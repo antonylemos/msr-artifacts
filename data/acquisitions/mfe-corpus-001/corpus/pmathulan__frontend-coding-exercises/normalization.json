@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "id": "979173938",
+  "fullName": "pmathulan/frontend-coding-exercises",
+  "commit": "89a3c271484ece4e37f719db9093c9157721a240",
+  "acquiredAt": "2026-10-15T19:20:52.855Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "angular-frontend-practical/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "microfrontend-workspace/projects/mfe1/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "microfrontend-workspace/projects/shell/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "ssr-app/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 209,
+    "bytes": 1936700
+  },
+  "languages": {
+    "JSON": 1815509,
+    "TypeScript": 70402,
+    "HTML": 13529,
+    "Markdown": 12028,
+    "SCSS": 10934,
+    "SVG": 5623,
+    "Other": 3422,
+    "YAML": 3119,
+    "JavaScript": 1652,
+    "CSS": 482
+  },
+  "contentSha256": "5a61e8d7b88e61f6eb2081cd2156a48c7eee08b7bb4a5315b2079c78dfd1c7c9"
+}

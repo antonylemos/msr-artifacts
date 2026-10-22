@@ -1,0 +1,3 @@
+directory,markers
+.,package.json;webpack.config.js
+public,public/index.html

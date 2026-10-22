@@ -1,0 +1,3 @@
+directory,markers
+shell,shell/index.html;shell/package.json;shell/vite.config.ts
+shop,shop/index.html;shop/package.json;shop/vite.config.ts

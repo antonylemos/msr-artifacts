@@ -1,0 +1,4 @@
+manifest,state
+backend/package.json,ok
+frontend/package.json,ok
+microfrontend/package.json,ok

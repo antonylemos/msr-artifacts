@@ -1,0 +1,62 @@
+{
+  "name": "eager-workspace",
+  "version": "0.0.0",
+  "workspaces": [
+    "projects/*"
+  ],
+  "scripts": {
+    "ng": "ng",
+    "start": "nx serve shell",
+    "start:shell": "nx serve shell",
+    "start:cart": "nx serve cart",
+    "build": "nx build",
+    "build:shell": "nx build shell",
+    "build:cart": "nx build cart",
+    "build:shared": "nx build shared-lib",
+    "watch": "nx build --watch --configuration development",
+    "test": "nx test"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "18.2.13",
+    "@angular/common": "18.2.13",
+    "@angular/compiler": "18.2.13",
+    "@angular/core": "18.2.13",
+    "@angular/forms": "18.2.13",
+    "@angular/platform-browser": "18.2.13",
+    "@angular/platform-browser-dynamic": "18.2.13",
+    "@angular/router": "18.2.13",
+    "@ngrx/effects": "^18.1.1",
+    "@ngrx/store": "^18.1.1",
+    "@ngrx/store-devtools": "^18.1.1",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.14.10"
+  },
+  "devDependencies": {
+    "@angular-architects/module-federation": "^20.0.0",
+    "@angular-builders/custom-webpack": "^18.0.0",
+    "@angular-devkit/build-angular": "18.2.13",
+    "@angular-devkit/core": "18.2.13",
+    "@angular-devkit/schematics": "18.2.13",
+    "@angular/cli": "18.2.13",
+    "@angular/compiler-cli": "18.2.13",
+    "@changesets/changelog-github": "^0.5.1",
+    "@changesets/cli": "^2.29.5",
+    "@nx/angular": "21.3.11",
+    "@nx/workspace": "21.3.11",
+    "@schematics/angular": "18.2.13",
+    "@swc-node/register": "^1.11.1",
+    "@swc/core": "^1.13.5",
+    "@types/jasmine": "~5.1.0",
+    "jasmine-core": "~5.2.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "ng-packagr": "^18.2.0",
+    "nx": "21.3.11",
+    "typescript": "~5.5.2"
+  }
+}

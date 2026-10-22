@@ -1,0 +1,6 @@
+manifest,state
+client/auth-app/package.json,ok
+client/community-app/package.json,ok
+client/package.json,ok
+client/shell-app/package.json,ok
+server/package.json,ok

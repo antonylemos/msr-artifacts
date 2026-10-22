@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "id": "1009887363",
+  "fullName": "dhiman1987/micro-frontend-demo",
+  "commit": "cae01436907388ad75de4a33cfc2c7a5ae256406",
+  "acquiredAt": "2026-10-15T19:20:53.096Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 21,
+    "bytes": 113659
+  },
+  "languages": {
+    "JSON": 99629,
+    "JavaScript": 3838,
+    "Markdown": 2713,
+    "Other": 2366,
+    "CSS": 2015,
+    "HTML": 1601,
+    "SVG": 1497
+  },
+  "contentSha256": "68c02bfb299f675b023a9ec48fe35e54c7c8704f4c714d32ab7d0b0ed6e032d8"
+}

@@ -1,0 +1,37 @@
+# ============================================================================
+# Portail union (gateway) — une seule image nginx sert shell + promote +
+# diaspora sur la MÊME origine, et proxifie les backends :
+#   /promote-api/*  -> backend promote   (host.docker.internal:${PROMOTE_PORT})
+#   /api/*          -> backend diaspora  (host.docker.internal:${DIASPORA_PORT})
+#
+# Ce compose ne déploie QUE le portail. Pour déployer la solution complète
+# (portail + promote + diaspora + payment hub), utilisez le point d'entrée
+# centralisé, qui pilote ce fichier avec les valeurs du manifeste
+# (deploy/server/components.env) :
+#
+#   bash deploy/server/deploy.sh              # toute la solution
+#   bash deploy/server/deploy.sh union        # le portail seul
+#
+# Lancé à la main (hors deploy.sh), les valeurs par défaut ci-dessous
+# s'appliquent : http://localhost:6080 et https://localhost:6443.
+# ============================================================================
+services:
+  union:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: afriland-union:latest
+    container_name: ${UNION_CONTAINER:-afriland-union}
+    ports:
+      - "${UNION_PORT:-6080}:80"
+      # HTTPS (certificat auto-signé, généré au démarrage) — requis pour la
+      # caméra/selfie ET pour l'API diaspora, qui force HTTPS.
+      - "${UNION_SSL_PORT:-6443}:443"
+    environment:
+      # Upstreams substitués dans le template nginx au démarrage.
+      PROMOTE_UPSTREAM: "${PROMOTE_UPSTREAM:-host.docker.internal:6390}"
+      DIASPORA_UPSTREAM: "${DIASPORA_UPSTREAM:-host.docker.internal:6002}"
+    restart: unless-stopped
+    # Permet au conteneur d'atteindre les backends qui tournent sur l'hôte.
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

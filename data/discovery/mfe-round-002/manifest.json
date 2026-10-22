@@ -1,0 +1,498 @@
+{
+  "run": {
+    "id": "cdde9e6a-9a49-4ce3-b91d-c1263703c2ae",
+    "catalog": {
+      "queries": [
+        {
+          "endpoint": "repositories",
+          "id": "terminology-topic-microfrontend",
+          "q": "topic:microfrontend",
+          "rationale": "Tópico explícito MFE atribuído pelos mantenedores (§3.1, procedimento 1).",
+          "strategy": "terminology"
+        },
+        {
+          "endpoint": "repositories",
+          "id": "terminology-topic-microfrontends",
+          "q": "topic:microfrontends",
+          "rationale": "Tópico explícito MFE atribuído pelos mantenedores (§3.1, procedimento 1).",
+          "strategy": "terminology"
+        },
+        {
+          "endpoint": "repositories",
+          "id": "terminology-topic-micro-frontend",
+          "q": "topic:micro-frontend",
+          "rationale": "Tópico explícito MFE atribuído pelos mantenedores (§3.1, procedimento 1).",
+          "strategy": "terminology"
+        },
+        {
+          "endpoint": "repositories",
+          "id": "terminology-topic-micro-frontends",
+          "q": "topic:micro-frontends",
+          "rationale": "Tópico explícito MFE atribuído pelos mantenedores (§3.1, procedimento 1).",
+          "strategy": "terminology"
+        },
+        {
+          "endpoint": "repositories",
+          "id": "terminology-microfrontend-repositories",
+          "partition": {
+            "by": "created",
+            "from": "2019-01-01",
+            "interval": "month"
+          },
+          "q": "microfrontend in:name,description,readme",
+          "rationale": "Termo explícito MFE em metadados e documentação (§3.1, procedimento 1).",
+          "strategy": "terminology"
+        },
+        {
+          "endpoint": "repositories",
+          "id": "terminology-microfrontends-repositories",
+          "partition": {
+            "by": "created",
+            "from": "2019-01-01",
+            "interval": "month"
+          },
+          "q": "microfrontends in:name,description,readme",
+          "rationale": "Termo explícito MFE em metadados e documentação (§3.1, procedimento 1).",
+          "strategy": "terminology"
+        },
+        {
+          "endpoint": "repositories",
+          "id": "terminology-micro-frontend-repositories",
+          "partition": {
+            "by": "created",
+            "from": "2019-01-01",
+            "interval": "month"
+          },
+          "q": "\"micro frontend\" in:name,description,readme",
+          "rationale": "Termo explícito MFE; equivale a \"micro-frontend\" na busca do GitHub (§3.1, procedimento 1).",
+          "strategy": "terminology"
+        },
+        {
+          "endpoint": "repositories",
+          "id": "terminology-micro-frontends-repositories",
+          "partition": {
+            "by": "created",
+            "from": "2019-01-01",
+            "interval": "month"
+          },
+          "q": "\"micro frontends\" in:name,description,readme",
+          "rationale": "Termo explícito MFE; equivale a \"micro-frontends\" na busca do GitHub (§3.1, procedimento 1).",
+          "strategy": "terminology"
+        },
+        {
+          "endpoint": "repositories",
+          "id": "technology-topic-module-federation",
+          "q": "topic:module-federation",
+          "rationale": "Tópico de tecnologia de composição, independente do termo MFE (§3.1, procedimento 2).",
+          "strategy": "technology"
+        },
+        {
+          "endpoint": "repositories",
+          "id": "technology-topic-single-spa",
+          "q": "topic:single-spa",
+          "rationale": "Tópico de tecnologia de composição, independente do termo MFE (§3.1, procedimento 2).",
+          "strategy": "technology"
+        },
+        {
+          "endpoint": "repositories",
+          "id": "technology-module-federation-repositories",
+          "partition": {
+            "by": "created",
+            "from": "2019-01-01",
+            "interval": "month"
+          },
+          "q": "\"module federation\" in:name,description,readme",
+          "rationale": "Menção à tecnologia em metadados e documentação (§3.1, procedimento 2).",
+          "strategy": "technology"
+        },
+        {
+          "endpoint": "repositories",
+          "id": "technology-single-spa-repositories",
+          "partition": {
+            "by": "created",
+            "from": "2019-01-01",
+            "interval": "quarter"
+          },
+          "q": "\"single-spa\" in:name,description,readme",
+          "rationale": "Menção à tecnologia; com aspas para evitar a separação do hífen (§3.1, procedimento 2).",
+          "strategy": "technology"
+        },
+        {
+          "endpoint": "repositories",
+          "id": "technology-web-components-mfe-repositories",
+          "q": "\"web components\" \"micro frontends\" in:readme",
+          "rationale": "Web Components não tem artefato discriminante; exige coocorrência com o termo MFE para excluir bibliotecas de componentes.",
+          "strategy": "technology"
+        },
+        {
+          "endpoint": "repositories",
+          "id": "technology-web-components-microfrontends-repositories",
+          "q": "\"web components\" microfrontends in:readme",
+          "rationale": "Variante da coocorrência com o termo MFE grafado sem espaço; a busca trata \"microfrontends\" e \"micro frontends\" como termos distintos.",
+          "strategy": "technology"
+        },
+        {
+          "endpoint": "code",
+          "id": "technology-module-federation-package-code",
+          "partition": {
+            "bounds": [
+              0,
+              100,
+              200,
+              300,
+              400,
+              500,
+              600,
+              700,
+              800,
+              900,
+              1000,
+              1150,
+              1300,
+              1450,
+              1600,
+              1800,
+              2000,
+              2250,
+              2500,
+              2750,
+              3000,
+              4000,
+              6000,
+              10000
+            ],
+            "by": "size"
+          },
+          "q": "\"@module-federation\" filename:package.json",
+          "rationale": "Dependência declarada de Module Federation, independente da terminologia (§3.1, procedimento 2).",
+          "strategy": "technology"
+        },
+        {
+          "endpoint": "code",
+          "id": "technology-vite-federation-package-code",
+          "partition": {
+            "bounds": [
+              0,
+              100,
+              200,
+              300,
+              400,
+              500,
+              600,
+              700,
+              800,
+              900,
+              1000,
+              1150,
+              1300,
+              1450,
+              1600,
+              1800,
+              2000,
+              2250,
+              2500,
+              2750,
+              3000,
+              4000,
+              6000,
+              10000
+            ],
+            "by": "size"
+          },
+          "q": "\"@originjs/vite-plugin-federation\" filename:package.json",
+          "rationale": "Dependência de federação de módulos para Vite (§3.1, procedimento 2).",
+          "strategy": "technology"
+        },
+        {
+          "endpoint": "code",
+          "id": "technology-angular-module-federation-package-code",
+          "partition": {
+            "bounds": [
+              0,
+              100,
+              200,
+              300,
+              400,
+              500,
+              600,
+              700,
+              800,
+              900,
+              1000,
+              1150,
+              1300,
+              1450,
+              1600,
+              1800,
+              2000,
+              2250,
+              2500,
+              2750,
+              3000,
+              4000,
+              6000,
+              10000
+            ],
+            "by": "size"
+          },
+          "q": "\"@angular-architects/module-federation\" filename:package.json",
+          "rationale": "Dependência de Module Federation para Angular (§3.1, procedimento 2).",
+          "strategy": "technology"
+        },
+        {
+          "endpoint": "code",
+          "id": "technology-native-federation-package-code",
+          "q": "\"@angular-architects/native-federation\" filename:package.json",
+          "rationale": "Dependência de Native Federation, abordagem adicional admitida pelo protocolo.",
+          "strategy": "technology"
+        },
+        {
+          "endpoint": "code",
+          "id": "technology-single-spa-package-code",
+          "partition": {
+            "bounds": [
+              0,
+              100,
+              200,
+              300,
+              400,
+              500,
+              600,
+              700,
+              800,
+              900,
+              1000,
+              1150,
+              1300,
+              1450,
+              1600,
+              1800,
+              2000,
+              2250,
+              2500,
+              2750,
+              3000,
+              4000,
+              6000,
+              10000
+            ],
+            "by": "size"
+          },
+          "q": "\"single-spa\" filename:package.json",
+          "rationale": "Dependência declarada de single-spa (§3.1, procedimento 2).",
+          "strategy": "technology"
+        },
+        {
+          "endpoint": "code",
+          "id": "technology-module-federation-plugin-js-code",
+          "partition": {
+            "bounds": [
+              0,
+              100,
+              200,
+              300,
+              400,
+              500,
+              600,
+              700,
+              800,
+              900,
+              1000,
+              1150,
+              1300,
+              1450,
+              1600,
+              1800,
+              2000,
+              2250,
+              2500,
+              2750,
+              3000,
+              4000,
+              6000,
+              10000
+            ],
+            "by": "size"
+          },
+          "q": "ModuleFederationPlugin remotes extension:js",
+          "rationale": "Configuração com remotes declarados: evidência de composição, não só de dependência.",
+          "strategy": "technology"
+        },
+        {
+          "endpoint": "code",
+          "id": "technology-module-federation-plugin-ts-code",
+          "partition": {
+            "bounds": [
+              0,
+              100,
+              200,
+              300,
+              400,
+              500,
+              600,
+              700,
+              800,
+              900,
+              1000,
+              1150,
+              1300,
+              1450,
+              1600,
+              1800,
+              2000,
+              2250,
+              2500,
+              2750,
+              3000,
+              4000,
+              6000,
+              10000
+            ],
+            "by": "size"
+          },
+          "q": "ModuleFederationPlugin remotes extension:ts",
+          "rationale": "Configuração com remotes declarados em TypeScript.",
+          "strategy": "technology"
+        },
+        {
+          "endpoint": "code",
+          "id": "technology-single-spa-register-code",
+          "partition": {
+            "bounds": [
+              0,
+              1000,
+              2000,
+              3000,
+              4000,
+              6000,
+              10000
+            ],
+            "by": "size"
+          },
+          "q": "registerApplication singleSpa",
+          "rationale": "Registro de aplicações single-spa: evidência de composição.",
+          "strategy": "technology"
+        },
+        {
+          "endpoint": "code",
+          "id": "technology-custom-elements-single-spa-code",
+          "q": "customElements.define registerApplication",
+          "rationale": "Custom elements registrados como aplicações: possível híbrido Web Components e single-spa.",
+          "strategy": "technology"
+        },
+        {
+          "endpoint": "repositories",
+          "id": "broader-frontend-composition",
+          "q": "\"frontend composition\" in:name,description,readme",
+          "rationale": "Termo amplo de composição de frontend (§3.1, procedimento 3).",
+          "strategy": "broader"
+        },
+        {
+          "endpoint": "repositories",
+          "id": "broader-frontend-decomposition",
+          "q": "\"frontend decomposition\" in:name,description,readme",
+          "rationale": "Termo amplo de decomposição de frontend (§3.1, procedimento 3).",
+          "strategy": "broader"
+        },
+        {
+          "endpoint": "repositories",
+          "id": "broader-frontend-orchestration",
+          "partition": {
+            "by": "created",
+            "from": "2019-01-01",
+            "interval": "quarter"
+          },
+          "q": "\"frontend orchestration\" in:name,description,readme",
+          "rationale": "Termo amplo de orquestração de frontend (§3.1, procedimento 3).",
+          "strategy": "broader"
+        },
+        {
+          "endpoint": "repositories",
+          "id": "broader-federated-modules",
+          "q": "\"federated modules\" in:name,description,readme",
+          "rationale": "Termo amplo de módulos federados (§3.1, procedimento 3).",
+          "strategy": "broader"
+        },
+        {
+          "endpoint": "repositories",
+          "id": "broader-micro-apps",
+          "partition": {
+            "by": "created",
+            "from": "2019-01-01",
+            "interval": "quarter"
+          },
+          "q": "\"micro apps\" frontend in:name,description,readme",
+          "rationale": "Micro-aplicações de frontend, termo associado citado no §3.4.7.",
+          "strategy": "broader"
+        }
+      ]
+    },
+    "protocol": {
+      "eligibility": [
+        {
+          "id": "recent-push",
+          "since": "2025-04-01",
+          "type": "last_push"
+        },
+        {
+          "authors": "human",
+          "branches": "default",
+          "dateField": "committedDate",
+          "id": "recent-human-commit",
+          "since": "2025-04-01",
+          "type": "recent_commit"
+        }
+      ]
+    },
+    "catalogHash": "ddcf42348954117d25d6732b6d1fd91b2310d2be18b4cc08785e533923f62edc",
+    "protocolHash": "557f04ab5b2efadb2cf2df7b7d2903229bbbd22fea4abd00e07e6ecf477451ad",
+    "evaluatorVersions": {
+      "author": 1,
+      "last_push": 1,
+      "recent_commit": 1
+    },
+    "startedAt": "2026-10-08T15:34:09.950Z",
+    "expansionDate": "2026-10-08",
+    "endedAt": "2026-10-09T00:59:17.930Z",
+    "state": "partial",
+    "invocations": [
+      {
+        "id": "c322baa6-2f0c-4e8f-ae1b-0b81815e3659",
+        "limits": {
+          "branchesPerPage": 100,
+          "commitsPerPage": 100,
+          "maxActivityDurationMs": null,
+          "maxActivityRequestsPerCandidate": 20
+        },
+        "startedAt": "2026-10-08T15:34:09.950Z"
+      }
+    ]
+  },
+  "versions": {
+    "node": "v24.12.0",
+    "code": "git:7700c7909368fde6288781c1a81bbf5f8c86a8bd",
+    "lockfileVersion": "9.0",
+    "lockfileSha256": "908835941066a14d9fdd6acf21487ab2c7f999970ff01902802677bce34f3914",
+    "evaluators": {
+      "author": 1,
+      "last_push": 1,
+      "recent_commit": 1
+    },
+    "snapshotEvaluators": {
+      "last_push": 1,
+      "recent_commit": 1,
+      "author": 1
+    }
+  },
+  "git": {
+    "available": true,
+    "revision": "7700c7909368fde6288781c1a81bbf5f8c86a8bd",
+    "dirty": true
+  },
+  "sha256": {
+    "candidates.csv": "d4f3dadfd281ca6861ecfd6d36a9157b2702314831f42a98ef51f05ec79c3d99",
+    "discovery-hits.csv": "a3bab964f057c281d296f24d75fa72f95164400f3b63c86059497149ba2c0bbb",
+    "coverage.json": "7f65c43c02b847dca0258f60dd41182715a51682f275eed64f12c9268ee092e6",
+    "report.md": "2aa7ed74156569a32bb7494675604ceab7e67b1fa7e905dd015985673f90c775"
+  }
+}

@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "spa.fullname" . }}-cache-bust
+  labels:
+    {{ include "spa.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-upgrade
+    "helm.sh/hook-weight": "0"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  template:
+    spec:
+      containers:
+        - name: curl
+          image: curlimages/curl
+          command: ["curl"]
+          args:
+            [
+              "-X", "POST",
+              "-H", "Authorization: Bearer $CLOUDFLARE_TOKEN",
+              "https://api.cloudflare.com/client/v4/zones/YOUR_ZONE_ID/purge_cache",
+              "-d", "{\"purge_everything\":true}"
+            ]
+          env:
+            - name: CLOUDFLARE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare-secrets
+                  key: token
+      restartPolicy: Never
+  backoffLimit: 1

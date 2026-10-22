@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "id": "1028839722",
+  "fullName": "mrgleam/mf-tanstack-demo",
+  "commit": "a7175973b0594cecfd32126b0bb65e71c627a6c3",
+  "acquiredAt": "2026-10-15T19:20:53.136Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 28,
+    "bytes": 169127
+  },
+  "languages": {
+    "JSON": 152466,
+    "TypeScript": 11452,
+    "Shell": 1251,
+    "YAML": 1174,
+    "Markdown": 1080,
+    "Other": 989,
+    "HTML": 715
+  },
+  "contentSha256": "810eab17388961dc4bca0456dcdf1934a9398c7b1076b9ae9c37fc770f3472a2"
+}

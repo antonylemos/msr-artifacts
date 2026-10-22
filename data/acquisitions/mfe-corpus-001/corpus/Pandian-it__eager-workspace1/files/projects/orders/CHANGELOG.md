@@ -1,0 +1,36 @@
+# orders
+
+## 1.1.3
+
+### Patch Changes
+
+- 50e0f97: Auto-generated patch for affected projects
+
+## 1.1.2
+
+### Patch Changes
+
+- f3750fd: Auto-generated patch for affected projects
+- 3a75f71: Auto-generated patch for affected projects
+
+## 1.1.1
+
+### Patch Changes
+
+- 5760af3: Auto-generated patch for affected projects
+- 5760af3: Auto-generated patch for affected projects
+
+## 1.1.0
+
+### Minor Changes
+
+- 7ac2370: 3rd change for orders
+
+### Patch Changes
+
+- b5cfbc3: Auto-generated patch for affected projects
+- 8308f08: Auto-generated patch for affected projects
+- b263abf: Auto-generated patch for affected projects
+- e2d6beb: Auto-generated patch for affected projects
+- 7ac2370: second change for orders
+- 7ac2370: This is change for orders

@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "id": "1202215420",
+  "fullName": "EnjoyFX/fe_containerize",
+  "commit": "f05a9de5c996497b2277614bf4cc473456d85b7e",
+  "acquiredAt": "2026-10-15T19:20:52.597Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 51,
+    "bytes": 85613
+  },
+  "languages": {
+    "JavaScript": 31346,
+    "Markdown": 16113,
+    "YAML": 11394,
+    "TypeScript": 6705,
+    "CSS": 6569,
+    "Other": 4399,
+    "Python": 4148,
+    "JSON": 2222,
+    "Shell": 1641,
+    "HTML": 683,
+    "SQL": 393
+  },
+  "contentSha256": "1b12597c00985f77fca147abab963604493cfb9ddc8b352d281fd402826be43c"
+}

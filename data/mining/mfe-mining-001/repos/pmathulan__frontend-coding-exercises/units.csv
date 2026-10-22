@@ -1,0 +1,9 @@
+directory,markers
+angular-frontend-practical,angular-frontend-practical/angular.json;angular-frontend-practical/package.json
+microfrontend-workspace,microfrontend-workspace/angular.json;microfrontend-workspace/package.json
+microfrontend-workspace/projects/mfe1,microfrontend-workspace/projects/mfe1/webpack.config.js;microfrontend-workspace/projects/mfe1/webpack.prod.config.js
+microfrontend-workspace/projects/shared,microfrontend-workspace/projects/shared/package.json
+microfrontend-workspace/projects/shell,microfrontend-workspace/projects/shell/webpack.config.js;microfrontend-workspace/projects/shell/webpack.prod.config.js
+rate-limited-scheduler,rate-limited-scheduler/package.json
+react-performance-practical,react-performance-practical/index.html;react-performance-practical/package.json;react-performance-practical/vite.config.ts
+ssr-app,ssr-app/angular.json;ssr-app/package.json

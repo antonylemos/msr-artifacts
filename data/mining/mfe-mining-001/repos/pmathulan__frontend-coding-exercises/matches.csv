@@ -1,0 +1,185 @@
+pattern,path,line,excerpt
+dep-module-federation,microfrontend-workspace/package.json,10,"    ""run:all"": ""node node_modules/@angular-architects/module-federation/src/server/mf-dev-server.js"""
+dep-module-federation,microfrontend-workspace/package.json,14,"    ""@angular-architects/module-federation"": ""^19.0.3"","
+dep-mfe-term,microfrontend-workspace/package.json,2,"  ""name"": ""microfrontend-workspace"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,77,"        ""@module-federation/enhanced"": ""^0.9.0"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,78,"        ""@module-federation/runtime-core"": ""^0.6.21"""
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3588,"    ""node_modules/@module-federation/bridge-react-webpack-plugin"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3590,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/bridge-react-webpack-plugin/-/bridge-react-webpack-plugin-0.9.1.tgz"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3595,"        ""@module-federation/sdk"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3600,"    ""node_modules/@module-federation/bridge-react-webpack-plugin/node_modules/semver"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3613,"    ""node_modules/@module-federation/data-prefetch"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3615,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/data-prefetch/-/data-prefetch-0.9.1.tgz"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3620,"        ""@module-federation/runtime"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3621,"        ""@module-federation/sdk"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3629,"    ""node_modules/@module-federation/data-prefetch/node_modules/fs-extra"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3645,"    ""node_modules/@module-federation/data-prefetch/node_modules/jsonfile"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3658,"    ""node_modules/@module-federation/data-prefetch/node_modules/universalify"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3668,"    ""node_modules/@module-federation/dts-plugin"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3670,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/dts-plugin/-/dts-plugin-0.9.1.tgz"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3675,"        ""@module-federation/error-codes"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3676,"        ""@module-federation/managers"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3677,"        ""@module-federation/sdk"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3678,"        ""@module-federation/third-party-dts-extractor"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3702,"    ""node_modules/@module-federation/dts-plugin/node_modules/chalk"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3716,"    ""node_modules/@module-federation/dts-plugin/node_modules/fs-extra"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3732,"    ""node_modules/@module-federation/dts-plugin/node_modules/jsonfile"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3745,"    ""node_modules/@module-federation/dts-plugin/node_modules/universalify"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3755,"    ""node_modules/@module-federation/dts-plugin/node_modules/ws"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3777,"    ""node_modules/@module-federation/enhanced"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3779,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/enhanced/-/enhanced-0.9.1.tgz"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3784,"        ""@module-federation/bridge-react-webpack-plugin"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3785,"        ""@module-federation/data-prefetch"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3786,"        ""@module-federation/dts-plugin"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3787,"        ""@module-federation/error-codes"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3788,"        ""@module-federation/inject-external-runtime-core-plugin"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3789,"        ""@module-federation/managers"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3790,"        ""@module-federation/manifest"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3791,"        ""@module-federation/rspack"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3792,"        ""@module-federation/runtime-tools"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3793,"        ""@module-federation/sdk"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3814,"    ""node_modules/@module-federation/error-codes"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3816,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/error-codes/-/error-codes-0.9.1.tgz"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3821,"    ""node_modules/@module-federation/inject-external-runtime-core-plugin"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3823,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/inject-external-runtime-core-plugin/-/inject-external-runtime-core-plugin-0.9.1.tgz"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3828,"        ""@module-federation/runtime-tools"": ""0.9.1"""
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3831,"    ""node_modules/@module-federation/managers"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3833,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/managers/-/managers-0.9.1.tgz"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3838,"        ""@module-federation/sdk"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3843,"    ""node_modules/@module-federation/managers/node_modules/fs-extra"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3859,"    ""node_modules/@module-federation/managers/node_modules/jsonfile"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3872,"    ""node_modules/@module-federation/managers/node_modules/universalify"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3882,"    ""node_modules/@module-federation/manifest"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3884,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/manifest/-/manifest-0.9.1.tgz"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3889,"        ""@module-federation/dts-plugin"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3890,"        ""@module-federation/managers"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3891,"        ""@module-federation/sdk"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3896,"    ""node_modules/@module-federation/manifest/node_modules/chalk"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3910,"    ""node_modules/@module-federation/rspack"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3912,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/rspack/-/rspack-0.9.1.tgz"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3917,"        ""@module-federation/bridge-react-webpack-plugin"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3918,"        ""@module-federation/dts-plugin"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3919,"        ""@module-federation/inject-external-runtime-core-plugin"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3920,"        ""@module-federation/managers"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3921,"        ""@module-federation/manifest"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3922,"        ""@module-federation/runtime-tools"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3923,"        ""@module-federation/sdk"": ""0.9.1"""
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3939,"    ""node_modules/@module-federation/runtime"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3941,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/runtime/-/runtime-0.9.1.tgz"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3946,"        ""@module-federation/error-codes"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3947,"        ""@module-federation/runtime-core"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3948,"        ""@module-federation/sdk"": ""0.9.1"""
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3951,"    ""node_modules/@module-federation/runtime-core"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3953,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/runtime-core/-/runtime-core-0.6.21.tgz"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3958,"        ""@module-federation/error-codes"": ""0.9.0"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3959,"        ""@module-federation/sdk"": ""0.9.0"""
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3962,"    ""node_modules/@module-federation/runtime-core/node_modules/@module-federation/error-codes"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3964,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/error-codes/-/error-codes-0.9.0.tgz"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3969,"    ""node_modules/@module-federation/runtime-core/node_modules/@module-federation/sdk"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3971,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/sdk/-/sdk-0.9.0.tgz"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3979,"    ""node_modules/@module-federation/runtime-tools"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3981,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/runtime-tools/-/runtime-tools-0.9.1.tgz"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3986,"        ""@module-federation/runtime"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3987,"        ""@module-federation/webpack-bundler-runtime"": ""0.9.1"""
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3990,"    ""node_modules/@module-federation/runtime/node_modules/@module-federation/runtime-core"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3992,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/runtime-core/-/runtime-core-0.9.1.tgz"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3997,"        ""@module-federation/error-codes"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,3998,"        ""@module-federation/sdk"": ""0.9.1"""
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,4001,"    ""node_modules/@module-federation/sdk"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,4003,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/sdk/-/sdk-0.9.1.tgz"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,4008,"    ""node_modules/@module-federation/third-party-dts-extractor"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,4010,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/third-party-dts-extractor/-/third-party-dts-extractor-0.9.1.tgz"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,4020,"    ""node_modules/@module-federation/third-party-dts-extractor/node_modules/fs-extra"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,4036,"    ""node_modules/@module-federation/third-party-dts-extractor/node_modules/jsonfile"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,4049,"    ""node_modules/@module-federation/third-party-dts-extractor/node_modules/resolve"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,4067,"    ""node_modules/@module-federation/third-party-dts-extractor/node_modules/universalify"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,4077,"    ""node_modules/@module-federation/webpack-bundler-runtime"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,4079,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/webpack-bundler-runtime/-/webpack-bundler-runtime-0.9.1.tgz"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,4084,"        ""@module-federation/runtime"": ""0.9.1"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,4085,"        ""@module-federation/sdk"": ""0.9.1"""
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,5654,"        ""@module-federation/runtime-tools"": ""0.11.2"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,5675,"    ""node_modules/@rspack/core/node_modules/@module-federation/error-codes"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,5677,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/error-codes/-/error-codes-0.11.2.tgz"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,5682,"    ""node_modules/@rspack/core/node_modules/@module-federation/runtime"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,5684,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/runtime/-/runtime-0.11.2.tgz"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,5689,"        ""@module-federation/error-codes"": ""0.11.2"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,5690,"        ""@module-federation/runtime-core"": ""0.11.2"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,5691,"        ""@module-federation/sdk"": ""0.11.2"""
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,5694,"    ""node_modules/@rspack/core/node_modules/@module-federation/runtime-core"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,5696,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/runtime-core/-/runtime-core-0.11.2.tgz"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,5701,"        ""@module-federation/error-codes"": ""0.11.2"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,5702,"        ""@module-federation/sdk"": ""0.11.2"""
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,5705,"    ""node_modules/@rspack/core/node_modules/@module-federation/runtime-tools"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,5707,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/runtime-tools/-/runtime-tools-0.11.2.tgz"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,5712,"        ""@module-federation/runtime"": ""0.11.2"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,5713,"        ""@module-federation/webpack-bundler-runtime"": ""0.11.2"""
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,5716,"    ""node_modules/@rspack/core/node_modules/@module-federation/sdk"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,5718,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/sdk/-/sdk-0.11.2.tgz"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,5723,"    ""node_modules/@rspack/core/node_modules/@module-federation/webpack-bundler-runtime"": {"
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,5725,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/webpack-bundler-runtime/-/webpack-bundler-runtime-0.11.2.tgz"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,5730,"        ""@module-federation/runtime"": ""0.11.2"","
+lock-mfe-dependency,microfrontend-workspace/package-lock.json,5731,"        ""@module-federation/sdk"": ""0.11.2"""
+cfg-federation-plugin,microfrontend-workspace/projects/mfe1/webpack.config.js,1,"const { shareAll, withModuleFederationPlugin } = require('@angular-architects/module-federation/webpack');"
+cfg-federation-plugin,microfrontend-workspace/projects/mfe1/webpack.config.js,3,module.exports = withModuleFederationPlugin({
+cfg-federation-plugin,microfrontend-workspace/projects/shell/webpack.config.js,1,"const { shareAll, withModuleFederationPlugin } = require('@angular-architects/module-federation/webpack');"
+cfg-federation-plugin,microfrontend-workspace/projects/shell/webpack.config.js,3,module.exports = withModuleFederationPlugin({
+cfg-remotes,microfrontend-workspace/projects/shell/webpack.config.js,14,  remotes: {
+cfg-exposes,microfrontend-workspace/projects/mfe1/webpack.config.js,8,  exposes: {
+cfg-exposes,microfrontend-workspace/projects/shell/webpack.config.js,7,  exposes: {
+cfg-shared,microfrontend-workspace/projects/mfe1/webpack.config.js,12,  shared: {
+cfg-shared,microfrontend-workspace/projects/mfe1/webpack.config.js,13,"    ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),"
+cfg-shared,microfrontend-workspace/projects/shell/webpack.config.js,11,  shared: {
+cfg-shared,microfrontend-workspace/projects/shell/webpack.config.js,12,"    ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),"
+cfg-custom-webpack,microfrontend-workspace/angular.json,18,"					""builder"": ""ngx-build-plus:browser"","
+cfg-custom-webpack,microfrontend-workspace/angular.json,42,"						""extraWebpackConfig"": ""projects/shell/webpack.config.js"","
+cfg-custom-webpack,microfrontend-workspace/angular.json,60,"							""extraWebpackConfig"": ""projects/shell/webpack.prod.config.js"""
+cfg-custom-webpack,microfrontend-workspace/angular.json,71,"					""builder"": ""ngx-build-plus:dev-server"","
+cfg-custom-webpack,microfrontend-workspace/angular.json,75,"							""extraWebpackConfig"": ""projects/shell/webpack.prod.config.js"""
+cfg-custom-webpack,microfrontend-workspace/angular.json,85,"						""extraWebpackConfig"": ""projects/shell/webpack.config.js"""
+cfg-custom-webpack,microfrontend-workspace/angular.json,126,"					""builder"": ""ngx-build-plus:browser"","
+cfg-custom-webpack,microfrontend-workspace/angular.json,150,"						""extraWebpackConfig"": ""projects/mfe1/webpack.config.js"","
+cfg-custom-webpack,microfrontend-workspace/angular.json,168,"							""extraWebpackConfig"": ""projects/mfe1/webpack.prod.config.js"""
+cfg-custom-webpack,microfrontend-workspace/angular.json,179,"					""builder"": ""ngx-build-plus:dev-server"","
+cfg-custom-webpack,microfrontend-workspace/angular.json,183,"							""extraWebpackConfig"": ""projects/mfe1/webpack.prod.config.js"""
+cfg-custom-webpack,microfrontend-workspace/angular.json,193,"						""extraWebpackConfig"": ""projects/mfe1/webpack.config.js"""
+rt-remote-entry,microfrontend-workspace/projects/mfe1/webpack.config.js,6,"  filename: 'remoteEntry.js',"
+rt-remote-entry,microfrontend-workspace/projects/shell/src/app/app.routes.ts,10,"                remoteEntry: 'http://localhost:4201/remoteEntry.js',"
+rt-remote-entry,microfrontend-workspace/projects/shell/src/app/app.routes.ts,19,"    //             remoteEntry: 'http://localhost:4202/remoteEntry.js',"
+rt-remote-entry,microfrontend-workspace/projects/shell/webpack.config.js,15,"    mfe1: ""mfe1@http://localhost:4201/remoteEntry.js"","
+src-async-bootstrap,microfrontend-workspace/projects/mfe1/src/main.ts,1,import('./bootstrap')
+src-async-bootstrap,microfrontend-workspace/projects/shell/src/main.ts,1,import('./bootstrap')
+src-load-remote,microfrontend-workspace/projects/shell/src/app/app.routes.ts,2,import { loadRemoteModule } from '@angular-architects/module-federation';
+src-load-remote,microfrontend-workspace/projects/shell/src/app/app.routes.ts,8,            loadRemoteModule({
+src-load-remote,microfrontend-workspace/projects/shell/src/app/app.routes.ts,17,    //         loadRemoteModule({
+src-html-external-script,angular-frontend-practical/src/index.html,13,"  <script src=""https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"""
+ops-deployment-file,spa-helm/Chart.yaml,,
+ops-deployment-file,spa-helm/templates/_helpers.tpl,,
+ops-deployment-file,spa-helm/templates/deployment.yaml,,
+ops-deployment-file,spa-helm/templates/ingress.yaml,,
+ops-deployment-file,spa-helm/templates/post-upgrade-hook.yaml,,
+ops-deployment-file,spa-helm/templates/service.yaml,,
+ops-deployment-file,spa-helm/values.yaml,,
+ops-compose-service,spa-helm/templates/deployment.yaml,19,"          image: ""{{ .Values.image.repository }}:{{ .Values.image.tag }}"""
+ops-compose-service,spa-helm/templates/post-upgrade-hook.yaml,16,          image: curlimages/curl
+ops-compose-service,spa-helm/values.yaml,3,image:
+ops-proxy-route,spa-helm/templates/ingress.yaml,16,        paths:
+ops-proxy-route,spa-helm/values.yaml,19,      paths:
+doc-mfe-term,microfrontend-workspace/README.md,1,# Angular Micro-Frontend Workspace
+doc-mfe-term,microfrontend-workspace/README.md,3,"This project demonstrates a **Micro-Frontend architecture** using Angular, Module Federation, and a shared library. The structure includes:"
+doc-mfe-term,microfrontend-workspace/README.md,6,- **MFE1**: A remote micro-frontend loaded at runtime.
+doc-mfe-term,microfrontend-workspace/README.md,21,Make sure you are in the root workspace folder (microfrontend-workspace/) when running this.
+doc-mfe-term,microfrontend-workspace/README.md,25,Terminal 1: Run MFE1
+doc-mfe-term,microfrontend-workspace/README.md,28,ng serve mfe1 --port 4201
+doc-mfe-term,microfrontend-workspace/README.md,41,Navigating to /mfe1 in the shell will dynamically load MFE1 via Module Federation
+doc-mfe-term,microfrontend-workspace/README.md,48,Micro-frontends like MFE1 are lazy-loaded at runtime.
+doc-mfe-term,microfrontend-workspace/README.md,50,Shell can share services and state with MFE1 using the shared library.
+doc-mfe-term,microfrontend-workspace/README.md,52,- MFE1 (Remote App)
+doc-mfe-term,microfrontend-workspace/README.md,66,- To enable communication between Shell and MFE1:
+doc-integration-technology,microfrontend-workspace/README.md,3,"This project demonstrates a **Micro-Frontend architecture** using Angular, Module Federation, and a shared library. The structure includes:"
+doc-integration-technology,microfrontend-workspace/README.md,41,Navigating to /mfe1 in the shell will dynamically load MFE1 via Module Federation
+doc-integration-technology,microfrontend-workspace/README.md,53,  Exposes Angular components or modules via Module Federation.
+doc-integration-technology,microfrontend-workspace/README.md,69,- Both apps consume the same shared service (thanks to Module Federation's shared config).
+doc-runtime-loading,microfrontend-workspace/README.md,6,- **MFE1**: A remote micro-frontend loaded at runtime.
+doc-runtime-loading,microfrontend-workspace/README.md,48,Micro-frontends like MFE1 are lazy-loaded at runtime.
+doc-host-remote,microfrontend-workspace/README.md,55,Registered as a remote in Shell's webpack.config.js.
+ws-path-alias,microfrontend-workspace/tsconfig.json,15,"    ""paths"": {"

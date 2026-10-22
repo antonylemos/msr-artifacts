@@ -1,0 +1,7 @@
+manifest,state
+angular-frontend-practical/package.json,ok
+microfrontend-workspace/package.json,ok
+microfrontend-workspace/projects/shared/package.json,ok
+rate-limited-scheduler/package.json,ok
+react-performance-practical/package.json,ok
+ssr-app/package.json,ok

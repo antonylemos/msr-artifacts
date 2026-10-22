@@ -1,0 +1,56 @@
+<div class="container py-5">
+    <h1 class="mb-5">Your Shopping Cart</h1>
+    @if (isLoading()) {
+    <div class="text-center">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    } @else if (items().length === 0) {
+    <div class="text-center">
+        <h2>Your cart is empty</h2>
+        <p>Looks like you haven't added anything to your cart yet.</p>
+        <a routerLink="/products" class="btn btn-primary">Start Shopping</a>
+    </div>
+    } @else {
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card mb-4">
+                <div class="card-body">
+                    @for (item of items(); track $index) {
+                    <app-cart-item [item]="item" (remove)="removeItem($event)"
+                        (quantityChange)="updateItemQuantity($event)" />
+                    }
+                    <hr />
+                </div>
+            </div>
+            <div class="text-start mb-4">
+                <a routerLink="/products" class="btn btn-outline-primary">
+                    <i class="bi bi-arrow-left me-2"></i>Continue Shopping
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card cart-summary">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">Order Summary</h5>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Line Items</span>
+                        <span>{{ itemCount() }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Subtotal</span>
+                        <span>{{ total() | currency }}</span>
+                    </div>
+                    <hr />
+                    <div class="d-flex justify-content-between mb-4">
+                        <strong>Total</strong>
+                        <strong>{{ total() | currency }}</strong>
+                    </div>
+                    <button class="btn btn-primary w-100">Proceed to Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>

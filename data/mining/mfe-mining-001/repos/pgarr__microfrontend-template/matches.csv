@@ -1,0 +1,105 @@
+pattern,path,line,excerpt
+cfg-federation-plugin,auth/config/webpack.dev.js,3,const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+cfg-federation-plugin,auth/config/webpack.dev.js,19,    new ModuleFederationPlugin({
+cfg-federation-plugin,auth/config/webpack.prod.js,2,const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+cfg-federation-plugin,auth/config/webpack.prod.js,13,    new ModuleFederationPlugin({
+cfg-federation-plugin,container/config/webpack.dev.js,2,const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+cfg-federation-plugin,container/config/webpack.dev.js,18,    new ModuleFederationPlugin({
+cfg-federation-plugin,container/config/webpack.prod.js,2,const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+cfg-federation-plugin,container/config/webpack.prod.js,15,    new ModuleFederationPlugin({
+cfg-federation-plugin,dashboard/config/webpack.dev.js,3,const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+cfg-federation-plugin,dashboard/config/webpack.dev.js,22,    new ModuleFederationPlugin({
+cfg-federation-plugin,dashboard/config/webpack.prod.js,2,const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+cfg-federation-plugin,dashboard/config/webpack.prod.js,13,    new ModuleFederationPlugin({
+cfg-federation-plugin,marketing/config/webpack.dev.js,3,const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+cfg-federation-plugin,marketing/config/webpack.dev.js,19,    new ModuleFederationPlugin({
+cfg-federation-plugin,marketing/config/webpack.prod.js,2,const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+cfg-federation-plugin,marketing/config/webpack.prod.js,13,    new ModuleFederationPlugin({
+cfg-remotes,container/config/webpack.dev.js,20,      remotes: {
+cfg-remotes,container/config/webpack.prod.js,17,      remotes: {
+cfg-exposes,auth/config/webpack.dev.js,22,      exposes: {
+cfg-exposes,auth/config/webpack.prod.js,16,      exposes: {
+cfg-exposes,dashboard/config/webpack.dev.js,25,      exposes: {
+cfg-exposes,dashboard/config/webpack.prod.js,16,      exposes: {
+cfg-exposes,marketing/config/webpack.dev.js,22,      exposes: {
+cfg-exposes,marketing/config/webpack.prod.js,16,      exposes: {
+cfg-shared,auth/config/webpack.dev.js,25,      shared: {
+cfg-shared,auth/config/webpack.dev.js,28,"          singleton: true,"
+cfg-shared,auth/config/webpack.dev.js,32,"          singleton: true,"
+cfg-shared,auth/config/webpack.dev.js,36,"          singleton: true,"
+cfg-shared,auth/config/webpack.prod.js,19,      shared: {
+cfg-shared,auth/config/webpack.prod.js,22,"          singleton: true,"
+cfg-shared,auth/config/webpack.prod.js,26,"          singleton: true,"
+cfg-shared,auth/config/webpack.prod.js,30,"          singleton: true,"
+cfg-shared,container/config/webpack.dev.js,25,      shared: {
+cfg-shared,container/config/webpack.dev.js,28,"          singleton: true,"
+cfg-shared,container/config/webpack.dev.js,32,"          singleton: true,"
+cfg-shared,container/config/webpack.dev.js,36,"          singleton: true,"
+cfg-shared,container/config/webpack.prod.js,22,      shared: {
+cfg-shared,container/config/webpack.prod.js,25,"          singleton: true,"
+cfg-shared,container/config/webpack.prod.js,29,"          singleton: true,"
+cfg-shared,container/config/webpack.prod.js,33,"          singleton: true,"
+cfg-shared,dashboard/config/webpack.dev.js,28,"      shared: packageJson.dependencies,"
+cfg-shared,dashboard/config/webpack.prod.js,19,"      shared: packageJson.dependencies,"
+cfg-shared,marketing/config/webpack.dev.js,25,      shared: {
+cfg-shared,marketing/config/webpack.dev.js,28,"          singleton: true,"
+cfg-shared,marketing/config/webpack.dev.js,32,"          singleton: true,"
+cfg-shared,marketing/config/webpack.dev.js,36,"          singleton: true,"
+cfg-shared,marketing/config/webpack.prod.js,19,      shared: {
+cfg-shared,marketing/config/webpack.prod.js,22,"          singleton: true,"
+cfg-shared,marketing/config/webpack.prod.js,26,"          singleton: true,"
+cfg-shared,marketing/config/webpack.prod.js,30,"          singleton: true,"
+cfg-public-path,auth/config/webpack.dev.js,10,"    publicPath: 'http://localhost:8082/',"
+cfg-public-path,auth/config/webpack.prod.js,10,"    publicPath: '/auth/latest/',"
+cfg-public-path,container/config/webpack.dev.js,9,"    publicPath: 'http://localhost:8080/',"
+cfg-public-path,container/config/webpack.prod.js,12,"    publicPath: '/container/latest/',"
+cfg-public-path,dashboard/config/webpack.dev.js,10,"    publicPath: 'http://localhost:8083/',"
+cfg-public-path,dashboard/config/webpack.prod.js,10,"    publicPath: '/dashboard/latest/',"
+cfg-public-path,marketing/config/webpack.dev.js,10,"    publicPath: 'http://localhost:8081/',"
+cfg-public-path,marketing/config/webpack.prod.js,10,"    publicPath: '/marketing/latest/',"
+rt-remote-entry,.github/workflows/auth.yml,28,"      - run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DISTRIBUTION_ID }} --paths ""/auth/latest/remoteEntry.js"""
+rt-remote-entry,.github/workflows/dashboard.yml,28,"      - run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DISTRIBUTION_ID }} --paths ""/dashboard/latest/remoteEntry.js"""
+rt-remote-entry,.github/workflows/marketing.yml,28,"      - run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DISTRIBUTION_ID }} --paths ""/marketing/latest/remoteEntry.js"""
+rt-remote-entry,auth/config/webpack.dev.js,21,"      filename: 'remoteEntry.js',"
+rt-remote-entry,auth/config/webpack.prod.js,15,"      filename: 'remoteEntry.js',"
+rt-remote-entry,container/config/webpack.dev.js,21,"        marketing: 'marketing@http://localhost:8081/remoteEntry.js',"
+rt-remote-entry,container/config/webpack.dev.js,22,"        auth: 'auth@http://localhost:8082/remoteEntry.js',"
+rt-remote-entry,container/config/webpack.dev.js,23,"        dashboard: 'dashboard@http://localhost:8083/remoteEntry.js',"
+rt-remote-entry,container/config/webpack.prod.js,18,"        marketing: `marketing@${domain}/marketing/latest/remoteEntry.js`,"
+rt-remote-entry,container/config/webpack.prod.js,19,"        auth: `auth@${domain}/auth/latest/remoteEntry.js`,"
+rt-remote-entry,container/config/webpack.prod.js,20,"        dashboard: `dashboard@${domain}/dashboard/latest/remoteEntry.js`,"
+rt-remote-entry,dashboard/config/webpack.dev.js,24,"      filename: 'remoteEntry.js',"
+rt-remote-entry,dashboard/config/webpack.prod.js,15,"      filename: 'remoteEntry.js',"
+rt-remote-entry,marketing/config/webpack.dev.js,21,"      filename: 'remoteEntry.js',"
+rt-remote-entry,marketing/config/webpack.prod.js,15,"      filename: 'remoteEntry.js',"
+src-async-bootstrap,auth/src/index.js,1,import('./bootstrap');
+src-async-bootstrap,container/src/index.js,1,import('./bootstrap');
+src-async-bootstrap,dashboard/src/index.js,1,import('./bootstrap');
+src-async-bootstrap,marketing/src/index.js,1,import('./bootstrap');
+src-mount-export,auth/src/bootstrap.js,46,export { mount };
+src-mount-export,dashboard/src/bootstrap.js,22,export { mount };
+src-mount-export,marketing/src/bootstrap.js,46,export { mount };
+src-mount-call,container/src/components/AuthApp.js,13,"    const { onParentNavigate } = mount(ref.current, {"
+src-mount-call,container/src/components/DashboardApp.js,8,    mount(ref.current);
+src-mount-call,container/src/components/MarketingApp.js,13,"    const { onParentNavigate } = mount(ref.current, {"
+src-mount-call,dashboard/src/bootstrap.js,7,  app.mount(el);
+src-mount-import,container/src/components/AuthApp.js,1,import { mount } from 'auth/AuthApp';
+src-mount-import,container/src/components/DashboardApp.js,1,import { mount } from 'dashboard/DashboardApp';
+src-mount-import,container/src/components/MarketingApp.js,1,import { mount } from 'marketing/MarketingApp';
+ops-hosting,.github/workflows/auth.yml,23,      - run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/auth/latest
+ops-hosting,.github/workflows/auth.yml,28,"      - run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DISTRIBUTION_ID }} --paths ""/auth/latest/remoteEntry.js"""
+ops-hosting,.github/workflows/container.yml,25,      - run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/container/latest
+ops-hosting,.github/workflows/container.yml,30,"      - run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DISTRIBUTION_ID }} --paths ""/container/latest/index.html"""
+ops-hosting,.github/workflows/dashboard.yml,23,      - run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/dashboard/latest
+ops-hosting,.github/workflows/dashboard.yml,28,"      - run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DISTRIBUTION_ID }} --paths ""/dashboard/latest/remoteEntry.js"""
+ops-hosting,.github/workflows/marketing.yml,23,      - run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/marketing/latest
+ops-hosting,.github/workflows/marketing.yml,28,"      - run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DISTRIBUTION_ID }} --paths ""/marketing/latest/remoteEntry.js"""
+ops-cors,dashboard/config/webpack.dev.js,18,"      'Access-Control-Allow-Origin': '*',"
+ci-workflow-file,.github/workflows/auth.yml,,
+ci-workflow-file,.github/workflows/container.yml,,
+ci-workflow-file,.github/workflows/dashboard.yml,,
+ci-workflow-file,.github/workflows/marketing.yml,,
+ci-path-trigger,.github/workflows/auth.yml,6,    paths:
+ci-path-trigger,.github/workflows/container.yml,6,    paths:
+ci-path-trigger,.github/workflows/dashboard.yml,6,    paths:
+ci-path-trigger,.github/workflows/marketing.yml,6,    paths:

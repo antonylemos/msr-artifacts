@@ -1,0 +1,28 @@
+{
+    "name": "rate-limited-scheduler",
+    "version": "1.0.0",
+    "description": "A TypeScript utility to schedule functions with a delay and enforce rate limiting (N executions per second).",
+    "main": "dist/index.js",
+    "scripts": {
+        "build": "tsc",
+        "start": "ts-node test/scheduler.test.ts"
+    },
+    "keywords": [
+        "typescript",
+        "scheduler",
+        "rate-limiter",
+        "async",
+        "event-loop"
+    ],
+    "author": "Mathulan",
+    "license": "MIT",
+    "devDependencies": {
+        "@types/node": "^20.17.30",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.8.3"
+    },
+    "directories": {
+        "test": "test"
+    },
+    "type": "commonjs"
+}

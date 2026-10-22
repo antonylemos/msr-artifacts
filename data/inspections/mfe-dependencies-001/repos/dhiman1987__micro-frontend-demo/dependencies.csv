@@ -1,0 +1,3 @@
+manifest,line,section,package,version,technology,same_package_matches,other_package_matches
+app3/package.json,13,dependencies,@lit/react,^1.0.7,web-components,app3/src/MyCounterElement.jsx:6;app3/src/MyCounterElement.jsx:8;app3/src/MyCounterElement.jsx:28,app1/app.js:1;app1/app.js:6;app2/app.js:1;app2/app.js:6
+app3/package.json,15,dependencies,lit,^3.3.0,web-components,app3/src/MyCounterElement.jsx:6;app3/src/MyCounterElement.jsx:8;app3/src/MyCounterElement.jsx:28,app1/app.js:1;app1/app.js:6;app2/app.js:1;app2/app.js:6

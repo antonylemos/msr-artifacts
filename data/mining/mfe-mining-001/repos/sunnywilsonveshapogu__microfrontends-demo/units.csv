@@ -1,0 +1,5 @@
+directory,markers
+.,package.json
+header-mf,header-mf/package.json;header-mf/webpack.config.js
+products-mf,products-mf/package.json;products-mf/webpack.config.js
+shell,shell/package.json;shell/webpack.config.js

@@ -1,0 +1,25 @@
+pattern,path,line,excerpt
+dep-web-components,app3/package.json,13,"    ""@lit/react"": ""^1.0.7"","
+dep-web-components,app3/package.json,15,"    ""lit"": ""^3.3.0"","
+cfg-library-bundle,app3/vite.config.js,10,    lib: {
+cfg-library-bundle,app3/vite.config.js,12,"      formats: ['iife'],"
+src-bundle-url,app-shell/index.html,26,"        <script src=""http://localhost:3003/my-counter-app.iife.js""></script>"
+src-custom-element,app1/app.js,1,class HelloApp extends HTMLElement {
+src-custom-element,app1/app.js,6,"customElements.define('hello-app', HelloApp);"
+src-custom-element,app2/app.js,1,class WorldApp extends HTMLElement {
+src-custom-element,app2/app.js,6,"customElements.define('world-app', WorldApp);"
+src-custom-element,app3/src/MyCounterElement.jsx,6,class MyCounterElement extends HTMLElement {
+src-custom-element,app3/src/MyCounterElement.jsx,8,    const shadow = this.attachShadow({ mode: 'open' });
+src-custom-element,app3/src/MyCounterElement.jsx,28,"customElements.define('my-counter-app', MyCounterElement);"
+src-html-external-script,app-shell/index.html,14,"        <script type=""module"" src=""http://localhost:3001/app.js""></script>"
+src-html-external-script,app-shell/index.html,20,"        <script type=""module"" src=""http://localhost:3002/app.js""></script>"
+src-html-external-script,app-shell/index.html,26,"        <script src=""http://localhost:3003/my-counter-app.iife.js""></script>"
+doc-mfe-term,README.md,1,# 🧩 micro-frontend-demo
+doc-mfe-term,README.md,3,A modular microfrontend playground with 3 independently deployed apps:
+doc-mfe-term,README.md,11,micro-frontend-demo/
+doc-mfe-term,README.md,13,│   ├── index.html           # Hosts all microfrontends
+doc-mfe-term,README.md,92,"Ideal for learning, prototyping, or showcasing microfrontend architecture without any tooling overhead."
+doc-integration-technology,README.md,17,│   └── app.js               # Vanilla JS custom element
+doc-integration-technology,README.md,35,"Each app runs on its own port and is dropped into the shell via `<script>` and custom elements, simulating real-world frontend autonomy."
+doc-independence,README.md,3,A modular microfrontend playground with 3 independently deployed apps:
+doc-independence,README.md,35,"Each app runs on its own port and is dropped into the shell via `<script>` and custom elements, simulating real-world frontend autonomy."

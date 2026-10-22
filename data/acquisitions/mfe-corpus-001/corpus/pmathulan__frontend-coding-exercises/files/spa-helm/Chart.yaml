@@ -1,0 +1,4 @@
+apiVersion: v2
+name: spa-helm
+description: A Helm chart for deploying a frontend SPA
+version: 0.1.0

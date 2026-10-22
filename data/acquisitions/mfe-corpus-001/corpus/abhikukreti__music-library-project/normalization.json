@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "id": "1304607643",
+  "fullName": "abhikukreti/music-library-project",
+  "commit": "4fdce67023d92745fe1212c84509efe1054a8a49",
+  "acquiredAt": "2026-10-15T19:20:53.014Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "main-app/src/assets/hero.png",
+      "reason": "preset:binaries",
+      "size": 13057
+    },
+    {
+      "path": "music-library/src/assets/hero.png",
+      "reason": "preset:binaries",
+      "size": 13057
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 47,
+    "bytes": 257917
+  },
+  "languages": {
+    "JSON": 165599,
+    "SVG": 54776,
+    "JavaScript": 21629,
+    "CSS": 10120,
+    "Markdown": 4496,
+    "HTML": 725,
+    "Other": 572
+  },
+  "contentSha256": "9f384b53182133508e873a76a422ad8ffc26360ed7468f0e24c8daa45297788d"
+}

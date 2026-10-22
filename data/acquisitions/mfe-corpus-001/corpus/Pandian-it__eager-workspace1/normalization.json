@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "id": "1036476677",
+  "fullName": "Pandian-it/eager-workspace1",
+  "commit": "9ad83c2d39d410bab0e82efdebca145ebb04adbc",
+  "acquiredAt": "2026-10-15T19:20:52.674Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "projects/cart/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "projects/checkout/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "projects/orders/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "projects/shell/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 130,
+    "bytes": 1030611
+  },
+  "languages": {
+    "JSON": 971333,
+    "TypeScript": 23856,
+    "YAML": 14166,
+    "Markdown": 9775,
+    "CSS": 4504,
+    "JavaScript": 2985,
+    "HTML": 2913,
+    "Other": 999,
+    "SCSS": 80
+  },
+  "contentSha256": "39e01d1c20084a0344bc855c60191be8b0549674e82fce7d1d344354d1d890b4"
+}

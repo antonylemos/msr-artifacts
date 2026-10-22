@@ -1,0 +1,8 @@
+manifest,state
+package.json,ok
+packages/app-mf-1/package.json,ok
+packages/app-mf-2/package.json,ok
+packages/app-qiankun-1/package.json,ok
+packages/app-qiankun-2/package.json,ok
+packages/host/package.json,ok
+packages/lib-app-interface/package.json,ok

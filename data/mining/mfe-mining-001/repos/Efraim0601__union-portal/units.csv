@@ -1,0 +1,6 @@
+directory,markers
+.,angular.json;package.json
+projects/diaspora,projects/diaspora/federation.config.js
+projects/promote,projects/promote/federation.config.js
+projects/shell,projects/shell/federation.config.js
+server/diaspora-otp,server/diaspora-otp/package.json

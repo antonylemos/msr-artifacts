@@ -1,0 +1,10 @@
+directory,markers
+react-js/auth,react-js/auth/package.json
+react-js/container,react-js/container/package.json
+react-js/container/config,react-js/container/config/webpack.common.js;react-js/container/config/webpack.dev.js;react-js/container/config/webpack.prod.js
+react-js/dashboard,react-js/dashboard/package.json
+react-js/marketing,react-js/marketing/package.json
+react-js/marketing/config,react-js/marketing/config/webpack.common.js;react-js/marketing/config/webpack.dev.js;react-js/marketing/config/webpack.prod.js
+simple-js/Cart,simple-js/Cart/package.json;simple-js/Cart/webpack.config.js
+simple-js/Container,simple-js/Container/package.json;simple-js/Container/webpack.config.js
+simple-js/Products,simple-js/Products/package.json;simple-js/Products/webpack.config.js

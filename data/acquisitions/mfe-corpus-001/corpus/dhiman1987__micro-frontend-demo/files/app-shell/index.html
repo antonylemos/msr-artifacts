@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Micro Frontend Demo 🧩</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <h1>Micro Frontend Demo 🧩</h1>
+    <div id="apps">
+      <div class="app-container">
+        <h2>Vanilla JS App 1</h2>
+        <script type="module" src="http://localhost:3001/app.js"></script>
+        <hello-app></hello-app>
+      </div>
+
+      <div class="app-container">
+        <h2>Vanilla JS App 2</h2>
+        <script type="module" src="http://localhost:3002/app.js"></script>
+        <world-app></world-app>
+      </div>
+
+      <div class="app-container">
+        <h2>Counter React App</h2>
+        <script src="http://localhost:3003/my-counter-app.iife.js"></script>
+        <my-counter-app theme="dark" maxcount="7"></my-counter-app>
+      </div>
+    </div>
+  </body>
+</html>

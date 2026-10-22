@@ -1,0 +1,56 @@
+{
+  "source": {
+    "run": "data/discovery/mfe-round-002",
+    "runId": "cdde9e6a-9a49-4ce3-b91d-c1263703c2ae",
+    "candidatesSha256": "d4f3dadfd281ca6861ecfd6d36a9157b2702314831f42a98ef51f05ec79c3d99",
+    "checks": {
+      "hashMatchesManifest": true,
+      "totalCandidates": 38643,
+      "byEligibility": {
+        "pass": 27408,
+        "fail": 7269,
+        "unknown": 3966
+      },
+      "unknownReasons": {
+        "activity_incomplete": 2079,
+        "author_indeterminate": 1887,
+        "push_unavailable": 312
+      }
+    }
+  },
+  "config": {
+    "run": "data/discovery/mfe-round-002",
+    "size": 380,
+    "seed": "random-mfes",
+    "filter": {
+      "eligibilityStatus": [
+        "pass",
+        "unknown"
+      ],
+      "excludeReasons": [
+        "push_unavailable"
+      ]
+    }
+  },
+  "configSha256": "27e30fcb0e73174e263572119c9d0a7b7b4a3ce0c62bbe44fe23a863266c912f",
+  "seed": "random-mfes",
+  "totals": {
+    "source": 38643,
+    "population": 31062,
+    "size": 380
+  },
+  "exclusions": {
+    "total": 7581,
+    "byStatus": {
+      "fail": 7269
+    },
+    "byReason": {
+      "push_unavailable": 312
+    }
+  },
+  "createdAt": "2026-10-12T00:59:16.183Z",
+  "sha256": {
+    "ranking.csv": "1715ae3f9239a825dd14598b2419fef143c5c62b96d534c6d7e3c56db03416a9",
+    "sample.csv": "d64c2181581b0ef1ba6ca93b0aa6bc86ef92751a303753f7c159d8ecd2ca8204"
+  }
+}

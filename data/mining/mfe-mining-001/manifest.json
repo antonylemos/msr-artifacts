@@ -1,0 +1,508 @@
+{
+  "schema": 1,
+  "version": "1",
+  "configSha256": "b3f63eb6fb86d8877fda117ccc22eec936a89ff7bf2d414c1dedafc0311f1fb1",
+  "config": {
+    "acquisition": "data/acquisitions/mfe-corpus-001",
+    "version": "1",
+    "artifactTypes": {
+      "dependency-manifest": [
+        "**/package.json"
+      ],
+      "lockfile": [
+        "**/package-lock.json",
+        "**/pnpm-lock.yaml",
+        "**/yarn.lock",
+        "**/npm-shrinkwrap.json"
+      ],
+      "build-config": [
+        "**/webpack.config.*",
+        "**/webpack.*.{js,cjs,mjs,ts}",
+        "**/vite.config.*",
+        "**/rsbuild.config.*",
+        "**/rspack.config.*",
+        "**/rollup.config.*",
+        "**/angular.json",
+        "**/project.json",
+        "**/federation.config.*",
+        "**/module-federation.config.*"
+      ],
+      "runtime-manifest": [
+        "**/*manifest*.json"
+      ],
+      "source": [
+        "**/*.{js,jsx,mjs,cjs,ts,tsx,vue,svelte,html}"
+      ],
+      "deployment": [
+        "**/Dockerfile*",
+        "**/docker-compose*.{yml,yaml}",
+        "**/nginx*.conf",
+        "**/kong*.{yml,yaml}",
+        "**/vercel.json",
+        "**/netlify.toml",
+        "**/_headers",
+        "**/deploy/**",
+        "**/*helm*/**/*.{yaml,yml,tpl}",
+        "**/Chart.{yaml,yml}"
+      ],
+      "ci-workflow": [
+        "**/.github/workflows/*.{yml,yaml}",
+        "**/.gitlab-ci.yml",
+        "**/azure-pipelines.yml",
+        "**/Jenkinsfile",
+        "**/.circleci/config.yml"
+      ],
+      "page-entry": [
+        "index.html",
+        "*/index.html"
+      ],
+      "documentation": [
+        "**/*.md"
+      ],
+      "workspace-config": [
+        "**/package.json",
+        "**/pnpm-workspace.yaml",
+        "**/lerna.json",
+        "**/nx.json",
+        "**/turbo.json",
+        "**/rush.json",
+        "**/tsconfig*.json"
+      ]
+    },
+    "patterns": [
+      {
+        "id": "dep-module-federation",
+        "artifactTypes": [
+          "dependency-manifest"
+        ],
+        "regex": "module-federation|vite-plugin-federation|webpack-module-federation",
+        "rationale": "Dependency on a Module Federation package"
+      },
+      {
+        "id": "dep-native-federation",
+        "artifactTypes": [
+          "dependency-manifest"
+        ],
+        "regex": "native-federation",
+        "rationale": "Dependency on a Native Federation package"
+      },
+      {
+        "id": "dep-single-spa",
+        "artifactTypes": [
+          "dependency-manifest"
+        ],
+        "regex": "single-spa",
+        "rationale": "Dependency on single-spa or a package of its ecosystem"
+      },
+      {
+        "id": "dep-qiankun",
+        "artifactTypes": [
+          "dependency-manifest"
+        ],
+        "regex": "qiankun",
+        "rationale": "Dependency on qiankun"
+      },
+      {
+        "id": "dep-web-components",
+        "artifactTypes": [
+          "dependency-manifest"
+        ],
+        "regex": "\"(lit|@lit/[^\"]+|@stencil/core|@webcomponents/[^\"]+|@angular/elements|vue-custom-element)\"",
+        "rationale": "Library to build Web Components, a way to ship a unit as a custom element"
+      },
+      {
+        "id": "dep-other-mfe-framework",
+        "artifactTypes": [
+          "dependency-manifest"
+        ],
+        "regex": "\"(piral[^\"]*|@?garfish[^\"]*|@micro-zoe/micro-app|wujie[^\"]*|@ice/stark[^\"]*|@luigi-project/[^\"]+|@podium/[^\"]+|frint[^\"]*|open-components)\"",
+        "rationale": "Dependency on a micro-frontend framework other than the ones above"
+      },
+      {
+        "id": "dep-monorepo-tool",
+        "artifactTypes": [
+          "dependency-manifest"
+        ],
+        "regex": "\"(lerna|nx|turbo|@nx/[^\"]+|@nrwl/[^\"]+|@rushstack/[^\"]+)\"\\s*:",
+        "rationale": "Monorepo tool, which usually hosts several units in one repository"
+      },
+      {
+        "id": "dep-mfe-term",
+        "artifactTypes": [
+          "dependency-manifest"
+        ],
+        "regex": "micro-?front-?ends?|\\bmfe",
+        "ignoreCase": true,
+        "rationale": "Term in the name, description, scripts or dependencies of a package"
+      },
+      {
+        "id": "lock-mfe-dependency",
+        "artifactTypes": [
+          "lockfile"
+        ],
+        "regex": "@module-federation/|vite-plugin-federation|native-federation|single-spa|qiankun",
+        "rationale": "Resolved version of an integration dependency; can be many lines per file"
+      },
+      {
+        "id": "cfg-federation-plugin",
+        "artifactTypes": [
+          "build-config"
+        ],
+        "regex": "ModuleFederationPlugin|withModuleFederation|\\bfederation\\(|pluginModuleFederation|createModuleFederationConfig",
+        "rationale": "Module Federation plugin or helper registered in the build"
+      },
+      {
+        "id": "cfg-native-federation",
+        "artifactTypes": [
+          "build-config"
+        ],
+        "regex": "withNativeFederation|native-federation:build",
+        "rationale": "Native Federation helper or Angular builder registered in the build"
+      },
+      {
+        "id": "cfg-remotes",
+        "artifactTypes": [
+          "build-config"
+        ],
+        "regex": "\\bremotes\\s*[:=]",
+        "rationale": "Remote units declared by a host"
+      },
+      {
+        "id": "cfg-exposes",
+        "artifactTypes": [
+          "build-config"
+        ],
+        "regex": "\\bexposes\\s*[:=]",
+        "rationale": "Modules a unit exposes to a host"
+      },
+      {
+        "id": "cfg-shared",
+        "artifactTypes": [
+          "build-config"
+        ],
+        "regex": "\\bshared\\s*[:=]|shareAll\\(|\\bshare\\(|singleton",
+        "rationale": "Dependencies shared between units at runtime"
+      },
+      {
+        "id": "cfg-library-bundle",
+        "artifactTypes": [
+          "build-config"
+        ],
+        "regex": "\\blib\\s*:\\s*\\{|formats\\s*:\\s*\\[",
+        "rationale": "Build as a self-contained library (iife, umd, es) that a host can load"
+      },
+      {
+        "id": "cfg-public-path",
+        "artifactTypes": [
+          "build-config"
+        ],
+        "regex": "publicPath\\s*:|\\bbase\\s*:\\s*['\"]/|--base-href",
+        "rationale": "Public path or base of the build, which fixes where a unit is served"
+      },
+      {
+        "id": "cfg-custom-webpack",
+        "artifactTypes": [
+          "build-config"
+        ],
+        "regex": "extraWebpackConfig|ngx-build-plus",
+        "rationale": "Angular build pointed at a custom webpack config, how Angular units usually get federation"
+      },
+      {
+        "id": "rt-remote-entry",
+        "artifactTypes": [
+          "build-config",
+          "runtime-manifest",
+          "source",
+          "deployment",
+          "ci-workflow"
+        ],
+        "regex": "remoteEntry|mf-manifest",
+        "rationale": "Name of the file a federated unit publishes for hosts"
+      },
+      {
+        "id": "rt-manifest-file",
+        "artifactTypes": [
+          "runtime-manifest"
+        ],
+        "rationale": "File that looks like a manifest; includes unrelated ones, such as the web app manifest"
+      },
+      {
+        "id": "rt-manifest-entry",
+        "artifactTypes": [
+          "runtime-manifest"
+        ],
+        "regex": "exposedModule|remoteName|\"entry\"|remoteEntry",
+        "rationale": "Manifest entry that maps a remote name to where it is served"
+      },
+      {
+        "id": "src-remote-import",
+        "artifactTypes": [
+          "source"
+        ],
+        "regex": "import\\(\\s*['\"][^.'\"/@][^'\"]*/",
+        "rationale": "Dynamic import of a bare specifier with a path, the shape of a remote module"
+      },
+      {
+        "id": "src-async-bootstrap",
+        "artifactTypes": [
+          "source"
+        ],
+        "regex": "import\\(\\s*['\"]\\./bootstrap['\"]\\s*\\)",
+        "rationale": "Asynchronous entry point that Module Federation requires"
+      },
+      {
+        "id": "src-load-remote",
+        "artifactTypes": [
+          "source"
+        ],
+        "regex": "loadRemoteModule|loadRemote\\(|initFederation|loadManifest|registerRemotes|__webpack_init_sharing__|__webpack_share_scopes__",
+        "rationale": "Runtime API that loads a remote by name or by manifest"
+      },
+      {
+        "id": "src-mount-export",
+        "artifactTypes": [
+          "source"
+        ],
+        "regex": "export\\s+(async\\s+)?(function|const)\\s+(mount|unmount|bootstrap)\\b|export\\s*\\{[^}]*\\b(mount|unmount)\\b",
+        "rationale": "Unit exposes mount and unmount functions for a host to call"
+      },
+      {
+        "id": "src-mount-call",
+        "artifactTypes": [
+          "source"
+        ],
+        "regex": "\\b(mount|unmount)\\(\\s*(container|el|element|node|[\\w.]*[rR]ef\\.current)\\b",
+        "rationale": "Host or wrapper mounts a unit into a DOM element"
+      },
+      {
+        "id": "src-mount-import",
+        "artifactTypes": [
+          "source"
+        ],
+        "regex": "import\\s*\\{[^}]*\\b(mount|unmount)\\b[^}]*\\}\\s*from\\s*['\"][^.'\"/][^'\"]*/",
+        "rationale": "Static import of mount or unmount from a bare specifier with a path, the shape of a remote"
+      },
+      {
+        "id": "src-bundle-url",
+        "artifactTypes": [
+          "source"
+        ],
+        "regex": "\\.(iife|umd)\\.js",
+        "rationale": "Reference to a self-contained bundle that a host loads at runtime"
+      },
+      {
+        "id": "src-lifecycles",
+        "artifactTypes": [
+          "source"
+        ],
+        "regex": "registerMicroApps|registerApplication\\(|singleSpaReact|singleSpaAngular|singleSpaVue|renderWithQiankun|qiankunWindow",
+        "rationale": "Lifecycle registration of single-spa or qiankun"
+      },
+      {
+        "id": "src-custom-element",
+        "artifactTypes": [
+          "source"
+        ],
+        "regex": "customElements\\.define|attachShadow|extends\\s+HTMLElement|createCustomElement",
+        "rationale": "Unit packaged as a custom element"
+      },
+      {
+        "id": "src-dynamic-script",
+        "artifactTypes": [
+          "source"
+        ],
+        "regex": "createElement\\(\\s*['\"]script['\"]\\s*\\)",
+        "rationale": "Script injected at runtime, a way for a host to load a bundle"
+      },
+      {
+        "id": "src-html-external-script",
+        "artifactTypes": [
+          "source"
+        ],
+        "regex": "<script[^>]*\\bsrc\\s*=\\s*[\"']https?://",
+        "rationale": "Page that loads a script served by another origin; includes ordinary CDN scripts"
+      },
+      {
+        "id": "src-iframe",
+        "artifactTypes": [
+          "source"
+        ],
+        "regex": "<iframe|createElement\\(\\s*['\"]iframe['\"]\\s*\\)",
+        "rationale": "Unit embedded in a frame"
+      },
+      {
+        "id": "src-cross-unit-communication",
+        "artifactTypes": [
+          "source"
+        ],
+        "regex": "new\\s+CustomEvent\\(|dispatchEvent\\(|postMessage\\(|BroadcastChannel|addEventListener\\(\\s*['\"][a-z]+[A-Z:_-]",
+        "rationale": "Mechanism units can use to talk to each other without importing one another; the listener matches only event names that are not native ones"
+      },
+      {
+        "id": "ops-deployment-file",
+        "artifactTypes": [
+          "deployment"
+        ],
+        "rationale": "Deployment-related file, to see how many are separate per unit"
+      },
+      {
+        "id": "ops-dockerfile",
+        "artifactTypes": [
+          "deployment"
+        ],
+        "regex": "^\\s*FROM\\s",
+        "rationale": "Container image definition; several in one repository suggest separate units"
+      },
+      {
+        "id": "ops-compose-service",
+        "artifactTypes": [
+          "deployment"
+        ],
+        "regex": "^\\s*(build|depends_on|image)\\s*:",
+        "rationale": "Service with its own build or image in a compose file"
+      },
+      {
+        "id": "ops-proxy-route",
+        "artifactTypes": [
+          "deployment"
+        ],
+        "regex": "proxy_pass|^\\s*location\\s|^\\s*-?\\s*paths\\s*:",
+        "rationale": "Route that sends part of the URL space to another service or unit"
+      },
+      {
+        "id": "ops-hosting",
+        "artifactTypes": [
+          "deployment",
+          "ci-workflow",
+          "documentation"
+        ],
+        "regex": "aws\\s+s3\\s+sync|cloudfront|netlify|vercel|gh-pages|firebase\\s+deploy|kubectl|helm\\s+(upgrade|install)",
+        "ignoreCase": true,
+        "rationale": "Hosting or publishing step, where independent deploys show up"
+      },
+      {
+        "id": "ops-cors",
+        "artifactTypes": [
+          "deployment",
+          "build-config"
+        ],
+        "regex": "access-control-allow-origin|--cors|\\bcors\\b",
+        "ignoreCase": true,
+        "rationale": "Cross-origin setup, needed when a host loads a unit served elsewhere"
+      },
+      {
+        "id": "ci-workflow-file",
+        "artifactTypes": [
+          "ci-workflow"
+        ],
+        "rationale": "Pipeline file, to see how many are separate per unit"
+      },
+      {
+        "id": "ci-path-trigger",
+        "artifactTypes": [
+          "ci-workflow"
+        ],
+        "regex": "^\\s*paths\\s*:",
+        "rationale": "Pipeline triggered only by changes in some paths, typical of one pipeline per unit"
+      },
+      {
+        "id": "ci-monorepo-tooling",
+        "artifactTypes": [
+          "ci-workflow"
+        ],
+        "regex": "--affected|nx\\s+(run-many|affected|show)|turbo\\s+run|lerna\\s+run|--filter",
+        "rationale": "Pipeline step that builds only the affected packages"
+      },
+      {
+        "id": "doc-mfe-term",
+        "artifactTypes": [
+          "documentation"
+        ],
+        "regex": "micro-?\\s?front-?\\s?ends?|\\bmfe",
+        "ignoreCase": true,
+        "rationale": "Term used in the documentation"
+      },
+      {
+        "id": "doc-integration-technology",
+        "artifactTypes": [
+          "documentation"
+        ],
+        "regex": "module\\s+federation|native\\s+federation|single-spa|qiankun|web\\s+components?|custom\\s+elements?|iframes?",
+        "ignoreCase": true,
+        "rationale": "Integration technology named in the documentation"
+      },
+      {
+        "id": "doc-runtime-loading",
+        "artifactTypes": [
+          "documentation"
+        ],
+        "regex": "\\bat\\s+runtime\\b|\\bruntime\\s+(load|loading|integration|composition)",
+        "ignoreCase": true,
+        "rationale": "Loading or composition at runtime described in the documentation"
+      },
+      {
+        "id": "doc-independence",
+        "artifactTypes": [
+          "documentation"
+        ],
+        "regex": "independen(t|tly)|autonom(y|ous)|deployed?\\s+separately",
+        "ignoreCase": true,
+        "rationale": "Independence of units claimed in the documentation"
+      },
+      {
+        "id": "doc-host-remote",
+        "artifactTypes": [
+          "documentation"
+        ],
+        "regex": "\\b(host|shell|container)\\b.*\\bremotes?\\b|\\bremotes?\\b.*\\b(host|shell|container)\\b",
+        "ignoreCase": true,
+        "rationale": "Host and remote roles described in the documentation"
+      },
+      {
+        "id": "ws-workspaces",
+        "artifactTypes": [
+          "workspace-config"
+        ],
+        "regex": "\"workspaces\"\\s*:|^packages\\s*:",
+        "rationale": "Workspace declaration that groups several packages in one repository"
+      },
+      {
+        "id": "ws-path-alias",
+        "artifactTypes": [
+          "workspace-config"
+        ],
+        "regex": "\"paths\"\\s*:",
+        "rationale": "Path mapping, which is how units usually consume a shared local library"
+      }
+    ],
+    "units": {
+      "artifactTypes": [
+        "dependency-manifest",
+        "build-config",
+        "page-entry"
+      ]
+    }
+  },
+  "acquisition": {
+    "directory": "data/acquisitions/mfe-corpus-001",
+    "manifestSha256": "074c9dc580ba792dbeb598c07c14b34384309315961e72ba71b4efd1bf54130b",
+    "acquisitionSha256": "055e55987b9015b0f93e69cb2a38cbb82a030a77053d9c1f5a1f288698628f1f"
+  },
+  "snapshots": {
+    "EnjoyFX/fe_containerize": "1b12597c00985f77fca147abab963604493cfb9ddc8b352d281fd402826be43c",
+    "Pandian-it/eager-workspace1": "39e01d1c20084a0344bc855c60191be8b0549674e82fce7d1d344354d1d890b4",
+    "Vishal-Kamra/Microfrontend-examples": "db76c60b653136b57da0d3b13ea8ff13737a5293b75d721ca7b6165523dac248",
+    "mrmechazilla/host-app": "2c73776e909de81dfed2b2a18edfbeded89b1e9e4687c1bb877984dc27e34725",
+    "pmathulan/frontend-coding-exercises": "5a61e8d7b88e61f6eb2081cd2156a48c7eee08b7bb4a5315b2079c78dfd1c7c9",
+    "a-kelen/mfe": "556cfd8270122a15083e04a8a8cf50fcb9fbd070881a863b3b37b31b9fdcee2b",
+    "wtlin1228/micro-frontend-workspace": "cbd6b22c142f677401626519b15877a39023a042b6e714e48a567cf9aa83ea16",
+    "abhikukreti/music-library-project": "9f384b53182133508e873a76a422ad8ffc26360ed7468f0e24c8daa45297788d",
+    "AlanOlimpio/list": "cfa9ce30dd62b4d71f300cd7cc87ed95a480e2ebd55e917183097b16087e6c05",
+    "dhiman1987/micro-frontend-demo": "68c02bfb299f675b023a9ec48fe35e54c7c8704f4c714d32ab7d0b0ed6e032d8",
+    "mrgleam/mf-tanstack-demo": "810eab17388961dc4bca0456dcdf1934a9398c7b1076b9ae9c37fc770f3472a2",
+    "pgarr/microfrontend-template": "9533f62eb85c6400f96b30741333f236f4317cfbbf11495067053daa2c43757e",
+    "sunnywilsonveshapogu/microfrontends-demo": "889ed5b7ad4c9a65922e948b84870f459717cfbb1051ffe7e99beeb65d54de3f",
+    "Efraim0601/union-portal": "e0ff6a190d108674c4732a24c8b66d633372fe75f1e2288795ebef160a16eff9",
+    "viernesviernes/EmerTech-Lab-Assignment-3": "8a3ebd9809b58d808a66425d6fbe90242097b7d1d0eff1ff72ad8d9fce6db291"
+  }
+}

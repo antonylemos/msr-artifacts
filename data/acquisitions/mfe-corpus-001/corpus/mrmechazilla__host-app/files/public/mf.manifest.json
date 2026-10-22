@@ -1,0 +1,20 @@
+{
+    "users-mfe": {
+        "remoteEntry": "http://localhost:4202/remoteEntry.js",
+        "exposedModule": "./users",
+        "displayName": "Users",
+        "routePath": "remotes",
+        "exportName": "usersRoutes",
+        "ngModuleName": "usersRoutes",
+        "type": "routes"
+    },
+    "payments-mfe": {
+        "remoteEntry": "http://localhost:4203/remoteEntry.js",
+        "exposedModule": "./payments",
+        "displayName": "Payments",
+        "routePath": "remotes",
+        "exportName": "PaymentsModule",
+        "ngModuleName": "PaymentsModule",
+        "type": "module"
+    }
+}

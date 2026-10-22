@@ -1,0 +1,8 @@
+directory,markers
+.,package.json
+packages/app-mf-1,packages/app-mf-1/module-federation.config.ts;packages/app-mf-1/package.json;packages/app-mf-1/rsbuild.config.ts
+packages/app-mf-2,packages/app-mf-2/module-federation.config.ts;packages/app-mf-2/package.json;packages/app-mf-2/rsbuild.config.ts
+packages/app-qiankun-1,packages/app-qiankun-1/package.json;packages/app-qiankun-1/rsbuild.config.ts
+packages/app-qiankun-2,packages/app-qiankun-2/package.json;packages/app-qiankun-2/rsbuild.config.ts
+packages/host,packages/host/module-federation.config.ts;packages/host/package.json;packages/host/rsbuild.config.ts
+packages/lib-app-interface,packages/lib-app-interface/package.json

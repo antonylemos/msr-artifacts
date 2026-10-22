@@ -1,0 +1,9 @@
+directory,markers
+auth,auth/package.json
+auth/config,auth/config/webpack.common.js;auth/config/webpack.dev.js;auth/config/webpack.prod.js
+container,container/package.json
+container/config,container/config/webpack.common.js;container/config/webpack.dev.js;container/config/webpack.prod.js
+dashboard,dashboard/package.json
+dashboard/config,dashboard/config/webpack.common.js;dashboard/config/webpack.dev.js;dashboard/config/webpack.prod.js
+marketing,marketing/package.json
+marketing/config,marketing/config/webpack.common.js;marketing/config/webpack.dev.js;marketing/config/webpack.prod.js

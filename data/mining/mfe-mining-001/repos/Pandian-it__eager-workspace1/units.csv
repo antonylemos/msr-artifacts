@@ -1,0 +1,8 @@
+directory,markers
+.,package.json
+projects/cart,projects/cart/package.json;projects/cart/project.json;projects/cart/webpack.config.js
+projects/checkout,projects/checkout/package.json;projects/checkout/project.json;projects/checkout/webpack.config.js
+projects/orders,projects/orders/package.json;projects/orders/project.json;projects/orders/webpack.config.js
+projects/shared-lib,projects/shared-lib/package.json;projects/shared-lib/project.json
+projects/shared-ui,projects/shared-ui/package.json;projects/shared-ui/project.json
+projects/shell,projects/shell/package.json;projects/shell/project.json;projects/shell/webpack.config.js

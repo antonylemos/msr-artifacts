@@ -1,0 +1,53 @@
+/* App.css */
+
+:host {
+  font-family: sans-serif;
+  display: block;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  padding: 2rem;
+}
+
+[data-theme="light"] {
+  --bg-color: #ffffff;
+  --text-color: #222;
+  --button-bg: #f0f0f0;
+  --button-text: #000;
+}
+
+[data-theme="dark"] {
+  --bg-color: #1e1e1e;
+  --text-color: #fff;
+  --button-bg: #444;
+  --button-text: #fff;
+}
+
+.card {
+  width: 100%;
+  max-width: 400px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  border: 1px dashed var(--text-color);
+  border-radius: 0.5rem;
+}
+
+button {
+  padding: 1rem 2rem;
+  width: 10rem;
+  height: 8rem;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+}
+button:hover {
+  background-color: #888;
+}

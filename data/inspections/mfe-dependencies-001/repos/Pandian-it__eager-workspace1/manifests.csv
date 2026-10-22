@@ -1,0 +1,8 @@
+manifest,state
+package.json,ok
+projects/cart/package.json,ok
+projects/checkout/package.json,ok
+projects/orders/package.json,ok
+projects/shared-lib/package.json,ok
+projects/shared-ui/package.json,ok
+projects/shell/package.json,ok

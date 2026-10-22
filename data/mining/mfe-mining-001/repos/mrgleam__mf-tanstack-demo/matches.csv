@@ -1,0 +1,33 @@
+pattern,path,line,excerpt
+dep-module-federation,shell/package.json,16,"    ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+dep-module-federation,shop/package.json,17,"    ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+lock-mfe-dependency,shell/package-lock.json,16,"        ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+lock-mfe-dependency,shell/package-lock.json,798,"    ""node_modules/@originjs/vite-plugin-federation"": {"
+lock-mfe-dependency,shell/package-lock.json,800,"      ""resolved"": ""https://registry.npmjs.org/@originjs/vite-plugin-federation/-/vite-plugin-federation-1.4.1.tgz"","
+lock-mfe-dependency,shop/package-lock.json,16,"        ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+lock-mfe-dependency,shop/package-lock.json,983,"    ""node_modules/@originjs/vite-plugin-federation"": {"
+lock-mfe-dependency,shop/package-lock.json,985,"      ""resolved"": ""https://registry.npmjs.org/@originjs/vite-plugin-federation/-/vite-plugin-federation-1.4.1.tgz"","
+cfg-federation-plugin,shell/vite.config.ts,8,    federation({
+cfg-federation-plugin,shop/vite.config.ts,9,    federation({
+cfg-remotes,shell/vite.config.ts,9,      remotes: {
+cfg-exposes,shop/vite.config.ts,12,"      exposes: { './ShopRoutes': './src/routes/ShopRoutes.tsx' },"
+cfg-shared,shell/vite.config.ts,12,"      shared: ['react','react-dom','@tanstack/react-router'],"
+cfg-shared,shop/vite.config.ts,13,"      shared: ['react','react-dom','@tanstack/react-router'],"
+cfg-public-path,shop/vite.config.ts,6,"  base: '/shop/',"
+rt-remote-entry,shell/vite.config.ts,10,"        shop: 'http://localhost:3001/shop/assets/remoteEntry.js',"
+rt-remote-entry,shop/vite.config.ts,11,"      filename: 'remoteEntry.js',"
+src-remote-import,shell/src/moduleLoader.ts,130,"    module: import('shop/ShopRoutes'),"
+ops-deployment-file,kong-remote/docker-compose.yml,,
+ops-deployment-file,kong-remote/kong.yml,,
+ops-deployment-file,kong-shell/docker-compose.yml,,
+ops-deployment-file,kong-shell/kong.yml,,
+ops-compose-service,kong-remote/docker-compose.yml,4,    image: kong:3.9.1
+ops-compose-service,kong-shell/docker-compose.yml,4,    image: kong:3.9.1
+ops-proxy-route,kong-remote/kong.yml,7,"        paths: [""/""]"
+ops-proxy-route,kong-remote/kong.yml,12,"        paths: [""/shop""]"
+ops-proxy-route,kong-shell/kong.yml,8,"        paths: [""/""]"
+doc-mfe-term,README.md,1,"# 🧩 Microfrontend Monorepo with Vite, TanStack Router, and Module Federation"
+doc-mfe-term,README.md,8,├── shop/           # Remote microfrontend exposing routes
+doc-integration-technology,README.md,1,"# 🧩 Microfrontend Monorepo with Vite, TanStack Router, and Module Federation"
+doc-integration-technology,README.md,54,- Remote subroutes via Module Federation
+doc-host-remote,README.md,41,- Shell + standalone remote:

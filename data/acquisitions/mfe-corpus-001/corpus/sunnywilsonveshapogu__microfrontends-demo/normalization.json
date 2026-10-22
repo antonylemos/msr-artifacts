@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "id": "1065269096",
+  "fullName": "sunnywilsonveshapogu/microfrontends-demo",
+  "commit": "f56f903190312e938d0ad5a9a146ad4dbe333589",
+  "acquiredAt": "2026-10-15T19:20:53.234Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 22,
+    "bytes": 570573
+  },
+  "languages": {
+    "JSON": 548784,
+    "Markdown": 13288,
+    "JavaScript": 7570,
+    "Other": 931
+  },
+  "contentSha256": "889ed5b7ad4c9a65922e948b84870f459717cfbb1051ffe7e99beeb65d54de3f"
+}

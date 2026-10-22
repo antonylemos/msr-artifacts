@@ -1,0 +1,2 @@
+manifest,line,section,package,version,technology,same_package_matches,other_package_matches
+package.json,14,dependencies,@angular-architects/module-federation,^19.0.0,module-federation,angular.json:18;angular.json:42;angular.json:63;angular.json:74;angular.json:78;angular.json:88;src/app/app.routes.ts:1;src/app/app.routes.ts:8;src/app/shared/utils/remote-loader.ts:1;src/app/shared/utils/remote-loader.ts:14;src/main.ts:2;src/main.ts:4;webpack.config.js:1;webpack.config.js:3;webpack.config.js:6;webpack.config.js:9;webpack.config.js:10,

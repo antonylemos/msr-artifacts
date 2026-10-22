@@ -1,0 +1,29 @@
+pattern,path,line,excerpt
+dep-module-federation,main-app/package.json,18,"    ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+dep-module-federation,music-library/package.json,20,"    ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+lock-mfe-dependency,main-app/package-lock.json,16,"        ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+lock-mfe-dependency,main-app/package-lock.json,748,"    ""node_modules/@originjs/vite-plugin-federation"": {"
+lock-mfe-dependency,main-app/package-lock.json,750,"      ""resolved"": ""https://registry.npmjs.org/@originjs/vite-plugin-federation/-/vite-plugin-federation-1.4.1.tgz"","
+lock-mfe-dependency,music-library/package-lock.json,18,"        ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+lock-mfe-dependency,music-library/package-lock.json,877,"    ""node_modules/@originjs/vite-plugin-federation"": {"
+lock-mfe-dependency,music-library/package-lock.json,879,"      ""resolved"": ""https://registry.npmjs.org/@originjs/vite-plugin-federation/-/vite-plugin-federation-1.4.1.tgz"","
+cfg-federation-plugin,main-app/vite.config.js,8,    federation({
+cfg-federation-plugin,music-library/vite.config.js,8,    federation({
+cfg-remotes,main-app/vite.config.js,10,      remotes: {
+cfg-exposes,music-library/vite.config.js,11,      exposes: {
+cfg-shared,main-app/vite.config.js,13,"      shared: ['react', 'react-dom', '@tanstack/react-query'],"
+cfg-shared,music-library/vite.config.js,14,"      shared: ['react', 'react-dom', '@tanstack/react-query'],"
+rt-remote-entry,main-app/vite.config.js,11,"        music_library: 'https://astonishing-seahorse-d2decf.netlify.app/assets/remoteEntry.js',"
+rt-remote-entry,music-library/vite.config.js,10,"      filename: 'remoteEntry.js',"
+src-remote-import,main-app/src/App.jsx,5,const MusicLibrary = lazy(() => import('music_library/MusicLibrary'))
+src-cross-unit-communication,music-library/public/mockServiceWorker.js,312,"    client.postMessage(message, ["
+ops-deployment-file,music-library/public/_headers,,
+ops-hosting,README.md,6,- Main App: https://fluffy-pika-9e723b.netlify.app
+ops-hosting,README.md,7,- Music Library (remote): https://astonishing-seahorse-d2decf.netlify.app
+ops-hosting,README.md,31,"Both apps in one repo, deployed as 2 separate Netlify sites."
+ops-cors,main-app/vite.config.js,21,"  server: { port: 5000, cors: true },"
+ops-cors,music-library/public/_headers,2,  Access-Control-Allow-Origin: *
+ops-cors,music-library/vite.config.js,22,"  server: { port: 5001, cors: true },"
+ops-cors,music-library/vite.config.js,23,"  preview: { port: 5001, cors: true },"
+doc-mfe-term,README.md,37,## Micro Frontend
+doc-integration-technology,README.md,3,"React app split into two parts (main app + music library) connected via Module Federation. Fetches songs from iTunes Search API, has filter/sort/group, add/delete song, and role-based login (admin/user)."

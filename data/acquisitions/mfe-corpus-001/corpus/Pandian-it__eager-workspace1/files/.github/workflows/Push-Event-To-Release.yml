@@ -1,0 +1,167 @@
+name: Push Event To Release
+
+on:
+  push:
+    branches:
+      - "release-*"
+
+jobs:
+  release-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout release branch
+      - name: Checkout release branch
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.ref_name }}
+          fetch-depth: 0
+
+      # 2. Detect commit author
+      - name: Detect commit author
+        id: author
+        run: |
+          AUTHOR=$(git log -1 --pretty=format:'%an')
+          echo "AUTHOR=$AUTHOR" >> $GITHUB_ENV
+          echo "Commit author: $AUTHOR"
+
+      # 3. Extract release version from branch name
+      - name: Extract release version
+        run: |
+          BRANCH_NAME=${GITHUB_REF##*/}
+          RELEASE_VERSION=${BRANCH_NAME#release-}
+          echo "RELEASE_VERSION=$RELEASE_VERSION" >> $GITHUB_ENV
+          echo "Release version from branch: $RELEASE_VERSION"
+          echo "RELEASE_BRANCH=${{ github.event.ref_name }}" >> $GITHUB_ENV
+
+      # 4. Setup Node
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      # 5. Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # -------------------
+      # Detect affected apps
+      # -------------------
+      - name: Detect affected apps
+        id: affected
+        run: |
+          echo "Detecting affected apps..."
+          PREV_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [ -z "$PREV_TAG" ]; then
+            BASE_BRANCH="origin/develop"
+          else
+            BASE_BRANCH=$PREV_TAG
+          fi
+          echo "Using base: $BASE_BRANCH"
+          AFFECTED=$(npx nx show projects --affected --base=$BASE_BRANCH --head=HEAD --plain | tr '\n' ' ' | xargs)
+          echo "AFFECTED=$AFFECTED" >> $GITHUB_ENV
+          echo "Affected apps: $AFFECTED"
+
+      # -------------------
+      # CASE B: Developer commit → Run changeset + update manifest
+      # -------------------
+      - name: Run changeset action
+        if: "!contains(env.AUTHOR, 'github-actions[bot]') && env.AFFECTED != ''"
+        uses: changesets/action@v1
+        with:
+          version: npx changeset version
+          publish: false
+          commit: "chore: version packages"
+          title: "Version Packages"
+          branch: "${{ env.RELEASE_BRANCH }}"
+          baseBranch: ${{ env.RELEASE_BRANCH }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout version branch
+        if: "!contains(env.AUTHOR, 'github-actions[bot]') && env.AFFECTED != ''"
+        run: |
+          VERSION_BRANCH="changeset-release/${GITHUB_REF##*/}"
+          git fetch origin '+refs/heads/*:refs/remotes/origin/*'
+          git checkout $VERSION_BRANCH
+
+      - name: Generate/update deployment manifest
+        if: "!contains(env.AUTHOR, 'github-actions[bot]') && env.AFFECTED != ''"
+        run: |
+          RELEASE_BRANCH="${GITHUB_REF##*/}"
+          RELEASE_VERSION="${RELEASE_BRANCH#release-}"   # e.g. release-13.2.4 → 13.2.4
+          MANIFEST_FILE="deployment-manifest.json"
+
+          # Ensure manifest exists, or initialize
+          if [ ! -f "$MANIFEST_FILE" ] || [ ! -s "$MANIFEST_FILE" ]; then
+            echo "{}" > $MANIFEST_FILE
+          fi
+
+          PROJECTS=$(npx nx show projects --plain)
+
+          for proj in $PROJECTS; do
+            if [ -f "./projects/$proj/package.json" ]; then
+              CUR_VERSION=$(node -p "require('./projects/$proj/package.json').version" 2>/dev/null || echo "0.0.0")
+
+              # Read existing version from manifest (if any)
+              EXISTING_VERSION=$(jq -r --arg proj "$proj" '.[$proj].version // empty' $MANIFEST_FILE)
+
+              if [ -z "$EXISTING_VERSION" ]; then
+                echo "Adding new project $proj with version $CUR_VERSION"
+                jq --arg proj "$proj" --arg version "$CUR_VERSION" --arg release "$RELEASE_VERSION" \
+                  '. + {($proj): {version: $version, release: $release}}' \
+                  $MANIFEST_FILE > tmp.json && mv tmp.json $MANIFEST_FILE
+
+              elif [ "$CUR_VERSION" != "$EXISTING_VERSION" ]; then
+                echo "Updating $proj: $EXISTING_VERSION → $CUR_VERSION"
+                jq --arg proj "$proj" --arg version "$CUR_VERSION" --arg release "$RELEASE_VERSION" \
+                  '.[$proj].version = $version | .[$proj].release = $release' \
+                  $MANIFEST_FILE > tmp.json && mv tmp.json $MANIFEST_FILE
+              else
+                echo "No change for $proj (version $CUR_VERSION)"
+              fi
+            else
+              echo "Warning: package.json not found for project $proj"
+            fi
+          done
+
+          echo "Final deployment manifest:"
+          cat $MANIFEST_FILE
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add $MANIFEST_FILE
+          git commit -m "ci: update deployment manifest" || echo "No changes to commit"
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD
+
+      # -------------------
+      # CASE A: Bot commit → Build, Deploy apps & manifest
+      # -------------------
+      - name: Build affected apps
+        if: contains(env.AUTHOR, 'github-actions[bot]') && env.AFFECTED != ''
+        run: |
+          for app in $AFFECTED; do
+            echo "Building $app..."
+            npx nx build $app --configuration=production
+          done
+      - name: Configure AWS Credentials
+        if: contains(env.AUTHOR, 'github-actions[bot]') && env.AFFECTED != ''
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2  # Change this to your region of your bucket
+
+      - name: Deploy affected apps to S3
+        if: contains(env.AUTHOR, 'github-actions[bot]') && env.AFFECTED != ''
+        run: |
+          for app in $AFFECTED; do
+            APP_VERSION=$(node -p "require('./projects/$app/package.json').version")
+            echo "Deploying $app@$APP_VERSION to S3"
+            
+            aws s3 sync dist/$app s3://static-app-601416097429/apps/$app/$APP_VERSION --delete
+            
+            echo "Deployed $app@$APP_VERSION"
+          done
+
+          aws s3 cp deployment-manifest.json s3://static-app-601416097429/manifest/${RELEASE_VERSION}/deployment-manifest.json

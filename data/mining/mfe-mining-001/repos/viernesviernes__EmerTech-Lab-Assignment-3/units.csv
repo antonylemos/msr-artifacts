@@ -1,0 +1,6 @@
+directory,markers
+client,client/package.json
+client/auth-app,client/auth-app/package.json;client/auth-app/vite.config.js
+client/community-app,client/community-app/package.json;client/community-app/vite.config.js
+client/shell-app,client/shell-app/package.json;client/shell-app/vite.config.js
+server,server/package.json

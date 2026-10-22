@@ -1,0 +1,30 @@
+pattern,path,line,excerpt
+dep-module-federation,client/auth-app/package.json,15,"    ""@originjs/vite-plugin-federation"": ""1.3.5"","
+dep-module-federation,client/community-app/package.json,15,"    ""@originjs/vite-plugin-federation"": ""1.3.5"","
+dep-module-federation,client/shell-app/package.json,14,"    ""@originjs/vite-plugin-federation"": ""1.3.5"","
+lock-mfe-dependency,client/auth-app/package-lock.json,12,"        ""@originjs/vite-plugin-federation"": ""1.3.5"","
+lock-mfe-dependency,client/auth-app/package-lock.json,952,"    ""node_modules/@originjs/vite-plugin-federation"": {"
+lock-mfe-dependency,client/auth-app/package-lock.json,954,"      ""resolved"": ""https://registry.npmjs.org/@originjs/vite-plugin-federation/-/vite-plugin-federation-1.3.5.tgz"","
+lock-mfe-dependency,client/community-app/package-lock.json,12,"        ""@originjs/vite-plugin-federation"": ""1.3.5"","
+lock-mfe-dependency,client/community-app/package-lock.json,953,"    ""node_modules/@originjs/vite-plugin-federation"": {"
+lock-mfe-dependency,client/community-app/package-lock.json,955,"      ""resolved"": ""https://registry.npmjs.org/@originjs/vite-plugin-federation/-/vite-plugin-federation-1.3.5.tgz"","
+lock-mfe-dependency,client/shell-app/package-lock.json,12,"        ""@originjs/vite-plugin-federation"": ""1.3.5"","
+lock-mfe-dependency,client/shell-app/package-lock.json,953,"    ""node_modules/@originjs/vite-plugin-federation"": {"
+lock-mfe-dependency,client/shell-app/package-lock.json,955,"      ""resolved"": ""https://registry.npmjs.org/@originjs/vite-plugin-federation/-/vite-plugin-federation-1.3.5.tgz"","
+cfg-federation-plugin,client/auth-app/vite.config.js,9,    federation({
+cfg-federation-plugin,client/community-app/vite.config.js,9,    federation({
+cfg-federation-plugin,client/shell-app/vite.config.js,9,    federation({
+cfg-remotes,client/shell-app/vite.config.js,11,      remotes: {
+cfg-exposes,client/auth-app/vite.config.js,12,      exposes: {
+cfg-exposes,client/community-app/vite.config.js,12,      exposes: {
+cfg-shared,client/auth-app/vite.config.js,15,"      shared: ['react', 'react-dom', '@apollo/client', 'graphql']"
+cfg-shared,client/community-app/vite.config.js,15,"      shared: ['react', 'react-dom', '@apollo/client', 'graphql']"
+cfg-shared,client/shell-app/vite.config.js,15,"      shared: ['react', 'react-dom', '@apollo/client', 'graphql']"
+rt-remote-entry,client/auth-app/vite.config.js,11,"      filename: 'remoteEntry.js',"
+rt-remote-entry,client/community-app/vite.config.js,11,"      filename: 'remoteEntry.js',"
+rt-remote-entry,client/shell-app/vite.config.js,12,"        authApp: 'http://localhost:3001/assets/remoteEntry.js',"
+rt-remote-entry,client/shell-app/vite.config.js,13,"        communityApp: 'http://localhost:3002/assets/remoteEntry.js',"
+src-remote-import,client/shell-app/src/App.jsx,5,const AuthApp = lazy(() => import('authApp/App'));
+src-remote-import,client/shell-app/src/App.jsx,6,const CommunityApp = lazy(() => import('communityApp/App'));
+src-cross-unit-communication,client/auth-app/src/subcomponents/Login.jsx,37,"        window.dispatchEvent(new CustomEvent('loginSuccess', { detail: { isLoggedIn: true } }));"
+src-cross-unit-communication,client/shell-app/src/App.jsx,28,"    window.addEventListener('loginSuccess', handleLoginSuccess);"

@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "id": "1183615585",
+  "fullName": "viernesviernes/EmerTech-Lab-Assignment-3",
+  "commit": "98845d1a3f9c1b41df04512b4472ee2d21085b6b",
+  "acquiredAt": "2026-10-15T19:20:53.484Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "client/auth-app/src/assets/hero.png",
+      "reason": "preset:binaries",
+      "size": 44919
+    },
+    {
+      "path": "client/community-app/src/assets/hero.png",
+      "reason": "preset:binaries",
+      "size": 44919
+    },
+    {
+      "path": "client/shell-app/src/assets/hero.png",
+      "reason": "preset:binaries",
+      "size": 44919
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 80,
+    "bytes": 1012912
+  },
+  "languages": {
+    "JSON": 853035,
+    "SVG": 82164,
+    "JavaScript": 60572,
+    "CSS": 12005,
+    "Markdown": 3075,
+    "HTML": 1101,
+    "Other": 960
+  },
+  "contentSha256": "8a3ebd9809b58d808a66425d6fbe90242097b7d1d0eff1ff72ad8d9fce6db291"
+}

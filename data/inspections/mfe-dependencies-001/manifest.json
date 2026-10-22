@@ -1,0 +1,123 @@
+{
+  "schema": 1,
+  "version": "1",
+  "configSha256": "9441822a7a5f9766a0b955feeac5b7c0421a03c2dd7e07da4b4d476e26caebb0",
+  "config": {
+    "mining": "data/mining/mfe-mining-001",
+    "version": "1",
+    "technologies": [
+      {
+        "id": "module-federation",
+        "packages": [
+          "^@module-federation/",
+          "^@originjs/vite-plugin-federation$",
+          "^@angular-architects/module-federation",
+          "^webpack-module-federation"
+        ],
+        "patterns": [
+          "cfg-federation-plugin",
+          "cfg-remotes",
+          "cfg-exposes",
+          "cfg-shared",
+          "cfg-custom-webpack",
+          "src-load-remote"
+        ]
+      },
+      {
+        "id": "native-federation",
+        "packages": [
+          "^@angular-architects/native-federation",
+          "^@softarc/native-federation"
+        ],
+        "patterns": [
+          "cfg-native-federation",
+          "cfg-remotes",
+          "cfg-exposes",
+          "cfg-shared",
+          "src-load-remote"
+        ]
+      },
+      {
+        "id": "single-spa",
+        "packages": [
+          "^single-spa",
+          "^@single-spa/"
+        ],
+        "patterns": [
+          "src-lifecycles"
+        ]
+      },
+      {
+        "id": "qiankun",
+        "packages": [
+          "^qiankun$",
+          "^@qiankun/"
+        ],
+        "patterns": [
+          "src-lifecycles"
+        ]
+      },
+      {
+        "id": "web-components",
+        "packages": [
+          "^lit$",
+          "^@lit/",
+          "^@stencil/core$",
+          "^@webcomponents/",
+          "^@angular/elements$",
+          "^vue-custom-element$"
+        ],
+        "patterns": [
+          "src-custom-element"
+        ]
+      },
+      {
+        "id": "other-mfe-framework",
+        "packages": [
+          "^piral",
+          "^@?garfish",
+          "^@micro-zoe/micro-app$",
+          "^wujie",
+          "^@ice/stark",
+          "^@luigi-project/",
+          "^@podium/",
+          "^frint",
+          "^open-components$"
+        ],
+        "patterns": [
+          "src-mount-export"
+        ]
+      },
+      {
+        "id": "monorepo-tool",
+        "packages": [
+          "^lerna$",
+          "^nx$",
+          "^turbo$",
+          "^@nx/",
+          "^@nrwl/",
+          "^@rushstack/"
+        ],
+        "patterns": [
+          "ws-workspaces",
+          "ci-monorepo-tooling"
+        ]
+      },
+      {
+        "id": "mfe-term",
+        "packages": [
+          "micro-?front-?ends?",
+          "\\bmfe"
+        ],
+        "patterns": [
+          "src-remote-import",
+          "src-load-remote"
+        ]
+      }
+    ]
+  },
+  "mining": {
+    "directory": "data/mining/mfe-mining-001",
+    "manifestSha256": "de14736ee21b417ec97461f017b11ccb7c0057f328dbc1bd3c555f6730cb0b49"
+  }
+}

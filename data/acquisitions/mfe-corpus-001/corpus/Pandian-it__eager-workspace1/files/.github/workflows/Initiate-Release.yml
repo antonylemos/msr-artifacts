@@ -1,0 +1,117 @@
+name: Initiate Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_branch:
+        description: 'Name of the new release branch'
+        required: true
+
+jobs:
+  create-release-branch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      # 1. Checkout develop
+      - name: Checkout develop
+        uses: actions/checkout@v4
+        with:
+          ref: develop
+          fetch-depth: 0
+
+      # 2. Create release branch from develop
+      - name: Create release branch
+        run: |
+          git checkout -b ${{ github.event.inputs.release_branch }}
+          git push origin ${{ github.event.inputs.release_branch }}
+          echo "RELEASE_BRANCH=${{ github.event.inputs.release_branch }}" >> $GITHUB_ENV
+
+      # 3. Checkout release branch explicitly
+      - name: Checkout release branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.release_branch }}
+          fetch-depth: 0
+
+      # 4. Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+
+      # 5. Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+
+      # 6. Run changesets/action to bump versions & open PR
+      - name: Version packages and open PR
+        uses: changesets/action@v1
+        with:
+          version: npx changeset version
+          publish: false
+          commit: "chore: version packages"
+          title: "Version Packages"
+          branch: "${{ env.RELEASE_BRANCH }}"
+          baseBranch: ${{ env.RELEASE_BRANCH }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # 7. Checkout the version branch created by changesets/action
+      - name: Checkout version branch
+        run: |
+          VERSION_BRANCH="changeset-release/${{ github.event.inputs.release_branch }}"
+          git fetch origin '+refs/heads/*:refs/remotes/origin/*'
+          git checkout $VERSION_BRANCH
+
+      # 8. Generate/update deployment manifest in the version branch
+      - name: Generate/update deployment manifest
+        run: |
+          RELEASE_BRANCH="${{ github.event.inputs.release_branch }}"
+          RELEASE_VERSION="${RELEASE_BRANCH#release-}"   # e.g. release-13.2.4 → 13.2.4
+          MANIFEST_FILE="deployment-manifest.json"
+
+          # Ensure manifest exists, or initialize
+          if [ ! -f "$MANIFEST_FILE" ] || [ ! -s "$MANIFEST_FILE" ]; then
+            echo "{}" > $MANIFEST_FILE
+          fi
+
+          PROJECTS=$(npx nx show projects --plain)
+
+          for proj in $PROJECTS; do
+            if [ -f "./projects/$proj/package.json" ]; then
+              CUR_VERSION=$(node -p "require('./projects/$proj/package.json').version" 2>/dev/null || echo "0.0.0")
+
+              # Read existing version from manifest (if any)
+              EXISTING_VERSION=$(jq -r --arg proj "$proj" '.[$proj].version // empty' $MANIFEST_FILE)
+
+              if [ -z "$EXISTING_VERSION" ]; then
+                echo "Adding new project $proj with version $CUR_VERSION"
+                jq --arg proj "$proj" --arg version "$CUR_VERSION" --arg release "$RELEASE_VERSION" \
+                  '. + {($proj): {version: $version, release: $release}}' \
+                  $MANIFEST_FILE > tmp.json && mv tmp.json $MANIFEST_FILE
+
+              elif [ "$CUR_VERSION" != "$EXISTING_VERSION" ]; then
+                echo "Updating $proj: $EXISTING_VERSION → $CUR_VERSION"
+                jq --arg proj "$proj" --arg version "$CUR_VERSION" --arg release "$RELEASE_VERSION" \
+                  '.[$proj].version = $version | .[$proj].release = $release' \
+                  $MANIFEST_FILE > tmp.json && mv tmp.json $MANIFEST_FILE
+              else
+                echo "No change for $proj (version $CUR_VERSION)"
+              fi
+            else
+              echo "Warning: package.json not found for project $proj"
+            fi
+          done
+
+          echo "Final deployment manifest:"
+          cat $MANIFEST_FILE
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add $MANIFEST_FILE
+          git commit -m "ci: update deployment manifest" || echo "No changes to commit"
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD

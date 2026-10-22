@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "id": "1043597864",
+  "fullName": "wtlin1228/micro-frontend-workspace",
+  "commit": "9b81d2c5b6156084e0e9a4a3ecfdd89494d0b692",
+  "acquiredAt": "2026-10-15T19:20:52.965Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 110,
+    "bytes": 213182
+  },
+  "languages": {
+    "YAML": 162486,
+    "TypeScript": 36099,
+    "JSON": 8388,
+    "Markdown": 2634,
+    "Other": 2090,
+    "JavaScript": 1485
+  },
+  "contentSha256": "cbd6b22c142f677401626519b15877a39023a042b6e714e48a567cf9aa83ea16"
+}

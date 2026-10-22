@@ -1,0 +1,5 @@
+directory,markers
+app-shell,app-shell/index.html
+app1,app1/index.html
+app2,app2/index.html
+app3,app3/index.html;app3/package.json;app3/vite.config.js

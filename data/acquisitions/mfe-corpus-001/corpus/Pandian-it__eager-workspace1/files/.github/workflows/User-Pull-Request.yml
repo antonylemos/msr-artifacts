@@ -1,0 +1,103 @@
+name: User Pull Request
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - release-**
+
+jobs:
+  pr-build-changeset:
+    if: github.actor != 'github-actions[bot]' && !startsWith(github.head_ref, 'release-')
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Checkout the PR branch with full history
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # 2. Fetch the target branch
+      - name: Fetch target branch
+        run: git fetch origin ${{ github.base_ref }}
+
+      # 3. Setup Node.js
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      # 4. Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # 5. Detect affected projects
+      - name: Get affected projects
+        id: affected
+        run: |
+          BASE=$(git merge-base origin/${{ github.base_ref }} HEAD)
+          echo "BASE=$BASE" >> $GITHUB_ENV
+
+          AFFECTED_PROJECTS=$(npx nx show projects --affected --base=$BASE --head=HEAD --plain | tr '\n' ',' | sed 's/,$//')
+          echo "NX_AFFECTED=$AFFECTED_PROJECTS" >> $GITHUB_ENV
+          echo "Affected projects: $AFFECTED_PROJECTS"
+
+      # 6. Build affected projects
+      - name: Build affected projects
+        run: |
+          if [ -z "$NX_AFFECTED" ]; then
+            echo "No affected projects; skipping build."
+            exit 0
+          fi
+          npx nx affected --target=build --base=$BASE --head=HEAD
+
+      # 7. Add automated patch changeset
+      - name: Add automated changeset
+        if: env.NX_AFFECTED != ''
+        run: |
+          mkdir -p .changeset
+
+          IFS=',' read -r -a PROJECTS <<< "$NX_AFFECTED"
+          SUMMARY="Auto-generated patch for affected projects"
+          FILENAME=".changeset/$(date +%s)-auto.md"
+
+          {
+            echo "---"
+            for proj in "${PROJECTS[@]}"; do
+              echo "\"$proj\": patch"
+            done
+            echo "---"
+            echo ""
+            echo "$SUMMARY"
+          } > "$FILENAME"
+
+          echo "Created changeset: $FILENAME"
+
+      # 8. Commit and push the changeset
+      - name: Commit and push changeset
+        if: env.NX_AFFECTED != ''
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .changeset/*.md
+          git commit -m "chore: auto-generated patch changeset for affected projects" || echo "No changes to commit"
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD
+
+  # --------------------------------------------------
+  # Future jobs (uncomment when ready to use)
+  # --------------------------------------------------
+  # lint:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Run lint
+  #       run: npx nx affected --target=lint --base=$BASE --head=HEAD
+  #
+  # test:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Run tests
+  #       run: npx nx affected --target=test --base=$BASE --head=HEAD

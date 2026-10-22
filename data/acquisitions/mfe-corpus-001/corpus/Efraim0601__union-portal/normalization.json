@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "id": "1297539319",
+  "fullName": "Efraim0601/union-portal",
+  "commit": "b11a3e3aa55aff8195e0cde0026ccbd45245266d",
+  "acquiredAt": "2026-10-15T19:20:53.357Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "projects/diaspora/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "projects/diaspora/public/mediapipe/face_landmarker.task",
+      "reason": "preset:binaries",
+      "size": 3758596
+    },
+    {
+      "path": "projects/diaspora/public/mediapipe/wasm/vision_wasm_internal.wasm",
+      "reason": "preset:binaries",
+      "size": 11153617
+    },
+    {
+      "path": "projects/diaspora/public/mediapipe/wasm/vision_wasm_nosimd_internal.wasm",
+      "reason": "preset:binaries",
+      "size": 10481398
+    },
+    {
+      "path": "projects/promote/public/bg-page.jpg",
+      "reason": "preset:binaries",
+      "size": 85724
+    },
+    {
+      "path": "projects/promote/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "projects/promote/public/mediapipe/face_landmarker.task",
+      "reason": "preset:binaries",
+      "size": 3758596
+    },
+    {
+      "path": "projects/promote/public/mediapipe/wasm/vision_wasm_internal.wasm",
+      "reason": "preset:binaries",
+      "size": 11153617
+    },
+    {
+      "path": "projects/promote/public/mediapipe/wasm/vision_wasm_nosimd_internal.wasm",
+      "reason": "preset:binaries",
+      "size": 10481398
+    },
+    {
+      "path": "projects/shell/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 152,
+    "bytes": 4695791
+  },
+  "languages": {
+    "HTML": 1929009,
+    "JavaScript": 1338998,
+    "TypeScript": 706845,
+    "JSON": 630231,
+    "Python": 23583,
+    "Markdown": 16599,
+    "Other": 15927,
+    "Shell": 15564,
+    "CSS": 15141,
+    "YAML": 3894
+  },
+  "contentSha256": "e0ff6a190d108674c4732a24c8b66d633372fe75f1e2288795ebef160a16eff9"
+}

@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "id": "1098119003",
+  "fullName": "Vishal-Kamra/Microfrontend-examples",
+  "commit": "eeb848822ba0bad3549c04a36f5c9dfb72ae7fe8",
+  "acquiredAt": "2026-10-15T19:20:52.729Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 43,
+    "bytes": 1976132
+  },
+  "languages": {
+    "JSON": 1956374,
+    "JavaScript": 18779,
+    "HTML": 979
+  },
+  "contentSha256": "db76c60b653136b57da0d3b13ea8ff13737a5293b75d721ca7b6165523dac248"
+}

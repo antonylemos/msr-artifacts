@@ -1,0 +1,4 @@
+directory,markers
+backend,backend/package.json
+frontend,frontend/index.html;frontend/package.json;frontend/vite.config.js
+microfrontend,microfrontend/index.html;microfrontend/package.json;microfrontend/vite.config.js

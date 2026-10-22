@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "id": "1043375878",
+  "fullName": "mrmechazilla/host-app",
+  "commit": "38ab4eb46b2edf72c07604bbbe2b0ff744c8f3b8",
+  "acquiredAt": "2026-10-15T19:20:52.780Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 38,
+    "bytes": 594608
+  },
+  "languages": {
+    "JSON": 585139,
+    "TypeScript": 6239,
+    "HTML": 1265,
+    "Other": 901,
+    "SCSS": 686,
+    "JavaScript": 346,
+    "Markdown": 32
+  },
+  "contentSha256": "2c73776e909de81dfed2b2a18edfbeded89b1e9e4687c1bb877984dc27e34725"
+}

@@ -1,0 +1,93 @@
+pattern,path,line,excerpt
+dep-mfe-term,microfrontend/package.json,2,"  ""name"": ""microfrontend-widget"","
+cfg-library-bundle,microfrontend/vite.config.js,25,    lib: {
+cfg-library-bundle,microfrontend/vite.config.js,29,"      formats: ['iife'],"
+src-mount-export,microfrontend/src/main.jsx,7,export function mount(container) {
+src-mount-export,microfrontend/src/main.jsx,14,export function unmount(container) {
+src-mount-call,frontend/src/RemoteWidget.jsx,14,        window.MicroFrontendWidget.mount(containerRef.current)
+src-mount-call,frontend/src/RemoteWidget.jsx,26,        window.MicroFrontendWidget.unmount(containerRef.current)
+src-mount-call,microfrontend/src/main.jsx,7,export function mount(container) {
+src-mount-call,microfrontend/src/main.jsx,14,export function unmount(container) {
+src-bundle-url,frontend/src/App.jsx,475,              path: /widget.iife.js
+src-bundle-url,frontend/src/App.jsx,802,          <RemoteWidget src={`/mfe/widget.iife.js?v=${Date.now()}`} />
+src-dynamic-script,frontend/src/RemoteWidget.jsx,8,    const script = document.createElement('script')
+ops-deployment-file,backend/Dockerfile,,
+ops-deployment-file,docker-compose.yml,,
+ops-deployment-file,frontend/Dockerfile,,
+ops-deployment-file,frontend/nginx.conf,,
+ops-deployment-file,helm/fe-containerize/Chart.yaml,,
+ops-deployment-file,helm/fe-containerize/templates/_helpers.tpl,,
+ops-deployment-file,helm/fe-containerize/templates/backend.yaml,,
+ops-deployment-file,helm/fe-containerize/templates/db.yaml,,
+ops-deployment-file,helm/fe-containerize/templates/frontend.yaml,,
+ops-deployment-file,helm/fe-containerize/templates/microfrontend.yaml,,
+ops-deployment-file,helm/fe-containerize/templates/secrets.yaml,,
+ops-deployment-file,helm/fe-containerize/values.yaml,,
+ops-deployment-file,microfrontend/Dockerfile,,
+ops-deployment-file,microfrontend/nginx.conf,,
+ops-dockerfile,backend/Dockerfile,2,FROM node:20-alpine AS build
+ops-dockerfile,backend/Dockerfile,10,FROM node:20-alpine
+ops-dockerfile,frontend/Dockerfile,2,FROM node:20-alpine AS build
+ops-dockerfile,frontend/Dockerfile,10,FROM nginx:alpine
+ops-dockerfile,microfrontend/Dockerfile,2,FROM node:20-alpine AS build
+ops-dockerfile,microfrontend/Dockerfile,10,FROM nginx:alpine
+ops-compose-service,docker-compose.yml,3,    image: postgres:16-alpine
+ops-compose-service,docker-compose.yml,19,    build: ./backend
+ops-compose-service,docker-compose.yml,31,    depends_on:
+ops-compose-service,docker-compose.yml,36,    build: ./microfrontend
+ops-compose-service,docker-compose.yml,40,    build: ./frontend
+ops-compose-service,docker-compose.yml,44,    depends_on:
+ops-compose-service,helm/fe-containerize/templates/backend.yaml,25,          image: busybox:1.36
+ops-compose-service,helm/fe-containerize/templates/backend.yaml,32,          image: {{ .Values.images.backend }}
+ops-compose-service,helm/fe-containerize/templates/db.yaml,58,          image: {{ .Values.db.image }}
+ops-compose-service,helm/fe-containerize/templates/frontend.yaml,25,          image: {{ .Values.images.frontend }}
+ops-compose-service,helm/fe-containerize/templates/microfrontend.yaml,25,          image: {{ .Values.images.microfrontend }}
+ops-compose-service,helm/fe-containerize/values.yaml,11,  image: postgres:16-alpine
+ops-proxy-route,frontend/nginx.conf,24,    location = /robots.txt {
+ops-proxy-route,frontend/nginx.conf,30,    location / {
+ops-proxy-route,frontend/nginx.conf,35,    location = /api {
+ops-proxy-route,frontend/nginx.conf,39,    location = /api/ {
+ops-proxy-route,frontend/nginx.conf,45,    location /api/ {
+ops-proxy-route,frontend/nginx.conf,46,        proxy_pass http://backend:8000/api/;
+ops-proxy-route,frontend/nginx.conf,57,    location /mfe/ {
+ops-proxy-route,frontend/nginx.conf,58,        proxy_pass http://microfrontend:80/;
+ops-proxy-route,helm/fe-containerize/templates/frontend.yaml,76,        paths:
+ops-proxy-route,microfrontend/nginx.conf,6,    location / {
+ops-hosting,helm/README.md,28,kubectl get nodes        # має показати Ready
+ops-hosting,helm/README.md,65,3. Деплоїть через `helm upgrade --install` і примусово тригерить rollout application pod-ів
+ops-hosting,helm/README.md,81,helm upgrade --install fe-containerize ./helm/fe-containerize \
+ops-hosting,helm/README.md,88,kubectl get pods -n fe-containerize
+ops-hosting,helm/README.md,89,kubectl get svc -n fe-containerize
+ops-hosting,helm/README.md,90,kubectl get ingress -n fe-containerize
+ops-hosting,helm/README.md,170,kubectl delete pod -n fe-containerize -l app=frontend
+ops-hosting,helm/README.md,180,> **Типова помилка:** `kubectl rollout restart` без попереднього `docker save ... | k3s ctr images import` — pod перестворюється зі **старим** образом.
+ops-hosting,helm/README.md,186,kubectl get pods -n fe-containerize
+ops-hosting,helm/README.md,189,kubectl logs -n fe-containerize deploy/backend -f
+ops-hosting,helm/README.md,192,kubectl logs -n fe-containerize deploy/frontend -f
+ops-hosting,helm/README.md,195,kubectl rollout restart deploy/backend -n fe-containerize
+ops-hosting,helm/README.md,198,kubectl scale deploy/backend --replicas=2 -n fe-containerize
+ops-hosting,helm/README.md,206,kubectl delete namespace fe-containerize
+ops-hosting,helm/README.md,217,kubectl edit svc traefik -n kube-system
+ops-hosting,helm/README.md,227,kubectl describe pod <pod-name> -n fe-containerize
+ops-hosting,helm/README.md,234,kubectl logs -n fe-containerize deploy/backend | tail -20
+ops-hosting,helm/README.md,237,kubectl get ingress -n fe-containerize
+ops-hosting,helm/README.md,238,kubectl logs -n kube-system deploy/traefik
+doc-mfe-term,README.docker-compose.md,7,- `microfrontend`: окремий React widget у форматі IIFE
+doc-mfe-term,README.docker-compose.md,22,│    Micro-frontend    │
+doc-mfe-term,README.docker-compose.md,69,├── microfrontend/
+doc-mfe-term,README.docker-compose.md,98,curl -I http://localhost:3080/mfe/widget.iife.js
+doc-mfe-term,README.docker-compose.md,132,2. Microfrontend:
+doc-mfe-term,README.docker-compose.md,135,cd microfrontend
+doc-mfe-term,README.docker-compose.md,151,- `frontend/vite.config.js` проксіює `/mfe` на `http://localhost:3001`
+doc-mfe-term,README.docker-compose.md,152,- `microfrontend/vite.config.js` проксіює `/api` на `http://localhost:8000`
+doc-mfe-term,README.docker-compose.md,159,- `frontend/nginx.conf` проксіює `/mfe` до `microfrontend:80`
+doc-mfe-term,README.md,20,│    Micro-frontend    │
+doc-mfe-term,README.md,30,"| `frontend` | React + Vite → nginx | UI, проксює /api та /mfe |"
+doc-mfe-term,README.md,32,| `microfrontend` | React + Vite (IIFE) → nginx | Незалежний widget |
+doc-mfe-term,helm/README.md,47,        ├── microfrontend.yaml     # MFE: Deployment + Service
+doc-mfe-term,helm/README.md,78,docker save fe_containerize-microfrontend:latest | sudo k3s ctr images import -
+doc-mfe-term,helm/README.md,100,| `images.microfrontend` | `fe-containerize-microfrontend:latest` | Образ microfrontend |
+doc-mfe-term,helm/README.md,110,| `microfrontend.replicas` | `1` | Кількість реплік MFE |
+doc-mfe-term,helm/README.md,128,│                  │  mfe    │     │   db    │          │
+doc-runtime-loading,README.docker-compose.md,19,           │ loads JS bundle at runtime
+doc-runtime-loading,README.md,17,           │ loads JS bundle at runtime

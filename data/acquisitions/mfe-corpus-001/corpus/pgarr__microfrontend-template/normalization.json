@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "id": "1080660279",
+  "fullName": "pgarr/microfrontend-template",
+  "commit": "8869e1289ab5b8e758cb6a465425997296b6ca32",
+  "acquiredAt": "2026-10-15T19:20:53.183Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 50,
+    "bytes": 1668070
+  },
+  "languages": {
+    "JSON": 1606294,
+    "JavaScript": 39287,
+    "Vue": 18079,
+    "YAML": 3974,
+    "HTML": 404,
+    "Other": 32
+  },
+  "contentSha256": "9533f62eb85c6400f96b30741333f236f4317cfbbf11495067053daa2c43757e"
+}

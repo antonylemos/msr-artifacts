@@ -1,0 +1,13 @@
+<div class="child">
+    <h2>{{"Child Component"| capitalize}}</h2>
+    <p>Counter: {{ counter() }}</p>
+    <p>Input Value: {{ inputValue() }}</p>
+
+    <p>Child Change Detection Runs: {{ changeDetectionRuns }}</p>
+
+    <ul>
+        @for (item of items() ; track item.id; let index = $index) {
+        <li>{{ item.value }}</li>
+        }
+    </ul>
+</div>

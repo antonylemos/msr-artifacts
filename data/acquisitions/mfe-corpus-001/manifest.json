@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "createdAt": "2026-10-15T19:20:52.525Z",
+  "config": {
+    "sample": "data/samples/mfe-sample-001",
+    "include": {
+      "classification": [
+        "MFE-implemented"
+      ],
+      "status": [
+        "final"
+      ]
+    },
+    "annotations": {
+      "files": "docs/mfe-classification/[0-9]*.md",
+      "statusField": "annotation.status",
+      "required": [
+        "approaches",
+        "ui_technologies",
+        "frontend_units",
+        "repo_type"
+      ],
+      "export": [
+        "classification",
+        "repo_type",
+        "approaches",
+        "ui_technologies",
+        "build_tools",
+        "frontend_units",
+        "unit_organization",
+        "annotation.method"
+      ]
+    },
+    "exclude": {
+      "presets": [
+        "node",
+        "python",
+        "build-output",
+        "binaries"
+      ],
+      "paths": [
+        "**/*.min.js"
+      ],
+      "maxFileBytes": 5242880
+    }
+  },
+  "configSha256": "0dcc797b1aa29cac37575bf54f838e8a6e745b8cd8ac3edcf758612b8d36c505",
+  "sample": {
+    "ranking.csv": "1715ae3f9239a825dd14598b2419fef143c5c62b96d534c6d7e3c56db03416a9",
+    "sample.csv": "d64c2181581b0ef1ba6ca93b0aa6bc86ef92751a303753f7c159d8ecd2ca8204"
+  },
+  "annotations": {
+    "979173938": "6743e14c941b551c0d10d8dc3f0114de9104687eaf25356721319cc92a8e3712",
+    "1007785611": "bb5ac729ee3d443401666559eea2907994ada8cfb4687f259f926a7faf15dda7",
+    "1009749841": "b4b5a646fe2580738336ccb7cce13749da703ec353c386b6ba72f3eb8ebd2adb",
+    "1009887363": "90172dc1d820537d3d964d951607f212b90e5066bbbb094bbd9337ab2f86a663",
+    "1028839722": "34925d593fa85ead7e9dc7b9cefef36ce2cd825efb50e7b993bb3d9fd75a9327",
+    "1036476677": "c25bac02db212da93906d8a7ba883ef4ebfc58ea5ec3e055020bb8bf423d1e02",
+    "1043375878": "b9abe786a039f5cd35f80d8c241a0b4a688feceeb5661253bfd9feabffc8eed2",
+    "1043597864": "2e92375a0011b0f3009ba74b2de169ae59ad23d41d697a364a0be38d84538012",
+    "1065269096": "c02c7dbffe6725cd9f122925074ea21c0e065da55ecfec9dfca6e234aab7f159",
+    "1080660279": "18cd83dca8550ce43a48938e4fa180682d7c83fce52b377b2a735ddeb6178baf",
+    "1098119003": "bb00ec3573ce4716d1df32d7a7219d536600f50d33d1c315e136982f89e06308",
+    "1183615585": "bdb5f93fcce36f5bf14a1f8964e9bfbc42701ed8568c6f6bb0e0961de00af67d",
+    "1202215420": "37754139c4f90ecaa377299dcd772fb7fbe08c49222cb8bcec00c85413c38533",
+    "1297539319": "027fba6d76926a5c8172297d27676b0dbed9d4990331c13447bceefa50612795",
+    "1304607643": "5936035f2c46f810420949559827bbc4d8b38e98a32a02dbef7d5fbca4ad7258"
+  },
+  "notSelected": []
+}

@@ -1,0 +1,29 @@
+<div class="parent">
+    <h2>Parent Component</h2>
+
+    <p>Counter: {{ counter() }}</p>
+
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Value" [value]="inputValue()"
+            (input)="updateInput($event)">
+        <button (click)="increment()" class="btn btn-primary">Increment +</button>
+    </div>
+
+    <p>Input Value: {{ inputValue() }}</p>
+
+    <button (click)="updateItems()" class="btn btn-secondary mb-2">Update Items</button>
+
+    <app-child [counter]="counter()" [inputValue]="inputValue()" [items]="items()"
+        (changeDetection)="changeDetectionRuns = $event"></app-child>
+
+    <p class="mt-2">Parent Change Detection Runs: {{ changeDetectionRuns }}</p>
+
+    <ul>
+        @for (item of items() ; track item.id; let index = $index) {
+        <li>
+            {{ item.value }}
+        </li>
+        }
+
+    </ul>
+</div>

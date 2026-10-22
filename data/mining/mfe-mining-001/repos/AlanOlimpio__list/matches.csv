@@ -1,0 +1,20 @@
+pattern,path,line,excerpt
+cfg-federation-plugin,webpack.config.js,3,const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+cfg-federation-plugin,webpack.config.js,46,    new ModuleFederationPlugin({
+cfg-remotes,webpack.config.js,52,      remotes: {
+cfg-exposes,webpack.config.js,49,      exposes: {
+cfg-shared,webpack.config.js,56,      shared: {
+cfg-shared,webpack.config.js,58,"          singleton: true,"
+cfg-shared,webpack.config.js,63,"          singleton: true,"
+cfg-shared,webpack.config.js,68,"          singleton: true,"
+cfg-public-path,webpack.config.js,9,"    publicPath: 'auto',"
+rt-remote-entry,webpack.config.js,48,"      filename: 'remoteEntry.js',"
+rt-remote-entry,webpack.config.js,54,"          'RegisterApp@https://register-navy-ten.vercel.app/remoteEntry.js',"
+src-remote-import,src/components/ListRoutes/ListRoutes.js,5,const ModalRegister = React.lazy(() => import('RegisterApp/ModalRegister'));
+src-async-bootstrap,src/index.js,1,import('./bootstrap');
+ops-deployment-file,vercel.json,,
+ops-hosting,vercel.json,8,"      ""use"": ""@vercel/static-build"""
+doc-mfe-term,README.md,29,Navega para pasta de cada micro front end execute npm i ou yarn para instalar as dependências e npm start ou yarn start para iniciar o projeto.
+doc-mfe-term,README.md,31,1. Micro front end `list` :
+doc-integration-technology,README.md,1,# Webpack do básico ao avançado module federation
+doc-integration-technology,README.md,15,Lista das bibliotecas utilizadas no desenvolvimento da plicação webpack module federation:

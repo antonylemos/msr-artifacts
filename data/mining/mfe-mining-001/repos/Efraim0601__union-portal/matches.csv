@@ -1,0 +1,116 @@
+pattern,path,line,excerpt
+dep-native-federation,package.json,28,"    ""@softarc/native-federation-node"": ""^3.3.4"","
+dep-native-federation,package.json,39,"    ""@angular-architects/native-federation"": ""21.2.5"","
+lock-mfe-dependency,package-lock.json,20,"        ""@softarc/native-federation-node"": ""^3.3.4"","
+lock-mfe-dependency,package-lock.json,31,"        ""@angular-architects/native-federation"": ""21.2.5"","
+lock-mfe-dependency,package-lock.json,280,"    ""node_modules/@angular-architects/native-federation"": {"
+lock-mfe-dependency,package-lock.json,282,"      ""resolved"": ""https://registry.npmjs.org/@angular-architects/native-federation/-/native-federation-21.2.5.tgz"","
+lock-mfe-dependency,package-lock.json,291,"        ""@softarc/native-federation"": ""~3.5.1"","
+lock-mfe-dependency,package-lock.json,292,"        ""@softarc/native-federation-runtime"": ""~3.5.1"","
+lock-mfe-dependency,package-lock.json,6786,"    ""node_modules/@softarc/native-federation"": {"
+lock-mfe-dependency,package-lock.json,6788,"      ""resolved"": ""https://registry.npmjs.org/@softarc/native-federation/-/native-federation-3.5.5.tgz"","
+lock-mfe-dependency,package-lock.json,6793,"        ""@softarc/native-federation-runtime"": ""~3.5.4"","
+lock-mfe-dependency,package-lock.json,6800,"    ""node_modules/@softarc/native-federation-node"": {"
+lock-mfe-dependency,package-lock.json,6802,"      ""resolved"": ""https://registry.npmjs.org/@softarc/native-federation-node/-/native-federation-node-3.5.5.tgz"","
+lock-mfe-dependency,package-lock.json,6806,"        ""@softarc/native-federation-runtime"": ""~3.5.4"","
+lock-mfe-dependency,package-lock.json,6810,"    ""node_modules/@softarc/native-federation-runtime"": {"
+lock-mfe-dependency,package-lock.json,6812,"      ""resolved"": ""https://registry.npmjs.org/@softarc/native-federation-runtime/-/native-federation-runtime-3.5.5.tgz"","
+cfg-native-federation,angular.json,53,"          ""builder"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,angular.json,67,"          ""builder"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,angular.json,179,"          ""builder"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,angular.json,193,"          ""builder"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,angular.json,306,"          ""builder"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,angular.json,320,"          ""builder"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,projects/diaspora/federation.config.js,1,"const { withNativeFederation, shareAll } = require('@angular-architects/native-federation/config');"
+cfg-native-federation,projects/diaspora/federation.config.js,3,module.exports = withNativeFederation({
+cfg-native-federation,projects/promote/federation.config.js,1,"const { withNativeFederation, shareAll } = require('@angular-architects/native-federation/config');"
+cfg-native-federation,projects/promote/federation.config.js,3,module.exports = withNativeFederation({
+cfg-native-federation,projects/shell/federation.config.js,1,"const { withNativeFederation, shareAll } = require('@angular-architects/native-federation/config');"
+cfg-native-federation,projects/shell/federation.config.js,3,module.exports = withNativeFederation({
+cfg-exposes,projects/diaspora/federation.config.js,8,  exposes: {
+cfg-exposes,projects/promote/federation.config.js,8,  exposes: {
+cfg-shared,projects/diaspora/federation.config.js,12,  shared: {
+cfg-shared,projects/diaspora/federation.config.js,13,"    ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),"
+cfg-shared,projects/promote/federation.config.js,12,  shared: {
+cfg-shared,projects/promote/federation.config.js,13,"    ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),"
+cfg-shared,projects/shell/federation.config.js,7,  shared: {
+cfg-shared,projects/shell/federation.config.js,8,"    ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),"
+rt-remote-entry,deploy/federation.manifest.prod.json,2,"  ""promote"": ""/remotes/promote/remoteEntry.json"","
+rt-remote-entry,deploy/federation.manifest.prod.json,3,"  ""diaspora"": ""/remotes/diaspora/remoteEntry.json"""
+rt-remote-entry,deploy/nginx.conf,3,# /remotes/promote/    -> assets statiques du remote promote (remoteEntry.json + chunks)
+rt-remote-entry,projects/shell/public/federation.manifest.json,2,"  ""promote"": ""http://localhost:4201/remoteEntry.json"","
+rt-remote-entry,projects/shell/public/federation.manifest.json,3,"  ""diaspora"": ""http://localhost:4202/remoteEntry.json"""
+rt-manifest-file,deploy/federation.manifest.prod.json,,
+rt-manifest-file,projects/shell/public/federation.manifest.json,,
+rt-manifest-entry,deploy/federation.manifest.prod.json,2,"  ""promote"": ""/remotes/promote/remoteEntry.json"","
+rt-manifest-entry,deploy/federation.manifest.prod.json,3,"  ""diaspora"": ""/remotes/diaspora/remoteEntry.json"""
+rt-manifest-entry,projects/shell/public/federation.manifest.json,2,"  ""promote"": ""http://localhost:4201/remoteEntry.json"","
+rt-manifest-entry,projects/shell/public/federation.manifest.json,3,"  ""diaspora"": ""http://localhost:4202/remoteEntry.json"""
+src-async-bootstrap,projects/diaspora/src/main.ts,5,  .then(_ => import('./bootstrap'))
+src-async-bootstrap,projects/promote/src/main.ts,5,  .then(_ => import('./bootstrap'))
+src-async-bootstrap,projects/shell/src/main.ts,5,  .then(_ => import('./bootstrap'))
+src-load-remote,projects/diaspora/src/main.ts,1,import { initFederation } from '@angular-architects/native-federation';
+src-load-remote,projects/diaspora/src/main.ts,3,initFederation()
+src-load-remote,projects/promote/src/main.ts,1,import { initFederation } from '@angular-architects/native-federation';
+src-load-remote,projects/promote/src/main.ts,3,initFederation()
+src-load-remote,projects/shell/src/app/app.routes.ts,2,import { loadRemoteModule } from '@angular-architects/native-federation';
+src-load-remote,projects/shell/src/app/app.routes.ts,13,"      loadRemoteModule('promote', './Routes').then((m) => m.routes),"
+src-load-remote,projects/shell/src/app/app.routes.ts,18,"      loadRemoteModule('diaspora', './Routes').then((m) => m.routes),"
+src-load-remote,projects/shell/src/main.ts,1,import { initFederation } from '@angular-architects/native-federation';
+src-load-remote,projects/shell/src/main.ts,3,initFederation('federation.manifest.json')
+src-iframe,projects/diaspora/src/app/pages/legacy-onboarding.ts,31,    <iframe
+ops-deployment-file,Dockerfile,,
+ops-deployment-file,deploy/40-selfsigned-cert.sh,,
+ops-deployment-file,deploy/federation.manifest.prod.json,,
+ops-deployment-file,deploy/nginx.conf,,
+ops-deployment-file,deploy/server/components.env,,
+ops-deployment-file,deploy/server/deploy.sh,,
+ops-deployment-file,deploy/server/stop.sh,,
+ops-deployment-file,deploy/test/Dockerfile.ocr,,
+ops-deployment-file,deploy/test/Dockerfile.otp,,
+ops-deployment-file,deploy/test/docker-compose.yml,,
+ops-deployment-file,docker-compose.yml,,
+ops-dockerfile,Dockerfile,9,FROM node:24-alpine AS build
+ops-dockerfile,Dockerfile,25,FROM nginx:1.27-alpine
+ops-dockerfile,deploy/test/Dockerfile.ocr,5,FROM python:3.12-slim
+ops-dockerfile,deploy/test/Dockerfile.otp,5,FROM node:24-alpine
+ops-compose-service,deploy/test/docker-compose.yml,16,    build:
+ops-compose-service,deploy/test/docker-compose.yml,19,    image: afriland-union:test
+ops-compose-service,deploy/test/docker-compose.yml,28,    depends_on:
+ops-compose-service,deploy/test/docker-compose.yml,33,    build:
+ops-compose-service,deploy/test/docker-compose.yml,46,    build:
+ops-compose-service,docker-compose.yml,20,    build:
+ops-compose-service,docker-compose.yml,23,    image: afriland-union:latest
+ops-proxy-route,deploy/nginx.conf,24,  location = /federation.manifest.json {
+ops-proxy-route,deploy/nginx.conf,31,  location ^~ /remotes/promote/ {
+ops-proxy-route,deploy/nginx.conf,37,  location ^~ /remotes/diaspora/ {
+ops-proxy-route,deploy/nginx.conf,51,  location ^~ /mediapipe/ {
+ops-proxy-route,deploy/nginx.conf,63,  # proxy_pass STATIQUE : nginx résout le nom au démarrage via /etc/hosts.
+ops-proxy-route,deploy/nginx.conf,72,  location ^~ /promote-api/ {
+ops-proxy-route,deploy/nginx.conf,74,    proxy_pass http://${PROMOTE_UPSTREAM};
+ops-proxy-route,deploy/nginx.conf,86,  location ^~ /api/ {
+ops-proxy-route,deploy/nginx.conf,87,    proxy_pass http://${DIASPORA_UPSTREAM};
+ops-proxy-route,deploy/nginx.conf,101,  location ^~ /backoffice/ {
+ops-proxy-route,deploy/nginx.conf,102,    proxy_pass http://${DIASPORA_UPSTREAM};
+ops-proxy-route,deploy/nginx.conf,110,  location ^~ /static/ {
+ops-proxy-route,deploy/nginx.conf,111,    proxy_pass http://${DIASPORA_UPSTREAM};
+ops-proxy-route,deploy/nginx.conf,117,  location ^~ /uploads/ {
+ops-proxy-route,deploy/nginx.conf,118,    proxy_pass http://${DIASPORA_UPSTREAM};
+ops-proxy-route,deploy/nginx.conf,128,  location / {
+ops-proxy-route,deploy/nginx.conf,133,  location ~* \.(?:js|css|woff2?|png|jpg|jpeg|svg|ico)$ {
+ops-cors,angular.json,267,"              ""Access-Control-Allow-Origin"": ""*"""
+ops-cors,angular.json,394,"              ""Access-Control-Allow-Origin"": ""*"""
+ops-cors,deploy/nginx.conf,5,# Même origine => localStorage 'portail_client_auth' partagé (SSO) + aucun CORS.
+ops-cors,deploy/nginx.conf,33,"    add_header Access-Control-Allow-Origin ""*"";"
+ops-cors,deploy/nginx.conf,39,"    add_header Access-Control-Allow-Origin ""*"";"
+ops-cors,deploy/nginx.conf,53,"    add_header Access-Control-Allow-Origin ""*"";"
+ops-cors,deploy/nginx.conf,81,"    # du navigateur, transmis au backend, le ferait rejeter (« Invalid CORS request »)."
+doc-integration-technology,README.md,4,"(host + remotes via **module federation**), avec un **design-system uniforme** aligné"
+doc-integration-technology,README.md,17,- **Fédération** : [`@angular-architects/native-federation`](https://www.npmjs.com/package/@angular-architects/native-federation) (équivalent esbuild du Module Federation de la banque).
+doc-host-remote,README.md,4,"(host + remotes via **module federation**), avec un **design-system uniforme** aligné"
+doc-host-remote,README.md,10,"shell (host, :4200)  ──loadRemoteModule──►  promote  (remote, :4201)  expose ./Routes"
+doc-host-remote,README.md,27,"| `shell` | host | 4200 | Coquille + navigation, charge les remotes |"
+doc-host-remote,README.md,50,npm run serve:all            # host + 2 remotes en parallèle
+doc-host-remote,README.md,54,npm run serve:shell          # :4200  (host ; démarrer les remotes d'abord)
+doc-host-remote,README.md,282,- **Navigation host-embarquée** : les remotes tournent parfaitement en standalone ; sous
+ws-path-alias,tsconfig.json,18,"    ""paths"": {"

@@ -1,0 +1,41 @@
+pattern,path,line,excerpt
+cfg-federation-plugin,react-js/container/config/webpack.dev.js,4,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,react-js/container/config/webpack.dev.js,19,    new ModuleFederationPlugin({
+cfg-federation-plugin,react-js/marketing/config/webpack.dev.js,4,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,react-js/marketing/config/webpack.dev.js,19,    new ModuleFederationPlugin({
+cfg-federation-plugin,simple-js/Cart/webpack.config.js,2,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,simple-js/Cart/webpack.config.js,10,    new ModuleFederationPlugin({
+cfg-federation-plugin,simple-js/Container/webpack.config.js,2,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,simple-js/Container/webpack.config.js,10,    new ModuleFederationPlugin({
+cfg-federation-plugin,simple-js/Products/webpack.config.js,2,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,simple-js/Products/webpack.config.js,10,    new ModuleFederationPlugin({
+cfg-remotes,react-js/container/config/webpack.dev.js,21,      remotes: {
+cfg-remotes,simple-js/Container/webpack.config.js,12,      remotes: {
+cfg-exposes,react-js/marketing/config/webpack.dev.js,22,      exposes: {
+cfg-exposes,simple-js/Cart/webpack.config.js,13,      exposes: {
+cfg-exposes,simple-js/Products/webpack.config.js,13,      exposes: {
+cfg-shared,react-js/container/config/webpack.dev.js,24,"      shared: packageJson.dependencies,"
+cfg-shared,react-js/marketing/config/webpack.dev.js,25,"      shared: packageJson.dependencies,"
+cfg-shared,simple-js/Cart/webpack.config.js,16,"      shared: [{ ""@faker-js/faker"": { singleton: true } }],"
+cfg-shared,simple-js/Products/webpack.config.js,16,"      shared: [{ ""@faker-js/faker"": { singleton: true } }],"
+rt-remote-entry,react-js/container/config/webpack.dev.js,22,"        marketing: ""marketing@http://localhost:8081/remoteEntry.js"","
+rt-remote-entry,react-js/marketing/config/webpack.dev.js,21,"      filename: ""remoteEntry.js"","
+rt-remote-entry,simple-js/Cart/webpack.config.js,12,"      filename: ""remoteEntry.js"","
+rt-remote-entry,simple-js/Container/webpack.config.js,13,"        products: ""products@http://localhost:8081/remoteEntry.js"","
+rt-remote-entry,simple-js/Container/webpack.config.js,14,"        cart: ""cart@http://localhost:8082/remoteEntry.js"","
+rt-remote-entry,simple-js/Products/webpack.config.js,12,"      filename: ""remoteEntry.js"","
+src-async-bootstrap,react-js/container/src/index.js,1,import('./bootstrap');
+src-async-bootstrap,react-js/marketing/src/index.js,1,import('./bootstrap');
+src-async-bootstrap,simple-js/Cart/src/index.js,1,"import(""./bootstrap"");"
+src-async-bootstrap,simple-js/Container/src/index.js,1,import('./bootstrap')
+src-async-bootstrap,simple-js/Products/src/index.js,1,"import(""./bootstrap"");"
+src-mount-export,react-js/container/src/bootstrap.js,22,export { mount };
+src-mount-export,react-js/marketing/src/bootstrap.js,22,export { mount };
+src-mount-export,simple-js/Cart/src/bootstrap.js,3,export const mount = (el) => {
+src-mount-export,simple-js/Products/src/bootstrap.js,3,export const mount = (el) => {
+src-mount-call,react-js/container/src/components/MarketingApp.js,9,    mount(ref.current);
+src-mount-call,simple-js/Cart/src/bootstrap.js,13,    mount(el);
+src-mount-call,simple-js/Products/src/bootstrap.js,17,    mount(el);
+src-mount-import,react-js/container/src/components/MarketingApp.js,3,"import { mount } from ""marketing/MarketingApp"";"
+src-mount-import,simple-js/Container/src/bootstrap.js,1,"import { mount as mountProducts } from ""products/ProductsIndex"";"
+src-mount-import,simple-js/Container/src/bootstrap.js,2,"import { mount as mountCart } from ""cart/CartShow"";"

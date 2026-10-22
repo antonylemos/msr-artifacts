@@ -1,0 +1,61 @@
+pattern,path,line,excerpt
+dep-module-federation,package.json,23,"    ""module-federation"","
+dep-mfe-term,package.json,2,"  ""name"": ""microfrontends-demo"","
+dep-mfe-term,package.json,4,"  ""description"": ""A complete microfrontends project demonstrating Module Federation with React"","
+dep-mfe-term,package.json,13,"    ""setup"": ""echo 'Run the following commands to recreate the microfrontends demo:' && echo '1. npm run create:structure' && echo '2. npm run install:all' && echo '3. npm run start:all'"","
+dep-mfe-term,package.json,22,"    ""microfrontends"","
+dep-mfe-term,package.json,29,"    ""url"": ""https://github.com/yourusername/microfrontends-demo.git"""
+cfg-federation-plugin,header-mf/webpack.config.js,2,const { ModuleFederationPlugin } = require('webpack').container;
+cfg-federation-plugin,header-mf/webpack.config.js,22,    new ModuleFederationPlugin({
+cfg-federation-plugin,products-mf/webpack.config.js,2,const { ModuleFederationPlugin } = require('webpack').container;
+cfg-federation-plugin,products-mf/webpack.config.js,22,    new ModuleFederationPlugin({
+cfg-federation-plugin,shell/webpack.config.js,2,const { ModuleFederationPlugin } = require('webpack').container;
+cfg-federation-plugin,shell/webpack.config.js,22,    new ModuleFederationPlugin({
+cfg-remotes,shell/webpack.config.js,24,      remotes: {
+cfg-exposes,header-mf/webpack.config.js,25,      exposes: {
+cfg-exposes,products-mf/webpack.config.js,25,      exposes: {
+cfg-shared,header-mf/webpack.config.js,28,      shared: {
+cfg-shared,header-mf/webpack.config.js,30,"          singleton: true,"
+cfg-shared,header-mf/webpack.config.js,37,"          singleton: true,"
+cfg-shared,products-mf/webpack.config.js,28,      shared: {
+cfg-shared,products-mf/webpack.config.js,30,"          singleton: true,"
+cfg-shared,products-mf/webpack.config.js,37,"          singleton: true,"
+cfg-shared,shell/webpack.config.js,28,      shared: {
+cfg-shared,shell/webpack.config.js,30,"          singleton: true,"
+cfg-shared,shell/webpack.config.js,34,"          singleton: true,"
+rt-remote-entry,header-mf/webpack.config.js,24,"      filename: 'remoteEntry.js',"
+rt-remote-entry,products-mf/webpack.config.js,24,"      filename: 'remoteEntry.js',"
+rt-remote-entry,shell/webpack.config.js,25,"        headerMf: 'headerMf@http://localhost:3001/remoteEntry.js',"
+rt-remote-entry,shell/webpack.config.js,26,"        productsMf: 'productsMf@http://localhost:3002/remoteEntry.js',"
+src-remote-import,shell/src/App.js,5,  return import('headerMf/Header').catch(err => {
+src-remote-import,shell/src/App.js,13,  return import('productsMf/Products').catch(err => {
+src-async-bootstrap,header-mf/src/index.js,1,import('./bootstrap');
+src-async-bootstrap,products-mf/src/index.js,1,import('./bootstrap');
+src-async-bootstrap,shell/src/index.js,1,import('./bootstrap');
+doc-mfe-term,README.md,1,# 🏗️ Microfrontends Demo - Complete Working Example
+doc-mfe-term,README.md,3,A complete microfrontends project with React and Module Federation that supports both independent and integrated development.
+doc-mfe-term,README.md,18,cd microfrontends-demo
+doc-mfe-term,README.md,38,microfrontends-demo/
+doc-mfe-term,README.md,130,    <title>Microfrontends Shell</title>
+doc-mfe-term,README.md,158,  console.log('Loading Header microfrontend...');
+doc-mfe-term,README.md,161,    return { default: () => <div>❌ Failed to load Header microfrontend</div> };
+doc-mfe-term,README.md,166,  console.log('Loading Products microfrontend...');
+doc-mfe-term,README.md,169,    return { default: () => <div>❌ Failed to load Products microfrontend</div> };
+doc-mfe-term,README.md,183,        <h1>Welcome to Microfrontends Demo</h1>
+doc-mfe-term,README.md,184,        <p>This is the shell application that orchestrates multiple microfrontends.</p>
+doc-mfe-term,README.md,197,### 2. Header Microfrontend
+doc-mfe-term,README.md,284,    <title>Header Microfrontend</title>
+doc-mfe-term,README.md,335,      <h1>🚀 Microfrontends Demo</h1>
+doc-mfe-term,README.md,349,### 3. Products Microfrontend
+doc-mfe-term,README.md,436,    <title>Products Microfrontend</title>
+doc-mfe-term,README.md,503,      <p>This microfrontend displays our product catalog independently.</p>
+doc-mfe-term,README.md,558,You now have a production-ready microfrontend architecture used by major companies!
+doc-mfe-term,README.md,565,- ✅ Real-world microfrontend architecture
+doc-integration-technology,README.md,3,A complete microfrontends project with React and Module Federation that supports both independent and integrated development.
+doc-integration-technology,README.md,549,"This prevents ""eager consumption"" errors in Module Federation."
+doc-integration-technology,README.md,561,- ✅ Module Federation setup
+doc-independence,README.md,3,A complete microfrontends project with React and Module Federation that supports both independent and integrated development.
+doc-independence,README.md,8,- ✅ **Independent Development** - work on pieces separately
+doc-independence,README.md,503,      <p>This microfrontend displays our product catalog independently.</p>
+doc-independence,README.md,551,### Independent + Integrated
+doc-independence,README.md,562,- ✅ Independent development workflow

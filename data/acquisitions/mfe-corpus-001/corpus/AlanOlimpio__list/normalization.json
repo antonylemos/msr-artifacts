@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "id": "1009749841",
+  "fullName": "AlanOlimpio/list",
+  "commit": "6ff9bfa3a94bb5920f60aabacc8f56298cbf4326",
+  "acquiredAt": "2026-10-15T19:20:53.057Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "dist/index.html",
+      "reason": "preset:build-output",
+      "size": 347
+    },
+    {
+      "path": "list.png",
+      "reason": "preset:binaries",
+      "size": 121127
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 17,
+    "bytes": 165678
+  },
+  "languages": {
+    "Other": 156704,
+    "JavaScript": 6566,
+    "Markdown": 1094,
+    "JSON": 1055,
+    "HTML": 222,
+    "CSS": 37
+  },
+  "contentSha256": "cfa9ce30dd62b4d71f300cd7cc87ed95a480e2ebd55e917183097b16087e6c05"
+}

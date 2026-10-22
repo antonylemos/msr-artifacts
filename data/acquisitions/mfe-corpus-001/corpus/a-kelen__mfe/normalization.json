@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "id": "1007785611",
+  "fullName": "a-kelen/mfe",
+  "commit": "80e4481f9b927142d2c57f4c2787da93ad01b54e",
+  "acquiredAt": "2026-10-15T19:20:52.906Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 50,
+    "bytes": 1565014
+  },
+  "languages": {
+    "JSON": 1502016,
+    "JavaScript": 39537,
+    "Vue": 18079,
+    "YAML": 4090,
+    "HTML": 1130,
+    "Other": 162
+  },
+  "contentSha256": "556cfd8270122a15083e04a8a8cf50fcb9fbd070881a863b3b37b31b9fdcee2b"
+}
