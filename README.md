@@ -1,12 +1,26 @@
-# Research artifacts — Micro frontends (MFE)
+# An Exploratory Repository Mining Study to Characterize Micro-Frontend Implementations
 
-This package brings together data and analyses from a study of public GitHub repositories that are candidates for implementing micro frontends. It covers candidate discovery, sampling, screening, corpus acquisition, mining, dependency inspection and qualitative reviews. This file explains how the package is organized and the order in which to consult it. Results are in the sources indicated below, and all links are relative.
+This package brings together data and analyses from an exploratory study of GitHub public repositories that could implement micro-frontends. The study aims to empirically characterize how micro-frontend implementations manifest in software repositories through investigating three aspects:
+
+1. The repository artifacts and characteristics that provide evidence of micro-frontend implementations.
+2. How such manifestations vary across implementation approaches.
+3. The relationships among repository artifacts that characterize micro-frontend implementations.
+   
+Rather than assuming a predefined repository signature, the study seeks to identify the observable evidence that makes micro-frontend architectures recognizable.
+
+The study followed five phases:
+
+1. **Candidate repository discovery:** This phase performs automated searches for repositories through a custom TypeScript command-line tool (publicly available [here](https://github.com/antonylemos/repo-miner)) that uses [GitHub's REST API](https://docs.github.com/en/rest) to search for repositories and code and its [GraphQL API](https://docs.github.com/en/graphql) to retrieve metadata for eligibility assessment.
+2. **Candidate repository classification:** This phase forms the study sample by combining manual screening with classification of candidate repositories to determine those that actually contain the implementation of micro-frontends.
+3. 3. **Repository acquisition:** This phase consists of retrieving and normalizing the repositories classified as referring to micro-frontend implementations. 
+4. **Artifact mining:** This phase combines automated extraction with manual inspection of the repositories implementing micro-frontends to identify potentially relevant files and textual occurrences.
+5. **Evidence extraction and classification:** This phase consists of extracting evidence from the analyzed artifacts and classifying them into different dimensions: technology and dependency; configuration; source code; structure; composition relationships; build and deployment boundaries; documentation; and repository history.
 
 ## Folder map
 
 | Folder | Purpose |
-|---|---|
-| [`config/`](config/) | Executable research method: eligibility protocol, query catalog, and sampling, acquisition, mining and inspection configurations. |
+| :------| :------ |
+| [`config/`](config/) | Executable research method: eligibility protocol, query catalog, and sampling, acquisition, mining, and inspection configurations. |
 | [`data/discovery/`](data/discovery/) | Candidate discovery round, with hits per query, a diagnostic report, and text parts of the candidate CSV and SQL dump. |
 | [`data/samples/`](data/samples/) | Random sample of eligible candidates and cloning records. |
 | [`data/docs/`](data/docs/) | Analytical texts: classifications and eight reviews per repository, each review family with a methodology document. |
@@ -14,7 +28,7 @@ This package brings together data and analyses from a study of public GitHub rep
 | [`data/mining/`](data/mining/) and [`data/inspections/`](data/inspections/) | Structured mining and dependency inspection data, per repository. |
 | [`data/clones/`](data/clones/) | Archived repository clones used in the historical review. Supporting material. |
 
-The [inventory](data/inventory.json) records the origin, hashes and representation of materials in this cut. The [integrity guide](data/README.md) explains how to check them. Analysis metadata and manifests preserve the source's scientific references; hashes of texts after editorial revision are in the inventory. Discovery parts and clones have [reconstruction instructions](data/discovery/mfe-round-002/README.md) and [archive verification guidance](data/clones/README.md).
+The [inventory](data/inventory.json) records the origin, hashes, and representation of materials in this cut; the [integrity guide](data/README.md) explains how to check them. Analysis metadata and manifests preserve references to the sources. In addition, Discovery parts and clones have [reconstruction instructions](data/discovery/mfe-round-002/README.md) and [archive verification guidance](data/clones/README.md).
 
 ## Evaluation sequence
 
