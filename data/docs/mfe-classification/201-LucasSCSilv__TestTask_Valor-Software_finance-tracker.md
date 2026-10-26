@@ -20,69 +20,69 @@ annotation:
 
 # 201 — LucasSCSilv/TestTask_Valor-Software_finance-tracker
 
-## Contexto
+## Context
 
-“FinTrack”, aplicação React + Vite + Supabase de finanças pessoais com login, dashboard, transações, receitas, orçamento e categorias (`README.md:1–5`; `src/App.jsx:43–55`). A rota `/reports` carrega um módulo federado externo: `lazy(() => import('finance_tracker_reports/reports'))`, com o comentário “Reports is loaded remotely from finance-tracker-reports via Module Federation. Zephyr resolves the URL automatically at runtime.” (`src/App.jsx:12–14`, `50`). A configuração de build no snapshot, porém, é a de um remote: `name: 'finance_tracker_reports'`, `exposes: { './Reports': './src/Reports.jsx' }`, sem `remotes` (`vite.config.js:6–16`). O arquivo exposto não existe no snapshot, e `package.json` também se chama `finance-tracker-reports` (`package.json:2`). O `package-lock.json` pertence a outro manifesto, `test-task-valor-software` (`package-lock.json:2`, `7–25`). O nome do repositório não é usado como evidência.
+“FinTrack”, a React + Vite + Supabase personal-finance application with login, dashboard, transactions, income, budget and categories (`README.md:1–5`; `src/App.jsx:43–55`). Route `/reports` loads an external federated module: `lazy(() => import('finance_tracker_reports/reports'))`, with comment “Reports is loaded remotely from finance-tracker-reports via Module Federation. Zephyr resolves the URL automatically at runtime.” (`src/App.jsx:12–14`, `50`). Snapshot build configuration, however, is for a remote: `name: 'finance_tracker_reports'`, `exposes: { './Reports': './src/Reports.jsx' }`, without `remotes` (`vite.config.js:6–16`). Exposed file is absent from snapshot, and `package.json` is also named `finance-tracker-reports` (`package.json:2`). `package-lock.json` belongs to another manifest, `test-task-valor-software` (`package-lock.json:2`, `7–25`). Repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:202` registra rank 201, ID 1175499187, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:202` records rank 201, ID 1175499187, status `cloned`, branch `main` and front-matter commit, which is clone HEAD and `origin/main`. Every clone Git command used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:202` registra a estratégia `technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:26049` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:26056` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:202` records strategy `technology` and eligibility `pass`. Sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). ID appears in `data/discovery/mfe-round-001/candidates.csv:26049` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:26056` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna um hit por rodada, do endpoint `code`:
+`sqlite3 -readonly` query of tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns one hit per round, at endpoint `code`:
 
-| Consulta (`q`) | Subconsulta / consulta efetiva | `path` | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery / effective query | `path` | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `technology-module-federation-package-code`: `"@module-federation" filename:package.json` | `technology-module-federation-package-code#size:600..699` / `"@module-federation" filename:package.json size:600..699` | `package.json` | 2026-10-07T18:20:45.384Z / 2026-10-08T15:36:05.759Z |
 
-O `package.json` tem 614 bytes no SHA, dentro da faixa, e contém `"@module-federation/vite": "^1.1.6"` (`package.json:18`). Foi adicionado em `d716676` (2026-03-08) e não foi alterado depois. Os metadados do hit de código não trazem descrição, tópicos nem datas. A entrada é só por código; o README não contém termos de MFE (só Zephyr Cloud, `README.md:5`, `13`, `103–110`). A última alteração do README é `bfab541` (2026-03-09), anterior às coletas de outubro de 2026.
+`package.json` is 614 bytes at SHA, within range, and contains `"@module-federation/vite": "^1.1.6"` (`package.json:18`). It was added in `d716676` (2026-03-08) and unchanged afterward. Code-hit metadata supply no description, topics or dates. Entry is code-only; README contains no MFE terms (only Zephyr Cloud, `README.md:5`, `13`, `103–110`). Last README change is `bfab541` (2026-03-09), before October 2026 collections.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 20 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Um único projeto Vite (`index.html`, `src/` com `App.jsx`, `main.jsx`, `components/layout.jsx`, `context/AuthContext.jsx`, `lib/supabase.js` e seis páginas). Não há `src/Reports.jsx` nem outra aplicação. | contexto |
-| Código-fonte (consumo) | `src/App.jsx:12–14`: import dinâmico do especificador federado `finance_tracker_reports/reports`. `:16–27`: `ReportsWrapper` passa `userId` ao componente remoto dentro de `Suspense`. `:50`: rota `/reports`. `src/components/layout.jsx:9`: item de navegação “Reports”. | moderada |
-| Configuração (MF) | `vite.config.js:4`, `6–16`, `21`: `federation(mfConfig)` com `name: 'finance_tracker_reports'`, `filename: 'remoteEntry.js'`, `exposes './Reports' → './src/Reports.jsx'` e `shared` de `react`/`react-dom` singleton; `:3`, `22`: `withZephyr()`. Não há `remotes`. É a configuração do remote, não a do host que o consome. | ambígua |
-| Configuração (coerência) | O arquivo exposto não existe no SHA. O especificador consumido (`/reports`) não coincide com a chave exposta (`./Reports`). O app consumidor tem o mesmo `name` do remote. `react-router-dom` é importado (`src/main.jsx:3`; `src/App.jsx:2`) mas não está em `package.json:10–24`; aparece só no lockfile de outro manifesto (`package-lock.json:15`), cuja entrada raiz (`:7–25`) também não lista `@module-federation/vite` (ele só aparece como pacote resolvido, `:1003`). Não há `zephyr:dependencies` nem outra declaração que diga onde está o remote. | ambígua |
-| Código-fonte (fronteiras) | `git grep` por `../..`: nenhuma ocorrência; imports relativos só dentro de `src/`. Não há código da unidade de relatórios. | contexto |
-| Busca | `git grep -i` no SHA (exceto lockfile) por `zephyr`, `federation`, `remote`, `micro.?front` e `Reports`: só as linhas citadas acima. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 20 entries, all regular files `100644`; zero symlinks and zero gitlinks. One Vite project (`index.html`, `src/` with `App.jsx`, `main.jsx`, `components/layout.jsx`, `context/AuthContext.jsx`, `lib/supabase.js` and six pages). No `src/Reports.jsx` or other application. | context |
+| Source code (consumption) | `src/App.jsx:12–14`: dynamic import of federated specifier `finance_tracker_reports/reports`. `:16–27`: `ReportsWrapper` passes `userId` to remote component within `Suspense`. `:50`: route `/reports`. `src/components/layout.jsx:9`: navigation item “Reports”. | moderate |
+| Configuration (MF) | `vite.config.js:4`, `6–16`, `21`: `federation(mfConfig)` with `name: 'finance_tracker_reports'`, `filename: 'remoteEntry.js'`, `exposes './Reports' → './src/Reports.jsx'` and singleton `shared` for `react`/`react-dom`; `:3`, `22`: `withZephyr()`. No `remotes`. This is remote configuration, not configuration of host consuming it. | ambiguous |
+| Configuration (consistency) | Exposed file is absent at SHA. Consumed specifier (`/reports`) does not match exposed key (`./Reports`). Consumer app has same `name` as remote. `react-router-dom` is imported (`src/main.jsx:3`; `src/App.jsx:2`) but absent from `package.json:10–24`; it appears only in another manifest’s lockfile (`package-lock.json:15`), whose root entry (`:7–25`) also does not list `@module-federation/vite` (appears only as resolved package, `:1003`). No `zephyr:dependencies` or other declaration locates remote. | ambiguous |
+| Source code (boundaries) | `git grep` for `../..`: no occurrence; relative imports stay within `src/`. No reports-unit code exists. | context |
+| Search | `git grep -i` at the SHA (except lockfile) for `zephyr`, `federation`, `remote`, `micro.?front` and `Reports`: only lines cited above. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 6 commits, nenhum merge, todos de Lucas Silv `<lucasscsilv@outlook.com>`, de 2026-03-07 (`dbca30e`, “Initial commit”, só `README.md`) a 2026-03-09 (SHA `4d31c68`):
-- `d716676` (2026-03-08, “commit”): adiciona o projeto inteiro e `.__mf__temp/finance_tracker_reports/localSharedImportMap.js`, artefato gerado pelo plugin de federação (o `.gitignore:6` ignora `__mf__temp/`, sem o ponto inicial);
-- `a3a1150` (2026-03-08, “Update App.jsx”): altera `src/App.jsx`;
-- `2fd0d56` e `bfab541` (2026-03-09): editam o README pela interface web;
-- SHA `4d31c68` (2026-03-09): remove o diretório `.__mf__temp/finance_tracker_reports`.
+Non-shallow clone; 6 commits, no merge, all by Lucas Silv `<lucasscsilv@outlook.com>`, from 2026-03-07 (`dbca30e`, “Initial commit”, only `README.md`) to 2026-03-09 (SHA `4d31c68`):
+- `d716676` (2026-03-08, “commit”): adds entire project and `.__mf__temp/finance_tracker_reports/localSharedImportMap.js`, federation-plugin-generated artifact (`.gitignore:6` ignores `__mf__temp/`, without leading dot);
+- `a3a1150` (2026-03-08, “Update App.jsx”): changes `src/App.jsx`;
+- `2fd0d56` and `bfab541` (2026-03-09): edit README through web interface;
+- SHA `4d31c68` (2026-03-09): removes directory `.__mf__temp/finance_tracker_reports`.
 
-O blob anterior de `src/App.jsx` (`d716676`, `46d4070`) e o de `localSharedImportMap.js` (`76a2f98`) estão ausentes no clone e não foram buscados; não se sabe o que `a3a1150` alterou. O artefato `__mf__temp` com nome `finance_tracker_reports` indica que esta configuração de remote foi executada localmente, mas o snapshot não contém a fonte exposta.
+Previous blob of `src/App.jsx` (`d716676`, `46d4070`) and blob of `localSharedImportMap.js` (`76a2f98`) are absent from clone and were not fetched; what `a3a1150` changed is unknown. Artifact `__mf__temp` named `finance_tracker_reports` indicates this remote configuration was executed locally, but snapshot contains no exposed source.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | O app referencia explicitamente uma unidade externa por especificador federado (`src/App.jsx:12–14`), como no host que referencia remote externo de 087. |
-| Q2 | Yes | A unidade de relatórios é outro projeto (“finance-tracker-reports”, `src/App.jsx:12`), sem import de código-fonte; este repositório tem build próprio (`package.json:5–9`). |
-| Q3 | Yes | O app monta o componente remoto na rota `/reports` (`src/App.jsx:16–27`, `50`). |
-| Q4 | Undetermined | Há Module Federation configurado (`vite.config.js:6–16`, `21`), mas como remote, expondo arquivo inexistente e sem `remotes`; o consumo depende de resolução pelo Zephyr não declarada no repositório. Pelo critério, “a configuration whose actual use is unclear is Undetermined”. |
-| Q5 | Undetermined | Nenhuma resposta No e Q4 Undetermined. |
+| Q1 | Yes | App explicitly references external unit through federated specifier (`src/App.jsx:12–14`), as host referencing external remote in 087. |
+| Q2 | Yes | Reports unit is another project (“finance-tracker-reports”, `src/App.jsx:12`), without source-code import; this repository has own build (`package.json:5–9`). |
+| Q3 | Yes | App mounts remote component at route `/reports` (`src/App.jsx:16–27`, `50`). |
+| Q4 | Undetermined | Module Federation is configured (`vite.config.js:6–16`, `21`), but as remote, exposing nonexistent file and without `remotes`; consumption depends on Zephyr resolution undeclared in repository. Under criterion, “a configuration whose actual use is unclear is Undetermined”. |
+| Q5 | Undetermined | No No answer and Q4 Undetermined. |
 
-## Motivo
+## Rationale
 
-- `Uncertain` pela regra “No question is No, but at least one is Undetermined”, com `status: review`.
-- **Lado consumidor:** o código monta um remote externo por rota, como 087. Diferentemente de 087, a configuração do host não declara o remote; a resolução é atribuída ao Zephyr só em comentário (`src/App.jsx:13`). Faltam URL e variável de ambiente, o que é mais fraco que 145.
-- **Lado configurado:** a configuração de MF é a do próprio remote de relatórios, com fonte exposta ausente. O snapshot parece misturar o host com a configuração copiada do projeto do remote (mesmo `name` em `vite.config.js:7` e `package.json:2`; lockfile de outro manifesto).
-- **Campos:** `approaches: [module-federation]`, `ui_technologies: [react]`, `build_tools: [vite]`, `frontend_units: 2` (este app e o remote de relatórios externo), `unit_organization: multi-repo`. `repo_type: example`: tarefa de avaliação técnica, conforme o lockfile `test-task-valor-software` (`package-lock.json:2`), sem uso em produção documentado.
+- `Uncertain` under rule “No question is No, but at least one is Undetermined”, with `status: review`.
+- **Consumer side:** code mounts external remote through route, as 087. Unlike 087, host configuration declares no remote; resolution is attributed to Zephyr only in comment (`src/App.jsx:13`). URL and environment variable are missing, weaker than 145.
+- **Configured side:** MF configuration belongs to reports remote itself, with absent exposed source. Snapshot appears to mix host with configuration copied from remote project (same `name` in `vite.config.js:7` and `package.json:2`; lockfile from another manifest).
+- **Fields:** `approaches: [module-federation]`, `ui_technologies: [react]`, `build_tools: [vite]`, `frontend_units: 2` (this app and external reports remote), `unit_organization: multi-repo`. `repo_type: example`: technical-assessment task, according to lockfile `test-task-valor-software` (`package-lock.json:2`), without documented production use.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** Module Federation em Vite com Zephyr Cloud, em que a resolução do remote fica a cargo da plataforma de deploy, sem declaração de `remotes` no repositório.
-- **RQ1 (sinais enganosos):** o `@module-federation/vite` do `package.json` é real e está ligado no build, mas a configuração contradiz o papel do app no código.
-- **Protocolo (busca):** entrada só por busca de código no `package.json`. A elegibilidade muda de `unknown` (001) para `pass` (002).
-- **Protocolo (snapshot):** dois blobs históricos ausentes no clone parcial, não buscados.
+- **RQ2:** Vite Module Federation with Zephyr Cloud, where remote resolution is left to deployment platform, without `remotes` declaration in repository.
+- **RQ1 (misleading signals):** `@module-federation/vite` in `package.json` is real and connected to build, but configuration contradicts app’s code role.
+- **Protocol (search):** entry only through code search in `package.json`. Eligibility changes from `unknown` (001) to `pass` (002).
+- **Protocol (snapshot):** two historical blobs absent from partial clone, not fetched.
 
-## Decisão registrada
+## Recorded decision
 
-Mantido como `Uncertain`. O import federado e a montagem do componente remoto existem, mas a configuração disponível define este projeto como remote, expõe um arquivo ausente e não declara a origem do remoto consumido. A resolução pelo Zephyr é apenas comentada, sem configuração verificável no snapshot.
+Retained as `Uncertain`. Federated import and remote-component mounting exist, but available configuration defines project as remote, exposes absent file and declares no origin for consumed remote. Zephyr resolution is only commented, without verifiable snapshot configuration.

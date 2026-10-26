@@ -19,273 +19,273 @@ annotation:
 
 # 318 — farzanemadani/todo-app-using-mfe
 
-## Leitura do repositório
+## Repository overview
 
-A cadeia de evidências mostra três unidades frontend, host-app, todoForm-app e todoList-app (#14–#16). O host declara os dois remotes nas configurações de desenvolvimento e produção (#1–#2); os remotes expõem os componentes do formulário e da lista (#3–#6). Os imports federados e as rotas conectam esses contratos à interface do host (#7–#12), sustentando duas relações ativas de Module Federation (#17–#18). As telas também compartilham a chave `todos` do `localStorage` (#13, #19), na mesma origem da página do host, sem canal de eventos.
+Evidence chain shows three frontend units, host-app, todoForm-app and todoList-app (#14–#16). Host declares both remotes in development and production configurations (#1–#2); remotes expose form/list components (#3–#6). Federated imports and routes connect these contracts to host UI (#7–#12), supporting two active Module Federation relationships (#17–#18). Screens also share `todos` in `localStorage` (#13, #19), at host page’s origin, without an event channel.
 
-Os três builds são separados, mas deploy e versionamento independente não foram observados (#20–#22). As URLs de produção ainda usam `localhost` (#2), limite reconhecido pela documentação (#35). As entradas locais confirmam unidades, sem demonstrar que as telas remotas funcionem integralmente fora do host: as revisões finais descrevem o App isolado do formulário como uma tela genérica e a lista isolada sem o BrowserRouter de que depende. Isso não deixa uma interpretação arquitetural concorrente para a composição no host.
+Three builds are separate, but deployment and independent versioning unobserved (#20–#22). Production URLs still use `localhost` (#2), a limit acknowledged in documentation (#35). Local entries confirm units without demonstrating fully working remote screens outside host: final reviews describe isolated form App as generic screen and isolated list without required BrowserRouter. This leaves no competing architectural interpretation of host composition.
 
-A revisão de dependências não lista dependências das tecnologias inspecionadas, portanto a dimensão 1 não tem observações; o mecanismo aparece nas configurações do plugin fornecido pelo próprio webpack (#1–#6). A revisão histórica não tem pontos, portanto a dimensão 8 também fica sem observações. As 14 afirmações documentais estão corroboradas (#23–#36), mas têm força fraca por serem semânticas. A afirmação sobre persistência local (#36) contextualiza o exemplo, sem estabelecer sozinha uma fronteira de unidade ou composição.
+Dependency review lists no dependencies of inspected technologies, so dimension 1 has no observations; mechanism appears in webpack’s own plugin configurations (#1–#6). History review has no points, so dimension 8 also has no observations. All 14 documentary claims corroborated (#23–#36), but weak because semantic. Local persistence claim (#36) contextualizes example without alone establishing unit or composition boundary.
 
-## Observações
+## Observations
 
 ### 1. host-app/webpack.dev.js:4-5; host-app/webpack.dev.js:45-55
 
-**Observação:** `ModuleFederationPlugin` vem de `webpack.container`; a configuração declara `name: 'host_app'`, `filename: 'remoteEntry.js'`, os remotes `todoForm_app@http://localhost:3001/remoteEntry.js` e `todoList_app@http://localhost:3002/remoteEntry.js`, e `shared` com todas as `dependencies` do manifesto local.
+**Observation:** `ModuleFederationPlugin` comes from `webpack.container`; configuration declares `name: 'host_app'`, `filename: 'remoteEntry.js'`, remotes `todoForm_app@http://localhost:3001/remoteEntry.js` and `todoList_app@http://localhost:3002/remoteEntry.js`, and `shared` with all local manifest `dependencies`.
 
-**Interpretação:** A configuração de desenvolvimento liga o host a duas unidades nomeadas por Module Federation; os endereços continuam locais.
+**Interpretation:** Development configuration links host to two units named through Module Federation; addresses remain local.
 
 ### 2. host-app/webpack.prod.js:4-5; host-app/webpack.prod.js:49-59; host-app/webpack.prod.js:7-8
 
-**Observação:** `ModuleFederationPlugin` vem de `webpack.container`; a configuração declara `name: 'host_app'`, `filename: 'remoteEntry.js'`, os remotes `todoForm_app@http://localhost:3001/remoteEntry.js` e `todoList_app@http://localhost:3002/remoteEntry.js`, e `shared` com todas as `dependencies` do manifesto local. As URLs são montadas com as constantes `todoformAppurl` e `todolistAppurl`.
+**Observation:** `ModuleFederationPlugin` comes from `webpack.container`; configuration declares `name: 'host_app'`, `filename: 'remoteEntry.js'`, remotes `todoForm_app@http://localhost:3001/remoteEntry.js` and `todoList_app@http://localhost:3002/remoteEntry.js`, and `shared` with all local manifest `dependencies`. URLs are built with constants `todoformAppurl` and `todolistAppurl`.
 
-**Interpretação:** A configuração de produção liga o host a duas unidades nomeadas por Module Federation; os endereços continuam locais.
+**Interpretation:** Production configuration links host to two units named through Module Federation; addresses remain local.
 
 ### 3. todoForm-app/webpack.dev.js:4-5; todoForm-app/webpack.dev.js:48-57
 
-**Observação:** `ModuleFederationPlugin` vem de `webpack.container`; declara `name: 'todoForm_app'`, `filename: 'remoteEntry.js'`, `exposes` de `./TodoForm` para `./src/components/todoForm.jsx`, e `shared` com todas as `dependencies` do manifesto local.
+**Observation:** `ModuleFederationPlugin` comes from `webpack.container`; declares `name: 'todoForm_app'`, `filename: 'remoteEntry.js'`, `exposes` mapping `./TodoForm` to `./src/components/todoForm.jsx`, and `shared` with all local manifest `dependencies`.
 
-**Interpretação:** A configuração de desenvolvimento prepara uma unidade para oferecer seu componente por Module Federation, sem nomear um consumidor.
+**Interpretation:** Development configuration prepares unit to offer its component through Module Federation, without naming a consumer.
 
 ### 4. todoForm-app/webpack.prod.js:4-5; todoForm-app/webpack.prod.js:48-57
 
-**Observação:** `ModuleFederationPlugin` vem de `webpack.container`; declara `name: 'todoForm_app'`, `filename: 'remoteEntry.js'`, `exposes` de `./TodoForm` para `./src/components/todoForm.jsx`, e `shared` com todas as `dependencies` do manifesto local.
+**Observation:** `ModuleFederationPlugin` comes from `webpack.container`; declares `name: 'todoForm_app'`, `filename: 'remoteEntry.js'`, `exposes` mapping `./TodoForm` to `./src/components/todoForm.jsx`, and `shared` with all local manifest `dependencies`.
 
-**Interpretação:** A configuração de produção prepara uma unidade para oferecer seu componente por Module Federation, sem nomear um consumidor.
+**Interpretation:** Production configuration prepares unit to offer its component through Module Federation, without naming a consumer.
 
 ### 5. todoList-app/webpack.dev.js:4-5; todoList-app/webpack.dev.js:47-56
 
-**Observação:** `ModuleFederationPlugin` vem de `webpack.container`; declara `name: 'todoList_app'`, `filename: 'remoteEntry.js'`, `exposes` de `./todoList` para `./src/components/ToDoList.jsx`, e `shared` com todas as `dependencies` do manifesto local.
+**Observation:** `ModuleFederationPlugin` comes from `webpack.container`; declares `name: 'todoList_app'`, `filename: 'remoteEntry.js'`, `exposes` mapping `./todoList` to `./src/components/ToDoList.jsx`, and `shared` with all local manifest `dependencies`.
 
-**Interpretação:** A configuração de desenvolvimento prepara uma unidade para oferecer seu componente por Module Federation, sem nomear um consumidor.
+**Interpretation:** Development configuration prepares unit to offer its component through Module Federation, without naming a consumer.
 
 ### 6. todoList-app/webpack.prod.js:4-5; todoList-app/webpack.prod.js:47-56
 
-**Observação:** `ModuleFederationPlugin` vem de `webpack.container`; declara `name: 'todoList_app'`, `filename: 'remoteEntry.js'`, `exposes` de `./todoList` para `./src/components/ToDoList.jsx`, e `shared` com todas as `dependencies` do manifesto local.
+**Observation:** `ModuleFederationPlugin` comes from `webpack.container`; declares `name: 'todoList_app'`, `filename: 'remoteEntry.js'`, `exposes` mapping `./todoList` to `./src/components/ToDoList.jsx`, and `shared` with all local manifest `dependencies`.
 
-**Interpretação:** A configuração de produção prepara uma unidade para oferecer seu componente por Module Federation, sem nomear um consumidor.
+**Interpretation:** Production configuration prepares unit to offer its component through Module Federation, without naming a consumer.
 
 ### 7. host-app/src/App.jsx:2; todoForm-app/webpack.prod.js:49-52; host-app/webpack.prod.js:7, 53; host-app/webpack.dev.js:49
 
-**Observação:** `React.lazy(() => import('todoForm_app/TodoForm'))` declara `TodoForm`; a chave `todoForm_app` resolve o remote cujo `./TodoForm` aponta para `src/components/todoForm.jsx`.
+**Observation:** `React.lazy(() => import('todoForm_app/TodoForm'))` declares `TodoForm`; key `todoForm_app` resolves remote whose `./TodoForm` points to `src/components/todoForm.jsx`.
 
-**Interpretação:** O host nomeia e carrega o componente de outra unidade pelo contrato federado.
+**Interpretation:** Host names and loads another unit’s component through federated contract.
 
 ### 8. host-app/src/App.jsx:3; todoList-app/webpack.prod.js:48-51; host-app/webpack.prod.js:8, 54; host-app/webpack.dev.js:50
 
-**Observação:** `React.lazy(() => import('todoList_app/todoList'))` declara `ToDoList`; a chave `todoList_app` resolve o remote cujo `./todoList` aponta para `src/components/ToDoList.jsx`.
+**Observation:** `React.lazy(() => import('todoList_app/todoList'))` declares `ToDoList`; key `todoList_app` resolves remote whose `./todoList` points to `src/components/ToDoList.jsx`.
 
-**Interpretação:** O host nomeia e carrega a tela de lista de outra unidade pelo contrato federado.
+**Interpretation:** Host names and loads another unit’s list screen through federated contract.
 
 ### 9. host-app/src/App.jsx:2-3, 12-22; host-app/src/index.js:7-9
 
-**Observação:** `Routes` associa `/` a `ToDoList`, `/add` a `TodoForm` e `/edit/:id` a `TodoForm` com `type='edit'`, dentro de `Suspense`; o `BrowserRouter` envolve o `App` na entrada.
+**Observation:** `Routes` associates `/` with `ToDoList`, `/add` with `TodoForm` and `/edit/:id` with `TodoForm` with `type='edit'`, inside `Suspense`; `BrowserRouter` wraps `App` at entry.
 
-**Interpretação:** As rotas do host distribuem as telas dos dois remotes na mesma aplicação.
+**Interpretation:** Host routes distribute both remotes’ screens in same application.
 
 ### 10. host-app/src/App.jsx:13-15; host-app/src/App.jsx:3
 
-**Observação:** A rota `/` renderiza `<ToDoList />` em `Suspense` com fallback `loading`; o componente vem do import remoto da linha 3.
+**Observation:** Route `/` renders `<ToDoList />` in `Suspense` with fallback `loading`; component comes from remote import at line 3.
 
-**Interpretação:** A rota conecta o caminho `/` à tela de um remote no host.
+**Interpretation:** Route connects path `/` to remote screen in host.
 
 ### 11. host-app/src/App.jsx:16-18; host-app/src/App.jsx:2
 
-**Observação:** A rota `/add` renderiza `<TodoForm />` em `Suspense` com fallback `loading`; o componente vem do import remoto da linha 2.
+**Observation:** Route `/add` renders `<TodoForm />` in `Suspense` with fallback `loading`; component comes from remote import at line 2.
 
-**Interpretação:** A rota conecta o caminho `/add` à tela de um remote no host.
+**Interpretation:** Route connects path `/add` to remote screen in host.
 
 ### 12. host-app/src/App.jsx:19-21; host-app/src/App.jsx:2; todoForm-app/src/components/todoForm.jsx:14
 
-**Observação:** A rota `/edit/:id` renderiza `<TodoForm type='edit' />` em `Suspense` com fallback `loading`; o componente vem do import remoto da linha 2. O formulário lê o parâmetro de rota com `useParams`.
+**Observation:** Route `/edit/:id` renders `<TodoForm type='edit' />` in `Suspense` with fallback `loading`; component comes from remote import at line 2. Form reads route parameter through `useParams`.
 
-**Interpretação:** A rota conecta o caminho `/edit/:id` à tela de um remote no host.
+**Interpretation:** Route connects path `/edit/:id` to remote screen in host.
 
 ### 13. todoForm-app/src/components/todoForm.jsx:16, 27-42; todoList-app/src/components/ToDoList.jsx:8-12; host-app/src/App.jsx:2-3, 13-21; todoForm-app/webpack.prod.js:51-52
 
-**Observação:** O formulário lê e grava a chave `todos` ao adicionar e editar e navega para `/`; a lista lê essa chave ao montar e a regrava ao excluir. As duas telas são montadas pelas rotas do host. Não há evento `storage`.
+**Observation:** Form reads/writes `todos` when adding/editing and navigates to `/`; list reads key on mount and rewrites on deletion. Both screens mounted by host routes. No `storage` event.
 
-**Interpretação:** O código usa armazenamento do navegador para compartilhar estado entre os remotes na mesma origem do host. A construção de gravação não nomeia o consumidor; a leitura ocorre quando a lista monta novamente.
+**Interpretation:** Code uses browser storage to share state between remotes at host origin. Write construct does not name consumer; reading occurs when list remounts.
 
 ### 14. host-app/; host-app/package.json:7-8; host-app/webpack.dev.js:7; host-app/webpack.prod.js:11; host-app/src/bootstrap.js:1; host-app/src/index.js:5-10
 
-**Observação:** O diretório `host-app` tem manifesto e configurações webpack de desenvolvimento e produção próprios. A entrada `./src/bootstrap.js` importa `./index.js`, que monta o `App` com React; os scripts locais selecionam as duas configurações.
+**Observation:** Directory `host-app` has own manifest and development/production webpack configurations. Entry `./src/bootstrap.js` imports `./index.js`, mounting `App` with React; local scripts select both configurations.
 
-**Interpretação:** Confirma o limite de uma unidade frontend (host), registrada como `Yes` na revisão estrutural; a entrada local não estabelece sozinha a composição.
+**Interpretation:** Confirms frontend unit boundary (host), recorded `Yes` in structure review; local entry alone does not establish composition.
 
 ### 15. todoForm-app/; todoForm-app/package.json:7-8; todoForm-app/webpack.dev.js:9; todoForm-app/webpack.prod.js:9; todoForm-app/src/bootstrap.js:1; todoForm-app/src/index.js:3-4
 
-**Observação:** O diretório `todoForm-app` tem manifesto e configurações webpack de desenvolvimento e produção próprios. A entrada `./src/bootstrap.js` importa `./index.js`, que monta o `App` com React; os scripts locais selecionam as duas configurações.
+**Observation:** Directory `todoForm-app` has own manifest and development/production webpack configurations. Entry `./src/bootstrap.js` imports `./index.js`, mounting `App` with React; local scripts select both configurations.
 
-**Interpretação:** Confirma o limite de uma unidade frontend (remote), registrada como `Yes` na revisão estrutural; a entrada local não estabelece sozinha a composição.
+**Interpretation:** Confirms frontend unit boundary (remote), recorded `Yes` in structure review; local entry alone does not establish composition.
 
 ### 16. todoList-app/; todoList-app/package.json:8-9; todoList-app/webpack.dev.js:8; todoList-app/webpack.prod.js:8; todoList-app/src/bootstrap.js:1; todoList-app/src/index.js:3-4
 
-**Observação:** O diretório `todoList-app` tem manifesto e configurações webpack de desenvolvimento e produção próprios. A entrada `./src/bootstrap.js` importa `./index.js`, que monta o `App` com React; os scripts locais selecionam as duas configurações.
+**Observation:** Directory `todoList-app` has own manifest and development/production webpack configurations. Entry `./src/bootstrap.js` imports `./index.js`, mounting `App` with React; local scripts select both configurations.
 
-**Interpretação:** Confirma o limite de uma unidade frontend (remote), registrada como `Yes` na revisão estrutural; a entrada local não estabelece sozinha a composição.
+**Interpretation:** Confirms frontend unit boundary (remote), recorded `Yes` in structure review; local entry alone does not establish composition.
 
 ### 17. host-app/src/App.jsx:2; host-app/src/App.jsx:12-22; host-app/webpack.dev.js:49; host-app/webpack.prod.js:7, 53; todoForm-app/webpack.dev.js:48-53; todoForm-app/webpack.prod.js:48-53; host-app/webpack.prod.js:11; host-app/src/bootstrap.js:1; host-app/src/index.js:2-10
 
-**Observação:** O host declara `todoForm_app`, importa `todoForm_app/TodoForm` e monta o componente nas rotas de App. O remote declara o mesmo nome e expõe `./TodoForm`; a entrada do host alcança o `App`.
+**Observation:** Host declares `todoForm_app`, imports `todoForm_app/TodoForm` and mounts component in App routes. Remote declares same name and exposes `./TodoForm`; host entry reaches `App`.
 
-**Interpretação:** A relação `host-app → todoForm-app` está presente e ativa no snapshot por `module-federation`, com consumidor, destino e exposição coincidentes.
+**Interpretation:** Relationship `host-app → todoForm-app` present and active in snapshot through `module-federation`, with matching consumer, target and exposure.
 
 ### 18. host-app/src/App.jsx:3; host-app/src/App.jsx:12-22; host-app/webpack.dev.js:50; host-app/webpack.prod.js:8, 54; todoList-app/webpack.dev.js:47-52; todoList-app/webpack.prod.js:47-52; host-app/webpack.prod.js:11; host-app/src/bootstrap.js:1; host-app/src/index.js:2-10
 
-**Observação:** O host declara `todoList_app`, importa `todoList_app/todoList` e monta o componente nas rotas de App. O remote declara o mesmo nome e expõe `./todoList`; a entrada do host alcança o `App`.
+**Observation:** Host declares `todoList_app`, imports `todoList_app/todoList` and mounts component in App routes. Remote declares same name and exposes `./todoList`; host entry reaches `App`.
 
-**Interpretação:** A relação `host-app → todoList-app` está presente e ativa no snapshot por `module-federation`, com consumidor, destino e exposição coincidentes.
+**Interpretation:** Relationship `host-app → todoList-app` present and active in snapshot through `module-federation`, with matching consumer, target and exposure.
 
 ### 19. todoForm-app/src/components/todoForm.jsx:16, 27-42; todoList-app/src/components/ToDoList.jsx:8-12; host-app/src/App.jsx:2-3, 13-21
 
-**Observação:** O formulário e a lista leem e gravam `localStorage['todos']`. Salvar volta à rota `/`, onde a lista relê os dados ao montar; excluir também regrava a chave. As duas telas são carregadas na página do host.
+**Observation:** Form/list read and write `localStorage['todos']`. Saving returns to `/`, where list rereads data on mount; deletion also rewrites key. Both screens loaded in host page.
 
-**Interpretação:** A relação `todoForm-app ↔ todoList-app` é comunicação bidirecional ativa por estado compartilhado, mecanismo `other`. Depende da mesma origem; as portas isoladas não compartilham esse armazenamento e não há sincronização por evento.
+**Interpretation:** Relationship `todoForm-app ↔ todoList-app` is active bidirectional communication through shared state, mechanism `other`. Requires same origin; isolated ports do not share storage and there is no event synchronization.
 
 ### 20. host-app/package.json:3, 8; host-app/webpack.prod.js:11-16; host-app/webpack.prod.js:49-55; host-app/webpack.dev.js:14
 
-**Observação:** O script `build` seleciona o `webpack.prod.js` de `host-app`, com entrada própria e saída `build/bundle.js` local. O plugin de federação declara os dois remotes. O servidor de desenvolvimento usa a porta 3000. A revisão registra build `separado`, deploy `não observado` e versionamento `No`; `version: 1.0.0` não é usado em publicação.
+**Observation:** Script `build` selects `webpack.prod.js` of `host-app`, with own entry and local output `build/bundle.js`. Federation plugin declares both remotes. Development server uses port 3000. Review records build `separate`, deployment `not observed`, versioning `No`; `version: 1.0.0` unused in publication.
 
-**Interpretação:** O build confirma o limite de `host-app` e permite gerar seu artefato separadamente. Não há evidência de publicação ou versionamento independente; endereços locais não estabelecem deploy.
+**Interpretation:** Build confirms boundary of `host-app` and allows separate artifact generation. No publication/independent versioning evidence; local addresses do not establish deployment.
 
 ### 21. todoForm-app/package.json:3, 8; todoForm-app/webpack.prod.js:9-14; todoForm-app/webpack.prod.js:48-53; todoForm-app/webpack.dev.js:16; host-app/webpack.prod.js:7, 53
 
-**Observação:** O script `build` seleciona o `webpack.prod.js` de `todoForm-app`, com entrada própria e saída `build/bundle.js` local. O plugin de federação declara remoteEntry.js e a exposição do componente. O servidor de desenvolvimento usa a porta 3001. A revisão registra build `separado`, deploy `não observado` e versionamento `No`; `version: 1.0.0` não é usado em publicação.
+**Observation:** Script `build` selects `webpack.prod.js` of `todoForm-app`, with own entry and local output `build/bundle.js`. Federation plugin declares remoteEntry.js and component exposure. Development server uses port 3001. Review records build `separate`, deployment `not observed`, versioning `No`; `version: 1.0.0` unused in publication.
 
-**Interpretação:** O build confirma o limite de `todoForm-app` e permite gerar seu artefato separadamente. Não há evidência de publicação ou versionamento independente; endereços locais não estabelecem deploy.
+**Interpretation:** Build confirms boundary of `todoForm-app` and allows separate artifact generation. No publication/independent versioning evidence; local addresses do not establish deployment.
 
 ### 22. todoList-app/package.json:3, 9; todoList-app/webpack.prod.js:8-13; todoList-app/webpack.prod.js:47-52; todoList-app/webpack.dev.js:15; host-app/webpack.prod.js:8, 54
 
-**Observação:** O script `build` seleciona o `webpack.prod.js` de `todoList-app`, com entrada própria e saída `build/bundle.js` local. O plugin de federação declara remoteEntry.js e a exposição do componente. O servidor de desenvolvimento usa a porta 3002. A revisão registra build `separado`, deploy `não observado` e versionamento `No`; `version: 1.0.0` não é usado em publicação.
+**Observation:** Script `build` selects `webpack.prod.js` of `todoList-app`, with own entry and local output `build/bundle.js`. Federation plugin declares remoteEntry.js and component exposure. Development server uses port 3002. Review records build `separate`, deployment `not observed`, versioning `No`; `version: 1.0.0` unused in publication.
 
-**Interpretação:** O build confirma o limite de `todoList-app` e permite gerar seu artefato separadamente. Não há evidência de publicação ou versionamento independente; endereços locais não estabelecem deploy.
+**Interpretation:** Build confirms boundary of `todoList-app` and allows separate artifact generation. No publication/independent versioning evidence; local addresses do not establish deployment.
 
 ### 23. README.md:3
 
-**Observação:** O README apresenta um pequeno projeto React de micro-frontends construído com Webpack Module Federation.
+**Observation:** README presents a small React microfrontends project built with Webpack Module Federation.
 
-**Interpretação:** A afirmação situa o projeto como composição de unidades por federação e é corroborada pelas unidades e relações; sozinha é evidência semântica.
+**Interpretation:** Claim situates project as federated unit composition, corroborated by units and relationships; alone semantic evidence.
 
 ### 24. README.md:5-9
 
-**Observação:** O README divide a aplicação em três apps: host-app como shell e roteador, todoForm-app para adicionar e editar e todoList-app para listar e excluir.
+**Observation:** README divides application into three apps: host-app as shell/router, todoForm-app for adding/editing and todoList-app for listing/deleting.
 
-**Interpretação:** Descreve limites e papéis de três unidades, corroborados pela estrutura, pelas relações e pelas rotas.
+**Interpretation:** Describes three unit boundaries/roles, corroborated by structure, relationships and routes.
 
 ### 25. README.md:11
 
-**Observação:** O README diz que as aplicações se comunicam por Module Federation e compartilham tarefas por localStorage.
+**Observation:** README says applications communicate through Module Federation and share tasks through localStorage.
 
-**Interpretação:** A afirmação descreve a composição e o estado compartilhado das unidades; as três relações a corroboram, com o compartilhamento restrito à origem do host.
+**Interpretation:** Describes unit composition/shared state; three relationships corroborate it, with sharing restricted to host origin.
 
 ### 26. README.md:16
 
-**Observação:** O README anuncia módulos remotos carregados de forma lazy com React.lazy e Suspense.
+**Observation:** README announces remote modules lazy-loaded with React.lazy and Suspense.
 
-**Interpretação:** Nomeia um mecanismo de carga de módulos remotos, sem situar unidades nessa frase; os imports e montagens o corroboram.
+**Interpretation:** Names remote-module loading mechanism without locating units in this sentence; imports/mounts corroborate it.
 
 ### 27. README.md:20
 
-**Observação:** O README afirma que cada app tem configurações webpack separadas para desenvolvimento e produção.
+**Observation:** README claims each app has separate development/production webpack configurations.
 
-**Interpretação:** Descreve a separação de build das unidades, corroborada pelos marcadores e scripts da revisão estrutural.
+**Interpretation:** Describes unit build separation, corroborated by structure-review markers/scripts.
 
 ### 28. README.md:43-46
 
-**Observação:** O README diz que host-app carrega todoForm_app e todoList_app dos endereços http://localhost:3001/remoteEntry.js e http://localhost:3002/remoteEntry.js.
+**Observation:** README says host-app loads todoForm_app and todoList_app from http://localhost:3001/remoteEntry.js and http://localhost:3002/remoteEntry.js.
 
-**Interpretação:** Descreve as ligações do host aos dois remotes, corroboradas pelas configurações e relações ativas.
+**Interpretation:** Describes host links to two remotes, corroborated by configurations/active relationships.
 
 ### 29. README.md:48-52
 
-**Observação:** O README associa / à lista remota, /add ao formulário de adição e /edit/:id ao formulário de edição.
+**Observation:** README maps / to remote list, /add to addition form and /edit/:id to edit form.
 
-**Interpretação:** Documenta a distribuição das telas remotas nas rotas do host, corroborada pelo código.
+**Interpretation:** Documents remote screens distributed across host routes, corroborated by code.
 
 ### 30. README.md:75
 
-**Observação:** O README instrui iniciar cada aplicação em um terminal separado.
+**Observation:** README instructs starting each application in a separate terminal.
 
-**Interpretação:** Descreve processos de desenvolvimento por aplicação, corroborados pelos servidores locais; não afirma funcionamento completo isolado dos remotes.
+**Interpretation:** Describes per-application development processes corroborated by local servers; does not claim fully working isolated remotes.
 
 ### 31. README.md:97; README.md:105
 
-**Observação:** O README instrui construir cada aplicação separadamente e diz que os bundles ficam no diretório build/ de cada app.
+**Observation:** README instructs building each application separately and says bundles stay in each app’s build/ directory.
 
-**Interpretação:** Descreve artefatos de build separados por unidade, corroborados pelos três builds.
+**Interpretation:** Describes separate unit build artifacts, corroborated by three builds.
 
 ### 32. README.md:115-118
 
-**Observação:** O README lista todoForm_app/TodoForm e todoList_app/todoList como remotes do host.
+**Observation:** README lists todoForm_app/TodoForm and todoList_app/todoList as host remotes.
 
-**Interpretação:** Documenta os contratos entre host e remotes, corroborados pelos imports e relações.
+**Interpretation:** Documents host/remote contracts, corroborated by imports/relationships.
 
 ### 33. README.md:120-123
 
-**Observação:** O README diz que todoForm-app expõe ./TodoForm e todoList-app expõe ./todoList.
+**Observation:** README says todoForm-app exposes ./TodoForm and todoList-app exposes ./todoList.
 
-**Interpretação:** Descreve as interfaces oferecidas pelas duas unidades, corroboradas pelas exposições e relações.
+**Interpretation:** Describes interfaces offered by both units, corroborated by exposures/relationships.
 
 ### 34. README.md:127
 
-**Observação:** O README afirma que não existe package.json na raiz e que as dependências são instaladas por app.
+**Observation:** README claims no root package.json and dependencies installed per app.
 
-**Interpretação:** A afirmação descreve a organização em projetos com manifestos próprios; não implica deploy independente.
+**Interpretation:** Describes projects with own manifests; does not imply independent deployment.
 
 ### 35. README.md:128
 
-**Observação:** O README reconhece que a configuração de produção do host aponta para localhost e que o deploy exigiria atualizar as URLs dos remotes.
+**Observation:** README acknowledges host production configuration points to localhost and deployment requires updating remote URLs.
 
-**Interpretação:** Documenta a resolução local entre unidades e o limite de publicação; as URLs configuradas corroboram a afirmação sem demonstrar deploy.
+**Interpretation:** Documents local inter-unit resolution/publication limit; configured URLs corroborate claim without demonstrating deployment.
 
 ### 36. README.md:129
 
-**Observação:** O README diz que os dados são locais ao navegador, sem API nem banco de dados.
+**Observation:** README says data local to browser, without API/database.
 
-**Interpretação:** Descreve uma limitação de persistência, sem estabelecer por si um mecanismo de composição ou um limite frontend; a comunicação por estado compartilhado corrobora o uso de dados locais.
+**Interpretation:** Describes persistence limitation without alone establishing composition mechanism/frontend boundary; shared-state communication corroborates local data usage.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.3 (host-app, Marcadores e Build); 3.4.4 (host-app/src/App.jsx:2, :3, Observação); 3.4.5 #1, #2 (Configuração); 3.4.7 #6 (Evidência) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #7; configura #8; configura #17; configura #18 |
-| 2 | 3.4.3 (host-app, Marcadores e Build); 3.4.4 (host-app/src/App.jsx:2, :3, Observação); 3.4.5 #1, #2 (Configuração); 3.4.6 #1 (Artefatos), #2, #3 (Onde é servida); 3.4.7 #1, #6, #13 (Evidência) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #7; configura #8; configura #17; configura #18 |
-| 3 | 3.4.3 (todoForm-app, Marcadores e Build); 3.4.5 #1 (Configuração) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #15; configura #17 |
-| 4 | 3.4.3 (todoForm-app, Marcadores e Build); 3.4.4 (host-app/src/App.jsx:2, Observação; todoForm-app/src/components/todoForm.jsx:29, Observação); 3.4.5 #1 (Configuração); 3.4.6 #2 (Artefatos); 3.4.7 #11 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #15; configura #17 |
-| 5 | 3.4.3 (todoList-app, Marcadores e Build); 3.4.5 #2 (Configuração) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #16; configura #18 |
-| 6 | 3.4.3 (todoList-app, Marcadores e Build); 3.4.4 (host-app/src/App.jsx:3, Observação); 3.4.5 #2 (Configuração); 3.4.6 #3 (Artefatos); 3.4.7 #11 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #16; configura #18 |
-| 7 | 3.4.4 (host-app/src/App.jsx:2) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #17 |
-| 8 | 3.4.4 (host-app/src/App.jsx:3) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #18 |
-| 9 | 3.4.4 (host-app/src/App.jsx:12) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #17; implementa #18 |
-| 10 | 3.4.4 (host-app/src/App.jsx:14) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #18 |
-| 11 | 3.4.4 (host-app/src/App.jsx:17) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #17 |
-| 12 | 3.4.4 (host-app/src/App.jsx:20) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #17 |
-| 13 | 3.4.4 (todoForm-app/src/components/todoForm.jsx:29) | 3 código | código-fonte | other | arquitetural | moderada | implementa #19 |
-| 14 | 3.4.3 (host-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 15 | 3.4.3 (todoForm-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 16 | 3.4.3 (todoList-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 17 | 3.4.5 #1 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #14; liga #15 |
-| 18 | 3.4.5 #2 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #14; liga #16 |
-| 19 | 3.4.5 #3 | 5 composição | código-fonte | other | arquitetural | forte | liga #15; liga #16 |
-| 20 | 3.4.6 #1 | 6 build-deploy | configuração | module-federation | arquitetural | moderada | publica #14 |
-| 21 | 3.4.6 #2 | 6 build-deploy | configuração | module-federation | arquitetural | moderada | publica #15 |
-| 22 | 3.4.6 #3 | 6 build-deploy | configuração | module-federation | arquitetural | moderada | publica #16 |
-| 23 | 3.4.7 #1 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #14; corrobora #15; corrobora #16; corrobora #17; corrobora #18 |
-| 24 | 3.4.7 #2 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #14; corrobora #15; corrobora #16; corrobora #9; corrobora #17; corrobora #18 |
-| 25 | 3.4.7 #3 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #17; corrobora #18; corrobora #19 |
-| 26 | 3.4.7 #4 | 7 documentação | documentação | — | tecnológica | fraca | corrobora #7; corrobora #8; corrobora #10; corrobora #11; corrobora #12 |
-| 27 | 3.4.7 #5 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #14; corrobora #15; corrobora #16 |
-| 28 | 3.4.7 #6 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #1; corrobora #2; corrobora #17; corrobora #18 |
-| 29 | 3.4.7 #7 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #9; corrobora #10; corrobora #11; corrobora #12 |
-| 30 | 3.4.7 #8 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #20; corrobora #21; corrobora #22 |
-| 31 | 3.4.7 #9 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #20; corrobora #21; corrobora #22 |
-| 32 | 3.4.7 #10 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #7; corrobora #8; corrobora #17; corrobora #18 |
-| 33 | 3.4.7 #11 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #3; corrobora #4; corrobora #5; corrobora #6; corrobora #17; corrobora #18 |
-| 34 | 3.4.7 #12 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #14; corrobora #15; corrobora #16 |
-| 35 | 3.4.7 #13 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #2 |
-| 36 | 3.4.7 #14 | 7 documentação | documentação | — | contexto | fraca | corrobora #19; corrobora todoForm-app/src/components/todoForm.jsx:16-40; corrobora todoList-app/src/components/ToDoList.jsx:8-12 |
+| 1 | 3.4.3 (host-app, Markers and Build); 3.4.4 (host-app/src/App.jsx:2, :3, Observation); 3.4.5 #1, #2 (Configuration); 3.4.7 #6 (Evidence) | 2 configuration | configuration | module-federation | architectural | strong | configures #7; configures #8; configures #17; configures #18 |
+| 2 | 3.4.3 (host-app, Markers and Build); 3.4.4 (host-app/src/App.jsx:2, :3, Observation); 3.4.5 #1, #2 (Configuration); 3.4.6 #1 (Artifacts), #2, #3 (Where served); 3.4.7 #1, #6, #13 (Evidence) | 2 configuration | configuration | module-federation | architectural | strong | configures #7; configures #8; configures #17; configures #18 |
+| 3 | 3.4.3 (todoForm-app, Markers and Build); 3.4.5 #1 (Configuration) | 2 configuration | configuration | module-federation | technological | moderate | configures #15; configures #17 |
+| 4 | 3.4.3 (todoForm-app, Markers and Build); 3.4.4 (host-app/src/App.jsx:2, Observation; todoForm-app/src/components/todoForm.jsx:29, Observation); 3.4.5 #1 (Configuration); 3.4.6 #2 (Artifacts); 3.4.7 #11 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #15; configures #17 |
+| 5 | 3.4.3 (todoList-app, Markers and Build); 3.4.5 #2 (Configuration) | 2 configuration | configuration | module-federation | technological | moderate | configures #16; configures #18 |
+| 6 | 3.4.3 (todoList-app, Markers and Build); 3.4.4 (host-app/src/App.jsx:3, Observation); 3.4.5 #2 (Configuration); 3.4.6 #3 (Artifacts); 3.4.7 #11 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #16; configures #18 |
+| 7 | 3.4.4 (host-app/src/App.jsx:2) | 3 code | source code | module-federation | architectural | strong | implements #17 |
+| 8 | 3.4.4 (host-app/src/App.jsx:3) | 3 code | source code | module-federation | architectural | strong | implements #18 |
+| 9 | 3.4.4 (host-app/src/App.jsx:12) | 3 code | source code | module-federation | architectural | strong | implements #17; implements #18 |
+| 10 | 3.4.4 (host-app/src/App.jsx:14) | 3 code | source code | module-federation | architectural | strong | implements #18 |
+| 11 | 3.4.4 (host-app/src/App.jsx:17) | 3 code | source code | module-federation | architectural | strong | implements #17 |
+| 12 | 3.4.4 (host-app/src/App.jsx:20) | 3 code | source code | module-federation | architectural | strong | implements #17 |
+| 13 | 3.4.4 (todoForm-app/src/components/todoForm.jsx:29) | 3 code | source code | other | architectural | moderate | implements #19 |
+| 14 | 3.4.3 (host-app) | 4 structure | directory | — | architectural | moderate | — |
+| 15 | 3.4.3 (todoForm-app) | 4 structure | directory | — | architectural | moderate | — |
+| 16 | 3.4.3 (todoList-app) | 4 structure | directory | — | architectural | moderate | — |
+| 17 | 3.4.5 #1 | 5 composition | source code | module-federation | architectural | strong | links #14; links #15 |
+| 18 | 3.4.5 #2 | 5 composition | source code | module-federation | architectural | strong | links #14; links #16 |
+| 19 | 3.4.5 #3 | 5 composition | source code | other | architectural | strong | links #15; links #16 |
+| 20 | 3.4.6 #1 | 6 build-deploy | configuration | module-federation | architectural | moderate | publishes #14 |
+| 21 | 3.4.6 #2 | 6 build-deploy | configuration | module-federation | architectural | moderate | publishes #15 |
+| 22 | 3.4.6 #3 | 6 build-deploy | configuration | module-federation | architectural | moderate | publishes #16 |
+| 23 | 3.4.7 #1 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #14; corroborates #15; corroborates #16; corroborates #17; corroborates #18 |
+| 24 | 3.4.7 #2 | 7 documentation | documentation | — | architectural | weak | corroborates #14; corroborates #15; corroborates #16; corroborates #9; corroborates #17; corroborates #18 |
+| 25 | 3.4.7 #3 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #17; corroborates #18; corroborates #19 |
+| 26 | 3.4.7 #4 | 7 documentation | documentation | — | technological | weak | corroborates #7; corroborates #8; corroborates #10; corroborates #11; corroborates #12 |
+| 27 | 3.4.7 #5 | 7 documentation | documentation | — | architectural | weak | corroborates #14; corroborates #15; corroborates #16 |
+| 28 | 3.4.7 #6 | 7 documentation | documentation | — | architectural | weak | corroborates #1; corroborates #2; corroborates #17; corroborates #18 |
+| 29 | 3.4.7 #7 | 7 documentation | documentation | — | architectural | weak | corroborates #9; corroborates #10; corroborates #11; corroborates #12 |
+| 30 | 3.4.7 #8 | 7 documentation | documentation | — | architectural | weak | corroborates #20; corroborates #21; corroborates #22 |
+| 31 | 3.4.7 #9 | 7 documentation | documentation | — | architectural | weak | corroborates #20; corroborates #21; corroborates #22 |
+| 32 | 3.4.7 #10 | 7 documentation | documentation | — | architectural | weak | corroborates #7; corroborates #8; corroborates #17; corroborates #18 |
+| 33 | 3.4.7 #11 | 7 documentation | documentation | — | architectural | weak | corroborates #3; corroborates #4; corroborates #5; corroborates #6; corroborates #17; corroborates #18 |
+| 34 | 3.4.7 #12 | 7 documentation | documentation | — | architectural | weak | corroborates #14; corroborates #15; corroborates #16 |
+| 35 | 3.4.7 #13 | 7 documentation | documentation | — | architectural | weak | corroborates #2 |
+| 36 | 3.4.7 #14 | 7 documentation | documentation | — | context | weak | corroborates #19; corroborates todoForm-app/src/components/todoForm.jsx:16-40; corroborates todoList-app/src/components/ToDoList.jsx:8-12 |
 
-## Resumo
+## Summary
 
-Observações: 36. Dimensões (tecnologia: 0, configuração: 6, código: 7, estrutura: 3, composição: 3, build-deploy: 3, documentação: 14, histórico: 0). Força (forte: 11, moderada: 11, fraca: 14, ambígua: 0). Evidência (tecnológica: 5, arquitetural: 30, contexto: 1).
+Observations: 36. Dimensions (technology: 0, configuration: 6, code: 7, structure: 3, composition: 3, build-deploy: 3, documentation: 14, history: 0). Strength (strong: 11, moderate: 11, weak: 14, ambiguous: 0). Evidence (technological: 5, architectural: 30, context: 1).

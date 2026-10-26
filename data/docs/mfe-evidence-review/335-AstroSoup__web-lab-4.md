@@ -19,203 +19,203 @@ annotation:
 
 # 335 — AstroSoup/web-lab-4
 
-## Leitura do repositório
+## Repository overview
 
-As três declarações de `@module-federation/vite` são sinais isolados (#1–3). A cadeia arquitetural passa pelas configurações que nomeiam os remotes e expõem os módulos (#4–6), pelos imports e renderizações dos dois painéis no host e de PopupWindow no remote de entrada (#7–8, #11), e pelas quatro relações federadas ativas (#15–18). O host também fornece HistoryStore e ErrorStore (#9–10), que sustentam três relações de comunicação bidirecional por estado reativo compartilhado, registradas como `events` (#19–21).
+Three `@module-federation/vite` declarations isolated signals (#1–3). Architectural chain passes through configurations naming remotes/exposing modules (#4–6), imports/rendering of two panels in host and PopupWindow in input remote (#7–8, #11), and four active federated relationships (#15–18). Host also provides HistoryStore/ErrorStore (#9–10), supporting three bidirectional communication relationships through shared reactive state, recorded as `events` (#19–21).
 
-A estrutura confirma o host como unidade frontend (#12), mas mantém os dois remotes como `Undetermined`: há pacote e build próprios, enquanto seus `src/main.js` estão vazios (#13–14). O histórico esclarece que essas entradas foram adicionadas já vazias, sem resolver sua autonomia de execução (#25–26). Isso não anula o consumo federado ativo dos painéis. Os três builds são separados, porém seus resultados são publicados na mesma imagem e no mesmo serviço nginx, sem versionamento independente (#22–24).
+Structure confirms host frontend unit (#12), but both remotes remain `Undetermined`: own package/build while `src/main.js` empty (#13–14). History clarifies entries added already empty without resolving execution autonomy (#25–26). Does not undo active panel federation consumption. Three builds separate but results published in same image/nginx service without independent versioning (#22–24).
 
-A revisão documental tem zero afirmações, portanto não gera observações. Não há sinal textual a confrontar com a implementação. A configuração foi deduplicada em um bloco por unidade; caminhos de publicação nginx permanecem em build/deploy. As fontes são as sete revisões finais e os trechos citados do snapshot, sem alteração de seus julgamentos.
+Documentation review has zero claims, so no observations/textual signal to compare with implementation. Configuration deduplicated into one block per unit; nginx publication paths remain in build/deployment. Sources are seven final reviews/cited snapshot excerpts, without changing judgments.
 
-## Observações
+## Observations
 
 ### 1. frontend/vite/host/package.json:17
 
-**Observação:** O manifesto declara `@module-federation/vite` na versão `latest`, em `devDependencies`.
+**Observation:** Manifest declares `@module-federation/vite` version `latest` in `devDependencies`.
 
-**Interpretação:** É um sinal tecnológico isolado de Module Federation; a revisão registra Configurada `Yes`, cuja configuração tem observação própria.
+**Interpretation:** Isolated Module Federation technology signal; review records Configured `Yes`, configuration has own observation.
 
 ### 2. frontend/vite/remote-inputs/package.json:16
 
-**Observação:** O manifesto declara `@module-federation/vite` na versão `latest`, em `devDependencies`.
+**Observation:** Manifest declares `@module-federation/vite` version `latest` in `devDependencies`.
 
-**Interpretação:** É um sinal tecnológico isolado de Module Federation; a revisão registra Configurada `Yes`, cuja configuração tem observação própria.
+**Interpretation:** Isolated Module Federation technology signal; review records Configured `Yes`, configuration has own observation.
 
 ### 3. frontend/vite/remote-results/package.json:16
 
-**Observação:** O manifesto declara `@module-federation/vite` na versão `latest`, em `devDependencies`.
+**Observation:** Manifest declares `@module-federation/vite` version `latest` in `devDependencies`.
 
-**Interpretação:** É um sinal tecnológico isolado de Module Federation; a revisão registra Configurada `Yes`, cuja configuração tem observação própria.
+**Interpretation:** Isolated Module Federation technology signal; review records Configured `Yes`, configuration has own observation.
 
 ### 4. frontend/vite/host/vite.config.js:3; frontend/vite/host/vite.config.js:13-38
 
-**Observação:** O plugin `federation` configura `host`, publica `remoteEntry.js`, expõe AuthStore, HistoryStore, ErrorStore e PopupWindow e declara `remote_inputs` em `https://localhost/remote-inputs/remoteEntry.js` e `remote_results` em `https://localhost/remote-results/remoteEntry.js`. Vue e Pinia são singleton.
+**Observation:** Plugin `federation` configures `host`, publishes `remoteEntry.js`, exposes AuthStore, HistoryStore, ErrorStore, PopupWindow and declares `remote_inputs` at `https://localhost/remote-inputs/remoteEntry.js`, `remote_results` at `https://localhost/remote-results/remoteEntry.js`. Vue/Pinia singleton.
 
-**Interpretação:** A configuração liga o host a dois remotes nomeados e oferece módulos para consumo no sentido inverso.
+**Interpretation:** Configuration links host to two named remotes/offers modules for reverse consumption.
 
 ### 5. frontend/vite/remote-inputs/vite.config.js:3; frontend/vite/remote-inputs/vite.config.js:13-30
 
-**Observação:** O plugin `federation` configura `remote_inputs`, publica `remoteEntry.js`, expõe `./InputsContainer` e declara o remote `host` em `https://localhost/remoteEntry.js`. Vue e Pinia são singleton.
+**Observation:** Plugin `federation` configures `remote_inputs`, publishes `remoteEntry.js`, exposes `./InputsContainer` and declares remote `host` at `https://localhost/remoteEntry.js`. Vue/Pinia singleton.
 
-**Interpretação:** O bloco configura o fornecedor do painel e sua ligação federada de volta ao host; não é apenas uma exposição isolada.
+**Interpretation:** Block configures panel provider/federated link back to host, beyond isolated exposure.
 
 ### 6. frontend/vite/remote-results/vite.config.js:3; frontend/vite/remote-results/vite.config.js:13-30
 
-**Observação:** O plugin `federation` configura `remote_results`, publica `remoteEntry.js`, expõe `./ResultsContainer` e declara o remote `host` em `https://localhost/remoteEntry.js`. Vue e Pinia são singleton.
+**Observation:** Plugin `federation` configures `remote_results`, publishes `remoteEntry.js`, exposes `./ResultsContainer` and declares remote `host` at `https://localhost/remoteEntry.js`. Vue/Pinia singleton.
 
-**Interpretação:** O bloco configura o fornecedor do painel e sua ligação federada de volta ao host; não é apenas uma exposição isolada.
+**Interpretation:** Block configures panel provider/federated link back to host, beyond isolated exposure.
 
 ### 7. frontend/vite/host/src/pages/MainPage.vue:6; frontend/vite/host/src/pages/MainPage.vue:11; frontend/vite/host/src/pages/MainPage.vue:23; frontend/vite/host/vite.config.js:23-27; frontend/vite/remote-inputs/vite.config.js:14-18
 
-**Observação:** `MainPage` importa `InputsContainer` de `remote_inputs/InputsContainer`, registra o componente e renderiza `<InputsContainer />`. As configurações declaram o remote de destino e a chave exposta correspondente.
+**Observation:** `MainPage` imports `InputsContainer` from `remote_inputs/InputsContainer`, registers component/renders `<InputsContainer />`. Configurations declare target remote/matching exposed key.
 
-**Interpretação:** O host insere o painel de outra unidade por Module Federation. O conjunto citado identifica o destino da tag.
+**Interpretation:** Host inserts another unit’s panel through Module Federation. Cited set identifies tag target.
 
 ### 8. frontend/vite/host/src/pages/MainPage.vue:7; frontend/vite/host/src/pages/MainPage.vue:11; frontend/vite/host/src/pages/MainPage.vue:24; frontend/vite/host/vite.config.js:28-32; frontend/vite/remote-results/vite.config.js:14-18
 
-**Observação:** `MainPage` importa `ResultsContainer` de `remote_results/ResultsContainer`, registra o componente e renderiza `<ResultsContainer />`. As configurações declaram o remote de destino e a chave exposta correspondente.
+**Observation:** `MainPage` imports `ResultsContainer` from `remote_results/ResultsContainer`, registers component/renders `<ResultsContainer />`. Configurations declare target remote/matching exposed key.
 
-**Interpretação:** O host insere o painel de outra unidade por Module Federation. O conjunto citado identifica o destino da tag.
+**Interpretation:** Host inserts another unit’s panel through Module Federation. Cited set identifies tag target.
 
 ### 9. frontend/vite/host/src/stores/HistoryStore.js:6-24; frontend/vite/host/src/stores/HistoryStore.js:126-143; frontend/vite/remote-inputs/src/InputsContainer.vue:5-29; frontend/vite/remote-inputs/src/elements/GraphCanvas.vue:3; frontend/vite/remote-inputs/src/elements/GraphCanvas.vue:139-140; frontend/vite/remote-results/src/elements/Table.vue:2-13; frontend/vite/remote-results/src/elements/GroupInput.vue:4-32; frontend/vite/host/src/common/Header.vue:20-22
 
-**Observação:** `defineStore("history", ...)` contém campos do formulário, histórico e grupos. O remote de entrada importa o store do host, altera campos e chama `addRecord`; o canvas lê `history`. O remote de resultados lê o histórico, altera seleção e cria grupos. O host limpa o estado no logout.
+**Observation:** `defineStore("history", ...)` contains form fields, history/groups. Input remote imports host store, changes fields/calls `addRecord`; canvas reads `history`. Results remote reads history, changes selection/creates groups. Host clears state on logout.
 
-**Interpretação:** O store fornece o mecanismo de estado reativo compartilhado usado pelas três unidades; sua definição é a implementação do canal, sem declarar por si a resolução federada dos consumidores.
+**Interpretation:** Store provides shared reactive-state mechanism used by three units; definition implements channel without alone declaring consumer federation resolution.
 
 ### 10. frontend/vite/host/src/stores/ErrorStore.js:3-15; frontend/vite/remote-inputs/src/InputsContainer.vue:6; frontend/vite/remote-inputs/src/InputsContainer.vue:28-32; frontend/vite/remote-results/src/elements/GroupInput.vue:3; frontend/vite/remote-results/src/elements/GroupInput.vue:21-25; frontend/vite/host/src/pages/MainPage.vue:13-21
 
-**Observação:** `defineStore("error", ...)` guarda `errorMsg` e `errorTitle`. Os remotes importam o store do host e escrevem nesses campos em situações de erro; `MainPage` lê os campos e os apresenta em `PopupWindow`.
+**Observation:** `defineStore("error", ...)` stores `errorMsg`, `errorTitle`. Remotes import host store/write fields on error; `MainPage` reads/presents fields in `PopupWindow`.
 
-**Interpretação:** O store implementa o canal reativo de mensagens dos remotes ao host; a declaração do store não estabelece sozinha a resolução federada desses consumidores.
+**Interpretation:** Store implements remote-to-host reactive message channel; declaration alone does not establish consumer federation resolution.
 
 ### 11. frontend/vite/remote-inputs/src/elements/GraphCanvas.vue:2-9; frontend/vite/remote-inputs/src/elements/GraphCanvas.vue:23-24; frontend/vite/remote-inputs/src/elements/GraphCanvas.vue:154-155; frontend/vite/remote-inputs/src/elements/GraphCanvas.vue:175-180; frontend/vite/remote-inputs/vite.config.js:19-25; frontend/vite/host/vite.config.js:20
 
-**Observação:** `GraphCanvas` importa `PopupWindow` de `host/PopupWindow`, registra e renderiza o componente com mensagem e título locais. O remote `host` e a exposição `./PopupWindow` estão declarados nas configurações.
+**Observation:** `GraphCanvas` imports `PopupWindow` from `host/PopupWindow`, registers/renders component with local message/title. Remote `host` and exposure `./PopupWindow` declared in configurations.
 
-**Interpretação:** O remote de entrada compõe um componente visual fornecido pelo host; os trechos identificam o destino da tag e o contrato federado.
+**Interpretation:** Input remote composes host-provided visual component; excerpts identify tag target/federated contract.
 
 ### 12. frontend/vite/host; frontend/vite/host/index.html:11; frontend/vite/host/package.json:8; frontend/vite/host/vite.config.js:5-40; frontend/vite/host/src/main.js:24-40
 
-**Observação:** O diretório tem manifesto e configuração Vite próprios; `index.html` carrega `src/main.js`, que cria a aplicação Vue, instala router e Pinia e monta em `#app`.
+**Observation:** Directory has own manifest/Vite configuration; `index.html` loads `src/main.js`, creating Vue application, installing router/Pinia and mounting at `#app`.
 
-**Interpretação:** O limite de unidade frontend está confirmado, conforme Unidade frontend `Yes` da revisão estrutural.
+**Interpretation:** Frontend unit boundary confirmed, Frontend unit `Yes` in structure review.
 
 ### 13. frontend/vite/remote-inputs; frontend/vite/remote-inputs/index.html:11; frontend/vite/remote-inputs/package.json:8; frontend/vite/remote-inputs/vite.config.js:5-32; frontend/vite/remote-inputs/src/main.js (0 bytes)
 
-**Observação:** O diretório tem manifesto e configuração Vite próprios, expondo `./InputsContainer`. O `index.html` aponta para `src/main.js`, um arquivo vazio.
+**Observation:** Directory has own manifest/Vite configuration exposing `./InputsContainer`. `index.html` points to empty `src/main.js`.
 
-**Interpretação:** O julgamento estrutural permanece `Undetermined`: o build e o módulo exposto delimitam um pacote de UI, mas não há bootstrap standalone. Continuam plausíveis a leitura como unidade frontend relativamente independente e a de painel dependente da execução do host.
+**Interpretation:** Structural judgment remains `Undetermined`: build/exposed module delimit UI package without standalone bootstrap. Relatively independent frontend unit and panel dependent on host execution remain plausible readings.
 
 ### 14. frontend/vite/remote-results; frontend/vite/remote-results/index.html:11; frontend/vite/remote-results/package.json:8; frontend/vite/remote-results/vite.config.js:5-32; frontend/vite/remote-results/src/main.js (0 bytes)
 
-**Observação:** O diretório tem manifesto e configuração Vite próprios, expondo `./ResultsContainer`. O `index.html` aponta para `src/main.js`, um arquivo vazio.
+**Observation:** Directory has own manifest/Vite configuration exposing `./ResultsContainer`. `index.html` points to empty `src/main.js`.
 
-**Interpretação:** O julgamento estrutural permanece `Undetermined`: o build e o módulo exposto delimitam um pacote de UI, mas não há bootstrap standalone. Continuam plausíveis a leitura como unidade frontend relativamente independente e a de painel dependente da execução do host.
+**Interpretation:** Structural judgment remains `Undetermined`: build/exposed module delimit UI package without standalone bootstrap. Relatively independent frontend unit and panel dependent on host execution remain plausible readings.
 
 ### 15. frontend/vite/host/src/pages/MainPage.vue:6; frontend/vite/host/src/pages/MainPage.vue:23; frontend/vite/host/vite.config.js:23-27; frontend/vite/remote-inputs/vite.config.js:14-18
 
-**Observação:** O host renderiza `InputsContainer` importado de `remote_inputs/InputsContainer`. A entrada do remote aponta para `https://localhost/remote-inputs/remoteEntry.js`, e o fornecedor declara nome, arquivo e exposição correspondentes.
+**Observation:** Host renders `InputsContainer` imported from `remote_inputs/InputsContainer`. Remote entry points to `https://localhost/remote-inputs/remoteEntry.js`; provider declares matching name/file/exposure.
 
-**Interpretação:** É a relação host → remote ativa registrada na 3.4.5, com destino presente no snapshot.
+**Interpretation:** Active host → remote relationship recorded in 3.4.5, target present in snapshot.
 
 ### 16. frontend/vite/host/src/pages/MainPage.vue:7; frontend/vite/host/src/pages/MainPage.vue:24; frontend/vite/host/vite.config.js:28-32; frontend/vite/remote-results/vite.config.js:14-18
 
-**Observação:** O host renderiza `ResultsContainer` importado de `remote_results/ResultsContainer`. A entrada do remote aponta para `https://localhost/remote-results/remoteEntry.js`, e o fornecedor declara nome, arquivo e exposição correspondentes.
+**Observation:** Host renders `ResultsContainer` imported from `remote_results/ResultsContainer`. Remote entry points to `https://localhost/remote-results/remoteEntry.js`; provider declares matching name/file/exposure.
 
-**Interpretação:** É a relação host → remote ativa registrada na 3.4.5, com destino presente no snapshot.
+**Interpretation:** Active host → remote relationship recorded in 3.4.5, target present in snapshot.
 
 ### 17. frontend/vite/remote-inputs/vite.config.js:19-25; frontend/vite/host/vite.config.js:14-20; frontend/vite/remote-inputs/src/InputsContainer.vue:5-6; frontend/vite/remote-inputs/src/elements/GraphCanvas.vue:2-3; frontend/vite/remote-inputs/src/elements/GraphCanvas.vue:175
 
-**Observação:** O consumidor declara `host` em `https://localhost/remoteEntry.js` e importa `host/HistoryStore` e `host/ErrorStore`, expostos pelo host. Também importa e renderiza `host/PopupWindow`.
+**Observation:** Consumer declares `host` at `https://localhost/remoteEntry.js`, imports `host/HistoryStore`, `host/ErrorStore` exposed by host. Also imports/renders `host/PopupWindow`.
 
-**Interpretação:** É a relação ativa de consumo federado no sentido remote → host, preservando o tipo host → remote usado na revisão de origem.
+**Interpretation:** Active federation-consumption relationship in remote → host direction, preserving host → remote type used in origin review.
 
 ### 18. frontend/vite/remote-results/vite.config.js:19-25; frontend/vite/host/vite.config.js:14-20; frontend/vite/remote-results/src/elements/GroupInput.vue:3-4; frontend/vite/remote-results/src/elements/Table.vue:2
 
-**Observação:** O consumidor declara `host` em `https://localhost/remoteEntry.js` e importa `host/HistoryStore` e `host/ErrorStore`, expostos pelo host.
+**Observation:** Consumer declares `host` at `https://localhost/remoteEntry.js`, imports `host/HistoryStore`, `host/ErrorStore` exposed by host.
 
-**Interpretação:** É a relação ativa de consumo federado no sentido remote → host, preservando o tipo host → remote usado na revisão de origem.
+**Interpretation:** Active federation-consumption relationship in remote → host direction, preserving host → remote type used in origin review.
 
 ### 19. frontend/vite/host/vite.config.js:18-19; frontend/vite/host/vite.config.js:36; frontend/vite/remote-inputs/vite.config.js:28; frontend/vite/host/src/stores/HistoryStore.js:136-143; frontend/vite/host/src/stores/ErrorStore.js:3-7; frontend/vite/host/src/common/Header.vue:20-22; frontend/vite/host/src/pages/MainPage.vue:13-21; frontend/vite/remote-inputs/src/InputsContainer.vue:5-31; frontend/vite/remote-inputs/src/elements/GraphCanvas.vue:139-140
 
-**Observação:** O host expõe HistoryStore e ErrorStore; Pinia é singleton nos dois lados. O remote escreve mensagens de erro exibidas pelo host; no logout o host limpa o histórico e os campos do formulário lidos pelo remote.
+**Observation:** Host exposes HistoryStore/ErrorStore; Pinia singleton on both sides. Remote writes errors displayed by host; on logout host clears history/form fields read by remote.
 
-**Interpretação:** É uma relação de comunicação bidirecional ativa por serviço reativo compartilhado, registrada como `events` na 3.4.5.
+**Interpretation:** Active bidirectional communication through shared reactive service, recorded `events` in 3.4.5.
 
 ### 20. frontend/vite/host/vite.config.js:18-19; frontend/vite/host/vite.config.js:36; frontend/vite/remote-results/vite.config.js:28; frontend/vite/host/src/stores/HistoryStore.js:136-143; frontend/vite/host/src/stores/ErrorStore.js:3-7; frontend/vite/host/src/common/Header.vue:20-22; frontend/vite/host/src/pages/MainPage.vue:13-21; frontend/vite/remote-results/src/elements/GroupInput.vue:3-24; frontend/vite/remote-results/src/elements/Table.vue:2-13; frontend/vite/remote-results/src/elements/Table.vue:53
 
-**Observação:** O host expõe HistoryStore e ErrorStore; Pinia é singleton nos dois lados. O remote escreve mensagens de erro exibidas pelo host; no logout o host limpa o histórico lido pela tabela do remote.
+**Observation:** Host exposes HistoryStore/ErrorStore; Pinia singleton on both sides. Remote writes errors displayed by host; on logout host clears history read by remote table.
 
-**Interpretação:** É uma relação de comunicação bidirecional ativa por serviço reativo compartilhado, registrada como `events` na 3.4.5.
+**Interpretation:** Active bidirectional communication through shared reactive service, recorded `events` in 3.4.5.
 
 ### 21. frontend/vite/host/vite.config.js:18; frontend/vite/host/vite.config.js:36; frontend/vite/remote-inputs/vite.config.js:28; frontend/vite/remote-results/vite.config.js:28; frontend/vite/remote-inputs/src/InputsContainer.vue:5-29; frontend/vite/host/src/stores/HistoryStore.js:49; frontend/vite/host/src/stores/HistoryStore.js:126; frontend/vite/remote-results/src/elements/Table.vue:2-13; frontend/vite/remote-results/src/elements/Table.vue:39-53; frontend/vite/remote-inputs/src/elements/GraphCanvas.vue:139-140
 
-**Observação:** Os remotes importam o mesmo HistoryStore do host com Pinia singleton. O remote de entrada acrescenta registros ao histórico consumido pela tabela; o remote de resultados carrega o histórico do backend ao montar, e o canvas do remote de entrada o lê.
+**Observation:** Remotes import same host HistoryStore with singleton Pinia. Input remote adds history records consumed by table; results remote loads backend history on mount, input remote canvas reads it.
 
-**Interpretação:** É a relação ativa de comunicação bidirecional entre remotes pelo estado reativo compartilhado, registrada como `events`, sem chamada direta entre seus componentes.
+**Interpretation:** Active bidirectional inter-remote communication through shared reactive state, recorded `events`, without direct component call.
 
 ### 22. frontend/vite/host/package.json:2-8; frontend/vite/host/vite.config.js:5-40; config/nginx/Dockerfile:5; config/nginx/nginx.conf:18-35; config/nginx/nginx.conf:90-93; config/docker-compose.yaml:38-52
 
-**Observação:** O pacote tem `vite build` e configuração próprios. O Dockerfile copia seu `dist` para uma pasta na mesma imagem que contém os outros frontends; um servidor nginx próprio e um caminho TLS o servem. O compose define um serviço `nginx` único. O manifesto usa `private: true` e `version: 0.0.0`.
+**Observation:** Package has own `vite build`/configuration. Dockerfile copies `dist` to folder in same image containing other frontends; own nginx server/TLS path serve it. Compose defines single `nginx` service. Manifest uses `private: true`, `version: 0.0.0`.
 
-**Interpretação:** Há build separado e deploy conjunto, com Versionamento `No`, conforme a 3.4.6. O endereço separado não demonstra publicação independente.
+**Interpretation:** Separate build/joint deployment, Versioning `No` per 3.4.6. Separate address does not demonstrate independent publication.
 
 ### 23. frontend/vite/remote-inputs/package.json:2-8; frontend/vite/remote-inputs/vite.config.js:5-32; config/nginx/Dockerfile:6; config/nginx/nginx.conf:37-53; config/nginx/nginx.conf:95-98; config/docker-compose.yaml:38-52
 
-**Observação:** O pacote tem `vite build` e configuração próprios. O Dockerfile copia seu `dist` para uma pasta na mesma imagem que contém os outros frontends; um servidor nginx próprio e um caminho TLS o servem. O compose define um serviço `nginx` único. O manifesto usa `private: true` e `version: 0.0.0`.
+**Observation:** Package has own `vite build`/configuration. Dockerfile copies `dist` to folder in same image containing other frontends; own nginx server/TLS path serve it. Compose defines single `nginx` service. Manifest uses `private: true`, `version: 0.0.0`.
 
-**Interpretação:** Há build separado e deploy conjunto, com Versionamento `No`, conforme a 3.4.6. O endereço separado não demonstra publicação independente.
+**Interpretation:** Separate build/joint deployment, Versioning `No` per 3.4.6. Separate address does not demonstrate independent publication.
 
 ### 24. frontend/vite/remote-results/package.json:2-8; frontend/vite/remote-results/vite.config.js:5-32; config/nginx/Dockerfile:7; config/nginx/nginx.conf:55-71; config/nginx/nginx.conf:100-103; config/docker-compose.yaml:38-52
 
-**Observação:** O pacote tem `vite build` e configuração próprios. O Dockerfile copia seu `dist` para uma pasta na mesma imagem que contém os outros frontends; um servidor nginx próprio e um caminho TLS o servem. O compose define um serviço `nginx` único. O manifesto usa `private: true` e `version: 0.0.0`.
+**Observation:** Package has own `vite build`/configuration. Dockerfile copies `dist` to folder in same image containing other frontends; own nginx server/TLS path serve it. Compose defines single `nginx` service. Manifest uses `private: true`, `version: 0.0.0`.
 
-**Interpretação:** Há build separado e deploy conjunto, com Versionamento `No`, conforme a 3.4.6. O endereço separado não demonstra publicação independente.
+**Interpretation:** Separate build/joint deployment, Versioning `No` per 3.4.6. Separate address does not demonstrate independent publication.
 
 ### 25. 53e46c0 2025-12-05 (frontend/vite/remote-inputs/src/main.js); 2214561 2025-12-08 (frontend/vite/remote-inputs/src/main.js)
 
-**Observação:** A revisão histórica registra a adição de `src/main.js` em `53e46c0`, já associado ao objeto vazio `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391`. O caminho conserva o mesmo objeto até o snapshot, sem alteração posterior registrada.
+**Observation:** History review records `src/main.js` added in `53e46c0`, already associated with empty object `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391`. Path retains same object through snapshot without recorded later change.
 
-**Interpretação:** O ponto está `esclarecido`: neste caminho não houve um bootstrap standalone anterior que tenha sido esvaziado. Isso explica a entrada vazia, sem demonstrar abandono ou mudar o `Undetermined` estrutural.
+**Interpretation:** Point `clarified`: no earlier standalone bootstrap emptied at this path. Explains empty entry without demonstrating abandonment/changing structural `Undetermined`.
 
 ### 26. f5cb3ef 2025-12-08 (frontend/vite/remote-results/src/main.js); 2214561 2025-12-08 (frontend/vite/remote-results/src/main.js)
 
-**Observação:** A revisão histórica registra a adição de `src/main.js` em `f5cb3ef`, já associado ao objeto vazio `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391`. O caminho conserva o mesmo objeto até o snapshot, sem alteração posterior registrada.
+**Observation:** History review records `src/main.js` added in `f5cb3ef`, already associated with empty object `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391`. Path retains same object through snapshot without recorded later change.
 
-**Interpretação:** O ponto está `esclarecido`: neste caminho não houve um bootstrap standalone anterior que tenha sido esvaziado. Isso explica a entrada vazia, sem demonstrar abandono ou mudar o `Undetermined` estrutural.
+**Interpretation:** Point `clarified`: no earlier standalone bootstrap emptied at this path. Explains empty entry without demonstrating abandonment/changing structural `Undetermined`.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.2 (frontend/vite/host/package.json:17) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #4 |
-| 2 | 3.4.2 (frontend/vite/remote-inputs/package.json:16) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #5 |
-| 3 | 3.4.2 (frontend/vite/remote-results/package.json:16) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #6 |
-| 4 | 3.4.2 (frontend/vite/host/package.json:17, Evidência); 3.4.2 (frontend/vite/remote-inputs/package.json:16, Evidência); 3.4.2 (frontend/vite/remote-results/package.json:16, Evidência); 3.4.3 (frontend/vite/host, Marcadores e Build); 3.4.4 (frontend/vite/host/src/pages/MainPage.vue:23 e :24, Observação); 3.4.4 (frontend/vite/host/src/stores/HistoryStore.js:6 e frontend/vite/host/src/stores/ErrorStore.js:3, Observação); 3.4.4 (frontend/vite/remote-inputs/src/elements/GraphCanvas.vue:175, Observação); 3.4.5 #1–7 (Configuração); 3.4.6 #1 (Artefatos) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #12; configura #15; configura #16; configura #17; configura #18; configura #19; configura #20; configura #21 |
-| 5 | 3.4.2 (frontend/vite/remote-inputs/package.json:16, Evidência); 3.4.3 (frontend/vite/remote-inputs, Marcadores, Entrada e Build); 3.4.4 (frontend/vite/host/src/pages/MainPage.vue:23, Observação); 3.4.4 (frontend/vite/host/src/stores/HistoryStore.js:6, Observação); 3.4.5 #1, #3, #5, #7 (Configuração); 3.4.6 #2 (Artefatos) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #13; configura #15; configura #17; configura #19; configura #21 |
-| 6 | 3.4.2 (frontend/vite/remote-results/package.json:16, Evidência); 3.4.3 (frontend/vite/remote-results, Marcadores, Entrada e Build); 3.4.4 (frontend/vite/host/src/pages/MainPage.vue:24, Observação); 3.4.4 (frontend/vite/host/src/stores/HistoryStore.js:6, Observação); 3.4.5 #2, #4, #6, #7 (Configuração); 3.4.6 #3 (Artefatos) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #14; configura #16; configura #18; configura #20; configura #21 |
-| 7 | 3.4.4 (frontend/vite/host/src/pages/MainPage.vue:23, manual) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #15 |
-| 8 | 3.4.4 (frontend/vite/host/src/pages/MainPage.vue:24, manual) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #16 |
-| 9 | 3.4.4 (frontend/vite/host/src/stores/HistoryStore.js:6, manual) | 3 código | código-fonte | events | arquitetural | moderada | implementa #17; implementa #18; implementa #19; implementa #20; implementa #21 |
-| 10 | 3.4.4 (frontend/vite/host/src/stores/ErrorStore.js:3, manual) | 3 código | código-fonte | events | arquitetural | moderada | implementa #17; implementa #18; implementa #19; implementa #20 |
-| 11 | 3.4.4 (frontend/vite/remote-inputs/src/elements/GraphCanvas.vue:175, manual) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #17 |
-| 12 | 3.4.3 (frontend/vite/host) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 13 | 3.4.3 (frontend/vite/remote-inputs) | 4 estrutura | diretório | — | arquitetural | ambígua | — |
-| 14 | 3.4.3 (frontend/vite/remote-results) | 4 estrutura | diretório | — | arquitetural | ambígua | — |
-| 15 | 3.4.5 #1 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #12; liga #13 |
-| 16 | 3.4.5 #2 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #12; liga #14 |
-| 17 | 3.4.5 #3 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #13; liga #12 |
-| 18 | 3.4.5 #4 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #14; liga #12 |
-| 19 | 3.4.5 #5 | 5 composição | código-fonte | events | arquitetural | forte | liga #12; liga #13 |
-| 20 | 3.4.5 #6 | 5 composição | código-fonte | events | arquitetural | forte | liga #12; liga #14 |
-| 21 | 3.4.5 #7 | 5 composição | código-fonte | events | arquitetural | forte | liga #13; liga #14 |
-| 22 | 3.4.6 #1 | 6 build-deploy | deploy | — | arquitetural | moderada | publica #12 |
-| 23 | 3.4.6 #2 | 6 build-deploy | deploy | — | arquitetural | moderada | publica #13 |
-| 24 | 3.4.6 #3 | 6 build-deploy | deploy | — | arquitetural | moderada | publica #14 |
-| 25 | 3.4.8 #1 | 8 histórico | histórico | — | arquitetural | fraca | explica #13 |
-| 26 | 3.4.8 #2 | 8 histórico | histórico | — | arquitetural | fraca | explica #14 |
+| 1 | 3.4.2 (frontend/vite/host/package.json:17) | 1 technology | manifest | module-federation | technological | weak | declares #4 |
+| 2 | 3.4.2 (frontend/vite/remote-inputs/package.json:16) | 1 technology | manifest | module-federation | technological | weak | declares #5 |
+| 3 | 3.4.2 (frontend/vite/remote-results/package.json:16) | 1 technology | manifest | module-federation | technological | weak | declares #6 |
+| 4 | 3.4.2 (frontend/vite/host/package.json:17, Evidence); 3.4.2 (frontend/vite/remote-inputs/package.json:16, Evidence); 3.4.2 (frontend/vite/remote-results/package.json:16, Evidence); 3.4.3 (frontend/vite/host, Markers and Build); 3.4.4 (frontend/vite/host/src/pages/MainPage.vue:23 and :24, Observation); 3.4.4 (frontend/vite/host/src/stores/HistoryStore.js:6 and frontend/vite/host/src/stores/ErrorStore.js:3, Observation); 3.4.4 (frontend/vite/remote-inputs/src/elements/GraphCanvas.vue:175, Observation); 3.4.5 #1–7 (Configuration); 3.4.6 #1 (Artifacts) | 2 configuration | configuration | module-federation | architectural | strong | configures #12; configures #15; configures #16; configures #17; configures #18; configures #19; configures #20; configures #21 |
+| 5 | 3.4.2 (frontend/vite/remote-inputs/package.json:16, Evidence); 3.4.3 (frontend/vite/remote-inputs, Markers, Entry and Build); 3.4.4 (frontend/vite/host/src/pages/MainPage.vue:23, Observation); 3.4.4 (frontend/vite/host/src/stores/HistoryStore.js:6, Observation); 3.4.5 #1, #3, #5, #7 (Configuration); 3.4.6 #2 (Artifacts) | 2 configuration | configuration | module-federation | architectural | strong | configures #13; configures #15; configures #17; configures #19; configures #21 |
+| 6 | 3.4.2 (frontend/vite/remote-results/package.json:16, Evidence); 3.4.3 (frontend/vite/remote-results, Markers, Entry and Build); 3.4.4 (frontend/vite/host/src/pages/MainPage.vue:24, Observation); 3.4.4 (frontend/vite/host/src/stores/HistoryStore.js:6, Observation); 3.4.5 #2, #4, #6, #7 (Configuration); 3.4.6 #3 (Artifacts) | 2 configuration | configuration | module-federation | architectural | strong | configures #14; configures #16; configures #18; configures #20; configures #21 |
+| 7 | 3.4.4 (frontend/vite/host/src/pages/MainPage.vue:23, manual) | 3 code | source code | module-federation | architectural | strong | implements #15 |
+| 8 | 3.4.4 (frontend/vite/host/src/pages/MainPage.vue:24, manual) | 3 code | source code | module-federation | architectural | strong | implements #16 |
+| 9 | 3.4.4 (frontend/vite/host/src/stores/HistoryStore.js:6, manual) | 3 code | source code | events | architectural | moderate | implements #17; implements #18; implements #19; implements #20; implements #21 |
+| 10 | 3.4.4 (frontend/vite/host/src/stores/ErrorStore.js:3, manual) | 3 code | source code | events | architectural | moderate | implements #17; implements #18; implements #19; implements #20 |
+| 11 | 3.4.4 (frontend/vite/remote-inputs/src/elements/GraphCanvas.vue:175, manual) | 3 code | source code | module-federation | architectural | strong | implements #17 |
+| 12 | 3.4.3 (frontend/vite/host) | 4 structure | directory | — | architectural | moderate | — |
+| 13 | 3.4.3 (frontend/vite/remote-inputs) | 4 structure | directory | — | architectural | ambiguous | — |
+| 14 | 3.4.3 (frontend/vite/remote-results) | 4 structure | directory | — | architectural | ambiguous | — |
+| 15 | 3.4.5 #1 | 5 composition | source code | module-federation | architectural | strong | links #12; links #13 |
+| 16 | 3.4.5 #2 | 5 composition | source code | module-federation | architectural | strong | links #12; links #14 |
+| 17 | 3.4.5 #3 | 5 composition | source code | module-federation | architectural | strong | links #13; links #12 |
+| 18 | 3.4.5 #4 | 5 composition | source code | module-federation | architectural | strong | links #14; links #12 |
+| 19 | 3.4.5 #5 | 5 composition | source code | events | architectural | strong | links #12; links #13 |
+| 20 | 3.4.5 #6 | 5 composition | source code | events | architectural | strong | links #12; links #14 |
+| 21 | 3.4.5 #7 | 5 composition | source code | events | architectural | strong | links #13; links #14 |
+| 22 | 3.4.6 #1 | 6 build-deploy | deploy | — | architectural | moderate | publishes #12 |
+| 23 | 3.4.6 #2 | 6 build-deploy | deploy | — | architectural | moderate | publishes #13 |
+| 24 | 3.4.6 #3 | 6 build-deploy | deploy | — | architectural | moderate | publishes #14 |
+| 25 | 3.4.8 #1 | 8 history | history | — | architectural | weak | explains #13 |
+| 26 | 3.4.8 #2 | 8 history | history | — | architectural | weak | explains #14 |
 
-## Resumo
+## Summary
 
-Observações: 26. Dimensões (tecnologia: 3, configuração: 3, código: 5, estrutura: 3, composição: 7, build-deploy: 3, documentação: 0, histórico: 2). Força (forte: 13, moderada: 6, fraca: 5, ambígua: 2). Evidência (tecnológica: 3, arquitetural: 23, contexto: 0).
+Observations: 26. Dimensions (technology: 3, configuration: 3, code: 5, structure: 3, composition: 7, build-deploy: 3, documentation: 0, history: 2). Strength (strong: 13, moderate: 6, weak: 5, ambiguous: 2). Evidence (technological: 3, architectural: 23, context: 0).

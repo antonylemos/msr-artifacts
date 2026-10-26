@@ -20,44 +20,44 @@ annotation:
 
 # 037 — Felliglanz/ioBroker.data-solectrus
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** production-oriented (adapter ioBroker publicado no npm, `package.json:2`, 101 commits)
-- **Classificação:** Non-MFE (via Q5, regra de plugins de plataforma; confirmada pelos pesquisadores)
+- **Repository type:** production-oriented (ioBroker adapter published on npm, `package.json:2`, 101 commits)
+- **Classification:** Non-MFE (through Q5, platform plugin rule; confirmed by the researchers)
 
-ioBroker é uma plataforma de automação residencial. Um adapter (backend Node.js, `main.js`, `lib/`) pode fornecer componentes customizados para a UI de administração da plataforma (`ioBroker.admin`). A partir das versões recentes, o Admin carrega esses componentes como **remotes de Module Federation** declarados no `admin/jsonConfig.json`.
+ioBroker is a home automation platform. An adapter (Node.js backend, `main.js`, `lib/`) can provide custom components for the platform's administration UI (`ioBroker.admin`). In recent versions, Admin loads these components as **Module Federation remotes** declared in `admin/jsonConfig.json`.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | Backend do adapter (`main.js`, `lib/services/*`) + `src-admin/` (uma app React/Vite com o componente de configuração) + `admin/custom/` (saída compilada versionada) | contrária |
-| Configuração (remote) | `src-admin/vite.config.ts:11-24`: `federation({ manifest: true, name: 'DataSolectrusItems', filename: 'customComponents.js', exposes: { './Components': './src/Components.tsx' }, remotes: {}, shared: { react, react-dom singletons } })`; `:13` "Must stay in sync with… `admin/jsonConfig.json`"; `:4-8` comentário: compartilha react/react-dom para reutilizar as instâncias do Admin | moderada |
-| Configuração (registro na plataforma) | `admin/jsonConfig.json:16-18`: campo `"type": "custom"`, `"url": "custom/customComponents.js"`, `"name": "DataSolectrusItems/Components/DataSolectrusItemsEditor"`. A plataforma lê isso para carregar o remote | moderada |
-| Build/deploy (artefatos) | `admin/custom/customComponents.js`, `admin/custom/mf-manifest.json` e `admin/custom/assets/*__loadShare__*`, `hostInit-*`, `virtualExposes-*`: saída MF versionada | fraca |
-| Código-fonte | `src-admin/src/DataSolectrusItemsEditor.tsx` (editor de itens) exposto via `src-admin/src/Components.tsx` | moderada |
-| Composição | O host (ioBroker Admin) é a plataforma, externa ao repositório | contexto |
-| Tecnologia | `src-admin/package.json:13`: `@module-federation/vite`; `package.json:27`: `@iobroker/adapter-core` | fraca |
+| Structure | Adapter backend (`main.js`, `lib/services/*`) + `src-admin/` (a React/Vite app with the configuration component) + `admin/custom/` (tracked compiled output) | contrary |
+| Configuration (remote) | `src-admin/vite.config.ts:11-24`: `federation({ manifest: true, name: 'DataSolectrusItems', filename: 'customComponents.js', exposes: { './Components': './src/Components.tsx' }, remotes: {}, shared: { react, react-dom singletons } })`; `:13` "Must stay in sync with… `admin/jsonConfig.json`"; `:4-8` comment: shares react/react-dom to reuse Admin's instances | moderate |
+| Configuration (platform registration) | `admin/jsonConfig.json:16-18`: fields `"type": "custom"`, `"url": "custom/customComponents.js"`, `"name": "DataSolectrusItems/Components/DataSolectrusItemsEditor"`. The platform reads this to load the remote | moderate |
+| Build/deploy (artifacts) | `admin/custom/customComponents.js`, `admin/custom/mf-manifest.json` and `admin/custom/assets/*__loadShare__*`, `hostInit-*`, `virtualExposes-*`: tracked MF output | weak |
+| Source code | `src-admin/src/DataSolectrusItemsEditor.tsx` (item editor) exposed through `src-admin/src/Components.tsx` | moderate |
+| Composition | The host (ioBroker Admin) is the platform, external to the repository | context |
+| Technology | `src-admin/package.json:13`: `@module-federation/vite`; `package.json:27`: `@iobroker/adapter-core` | weak |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend (o componente custom do Admin); `remotes: {}` |
-| Q2 | Yes (para a unidade) | Build próprio (`src-admin/vite.config.ts`), saída em `admin/custom/` |
-| Q3 | Undetermined | O host (ioBroker Admin) não está no repositório |
-| Q4 | Undetermined | Remote configurado e registrado no `jsonConfig.json`; o consumidor é a plataforma |
-| Q5 | **No** (override) | MF como mecanismo de plugin de plataforma (mesma justificativa dos repos 010 e 035) |
+| Q1 | No | A single frontend unit (the custom Admin component); `remotes: {}` |
+| Q2 | Yes (for this unit) | Its own build (`src-admin/vite.config.ts`), output in `admin/custom/` |
+| Q3 | Undetermined | The host (ioBroker Admin) is not in the repository |
+| Q4 | Undetermined | Remote configured and registered in `jsonConfig.json`; the consumer is the platform |
+| Q5 | **No** (override) | MF as a platform plugin mechanism (same rationale as repos 010 and 035) |
 
-## Motivo
+## Rationale
 
-- Pela letra do checklist, seria **MFE-unit**: um remote MF explicitamente preparado para um host externo.
-- Mas o host é a UI de administração de uma plataforma (ioBroker Admin), e o MF é o mecanismo oficial de extensão dessa UI: o adapter fornece um widget de formulário para a tela de configuração da plataforma, não uma parte de uma aplicação decomposta pelo autor.
-- Consistente com o repositório 010 (Qodly, classificado Non-MFE pelos pesquisadores) e com o 035 (MEXT).
+- Under a literal reading of the checklist, this would be **MFE-unit**: an MF remote explicitly prepared for an external host.
+- But the host is a platform's administration UI (ioBroker Admin), and MF is the official extension mechanism of that UI: the adapter provides a form widget for the platform's configuration screen, not part of an application decomposed by the author.
+- Consistent with repository 010 (Qodly, classified Non-MFE by the researchers) and 035 (MEXT).
 
-## Notas para análise
+## Analysis notes
 
-- **Regra de plugins de plataforma — quarto caso** (010 Qodly, 022 FireCMS Cloud, 035 MEXT, 037 ioBroker Admin). Proposta de regra: "unidades cujo único host é uma plataforma de terceiros que usa MF/Web Components/iframe como mecanismo de extensão (plugins, blocks, custom components) são Non-MFE; registrar a plataforma".
-- **Checklist (diferença em relação a 010):** aqui a config de federação é autoral (`src-admin/vite.config.ts`), não só artefato compilado de terceiros.
-- **Checklist (decisão dos pesquisadores):** manter Non-MFE. A regra de plugins de plataforma vale independentemente de a config de federação ser autoral ou só artefato compilado.
-- **RQ1:** saída de build MF versionada (`admin/custom/`) gera vários sinais de tecnologia (`mf-manifest.json`, `remoteEntry`) em buscas automáticas.
+- **Platform plugin rule — fourth case** (010 Qodly, 022 FireCMS Cloud, 035 MEXT, 037 ioBroker Admin). Proposed rule: "units whose only host is a third-party platform using MF/Web Components/iframe as an extension mechanism (plugins, blocks, custom components) are Non-MFE; record the platform".
+- **Checklist (difference from 010):** here, federation config is project-authored (`src-admin/vite.config.ts`), not merely a third-party compiled artifact.
+- **Checklist (researchers' decision):** retain Non-MFE. The platform plugin rule applies regardless of whether federation config is project-authored or only a compiled artifact.
+- **RQ1:** tracked MF build output (`admin/custom/`) produces several technology signals (`mf-manifest.json`, `remoteEntry`) in automatic searches.

@@ -20,65 +20,65 @@ annotation:
 
 # 191 — jdruper/angular-sandbox
 
-## Contexto
+## Context
 
-“Angular Sandbox Pattern Template” (`README.md:1–7`): template Angular 19 de uma única aplicação que demonstra o “Sandbox Pattern”, com serviços que isolam a lógica de negócio dos componentes. Inclui suporte a PWA e um serviço de sincronização. “Micro Frontend Ready” aparece como qualidade de escalabilidade declarada (`README.md:312`), mas o repositório não configura nenhuma composição. O nome do repositório não é usado como evidência.
+“Angular Sandbox Pattern Template” (`README.md:1–7`): single-application Angular 19 template demonstrating the “Sandbox Pattern”, with services isolating business logic from components. Includes PWA support and a synchronization service. “Micro Frontend Ready” appears as a declared scalability quality (`README.md:312`), but repository configures no composition. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:192` registra rank 191, ID 1012591256, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:192` records rank 191, ID 1012591256, status `cloned`, branch `main` and the front matter commit, which is HEAD of the clone and `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:192` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:15913` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:15917` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:192` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:15913` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:15917` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2025-07` e `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2025-07` and empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | 2026-10-07T22:24:04.410Z / 2026-10-08T15:55:14.653Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | 2026-10-07T22:55:39.933Z / 2026-10-08T16:06:16.274Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2025-07-01..2025-07-31`.
+Effective queries append `pushed:>=2025-04-01 created:2025-07-01..2025-07-31`.
 
-Metadados do hit:
-- descrição “A production-ready Angular 19 starter template demonstrating the **Sandbox Pattern**…”, sem os termos;
-- sem tópicos, linguagem TypeScript, `fork: false`, tamanho 218;
-- criação em 2025-07-02T15:07:24Z, push em 2025-07-10T20:40:09Z.
+Hit metadata:
+- description “A production-ready Angular 19 starter template demonstrating the **Sandbox Pattern**…”, without the terms;
+- no topics, language TypeScript, `fork: false`, size 218;
+- created at 2025-07-02T15:07:24Z, pushed at 2025-07-10T20:40:09Z.
 
-O acerto vem de `README.md:312`, “- **Micro Frontend Ready**: Each feature is self-contained”, única ocorrência. O plural “micro frontends” não aparece literalmente; esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+The hit comes from `README.md:312`, “- **Micro Frontend Ready**: Each feature is self-contained”, the only occurrence. Plural “micro frontends” does not appear literally; that hit depends on GitHub search text processing, which is not recorded.
 
-A última alteração do README é `50277fe` (2025-07-02), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The README's last change is `50277fe` (2025-07-02), before October 2026 collection. The SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 65 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Há um único projeto Angular (`angular.json`, `src/app` com `core/`, `features/dashboard/`, `sandbox/` e `shared/`) e documentação de arquitetura em `docs/`. | contrária |
-| Configuração / Build | `angular.json:25–29`: builder `@angular/build:application`, uma entrada `src/main.ts`. `package.json:30–45`: Angular 19 e service worker, sem dependência de federação, single-spa ou Native Federation. `src/app/app.routes.ts:3`: rotas vazias. | contrária |
-| Documentação | `README.md:1–7`: padrão Sandbox numa aplicação. `README.md:310–314`: “Micro Frontend Ready” como propriedade das features autocontidas, ao lado de “Lazy Loading” e “Service Isolation”. É qualidade alegada, não composição implementada. | fraca |
-| Tecnologia / Configuração / Composição (busca) | `git grep -i` no SHA (exceto `package-lock.json`) por `micro.?front`, `federation`, `remoteEntry` e `single-spa`: só `README.md:312`. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 65 entries, all regular `100644` files; zero symlinks and zero gitlinks. A single Angular project (`angular.json`, `src/app` with `core/`, `features/dashboard/`, `sandbox/` and `shared/`) and architecture documentation in `docs/`. | contrary |
+| Configuration / Build | `angular.json:25–29`: builder `@angular/build:application`, one entry `src/main.ts`. `package.json:30–45`: Angular 19 and service worker, without federation, single-spa or Native Federation dependency. `src/app/app.routes.ts:3`: empty routes. | contrary |
+| Documentation | `README.md:1–7`: Sandbox pattern in one application. `README.md:310–314`: “Micro Frontend Ready” as a property of self-contained features, alongside “Lazy Loading” and “Service Isolation”. Claimed quality, rather than implemented composition. | weak |
+| Technology / Configuration / Composition (search) | `git grep -i` at the SHA (except `package-lock.json`) for `micro.?front`, `federation`, `remoteEntry` and `single-spa`: only `README.md:312`. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 3 commits, nenhum merge, todos de Jose Beita `<jdruper@gmail.com>`: `c8842c6` (2025-07-02, “Basic boilerplate created”), `50277fe` (2025-07-02, “Sandbox pattern creation”) e o SHA `ed38451` (2025-07-10, “feat: pwa support and sync service”). Nenhum blob histórico foi lido. O clone é parcial (`blob:none`) e `git cat-file` confirma que o objeto `7919c63…` não está disponível localmente; comandos que dependem dele falham sob `GIT_NO_LAZY_FETCH=1`, de modo que a atribuição exaustiva de cada arquivo histórico fica limitada ao que os objetos locais permitem.
+Non-shallow clone; 3 commits, no merges, all by Jose Beita `<jdruper@gmail.com>`: `c8842c6` (2025-07-02, “Basic boilerplate created”), `50277fe` (2025-07-02, “Sandbox pattern creation”) and SHA `ed38451` (2025-07-10, “feat: pwa support and sync service”). No historical blob was read. The clone is partial (`blob:none`) and `git cat-file` confirms object `7919c63…` is unavailable locally; commands depending on it fail under `GIT_NO_LAZY_FETCH=1`, limiting exhaustive attribution of each historical file to what local objects permit.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única aplicação frontend; as “features” são pastas internas, não unidades com entrada própria. Nenhuma configuração de composição. |
-| Q2 | No | Não há segunda unidade cuja independência possa ser avaliada; há um único build (`angular.json:25–29`). |
-| Q3 | No | Não há host compondo unidades. |
-| Q4 | No | Nenhum mecanismo de composição configurado (busca registrada). |
-| Q5 | No | Q1–Q4 são No: template de aplicação Angular que se declara “Micro Frontend Ready”. |
+| Q1 | No | A single frontend application; “features” are internal folders, rather than units with their own entries. No composition configuration. |
+| Q2 | No | There is no second unit whose independence could be assessed; a single build (`angular.json:25–29`). |
+| Q3 | No | No host composes units. |
+| Q4 | No | No configured composition mechanism (recorded search). |
+| Q5 | No | Q1–Q4 are No: Angular application template declaring itself “Micro Frontend Ready”. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “conventional frontend monoliths” e a “repositories mentioning micro-frontends without implementing them”: a prontidão para micro-frontends é afirmação de arquitetura modular, sem composição.
-- Há uma aplicação real, por isso `frontend_units: 1` e `single-unit`. `ui_technologies: [angular]`, `build_tools: []` (o CLI do Angular encapsula o bundler). `repo_type: template` (“starter template”, `README.md:3`).
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. Matches “conventional frontend monoliths” and “repositories mentioning micro-frontends without implementing them”: micro-frontend readiness is a modular architecture claim, without composition.
+- A real application exists, hence `frontend_units: 1` and `single-unit`. `ui_technologies: [angular]`, `build_tools: []` (Angular CLI encapsulates the bundler). `repo_type: template` (“starter template”, `README.md:3`).
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** “Micro Frontend Ready” como qualidade de um template monolítico modular.
-- **Protocolo (busca):** o hit plural `"micro frontends"` não tem grafia literal. A elegibilidade muda de `unknown` (001) para `pass` (002).
-- **Contribuição da revisão independente (Lupa):** concordância integral com Non-MFE, Q1–Q5 No, `template`, `[angular]`, uma unidade e `single-unit`; sem decisão aberta (`draft`). Um único projeto Angular (entrada `src/main.ts`) em 65 entradas regulares. Ressalva de completude histórica: o objeto ausente do clone parcial impede comprovar integralmente alguns diffs e `name-status` antigos, sem afetar a leitura dos artefatos citados no SHA nem a conclusão.
+- **RQ1 (misleading signals):** “Micro Frontend Ready” as a quality of a modular monolithic template.
+- **Protocol (search):** plural hit `"micro frontends"` has no literal spelling. Eligibility changes from `unknown` (001) to `pass` (002).
+- **Independent review contribution (Lupa):** full agreement with Non-MFE, Q1–Q5 No, `template`, `[angular]`, one unit and `single-unit`; no open decision (`draft`). One Angular project (entry `src/main.ts`) in 65 regular entries. Historical completeness caveat: missing partial clone object prevents full proof of some old diffs and `name-status`, without affecting reading of cited SHA artifacts or the conclusion.

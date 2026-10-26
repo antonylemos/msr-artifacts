@@ -1,211 +1,211 @@
-# Método: revisão de código-fonte
+# Method: source code review
 
-Os caminhos começados por `docs/` preservam a organização do projeto de origem (`repo-miner`). Neste pacote, as análises correspondentes estão em `data/docs/`. Os caminhos e hashes registrados nas análises mantêm sua função de proveniência.
+Paths beginning with `docs/` preserve the organization of the source project (`repo-miner`). In this package, the corresponding analyses are in `data/docs/`. The paths and hashes recorded in the analyses retain their provenance role.
 
-Este documento descreve como foi feita a revisão de código-fonte e como ler os arquivos
-`NNN-<owner>__<name>.md` desta pasta. Cada arquivo registra a revisão de um repositório do corpus,
-e os passos abaixo seguem a ordem da revisão: ler os arquivos do snapshot vem antes de qualquer julgamento.
+This document describes how the source code review was conducted and how to read the
+`NNN-<owner>__<name>.md` files in this folder. Each file records the review of one corpus repository,
+and the steps below follow the review order: reading the snapshot files comes before any judgment.
 
-## Objetivo
+## Objective
 
-Seção 3.4.4 do protocolo (*Source code mining*): inspecionar o código-fonte em busca de
-construções que mostram **como as unidades frontend interagem**. O objetivo não é registrar
-que uma tecnologia está presente, mas como a construção contribui para a arquitetura.
-A mineração já localizou, linha a linha, as ocorrências dos padrões `src-*`. Esta etapa lê cada
-uma, decide se ela participa da composição e procura as construções que a mineração não pegou.
+Protocol section 3.4.4 (*Source code mining*): inspect source code for
+constructs that show **how frontend units interact**. The objective is not to record
+that a technology is present, but how the construct contributes to the architecture.
+Mining has already located occurrences of the `src-*` patterns, line by line. This stage reads each
+one, decides whether it participates in composition and searches for constructs that mining missed.
 
-Esta etapa não registra a relação completa entre unidades (direção, participantes): isso é a
-seção 3.4.5 do protocolo, tratada na revisão de relações de composição. Ela não reclassifica o
-repositório e não altera os arquivos de `../mfe-classification/`.
+This stage does not record the complete relationship between units (direction, participants): that is
+protocol section 3.4.5, covered in the composition relationship review. It does not reclassify the
+repository or modify files in `../mfe-classification/`.
 
-## Fontes consultadas (somente leitura)
+## Sources consulted (read only)
 
-| O quê | Caminho |
+| What | Path |
 |---|---|
-| Lista de repositórios | `data/acquisitions/mfe-corpus-001/acquisition.csv` |
-| Ocorrências | `data/mining/mfe-mining-001/repos/<owner>__<name>/matches.csv` (linhas com `pattern` começando por `src-`) |
-| Padrões e expressões regulares | `data/mining/mfe-mining-001/manifest.json` (`config.patterns`) |
-| Versão e hash da mineração | `data/mining/mfe-mining-001/manifest.json` (`version`, `configSha256`) |
-| Unidades | `docs/mfe-structure-review/NNN-<owner>__<name>.md` (tabela "Unidades") |
-| Arquivos do snapshot | `data/acquisitions/mfe-corpus-001/corpus/<owner>__<name>/files/` |
-| Classificação (id, commit, contexto) | `docs/mfe-classification/NNN-<owner>__<name>.md` |
+| Repository list | `data/acquisitions/mfe-corpus-001/acquisition.csv` |
+| Occurrences | `data/mining/mfe-mining-001/repos/<owner>__<name>/matches.csv` (rows with `pattern` starting with `src-`) |
+| Patterns and regular expressions | `data/mining/mfe-mining-001/manifest.json` (`config.patterns`) |
+| Mining version and hash | `data/mining/mfe-mining-001/manifest.json` (`version`, `configSha256`) |
+| Units | `docs/mfe-structure-review/NNN-<owner>__<name>.md` ("Units" table) |
+| Snapshot files | `data/acquisitions/mfe-corpus-001/corpus/<owner>__<name>/files/` |
+| Classification (id, commit, context) | `docs/mfe-classification/NNN-<owner>__<name>.md` |
 
-Todo `artefato:linha` é relativo a `files/` do snapshot. A revisão nunca usa o clone em `data/samples/`.
+Every `artifact:line` is relative to the snapshot's `files/` directory. The review never uses the clone in `data/samples/`.
 
-A revisão não modifica nada em `data/` e não reexecuta `mine` nem `inspect-dependencies`.
+The review does not modify anything in `data/` or rerun `mine` or `inspect-dependencies`.
 
-As classificações, as revisões anteriores e as configurações em `config/` são consultadas sem alteração.
+Classifications, previous reviews and configurations in `config/` are consulted without modification.
 
-## Produto
+## Output
 
-Um arquivo `docs/mfe-source-review/NNN-<owner>__<name>.md` por repositório, com o **mesmo nome**
-do arquivo de classificação. O exemplo completo é `008-mrmechazilla__host-app.md`.
+One `docs/mfe-source-review/NNN-<owner>__<name>.md` file per repository, with the **same name**
+as its classification file. The complete example is `008-mrmechazilla__host-app.md`.
 
-Cada arquivo tem esta estrutura:
+Each file has this structure:
 
-1. Front matter com os campos descritos no passo 1.
-2. Título `# NNN — <owner>/<name>`.
-3. Seção "Construções da mineração": uma tabela com as colunas `Padrão`, `Arquivo:linha`, `Unidade`,
-   `Categoria`, `Composição` e `Observação`.
-4. Seção "Construções fora da mineração": uma tabela com as mesmas colunas.
-5. Seção "Resumo".
-6. Seção "Notas" (opcional) e, quando o `status` é `review`, a seção "Ponto para revisão conjunta".
+1. Front matter with the fields described in step 1.
+2. Title `# NNN — <owner>/<name>`.
+3. "Mined constructs" section: a table with the columns `Pattern`, `File:line`, `Unit`,
+   `Category`, `Composition` and `Observation`.
+4. "Constructs outside mining" section: a table with the same columns.
+5. "Summary" section.
+6. Optional "Notes" section and, when `status` is `review`, the "Point for joint review" section.
 
-## Procedimento por repositório
+## Procedure per repository
 
-### 1. Cabeçalho do arquivo
+### 1. File header
 
-O `NNN` do nome vem do arquivo correspondente em `../mfe-classification/`. O front matter registra:
+The `NNN` in the filename comes from the corresponding file in `../mfe-classification/`. The front matter records:
 
-- `id`, `full_name`, `commit`: copiados do front matter da classificação.
+- `id`, `full_name`, `commit`: copied from the classification's front matter.
 - `mining.output`: `data/mining/mfe-mining-001`.
-- `mining.version` e `mining.config_sha256`: copiados de `version` e `configSha256` do `manifest.json` da mineração.
+- `mining.version` and `mining.config_sha256`: copied from `version` and `configSha256` in the mining `manifest.json`.
 - `annotation.method`: `manual`.
-- `annotation.status`: `draft` enquanto a revisão não foi validada. A validação final cabe ao pesquisador, e só ele promove o status para `final`.
-- `annotation.date`: data da revisão, no formato `AAAA-MM-DD`.
+- `annotation.status`: `draft` while the review has not been validated. Final validation is the researcher's responsibility, and only the researcher promotes the status to `final`.
+- `annotation.date`: review date, in `YYYY-MM-DD` format.
 
-O `commit` deve ser o mesmo do `acquisition.csv` da aquisição. Se divergir, a revisão é interrompida
-e a divergência é registrada em "Ponto para revisão conjunta".
+The `commit` must match the acquisition's `acquisition.csv`. If it differs, the review is interrupted
+and the discrepancy is recorded in "Point for joint review".
 
-### 2. Cópia das linhas do `matches.csv`
+### 2. Copying the `matches.csv` rows
 
-Na tabela "Construções da mineração", há uma linha para cada linha do `matches.csv` cujo `pattern`
-começa com `src-`, **na mesma ordem**, sem juntar nem omitir linhas:
+The "Mined constructs" table has one row for each row of `matches.csv` whose `pattern`
+starts with `src-`, **in the same order**, without merging or omitting rows:
 
-| Coluna da tabela | Coluna do CSV |
+| Table column | CSV column |
 |---|---|
-| Padrão | `pattern` |
-| Arquivo:linha | `path` + `:` + `line` (só `path` se `line` estiver vazia) |
+| Pattern | `pattern` |
+| File:line | `path` + `:` + `line` (only `path` if `line` is empty) |
 
-Os valores não são corrigidos nem normalizados. Sem nenhuma linha `src-`, a tabela é substituída pela frase
-"Nenhuma ocorrência src-* no matches.csv."
+Values are neither corrected nor normalized. With no `src-` rows, replace the table with the sentence
+"No src-* occurrences in matches.csv."
 
-### 3. Leitura de cada linha
+### 3. Reading each row
 
-Para cada linha, o arquivo é aberto na linha indicada e o bloco ou a função em volta é lido.
+For each row, open the file at the indicated line and read the surrounding block or function.
 
-**Unidade.** A aplicação a que o arquivo pertence. Parte-se do arquivo e sobe-se pelos diretórios:
-a unidade é o primeiro diretório da tabela "Unidades" da revisão estrutural que contém o arquivo
-e **não** foi julgado `No` (ou seja, `Yes` ou `Undetermined`). Os segmentos de caminho são comparados
-por inteiro (`app` não contém `app-2/x`; `.` contém todos). Se todos os diretórios que contêm o arquivo forem
-`No`, ou não houver nenhum, a unidade é `—`.
+**Unit.** The application to which the file belongs. Start from the file and move up the directories:
+the unit is the first directory in the structural review's "Units" table that contains the file
+and was **not** judged `No` (that is, `Yes` or `Undetermined`). Compare complete path segments
+(`app` does not contain `app-2/x`; `.` contains everything). If all directories containing the file are
+`No`, or none exists, the unit is `—`.
 
-| Arquivo | Diretórios que o contêm, do mais fundo para cima | Unidade |
+| File | Containing directories, from deepest upwards | Unit |
 |---|---|---|
 | `src/main.ts` | `src` (No) → `.` (Yes) | `.` |
 | `projects/cart/src/main.ts` | `projects/cart` (Undetermined) → `.` (No) | `projects/cart` |
 | `projects/shared-lib/src/x.ts` | `projects/shared-lib` (No) → `.` (No) | `—` |
 
-`No` é pulado porque não é uma aplicação: ou o arquivo pertence à aplicação acima dele (como o
-`src/` de um projeto Angular), ou não pertence a nenhuma (biblioteca, servidor). `Undetermined`
-não é pulado: é um diretório de aplicação com entrada ou build problemáticos.
+Skip `No` because it is not an application: either the file belongs to the application above it (such as
+`src/` in an Angular project), or it belongs to none (library, server). Do not skip `Undetermined`:
+it is an application directory with a problematic entry or build.
 
-**Categoria.** Uma categoria é escolhida pela ação da construção:
+**Category.** Choose a category according to the construct's action:
 
-| Categoria | Quando |
+| Category | When |
 |---|---|
-| `dynamic-loading` | `import()` dinâmico que carrega um módulo em runtime (ex.: `import('remote/App')`, `import('./bootstrap')`, `React.lazy`, `defineAsyncComponent`). |
-| `script-loading` | Carga do bundle de outra unidade por script, estático ou injetado (ex.: `<script src="https://...">`, `createElement('script')`, URL de bundle `iife`/`umd` passada para quem o carrega). |
-| `remote-resolution` | Resolução de um módulo remoto por nome, manifesto ou URL de entrada (ex.: `loadRemoteModule`, `loadRemote`, `loadManifest`, `initFederation`, `registerRemotes`). |
-| `custom-element` | Definição de custom element para consumo (`customElements.define`, `extends HTMLElement`, `createCustomElement`, `attachShadow`) ou consumo dele (tag em HTML ou JSX). |
-| `runtime-composition` | Montagem, desmontagem ou registro de aplicações em runtime (`mount`/`unmount`, `registerApplication`, `registerMicroApps`, lifecycles do single-spa ou do qiankun). |
-| `host-relationship` | Declaração no código de quais aplicações o host usa e onde (tabela de rotas ou registro de aplicações que nomeia as unidades), quando a linha é a declaração e não a chamada de carregamento. |
-| `embedding` | Embutimento de outra unidade numa página (`<iframe>`, `createElement('iframe')`). |
-| `communication` | Mecanismo de comunicação entre unidades, onde é definido ou disparado (`CustomEvent`/`dispatchEvent`, `postMessage`, `BroadcastChannel`, evento `storage`, serviço ou barramento reativo compartilhado). |
-| `other` | Outro mecanismo de composição que não cabe nas categorias acima; a Observação o explica. |
-| `none` | A linha não é uma construção de composição: falso positivo do padrão (ex.: `dispatchEvent` de um evento interno, `mount` de uma biblioteca de testes). |
+| `dynamic-loading` | A dynamic `import()` that loads a module at runtime (e.g., `import('remote/App')`, `import('./bootstrap')`, `React.lazy`, `defineAsyncComponent`). |
+| `script-loading` | Loading another unit's bundle through a static or injected script (e.g., `<script src="https://...">`, `createElement('script')`, an `iife`/`umd` bundle URL passed to its loader). |
+| `remote-resolution` | Resolving a remote module by name, manifest or entry URL (e.g., `loadRemoteModule`, `loadRemote`, `loadManifest`, `initFederation`, `registerRemotes`). |
+| `custom-element` | Defining a custom element for consumption (`customElements.define`, `extends HTMLElement`, `createCustomElement`, `attachShadow`) or consuming it (tag in HTML or JSX). |
+| `runtime-composition` | Mounting, unmounting or registering applications at runtime (`mount`/`unmount`, `registerApplication`, `registerMicroApps`, single-spa or qiankun lifecycles). |
+| `host-relationship` | A declaration in code of which applications the host uses and where (a route table or application registry naming the units), when the line is the declaration rather than the loading call. |
+| `embedding` | Embedding another unit in a page (`<iframe>`, `createElement('iframe')`). |
+| `communication` | An inter-unit communication mechanism, where it is defined or triggered (`CustomEvent`/`dispatchEvent`, `postMessage`, `BroadcastChannel`, the `storage` event, a shared reactive service or bus). |
+| `other` | Another composition mechanism that does not fit the categories above; the Observation explains it. |
+| `none` | The line is not a composition construct: a pattern false positive (e.g., `dispatchEvent` for an internal event, `mount` from a testing library). |
 
-Uma linha de `import { x } from '<pacote>'` recebe a categoria do uso que ela habilita.
+An `import { x } from '<pacote>'` line receives the category of the use it enables. The original placeholder `<pacote>` means `<package>`.
 
-**Composição.** A decisão segue estas regras, nesta ordem:
+**Composition.** Apply these decision rules in this order:
 
-| Resposta | Quando |
+| Answer | When |
 |---|---|
-| `No` | A construção está inativa (comentada, em arquivo que nenhum outro importa ou que nenhum build usa), é interna à própria unidade (ex.: `import('./bootstrap')`, `import()` de um arquivo local) ou a categoria é `none`. |
-| `Yes` | A construção está ativa e carrega, resolve, monta, registra, define para consumo ou se comunica com **outra** unidade, do snapshot ou externa (remote em outra URL). |
-| `Undetermined` | Não dá para confirmar se a construção está ativa, ou qual unidade é o alvo. |
+| `No` | The construct is inactive (commented out, in a file that no other file imports or no build uses), is internal to the unit itself (e.g., `import('./bootstrap')`, `import()` of a local file), or its category is `none`. |
+| `Yes` | The construct is active and loads, resolves, mounts, registers, defines for consumption or communicates with **another** unit, within the snapshot or external (a remote at another URL). |
+| `Undetermined` | Whether the construct is active or which unit is the target cannot be confirmed. |
 
-Para confirmar que a construção está ativa, segue-se a cadeia até um ponto de entrada da unidade
-(ex.: `main.ts` → `bootstrap.ts` → `app.config.ts` → `app.routes.ts`). Uma linha de `import`
-de pacote é `Yes` quando o uso que ela habilita é `Yes`, e `No` quando ele é `No`.
+To confirm that the construct is active, follow the chain to a unit entry point
+(e.g., `main.ts` → `bootstrap.ts` → `app.config.ts` → `app.routes.ts`). A package `import`
+line is `Yes` when the use it enables is `Yes`, and `No` when that use is `No`.
 
-**Observação.** A coluna registra o que a construção faz, a unidade alvo quando houver e a evidência
-(`artefato:linha`) que sustenta a resposta. Para `No`, explica o motivo (ex.: "arquivo inteiro
-comentado, `/*` na linha 1 e `*/` na linha 28"). Na dúvida entre `Yes` e `Undetermined`, a resposta é
-`Undetermined`, com a explicação em "Notas".
+**Observation.** Record what the construct does, the target unit when present and the evidence
+(`artifact:line`) supporting the answer. For `No`, explain the reason (e.g., "entire file
+commented out, `/*` on line 1 and `*/` on line 28"). When in doubt between `Yes` and `Undetermined`, answer
+`Undetermined` and explain in "Notes".
 
-### 4. Busca de construções fora da mineração
+### 4. Searching for constructs outside mining
 
-Os padrões `src-*` são avaliados linha a linha e perdem construções em várias linhas, consumo de
-custom elements e carregamentos com outras APIs. Por isso, os arquivos de código de cada unidade
-são pesquisados (ignorando lockfiles, `node_modules`, testes e arquivos gerados), por exemplo com:
+The `src-*` patterns are evaluated line by line and miss multiline constructs, custom element
+consumption and loading through other APIs. Therefore, search each unit's source files
+(ignoring lockfiles, `node_modules`, tests and generated files), for example with:
 
 ```sh
 grep -rnE "import\(|React\.lazy|defineAsyncComponent|loadRemote|loadRemoteModule|loadManifest|initFederation|registerRemotes|System\.import|importShim|customElements|registerApplication|registerMicroApps|<iframe|postMessage|CustomEvent|BroadcastChannel|createElement\(['\"]script" data/acquisitions/mfe-corpus-001/corpus/<owner>__<name>/files
 ```
 
-Para cada custom element definido, procura-se também o uso da tag (ex.: `<hello-app>`) em HTML,
-JSX e templates.
+For each custom element defined, also search for use of its tag (e.g., `<hello-app>`) in HTML,
+JSX and templates.
 
-Cada construção encontrada que **não** está no `matches.csv` vira uma linha da tabela
-"Construções fora da mineração", com Padrão = `manual` e as mesmas regras do passo 3, **somente**
-se for de um destes tipos:
+Each construct found that is **not** in `matches.csv` becomes a row in the
+"Constructs outside mining" table, with Pattern = `manual` and the same rules as step 3, **only**
+if it is one of these types:
 
-| Vira linha manual | Exemplo |
+| Becomes a manual row | Example |
 |---|---|
-| Chamada de carregamento, resolução, montagem ou registro que o padrão não pegou (em várias linhas, outra API) | `loadRemote(` com argumentos na linha seguinte; `start()` do qiankun |
-| `import()`, `React.lazy` ou `defineAsyncComponent` de um módulo de outra unidade | `React.lazy(() => import('shop/ShopRoutes'))` |
-| Renderização ou montagem do componente de outra unidade no host | `<MusicLibrary />` importado do remote; `mount(ref.current)` de um remote |
-| Uso da tag de um custom element de outra unidade | `<hello-app>` no HTML do shell |
-| Declaração no host de quais aplicações ele usa e onde (tabela de rotas, registro de aplicações) | `Routes` que nomeia os remotes; `APP_CONFIGS` |
-| Mecanismo explícito de comunicação entre unidades: uma linha onde o mecanismo é definido ou disparado | `dispatchEvent(new CustomEvent(...))`, `postMessage`, `BroadcastChannel`, serviço ou barramento compartilhado entre unidades |
+| A loading, resolution, mounting or registration call missed by the pattern (multiline, another API) | `loadRemote(` with arguments on the next line; qiankun's `start()` |
+| `import()`, `React.lazy` or `defineAsyncComponent` for a module from another unit | `React.lazy(() => import('shop/ShopRoutes'))` |
+| Rendering or mounting another unit's component in the host | `<MusicLibrary />` imported from the remote; a remote's `mount(ref.current)` |
+| Use of another unit's custom element tag | `<hello-app>` in the shell's HTML |
+| A declaration in the host of which applications it uses and where (route table, application registry) | `Routes` naming the remotes; `APP_CONFIGS` |
+| An explicit inter-unit communication mechanism: a line where the mechanism is defined or triggered | `dispatchEvent(new CustomEvent(...))`, `postMessage`, `BroadcastChannel`, a service or bus shared between units |
 
-**Não** viram linha (quando for útil, entram na Observação da linha de carregamento ou montagem correspondente):
-- callbacks e props passados a um remote ou recebidos dele (ex.: `onNavigate`, `onSignIn`, `isAdmin`) e leitura de atributos;
-- linha de `import` sem chamada: a chamada é que vira linha, e o import vai na Observação dela (ex.: `loadRemote` importado num `import { ... }` de várias linhas);
-- `export` comum do componente ou das rotas expostas (a exposição já está na configuração de build);
-- cada ponto de uso de um mecanismo de comunicação já registrado (assinatura, envio, `removeEventListener`);
-- passos seguintes de uma mesma construção: uma construção em vários passos (extrair, reatribuir, acrescentar) vira **uma** linha, no primeiro passo, e os demais vão na Observação.
+The following do **not** become rows (when useful, include them in the Observation for the corresponding loading or mounting row):
+- callbacks and props passed to or received from a remote (e.g., `onNavigate`, `onSignIn`, `isAdmin`) and attribute reads;
+- an `import` line without a call: the call becomes the row, and the import goes in its Observation (e.g., `loadRemote` imported in a multiline `import { ... }`);
+- an ordinary `export` of the exposed component or routes (exposure is already in the build configuration);
+- each usage point of an already recorded communication mechanism (subscription, sending, `removeEventListener`);
+- subsequent steps of the same construct: a construct with several steps (extracting, reassigning, adding) becomes **one** row at the first step, and the others go in the Observation.
 
-Sem nenhuma construção adicional, a tabela é substituída pela frase: "Nenhuma construção adicional."
+With no additional constructs, replace the table with the sentence: "No additional constructs."
 
-### 5. Resumo
+### 5. Summary
 
-A seção "Resumo" traz exatamente a frase: "Construções com composição: N (categoria: n, ...)." com N
-igual ao número de linhas `Yes` das duas tabelas e as categorias na ordem em que aparecem.
-Com zero: "Construções com composição: 0."
+The "Summary" section contains exactly the sentence: "Constructs participating in composition: N (category: n, ...)." with N
+equal to the number of `Yes` rows in both tables and categories in order of appearance.
+For zero: "Constructs participating in composition: 0."
 
-O resumo conta linhas anotadas com `Yes`, não mecanismos únicos de composição. Na tabela da
-mineração, cada ocorrência é preservada e contada, inclusive quando padrões diferentes apontam para
-a mesma linha ou quando import e chamada pertencem ao mesmo mecanismo. Na tabela manual,
-os critérios do passo 4 evitam linhas acrescentadas por evidências ou etapas repetidas.
+The summary counts rows annotated `Yes`, not unique composition mechanisms. In the mining table,
+every occurrence is preserved and counted, including when different patterns point to
+the same line or when an import and a call belong to the same mechanism. In the manual table,
+the criteria in step 4 prevent rows added for repeated evidence or steps.
 
-### 6. Notas e revisão conjunta
+### 6. Notes and joint review
 
-- **Notas** (opcional): falsos positivos recorrentes, construções que a mineração perdeu, unidades alvo fora do snapshot, divergência com a classificação.
-- **Ponto para revisão conjunta**: obrigatório se `status: review`.
+- **Notes** (optional): recurring false positives, constructs missed by mining, target units outside the snapshot, disagreement with the classification.
+- **Point for joint review**: required if `status: review`.
 
-Quando algo contradiz a classificação do repositório, a revisão não propõe mudá-la; a contradição
-é registrada em "Notas".
+When something contradicts the repository classification, the review does not propose changing it; record
+the contradiction in "Notes".
 
-## Verificações de consistência
+## Consistency checks
 
-Antes de considerar um arquivo concluído, confere-se que:
+Before considering a file complete, check that:
 
-- o nome do arquivo é igual ao da classificação;
-- `commit` é igual ao da classificação e ao do `acquisition.csv`;
-- `version` e `config_sha256` são os do `manifest.json` da mineração;
-- o número de linhas da primeira tabela é igual ao de linhas `src-*` do `matches.csv` (ou a frase fixa está presente), e as duas colunas copiadas são idênticas;
-- toda `Unidade` é um diretório `Yes` ou `Undetermined` da revisão estrutural do repositório, ou `—`;
-- toda linha tem `Categoria` e `Composição` do vocabulário e uma observação com evidência;
-- as linhas da segunda tabela não repetem ocorrências do `matches.csv`, são todas de um tipo da lista do passo 4 e nenhuma é callback, prop, export comum, ponto de uso de um mecanismo já registrado ou passo seguinte de outra linha (ou a frase fixa está presente);
-- o "Resumo" conta exatamente as linhas `Yes` das duas tabelas;
-- toda citação foi aberta no snapshot, e a linha citada contém o que foi descrito;
-- o arquivo não contém comentários ou marcações de preenchimento;
-- `status` é `draft` ou o valor definido pelo pesquisador.
+- its filename matches the classification's;
+- `commit` matches the classification and `acquisition.csv`;
+- `version` and `config_sha256` match the mining `manifest.json`;
+- the number of rows in the first table equals the number of `src-*` rows in `matches.csv` (or the fixed sentence is present), and the two copied columns are identical;
+- every `Unit` is a `Yes` or `Undetermined` directory from the repository's structural review, or `—`;
+- every row has `Category` and `Composition` from the vocabulary and an observation with evidence;
+- rows in the second table do not repeat `matches.csv` occurrences, all belong to a type listed in step 4, and none is a callback, prop, ordinary export, usage point of an already recorded mechanism or subsequent step of another row (or the fixed sentence is present);
+- the "Summary" counts exactly the `Yes` rows in both tables;
+- every citation was opened in the snapshot, and the cited line contains what was described;
+- the file contains no comments or completion placeholders;
+- `status` is `draft` or the value set by the researcher.
 
-## Quando a mineração mudar
+## When mining changes
 
-Se `mine` for executado com outro catálogo (nova `version`, novo `config_sha256`), os arquivos
-desta pasta continuam válidos só para a versão registrada no front matter. Os repositórios cujo
-`matches.csv` mudou precisam ser revisados de novo, com o bloco `mining` atualizado.
+If `mine` runs with another catalog (new `version`, new `config_sha256`), the files
+in this folder remain valid only for the version recorded in the front matter. Repositories whose
+`matches.csv` changed must be reviewed again, with the `mining` block updated.

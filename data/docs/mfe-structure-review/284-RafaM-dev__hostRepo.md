@@ -17,21 +17,21 @@ annotation:
 
 ## Workspace
 
-Nenhuma declaração de workspace.
+No workspace declaration.
 
-## Unidades
+## Units
 
-| Diretório | Marcadores | Manifesto | Entrada | Build | Workspace | Deploy | Unidade frontend | Motivo |
+| Directory | Markers | Manifest | Entry | Build | Workspace | Deploy | Frontend unit | Rationale |
 |---|---|---|---|---|---|---|---|---|
-| . | index.html;package.json;vite.config.ts | package.json | index.html:11 (`<script type="module" src="/src/main.tsx">`); src/main.tsx:7-13 (`createRoot(...).render(<App />)`) | vite.config.ts:5-17 (config Vite com `react()` e `federation(...)`); package.json:8 (`tsc -b && vite build`) | — | — | Yes | Única aplicação React + Vite do snapshot (o host), com entrada e build próprios |
+| . | index.html;package.json;vite.config.ts | package.json | index.html:11 (`<script type="module" src="/src/main.tsx">`); src/main.tsx:7-13 (`createRoot(...).render(<App />)`) | vite.config.ts:5-17 (Vite configuration with `react()` and `federation(...)`); package.json:8 (`tsc -b && vite build`) | — | — | Yes | The snapshot’s only React + Vite application (the host), with its own entry and build |
 
-## Resumo
+## Summary
 
-Aplicações frontend no snapshot: 1 (.).
+Frontend applications in the snapshot: 1 (.).
 
-## Notas
+## Notes
 
-- A classificação registra `frontend_units: 2`: o host e o remoto `mf-remoteDetails`, que está fora do snapshot e só aparece em vite.config.ts:12 (`http://localhost:5001/assets/remoteEntry.js`).
-- A marca `workspace-config` de `package.json` e dos `tsconfig*.json` no `artifacts.csv` não corresponde a declaração de workspace: `package.json:1-40` não tem `workspaces`, e o `matches.csv` não tem ocorrências `ws-*`.
-- O arquivo vazio `remote-root@0.0.0` na raiz não é unidade nem manifesto.
-- Nenhuma ocorrência `ops-*` ou `ci-*` no `matches.csv` e nenhum Dockerfile, workflow ou configuração de hospedagem no snapshot.
+- The classification records `frontend_units: 2`: the host and the remote `mf-remoteDetails`, which is outside the snapshot and appears only in vite.config.ts:12 (`http://localhost:5001/assets/remoteEntry.js`).
+- The `workspace-config` marker for `package.json` and the `tsconfig*.json` files in `artifacts.csv` does not correspond to a workspace declaration: `package.json:1-40` has no `workspaces`, and `matches.csv` has no `ws-*` occurrences.
+- The empty file `remote-root@0.0.0` at the root is neither a unit nor a manifest.
+- No `ops-*` or `ci-*` occurrence in `matches.csv` and no Dockerfile, workflow or hosting configuration in the snapshot.

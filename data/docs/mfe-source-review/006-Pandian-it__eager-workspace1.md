@@ -15,36 +15,36 @@ annotation:
 
 # 006 — Pandian-it/eager-workspace1
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-async-bootstrap | projects/cart/src/main.ts:1 | projects/cart | dynamic-loading | No | Importa o bootstrap local de cart em projects/cart/src/main.ts:1; não carrega outra unidade. |
-| src-async-bootstrap | projects/checkout/src/main.ts:1 | projects/checkout | dynamic-loading | No | Importa o bootstrap local de checkout em projects/checkout/src/main.ts:1; interno à unidade. |
-| src-async-bootstrap | projects/orders/src/main.ts:1 | projects/orders | dynamic-loading | No | Importa o bootstrap local de orders em projects/orders/src/main.ts:1; interno à unidade. |
-| src-async-bootstrap | projects/shell/src/main.ts:1 | projects/shell | dynamic-loading | No | Importa o bootstrap local do shell em projects/shell/src/main.ts:1; interno à unidade. |
-| src-load-remote | projects/shell/src/app/app-routing.module.ts:13 | projects/shell | remote-resolution | Yes | A rota cart chama o carregador do ManifestService (projects/shell/src/app/app-routing.module.ts:9-14); rotas registradas em projects/shell/src/app/app-routing.module.ts:41-45 e importadas por projects/shell/src/app/app.module.ts:24. |
-| src-load-remote | projects/shell/src/app/app-routing.module.ts:20 | projects/shell | remote-resolution | Yes | A rota checkout chama o carregador remoto (projects/shell/src/app/app-routing.module.ts:16-21), conectado ao AppModule por projects/shell/src/app/app.module.ts:4 e projects/shell/src/app/app.module.ts:24. |
-| src-load-remote | projects/shell/src/app/app-routing.module.ts:27 | projects/shell | remote-resolution | Yes | A rota orders chama o carregador remoto (projects/shell/src/app/app-routing.module.ts:23-28), conectado ao AppModule por projects/shell/src/app/app.module.ts:4 e projects/shell/src/app/app.module.ts:24. |
-| src-load-remote | projects/shell/src/app/manifest.service.ts:4 | projects/shell | remote-resolution | Yes | Importa a API usada em projects/shell/src/app/manifest.service.ts:71-75 para carregar o módulo de outra aplicação; o serviço é invocado pelas rotas em projects/shell/src/app/app-routing.module.ts:13-27. |
-| src-load-remote | projects/shell/src/app/manifest.service.ts:23 | projects/shell | remote-resolution | Yes | Método que busca o manifesto local ou de produção (projects/shell/src/app/manifest.service.ts:23-36) para resolver as entradas dos remotes; chamado em projects/shell/src/app/manifest.service.ts:65. |
-| src-load-remote | projects/shell/src/app/manifest.service.ts:63 | projects/shell | remote-resolution | Yes | Define o carregador usado nas rotas do shell (projects/shell/src/app/app-routing.module.ts:13-27); resolve remoteEntry e carrega ./Module em projects/shell/src/app/manifest.service.ts:63-75. |
-| src-load-remote | projects/shell/src/app/manifest.service.ts:65 | projects/shell | remote-resolution | Yes | Carrega o manifesto antes de resolver o remoteEntry, dentro do fluxo ativo do carregador em projects/shell/src/app/manifest.service.ts:63-75. |
-| src-load-remote | projects/shell/src/app/manifest.service.ts:71 | projects/shell | remote-resolution | Yes | Invoca a API com remoteEntry e exposedModule ./Module (projects/shell/src/app/manifest.service.ts:71-75), retornando MfeModule à rota do shell em projects/shell/src/app/app-routing.module.ts:13-27. |
+| src-async-bootstrap | projects/cart/src/main.ts:1 | projects/cart | dynamic-loading | No | Imports the local cart bootstrap at projects/cart/src/main.ts:1; does not load another unit. |
+| src-async-bootstrap | projects/checkout/src/main.ts:1 | projects/checkout | dynamic-loading | No | Imports the local checkout bootstrap at projects/checkout/src/main.ts:1; internal to the unit. |
+| src-async-bootstrap | projects/orders/src/main.ts:1 | projects/orders | dynamic-loading | No | Imports the local orders bootstrap at projects/orders/src/main.ts:1; internal to the unit. |
+| src-async-bootstrap | projects/shell/src/main.ts:1 | projects/shell | dynamic-loading | No | Imports the local shell bootstrap at projects/shell/src/main.ts:1; internal to the unit. |
+| src-load-remote | projects/shell/src/app/app-routing.module.ts:13 | projects/shell | remote-resolution | Yes | The cart route calls the ManifestService loader (projects/shell/src/app/app-routing.module.ts:9-14); routes registered at projects/shell/src/app/app-routing.module.ts:41-45 and imported by projects/shell/src/app/app.module.ts:24. |
+| src-load-remote | projects/shell/src/app/app-routing.module.ts:20 | projects/shell | remote-resolution | Yes | The checkout route calls the remote loader (projects/shell/src/app/app-routing.module.ts:16-21), connected to AppModule through projects/shell/src/app/app.module.ts:4 and projects/shell/src/app/app.module.ts:24. |
+| src-load-remote | projects/shell/src/app/app-routing.module.ts:27 | projects/shell | remote-resolution | Yes | The orders route calls the remote loader (projects/shell/src/app/app-routing.module.ts:23-28), connected to AppModule through projects/shell/src/app/app.module.ts:4 and projects/shell/src/app/app.module.ts:24. |
+| src-load-remote | projects/shell/src/app/manifest.service.ts:4 | projects/shell | remote-resolution | Yes | Imports the API used at projects/shell/src/app/manifest.service.ts:71-75 to load the module of another application; the service is invoked by the routes at projects/shell/src/app/app-routing.module.ts:13-27. |
+| src-load-remote | projects/shell/src/app/manifest.service.ts:23 | projects/shell | remote-resolution | Yes | Method that fetches the local or production manifest (projects/shell/src/app/manifest.service.ts:23-36) to resolve the remote entries; called at projects/shell/src/app/manifest.service.ts:65. |
+| src-load-remote | projects/shell/src/app/manifest.service.ts:63 | projects/shell | remote-resolution | Yes | Defines the loader used in the shell routes (projects/shell/src/app/app-routing.module.ts:13-27); resolves remoteEntry and loads ./Module at projects/shell/src/app/manifest.service.ts:63-75. |
+| src-load-remote | projects/shell/src/app/manifest.service.ts:65 | projects/shell | remote-resolution | Yes | Loads the manifest before resolving remoteEntry, within the active loader flow at projects/shell/src/app/manifest.service.ts:63-75. |
+| src-load-remote | projects/shell/src/app/manifest.service.ts:71 | projects/shell | remote-resolution | Yes | Invokes the API with remoteEntry and exposedModule ./Module (projects/shell/src/app/manifest.service.ts:71-75), returning MfeModule to the shell route at projects/shell/src/app/app-routing.module.ts:13-27. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | projects/shell/src/app/app-routing.module.ts:8 | projects/shell | host-relationship | Yes | Declara as rotas que nomeiam cart, checkout e orders (projects/shell/src/app/app-routing.module.ts:8-28), registradas por RouterModule.forRoot em projects/shell/src/app/app-routing.module.ts:42. |
-| manual | projects/shell/src/app/manifest.service.ts:40 | projects/shell | remote-resolution | Yes | getRemoteUrl resolve a entrada de outra aplicação pelo manifesto: URL direta em desenvolvimento ou caminho com versão em produção (projects/shell/src/app/manifest.service.ts:40-58); chamado em projects/shell/src/app/manifest.service.ts:68. |
+| manual | projects/shell/src/app/app-routing.module.ts:8 | projects/shell | host-relationship | Yes | Declares the routes naming cart, checkout and orders (projects/shell/src/app/app-routing.module.ts:8-28), registered by RouterModule.forRoot at projects/shell/src/app/app-routing.module.ts:42. |
+| manual | projects/shell/src/app/manifest.service.ts:40 | projects/shell | remote-resolution | Yes | getRemoteUrl resolves another application’s entry through the manifest: a direct URL in development or a versioned path in production (projects/shell/src/app/manifest.service.ts:40-58); called at projects/shell/src/app/manifest.service.ts:68. |
 
-## Resumo
+## Summary
 
-Construções com composição: 10 (remote-resolution: 9, host-relationship: 1).
+Constructs participating in composition: 10 (remote-resolution: 9, host-relationship: 1).
 
-## Notas
+## Notes
 
-- Cadeia ativa: projects/shell/project.json:24 → projects/shell/src/main.ts:1 → projects/shell/src/bootstrap.ts:3-7 → projects/shell/src/app/app.module.ts:4 e projects/shell/src/app/app.module.ts:24 → AppRoutingModule e ManifestService.
-- projects/cart é Undetermined na revisão estrutural pela inicialização standalone; isso não torna inativa a construção do shell que solicita o remote cart. O julgamento aqui descreve o código de composição, sem afirmar sucesso de execução ou disponibilidade dos servidores.
-- As buscas adicionais encontraram a declaração de rotas e a resolução de URL não capturadas por src-*. Os imports de bootstrap locais não participam da interação entre unidades.
+- Active chain: projects/shell/project.json:24 → projects/shell/src/main.ts:1 → projects/shell/src/bootstrap.ts:3-7 → projects/shell/src/app/app.module.ts:4 and projects/shell/src/app/app.module.ts:24 → AppRoutingModule and ManifestService.
+- projects/cart is Undetermined in the structural review because of standalone initialization; this does not make the shell construct requesting the cart remote inactive. The judgment here describes the composition code without asserting successful execution or server availability.
+- The additional searches found the route declaration and URL resolution not captured by src-*. Local bootstrap imports do not participate in interaction between units.

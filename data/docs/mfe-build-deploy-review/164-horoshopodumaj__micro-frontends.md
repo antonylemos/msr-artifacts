@@ -16,30 +16,30 @@ annotation:
 
 # 164 — horoshopodumaj/micro-frontends
 
-## Leitura do repositório
+## Repository overview
 
-Demonstração de Module Federation com Rspack, com três projetos irmãos e nenhum manifesto na raiz: `host` (React), `remote` (React) e `vue-remote` (Vue 3). Cada projeto tem seu `package.json`, seu `package-lock.json` e o mesmo conjunto de scripts: `"build": "NODE_ENV=production rspack build"`, `build:dev`, `build:start` e `start` (host/package.json:4-9; remote/package.json:4-9; vue-remote/package.json:4-9). As três configurações Rspack são quase idênticas: entrada `./src/index.ts`, `HtmlRspackPlugin` com `./index.html` e `ModuleFederationPlugin` com a configuração federada do próprio projeto (host/rspack.config.ts:17-19, 78-81; remote/rspack.config.ts:17-19, 78-81; vue-remote/rspack.config.ts:16-18, 79-82). Nenhuma define `output.path`, só `uniqueName` e `publicPath` (host/rspack.config.ts:29-34), de modo que a saída fica no diretório padrão do Rspack, ignorado pelo git (host/.gitignore:85). Nenhum script dispara os três builds juntos.
+Module Federation demonstration with Rspack, with three sibling projects and no root manifest: `host` (React), `remote` (React) and `vue-remote` (Vue 3). Each project has its own `package.json`, `package-lock.json` and same script set: `"build": "NODE_ENV=production rspack build"`, `build:dev`, `build:start` and `start` (host/package.json:4-9; remote/package.json:4-9; vue-remote/package.json:4-9). All three Rspack configurations are nearly identical: entry `./src/index.ts`, `HtmlRspackPlugin` with `./index.html` and `ModuleFederationPlugin` with project’s own federated configuration (host/rspack.config.ts:17-19, 78-81; remote/rspack.config.ts:17-19, 78-81; vue-remote/rspack.config.ts:16-18, 79-82). None defines `output.path`, only `uniqueName` and `publicPath` (host/rspack.config.ts:29-34), so output remains in default Rspack directory, ignored by git (host/.gitignore:85). No script triggers all three builds together.
 
-Não há artefato de deploy no snapshot: nem Dockerfile, nem compose, nem workflow de CI, nem configuração de hospedagem, e o `matches.csv` não tem ocorrências `ops-*` nem `ci-*`. As três ocorrências `cfg-public-path` são os `publicPath` fixos em `localhost` de cada projeto (host/rspack.config.ts:33; remote/rspack.config.ts:33; vue-remote/rspack.config.ts:33), as mesmas portas do `devServer` (host/rspack.config.ts:24-25; remote/rspack.config.ts:24-25; vue-remote/rspack.config.ts:23-24). Como os containers remotos também são declarados em `localhost:3001` e `localhost:3002` (revisão de composição, coluna Configuração), mesmo o build de produção só funciona na máquina local.
+No deployment artifact is present in snapshot: no Dockerfile, compose, CI workflow or hosting configuration, and `matches.csv` has no `ops-*` or `ci-*` occurrences. All three `cfg-public-path` occurrences are each project’s fixed `publicPath` at `localhost` (host/rspack.config.ts:33; remote/rspack.config.ts:33; vue-remote/rspack.config.ts:33), the same ports as `devServer` (host/rspack.config.ts:24-25; remote/rspack.config.ts:24-25; vue-remote/rspack.config.ts:23-24). Because remote containers are also declared at `localhost:3001` and `localhost:3002` (composition review, Configuration column), even production build only works on local machine.
 
-Tudo o que o snapshot executa é de desenvolvimento: `start` roda `rspack serve`, e `build:start` roda `rspack serve` de dentro de `dist` (host/package.json:7-8), ainda o servidor de desenvolvimento. O README manda instalar e subir cada aplicação num terminal próprio com `npm run start` e abrir `http://localhost:3000` (README.md:61-65, 71, 101); ele usa `cd vue_remote`, mas o diretório é `vue-remote` (README.md:62).
+Everything snapshot executes is for development: `start` runs `rspack serve`, and `build:start` runs `rspack serve` from inside `dist` (host/package.json:7-8), still development server. README instructs installation and startup of each application in its own terminal with `npm run start` and opening `http://localhost:3000` (README.md:61-65, 71, 101); it uses `cd vue_remote`, but directory is `vue-remote` (README.md:62).
 
-## Aplicações
+## Applications
 
-| # | Aplicação | Build | Deploy | Onde é servida | Versionamento | Artefatos |
+| # | Application | Build | Deploy | Where served | Versioning | Artifacts |
 |---|---|---|---|---|---|---|
-| 1 | host | separado | não observado | `http://localhost:3000/`, só em desenvolvimento com `rspack serve` (host/rspack.config.ts:25, 33; host/package.json:8) | No | host/package.json:5 (`NODE_ENV=production rspack build`); host/rspack.config.ts:15-92 (entrada própria, `HtmlRspackPlugin`, `ModuleFederationPlugin`, `uniqueName: "host"`) |
-| 2 | remote | separado | não observado | `http://localhost:3001/`, só em desenvolvimento com `rspack serve` (remote/rspack.config.ts:25, 33; remote/package.json:8) | No | remote/package.json:5 (`NODE_ENV=production rspack build`); remote/rspack.config.ts:15-92 (entrada própria, `HtmlRspackPlugin`, `ModuleFederationPlugin`, `uniqueName: "remote"`); remote/module-federation.config.ts:3 (`filename: 'remoteEntry.js'`) |
-| 3 | vue-remote | separado | não observado | `http://localhost:3002/`, só em desenvolvimento com `rspack serve` (vue-remote/rspack.config.ts:24, 33; vue-remote/package.json:8) | No | vue-remote/package.json:5 (`NODE_ENV=production rspack build`); vue-remote/rspack.config.ts:14-92 (entrada própria, `vue-loader`, `HtmlRspackPlugin`, `ModuleFederationPlugin`, `uniqueName: "vue_remote"`); vue-remote/module-federation.config.ts:3 (`filename: 'remoteEntry.js'`) |
+| 1 | host | separate | not observed | `http://localhost:3000/`, only in development with `rspack serve` (host/rspack.config.ts:25, 33; host/package.json:8) | No | host/package.json:5 (`NODE_ENV=production rspack build`); host/rspack.config.ts:15-92 (own entry, `HtmlRspackPlugin`, `ModuleFederationPlugin`, `uniqueName: "host"`) |
+| 2 | remote | separate | not observed | `http://localhost:3001/`, only in development with `rspack serve` (remote/rspack.config.ts:25, 33; remote/package.json:8) | No | remote/package.json:5 (`NODE_ENV=production rspack build`); remote/rspack.config.ts:15-92 (own entry, `HtmlRspackPlugin`, `ModuleFederationPlugin`, `uniqueName: "remote"`); remote/module-federation.config.ts:3 (`filename: 'remoteEntry.js'`) |
+| 3 | vue-remote | separate | not observed | `http://localhost:3002/`, only in development with `rspack serve` (vue-remote/rspack.config.ts:24, 33; vue-remote/package.json:8) | No | vue-remote/package.json:5 (`NODE_ENV=production rspack build`); vue-remote/rspack.config.ts:14-92 (own entry, `vue-loader`, `HtmlRspackPlugin`, `ModuleFederationPlugin`, `uniqueName: "vue_remote"`); vue-remote/module-federation.config.ts:3 (`filename: 'remoteEntry.js'`) |
 
-## Observações
+## Observations
 
-**1. host.** Build próprio com o Rspack, que gera a página do contêiner a partir de `./index.html` (host/rspack.config.ts:78-80) e carrega o `remote` pela federação (host/rspack.config.ts:81). O `publicPath` `http://localhost:3000/` (host/rspack.config.ts:33) amarra os assets ao servidor local. Sem artefato de deploy. A versão `0.0.1` (host/package.json:3) não é usada em nenhuma publicação.
+**1. host.** Own Rspack build, generating container page from `./index.html` (host/rspack.config.ts:78-80) and loading `remote` through federation (host/rspack.config.ts:81). The `publicPath` `http://localhost:3000/` (host/rspack.config.ts:33) ties assets to local server. No deployment artifact. Version `0.0.1` (host/package.json:3) is unused in any publication.
 
-**2. remote.** Build próprio, igual ao do host salvo a porta, o `uniqueName` e o `publicPath` (remote/rspack.config.ts:25, 31, 33); gera também o `remoteEntry.js` consumido pelo host (remote/module-federation.config.ts:3). Sem deploy observado; versão `0.0.1` sem uso (remote/package.json:3).
+**2. remote.** Own build, identical to host’s except port, `uniqueName` and `publicPath` (remote/rspack.config.ts:25, 31, 33); also generates `remoteEntry.js` consumed by host (remote/module-federation.config.ts:3). No observed deploy; version `0.0.1` unused (remote/package.json:3).
 
-**3. vue-remote.** Build próprio, com `vue-loader` e `VueLoaderPlugin` no lugar do refresh do React (vue-remote/rspack.config.ts:5, 43-47, 78) e `remoteEntry.js` próprio (vue-remote/module-federation.config.ts:3). O `uniqueName` `vue_remote` (vue-remote/rspack.config.ts:31) difere do nome do diretório. Sem deploy observado; versão `0.0.1` sem uso (vue-remote/package.json:3).
+**3. vue-remote.** Own build, with `vue-loader` and `VueLoaderPlugin` instead of React refresh (vue-remote/rspack.config.ts:5, 43-47, 78) and own `remoteEntry.js` (vue-remote/module-federation.config.ts:3). The `uniqueName` `vue_remote` (vue-remote/rspack.config.ts:31) differs from directory name. No observed deploy; version `0.0.1` unused (vue-remote/package.json:3).
 
-## Resumo
+## Summary
 
-Aplicações: 3. Build (separado: 3). Deploy (não observado: 3). Versionamento independente: 0.
+Applications: 3. Build (separate: 3). Deploy (not observed: 3). Independent versioning: 0.

@@ -15,6 +15,6 @@ annotation:
 
 # 177 — Varshithknaik/mfe-lect
 
-## Dependências
+## Dependencies
 
-Nenhuma dependência das tecnologias no dependencies.csv.
+No dependency on the technologies in dependencies.csv.

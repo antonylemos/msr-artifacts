@@ -20,34 +20,34 @@ annotation:
 
 # 067 — varshi929/Data-Science-Project
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** example/proof of concept (projeto de ciência de dados "AI News Sentiment Analysis", Python)
+- **Repository type:** example/proof of concept ("AI News Sentiment Analysis" data science project, Python)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | Projeto Python (`main.py`, `src/{data,features,model,utils,config}/*.py`, `data/raw/*.csv`); 19.618 dos 19.650 arquivos são um ambiente virtual versionado (`.venv/`) | contrária |
-| Documentação | `README.md:1-15`: projeto de análise de sentimento com Pandas, Scikit-learn, FastAPI, MLflow; nenhuma menção a micro-frontends | ausente |
-| Tecnologia / Configuração / Código-fonte | Inexistentes | ausente |
-| Estrutura (ruído) | `data/raw/news_sentiment_analysis.csv:268,1291,1641`: o termo "Federation" aparece no texto das notícias do dataset ("Attorney-General of the Federation", "Horse Racing Federation", "Confederation of Zimbabwe Industries") (sinal enganoso) | contexto |
+| Structure | Python project (`main.py`, `src/{data,features,model,utils,config}/*.py`, `data/raw/*.csv`); 19,618 of the 19,650 files are a tracked virtual environment (`.venv/`) | contrary |
+| Documentation | `README.md:1-15`: sentiment analysis project with Pandas, Scikit-learn, FastAPI, MLflow; no mention of micro-frontends | absent |
+| Technology / Configuration / Source code | Nonexistent | absent |
+| Structure (noise) | `data/raw/news_sentiment_analysis.csv:268,1291,1641`: "Federation" appears in dataset news text ("Attorney-General of the Federation", "Horse Racing Federation", "Confederation of Zimbabwe Industries") (misleading signal) | context |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend |
-| Q2 | No | Não há unidades |
-| Q3 | No | Não há host, shell nem root config |
-| Q4 | No | Nenhum mecanismo de composição |
-| Q5 | No | Q1–Q4 convergem |
+| Q1 | No | No frontend units |
+| Q2 | No | No units |
+| Q3 | No | No host, shell or root config |
+| Q4 | No | No composition mechanism |
+| Q5 | No | Q1–Q4 converge |
 
-## Motivo
+## Rationale
 
-- É um projeto de ML em Python sem frontend; na filtragem automática do protocolo (seção 3.2), "repositories containing no relevant frontend implementation".
-- Provavelmente capturado por busca de conteúdo indexado: "Federation" aparece em notícias do dataset CSV (falso positivo de termo).
+- This is a Python ML project without a frontend; in the protocol's automatic filtering (section 3.2), "repositories containing no relevant frontend implementation".
+- Probably captured through indexed-content search: "Federation" appears in CSV dataset news (term false positive).
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** termos de busca como "federation" casam com texto natural em datasets; buscas de conteúdo deveriam restringir extensões (código/config) ou usar frases compostas ("module federation").
+- **RQ1 (misleading signals):** search terms such as "federation" match natural text in datasets; content searches should restrict extensions (code/config) or use compound phrases ("module federation").

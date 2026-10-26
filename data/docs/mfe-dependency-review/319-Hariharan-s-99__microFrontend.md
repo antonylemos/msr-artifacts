@@ -15,16 +15,17 @@ annotation:
 
 # 319 — Hariharan-s-99/microFrontend
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| container/package.json:29 | dependencies | @module-federation/enhanced | ^0.8.9 | module-federation | Yes | container/rspack.config.ts:5 (`ModuleFederationPlugin` importado de `@module-federation/enhanced/rspack`); container/rspack.config.ts:94 (`new ModuleFederationPlugin(mfConfig)` em `plugins`); container/module-federation.config.ts:1-8 (`name: "container"`, remotes `settings` e `home`); container/package.json:5 e container/package.json:8 (`rspack build` / `rspack serve`, que leem `rspack.config.ts`) |
-| home/package.json:29 | dependencies | @module-federation/enhanced | ^0.8.9 | module-federation | Yes | home/rspack.config.ts:5 (`ModuleFederationPlugin` importado de `@module-federation/enhanced/rspack`); home/rspack.config.ts:94 (`new ModuleFederationPlugin(mfConfig)` em `plugins`); home/module-federation.config.ts:1-8 (`name: "home"`, `filename: "remoteEntry.js"`, expõe `./app`); home/package.json:5 e home/package.json:8 (`rspack build` / `rspack serve`) |
-| settings/package.json:28 | dependencies | @module-federation/enhanced | ^0.8.9 | module-federation | Yes | settings/rspack.config.ts:5 (`ModuleFederationPlugin` importado de `@module-federation/enhanced/rspack`); settings/rspack.config.ts:93 (`new ModuleFederationPlugin(mfConfig)` em `plugins`); settings/module-federation.config.ts:1-8 (`name: "settings"`, `filename: "remoteEntry.js"`, expõe `./app`); settings/package.json:5 e settings/package.json:8 (`rspack build` / `rspack serve`) |
+| container/package.json:29 | dependencies | @module-federation/enhanced | ^0.8.9 | module-federation | Yes | container/rspack.config.ts:5 (`ModuleFederationPlugin` imported from `@module-federation/enhanced/rspack`); container/rspack.config.ts:94 (`new ModuleFederationPlugin(mfConfig)` in `plugins`); container/module-federation.config.ts:1-8 (`name: "container"`, remotes `settings` and `home`); container/package.json:5 and container/package.json:8 (`rspack build` / `rspack serve`, which read `rspack.config.ts`) |
+| home/package.json:29 | dependencies | @module-federation/enhanced | ^0.8.9 | module-federation | Yes | home/rspack.config.ts:5 (`ModuleFederationPlugin` imported from `@module-federation/enhanced/rspack`); home/rspack.config.ts:94 (`new ModuleFederationPlugin(mfConfig)` in `plugins`); home/module-federation.config.ts:1-8 (`name: "home"`, `filename: "remoteEntry.js"`, exposes `./app`); home/package.json:5 and home/package.json:8 (`rspack build` / `rspack serve`) |
+| settings/package.json:28 | dependencies | @module-federation/enhanced | ^0.8.9 | module-federation | Yes | settings/rspack.config.ts:5 (`ModuleFederationPlugin` imported from `@module-federation/enhanced/rspack`); settings/rspack.config.ts:93 (`new ModuleFederationPlugin(mfConfig)` in `plugins`); settings/module-federation.config.ts:1-8 (`name: "settings"`, `filename: "remoteEntry.js"`, exposes `./app`); settings/package.json:5 and settings/package.json:8 (`rspack build` / `rspack serve`) |
 
-## Notas
+## Notes
 
-- Cada pacote usa a própria cópia do plugin; as ocorrências em `other_package_matches` são as configurações equivalentes dos outros dois pacotes e não foram usadas como evidência da linha.
-- O grep fora das listas não achou outro uso do pacote (só `rspack.config.ts` e os `package.json`). `advancedWebpack/` não declara nem usa o pacote.
-- O host consome os remotos em container/src/Home.tsx:1 (`import { mount } from "home/app"`) e container/src/Settings.tsx:1 (`import { mount } from "settings/app"`).
+- Each package uses its own plugin copy; the `other_package_matches` occurrences are the equivalent configurations in the other two packages and were not used as evidence for the row.
+- Grep outside the lists found no other package use (only `rspack.config.ts` and `package.json` files). `advancedWebpack/` neither declares nor uses the package.
+- The host consumes the remotes in container/src/Home.tsx:1 (`import { mount } from "home/app"`) and container/src/Settings.tsx:1 (`import { mount } from "settings/app"`).
+

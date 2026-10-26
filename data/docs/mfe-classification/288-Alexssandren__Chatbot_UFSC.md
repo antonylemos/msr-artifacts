@@ -20,62 +20,62 @@ annotation:
 
 # 288 — Alexssandren/Chatbot_UFSC
 
-## Contexto
+## Context
 
-Sistema de recebimento e análise de submissões de atividades complementares (requerimento + certificados em PDF), com painel web para o orientador (`README.md:1–3`). Há um backend Fastify + Prisma (`backend/`) e um único frontend React + Vite (`frontend/`). Micro-frontends aparecem só numa lista de itens fora do escopo: “Itens explicitamente **fora** do escopo atual (evitar sem decisão): OCR, anotação em PDF, react-pdf/pdf.js pesado, microfrontends.” (`README.md:97`). O nome do repositório não é usado como evidência.
+System receiving and analyzing supplementary activity submissions (application + PDF certificates), with an advisor web dashboard (`README.md:1–3`). Fastify + Prisma backend (`backend/`) and a single React + Vite frontend (`frontend/`). Micro-frontends appear only in an out-of-scope item list: “Itens explicitamente **fora** do escopo atual (evitar sem decisão): OCR, anotação em PDF, react-pdf/pdf.js pesado, microfrontends.” (English translation: “Items explicitly **outside** current scope (avoid without a decision): OCR, PDF annotation, heavy react-pdf/pdf.js, microfrontends.”; `README.md:97`). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:289` registra rank 288, ID 1231899916, status `cloned`, branch `master` e o commit do front matter, que é o HEAD do clone e de `origin/master`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:289` records rank 288, ID 1231899916, status `cloned`, branch `master` and the front matter commit, which is HEAD of the clone and `origin/master`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:289` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:29702` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:29708` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:289` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:29702` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:29708` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2026-05` e `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2026-05` and empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | 2026-10-07T21:51:29.129Z / 2026-10-08T15:42:48.382Z |
 | `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | 2026-10-07T22:12:58.622Z / 2026-10-08T15:49:57.059Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2026-05-01..2026-05-31`.
+Effective queries append `pushed:>=2025-04-01 created:2026-05-01..2026-05-31`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem TypeScript, `fork: false`, tamanho 575;
-- criação em 2026-05-07T11:51:32Z, push em 2026-07-02T12:28:22Z.
+Hit metadata:
+- null description, no topics, language TypeScript, `fork: false`, size 575;
+- created at 2026-05-07T11:51:32Z, pushed at 2026-07-02T12:28:22Z.
 
-A grafia “microfrontends” está em `README.md:97`. O singular não aparece literalmente; esse hit depende do processamento textual da busca do GitHub, que não está registrado. A última alteração do README é `5bd8725` (2026-06-07), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+Spelling “microfrontends” is at `README.md:97`. Singular does not appear literally; that hit depends on GitHub search text processing, which is not recorded. README's last change is `5bd8725` (2026-06-07), before October 2026 collection. The SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 129 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Há `backend/` (Fastify, Prisma, testes), `frontend/` (uma aplicação Vite com 33 arquivos em `src/`), `docs/` (3 documentos), `scripts/`, `docker-compose.yml`, scripts `.bat` e um log em `.cursor/`. | contrária |
-| Frontend | `frontend/vite.config.ts:1–15`: só `@vitejs/plugin-react` e proxy `/api` para o backend. `frontend/index.html:11`: um único `<script type="module" src="/src/main.tsx">`. | contrária |
-| iframe | `frontend/src/components/PdfViewerModal.tsx:199–206`: `<iframe src={url}>` para exibir PDFs enviados (`README.md:60`). É visualização de documento, não composição de unidade frontend. | contexto |
-| Busca de mecanismos | `git grep` no SHA, sem lockfiles e logs, por `micro.?front`, `federation`, `single-spa`, `remoteEntry`, `import-map`, `web component` e `customElements`: só `README.md:97`. | ausente |
-| Documentação | `README.md:97`: micro-frontends listados como fora do escopo. `docs/INTEGRACAO-CHATBOT.md:1–15`: a integração com o chatbot é por API (`POST /api/submissions`), não por frontend. | contrária |
+| Structure | `git ls-tree -r` at the SHA: 129 entries, all regular `100644` files; zero symlinks and zero gitlinks. There are `backend/` (Fastify, Prisma, tests), `frontend/` (a Vite application with 33 files in `src/`), `docs/` (3 documents), `scripts/`, `docker-compose.yml`, `.bat` scripts and a log in `.cursor/`. | contrary |
+| Frontend | `frontend/vite.config.ts:1–15`: only `@vitejs/plugin-react` and `/api` proxy to backend. `frontend/index.html:11`: a single `<script type="module" src="/src/main.tsx">`. | contrary |
+| iframe | `frontend/src/components/PdfViewerModal.tsx:199–206`: `<iframe src={url}>` displays uploaded PDFs (`README.md:60`). Document viewing, rather than frontend unit composition. | context |
+| Mechanism search | `git grep` at the SHA, excluding lockfiles and logs, for `micro.?front`, `federation`, `single-spa`, `remoteEntry`, `import-map`, `web component` and `customElements`: only `README.md:97`. | absent |
+| Documentation | `README.md:97`: micro-frontends listed as out of scope. `docs/INTEGRACAO-CHATBOT.md:1–15`: chatbot integration through API (`POST /api/submissions`), rather than frontend. | contrary |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 18 commits lineares, nenhum merge, todos de `Alexssandren`, de 2026-05-07 a 2026-07-02 (SHA `170bb0b`). Só há o branch `master`. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 18 linear commits, no merges, all by `Alexssandren`, from 2026-05-07 to 2026-07-02 (SHA `170bb0b`). Only branch `master`. No historical blob was read and no object was missing.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única aplicação frontend (`frontend/`); o backend não é unidade frontend. |
-| Q2 | No | Sem duas unidades frontend, não há independência a avaliar. |
-| Q3 | No | Não há host, shell ou configuração raiz de composição. |
-| Q4 | No | Nenhum mecanismo de composição; o único `iframe` exibe PDFs. |
-| Q5 | No | Q1–Q4 são No: aplicação full-stack convencional que declara micro-frontends fora do escopo. |
+| Q1 | No | A single frontend application (`frontend/`); backend is not a frontend unit. |
+| Q2 | No | Without two frontend units, there is no independence to assess. |
+| Q3 | No | No host, shell or root composition configuration. |
+| Q4 | No | No composition mechanism; the only `iframe` displays PDFs. |
+| Q5 | No | Q1–Q4 are No: conventional full-stack application declaring micro-frontends out of scope. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “conventional frontend monoliths” e a “repositories mentioning micro-frontends without implementing them”: aqui a menção é justamente uma exclusão.
-- **Campos:** `frontend_units: 1`, `unit_organization: single-unit`, `approaches: []`, `ui_technologies: [react]`, `build_tools: [vite]`, `repo_type: production` (checklist de deploy, script de VPS e integração com sistema institucional, `docs/DEPLOY-CHECKLIST.md`, `scripts/vps-deploy.sh`).
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. Matches “conventional frontend monoliths” and “repositories mentioning micro-frontends without implementing them”: here the mention is precisely an exclusion.
+- **Fields:** `frontend_units: 1`, `unit_organization: single-unit`, `approaches: []`, `ui_technologies: [react]`, `build_tools: [vite]`, `repo_type: production` (deployment checklist, VPS script and institutional system integration, `docs/DEPLOY-CHECKLIST.md`, `scripts/vps-deploy.sh`).
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** a menção a “microfrontends” como item fora do escopo casa as consultas terminológicas.
-- **Protocolo (busca):** o hit singular não tem grafia literal. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ1 (misleading signals):** “microfrontends” mention as an out-of-scope item matches terminology queries.
+- **Protocol (search):** singular hit has no literal spelling. Eligibility changes from `unknown` (001) to `pass` (002).

@@ -17,21 +17,21 @@ annotation:
 
 ## Workspace
 
-Nenhuma declaração de workspace.
+No workspace declaration.
 
-## Unidades
+## Units
 
-| Diretório | Marcadores | Manifesto | Entrada | Build | Workspace | Deploy | Unidade frontend | Motivo |
+| Directory | Markers | Manifest | Entry | Build | Workspace | Deploy | Frontend unit | Rationale |
 |---|---|---|---|---|---|---|---|---|
-| . | angular.json;package.json;webpack.config.js;webpack.prod.config.js | package.json | angular.json:41 (`main: src/main.ts`); angular.json:21 (`index: src/index.html`) | angular.json:17-18 (target `build` com `ngx-build-plus:browser`); angular.json:42 (`extraWebpackConfig: webpack.config.js`); package.json:7 (`ng build`) | — | — | Yes | Única aplicação Angular do snapshot (o host), com entrada e build próprios |
-| src | src/index.html | — | — | — | — | — | No | Parte da unidade `.`: `src/index.html` é a página de entrada declarada em angular.json:21 |
+| . | angular.json;package.json;webpack.config.js;webpack.prod.config.js | package.json | angular.json:41 (`main: src/main.ts`); angular.json:21 (`index: src/index.html`) | angular.json:17-18 (`build` target with `ngx-build-plus:browser`); angular.json:42 (`extraWebpackConfig: webpack.config.js`); package.json:7 (`ng build`) | — | — | Yes | The snapshot’s only Angular application (the host), with its own entry and build |
+| src | src/index.html | — | — | — | — | — | No | Part of unit `.`: `src/index.html` is the entry page declared in angular.json:21 |
 
-## Resumo
+## Summary
 
-Aplicações frontend no snapshot: 1 (.).
+Frontend applications in the snapshot: 1 (.).
 
-## Notas
+## Notes
 
-- A classificação registra `frontend_units: 3`: o host e os remotes `users-mfe` e `payments-mfe`, que estão fora do snapshot e só aparecem em `public/mf.manifest.json` (remotes em `localhost:4202` e `localhost:4203`).
-- `angular.json:5-6` declara um único projeto (`host-app`); por isso não há workspace.
-- Nenhuma ocorrência `ops-*` ou `ci-*` no `matches.csv` e nenhum Dockerfile, workflow ou configuração de hospedagem no snapshot.
+- The classification records `frontend_units: 3`: the host and the remotes `users-mfe` and `payments-mfe`, which are outside the snapshot and appear only in `public/mf.manifest.json` (remotes at `localhost:4202` and `localhost:4203`).
+- `angular.json:5-6` declares a single project (`host-app`); therefore there is no workspace.
+- No `ops-*` or `ci-*` occurrence in `matches.csv` and no Dockerfile, workflow or hosting configuration in the snapshot.

@@ -20,59 +20,59 @@ annotation:
 
 # 300 — deepbag/micro-frontend-rspack
 
-## Contexto
+## Context
 
-Repositório vazio: no commit fixado, que é o único, há só um `README.md` de uma linha (“# micro-frontend-rspack”, 23 bytes), criado pela interface do GitHub. Não há código, configuração nem dependências. O nome do repositório não é usado como evidência.
+Empty repository: at the fixed commit, the only one, there is only a one-line `README.md` (“# micro-frontend-rspack”, 23 bytes), created through the GitHub interface. No code, configuration or dependencies. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:301` registra rank 300, ID 1329958608, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:301` records rank 300, ID 1329958608, status `cloned`, branch `main` and the front matter commit, which is HEAD of the clone and `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:301` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:35106` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:35112` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:301` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:35106` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:35112` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2026-08` e `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2026-08` and empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | 2026-10-07T22:40:50.062Z / 2026-10-08T16:01:32.208Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | 2026-10-07T23:11:13.636Z / 2026-10-08T16:10:20.504Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2026-08-01..2026-08-31`.
+Effective queries append `pushed:>=2025-04-01 created:2026-08-01..2026-08-31`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem nula, `fork: false`, tamanho 0;
-- criação em 2026-08-10T15:14:59Z, push em 2026-08-10T15:15:00Z.
+Hit metadata:
+- null description, no topics, null language, `fork: false`, size 0;
+- created at 2026-08-10T15:14:59Z, pushed at 2026-08-10T15:15:00Z.
 
-O único texto é `README.md:1` (“# micro-frontend-rspack”, sem quebra de linha final), em que “micro-frontend” aparece dentro de um identificador hifenizado; o plural não aparece. Os campos buscados incluem também o nome, e a parte responsável por cada hit depende do processamento textual da busca do GitHub, que não está registrado. O README é do único commit (2026-08-10), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+Only text is `README.md:1` (“# micro-frontend-rspack”, without final newline), where “micro-frontend” appears within a hyphenated identifier; plural does not appear. Searched fields also include name, and the part responsible for each hit depends on GitHub search text processing, which is not recorded. README belongs to the only commit (2026-08-10), before October 2026 collection. The SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 1 entrada, arquivo regular `100644` (`README.md`, 23 bytes); zero symlinks e zero gitlinks. Não há código, configuração nem dependências. | contrária |
-| Documentação | `README.md:1`: só um título. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 1 entry, regular `100644` file (`README.md`, 23 bytes); zero symlinks and zero gitlinks. No code, configuration or dependencies. | contrary |
+| Documentation | `README.md:1`: only a title. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; um único commit, `12ffbcc` (2026-08-10, “Initial commit”), de Deep Bag, criado pela interface do GitHub (committer `GitHub`). Só há o branch `main`. Não houve objeto ausente.
+Non-shallow clone; a single commit, `12ffbcc` (2026-08-10, “Initial commit”), by Deep Bag, created through the GitHub interface (committer `GitHub`). Only branch `main`. No objects were missing.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend; só um README de uma linha. |
-| Q2 | No | Sem unidades, não há independência a avaliar. |
-| Q3 | No | Não há host, shell ou configuração raiz. |
-| Q4 | No | Nenhum mecanismo de composição. |
-| Q5 | No | Q1–Q4 são No: repositório vazio. |
+| Q1 | No | No frontend unit; only a one-line README. |
+| Q2 | No | Without units, there is no independence to assess. |
+| Q3 | No | No host, shell or root configuration. |
+| Q4 | No | No composition mechanism. |
+| Q5 | No | Q1–Q4 are No: empty repository. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “repositories mentioning micro-frontends without implementing them”: o termo está só no título.
-- Mesmo enquadramento do rascunho 265 (commit inicial só com README) e dos perfis 011/064/068/073/077/101/111 (sem implementação).
-- **Campos:** `repo_type: other`, `frontend_units: 0`, `unit_organization: none`, `approaches: []`, `ui_technologies: []`, `build_tools: []`.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. Matches “repositories mentioning micro-frontends without implementing them”: term is only in title.
+- Same framing as draft 265 (initial README-only commit) and profiles 011/064/068/073/077/101/111 (without implementation).
+- **Fields:** `repo_type: other`, `frontend_units: 0`, `unit_organization: none`, `approaches: []`, `ui_technologies: []`, `build_tools: []`.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **Protocolo (busca):** o título hifenizado (ou o nome do repositório) casa as duas consultas; o plural não tem grafia literal. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **Protocol (search):** hyphenated title (or repository name) matches both queries; plural has no literal spelling. Eligibility changes from `unknown` (001) to `pass` (002).

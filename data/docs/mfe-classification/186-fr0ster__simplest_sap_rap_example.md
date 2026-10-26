@@ -20,64 +20,64 @@ annotation:
 
 # 186 — fr0ster/simplest_sap_rap_example
 
-## Contexto
+## Context
 
-Guia em Markdown para construir uma aplicação SAP RAP (ABAP RESTful Application Programming) em iterações (`README.md:1–12`). As pastas `1st_iteration/` a `10th_iteration/` contêm notas e trechos de CDS, behavior definitions e serviços, além de capturas de tela e um XML de serviço. Não há aplicação frontend. “Micro Frontend” só aparece no título de um tutorial externo listado no README (“Luigi Micro Frontend Framework”, `README.md:196`). O nome do repositório não é usado como evidência.
+Markdown guide to building an SAP RAP (ABAP RESTful Application Programming) application in iterations (`README.md:1–12`). Folders `1st_iteration/` through `10th_iteration/` contain notes and CDS, behavior definition and service snippets, plus screenshots and a service XML. No frontend application. “Micro Frontend” appears only in the title of an external tutorial listed in the README (“Luigi Micro Frontend Framework”, `README.md:196`). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:187` registra rank 186, ID 906200654, status `cloned`, branch `master` e o commit do front matter, que é o HEAD do clone e de `origin/master`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:187` records rank 186, ID 906200654, status `cloned`, branch `master` and the front matter commit, which is HEAD of the clone and `origin/master`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:187` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:11207` e `data/discovery/mfe-round-002/candidates.csv:11213`, ambos com `pass`.
+`data/samples/mfe-sample-001/sample.csv:187` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:11207` and `data/discovery/mfe-round-002/candidates.csv:11213`, both `pass`.
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2024-12` e `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2024-12` and empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | 2026-10-07T22:19:53.790Z / 2026-10-08T15:53:34.234Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | 2026-10-07T22:51:03.894Z / 2026-10-08T16:05:10.484Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2024-12-01..2024-12-31`.
+Effective queries append `pushed:>=2025-04-01 created:2024-12-01..2024-12-31`.
 
-Metadados do hit:
-- descrição “The simplest SAP RAP example”, sem os termos;
-- sem tópicos, linguagem nula, `fork: false`, tamanho 4.025;
-- criação em 2024-12-20T11:26:46Z, push em 2025-05-08T12:53:42Z.
+Hit metadata:
+- description “The simplest SAP RAP example”, without the terms;
+- no topics, null language, `fork: false`, size 4,025;
+- created at 2024-12-20T11:26:46Z, pushed at 2025-05-08T12:53:42Z.
 
-O acerto vem de `README.md:196`, “Create an Application with the Luigi Micro Frontend Framework”, título de tutorial da SAP listado como link e única ocorrência. O plural “micro frontends” não aparece literalmente; esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+The hit comes from `README.md:196`, “Create an Application with the Luigi Micro Frontend Framework”, title of an SAP tutorial listed as a link and the only occurrence. Plural “micro frontends” does not appear literally; that hit depends on GitHub search text processing, which is not recorded.
 
-A última alteração do README é o próprio SHA, `3c01bce` (2025-05-08), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The README's last change is the SHA itself, `3c01bce` (2025-05-08), before October 2026 collection. The SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 93 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. São notas `.md` por iteração, imagens PNG, `10th_iteration/ZE2E100_SOL_2_SRV.xml`, `LICENSE`, `README.md` e um `.code-workspace`. Não há `package.json`, HTML de entrada, código JavaScript/TypeScript nem configuração de bundler. | contrária |
-| Documentação | `README.md:1–12`: guia iterativo de SAP RAP. `README.md:141`, `196`: links para tutoriais SAP, entre eles “Luigi Micro Frontend Framework”. É referência externa, não implementação. | fraca |
-| Tecnologia / Configuração / Composição (busca) | `git grep -i` no SHA por `micro.?front`: só `README.md:196`. Nenhum mecanismo de composição. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 93 entries, all regular `100644` files; zero symlinks and zero gitlinks. Per-iteration `.md` notes, PNG images, `10th_iteration/ZE2E100_SOL_2_SRV.xml`, `LICENSE`, `README.md` and a `.code-workspace`. No `package.json`, entry HTML, JavaScript/TypeScript code or bundler configuration. | contrary |
+| Documentation | `README.md:1–12`: iterative SAP RAP guide. `README.md:141`, `196`: SAP tutorial links, including “Luigi Micro Frontend Framework”. External reference, rather than implementation. | weak |
+| Technology / Configuration / Composition (search) | `git grep -i` at the SHA for `micro.?front`: only `README.md:196`. No composition mechanism. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 126 commits, 2 merges, todos de Oleksii Kyslytsia, com três e-mails: `oleksij.kyslytsja@gmail.com` (115), `oleksii_kyslytsia@epam.com` (10) e `oleksii_kyslytsai@epam.com` (1). Vão de 2024-12-20 (`14d5d40`, “Initial commit”) a 2025-05-08 (SHA). Os commits recentes acrescentam links de tutoriais ao README. Nenhum blob histórico foi lido. O clone é parcial (`blob:none`): as consultas por caminho de `2nd_iteration`, `4th_iteration`, `5th_iteration` e `10th_iteration` retornam erros de objetos promisor indisponíveis com `GIT_NO_LAZY_FETCH=1`; o histórico local confirma o autor único, mas não se atesta a completude do `name-status` dessas pastas. O SHA avaliado é integral (93 blobs disponíveis).
+Non-shallow clone; 126 commits, 2 merges, all by Oleksii Kyslytsia, with three emails: `oleksij.kyslytsja@gmail.com` (115), `oleksii_kyslytsia@epam.com` (10) and `oleksii_kyslytsai@epam.com` (1). They span 2024-12-20 (`14d5d40`, “Initial commit”) to 2025-05-08 (SHA). Recent commits add tutorial links to README. No historical blob was read. The clone is partial (`blob:none`): path-specific queries for `2nd_iteration`, `4th_iteration`, `5th_iteration` and `10th_iteration` return unavailable promisor object errors with `GIT_NO_LAZY_FETCH=1`; local history confirms one author, but completeness of these folders' `name-status` is not certified. The assessed SHA is complete (93 available blobs).
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend; o inventário é documentação e artefatos de SAP RAP. |
-| Q2 | No | Sem unidades, não há entradas ou builds. |
-| Q3 | No | Não há host, shell ou configuração raiz. |
-| Q4 | No | Nenhum mecanismo de composição; “Micro Frontend” é título de tutorial externo (`README.md:196`). |
-| Q5 | No | Q1–Q4 são No: guia de desenvolvimento SAP RAP com link para tutorial de micro-frontends. |
+| Q1 | No | No frontend unit; inventory consists of SAP RAP documentation and artifacts. |
+| Q2 | No | Without units, there are no entries or builds. |
+| Q3 | No | No host, shell or root configuration. |
+| Q4 | No | No composition mechanism; “Micro Frontend” is an external tutorial title (`README.md:196`). |
+| Q5 | No | Q1–Q4 are No: SAP RAP development guide linking to a micro-frontends tutorial. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “repositories mentioning micro-frontends without implementing them”.
-- É conteúdo didático, como em 023, e não tem unidade frontend, como os perfis 011/064/068/073/077/101/111. Daí `frontend_units: 0`, `unit_organization: none`, `repo_type: other`, `ui_technologies: []` e `build_tools: []`.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. Matches “repositories mentioning micro-frontends without implementing them”.
+- Teaching content, as in 023, without a frontend unit, like profiles 011/064/068/073/077/101/111. Hence `frontend_units: 0`, `unit_organization: none`, `repo_type: other`, `ui_technologies: []` and `build_tools: []`.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** um link para tutorial externo (“Luigi Micro Frontend Framework”) numa lista de recursos basta para a consulta terminológica.
-- **Protocolo (busca):** o hit plural `"micro frontends"` não tem grafia literal. Elegibilidade `pass` nas duas rodadas.
-- **Contribuição da revisão independente (Lupa):** concordância integral com Non-MFE e Q1–Q5 No; sem decisão aberta (`draft`). O SHA contém documentação e exemplos SAP RAP, sem unidades frontend nem configuração de composição, e o sinal de descoberta vem de um título externo listado no README (`README.md:196`). Divergência de campo não resolvida pelo checklist: `repo_type: other` é defensável se o rótulo classifica o artefato entregue (guia documental sem aplicação frontend observável), enquanto `example` seria mais preciso se classificar o propósito didático (o README descreve um processo iterativo para construir uma aplicação); o template aceita ambos (`_template.md:12`) sem regra explícita para guias de exemplo não executáveis. Mantido `other`, e o limite entre os dois entra na harmonização pendente de `repo_type`. A auditoria do histórico por caminho está limitada pelo clone parcial.
+- **RQ1 (misleading signals):** an external tutorial link (“Luigi Micro Frontend Framework”) in a resource list suffices for the terminology query.
+- **Protocol (search):** plural hit `"micro frontends"` has no literal spelling. Eligibility `pass` in both rounds.
+- **Independent review contribution (Lupa):** full agreement with Non-MFE and Q1–Q5 No; no open decision (`draft`). SHA contains SAP RAP documentation and examples, without frontend units or composition configuration, and discovery signal comes from an external title listed in README (`README.md:196`). Field disagreement unresolved by checklist: `repo_type: other` is defensible if label classifies the delivered artifact (documentary guide without observable frontend application), while `example` would be more precise if classifying teaching purpose (README describes an iterative application-building process); template accepts both (`_template.md:12`) without an explicit rule for non-executable example guides. `other` retained, and the boundary between both enters pending `repo_type` harmonization. Path-specific history audit is limited by the partial clone.

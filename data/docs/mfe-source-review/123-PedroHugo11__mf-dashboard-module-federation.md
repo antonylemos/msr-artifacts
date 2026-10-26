@@ -15,25 +15,25 @@ annotation:
 
 # 123 — PedroHugo11/mf-dashboard-module-federation
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-remote-import | shell/src/App.tsx:3 | shell | dynamic-loading | Yes | `React.lazy(() => import("weather/Widget"))` carrega o módulo `./Widget` exposto pela unidade mfe-weather (mfe-weather/vite.config.ts:15-18), resolvido pelo remote `weather` em shell/vite.config.ts:16; o componente é renderizado em shell/src/App.tsx:19, e App é montado por shell/src/main.tsx:5-7, entrada de shell/index.html:11. |
-| src-remote-import | shell/src/App.tsx:4 | shell | dynamic-loading | Yes | `React.lazy(() => import("counter/Widget"))` carrega o módulo `./Widget` exposto pela unidade mfe-counter (mfe-counter/vite.config.ts:15-18), resolvido pelo remote `counter` em shell/vite.config.ts:17; o componente é renderizado em shell/src/App.tsx:25, e App é montado por shell/src/main.tsx:5-7, entrada de shell/index.html:11. |
+| src-remote-import | shell/src/App.tsx:3 | shell | dynamic-loading | Yes | `React.lazy(() => import("weather/Widget"))` loads module `./Widget` exposed by unit mfe-weather (mfe-weather/vite.config.ts:15-18), resolved by remote `weather` at shell/vite.config.ts:16; the component is rendered at shell/src/App.tsx:19, and App is mounted by shell/src/main.tsx:5-7, the entry of shell/index.html:11. |
+| src-remote-import | shell/src/App.tsx:4 | shell | dynamic-loading | Yes | `React.lazy(() => import("counter/Widget"))` loads module `./Widget` exposed by unit mfe-counter (mfe-counter/vite.config.ts:15-18), resolved by remote `counter` at shell/vite.config.ts:17; the component is rendered at shell/src/App.tsx:25, and App is mounted by shell/src/main.tsx:5-7, the entry of shell/index.html:11. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | shell/src/App.tsx:19 | shell | runtime-composition | Yes | Renderiza `<WeatherWidget />`, componente da unidade mfe-weather, dentro de `Suspense` + `WidgetCard` (shell/src/App.tsx:17-21); o componente vem do `React.lazy` em shell/src/App.tsx:3. |
-| manual | shell/src/App.tsx:25 | shell | runtime-composition | Yes | Renderiza `<CounterWidget />`, componente da unidade mfe-counter, dentro de `Suspense` + `WidgetCard` (shell/src/App.tsx:23-27); o componente vem do `React.lazy` em shell/src/App.tsx:4. |
+| manual | shell/src/App.tsx:19 | shell | runtime-composition | Yes | Renders `<WeatherWidget />`, a component of unit mfe-weather, inside `Suspense` + `WidgetCard` (shell/src/App.tsx:17-21); the component comes from `React.lazy` at shell/src/App.tsx:3. |
+| manual | shell/src/App.tsx:25 | shell | runtime-composition | Yes | Renders `<CounterWidget />`, a component of unit mfe-counter, inside `Suspense` + `WidgetCard` (shell/src/App.tsx:23-27); the component comes from `React.lazy` at shell/src/App.tsx:4. |
 
-## Resumo
+## Summary
 
-Construções com composição: 4 (dynamic-loading: 2, runtime-composition: 2).
+Constructs participating in composition: 4 (dynamic-loading: 2, runtime-composition: 2).
 
-## Notas
+## Notes
 
-- Os remotes não usam `import()` internamente: `./Widget` aponta para `src/bootstrap.tsx`, que só reexporta o widget (mfe-weather/src/bootstrap.tsx:1-2, mfe-counter/src/bootstrap.tsx:1-2); os `main.tsx` dos remotes montam o widget de forma isolada (mfe-weather/src/main.tsx:4-6, mfe-counter/src/main.tsx:4-6). As buscas do passo 4 não acharam custom elements, iframes, scripts injetados nem mecanismos de comunicação.
-- As URLs dos remotes são fixas em `localhost` nas portas 4173 (weather) e 4174 (counter) (shell/vite.config.ts:16-17), diferentes das portas de `server.port` dos remotes (mfe-weather/vite.config.ts:7, mfe-counter/vite.config.ts:7); elas correspondem ao `vite preview` dos remotes na ordem do README.md:65-73 (sem porta própria em `preview`), o que não muda a composição.
+- The remotes do not use `import()` internally: `./Widget` points to `src/bootstrap.tsx`, which only re-exports the widget (mfe-weather/src/bootstrap.tsx:1-2, mfe-counter/src/bootstrap.tsx:1-2); the remotes’ `main.tsx` files mount the widget in isolation (mfe-weather/src/main.tsx:4-6, mfe-counter/src/main.tsx:4-6). The step 4 searches found no custom elements, iframes, injected scripts or communication mechanisms.
+- The remote URLs are fixed at `localhost` on ports 4173 (weather) and 4174 (counter) (shell/vite.config.ts:16-17), different from the remotes’ `server.port` ports (mfe-weather/vite.config.ts:7, mfe-counter/vite.config.ts:7); they correspond to the remotes’ `vite preview` in README.md:65-73 order (without a specific port in `preview`), which does not change composition.

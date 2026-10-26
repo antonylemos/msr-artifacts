@@ -19,471 +19,472 @@ annotation:
 
 # 292 — jaideepsinghchauhan/Angular-MFE
 
-## Leitura do repositório
+## Repository overview
 
-A cadeia principal combina as declarações de federação (#2, #9), a configuração do host com seus dois remotes (#16), os plugins webpack (#17, #19, #21) e as rotas correspondentes (#25, #26, #31). As relações #44 e #45 ligam o host às unidades mfe2 e mfe1, cujos limites de entrada e build estão em #36, #38 e #40. O canal de estado compartilhado tem implementação em #32 e relação em #46, preservando a dependência do compartilhamento padrão do wrapper Nx registrada na 3.4.
+Main chain combines federation declarations (#2, #9), host configuration with two remotes (#16), webpack plugins (#17, #19, #21) and corresponding routes (#25, #26, #31). Relationships #44 and #45 link host to units mfe2/mfe1, whose entry/build boundaries in #36, #38 and #40. Shared-state channel implemented in #32, relationship in #46, preserving dependency on Nx wrapper default sharing recorded in 3.4.
 
-A rota greeting é o limite dessa cadeia: #27 permanece Undetermined porque consome uma chave ausente dos exposes de #18. Isso não desfaz a ligação principal ativa com mfe1. As afirmações do tutorial sobre duas exposições carregadas e independência são contraditas (#53, #57); o histórico (#63, #64) mostra a coexistência inicial da divergência e a estabilidade da dependência de serve, sem provar abandono.
+Greeting route limits chain: #27 remains Undetermined because consumes key absent from #18 exposes. Does not undo main active mfe1 link. Tutorial claims about two loaded exposures/independence contradicted (#53, #57); history (#63, #64) shows initial discrepancy coexistence and stable serve dependency without proving abandonment.
 
-Há quatro aplicações frontend na revisão estrutural: a aplicação padrão #34 fica fora da composição. A raiz, os quatro projetos de testes e as duas bibliotecas não são unidades frontend. Os quatro builds são separados (#47, #48, #49, #50), com deploy não observado e sem versionamento independente registrado. As dependências de ferramentas do workspace são contexto, e os três pontos históricos inconclusivos (#60, #61, #62) dizem respeito ao passado dessas declarações, sem mudar o snapshot. As afirmações documentais continuam evidência fraca, mesmo quando corroboradas.
+Four frontend applications in structure review: default application #34 outside composition. Root, four test projects and two libraries not frontend units. Four builds separate (#47, #48, #49, #50), deployment not observed and no independent versioning recorded. Workspace tool dependencies context; three inconclusive historical points (#60, #61, #62) concern past declarations without changing snapshot. Documentary claims remain weak evidence even when corroborated.
 
-## Observações
+## Observations
 
 ### 1. package.json:17
 
-**Observação:** O manifesto declara `@nx/angular: 21.2.0` em `dependencies`.
+**Observation:** Manifest declares `@nx/angular: 21.2.0` in `dependencies`.
 
-**Interpretação:** Ferramenta Angular do workspace, configurada nos targets; a declaração isolada não demonstra a composição. Configurada: `Yes` na 3.4.2.
+**Interpretation:** Angular workspace tool configured in targets; declaration alone demonstrates no composition. Configured: `Yes` in 3.4.2.
 
 ### 2. package.json:27
 
-**Observação:** O manifesto declara `@module-federation/enhanced: ^0.9.0` em `devDependencies`.
+**Observation:** Manifest declares `@module-federation/enhanced: ^0.9.0` in `devDependencies`.
 
-**Interpretação:** Sinal de Module Federation; a revisão registra configuração indireta pelo wrapper Nx e pelo vínculo do lockfile. Configurada: `Yes` na 3.4.2.
+**Interpretation:** Module Federation signal; review records indirect configuration through Nx wrapper/lockfile link. Configured: `Yes` in 3.4.2.
 
 ### 3. package.json:28
 
-**Observação:** O manifesto declara `@nx/cypress: 21.2.0` em `devDependencies`.
+**Observation:** Manifest declares `@nx/cypress: 21.2.0` in `devDependencies`.
 
-**Interpretação:** Ferramenta de testes configurada, sem demonstrar composição de frontends. Configurada: `Yes` na 3.4.2.
+**Interpretation:** Configured test tool without demonstrating frontend composition. Configured: `Yes` in 3.4.2.
 
 ### 4. package.json:29
 
-**Observação:** O manifesto declara `@nx/devkit: 21.2.0` em `devDependencies`.
+**Observation:** Manifest declares `@nx/devkit: 21.2.0` in `devDependencies`.
 
-**Interpretação:** Utilitário do workspace usado nas configurações de testes, sem mecanismo próprio de MFE. Configurada: `Yes` na 3.4.2.
+**Interpretation:** Workspace utility used in test configurations without own MFE mechanism. Configured: `Yes` in 3.4.2.
 
 ### 5. package.json:30
 
-**Observação:** O manifesto declara `@nx/eslint: 21.2.0` em `devDependencies`.
+**Observation:** Manifest declares `@nx/eslint: 21.2.0` in `devDependencies`.
 
-**Interpretação:** Ferramenta de lint configurada no workspace, sem evidência própria de composição. Configurada: `Yes` na 3.4.2.
+**Interpretation:** Workspace-configured lint tool without own composition evidence. Configured: `Yes` in 3.4.2.
 
 ### 6. package.json:31
 
-**Observação:** O manifesto declara `@nx/eslint-plugin: 21.2.0` em `devDependencies`.
+**Observation:** Manifest declares `@nx/eslint-plugin: 21.2.0` in `devDependencies`.
 
-**Interpretação:** Plugin de análise estática configurado, sem estabelecer a arquitetura de MFE. Configurada: `Yes` na 3.4.2.
+**Interpretation:** Configured static analysis plugin without establishing MFE architecture. Configured: `Yes` in 3.4.2.
 
 ### 7. package.json:32
 
-**Observação:** O manifesto declara `@nx/jest: 21.2.0` em `devDependencies`.
+**Observation:** Manifest declares `@nx/jest: 21.2.0` in `devDependencies`.
 
-**Interpretação:** Ferramenta de testes configurada, sem estabelecer uma ligação entre aplicações. Configurada: `Yes` na 3.4.2.
+**Interpretation:** Configured test tool without establishing inter-application link. Configured: `Yes` in 3.4.2.
 
 ### 8. package.json:33
 
-**Observação:** O manifesto declara `@nx/js: 21.2.0` em `devDependencies`.
+**Observation:** Manifest declares `@nx/js: 21.2.0` in `devDependencies`.
 
-**Interpretação:** Ferramenta declarada sem uso observado na revisão; não sustenta mecanismo de MFE. Configurada: `No` na 3.4.2.
+**Interpretation:** Declared tool without observed review usage; supports no MFE mechanism. Configured: `No` in 3.4.2.
 
 ### 9. package.json:34
 
-**Observação:** O manifesto declara `@nx/module-federation: 21.2.0` em `devDependencies`.
+**Observation:** Manifest declares `@nx/module-federation: 21.2.0` in `devDependencies`.
 
-**Interpretação:** Sinal de Module Federation, com configuração registrada em observações próprias. Configurada: `Yes` na 3.4.2.
+**Interpretation:** Module Federation signal with configuration recorded in own observations. Configured: `Yes` in 3.4.2.
 
 ### 10. package.json:35
 
-**Observação:** O manifesto declara `@nx/playwright: 21.2.0` em `devDependencies`.
+**Observation:** Manifest declares `@nx/playwright: 21.2.0` in `devDependencies`.
 
-**Interpretação:** Ferramenta de e2e configurada, sem demonstrar composição. Configurada: `Yes` na 3.4.2.
+**Interpretation:** Configured e2e tool without demonstrating composition. Configured: `Yes` in 3.4.2.
 
 ### 11. package.json:36
 
-**Observação:** O manifesto declara `@nx/web: 21.2.0` em `devDependencies`.
+**Observation:** Manifest declares `@nx/web: 21.2.0` in `devDependencies`.
 
-**Interpretação:** Ferramenta de servidor de arquivos local configurada, sem comprovar deploy ou composição. Configurada: `Yes` na 3.4.2.
+**Interpretation:** Configured local file server tool without establishing deployment/composition. Configured: `Yes` in 3.4.2.
 
 ### 12. package.json:37
 
-**Observação:** O manifesto declara `@nx/webpack: 21.2.0` em `devDependencies`.
+**Observation:** Manifest declares `@nx/webpack: 21.2.0` in `devDependencies`.
 
-**Interpretação:** Ferramenta declarada sem uso observado; os executores de build registrados pertencem a @nx/angular. Configurada: `No` na 3.4.2.
+**Interpretation:** Declared tool without observed usage; recorded build executors belong to @nx/angular. Configured: `No` in 3.4.2.
 
 ### 13. package.json:38
 
-**Observação:** O manifesto declara `@nx/workspace: 21.2.0` em `devDependencies`.
+**Observation:** Manifest declares `@nx/workspace: 21.2.0` in `devDependencies`.
 
-**Interpretação:** Ferramenta de workspace declarada sem uso observado, sem demonstrar composição. Configurada: `No` na 3.4.2.
+**Interpretation:** Declared workspace tool without observed usage or demonstrated composition. Configured: `No` in 3.4.2.
 
 ### 14. package.json:56
 
-**Observação:** O manifesto declara `nx: 21.2.0` em `devDependencies`.
+**Observation:** Manifest declares `nx: 21.2.0` in `devDependencies`.
 
-**Interpretação:** CLI do workspace com invocação registrada nas configurações de e2e; não é, por si, mecanismo de MFE. Configurada: `Yes` na 3.4.2.
+**Interpretation:** Workspace CLI with invocation recorded in e2e configurations; alone no MFE mechanism. Configured: `Yes` in 3.4.2.
 
 ### 15. appshell/host/project.json:59-75
 
-**Observação:** O target serve usa `@nx/angular:module-federation-dev-server` e seleciona host:build:production ou host:build:development.
+**Observation:** Serve target uses `@nx/angular:module-federation-dev-server`, selecting host:build:production or host:build:development.
 
-**Interpretação:** Configura o executor de desenvolvimento federado do host, sem declarar um endereço de publicação.
+**Interpretation:** Configures host federated development executor without declaring publication address.
 
-**Nota:** Os targets build dos project.json só conectam o executor genérico webpack-browser aos arquivos webpack. Os demais servidores, aliases de tsconfig.base.json e plugins de testes/lint não declaram elementos de composição e não geram observações de configuração. Portas locais são apenas apoio.
+**Note:** project.json build targets only connect generic webpack-browser executor to webpack files. Other servers, tsconfig.base.json aliases and test/lint plugins declare no composition elements, generating no configuration observations. Local ports only support.
 
 ### 16. appshell/host/module-federation.config.ts:3-18
 
-**Observação:** A configuração declara `name: 'host'` e `remotes: ['mfe1', 'mfe2']`. O remote externo do comentário é apenas exemplo.
+**Observation:** Configuration declares `name: 'host'` and `remotes: ['mfe1', 'mfe2']`. External remote comment merely example.
 
-**Interpretação:** Nomeia as duas unidades que o host resolve por Module Federation dentro do workspace.
+**Interpretation:** Names two units resolved by host through Module Federation within workspace.
 
 ### 17. appshell/host/webpack.config.ts:1-9
 
-**Observação:** Importa a configuração local de federação e exporta `withModuleFederation(config, { dts: false })`.
+**Observation:** Imports local federation configuration, exporting `withModuleFederation(config, { dts: false })`.
 
-**Interpretação:** Aplica o plugin de federação ao build de host. O bloco não nomeia sozinho outra unidade.
+**Interpretation:** Applies federation plugin to host build. Block alone names no other unit.
 
 ### 18. appshell/mfe1/module-federation.config.ts:3-10
 
-**Observação:** Declara `name: 'mfe1'` e expõe `./Routes` de appshell/mfe1/src/app/remote-entry/entry.routes.ts. Expõe também `./GreetingComponent` de src/app/greeting/greeting.component.ts; não declara `./GreetingRoutes`.
+**Observation:** Declares `name: 'mfe1'`, exposing `./Routes` from appshell/mfe1/src/app/remote-entry/entry.routes.ts. Also exposes `./GreetingComponent` from src/app/greeting/greeting.component.ts; no `./GreetingRoutes` declaration.
 
-**Interpretação:** Configura as exposições da unidade mfe1; a configuração isolada não identifica um consumidor.
+**Interpretation:** Configures mfe1 unit exposures; configuration alone identifies no consumer.
 
 ### 19. appshell/mfe1/webpack.config.ts:1-9
 
-**Observação:** Importa a configuração local de federação e exporta `withModuleFederation(config, { dts: false })`.
+**Observation:** Imports local federation configuration, exporting `withModuleFederation(config, { dts: false })`.
 
-**Interpretação:** Aplica o plugin de federação ao build de mfe1. O bloco não nomeia sozinho outra unidade.
+**Interpretation:** Applies federation plugin to mfe1 build. Block alone names no other unit.
 
 ### 20. appshell/mfe2/module-federation.config.ts:3-8
 
-**Observação:** Declara `name: 'mfe2'` e expõe `./Routes` de appshell/mfe2/src/app/remote-entry/entry.routes.ts.
+**Observation:** Declares `name: 'mfe2'`, exposing `./Routes` from appshell/mfe2/src/app/remote-entry/entry.routes.ts.
 
-**Interpretação:** Configura as exposições da unidade mfe2; a configuração isolada não identifica um consumidor.
+**Interpretation:** Configures mfe2 unit exposures; configuration alone identifies no consumer.
 
 ### 21. appshell/mfe2/webpack.config.ts:1-9
 
-**Observação:** Importa a configuração local de federação e exporta `withModuleFederation(config, { dts: false })`.
+**Observation:** Imports local federation configuration, exporting `withModuleFederation(config, { dts: false })`.
 
-**Interpretação:** Aplica o plugin de federação ao build de mfe2. O bloco não nomeia sozinho outra unidade.
+**Interpretation:** Applies federation plugin to mfe2 build. Block alone names no other unit.
 
 ### 22. appshell/host/webpack.prod.config.ts:1-24
 
-**Observação:** Invoca `withModuleFederation({ ...config }, { dts: false })`; os exemplos de URLs de produção estão comentados.
+**Observation:** Invokes `withModuleFederation({ ...config }, { dts: false })`; production URL examples commented.
 
-**Interpretação:** Reaplica a configuração federada de host em produção, sem acrescentar URLs de publicação.
+**Interpretation:** Reapplies host production federation configuration without adding publication URLs.
 
 ### 23. appshell/mfe1/webpack.prod.config.ts:1-24
 
-**Observação:** Invoca `withModuleFederation({ ...config }, { dts: false })`; os exemplos de URLs de produção estão comentados.
+**Observation:** Invokes `withModuleFederation({ ...config }, { dts: false })`; production URL examples commented.
 
-**Interpretação:** Reaplica a configuração federada de mfe1 em produção, sem acrescentar URLs de publicação.
+**Interpretation:** Reapplies mfe1 production federation configuration without adding publication URLs.
 
 ### 24. appshell/mfe2/webpack.prod.config.ts:1-24
 
-**Observação:** Invoca `withModuleFederation({ ...config }, { dts: false })`; os exemplos de URLs de produção estão comentados.
+**Observation:** Invokes `withModuleFederation({ ...config }, { dts: false })`; production URL examples commented.
 
-**Interpretação:** Reaplica a configuração federada de mfe2 em produção, sem acrescentar URLs de publicação.
+**Interpretation:** Reapplies mfe2 production federation configuration without adding publication URLs.
 
 ### 25. appshell/host/src/app/app.routes.ts:7
 
-**Observação:** A rota mfe2 usa `loadChildren` com `import('mfe2/Routes')` e seleciona `remoteRoutes`.
+**Observation:** Route mfe2 uses `loadChildren` with `import('mfe2/Routes')`, selecting `remoteRoutes`.
 
-**Interpretação:** O host carrega por navegação as rotas federadas de mfe2.
+**Interpretation:** Host loads mfe2 federated routes through navigation.
 
 ### 26. appshell/host/src/app/app.routes.ts:11
 
-**Observação:** A rota mfe1 usa `loadChildren` com `import('mfe1/Routes')` e seleciona `remoteRoutes`.
+**Observation:** Route mfe1 uses `loadChildren` with `import('mfe1/Routes')`, selecting `remoteRoutes`.
 
-**Interpretação:** O host carrega por navegação as rotas federadas de mfe1.
+**Interpretation:** Host loads mfe1 federated routes through navigation.
 
 ### 27. appshell/host/src/app/app.routes.ts:13-17; appshell/mfe1/module-federation.config.ts:5-9
 
-**Observação:** A rota greeting importa `mfe1/GreetingRoutes`, mas os exposes de mfe1 são `./Routes` e `./GreetingComponent`.
+**Observation:** Greeting route imports `mfe1/GreetingRoutes`, but mfe1 exposes are `./Routes` and `./GreetingComponent`.
 
-**Interpretação:** A construção nomeia o remote, mas a chave consumida não corresponde à exposição. Pode representar uma ligação adicional incompleta ou uma configuração divergente sem ligação efetiva por essa rota; não há sustentação para tratá-la como carregamento confirmado. Mantém-se Composição Undetermined da 3.4.4.
+**Interpretation:** Construct names remote but consumed key does not match exposure. May represent incomplete additional link or divergent configuration without effective route link; no support for confirmed loading. Composition Undetermined from 3.4.4 retained.
 
 ### 28. appshell/host/src/main.ts:1
 
-**Observação:** Executa `import('./bootstrap')` e registra eventuais erros.
+**Observation:** Executes `import('./bootstrap')`, logging possible errors.
 
-**Interpretação:** Bootstrap assíncrono interno de host, sem carregar outra unidade nessa construção.
+**Interpretation:** Internal asynchronous host bootstrap without loading another unit in construct.
 
 ### 29. appshell/mfe1/src/main.ts:1
 
-**Observação:** Executa `import('./bootstrap')` e registra eventuais erros.
+**Observation:** Executes `import('./bootstrap')`, logging possible errors.
 
-**Interpretação:** Bootstrap assíncrono interno de mfe1, sem carregar outra unidade nessa construção.
+**Interpretation:** Internal asynchronous mfe1 bootstrap without loading another unit in construct.
 
 ### 30. appshell/mfe2/src/main.ts:1
 
-**Observação:** Executa `import('./bootstrap')` e registra eventuais erros.
+**Observation:** Executes `import('./bootstrap')`, logging possible errors.
 
-**Interpretação:** Bootstrap assíncrono interno de mfe2, sem carregar outra unidade nessa construção.
+**Interpretation:** Internal asynchronous mfe2 bootstrap without loading another unit in construct.
 
 ### 31. appshell/host/src/app/app.routes.ts:4-22; appshell/host/src/app/app.config.ts:13; appshell/host/src/app/app.html:1-5; appshell/host/src/app/app.html:17
 
-**Observação:** appRoutes associa os caminhos mfe2, mfe1 e greeting aos imports federados; provideRouter registra a tabela, e o template traz navegação e router-outlet.
+**Observation:** appRoutes associates mfe2, mfe1 and greeting paths with federated imports; provideRouter registers table, template contains navigation/router-outlet.
 
-**Interpretação:** A tabela organiza a composição por navegação no host. Os dois Routes correspondentes sustentam relações ativas; a rota greeting conserva o limite descrito em #27.
+**Interpretation:** Table organizes host navigation composition. Two matching Routes support active relationships; greeting route retains #27 limitation.
 
 ### 32. libs/shared/data/src/lib/user.service.ts:3-20; appshell/host/src/app/app.ts:15-23; appshell/host/src/app/app.html:6-15; appshell/mfe1/src/app/remote-entry/nx-welcome.ts:9; appshell/mfe1/src/app/remote-entry/nx-welcome.ts:875-877; appshell/mfe1/src/app/remote-entry/entry.ts:3-8
 
-**Observação:** login e logout alteram o signal do UserService. O host chama esses métodos, e NxWelcome de mfe1 injeta o serviço, lê seu valor e o exibe.
+**Observation:** Login/logout change UserService signal. Host calls methods; mfe1 NxWelcome injects service, reading/displaying value.
 
-**Interpretação:** O serviço reativo implementa o canal registrado na 3.4.5. Seu funcionamento entre unidades depende da instância compartilhada pelo wrapper Nx, sem shared explícito nas configurações.
+**Interpretation:** Reactive service implements channel recorded in 3.4.5. Inter-unit operation depends on Nx wrapper-shared instance without explicit shared in configurations.
 
 ### 33. .; package.json:1-6; nx.json:1-99
 
-**Observação:** A raiz contém manifesto de workspace com scripts vazio e configuração Nx, sem entrada ou build de UI próprios.
+**Observation:** Root contains workspace manifest with empty scripts and Nx configuration without own UI entry/build.
 
-**Interpretação:** É coordenação de workspace, Unidade frontend No.
+**Interpretation:** Workspace coordination, Frontend unit No.
 
 ### 34. apps/angular-monorepo; apps/angular-monorepo/project.json:9-27; apps/angular-monorepo/src/main.ts:1-5
 
-**Observação:** O projeto angular-monorepo tem entrada e target build próprios, com outputPath específico. main.ts chama bootstrapApplication.
+**Observation:** Project angular-monorepo has own entry/build target with specific outputPath. main.ts calls bootstrapApplication.
 
-**Interpretação:** É uma unidade frontend com limite de entrada e build próprio, Unidade frontend Yes. Não participa das relações de composição registradas.
+**Interpretation:** Frontend unit with own entry/build boundary, Frontend unit Yes. Does not participate in recorded composition relationships.
 
 ### 35. apps/angular-monorepo-e2e; apps/angular-monorepo-e2e/project.json:2-9; apps/angular-monorepo-e2e/cypress.config.ts:1-17
 
-**Observação:** O projeto Nx tem targets explícitos vazios e configuração de testes e2e, sem entrada nem build de UI.
+**Observation:** Nx project has empty explicit targets and e2e test configuration without UI entry/build.
 
-**Interpretação:** É projeto de testes; Unidade frontend No, apesar do projectType application.
+**Interpretation:** Test project; Frontend unit No despite projectType application.
 
 ### 36. appshell/host; appshell/host/project.json:9-27; appshell/host/src/main.ts:1-1; appshell/host/src/bootstrap.ts:1-5; appshell/host/webpack.config.ts:1-9
 
-**Observação:** O projeto host tem entrada e target build próprios, com outputPath específico. main.ts importa bootstrap, que chama bootstrapApplication.
+**Observation:** Project host has own entry/build target with specific outputPath. main.ts imports bootstrap, calling bootstrapApplication.
 
-**Interpretação:** É uma unidade frontend com limite de entrada e build próprio, Unidade frontend Yes.
+**Interpretation:** Frontend unit with own entry/build boundary, Frontend unit Yes.
 
 ### 37. appshell/host-e2e; appshell/host-e2e/project.json:2-9; appshell/host-e2e/playwright.config.ts:17-31
 
-**Observação:** O projeto Nx tem targets explícitos vazios e configuração de testes e2e, sem entrada nem build de UI.
+**Observation:** Nx project has empty explicit targets and e2e test configuration without UI entry/build.
 
-**Interpretação:** É projeto de testes; Unidade frontend No, apesar do projectType application.
+**Interpretation:** Test project; Frontend unit No despite projectType application.
 
 ### 38. appshell/mfe1; appshell/mfe1/project.json:9-27; appshell/mfe1/src/main.ts:1-1; appshell/mfe1/src/bootstrap.ts:1-5; appshell/mfe1/webpack.config.ts:1-9
 
-**Observação:** O projeto mfe1 tem entrada e target build próprios, com outputPath específico. main.ts importa bootstrap, que chama bootstrapApplication.
+**Observation:** Project mfe1 has own entry/build target with specific outputPath. main.ts imports bootstrap, calling bootstrapApplication.
 
-**Interpretação:** É uma unidade frontend com limite de entrada e build próprio, Unidade frontend Yes.
+**Interpretation:** Frontend unit with own entry/build boundary, Frontend unit Yes.
 
 ### 39. appshell/mfe1-e2e; appshell/mfe1-e2e/project.json:2-9; appshell/mfe1-e2e/playwright.config.ts:17-31
 
-**Observação:** O projeto Nx tem targets explícitos vazios e configuração de testes e2e, sem entrada nem build de UI.
+**Observation:** Nx project has empty explicit targets and e2e test configuration without UI entry/build.
 
-**Interpretação:** É projeto de testes; Unidade frontend No, apesar do projectType application.
+**Interpretation:** Test project; Frontend unit No despite projectType application.
 
 ### 40. appshell/mfe2; appshell/mfe2/project.json:9-27; appshell/mfe2/src/main.ts:1-1; appshell/mfe2/src/bootstrap.ts:1-5; appshell/mfe2/webpack.config.ts:1-9
 
-**Observação:** O projeto mfe2 tem entrada e target build próprios, com outputPath específico. main.ts importa bootstrap, que chama bootstrapApplication.
+**Observation:** Project mfe2 has own entry/build target with specific outputPath. main.ts imports bootstrap, calling bootstrapApplication.
 
-**Interpretação:** É uma unidade frontend com limite de entrada e build próprio, Unidade frontend Yes.
+**Interpretation:** Frontend unit with own entry/build boundary, Frontend unit Yes.
 
 ### 41. appshell/mfe2-e2e; appshell/mfe2-e2e/project.json:2-9; appshell/mfe2-e2e/playwright.config.ts:17-31
 
-**Observação:** O projeto Nx tem targets explícitos vazios e configuração de testes e2e, sem entrada nem build de UI.
+**Observation:** Nx project has empty explicit targets and e2e test configuration without UI entry/build.
 
-**Interpretação:** É projeto de testes; Unidade frontend No, apesar do projectType application.
+**Interpretation:** Test project; Frontend unit No despite projectType application.
 
 ### 42. libs/shared/data; libs/shared/data/project.json:2-19; libs/shared/data/src/index.ts:1
 
-**Observação:** O projeto é library, exporta UserService e tem apenas targets test e lint.
+**Observation:** Project is library, exports UserService with only test/lint targets.
 
-**Interpretação:** Biblioteca compartilhada, sem entrada de aplicação; Unidade frontend No.
+**Interpretation:** Shared library without application entry; Frontend unit No.
 
 ### 43. libs/shared/ui; libs/shared/ui/project.json:2-19; libs/shared/ui/src/index.ts:1
 
-**Observação:** O projeto é library, exporta Button e tem apenas targets test e lint.
+**Observation:** Project is library, exports Button with only test/lint targets.
 
-**Interpretação:** Biblioteca compartilhada, sem entrada de aplicação; Unidade frontend No.
+**Interpretation:** Shared library without application entry; Frontend unit No.
 
 ### 44. appshell/host/src/app/app.routes.ts:7; appshell/host/src/app/app.routes.ts:4; appshell/host/module-federation.config.ts:17; appshell/mfe2/module-federation.config.ts:4-6; appshell/host/webpack.config.ts:1-9; appshell/mfe2/webpack.config.ts:1-9; appshell/host/project.json:25-26; appshell/mfe2/project.json:25-26; appshell/mfe2/src/app/remote-entry/entry.routes.ts:4
 
-**Observação:** O host declara mfe2, importa mfe2/Routes e lê remoteRoutes, exportado pelo arquivo exposto como ./Routes. Os dois builds aplicam withModuleFederation.
+**Observation:** Host declares mfe2, imports mfe2/Routes and reads remoteRoutes exported by file exposed as ./Routes. Both builds apply withModuleFederation.
 
-**Interpretação:** Relação host → remote ativa entre host e mfe2, por Module Federation.
+**Interpretation:** Active host → remote Module Federation relationship between host/mfe2.
 
 ### 45. appshell/host/src/app/app.routes.ts:11; appshell/host/src/app/app.routes.ts:4; appshell/host/module-federation.config.ts:17; appshell/mfe1/module-federation.config.ts:4-9; appshell/host/webpack.config.ts:1-9; appshell/mfe1/webpack.config.ts:1-9; appshell/host/project.json:25-26; appshell/mfe1/project.json:25-26; appshell/mfe1/src/app/remote-entry/entry.routes.ts:4; appshell/host/src/app/app.routes.ts:16
 
-**Observação:** O host declara mfe1, importa mfe1/Routes e lê remoteRoutes, exportado pelo arquivo exposto como ./Routes. Os dois builds aplicam withModuleFederation. O mesmo remote é nomeado pela importação GreetingRoutes, sem chave exposta correspondente.
+**Observation:** Host declares mfe1, imports mfe1/Routes and reads remoteRoutes exported by file exposed as ./Routes. Both builds apply withModuleFederation. Same remote named by GreetingRoutes import without corresponding exposed key.
 
-**Interpretação:** Relação host → remote ativa entre host e mfe1, por Module Federation. A relação é ativa pela rota principal; o carregamento adicional de greeting permanece sem sustentação.
+**Interpretation:** Active host → remote Module Federation relationship between host/mfe1 through main route; additional greeting loading remains unsupported.
 
 ### 46. libs/shared/data/src/lib/user.service.ts:3-20; appshell/host/src/app/app.ts:15-23; appshell/host/src/app/app.html:6-15; appshell/mfe1/src/app/remote-entry/nx-welcome.ts:9; appshell/mfe1/src/app/remote-entry/nx-welcome.ts:875-877; appshell/host/webpack.config.ts:1-9; appshell/mfe1/webpack.config.ts:1-9; tsconfig.base.json:19
 
-**Observação:** O host escreve no signal do UserService, e mfe1 lê o estado por injeção do mesmo serviço. O alias data aponta para a biblioteca comum, e os builds usam o wrapper Nx sem shared explícito.
+**Observation:** Host writes UserService signal; mfe1 reads state through same service injection. Data alias points to common library; builds use Nx wrapper without explicit shared.
 
-**Interpretação:** Relação communication ativa, de host para mfe1, classificada como events na 3.4.5. A instância compartilhada depende do comportamento padrão do wrapper Nx registrado nas revisões.
+**Interpretation:** Active communication relationship from host to mfe1, classified events in 3.4.5. Shared instance depends on Nx wrapper default behavior recorded in reviews.
 
 ### 47. apps/angular-monorepo/project.json:9-15; apps/angular-monorepo/project.json:75-82; package.json:3
 
-**Observação:** O target build grava em dist/apps/angular-monorepo. Usa @angular-devkit/build-angular:browser e tem serve-static local. A revisão registra deploy não observado e Versionamento No; a versão da raiz é 0.0.0.
+**Observation:** Build target writes dist/apps/angular-monorepo. Uses @angular-devkit/build-angular:browser with local serve-static. Review records deployment not observed and Versioning No; root version 0.0.0.
 
-**Interpretação:** Fronteira de build separada da aplicação, sem publicação ou versão independente observadas.
+**Interpretation:** Separate application build boundary without observed publication/independent version.
 
 ### 48. appshell/host/project.json:9-15; appshell/host/project.json:44-46; appshell/host/webpack.prod.config.ts:1-24; appshell/host/project.json:59-75; package.json:3
 
-**Observação:** O target build grava em dist/appshell/host. Usa @nx/angular:webpack-browser com webpack de produção próprio, sem URLs de deploy acrescentadas. A revisão registra deploy não observado e Versionamento No; a versão da raiz é 0.0.0.
+**Observation:** Build target writes dist/appshell/host. Uses @nx/angular:webpack-browser with own production webpack without added deployment URLs. Review records deployment not observed and Versioning No; root version 0.0.0.
 
-**Interpretação:** Fronteira de build separada da aplicação, sem publicação ou versão independente observadas.
+**Interpretation:** Separate application build boundary without observed publication/independent version.
 
 ### 49. appshell/mfe1/project.json:9-15; appshell/mfe1/project.json:44-46; appshell/mfe1/webpack.prod.config.ts:1-24; appshell/mfe1/project.json:59-76; package.json:3
 
-**Observação:** O target build grava em dist/appshell/mfe1. Usa @nx/angular:webpack-browser com webpack de produção próprio, sem URLs de deploy acrescentadas. O target serve depende de host:serve. A revisão registra deploy não observado e Versionamento No; a versão da raiz é 0.0.0.
+**Observation:** Build target writes dist/appshell/mfe1. Uses @nx/angular:webpack-browser with own production webpack without added deployment URLs. Serve target depends on host:serve. Review records deployment not observed and Versioning No; root version 0.0.0.
 
-**Interpretação:** Fronteira de build separada da aplicação, sem publicação ou versão independente observadas. A dependência de serve é de execução em desenvolvimento.
+**Interpretation:** Separate application build boundary without observed publication/independent version. Serve dependency concerns development execution.
 
 ### 50. appshell/mfe2/project.json:9-15; appshell/mfe2/project.json:44-46; appshell/mfe2/webpack.prod.config.ts:1-24; appshell/mfe2/project.json:59-76; package.json:3
 
-**Observação:** O target build grava em dist/appshell/mfe2. Usa @nx/angular:webpack-browser com webpack de produção próprio, sem URLs de deploy acrescentadas. O target serve depende de host:serve. A revisão registra deploy não observado e Versionamento No; a versão da raiz é 0.0.0.
+**Observation:** Build target writes dist/appshell/mfe2. Uses @nx/angular:webpack-browser with own production webpack without added deployment URLs. Serve target depends on host:serve. Review records deployment not observed and Versioning No; root version 0.0.0.
 
-**Interpretação:** Fronteira de build separada da aplicação, sem publicação ou versão independente observadas. A dependência de serve é de execução em desenvolvimento.
+**Interpretation:** Separate application build boundary without observed publication/independent version. Serve dependency concerns development execution.
 
 ### 51. README.md:1
 
-**Observação:** O README apresenta um host/Appshell, dois MFEs e duas bibliotecas.
+**Observation:** README presents host/Appshell, two MFEs and two libraries.
 
-**Interpretação:** Descreve a organização do conjunto federado, corroborada pelas unidades e relações; não é inventário exaustivo de todo o workspace.
+**Interpretation:** Describes federated group organization corroborated by units/relationships; not exhaustive whole-workspace inventory.
 
 ### 52. README.md:2
 
-**Observação:** O README atribui a uma biblioteca o compartilhamento de dados entre MFEs e à outra componentes HTML comuns.
+**Observation:** README assigns one library inter-MFE data sharing, other common HTML components.
 
-**Interpretação:** Afirmação arquitetural corroborada pelo canal de dados e pelos imports da biblioteca de UI, sem provar que o botão seja renderizado em mfe1.
+**Interpretation:** Architectural claim corroborated by data channel/UI library imports without proving button rendered in mfe1.
 
 ### 53. README.md:3
 
-**Observação:** O README afirma que um MFE exporta dois componentes independentes e ambos são carregados por rota.
+**Observation:** README claims MFE exports two independent components, both loaded through routes.
 
-**Interpretação:** Afirmação contradita: a exposição GreetingComponent não corresponde à importação GreetingRoutes. A relação principal com mfe1 permanece ativa.
+**Interpretation:** Contradicted claim: GreetingComponent exposure does not match GreetingRoutes import. Main mfe1 relationship remains active.
 
 ### 54. README.md:134
 
-**Observação:** O README descreve o mapeamento dos dois MFEs no arquivo de configuração de Module Federation do host.
+**Observation:** README describes mapping two MFEs in host Module Federation configuration file.
 
-**Interpretação:** Afirmação arquitetural corroborada pelo registro dos remotes e suas exposições.
+**Interpretation:** Architectural claim corroborated by remote registration/exposures.
 
 ### 55. README.md:135
 
-**Observação:** O README diz que o mapeamento é local e que as URLs precisam ser acrescentadas à configuração de produção.
+**Observation:** README says mapping local, URLs must be added to production configuration.
 
-**Interpretação:** A afirmação reconhece uma lacuna de produção, corroborada pelo override comentado e pelos registros de deploy não observado.
+**Interpretation:** Claim acknowledges production gap corroborated by commented override/deployment-not-observed records.
 
 ### 56. README.md:140
 
-**Observação:** O README diz que o host usa lazy loading nas rotas e carrega o MFE para o qual se navega.
+**Observation:** README says host uses route lazy loading, loading navigated-to MFE.
 
-**Interpretação:** Afirmação corroborada para as duas rotas principais, sem resolver a divergência da rota adicional.
+**Interpretation:** Claim corroborated for two main routes without resolving additional route discrepancy.
 
 ### 57. README.md:250
 
-**Observação:** O README afirma que o resultado funciona como um MFE standalone independente.
+**Observation:** README claims result works as independent standalone MFE.
 
-**Interpretação:** Afirmação contradita pelos limites registrados: serve de mfe1 depende do host e o carregamento federado de greeting não tem exposição correspondente.
+**Interpretation:** Claim contradicted by recorded limits: mfe1 serve depends on host; federated greeting loading lacks matching exposure.
 
 ### 58. README.md:283
 
-**Observação:** O README descreve usar o mesmo import do botão por alias para incorporá-lo em mfe1 ou mfe2 e exemplifica mfe1.
+**Observation:** README describes same alias-based button import to incorporate in mfe1/mfe2, exemplifying mfe1.
 
-**Interpretação:** Afirmação corroborada sobre reutilização da biblioteca em unidades; o import compartilhado não cria outra relação de composição.
+**Interpretation:** Claim corroborated regarding library reuse within units; shared import creates no further composition relationship.
 
 ### 59. README.md:346
 
-**Observação:** O README descreve injetar o mesmo serviço num MFE para trabalhar com os dados de login e logout.
+**Observation:** README describes injecting same service in MFE for login/logout data.
 
-**Interpretação:** Afirmação corroborada pelo canal de estado do host para mfe1 registrado na revisão de composição.
+**Interpretation:** Claim corroborated by host-to-mfe1 state channel recorded in composition review.
 
 ### 60. f716548 2025-06-17 (package.json); 6a85acf 2025-06-29 (package.json)
 
-**Observação:** A 3.4.8 registra que package.json existe no primeiro commit, muda no segundo e não muda depois. A versão do segundo declara @nx/js; o manifesto inicial não pôde ser lido por objeto ausente.
+**Observation:** Section 3.4.8 records package.json present in first commit, changed in second, unchanged afterward. Second version declares @nx/js; initial manifest unreadable due to missing object.
 
-**Interpretação:** Ponto inconclusivo sobre o passado da dependência: não distingue inclusão sem configuração, herança ou abandono. O No do snapshot é claro, e a lacuna não muda sua leitura arquitetural.
+**Interpretation:** Inconclusive dependency past: does not distinguish unconfigured inclusion, inheritance or abandonment. Snapshot No clear; gap does not change architectural reading.
 
 ### 61. f716548 2025-06-17 (package.json); 6a85acf 2025-06-29 (package.json)
 
-**Observação:** A 3.4.8 registra que package.json existe no primeiro commit, muda no segundo e não muda depois. A versão do segundo declara @nx/webpack; o manifesto inicial não pôde ser lido por objeto ausente.
+**Observation:** Section 3.4.8 records package.json present in first commit, changed in second, unchanged afterward. Second version declares @nx/webpack; initial manifest unreadable due to missing object.
 
-**Interpretação:** Ponto inconclusivo sobre o passado da dependência: não distingue inclusão sem configuração, herança ou abandono. O No do snapshot é claro, e a lacuna não muda sua leitura arquitetural.
+**Interpretation:** Inconclusive dependency past: does not distinguish unconfigured inclusion, inheritance or abandonment. Snapshot No clear; gap does not change architectural reading.
 
 ### 62. f716548 2025-06-17 (package.json); 6a85acf 2025-06-29 (package.json)
 
-**Observação:** A 3.4.8 registra que package.json existe no primeiro commit, muda no segundo e não muda depois. A versão do segundo declara @nx/workspace; o manifesto inicial não pôde ser lido por objeto ausente.
+**Observation:** Section 3.4.8 records package.json present in first commit, changed in second, unchanged afterward. Second version declares @nx/workspace; initial manifest unreadable due to missing object.
 
-**Interpretação:** Ponto inconclusivo sobre o passado da dependência: não distingue inclusão sem configuração, herança ou abandono. O No do snapshot é claro, e a lacuna não muda sua leitura arquitetural.
+**Interpretation:** Inconclusive dependency past: does not distinguish unconfigured inclusion, inheritance or abandonment. Snapshot No clear; gap does not change architectural reading.
 
 ### 63. 6a85acf 2025-06-29 (appshell/host/src/app/app.routes.ts; appshell/mfe1/module-federation.config.ts); 0a0848e 2025-06-29 (README.md); 7648339 2025-06-29 (README.md)
 
-**Observação:** A revisão histórica registra os arquivos de greeting adicionados em 6a85acf já com GreetingRoutes consumido e GreetingComponent exposto, sem alterações posteriores nesses arquivos. O README intermediário não estava disponível.
+**Observation:** History review records greeting files added in 6a85acf already consuming GreetingRoutes/exposing GreetingComponent, unchanged afterward. Intermediate README unavailable.
 
-**Interpretação:** Ponto esclarecido quanto à coexistência das chaves divergentes desde a primeira versão dos artefatos. Não demonstra abandono nem corrige a construção Undetermined ou a afirmação contradita.
+**Interpretation:** Point clarified regarding divergent keys coexisting since first artifact version. Demonstrates no abandonment or correction to Undetermined construct/contradicted claim.
 
 ### 64. 6a85acf 2025-06-29 (appshell/mfe1/project.json); 0a0848e 2025-06-29 (README.md); 7648339 2025-06-29 (README.md)
 
-**Observação:** A 3.4.8 registra project.json de mfe1 adicionado já com dependsOn host:serve, sem mudanças posteriores. A versão intermediária do README não estava disponível.
+**Observation:** Section 3.4.8 records mfe1 project.json added already with dependsOn host:serve, unchanged afterward. Intermediate README unavailable.
 
-**Interpretação:** Ponto esclarecido sobre a estabilidade do target de execução: não há nesse arquivo uma versão anterior sem a dependência que explique a afirmação de independência. Não permite datar a frase nem atribuir intenção.
+**Interpretation:** Point clarified regarding stable execution target: no earlier dependency-free version in file explaining independence claim. Does not date phrase or attribute intent.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.2 (package.json:17) | 1 tecnologia | manifesto | — | contexto | fraca | declara #15 |
-| 2 | 3.4.2 (package.json:27) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #17; declara #19; declara #21 |
-| 3 | 3.4.2 (package.json:28) | 1 tecnologia | manifesto | — | contexto | fraca | — |
-| 4 | 3.4.2 (package.json:29) | 1 tecnologia | manifesto | — | contexto | fraca | — |
-| 5 | 3.4.2 (package.json:30) | 1 tecnologia | manifesto | — | contexto | fraca | — |
-| 6 | 3.4.2 (package.json:31) | 1 tecnologia | manifesto | — | contexto | fraca | — |
-| 7 | 3.4.2 (package.json:32) | 1 tecnologia | manifesto | — | contexto | fraca | — |
-| 8 | 3.4.2 (package.json:33) | 1 tecnologia | manifesto | — | contexto | fraca | — |
-| 9 | 3.4.2 (package.json:34) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #16; declara #17; declara #18; declara #19; declara #20; declara #21; declara #22; declara #23; declara #24 |
-| 10 | 3.4.2 (package.json:35) | 1 tecnologia | manifesto | — | contexto | fraca | — |
-| 11 | 3.4.2 (package.json:36) | 1 tecnologia | manifesto | — | contexto | fraca | — |
-| 12 | 3.4.2 (package.json:37) | 1 tecnologia | manifesto | — | contexto | fraca | — |
-| 13 | 3.4.2 (package.json:38) | 1 tecnologia | manifesto | — | contexto | fraca | — |
-| 14 | 3.4.2 (package.json:56) | 1 tecnologia | manifesto | — | contexto | fraca | — |
-| 15 | 3.4.2 (package.json:17, Evidência); 3.4.3 (appshell/host, Marcadores) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #36 |
-| 16 | 3.4.2 (package.json:27,34, Evidência); 3.4.3 (appshell/host, Marcadores); 3.4.4 (appshell/host/src/app/app.routes.ts:7, Observação); 3.4.5 #1, #2 (Configuração); 3.4.7 #4, #5 (Evidência) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #44; configura #45; configura #31; configura #25; configura #26; configura #27 |
-| 17 | 3.4.2 (package.json:27,34, Evidência); 3.4.3 (appshell/host, Marcadores e Build); 3.4.5 #1, #2, #3 (Configuração) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #36; configura #45; configura #44; configura #46 |
-| 18 | 3.4.2 (package.json:27,34, Evidência); 3.4.3 (appshell/mfe1, Marcadores); 3.4.4 (appshell/host/src/app/app.routes.ts:11,16, Observação); 3.4.5 #2 (Configuração); 3.4.7 #3, #4, #7 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #38; configura #45; configura #27 |
-| 19 | 3.4.2 (package.json:27,34, Evidência); 3.4.3 (appshell/mfe1, Marcadores e Build); 3.4.5 #2, #3 (Configuração) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #38; configura #45; configura #46 |
-| 20 | 3.4.2 (package.json:27,34, Evidência); 3.4.3 (appshell/mfe2, Marcadores); 3.4.4 (appshell/host/src/app/app.routes.ts:7, Observação); 3.4.5 #1 (Configuração); 3.4.7 #4 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #40; configura #44 |
-| 21 | 3.4.2 (package.json:27,34, Evidência); 3.4.3 (appshell/mfe2, Marcadores e Build); 3.4.5 #1 (Configuração) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #40; configura #44 |
-| 22 | 3.4.2 (package.json:34, Evidência); 3.4.3 (appshell/host, Marcadores); 3.4.6 #2 (Artefatos); 3.4.7 #5 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #36 |
-| 23 | 3.4.2 (package.json:34, Evidência); 3.4.3 (appshell/mfe1, Marcadores) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #38 |
-| 24 | 3.4.2 (package.json:34, Evidência); 3.4.3 (appshell/mfe2, Marcadores) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #40 |
-| 25 | 3.4.4 (appshell/host/src/app/app.routes.ts:7) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #44 |
-| 26 | 3.4.4 (appshell/host/src/app/app.routes.ts:11) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #45 |
-| 27 | 3.4.4 (appshell/host/src/app/app.routes.ts:16) | 3 código | código-fonte | module-federation | arquitetural | ambígua | — |
-| 28 | 3.4.4 (appshell/host/src/main.ts:1) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 29 | 3.4.4 (appshell/mfe1/src/main.ts:1) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 30 | 3.4.4 (appshell/mfe2/src/main.ts:1) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 31 | 3.4.4 (appshell/host/src/app/app.routes.ts:4) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #44; implementa #45 |
-| 32 | 3.4.4 (libs/shared/data/src/lib/user.service.ts:11) | 3 código | código-fonte | events | arquitetural | moderada | implementa #46 |
-| 33 | 3.4.3 (.) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 34 | 3.4.3 (apps/angular-monorepo) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 35 | 3.4.3 (apps/angular-monorepo-e2e) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 36 | 3.4.3 (appshell/host) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 37 | 3.4.3 (appshell/host-e2e) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 38 | 3.4.3 (appshell/mfe1) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 39 | 3.4.3 (appshell/mfe1-e2e) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 40 | 3.4.3 (appshell/mfe2) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 41 | 3.4.3 (appshell/mfe2-e2e) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 42 | 3.4.3 (libs/shared/data) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 43 | 3.4.3 (libs/shared/ui) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 44 | 3.4.5 #1 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #36; liga #40 |
-| 45 | 3.4.5 #2 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #36; liga #38 |
-| 46 | 3.4.5 #3 | 5 composição | código-fonte | events | arquitetural | forte | liga #36; liga #38 |
-| 47 | 3.4.6 #1 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #34 |
-| 48 | 3.4.6 #2 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #36 |
-| 49 | 3.4.6 #3 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #38 |
-| 50 | 3.4.6 #4 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #40 |
-| 51 | 3.4.7 #1 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #36; corrobora #38; corrobora #40; corrobora #42; corrobora #43; corrobora #44; corrobora #45 |
-| 52 | 3.4.7 #2 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #46; corrobora appshell/host/src/app/app.ts:4-9; corrobora appshell/mfe1/src/app/remote-entry/entry.ts:4-8 |
-| 53 | 3.4.7 #3 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #18; contradiz appshell/host/src/app/app.routes.ts:9-17 |
-| 54 | 3.4.7 #4 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #16; corrobora #18; corrobora #20; corrobora #44; corrobora #45 |
-| 55 | 3.4.7 #5 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #22; corrobora #48; corrobora #49; corrobora #50 |
-| 56 | 3.4.7 #6 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #25; corrobora #26; corrobora #44; corrobora #45 |
-| 57 | 3.4.7 #7 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #49; contradiz appshell/mfe1/project.json:59-75; contradiz #18; contradiz appshell/host/src/app/app.routes.ts:13-17 |
-| 58 | 3.4.7 #8 | 7 documentação | documentação | — | arquitetural | fraca | corrobora tsconfig.base.json:18; corrobora appshell/host/src/app/app.ts:4-9; corrobora appshell/mfe1/src/app/remote-entry/entry.ts:4-6 |
-| 59 | 3.4.7 #9 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #46; corrobora #32 |
-| 60 | 3.4.8 #1 | 8 histórico | histórico | — | contexto | fraca | explica #8 |
-| 61 | 3.4.8 #2 | 8 histórico | histórico | — | contexto | fraca | explica #12 |
-| 62 | 3.4.8 #3 | 8 histórico | histórico | — | contexto | fraca | explica #13 |
-| 63 | 3.4.8 #4 | 8 histórico | histórico | module-federation | arquitetural | fraca | explica #27; explica #18; explica #45; explica #53; explica #57 |
-| 64 | 3.4.8 #5 | 8 histórico | histórico | — | arquitetural | fraca | explica #49; explica #57 |
+| 1 | 3.4.2 (package.json:17) | 1 technology | manifest | — | context | weak | declares #15 |
+| 2 | 3.4.2 (package.json:27) | 1 technology | manifest | module-federation | technological | weak | declares #17; declares #19; declares #21 |
+| 3 | 3.4.2 (package.json:28) | 1 technology | manifest | — | context | weak | — |
+| 4 | 3.4.2 (package.json:29) | 1 technology | manifest | — | context | weak | — |
+| 5 | 3.4.2 (package.json:30) | 1 technology | manifest | — | context | weak | — |
+| 6 | 3.4.2 (package.json:31) | 1 technology | manifest | — | context | weak | — |
+| 7 | 3.4.2 (package.json:32) | 1 technology | manifest | — | context | weak | — |
+| 8 | 3.4.2 (package.json:33) | 1 technology | manifest | — | context | weak | — |
+| 9 | 3.4.2 (package.json:34) | 1 technology | manifest | module-federation | technological | weak | declares #16; declares #17; declares #18; declares #19; declares #20; declares #21; declares #22; declares #23; declares #24 |
+| 10 | 3.4.2 (package.json:35) | 1 technology | manifest | — | context | weak | — |
+| 11 | 3.4.2 (package.json:36) | 1 technology | manifest | — | context | weak | — |
+| 12 | 3.4.2 (package.json:37) | 1 technology | manifest | — | context | weak | — |
+| 13 | 3.4.2 (package.json:38) | 1 technology | manifest | — | context | weak | — |
+| 14 | 3.4.2 (package.json:56) | 1 technology | manifest | — | context | weak | — |
+| 15 | 3.4.2 (package.json:17, Evidence); 3.4.3 (appshell/host, Markers) | 2 configuration | configuration | module-federation | technological | moderate | configures #36 |
+| 16 | 3.4.2 (package.json:27,34, Evidence); 3.4.3 (appshell/host, Markers); 3.4.4 (appshell/host/src/app/app.routes.ts:7, Observation); 3.4.5 #1, #2 (Configuration); 3.4.7 #4, #5 (Evidence) | 2 configuration | configuration | module-federation | architectural | strong | configures #44; configures #45; configures #31; configures #25; configures #26; configures #27 |
+| 17 | 3.4.2 (package.json:27,34, Evidence); 3.4.3 (appshell/host, Markers and Build); 3.4.5 #1, #2, #3 (Configuration) | 2 configuration | configuration | module-federation | technological | moderate | configures #36; configures #45; configures #44; configures #46 |
+| 18 | 3.4.2 (package.json:27,34, Evidence); 3.4.3 (appshell/mfe1, Markers); 3.4.4 (appshell/host/src/app/app.routes.ts:11,16, Observation); 3.4.5 #2 (Configuration); 3.4.7 #3, #4, #7 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #38; configures #45; configures #27 |
+| 19 | 3.4.2 (package.json:27,34, Evidence); 3.4.3 (appshell/mfe1, Markers and Build); 3.4.5 #2, #3 (Configuration) | 2 configuration | configuration | module-federation | technological | moderate | configures #38; configures #45; configures #46 |
+| 20 | 3.4.2 (package.json:27,34, Evidence); 3.4.3 (appshell/mfe2, Markers); 3.4.4 (appshell/host/src/app/app.routes.ts:7, Observation); 3.4.5 #1 (Configuration); 3.4.7 #4 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #40; configures #44 |
+| 21 | 3.4.2 (package.json:27,34, Evidence); 3.4.3 (appshell/mfe2, Markers and Build); 3.4.5 #1 (Configuration) | 2 configuration | configuration | module-federation | technological | moderate | configures #40; configures #44 |
+| 22 | 3.4.2 (package.json:34, Evidence); 3.4.3 (appshell/host, Markers); 3.4.6 #2 (Artifacts); 3.4.7 #5 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #36 |
+| 23 | 3.4.2 (package.json:34, Evidence); 3.4.3 (appshell/mfe1, Markers) | 2 configuration | configuration | module-federation | technological | moderate | configures #38 |
+| 24 | 3.4.2 (package.json:34, Evidence); 3.4.3 (appshell/mfe2, Markers) | 2 configuration | configuration | module-federation | technological | moderate | configures #40 |
+| 25 | 3.4.4 (appshell/host/src/app/app.routes.ts:7) | 3 code | source code | module-federation | architectural | strong | implements #44 |
+| 26 | 3.4.4 (appshell/host/src/app/app.routes.ts:11) | 3 code | source code | module-federation | architectural | strong | implements #45 |
+| 27 | 3.4.4 (appshell/host/src/app/app.routes.ts:16) | 3 code | source code | module-federation | architectural | ambiguous | — |
+| 28 | 3.4.4 (appshell/host/src/main.ts:1) | 3 code | source code | — | technological | weak | — |
+| 29 | 3.4.4 (appshell/mfe1/src/main.ts:1) | 3 code | source code | — | technological | weak | — |
+| 30 | 3.4.4 (appshell/mfe2/src/main.ts:1) | 3 code | source code | — | technological | weak | — |
+| 31 | 3.4.4 (appshell/host/src/app/app.routes.ts:4) | 3 code | source code | module-federation | architectural | strong | implements #44; implements #45 |
+| 32 | 3.4.4 (libs/shared/data/src/lib/user.service.ts:11) | 3 code | source code | events | architectural | moderate | implements #46 |
+| 33 | 3.4.3 (.) | 4 structure | directory | — | context | weak | — |
+| 34 | 3.4.3 (apps/angular-monorepo) | 4 structure | directory | — | architectural | moderate | — |
+| 35 | 3.4.3 (apps/angular-monorepo-e2e) | 4 structure | directory | — | context | weak | — |
+| 36 | 3.4.3 (appshell/host) | 4 structure | directory | — | architectural | moderate | — |
+| 37 | 3.4.3 (appshell/host-e2e) | 4 structure | directory | — | context | weak | — |
+| 38 | 3.4.3 (appshell/mfe1) | 4 structure | directory | — | architectural | moderate | — |
+| 39 | 3.4.3 (appshell/mfe1-e2e) | 4 structure | directory | — | context | weak | — |
+| 40 | 3.4.3 (appshell/mfe2) | 4 structure | directory | — | architectural | moderate | — |
+| 41 | 3.4.3 (appshell/mfe2-e2e) | 4 structure | directory | — | context | weak | — |
+| 42 | 3.4.3 (libs/shared/data) | 4 structure | directory | — | context | weak | — |
+| 43 | 3.4.3 (libs/shared/ui) | 4 structure | directory | — | context | weak | — |
+| 44 | 3.4.5 #1 | 5 composition | source code | module-federation | architectural | strong | links #36; links #40 |
+| 45 | 3.4.5 #2 | 5 composition | source code | module-federation | architectural | strong | links #36; links #38 |
+| 46 | 3.4.5 #3 | 5 composition | source code | events | architectural | strong | links #36; links #38 |
+| 47 | 3.4.6 #1 | 6 build-deploy | configuration | — | architectural | moderate | publishes #34 |
+| 48 | 3.4.6 #2 | 6 build-deploy | configuration | — | architectural | moderate | publishes #36 |
+| 49 | 3.4.6 #3 | 6 build-deploy | configuration | — | architectural | moderate | publishes #38 |
+| 50 | 3.4.6 #4 | 6 build-deploy | configuration | — | architectural | moderate | publishes #40 |
+| 51 | 3.4.7 #1 | 7 documentation | documentation | — | architectural | weak | corroborates #36; corroborates #38; corroborates #40; corroborates #42; corroborates #43; corroborates #44; corroborates #45 |
+| 52 | 3.4.7 #2 | 7 documentation | documentation | — | architectural | weak | corroborates #46; corroborates appshell/host/src/app/app.ts:4-9; corroborates appshell/mfe1/src/app/remote-entry/entry.ts:4-8 |
+| 53 | 3.4.7 #3 | 7 documentation | documentation | — | architectural | weak | contradicts #18; contradicts appshell/host/src/app/app.routes.ts:9-17 |
+| 54 | 3.4.7 #4 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #16; corroborates #18; corroborates #20; corroborates #44; corroborates #45 |
+| 55 | 3.4.7 #5 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #22; corroborates #48; corroborates #49; corroborates #50 |
+| 56 | 3.4.7 #6 | 7 documentation | documentation | — | architectural | weak | corroborates #25; corroborates #26; corroborates #44; corroborates #45 |
+| 57 | 3.4.7 #7 | 7 documentation | documentation | — | architectural | weak | contradicts #49; contradicts appshell/mfe1/project.json:59-75; contradicts #18; contradicts appshell/host/src/app/app.routes.ts:13-17 |
+| 58 | 3.4.7 #8 | 7 documentation | documentation | — | architectural | weak | corroborates tsconfig.base.json:18; corroborates appshell/host/src/app/app.ts:4-9; corroborates appshell/mfe1/src/app/remote-entry/entry.ts:4-6 |
+| 59 | 3.4.7 #9 | 7 documentation | documentation | — | architectural | weak | corroborates #46; corroborates #32 |
+| 60 | 3.4.8 #1 | 8 history | history | — | context | weak | explains #8 |
+| 61 | 3.4.8 #2 | 8 history | history | — | context | weak | explains #12 |
+| 62 | 3.4.8 #3 | 8 history | history | — | context | weak | explains #13 |
+| 63 | 3.4.8 #4 | 8 history | history | module-federation | architectural | weak | explains #27; explains #18; explains #45; explains #53; explains #57 |
+| 64 | 3.4.8 #5 | 8 history | history | — | architectural | weak | explains #49; explains #57 |
 
-## Resumo
+## Summary
 
-Observações: 64. Dimensões (tecnologia: 14, configuração: 10, código: 8, estrutura: 11, composição: 3, build-deploy: 4, documentação: 9, histórico: 5). Força (forte: 7, moderada: 18, fraca: 38, ambígua: 1). Evidência (tecnológica: 14, arquitetural: 28, contexto: 22).
+Observations: 64. Dimensions (technology: 14, configuration: 10, code: 8, structure: 11, composition: 3, build-deploy: 4, documentation: 9, history: 5). Strength (strong: 7, moderate: 18, weak: 38, ambiguous: 1). Evidence (technological: 14, architectural: 28, context: 22).
+

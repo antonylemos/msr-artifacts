@@ -19,183 +19,184 @@ annotation:
 
 # 045 — mrgleam/mf-tanstack-demo
 
-## Leitura do repositório
+## Repository overview
 
-A cadeia de Module Federation está completa até a carga do módulo:
-- **Dependência:** `@originjs/vite-plugin-federation`, nas duas aplicações (#1, #2).
-- **Configuração:** o shell declara o remote `shop` (#3), e o shop se declara e expõe as próprias rotas (#4).
-- **Código:** o shell importa o módulo remoto pelo nome (#5), num registro de módulos com cache e fallback (#6), e pede esse módulo ao criar o router (#7).
-- **Relação:** isso resulta na relação ativa shell → shop (#11).
+Module Federation chain complete through module loading:
+- **Dependency:** `@originjs/vite-plugin-federation` in both applications (#1, #2).
+- **Configuration:** shell declares remote `shop` (#3), shop declares itself/exposes own routes (#4).
+- **Code:** shell imports remote module by name (#5), in cached/fallback module registry (#6), requesting module when creating router (#7).
+- **Relationship:** active shell → shop relationship results (#11).
 
-A ambiguidade está no passo seguinte. O shell lê `default.routes`, e o shop só exporta `routes` por nome (#8). O módulo é carregado, mas nada garante que as rotas cheguem à árvore. A documentação afirma que chegam, e os artefatos a desmentem (#18). O histórico não diz se houve uma versão compatível (#21).
+Ambiguity in next step. Shell reads `default.routes`, shop exports only named `routes` (#8). Module loaded without guarantee routes reach tree. Documentation claims they do, contradicted by artifacts (#18). History does not establish compatible version (#21).
 
-Também é contradito o "retry logic" do carregador (#20): as tentativas aguardam a mesma promessa. O histórico mostra que nunca houve uma versão em que o retry funcionasse (#22).
+Loader "retry logic" also contradicted (#20): attempts await same promise. History shows no version with working retry (#22).
 
-Build é separado para as duas aplicações (#12, #13). O deploy não é observado: os dois arranjos de Kong só encaminham para servidores locais.
+Separate builds for both applications (#12, #13). No observed deployment: both Kong arrangements only forward to local servers.
 
-## Observações
+## Observations
 
 ### 1. shell/package.json:16
 
-**Observação:** `@originjs/vite-plugin-federation` (`^1.4.1`) está declarada em `devDependencies`.
+**Observation:** `@originjs/vite-plugin-federation` (`^1.4.1`) declared in `devDependencies`.
 
-**Interpretação:** A tecnologia de federação está presente no build do shell.
+**Interpretation:** Federation technology present in shell build.
 
 ### 2. shop/package.json:17
 
-**Observação:** `@originjs/vite-plugin-federation` (`^1.4.1`) está declarada em `devDependencies`.
+**Observation:** `@originjs/vite-plugin-federation` (`^1.4.1`) declared in `devDependencies`.
 
-**Interpretação:** A tecnologia de federação está presente no build do shop.
+**Interpretation:** Federation technology present in shop build.
 
 ### 3. shell/vite.config.ts:1-34
 
-**Observação:** `federation` declara o remote `shop: 'http://localhost:3001/shop/assets/remoteEntry.js'` e compartilha `react`, `react-dom` e `@tanstack/react-router`.
+**Observation:** `federation` declares remote `shop: 'http://localhost:3001/shop/assets/remoteEntry.js'`, sharing `react`, `react-dom` and `@tanstack/react-router`.
 
-**Interpretação:** A configuração do host declara o remote e onde encontrá-lo em desenvolvimento.
+**Interpretation:** Host configuration declares remote/development location.
 
 ### 4. shop/vite.config.ts:1-30
 
-**Observação:** `base: '/shop/'`. `federation` declara `name: 'shop'` e `filename: 'remoteEntry.js'`, expõe `./ShopRoutes` (`./src/routes/ShopRoutes.tsx`) e compartilha as mesmas bibliotecas.
+**Observation:** `base: '/shop/'`. `federation` declares `name: 'shop'` and `filename: 'remoteEntry.js'`, exposing `./ShopRoutes` (`./src/routes/ShopRoutes.tsx`), sharing same libraries.
 
-**Interpretação:** O shop está configurado como remote, sob um caminho próprio, e oferece suas rotas a um host.
+**Interpretation:** Shop configured as remote under own path, offering routes to host.
 
-**Nota:** As configurações do Kong (`kong-shell/kong.yml`, `kong-remote/kong.yml`), citadas na tabela da revisão de build e deploy (3.4.6), são rotas de gateway, ou seja, caminhos de publicação. Elas ficam na dimensão 6, e não aqui.
+**Note:** Kong configurations (`kong-shell/kong.yml`, `kong-remote/kong.yml`) cited in build/deployment review table (3.4.6) are gateway routes, hence publication paths. Included in dimension 6, not here.
 
 ### 5. shell/src/moduleLoader.ts:130
 
-**Observação:** `module: import('shop/ShopRoutes')`, dentro de `MODULE_CONFIGS.shop`.
+**Observation:** `module: import('shop/ShopRoutes')` within `MODULE_CONFIGS.shop`.
 
-**Interpretação:** O shell importa o módulo exposto pelo remote, pelo nome dele.
+**Interpretation:** Shell imports remote-exposed module by name.
 
 ### 6. shell/src/moduleLoader.ts:127-136
 
-**Observação:** `MODULE_CONFIGS.shop` declara o nome `shop/ShopRoutes`, o import, `retries: 3`, `retryDelay: 1000` e o fallback `{ default: { routes: [] } }`.
+**Observation:** `MODULE_CONFIGS.shop` declares name `shop/ShopRoutes`, import, `retries: 3`, `retryDelay: 1000` and fallback `{ default: { routes: [] } }`.
 
-**Interpretação:** O host declara o módulo remoto que usa e como seguir sem ele.
+**Interpretation:** Host declares used remote module/how to continue without it.
 
 ### 7. shell/src/router.tsx:49-58
 
-**Observação:** `moduleLoader.loadModules([MODULE_CONFIGS.shop])`, chamado na criação do router.
+**Observation:** `moduleLoader.loadModules([MODULE_CONFIGS.shop])`, called in router creation.
 
-**Interpretação:** O host pede o módulo do shop ao iniciar o roteamento.
+**Interpretation:** Host requests shop module when starting routing.
 
 ### 8. shell/src/router.tsx:61-68; shop/src/routes/ShopRoutes.tsx:49-53
 
-**Observação:** O shell atribui `result.module.default.routes` às rotas do shop. O módulo do shop exporta `routes` e `shopRouter` só por nome, sem export default.
+**Observation:** Shell assigns `result.module.default.routes` to shop routes. Shop module exports named `routes` and `shopRouter` only, without default export.
 
-**Interpretação:** A integração das rotas remotas é ambígua: o módulo é carregado, mas o formato lido não existe nele, e as rotas podem cair no fallback vazio.
+**Interpretation:** Remote route integration ambiguous: module loads but requested shape absent, routes possibly using empty fallback.
 
 ### 9. shell; shell/package.json:1-9; shell/index.html:10-11; shell/src/main.tsx:6-8; shell/vite.config.ts:5-29
 
-**Observação:** É uma aplicação React com manifesto, entrada e build Vite próprios.
+**Observation:** React application with own manifest, entry and Vite build.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with own boundary.
 
 ### 10. shop; shop/package.json:1-10; shop/index.html:10-11; shop/src/main.tsx:6-8; shop/vite.config.ts:5-25
 
-**Observação:** É uma aplicação React com manifesto, entrada e build Vite próprios.
+**Observation:** React application with own manifest, entry and Vite build.
 
-**Interpretação:** É uma unidade frontend com limite próprio, capaz de rodar sozinha.
+**Interpretation:** Frontend unit with own boundary, capable of running alone.
 
 ### 11. shell/src/moduleLoader.ts:127-130; shell/src/router.tsx:52, 64; shell/vite.config.ts:9-11; shop/vite.config.ts:6, 10-12
 
-**Observação:** O shell solicita `shop/ShopRoutes` na inicialização do router. O nome, o `remoteEntry.js` e o caminho `/shop/` correspondem à configuração do shop.
+**Observation:** Shell requests `shop/ShopRoutes` during router initialization. Name, `remoteEntry.js` and `/shop/` path match shop configuration.
 
-**Interpretação:** É uma relação host → remote ativa, com a integração das rotas ambígua (#8).
+**Interpretation:** Active host → remote relationship, route integration ambiguous (#8).
 
 ### 12. shell/vite.config.ts:5-34; shell/package.json:7; kong-shell/kong.yml:3-9
 
-**Observação:** Tem configuração e `vite build` próprios. O gateway Kong só encaminha `/` para o servidor local do shell, e nada empacota ou publica o build.
+**Observation:** Own configuration/`vite build`. Kong gateway only forwards `/` to shell local server, nothing packaging/publishing build.
 
-**Interpretação:** Há uma fronteira de build própria, sem deploy observado.
+**Interpretation:** Own build boundary without observed deployment.
 
 ### 13. shop/vite.config.ts:5-30; shop/package.json:7; kong-remote/kong.yml:8-13
 
-**Observação:** Tem configuração e `vite build` próprios, com `base: '/shop/'`. Um dos arranjos do Kong encaminha `/shop` para o servidor local do shop.
+**Observation:** Own configuration/`vite build` with `base: '/shop/'`. One Kong arrangement forwards `/shop` to shop local server.
 
-**Interpretação:** Há uma fronteira de build própria, com caminho próprio, sem deploy observado.
+**Interpretation:** Own build boundary/path without observed deployment.
 
 ### 14. README.md:1
 
-**Observação:** "Microfrontend Monorepo with Vite, TanStack Router, and Module Federation".
+**Observation:** "Microfrontend Monorepo with Vite, TanStack Router, and Module Federation".
 
-**Interpretação:** Apresenta o repositório como monorepo de micro-frontends com Module Federation. A afirmação é corroborada.
+**Interpretation:** Presents repository as micro-frontend monorepo with Module Federation. Claim corroborated.
 
 ### 15. README.md:7-8
 
-**Observação:** "shell/ # Host app with layout & routing / shop/ # Remote microfrontend exposing routes".
+**Observation:** "shell/ # Host app with layout & routing / shop/ # Remote microfrontend exposing routes".
 
-**Interpretação:** Descreve os papéis de host e remote. A afirmação é corroborada.
+**Interpretation:** Describes host/remote roles. Claim corroborated.
 
 ### 16. README.md:9-10
 
-**Observação:** "kong-shell/ # Kong config for layout-controlled routing / kong-remote/ # Kong config for standalone remote access".
+**Observation:** "kong-shell/ # Kong config for layout-controlled routing / kong-remote/ # Kong config for standalone remote access".
 
-**Interpretação:** Descreve dois gateways, um só com o shell e outro que também expõe o remote. A afirmação é corroborada.
+**Interpretation:** Describes two gateways, one shell-only, another also exposing remote. Claim corroborated.
 
 ### 17. README.md:53
 
-**Observação:** "Shared layout with always-visible NavBar".
+**Observation:** "Shared layout with always-visible NavBar".
 
-**Interpretação:** Afirma que o shell dá o layout comum. A afirmação é corroborada.
+**Interpretation:** Claims shell provides common layout. Claim corroborated.
 
 ### 18. README.md:54
 
-**Observação:** "Remote subroutes via Module Federation".
+**Observation:** "Remote subroutes via Module Federation".
 
-**Interpretação:** Afirma que as sub-rotas do remote entram no shell. O formato que o shell lê não existe no módulo do shop, e a afirmação é contradita.
+**Interpretation:** Claims remote subroutes enter shell. Shell-requested shape absent from shop module, making claim contradicted.
 
 ### 19. shell/src/moduleLoader.ts:1
 
-**Observação:** "Module Federation Loader with caching, […] and error handling".
+**Observation:** "Module Federation Loader with caching, […] and error handling".
 
-**Interpretação:** Afirma que o carregador tem cache e tratamento de erro. A afirmação é corroborada.
+**Interpretation:** Claims loader caching/error handling. Claim corroborated.
 
 ### 20. shell/src/moduleLoader.ts:1
 
-**Observação:** "retry logic".
+**Observation:** "retry logic".
 
-**Interpretação:** Afirma que o carregador tenta de novo quando a carga falha. As tentativas reaguardam a mesma promessa, e a afirmação é contradita.
+**Interpretation:** Claims loader retries on loading failure. Attempts reawait same promise, making claim contradicted.
 
-### 21. 04bfb96 2025-07-30 (shop/src/routes/ShopRoutes.tsx, shell/src/router.tsx); 5633835 2025-07-30 (shell/src/router.tsx, versão ausente); 1816f5b 2025-07-30 (shell/src/router.tsx, versão ausente); a717597 2025-08-01 (shell/src/router.tsx)
+### 21. 04bfb96 2025-07-30 (shop/src/routes/ShopRoutes.tsx, shell/src/router.tsx); 5633835 2025-07-30 (shell/src/router.tsx, version absent); 1816f5b 2025-07-30 (shell/src/router.tsx, version absent); a717597 2025-08-01 (shell/src/router.tsx)
 
-**Observação:** O `ShopRoutes.tsx` não muda desde o primeiro commit e nunca teve export default. O `router.tsx` do shell mudou em quatro commits, e as versões anteriores não estão disponíveis.
+**Observation:** `ShopRoutes.tsx` unchanged since first commit, never default-exported. Shell `router.tsx` changed in four commits, prior versions unavailable.
 
-**Interpretação:** Não se sabe se uma versão anterior do shell lia o export nomeado. A dúvida é só sobre o passado: no snapshot, o desencontro existe.
+**Interpretation:** Unknown whether earlier shell read named export. Past-only question: mismatch exists in snapshot.
 
 ### 22. a717597 2025-08-01 (shell/src/moduleLoader.ts)
 
-**Observação:** O carregador é criado no commit do snapshot e tem uma única versão.
+**Observation:** Loader created in snapshot commit, sole version.
 
-**Interpretação:** Não houve estágio em que o retry tenha funcionado. O ponto está esclarecido.
+**Interpretation:** No stage with working retry. Point clarified.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.2 (shell/package.json:16) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #3 |
-| 2 | 3.4.2 (shop/package.json:17) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #4 |
-| 3 | 3.4.2 (shell/package.json:16, Evidência); 3.4.3 (shell, Marcadores e Build); 3.4.5 #1 (Configuração); 3.4.6 #1 (Artefatos) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #9; configura #11 |
-| 4 | 3.4.2 (shop/package.json:17, Evidência); 3.4.3 (shop, Marcadores e Build); 3.4.5 #1 (Configuração); 3.4.6 #2 (Artefatos); 3.4.7 #2 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #10; configura #11 |
-| 5 | 3.4.4 (shell/src/moduleLoader.ts:130) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #11 |
-| 6 | 3.4.4 (shell/src/moduleLoader.ts:127) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #11 |
-| 7 | 3.4.4 (shell/src/router.tsx:52) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #11 |
-| 8 | 3.4.4 (shell/src/router.tsx:64) | 3 código | código-fonte | module-federation | arquitetural | ambígua | implementa #11 |
-| 9 | 3.4.3 (shell) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 10 | 3.4.3 (shop) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 11 | 3.4.5 #1 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #9; liga #10 |
-| 12 | 3.4.6 #1 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #9 |
-| 13 | 3.4.6 #2 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #10 |
-| 14 | 3.4.7 #1 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #9; corrobora #10; corrobora #1; corrobora #2 |
-| 15 | 3.4.7 #2 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #11; corrobora #4 |
-| 16 | 3.4.7 #3 | 7 documentação | documentação | — | arquitetural | fraca | corrobora kong-shell/kong.yml:3-9; corrobora kong-remote/kong.yml:8-13 |
-| 17 | 3.4.7 #4 | 7 documentação | documentação | — | arquitetural | fraca | corrobora shell/src/router.tsx:19-25 |
-| 18 | 3.4.7 #5 | 7 documentação | documentação | module-federation | arquitetural | fraca | contradiz shop/src/routes/ShopRoutes.tsx:49-53; contradiz shell/src/router.tsx:61-68 |
-| 19 | 3.4.7 #6 | 7 documentação | comentário | module-federation | tecnológica | fraca | corrobora #6; corrobora shell/src/moduleLoader.ts:33-40, 49-53, 61-74 |
-| 20 | 3.4.7 #7 | 7 documentação | comentário | module-federation | tecnológica | fraca | contradiz shell/src/moduleLoader.ts:42-47; contradiz #5 |
-| 21 | 3.4.8 #1 | 8 histórico | histórico | module-federation | arquitetural | fraca | explica #8; explica #18 |
-| 22 | 3.4.8 #2 | 8 histórico | histórico | module-federation | tecnológica | fraca | explica #20 |
+| 1 | 3.4.2 (shell/package.json:16) | 1 technology | manifest | module-federation | technological | weak | declares #3 |
+| 2 | 3.4.2 (shop/package.json:17) | 1 technology | manifest | module-federation | technological | weak | declares #4 |
+| 3 | 3.4.2 (shell/package.json:16, Evidence); 3.4.3 (shell, Markers and Build); 3.4.5 #1 (Configuration); 3.4.6 #1 (Artifacts) | 2 configuration | configuration | module-federation | architectural | strong | configures #9; configures #11 |
+| 4 | 3.4.2 (shop/package.json:17, Evidence); 3.4.3 (shop, Markers and Build); 3.4.5 #1 (Configuration); 3.4.6 #2 (Artifacts); 3.4.7 #2 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #10; configures #11 |
+| 5 | 3.4.4 (shell/src/moduleLoader.ts:130) | 3 code | source code | module-federation | architectural | strong | implements #11 |
+| 6 | 3.4.4 (shell/src/moduleLoader.ts:127) | 3 code | source code | module-federation | architectural | strong | implements #11 |
+| 7 | 3.4.4 (shell/src/router.tsx:52) | 3 code | source code | module-federation | architectural | strong | implements #11 |
+| 8 | 3.4.4 (shell/src/router.tsx:64) | 3 code | source code | module-federation | architectural | ambiguous | implements #11 |
+| 9 | 3.4.3 (shell) | 4 structure | directory | — | architectural | moderate | — |
+| 10 | 3.4.3 (shop) | 4 structure | directory | — | architectural | moderate | — |
+| 11 | 3.4.5 #1 | 5 composition | source code | module-federation | architectural | strong | links #9; links #10 |
+| 12 | 3.4.6 #1 | 6 build-deploy | configuration | — | architectural | moderate | publishes #9 |
+| 13 | 3.4.6 #2 | 6 build-deploy | configuration | — | architectural | moderate | publishes #10 |
+| 14 | 3.4.7 #1 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #9; corroborates #10; corroborates #1; corroborates #2 |
+| 15 | 3.4.7 #2 | 7 documentation | documentation | — | architectural | weak | corroborates #11; corroborates #4 |
+| 16 | 3.4.7 #3 | 7 documentation | documentation | — | architectural | weak | corroborates kong-shell/kong.yml:3-9; corroborates kong-remote/kong.yml:8-13 |
+| 17 | 3.4.7 #4 | 7 documentation | documentation | — | architectural | weak | corroborates shell/src/router.tsx:19-25 |
+| 18 | 3.4.7 #5 | 7 documentation | documentation | module-federation | architectural | weak | contradicts shop/src/routes/ShopRoutes.tsx:49-53; contradicts shell/src/router.tsx:61-68 |
+| 19 | 3.4.7 #6 | 7 documentation | comment | module-federation | technological | weak | corroborates #6; corroborates shell/src/moduleLoader.ts:33-40, 49-53, 61-74 |
+| 20 | 3.4.7 #7 | 7 documentation | comment | module-federation | technological | weak | contradicts shell/src/moduleLoader.ts:42-47; contradicts #5 |
+| 21 | 3.4.8 #1 | 8 history | history | module-federation | architectural | weak | explains #8; explains #18 |
+| 22 | 3.4.8 #2 | 8 history | history | module-federation | technological | weak | explains #20 |
 
-## Resumo
+## Summary
 
-Observações: 22. Dimensões (tecnologia: 2, configuração: 2, código: 4, estrutura: 2, composição: 1, build-deploy: 2, documentação: 7, histórico: 2). Força (forte: 5, moderada: 5, fraca: 11, ambígua: 1). Evidência (tecnológica: 6, arquitetural: 16, contexto: 0).
+Observations: 22. Dimensions (technology: 2, configuration: 2, code: 4, structure: 2, composition: 1, build-deploy: 2, documentation: 7, history: 2). Strength (strong: 5, moderate: 5, weak: 11, ambiguous: 1). Evidence (technological: 6, architectural: 16, context: 0).
+

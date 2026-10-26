@@ -16,31 +16,32 @@ annotation:
 
 # 109 — ramdev90/nx-module-federation
 
-## Leitura do repositório
+## Repository overview
 
-O repositório não tem nenhum arquivo `.md`, e o `artifacts.csv` não registra nenhum documento. O único `package.json` não tem `description`; o campo `name`, "@microfrontend-workspace/source" (package.json:2), é o nome do workspace gerado pelo Nx e não afirma nada verificável sobre as unidades.
+Repository has no `.md` files, and `artifacts.csv` records no documents. Sole `package.json` has no `description`; field `name`, "@microfrontend-workspace/source" (package.json:2), is Nx-generated workspace name and makes no verifiable unit claim.
 
-Foram lidos os comentários e os campos descritivos dos artefatos que as revisões anteriores citam:
-- package.json, nx.json e os `project.json` de shell, products, orders, customer e apps/microfrontend-workspace, que não têm comentário nem `description`;
-- os quatro `module-federation.config.ts`. Só têm os comentários-padrão do gerador do Nx: a exigência de exportação default "to allow correct resolution of the module federation graph" (shell/module-federation.config.ts:20-22; products/module-federation.config.ts:10-12; orders/module-federation.config.ts:10-12; customer/module-federation.config.ts:10-12) e, no shell, a explicação da sintaxe de tupla para remotes externos ao workspace, com um endereço de exemplo (shell/module-federation.config.ts:5-16);
-- os quatro `webpack.config.ts` e os quatro `webpack.prod.config.ts`, idênticos entre as aplicações. O comentário sobre o DTS Plugin (shell/webpack.config.ts:4-8) e o bloco "Remote overrides for production", com exemplos `app1`/`app2` (shell/webpack.prod.config.ts:12-21), também vêm do gerador. O bloco de produção ficou só como exemplo comentado: nenhuma URL de produção foi declarada;
-- os `eslint.config.mjs`, que só têm o comentário-padrão "Override or add rules here" (ex.: shell/eslint.config.mjs:31; eslint.config.mjs:39);
-- shell/src/main.ts, shell/src/bootstrap.ts, shell/src/app/app.routes.ts, shell/src/app/app.html e products/src/app/remote-entry/entry.routes.ts, sem comentários.
+Comments and descriptive fields were read in artifacts cited by previous reviews:
+- package.json, nx.json and `project.json` files of shell, products, orders, customer and apps/microfrontend-workspace, without comments or `description`;
+- Four `module-federation.config.ts` files. Only standard Nx generator comments: default export requirement "to allow correct resolution of the module federation graph" (shell/module-federation.config.ts:20-22; products/module-federation.config.ts:10-12; orders/module-federation.config.ts:10-12; customer/module-federation.config.ts:10-12) and shell explanation of tuple syntax for remotes outside workspace, with example address (shell/module-federation.config.ts:5-16);
+- Four `webpack.config.ts` and four `webpack.prod.config.ts` files, identical across applications. DTS Plugin comment (shell/webpack.config.ts:4-8) and "Remote overrides for production" block with `app1`/`app2` examples (shell/webpack.prod.config.ts:12-21) also come from generator. Production block remains a commented example: no production URL declared;
+- `eslint.config.mjs` files, only standard comment "Override or add rules here" (e.g.: shell/eslint.config.mjs:31; eslint.config.mjs:39);
+- shell/src/main.ts, shell/src/bootstrap.ts, shell/src/app/app.routes.ts, shell/src/app/app.html and products/src/app/remote-entry/entry.routes.ts, without comments.
 
-Os componentes `NxWelcome` (ex.: shell/src/app/nx-welcome.ts:516; products/src/app/remote-entry/nx-welcome.ts:516) são a tela de boas-vindas padrão do Nx. Eles não falam da arquitetura deste projeto.
+`NxWelcome` components (e.g.: shell/src/app/nx-welcome.ts:516; products/src/app/remote-entry/nx-welcome.ts:516) are standard Nx welcome screen. They do not address this project's architecture.
 
-O repositório, portanto, não documenta sua arquitetura. Tudo o que se sabe dele vem dos artefatos, já registrado nas revisões anteriores.
+Repository therefore does not document its architecture. Everything known comes from artifacts, already recorded in previous reviews.
 
-Nenhuma ocorrência `doc-*` na mineração.
+No `doc-*` mining occurrences.
 
-## Afirmações
+## Claims
 
-Nenhuma afirmação arquitetural.
+No architectural claims.
 
-## Observações
+## Observations
 
-Sem afirmações.
+No claims.
 
-## Resumo
+## Summary
 
-Afirmações: 0.
+Claims: 0.
+

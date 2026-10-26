@@ -20,53 +20,53 @@ annotation:
 
 # 303 — Twocram/Twocram
 
-## Contexto
+## Context
 
-Repositório de perfil do GitHub: um único `README.md` com um bloco TypeScript ilustrativo que apresenta o autor, sua stack e contatos (`README.md:1–23`). Module Federation aparece só como item da lista de ferramentas (`README.md:13`). Não há código executável nem aplicação. O nome do repositório não é usado como evidência.
+GitHub profile repository: a single `README.md` with an illustrative TypeScript block presenting author, stack and contacts (`README.md:1–23`). Module Federation appears only as a tool list item (`README.md:13`). No executable code or application. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:304` registra rank 303, ID 1320881755, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede. Os dados de contato pessoal do README não são reproduzidos.
+`data/samples/mfe-sample-001/clones.csv:304` records rank 303, ID 1320881755, status `cloned`, branch `main` and the front matter commit, which is HEAD of the clone and `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, execution or network access occurred. Personal contact data from README is not reproduced.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:304` registra a estratégia `technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:34651` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:34657` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:304` records strategy `technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:34651` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:34657` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna um único hit em cada rodada. Ele vem do endpoint `repositories`, consulta `technology-module-federation-repositories` (`"module federation" in:name,description,readme`), subconsulta `…#created:2026-08`, com `path` vazio. As coletas são 2026-10-07T23:30:05.892Z (001) e 2026-10-08T16:19:18.549Z (002). A consulta efetiva acrescenta `pushed:>=2025-04-01 created:2026-08-01..2026-08-31`.
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns a single hit in each round. It comes from endpoint `repositories`, query `technology-module-federation-repositories` (`"module federation" in:name,description,readme`), subquery `…#created:2026-08`, with empty `path`. Collection times are 2026-10-07T23:30:05.892Z (001) and 2026-10-08T16:19:18.549Z (002). Effective query appends `pushed:>=2025-04-01 created:2026-08-01..2026-08-31`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem nula, `fork: false`, tamanho 0;
-- criação em 2026-08-02T22:37:10Z, push em 2026-08-02T22:39:54Z.
+Hit metadata:
+- null description, no topics, null language, `fork: false`, size 0;
+- created at 2026-08-02T22:37:10Z, pushed at 2026-08-02T22:39:54Z.
 
-A grafia literal está em `README.md:13` (`tooling: ["Vite", "Module Federation", "Vitest", "Jest", "Docker"]`). O README é do único commit (2026-08-03), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+Literal spelling is at `README.md:13` (`tooling: ["Vite", "Module Federation", "Vitest", "Jest", "Docker"]`). README belongs to the only commit (2026-08-03), before October 2026 collection. The SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 1 entrada, arquivo regular `100644` (`README.md`, 610 bytes); zero symlinks e zero gitlinks. | contrária |
-| Documentação | `README.md:1–23`: bloco de código ilustrativo com nome, função, stack e contatos; `README.md:13` lista “Module Federation” entre as ferramentas. | fraca |
+| Structure | `git ls-tree -r` at the SHA: 1 entry, regular `100644` file (`README.md`, 610 bytes); zero symlinks and zero gitlinks. | contrary |
+| Documentation | `README.md:1–23`: illustrative code block with name, role, stack and contacts; `README.md:13` lists “Module Federation” among tools. | weak |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; um único commit, `6138b95` (2026-08-03, “feat: initial commit”), de Artem Maslov. Só há o branch `main`. Não houve objeto ausente.
+Non-shallow clone; a single commit, `6138b95` (2026-08-03, “feat: initial commit”), by Artem Maslov. Only branch `main`. No objects were missing.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend; só um README. |
-| Q2 | No | Sem unidades, não há independência a avaliar. |
-| Q3 | No | Não há host, shell ou configuração raiz. |
-| Q4 | No | Nenhum mecanismo de composição; Module Federation só citado em `README.md:13`. |
-| Q5 | No | Q1–Q4 são No: repositório de perfil. |
+| Q1 | No | No frontend unit; only a README. |
+| Q2 | No | Without units, there is no independence to assess. |
+| Q3 | No | No host, shell or root configuration. |
+| Q4 | No | No composition mechanism; Module Federation only mentioned at `README.md:13`. |
+| Q5 | No | Q1–Q4 are No: profile repository. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “repositories mentioning micro-frontends without implementing them”.
-- Mesmo enquadramento dos finais de perfil 011/064/068/073/077/101/111 e do rascunho 285.
-- **Campos:** `repo_type: other`, `frontend_units: 0`, `unit_organization: none`, `approaches: []`, `ui_technologies: []`, `build_tools: []`.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. Matches “repositories mentioning micro-frontends without implementing them”.
+- Same framing as final profile records 011/064/068/073/077/101/111 and draft 285.
+- **Fields:** `repo_type: other`, `frontend_units: 0`, `unit_organization: none`, `approaches: []`, `ui_technologies: []`, `build_tools: []`.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** Module Federation citado como ferramenta num README de perfil casa a consulta tecnológica de repositórios.
-- **Protocolo (busca):** grafia literal no README. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ1 (misleading signals):** Module Federation cited as a tool in a profile README matches the repository technology query.
+- **Protocol (search):** literal spelling in README. Eligibility changes from `unknown` (001) to `pass` (002).

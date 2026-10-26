@@ -16,209 +16,94 @@ annotation:
 
 # 185 — Marcel-b-velop/vue-mf
 
-## Leitura do repositório
+## Repository overview
 
-A documentação está toda em alemão. O README da raiz é um caderno de experimento: diz o objetivo
-("Ziel": páginas carregadas como módulos remotos, um host com navegação, cabeçalho e rodapé, uma
-biblioteca de controles compartilhados), a montagem do teste ("Testaufbau": Host, App1 e Lib), os
-problemas resolvidos ("Gelöste Probleme": como rodar os remotes, o `shared` do PrimeVue, o CSS do
-Tailwind, as declarações de tipo dos módulos remotos) e o estado ("Stand"). O `app-2/README.md`
-descreve app-2 como módulo de autenticação, carregável por Module Federation e ligado ao
-IdentityServer. O `Api/IdentityServer/README.md` documenta o backend de identidade .NET. Os
-READMEs de `app-1/`, `host/` e `lib/` são o template do Vite (app-1/README.md:1-5;
-host/README.md:1-5; lib/README.md:1-5) e não trazem afirmação sobre o projeto.
+Documentation is entirely German. Root README is experiment notebook: objective ("Ziel", English translation: "Goal": remotely loaded pages, host navigation/header/footer, shared control library), test arrangement ("Testaufbau", English translation: "Test setup": Host, App1, Lib), solved problems ("Gelöste Probleme", English translation: "Solved problems": running remotes, PrimeVue `shared`, Tailwind CSS, remote module type declarations), status ("Stand", English translation: "Status"). `app-2/README.md` describes authentication module app-2, loadable through Module Federation and connected to IdentityServer. `Api/IdentityServer/README.md` documents .NET identity backend. READMEs in `app-1/`, `host/` and `lib/` are Vite templates (app-1/README.md:1-5; host/README.md:1-5; lib/README.md:1-5), without project claims.
 
-O README da raiz confere com as revisões anteriores na composição (host, app-1 e lib ligados por
-`@originjs/vite-plugin-federation`, dependências comuns em `shared`, remotes servidos por `vite
-preview` em `localhost`), mas está atrasado em relação ao snapshot: fala em três partes e nunca cita
-app-2, que existe como quarta unidade (pnpm-workspace.yaml:4) e é o remote das rotas `/login` e
-`/register` do host (host/src/router/index.ts:7-8). app-2 só é descrita no próprio README. Também
-nem toda página do host é remota: `/about` é local (host/src/router/index.ts:6).
+Root README matches previous composition reviews (host, app-1, lib linked through `@originjs/vite-plugin-federation`, common `shared` dependencies, remotes served through `vite
+preview` on `localhost`), but lags snapshot: mentions three parts, never app-2, existing fourth unit (pnpm-workspace.yaml:4), remote for host routes `/login` and `/register` (host/src/router/index.ts:7-8). App-2 described only in own README. Not every host page is remote: `/about` local (host/src/router/index.ts:6).
 
-Ficaram fora da tabela:
-- a segunda metade de README.md:7 (se a lógica de funções será compartilhada por NPM ou pela
-  biblioteca "muss noch erarbeitet werden", ainda está por definir) e README.md:9 (estratégia para
-  compartilhar o estilo, também em aberto): são intenções;
-- README.md:11, a descrição funcional do diálogo de seleção (inicializado com seleções, carrega os
-  próprios dados e devolve o selecionado ao chamador). É o contrato interno do componente `Confirm`
-  (lib/src/components/Confirm.vue:9-24), já registrado na revisão de composição (3.4.5 #1);
-- README.md:36-56, as declarações `declare module` no `vite-env.d.ts` para o compilador conhecer os
-  módulos remotos (host/src/vite-env.d.ts:1-29), detalhe de tipagem; o bloco de código reproduz o
-  arquivo;
-- o bloco de código README.md:28-34, que reproduz a configuração citada na afirmação 11;
-- README.md:60, o estado ("Host, App1 und Lib sind schon lauffähig. Es fehlt noch der Footer und die
-  Auslagerung der Styles und Funktionen.", host, App1 e Lib já rodam; faltam o rodapé e a extração
-  dos estilos e funções): "lauffähig" não se verifica no snapshot, e o rodapé entra no parágrafo da
-  afirmação 2;
-- "die vite configs wurden optimiert" (README.md:62), sem conteúdo verificável;
-- em `app-2/README.md`: a descrição funcional (:3), as features de login, registro, logout, token
-  JWT e store Pinia (:7-11), detalhes internos da unidade; as rotas da execução isolada (:48-52); as
-  dependências (:54-61); o bloco de comandos (:23-38);
-- `Api/IdentityServer/README.md`, que trata só do backend (endpoints, JWT, senha, banco em memória,
-  execução em `localhost:5283`). A seção "Integration mit Vue-App" (Api/IdentityServer/README.md:113-121)
-  manda guardar o token no `localStorage` e enviá-lo no cabeçalho `Authorization`; é instrução de
-  integração com o backend, sem afirmação sobre as unidades. No snapshot, app-2 grava o token
-  (app-2/src/services/authService.ts:67) e lib o lê (lib/src/services/apiClient.ts:15), o canal da
-  relação 3.4.5 #5.
+Excluded from table:
+- Second half of README.md:7 (whether function logic shared through NPM or library "muss noch erarbeitet werden", English translation: "remains to be worked out") and README.md:9 (style-sharing strategy also open), intentions;
+- README.md:11, selection-dialog functional description (initialized with selections, loads own data, returns selection to caller). Internal `Confirm` contract (lib/src/components/Confirm.vue:9-24), recorded by composition review (3.4.5 #1);
+- README.md:36-56, `declare module` declarations in `vite-env.d.ts` informing compiler of remote modules (host/src/vite-env.d.ts:1-29), typing detail; code block reproduces file;
+- Code block README.md:28-34, reproducing claim 11 configuration;
+- README.md:60, status ("Host, App1 und Lib sind schon lauffähig. Es fehlt noch der Footer und die
+  Auslagerung der Styles und Funktionen.", English translation: "Host, App1 and Lib already run; footer and extraction of styles/functions remain"): "lauffähig" (English translation: "runnable") unverified in snapshot; footer in claim 2 paragraph;
+- "die vite configs wurden optimiert" (English translation: "Vite configurations optimized") (README.md:62), without verifiable content;
+- In `app-2/README.md`: functional description (:3), login/registration/logout/JWT-token/Pinia-store features (:7-11), internal details; standalone routes (:48-52); dependencies (:54-61); command block (:23-38);
+- `Api/IdentityServer/README.md`, solely backend (endpoints, JWT, password, in-memory database, running at `localhost:5283`). Section "Integration mit Vue-App" (English translation: "Integration with Vue app") (Api/IdentityServer/README.md:113-121) instructs storing token in `localStorage`, sending through `Authorization`; backend integration instruction without unit claims. Snapshot app-2 stores token (app-2/src/services/authService.ts:67), lib reads it (lib/src/services/apiClient.ts:15), channel of relationship 3.4.5 #5.
 
-Ocorrências `doc-*` que não viraram linha: README.md:1 (título "Vue Module Federation");
-app-2/README.md:30, :33 e :36, comentários dentro do bloco de comandos (`pnpm build`,
-`pnpm dev:watch`, `pnpm preview` "für Module Federation"), cujo arranjo está na afirmação 7;
-app-2/README.md:40, título da seção "Module Federation". README.md:5 está nas afirmações 1 e 2, e
-app-2/README.md:12 na 15.
+`doc-*` occurrences without rows: README.md:1 (title "Vue Module Federation"); app-2/README.md:30, :33 and :36, comments inside command block (`pnpm build`, `pnpm dev:watch`, `pnpm preview` "für Module Federation", English translation: "for Module Federation"), arrangement in claim 7; app-2/README.md:40, "Module Federation" section title. README.md:5 in claims 1 and 2, app-2/README.md:12 in 15.
 
-Comentários e campos lidos nos artefatos que as revisões anteriores citam: os quatro
-`vite.config.ts` (os rótulos "Modules to expose" em host/vite.config.ts:14, app-1/vite.config.ts:14 e
-app-2/vite.config.ts:14 e "Modules to exposed" em lib/vite.config.ts:20 só marcam a seção; o do host
-fica acima de `remotes`, sem `exposes`; host/vite.config.ts:36 e lib/vite.config.ts:34, 36 tratam de
-chunks e top-level await; app-2/vite.config.ts:16 virou a afirmação 19); app-2/src/main.ts:9 e
-app-2/src/App.vue:9, 23, 45, 79 (afirmação 18); app-1/src/main.ts:17, 19;
-app-2/src/services/authService.ts:37, 51; lib/src/services/apiClient.ts:12, 32, 51; o workflow
-(.github/workflows/node.js.yml:1, nome "Build UI", e :24, ".NET Setup und Build"). Fora os indicados,
-são detalhes internos. Nenhum `package.json` tem `description`.
+Comments/fields read in artifacts cited by previous reviews: four `vite.config.ts` files (labels "Modules to expose" at host/vite.config.ts:14, app-1/vite.config.ts:14, app-2/vite.config.ts:14 and "Modules to exposed" at lib/vite.config.ts:20 merely mark section; host label above `remotes`, without `exposes`; host/vite.config.ts:36 and lib/vite.config.ts:34, 36 concern chunks/top-level await; app-2/vite.config.ts:16 became claim 19); app-2/src/main.ts:9 and app-2/src/App.vue:9, 23, 45, 79 (claim 18); app-1/src/main.ts:17, 19; app-2/src/services/authService.ts:37, 51; lib/src/services/apiClient.ts:12, 32, 51; workflow (.github/workflows/node.js.yml:1, name "Build UI", :24, ".NET Setup und Build", English translation: ".NET setup and build"). Others are internal details. No `package.json` has `description`.
 
-## Afirmações
+## Claims
 
-| # | Documento | Afirmação | Tema | Corroboração | Evidência |
+| # | Document | Claim | Theme | Corroboration | Evidence |
 |---|---|---|---|---|---|
-| 1 | README.md:5 | "Die einzelnen Seiten sollen als Remote Module geladen werden." (as páginas devem ser carregadas como módulos remotos) | composição | contradita | 3.4.5 #2, #4; host/src/router/index.ts:5-8; host/src/views/Home.vue:1; host/src/views/About.vue:1-5 |
-| 2 | README.md:5 | "Der Host hält die Navigationsleiste, Header und den Footer." (o host mantém a barra de navegação, o cabeçalho e o rodapé) | estrutura | parcial | host/src/App.vue:8-9; host/src/components/Navigation.vue:26 |
-| 3 | README.md:7 | "Mehrfach genutzte Steuerelemente sollen durch eine Library bereitgestellt werden" (controles usados em vários lugares devem ser fornecidos por uma biblioteca) | estrutura | corroborada | 3.4.5 #1, #3; lib/vite.config.ts:22; app-1/src/main.ts:11, 16; app-1/src/App.vue:33; host/src/main.ts:14, 21 |
-| 4 | README.md:15 | "Host: Host der/für Anwendung/en" (host das aplicações) | estrutura | corroborada | 3.4.3 (host `Yes`); 3.4.5 #2, #3, #4; host/vite.config.ts:15-19 |
-| 5 | README.md:17 | "App1: Eine Anwendung, welche zu Testzwecken eine Library mit einem Dialog nuten soll" (uma aplicação que, para teste, usa uma biblioteca com um diálogo) | composição | corroborada | 3.4.5 #1; app-1/src/main.ts:11, 16; app-1/src/App.vue:33 |
-| 6 | README.md:22 | "die drei Teile der anwendung" (as três partes da aplicação) | estrutura | contradita | 3.4.3 (app-1, app-2, host, lib `Yes`); pnpm-workspace.yaml:2-5 |
-| 7 | README.md:22 | "Den Host kann man so starten, Lib und App1 müssen gebaut werden und danach über preview bereitgestellt werden, um alles im Host zu sehen." (o host pode rodar com `pnpm dev`; Lib e App1 precisam ser construídas e servidas por `preview` para aparecer no host) | build-deploy | corroborada | 3.4.6 #1, #4; host/vite.config.ts:16, 18; app-1/package.json:9-11; lib/package.json:8-10; host/package.json:7 |
-| 8 | README.md:22 | "Einzelne Anwendungen kann man natürlich auch direkt starten und debuggen, sie funktionieren dann allerdings nicht in der Hostanwendung." (cada aplicação também pode ser iniciada e depurada sozinha, mas então não funciona no host) | independência | corroborada | 3.4.3 (entrada própria de app-1, app-2, host e lib); app-1/package.json:7; lib/package.json:7 |
-| 9 | README.md:24 | "Primevue, Pinia, Vue sollten von allen Anwendungen geteilt werden. In der vite.config.ts wird das konfiguriert" (PrimeVue, Pinia e Vue são compartilhados por todas as aplicações, configurados no `vite.config.ts`) | composição | corroborada | 3.4.2 (federation configurada nas quatro); host/vite.config.ts:20-25; app-1/vite.config.ts:21-26; app-2/vite.config.ts:24-29; lib/vite.config.ts:26-31 |
-| 10 | README.md:24 | "Für Primevue musste nur in der Host Anwendung die vite.confit.ts erweitert werden […] Die Lösung war version und requiredVersion." (para o PrimeVue, só a configuração do host precisou de `version` e `requiredVersion`) | composição | corroborada | host/vite.config.ts:23; app-1/vite.config.ts:24; app-2/vite.config.ts:27; lib/vite.config.ts:29 |
-| 11 | README.md:26 | "Folgender Code hat in der vite.config.ts der Lib und App1 zur Lösung geführt (in der Host Anwendung gab es die Anpassung nicht)" (o bloco `build` com `target: "esnext"`, `minify: false`, `cssCodeSplit: false` está nas configurações de Lib e App1, e não na do host) | build-deploy | contradita | lib/vite.config.ts:40-44; app-1/vite.config.ts:30-35; host/vite.config.ts:28-30 |
-| 12 | README.md:62 | "Bis jetzt wurde nur lokal getestet, wie der Host sich im Livebetrieb verhält ist noch unklar." (até agora só se testou localmente; o comportamento do host em produção é desconhecido) | build-deploy | corroborada | 3.4.6 #1-#4 (deploy `não observado`); host/vite.config.ts:16-18 |
-| 13 | README.md:62 | "GitHub Action wurde implementiert" (foi implementada uma GitHub Action) | build-deploy | corroborada | 3.4.6 (Leitura); .github/workflows/node.js.yml:1-23 |
-| 14 | README.md:62 | "Auch ein apiClient wird in der lib gepflegt und den anderen Anwendungen zur Verfügung gestellt." (um `apiClient` é mantido na lib e fornecido às outras aplicações) | estrutura | corroborada | lib/vite.config.ts:23; lib/src/components/Confirm.vue:7, 22; app-1/src/main.ts:8; app-1/src/composables/api.ts:1 |
-| 15 | app-2/README.md:12 | "Module Federation: Kann als Remote-Modul in andere Apps geladen werden" (pode ser carregada como módulo remoto em outras aplicações) | composição | corroborada | 3.4.2 (app-2 configurada); 3.4.5 #4; app-2/vite.config.ts:11-20 |
-| 16 | app-2/README.md:16 | "Die App kommuniziert mit dem IdentityServer unter `http://localhost:5283/api/identity`" (a aplicação se comunica com o IdentityServer nesse endereço) | outro | corroborada | app-2/src/services/authService.ts:3, 29-30; Api/IdentityServer/Properties/launchSettings.json:9 |
-| 17 | app-2/README.md:42 | "Die App wird als `remote-app2` exponiert und kann in anderen Apps wie folgt verwendet werden" (a aplicação é exposta como `remote-app2` e usada em outras por `defineAsyncComponent(() => import("remote-app2/App2"))`) | composição | corroborada | app-2/vite.config.ts:12, 16; host/src/main.ts:13 |
-| 18 | app-2/src/App.vue:9 | "Prüfen ob Router verfügbar ist (nur für standalone-Modus)" (verifica se há router, que só existe no modo standalone) | independência | corroborada | 3.4.3 (app-2 `Yes`, router próprio em modo standalone); app-2/index.html:11; app-2/src/main.ts:10-37 |
-| 19 | app-2/vite.config.ts:16 | `"./App2": "./src/App.vue", // Für standalone-Modus` (o `./App2` exposto é a aplicação do modo standalone) | composição | corroborada | app-2/src/main.ts:4, 33; app-2/src/App.vue:80-82 |
+| 1 | README.md:5 | "Die einzelnen Seiten sollen als Remote Module geladen werden." (English translation: Pages should load as remote modules) | composition | contradicted | 3.4.5 #2, #4; host/src/router/index.ts:5-8; host/src/views/Home.vue:1; host/src/views/About.vue:1-5 |
+| 2 | README.md:5 | "Der Host hält die Navigationsleiste, Header und den Footer." (English translation: Host maintains navigation bar, header and footer) | structure | partial | host/src/App.vue:8-9; host/src/components/Navigation.vue:26 |
+| 3 | README.md:7 | "Mehrfach genutzte Steuerelemente sollen durch eine Library bereitgestellt werden" (English translation: Repeatedly used controls should be provided through library) | structure | corroborated | 3.4.5 #1, #3; lib/vite.config.ts:22; app-1/src/main.ts:11, 16; app-1/src/App.vue:33; host/src/main.ts:14, 21 |
+| 4 | README.md:15 | "Host: Host der/für Anwendung/en" (English translation: Host of applications) | structure | corroborated | 3.4.3 (host `Yes`); 3.4.5 #2, #3, #4; host/vite.config.ts:15-19 |
+| 5 | README.md:17 | "App1: Eine Anwendung, welche zu Testzwecken eine Library mit einem Dialog nuten soll" (English translation: Test application using library with dialog) | composition | corroborated | 3.4.5 #1; app-1/src/main.ts:11, 16; app-1/src/App.vue:33 |
+| 6 | README.md:22 | "die drei Teile der anwendung" (English translation: Three application parts) | structure | contradicted | 3.4.3 (app-1, app-2, host, lib `Yes`); pnpm-workspace.yaml:2-5 |
+| 7 | README.md:22 | "Den Host kann man so starten, Lib und App1 müssen gebaut werden und danach über preview bereitgestellt werden, um alles im Host zu sehen." (English translation: Host runs through `pnpm dev`; Lib and App1 must build and serve through `preview` to appear in host) | build-deploy | corroborated | 3.4.6 #1, #4; host/vite.config.ts:16, 18; app-1/package.json:9-11; lib/package.json:8-10; host/package.json:7 |
+| 8 | README.md:22 | "Einzelne Anwendungen kann man natürlich auch direkt starten und debuggen, sie funktionieren dann allerdings nicht in der Hostanwendung." (English translation: Applications can start/debug independently, but then do not work in host) | independence | corroborated | 3.4.3 (own entry of app-1, app-2, host and lib); app-1/package.json:7; lib/package.json:7 |
+| 9 | README.md:24 | "Primevue, Pinia, Vue sollten von allen Anwendungen geteilt werden. In der vite.config.ts wird das konfiguriert" (English translation: PrimeVue, Pinia and Vue shared across applications, configured in `vite.config.ts`) | composition | corroborated | 3.4.2 (federation configured in four); host/vite.config.ts:20-25; app-1/vite.config.ts:21-26; app-2/vite.config.ts:24-29; lib/vite.config.ts:26-31 |
+| 10 | README.md:24 | "Für Primevue musste nur in der Host Anwendung die vite.confit.ts erweitert werden […] Die Lösung war version und requiredVersion." (English translation: Only host PrimeVue configuration needed `version` and `requiredVersion`) | composition | corroborated | host/vite.config.ts:23; app-1/vite.config.ts:24; app-2/vite.config.ts:27; lib/vite.config.ts:29 |
+| 11 | README.md:26 | "Folgender Code hat in der vite.config.ts der Lib und App1 zur Lösung geführt (in der Host Anwendung gab es die Anpassung nicht)" (English translation: Block `build` with `target: "esnext"`, `minify: false`, `cssCodeSplit: false` in Lib/App1 configurations, absent from host) | build-deploy | contradicted | lib/vite.config.ts:40-44; app-1/vite.config.ts:30-35; host/vite.config.ts:28-30 |
+| 12 | README.md:62 | "Bis jetzt wurde nur lokal getestet, wie der Host sich im Livebetrieb verhält ist noch unklar." (English translation: Only locally tested so far; production host behavior unknown) | build-deploy | corroborated | 3.4.6 #1-#4 (deploy `not observed`); host/vite.config.ts:16-18 |
+| 13 | README.md:62 | "GitHub Action wurde implementiert" (English translation: GitHub Action implemented) | build-deploy | corroborated | 3.4.6 (Repository overview); .github/workflows/node.js.yml:1-23 |
+| 14 | README.md:62 | "Auch ein apiClient wird in der lib gepflegt und den anderen Anwendungen zur Verfügung gestellt." (English translation: `apiClient` maintained in lib, provided to other applications) | structure | corroborated | lib/vite.config.ts:23; lib/src/components/Confirm.vue:7, 22; app-1/src/main.ts:8; app-1/src/composables/api.ts:1 |
+| 15 | app-2/README.md:12 | "Module Federation: Kann als Remote-Modul in andere Apps geladen werden" (English translation: Can load as remote module in other applications) | composition | corroborated | 3.4.2 (app-2 configured); 3.4.5 #4; app-2/vite.config.ts:11-20 |
+| 16 | app-2/README.md:16 | "Die App kommuniziert mit dem IdentityServer unter `http://localhost:5283/api/identity`" (English translation: Application communicates with IdentityServer at stated address) | other | corroborated | app-2/src/services/authService.ts:3, 29-30; Api/IdentityServer/Properties/launchSettings.json:9 |
+| 17 | app-2/README.md:42 | "Die App wird als `remote-app2` exponiert und kann in anderen Apps wie folgt verwendet werden" (English translation: Application exposed as `remote-app2`, usable elsewhere through `defineAsyncComponent(() => import("remote-app2/App2"))`) | composition | corroborated | app-2/vite.config.ts:12, 16; host/src/main.ts:13 |
+| 18 | app-2/src/App.vue:9 | "Prüfen ob Router verfügbar ist (nur für standalone-Modus)" (English translation: Checks router availability, present only in standalone mode) | independence | corroborated | 3.4.3 (app-2 `Yes`, own router in standalone mode); app-2/index.html:11; app-2/src/main.ts:10-37 |
+| 19 | app-2/vite.config.ts:16 | `"./App2": "./src/App.vue", // Für standalone-Modus` (English translation: Exposed `./App2` is standalone-mode application) | composition | corroborated | app-2/src/main.ts:4, 33; app-2/src/App.vue:80-82 |
 
-## Observações
+## Observations
 
-**1. README.md:5.** O objetivo é que cada página seja um módulo remoto, com o host só segurando a
-moldura. No snapshot, três das quatro rotas do host mostram código remoto: `/` renderiza o `App1` de
-app-1 (host/src/router/index.ts:5; host/src/views/Home.vue:1) e `/login` e `/register` carregam os
-formulários de app-2 (host/src/router/index.ts:7-8). A rota `/about` é uma página local do host
-(host/src/router/index.ts:2, 6; host/src/views/About.vue:1-5). Como uma página contraria a frase, ela
-fica `contradita`; a parte remota se confirma. A frase está escrita como objetivo ("sollen"), e o
-README não diz que ela já foi cumprida. É também a ocorrência `doc-host-remote`.
+**1. README.md:5.** Goal: each page remote module, host holding frame only. Three of four snapshot host routes show remote code: `/` renders `App1` from app-1 (host/src/router/index.ts:5; host/src/views/Home.vue:1), `/login` and `/register` load app-2 forms (host/src/router/index.ts:7-8). Route `/about` is local host page (host/src/router/index.ts:2, 6; host/src/views/About.vue:1-5). One page refutes sentence, hence `contradicted`; remote part holds. Written as goal ("sollen", English translation: "should"), README does not claim achieved. Also `doc-host-remote` occurrence.
 
-**2. README.md:5.** A barra de navegação está no host: `host/src/App.vue:8` monta o `Navigation`,
-um `Menubar` do PrimeVue (host/src/components/Navigation.vue:26), acima do `<RouterView />`
-(host/src/App.vue:9). Não há cabeçalho nem rodapé no host; o próprio README diz que "Es fehlt noch
-der Footer" (falta ainda o rodapé, README.md:60). A afirmação é `parcial`: a navegação se confirma, e
-cabeçalho e rodapé não têm artefato. O único `<header>` do snapshot é o de app-2
-(app-2/src/App.vue:46), que o host não renderiza.
+**2. README.md:5.** Navigation bar in host: `host/src/App.vue:8` mounts `Navigation`, PrimeVue `Menubar` (host/src/components/Navigation.vue:26), above `<RouterView />` (host/src/App.vue:9). No header/footer; README itself says "Es fehlt noch
+der Footer" (English translation: "Footer still missing", README.md:60). Hence `partial`: navigation holds, header/footer lack artifacts. Sole snapshot `<header>` in app-2 (app-2/src/App.vue:46), not rendered by host.
 
-**3. README.md:7.** A biblioteca é a unidade lib, que expõe o diálogo `Confirm`
-(lib/vite.config.ts:22). Ele é usado por mais de uma unidade: app-1 o carrega e o registra
-(app-1/src/main.ts:11, 16) e o usa em app-1/src/App.vue:33; o host o carrega e o registra
-(host/src/main.ts:14, 21) para o `App1` que renderiza. O mesmo conteúdo aparece em README.md:18
-("Lib: Stellt einen Dialog bereit, der von mehreren Anwendungen benutzt werden kann", fornece um
-diálogo que várias aplicações podem usar). É o único controle exposto: os outros módulos de lib são
-o `apiClient` e os tipos (lib/vite.config.ts:23-24).
+**3. README.md:7.** Library is unit lib, exposing dialog `Confirm` (lib/vite.config.ts:22). Multiple units use it: app-1 loads/registers (app-1/src/main.ts:11, 16), uses at app-1/src/App.vue:33; host loads/registers (host/src/main.ts:14, 21) for rendered `App1`. Repeated in README.md:18 ("Lib: Stellt einen Dialog bereit, der von mehreren Anwendungen benutzt werden kann", English translation: "Provides dialog usable by multiple applications"). Sole exposed control; other lib modules `apiClient` and types (lib/vite.config.ts:23-24).
 
-**4. README.md:15.** O host é a casca que consome os três remotes (host/vite.config.ts:15-19) e
-não expõe nada. A revisão de composição registra as relações dele com app-1, lib e app-2.
+**4. README.md:15.** Host is shell consuming three remotes (host/vite.config.ts:15-19), exposing nothing. Composition review records relationships with app-1, lib and app-2.
 
-**5. README.md:17.** app-1 consome o `Confirm` de lib: carrega-o por `defineAsyncComponent`
-(app-1/src/main.ts:11), registra-o como global (app-1/src/main.ts:16) e o abre em
-app-1/src/App.vue:33. "Zu Testzwecken" (para teste) descreve o propósito, o que combina com o
-`repo_type: example` da classificação.
+**5. README.md:17.** App-1 consumes lib `Confirm`: loads through `defineAsyncComponent` (app-1/src/main.ts:11), registers globally (app-1/src/main.ts:16), opens at app-1/src/App.vue:33. "Zu Testzwecken" (English translation: "for testing") describes purpose, matching classification `repo_type: example`.
 
-**6. README.md:22.** A frase fala das três partes da aplicação, as mesmas três listadas no
-"Testaufbau" (README.md:15-18: Host, App1, Lib). O snapshot tem quatro unidades frontend no
-workspace (pnpm-workspace.yaml:2-5), e a revisão de estrutura marcou as quatro como `Yes`; app-2
-falta na contagem. A afirmação é `contradita`. O README parece anterior a app-2, que tem
-documentação própria (app-2/README.md).
+**6. README.md:22.** Sentence names three application parts, same as "Testaufbau" (English translation: "Test setup") (README.md:15-18: Host, App1, Lib). Snapshot has four frontend workspace units (pnpm-workspace.yaml:2-5), all marked `Yes` in structural review; app-2 missing from count. Hence `contradicted`. README appears older than app-2, with own documentation (app-2/README.md).
 
-**7. README.md:22.** Os remotes são vistos pelo host em `localhost:5174` e `localhost:5177`
-(host/vite.config.ts:16, 18), as portas do `vite preview` de app-1 e lib (app-1/package.json:10;
-lib/package.json:9), e os scripts `dev:all` combinam `vite build --watch` com `preview`
-(app-1/package.json:9-11; lib/package.json:8-10). O host roda com `vite` (host/package.json:7). A
-revisão de build e deploy já citou este trecho na Leitura. O mesmo arranjo aparece nos comentários do
-bloco de comandos de app-2 (app-2/README.md:30-37), e app-2 segue o mesmo padrão
-(app-2/package.json:9-11).
+**7. README.md:22.** Host sees remotes at `localhost:5174` and `localhost:5177` (host/vite.config.ts:16, 18), app-1/lib `vite preview` ports (app-1/package.json:10; lib/package.json:9), with `dev:all` combining `vite build --watch` and `preview` (app-1/package.json:9-11; lib/package.json:8-10). Host runs through `vite` (host/package.json:7). Build and deployment review cites passage in Repository overview. Same arrangement in app-2 command-block comments (app-2/README.md:30-37), app-2 following same pattern (app-2/package.json:9-11).
 
-**8. README.md:22.** Cada unidade tem `index.html`, entrada que monta o próprio app e `dev` próprio
-(3.4.3; app-1/package.json:7; lib/package.json:7), por isso pode ser iniciada sozinha. A segunda
-parte, que no `dev` elas não funcionam dentro do host, é a outra face da afirmação 7: o host busca
-`/assets/remoteEntry.js` (host/vite.config.ts:16-18), que vem do build servido pelo `preview`.
+**8. README.md:22.** Each unit has `index.html`, own mounting entry and own `dev` (3.4.3; app-1/package.json:7; lib/package.json:7), so can start independently. Second part, not working inside host in `dev`, is counterpart to claim 7: host seeks `/assets/remoteEntry.js` (host/vite.config.ts:16-18), produced by build served through `preview`.
 
-**9. README.md:24.** `vue`, `pinia` e `primevue` estão no `shared` dos quatro `vite.config.ts`
-(host/vite.config.ts:20-25; app-1/vite.config.ts:21-26; app-2/vite.config.ts:24-29;
-lib/vite.config.ts:26-31), junto com `axios`, que o README não cita. Nos remotes, as três ficam com
-`generate: false, import: false`, ou seja, usam a cópia fornecida pelo host; app-2 é a única que gera
-e importa a própria `axios` (app-2/vite.config.ts:28).
+**9. README.md:24.** `vue`, `pinia` and `primevue` in `shared` of four `vite.config.ts` files (host/vite.config.ts:20-25; app-1/vite.config.ts:21-26; app-2/vite.config.ts:24-29; lib/vite.config.ts:26-31), alongside omitted `axios`. Remotes set three to `generate: false, import: false`, using host copy; only app-2 generates/imports own `axios` (app-2/vite.config.ts:28).
 
-**10. README.md:24.** Só o host declara `requiredVersion` e `version` para o PrimeVue
-(host/vite.config.ts:23); nos três remotes a entrada é só `generate: false, import: false`
-(app-1/vite.config.ts:24; app-2/vite.config.ts:27; lib/vite.config.ts:29). O trecho de código citado
-no README traz também `singleton: true`, que não está na configuração atual, onde aparece
-`modulePreload: true`. A frase conclui que a solução foram `version` e `requiredVersion`, e essa
-parte se confirma.
+**10. README.md:24.** Only host declares `requiredVersion` and `version` for PrimeVue (host/vite.config.ts:23); three remote entries only `generate: false, import: false` (app-1/vite.config.ts:24; app-2/vite.config.ts:27; lib/vite.config.ts:29). README code also has `singleton: true`, absent from current configuration, which has `modulePreload: true`. Sentence concludes solution was `version` and `requiredVersion`, holding this part.
 
-**11. README.md:26.** O bloco citado (README.md:28-34) está inteiro só em lib
-(lib/vite.config.ts:40-44, que acrescenta `sourcemap`). Em app-1 há `target: "esnext"` e
-`cssCodeSplit: false`, mas `minify: "esbuild"` em vez de `false` (app-1/vite.config.ts:30-35). No host
-falta `cssCodeSplit`, mas `target: "esnext"` também está lá (host/vite.config.ts:28-30). A parte que
-resolve o CSS, `cssCodeSplit: false` em lib e app-1 e ausente no host, se confirma; o resto do bloco
-não corresponde às configurações atuais, daí `contradita`. app-2, que o README não cita, também tem
-`cssCodeSplit: false` (app-2/vite.config.ts:36). O README diz depois que as configurações foram
-otimizadas (README.md:62), o que pode explicar a diferença.
+**11. README.md:26.** Cited block (README.md:28-34) complete only in lib (lib/vite.config.ts:40-44, adding `sourcemap`). App-1 has `target: "esnext"` and `cssCodeSplit: false`, but `minify: "esbuild"` rather than `false` (app-1/vite.config.ts:30-35). Host lacks `cssCodeSplit`, but also has `target: "esnext"` (host/vite.config.ts:28-30). CSS-solving part, `cssCodeSplit: false` in lib/app-1 but absent in host, holds; rest differs from current configurations, hence `contradicted`. Unmentioned app-2 also has `cssCodeSplit: false` (app-2/vite.config.ts:36). README later says configurations optimized (README.md:62), possibly explaining difference.
 
-**12. README.md:62.** Nenhum artefato publica as aplicações: a revisão de build e deploy marcou as
-quatro com deploy `não observado`, e o host aponta para os remotes em `localhost`
-(host/vite.config.ts:16-18). A frase confere com o snapshot.
+**12. README.md:62.** No artifact publishes applications: build and deployment review marks four deployments `not observed`, host pointing at `localhost` remotes (host/vite.config.ts:16-18). Sentence matches snapshot.
 
-**13. README.md:62.** O workflow "Build UI" roda em todo push, instala o workspace e chama
-`pnpm build` (.github/workflows/node.js.yml:1-3, 20-23), e depois constrói e testa a solução .NET
-(:25-34). É integração contínua, sem publicação.
+**13. README.md:62.** Workflow "Build UI" runs every push, installs workspace, calls `pnpm build` (.github/workflows/node.js.yml:1-3, 20-23), then builds/tests .NET solution (:25-34). Continuous integration without publishing.
 
-**14. README.md:62.** lib expõe `./apiClient` (lib/vite.config.ts:23) e o usa no próprio `Confirm`
-(lib/src/components/Confirm.vue:7, 22); app-1 o importa estaticamente de `remote-lib/apiClient`
-(app-1/src/main.ts:8, 20; app-1/src/composables/api.ts:1). São duas unidades que o usam, por isso
-`corroborada`. "Den anderen Anwendungen" (às outras aplicações) fica mais largo que o uso: host e
-app-2 não importam o `apiClient` (app-2 tem o próprio cliente, app-2/src/services/authService.ts:29);
-o host só o executa indiretamente, pelo `Confirm` dentro do `App1`.
+**14. README.md:62.** Lib exposes `./apiClient` (lib/vite.config.ts:23), using in own `Confirm` (lib/src/components/Confirm.vue:7, 22); app-1 statically imports from `remote-lib/apiClient` (app-1/src/main.ts:8, 20; app-1/src/composables/api.ts:1). Two using units, hence `corroborated`. "Den anderen Anwendungen" (English translation: "to other applications") exceeds use: host/app-2 do not import `apiClient` (app-2 has own client, app-2/src/services/authService.ts:29); host only executes indirectly through `Confirm` within `App1`.
 
-**15. app-2/README.md:12.** app-2 é o remote `remote-app2`, com quatro módulos expostos
-(app-2/vite.config.ts:11-20). O host o carrega nas rotas `/login` e `/register`
-(host/src/router/index.ts:7-8), relação ativa na revisão de composição (3.4.5 #4).
+**15. app-2/README.md:12.** App-2 is remote `remote-app2`, four exposed modules (app-2/vite.config.ts:11-20). Host loads it at routes `/login` and `/register` (host/src/router/index.ts:7-8), active composition relationship (3.4.5 #4).
 
-**16. app-2/README.md:16.** O cliente de autenticação de app-2 usa essa base
-(app-2/src/services/authService.ts:3, 29-30), e o perfil de execução do IdentityServer expõe
-`http://localhost:5283` (Api/IdentityServer/Properties/launchSettings.json:9). É a dependência de
-app-2 em relação a um backend do próprio repositório, que não é unidade frontend.
+**16. app-2/README.md:16.** App-2 authentication client uses this base (app-2/src/services/authService.ts:3, 29-30), IdentityServer run profile exposing `http://localhost:5283` (Api/IdentityServer/Properties/launchSettings.json:9). App-2 dependency on repository backend rather than frontend unit.
 
-**17. app-2/README.md:42.** O nome `remote-app2` e a exposição `./App2` estão em
-app-2/vite.config.ts:12 e :16, e o host faz exatamente o carregamento do exemplo
-(host/src/main.ts:13, registrado como `AppTwo` em :20). A revisão de código-fonte marcou esse
-carregamento `No`, porque nenhum template usa `<AppTwo>`; a afirmação diz que o uso é possível, e isso
-se confirma. O que o host usa de fato são `LoginForm` e `RegisterForm` (host/src/router/index.ts:7-8),
-que o README não menciona.
+**17. app-2/README.md:42.** Name `remote-app2` and exposure `./App2` at app-2/vite.config.ts:12 and :16; host performs exact example load (host/src/main.ts:13, registered as `AppTwo` at :20). Source-code review marks load `No`, since no template uses `<AppTwo>`; claim says use possible, which holds. Host actually uses `LoginForm` and `RegisterForm` (host/src/router/index.ts:7-8), unmentioned by README.
 
-**18. app-2/src/App.vue:9.** O router de app-2 é criado só na entrada da execução isolada
-(app-2/src/main.ts:10-37, com o comentário "Router nur für standalone-Modus (wenn app-2 direkt
-verwendet wird)", router só para o modo standalone, quando app-2 é usada diretamente,
-app-2/src/main.ts:9), e o `App.vue` só mostra o `<router-view />` quando há router
-(app-2/src/App.vue:10-17, 79-82: "Main Content - nur wenn Router vorhanden (standalone)"). Os três
-comentários dizem a mesma coisa: app-2 tem um modo em que roda sozinha, com entrada própria
-(app-2/index.html:11).
+**18. app-2/src/App.vue:9.** App-2 router created solely in standalone entry (app-2/src/main.ts:10-37, comment "Router nur für standalone-Modus (wenn app-2 direkt
+verwendet wird)", English translation: "Router only for standalone mode when app-2 used directly", app-2/src/main.ts:9), and `App.vue` only shows `<router-view />` when router exists (app-2/src/App.vue:10-17, 79-82: "Main Content - nur wenn Router vorhanden (standalone)", English translation: "Main content only when router exists, standalone"). Three comments say same: app-2 has mode running independently with own entry (app-2/index.html:11).
 
-**19. app-2/vite.config.ts:16.** `./App2` aponta para `./src/App.vue`, o componente raiz montado pela
-entrada standalone (app-2/src/main.ts:4, 33), com cabeçalho e área de rotas
-(app-2/src/App.vue:46-82). O comentário confere com o arquivo exposto. Esse módulo é o `App2` que o
-host registra sem usar (host/src/main.ts:13, 20).
+**19. app-2/vite.config.ts:16.** `./App2` points to `./src/App.vue`, root component mounted by standalone entry (app-2/src/main.ts:4, 33), with header and route area (app-2/src/App.vue:46-82). Comment matches exposed file. Module is `App2` host registers without use (host/src/main.ts:13, 20).
 
-## Resumo
+## Summary
 
-Afirmações: 19 (corroborada: 15, parcial: 1, contradita: 3, sem corroboração: 0). Temas: (estrutura: 5, composição: 7, build-deploy: 4, independência: 2, outro: 1).
+Claims: 19 (corroborated: 15, partial: 1, contradicted: 3, uncorroborated: 0). Themes: (structure: 5, composition: 7, build-deploy: 4, independence: 2, other: 1).

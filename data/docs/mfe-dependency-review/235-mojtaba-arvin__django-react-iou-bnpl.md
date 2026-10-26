@@ -15,15 +15,16 @@ annotation:
 
 # 235 — mojtaba-arvin/django-react-iou-bnpl
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| frontend/package.json:40 | devDependencies | @module-federation/typescript | ^3.1.3 | module-federation | Undetermined | frontend/shell/tsconfig.build.json:17-24 (`compilerOptions.plugins` com `"name": "@module-federation/typescript"` e `configPath: ./webpack.config.js`), arquivo usado pelo build em frontend/shell/webpack.config.js:44-47 (`ts-loader` com `configFile: "tsconfig.build.json"`); frontend/shell/tsconfig.json:25-32 (mesma entrada); nenhum arquivo de build ou código importa ou invoca o pacote: os três `webpack.config.js` obtêm o `ModuleFederationPlugin` de `webpack` (frontend/shell/webpack.config.js:3, frontend/customer-app/webpack.config.js:3, frontend/merchant-app/webpack.config.js:3) (grep por `@module-federation` e `FederatedTypes` em `frontend/`, excluindo lockfile) |
+| frontend/package.json:40 | devDependencies | @module-federation/typescript | ^3.1.3 | module-federation | Undetermined | frontend/shell/tsconfig.build.json:17-24 (`compilerOptions.plugins` with `"name": "@module-federation/typescript"` and `configPath: ./webpack.config.js`), file used by the build in frontend/shell/webpack.config.js:44-47 (`ts-loader` with `configFile: "tsconfig.build.json"`); frontend/shell/tsconfig.json:25-32 (same entry); no build or code file imports or invokes the package: the three `webpack.config.js` obtain the `ModuleFederationPlugin` from `webpack` (frontend/shell/webpack.config.js:3, frontend/customer-app/webpack.config.js:3, frontend/merchant-app/webpack.config.js:3) (grep for `@module-federation` and `FederatedTypes` in `frontend/`, excluding the lockfile) |
 
-## Notas
+## Notes
 
-- `same_package_matches` está vazio. Os itens de `other_package_matches` são as linhas de `ModuleFederationPlugin`, `remotes`, `exposes` e `shared` dos três `webpack.config.js` (`:3`, `59-94` no shell; `:3`, `81-116` nos remotos), todas com o plugin nativo do webpack 5, não com este pacote.
-- A única referência ao pacote fora do manifesto está em `compilerOptions.plugins` dos `tsconfig` do shell. `frontend/shell/tsconfig.build.json` é usado pelo `ts-loader`, mas a entrada declara o pacote como plugin do compilador TypeScript, e não há invocação dele no build webpack. Como não dá para confirmar que essa entrada tem efeito no build, a linha fica `Undetermined`, e não `Yes`. `frontend/customer-app` e `frontend/merchant-app` não têm essa entrada nos seus `tsconfig`.
-- `frontend/package.json:70` (`dependenciesDocumentation`) diz que o pacote fornece o `ModuleFederationPlugin`, o que contradiz os `webpack.config.js`, que importam o plugin de `webpack`. É documentação, não uso.
-- A configuração Module Federation do webpack 5 em si (sem pacote próprio) está registrada na classificação.
+- `same_package_matches` is empty. The `other_package_matches` items are the `ModuleFederationPlugin`, `remotes`, `exposes` and `shared` lines of the three `webpack.config.js` files (`:3`, `59-94` in the shell; `:3`, `81-116` in the remotes), all with webpack 5's native plugin, not this package.
+- The only reference to the package outside the manifest is in `compilerOptions.plugins` of the shell's `tsconfig` files. `frontend/shell/tsconfig.build.json` is used by `ts-loader`, but the entry declares the package as a TypeScript compiler plugin, and there is no invocation of it in the webpack build. Since it is not possible to confirm that this entry affects the build, the row remains `Undetermined`, rather than `Yes`. `frontend/customer-app` and `frontend/merchant-app` do not have this entry in their `tsconfig` files.
+- `frontend/package.json:70` (`dependenciesDocumentation`) says the package provides `ModuleFederationPlugin`, which contradicts the `webpack.config.js` files, which import the plugin from `webpack`. This is documentation, not use.
+- The webpack 5 Module Federation configuration itself (without a separate package) is recorded in the classification.
+

@@ -20,46 +20,46 @@ annotation:
 
 # 006 — Pandian-it/eager-workspace1
 
-## Contexto
+## Context
 
-- **Abordagem de implementação:** Module Federation (`@angular-architects/module-federation`, Angular 18) com carga dinâmica guiada por manifesto
-- **Tipo de repositório:** example/proof of concept, com pipeline de release semelhante a produção (README é o boilerplate do Angular CLI e as apps são simples, mas há versionamento por app e deploy em S3/CloudFront)
+- **Implementation approach:** Module Federation (`@angular-architects/module-federation`, Angular 18) with manifest-driven dynamic loading
+- **Repository type:** example/proof of concept, with a production-like release pipeline (the README is Angular CLI boilerplate and the apps are simple, but there is per-app versioning and deployment to S3/CloudFront)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Tecnologia | `package.json:37`: `@angular-architects/module-federation`; `:24` Angular 18; `:59` Nx | fraca |
-| Estrutura | Monorepo Nx com quatro apps (`projects/shell`, `projects/cart`, `projects/checkout`, `projects/orders`) e duas libs (`projects/shared-lib`, `projects/shared-ui`). Cada app tem `package.json`, `project.json`, `webpack.config.js`, `src/main.ts` e `src/bootstrap.ts` próprios. | forte |
-| Configuração (host) | `projects/shell/webpack.config.js:5-11`: `name: 'shell'`, `remotes` para `cart` (4201), `checkout` (4202) e `orders` (4203); `:21-33` `@shared-lib` e `@shared-ui` como singletons `eager` | forte |
-| Configuração (remotes) | `projects/cart/webpack.config.js:5-8`, `projects/checkout/webpack.config.js:5-8`, `projects/orders/webpack.config.js:5-8`: cada um expõe `./Module` → `src/app/mfe.module.ts` | forte |
-| Código-fonte (composição) | `projects/shell/src/app/app-routing.module.ts:9-29`: rotas `cart`, `checkout` e `orders` com `loadChildren` → `ManifestService.loadRemoteModule(...)` | forte |
-| Código-fonte (carga) | `projects/shell/src/app/manifest.service.ts:4` importa `loadRemoteModule`; `:23-37` busca o manifesto (`mfe.manifest.json` em localhost, `deployment-manifest.json` em produção); `:57-58` monta a URL `/apps/<app>/<version>/remoteEntry.js`; `:62-75` chama `loadRemoteModule({ remoteEntry, exposedModule: './Module' })` | forte |
-| Código-fonte | `src/main.ts:1` de cada app usa `import('./bootstrap')` (entry assíncrono do MF); nenhuma app importa código-fonte de outra, só as libs `@shared-lib`/`@shared-ui` via path alias (`tsconfig.json:17-20`) (sustenta a independência das unidades) | moderada |
-| Configuração (runtime) | `projects/shell/public/mfe.manifest.json:2-4`: URLs locais dos três remotes; `deployment-manifest.json:10-25`: versão independente por app (checkout 2.0.4, orders 1.1.3, shell 1.0.7, cart 1.0.5) | forte |
-| Build/deploy | `.github/workflows/Push-Event-To-Release.yml:61` detecta apps afetadas (`nx show projects --affected`); `:158-162` `aws s3 sync dist/$app s3://…/apps/$app/$APP_VERSION`; `:167` publica `deployment-manifest.json`. Cada app tem build e deploy versionado próprio. | forte |
-| Configuração (resíduo) | `projects/shell/public/federation.manifest.json:2-3` (`mfe1`, `mfe2`) não é referenciado no código; resíduo de scaffolding | contexto |
-| Documentação | `README.md` é o boilerplate do Angular CLI, sem descrição da arquitetura | ausente |
+| Technology | `package.json:37`: `@angular-architects/module-federation`; `:24` Angular 18; `:59` Nx | weak |
+| Structure | Nx monorepo with four apps (`projects/shell`, `projects/cart`, `projects/checkout`, `projects/orders`) and two libraries (`projects/shared-lib`, `projects/shared-ui`). Each app has its own `package.json`, `project.json`, `webpack.config.js`, `src/main.ts` and `src/bootstrap.ts`. | strong |
+| Configuration (host) | `projects/shell/webpack.config.js:5-11`: `name: 'shell'`, `remotes` for `cart` (4201), `checkout` (4202) and `orders` (4203); `:21-33` `@shared-lib` and `@shared-ui` as `eager` singletons | strong |
+| Configuration (remotes) | `projects/cart/webpack.config.js:5-8`, `projects/checkout/webpack.config.js:5-8`, `projects/orders/webpack.config.js:5-8`: each exposes `./Module` → `src/app/mfe.module.ts` | strong |
+| Source code (composition) | `projects/shell/src/app/app-routing.module.ts:9-29`: `cart`, `checkout` and `orders` routes with `loadChildren` → `ManifestService.loadRemoteModule(...)` | strong |
+| Source code (loading) | `projects/shell/src/app/manifest.service.ts:4` imports `loadRemoteModule`; `:23-37` fetches the manifest (`mfe.manifest.json` on localhost, `deployment-manifest.json` in production); `:57-58` constructs the URL `/apps/<app>/<version>/remoteEntry.js`; `:62-75` calls `loadRemoteModule({ remoteEntry, exposedModule: './Module' })` | strong |
+| Source code | Each app's `src/main.ts:1` uses `import('./bootstrap')` (MF asynchronous entry); no app imports another's source code, only the `@shared-lib`/`@shared-ui` libraries through path aliases (`tsconfig.json:17-20`) (supports the units' independence) | moderate |
+| Configuration (runtime) | `projects/shell/public/mfe.manifest.json:2-4`: local URLs of the three remotes; `deployment-manifest.json:10-25`: independent version per app (checkout 2.0.4, orders 1.1.3, shell 1.0.7, cart 1.0.5) | strong |
+| Build/deploy | `.github/workflows/Push-Event-To-Release.yml:61` detects affected apps (`nx show projects --affected`); `:158-162` `aws s3 sync dist/$app s3://…/apps/$app/$APP_VERSION`; `:167` publishes `deployment-manifest.json`. Each app has its own build and versioned deployment. | strong |
+| Configuration (remnant) | `projects/shell/public/federation.manifest.json:2-3` (`mfe1`, `mfe2`) is not referenced in the code; scaffolding remnant | context |
+| Documentation | `README.md` is Angular CLI boilerplate, without an architecture description | absent |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | Quatro unidades frontend no repositório (`shell`, `cart`, `checkout`, `orders`), todas referenciadas pela config de composição (`shell/webpack.config.js:7-11`) |
-| Q2 | Yes | Entry, `webpack.config.js` e build próprios por app; versões e deploy independentes (`deployment-manifest.json`, `Push-Event-To-Release.yml:158-162`); sem import de código-fonte entre apps |
-| Q3 | Yes | O shell roteia e carrega os remotes (`app-routing.module.ts:9-29`) |
-| Q4 | Yes | Module Federation configurado nos dois lados (`remotes`/`exposes`) e usado em runtime por `loadRemoteModule` (`manifest.service.ts:62-75`) |
-| Q5 | Yes | Q1–Q4 convergem; nenhuma divergência a justificar |
+| Q1 | Yes | Four frontend units in the repository (`shell`, `cart`, `checkout`, `orders`), all referenced by the composition config (`shell/webpack.config.js:7-11`) |
+| Q2 | Yes | Each app has its own entry, `webpack.config.js` and build; independent versions and deployment (`deployment-manifest.json`, `Push-Event-To-Release.yml:158-162`); no source code imports between apps |
+| Q3 | Yes | The shell routes to and loads remotes (`app-routing.module.ts:9-29`) |
+| Q4 | Yes | Module Federation configured on both sides (`remotes`/`exposes`) and used at runtime through `loadRemoteModule` (`manifest.service.ts:62-75`) |
+| Q5 | Yes | Q1–Q4 converge; no discrepancy to justify |
 
-## Motivo
+## Rationale
 
-- Q1–Q5 são todos Yes, o que satisfaz a regra de MFE-implemented.
-- Corresponde ao caso "monorepos containing a host and its remotes".
-- A evidência forma uma cadeia completa: dependência → config `remotes`/`exposes` → rotas com `loadChildren` → `loadRemoteModule` guiado por manifesto → build e deploy versionados por app.
-- As libs compartilhadas (`shared-lib`, `shared-ui`) entram como `shared` singleton do MF, não como acoplamento direto entre unidades, então não comprometem Q2.
+- Q1–Q5 are all Yes, satisfying the MFE-implemented rule.
+- Matches the case "monorepos containing a host and its remotes".
+- The evidence forms a complete chain: dependency → `remotes`/`exposes` config → routes with `loadChildren` → manifest-driven `loadRemoteModule` → versioned build and deployment per app.
+- Shared libraries (`shared-lib`, `shared-ui`) participate as MF `shared` singletons, not as direct coupling between units, so they do not compromise Q2.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1:** a documentação está ausente (README boilerplate); toda a evidência vem de configuração, código e CI/CD.
-- **RQ3:** relação host → remote mediada por manifesto em runtime (`mfe.manifest.json` / `deployment-manifest.json`), em vez de URLs fixas. O `remotes` estático no webpack coexiste com a resolução dinâmica.
-- **RQ1 (build/deploy):** versionamento independente por app com Changesets (`.changeset/`) e Nx affected, um caso forte para a dimensão de evidência 6.
+- **RQ1:** documentation is absent (boilerplate README); all evidence comes from configuration, code and CI/CD.
+- **RQ3:** host → remote relationship mediated by a manifest at runtime (`mfe.manifest.json` / `deployment-manifest.json`), instead of fixed URLs. Static webpack `remotes` coexist with dynamic resolution.
+- **RQ1 (build/deploy):** independent versioning per app with Changesets (`.changeset/`) and Nx affected, a strong case for evidence dimension 6.

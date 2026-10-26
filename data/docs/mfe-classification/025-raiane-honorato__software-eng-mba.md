@@ -20,57 +20,57 @@ annotation:
 
 # 025 — raiane-honorato/software-eng-mba
 
-## Contexto
+## Context
 
-- **Abordagem de implementação:** Module Federation 2 para React Native (Re.Pack + Rspack, `ModuleFederationPluginV2`)
-- **Tipo de repositório:** example/proof of concept (TCC de MBA, "Abordagens de Micro Frontend em React Native", `README.md:1-3`)
-- **Classificação:** MFE-implemented (sujeito a decisão de escopo: app **mobile** React Native, não web)
-- **Checklist:** aplicado a `apps/repack/`.
+- **Implementation approach:** Module Federation 2 for React Native (Re.Pack + Rspack, `ModuleFederationPluginV2`)
+- **Repository type:** example/proof of concept (MBA final project, "Abordagens de Micro Frontend em React Native" [English translation: "Micro Frontend Approaches in React Native"], `README.md:1-3`)
+- **Classification:** MFE-implemented (subject to a scope decision: React Native **mobile** app, not web)
+- **Checklist:** applied to `apps/repack/`.
 
-O repositório implementa o mesmo app (MyGym) três vezes para comparar regimes de modularização (`README.md:27-33`):
+The repository implements the same app (MyGym) three times to compare modularization regimes (`README.md:27-33`):
 
-| Versão | Regime | Diretório |
+| Version | Regime | Directory |
 |---|---|---|
-| Monolito | baseline | `apps/monolith/` |
-| Turborepo | build-time (packages `@mygym/*` fundidos num bundle único) | `apps/turborepo/` |
-| Re.Pack | runtime (host + mini-apps carregados pela rede via MF) | `apps/repack/` |
+| Monolith | baseline | `apps/monolith/` |
+| Turborepo | build-time (`@mygym/*` packages merged into a single bundle) | `apps/turborepo/` |
+| Re.Pack | runtime (host + mini-apps loaded over the network through MF) | `apps/repack/` |
 
-Há também `apps/repack-poc/` (host + remote mínimos, `HelloScreen`). A avaliação abaixo se concentra em `apps/repack/`.
+There is also `apps/repack-poc/` (minimal host + remote, `HelloScreen`). The assessment below focuses on `apps/repack/`.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `apps/repack/packages/`: apps `host`, `check-in` e `dashboard` (cada uma com `package.json`, `index.js`, `rspack.config.mjs`, `App.tsx`) e libs `store`, `ui`, `theme`, `navigation`, `utils`, `data`, `shared-deps` | forte |
-| Configuração (host) | `apps/repack/packages/host/rspack.config.mjs:45-51`: `ModuleFederationPluginV2` com `name: 'host'` e `remotes` `checkin@http://localhost:9001/${platform}/mf-manifest.json` e `dashboard@http://localhost:9002/${platform}/mf-manifest.json` | forte |
-| Configuração (remotes) | `check-in/rspack.config.mjs:39-46`: `name: 'checkin'`, `exposes: { './CheckInStack' }`; `dashboard/rspack.config.mjs:39-44`: `name: 'dashboard'`, `exposes: { './DashboardStack' }`; singletons compartilhados via `shared-deps/sharedDeps.mjs` | forte |
-| Código-fonte (composição) | `host/src/screens/CheckInTab.tsx:11-13`: `React.lazy(() => import('checkin/CheckInStack'))`; `:17-24`: envolve em `ErrorBoundary` + `Suspense`; `DashboardTab.tsx` análogo; `host/src/navigation/RootNavigator.tsx:52-53`: as abas `Home` e `FindGyms` montam os remotes | forte |
-| Código-fonte (independência) | `check-in` e `dashboard` não se importam; comunicam-se só pela store compartilhada `@mygym/store` (Zustand) (`README.md:22`); o `host` não depende dos pacotes dos mini-apps em `package.json` | forte |
-| Build/deploy | Cada mini-app tem bundler e dev server próprios (portas 9001/9002); `apps/repack/mprocs.yaml` orquestra os processos; deploy OTA citado como motivação, sem pipeline no repositório | moderada |
-| Documentação | `README.md:1-33`; `apps/repack/ARCHITECTURE.md` e `README.md` de cada versão descrevem host, mini-apps, `exposes`/`remotes` e carga em runtime | moderada |
-| Estrutura (versão Turborepo) | `apps/turborepo/`: módulos como packages integrados em build-time num bundle único | ambígua |
+| Structure | `apps/repack/packages/`: apps `host`, `check-in` and `dashboard` (each with `package.json`, `index.js`, `rspack.config.mjs`, `App.tsx`) and libraries `store`, `ui`, `theme`, `navigation`, `utils`, `data`, `shared-deps` | strong |
+| Configuration (host) | `apps/repack/packages/host/rspack.config.mjs:45-51`: `ModuleFederationPluginV2` with `name: 'host'` and `remotes` `checkin@http://localhost:9001/${platform}/mf-manifest.json` and `dashboard@http://localhost:9002/${platform}/mf-manifest.json` | strong |
+| Configuration (remotes) | `check-in/rspack.config.mjs:39-46`: `name: 'checkin'`, `exposes: { './CheckInStack' }`; `dashboard/rspack.config.mjs:39-44`: `name: 'dashboard'`, `exposes: { './DashboardStack' }`; shared singletons through `shared-deps/sharedDeps.mjs` | strong |
+| Source code (composition) | `host/src/screens/CheckInTab.tsx:11-13`: `React.lazy(() => import('checkin/CheckInStack'))`; `:17-24`: wraps in `ErrorBoundary` + `Suspense`; analogous `DashboardTab.tsx`; `host/src/navigation/RootNavigator.tsx:52-53`: the `Home` and `FindGyms` tabs mount remotes | strong |
+| Source code (independence) | `check-in` and `dashboard` do not import one another; they communicate only through shared store `@mygym/store` (Zustand) (`README.md:22`); `host` does not depend on mini-app packages in `package.json` | strong |
+| Build/deploy | Each mini-app has its own bundler and dev server (ports 9001/9002); `apps/repack/mprocs.yaml` orchestrates processes; OTA deployment cited as motivation, without a pipeline in the repository | moderate |
+| Documentation | `README.md:1-33`; `apps/repack/ARCHITECTURE.md` and each version's `README.md` describe host, mini-apps, `exposes`/`remotes` and runtime loading | moderate |
+| Structure (Turborepo version) | `apps/turborepo/`: modules as packages integrated at build-time into a single bundle | ambiguous |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | `host`, `check-in` e `dashboard` |
-| Q2 | Yes | Entry, `rspack.config.mjs` e dev server próprios por mini-app; sem import de código-fonte entre `check-in` e `dashboard` |
-| Q3 | Yes | O host monta os remotes nas abas (`RootNavigator.tsx:52-53`) |
-| Q4 | Yes | MF configurado (`remotes`/`exposes`) e usado via `import('checkin/CheckInStack')` em runtime (`CheckInTab.tsx:11-13`) |
-| Q5 | Yes | Q1–Q4 convergem |
+| Q1 | Yes | `host`, `check-in` and `dashboard` |
+| Q2 | Yes | Each mini-app has its own entry, `rspack.config.mjs` and dev server; no source code imports between `check-in` and `dashboard` |
+| Q3 | Yes | The host mounts remotes in tabs (`RootNavigator.tsx:52-53`) |
+| Q4 | Yes | MF configured (`remotes`/`exposes`) and used through `import('checkin/CheckInStack')` at runtime (`CheckInTab.tsx:11-13`) |
+| Q5 | Yes | Q1–Q4 converge |
 
-## Motivo
+## Rationale
 
-- Q1–Q5 são Yes para a versão Re.Pack, o que satisfaz a regra de MFE-implemented.
-- Corresponde a "monorepos containing a host and its remotes" e a "examples… and proofs of concept that actually compose frontend units".
+- Q1–Q5 are Yes for the Re.Pack version, satisfying the MFE-implemented rule.
+- Matches "monorepos containing a host and its remotes" and "examples… and proofs of concept that actually compose frontend units".
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** abordagem MF em React Native (Re.Pack/Rspack, `mf-manifest.json` por plataforma); se o escopo incluir mobile, é uma categoria própria.
-- **RQ3:** comparação controlada no mesmo repositório (monolito × build-time × runtime) com o mesmo código de domínio, um caso raro e útil para relacionar artefatos e regime de integração.
+- **RQ2:** MF approach in React Native (Re.Pack/Rspack, `mf-manifest.json` per platform); if scope includes mobile, it is its own category.
+- **RQ3:** controlled comparison within the same repository (monolith × build-time × runtime) with the same domain code, a rare case useful for relating artifacts to integration regimes.
 
-## Ponto para revisão conjunta
+## Point for joint review
 
-- **Escopo (mobile vs web):** o protocolo define MFE como decomposição do frontend de uma aplicação **web** (seção 1). Aqui as unidades são mini-apps React Native carregados num app nativo. Se o estudo se restringir a web, o repositório passa a Non-MFE (fora do escopo). Sugiro registrar a decisão como regra explícita no checklist ("frontend units are web frontends" ou "mobile MFEs are included").
-- **Versão Turborepo:** composição em build-time; não afeta a classificação (a versão Re.Pack já satisfaz), mas é exemplo direto da decisão em aberto sobre build-time composition.
+- **Scope (mobile vs web):** the protocol defines MFE as decomposition of a **web** application's frontend (section 1). Here, units are React Native mini-apps loaded in a native app. If the study is restricted to web, the repository becomes Non-MFE (out of scope). I suggest recording the decision as an explicit checklist rule ("frontend units are web frontends" or "mobile MFEs are included").
+- **Turborepo version:** build-time composition; does not affect classification (the Re.Pack version already satisfies it), but directly exemplifies the unresolved decision about build-time composition.

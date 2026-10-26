@@ -16,51 +16,51 @@ annotation:
 
 # 043 — dhiman1987/micro-frontend-demo
 
-## Leitura do repositório
+## Repository overview
 
-A documentação é o README da raiz, em inglês. Ele apresenta o repositório como um "playground" de micro-frontends com Web Components: três aplicações, `app1` e `app2` em JavaScript puro e `app3` em React com Shadow DOM, mais um `app-shell` que as reúne. Traz a árvore de pastas comentada, as instruções para servir cada pasta com `http-server`, dicas de CORS e uma lista de "Features". O tom é promocional ("Ideal for learning, prototyping, or showcasing microfrontend architecture without any tooling overhead", README.md:92), e essa frase de propósito não virou linha.
+Documentation is the root README, in English. It presents the repository as a micro-frontends "playground" with Web Components: three applications, `app1` and `app2` in plain JavaScript and `app3` in React with Shadow DOM, plus an `app-shell` bringing them together. It includes an annotated folder tree, instructions to serve each folder with `http-server`, CORS tips and a "Features" list. The tone is promotional ("Ideal for learning, prototyping, or showcasing microfrontend architecture without any tooling overhead", README.md:92), and that purpose sentence did not become a row.
 
-Foram lidos os artefatos que as revisões anteriores citam:
+Artifacts cited by previous reviews were read:
 - `app-shell/index.html`;
-- `app1/index.html`, `app1/app.js`, `app2/index.html` e `app2/app.js`;
-- `app3/index.html`, `app3/package.json`, `app3/vite.config.js`, `app3/src/main.jsx`, `app3/src/MyCounterElement.jsx` e `app3/src/MyCounterLitElement.jsx`.
+- `app1/index.html`, `app1/app.js`, `app2/index.html` and `app2/app.js`;
+- `app3/index.html`, `app3/package.json`, `app3/vite.config.js`, `app3/src/main.jsx`, `app3/src/MyCounterElement.jsx` and `app3/src/MyCounterLitElement.jsx`.
 
-Os únicos comentários são um sobre a injeção de CSS no Shadow DOM (app3/src/MyCounterElement.jsx:14) e trechos de código desativado.
+The only comments concern CSS injection into Shadow DOM (app3/src/MyCounterElement.jsx:14) and disabled code passages.
 
-A descrição da estrutura e da composição confere com as revisões anteriores. Destoam dois pontos:
-- **Deploy:** o README diz que as aplicações são "independently deployed", mas o repositório só tem servidores locais.
-- **Isolamento de estilos:** promete "zero global style bleed", mas só a `app3` isola os seus estilos.
+Structure and composition descriptions match previous reviews. Two points differ:
+- **Deployment:** README says applications are "independently deployed", but the repository has only local servers.
+- **Style isolation:** it promises "zero global style bleed", but only `app3` isolates its styles.
 
-Ocorrências `doc-*` que não viraram linha: README.md:1 (título), README.md:11 (raiz da árvore de pastas) e README.md:92 (frase de propósito). As demais estão nas afirmações 1, 2 e 6.
+`doc-*` occurrences that did not become rows: README.md:1 (title), README.md:11 (folder tree root) and README.md:92 (purpose sentence). Others are in claims 1, 2 and 6.
 
-## Afirmações
+## Claims
 
-| # | Documento | Afirmação | Tema | Corroboração | Evidência |
+| # | Document | Claim | Theme | Corroboration | Evidence |
 |---|---|---|---|---|---|
-| 1 | README.md:3 | "3 independently deployed apps" (três aplicações implantadas de forma independente) | build-deploy | sem corroboração | 3.4.6 (Deploy `não observado` nas quatro) |
-| 2 | README.md:5-8 | "`app1` – Vanilla JS component […] `app3` – A React component wrapped in Shadow DOM […] `app-shell` – The main UI that brings it all together" | estrutura | corroborada | 3.4.3 (quatro aplicações `Yes`); 3.4.5 #1-#3; app1/app.js:1-6; app3/src/MyCounterElement.jsx:8, 28 |
-| 3 | README.md:16 | "index.html # Standalone entry point for app1" (a app1 roda sozinha) | independência | corroborada | 3.4.3; app1/index.html:3-4 |
-| 4 | README.md:19 | "index.html # Standalone entry point for app2" (a app2 roda sozinha) | independência | corroborada | 3.4.3; app2/index.html:3-4 |
-| 5 | README.md:22-23 | "my-counter-app.iife.js # Self-contained React bundle" (o bundle da app3 é autossuficiente) | build-deploy | corroborada | 3.4.6 #4; app3/vite.config.js:9-16 |
-| 6 | README.md:35 | "Each app […] is dropped into the shell via `<script>` and custom elements, simulating real-world frontend autonomy." | composição | corroborada | 3.4.5 #1-#3; app-shell/index.html:14-15, 20-21, 26-27 |
-| 7 | README.md:88 | "Plug-and-play architecture with zero global style bleed" (nenhum estilo global vaza entre as unidades) | composição | contradita | app1/app.js:3; app-shell/style.css:48-52; app-shell/index.html:12-16 |
+| 1 | README.md:3 | "3 independently deployed apps" (three independently deployed applications) | build-deploy | uncorroborated | 3.4.6 (Deploy `not observed` in all four) |
+| 2 | README.md:5-8 | "`app1` – Vanilla JS component […] `app3` – A React component wrapped in Shadow DOM […] `app-shell` – The main UI that brings it all together" | structure | corroborated | 3.4.3 (four `Yes` applications); 3.4.5 #1-#3; app1/app.js:1-6; app3/src/MyCounterElement.jsx:8, 28 |
+| 3 | README.md:16 | "index.html # Standalone entry point for app1" (app1 runs independently) | independence | corroborated | 3.4.3; app1/index.html:3-4 |
+| 4 | README.md:19 | "index.html # Standalone entry point for app2" (app2 runs independently) | independence | corroborated | 3.4.3; app2/index.html:3-4 |
+| 5 | README.md:22-23 | "my-counter-app.iife.js # Self-contained React bundle" (app3 bundle is self-contained) | build-deploy | corroborated | 3.4.6 #4; app3/vite.config.js:9-16 |
+| 6 | README.md:35 | "Each app […] is dropped into the shell via `<script>` and custom elements, simulating real-world frontend autonomy." | composition | corroborated | 3.4.5 #1-#3; app-shell/index.html:14-15, 20-21, 26-27 |
+| 7 | README.md:88 | "Plug-and-play architecture with zero global style bleed" (no global styles bleed between units) | composition | contradicted | app1/app.js:3; app-shell/style.css:48-52; app-shell/index.html:12-16 |
 
-## Observações
+## Observations
 
-**1. README.md:3.** A revisão de build e deploy não encontrou artefato de deploy: cada pasta é servida à mão com `http-server`, numa porta própria (README.md:46-69). O snapshot não confirma nem desmente um deploy independente, e o README só descreve a execução local. Por isso a afirmação fica `sem corroboração`.
+**1. README.md:3.** The build and deployment review found no deployment artifact: each folder is manually served with `http-server` on its own port (README.md:46-69). The snapshot neither confirms nor refutes independent deployment, and README describes only local execution. Hence the claim remains `uncorroborated`.
 
-**2. README.md:5-8.** As quatro pastas são aplicações na revisão estrutural. As três relações `application → custom-element` partem do shell. app1 e app2 definem custom elements em JavaScript puro, e a app3 encapsula React num custom element com `attachShadow`. Repetições: a árvore comentada (README.md:13, "Hosts all microfrontends"; README.md:17, "Vanilla JS custom element").
+**2. README.md:5-8.** All four folders are applications in the structural review. All three `application → custom-element` relationships start from shell. App1 and app2 define custom elements in plain JavaScript, and app3 encapsulates React in a custom element with `attachShadow`. Repetitions: annotated tree (README.md:13, "Hosts all microfrontends"; README.md:17, "Vanilla JS custom element").
 
-**3. README.md:16.** A app1 tem um `index.html` próprio que carrega o script e usa a tag, o que permite abri-la sozinha.
+**3. README.md:16.** App1 has its own `index.html` loading the script and using the tag, allowing it to open independently.
 
-**4. README.md:19.** A app2 tem o mesmo arranjo da app1: um `index.html` próprio que carrega o script e usa a tag `world-app`.
+**4. README.md:19.** App2 has the same arrangement as app1: its own `index.html` loading the script and using tag `world-app`.
 
-**5. README.md:22-23.** A app3 é construída como biblioteca IIFE, sem dependências externas declaradas, e o shell a carrega por uma única URL. O `dist/` citado na árvore não está no snapshot, porque é saída de build.
+**5. README.md:22-23.** App3 is built as an IIFE library, without declared external dependencies, and shell loads it through a single URL. `dist/` cited in the tree is absent from the snapshot because it is build output.
 
-**6. README.md:35.** O shell carrega o script de cada aplicação pela URL da sua porta e usa a tag correspondente. A frase também fala de cada app na sua própria porta; isso é detalhe de infraestrutura, já registrado na revisão de build e deploy.
+**6. README.md:35.** Shell loads each application's script through its port URL and uses the corresponding tag. The sentence also mentions each app on its own port; that is an infrastructure detail already recorded by the build and deployment review.
 
-**7. README.md:88.** Só a app3 isola os estilos: cria um Shadow DOM e injeta neles o seu CSS (app3/src/MyCounterElement.jsx:8, 14-16; repetição em README.md:85). app1 e app2 escrevem `<h2>` no DOM comum com `innerHTML` (app1/app.js:3). O shell estiliza `.app-container h2` (app-shell/style.css:48-52), e os dois elementos ficam dentro de `.app-container` (app-shell/index.html:12-16). O estilo do shell, portanto, atinge as duas aplicações. A afirmação vale para a app3, mas não para o conjunto.
+**7. README.md:88.** Only app3 isolates styles: it creates a Shadow DOM and injects its CSS there (app3/src/MyCounterElement.jsx:8, 14-16; repetition in README.md:85). App1 and app2 write `<h2>` into the common DOM with `innerHTML` (app1/app.js:3). Shell styles `.app-container h2` (app-shell/style.css:48-52), and both elements are inside `.app-container` (app-shell/index.html:12-16). Thus shell's style reaches both applications. The claim holds for app3, but not for the set.
 
-## Resumo
+## Summary
 
-Afirmações: 7 (corroborada: 5, parcial: 0, contradita: 1, sem corroboração: 1). Temas: (estrutura: 1, composição: 2, build-deploy: 2, independência: 2).
+Claims: 7 (corroborated: 5, partial: 0, contradicted: 1, uncorroborated: 1). Themes: (structure: 1, composition: 2, build-deploy: 2, independence: 2).

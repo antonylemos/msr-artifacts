@@ -19,398 +19,399 @@ annotation:
 
 # 102 — pierrekasongo/bahmni-drc
 
-## Leitura do repositório
+## Repository overview
 
-É uma distribuição local de Bahmni/OpenMRS. A única unidade frontend do snapshot é o host AngularJS
-`openmrs-module-bahmniapps/ui` (#28). A composição está numa ponte React com Module Federation
-(`openmrs-module-bahmniapps/micro-frontends`). Essa ponte não é unidade: o build dela escreve dentro
-da `ui` (#27). O remote consumido, `bahmni_ipd`, não tem fontes aqui e vem de uma imagem externa.
+A local Bahmni/OpenMRS distribution. Sole frontend unit in snapshot is AngularJS host
+`openmrs-module-bahmniapps/ui` (#28). Composition is in a React bridge with Module Federation
+(`openmrs-module-bahmniapps/micro-frontends`). Bridge is not a unit: its build writes inside
+`ui` (#27). Consumed remote, `bahmni_ipd`, has no sources here and comes from an external image.
 
-A cadeia que sustenta a arquitetura:
-- **Dependência:** nenhuma linha na 3.4.2. A cadeia começa na configuração.
-- **Configuração:** o `ModuleFederationPlugin` do host declara o remote `@openmrs-mf/ipd` → `bahmni_ipd`, com `exposes: {}`. A URL do `remoteEntry.js` é montada em runtime na origem da página (#1).
-- **Código:** a declaração do remote (#16) e a injeção do script (#2). Os dois `lazy(() => import(...))` dos módulos `IpdDashboard` e `CareViewDashboard` (#17, #18). O registro deles como componentes AngularJS com `react2angular` (#19, #20). As rotas e tags do host que os montam nas aplicações clinical, adt e bedmanagement (#22–#25).
-- **Relação:** host → remote `bahmni_ipd`, ativa, com destino fora do snapshot (#29).
+Architecture-supporting chain:
+- **Dependency:** no row in 3.4.2. Chain starts with configuration.
+- **Configuration:** host `ModuleFederationPlugin` declares remote `@openmrs-mf/ipd` → `bahmni_ipd`, with `exposes: {}`. `remoteEntry.js` URL is assembled at runtime on page origin (#1).
+- **Code:** remote declaration (#16) and script injection (#2). Two `lazy(() => import(...))` calls for modules `IpdDashboard` and `CareViewDashboard` (#17, #18). Their registration as AngularJS components through `react2angular` (#19, #20). Host routes and tags mounting them in clinical, adt and bedmanagement applications (#22–#25).
+- **Relationship:** active host → remote `bahmni_ipd`, with target outside snapshot (#29).
 
-Build e deploy: o host tem build Grunt e imagem Apache próprios (#32). O remote sai em outro serviço, o
-que a observação #29 registra pelo Compose e pelo proxy.
+Build and deployment: host has its own Grunt build and Apache image (#32). Remote runs in another service,
+recorded by observation #29 through Compose and proxy.
 
-Sinais que enganam:
-- **Comunicação:** as oito ocorrências de `dispatchEvent` são `KeyboardEvent` sintéticos em testes unitários (#8–#15).
-- **Iframes:** os da galeria, da impressão e da biblioteca vendorizada não carregam unidades (#4–#6). O helper de script carrega um arquivo de validação da configuração (#3).
-- **Bundles:** a carga dos bundles da ponte pelas páginas é interna ao host (#21).
-- **Documentação:** o README da ponte chama de micro-frontends os bundles locais `ipd`, `next-ui` e `shared`. Por isso quatro afirmações são contraditas (#39, #40, #42, #43). O histórico mostra que esse texto veio com a cópia do upstream (#51).
+Misleading signals:
+- **Communication:** eight `dispatchEvent` occurrences are synthetic `KeyboardEvent` calls in unit tests (#8–#15).
+- **Iframes:** gallery, printing and vendored-library iframes do not load units (#4–#6). Script helper loads configuration validation file (#3).
+- **Bundles:** pages loading bridge bundles are internal to host (#21).
+- **Documentation:** bridge README calls local `ipd`, `next-ui` and `shared` bundles micro-frontends. Four claims are therefore contradicted (#39, #40, #42, #43). History shows text arrived with upstream copy (#51).
 
-Fica ambíguo o ponto de extensão do registro: um iframe com `src` vindo da configuração e um
-listener de `message` (#7, #26, #30, #31). Nenhuma configuração declara esse ponto. O histórico
-mostra que ele nunca foi declarado neste repositório (#50).
+Registration extension point remains ambiguous: an iframe with configuration-provided `src` and a
+`message` listener (#7, #26, #30, #31). No configuration declares that point. History
+shows it was never declared in this repository (#50).
 
-## Observações
+## Observations
 
 ### 1. openmrs-module-bahmniapps/micro-frontends/webpack.config.js:16-25, 34-67, 113-138
 
-**Observação:** A configuração Webpack da ponte define as entradas `ipd`, `next-ui` e `shared`, com saída em `../ui/app/micro-frontends-dist`. O `ModuleFederationPlugin` declara `name: "bahmni_mfe_host"` e o remote `"@openmrs-mf/ipd": remoteProxiedAtHostDomain({ name: "bahmni_ipd", path: "ipd" })`, com `exposes: {}`. Compartilha `carbon-components-react`, `carbon-components`, `bahmni-carbon-ui`, `react` e `react-dom` como `singleton` e `eager`. A função `remoteProxiedAtHostDomain` monta `/<path>/remoteEntry.js` sobre `window.location.href`, injeta o script e devolve um proxy de `get`/`init` de `window['<name>']`.
+**Observation:** Bridge Webpack configuration defines entries `ipd`, `next-ui` and `shared`, outputting to `../ui/app/micro-frontends-dist`. `ModuleFederationPlugin` declares `name: "bahmni_mfe_host"` and remote `"@openmrs-mf/ipd": remoteProxiedAtHostDomain({ name: "bahmni_ipd", path: "ipd" })`, with `exposes: {}`. Shares `carbon-components-react`, `carbon-components`, `bahmni-carbon-ui`, `react` and `react-dom` as `singleton` and `eager`. Function `remoteProxiedAtHostDomain` assembles `/<path>/remoteEntry.js` over `window.location.href`, injects script and returns a proxy of `get`/`init` from `window['<name>']`.
 
-**Interpretação:** É a configuração do host que nomeia o remote `bahmni_ipd` e resolve o endereço dele em runtime, na mesma origem da página. O host não expõe nada.
+**Interpretation:** Host configuration naming remote `bahmni_ipd` and resolving its address at runtime, on same page origin. Host exposes nothing.
 
-**Nota:** A 3.4.5 #1 também cita, na coluna Configuração, `bahmni-proxy/resources/bahmni-proxy.conf:31-33`, `docker-compose.yml:586-593` e `.env:193`. São caminho de publicação, serviço e tag de imagem, ou seja, deploy. Ficam nas observações #29 e #32, e não aqui.
+**Note:** Section 3.4.5 #1 also cites, in Configuration column, `bahmni-proxy/resources/bahmni-proxy.conf:31-33`, `docker-compose.yml:586-593` and `.env:193`. These are publication path, service and image tag, hence deployment. They remain in observations #29 and #32 rather than here.
 
 ### 2. openmrs-module-bahmniapps/micro-frontends/webpack.config.js:119
 
-**Observação:** `const script = document.createElement('script')`, dentro do texto que `remoteProxiedAtHostDomain` (`:113`) devolve. O `src` é `/<path>/remoteEntry.js` na origem atual (`:115-120`).
+**Observation:** `const script = document.createElement('script')`, inside text returned by `remoteProxiedAtHostDomain` (`:113`). `src` is `/<path>/remoteEntry.js` on current origin (`:115-120`).
 
-**Interpretação:** É a carga do bundle de entrada do remote. O remote chega pelos parâmetros `name` e `path` da função, usada com `bahmni_ipd` em `:38`.
+**Interpretation:** Remote entry bundle loading. Remote arrives through function parameters `name` and `path`, used with `bahmni_ipd` at `:38`.
 
 ### 3. openmrs-module-bahmniapps/ui/app/common/util/dynamicResourceLoader.js:6
 
-**Observação:** O helper `includeJs` cria um `<script>` com o `src` recebido. O único chamador monta `<configBaseUrl>/registration/fieldValidation.js` (`openmrs-module-bahmniapps/ui/app/registration/initialization.js:29-31`).
+**Observation:** Helper `includeJs` creates a `<script>` with received `src`. Sole caller assembles `<configBaseUrl>/registration/fieldValidation.js` (`openmrs-module-bahmniapps/ui/app/registration/initialization.js:29-31`).
 
-**Interpretação:** É a carga de um script de validação da configuração da própria aplicação, e não de outra unidade. É um falso positivo da busca por carga de script.
+**Interpretation:** Loads a configuration validation script of same application rather than another unit. A false positive from script-loading search.
 
 ### 4. openmrs-module-bahmniapps/ui/app/common/gallery/views/gallery.html:29
 
-**Observação:** `<iframe ng-src="{{image.src}}" class="pdf-frame">` no ramo `isPdf(image)` da galeria de imagens.
+**Observation:** `<iframe ng-src="{{image.src}}" class="pdf-frame">` in image gallery `isPdf(image)` branch.
 
-**Interpretação:** O iframe exibe o PDF de um documento do paciente. Não é unidade frontend.
+**Interpretation:** Iframe displays a patient document PDF. Not a frontend unit.
 
 ### 5. openmrs-module-bahmniapps/ui/app/common/ui-helper/printer.js:8
 
-**Observação:** O factory `printer` cria um iframe oculto, escreve nele um HTML gerado localmente, imprime e o remove (`:6-20`).
+**Observation:** Factory `printer` creates a hidden iframe, writes locally generated HTML in it, prints and removes it (`:6-20`).
 
-**Interpretação:** É um recurso de impressão da aplicação. O iframe não carrega outra unidade.
+**Interpretation:** Application printing feature. Iframe does not load another unit.
 
 ### 6. openmrs-module-bahmniapps/ui/app/lib/magnific-popup/jquery.magnific-popup.js:1593
 
-**Observação:** É o template de iframe do módulo `iframe` da biblioteca magnific-popup, vendorizada em `ui/app/lib`. Nenhum HTML ou build do snapshot referencia a biblioteca.
+**Observation:** Iframe template of `iframe` module in magnific-popup library, vendored in `ui/app/lib`. No snapshot HTML or build references library.
 
-**Interpretação:** É código de terceiros inativo. Não participa da composição.
+**Interpretation:** Inactive third-party code. Does not participate in composition.
 
 ### 7. openmrs-module-bahmniapps/ui/app/registration/views/patientIdentifier.html:93; openmrs-module-bahmniapps/ui/app/registration/controllers/patientCommonController.js:21, 35-37
 
-**Observação:** `<iframe id="extension-popup">`, mostrado por `controllerScope.showExtIframe`. O controller atribui o `src` em runtime a partir do ponto de extensão `org.bahmni.registration.identifier`. Nenhuma configuração do snapshot declara esse ponto.
+**Observation:** `<iframe id="extension-popup">`, shown through `controllerScope.showExtIframe`. Controller assigns `src` at runtime from extension point `org.bahmni.registration.identifier`. No snapshot configuration declares this point.
 
-**Interpretação:** O mecanismo de embutir conteúdo está implementado e ativo. Pode carregar uma unidade frontend externa ou apenas uma página de apoio, e o snapshot não decide entre as duas.
+**Interpretation:** Embedding mechanism is implemented and active. It may load an external frontend unit or merely a supporting page, and snapshot does not decide between them.
 
 ### 8. openmrs-module-bahmniapps/ui/test/unit/adt/controllers/careViewController.spec.js:63
 
-**Observação:** `$window.dispatchEvent(new KeyboardEvent('keydown', {'key': 'Escape', 'metaKey': true, 'ctrlKey': false}))` num teste unitário.
+**Observation:** `$window.dispatchEvent(new KeyboardEvent('keydown', {'key': 'Escape', 'metaKey': true, 'ctrlKey': false}))` in a unit test.
 
-**Interpretação:** O teste exercita o atalho de saída do controller. Não é comunicação entre unidades.
+**Interpretation:** Test exercises controller exit shortcut. Not communication between units.
 
 ### 9. openmrs-module-bahmniapps/ui/test/unit/adt/controllers/careViewController.spec.js:69
 
-**Observação:** O mesmo `dispatchEvent` de `KeyboardEvent`, com `ctrlKey: true`.
+**Observation:** Same `dispatchEvent` of `KeyboardEvent`, with `ctrlKey: true`.
 
-**Interpretação:** É um evento sintético de teste. Não é comunicação entre unidades.
+**Interpretation:** Synthetic test event. Not communication between units.
 
 ### 10. openmrs-module-bahmniapps/ui/test/unit/adt/controllers/careViewController.spec.js:75
 
-**Observação:** O mesmo `dispatchEvent` de `KeyboardEvent`, sem modificadores.
+**Observation:** Same `dispatchEvent` of `KeyboardEvent`, without modifiers.
 
-**Interpretação:** É um evento sintético de teste. Não é comunicação entre unidades.
+**Interpretation:** Synthetic test event. Not communication between units.
 
 ### 11. openmrs-module-bahmniapps/ui/test/unit/adt/controllers/careViewController.spec.js:82
 
-**Observação:** O mesmo `dispatchEvent` de `KeyboardEvent`, no caso em que o atalho não deve agir.
+**Observation:** Same `dispatchEvent` of `KeyboardEvent`, in case where shortcut should not act.
 
-**Interpretação:** É um evento sintético de teste. Não é comunicação entre unidades.
+**Interpretation:** Synthetic test event. Not communication between units.
 
 ### 12. openmrs-module-bahmniapps/ui/test/unit/bedmanagement/controllers/careViewController.spec.js:62
 
-**Observação:** `$window.dispatchEvent(new KeyboardEvent('keydown', ...))` de Escape no teste do `CareViewController` de bedmanagement.
+**Observation:** Escape `$window.dispatchEvent(new KeyboardEvent('keydown', ...))` in bedmanagement `CareViewController` test.
 
-**Interpretação:** É um evento sintético de teste. Não é comunicação entre unidades.
+**Interpretation:** Synthetic test event. Not communication between units.
 
 ### 13. openmrs-module-bahmniapps/ui/test/unit/bedmanagement/controllers/careViewController.spec.js:69
 
-**Observação:** O mesmo `dispatchEvent` de `KeyboardEvent`, com `ctrlKey: true`.
+**Observation:** Same `dispatchEvent` of `KeyboardEvent`, with `ctrlKey: true`.
 
-**Interpretação:** É um evento sintético de teste. Não é comunicação entre unidades.
+**Interpretation:** Synthetic test event. Not communication between units.
 
 ### 14. openmrs-module-bahmniapps/ui/test/unit/bedmanagement/controllers/careViewController.spec.js:76
 
-**Observação:** O mesmo `dispatchEvent` de `KeyboardEvent`, sem modificadores.
+**Observation:** Same `dispatchEvent` of `KeyboardEvent`, without modifiers.
 
-**Interpretação:** É um evento sintético de teste. Não é comunicação entre unidades.
+**Interpretation:** Synthetic test event. Not communication between units.
 
 ### 15. openmrs-module-bahmniapps/ui/test/unit/clinical/common/controllers/visitController.spec.js:171
 
-**Observação:** `window.dispatchEvent(new KeyboardEvent('keydown', ...))` de Escape no teste do `VisitController`.
+**Observation:** Escape `window.dispatchEvent(new KeyboardEvent('keydown', ...))` in `VisitController` test.
 
-**Interpretação:** É um evento sintético de teste. Não é comunicação entre unidades.
+**Interpretation:** Synthetic test event. Not communication between units.
 
 ### 16. openmrs-module-bahmniapps/micro-frontends/webpack.config.js:38
 
-**Observação:** `"@openmrs-mf/ipd": remoteProxiedAtHostDomain({ name: "bahmni_ipd", path: "ipd" })`, na entrada `remotes` do `ModuleFederationPlugin`.
+**Observation:** `"@openmrs-mf/ipd": remoteProxiedAtHostDomain({ name: "bahmni_ipd", path: "ipd" })`, in `remotes` entry of `ModuleFederationPlugin`.
 
-**Interpretação:** O host nomeia o remote `bahmni_ipd` e o caminho pelo qual o resolve.
+**Interpretation:** Host names remote `bahmni_ipd` and path through which it resolves it.
 
 ### 17. openmrs-module-bahmniapps/micro-frontends/src/ipd/IpdDashboard.jsx:6; openmrs-module-bahmniapps/micro-frontends/src/ipd/IpdDashboard.jsx:10-15
 
-**Observação:** `const LazyApp = lazy(() => import("@openmrs-mf/ipd/IpdDashboard"))`, renderizado sob `Suspense` com `hostData` e `hostApi`.
+**Observation:** `const LazyApp = lazy(() => import("@openmrs-mf/ipd/IpdDashboard"))`, rendered under `Suspense` with `hostData` and `hostApi`.
 
-**Interpretação:** O host importa sob demanda o módulo `IpdDashboard` do remote, pelo alias declarado, e lhe passa dados e callbacks.
+**Interpretation:** Host imports remote `IpdDashboard` module on demand through declared alias and passes data and callbacks.
 
 ### 18. openmrs-module-bahmniapps/micro-frontends/src/ipd/CareViewDashboard.jsx:6; openmrs-module-bahmniapps/micro-frontends/src/ipd/CareViewDashboard.jsx:10-12
 
-**Observação:** `const LazyApp = lazy(() => import("@openmrs-mf/ipd/CareViewDashboard"))`, renderizado sob `Suspense` com `hostData` e `hostApi`.
+**Observation:** `const LazyApp = lazy(() => import("@openmrs-mf/ipd/CareViewDashboard"))`, rendered under `Suspense` with `hostData` and `hostApi`.
 
-**Interpretação:** O host importa sob demanda um segundo módulo do mesmo remote.
+**Interpretation:** Host imports a second module of same remote on demand.
 
 ### 19. openmrs-module-bahmniapps/micro-frontends/src/ipd/index.js:21; openmrs-module-bahmniapps/ui/app/clinical/init.js:7-9
 
-**Observação:** `.component("mfeIpdDashboard", react2angular(IpdDashboard), ...)` no módulo AngularJS `bahmni.mfe.ipd`. A aplicação clínica inclui esse módulo.
+**Observation:** `.component("mfeIpdDashboard", react2angular(IpdDashboard), ...)` in AngularJS module `bahmni.mfe.ipd`. Clinical application includes this module.
 
-**Interpretação:** Registra o wrapper do módulo remoto `IpdDashboard` como componente AngularJS, montável nas páginas do host.
+**Interpretation:** Registers remote module `IpdDashboard` wrapper as an AngularJS component mountable in host pages.
 
 ### 20. openmrs-module-bahmniapps/micro-frontends/src/ipd/index.js:31
 
-**Observação:** `.component("mfeIpdCareViewDashboard", react2angular(CareViewDashboard), ...)` no mesmo módulo `bahmni.mfe.ipd`.
+**Observation:** `.component("mfeIpdCareViewDashboard", react2angular(CareViewDashboard), ...)` in same module `bahmni.mfe.ipd`.
 
-**Interpretação:** Registra o wrapper da segunda exposição do remote como componente AngularJS.
+**Interpretation:** Registers wrapper of second remote exposure as AngularJS component.
 
 ### 21. openmrs-module-bahmniapps/ui/app/clinical/index.html:95
 
-**Observação:** `<script src="../micro-frontends-dist/ipd.min.js">`, depois de `shared.min.js` (`:92`) e antes de `next-ui.min.js` (`:96`). As mesmas cargas aparecem nas páginas de adt, bedmanagement e ot.
+**Observation:** `<script src="../micro-frontends-dist/ipd.min.js">`, after `shared.min.js` (`:92`) and before `next-ui.min.js` (`:96`). Same loads appear in adt, bedmanagement and ot pages.
 
-**Interpretação:** A página carrega o bundle da ponte, que é parte do próprio host. Não liga duas unidades.
+**Interpretation:** Page loads bridge bundle, part of host itself. Does not link two units.
 
 ### 22. openmrs-module-bahmniapps/ui/app/clinical/app.js:328-337
 
-**Observação:** O estado `patient.dashboard.ipdVisit`, com URL `/dashboard/visit/ipd/:visitUuid?source`, usa o `templateUrl` `common/views/visitIpd.html`.
+**Observation:** State `patient.dashboard.ipdVisit`, with URL `/dashboard/visit/ipd/:visitUuid?source`, uses `templateUrl` `common/views/visitIpd.html`.
 
-**Interpretação:** A tabela de rotas do host liga um caminho à tela que monta a UI do remote IPD.
+**Interpretation:** Host route table links path to screen mounting remote IPD UI.
 
 ### 23. openmrs-module-bahmniapps/ui/app/clinical/common/views/visitIpd.html:1
 
-**Observação:** `<mfe-ipd-dashboard ... host-data="ipdDashboard.hostData" host-api="ipdDashboard.hostApi">`.
+**Observation:** `<mfe-ipd-dashboard ... host-data="ipdDashboard.hostData" host-api="ipdDashboard.hostApi">`.
 
-**Interpretação:** O host monta a tag do componente que renderiza o `IpdDashboard` do remote.
+**Interpretation:** Host mounts component tag rendering remote `IpdDashboard`.
 
 ### 24. openmrs-module-bahmniapps/ui/app/adt/app.js:51-58
 
-**Observação:** O estado `careViewDashboard`, na URL `/home/careViewDashboard`, tem `template` inline com `<mfe-ipd-care-view-dashboard ... host-data="hostData" host-api="hostApi">`.
+**Observation:** State `careViewDashboard`, at URL `/home/careViewDashboard`, has inline `template` with `<mfe-ipd-care-view-dashboard ... host-data="hostData" host-api="hostApi">`.
 
-**Interpretação:** A rota da aplicação adt liga um caminho à UI `CareViewDashboard` do remote.
+**Interpretation:** Adt application route links path to remote `CareViewDashboard` UI.
 
 ### 25. openmrs-module-bahmniapps/ui/app/bedmanagement/app.js:133-140
 
-**Observação:** O estado `careViewDashboard` de bedmanagement tem a mesma tag `<mfe-ipd-care-view-dashboard>` no `template` inline.
+**Observation:** Bedmanagement state `careViewDashboard` has same `<mfe-ipd-care-view-dashboard>` tag in inline `template`.
 
-**Interpretação:** A rota da aplicação bedmanagement liga um caminho à mesma UI do remote.
+**Interpretation:** Bedmanagement application route links path to same remote UI.
 
 ### 26. openmrs-module-bahmniapps/ui/app/registration/controllers/patientCommonController.js:39-54
 
-**Observação:** `$window.addEventListener("message", ...)`, registrado ao abrir o popup de identificador. Com o `patient` ou o `patientUuid` recebido, preenche o formulário ou navega. O handler não confere `source` nem `origin`.
+**Observation:** `$window.addEventListener("message", ...)`, registered when identifier popup opens. Received `patient` or `patientUuid` fills form or navigates. Handler checks neither `source` nor `origin`.
 
-**Interpretação:** É o canal pelo qual o conteúdo embutido em #7 devolveria dados ao host. Quem envia não se identifica no snapshot.
+**Interpretation:** Channel through which content embedded in #7 would return data to host. Sender is not identified in snapshot.
 
 ### 27. openmrs-module-bahmniapps/micro-frontends; openmrs-module-bahmniapps/micro-frontends/package.json:57; openmrs-module-bahmniapps/micro-frontends/webpack.config.js:16-25; openmrs-module-bahmniapps/ui/app/clinical/index.html:92-96
 
-**Observação:** Tem manifesto e build Webpack próprios (`webpack --mode production`). A saída vai para `../ui/app/micro-frontends-dist`, que as páginas da `ui` carregam. Não inicia UI própria.
+**Observation:** Own manifest and Webpack build (`webpack --mode production`). Output goes to `../ui/app/micro-frontends-dist`, loaded by `ui` pages. Does not start its own UI.
 
-**Interpretação:** É uma ponte React do host, construída para dentro dele, e não uma unidade frontend separada.
+**Interpretation:** Host React bridge, built into it rather than separate frontend unit.
 
 ### 28. openmrs-module-bahmniapps/ui; openmrs-module-bahmniapps/ui/package.json:117; openmrs-module-bahmniapps/ui/Gruntfile.js:215-229, 600-620; openmrs-module-bahmniapps/ui/app/clinical/index.html:29; openmrs-module-bahmniapps/package/docker/Dockerfile:12-13
 
-**Observação:** São páginas AngularJS com `ng-app` próprio (por exemplo, `consultation`), build Grunt próprio e saída `dist` copiada para uma imagem Apache.
+**Observation:** AngularJS pages with own `ng-app` (for example, `consultation`), own Grunt build and `dist` output copied to Apache image.
 
-**Interpretação:** É uma unidade frontend com limite próprio: o host Bahmni.
+**Interpretation:** Frontend unit with its own boundary: Bahmni host.
 
 ### 29. openmrs-module-bahmniapps/micro-frontends/webpack.config.js:38; openmrs-module-bahmniapps/micro-frontends/webpack.config.js:34-40, 113-135; openmrs-module-bahmniapps/micro-frontends/src/ipd/IpdDashboard.jsx:6; openmrs-module-bahmniapps/micro-frontends/src/ipd/CareViewDashboard.jsx:6; openmrs-module-bahmniapps/ui/app/clinical/common/views/visitIpd.html:1; bahmni-proxy/resources/bahmni-proxy.conf:31-33; docker-compose.yml:586-593
 
-**Observação:** O host carrega `IpdDashboard` e `CareViewDashboard` do remote `bahmni_ipd` e os monta nas aplicações clinical, adt e bedmanagement. O proxy encaminha `/ipd` ao serviço `ipd`, que roda a imagem `bahmni/microfrontend-ipd:${IPD_TAG}`. O volume de fontes locais está comentado. O remote não está no snapshot.
+**Observation:** Host loads `IpdDashboard` and `CareViewDashboard` from remote `bahmni_ipd` and mounts them in clinical, adt and bedmanagement applications. Proxy forwards `/ipd` to service `ipd`, running image `bahmni/microfrontend-ipd:${IPD_TAG}`. Local-source volume is commented out. Remote is not in snapshot.
 
-**Interpretação:** É uma relação host → remote ativa, com destino externo.
+**Interpretation:** An active host → remote relationship with external target.
 
 ### 30. openmrs-module-bahmniapps/ui/app/registration/views/patientIdentifier.html:93; openmrs-module-bahmniapps/ui/app/registration/controllers/patientCommonController.js:21, 35-37
 
-**Observação:** O host abre num iframe o `src` do ponto de extensão `org.bahmni.registration.identifier`. Nenhum arquivo do snapshot declara esse ponto.
+**Observation:** Host opens `src` from extension point `org.bahmni.registration.identifier` in an iframe. No snapshot file declares this point.
 
-**Interpretação:** Pode ser uma relação página → frontend embutido. O destino pode ser uma unidade externa, uma página local ou nada, e o snapshot não decide.
+**Interpretation:** May be a page → embedded frontend relationship. Target may be an external unit, local page or nothing, and snapshot does not decide.
 
 ### 31. openmrs-module-bahmniapps/ui/app/registration/controllers/patientCommonController.js:39
 
-**Observação:** O host recebe `message` da janela, sem conferir remetente, e não envia `postMessage` ao iframe.
+**Observation:** Host receives window `message`, without checking sender, and sends no `postMessage` to iframe.
 
-**Interpretação:** Pode ser comunicação por eventos com o conteúdo de #30. Nem o remetente nem a direção estão estabelecidos.
+**Interpretation:** May be event communication with content from #30. Neither sender nor direction is established.
 
 ### 32. openmrs-module-bahmniapps/ui/package.json:117; openmrs-module-bahmniapps/ui/Gruntfile.js:600-620; openmrs-module-bahmniapps/package/docker/Dockerfile:1-13; docker-compose.yml:366-377; start.sh:6-8; bahmni-proxy/resources/bahmni-proxy.conf:40-41
 
-**Observação:** `grunt build` gera `dist`. A imagem Apache copia `ui/dist/` para `htdocs/bahmni`. O serviço `bahmni-web` constrói a imagem local `bahmni-web-drc:latest` e monta `ui/app/` por volume. O proxy publica a aplicação em `/bahmni`. A tag de versão do `.env` não é usada.
+**Observation:** `grunt build` generates `dist`. Apache image copies `ui/dist/` to `htdocs/bahmni`. Service `bahmni-web` builds local image `bahmni-web-drc:latest` and mounts `ui/app/` through volume. Proxy publishes application at `/bahmni`. Version tag from `.env` is unused.
 
-**Interpretação:** Há fronteiras de build e de deploy próprias, separadas da imagem do remote IPD, sem versionamento independente.
+**Interpretation:** Own build and deployment boundaries, separate from remote IPD image, without independent versioning.
 
 ### 33. README.md:41-44
 
-**Observação:** "Run these commands from within the `micro-frontends` sub-folder […] the `../ui/app/micro-frontends-dist` folder has the set of files which can be used by the angular modules for their build".
+**Observation:** "Run these commands from within the `micro-frontends` sub-folder […] the `../ui/app/micro-frontends-dist` folder has the set of files which can be used by the angular modules for their build".
 
-**Interpretação:** Descreve o build da ponte para dentro da `ui`. A afirmação é corroborada.
+**Interpretation:** Describes bridge build into `ui`. Claim corroborated.
 
 ### 34. README.md:46-50
 
-**Observação:** "Run these commands from within the `ui` sub-folder […] `yarn ci` (will internally trigger grunt) […] the `dist` folder has the set of files to be deployed in Apache (or in Vagrant)."
+**Observation:** "Run these commands from within the `ui` sub-folder […] `yarn ci` (will internally trigger grunt) […] the `dist` folder has the set of files to be deployed in Apache (or in Vagrant)."
 
-**Interpretação:** Descreve o build Grunt e o deploy Apache do host. A afirmação é corroborada.
+**Interpretation:** Describes host Grunt build and Apache deployment. Claim corroborated.
 
 ### 35. README.md:68
 
-**Observação:** "Docker images for [Bahmniapps] is built using [Github Actions]."
+**Observation:** "Docker images for [Bahmniapps] is built using [Github Actions]."
 
-**Interpretação:** Fala da imagem publicada pelo upstream. O snapshot não tem workflow de CI. A afirmação fica sem corroboração.
+**Interpretation:** Discusses image published by upstream. Snapshot has no CI workflow. Claim remains uncorroborated.
 
 ### 36. README.md:70
 
-**Observação:** "Resources to build the following docker images can be found in the [package] directory."
+**Observation:** "Resources to build the following docker images can be found in the [package] directory."
 
-**Interpretação:** Aponta o Dockerfile da imagem do host. A afirmação é corroborada.
+**Interpretation:** Points to host image Dockerfile. Claim corroborated.
 
 ### 37. README.md:112-116
 
-**Observação:** "Building local images […] `docker build -t bahmni-web-drc:latest -f package/docker/Dockerfile .`"
+**Observation:** "Building local images […] `docker build -t bahmni-web-drc:latest -f package/docker/Dockerfile .`"
 
-**Interpretação:** Descreve a imagem local do host que o `start.sh` e o Compose usam. A afirmação é corroborada.
+**Interpretation:** Describes local host image used by `start.sh` and Compose. Claim corroborated.
 
 ### 38. bahmni-proxy/README.md:5
 
-**Observação:** "Proxy rules for different components of the application is configured."
+**Observation:** "Proxy rules for different components of the application is configured."
 
-**Interpretação:** Fala das regras do proxy, entre elas a de `/ipd`, que põe o remote na origem do host. A afirmação é corroborada.
+**Interpretation:** Discusses proxy rules, including `/ipd`, placing remote on host origin. Claim corroborated.
 
 ### 39. openmrs-module-bahmniapps/micro-frontends/README.md:3-4
 
-**Observação:** "a webpack build system to package the various react micro-frontends (mfe) available".
+**Observation:** "a webpack build system to package the various react micro-frontends (mfe) available".
 
-**Interpretação:** Chama de micro-frontends os bundles que o build gera. Os bundles são parte do host, e o único remote não sai desse build. A afirmação é contradita.
+**Interpretation:** Calls build-generated bundles micro-frontends. Bundles are part of host, and sole remote does not come from this build. Claim contradicted.
 
 ### 40. openmrs-module-bahmniapps/micro-frontends/README.md:36-37
 
-**Observação:** "shared.min.js // Contains shared JS across microfrontends. should be loaded first"; "shared.min.css // Contains shared CSS across microfrontends including the carbon stylesheet. should be loaded first".
+**Observation:** "shared.min.js // Contains shared JS across microfrontends. should be loaded first"; "shared.min.css // Contains shared CSS across microfrontends including the carbon stylesheet. should be loaded first".
 
-**Interpretação:** A ordem de carga se confirma, mas o recurso é compartilhado entre bundles de uma só unidade. A afirmação é contradita.
+**Interpretation:** Loading order is confirmed, but resource is shared between bundles of a single unit. Claim contradicted.
 
 ### 41. openmrs-module-bahmniapps/micro-frontends/README.md:39-40
 
-**Observação:** "<mfe-name>.min.js // angular module containing components from a single mfe".
+**Observation:** "<mfe-name>.min.js // angular module containing components from a single mfe".
 
-**Interpretação:** Descreve a forma do bundle: um módulo AngularJS com componentes registrados pela ponte. A afirmação é corroborada.
+**Interpretation:** Describes bundle form: AngularJS module with bridge-registered components. Claim corroborated.
 
 ### 42. openmrs-module-bahmniapps/micro-frontends/README.md:45
 
-**Observação:** "`next-ui.min.js`: A local micro-fontend containing next gen react components to be used by bahmniapps".
+**Observation:** "`next-ui.min.js`: A local micro-fontend containing next gen react components to be used by bahmniapps".
 
-**Interpretação:** Chama de micro-frontend um bundle de componentes locais, sem build, deploy ou entrada próprios. A afirmação é contradita.
+**Interpretation:** Calls a bundle of local components a micro-frontend, without own build, deployment or entry. Claim contradicted.
 
 ### 43. openmrs-module-bahmniapps/micro-frontends/README.md:46
 
-**Observação:** "`ipd.min.js`: The IPD micro-frontend".
+**Observation:** "`ipd.min.js`: The IPD micro-frontend".
 
-**Interpretação:** Chama de micro-frontend a ponte do host para o IPD. O micro-frontend IPD é o remote de outra imagem. A afirmação é contradita.
+**Interpretation:** Calls host bridge to IPD a micro-frontend. IPD micro-frontend is remote from another image. Claim contradicted.
 
 ### 44. openmrs-module-bahmniapps/micro-frontends/README.md:46
 
-**Observação:** "[`ipd.min.js`] talking to the remote IPD repository".
+**Observation:** "[`ipd.min.js`] talking to the remote IPD repository".
 
-**Interpretação:** Afirma que a ponte carrega um remote IPD mantido fora daqui. A afirmação é corroborada.
+**Interpretation:** Claims bridge loads an IPD remote maintained elsewhere. Claim corroborated.
 
 ### 45. openmrs-module-bahmniapps/micro-frontends/package.json:4
 
-**Observação:** `"description": "Hosting microfrontends for openmrs"`.
+**Observation:** `"description": "Hosting microfrontends for openmrs"`.
 
-**Interpretação:** Atribui o papel de host ao pacote, que configura um container sem exposições e com um remote. A afirmação é corroborada.
+**Interpretation:** Assigns host role to package, which configures a container without exposures and with one remote. Claim corroborated.
 
 ### 46. openmrs-module-bahmniapps/micro-frontends/webpack.config.js:104-105
 
-**Observação:** "An alternative to providing build time URLs. We need to do this string promise stuff because we need to resolve the host at run-time."
+**Observation:** "An alternative to providing build time URLs. We need to do this string promise stuff because we need to resolve the host at run-time."
 
-**Interpretação:** Explica que a URL do remote é resolvida em runtime, e não fixada no build. A afirmação é corroborada.
+**Interpretation:** Explains remote URL resolves at runtime rather than being fixed in build. Claim corroborated.
 
 ### 47. openmrs-module-bahmniapps/ui/app/adt/index.html:60
 
-**Observação:** "Adding react since micro-frontends will be used".
+**Observation:** "Adding react since micro-frontends will be used".
 
-**Interpretação:** Liga a carga global de React às necessidades da ponte, que trata `react` e `react-dom` como `externals`. A afirmação é corroborada.
+**Interpretation:** Links global React loading to bridge needs, treating `react` and `react-dom` as `externals`. Claim corroborated.
 
 ### 48. openmrs-module-bahmniapps/ui/app/adt/index.html:64
 
-**Observação:** "polyfill to add angular feature which will allow easy loading of mfe into angular component".
+**Observation:** "polyfill to add angular feature which will allow easy loading of mfe into angular component".
 
-**Interpretação:** Descreve o `shared.min.js` como polyfill de `angular.module.component`, recurso que a ponte usa para registrar a UI remota. A afirmação é corroborada.
+**Interpretation:** Describes `shared.min.js` as polyfill for `angular.module.component`, used by bridge to register remote UI. Claim corroborated.
 
 ### 49. f710945 2025-04-22 (openmrs-module-bahmniapps/ui/app/lib/magnific-popup); f3ee559 2025-04-23 (openmrs-module-bahmniapps/ui/app/admin/index.html, openmrs-module-bahmniapps/ui/app/home/index.html, openmrs-module-bahmniapps/ui/app/home/views/dashboard.html); 1ed2b99 2025-05-01 (openmrs-module-bahmniapps/ui/app/registration/views/patientcommon.html)
 
-**Observação:** A biblioteca chega com a cópia da árvore do Bahmni e não muda até o snapshot. O `Gruntfile.js` também não muda, e nenhum arquivo de `ui/app` é removido. Só quatro páginas mudam depois da cópia, e as versões anteriores delas não estão disponíveis.
+**Observation:** Library arrives with Bahmni tree copy and does not change through snapshot. `Gruntfile.js` also does not change, and no `ui/app` file is removed. Only four pages change after copy, and their earlier versions are unavailable.
 
-**Interpretação:** A biblioteca é parte do conteúdo copiado. A distribuição não a ligou nem a desligou. O ponto foi esclarecido.
+**Interpretation:** Library is part of copied contents. Distribution neither connected nor disconnected it. Point clarified.
 
 ### 50. f710945 2025-04-22 (openmrs-module-bahmniapps/ui/app/registration, default-config/openmrs/apps/registration/extension.json); f3ee559 2025-04-23, 1ed2b99 2025-05-01, f44767d 2025-05-01 (default-config/openmrs/apps/registration/app.json)
 
-**Observação:** O iframe, a diretiva e o controller chegam na cópia e não mudam. O `extension.json` do registro tem o mesmo objeto em todos os commits e nunca declara `org.bahmni.registration.identifier`. Só o `app.json` muda, com mensagens de traduções, dados mestres e visita padrão.
+**Observation:** Iframe, directive and controller arrive in copy and do not change. Registration `extension.json` has same object in every commit and never declares `org.bahmni.registration.identifier`. Only `app.json` changes, with messages about translations, master data and default visit.
 
-**Interpretação:** O ponto de extensão nunca foi declarado neste histórico. O iframe e o listener são código herdado que a configuração da distribuição não aciona. O ponto foi esclarecido, mas o histórico não exclui uma configuração externa.
+**Interpretation:** Extension point was never declared in this history. Iframe and listener are inherited code not triggered by distribution configuration. Point clarified, but history does not exclude external configuration.
 
 ### 51. ee1e6fc 2025-04-21 (openmrs-module-bahmniapps); f710945 2025-04-22 (openmrs-module-bahmniapps/micro-frontends); d1faead 2025-06-12 (openmrs-module-bahmniapps/micro-frontends/public/i18n/locale_fr.json)
 
-**Observação:** O primeiro commit tem `openmrs-module-bahmniapps` só como gitlink. O README, a configuração, o manifesto e o `src/` da ponte chegam juntos na cópia seguinte e não mudam. O único commit posterior na pasta altera uma tradução.
+**Observation:** First commit has `openmrs-module-bahmniapps` only as gitlink. Bridge README, configuration, manifest and `src/` arrive together in next copy and do not change. Sole later commit in folder changes a translation.
 
-**Interpretação:** O texto que chama os bundles de micro-frontends e o código que o contradiz são do mesmo estágio. A redação veio com a cópia do upstream. O ponto foi esclarecido.
+**Interpretation:** Text calling bundles micro-frontends and contradicting code are from same stage. Wording arrived with upstream copy. Point clarified.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.3 (openmrs-module-bahmniapps/micro-frontends, Marcadores, Entrada e Build); 3.4.4 (openmrs-module-bahmniapps/micro-frontends/webpack.config.js:119, :38, Arquivo:linha); 3.4.4 (openmrs-module-bahmniapps/micro-frontends/src/ipd/IpdDashboard.jsx:6; openmrs-module-bahmniapps/micro-frontends/src/ipd/CareViewDashboard.jsx:6; openmrs-module-bahmniapps/ui/app/clinical/index.html:95, Observação); 3.4.5 #1 (Configuração, Código); 3.4.7 #14 (Documento); 3.4.7 #1, #7, #11, #12, #13, #14, #15 (Evidência) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #28; configura #29 |
-| 2 | 3.4.4 (openmrs-module-bahmniapps/micro-frontends/webpack.config.js:119) | 3 código | configuração | module-federation | tecnológica | moderada | implementa #29 |
-| 3 | 3.4.4 (openmrs-module-bahmniapps/ui/app/common/util/dynamicResourceLoader.js:6) | 3 código | código-fonte | — | contexto | fraca | — |
-| 4 | 3.4.4 (openmrs-module-bahmniapps/ui/app/common/gallery/views/gallery.html:29) | 3 código | código-fonte | — | contexto | fraca | — |
-| 5 | 3.4.4 (openmrs-module-bahmniapps/ui/app/common/ui-helper/printer.js:8) | 3 código | código-fonte | — | contexto | fraca | — |
-| 6 | 3.4.4 (openmrs-module-bahmniapps/ui/app/lib/magnific-popup/jquery.magnific-popup.js:1593) | 3 código | código-fonte | — | contexto | fraca | — |
-| 7 | 3.4.4 (openmrs-module-bahmniapps/ui/app/registration/views/patientIdentifier.html:93) | 3 código | código-fonte | iframe | tecnológica | ambígua | implementa #30 |
-| 8 | 3.4.4 (openmrs-module-bahmniapps/ui/test/unit/adt/controllers/careViewController.spec.js:63) | 3 código | código-fonte | — | contexto | fraca | — |
-| 9 | 3.4.4 (openmrs-module-bahmniapps/ui/test/unit/adt/controllers/careViewController.spec.js:69) | 3 código | código-fonte | — | contexto | fraca | — |
-| 10 | 3.4.4 (openmrs-module-bahmniapps/ui/test/unit/adt/controllers/careViewController.spec.js:75) | 3 código | código-fonte | — | contexto | fraca | — |
-| 11 | 3.4.4 (openmrs-module-bahmniapps/ui/test/unit/adt/controllers/careViewController.spec.js:82) | 3 código | código-fonte | — | contexto | fraca | — |
-| 12 | 3.4.4 (openmrs-module-bahmniapps/ui/test/unit/bedmanagement/controllers/careViewController.spec.js:62) | 3 código | código-fonte | — | contexto | fraca | — |
-| 13 | 3.4.4 (openmrs-module-bahmniapps/ui/test/unit/bedmanagement/controllers/careViewController.spec.js:69) | 3 código | código-fonte | — | contexto | fraca | — |
-| 14 | 3.4.4 (openmrs-module-bahmniapps/ui/test/unit/bedmanagement/controllers/careViewController.spec.js:76) | 3 código | código-fonte | — | contexto | fraca | — |
-| 15 | 3.4.4 (openmrs-module-bahmniapps/ui/test/unit/clinical/common/controllers/visitController.spec.js:171) | 3 código | código-fonte | — | contexto | fraca | — |
-| 16 | 3.4.4 (openmrs-module-bahmniapps/micro-frontends/webpack.config.js:38) | 3 código | configuração | module-federation | arquitetural | forte | implementa #29 |
-| 17 | 3.4.4 (openmrs-module-bahmniapps/micro-frontends/src/ipd/IpdDashboard.jsx:6) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #29 |
-| 18 | 3.4.4 (openmrs-module-bahmniapps/micro-frontends/src/ipd/CareViewDashboard.jsx:6) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #29 |
-| 19 | 3.4.4 (openmrs-module-bahmniapps/micro-frontends/src/ipd/index.js:21) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #29 |
-| 20 | 3.4.4 (openmrs-module-bahmniapps/micro-frontends/src/ipd/index.js:31) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #29 |
-| 21 | 3.4.4 (openmrs-module-bahmniapps/ui/app/clinical/index.html:95) | 3 código | código-fonte | — | contexto | fraca | — |
-| 22 | 3.4.4 (openmrs-module-bahmniapps/ui/app/clinical/app.js:328) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #29 |
-| 23 | 3.4.4 (openmrs-module-bahmniapps/ui/app/clinical/common/views/visitIpd.html:1) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #29 |
-| 24 | 3.4.4 (openmrs-module-bahmniapps/ui/app/adt/app.js:55) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #29 |
-| 25 | 3.4.4 (openmrs-module-bahmniapps/ui/app/bedmanagement/app.js:137) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #29 |
-| 26 | 3.4.4 (openmrs-module-bahmniapps/ui/app/registration/controllers/patientCommonController.js:39) | 3 código | código-fonte | events | tecnológica | ambígua | implementa #31 |
-| 27 | 3.4.3 (openmrs-module-bahmniapps/micro-frontends) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 28 | 3.4.3 (openmrs-module-bahmniapps/ui) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 29 | 3.4.5 #1 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #28 |
-| 30 | 3.4.5 #2 | 5 composição | código-fonte | iframe | arquitetural | ambígua | liga #28 |
-| 31 | 3.4.5 #3 | 5 composição | código-fonte | events | arquitetural | ambígua | liga #28 |
-| 32 | 3.4.6 #1 | 6 build-deploy | deploy | — | arquitetural | moderada | publica #28 |
-| 33 | 3.4.7 #1 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #1; corrobora #32 |
-| 34 | 3.4.7 #2 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #32 |
-| 35 | 3.4.7 #3 | 7 documentação | documentação | — | arquitetural | fraca | — |
-| 36 | 3.4.7 #4 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #32 |
-| 37 | 3.4.7 #5 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #32 |
-| 38 | 3.4.7 #6 | 7 documentação | documentação | — | contexto | fraca | corrobora #29; corrobora #32 |
-| 39 | 3.4.7 #7 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #27; contradiz #29 |
-| 40 | 3.4.7 #8 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #27 |
-| 41 | 3.4.7 #9 | 7 documentação | documentação | — | tecnológica | fraca | corrobora #19; corrobora #20 |
-| 42 | 3.4.7 #10 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #27 |
-| 43 | 3.4.7 #11 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #27; contradiz #29 |
-| 44 | 3.4.7 #12 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #29; corrobora #1 |
-| 45 | 3.4.7 #13 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #29; corrobora #1 |
-| 46 | 3.4.7 #14 | 7 documentação | comentário | — | tecnológica | fraca | corrobora #2; corrobora #1; corrobora #29 |
-| 47 | 3.4.7 #15 | 7 documentação | comentário | — | tecnológica | fraca | corrobora openmrs-module-bahmniapps/ui/app/adt/index.html:61-62; corrobora #1 |
-| 48 | 3.4.7 #16 | 7 documentação | comentário | — | tecnológica | fraca | corrobora openmrs-module-bahmniapps/micro-frontends/src/shared.js:1-2; corrobora #19 |
-| 49 | 3.4.8 #1 | 8 histórico | histórico | — | contexto | fraca | explica #6 |
-| 50 | 3.4.8 #2 | 8 histórico | histórico | iframe | arquitetural | fraca | explica #7; explica #26; explica #30; explica #31 |
-| 51 | 3.4.8 #3 | 8 histórico | histórico | — | arquitetural | fraca | explica #39; explica #40; explica #42; explica #43 |
+| 1 | 3.4.3 (openmrs-module-bahmniapps/micro-frontends, Markers, Entry and Build); 3.4.4 (openmrs-module-bahmniapps/micro-frontends/webpack.config.js:119, :38, File:line); 3.4.4 (openmrs-module-bahmniapps/micro-frontends/src/ipd/IpdDashboard.jsx:6; openmrs-module-bahmniapps/micro-frontends/src/ipd/CareViewDashboard.jsx:6; openmrs-module-bahmniapps/ui/app/clinical/index.html:95, Observation); 3.4.5 #1 (Configuration, Code); 3.4.7 #14 (Document); 3.4.7 #1, #7, #11, #12, #13, #14, #15 (Evidence) | 2 configuration | configuration | module-federation | architectural | strong | configures #28; configures #29 |
+| 2 | 3.4.4 (openmrs-module-bahmniapps/micro-frontends/webpack.config.js:119) | 3 code | configuration | module-federation | technological | moderate | implements #29 |
+| 3 | 3.4.4 (openmrs-module-bahmniapps/ui/app/common/util/dynamicResourceLoader.js:6) | 3 code | source code | — | context | weak | — |
+| 4 | 3.4.4 (openmrs-module-bahmniapps/ui/app/common/gallery/views/gallery.html:29) | 3 code | source code | — | context | weak | — |
+| 5 | 3.4.4 (openmrs-module-bahmniapps/ui/app/common/ui-helper/printer.js:8) | 3 code | source code | — | context | weak | — |
+| 6 | 3.4.4 (openmrs-module-bahmniapps/ui/app/lib/magnific-popup/jquery.magnific-popup.js:1593) | 3 code | source code | — | context | weak | — |
+| 7 | 3.4.4 (openmrs-module-bahmniapps/ui/app/registration/views/patientIdentifier.html:93) | 3 code | source code | iframe | technological | ambiguous | implements #30 |
+| 8 | 3.4.4 (openmrs-module-bahmniapps/ui/test/unit/adt/controllers/careViewController.spec.js:63) | 3 code | source code | — | context | weak | — |
+| 9 | 3.4.4 (openmrs-module-bahmniapps/ui/test/unit/adt/controllers/careViewController.spec.js:69) | 3 code | source code | — | context | weak | — |
+| 10 | 3.4.4 (openmrs-module-bahmniapps/ui/test/unit/adt/controllers/careViewController.spec.js:75) | 3 code | source code | — | context | weak | — |
+| 11 | 3.4.4 (openmrs-module-bahmniapps/ui/test/unit/adt/controllers/careViewController.spec.js:82) | 3 code | source code | — | context | weak | — |
+| 12 | 3.4.4 (openmrs-module-bahmniapps/ui/test/unit/bedmanagement/controllers/careViewController.spec.js:62) | 3 code | source code | — | context | weak | — |
+| 13 | 3.4.4 (openmrs-module-bahmniapps/ui/test/unit/bedmanagement/controllers/careViewController.spec.js:69) | 3 code | source code | — | context | weak | — |
+| 14 | 3.4.4 (openmrs-module-bahmniapps/ui/test/unit/bedmanagement/controllers/careViewController.spec.js:76) | 3 code | source code | — | context | weak | — |
+| 15 | 3.4.4 (openmrs-module-bahmniapps/ui/test/unit/clinical/common/controllers/visitController.spec.js:171) | 3 code | source code | — | context | weak | — |
+| 16 | 3.4.4 (openmrs-module-bahmniapps/micro-frontends/webpack.config.js:38) | 3 code | configuration | module-federation | architectural | strong | implements #29 |
+| 17 | 3.4.4 (openmrs-module-bahmniapps/micro-frontends/src/ipd/IpdDashboard.jsx:6) | 3 code | source code | module-federation | architectural | strong | implements #29 |
+| 18 | 3.4.4 (openmrs-module-bahmniapps/micro-frontends/src/ipd/CareViewDashboard.jsx:6) | 3 code | source code | module-federation | architectural | strong | implements #29 |
+| 19 | 3.4.4 (openmrs-module-bahmniapps/micro-frontends/src/ipd/index.js:21) | 3 code | source code | module-federation | architectural | strong | implements #29 |
+| 20 | 3.4.4 (openmrs-module-bahmniapps/micro-frontends/src/ipd/index.js:31) | 3 code | source code | module-federation | architectural | strong | implements #29 |
+| 21 | 3.4.4 (openmrs-module-bahmniapps/ui/app/clinical/index.html:95) | 3 code | source code | — | context | weak | — |
+| 22 | 3.4.4 (openmrs-module-bahmniapps/ui/app/clinical/app.js:328) | 3 code | source code | module-federation | architectural | strong | implements #29 |
+| 23 | 3.4.4 (openmrs-module-bahmniapps/ui/app/clinical/common/views/visitIpd.html:1) | 3 code | source code | module-federation | architectural | strong | implements #29 |
+| 24 | 3.4.4 (openmrs-module-bahmniapps/ui/app/adt/app.js:55) | 3 code | source code | module-federation | architectural | strong | implements #29 |
+| 25 | 3.4.4 (openmrs-module-bahmniapps/ui/app/bedmanagement/app.js:137) | 3 code | source code | module-federation | architectural | strong | implements #29 |
+| 26 | 3.4.4 (openmrs-module-bahmniapps/ui/app/registration/controllers/patientCommonController.js:39) | 3 code | source code | events | technological | ambiguous | implements #31 |
+| 27 | 3.4.3 (openmrs-module-bahmniapps/micro-frontends) | 4 structure | directory | — | context | weak | — |
+| 28 | 3.4.3 (openmrs-module-bahmniapps/ui) | 4 structure | directory | — | architectural | moderate | — |
+| 29 | 3.4.5 #1 | 5 composition | source code | module-federation | architectural | strong | links #28 |
+| 30 | 3.4.5 #2 | 5 composition | source code | iframe | architectural | ambiguous | links #28 |
+| 31 | 3.4.5 #3 | 5 composition | source code | events | architectural | ambiguous | links #28 |
+| 32 | 3.4.6 #1 | 6 build-deploy | deploy | — | architectural | moderate | publishes #28 |
+| 33 | 3.4.7 #1 | 7 documentation | documentation | — | architectural | weak | corroborates #1; corroborates #32 |
+| 34 | 3.4.7 #2 | 7 documentation | documentation | — | architectural | weak | corroborates #32 |
+| 35 | 3.4.7 #3 | 7 documentation | documentation | — | architectural | weak | — |
+| 36 | 3.4.7 #4 | 7 documentation | documentation | — | architectural | weak | corroborates #32 |
+| 37 | 3.4.7 #5 | 7 documentation | documentation | — | architectural | weak | corroborates #32 |
+| 38 | 3.4.7 #6 | 7 documentation | documentation | — | context | weak | corroborates #29; corroborates #32 |
+| 39 | 3.4.7 #7 | 7 documentation | documentation | — | architectural | weak | contradicts #27; contradicts #29 |
+| 40 | 3.4.7 #8 | 7 documentation | documentation | — | architectural | weak | contradicts #27 |
+| 41 | 3.4.7 #9 | 7 documentation | documentation | — | technological | weak | corroborates #19; corroborates #20 |
+| 42 | 3.4.7 #10 | 7 documentation | documentation | — | architectural | weak | contradicts #27 |
+| 43 | 3.4.7 #11 | 7 documentation | documentation | — | architectural | weak | contradicts #27; contradicts #29 |
+| 44 | 3.4.7 #12 | 7 documentation | documentation | — | architectural | weak | corroborates #29; corroborates #1 |
+| 45 | 3.4.7 #13 | 7 documentation | comment | — | architectural | weak | corroborates #29; corroborates #1 |
+| 46 | 3.4.7 #14 | 7 documentation | comment | — | technological | weak | corroborates #2; corroborates #1; corroborates #29 |
+| 47 | 3.4.7 #15 | 7 documentation | comment | — | technological | weak | corroborates openmrs-module-bahmniapps/ui/app/adt/index.html:61-62; corroborates #1 |
+| 48 | 3.4.7 #16 | 7 documentation | comment | — | technological | weak | corroborates openmrs-module-bahmniapps/micro-frontends/src/shared.js:1-2; corroborates #19 |
+| 49 | 3.4.8 #1 | 8 history | history | — | context | weak | explains #6 |
+| 50 | 3.4.8 #2 | 8 history | history | iframe | architectural | weak | explains #7; explains #26; explains #30; explains #31 |
+| 51 | 3.4.8 #3 | 8 history | history | — | architectural | weak | explains #39; explains #40; explains #42; explains #43 |
 
-## Resumo
+## Summary
 
-Observações: 51. Dimensões (tecnologia: 0, configuração: 1, código: 25, estrutura: 2, composição: 3, build-deploy: 1, documentação: 16, histórico: 3). Força (forte: 11, moderada: 3, fraca: 33, ambígua: 4). Evidência (tecnológica: 7, arquitetural: 28, contexto: 16).
+Observations: 51. Dimensions (technology: 0, configuration: 1, code: 25, structure: 2, composition: 3, build-deploy: 1, documentation: 16, history: 3). Strength (strong: 11, moderate: 3, weak: 33, ambiguous: 4). Evidence (technological: 7, architectural: 28, context: 16).
+

@@ -20,69 +20,69 @@ annotation:
 
 # 249 — single-spa/action-deploy-to-import-map-deployer
 
-## Contexto
+## Context
 
-GitHub Action “for deploying microfrontends or import maps to import-map-deployer” (`README.md:1–3`). A action chama, por HTTP `PATCH`, um servidor `import-map-deployer` para atualizar a entrada de um serviço ou o import map inteiro de um ambiente (`src/index.js:30–110`). O README avisa que ela não envia arquivos para CDN (`README.md:3`). É ferramenta de deploy para sistemas que usam import maps, como os do ecossistema single-spa. Não há aplicação frontend. O nome do repositório e o da organização não são usados como evidência.
+GitHub Action “for deploying microfrontends or import maps to import-map-deployer” (`README.md:1–3`). The action calls through HTTP `PATCH` an `import-map-deployer` server to update a service entry or an environment’s entire import map (`src/index.js:30–110`). The README warns that it does not upload files to a CDN (`README.md:3`). It is a deployment tool for systems using import maps, such as those in the single-spa ecosystem. There is no frontend application. Repository and organization names are not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:250` registra rank 249, ID 871388763, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:250` records rank 249, ID 871388763, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:250` registra as estratégias `terminology;technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:10357` e `data/discovery/mfe-round-002/candidates.csv:10363`, ambos com `pass`.
+`data/samples/mfe-sample-001/sample.csv:250` records strategies `terminology;technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:10357` and `data/discovery/mfe-round-002/candidates.csv:10363`, both with `pass`.
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos três hits em cada rodada, do endpoint `repositories` e com `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same three hits in each round, from endpoint `repositories` and with an empty `path`:
 
-| Consulta (`q`) | Subconsulta | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Collection 001 / 002 (UTC) |
 |---|---|---|
 | `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | `…#created:2024-10` | 2026-10-07T18:25:39.366Z / 2026-10-08T15:37:07.510Z |
 | `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | `…#created:2024-10` | 2026-10-07T22:06:41.303Z / 2026-10-08T15:46:44.873Z |
 | `technology-single-spa-repositories`: `"single-spa" in:name,description,readme` | `…#created:2024-Q4` | 2026-10-07T23:33:22.655Z / 2026-10-08T16:20:53.721Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01` e `created:2024-10-01..2024-10-31` (terminologia) ou `created:2024-10-01..2024-12-31` (single-spa).
+The effective queries append `pushed:>=2025-04-01` and `created:2024-10-01..2024-10-31` (terminology) or `created:2024-10-01..2024-12-31` (single-spa).
 
-Metadados do hit:
-- descrição “Github action for deploying to import-map-deployer”;
-- sem tópicos, linguagem JavaScript, `fork: false`, tamanho 394;
-- criação em 2024-10-11T21:31:42Z, push em 2025-06-19T20:25:33Z.
+Hit metadata:
+- description “Github action for deploying to import-map-deployer”;
+- no topics, language JavaScript, `fork: false`, size 394;
+- created at 2024-10-11T21:31:42Z, pushed at 2025-06-19T20:25:33Z.
 
-Grafias no README:
+Spellings in the README:
 - “microfrontends”: `README.md:3` (“for deploying microfrontends or import maps”);
-- “single-spa”: `README.md:3` (URL `github.com/single-spa/import-map-deployer`) e `README.md:7`, `15`, `31` (`uses: single-spa/action-deploy-to-import-map-deployer@v1`).
+- “single-spa”: `README.md:3` (URL `github.com/single-spa/import-map-deployer`) and `README.md:7`, `15`, `31` (`uses: single-spa/action-deploy-to-import-map-deployer@v1`).
 
-O singular “microfrontend” não aparece literalmente no README nem na descrição. Aparece em `action.yml:2`, `11` e `14`, fora dos campos buscados, e o hit depende do processamento textual da busca do GitHub, que não está registrado.
+The singular “microfrontend” does not appear literally in the README or description. It appears in `action.yml:2`, `11` and `14`, outside the searched fields, and the hit depends on GitHub search text processing, which is not recorded.
 
-A última alteração do README é `9206073` (2024-10-15), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The last README change is `9206073` (2024-10-15), before the October 2026 collections. The README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 14 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. São `action.yml`, `src/index.js`, o bundle `dist/index.js` gerado pelo `ncc` (`package.json:8`), configs (`.husky`, prettier, pnpm) e documentos. Não há HTML nem componentes de UI. | contrária |
-| Código-fonte | `src/index.js:1–110`: lê entradas da action, calcula integridade SHA-384 opcional e faz `PATCH` em `/services` ou `/import-map.json` do `import-map-deployer`. É código Node de CI. | contrária |
-| Configuração | `action.yml:1–36`: action `node20` com entradas `host`, `service-name`, `service-url`, `import-map-path` e credenciais. Não configura composição de unidades frontend; atualiza o registro de URLs mantido por outro serviço. | contrária |
-| Documentação | `README.md:9–38`: exemplos de uso em workflows de terceiros, como `react-microfrontends/api` (`:11`). | contexto |
+| Structure | `git ls-tree -r` at the SHA: 14 entries, all regular files `100644`; zero symlinks and zero gitlinks. These are `action.yml`, `src/index.js`, bundle `dist/index.js` generated by `ncc` (`package.json:8`), configs (`.husky`, prettier, pnpm) and documents. There is no HTML or UI components. | contrary |
+| Source code | `src/index.js:1–110`: reads action inputs, calculates optional SHA-384 integrity and performs `PATCH` on `/services` or `/import-map.json` of `import-map-deployer`. This is CI Node code. | contrary |
+| Configuration | `action.yml:1–36`: `node20` action with inputs `host`, `service-name`, `service-url`, `import-map-path` and credentials. It does not configure frontend unit composition; it updates the URL registry maintained by another service. | contrary |
+| Documentation | `README.md:9–38`: examples of use in third-party workflows, such as `react-microfrontends/api` (`:11`). | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 29 commits lineares, nenhum merge, de Joel Denning (27) e Jolyn Denning (2), de 2024-10-11 (`3c282ed`, “Initial commit”) a 2025-06-19 (SHA `deda221`, “Update FUNDING.yml (#1)”). O branch `origin/jolyndenning-patch-1` não foi considerado. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 29 linear commits, no merges, by Joel Denning (27) and Jolyn Denning (2), from 2024-10-11 (`3c282ed`, “Initial commit”) to 2025-06-19 (SHA `deda221`, “Update FUNDING.yml (#1)”). Branch `origin/jolyndenning-patch-1` was not considered. No historical blob was read and there was no missing object.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend; o repositório é uma GitHub Action em Node. |
-| Q2 | No | Sem unidades, não há independência a avaliar. |
-| Q3 | No | Não há host, shell ou configuração raiz neste repositório. |
-| Q4 | No | Nenhum mecanismo de composição configurado entre unidades deste repositório; a action atualiza import maps de outros sistemas (`src/index.js:55–63`, `87–95`). |
-| Q5 | No | Q1–Q4 são No: ferramenta de deploy para ecossistemas de micro-frontends com import maps. |
+| Q1 | No | No frontend unit; the repository is a GitHub Action in Node. |
+| Q2 | No | Without units, there is no independence to assess. |
+| Q3 | No | There is no host, shell or root configuration in this repository. |
+| Q4 | No | No composition mechanism configured between units in this repository; the action updates import maps in other systems (`src/index.js:55–63`, `87–95`). |
+| Q5 | No | Q1–Q4 are No: deployment tool for micro-frontend ecosystems with import maps. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “MFE frameworks and libraries (e.g., single-spa itself, federation plugins)”: é ferramenta de apoio ao deploy de micro-frontends, sem implementá-los.
-- Mesmo enquadramento do rascunho 204 (ferramentas de desenvolvimento para single-spa): `repo_type: library`, `frontend_units: 0`, `unit_organization: none`, `approaches: []`, `ui_technologies: []`, `build_tools: []`.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. It matches “MFE frameworks and libraries (e.g., single-spa itself, federation plugins)”: a tool supporting micro-frontend deployment without implementing them.
+- Same categorization as draft 204 (development tools for single-spa): `repo_type: library`, `frontend_units: 0`, `unit_organization: none`, `approaches: []`, `ui_technologies: []`, `build_tools: []`.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** ferramenta de CI do ecossistema de import maps casa as consultas terminológicas e a de single-spa.
-- **Protocolo (busca):** o hit singular `microfrontend` não tem grafia literal nos campos buscados. Elegibilidade `pass` nas duas rodadas.
+- **RQ1 (misleading signals):** CI tool in the import map ecosystem matches terminology queries and the single-spa query.
+- **Protocol (search):** the singular hit `microfrontend` has no literal spelling in the searched fields. Eligibility `pass` in both rounds.

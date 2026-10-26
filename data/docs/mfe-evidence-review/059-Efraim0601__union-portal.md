@@ -19,529 +19,530 @@ annotation:
 
 # 059 — Efraim0601/union-portal
 
-## Leitura do repositório
+## Repository overview
 
-A arquitetura se sustenta por uma cadeia completa de Native Federation:
-- **Dependência:** `@angular-architects/native-federation` (#2).
-- **Configuração:**
-  - os targets `build` e `serve` das três aplicações usam o builder da federação (#3 a #8);
-  - nos `federation.config.js`, os remotes expõem `./Routes`, e as três aplicações configuram dependências compartilhadas (#9 a #11);
-  - os manifestos de desenvolvimento e de produção dão ao shell os endereços dos dois remotes (#12, #13).
-- **Código:** o shell inicializa a federação com o manifesto (#24, #25) e carrega as rotas de cada remote por nome (#22, #23, #27).
-- **Relações:** isso resulta nas duas relações ativas, shell → diaspora e shell → promote (#34, #35). Elas ligam três unidades com limites confirmados (#30 a #32).
+Architecture supported by complete Native Federation chain:
+- **Dependency:** `@angular-architects/native-federation` (#2).
+- **Configuration:**
+  - three applications’ `build` and `serve` targets use federation builder (#3 through #8);
+  - `federation.config.js` remotes expose `./Routes`, all three applications configuring shared dependencies (#9 through #11);
+  - development/production manifests give shell two remote addresses (#12, #13).
+- **Code:** shell initializes federation with manifest (#24, #25), loading each remote’s routes by name (#22, #23, #27).
+- **Relationships:** two active relationships, shell → diaspora/shell → promote (#34, #35), linking three confirmed units (#30 through #32).
 
-Build e deploy mostram unidades separadas no build e juntas no deploy (#37 a #39). A separação de publicação não aparece neste repositório.
+Build/deployment show separate build/joint deployment units (#37 through #39). Publication separation absent from repository.
 
-Três sinais enganam se lidos sozinhos:
-- **Dependência sem uso:** `@softarc/native-federation-node` está declarada e não é usada (#1). O histórico não diz quando ela entrou (#66), mas isso não muda a leitura do snapshot.
-- **Inicializações que não compõem:** os remotes também chamam `initFederation` e fazem o bootstrap assíncrono (#14 a #20, exceto #16). São construções de federação que só servem ao modo standalone da própria unidade.
-- **Sessão compartilhada só no papel:** a biblioteca de sessão compartilhada existe (#28), e a documentação a anuncia várias vezes (#42, #50, #51, #65). Nenhuma aplicação a usa.
+Three signals misleading in isolation:
+- **Unused dependency:** `@softarc/native-federation-node` declared/unused (#1). History does not establish introduction (#66), without changing snapshot reading.
+- **Noncomposing initialization:** remotes also call `initFederation`/asynchronous bootstrap (#14 through #20 except #16). Federation constructs serving own unit’s standalone mode only.
+- **Shared session on paper only:** shared session library exists (#28), repeatedly announced by documentation (#42, #50, #51, #65). No application uses it.
 
-A única ambiguidade arquitetural é o iframe do fluxo legado (#26, #36). Os comentários que o acompanham são desmentidos pelo nginx do snapshot (#61, #63), e o histórico não resolve a dúvida (#67).
+Sole architectural ambiguity is legacy-flow iframe (#26, #36). Accompanying comments contradicted by snapshot nginx (#61, #63), history not resolving question (#67).
 
-A documentação tem 26 afirmações, todas fracas pelo critério do protocolo: 16 corroboradas, 1 parcial, 7 contraditas e 2 sem corroboração. Ficam como contexto, e não como evidência de MFE:
-- a raiz de coordenação (#29) e o backend de OTP (#33);
-- as afirmações sobre sistemas externos e backends (#46, #52, #53, #56).
+Documentation has 26 claims, all weak under protocol: 16 corroborated, 1 partial, 7 contradicted, 2 uncorroborated. Context rather than MFE evidence:
+- coordination root (#29)/OTP backend (#33);
+- external-system/backend claims (#46, #52, #53, #56).
 
-## Observações
+## Observations
 
 ### 1. package.json:28
 
-**Observação:** `@softarc/native-federation-node` (`^3.3.4`) está declarada em `dependencies`. Não há import nem invocação dela nos arquivos de código e de build do snapshot.
+**Observation:** `@softarc/native-federation-node` (`^3.3.4`) declared in `dependencies`. No import/invocation in snapshot code/build files.
 
-**Interpretação:** Uma tecnologia de federação é declarada e não é usada. É um sinal enganoso.
+**Interpretation:** Declared unused federation technology. Misleading signal.
 
 ### 2. package.json:39
 
-**Observação:** `@angular-architects/native-federation` (`21.2.5`) está declarada em `devDependencies`.
+**Observation:** `@angular-architects/native-federation` (`21.2.5`) declared in `devDependencies`.
 
-**Interpretação:** A tecnologia de federação está presente. A configuração e o código a usam.
+**Interpretation:** Federation technology present, used by configuration/code.
 
 ### 3. angular.json:52-64
 
-**Observação:** O target `build` do projeto `shell` usa o builder `@angular-architects/native-federation:build` sobre o target `esbuild`.
+**Observation:** Target `build` of project `shell` uses builder `@angular-architects/native-federation:build` over target `esbuild`.
 
-**Interpretação:** O build do shell está configurado para Native Federation.
+**Interpretation:** Native Federation configured in shell build.
 
 ### 4. angular.json:66-75
 
-**Observação:** O target `serve` do projeto `shell` usa o builder `@angular-architects/native-federation:build` em modo `dev`.
+**Observation:** Target `serve` of project `shell` uses builder `@angular-architects/native-federation:build` in `dev` mode.
 
-**Interpretação:** O servidor de desenvolvimento do shell passa pela federação.
+**Interpretation:** Shell development server passes through federation.
 
 ### 5. angular.json:178-190
 
-**Observação:** O target `build` do projeto `promote` usa o builder `@angular-architects/native-federation:build` sobre o target `esbuild`.
+**Observation:** Target `build` of project `promote` uses builder `@angular-architects/native-federation:build` over target `esbuild`.
 
-**Interpretação:** O build do promote está configurado para Native Federation.
+**Interpretation:** Native Federation configured in promote build.
 
 ### 6. angular.json:192-201
 
-**Observação:** O target `serve` do projeto `promote` usa o builder `@angular-architects/native-federation:build` em modo `dev`.
+**Observation:** Target `serve` of project `promote` uses builder `@angular-architects/native-federation:build` in `dev` mode.
 
-**Interpretação:** O servidor de desenvolvimento do promote passa pela federação, o que permite rodá-lo sozinho.
+**Interpretation:** Promote development server passes through federation, allowing standalone execution.
 
 ### 7. angular.json:305-317
 
-**Observação:** O target `build` do projeto `diaspora` usa o builder `@angular-architects/native-federation:build` sobre o target `esbuild`.
+**Observation:** Target `build` of project `diaspora` uses builder `@angular-architects/native-federation:build` over target `esbuild`.
 
-**Interpretação:** O build do diaspora está configurado para Native Federation.
+**Interpretation:** Native Federation configured in diaspora build.
 
 ### 8. angular.json:319-328
 
-**Observação:** O target `serve` do projeto `diaspora` usa o builder `@angular-architects/native-federation:build` em modo `dev`.
+**Observation:** Target `serve` of project `diaspora` uses builder `@angular-architects/native-federation:build` in `dev` mode.
 
-**Interpretação:** O servidor de desenvolvimento do diaspora passa pela federação, o que permite rodá-lo sozinho.
+**Interpretation:** Diaspora development server passes through federation, allowing standalone execution.
 
 ### 9. projects/diaspora/federation.config.js:1-33
 
-**Observação:** `withNativeFederation` declara `name: 'diaspora'`, expõe `./Routes` (`./projects/diaspora/src/app/remote.routes.ts`) e configura `shared` com `shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' })`. Declara também exclusões em `skip` e `ignoreUnusedDeps: true`.
+**Observation:** `withNativeFederation` declares `name: 'diaspora'`, exposing `./Routes` (`./projects/diaspora/src/app/remote.routes.ts`), configuring `shared` through `shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' })`. Also declares `skip` exclusions and `ignoreUnusedDeps: true`.
 
-**Interpretação:** O diaspora está configurado como remote, oferece suas rotas a um host e configura o compartilhamento de dependências, com as exclusões declaradas.
+**Interpretation:** Diaspora configured as remote offering routes to host/configuring dependency sharing with stated exclusions.
 
 ### 10. projects/promote/federation.config.js:1-33
 
-**Observação:** `withNativeFederation` declara `name: 'promote'`, expõe `./Routes` (`./projects/promote/src/app/remote.routes.ts`) e configura `shared` com `shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' })`. Declara também exclusões em `skip` e `ignoreUnusedDeps: true`.
+**Observation:** `withNativeFederation` declares `name: 'promote'`, exposing `./Routes` (`./projects/promote/src/app/remote.routes.ts`), configuring `shared` through `shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' })`. Also declares `skip` exclusions and `ignoreUnusedDeps: true`.
 
-**Interpretação:** O promote está configurado como remote, oferece suas rotas a um host e configura o compartilhamento de dependências, com as exclusões declaradas.
+**Interpretation:** Promote configured as remote offering routes to host/configuring dependency sharing with stated exclusions.
 
 ### 11. projects/shell/federation.config.js:1-28
 
-**Observação:** `withNativeFederation` declara `name: 'shell'`, sem expor módulos, e configura `shared` com `shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' })`. Declara também exclusões em `skip` e `ignoreUnusedDeps: true`.
+**Observation:** `withNativeFederation` declares `name: 'shell'` without exposing modules, configuring `shared` through `shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' })`. Also declares `skip` exclusions and `ignoreUnusedDeps: true`.
 
-**Interpretação:** O shell está configurado como participante da federação e configura o compartilhamento de dependências, com as exclusões declaradas.
+**Interpretation:** Shell configured as federation participant/dependency sharing with stated exclusions.
 
 ### 12. projects/shell/public/federation.manifest.json:2-3
 
-**Observação:** O manifesto do shell mapeia `promote` para `http://localhost:4201/remoteEntry.json` e `diaspora` para `http://localhost:4202/remoteEntry.json`.
+**Observation:** Shell manifest maps `promote` to `http://localhost:4201/remoteEntry.json` and `diaspora` to `http://localhost:4202/remoteEntry.json`.
 
-**Interpretação:** A configuração do host declara os dois remotes e onde encontrá-los em desenvolvimento.
+**Interpretation:** Host configuration declares two remotes/development locations.
 
 ### 13. deploy/federation.manifest.prod.json:2-3; Dockerfile:42-43
 
-**Observação:** O manifesto de produção mapeia `promote` para `/remotes/promote/remoteEntry.json` e `diaspora` para `/remotes/diaspora/remoteEntry.json`. A imagem o copia sobre o manifesto de desenvolvimento.
+**Observation:** Production manifest maps `promote` to `/remotes/promote/remoteEntry.json`, `diaspora` to `/remotes/diaspora/remoteEntry.json`. Image copies over development manifest.
 
-**Interpretação:** A configuração do host declara os dois remotes e onde encontrá-los em produção, na mesma origem.
+**Interpretation:** Host configuration declares two remotes/production locations under same origin.
 
 ### 14. projects/diaspora/src/main.ts:3-5
 
-**Observação:** `import('./bootstrap')` depois de `initFederation()`.
+**Observation:** `import('./bootstrap')` after `initFederation()`.
 
-**Interpretação:** É um bootstrap assíncrono interno à unidade, que não compõe outra.
+**Interpretation:** Asynchronous bootstrap internal to unit without composing another.
 
 ### 15. projects/promote/src/main.ts:3-5
 
-**Observação:** `import('./bootstrap')` depois de `initFederation()`.
+**Observation:** `import('./bootstrap')` after `initFederation()`.
 
-**Interpretação:** É um bootstrap assíncrono interno à unidade, que não compõe outra.
+**Interpretation:** Asynchronous bootstrap internal to unit without composing another.
 
 ### 16. projects/shell/src/main.ts:3-5
 
-**Observação:** `import('./bootstrap')` depois de `initFederation('federation.manifest.json')`.
+**Observation:** `import('./bootstrap')` after `initFederation('federation.manifest.json')`.
 
-**Interpretação:** É um bootstrap assíncrono interno ao shell. A composição está nas linhas #24 e #25.
+**Interpretation:** Asynchronous bootstrap internal to shell. Composition in rows #24 and #25.
 
 ### 17. projects/diaspora/src/main.ts:1
 
-**Observação:** Importa `initFederation` de `@angular-architects/native-federation`.
+**Observation:** Imports `initFederation` from `@angular-architects/native-federation`.
 
-**Interpretação:** Prepara o runtime de federação do modo standalone da própria unidade.
+**Interpretation:** Prepares own-unit standalone federation runtime.
 
 ### 18. projects/diaspora/src/main.ts:3
 
-**Observação:** `initFederation()`, sem manifesto.
+**Observation:** `initFederation()` without manifest.
 
-**Interpretação:** O runtime standalone não resolve nenhuma outra unidade. O shell consome `./Routes` diretamente e não passa por este `main`.
+**Interpretation:** Standalone runtime resolves no other unit. Shell directly consumes `./Routes`, bypassing this `main`.
 
 ### 19. projects/promote/src/main.ts:1
 
-**Observação:** Importa `initFederation` de `@angular-architects/native-federation`.
+**Observation:** Imports `initFederation` from `@angular-architects/native-federation`.
 
-**Interpretação:** Prepara o runtime de federação do modo standalone da própria unidade.
+**Interpretation:** Prepares own-unit standalone federation runtime.
 
 ### 20. projects/promote/src/main.ts:3
 
-**Observação:** `initFederation()`, sem manifesto.
+**Observation:** `initFederation()` without manifest.
 
-**Interpretação:** O runtime standalone não resolve nenhuma outra unidade. O shell consome `./Routes` diretamente e não passa por este `main`.
+**Interpretation:** Standalone runtime resolves no other unit. Shell directly consumes `./Routes`, bypassing this `main`.
 
 ### 21. projects/shell/src/app/app.routes.ts:2
 
-**Observação:** Importa `loadRemoteModule` de `@angular-architects/native-federation`.
+**Observation:** Imports `loadRemoteModule` from `@angular-architects/native-federation`.
 
-**Interpretação:** O mecanismo de carga remota está disponível nas rotas do shell.
+**Interpretation:** Remote-loading mechanism available in shell routes.
 
 ### 22. projects/shell/src/app/app.routes.ts:11-13
 
-**Observação:** A rota `promote` carrega os filhos com `loadRemoteModule('promote', './Routes').then((m) => m.routes)`.
+**Observation:** Route `promote` loads children through `loadRemoteModule('promote', './Routes').then((m) => m.routes)`.
 
-**Interpretação:** O shell carrega as rotas do promote em runtime.
+**Interpretation:** Shell loads promote routes at runtime.
 
 ### 23. projects/shell/src/app/app.routes.ts:16-18
 
-**Observação:** A rota `diaspora` carrega os filhos com `loadRemoteModule('diaspora', './Routes').then((m) => m.routes)`.
+**Observation:** Route `diaspora` loads children through `loadRemoteModule('diaspora', './Routes').then((m) => m.routes)`.
 
-**Interpretação:** O shell carrega as rotas do diaspora em runtime.
+**Interpretation:** Shell loads diaspora routes at runtime.
 
 ### 24. projects/shell/src/main.ts:1
 
-**Observação:** Importa `initFederation` de `@angular-architects/native-federation`.
+**Observation:** Imports `initFederation` from `@angular-architects/native-federation`.
 
-**Interpretação:** O runtime de federação do host está disponível.
+**Interpretation:** Host federation runtime available.
 
 ### 25. projects/shell/src/main.ts:3-5
 
-**Observação:** `initFederation('federation.manifest.json')` antes do bootstrap.
+**Observation:** `initFederation('federation.manifest.json')` before bootstrap.
 
-**Interpretação:** O host resolve as entradas dos remotes pelo manifesto antes de iniciar.
+**Interpretation:** Host resolves manifest remote entries before startup.
 
 ### 26. projects/diaspora/src/app/pages/legacy-onboarding.ts:31-36; projects/diaspora/src/app/pages/legacy-onboarding.ts:19-24, 53-54; projects/diaspora/src/app/app.routes.ts:11
 
-**Observação:** Uma rota ativa renderiza um `<iframe>`. O `src` vem da global `__LEGACY_ONBOARDING_URL__` ou, na falta dela, do caminho relativo `/open-account-flow-test`. Nenhum dos dois está definido ou implementado no snapshot.
+**Observation:** Active route renders `<iframe>`. `src` from global `__LEGACY_ONBOARDING_URL__` or fallback relative `/open-account-flow-test`. Neither defined/implemented in snapshot.
 
-**Interpretação:** Pode haver a incorporação de um frontend legado, mas o destino não é observável.
+**Interpretation:** Possible legacy frontend embedding, but target unobservable.
 
 ### 27. projects/shell/src/app/app.routes.ts:9-20; projects/shell/src/app/app.config.ts:7-10
 
-**Observação:** As rotas do host nomeiam `promote` e `diaspora`, e a rota vazia redireciona para `diaspora/home`. As rotas estão registradas na configuração do shell.
+**Observation:** Host routes name `promote` and `diaspora`, empty route redirecting to `diaspora/home`. Routes registered in shell configuration.
 
-**Interpretação:** O roteamento do host declara a relação host → remotes.
+**Interpretation:** Host routing declares host → remotes relationship.
 
 ### 28. projects/auth/src/lib/client-auth-store.ts:71; projects/auth/src/lib/client-auth-store.ts:68-75
 
-**Observação:** A biblioteca `projects/auth` registra um listener do evento `storage` para sincronizar a sessão. Nenhuma aplicação importa a biblioteca.
+**Observation:** Library `projects/auth` registers `storage` event listener synchronizing session. No application imports library.
 
-**Interpretação:** Um mecanismo de comunicação entre aplicações está implementado e não está conectado.
+**Interpretation:** Implemented disconnected inter-application communication mechanism.
 
 ### 29. .; package.json:1-17; angular.json:20-21, 146-147, 273-274
 
-**Observação:** A raiz tem o `angular.json` e o `package.json` do workspace, sem UI própria. Os targets pertencem às três aplicações em `projects/`.
+**Observation:** Root has workspace `angular.json`/`package.json` without own UI. Targets belong to three applications in `projects/`.
 
-**Interpretação:** É a raiz de coordenação de um monorepo, e não uma unidade.
+**Interpretation:** Monorepo coordination root rather than unit.
 
 ### 30. projects/diaspora; angular.json:332; projects/diaspora/src/main.ts:1-6; projects/diaspora/src/bootstrap.ts:1-5; angular.json:305-317
 
-**Observação:** É um projeto do `angular.json` com entrada (`main.ts` → `bootstrap.ts`) e target de build próprios, sem manifesto local.
+**Observation:** Project in `angular.json` with own entry (`main.ts` → `bootstrap.ts`)/build target, without local manifest.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with own boundary.
 
 ### 31. projects/promote; angular.json:205; projects/promote/src/main.ts:1-6; projects/promote/src/bootstrap.ts:1-5; angular.json:178-190
 
-**Observação:** É um projeto do `angular.json` com entrada (`main.ts` → `bootstrap.ts`) e target de build próprios, sem manifesto local.
+**Observation:** Project in `angular.json` with own entry (`main.ts` → `bootstrap.ts`)/build target, without local manifest.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with own boundary.
 
 ### 32. projects/shell; angular.json:79; projects/shell/src/main.ts:1-6; projects/shell/src/bootstrap.ts:1-5; angular.json:52-64
 
-**Observação:** É um projeto do `angular.json` com entrada (`main.ts` → `bootstrap.ts`) e target de build próprios, sem manifesto local.
+**Observation:** Project in `angular.json` with own entry (`main.ts` → `bootstrap.ts`)/build target, without local manifest.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with own boundary.
 
 ### 33. server/diaspora-otp; server/diaspora-otp/package.json:1-16; server/diaspora-otp/index.js:18; deploy/test/Dockerfile.otp:5-9
 
-**Observação:** É o pacote de um servidor Express de OTP, com imagem própria e sem entrada de UI.
+**Observation:** Express OTP server package with own image/no UI entry.
 
-**Interpretação:** É um backend no mesmo repositório, e não uma unidade frontend.
+**Interpretation:** Backend in same repository rather than frontend unit.
 
 ### 34. projects/shell/src/app/app.routes.ts:16-18; projects/shell/public/federation.manifest.json:3; deploy/federation.manifest.prod.json:3; projects/diaspora/federation.config.js:4-9
 
-**Observação:** O shell carrega `./Routes` de `diaspora`. O nome é resolvido pelos manifestos e corresponde ao nome e ao módulo exposto na configuração do diaspora.
+**Observation:** Shell loads `./Routes` from `diaspora`. Name resolved through manifests, matching name/exposed module in diaspora configuration.
 
-**Interpretação:** É uma relação host → remote ativa.
+**Interpretation:** Active host → remote relationship.
 
 ### 35. projects/shell/src/app/app.routes.ts:11-13; projects/shell/public/federation.manifest.json:2; deploy/federation.manifest.prod.json:2; projects/promote/federation.config.js:4-9
 
-**Observação:** O shell carrega `./Routes` de `promote`. O nome é resolvido pelos manifestos e corresponde ao nome e ao módulo exposto na configuração do promote.
+**Observation:** Shell loads `./Routes` from `promote`. Name resolved through manifests, matching name/exposed module in promote configuration.
 
-**Interpretação:** É uma relação host → remote ativa.
+**Interpretation:** Active host → remote relationship.
 
 ### 36. projects/diaspora/src/app/pages/legacy-onboarding.ts:31-36; projects/diaspora/src/app/pages/legacy-onboarding.ts:19-24, 53-54; deploy/nginx.conf:128-130
 
-**Observação:** O diaspora embute por iframe o caminho `/open-account-flow-test`. O snapshot não tem override nem implementação desse caminho, e o nginx manda os caminhos não mapeados para o shell.
+**Observation:** Diaspora embeds `/open-account-flow-test` through iframe. No snapshot override/path implementation, nginx forwarding unmapped paths to shell.
 
-**Interpretação:** É uma relação page → embedded-frontend com destino e atividade indeterminados.
+**Interpretation:** Page → embedded-frontend relationship with undetermined target/activity.
 
 ### 37. angular.json:305-317; Dockerfile:22; Dockerfile:41; docker-compose.yml:19-23; deploy/server/components.env:65-70
 
-**Observação:** O diaspora tem target e `ng build` próprios, com `base-href` `/remotes/diaspora/`. O artefato é copiado para a imagem do portal, que é um único serviço no compose e um único componente no deploy.
+**Observation:** Diaspora has own target/`ng build`, `base-href` `/remotes/diaspora/`. Artifact copied to portal image, single compose service/single deployment component.
 
-**Interpretação:** Há uma fronteira de build própria, mas não uma fronteira de deploy.
+**Interpretation:** Own build boundary without deployment boundary.
 
-**Nota:** O build do diaspora também carrega os arquivos do MediaPipe que o nginx serve na raiz para as duas aplicações (deploy/nginx.conf:42-52). É um acoplamento de deploy entre unidades (#60).
+**Note:** Diaspora build also carries MediaPipe files nginx serves at root for both applications (deploy/nginx.conf:42-52). Inter-unit deployment coupling (#60).
 
 ### 38. angular.json:178-190; Dockerfile:21; Dockerfile:40; docker-compose.yml:19-23; deploy/server/components.env:65-70
 
-**Observação:** O promote tem target e `ng build` próprios, com `base-href` `/remotes/promote/`. O artefato é copiado para a mesma imagem.
+**Observation:** Promote has own target/`ng build`, `base-href` `/remotes/promote/`. Artifact copied to same image.
 
-**Interpretação:** Há uma fronteira de build própria, mas não uma fronteira de deploy.
+**Interpretation:** Own build boundary without deployment boundary.
 
 ### 39. angular.json:52-64; Dockerfile:20; Dockerfile:38; Dockerfile:43; deploy/server/deploy.sh:153
 
-**Observação:** O shell tem target e `ng build` próprios (`--base-href /`). O artefato é copiado para a raiz da mesma imagem, que também recebe o manifesto de produção (Dockerfile:43). O script de deploy reconstrói a imagem e recria o serviço (`--build --force-recreate`).
+**Observation:** Shell has own target/`ng build` (`--base-href /`). Artifact copied to same image root, also receiving production manifest (Dockerfile:43). Deployment script rebuilds image/recreates service (`--build --force-recreate`).
 
-**Interpretação:** Há uma fronteira de build própria, mas não uma fronteira de deploy. Pelo fluxo de deploy registrado, mudar o manifesto que liga os remotes exige republicar a imagem conjunta.
+**Interpretation:** Own build boundary without deployment boundary. Recorded deployment flow requires republishing joint image when remote-linking manifest changes.
 
 ### 40. Dockerfile:2-3
 
-**Observação:** "image unique (gateway) servant shell + promote + diaspora […] une seule origine".
+**Observation:** "image unique (gateway) servant shell + promote + diaspora […] une seule origine". English translation: "single gateway image serving shell, promote and diaspora under one origin".
 
-**Interpretação:** Descreve o deploy conjunto das três aplicações numa só origem. A afirmação é corroborada.
+**Interpretation:** Describes joint three-application deployment under one origin. Claim corroborated.
 
 ### 41. Dockerfile:3
 
-**Observação:** "Architecture host/remotes (Native Federation)".
+**Observation:** "Architecture host/remotes (Native Federation)".
 
-**Interpretação:** Descreve a composição host/remotes com a tecnologia usada. A afirmação é corroborada.
+**Interpretation:** Describes host/remote composition using actual technology. Claim corroborated.
 
 ### 42. Dockerfile:3
 
-**Observação:** "(SSO partagé)".
+**Observation:** "(SSO partagé)". English translation: "shared SSO".
 
-**Interpretação:** Anuncia uma sessão compartilhada entre as unidades. A afirmação é contradita.
+**Interpretation:** Announces inter-unit shared session. Claim contradicted.
 
 ### 43. Dockerfile:8
 
-**Observação:** "Stage 1 : build des 3 apps".
+**Observation:** "Stage 1 : build des 3 apps". English translation: "Stage one: build all three apps".
 
-**Interpretação:** Descreve os três builds feitos dentro da imagem. A afirmação é corroborada.
+**Interpretation:** Describes three builds within image. Claim corroborated.
 
 ### 44. Dockerfile:42
 
-**Observação:** "Manifest de PROD (chemins same-origin) écrase celui de dev (localhost:*)".
+**Observation:** "Manifest de PROD (chemins same-origin) écrase celui de dev (localhost:*)". English translation: "Production manifest with same-origin paths overwrites development localhost manifest".
 
-**Interpretação:** Descreve a troca de manifesto que liga o deploy ao carregamento dos remotes. A afirmação é corroborada.
+**Interpretation:** Describes manifest replacement linking deployment/remote loading. Claim corroborated.
 
 ### 45. README.md:1
 
-**Observação:** "Monorepo frontend".
+**Observation:** "Monorepo frontend". English translation: "Frontend monorepo".
 
-**Interpretação:** Descreve as aplicações reunidas num monorepo. A afirmação é corroborada.
+**Interpretation:** Describes applications together in monorepo. Claim corroborated.
 
 ### 46. README.md:3
 
-**Observação:** "reproduisant l'architecture de `portal-client-firstpay`".
+**Observation:** "reproduisant l'architecture de `portal-client-firstpay`". English translation: "reproducing architecture of named external project".
 
-**Interpretação:** Faz referência a um sistema externo, que não é verificável. A afirmação fica sem corroboração.
+**Interpretation:** References unverifiable external system. Claim uncorroborated.
 
 ### 47. README.md:4
 
-**Observação:** "(host + remotes via **module federation**)".
+**Observation:** "(host + remotes via **module federation**)".
 
-**Interpretação:** Nomeia uma tecnologia diferente da usada. A afirmação é contradita.
+**Interpretation:** Names technology different from actual. Claim contradicted.
 
 ### 48. README.md:10-11
 
-**Observação:** É um diagrama: o shell (`:4200`) chama `loadRemoteModule` para promote (`:4201`) e diaspora (`:4202`), e cada um "expose ./Routes".
+**Observation:** Diagram: shell (`:4200`) calls `loadRemoteModule` for promote (`:4201`) and diaspora (`:4202`), each "expose ./Routes".
 
-**Interpretação:** Descreve as relações e os módulos expostos. A afirmação é corroborada.
+**Interpretation:** Describes relationships/exposed modules. Claim corroborated.
 
 ### 49. README.md:13
 
-**Observação:** "libs partagées : @union/design-system".
+**Observation:** "libs partagées : @union/design-system". English translation: "shared libraries: named design system".
 
-**Interpretação:** Apresenta uma biblioteca de design usada pelas três aplicações. A afirmação é corroborada.
+**Interpretation:** Presents design library used by all three applications. Claim corroborated.
 
 ### 50. README.md:13-14
 
-**Observação:** "libs partagées : […] @union/auth".
+**Observation:** "libs partagées : […] @union/auth". English translation: "shared libraries: named authentication package".
 
-**Interpretação:** Apresenta uma biblioteca de autenticação compartilhada. A afirmação é contradita.
+**Interpretation:** Presents shared authentication library. Claim contradicted.
 
 ### 51. README.md:20
 
-**Observação:** "`@union/auth` partage la clé localStorage `portail_client_auth` (JWT, sync cross-tab)".
+**Observation:** "`@union/auth` partage la clé localStorage `portail_client_auth` (JWT, sync cross-tab)". English translation: "named authentication package shares the stated localStorage key, JWT and cross-tab synchronization".
 
-**Interpretação:** Anuncia uma sessão compartilhada por uma chave comum. A afirmação é contradita.
+**Interpretation:** Announces session sharing through common key. Claim contradicted.
 
 ### 52. README.md:20-21
 
-**Observação:** "interopérable avec les apps de la banque servies sur la même origine".
+**Observation:** "interopérable avec les apps de la banque servies sur la même origine". English translation: "interoperable with bank applications served under same origin".
 
-**Interpretação:** Anuncia interoperabilidade com sistemas externos, que não é verificável. A afirmação fica sem corroboração.
+**Interpretation:** Announces unverifiable external-system interoperability. Claim uncorroborated.
 
 ### 53. README.md:42-43
 
-**Observação:** "Le frontend ne fonctionne pas seul : il appelle **deux backends** (dépôts séparés)".
+**Observation:** "Le frontend ne fonctionne pas seul : il appelle **deux backends** (dépôts séparés)". English translation: "frontend does not work alone: calls two backends in separate repositories".
 
-**Interpretação:** Descreve a dependência de backends externos. A afirmação é corroborada.
+**Interpretation:** Describes external backend dependency. Claim corroborated.
 
 ### 54. README.md:52
 
-**Observação:** "(app complète, standalone)", sobre o promote.
+**Observation:** "(app complète, standalone)", about promote. English translation: "complete standalone app".
 
-**Interpretação:** Afirma que o promote roda sozinho. A afirmação é corroborada.
+**Interpretation:** Claims promote runs alone. Claim corroborated.
 
 ### 55. README.md:114-116
 
-**Observação:** "**4 composants**, chacun dans son dépôt […] **pilotés depuis union**, qui est le point de centralisation du déploiement".
+**Observation:** "**4 composants**, chacun dans son dépôt […] **pilotés depuis union**, qui est le point de centralisation du déploiement". English translation: "four components, each in own repository, controlled from union as central deployment point".
 
-**Interpretação:** Descreve o portal inteiro como um único componente de deploy. A afirmação é corroborada.
+**Interpretation:** Describes whole portal as one deployment component. Claim corroborated.
 
 ### 56. README.md:138-143
 
-**Observação:** "Câblage API (proxy `deploy/nginx.conf`, origine unique — pas de CORS)".
+**Observation:** "Câblage API (proxy `deploy/nginx.conf`, origine unique — pas de CORS)". English translation: "API wiring: named nginx proxy, single origin without CORS".
 
-**Interpretação:** Descreve o gateway como proxy das APIs. A afirmação é corroborada.
+**Interpretation:** Describes gateway as API proxy. Claim corroborated.
 
 ### 57. README.md:279-281
 
-**Observação:** "l'adoption complète des composants `@union/design-system` dans les 17 pages est progressive".
+**Observation:** "l'adoption complète des composants `@union/design-system` dans les 17 pages est progressive". English translation: "full adoption of named design-system components across seventeen pages is progressive".
 
-**Interpretação:** Confirma-se que a adoção não está completa, mas não há artefato de que ela esteja em curso. A afirmação é parcial.
+**Interpretation:** Incomplete adoption confirmed, no artifact showing ongoing adoption. Claim partial.
 
 ### 58. README.md:282
 
-**Observação:** "les remotes tournent parfaitement en standalone".
+**Observation:** "les remotes tournent parfaitement en standalone". English translation: "remotes run perfectly standalone".
 
-**Interpretação:** Afirma que os dois remotes rodam sozinhos. A afirmação é corroborada.
+**Interpretation:** Claims both remotes run alone. Claim corroborated.
 
 ### 59. README.md:282-284
 
-**Observação:** "sous le host, les routes s'imbriquent (`/promote/…`, `/diaspora/…`)".
+**Observation:** "sous le host, les routes s'imbriquent (`/promote/…`, `/diaspora/…`)". English translation: "under host routes nest at stated promote/diaspora paths".
 
-**Interpretação:** Afirma que as rotas dos remotes ficam aninhadas no host. A afirmação é corroborada.
+**Interpretation:** Claims remote routes nest in host. Claim corroborated.
 
 ### 60. deploy/nginx.conf:43-48
 
-**Observação:** "On sert l'unique copie (identique entre remotes) à la racine, pour les deux apps".
+**Observation:** "On sert l'unique copie (identique entre remotes) à la racine, pour les deux apps". English translation: "one copy identical across remotes served at root for both apps".
 
-**Interpretação:** Descreve um acoplamento de deploy entre as unidades. A afirmação é corroborada.
+**Interpretation:** Describes inter-unit deployment coupling. Claim corroborated.
 
 ### 61. projects/diaspora/src/app/app.routes.ts:10
 
-**Observação:** "embarque le parcours legacy FastAPI en iframe".
+**Observation:** "embarque le parcours legacy FastAPI en iframe". English translation: "embeds legacy FastAPI flow in iframe".
 
-**Interpretação:** Anuncia a incorporação do fluxo legado. Com a configuração do snapshot, o iframe não recebe esse fluxo, e a afirmação é contradita.
+**Interpretation:** Announces legacy-flow embedding. Snapshot configuration does not deliver flow to iframe. Claim contradicted.
 
 ### 62. projects/diaspora/src/app/core/admin-auth.ts:21-23
 
-**Observação:** "`@union/auth` (ClientAuthStore) existe dans le monorepo mais n'est branché nulle part".
+**Observation:** "`@union/auth` (ClientAuthStore) existe dans le monorepo mais n'est branché nulle part". English translation: "named authentication library exists in monorepo but connected nowhere".
 
-**Interpretação:** Reconhece que a biblioteca de sessão não está conectada. A afirmação é corroborada.
+**Interpretation:** Acknowledges session library disconnected. Claim corroborated.
 
 ### 63. projects/diaspora/src/app/pages/legacy-onboarding.ts:16-17
 
-**Observação:** "le reverse proxy sert le flux legacy sur le même domaine".
+**Observation:** "le reverse proxy sert le flux legacy sur le même domaine". English translation: "reverse proxy serves legacy flow under same domain".
 
-**Interpretação:** Atribui o destino do iframe a um proxy. O único proxy do snapshot não serve esse caminho, e a afirmação é contradita.
+**Interpretation:** Attributes iframe target to proxy. Sole snapshot proxy does not serve path. Claim contradicted.
 
 ### 64. projects/shell/src/app/app.ts:5-6
 
-**Observação:** "chaque remote (diaspora hub, promote) fournit son propre layout plein écran + en-tête. Le shell ne fait qu'orchestrer la fédération".
+**Observation:** "chaque remote (diaspora hub, promote) fournit son propre layout plein écran + en-tête. Le shell ne fait qu'orchestrer la fédération". English translation: "each remote supplies own full-screen layout and header; shell only orchestrates federation".
 
-**Interpretação:** Descreve a divisão de papéis entre o host e os remotes. A afirmação é corroborada.
+**Interpretation:** Describes host/remote role division. Claim corroborated.
 
 ### 65. projects/shell/src/app/app.ts:7
 
-**Observação:** "partager la session (SSO via ClientAuthStore, provisionné au bootstrap)".
+**Observation:** "partager la session (SSO via ClientAuthStore, provisionné au bootstrap)". English translation: "share session through SSO and ClientAuthStore provisioned at bootstrap".
 
-**Interpretação:** Anuncia um provisionamento que o bootstrap não faz. A afirmação é contradita.
+**Interpretation:** Announces provisioning bootstrap does not perform. Claim contradicted.
 
-### 66. 012b229 2026-07-11 (package.json, versão ausente); cd974b8 2026-07-14 (package.json)
+### 66. 012b229 2026-07-11 (package.json, version absent); cd974b8 2026-07-14 (package.json)
 
-**Observação:** O `package.json` mudou em dois commits. A versão de `cd974b8` já declara a dependência, e a do commit inicial não está disponível.
+**Observation:** `package.json` changed in two commits. `cd974b8` version already declares dependency, initial commit version unavailable.
 
-**Interpretação:** Não se sabe quando nem por que a dependência sem uso entrou. A dúvida é só sobre o passado: no snapshot, a dependência não é usada.
+**Interpretation:** Unknown when/why unused dependency entered. Past-only question: unused in snapshot.
 
-### 67. 1e8d9fb 2026-07-15 (projects/diaspora/src/app/pages/legacy-onboarding.ts, projects/diaspora/src/app/app.routes.ts); 81b1158 2026-07-15 (deploy/nginx.conf, versão ausente); 092eff1 2026-07-16 (deploy/nginx.conf); bf7d95d 2026-07-16 (deploy/nginx.conf)
+### 67. 1e8d9fb 2026-07-15 (projects/diaspora/src/app/pages/legacy-onboarding.ts, projects/diaspora/src/app/app.routes.ts); 81b1158 2026-07-15 (deploy/nginx.conf, version absent); 092eff1 2026-07-16 (deploy/nginx.conf); bf7d95d 2026-07-16 (deploy/nginx.conf)
 
-**Observação:** O commit que cria o iframe não toca no deploy. As mensagens dos commits seguintes no nginx anunciam o back-office e o MediaPipe, e uma versão anterior do nginx não está disponível.
+**Observation:** Iframe-creating commit does not touch deployment. Later nginx commit messages announce back-office/MediaPipe, earlier nginx version unavailable.
 
-**Interpretação:** O histórico não diz se alguma versão teve rota para o fluxo legado. Continuam plausíveis duas leituras do snapshot: o iframe incorpora um frontend legado servido por um proxy fora do repositório, ou o iframe não tem destino ativo.
+**Interpretation:** History does not establish any version routing legacy flow. Two plausible snapshot readings: iframe embeds legacy frontend through external-repository proxy, or iframe lacks active target.
 
 ### 68. 012b229 2026-07-11 (projects/auth/src/lib/client-auth-store.ts); 77c7b4f 2026-07-12 (projects/promote/src/app/core/auth.ts); 1cea70e 2026-07-15 (projects/diaspora/src/app/core/admin-auth.ts)
 
-**Observação:** A biblioteca não muda desde o primeiro commit. Desde `1cea70e`, um comentário a declara não conectada. A versão inicial do `auth.ts` do promote não está disponível.
+**Observation:** Library unchanged since first commit. Since `1cea70e`, comment declares disconnected. Initial promote `auth.ts` version unavailable.
 
-**Interpretação:** Não se exclui que as aplicações tenham usado a biblioteca antes. A dúvida é só sobre o passado: no snapshot, a biblioteca não está conectada.
+**Interpretation:** Prior application library use not excluded. Past-only question: library disconnected in snapshot.
 
 ### 69. 012b229 2026-07-11 (projects/design-system)
 
-**Observação:** A pasta do design-system não muda desde o primeiro commit.
+**Observation:** Design-system folder unchanged since first commit.
 
-**Interpretação:** Não se sabe se a adoção dos componentes avançou ou recuou. A dúvida é só sobre o passado: no snapshot, nenhuma aplicação importa os componentes.
+**Interpretation:** Unknown whether component adoption advanced/receded. Past-only question: no snapshot application imports components.
 
 ### 70. 012b229 2026-07-11 (projects/shell/src/bootstrap.ts, projects/shell/src/main.ts, projects/shell/src/app/app.config.ts, projects/shell/src/app/app.ts)
 
-**Observação:** Os quatro arquivos aparecem no commit inicial com os mesmos identificadores de objeto do snapshot, e nenhum commit os altera.
+**Observation:** Four files appear in initial commit with same object identifiers as snapshot, unchanged by all commits.
 
-**Interpretação:** O provisionamento anunciado no comentário nunca existiu nesses arquivos. O ponto está esclarecido.
+**Interpretation:** Comment-announced provisioning never existed in these files. Point clarified.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.2 (package.json:28) | 1 tecnologia | manifesto | native-federation | tecnológica | fraca | — |
-| 2 | 3.4.2 (package.json:39) | 1 tecnologia | manifesto | native-federation | tecnológica | fraca | declara #3; declara #4; declara #5; declara #6; declara #7; declara #8; declara #9; declara #10; declara #11; declara #17; declara #19; declara #21; declara #24 |
-| 3 | 3.4.2 (package.json:39, Evidência); 3.4.3 (., Marcadores); 3.4.3 (projects/shell, Build); 3.4.6 #3 (Artefatos) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #32 |
-| 4 | 3.4.3 (., Marcadores) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #32 |
-| 5 | 3.4.3 (., Marcadores); 3.4.3 (projects/promote, Build); 3.4.6 #2 (Artefatos) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #31 |
-| 6 | 3.4.3 (., Marcadores); 3.4.7 #15, #19 (Evidência) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #31 |
-| 7 | 3.4.3 (., Marcadores); 3.4.3 (projects/diaspora, Build); 3.4.6 #1 (Artefatos) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #30 |
-| 8 | 3.4.3 (., Marcadores); 3.4.7 #19 (Evidência) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #30 |
-| 9 | 3.4.3 (projects/diaspora, Marcadores); 3.4.4 (projects/diaspora/src/main.ts:3, Observação); 3.4.5 #1 (Configuração); 3.4.7 #9 (Evidência) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #30; configura #34 |
-| 10 | 3.4.3 (projects/promote, Marcadores); 3.4.4 (projects/promote/src/main.ts:3, Observação); 3.4.5 #2 (Configuração); 3.4.7 #9 (Evidência) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #31; configura #35 |
-| 11 | 3.4.3 (projects/shell, Marcadores) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #32 |
-| 12 | 3.4.4 (projects/shell/src/main.ts:1, Observação); 3.4.4 (projects/shell/src/main.ts:3, Observação); 3.4.5 #1, #2 (Configuração) | 2 configuração | configuração | native-federation | arquitetural | forte | configura #25; configura #34; configura #35 |
-| 13 | 3.4.5 #1, #2 (Configuração); 3.4.6 #1, #2 (Artefatos); 3.4.7 #5 (Evidência) | 2 configuração | configuração | native-federation | arquitetural | forte | configura #34; configura #35 |
-| 14 | 3.4.4 (projects/diaspora/src/main.ts:5) | 3 código | código-fonte | native-federation | tecnológica | fraca | — |
-| 15 | 3.4.4 (projects/promote/src/main.ts:5) | 3 código | código-fonte | native-federation | tecnológica | fraca | — |
-| 16 | 3.4.4 (projects/shell/src/main.ts:5) | 3 código | código-fonte | native-federation | tecnológica | fraca | — |
-| 17 | 3.4.4 (projects/diaspora/src/main.ts:1) | 3 código | código-fonte | native-federation | tecnológica | fraca | — |
-| 18 | 3.4.4 (projects/diaspora/src/main.ts:3) | 3 código | código-fonte | native-federation | tecnológica | fraca | — |
-| 19 | 3.4.4 (projects/promote/src/main.ts:1) | 3 código | código-fonte | native-federation | tecnológica | fraca | — |
-| 20 | 3.4.4 (projects/promote/src/main.ts:3) | 3 código | código-fonte | native-federation | tecnológica | fraca | — |
-| 21 | 3.4.4 (projects/shell/src/app/app.routes.ts:2) | 3 código | código-fonte | native-federation | tecnológica | moderada | implementa #34; implementa #35 |
-| 22 | 3.4.4 (projects/shell/src/app/app.routes.ts:13) | 3 código | código-fonte | native-federation | arquitetural | forte | implementa #35 |
-| 23 | 3.4.4 (projects/shell/src/app/app.routes.ts:18) | 3 código | código-fonte | native-federation | arquitetural | forte | implementa #34 |
-| 24 | 3.4.4 (projects/shell/src/main.ts:1) | 3 código | código-fonte | native-federation | tecnológica | moderada | implementa #34; implementa #35 |
-| 25 | 3.4.4 (projects/shell/src/main.ts:3) | 3 código | código-fonte | native-federation | tecnológica | moderada | implementa #34; implementa #35 |
-| 26 | 3.4.4 (projects/diaspora/src/app/pages/legacy-onboarding.ts:31) | 3 código | código-fonte | iframe | arquitetural | ambígua | implementa #36 |
-| 27 | 3.4.4 (projects/shell/src/app/app.routes.ts:9) | 3 código | código-fonte | native-federation | arquitetural | forte | implementa #34; implementa #35 |
-| 28 | 3.4.4 (projects/auth/src/lib/client-auth-store.ts:71) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 29 | 3.4.3 (.) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 30 | 3.4.3 (projects/diaspora) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 31 | 3.4.3 (projects/promote) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 32 | 3.4.3 (projects/shell) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 33 | 3.4.3 (server/diaspora-otp) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 34 | 3.4.5 #1 | 5 composição | código-fonte | native-federation | arquitetural | forte | liga #32; liga #30 |
-| 35 | 3.4.5 #2 | 5 composição | código-fonte | native-federation | arquitetural | forte | liga #32; liga #31 |
-| 36 | 3.4.5 #3 | 5 composição | código-fonte | iframe | arquitetural | ambígua | liga #30 |
-| 37 | 3.4.6 #1 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #30 |
-| 38 | 3.4.6 #2 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #31 |
-| 39 | 3.4.6 #3 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #32 |
-| 40 | 3.4.7 #1 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #37; corrobora #38; corrobora #39 |
-| 41 | 3.4.7 #2 | 7 documentação | comentário | native-federation | arquitetural | fraca | corrobora #2; corrobora #34; corrobora #35 |
-| 42 | 3.4.7 #3 | 7 documentação | comentário | — | arquitetural | fraca | contradiz #28; contradiz #62 |
-| 43 | 3.4.7 #4 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #37; corrobora #38; corrobora #39 |
-| 44 | 3.4.7 #5 | 7 documentação | comentário | native-federation | arquitetural | fraca | corrobora #13 |
-| 45 | 3.4.7 #6 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #30; corrobora #31; corrobora #32 |
-| 46 | 3.4.7 #7 | 7 documentação | documentação | — | contexto | fraca | — |
-| 47 | 3.4.7 #8 | 7 documentação | documentação | module-federation | tecnológica | fraca | contradiz #21; contradiz #2 |
-| 48 | 3.4.7 #9 | 7 documentação | documentação | native-federation | arquitetural | fraca | corrobora #9; corrobora #10; corrobora #34; corrobora #35 |
-| 49 | 3.4.7 #10 | 7 documentação | documentação | — | arquitetural | fraca | corrobora angular.json:88; corrobora angular.json:214; corrobora angular.json:341 |
-| 50 | 3.4.7 #11 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #28; contradiz #62 |
-| 51 | 3.4.7 #12 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #28; contradiz projects/promote/src/app/core/auth.ts:7; contradiz projects/diaspora/src/app/core/admin-auth.ts:3 |
-| 52 | 3.4.7 #13 | 7 documentação | documentação | — | contexto | fraca | — |
-| 53 | 3.4.7 #14 | 7 documentação | documentação | — | contexto | fraca | corrobora deploy/nginx.conf:72-87; corrobora deploy/server/components.env:35-39; corrobora deploy/server/components.env:50-54 |
-| 54 | 3.4.7 #15 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #31; corrobora #6 |
-| 55 | 3.4.7 #16 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #37; corrobora #38; corrobora #39; corrobora deploy/server/components.env:15, 22-73; corrobora deploy/server/deploy.sh:35-40, 130-153 |
-| 56 | 3.4.7 #17 | 7 documentação | documentação | — | contexto | fraca | corrobora deploy/nginx.conf:72-87 |
-| 57 | 3.4.7 #18 | 7 documentação | documentação | — | arquitetural | fraca | corrobora em parte projects/design-system/src/public-api.ts:6-10; corrobora em parte projects/promote/src/styles.css:8, 12 |
-| 58 | 3.4.7 #19 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #30; corrobora #31; corrobora #6; corrobora #8 |
-| 59 | 3.4.7 #20 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #34; corrobora #35 |
-| 60 | 3.4.7 #21 | 7 documentação | comentário | — | arquitetural | fraca | corrobora deploy/nginx.conf:51-52; corrobora projects/promote/src/app/shared/face-mesh.ts:51, 53; corrobora projects/diaspora/src/app/shared/face-mesh.ts:53, 65-66 |
-| 61 | 3.4.7 #22 | 7 documentação | comentário | iframe | arquitetural | fraca | contradiz deploy/nginx.conf:128-130 |
-| 62 | 3.4.7 #23 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #28 |
-| 63 | 3.4.7 #24 | 7 documentação | comentário | — | arquitetural | fraca | contradiz deploy/nginx.conf:128-130 |
-| 64 | 3.4.7 #25 | 7 documentação | comentário | — | arquitetural | fraca | corrobora projects/shell/src/app/app.ts:9-14; corrobora projects/promote/src/app/remote.routes.ts:35-36; corrobora projects/diaspora/src/app/pages/home.ts:29-31 |
-| 65 | 3.4.7 #26 | 7 documentação | comentário | — | arquitetural | fraca | contradiz projects/shell/src/bootstrap.ts:1-5; contradiz projects/shell/src/app/app.config.ts:9-10 |
-| 66 | 3.4.8 #1 | 8 histórico | histórico | native-federation | tecnológica | fraca | explica #1 |
-| 67 | 3.4.8 #2 | 8 histórico | histórico | iframe | arquitetural | ambígua | explica #26; explica #36; explica #61; explica #63 |
-| 68 | 3.4.8 #3 | 8 histórico | histórico | — | arquitetural | fraca | explica #28; explica #42; explica #50; explica #51 |
-| 69 | 3.4.8 #4 | 8 histórico | histórico | — | arquitetural | fraca | explica #57 |
-| 70 | 3.4.8 #5 | 8 histórico | histórico | — | arquitetural | fraca | explica #65 |
+| 1 | 3.4.2 (package.json:28) | 1 technology | manifest | native-federation | technological | weak | — |
+| 2 | 3.4.2 (package.json:39) | 1 technology | manifest | native-federation | technological | weak | declares #3; declares #4; declares #5; declares #6; declares #7; declares #8; declares #9; declares #10; declares #11; declares #17; declares #19; declares #21; declares #24 |
+| 3 | 3.4.2 (package.json:39, Evidence); 3.4.3 (., Markers); 3.4.3 (projects/shell, Build); 3.4.6 #3 (Artifacts) | 2 configuration | configuration | native-federation | technological | moderate | configures #32 |
+| 4 | 3.4.3 (., Markers) | 2 configuration | configuration | native-federation | technological | moderate | configures #32 |
+| 5 | 3.4.3 (., Markers); 3.4.3 (projects/promote, Build); 3.4.6 #2 (Artifacts) | 2 configuration | configuration | native-federation | technological | moderate | configures #31 |
+| 6 | 3.4.3 (., Markers); 3.4.7 #15, #19 (Evidence) | 2 configuration | configuration | native-federation | technological | moderate | configures #31 |
+| 7 | 3.4.3 (., Markers); 3.4.3 (projects/diaspora, Build); 3.4.6 #1 (Artifacts) | 2 configuration | configuration | native-federation | technological | moderate | configures #30 |
+| 8 | 3.4.3 (., Markers); 3.4.7 #19 (Evidence) | 2 configuration | configuration | native-federation | technological | moderate | configures #30 |
+| 9 | 3.4.3 (projects/diaspora, Markers); 3.4.4 (projects/diaspora/src/main.ts:3, Observation); 3.4.5 #1 (Configuration); 3.4.7 #9 (Evidence) | 2 configuration | configuration | native-federation | technological | moderate | configures #30; configures #34 |
+| 10 | 3.4.3 (projects/promote, Markers); 3.4.4 (projects/promote/src/main.ts:3, Observation); 3.4.5 #2 (Configuration); 3.4.7 #9 (Evidence) | 2 configuration | configuration | native-federation | technological | moderate | configures #31; configures #35 |
+| 11 | 3.4.3 (projects/shell, Markers) | 2 configuration | configuration | native-federation | technological | moderate | configures #32 |
+| 12 | 3.4.4 (projects/shell/src/main.ts:1, Observation); 3.4.4 (projects/shell/src/main.ts:3, Observation); 3.4.5 #1, #2 (Configuration) | 2 configuration | configuration | native-federation | architectural | strong | configures #25; configures #34; configures #35 |
+| 13 | 3.4.5 #1, #2 (Configuration); 3.4.6 #1, #2 (Artifacts); 3.4.7 #5 (Evidence) | 2 configuration | configuration | native-federation | architectural | strong | configures #34; configures #35 |
+| 14 | 3.4.4 (projects/diaspora/src/main.ts:5) | 3 code | source code | native-federation | technological | weak | — |
+| 15 | 3.4.4 (projects/promote/src/main.ts:5) | 3 code | source code | native-federation | technological | weak | — |
+| 16 | 3.4.4 (projects/shell/src/main.ts:5) | 3 code | source code | native-federation | technological | weak | — |
+| 17 | 3.4.4 (projects/diaspora/src/main.ts:1) | 3 code | source code | native-federation | technological | weak | — |
+| 18 | 3.4.4 (projects/diaspora/src/main.ts:3) | 3 code | source code | native-federation | technological | weak | — |
+| 19 | 3.4.4 (projects/promote/src/main.ts:1) | 3 code | source code | native-federation | technological | weak | — |
+| 20 | 3.4.4 (projects/promote/src/main.ts:3) | 3 code | source code | native-federation | technological | weak | — |
+| 21 | 3.4.4 (projects/shell/src/app/app.routes.ts:2) | 3 code | source code | native-federation | technological | moderate | implements #34; implements #35 |
+| 22 | 3.4.4 (projects/shell/src/app/app.routes.ts:13) | 3 code | source code | native-federation | architectural | strong | implements #35 |
+| 23 | 3.4.4 (projects/shell/src/app/app.routes.ts:18) | 3 code | source code | native-federation | architectural | strong | implements #34 |
+| 24 | 3.4.4 (projects/shell/src/main.ts:1) | 3 code | source code | native-federation | technological | moderate | implements #34; implements #35 |
+| 25 | 3.4.4 (projects/shell/src/main.ts:3) | 3 code | source code | native-federation | technological | moderate | implements #34; implements #35 |
+| 26 | 3.4.4 (projects/diaspora/src/app/pages/legacy-onboarding.ts:31) | 3 code | source code | iframe | architectural | ambiguous | implements #36 |
+| 27 | 3.4.4 (projects/shell/src/app/app.routes.ts:9) | 3 code | source code | native-federation | architectural | strong | implements #34; implements #35 |
+| 28 | 3.4.4 (projects/auth/src/lib/client-auth-store.ts:71) | 3 code | source code | — | technological | weak | — |
+| 29 | 3.4.3 (.) | 4 structure | directory | — | context | weak | — |
+| 30 | 3.4.3 (projects/diaspora) | 4 structure | directory | — | architectural | moderate | — |
+| 31 | 3.4.3 (projects/promote) | 4 structure | directory | — | architectural | moderate | — |
+| 32 | 3.4.3 (projects/shell) | 4 structure | directory | — | architectural | moderate | — |
+| 33 | 3.4.3 (server/diaspora-otp) | 4 structure | directory | — | context | weak | — |
+| 34 | 3.4.5 #1 | 5 composition | source code | native-federation | architectural | strong | links #32; links #30 |
+| 35 | 3.4.5 #2 | 5 composition | source code | native-federation | architectural | strong | links #32; links #31 |
+| 36 | 3.4.5 #3 | 5 composition | source code | iframe | architectural | ambiguous | links #30 |
+| 37 | 3.4.6 #1 | 6 build-deploy | configuration | — | architectural | moderate | publishes #30 |
+| 38 | 3.4.6 #2 | 6 build-deploy | configuration | — | architectural | moderate | publishes #31 |
+| 39 | 3.4.6 #3 | 6 build-deploy | configuration | — | architectural | moderate | publishes #32 |
+| 40 | 3.4.7 #1 | 7 documentation | comment | — | architectural | weak | corroborates #37; corroborates #38; corroborates #39 |
+| 41 | 3.4.7 #2 | 7 documentation | comment | native-federation | architectural | weak | corroborates #2; corroborates #34; corroborates #35 |
+| 42 | 3.4.7 #3 | 7 documentation | comment | — | architectural | weak | contradicts #28; contradicts #62 |
+| 43 | 3.4.7 #4 | 7 documentation | comment | — | architectural | weak | corroborates #37; corroborates #38; corroborates #39 |
+| 44 | 3.4.7 #5 | 7 documentation | comment | native-federation | architectural | weak | corroborates #13 |
+| 45 | 3.4.7 #6 | 7 documentation | documentation | — | architectural | weak | corroborates #30; corroborates #31; corroborates #32 |
+| 46 | 3.4.7 #7 | 7 documentation | documentation | — | context | weak | — |
+| 47 | 3.4.7 #8 | 7 documentation | documentation | module-federation | technological | weak | contradicts #21; contradicts #2 |
+| 48 | 3.4.7 #9 | 7 documentation | documentation | native-federation | architectural | weak | corroborates #9; corroborates #10; corroborates #34; corroborates #35 |
+| 49 | 3.4.7 #10 | 7 documentation | documentation | — | architectural | weak | corroborates angular.json:88; corroborates angular.json:214; corroborates angular.json:341 |
+| 50 | 3.4.7 #11 | 7 documentation | documentation | — | architectural | weak | contradicts #28; contradicts #62 |
+| 51 | 3.4.7 #12 | 7 documentation | documentation | — | architectural | weak | contradicts #28; contradicts projects/promote/src/app/core/auth.ts:7; contradicts projects/diaspora/src/app/core/admin-auth.ts:3 |
+| 52 | 3.4.7 #13 | 7 documentation | documentation | — | context | weak | — |
+| 53 | 3.4.7 #14 | 7 documentation | documentation | — | context | weak | corroborates deploy/nginx.conf:72-87; corroborates deploy/server/components.env:35-39; corroborates deploy/server/components.env:50-54 |
+| 54 | 3.4.7 #15 | 7 documentation | documentation | — | architectural | weak | corroborates #31; corroborates #6 |
+| 55 | 3.4.7 #16 | 7 documentation | documentation | — | architectural | weak | corroborates #37; corroborates #38; corroborates #39; corroborates deploy/server/components.env:15, 22-73; corroborates deploy/server/deploy.sh:35-40, 130-153 |
+| 56 | 3.4.7 #17 | 7 documentation | documentation | — | context | weak | corroborates deploy/nginx.conf:72-87 |
+| 57 | 3.4.7 #18 | 7 documentation | documentation | — | architectural | weak | partially corroborates projects/design-system/src/public-api.ts:6-10; partially corroborates projects/promote/src/styles.css:8, 12 |
+| 58 | 3.4.7 #19 | 7 documentation | documentation | — | architectural | weak | corroborates #30; corroborates #31; corroborates #6; corroborates #8 |
+| 59 | 3.4.7 #20 | 7 documentation | documentation | — | architectural | weak | corroborates #34; corroborates #35 |
+| 60 | 3.4.7 #21 | 7 documentation | comment | — | architectural | weak | corroborates deploy/nginx.conf:51-52; corroborates projects/promote/src/app/shared/face-mesh.ts:51, 53; corroborates projects/diaspora/src/app/shared/face-mesh.ts:53, 65-66 |
+| 61 | 3.4.7 #22 | 7 documentation | comment | iframe | architectural | weak | contradicts deploy/nginx.conf:128-130 |
+| 62 | 3.4.7 #23 | 7 documentation | comment | — | architectural | weak | corroborates #28 |
+| 63 | 3.4.7 #24 | 7 documentation | comment | — | architectural | weak | contradicts deploy/nginx.conf:128-130 |
+| 64 | 3.4.7 #25 | 7 documentation | comment | — | architectural | weak | corroborates projects/shell/src/app/app.ts:9-14; corroborates projects/promote/src/app/remote.routes.ts:35-36; corroborates projects/diaspora/src/app/pages/home.ts:29-31 |
+| 65 | 3.4.7 #26 | 7 documentation | comment | — | architectural | weak | contradicts projects/shell/src/bootstrap.ts:1-5; contradicts projects/shell/src/app/app.config.ts:9-10 |
+| 66 | 3.4.8 #1 | 8 history | history | native-federation | technological | weak | explains #1 |
+| 67 | 3.4.8 #2 | 8 history | history | iframe | architectural | ambiguous | explains #26; explains #36; explains #61; explains #63 |
+| 68 | 3.4.8 #3 | 8 history | history | — | architectural | weak | explains #28; explains #42; explains #50; explains #51 |
+| 69 | 3.4.8 #4 | 8 history | history | — | architectural | weak | explains #57 |
+| 70 | 3.4.8 #5 | 8 history | history | — | architectural | weak | explains #65 |
 
-## Resumo
+## Summary
 
-Observações: 70. Dimensões (tecnologia: 2, configuração: 11, código: 15, estrutura: 5, composição: 3, build-deploy: 3, documentação: 26, histórico: 5). Força (forte: 7, moderada: 18, fraca: 42, ambígua: 3). Evidência (tecnológica: 24, arquitetural: 40, contexto: 6).
+Observations: 70. Dimensions (technology: 2, configuration: 11, code: 15, structure: 5, composition: 3, build-deploy: 3, documentation: 26, history: 5). Strength (strong: 7, moderate: 18, weak: 42, ambiguous: 3). Evidence (technological: 24, architectural: 40, context: 6).
+

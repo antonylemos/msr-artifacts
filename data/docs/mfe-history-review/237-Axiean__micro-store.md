@@ -13,17 +13,17 @@ annotation:
 
 # 237 — Axiean/micro-store
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem 15 commits, de 2025-08-03 a 2025-08-04, sem merges. O primeiro commit é `1718d95` (2025-08-03, "init"), e o do snapshot é `7ed9142` (2025-08-04, "update readme"). As mensagens do primeiro dia anunciam a conteinerização (`ce3eddd`, "docker file setup") e a montagem das zonas (`9099056`, "multi zone setup"); o conteúdo desses commits não foi inspecionado.
+History up to snapshot has 15 commits, from 2025-08-03 to 2025-08-04, without merges. First commit is `1718d95` (2025-08-03, "init"), and snapshot is `7ed9142` (2025-08-04, "update readme"). First-day messages announce containerization (`ce3eddd`, "docker file setup") and zone assembly (`9099056`, "multi zone setup"); contents of these commits were not inspected.
 
-As revisões anteriores não deixaram ponto ambíguo que o histórico pudesse esclarecer: não há dependência das tecnologias inspecionadas (3.4.2), unidade `Undetermined` (3.4.3), construção inativa, comentada ou `Undetermined` (3.4.4), relação `Undetermined` (3.4.5), deploy `Undetermined` (3.4.6) nem afirmação de documentação `contradita` ou `parcial` (3.4.7). O alias `@repo/ui/*` para `../../packages/ui/*`, registrado nas Notas da 3.4.3, aponta para um diretório ausente e não é usado; não é unidade `Undetermined` e não virou ponto. Por isso o histórico não foi consultado além deste contexto.
+Previous reviews left no ambiguous point history could clarify: no dependency on inspected technologies (3.4.2), `Undetermined` unit (3.4.3), inactive, commented-out or `Undetermined` construct (3.4.4), `Undetermined` relationship (3.4.5), `Undetermined` deploy (3.4.6) or `contradicted` or `partial` documentation claim (3.4.7). Alias `@repo/ui/*` to `../../packages/ui/*`, recorded in Notes in 3.4.3, points to a missing directory and is unused; it is no `Undetermined` unit and did not become a point. Thus history was not consulted beyond this context.
 
-## Pontos
+## Points
 
-Nenhum ponto ambíguo nas revisões anteriores.
+No ambiguous points in previous reviews.
 
-## Comandos
+## Commands
 
 ```
 docs/mfe-history-review/tools/hist.sh Axiean__micro-store rev-list --count 7ed9142db806ba9851416ae0b8bb207d5d10bdca
@@ -31,6 +31,6 @@ docs/mfe-history-review/tools/hist.sh Axiean__micro-store log --reverse --format
 docs/mfe-history-review/tools/hist.sh Axiean__micro-store rev-list --count --merges 7ed9142db806ba9851416ae0b8bb207d5d10bdca
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 15 (2025-08-03 a 2025-08-04). Pontos: 0.
+Commits up to the snapshot: 15 (2025-08-03 to 2025-08-04). Points: 0.

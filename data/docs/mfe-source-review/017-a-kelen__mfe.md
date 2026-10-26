@@ -15,37 +15,37 @@ annotation:
 
 # 017 — a-kelen/mfe
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-async-bootstrap | packages/auth/src/index.js:1 | packages/auth | dynamic-loading | No | packages/auth/src/index.js:1 importa o bootstrap da própria unidade. |
-| src-async-bootstrap | packages/container/src/index.js:1 | packages/container | dynamic-loading | No | packages/container/src/index.js:1 importa o bootstrap da própria unidade. |
-| src-async-bootstrap | packages/dashboard/src/index.js:1 | packages/dashboard | dynamic-loading | No | packages/dashboard/src/index.js:1 importa o bootstrap da própria unidade. |
-| src-async-bootstrap | packages/marketing/src/index.js:1 | packages/marketing | dynamic-loading | No | packages/marketing/src/index.js:1 importa o bootstrap da própria unidade. |
-| src-mount-export | packages/auth/src/bootstrap.js:34 | packages/auth | runtime-composition | Yes | Exporta mount em packages/auth/src/bootstrap.js:34, exposto em packages/auth/config/webpack.prod.js:16-17 e consumido pelo wrapper em packages/container/src/components/AuthApp.js:11. |
-| src-mount-export | packages/dashboard/src/bootstrap.js:16 | packages/dashboard | runtime-composition | Yes | Exporta mount em packages/dashboard/src/bootstrap.js:16, exposto em packages/dashboard/config/webpack.prod.js:16-17 e consumido pelo wrapper em packages/container/src/components/DashboardApp.js:8. |
-| src-mount-export | packages/marketing/src/bootstrap.js:33 | packages/marketing | runtime-composition | Yes | Exporta mount em packages/marketing/src/bootstrap.js:33, exposto em packages/marketing/config/webpack.prod.js:16-17 e consumido pelo wrapper em packages/container/src/components/MarketingApp.js:11. |
-| src-mount-call | packages/dashboard/src/bootstrap.js:6 | packages/dashboard | runtime-composition | No | packages/dashboard/src/bootstrap.js:4-6 chama app.mount(el) do Vue para renderizar a UI da própria unidade; a fronteira externa é o export mount em packages/dashboard/src/bootstrap.js:16. |
-| src-mount-import | packages/container/src/components/AuthApp.js:4 | packages/container | runtime-composition | Yes | Importa mount da unidade auth; invocado no wrapper em packages/container/src/components/AuthApp.js:11; wrapper ligado às rotas em packages/container/src/App.js:41-48. |
-| src-mount-import | packages/container/src/components/DashboardApp.js:2 | packages/container | runtime-composition | Yes | Importa mount da unidade dashboard; invocado no wrapper em packages/container/src/components/DashboardApp.js:8; wrapper ligado às rotas em packages/container/src/App.js:41-48. |
-| src-mount-import | packages/container/src/components/MarketingApp.js:4 | packages/container | runtime-composition | Yes | Importa mount da unidade marketing; invocado no wrapper em packages/container/src/components/MarketingApp.js:11; wrapper ligado às rotas em packages/container/src/App.js:41-48. |
+| src-async-bootstrap | packages/auth/src/index.js:1 | packages/auth | dynamic-loading | No | packages/auth/src/index.js:1 imports the unit’s own bootstrap. |
+| src-async-bootstrap | packages/container/src/index.js:1 | packages/container | dynamic-loading | No | packages/container/src/index.js:1 imports the unit’s own bootstrap. |
+| src-async-bootstrap | packages/dashboard/src/index.js:1 | packages/dashboard | dynamic-loading | No | packages/dashboard/src/index.js:1 imports the unit’s own bootstrap. |
+| src-async-bootstrap | packages/marketing/src/index.js:1 | packages/marketing | dynamic-loading | No | packages/marketing/src/index.js:1 imports the unit’s own bootstrap. |
+| src-mount-export | packages/auth/src/bootstrap.js:34 | packages/auth | runtime-composition | Yes | Exports mount at packages/auth/src/bootstrap.js:34, exposed at packages/auth/config/webpack.prod.js:16-17 and consumed by the wrapper at packages/container/src/components/AuthApp.js:11. |
+| src-mount-export | packages/dashboard/src/bootstrap.js:16 | packages/dashboard | runtime-composition | Yes | Exports mount at packages/dashboard/src/bootstrap.js:16, exposed at packages/dashboard/config/webpack.prod.js:16-17 and consumed by the wrapper at packages/container/src/components/DashboardApp.js:8. |
+| src-mount-export | packages/marketing/src/bootstrap.js:33 | packages/marketing | runtime-composition | Yes | Exports mount at packages/marketing/src/bootstrap.js:33, exposed at packages/marketing/config/webpack.prod.js:16-17 and consumed by the wrapper at packages/container/src/components/MarketingApp.js:11. |
+| src-mount-call | packages/dashboard/src/bootstrap.js:6 | packages/dashboard | runtime-composition | No | packages/dashboard/src/bootstrap.js:4-6 calls Vue’s app.mount(el) to render the unit’s own UI; the external boundary is the mount export at packages/dashboard/src/bootstrap.js:16. |
+| src-mount-import | packages/container/src/components/AuthApp.js:4 | packages/container | runtime-composition | Yes | Imports mount from the auth unit; invoked in the wrapper at packages/container/src/components/AuthApp.js:11; wrapper connected to routes at packages/container/src/App.js:41-48. |
+| src-mount-import | packages/container/src/components/DashboardApp.js:2 | packages/container | runtime-composition | Yes | Imports mount from the dashboard unit; invoked in the wrapper at packages/container/src/components/DashboardApp.js:8; wrapper connected to routes at packages/container/src/App.js:41-48. |
+| src-mount-import | packages/container/src/components/MarketingApp.js:4 | packages/container | runtime-composition | Yes | Imports mount from the marketing unit; invoked in the wrapper at packages/container/src/components/MarketingApp.js:11; wrapper connected to routes at packages/container/src/App.js:41-48. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | packages/container/src/components/AuthApp.js:11 | packages/container | runtime-composition | Yes | Monta a unidade auth usando o alias importado no wrapper; componente renderizado pelas rotas em packages/container/src/App.js:41-48 e App iniciado em packages/container/src/bootstrap.js:3-5. |
-| manual | packages/container/src/components/DashboardApp.js:8 | packages/container | runtime-composition | Yes | Monta a unidade dashboard usando o alias importado no wrapper; componente renderizado pelas rotas em packages/container/src/App.js:41-48 e App iniciado em packages/container/src/bootstrap.js:3-5. |
-| manual | packages/container/src/components/MarketingApp.js:11 | packages/container | runtime-composition | Yes | Monta a unidade marketing usando o alias importado no wrapper; componente renderizado pelas rotas em packages/container/src/App.js:41-48 e App iniciado em packages/container/src/bootstrap.js:3-5. |
-| manual | packages/container/src/App.js:40 | packages/container | host-relationship | Yes | O Switch declara onde AuthApp, DashboardApp e MarketingApp participam da UI (packages/container/src/App.js:40-48); App montado em packages/container/src/bootstrap.js:5. |
+| manual | packages/container/src/components/AuthApp.js:11 | packages/container | runtime-composition | Yes | Mounts the auth unit using the alias imported in the wrapper; component rendered by routes at packages/container/src/App.js:41-48 and App started at packages/container/src/bootstrap.js:3-5. |
+| manual | packages/container/src/components/DashboardApp.js:8 | packages/container | runtime-composition | Yes | Mounts the dashboard unit using the alias imported in the wrapper; component rendered by routes at packages/container/src/App.js:41-48 and App started at packages/container/src/bootstrap.js:3-5. |
+| manual | packages/container/src/components/MarketingApp.js:11 | packages/container | runtime-composition | Yes | Mounts the marketing unit using the alias imported in the wrapper; component rendered by routes at packages/container/src/App.js:41-48 and App started at packages/container/src/bootstrap.js:3-5. |
+| manual | packages/container/src/App.js:40 | packages/container | host-relationship | Yes | The Switch declares where AuthApp, DashboardApp and MarketingApp participate in the UI (packages/container/src/App.js:40-48); App mounted at packages/container/src/bootstrap.js:5. |
 
-## Resumo
+## Summary
 
-Construções com composição: 10 (runtime-composition: 9, host-relationship: 1).
+Constructs participating in composition: 10 (runtime-composition: 9, host-relationship: 1).
 
-## Notas
+## Notes
 
-- Os imports dinâmicos de wrappers em packages/container/src/App.js:7-9 são locais. As montagens remotas com aliases escaparam a src-mount-call e aparecem na segunda tabela.
-- app.mount(el) do Vue é renderização interna ao dashboard, embora a função mount que o envolve seja exportada e consumida pelo host.
-- Pelo critério de construções fora da mineração (passo 4 do método), os callbacks trocados no `mount` não viram linhas: o host passa `onNavigate` e `onSignIn` e recebe `onParentNavigate` em packages/container/src/components/AuthApp.js:11-21 e packages/container/src/components/MarketingApp.js:11-20; os remotes os registram em packages/auth/src/bootstrap.js:7-23 e packages/marketing/src/bootstrap.js:6-23, e `onSignIn` é chamado em packages/auth/src/components/Signin.js:102 e packages/auth/src/components/Signup.js:127.
+- The dynamic wrapper imports at packages/container/src/App.js:7-9 are local. Remote mounts using aliases escaped src-mount-call and appear in the second table.
+- Vue’s app.mount(el) renders internally to dashboard, although the enclosing mount function is exported and consumed by the host.
+- Under the criteria for constructs outside mining (method step 4), callbacks exchanged in `mount` do not become rows: the host passes `onNavigate` and `onSignIn` and receives `onParentNavigate` at packages/container/src/components/AuthApp.js:11-21 and packages/container/src/components/MarketingApp.js:11-20; the remotes register them at packages/auth/src/bootstrap.js:7-23 and packages/marketing/src/bootstrap.js:6-23, and `onSignIn` is called at packages/auth/src/components/Signin.js:102 and packages/auth/src/components/Signup.js:127.

@@ -20,58 +20,58 @@ annotation:
 
 # 295 — nikhilrajnair/nikhilrajnair
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** não é projeto de software. É o README de perfil do GitHub (repositório `<usuário>/<usuário>`, descrição “My Personal Details”), com apresentação profissional, competências e links de contato. A coincidência entre dono e nome é registrada só como tipo de repositório, não como evidência arquitetural.
+- **Repository type:** not a software project. GitHub profile README (repository `<user>/<user>`, description “My Personal Details”), with professional presentation, skills and contact links. Owner/name equality is recorded only as repository type, rather than architectural evidence.
 
-`data/samples/mfe-sample-001/clones.csv:296` registra rank 295, ID 444043628, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:296` records rank 295, ID 444043628, status `cloned`, branch `main` and the front matter commit, which is HEAD of the clone and `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:296` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:3481` e `data/discovery/mfe-round-002/candidates.csv:3483`, ambos com `terminology` e `pass`.
+`data/samples/mfe-sample-001/sample.csv:296` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:3481` and `data/discovery/mfe-round-002/candidates.csv:3483`, both with `terminology` and `pass`.
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with empty `path`:
 
-| Consulta (`q`) | Subconsulta | Consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Effective query | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | `terminology-micro-frontend-repositories#created:2022-01` | `"micro frontend" in:name,description,readme pushed:>=2025-04-01 created:2022-01-01..2022-01-31` | 2026-10-07T22:17:01.804Z / 2026-10-08T15:52:15.597Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | `terminology-micro-frontends-repositories#created:2022-01` | `"micro frontends" in:name,description,readme pushed:>=2025-04-01 created:2022-01-01..2022-01-31` | 2026-10-07T22:47:12.936Z / 2026-10-08T16:03:58.890Z |
 
-Metadados do hit: descrição “My Personal Details”, sem tópicos, linguagem nula, sem licença, `fork: false`, tamanho 39, criação em 2022-01-03T11:54:46Z, push em 2026-05-10T08:25:59Z.
+Hit metadata: description “My Personal Details”, no topics, null language, no license, `fork: false`, size 39, created at 2022-01-03T11:54:46Z, pushed at 2026-05-10T08:25:59Z.
 
-A única ocorrência do termo no README é `README.md:5`: “My work spans micro-frontends, onboarding workflows, analytics systems…”. A busca de frase trata o hífen como separador, o que casa o plural “micro frontends”; o singular “micro frontend” não aparece isolado e esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+Only README term occurrence is `README.md:5`: “My work spans micro-frontends, onboarding workflows, analytics systems…”. Phrase search treats hyphen as separator, matching plural “micro frontends”; singular “micro frontend” does not appear isolated and that hit depends on GitHub search text processing, which is not recorded.
 
-A última alteração do README é o próprio SHA `1338fe6` (2026-05-10, “Revise README for updated profile and focus areas”), anterior às coletas de 7 e 8 de outubro de 2026. O README do SHA não é posterior às buscas.
+README's last change is SHA `1338fe6` itself (2026-05-10, “Revise README for updated profile and focus areas”), before collection on October 7 and 8, 2026. The SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 1 entrada, arquivo regular `100644` (`README.md`, 3005 bytes); zero symlinks e zero gitlinks. | ausente |
-| Documentação | `README.md:3–5`: “Product Engineer with 9+ years of experience…”; “My work spans micro-frontends…” como experiência profissional; `README.md:22–34`: badges de tecnologias; `README.md:38–43`: emprego atual; `README.md:53–58`: links externos (site, LinkedIn, CodePen, X), não seguidos. | fraca |
-| Tecnologia / Configuração / Código-fonte / Composição / Build/deploy | Inexistentes no snapshot; sem código, portanto sem imports relativos a buscar. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 1 entry, regular `100644` file (`README.md`, 3005 bytes); zero symlinks and zero gitlinks. | absent |
+| Documentation | `README.md:3–5`: “Product Engineer with 9+ years of experience…”; “My work spans micro-frontends…” as professional experience; `README.md:22–34`: technology badges; `README.md:38–43`: current employment; `README.md:53–58`: external links (website, LinkedIn, CodePen, X), not followed. | weak |
+| Technology / Configuration / Source code / Composition / Build/deploy | Nonexistent in snapshot; no code, hence no relative imports to search for. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso, parcial (`blob:none`). 26 commits alcançáveis (26 em todos os refs), 3 merges de PR, raiz `8d5902e` (2022-01-03, “Initial commit”). Refs remotos `copilot/update-readme-with-details`, `nikhilrajnair-remove-github-streak` e `nikhilrajnair-we` correspondem aos PRs integrados e não foram considerados à parte. Autoria: `Nikhil Raj A <nikhilrajnair.a@gmail.com>` em 25 commits, todos pela interface web (committer GitHub), e `copilot-swe-agent[bot]` em `61da0f7` (2026-04-30, “docs: update README with current title, skills, and experience”), integrado pelo PR #3. Por `git diff-tree --no-renames --name-status`, todos os commits com alteração só tocam `README.md`; o histórico nunca conteve código. Nenhum blob histórico foi lido. `git rev-list --objects $SHA --missing=print` identifica 22 objetos históricos ausentes; o blob do SHA está presente e foi lido.
+Non-shallow, partial clone (`blob:none`). 26 reachable commits (26 across all refs), 3 PR merges, root `8d5902e` (2022-01-03, “Initial commit”). Remote refs `copilot/update-readme-with-details`, `nikhilrajnair-remove-github-streak` and `nikhilrajnair-we` correspond to integrated PRs and were not considered separately. Authorship: `Nikhil Raj A <nikhilrajnair.a@gmail.com>` in 25 commits, all through web interface (GitHub committer), and `copilot-swe-agent[bot]` in `61da0f7` (2026-04-30, “docs: update README with current title, skills, and experience”), integrated through PR #3. According to `git diff-tree --no-renames --name-status`, all commits with changes touch only `README.md`; history never contained code. No historical blob was read. `git rev-list --objects $SHA --missing=print` identifies 22 missing historical objects; SHA blob is present and was read.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend; só `README.md` (inventário). |
-| Q2 | No | Não há unidades. |
-| Q3 | No | Não há host, shell nem root config. |
-| Q4 | No | Nenhum mecanismo de composição; micro-frontends aparecem só como experiência profissional (`README.md:5`). |
-| Q5 | No | Q1–Q4 convergem. |
+| Q1 | No | No frontend unit; only `README.md` (inventory). |
+| Q2 | No | No units. |
+| Q3 | No | No host, shell or root config. |
+| Q4 | No | No composition mechanism; micro-frontends appear only as professional experience (`README.md:5`). |
+| Q5 | No | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “repositories mentioning micro-frontends without implementing them”, como os perfis 011/064/068/073/077/101/111. Na seção 3.2 do protocolo, cabe em “purely documentation without an implementation”.
-- `repo_type: other`, `frontend_units: 0`, `unit_organization: none`, arrays vazios.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. Matches “repositories mentioning micro-frontends without implementing them”, like profiles 011/064/068/073/077/101/111. In protocol section 3.2, fits “purely documentation without an implementation”.
+- `repo_type: other`, `frontend_units: 0`, `unit_organization: none`, empty arrays.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** mais um README de perfil (`owner == name`) que entra pela menção hifenizada “micro-frontends” como competência, no padrão já apontado em 011.
-- **Protocolo (busca):** o repositório foi criado em 2022 e entra pela partição `created:2022-01` e passa no filtro `pushed:>=2025-04-01` por commits de README de 2026-04/05; não se verificou em qual revisão o termo entrou, porque os blobs históricos estão ausentes no clone parcial. O hit singular não tem grafia literal.
+- **RQ1 (misleading signals):** another profile README (`owner == name`) entering through hyphenated “micro-frontends” skill mention, in the pattern already noted in 011.
+- **Protocol (search):** repository was created in 2022 and enters through partition `created:2022-01`, passing filter `pushed:>=2025-04-01` through 2026-04/05 README commits; revision introducing the term was not verified, because historical blobs are missing from partial clone. Singular hit has no literal spelling.

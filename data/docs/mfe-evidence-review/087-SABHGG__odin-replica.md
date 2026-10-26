@@ -19,240 +19,241 @@ annotation:
 
 # 087 — SABHGG/odin-replica
 
-## Leitura do repositório
+## Repository overview
 
-O snapshot é um único projeto Create React App na raiz (#15). Ele é ao mesmo tempo o root-config single-spa e a aplicação React local, e registra uma aplicação Angular externa que não está no repositório. Não há arquivo de configuração que declare elemento da composição: a URL do remote está no próprio código de entrada, por isso não há observação de configuração.
+Snapshot is a single Create React App project at root (#15). It is simultaneously the single-spa root-config and local React application, registering an external Angular application absent from repository. No configuration file declares a composition element: remote URL is in entry code itself, so there is no configuration observation.
 
-A cadeia que sustenta a arquitetura passa pelo código:
-- **Dependência:** `single-spa` é declarado (#1) e usado na entrada.
-- **Código:** o registro `leadocs-angular` nomeia a unidade externa (#7), o loader injeta o `<script>` do bundle remoto (#10) e `start()` inicia o orquestrador (#14).
-- **Relação:** daí sai a única relação, root-config → application, ativa e com destino fora do snapshot (#17).
+The architecture-supporting chain runs through code:
+- **Dependency:** `single-spa` is declared (#1) and used in entry.
+- **Code:** registration `leadocs-angular` names external unit (#7), loader injects remote bundle `<script>` (#10) and `start()` starts orchestrator (#14).
+- **Relationship:** this produces the sole relationship, active root-config → application with target outside snapshot (#17).
 
-O build é próprio da aplicação, sem deploy no repositório (#18).
+Application has its own build, without deployment in repository (#18).
 
-Sinais que enganam:
-- **Lifecycles locais:** os lifecycles de `single-spa-react` (#2, #3–#5, #8, #9) e o registro `odin-react` (#6) usam o mecanismo, mas para a própria unidade, no mesmo bundle. Não ligam unidades.
-- **Evento `toggle-leapdocs`:** o par emissor/receptor (#11–#13) parece comunicação entre MFEs, mas é interno à unidade. Ele só alimenta a função de atividade do remote.
+Misleading signals:
+- **Local lifecycles:** `single-spa-react` lifecycles (#2, #3–#5, #8, #9) and `odin-react` registration (#6) use mechanism for same unit in same bundle. They do not link units.
+- **Event `toggle-leapdocs`:** emitter/receiver pair (#11–#13) looks like inter-MFE communication, but is internal to unit. It only feeds remote activity function.
 
-A documentação está nos comentários e mensagens de console de `src/index.js`. Ela confirma a ativação por evento (#20), o Odin local (#21, #22) e o loader por script (#24). O "Angular" do remote e o contrato `leapdocs` ficam só em parte confirmados (#23, #25), porque o lado remoto não tem artefato. Duas afirmações são desmentidas pelo código: o `libraryName` `leadocs` (#26) e o "import dinâmico" de `src/root.app.js` (#27). O histórico esclarece as três divergências: o remote nunca esteve no repositório (#28), e a mensagem e o comentário nasceram junto com o código que os contradiz (#29, #30). Nada fica ambíguo no snapshot. O que não se observa é o próprio remote.
+Documentation is in comments and console messages of `src/index.js`. It confirms event activation (#20), local Odin (#21, #22) and script loader (#24). Remote's "Angular" and `leapdocs` contract are only partially confirmed (#23, #25), because remote side has no artifact. Two claims are refuted by code: `libraryName` `leadocs` (#26) and "dynamic import" of `src/root.app.js` (#27). History clarifies three discrepancies: remote was never in repository (#28), and message and comment originated alongside contradicting code (#29, #30). Nothing remains ambiguous in snapshot. Remote itself is unobserved.
 
-## Observações
+## Observations
 
 ### 1. package.json:13
 
-**Observação:** `single-spa` `^6.0.3` em `dependencies`. A revisão o marca como configurado, pelo import e pelos usos em src/index.js:3, 56-60, 63-100 e 103.
+**Observation:** `single-spa` `^6.0.3` in `dependencies`. Review marks it configured through import and uses in src/index.js:3, 56-60, 63-100 and 103.
 
-**Interpretação:** A aplicação declara o orquestrador single-spa e o usa na entrada.
+**Interpretation:** Application declares single-spa orchestrator and uses it in entry.
 
 ### 2. package.json:14
 
-**Observação:** `single-spa-react` `^6.0.2` em `dependencies`. A revisão o marca como configurado, pelo import e pela chamada em src/root.app.js:3 e 6-14.
+**Observation:** `single-spa-react` `^6.0.2` in `dependencies`. Review marks it configured through import and call in src/root.app.js:3 and 6-14.
 
-**Interpretação:** A aplicação declara o adaptador React do single-spa e o usa para a aplicação local.
+**Interpretation:** Application declares single-spa React adapter and uses it for local application.
 
 ### 3. src/root.app.js:16
 
-**Observação:** `export const bootstrap = reactLifecycles.bootstrap`. O objeto é criado em src/root.app.js:6-14, e o único consumidor é o registro `odin-react` em src/index.js:56-60, no mesmo bundle.
+**Observation:** `export const bootstrap = reactLifecycles.bootstrap`. Object is created in src/root.app.js:6-14, and sole consumer is `odin-react` registration in src/index.js:56-60, in same bundle.
 
-**Interpretação:** É um lifecycle single-spa da própria unidade, interno a ela.
+**Interpretation:** A single-spa lifecycle of unit itself, internal to it.
 
 ### 4. src/root.app.js:17
 
-**Observação:** `export const mount = reactLifecycles.mount`, do mesmo objeto, com o mesmo consumidor interno.
+**Observation:** `export const mount = reactLifecycles.mount`, from same object, with same internal consumer.
 
-**Interpretação:** É um lifecycle single-spa da própria unidade, interno a ela.
+**Interpretation:** A single-spa lifecycle of unit itself, internal to it.
 
 ### 5. src/root.app.js:18
 
-**Observação:** `export const unmount = reactLifecycles.unmount`, do mesmo objeto, com o mesmo consumidor interno.
+**Observation:** `export const unmount = reactLifecycles.unmount`, from same object, with same internal consumer.
 
-**Interpretação:** É um lifecycle single-spa da própria unidade, interno a ela.
+**Interpretation:** A single-spa lifecycle of unit itself, internal to it.
 
 ### 6. src/index.js:56-60; src/index.js:4
 
-**Observação:** `registerApplication('odin-react', async () => RootApp, () => true)`. `RootApp` vem do import estático de `./root.app`.
+**Observation:** `registerApplication('odin-react', async () => RootApp, () => true)`. `RootApp` comes from static import of `./root.app`.
 
-**Interpretação:** O root registra a própria aplicação React, sempre ativa, sem envolver outra unidade.
+**Interpretation:** Root registers its own React application, always active, involving no other unit.
 
 ### 7. src/index.js:63-100
 
-**Observação:** `registerApplication('leadocs-angular', ...)`, com uma função de carga que injeta um script (src/index.js:65-94), a função de atividade `() => isLeadocsActive` (src/index.js:96) e `domElementGetter` para `#microfrontend-container` (src/index.js:98), nó criado em src/App.js:57.
+**Observation:** `registerApplication('leadocs-angular', ...)`, with a loading function injecting a script (src/index.js:65-94), activity function `() => isLeadocsActive` (src/index.js:96) and `domElementGetter` for `#microfrontend-container` (src/index.js:98), node created in src/App.js:57.
 
-**Interpretação:** O root registra pelo nome uma aplicação externa no orquestrador e define quando e onde ela monta.
+**Interpretation:** Root registers an external application by name in orchestrator and defines when and where it mounts.
 
 ### 8. src/root.app.js:3
 
-**Observação:** `import singleSpaReact from 'single-spa-react'`.
+**Observation:** `import singleSpaReact from 'single-spa-react'`.
 
-**Interpretação:** A unidade importa o adaptador para criar os próprios lifecycles.
+**Interpretation:** Unit imports adapter to create its own lifecycles.
 
 ### 9. src/root.app.js:6-14
 
-**Observação:** `singleSpaReact({ React, ReactDOM, rootComponent: App, errorBoundary, domElementGetter: () => document.getElementById('root') })`.
+**Observation:** `singleSpaReact({ React, ReactDOM, rootComponent: App, errorBoundary, domElementGetter: () => document.getElementById('root') })`.
 
-**Interpretação:** O `App` local é adaptado a lifecycles single-spa para o orquestrador do mesmo bundle.
+**Interpretation:** Local `App` is adapted to single-spa lifecycles for orchestrator in same bundle.
 
 ### 10. src/index.js:72-73; src/index.js:93; src/index.js:7-9; src/index.js:78-80
 
-**Observação:** Dentro da função de carga de `leadocs-angular`, `document.createElement('script')` recebe `src = LEAPDOCS_BUNDLE_URL` (padrão `http://localhost:4200/main.js`, trocável por `REACT_APP_LEAPDOCS_ORIGIN` e `REACT_APP_LEAPDOCS_BUNDLE_URL`) e é anexado a `document.head`. No `onload`, a promessa resolve com `globalThis.leapdocs`.
+**Observation:** Inside `leadocs-angular` loading function, `document.createElement('script')` receives `src = LEAPDOCS_BUNDLE_URL` (default `http://localhost:4200/main.js`, overridable through `REACT_APP_LEAPDOCS_ORIGIN` and `REACT_APP_LEAPDOCS_BUNDLE_URL`) and is appended to `document.head`. In `onload`, promise resolves with `globalThis.leapdocs`.
 
-**Interpretação:** O loader do single-spa traz o bundle da unidade externa por script em runtime e lê os lifecycles numa global.
+**Interpretation:** Single-spa loader fetches external unit bundle through a script at runtime and reads lifecycles from a global.
 
 ### 11. src/App.js:18-22; src/App.js:29-38
 
-**Observação:** `window.dispatchEvent(...)` em `handleSectionChange`, acionado pelos botões da barra lateral.
+**Observation:** `window.dispatchEvent(...)` in `handleSectionChange`, triggered by sidebar buttons.
 
-**Interpretação:** É um evento disparado pela própria unidade, cujo único receptor também está nela.
+**Interpretation:** An event dispatched by unit itself, whose sole receiver is also in it.
 
 ### 12. src/App.js:19-21
 
-**Observação:** `new CustomEvent('toggle-leapdocs', { detail: { isActive: sectionId === 'microfrontend' } })`.
+**Observation:** `new CustomEvent('toggle-leapdocs', { detail: { isActive: sectionId === 'microfrontend' } })`.
 
-**Interpretação:** É o evento interno da observação #11.
+**Interpretation:** Internal event of observation #11.
 
 ### 13. src/index.js:47-51
 
-**Observação:** `globalThis.addEventListener('toggle-leapdocs', ...)` grava `isLeadocsActive`, chama `normalizeCurrentUrl()` e `triggerAppChange()`.
+**Observation:** `globalThis.addEventListener('toggle-leapdocs', ...)` writes `isLeadocsActive`, calls `normalizeCurrentUrl()` and `triggerAppChange()`.
 
-**Interpretação:** É o receptor, na mesma unidade, do evento das observações #11 e #12. Ele muda o estado que a função de atividade do remote lê.
+**Interpretation:** Receiver in same unit of event from observations #11 and #12. It changes state read by remote activity function.
 
 ### 14. src/index.js:103; src/index.js:3
 
-**Observação:** `start()`, importado de `single-spa`.
+**Observation:** `start()`, imported from `single-spa`.
 
-**Interpretação:** Inicia o orquestrador. Sem ele nenhum dos registros monta, nem o da unidade externa.
+**Interpretation:** Starts orchestrator. Without it, no registration mounts, including external unit.
 
 ### 15. .; package.json; src/index.js:56-60; src/index.js:103; public/index.html:31; package.json:20
 
-**Observação:** Aplicação CRA na raiz, com manifesto, entrada `src/index.js` (registra `odin-react` e chama `start()`), template com `<div id="root">` e build `react-scripts build`, sem arquivo de configuração próprio nem workspace.
+**Observation:** Root CRA application, with manifest, `src/index.js` entry (registers `odin-react` and calls `start()`), template with `<div id="root">` and `react-scripts build`, without own configuration file or workspace.
 
-**Interpretação:** É a única unidade frontend do snapshot, com limite próprio.
+**Interpretation:** Sole frontend unit in snapshot, with its own boundary.
 
 ### 16. public; public/index.html
 
-**Observação:** É a pasta do template HTML do CRA.
+**Observation:** CRA HTML template folder.
 
-**Interpretação:** É parte da aplicação da raiz, e não outra unidade.
+**Interpretation:** Part of root application rather than another unit.
 
 ### 17. src/index.js:63; src/index.js:72; src/index.js:103; src/index.js:7-9
 
-**Observação:** O root `.` registra `leadocs-angular` no single-spa, carrega o bundle dela por script de uma URL (padrão `http://localhost:4200/main.js`) e inicia o orquestrador. O destino não está no snapshot, e nenhuma unidade do snapshot produz esse bundle.
+**Observation:** Root `.` registers `leadocs-angular` in single-spa, loads its bundle through a script from a URL (default `http://localhost:4200/main.js`) and starts orchestrator. Target is not in snapshot, and no snapshot unit produces this bundle.
 
-**Interpretação:** É uma relação root-config → application ativa, com destino externo.
+**Interpretation:** An active root-config → application relationship with external target.
 
 ### 18. package.json:20; .gitignore:11-12
 
-**Observação:** `"build": "react-scripts build"`, com saída `/build` ignorada pelo git. Não há artefato de deploy, e a versão `0.1.0` de um pacote `private` não é usada em publicação.
+**Observation:** `"build": "react-scripts build"`, with git-ignored `/build` output. No deployment artifact, and version `0.1.0` of a `private` package is not used in publication.
 
-**Interpretação:** A aplicação tem build próprio, separado do remote, sem deploy observado nem versionamento independente.
+**Interpretation:** Application has its own build, separate from remote, without observed deployment or independent versioning.
 
 ### 19. src/index.js:7
 
-**Observação:** "Puerto donde corre tu 'ng serve'" (porta onde roda o seu `ng serve`).
+**Observation:** "Puerto donde corre tu 'ng serve'" (English translation: port where your `ng serve` runs).
 
-**Interpretação:** Afirma que o remote é servido pelo servidor de desenvolvimento do Angular, à parte. Nada no snapshot roda esse servidor, e a afirmação fica sem corroboração.
+**Interpretation:** Claims remote is served separately by Angular development server. Nothing in snapshot runs that server, and claim remains uncorroborated.
 
 ### 20. src/index.js:44
 
-**Observação:** "Activación por evento (sin rutas)" (ativação por evento, sem rotas).
+**Observation:** "Activación por evento (sin rutas)" (English translation: event activation, without routes).
 
-**Interpretação:** Afirma que o remote é ativado por evento, não por rota. A afirmação é corroborada.
+**Interpretation:** Claims remote is activated by event rather than route. Claim corroborated.
 
 ### 21. src/index.js:55
 
-**Observação:** "Registrar Odin (React Local)" (registrar o Odin, React local).
+**Observation:** "Registrar Odin (React Local)" (English translation: register Odin, local React).
 
-**Interpretação:** Afirma que o Odin é a aplicação React do próprio repositório. A afirmação é corroborada.
+**Interpretation:** Claims Odin is repository's own React application. Claim corroborated.
 
 ### 22. src/index.js:58
 
-**Observação:** "Carga directa del componente exportado" (carga direta do componente exportado).
+**Observation:** "Carga directa del componente exportado" (English translation: direct loading of exported component).
 
-**Interpretação:** Afirma que os lifecycles locais são entregues sem carga remota. A afirmação é corroborada.
+**Interpretation:** Claims local lifecycles are delivered without remote loading. Claim corroborated.
 
 ### 23. src/index.js:62
 
-**Observação:** "Registrar Leadocs (Angular Remoto)" (registrar o Leadocs, Angular remoto).
+**Observation:** "Registrar Leadocs (Angular Remoto)" (English translation: register Leadocs, remote Angular).
 
-**Interpretação:** Afirma que o Leadocs é uma aplicação Angular remota. O "remoto" é confirmado; o "Angular" não tem artefato no snapshot, e a afirmação é corroborada em parte.
+**Interpretation:** Claims Leadocs is a remote Angular application. "Remote" is confirmed; "Angular" has no snapshot artifact, and claim is partially corroborated.
 
 ### 24. src/index.js:66
 
-**Observação:** "Promesa que carga el script y devuelve el módulo" (promessa que carrega o script e devolve o módulo).
+**Observation:** "Promesa que carga el script y devuelve el módulo" (English translation: promise loading script and returning module).
 
-**Interpretação:** Afirma que o remote é carregado por script numa promessa. A afirmação é corroborada; o "módulo" devolvido é uma global.
+**Interpretation:** Claims remote loads through a script in a promise. Claim corroborated; returned "module" is a global.
 
 ### 25. src/index.js:77
 
-**Observação:** "Al terminar de cargar, Angular debe haber expuesto 'window.leapdocs'" (ao terminar de carregar, o Angular deve ter exposto `window.leapdocs`).
+**Observation:** "Al terminar de cargar, Angular debe haber expuesto 'window.leapdocs'" (English translation: when loading finishes, Angular should have exposed `window.leapdocs`).
 
-**Interpretação:** Afirma o contrato entre host e remote pela global `leapdocs`. O lado do host é confirmado; o do remote não tem artefato, e a afirmação é corroborada em parte.
+**Interpretation:** Claims host–remote contract through global `leapdocs`. Host side confirmed; remote side has no artifact, and claim partially corroborated.
 
 ### 26. src/index.js:83
 
-**Observação:** Mensagem de console: "Asegúrate de que en el 'angular.json' de Leadocs, la propiedad 'libraryName' sea 'leadocs'" (garanta que, no `angular.json` do Leadocs, a propriedade `libraryName` seja `leadocs`).
+**Observation:** Console message: "Asegúrate de que en el 'angular.json' de Leadocs, la propiedad 'libraryName' sea 'leadocs'" (English translation: ensure that in Leadocs `angular.json`, property `libraryName` is `leadocs`).
 
-**Interpretação:** Afirma como o remote deve ser construído. O código lê `globalThis.leapdocs` (src/index.js:69, 78), o que contradiz o nome pedido.
+**Interpretation:** Claims how remote must be built. Code reads `globalThis.leapdocs` (src/index.js:69, 78), contradicting requested name.
 
 ### 27. src/root.app.js:20
 
-**Observação:** "Exportamos todo el objeto para el import dinámico" (exportamos o objeto inteiro para o import dinâmico).
+**Observation:** "Exportamos todo el objeto para el import dinámico" (English translation: we export entire object for dynamic import).
 
-**Interpretação:** Afirma que o objeto de lifecycles é importado dinamicamente. O único consumidor o importa estaticamente (src/index.js:4), o que contradiz a afirmação.
+**Interpretation:** Claims lifecycle object is imported dynamically. Sole consumer imports it statically (src/index.js:4), contradicting claim.
 
 ### 28. 80616f7 2026-03-11 (.); 06ce2bd 2026-03-16 (.)
 
-**Observação:** As árvores dos dois commits só têm o scaffold do CRA e, a partir de `06ce2bd`, `src/root.app.js`. Nenhuma tem `angular.json`, projeto Angular ou outro arquivo do remote, e nenhum commit remove arquivo.
+**Observation:** Both commit trees contain only CRA scaffold and, from `06ce2bd`, `src/root.app.js`. Neither contains `angular.json`, Angular project or any other remote file, and no commit removes a file.
 
-**Interpretação:** O remote nunca esteve no repositório. Sua ausência não vem de extração nem de remoção, e o histórico não mostra se ele é Angular nem se publica `leapdocs`.
+**Interpretation:** Remote was never in repository. Its absence does not come from extraction or removal, and history does not show whether it is Angular or publishes `leapdocs`.
 
 ### 29. 80616f7 2026-03-11 (src/index.js); 06ce2bd 2026-03-16 (src/index.js)
 
-**Observação:** `src/index.js` tem duas versões. A do snapshot, `06ce2bd`, que introduz o root single-spa, tem ao mesmo tempo a mensagem com `leadocs` e a leitura de `globalThis.leapdocs`. O conteúdo de `80616f7` não está disponível no clone, e não há commit posterior.
+**Observation:** `src/index.js` has two versions. Snapshot version, `06ce2bd`, introducing single-spa root, simultaneously contains message with `leadocs` and reading of `globalThis.leapdocs`. Contents of `80616f7` are unavailable in clone, and no later commit exists.
 
-**Interpretação:** A mensagem e a global lida entraram juntas. A divergência não é resto de uma mudança versionada.
+**Interpretation:** Message and read global entered together. Discrepancy does not remain from a versioned change.
 
 ### 30. 06ce2bd 2026-03-16 (src/root.app.js; src/index.js)
 
-**Observação:** `src/root.app.js` é criado em `06ce2bd`, o mesmo commit da única versão de `src/index.js` com o `import RootApp from './root.app'` estático.
+**Observation:** `src/root.app.js` is created in `06ce2bd`, same commit as sole version of `src/index.js` with static `import RootApp from './root.app'`.
 
-**Interpretação:** O comentário e o import estático nasceram juntos. O comentário não é resto de um estágio com import dinâmico.
+**Interpretation:** Comment and static import originated together. Comment does not remain from a stage with dynamic import.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.2 (package.json:13) | 1 tecnologia | manifesto | single-spa | tecnológica | fraca | declara #6; declara #7; declara #14 |
-| 2 | 3.4.2 (package.json:14) | 1 tecnologia | manifesto | single-spa | tecnológica | fraca | declara #8; declara #9 |
-| 3 | 3.4.4 (src/root.app.js:16) | 3 código | código-fonte | single-spa | tecnológica | fraca | — |
-| 4 | 3.4.4 (src/root.app.js:17) | 3 código | código-fonte | single-spa | tecnológica | fraca | — |
-| 5 | 3.4.4 (src/root.app.js:18) | 3 código | código-fonte | single-spa | tecnológica | fraca | — |
-| 6 | 3.4.4 (src/index.js:56) | 3 código | código-fonte | single-spa | tecnológica | fraca | — |
-| 7 | 3.4.4 (src/index.js:63) | 3 código | código-fonte | single-spa | arquitetural | forte | implementa #17 |
-| 8 | 3.4.4 (src/root.app.js:3) | 3 código | código-fonte | single-spa | tecnológica | fraca | — |
-| 9 | 3.4.4 (src/root.app.js:6) | 3 código | código-fonte | single-spa | tecnológica | fraca | — |
-| 10 | 3.4.4 (src/index.js:72) | 3 código | código-fonte | script | tecnológica | moderada | implementa #17 |
-| 11 | 3.4.4 (src/App.js:18) | 3 código | código-fonte | — | contexto | fraca | — |
-| 12 | 3.4.4 (src/App.js:19) | 3 código | código-fonte | — | contexto | fraca | — |
-| 13 | 3.4.4 (src/index.js:47) | 3 código | código-fonte | — | contexto | fraca | — |
-| 14 | 3.4.4 (src/index.js:103) | 3 código | código-fonte | single-spa | tecnológica | moderada | implementa #17 |
-| 15 | 3.4.3 (.) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 16 | 3.4.3 (public) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 17 | 3.4.5 #1 | 5 composição | código-fonte | single-spa | arquitetural | forte | liga #15 |
-| 18 | 3.4.6 #1 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #15 |
-| 19 | 3.4.7 #1 | 7 documentação | comentário | — | arquitetural | fraca | — |
-| 20 | 3.4.7 #2 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #13; corrobora #11; corrobora #17 |
-| 21 | 3.4.7 #3 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #15; corrobora #6 |
-| 22 | 3.4.7 #4 | 7 documentação | comentário | — | tecnológica | fraca | corrobora #6 |
-| 23 | 3.4.7 #5 | 7 documentação | comentário | — | arquitetural | fraca | corrobora em parte #7; corrobora em parte #17 |
-| 24 | 3.4.7 #6 | 7 documentação | comentário | script | tecnológica | fraca | corrobora #10; corrobora #17 |
-| 25 | 3.4.7 #7 | 7 documentação | comentário | — | arquitetural | fraca | corrobora em parte #10 |
-| 26 | 3.4.7 #8 | 7 documentação | comentário | — | arquitetural | fraca | contradiz #7; contradiz #10 |
-| 27 | 3.4.7 #9 | 7 documentação | comentário | — | tecnológica | fraca | contradiz #6 |
-| 28 | 3.4.8 #1 | 8 histórico | histórico | — | arquitetural | fraca | explica #23; explica #25 |
-| 29 | 3.4.8 #2 | 8 histórico | histórico | — | arquitetural | fraca | explica #26 |
-| 30 | 3.4.8 #3 | 8 histórico | histórico | — | tecnológica | fraca | explica #27 |
+| 1 | 3.4.2 (package.json:13) | 1 technology | manifest | single-spa | technological | weak | declares #6; declares #7; declares #14 |
+| 2 | 3.4.2 (package.json:14) | 1 technology | manifest | single-spa | technological | weak | declares #8; declares #9 |
+| 3 | 3.4.4 (src/root.app.js:16) | 3 code | source code | single-spa | technological | weak | — |
+| 4 | 3.4.4 (src/root.app.js:17) | 3 code | source code | single-spa | technological | weak | — |
+| 5 | 3.4.4 (src/root.app.js:18) | 3 code | source code | single-spa | technological | weak | — |
+| 6 | 3.4.4 (src/index.js:56) | 3 code | source code | single-spa | technological | weak | — |
+| 7 | 3.4.4 (src/index.js:63) | 3 code | source code | single-spa | architectural | strong | implements #17 |
+| 8 | 3.4.4 (src/root.app.js:3) | 3 code | source code | single-spa | technological | weak | — |
+| 9 | 3.4.4 (src/root.app.js:6) | 3 code | source code | single-spa | technological | weak | — |
+| 10 | 3.4.4 (src/index.js:72) | 3 code | source code | script | technological | moderate | implements #17 |
+| 11 | 3.4.4 (src/App.js:18) | 3 code | source code | — | context | weak | — |
+| 12 | 3.4.4 (src/App.js:19) | 3 code | source code | — | context | weak | — |
+| 13 | 3.4.4 (src/index.js:47) | 3 code | source code | — | context | weak | — |
+| 14 | 3.4.4 (src/index.js:103) | 3 code | source code | single-spa | technological | moderate | implements #17 |
+| 15 | 3.4.3 (.) | 4 structure | directory | — | architectural | moderate | — |
+| 16 | 3.4.3 (public) | 4 structure | directory | — | context | weak | — |
+| 17 | 3.4.5 #1 | 5 composition | source code | single-spa | architectural | strong | links #15 |
+| 18 | 3.4.6 #1 | 6 build-deploy | manifest | — | architectural | moderate | publishes #15 |
+| 19 | 3.4.7 #1 | 7 documentation | comment | — | architectural | weak | — |
+| 20 | 3.4.7 #2 | 7 documentation | comment | — | architectural | weak | corroborates #13; corroborates #11; corroborates #17 |
+| 21 | 3.4.7 #3 | 7 documentation | comment | — | architectural | weak | corroborates #15; corroborates #6 |
+| 22 | 3.4.7 #4 | 7 documentation | comment | — | technological | weak | corroborates #6 |
+| 23 | 3.4.7 #5 | 7 documentation | comment | — | architectural | weak | partially corroborates #7; partially corroborates #17 |
+| 24 | 3.4.7 #6 | 7 documentation | comment | script | technological | weak | corroborates #10; corroborates #17 |
+| 25 | 3.4.7 #7 | 7 documentation | comment | — | architectural | weak | partially corroborates #10 |
+| 26 | 3.4.7 #8 | 7 documentation | comment | — | architectural | weak | contradicts #7; contradicts #10 |
+| 27 | 3.4.7 #9 | 7 documentation | comment | — | technological | weak | contradicts #6 |
+| 28 | 3.4.8 #1 | 8 history | history | — | architectural | weak | explains #23; explains #25 |
+| 29 | 3.4.8 #2 | 8 history | history | — | architectural | weak | explains #26 |
+| 30 | 3.4.8 #3 | 8 history | history | — | technological | weak | explains #27 |
 
-## Resumo
+## Summary
 
-Observações: 30. Dimensões (tecnologia: 2, configuração: 0, código: 12, estrutura: 2, composição: 1, build-deploy: 1, documentação: 9, histórico: 3). Força (forte: 2, moderada: 4, fraca: 24, ambígua: 0). Evidência (tecnológica: 14, arquitetural: 12, contexto: 4).
+Observations: 30. Dimensions (technology: 2, configuration: 0, code: 12, structure: 2, composition: 1, build-deploy: 1, documentation: 9, history: 3). Strength (strong: 2, moderate: 4, weak: 24, ambiguous: 0). Evidence (technological: 14, architectural: 12, context: 4).
+

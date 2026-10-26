@@ -13,24 +13,24 @@ annotation:
 
 # 043 — dhiman1987/micro-frontend-demo
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem 3 commits, sem merges. O shell, as três aplicações e o README já aparecem no primeiro commit observado, `8841396` (2025-06-28, "Initial commit"). O segundo, `54b84a0` (2025-06-28, "Updated readme"), altera só o README. O último, `cae0143` (2025-08-25, "remaining changes"), altera o `package.json` e o lockfile da `app3` e cria `app3/src/MyCounterLitElement.jsx`. Os demais arquivos das aplicações e do shell não mudam desde o primeiro commit.
+History up to snapshot has 3 commits, without merges. Shell, all three applications and README already appear in first observed commit, `8841396` (2025-06-28, "Initial commit"). Second, `54b84a0` (2025-06-28, "Updated readme"), changes only README. Last, `cae0143` (2025-08-25, "remaining changes"), changes `package.json` and lockfile of `app3` and creates `app3/src/MyCounterLitElement.jsx`. Other application and shell files have not changed since first commit.
 
-## Pontos
+## Points
 
-| # | Ponto | Origem | Pergunta | Commits | Resultado |
+| # | Point | Origin | Question | Commits | Result |
 |---|---|---|---|---|---|
-| 1 | `lit` e `@lit/react` estão declaradas, e a variante Lit do contador não tem ponto de entrada | 3.4.2 (app3/package.json:13, 15); 3.4.4 (app3/src/MyCounterLitElement.jsx:7) | uso de dependência | cae0143 2025-08-25 remaining changes; 8841396 2025-06-28 Initial commit | esclarecido |
-| 2 | O README promete "zero global style bleed", e o CSS do shell atinge a app1 e a app2 | 3.4.7 #7 | estágios em conflito | 8841396 2025-06-28 Initial commit; 54b84a0 2025-06-28 Updated readme | esclarecido |
+| 1 | `lit` and `@lit/react` are declared, and Lit counter variant has no entry point | 3.4.2 (app3/package.json:13, 15); 3.4.4 (app3/src/MyCounterLitElement.jsx:7) | dependency use | cae0143 2025-08-25 remaining changes; 8841396 2025-06-28 Initial commit | clarified |
+| 2 | README promises "zero global style bleed", while shell CSS affects app1 and app2 | 3.4.7 #7 | conflicting stages | 8841396 2025-06-28 Initial commit; 54b84a0 2025-06-28 Updated readme | clarified |
 
-## Observações
+## Observations
 
-**1. `lit` e `@lit/react` estão declaradas, e a variante Lit do contador não tem ponto de entrada.** `MyCounterLitElement.jsx` é criado no último commit, `cae0143`, junto com a mudança no `package.json` da `app3`. A versão anterior do `package.json` não está disponível, e não dá para confirmar se as dependências Lit entraram nesse mesmo commit. Já os arquivos que definem a entrada e o build da `app3` (`vite.config.js`, `index.html`, `src/main.jsx` e `src/MyCounterElement.jsx`) não mudam desde o primeiro commit, e a variante Lit não existia antes de `cae0143`. Em nenhuma versão do histórico ela esteve ligada a um ponto de entrada. Foi acrescentada e não conectada, e não desconectada depois.
+**1. `lit` and `@lit/react` are declared, and Lit counter variant has no entry point.** The `MyCounterLitElement.jsx` is created in last commit, `cae0143`, with change to `package.json` of `app3`. Previous `package.json` version is unavailable, so whether Lit dependencies entered in same commit cannot be confirmed. However files defining entry and build of `app3` (`vite.config.js`, `index.html`, `src/main.jsx` and `src/MyCounterElement.jsx`) have not changed since first commit, and Lit variant did not exist before `cae0143`. In no historical version was it connected to an entry point. Added without connection, not disconnected afterward.
 
-**2. O README promete "zero global style bleed", e o CSS do shell atinge a app1 e a app2.** `app1/app.js`, `app2/app.js`, `app-shell/index.html` e `app-shell/style.css` não mudam desde o primeiro commit. O README teve a última alteração em `54b84a0`, no mesmo dia. A promessa e o código que a contradiz convivem desde 2025-06-28: não são estágios diferentes.
+**2. README promises "zero global style bleed", while shell CSS affects app1 and app2.** The `app1/app.js`, `app2/app.js`, `app-shell/index.html` and `app-shell/style.css` have not changed since first commit. README last changed in `54b84a0`, same day. Promise and contradicting code have coexisted since 2025-06-28: not different stages.
 
-## Comandos
+## Commands
 
 ```
 docs/mfe-history-review/tools/hist.sh dhiman1987__micro-frontend-demo rev-list --count cae01436907388ad75de4a33cfc2c7a5ae256406
@@ -39,7 +39,7 @@ docs/mfe-history-review/tools/hist.sh dhiman1987__micro-frontend-demo log --reve
 docs/mfe-history-review/tools/hist.sh dhiman1987__micro-frontend-demo show --name-status --no-renames --format='== %h' 8841396
 docs/mfe-history-review/tools/hist.sh dhiman1987__micro-frontend-demo show --name-status --no-renames --format='== %h' 54b84a0
 docs/mfe-history-review/tools/hist.sh dhiman1987__micro-frontend-demo show --name-status --no-renames --format='== %h' cae0143
-docs/mfe-history-review/tools/hist.sh dhiman1987__micro-frontend-demo show 8841396:app3/package.json   # falha: objeto ausente
+docs/mfe-history-review/tools/hist.sh dhiman1987__micro-frontend-demo show 8841396:app3/package.json   # failure: missing object
 docs/mfe-history-review/tools/hist.sh dhiman1987__micro-frontend-demo log --format='%h %ad' --date=short cae01436907388ad75de4a33cfc2c7a5ae256406 -- app3/vite.config.js
 docs/mfe-history-review/tools/hist.sh dhiman1987__micro-frontend-demo log --format='%h %ad' --date=short cae01436907388ad75de4a33cfc2c7a5ae256406 -- app3/index.html
 docs/mfe-history-review/tools/hist.sh dhiman1987__micro-frontend-demo log --format='%h %ad' --date=short cae01436907388ad75de4a33cfc2c7a5ae256406 -- app3/src/main.jsx
@@ -52,6 +52,6 @@ docs/mfe-history-review/tools/hist.sh dhiman1987__micro-frontend-demo log --form
 docs/mfe-history-review/tools/hist.sh dhiman1987__micro-frontend-demo log --format='%h %ad' --date=short cae01436907388ad75de4a33cfc2c7a5ae256406 -- README.md
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 3 (2025-06-28 a 2025-08-25). Pontos: 2 (esclarecido: 2, inconclusivo: 0, resolvido pelo snapshot: 0).
+Commits up to the snapshot: 3 (2025-06-28 to 2025-08-25). Points: 2 (clarified: 2, inconclusive: 0, resolved by the snapshot: 0).

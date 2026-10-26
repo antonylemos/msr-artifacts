@@ -20,25 +20,26 @@ annotation:
 
 # 305 — martinkuba/micro-frontend-test
 
-## Leitura do repositório
+## Repository overview
 
-Aplicação de teste do Grafana Faro numa arquitetura de micro-frontends. É um monorepo com npm workspaces e três pacotes webpack 5 (package.json:14-18). `packages/shell` é o host React: seu `ModuleFederationPlugin` declara o remote `mainContent` (packages/shell/webpack.config.js:32-35). A entrada carrega o bootstrap de forma assíncrona (packages/shell/src/index.tsx:2), e o bootstrap monta o `App` (packages/shell/src/bootstrap.tsx:14-19). O `App` carrega `mainContent/MainContent` com `React.lazy` (packages/shell/src/App.tsx:6) e o renderiza dentro de `ErrorBoundary` e `Suspense` (packages/shell/src/App.tsx:199-203). `packages/main-content` é o remote: expõe `./MainContent` num `remoteEntry.js` (packages/main-content/webpack.config.js:31-36). O único mecanismo é Module Federation, com `react`, `react-dom` e `@grafana/faro-web-sdk` compartilhados como singletons (packages/shell/webpack.config.js:38-42; packages/main-content/webpack.config.js:37-41).
+A Grafana Faro test application in a micro-frontends architecture. An npm workspaces monorepo with three webpack 5 packages (package.json:14-18). `packages/shell` is the React host: its `ModuleFederationPlugin` declares remote `mainContent` (packages/shell/webpack.config.js:32-35). The entry point loads bootstrap asynchronously (packages/shell/src/index.tsx:2), and bootstrap mounts `App` (packages/shell/src/bootstrap.tsx:14-19). `App` loads `mainContent/MainContent` with `React.lazy` (packages/shell/src/App.tsx:6) and renders it inside `ErrorBoundary` and `Suspense` (packages/shell/src/App.tsx:199-203). `packages/main-content` is the remote: it exposes `./MainContent` in a `remoteEntry.js` (packages/main-content/webpack.config.js:31-36). The only mechanism is Module Federation, with `react`, `react-dom` and `@grafana/faro-web-sdk` shared as singletons (packages/shell/webpack.config.js:38-42; packages/main-content/webpack.config.js:37-41).
 
-O terceiro pacote, `packages/sidebar`, tem configuração de remote completa (`name: 'sidebar'`, `exposes: { './Sidebar' }`, packages/sidebar/webpack.config.js:32-36), mas está desligado no snapshot. A declaração do remote no shell está comentada (packages/shell/webpack.config.js:36), assim como o import (packages/shell/src/App.tsx:7) e a montagem (packages/shell/src/App.tsx:206-214). Só a declaração de tipo `sidebar/Sidebar` permanece (packages/shell/src/remotes.d.ts:7-10), e ela não carrega nada. O script `start` sobe só main-content e shell (package.json:7); `start:sidebar` fica à parte (package.json:10). Por isso o sidebar não virou relação.
+The third package, `packages/sidebar`, has complete remote configuration (`name: 'sidebar'`, `exposes: { './Sidebar' }`, packages/sidebar/webpack.config.js:32-36), but is disabled in the snapshot. Its remote declaration in the shell is commented out (packages/shell/webpack.config.js:36), as are the import (packages/shell/src/App.tsx:7) and mounting (packages/shell/src/App.tsx:206-214). Only type declaration `sidebar/Sidebar` remains (packages/shell/src/remotes.d.ts:7-10), loading nothing. Script `start` starts only main-content and shell (package.json:7); `start:sidebar` remains separate (package.json:10). Hence sidebar did not become a relationship.
 
-Não há comunicação entre as unidades. Cada uma inicializa sua própria instância do Faro (packages/shell/src/bootstrap.tsx:7), o que é telemetria, não troca de mensagens, e a busca no snapshot não achou `CustomEvent`, `postMessage`, `dispatchEvent` nem `BroadcastChannel` em `packages/`.
+There is no inter-unit communication. Each initializes its own Faro instance (packages/shell/src/bootstrap.tsx:7), which is telemetry rather than message exchange, and the snapshot search found no `CustomEvent`, `postMessage`, `dispatchEvent` or `BroadcastChannel` in `packages/`.
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | packages/shell | packages/main-content | host → remote | origem → destino | module-federation | Yes | Yes | packages/shell/webpack.config.js:34-35 (remote `mainContent` em `http://localhost:3001/remoteEntry.js`); packages/main-content/webpack.config.js:32-36 (`name: 'mainContent'`, `filename: 'remoteEntry.js'`, expõe `./MainContent`); packages/main-content/webpack.config.js:11 (`publicPath: 'http://localhost:3001/'`); packages/main-content/webpack.config.js:45 (porta 3001) | packages/shell/src/App.tsx:6; packages/shell/src/App.tsx:201 |
+| 1 | packages/shell | packages/main-content | host → remote | source → target | module-federation | Yes | Yes | packages/shell/webpack.config.js:34-35 (remote `mainContent` at `http://localhost:3001/remoteEntry.js`); packages/main-content/webpack.config.js:32-36 (`name: 'mainContent'`, `filename: 'remoteEntry.js'`, exposes `./MainContent`); packages/main-content/webpack.config.js:11 (`publicPath: 'http://localhost:3001/'`); packages/main-content/webpack.config.js:45 (port 3001) | packages/shell/src/App.tsx:6; packages/shell/src/App.tsx:201 |
 
-## Observações
+## Observations
 
-**1. packages/shell → packages/main-content.** O remote `mainContent` declarado pelo shell (packages/shell/webpack.config.js:35) corresponde a `packages/main-content` pelo `name: 'mainContent'` e pelo `filename: 'remoteEntry.js'` (packages/main-content/webpack.config.js:32-33). O módulo importado, `mainContent/MainContent`, é o `./MainContent` exposto (packages/main-content/webpack.config.js:34-36), cujo export default é o componente (packages/main-content/src/MainContent.tsx:104). O `publicPath` e a porta 3001 (packages/main-content/webpack.config.js:11, 45) só corroboram. A relação é ativa: as duas linhas `Yes` da revisão de código-fonte são o `React.lazy` (packages/shell/src/App.tsx:6) e a renderização `<MainContent />` (packages/shell/src/App.tsx:201), e o `App` é montado na inicialização (packages/shell/src/bootstrap.tsx:14-19). A revisão estrutural deixou `packages/main-content` como `Undetermined` porque o pacote não roda sozinho; o papel dele de remote está estabelecido pela configuração e pelo consumo.
+**1. packages/shell → packages/main-content.** Remote `mainContent` declared by the shell (packages/shell/webpack.config.js:35) matches `packages/main-content` through `name: 'mainContent'` and `filename: 'remoteEntry.js'` (packages/main-content/webpack.config.js:32-33). Imported module `mainContent/MainContent` is exposed `./MainContent` (packages/main-content/webpack.config.js:34-36), whose default export is the component (packages/main-content/src/MainContent.tsx:104). `publicPath` and port 3001 (packages/main-content/webpack.config.js:11, 45) only corroborate. The relationship is active: both `Yes` source code review lines are `React.lazy` (packages/shell/src/App.tsx:6) and rendering `<MainContent />` (packages/shell/src/App.tsx:201), and `App` is mounted on initialization (packages/shell/src/bootstrap.tsx:14-19). The structural review left `packages/main-content` as `Undetermined` because the package does not run independently; its remote role is established by configuration and consumption.
 
-## Resumo
+## Summary
 
-Relações: 1 (host → remote: 1). Ativas: 1. Destino fora do snapshot: 0.
-Unidades sem relação: nenhuma.
+Relationships: 1 (host → remote: 1). Active: 1. Target outside the snapshot: 0.
+Units without a relationship: none.
+

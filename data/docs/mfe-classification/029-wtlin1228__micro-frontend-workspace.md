@@ -20,43 +20,43 @@ annotation:
 
 # 029 — wtlin1228/micro-frontend-workspace
 
-## Contexto
+## Context
 
-- **Abordagem de implementação:** híbrida, com Module Federation 2 (`@module-federation/rsbuild-plugin` + runtime `registerRemotes`/`loadRemote`) e qiankun (lifecycles `bootstrap`/`mount`/`unmount`, baseado em single-spa) no mesmo host
-- **Tipo de repositório:** example/proof of concept (workspace de experimentação; README só com portas e comandos)
+- **Implementation approach:** hybrid, with Module Federation 2 (`@module-federation/rsbuild-plugin` + `registerRemotes`/`loadRemote` runtime) and qiankun (`bootstrap`/`mount`/`unmount` lifecycles, based on single-spa) in the same host
+- **Repository type:** example/proof of concept (experimentation workspace; README with only ports and commands)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | Monorepo pnpm com `packages/host`, `packages/app-mf-1`, `packages/app-mf-2`, `packages/app-qiankun-1`, `packages/app-qiankun-2` (cada um com `package.json`, `rsbuild.config.ts`, `src/index.tsx` e porta própria, `README.md:5-11`) e a lib de contrato `packages/lib-app-interface` (`@mfw/app-interface`) | forte |
-| Configuração (host) | `packages/host/module-federation.config.ts:3-16`: `name: 'host'`, `remotes` vazio (com comentário: carga pela runtime API), `shared` singleton de react/react-dom | moderada |
-| Configuração (registro) | `packages/host/src/configs/apps.ts:9-34`: `APP_CONFIGS` com quatro apps, tipo de arquitetura (`'Module Federation'` ou `'Qiankun'`) e `entry` (`mf-manifest.json` em 4001/4002; `index.html` em 3001/3002) | forte |
-| Configuração (remotes MF) | `packages/app-mf-1/module-federation.config.ts:3-13`: `name: 'mf1'`, `exposes: { '.': './src/exposed.tsx' }`, `shared` singleton; `app-mf-2` análogo | forte |
-| Código-fonte (carga MF) | `packages/host/src/app-loaders/module-federation.ts:27-43`: `registerRemotes([{ name, entry }])` + `loadRemote(name)` → `getRootComponent({ basepath: '/apps/<id>' })`; `packages/host/src/routes/apps.$baseRoute.tsx:12-25,39-56`: o loader de rota resolve o remote e renderiza em `Suspense` | forte |
-| Código-fonte (carga qiankun) | `packages/host/src/app-loaders/qiankun.ts:7-26`: `registerMicroApps` com `entry`, `container: '#qiankun-container'`, `activeRule: '/apps/<id>'` e `props.basepath`, depois `start()`; `packages/host/src/App.tsx:3,8` chama `registerQiankunApps()`; `packages/host/src/routes/apps.tsx:12` renderiza o container | forte |
-| Código-fonte (remotes) | `packages/app-mf-1/src/exposed.tsx:1` exporta `getRootComponent`; `packages/app-qiankun-1/src/lifecycles.tsx:14-30` exporta `bootstrap`/`mount` (e `unmount`) recebendo `HostProps` | forte |
-| Código-fonte (contrato) | `HostProps` de `@mfw/app-interface` usado pelo host (`module-federation.ts:6`, `qiankun.ts:1`) e pelos remotes (`lifecycles.tsx:1`) (contrato compartilhado) | moderada |
-| Build/deploy | Scripts separados `build:libs`, `build:apps`, `build:host` e `preview:*` (`README.md:15-23`); sem CI/CD | moderada |
-| Documentação | `README.md`: só a tabela de portas e o quick start (arquitetural) | ausente |
+| Structure | pnpm monorepo with `packages/host`, `packages/app-mf-1`, `packages/app-mf-2`, `packages/app-qiankun-1`, `packages/app-qiankun-2` (each with its own `package.json`, `rsbuild.config.ts`, `src/index.tsx` and port, `README.md:5-11`) and contract library `packages/lib-app-interface` (`@mfw/app-interface`) | strong |
+| Configuration (host) | `packages/host/module-federation.config.ts:3-16`: `name: 'host'`, empty `remotes` (with comment: loading through the runtime API), singleton `shared` for react/react-dom | moderate |
+| Configuration (registration) | `packages/host/src/configs/apps.ts:9-34`: `APP_CONFIGS` with four apps, architecture type (`'Module Federation'` or `'Qiankun'`) and `entry` (`mf-manifest.json` on 4001/4002; `index.html` on 3001/3002) | strong |
+| Configuration (MF remotes) | `packages/app-mf-1/module-federation.config.ts:3-13`: `name: 'mf1'`, `exposes: { '.': './src/exposed.tsx' }`, singleton `shared`; analogous `app-mf-2` | strong |
+| Source code (MF loading) | `packages/host/src/app-loaders/module-federation.ts:27-43`: `registerRemotes([{ name, entry }])` + `loadRemote(name)` → `getRootComponent({ basepath: '/apps/<id>' })`; `packages/host/src/routes/apps.$baseRoute.tsx:12-25,39-56`: the route loader resolves the remote and renders it in `Suspense` | strong |
+| Source code (qiankun loading) | `packages/host/src/app-loaders/qiankun.ts:7-26`: `registerMicroApps` with `entry`, `container: '#qiankun-container'`, `activeRule: '/apps/<id>'` and `props.basepath`, then `start()`; `packages/host/src/App.tsx:3,8` calls `registerQiankunApps()`; `packages/host/src/routes/apps.tsx:12` renders the container | strong |
+| Source code (remotes) | `packages/app-mf-1/src/exposed.tsx:1` exports `getRootComponent`; `packages/app-qiankun-1/src/lifecycles.tsx:14-30` exports `bootstrap`/`mount` (and `unmount`) receiving `HostProps` | strong |
+| Source code (contract) | `HostProps` from `@mfw/app-interface` used by the host (`module-federation.ts:6`, `qiankun.ts:1`) and remotes (`lifecycles.tsx:1`) (shared contract) | moderate |
+| Build/deploy | Separate scripts `build:libs`, `build:apps`, `build:host` and `preview:*` (`README.md:15-23`); no CI/CD | moderate |
+| Documentation | `README.md`: only the port table and quick start (architectural) | absent |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
 | Q1 | Yes | `host` + `app-mf-1`, `app-mf-2`, `app-qiankun-1`, `app-qiankun-2` |
-| Q2 | Yes | Entry, `rsbuild.config.ts` e porta próprios por app; só compartilham a lib de tipos `@mfw/app-interface`, sem import de código-fonte entre apps |
-| Q3 | Yes | O host roteia `/apps/<id>` para cada app (`apps.$baseRoute.tsx`, `qiankun.ts:12-17`) |
-| Q4 | Yes | MF runtime (`registerRemotes`/`loadRemote`) e qiankun (`registerMicroApps`/`start`) configurados e em uso, guiados por `APP_CONFIGS` |
-| Q5 | Yes | Q1–Q4 convergem; nenhuma divergência a justificar |
+| Q2 | Yes | Each app has its own entry, `rsbuild.config.ts` and port; they share only the `@mfw/app-interface` types library, with no source code imports between apps |
+| Q3 | Yes | The host routes `/apps/<id>` to each app (`apps.$baseRoute.tsx`, `qiankun.ts:12-17`) |
+| Q4 | Yes | MF runtime (`registerRemotes`/`loadRemote`) and qiankun (`registerMicroApps`/`start`) configured and in use, driven by `APP_CONFIGS` |
+| Q5 | Yes | Q1–Q4 converge; no discrepancy to justify |
 
-## Motivo
+## Rationale
 
-- Q1–Q5 são todos Yes, o que satisfaz a regra de MFE-implemented.
-- Corresponde a "monorepos containing a host and its remotes" e a "hybrid implementations": um único host orquestra dois mecanismos de composição diferentes, escolhidos por app via configuração.
+- Q1–Q5 are all Yes, satisfying the MFE-implemented rule.
+- Matches "monorepos containing a host and its remotes" and "hybrid implementations": a single host orchestrates two different composition mechanisms, chosen per app through configuration.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** caso híbrido explícito (Module Federation + qiankun/single-spa no mesmo host), com o tipo de arquitetura declarado por app em `APP_CONFIGS`.
-- **RQ3:** o `remotes` estático vazio no `module-federation.config.ts` + `registerRemotes` em runtime mostra que a relação host → remote pode não aparecer na config de build; está no código e num registro de apps (que, segundo o comentário em `apps.ts:8`, viria de uma API em produção).
-- **RQ1:** a lib `@mfw/app-interface` define o contrato (`HostProps`) entre host e apps, um artefato de fronteira explícito.
+- **RQ2:** explicit hybrid case (Module Federation + qiankun/single-spa in the same host), with architecture type declared per app in `APP_CONFIGS`.
+- **RQ3:** empty static `remotes` in `module-federation.config.ts` + `registerRemotes` at runtime show that the host → remote relationship may be absent from build config; it is in code and an app registry (which, according to the comment in `apps.ts:8`, would come from an API in production).
+- **RQ1:** the `@mfw/app-interface` library defines the contract (`HostProps`) between host and apps, an explicit boundary artifact.

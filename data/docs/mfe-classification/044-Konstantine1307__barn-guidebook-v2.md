@@ -20,37 +20,37 @@ annotation:
 
 # 044 — Konstantine1307/barn-guidebook-v2
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** template (guia de hospedagem em PWA; "This is the template… Each property gets its own copy", `README.md:7-8`)
+- **Repository type:** template (PWA accommodation guide; "This is the template… Each property gets its own copy", `README.md:7-8`)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Documentação | `README.md:3-5` "Single Page Application (SPA) — Vanilla HTML + CSS + TypeScript… Web Components, CSS custom properties, History API routing"; `ARCHITECTURE.md:5` idem; nenhuma menção a micro-frontends | contexto |
-| Configuração | `vite.config.ts:17-30`: um único input (`src/index.html`), `VitePWA`; sem federação, `build.lib` ou entries múltiplas | ausente |
-| Código-fonte (Web Components) | `src/components/guide-navbar.ts:138`, `guide-drawer.ts:174`, `guide-modal.ts:77`: `customElements.define(...)` para componentes de UI internos (navbar, drawer, modal), compilados no mesmo bundle | contrária |
-| Código-fonte (roteamento) | `src/scripts/router.ts` + `src/components/sections/*.ts`: seções da SPA renderizadas pelo roteador interno (History API) | contrária |
-| Estrutura | Uma única app (um `package.json`, um entry) | contrária |
-| Build/deploy | `public/_headers`, `_redirects`, `_routes.json`: deploy único no Cloudflare Pages | contrária |
+| Documentation | `README.md:3-5` "Single Page Application (SPA) — Vanilla HTML + CSS + TypeScript… Web Components, CSS custom properties, History API routing"; same in `ARCHITECTURE.md:5`; no mention of micro-frontends | context |
+| Configuration | `vite.config.ts:17-30`: a single input (`src/index.html`), `VitePWA`; no federation, `build.lib` or multiple entries | absent |
+| Source code (Web Components) | `src/components/guide-navbar.ts:138`, `guide-drawer.ts:174`, `guide-modal.ts:77`: `customElements.define(...)` for internal UI components (navbar, drawer, modal), compiled in the same bundle | contrary |
+| Source code (routing) | `src/scripts/router.ts` + `src/components/sections/*.ts`: SPA sections rendered by the internal router (History API) | contrary |
+| Structure | A single app (one `package.json`, one entry) | contrary |
+| Build/deploy | `public/_headers`, `_redirects`, `_routes.json`: single deployment on Cloudflare Pages | contrary |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend (`vite.config.ts:24-26`) |
-| Q2 | No | Os Web Components compartilham o mesmo build e bundle |
-| Q3 | No | Não há host, shell nem root config compondo unidades; o roteador é interno |
-| Q4 | No | Nenhum mecanismo de composição entre unidades; `customElements.define` é usado para componentes de UI internos |
-| Q5 | No | Q1–Q4 convergem |
+| Q1 | No | A single frontend unit (`vite.config.ts:24-26`) |
+| Q2 | No | Web Components share the same build and bundle |
+| Q3 | No | No host, shell or root config composing units; the router is internal |
+| Q4 | No | No composition mechanism between units; `customElements.define` is used for internal UI components |
+| Q5 | No | Q1–Q4 converge |
 
-## Motivo
+## Rationale
 
-- É uma SPA monolítica em TypeScript puro que usa Web Components nativos como modelo de componentes, não como fronteira entre unidades independentes.
-- Corresponde a "conventional frontend monoliths". Por analogia, também a "component libraries using Web Components": os custom elements são componentes internos da própria app.
-- Provavelmente entrou pela busca de implementação ("Web Components").
+- This is a monolithic SPA in plain TypeScript using native Web Components as its component model, not as boundaries between independent units.
+- Matches "conventional frontend monoliths". By analogy, also "component libraries using Web Components": custom elements are internal components of the app itself.
+- It probably entered through the implementation search ("Web Components").
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** `customElements.define` é evidência só de tecnologia; aqui serve como modelo de componentes de uma SPA. Contraste com o repositório 043, onde cada custom element é uma unidade servida separadamente e composta em runtime.
+- **RQ1 (misleading signals):** `customElements.define` is only technology evidence; here it serves as a SPA's component model. Contrast with repository 043, where each custom element is a separately served unit composed at runtime.

@@ -16,29 +16,29 @@ annotation:
 
 # 017 — a-kelen/mfe
 
-## Leitura do repositório
+## Repository overview
 
-O repositório não tem nenhum arquivo `.md`, e os `package.json` das quatro aplicações não têm `description`. Foram lidos os artefatos que as revisões anteriores citam:
-- os quatro workflows de deploy;
-- as configurações webpack (`webpack.common.js`, `webpack.dev.js` e `webpack.prod.js`) de cada aplicação;
-- os `package.json`, `index.js` e `bootstrap.js`;
-- os componentes de montagem do container (`App.js`, `AuthApp.js`, `DashboardApp.js` e `MarketingApp.js`);
-- os componentes de login do auth.
+The repository has no `.md` file, and all four applications' `package.json` files have no `description`. Artifacts cited by previous reviews were read:
+- all four deployment workflows;
+- each application's webpack configurations (`webpack.common.js`, `webpack.dev.js` and `webpack.prod.js`);
+- `package.json`, `index.js` and `bootstrap.js` files;
+- container mounting components (`App.js`, `AuthApp.js`, `DashboardApp.js` and `MarketingApp.js`);
+- auth login components.
 
-Nenhum tem comentário sobre a arquitetura. Os únicos comentários do código, fora desses artefatos, são de estilo e de layout (ex.: packages/dashboard/src/components/Dashboard.vue:394; packages/marketing/src/components/Pricing.js:173).
+None has an architecture comment. The only code comments outside those artifacts concern style and layout (e.g.: packages/dashboard/src/components/Dashboard.vue:394; packages/marketing/src/components/Pricing.js:173).
 
-O repositório, portanto, não documenta sua arquitetura. Tudo o que se sabe dele vem dos artefatos, já registrado nas revisões anteriores.
+Thus the repository does not document its architecture. Everything known about it comes from artifacts, already recorded in previous reviews.
 
-Nenhuma ocorrência `doc-*` na mineração.
+No `doc-*` occurrences in mining.
 
-## Afirmações
+## Claims
 
-Nenhuma afirmação arquitetural.
+No architectural claims.
 
-## Observações
+## Observations
 
-Sem afirmações.
+No claims.
 
-## Resumo
+## Summary
 
-Afirmações: 0.
+Claims: 0.

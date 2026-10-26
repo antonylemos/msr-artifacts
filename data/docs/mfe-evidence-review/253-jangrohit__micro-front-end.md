@@ -19,322 +19,323 @@ annotation:
 
 # 253 — jangrohit/micro-front-end
 
-## Leitura do repositório
+## Repository overview
 
-A cadeia de composição liga duas aplicações React com entrada e build próprios: container (#11) e marketing (#14). A configuração do host nomeia marketing e resolve seu remoteEntry em produção e desenvolvimento (#1, #2); o remote expõe MarketingApp (#3, #4). O container importa essa interface pelo nome federado (#9), chama mount no elemento de seu wrapper (#8), e o destino exporta a função de montagem (#7). A relação ativa #16 reúne essa cadeia de Module Federation. Os workflows constroem e publicam cada aplicação separadamente em prefixos próprios de S3/CloudFront (#17, #18), sem versionamento de publicação independente nem prova de execução dos jobs.
+Composition chain links two React applications with own entries/builds: container (#11) and marketing (#14). Host configuration names marketing and resolves remoteEntry in production/development (#1, #2); remote exposes MarketingApp (#3, #4). Container imports interface by federated name (#9), calls mount in wrapper element (#8), and target exports mounting function (#7). Active relationship #16 combines Module Federation chain. Workflows build/publish each application separately under own S3/CloudFront prefixes (#17, #18), without independent publication versioning or evidence of job execution.
 
-A 3.4.2 não tem linhas de dependências das tecnologias inspecionadas, portanto a dimensão 1 não tem observações. Isso não exclui o mecanismo: as configurações importam o plugin embutido no webpack (#1–#4). Os bootstraps assíncronos locais (#5, #6) são sinais fracos isolados. Auth e dashboard são pacotes sem UI (#10, #13), e os diretórios config não são aplicações extras (#12, #15).
+Section 3.4.2 has no inspected-technology dependency rows, therefore no dimension 1 observations. This does not exclude mechanism: configurations import webpack built-in plugin (#1–#4). Local asynchronous bootstraps (#5, #6) isolated weak signals. Auth/dashboard packages without UI (#10, #13); config directories not extra applications (#12, #15).
 
-As 23 afirmações documentais (#19–#41) ajudam a descrever os papéis e o contrato de montagem, mas têm força fraca por serem semânticas. Duas são contraditas: a negação dos pipelines (#40), frente aos workflows, e a conclusão sobre roteadores aninhados na mesma árvore React (#41), frente à raiz própria do marketing. O histórico esclarece que os workflows antecedem o README (#42); o segundo ponto é resolvido pelo snapshot (#43). Não resta ambiguidade arquitetural registrada pelas entradas finais. Não se infere execução bem-sucedida, sincronização de navegação ou origem externa do código.
+23 documentary claims (#19–#41) describe roles/mounting contract but weak as semantic statements. Two contradicted: denial of pipelines (#40) versus workflows, and conclusion about routers nested in same React tree (#41) versus marketing’s own root. History clarifies workflows predate README (#42); second point resolved by snapshot (#43). No architectural ambiguity recorded in final inputs. No inference of successful execution, navigation synchronization or external code origin.
 
-## Observações
+## Observations
 
 ### 1. packages/container/config/webpack.prod.js:3-5; packages/container/config/webpack.prod.js:19-25
 
-**Observação:** O ModuleFederationPlugin declara name `container`, remote `marketing@${domain}/marketing/latest/remoteEntry.js` e shared obtido das dependencies do pacote; domain vem de PRODUCTION_DOMAIN.
+**Observation:** ModuleFederationPlugin declares name `container`, remote `marketing@${domain}/marketing/latest/remoteEntry.js` and shared obtained from package dependencies; domain comes from PRODUCTION_DOMAIN.
 
-**Interpretação:** O host declara outra unidade e seu endereço de resolução em produção.
+**Interpretation:** Host declares another unit and production resolution address.
 
 ### 2. packages/container/config/webpack.dev.js:3-4; packages/container/config/webpack.dev.js:14-20
 
-**Observação:** O ModuleFederationPlugin declara name `container`, remote `marketing@http://localhost:8081/remoteEntry.js` e shared com as dependencies do pacote.
+**Observation:** ModuleFederationPlugin declares name `container`, remote `marketing@http://localhost:8081/remoteEntry.js` and shared with package dependencies.
 
-**Interpretação:** O host declara marketing como destino federado em desenvolvimento.
+**Interpretation:** Host declares marketing as development federated target.
 
 ### 3. packages/marketing/config/webpack.prod.js:3-4; packages/marketing/config/webpack.prod.js:19-26
 
-**Observação:** O ModuleFederationPlugin declara name `marketing`, filename `remoteEntry.js`, exposes de `./MarketingApp` para `./src/bootstrap` e shared com as dependencies do pacote.
+**Observation:** ModuleFederationPlugin declares name `marketing`, filename `remoteEntry.js`, exposes from `./MarketingApp` to `./src/bootstrap` and shared with package dependencies.
 
-**Interpretação:** Configura a exposição federada da unidade marketing, sem nomear uma unidade consumidora.
+**Interpretation:** Configures federated exposure of marketing unit without naming consuming unit.
 
 ### 4. packages/marketing/config/webpack.dev.js:4-5; packages/marketing/config/webpack.dev.js:15-22
 
-**Observação:** O ModuleFederationPlugin declara name `marketing`, filename `remoteEntry.js`, exposes de `./MarketingApp` para `./src/bootstrap` e shared com as dependencies do pacote.
+**Observation:** ModuleFederationPlugin declares name `marketing`, filename `remoteEntry.js`, exposes from `./MarketingApp` to `./src/bootstrap` and shared with package dependencies.
 
-**Interpretação:** Configura o mesmo módulo exposto em desenvolvimento, sem identificar um consumidor.
+**Interpretation:** Configures same exposed module in development without naming consuming unit.
 
 ### 5. packages/container/src/index.js:1
 
-**Observação:** A entrada executa `import("./bootstrap")`, com destino no próprio pacote.
+**Observation:** Entry executes `import("./bootstrap")`, targeting own package.
 
-**Interpretação:** É um bootstrap assíncrono local; a revisão registra Composição No. A linha isolada não identifica mecanismo de MFE.
+**Interpretation:** Local asynchronous bootstrap; review records Composition No. Line alone identifies no MFE mechanism.
 
 ### 6. packages/marketing/src/index.js:1
 
-**Observação:** A entrada executa `import("./bootstrap")`, com destino no próprio pacote.
+**Observation:** Entry executes `import("./bootstrap")`, targeting own package.
 
-**Interpretação:** É um bootstrap assíncrono local; a revisão registra Composição No. A linha isolada não identifica mecanismo de MFE.
+**Interpretation:** Local asynchronous bootstrap; review records Composition No. Line alone identifies no MFE mechanism.
 
 ### 7. packages/marketing/src/bootstrap.js:5-7; packages/marketing/src/bootstrap.js:17
 
-**Observação:** Define mount(el), que executa ReactDOM.render de App no elemento recebido, e exporta mount.
+**Observation:** Defines mount(el), executing ReactDOM.render of App in supplied element, exporting mount.
 
-**Interpretação:** Oferece a montagem da aplicação num elemento fornecido pelo consumidor; o código recebe esse elemento por parâmetro e não nomeia o host.
+**Interpretation:** Offers application mounting in consumer-supplied element; code receives element as parameter without naming host.
 
 ### 8. packages/container/src/components/MarketingApp.js:3-11
 
-**Observação:** O wrapper importa mount de `marketing/MarketingApp`, chama `mount(ref.current)` dentro de useEffect e devolve o div referenciado. Só passa o elemento.
+**Observation:** Wrapper imports mount from `marketing/MarketingApp`, calls `mount(ref.current)` inside useEffect and returns referenced div. Passes only element.
 
-**Interpretação:** O wrapper monta a aplicação remota dentro do host. A chamada usa o mecanismo fora de uma rota e não estabelece sozinha as fronteiras de build ou deploy.
+**Interpretation:** Wrapper mounts remote application inside host. Call uses mechanism outside route without independently establishing build/deployment boundaries.
 
 ### 9. packages/container/src/components/MarketingApp.js:3
 
-**Observação:** Importa mount pelo especificador federado `marketing/MarketingApp`.
+**Observation:** Imports mount through federated specifier `marketing/MarketingApp`.
 
-**Interpretação:** A importação nomeia explicitamente a unidade remota consumida pelo container.
+**Interpretation:** Import explicitly names remote unit consumed by container.
 
 ### 10. packages/auth; packages/auth/package.json:1-6
 
-**Observação:** O diretório contém manifesto e lockfile; seu único script é test, sem código de UI, entrada ou build de aplicação registrados na revisão.
+**Observation:** Directory contains manifest/lockfile; only script test, without UI code, entry or application build recorded in review.
 
-**Interpretação:** É um pacote sem unidade frontend no snapshot, apesar do nome sugerir uma área funcional.
+**Interpretation:** Package without snapshot frontend unit despite name suggesting functional area.
 
 ### 11. packages/container; packages/container/package.json:1-7; packages/container/src/index.js:1; packages/container/src/bootstrap.js:5; packages/container/config/webpack.common.js:19-21; packages/container/config/webpack.prod.js:6-29
 
-**Observação:** O diretório tem manifesto, entrada que carrega bootstrap, montagem de App no elemento próprio, template HTML e comando build com configuração webpack própria.
+**Observation:** Directory has manifest, bootstrap-loading entry, App mounting in own element, HTML template and build command with own webpack configuration.
 
-**Interpretação:** Os artefatos confirmam o limite de uma aplicação frontend; a revisão registra Unidade frontend Yes.
+**Interpretation:** Artifacts confirm frontend application boundary; review records Frontend unit Yes.
 
 ### 12. packages/container/config; packages/container/config/webpack.common.js:1-23; packages/container/config/webpack.dev.js:1-24; packages/container/config/webpack.prod.js:1-29
 
-**Observação:** O diretório reúne as configurações common, dev e prod usadas pelo container.
+**Observation:** Directory combines common, dev and prod configurations used by container.
 
-**Interpretação:** É suporte ao build do container, sem constituir aplicação separada; Unidade frontend No.
+**Interpretation:** Container build support without constituting separate application; Frontend unit No.
 
 ### 13. packages/dashboard; packages/dashboard/package.json:1-7
 
-**Observação:** O diretório só tem manifesto e lockfile; start e build apontam para config/webpack.dev.js e config/webpack.prod.js, ausentes do snapshot segundo a revisão.
+**Observation:** Directory only has manifest/lockfile; start/build point to config/webpack.dev.js and config/webpack.prod.js, absent from snapshot per review.
 
-**Interpretação:** Scripts declarados sem entrada nem configuração existente não confirmam uma aplicação; Unidade frontend No.
+**Interpretation:** Declared scripts without entry or existing configuration do not confirm application; Frontend unit No.
 
 ### 14. packages/marketing; packages/marketing/package.json:1-7; packages/marketing/src/index.js:1; packages/marketing/src/bootstrap.js:5-14; packages/marketing/config/webpack.common.js:19-21; packages/marketing/config/webpack.prod.js:6-30
 
-**Observação:** O diretório tem manifesto, entrada que carrega bootstrap, função mount, montagem própria em desenvolvimento, template HTML e build com configuração webpack própria.
+**Observation:** Directory has manifest, bootstrap-loading entry, mount function, own development mounting, HTML template and build with own webpack configuration.
 
-**Interpretação:** Confirma o limite da aplicação frontend marketing; Unidade frontend Yes.
+**Interpretation:** Confirms marketing frontend application boundary; Frontend unit Yes.
 
 ### 15. packages/marketing/config; packages/marketing/config/webpack.common.js:1-23; packages/marketing/config/webpack.dev.js:1-26; packages/marketing/config/webpack.prod.js:1-30
 
-**Observação:** O diretório reúne as configurações common, dev e prod usadas pelo marketing.
+**Observation:** Directory combines common, dev and prod configurations used by marketing.
 
-**Interpretação:** É suporte ao build do marketing, sem constituir aplicação separada; Unidade frontend No.
+**Interpretation:** Marketing build support without constituting separate application; Frontend unit No.
 
 ### 16. packages/container/src/components/MarketingApp.js:3-11; packages/container/src/App.js:19; packages/container/src/bootstrap.js:5; packages/container/src/index.js:1; packages/container/config/webpack.prod.js:21-22; packages/container/config/webpack.dev.js:16-18; packages/marketing/config/webpack.prod.js:10; packages/marketing/config/webpack.prod.js:20-23; packages/marketing/config/webpack.dev.js:9; packages/marketing/config/webpack.dev.js:16-20; packages/marketing/src/bootstrap.js:5-7; packages/marketing/src/bootstrap.js:17
 
-**Observação:** O container importa e chama mount de marketing/MarketingApp no wrapper renderizado por App. Seus remotes resolvem marketing; o destino declara esse nome e expõe MarketingApp a partir do bootstrap. Os caminhos de produção correspondem.
+**Observation:** Container imports/calls mount from marketing/MarketingApp in App-rendered wrapper. Remotes resolve marketing; target declares name, exposing MarketingApp from bootstrap. Production paths match.
 
-**Interpretação:** É uma relação ativa host → remote por Module Federation entre as duas aplicações presentes no snapshot, conforme a revisão de composição.
+**Interpretation:** Active host → remote Module Federation relationship between two snapshot applications per composition review.
 
 ### 17. packages/container/package.json:3-7; packages/container/config/webpack.prod.js:6-27; .github/workflows/container.yml:8-13; .github/workflows/container.yml:30-42
 
-**Observação:** O pacote executa build com sua configuração webpack. O workflow usa seu diretório e gatilho por caminho, constrói e sincroniza dist no prefixo /container/latest do S3; invalida index.html. A versão do manifesto é 1.0.0; a publicação usa latest.
+**Observation:** Package executes build with own webpack configuration. Workflow uses directory/path trigger, builds/syncs dist to /container/latest S3 prefix; invalidates index.html. Manifest version 1.0.0; publication uses latest.
 
-**Interpretação:** Build separado e deploy separado confirmam o limite operacional da unidade. Bucket e distribuição vêm de secrets compartilhados; não há versionamento independente registrado nem comprovação de execução dos jobs.
+**Interpretation:** Separate build/deployment confirm operational unit boundary. Bucket/distribution from shared secrets; no independent versioning recorded or evidence of job execution.
 
 ### 18. packages/marketing/package.json:3-7; packages/marketing/config/webpack.prod.js:6-27; .github/workflows/marketing.yml:8-13; .github/workflows/marketing.yml:30-40
 
-**Observação:** O pacote executa build com sua configuração webpack. O workflow usa seu diretório e gatilho por caminho, constrói e sincroniza dist no prefixo /marketing/latest do S3; invalida remoteEntry.js. A versão do manifesto é 1.0.0; a publicação usa latest.
+**Observation:** Package executes build with own webpack configuration. Workflow uses directory/path trigger, builds/syncs dist to /marketing/latest S3 prefix; invalidates remoteEntry.js. Manifest version 1.0.0; publication uses latest.
 
-**Interpretação:** Build separado e deploy separado confirmam o limite operacional da unidade. Bucket e distribuição vêm de secrets compartilhados; não há versionamento independente registrado nem comprovação de execução dos jobs.
+**Interpretation:** Separate build/deployment confirm operational unit boundary. Bucket/distribution from shared secrets; no independent versioning recorded or evidence of job execution.
 
 ### 19. README.md:3
 
-**Observação:** O README apresenta o projeto como arquitetura de micro frontends com Webpack 5 Module Federation.
+**Observation:** README presents project as microfrontend architecture with Webpack 5 Module Federation.
 
-**Interpretação:** Afirma uma organização de unidades frontend pelo mecanismo nomeado.
+**Interpretation:** Claims frontend unit organization through named mechanism.
 
 ### 20. README.md:3
 
-**Observação:** O README identifica container como aplicação host.
+**Observation:** README identifies container as host application.
 
-**Interpretação:** Atribui ao container o papel de host na composição.
+**Interpretation:** Assigns container host composition role.
 
 ### 21. README.md:3
 
-**Observação:** O README afirma que o container carrega a aplicação marketing, construída independentemente, em runtime.
+**Observation:** README claims container loads independently built marketing application at runtime.
 
-**Interpretação:** Descreve a ligação em execução entre duas unidades com builds próprios.
+**Interpretation:** Describes runtime link between two units with own builds.
 
 ### 22. README.md:3
 
-**Observação:** O README afirma que auth e dashboard existem, mas não estão conectados ao host como micro frontends.
+**Observation:** README claims auth/dashboard exist but not connected to host as microfrontends.
 
-**Interpretação:** Distingue os pacotes sem UI das unidades que efetivamente participam da composição.
+**Interpretation:** Distinguishes UI-free packages from units actually participating in composition.
 
 ### 23. README.md:11
 
-**Observação:** O diagrama coloca cabeçalho e layout superior no container.
+**Observation:** Diagram places header/upper layout in container.
 
-**Interpretação:** Atribui ao host a responsabilidade pela moldura da página.
+**Interpretation:** Assigns page frame responsibility to host.
 
 ### 24. README.md:12
 
-**Observação:** O diagrama identifica marketing como remote e informa a porta 8081.
+**Observation:** Diagram identifies marketing as remote, specifying port 8081.
 
-**Interpretação:** Atribui à aplicação marketing o papel de remote; a porta é apenas apoio de desenvolvimento.
+**Interpretation:** Assigns marketing remote role; port only development support.
 
 ### 25. README.md:19
 
-**Observação:** O README afirma que a configuração Module Federation do container declara marketing em http://localhost:8081/remoteEntry.js.
+**Observation:** README claims container Module Federation configuration declares marketing at http://localhost:8081/remoteEntry.js.
 
-**Interpretação:** Descreve a resolução da unidade remota em desenvolvimento.
+**Interpretation:** Describes development remote unit resolution.
 
 ### 26. README.md:19
 
-**Observação:** O README afirma que o container importa marketing/MarketingApp e chama mount com um elemento DOM do host.
+**Observation:** README claims container imports marketing/MarketingApp, calling mount with host DOM element.
 
-**Interpretação:** Descreve o contrato de montagem do remote na página do host.
+**Interpretation:** Describes remote mounting contract on host page.
 
 ### 27. README.md:25
 
-**Observação:** O README afirma que marketing expõe ./MarketingApp de src/bootstrap.js por Module Federation e exporta mount(element) para renderizar sua aplicação.
+**Observation:** README claims marketing exposes ./MarketingApp from src/bootstrap.js through Module Federation, exporting mount(element) to render application.
 
-**Interpretação:** Descreve a interface exposta da unidade remota e sua montagem pelo consumidor.
+**Interpretation:** Describes remote unit exposed interface and consumer mounting.
 
 ### 28. README.md:25
 
-**Observação:** O README afirma que marketing se monta em #_marketing-dev-root no desenvolvimento e pode ser aberto sozinho.
+**Observation:** README claims marketing mounts itself in #_marketing-dev-root in development and can be opened alone.
 
-**Interpretação:** Descreve execução isolada da unidade em desenvolvimento, sem demonstrar deploy de produção.
+**Interpretation:** Describes isolated development unit execution without demonstrating production deployment.
 
 ### 29. README.md:39
 
-**Observação:** O README afirma que Module Federation coordena o compartilhamento das dependências configuradas.
+**Observation:** README claims Module Federation coordinates configured dependency sharing.
 
-**Interpretação:** Nomeia o mecanismo de compartilhamento, sem que essa parte da frase situe unidades.
+**Interpretation:** Names sharing mechanism without locating units in this phrase portion.
 
 ### 30. README.md:47
 
-**Observação:** A tabela do README descreve auth como apenas metadados de pacote.
+**Observation:** README table describes auth as only package metadata.
 
-**Interpretação:** Documenta um pacote que não constitui unidade frontend no snapshot.
+**Interpretation:** Documents package not constituting snapshot frontend unit.
 
 ### 31. README.md:48
 
-**Observação:** A tabela do README descreve dashboard como metadados, com scripts apontando para configurações webpack ausentes.
+**Observation:** README table describes dashboard as metadata with scripts pointing to absent webpack configurations.
 
-**Interpretação:** Explica o sinal enganoso dos scripts de um pacote sem aplicação.
+**Interpretation:** Explains misleading scripts of application-free package.
 
 ### 32. README.md:52
 
-**Observação:** O README afirma que cada pacote tem package.json e lockfile próprios e não há script de instalação na raiz.
+**Observation:** README claims each package has own package.json/lockfile, no root install script.
 
-**Interpretação:** Descreve a organização dos pacotes e suas fronteiras; a revisão estrutural não registra workspace.
+**Interpretation:** Describes package organization/boundaries; structure review records no workspace.
 
 ### 33. README.md:72
 
-**Observação:** O README orienta construir cada aplicação publicável a partir de seu próprio diretório de pacote.
+**Observation:** README instructs building each publishable application from own package directory.
 
-**Interpretação:** Afirma a separação dos builds das duas aplicações.
+**Interpretation:** Claims separation of two application builds.
 
 ### 34. README.md:82
 
-**Observação:** O README afirma que o build de marketing emite remoteEntry.js, necessário ao host para localizar e carregar o módulo exposto.
+**Observation:** README claims marketing build emits remoteEntry.js required by host to locate/load exposed module.
 
-**Interpretação:** Relaciona o artefato produzido pelo remote ao consumo pelo host.
+**Interpretation:** Relates remote-produced artifact to host consumption.
 
 ### 35. README.md:86
 
-**Observação:** O README afirma que cada aplicação tem configurações webpack common, dev e prod próprias em config/.
+**Observation:** README claims each application has own common/dev/prod webpack configurations in config/.
 
-**Interpretação:** Descreve a separação das configurações de build por aplicação.
+**Interpretation:** Describes per-application build configuration separation.
 
 ### 36. README.md:89
 
-**Observação:** O README afirma que webpack.dev.js configura o servidor local e as URLs de Module Federation.
+**Observation:** README claims webpack.dev.js configures local server and Module Federation URLs.
 
-**Interpretação:** Descreve a configuração que permite resolver o remote em desenvolvimento.
+**Interpretation:** Describes configuration enabling development remote resolution.
 
 ### 37. README.md:90
 
-**Observação:** O README afirma que webpack.prod.js habilita saída de produção e define caminhos de publicação.
+**Observation:** README claims webpack.prod.js enables production output, defining publication paths.
 
-**Interpretação:** Descreve os caminhos de saída de cada unidade, confirmados pelos artefatos de build e deploy.
+**Interpretation:** Describes per-unit output paths confirmed by build/deployment artifacts.
 
 ### 38. README.md:98-101
 
-**Observação:** O README afirma que o container usa PRODUCTION_DOMAIN para localizar marketing em ${PRODUCTION_DOMAIN}/marketing/latest/remoteEntry.js.
+**Observation:** README claims container uses PRODUCTION_DOMAIN to locate marketing at ${PRODUCTION_DOMAIN}/marketing/latest/remoteEntry.js.
 
-**Interpretação:** Descreve a resolução do remote em produção; o domínio concreto fica fora do snapshot.
+**Interpretation:** Describes production remote resolution; concrete domain outside snapshot.
 
 ### 39. README.md:104
 
-**Observação:** O README orienta publicar os assets de marketing, incluindo remoteEntry.js, no caminho configurado e o container no seu próprio caminho.
+**Observation:** README instructs publishing marketing assets including remoteEntry.js at configured path and container at own path.
 
-**Interpretação:** Afirma a publicação das duas unidades em destinos próprios.
+**Interpretation:** Claims publication of two units at own targets.
 
 ### 40. README.md:104
 
-**Observação:** O README afirma que o repositório não inclui pipeline que publique os artefatos.
+**Observation:** README claims repository includes no artifact-publication pipeline.
 
-**Interpretação:** É uma afirmação arquitetural contradita pelos workflows de publicação das duas aplicações, conforme a revisão documental.
+**Interpretation:** Architectural claim contradicted by both application publication workflows per documentation review.
 
 ### 41. README.md:108
 
-**Observação:** O README afirma que os BrowserRouter do container e do marketing ficam aninhados na aplicação composta porque o host monta marketing dentro de seu roteador.
+**Observation:** README claims container/marketing BrowserRouters nested in composed application because host mounts marketing inside own router.
 
-**Interpretação:** A conclusão sobre aninhamento na mesma árvore React é contradita pela montagem do marketing numa raiz React própria. O efeito de ambos no histórico do navegador não foi verificado.
+**Interpretation:** Conclusion about nesting in same React tree contradicted by marketing mounting in own React root. Effect of both on browser history not verified.
 
 ### 42. 5d05e98 2026-09-27 (.github/workflows/container.yml); e002f80 2026-09-27 (.github/workflows/marketing.yml; .github/workflows/container.yml); c6c0dbc 2026-09-27 (README.md:104)
 
-**Observação:** A revisão histórica registra a adição do workflow do container em 5d05e98 e do marketing em e002f80. Os dois arquivos lidos em e002f80 já contêm build, S3 sync e invalidação CloudFront. O README só é adicionado depois, em c6c0dbc.
+**Observation:** History review records container workflow addition in 5d05e98 and marketing in e002f80. Both files read in e002f80 already contain build, S3 sync and CloudFront invalidation. README added only afterward in c6c0dbc.
 
-**Interpretação:** Resultado esclarecido: a negação de pipeline não corresponde a um estágio anterior à presença dos workflows. A cronologia não demonstra execução, abandono nem a razão da afirmação.
+**Interpretation:** Clarified result: pipeline denial does not correspond to stage before workflows. Chronology demonstrates neither execution, abandonment nor reason for claim.
 
 ### 43. packages/container/src/App.js:17-20; packages/marketing/src/App.js:14-19; packages/marketing/src/bootstrap.js:5-7; README.md:108
 
-**Observação:** O ponto histórico foi resolvido pelo snapshot: o wrapper fica no BrowserRouter do host, mas mount do marketing executa ReactDOM.render numa raiz própria. Não houve consulta histórica específica para esse ponto.
+**Observation:** Historical point resolved by snapshot: wrapper inside host BrowserRouter, but marketing mount executes ReactDOM.render in own root. No specific history query for point.
 
-**Interpretação:** A distinção entre árvore DOM e árvore React explica a contradição documental, sem exigir estágios distintos do código; o efeito no histórico do navegador permanece não verificado.
+**Interpretation:** DOM-tree/React-tree distinction explains documentary contradiction without requiring different code stages; browser history effect remains unverified.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.3 (packages/container, Build; packages/container/config, Marcadores); 3.4.4 src-mount-call (Observação); 3.4.5 #1 (Configuração); 3.4.6 #1 (Artefatos), #2 (Onde é servida); 3.4.7 #1, #2, #4, #11, #16, #20 (Evidência) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #11; configura #8; configura #9; configura #16 |
-| 2 | 3.4.3 (packages/container/config, Marcadores); 3.4.5 #1 (Configuração); 3.4.7 #4, #7, #11, #18 (Evidência) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #11; configura #8; configura #9; configura #16 |
-| 3 | 3.4.3 (packages/marketing, Build; packages/marketing/config, Marcadores); 3.4.4 src-mount-export (Observação); 3.4.5 #1 (Configuração); 3.4.6 #2 (Artefatos); 3.4.7 #6, #9, #11, #16 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #7; configura #14; configura #16 |
-| 4 | 3.4.3 (packages/marketing/config, Marcadores); 3.4.4 src-mount-export (Observação); 3.4.5 #1 (Configuração); 3.4.7 #7, #11, #18 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #7; configura #14; configura #16 |
-| 5 | 3.4.4 src-async-bootstrap (packages/container/src/index.js:1) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 6 | 3.4.4 src-async-bootstrap (packages/marketing/src/index.js:1) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 7 | 3.4.4 src-mount-export | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #16 |
-| 8 | 3.4.4 src-mount-call | 3 código | código-fonte | module-federation | arquitetural | moderada | implementa #16 |
-| 9 | 3.4.4 src-mount-import | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #16 |
-| 10 | 3.4.3 (packages/auth) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 11 | 3.4.3 (packages/container) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 12 | 3.4.3 (packages/container/config) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 13 | 3.4.3 (packages/dashboard) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 14 | 3.4.3 (packages/marketing) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 15 | 3.4.3 (packages/marketing/config) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 16 | 3.4.5 #1 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #11; liga #14 |
-| 17 | 3.4.6 #1 | 6 build-deploy | CI | — | arquitetural | moderada | publica #11 |
-| 18 | 3.4.6 #2 | 6 build-deploy | CI | — | arquitetural | moderada | publica #14 |
-| 19 | 3.4.7 #1 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #11; corrobora #14; corrobora #16 |
-| 20 | 3.4.7 #2 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #1; corrobora #16 |
-| 21 | 3.4.7 #3 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #8; corrobora #16; corrobora #18 |
-| 22 | 3.4.7 #4 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #10; corrobora #13; corrobora #1; corrobora #2 |
-| 23 | 3.4.7 #5 | 7 documentação | documentação | — | arquitetural | fraca | corrobora packages/container/src/App.js:3,18; corrobora packages/container/src/components/Header.js:57-98 |
-| 24 | 3.4.7 #6 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #3; corrobora #16 |
-| 25 | 3.4.7 #7 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #2; corrobora #4; corrobora #16 |
-| 26 | 3.4.7 #8 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #8; corrobora #9 |
-| 27 | 3.4.7 #9 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #3; corrobora #7 |
-| 28 | 3.4.7 #10 | 7 documentação | documentação | — | arquitetural | fraca | corrobora packages/marketing/src/bootstrap.js:9-13; corrobora packages/marketing/public/index.html:9 |
-| 29 | 3.4.7 #11 | 7 documentação | documentação | module-federation | tecnológica | fraca | corrobora #1; corrobora #2; corrobora #3; corrobora #4 |
-| 30 | 3.4.7 #12 | 7 documentação | documentação | — | contexto | fraca | corrobora #10 |
-| 31 | 3.4.7 #13 | 7 documentação | documentação | — | contexto | fraca | corrobora #13 |
-| 32 | 3.4.7 #14 | 7 documentação | documentação | — | arquitetural | fraca | corrobora packages/container/package.json:1; corrobora packages/marketing/package.json:1; corrobora packages/auth/package.json:1; corrobora packages/dashboard/package.json:1 |
-| 33 | 3.4.7 #15 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #17; corrobora #18 |
-| 34 | 3.4.7 #16 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #3; corrobora #1; corrobora #18 |
-| 35 | 3.4.7 #17 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #12; corrobora #15 |
-| 36 | 3.4.7 #18 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #2; corrobora #4 |
-| 37 | 3.4.7 #19 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #17; corrobora #18 |
-| 38 | 3.4.7 #20 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #1; corrobora #16 |
-| 39 | 3.4.7 #21 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #17; corrobora #18 |
-| 40 | 3.4.7 #22 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #17; contradiz #18 |
-| 41 | 3.4.7 #23 | 7 documentação | documentação | — | arquitetural | fraca | contradiz packages/marketing/src/bootstrap.js:5-7 |
-| 42 | 3.4.8 #1 | 8 histórico | histórico | — | arquitetural | fraca | explica #17; explica #18; explica #40 |
-| 43 | 3.4.8 #2 | 8 histórico | histórico | — | arquitetural | fraca | explica #41 |
+| 1 | 3.4.3 (packages/container, Build; packages/container/config, Markers); 3.4.4 src-mount-call (Observation); 3.4.5 #1 (Configuration); 3.4.6 #1 (Artifacts), #2 (Where served); 3.4.7 #1, #2, #4, #11, #16, #20 (Evidence) | 2 configuration | configuration | module-federation | architectural | strong | configures #11; configures #8; configures #9; configures #16 |
+| 2 | 3.4.3 (packages/container/config, Markers); 3.4.5 #1 (Configuration); 3.4.7 #4, #7, #11, #18 (Evidence) | 2 configuration | configuration | module-federation | architectural | strong | configures #11; configures #8; configures #9; configures #16 |
+| 3 | 3.4.3 (packages/marketing, Build; packages/marketing/config, Markers); 3.4.4 src-mount-export (Observation); 3.4.5 #1 (Configuration); 3.4.6 #2 (Artifacts); 3.4.7 #6, #9, #11, #16 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #7; configures #14; configures #16 |
+| 4 | 3.4.3 (packages/marketing/config, Markers); 3.4.4 src-mount-export (Observation); 3.4.5 #1 (Configuration); 3.4.7 #7, #11, #18 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #7; configures #14; configures #16 |
+| 5 | 3.4.4 src-async-bootstrap (packages/container/src/index.js:1) | 3 code | source code | — | technological | weak | — |
+| 6 | 3.4.4 src-async-bootstrap (packages/marketing/src/index.js:1) | 3 code | source code | — | technological | weak | — |
+| 7 | 3.4.4 src-mount-export | 3 code | source code | module-federation | technological | moderate | implements #16 |
+| 8 | 3.4.4 src-mount-call | 3 code | source code | module-federation | architectural | moderate | implements #16 |
+| 9 | 3.4.4 src-mount-import | 3 code | source code | module-federation | architectural | strong | implements #16 |
+| 10 | 3.4.3 (packages/auth) | 4 structure | directory | — | context | weak | — |
+| 11 | 3.4.3 (packages/container) | 4 structure | directory | — | architectural | moderate | — |
+| 12 | 3.4.3 (packages/container/config) | 4 structure | directory | — | context | weak | — |
+| 13 | 3.4.3 (packages/dashboard) | 4 structure | directory | — | context | weak | — |
+| 14 | 3.4.3 (packages/marketing) | 4 structure | directory | — | architectural | moderate | — |
+| 15 | 3.4.3 (packages/marketing/config) | 4 structure | directory | — | context | weak | — |
+| 16 | 3.4.5 #1 | 5 composition | source code | module-federation | architectural | strong | links #11; links #14 |
+| 17 | 3.4.6 #1 | 6 build-deploy | CI | — | architectural | moderate | publishes #11 |
+| 18 | 3.4.6 #2 | 6 build-deploy | CI | — | architectural | moderate | publishes #14 |
+| 19 | 3.4.7 #1 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #11; corroborates #14; corroborates #16 |
+| 20 | 3.4.7 #2 | 7 documentation | documentation | — | architectural | weak | corroborates #1; corroborates #16 |
+| 21 | 3.4.7 #3 | 7 documentation | documentation | — | architectural | weak | corroborates #8; corroborates #16; corroborates #18 |
+| 22 | 3.4.7 #4 | 7 documentation | documentation | — | architectural | weak | corroborates #10; corroborates #13; corroborates #1; corroborates #2 |
+| 23 | 3.4.7 #5 | 7 documentation | documentation | — | architectural | weak | corroborates packages/container/src/App.js:3,18; corroborates packages/container/src/components/Header.js:57-98 |
+| 24 | 3.4.7 #6 | 7 documentation | documentation | — | architectural | weak | corroborates #3; corroborates #16 |
+| 25 | 3.4.7 #7 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #2; corroborates #4; corroborates #16 |
+| 26 | 3.4.7 #8 | 7 documentation | documentation | — | architectural | weak | corroborates #8; corroborates #9 |
+| 27 | 3.4.7 #9 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #3; corroborates #7 |
+| 28 | 3.4.7 #10 | 7 documentation | documentation | — | architectural | weak | corroborates packages/marketing/src/bootstrap.js:9-13; corroborates packages/marketing/public/index.html:9 |
+| 29 | 3.4.7 #11 | 7 documentation | documentation | module-federation | technological | weak | corroborates #1; corroborates #2; corroborates #3; corroborates #4 |
+| 30 | 3.4.7 #12 | 7 documentation | documentation | — | context | weak | corroborates #10 |
+| 31 | 3.4.7 #13 | 7 documentation | documentation | — | context | weak | corroborates #13 |
+| 32 | 3.4.7 #14 | 7 documentation | documentation | — | architectural | weak | corroborates packages/container/package.json:1; corroborates packages/marketing/package.json:1; corroborates packages/auth/package.json:1; corroborates packages/dashboard/package.json:1 |
+| 33 | 3.4.7 #15 | 7 documentation | documentation | — | architectural | weak | corroborates #17; corroborates #18 |
+| 34 | 3.4.7 #16 | 7 documentation | documentation | — | architectural | weak | corroborates #3; corroborates #1; corroborates #18 |
+| 35 | 3.4.7 #17 | 7 documentation | documentation | — | architectural | weak | corroborates #12; corroborates #15 |
+| 36 | 3.4.7 #18 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #2; corroborates #4 |
+| 37 | 3.4.7 #19 | 7 documentation | documentation | — | architectural | weak | corroborates #17; corroborates #18 |
+| 38 | 3.4.7 #20 | 7 documentation | documentation | — | architectural | weak | corroborates #1; corroborates #16 |
+| 39 | 3.4.7 #21 | 7 documentation | documentation | — | architectural | weak | corroborates #17; corroborates #18 |
+| 40 | 3.4.7 #22 | 7 documentation | documentation | — | architectural | weak | contradicts #17; contradicts #18 |
+| 41 | 3.4.7 #23 | 7 documentation | documentation | — | architectural | weak | contradicts packages/marketing/src/bootstrap.js:5-7 |
+| 42 | 3.4.8 #1 | 8 history | history | — | architectural | weak | explains #17; explains #18; explains #40 |
+| 43 | 3.4.8 #2 | 8 history | history | — | architectural | weak | explains #41 |
 
-## Resumo
+## Summary
 
-Observações: 43. Dimensões (tecnologia: 0, configuração: 4, código: 5, estrutura: 6, composição: 1, build-deploy: 2, documentação: 23, histórico: 2). Força (forte: 4, moderada: 8, fraca: 31, ambígua: 0). Evidência (tecnológica: 6, arquitetural: 31, contexto: 6).
+Observations: 43. Dimensions (technology: 0, configuration: 4, code: 5, structure: 6, composition: 1, build-deploy: 2, documentation: 23, history: 2). Strength (strong: 4, moderate: 8, weak: 31, ambiguous: 0). Evidence (technological: 6, architectural: 31, context: 6).
+

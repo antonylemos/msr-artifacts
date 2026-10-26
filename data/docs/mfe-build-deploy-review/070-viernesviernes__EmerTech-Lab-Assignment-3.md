@@ -16,28 +16,28 @@ annotation:
 
 # 070 — viernesviernes/EmerTech-Lab-Assignment-3
 
-## Leitura do repositório
+## Repository overview
 
-Trabalho acadêmico com três aplicações Vite em `client/`: `shell-app`, `auth-app` e `community-app`, cada uma com manifesto, lockfile e `vite.config.js` próprios. Há ainda um backend em `server/`, com dois microsserviços e um gateway Apollo na porta 4000 (server/gateway.js:5, 105), que não é aplicação frontend. O `client/package.json` não é workspace: só tem um script `dev` que sobe as três aplicações juntas com `concurrently` (client/package.json:11).
+Academic project with three Vite applications in `client/`: `shell-app`, `auth-app` and `community-app`, each with its own manifest, lockfile and `vite.config.js`. There is also a backend in `server/`, with two microservices and an Apollo gateway on port 4000 (server/gateway.js:5, 105), not a frontend application. The `client/package.json` is not a workspace: it has only a `dev` script starting all three applications together with `concurrently` (client/package.json:11).
 
-Os remotes têm um script chamado `deploy`, mas ele só roda `build` seguido de `preview` local na porta fixa da aplicação (client/auth-app/package.json:10-11; client/community-app/package.json:10-11). É assim que o `dev` do cliente sobe os dois remotes, enquanto o shell roda no servidor de desenvolvimento (client/package.json:11). Essa combinação existe porque o plugin de federação do Vite só gera o `remoteEntry.js` no build. Apesar do nome, o script não publica nada: é execução local. Não há Dockerfile, CI nem configuração de hospedagem, e as ocorrências `ops-*`, `ci-*` e `cfg-public-path` da mineração estão vazias. O gateway lista as origens das três aplicações em `localhost` para o CORS (server/gateway.js:12).
+Remotes have a script named `deploy`, but it only runs `build` followed by local `preview` on the application’s fixed port (client/auth-app/package.json:10-11; client/community-app/package.json:10-11). This is how client `dev` starts both remotes while shell runs on the development server (client/package.json:11). This combination exists because the Vite federation plugin generates `remoteEntry.js` only during build. Despite its name, the script publishes nothing: it is local execution. There is no Dockerfile, CI or hosting configuration, and mining `ops-*`, `ci-*` and `cfg-public-path` occurrences are empty. Gateway lists the three applications’ `localhost` origins for CORS (server/gateway.js:12).
 
-## Aplicações
+## Applications
 
-| # | Aplicação | Build | Deploy | Onde é servida | Versionamento | Artefatos |
+| # | Application | Build | Deploy | Where served | Versioning | Artifacts |
 |---|---|---|---|---|---|---|
-| 1 | client/auth-app | separado | não observado | `http://localhost:3001`, em `preview` local (client/auth-app/package.json:10; client/auth-app/vite.config.js:27-31) | No | client/auth-app/vite.config.js:21-26 (configuração de build própria); client/auth-app/package.json:8 (`vite build`); client/auth-app/package.json:11 (`deploy` = build + preview local) |
-| 2 | client/community-app | separado | não observado | `http://localhost:3002`, em `preview` local (client/community-app/package.json:10; client/community-app/vite.config.js:27-31) | No | client/community-app/vite.config.js:21-26 (configuração de build própria); client/community-app/package.json:8 (`vite build`); client/community-app/package.json:11 (`deploy` = build + preview local) |
-| 3 | client/shell-app | separado | não observado | `http://localhost:3000` em desenvolvimento (client/shell-app/package.json:7) | No | client/shell-app/vite.config.js:18-23 (configuração de build própria); client/shell-app/package.json:8 (`vite build`) |
+| 1 | client/auth-app | separate | not observed | `http://localhost:3001`, in local `preview` (client/auth-app/package.json:10; client/auth-app/vite.config.js:27-31) | No | client/auth-app/vite.config.js:21-26 (own build configuration); client/auth-app/package.json:8 (`vite build`); client/auth-app/package.json:11 (`deploy` = build + local preview) |
+| 2 | client/community-app | separate | not observed | `http://localhost:3002`, in local `preview` (client/community-app/package.json:10; client/community-app/vite.config.js:27-31) | No | client/community-app/vite.config.js:21-26 (own build configuration); client/community-app/package.json:8 (`vite build`); client/community-app/package.json:11 (`deploy` = build + local preview) |
+| 3 | client/shell-app | separate | not observed | `http://localhost:3000` in development (client/shell-app/package.json:7) | No | client/shell-app/vite.config.js:18-23 (own build configuration); client/shell-app/package.json:8 (`vite build`) |
 
-## Observações
+## Observations
 
-**1. client/auth-app.** Build próprio. O script `deploy` não conta como deploy: ele serve o build localmente com `vite preview` (client/auth-app/package.json:10-11), um comando de desenvolvimento. A versão `0.0.0` não é usada.
+**1. client/auth-app.** Own build. Script `deploy` does not count as deployment: it serves build locally with `vite preview` (client/auth-app/package.json:10-11), a development command. Version `0.0.0` is unused.
 
-**2. client/community-app.** Mesmo arranjo, porta 3002 (client/community-app/package.json:10-11).
+**2. client/community-app.** Same arrangement, port 3002 (client/community-app/package.json:10-11).
 
-**3. client/shell-app.** Build próprio. Nem `deploy` tem: roda só com o servidor de desenvolvimento na porta 3000 (client/shell-app/package.json:7). Os remotes estão fixados em `localhost` (ver a revisão de composição).
+**3. client/shell-app.** Own build. It does not even have `deploy`: runs only with the development server on port 3000 (client/shell-app/package.json:7). Remotes are fixed at `localhost` (see the composition review).
 
-## Resumo
+## Summary
 
-Aplicações: 3. Build (separado: 3). Deploy (não observado: 3). Versionamento independente: 0.
+Applications: 3. Build (separate: 3). Deploy (not observed: 3). Independent versioning: 0.

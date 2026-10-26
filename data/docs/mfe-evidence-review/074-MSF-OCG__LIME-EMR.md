@@ -19,415 +19,416 @@ annotation:
 
 # 074 — MSF-OCG/LIME-EMR
 
-## Leitura do repositório
+## Repository overview
 
-O repositório é uma distribuição OpenMRS 3 empacotada por Maven para três locais (Mosul, Matsapha e Bunia). Ele não contém o código de nenhuma aplicação frontend. A revisão de dependências não tem dependência das tecnologias inspecionadas, a revisão de código-fonte não tem construção, e as revisões de composição e de build e deploy não têm linhas. Por isso não há observações nas dimensões 1, 3, 5 e 6. Os dois diretórios candidatos são `No`: o pacote de testes Playwright da raiz e o site Docsify (#14, #15).
+OpenMRS 3 distribution packaged through Maven for three sites (Mosul, Matsapha and Bunia), without any frontend application code. Dependency review has no inspected-technology dependency, source review no construct, composition/build-deployment reviews no rows. Thus no observations in dimensions 1, 3, 5 and 6. Both candidate directories `No`: root Playwright test package/Docsify site (#14, #15).
 
-A arquitetura aparece só na configuração, numa cadeia que termina fora do snapshot:
-- **Montagem:** `spa-assemble-config.json` fixa a versão do app-shell e lista 42 módulos externos com versão, além de seis exclusões (#1). É a declaração mais forte do repositório: nomeia as unidades que a distribuição compõe.
-- **Import map por site:** cada site tira módulos do import map e do registro de rotas no build (#2 a #4).
-- **Extensões em slots:** a configuração de UI da distro põe a extensão `patient-flags-list` e o follow-up table em slots do patient chart (#5). As outras configurações tiram extensões de slots de outros módulos (#6 a #13).
+Architecture appears only in configuration, chain ending outside snapshot:
+- **Assembly:** `spa-assemble-config.json` pins app-shell version/lists 42 versioned external modules plus six exclusions (#1). Strongest repository declaration, naming composed units.
+- **Per-site import map:** each site removes modules from import map/route registry at build (#2 through #4).
+- **Slot extensions:** distro UI configuration puts `patient-flags-list`/follow-up table in patient-chart slots (#5). Other configurations remove extensions from other-module slots (#6 through #13).
 
-O host que compõe tudo isso, o `@openmrs/esm-app-shell`, é externo. Os mapas gerados no build (`importmap.json`, `routes.registry.json`) não estão no snapshot. Nenhuma das observações liga duas unidades do snapshot. Elas configuram uma composição cujas partes estão todas em outros repositórios, como a classificação registra (`multi-repo`, 42 unidades).
+Composing host `@openmrs/esm-app-shell` external. Build-generated maps (`importmap.json`, `routes.registry.json`) absent from snapshot. No observation links two snapshot units. Configure composition whose parts all in other repositories, per classification (`multi-repo`, 42 units).
 
-Foram tratados como registro declarado num arquivo de configuração os blocos `extensionSlots` com `add` ou `remove`, que põem ou tiram a extensão de um módulo no slot de outro. Ficaram de fora os blocos que só ajustam opções, feature flags ou `Display conditions` (ex.: distro/configs/openmrs/frontend_config/msf-frontend-config.json:222-231, 273-283). Também ficaram de fora a lista `SPA_CONFIG_URLS` e as execuções que a montam, porque indicam arquivos de configuração, não remotes. Pelo mesmo motivo ficaram de fora a linha do `distro/pom.xml` que aponta o script de montagem para a configuração (distro/pom.xml:493-494), o empacotamento e as imagens Docker, e os scripts Groovy, que são código de build.
+`extensionSlots` blocks with `add`/`remove` treated as configuration-declared registrations putting/removing module extension in another’s slot. Excluded blocks only adjusting options, feature flags or `Display conditions` (e.g. distro/configs/openmrs/frontend_config/msf-frontend-config.json:222-231, 273-283). Also excluded `SPA_CONFIG_URLS` list/assembling executions because identify configuration files rather than remotes. Same reason excludes `distro/pom.xml` line pointing assembly script at configuration (distro/pom.xml:493-494), packaging/Docker images, Groovy build-code scripts.
 
-A documentação tem 29 afirmações, todas fracas pelo critério do protocolo: 11 corroboradas, 10 parciais, 7 contraditas e 1 sem corroboração. Ela confirma o mecanismo de configuração (#21, #29, #30, #33, #35, #36, #39), mas engana em alguns pontos:
-- os números de módulos e a versão do core (#20, #28; o histórico não esclarece, #46);
-- a herança por todos os sites do follow-up table e do app de tarefas (#31, #34);
-- o lugar onde os módulos são definidos (#42);
-- o deploy automático pelo CI e as imagens "desativadas" (#18, #41; o histórico explica o primeiro, #45).
+Documentation has 29 claims, all weak under protocol: 11 corroborated, 10 partial, 7 contradicted, 1 uncorroborated. Confirms configuration mechanism (#21, #29, #30, #33, #35, #36, #39) but misleads on:
+- module counts/core version (#20, #28; history does not clarify, #46);
+- all-site inheritance of follow-up table/task app (#31, #34);
+- module definition location (#42);
+- automatic CI deployment/"desativadas" images (English translation: "disabled") (#18, #41; history explains former, #45).
 
-O que depende do app-shell em runtime não tem artefato: o carregamento pelo import map, a precedência das configurações e o efeito de uma rota órfã (#24, #38, #43, #44). Ficam como contexto a infraestrutura de contêineres, o pipeline de publicação e as imagens (#16, #18, #19, #25, #26, #41).
+App-shell runtime-dependent behavior lacks artifact: import-map loading, configuration precedence/orphan-route effect (#24, #38, #43, #44). Container infrastructure, publication pipeline/images remain context (#16, #18, #19, #25, #26, #41).
 
-Nenhuma observação é ambígua. Os três pontos inconclusivos do histórico tratam só do passado (#46, #49, #50), e o snapshot é claro em cada um.
+No ambiguous observation. Three inconclusive historical points concern past only (#46, #49, #50), each with clear snapshot.
 
-## Observações
+## Observations
 
 ### 1. distro/configs/openmrs/frontend_assembly/spa-assemble-config.json:2-55
 
-**Observação:** `coreVersion` é `10.0.1-pre.5320` (:2). `frontendModules` lista 42 pacotes com versão, 39 `@openmrs/` e 3 `@madiro/` (:3-46). `frontendModuleExcludes` lista seis módulos padrão, precedidos do `__comment` "Excluding modules some default modules to ensure we are using the specified versions." (:47-55).
+**Observation:** `coreVersion` is `10.0.1-pre.5320` (:2). `frontendModules` lists 42 versioned packages, 39 `@openmrs/` and 3 `@madiro/` (:3-46). `frontendModuleExcludes` lists six defaults preceded by `__comment` "Excluding modules some default modules to ensure we are using the specified versions." (:47-55).
 
-**Interpretação:** No nível da distro, o arquivo declara a versão do app-shell e as unidades frontend externas que compõem a aplicação. O build o passa ao script de montagem herdado da Ozone (distro/pom.xml:493-494). Segundo a 3.4.5, o app-shell carrega os bundles por um import map gerado nesse build. Nem o app-shell, nem os módulos, nem o mapa estão no snapshot.
+**Interpretation:** Distro-level file declares app-shell version/external frontend units composing application. Build passes to Ozone-inherited assembly script (distro/pom.xml:493-494). Per 3.4.5, app-shell loads bundles through build-generated import map. Neither app-shell, modules nor map in snapshot.
 
 ### 2. sites/bunia/pom.xml:318-331
 
-**Observação:** A execução `remove-importmap-entries`, na fase `process-resources`, passa `modulesToRemove` = `@madiro/esm-mental-health-app,@madiro/esm-nutrition-app` (:326-327) a `scripts/remove-importmap-entries.groovy` (:331).
+**Observation:** Execution `remove-importmap-entries` in phase `process-resources` passes `modulesToRemove` = `@madiro/esm-mental-health-app,@madiro/esm-nutrition-app` (:326-327) to `scripts/remove-importmap-entries.groovy` (:331).
 
-**Interpretação:** Bunia tira dois módulos da composição herdada da distro, apagando as entradas no import map e no registro de rotas montados no build.
+**Interpretation:** Bunia removes two modules from distro-inherited composition, deleting build-assembled import-map/route-registry entries.
 
-**Nota:** Força `moderada`. O bloco nomeia unidades de outra parte, mas para excluí-las, sem ligá-las a nenhuma unidade. Ele configura o mecanismo de import map da distribuição de um site.
+**Note:** Strength `moderate`. Block names external units but excludes them without linking to any unit. Configures site distribution import-map mechanism.
 
 ### 3. sites/matsapha/pom.xml:273-286
 
-**Observação:** A execução `remove-importmap-entries`, na fase `process-resources`, passa `modulesToRemove` = `@madiro/esm-mental-health-app,@madiro/esm-nutrition-app,@openmrs/esm-ward-app` (:281-282) a `scripts/remove-importmap-entries.groovy` (:286).
+**Observation:** Execution `remove-importmap-entries` in phase `process-resources` passes `modulesToRemove` = `@madiro/esm-mental-health-app,@madiro/esm-nutrition-app,@openmrs/esm-ward-app` (:281-282) to `scripts/remove-importmap-entries.groovy` (:286).
 
-**Interpretação:** Matsapha tira três módulos da composição herdada da distro, no import map e no registro de rotas.
+**Interpretation:** Matsapha removes three modules from distro-inherited composition, in import map/route registry.
 
-**Nota:** Força `moderada`, pelo mesmo motivo de #2.
+**Note:** Strength `moderate`, same reason as #2.
 
 ### 4. sites/mosul/pom.xml:220-234
 
-**Observação:** A execução `remove-importmap-entries`, na fase `process-resources`, passa `modulesToRemove` = `@openmrs/esm-ward-app,@openmrs/esm-patient-task-list-app` (:228-229) a `scripts/remove-importmap-entries.groovy` (:233).
+**Observation:** Execution `remove-importmap-entries` in phase `process-resources` passes `modulesToRemove` = `@openmrs/esm-ward-app,@openmrs/esm-patient-task-list-app` (:228-229) to `scripts/remove-importmap-entries.groovy` (:233).
 
-**Interpretação:** Mosul tira dois módulos da composição herdada da distro, entre eles o app de tarefas.
+**Interpretation:** Mosul removes two modules from distro-inherited composition, including task app.
 
-**Nota:** Força `moderada`, pelo mesmo motivo de #2.
+**Note:** Strength `moderate`, same reason as #2.
 
 ### 5. distro/configs/openmrs/frontend_config/msf-frontend-config.json:27-221
 
-**Observação:** No bloco de `@openmrs/esm-patient-chart-app`, `extensionSlots` acrescenta `patient-flags-list` e `obs-table-horizontal-widget` a `patient-chart-test-results-dashboard-slot` (:37-39). Também acrescenta `patient-flags-list`, com tags diferentes, a `patient-chart-summary-dashboard-slot`, `patient-chart-medications-dashboard-slot`, `conditions-summary-dashboard` e `patient-appointments-summary-dashboard` (:146-176). Os demais slots do bloco só ajustam `Display conditions` de extensões.
+**Observation:** Within `@openmrs/esm-patient-chart-app` block, `extensionSlots` adds `patient-flags-list` and `obs-table-horizontal-widget` to `patient-chart-test-results-dashboard-slot` (:37-39). Also adds differently tagged `patient-flags-list` to `patient-chart-summary-dashboard-slot`, `patient-chart-medications-dashboard-slot`, `conditions-summary-dashboard` and `patient-appointments-summary-dashboard` (:146-176). Other block slots only adjust extension `Display conditions`.
 
-**Interpretação:** A configuração de UI da distro põe extensões de outros módulos nos slots do patient chart. `patient-flags-list` vem do módulo de flags, que está na montagem (#1, :13). Essa é uma ligação declarada entre duas unidades externas, e quem a aplica em runtime é o app-shell.
+**Interpretation:** Distro UI configuration puts other-module extensions in patient-chart slots. `patient-flags-list` from assembled flags module (#1, :13). Declared link between two external units, applied by app-shell at runtime.
 
 ### 6. sites/mosul/configs/openmrs/frontend_config/msf-mosul-frontend-config.json:18-165
 
-**Observação:** No bloco de `@openmrs/esm-patient-chart-app`, `extensionSlots` tira `obs-table-horizontal-widget` de `patient-chart-test-results-dashboard-slot` (:25-26). Também tira `clinical-view-section`, `patient-mental-health-summary-dashboard` e `patient-nutrition-summary-dashboard` de `patient-chart-dashboard-slot` (:33-38). O bloco não tem `add`.
+**Observation:** Within `@openmrs/esm-patient-chart-app` block, `extensionSlots` removes `obs-table-horizontal-widget` from `patient-chart-test-results-dashboard-slot` (:25-26). Also removes `clinical-view-section`, `patient-mental-health-summary-dashboard` and `patient-nutrition-summary-dashboard` from `patient-chart-dashboard-slot` (:33-38). No `add` in block.
 
-**Interpretação:** O site desfaz, no patient chart, extensões que a distro põe (#5) e os resumos dos módulos de saúde mental e de nutrição.
+**Interpretation:** Site undoes distro patient-chart extensions (#5) and mental-health/nutrition module summaries.
 
-**Nota:** Força `moderada`. O bloco nomeia extensões de outras unidades, mas para tirá-las do slot, sem ligar unidades. Ele configura o mecanismo de slots de uma unidade.
+**Note:** Strength `moderate`. Block names other-unit extensions to remove from slot rather than link units. Configures one unit’s slot mechanism.
 
 ### 7. sites/bunia/configs/openmrs/frontend_config/msf-bunia-frontend-config.json:18-167
 
-**Observação:** No bloco de `@openmrs/esm-patient-chart-app`, `extensionSlots` tira `obs-table-horizontal-widget` de `patient-chart-test-results-dashboard-slot` (:27-28). Também tira `clinical-view-section`, `patient-mental-health-summary-dashboard` e `patient-nutrition-summary-dashboard` de `patient-chart-dashboard-slot` (:35-40). O bloco não tem `add`.
+**Observation:** Within `@openmrs/esm-patient-chart-app` block, `extensionSlots` removes `obs-table-horizontal-widget` from `patient-chart-test-results-dashboard-slot` (:27-28). Also removes `clinical-view-section`, `patient-mental-health-summary-dashboard` and `patient-nutrition-summary-dashboard` from `patient-chart-dashboard-slot` (:35-40). No `add` in block.
 
-**Interpretação:** Bunia faz no patient chart a mesma remoção que Mosul (#6).
+**Interpretation:** Bunia performs same patient-chart removal as Mosul (#6).
 
-**Nota:** Força `moderada`, pelo mesmo motivo de #6.
+**Note:** Strength `moderate`, same reason as #6.
 
 ### 8. sites/matsapha/configs/openmrs/frontend_config/msf-matsapha-frontend-config.json:18-165
 
-**Observação:** No bloco de `@openmrs/esm-patient-chart-app`, `extensionSlots` tira `obs-table-horizontal-widget` de `patient-chart-test-results-dashboard-slot` (:25-26). Também tira `clinical-view-section`, `patient-mental-health-summary-dashboard` e `patient-nutrition-summary-dashboard` de `patient-chart-dashboard-slot` (:33-38). O bloco não tem `add`.
+**Observation:** Within `@openmrs/esm-patient-chart-app` block, `extensionSlots` removes `obs-table-horizontal-widget` from `patient-chart-test-results-dashboard-slot` (:25-26). Also removes `clinical-view-section`, `patient-mental-health-summary-dashboard` and `patient-nutrition-summary-dashboard` from `patient-chart-dashboard-slot` (:33-38). No `add` in block.
 
-**Interpretação:** Matsapha faz no patient chart a mesma remoção que Mosul (#6).
+**Interpretation:** Matsapha performs same patient-chart removal as Mosul (#6).
 
-**Nota:** Força `moderada`, pelo mesmo motivo de #6.
+**Note:** Strength `moderate`, same reason as #6.
 
 ### 9. distro/configs/openmrs/frontend_config/msf-frontend-config.json:2-17
 
-**Observação:** No bloco de `@madiro/esm-home-app`, `extensionSlots` tira `service-queues-dashboard-link` de `homepage-dashboard-slot` (:4-5). O outro slot do bloco só ajusta `Display conditions` de `active-visits-widget` (:7-14).
+**Observation:** Within `@madiro/esm-home-app` block, `extensionSlots` removes `service-queues-dashboard-link` from `homepage-dashboard-slot` (:4-5). Other block slot only adjusts `Display conditions` of `active-visits-widget` (:7-14).
 
-**Interpretação:** A distro tira da página inicial a extensão de link de outro módulo (3.4.7 #18).
+**Interpretation:** Distro removes other-module link extension from home page (3.4.7 #18).
 
-**Nota:** Força `moderada`, pelo mesmo motivo de #6.
+**Note:** Strength `moderate`, same reason as #6.
 
 ### 10. sites/bunia/configs/openmrs/frontend_config/msf-bunia-frontend-config.json:2-8
 
-**Observação:** No bloco de `@madiro/esm-home-app`, `extensionSlots` tira `service-queues-dashboard-link` de `homepage-dashboard-slot` (:4-5).
+**Observation:** Within `@madiro/esm-home-app` block, `extensionSlots` removes `service-queues-dashboard-link` from `homepage-dashboard-slot` (:4-5).
 
-**Interpretação:** Bunia repete a remoção da distro (#9).
+**Interpretation:** Bunia repeats distro removal (#9).
 
-**Nota:** Força `moderada`, pelo mesmo motivo de #6.
+**Note:** Strength `moderate`, same reason as #6.
 
 ### 11. sites/matsapha/configs/openmrs/frontend_config/msf-matsapha-frontend-config.json:2-8
 
-**Observação:** No bloco de `@madiro/esm-home-app`, `extensionSlots` tira `service-queues-dashboard-link` de `homepage-dashboard-slot` (:4-5).
+**Observation:** Within `@madiro/esm-home-app` block, `extensionSlots` removes `service-queues-dashboard-link` from `homepage-dashboard-slot` (:4-5).
 
-**Interpretação:** Matsapha repete a remoção da distro (#9).
+**Interpretation:** Matsapha repeats distro removal (#9).
 
-**Nota:** Força `moderada`, pelo mesmo motivo de #6.
+**Note:** Strength `moderate`, same reason as #6.
 
 ### 12. sites/mosul/configs/openmrs/frontend_config/msf-mosul-frontend-config.json:2-8
 
-**Observação:** No bloco de `@madiro/esm-home-app`, `extensionSlots` tira `service-queues-dashboard-link` de `homepage-dashboard-slot` (:4-5).
+**Observation:** Within `@madiro/esm-home-app` block, `extensionSlots` removes `service-queues-dashboard-link` from `homepage-dashboard-slot` (:4-5).
 
-**Interpretação:** Mosul repete a remoção da distro (#9).
+**Interpretation:** Mosul repeats distro removal (#9).
 
-**Nota:** Força `moderada`, pelo mesmo motivo de #6.
+**Note:** Strength `moderate`, same reason as #6.
 
 ### 13. distro/configs/openmrs/frontend_config/msf-frontend-config.json:249-267
 
-**Observação:** No bloco de `@openmrs/esm-primary-navigation-app`, `extensionSlots` tira `offline-tools-patient-chart-actions-dashboard-link` de `patient-chart-dashboard-slot` (:254-255). O outro slot do bloco só ajusta `Display conditions` de `dispensing-link` (:257-264).
+**Observation:** Within `@openmrs/esm-primary-navigation-app` block, `extensionSlots` removes `offline-tools-patient-chart-actions-dashboard-link` from `patient-chart-dashboard-slot` (:254-255). Other block slot only adjusts `Display conditions` of `dispensing-link` (:257-264).
 
-**Interpretação:** A distro tira um link de ferramentas offline do painel do patient chart.
+**Interpretation:** Distro removes offline-tools link from patient-chart dashboard.
 
-**Nota:** Força `moderada`, pelo mesmo motivo de #6.
+**Note:** Strength `moderate`, same reason as #6.
 
 ### 14. .; package.json:5; package.json:6-9
 
-**Observação:** O `package.json` da raiz declara `main: index.js`, que não está no snapshot (:5), e só tem scripts `playwright test` (:6-9). Não há workspace nem deploy.
+**Observation:** Root `package.json` declares absent snapshot `main: index.js` (:5), only `playwright test` scripts (:6-9). No workspace/deployment.
 
-**Interpretação:** É o pacote de testes e2e da distribuição, não uma unidade frontend.
+**Interpretation:** Distribution e2e test package rather than frontend unit.
 
 ### 15. docs; docs/index.html:15-35
 
-**Observação:** `docs/index.html` tem um `<div id="app">` e configura `window.$docsify`, com scripts do CDN (:15-35). Não há build nem workflow que o publique.
+**Observation:** `docs/index.html` has `<div id="app">`, configures `window.$docsify` with CDN scripts (:15-35). No build/publication workflow.
 
-**Interpretação:** É um site de documentação Docsify, não uma unidade frontend do sistema.
+**Interpretation:** Docsify documentation site rather than system frontend unit.
 
 ### 16. README.md:101
 
-**Observação:** "**Containerized** -- Docker Compose orchestration with Traefik SSL".
+**Observation:** "**Containerized** -- Docker Compose orchestration with Traefik SSL".
 
-**Interpretação:** Fala da infraestrutura de contêineres. O snapshot tem o compose do Traefik, um override do serviço `frontend` e a imagem de frontend, mas o compose principal é externo. A afirmação é parcial.
+**Interpretation:** Concerns container infrastructure. Snapshot has Traefik compose, `frontend` service override/frontend image, main compose external. Claim partial.
 
 ### 17. README.md:129
 
-**Observação:** "**Distro** (`/distro`) -- Organization-wide MSF base configuration. Defines backend modules, frontend modules, […] shared across all MSF sites."
+**Observation:** "**Distro** (`/distro`) -- Organization-wide MSF base configuration. Defines backend modules, frontend modules, […] shared across all MSF sites."
 
-**Interpretação:** Diz que os módulos frontend são definidos uma vez, na distro, e herdados pelos sites. A lista de montagem (#1) e o desempacotamento do ZIP da distro pelos sites confirmam isso. A afirmação é corroborada.
+**Interpretation:** Says frontend modules defined once in distro/inherited by sites. Assembly list (#1)/sites unpacking distro ZIP confirm. Claim corroborated.
 
 ### 18. README.md:149-150
 
-**Observação:** diagrama "GitHub Repository" "Maven build" "ZIP Artifacts + Docker Images" […] "GitHub Actions deploy" "Execution Server".
+**Observation:** diagram "GitHub Repository" "Maven build" "ZIP Artifacts + Docker Images" […] "GitHub Actions deploy" "Execution Server".
 
-**Interpretação:** Fala do pipeline de publicação da distribuição. ZIPs e imagens se confirmam, mas a única chamada ao workflow de deploy está comentada. A afirmação é contradita.
+**Interpretation:** Concerns distribution publication pipeline. ZIPs/images confirmed but sole deploy-workflow invocation commented. Claim contradicted.
 
 ### 19. README.md:160-181
 
-**Observação:** diagrama "Runtime Services": "OpenMRS Frontend (ESM)" […] "REST API" […] "OpenMRS Backend (Java 8)"; "Traefik (SSL)" […] "SSL termination" […] "OpenMRS Frontend (ESM)".
+**Observation:** diagram "Runtime Services": "OpenMRS Frontend (ESM)" […] "REST API" […] "OpenMRS Backend (Java 8)"; "Traefik (SSL)" […] "SSL termination" […] "OpenMRS Frontend (ESM)".
 
-**Interpretação:** Põe o frontend como um único serviço ao lado do backend e do proxy. O snapshot tem só os overrides desses serviços e o Traefik sem rota para o frontend. A afirmação é parcial.
+**Interpretation:** Places frontend as single service alongside backend/proxy. Snapshot only service overrides/Traefik without frontend route. Claim partial.
 
 ### 20. README.md:189
 
-**Observação:** "**Frontend** | OpenMRS 3 ESM microfrontend architecture (41 modules), plus custom Madiro modules (Nutrition, Mental Health)".
+**Observation:** "**Frontend** | OpenMRS 3 ESM microfrontend architecture (41 modules), plus custom Madiro modules (Nutrition, Mental Health)".
 
-**Interpretação:** Descreve o frontend como microfrontends ESM. O tipo de arquitetura confere com a montagem (#1), mas a contagem não: são 42 módulos, e o README deixa de fora `@madiro/esm-home-app`. A afirmação é contradita.
+**Interpretation:** Describes ESM microfrontend architecture. Type matches assembly (#1), count differs: 42 modules, README excluding `@madiro/esm-home-app`. Claim contradicted.
 
 ### 21. README.md:262
 
-**Observação:** "frontend_assembly/ # spa-assemble-config.json (frontend module versions)".
+**Observation:** "frontend_assembly/ # spa-assemble-config.json (frontend module versions)".
 
-**Interpretação:** Localiza a lista de módulos e versões. Confere com #1. A afirmação é corroborada.
+**Interpretation:** Locates module/version list. Matches #1. Claim corroborated.
 
 ### 22. README.md:325
 
-**Observação:** "Configuration types that can be overridden at each level: […] Frontend ESM modules (JS bundles)".
+**Observation:** "Configuration types that can be overridden at each level: […] Frontend ESM modules (JS bundles)".
 
-**Interpretação:** Diz que cada nível pode trocar os módulos frontend. Os sites só tiram módulos do import map (#2 a #4). A distro tem o mecanismo de substituição de bundles (distro/pom.xml:641-655), mas sem nenhum override de frontend no snapshot. A afirmação é parcial.
+**Interpretation:** Says each level can replace frontend modules. Sites only remove import-map modules (#2 through #4). Distro has bundle replacement mechanism (distro/pom.xml:641-655), no snapshot frontend override. Claim partial.
 
 ### 23. README.md:326
 
-**Observação:** "Frontend JSON config files (branding, UI widgets, dashboards)" (podem ser sobrescritos em cada nível).
+**Observation:** "Frontend JSON config files (branding, UI widgets, dashboards)" (can be overridden at each level).
 
-**Interpretação:** Diz que a configuração de UI é sobrescrita por nível. O site acrescenta a sua configuração e desfaz uma extensão da distro (#6 sobre #5). A afirmação é corroborada.
+**Interpretation:** Says UI configuration overridden per level. Site adds own configuration/undoes distro extension (#6 over #5). Claim corroborated.
 
 ### 24. README.md:332
 
-**Observação:** "**Frontend config inheritance** uses `SPA_CONFIG_URLS` in the Docker `.env` file to load multiple JSON configs in order, with later files overriding earlier ones".
+**Observation:** "**Frontend config inheritance** uses `SPA_CONFIG_URLS` in the Docker `.env` file to load multiple JSON configs in order, with later files overriding earlier ones".
 
-**Interpretação:** Descreve como o app-shell carrega as configurações. A montagem ordenada da lista no build se confirma. A carga em ordem com a última prevalecendo é comportamento do app-shell externo, sem artefato. A afirmação é parcial.
+**Interpretation:** Describes app-shell configuration loading. Ordered build-list assembly confirmed. Last-wins ordered loading is external app-shell behavior without artifact. Claim partial.
 
 ### 25. README.md:391
 
-**Observação:** "**Update** the `.env` file with the site frontend config URL (`maven-antrun-plugin`)".
+**Observation:** "**Update** the `.env` file with the site frontend config URL (`maven-antrun-plugin`)".
 
-**Interpretação:** Descreve um passo de build de cada site. As três execuções do `maven-antrun-plugin` confirmam. A afirmação é corroborada.
+**Interpretation:** Describes per-site build step. Three `maven-antrun-plugin` executions confirm. Claim corroborated.
 
 ### 26. README.md:504
 
-**Observação:** "The `bundled-docker` Maven profile builds pre-configured Docker images and pushes them to Docker Hub under the `msfocg` registry."
+**Observation:** "The `bundled-docker` Maven profile builds pre-configured Docker images and pushes them to Docker Hub under the `msfocg` registry."
 
-**Interpretação:** Fala da publicação das imagens da distribuição. O perfil e o CI confirmam. A afirmação é corroborada.
+**Interpretation:** Concerns distribution image publication. Profile/CI confirm. Claim corroborated.
 
 ### 27. README.md:516
 
-**Observação:** "`msfocg/<site>-openmrs-frontend` | amd64, arm64 | OpenMRS frontend SPA with all ESM modules".
+**Observation:** "`msfocg/<site>-openmrs-frontend` | amd64, arm64 | OpenMRS frontend SPA with all ESM modules".
 
-**Interpretação:** Diz que todos os módulos são publicados juntos numa imagem de frontend por site. A imagem e as plataformas se confirmam, mas o conteúdo não, porque o Dockerfile é gerado fora do snapshot. A afirmação é parcial.
+**Interpretation:** Says all modules published together in per-site frontend image. Image/platforms confirmed, contents not because Dockerfile generated externally. Claim partial.
 
 ### 28. README.md:585
 
-**Observação:** "**Frontend module versions** are defined in […] `spa-assemble-config.json` (Core UI 8.0.1, 40+ ESM modules plus custom Madiro Nutrition and Mental Health apps)".
+**Observation:** "**Frontend module versions** are defined in […] `spa-assemble-config.json` (Core UI 8.0.1, 40+ ESM modules plus custom Madiro Nutrition and Mental Health apps)".
 
-**Interpretação:** Localiza a lista de módulos e dá seus números. O local e a contagem conferem com #1, mas a versão do core não (`10.0.1-pre.5320`). A afirmação é contradita.
+**Interpretation:** Locates module list/gives numbers. Location/count match #1, core version does not (`10.0.1-pre.5320`). Claim contradicted.
 
 ### 29. README.md:823-831
 
-**Observação:** "Flags are filtered by tag and surface in the relevant patient chart dashboard tab" (Test Results, Summary, Medications, Conditions, Appointments).
+**Observation:** "Flags are filtered by tag and surface in the relevant patient chart dashboard tab" (Test Results, Summary, Medications, Conditions, Appointments).
 
-**Interpretação:** Diz onde a extensão de flags aparece dentro de outro módulo. Os cinco slots e as tags estão em #5. A afirmação é corroborada.
+**Interpretation:** Says where flags extension appears inside another module. Five slots/tags in #5. Claim corroborated.
 
 ### 30. README.md:838
 
-**Observação:** "Frontend widget placement: `msf-frontend-config.json` → `patient-flags-list` extension in `@openmrs/esm-patient-chart-app` slots".
+**Observation:** "Frontend widget placement: `msf-frontend-config.json` → `patient-flags-list` extension in `@openmrs/esm-patient-chart-app` slots".
 
-**Interpretação:** Nomeia a ligação entre a extensão de flags e os slots do patient chart. #5 a declara, e os dois módulos estão na montagem (#1). A afirmação é corroborada.
+**Interpretation:** Names flags-extension/patient-chart slot link. Declared by #5, both modules assembled (#1). Claim corroborated.
 
 ### 31. README.md:874-876
 
-**Observação:** "**Status:** Enabled at distro level and inherited by all sites." (follow-up table, `obs-table-horizontal-widget` em `patient-chart-test-results-dashboard-slot`).
+**Observation:** "**Status:** Enabled at distro level and inherited by all sites." (follow-up table, `obs-table-horizontal-widget` in `patient-chart-test-results-dashboard-slot`).
 
-**Interpretação:** A distro põe o widget no slot (#5), mas os três sites o tiram (#6 a #8). A herança por todos os sites é desmentida. A afirmação é contradita.
+**Interpretation:** Distro inserts widget in slot (#5), all three sites removing it (#6 through #8). All-site inheritance disproven. Claim contradicted.
 
 ### 32. README.md:897
 
-**Observação:** "Tasks are accessed through the dedicated **Tasks app** in the main navigation."
+**Observation:** "Tasks are accessed through the dedicated **Tasks app** in the main navigation."
 
-**Interpretação:** Nomeia o app de tarefas como unidade própria. Ele está na montagem (#1), mas o acesso pela navegação não tem artefato. A afirmação é parcial.
+**Interpretation:** Names task app as own unit. Assembled (#1), navigation access lacks artifact. Claim partial.
 
 ### 33. README.md:897
 
-**Observação:** "The service queues dashboard link is intentionally removed from the homepage across all configurations".
+**Observation:** "The service queues dashboard link is intentionally removed from the homepage across all configurations".
 
-**Interpretação:** Fala da extensão de um módulo tirada do slot de outro. A distro e os três sites fazem a remoção (#9 a #12). A afirmação é corroborada.
+**Interpretation:** Concerns extension removed from another module’s slot. Distro/three sites perform removal (#9 through #12). Claim corroborated.
 
 ### 34. README.md:901
 
-**Observação:** "**Status:** Enabled at distro level and inherited by all sites." (tarefas).
+**Observation:** "**Status:** Enabled at distro level and inherited by all sites." (tasks).
 
-**Interpretação:** Mosul tira o app de tarefas do import map (#4), então a parte de frontend não chega a todos os sites. A afirmação é contradita.
+**Interpretation:** Mosul removes task app from import map (#4), so frontend part does not reach all sites. Claim contradicted.
 
 ### 35. README.md:1029
 
-**Observação:** "To remove (hide) a frontend app for a specific site without affecting other sites, edit the site's frontend configuration JSON file".
+**Observation:** "To remove (hide) a frontend app for a specific site without affecting other sites, edit the site's frontend configuration JSON file".
 
-**Interpretação:** Diz que a composição de um site se ajusta pela sua configuração. Mosul tira os resumos de saúde mental e nutrição assim (#6). A afirmação é corroborada.
+**Interpretation:** Says site composition adjusted through configuration. Mosul removes mental-health/nutrition summaries this way (#6). Claim corroborated.
 
 ### 36. README.md:1033
 
-**Observação:** "Use the `\"remove\"` property in an `extensionSlots` configuration to hide the app's UI elements from the page".
+**Observation:** "Use the `\"remove\"` property in an `extensionSlots` configuration to hide the app's UI elements from the page".
 
-**Interpretação:** Nomeia o mecanismo de remoção em slots. Ele está em uso no site e na distro (#6, #9, #13). A afirmação é corroborada.
+**Interpretation:** Names slot-removal mechanism. Used by site/distro (#6, #9, #13). Claim corroborated.
 
 ### 37. README.md:1051
 
-**Observação:** "Set `\"Display conditions\"` with a privilege that no role at the site has, effectively hiding it from all users".
+**Observation:** "Set `\"Display conditions\"` with a privilege that no role at the site has, effectively hiding it from all users".
 
-**Interpretação:** Nomeia um mecanismo de visibilidade por privilégio. Ele existe na distro, mas só para restringir. O uso para esconder de todos não aparece no snapshot. A afirmação é parcial.
+**Interpretation:** Names privilege visibility mechanism. Present in distro for restriction only. Hiding from everyone absent. Claim partial.
 
 ### 38. README.md:1063-1065
 
-**Observação:** "**Option C: Remove importmap entries via the build (site-level)** […] This strips the specified modules from the importmap at build time so they are never loaded for that site".
+**Observation:** "**Option C: Remove importmap entries via the build (site-level)** […] This strips the specified modules from the importmap at build time so they are never loaded for that site".
 
-**Interpretação:** Descreve a remoção de unidades do import map por site. As execuções dos três sites confirmam a remoção no build (#2 a #4). O "never loaded" é comportamento do app-shell em runtime, sem artefato. A afirmação é parcial.
+**Interpretation:** Describes per-site import-map unit removal. Three-site executions confirm build removal (#2 through #4). "never loaded" is app-shell runtime behavior without artifact. Claim partial.
 
 ### 39. README.md:1092
 
-**Observação:** "If the app should be excluded from **all** sites, add it to the `frontendModuleExcludes` array in `distro/configs/openmrs/frontend_assembly/spa-assemble-config.json`".
+**Observation:** "If the app should be excluded from **all** sites, add it to the `frontendModuleExcludes` array in `distro/configs/openmrs/frontend_assembly/spa-assemble-config.json`".
 
-**Interpretação:** Diz que a exclusão de uma unidade de todos os sites se faz na montagem da distro. A lista existe em #1. A afirmação é corroborada.
+**Interpretation:** Says all-site unit exclusion occurs in distro assembly. List in #1. Claim corroborated.
 
 ### 40. distro/pom.xml:641-642
 
-**Observação:** "Loaded custom patient documents module and ESM patient banner app for stickers functionality. […] Kept for manual override capability if needed."
+**Observation:** "Loaded custom patient documents module and ESM patient banner app for stickers functionality. […] Kept for manual override capability if needed."
 
-**Interpretação:** Fala da troca do bundle de uma unidade por uma versão própria. A execução `apply-overrides` continua ativa, mas não há override de frontend no snapshot, e o carregamento do banner próprio é relato do passado. A afirmação é parcial.
+**Interpretation:** Concerns replacement of unit bundle with own version. `apply-overrides` execution active, no snapshot frontend override; own-banner loading reports past. Claim partial.
 
 ### 41. distro/pom.xml:885
 
-**Observação:** "Disable builidng and pushing distro docker images".
+**Observation:** "Disable builidng and pushing distro docker images".
 
-**Interpretação:** Fala da publicação das imagens. As execuções `build` e `push` estão ativas, e o CI liga o perfil. A afirmação é contradita.
+**Interpretation:** Concerns image publication. `build`/`push` executions active, CI enabling profile. Claim contradicted.
 
 ### 42. docs/README.md:109
 
-**Observação:** "Frontend modules | `frontend_config/` | JSON" (tabela "Configuration types").
+**Observation:** "Frontend modules | `frontend_config/` | JSON" (tabela "Configuration types").
 
-**Interpretação:** Põe a definição dos módulos na pasta de configuração de UI. A lista de módulos está em `frontend_assembly/` (#1). A afirmação é contradita.
+**Interpretation:** Places module definition in UI configuration folder. Module list in `frontend_assembly/` (#1). Claim contradicted.
 
 ### 43. scripts/remove-importmap-entries.groovy:7-9
 
-**Observação:** "A module is declared in two places that must stay in sync: importmap.json […] -> where the app-shell loads the bundle from; routes.registry.json […] -> the app's pages and extensions".
+**Observation:** "A module is declared in two places that must stay in sync: importmap.json […] -> where the app-shell loads the bundle from; routes.registry.json […] -> the app's pages and extensions".
 
-**Interpretação:** Descreve como o host externo carrega e registra cada unidade. O script confirma que os dois mapas têm entradas por módulo, mas os mapas são gerados e o app-shell é externo. A afirmação é parcial.
+**Interpretation:** Describes external host loading/registering each unit. Script confirms both maps have per-module entries, maps generated/app-shell external. Claim partial.
 
 ### 44. scripts/remove-importmap-entries.groovy:11-15
 
-**Observação:** "Removing a module from the importmap alone leaves its extensions registered against slots […]. The app-shell then retries resolving a package that the importmap cannot supply […] until the browser tab runs out of memory and crashes."
+**Observation:** "Removing a module from the importmap alone leaves its extensions registered against slots […]. The app-shell then retries resolving a package that the importmap cannot supply […] until the browser tab runs out of memory and crashes."
 
-**Interpretação:** Descreve o comportamento do mecanismo de carga do app-shell em runtime, fora do snapshot. A afirmação fica sem corroboração.
+**Interpretation:** Describes external app-shell runtime loading behavior. Claim uncorroborated.
 
-### 45. 758d373 2025-12-16 (.github/workflows/ci.yml, versão ausente); 7d6db6b 2026-01-08 (.github/workflows/deploy.yml, .github/workflows/run-e2e-tests.yml, .github/workflows/ci.yml, versão ausente); c08eeee 2026-01-10 (.github/workflows/ci.yml, versão ausente); a590846 2026-02-12 (.github/workflows/ci.yml, versão ausente); 1c1b728 2026-03-21 (.github/workflows/ci.yml, versão ausente); 7312d4c 2026-03-21 (.github/workflows/ci.yml, versão ausente); 90bdc3a 2026-07-03 (.github/workflows/ci.yml)
+### 45. 758d373 2025-12-16 (.github/workflows/ci.yml, version absent); 7d6db6b 2026-01-08 (.github/workflows/deploy.yml, .github/workflows/run-e2e-tests.yml, .github/workflows/ci.yml, version absent); c08eeee 2026-01-10 (.github/workflows/ci.yml, version absent); a590846 2026-02-12 (.github/workflows/ci.yml, version absent); 1c1b728 2026-03-21 (.github/workflows/ci.yml, version absent); 7312d4c 2026-03-21 (.github/workflows/ci.yml, version absent); 90bdc3a 2026-07-03 (.github/workflows/ci.yml)
 
-**Observação:** As mensagens dos dois commits anunciam o deploy automático em dev e em UAT. O segundo cria os workflows de deploy e de testes, que chegam ao snapshot. `ci.yml` mudou em mais cinco commits, de `c08eeee` a `90bdc3a`, e suas versões anteriores não estão disponíveis.
+**Observation:** Two commit messages announce automatic dev/UAT deployment. Second creates deploy/test workflows present in snapshot. `ci.yml` changes in five further commits, `c08eeee` through `90bdc3a`, earlier versions unavailable.
 
-**Interpretação:** A chamada comentada no snapshot é resto de uma cadeia de deploy que foi introduzida, não um plano nunca ligado. O histórico não diz quando nem por que ela foi desligada.
+**Interpretation:** Snapshot commented invocation is remnant of introduced deployment chain rather than never-connected plan. History does not establish when/why disabled.
 
-### 46. 6abb17e 2026-06-22 (mensagem: "migrate to using @madiro/esm-home-app"); 9de5ce9 2026-05-14 (README.md, versão ausente); c852c54 2026-07-20 (README.md); 886cd9b 2026-08-21 (distro/configs/openmrs/frontend_assembly/spa-assemble-config.json); eb80724 2026-09-03 (mensagem: "Update @madiro scoped packages with openmrs framework 10x"); c8fb59c 2026-09-19 (distro/configs/openmrs/frontend_assembly/spa-assemble-config.json)
+### 46. 6abb17e 2026-06-22 (message: "migrate to using @madiro/esm-home-app"); 9de5ce9 2026-05-14 (README.md, version absent); c852c54 2026-07-20 (README.md); 886cd9b 2026-08-21 (distro/configs/openmrs/frontend_assembly/spa-assemble-config.json); eb80724 2026-09-03 (message: "Update @madiro scoped packages with openmrs framework 10x"); c8fb59c 2026-09-19 (distro/configs/openmrs/frontend_assembly/spa-assemble-config.json)
 
-**Observação:** O README do snapshot é o de `c852c54`. Depois dele, a configuração de montagem mudou seis vezes, de `886cd9b` a `c8fb59c`, e `eb80724` anuncia a atualização dos pacotes `@madiro` para o framework 10. O módulo que o README deixa de fora entra, segundo a mensagem, em `6abb17e`. As versões antigas do README e da configuração não estão disponíveis.
+**Observation:** Snapshot README from `c852c54`. Afterwards assembly configuration changes six times, `886cd9b` through `c8fb59c`, `eb80724` announcing `@madiro` package update to framework 10. README-omitted module enters per message in `6abb17e`. Old README/configuration versions unavailable.
 
-**Interpretação:** Não se sabe quando os números do README foram escritos nem se conferiam com a configuração daquele momento. A dúvida é só sobre o passado: no snapshot, a montagem tem 42 módulos e core `10.0.1-pre.5320`.
+**Interpretation:** Unknown when README numbers written or whether matched then-current configuration. Past-only question: snapshot assembly has 42 modules/core `10.0.1-pre.5320`.
 
 ### 47. 792c607 2025-05-08 (scripts/apply-overrides.groovy, distro/pom.xml, distro/configs/openmrs/overrides/frontend/openmrs-esm-patient-banner-app.zip); 2b6b9e6 2025-05-09 (distro/configs/openmrs/overrides/frontend/openmrs-esm-patient-banner-app.zip); a48c566 2025-05-15 (distro/configs/openmrs/overrides/frontend/openmrs-esm-patient-banner-app.zip); 3bdf66f 2025-12-04 (distro/configs/openmrs/overrides/frontend/openmrs-esm-patient-banner-app.zip, distro/configs/openmrs/frontend_assembly/spa-assemble-config.json, distro/pom.xml); 8324e11 2026-02-14 (distro/configs/openmrs/overrides/modules/drools-1.1.0-SNAPSHOT.omod)
 
-**Observação:** O override do banner entra com o script em `792c607`, é alterado em `2b6b9e6` e `a48c566` e é apagado em `3bdf66f`, junto com módulos backend de override. Nenhum outro arquivo é criado em `overrides/frontend` até o snapshot. Em `overrides/modules`, `8324e11` acrescenta um módulo backend.
+**Observation:** Banner override enters with script in `792c607`, changed in `2b6b9e6` and `a48c566`, deleted in `3bdf66f` alongside backend overrides. No further `overrides/frontend` file created through snapshot. In `overrides/modules`, `8324e11` adds backend module.
 
-**Interpretação:** A troca do bundle de uma unidade existiu de maio a dezembro de 2025 e foi abandonada. O script continua ligado ao build, sem override de frontend.
+**Interpretation:** Unit-bundle replacement existed May through December 2025, then abandoned. Script still connected to build without frontend override.
 
 ### 48. 9af9025 2026-03-09 (distro/configs/openmrs/frontend_config/msf-frontend-config.json); c852c54 2026-07-20 (README.md); f71c4f5 2026-09-09 (sites/mosul/configs/openmrs/frontend_config/msf-mosul-frontend-config.json, sites/matsapha/configs/openmrs/frontend_config/msf-matsapha-frontend-config.json, sites/bunia/configs/openmrs/frontend_config/msf-bunia-frontend-config.json)
 
-**Observação:** O widget entra só na distro em `9af9025`. O README muda pela última vez em `c852c54`. As três configurações de site o removem juntas em `f71c4f5`, cuja mensagem diz que ele "is only meant to be visible on demo/distro".
+**Observation:** Widget enters distro only in `9af9025`. README last changes in `c852c54`. Three site configurations remove it together in `f71c4f5`, message saying "is only meant to be visible on demo/distro".
 
-**Interpretação:** A afirmação do README é do estágio em que todos os sites herdavam o widget. A remoção nos sites veio depois.
+**Interpretation:** README claim from stage all sites inherited widget. Site removal came later.
 
-### 49. d63ea0e 2026-02-13 (distro/configs/openmrs/frontend_assembly/spa-assemble-config.json); e88d16f 2026-03-24 (sites/mosul/pom.xml, sites/matsapha/pom.xml, sites/bunia/pom.xml); e36c0c4 2026-04-22 (mensagem: "Bunia - enable task lists"); c852c54 2026-07-20 (README.md); 3862541 2026-08-12 (mensagem: "Re-enable patient task list app for Matsapha")
+### 49. d63ea0e 2026-02-13 (distro/configs/openmrs/frontend_assembly/spa-assemble-config.json); e88d16f 2026-03-24 (sites/mosul/pom.xml, sites/matsapha/pom.xml, sites/bunia/pom.xml); e36c0c4 2026-04-22 (message: "Bunia - enable task lists"); c852c54 2026-07-20 (README.md); 3862541 2026-08-12 (message: "Re-enable patient task list app for Matsapha")
 
-**Observação:** O app de tarefas entra na montagem em `d63ea0e` e é tirado dos três sites em `e88d16f`. Segundo as mensagens, ele volta a Bunia (`e36c0c4`, 2026-04-22) e a Matsapha (`3862541`, 2026-08-12). O README mudou antes, dentro e depois desse intervalo, e suas versões antigas não estão disponíveis.
+**Observation:** Task app enters assembly in `d63ea0e`, removed from three sites in `e88d16f`. Messages report return to Bunia (`e36c0c4`, 2026-04-22) and Matsapha (`3862541`, 2026-08-12). README changed before, within and after interval, older versions unavailable.
 
-**Interpretação:** Não se sabe se a frase do README é resto do estágio em que todos os sites tinham o app. A dúvida é só sobre o passado: no snapshot, Mosul tira o app do import map.
+**Interpretation:** Unknown whether README sentence remains from all-site task-app stage. Past-only question: snapshot Mosul removes app from import map.
 
-### 50. 272b488 2025-11-17 (mensagem: "Build docker images using Bundled-docker and CLI"); 7de2fbe 2026-02-24 (mensagem: "Enable building and deploying of Distro images using bundled docker"); 185e757 2026-02-26 (mensagem: "Fix pushing distro docker images dev tags on snapshot build workflow"); c8fb59c 2026-09-19 (mensagem: "Stop the registration form crashing on the address hierarchy")
+### 50. 272b488 2025-11-17 (message: "Build docker images using Bundled-docker and CLI"); 7de2fbe 2026-02-24 (message: "Enable building and deploying of Distro images using bundled docker"); 185e757 2026-02-26 (message: "Fix pushing distro docker images dev tags on snapshot build workflow"); c8fb59c 2026-09-19 (message: "Stop the registration form crashing on the address hierarchy")
 
-**Observação:** As mensagens sugerem um estágio em que as imagens da distro não eram construídas, até `7de2fbe`. `distro/pom.xml` mudou em 84 commits, e suas versões anteriores não estão disponíveis.
+**Observation:** Messages suggest stage without distro image builds until `7de2fbe`. `distro/pom.xml` changed in 84 commits, prior versions unavailable.
 
-**Interpretação:** Não se sabe quando o comentário foi escrito. A dúvida é só sobre o passado: no snapshot, as execuções estão ativas.
+**Interpretation:** Unknown when comment written. Past-only question: snapshot executions active.
 
 ### 51. c60c10b 2024-04-11 (distro/configs/openmrs/frontend_assembly/spa-assemble-config.json, distro/configs/openmrs/frontend_config/msf-frontend-config.json); d29d101 2024-05-16 (distro/configs/openmrs/frontend_assembly/spa-assemble-config.json); b2e8d52 2024-05-26 (distro/configs/openmrs/frontend_assembly/spa-assemble-config.json); 5e8bc05 2025-05-20 (docs/README.md); 9de5ce9 2026-05-14 (docs/README.md)
 
-**Observação:** A lista de módulos está em `frontend_assembly/` desde o primeiro commit. Ela foi apagada e recriada no mesmo lugar em 2024. `docs/README.md` foi criado e alterado depois disso.
+**Observation:** Module list in `frontend_assembly/` since first commit. Deleted/recreated at same location in 2024. `docs/README.md` created/changed later.
 
-**Interpretação:** A tabela não é resto de uma organização anterior. Os módulos nunca foram definidos em `frontend_config/`.
+**Interpretation:** Table not remnant of earlier organization. Modules never defined in `frontend_config/`.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.7 #2, #5, #6, #13, #15, #17, #19, #24, #27 (Evidência) | 2 configuração | configuração | import-maps | arquitetural | forte | — |
-| 2 | 3.4.7 #7, #23 (Evidência) | 2 configuração | configuração | import-maps | arquitetural | moderada | configura scripts/remove-importmap-entries.groovy:71-100 |
-| 3 | 3.4.7 #7, #23 (Evidência) | 2 configuração | configuração | import-maps | arquitetural | moderada | configura scripts/remove-importmap-entries.groovy:71-100 |
-| 4 | 3.4.7 #7, #19, #23 (Evidência) | 2 configuração | configuração | import-maps | arquitetural | moderada | configura scripts/remove-importmap-entries.groovy:71-100 |
-| 5 | 3.4.7 #8, #14, #15, #16, #27 (Evidência) | 2 configuração | configuração | other | arquitetural | forte | — |
-| 6 | 3.4.7 #8, #9, #16, #20, #21 (Evidência) | 2 configuração | configuração | other | arquitetural | moderada | — |
-| 7 | 3.4.7 #16 (Evidência) | 2 configuração | configuração | other | arquitetural | moderada | — |
-| 8 | 3.4.7 #16 (Evidência) | 2 configuração | configuração | other | arquitetural | moderada | — |
-| 9 | 3.4.7 #18, #21, #27 (Evidência) | 2 configuração | configuração | other | arquitetural | moderada | — |
-| 10 | 3.4.7 #18 (Evidência) | 2 configuração | configuração | other | arquitetural | moderada | — |
-| 11 | 3.4.7 #18 (Evidência) | 2 configuração | configuração | other | arquitetural | moderada | — |
-| 12 | 3.4.7 #18 (Evidência) | 2 configuração | configuração | other | arquitetural | moderada | — |
-| 13 | 3.4.7 #21 (Evidência) | 2 configuração | configuração | other | arquitetural | moderada | — |
-| 14 | 3.4.3 (.) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 15 | 3.4.3 (docs) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 16 | 3.4.7 #1 | 7 documentação | documentação | — | contexto | fraca | corrobora em parte scripts/docker-compose-traefik.yml:6-11; corrobora em parte scripts/docker-compose-openmrs-override.yml:16-18; corrobora em parte distro/pom.xml:901-909 |
-| 17 | 3.4.7 #2 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #1; corrobora sites/mosul/pom.xml:22-29, 36-48 |
-| 18 | 3.4.7 #3 | 7 documentação | documentação | — | contexto | fraca | contradiz .github/workflows/ci.yml:25-48; contradiz .github/workflows/deploy.yml:3-4 |
-| 19 | 3.4.7 #4 | 7 documentação | documentação | — | contexto | fraca | corrobora em parte scripts/docker-compose-openmrs-override.yml:2-3, 16-18; corrobora em parte scripts/docker-compose-traefik.yml:6-26 |
-| 20 | 3.4.7 #5 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #1 |
-| 21 | 3.4.7 #6 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #1 |
-| 22 | 3.4.7 #7 | 7 documentação | documentação | — | arquitetural | fraca | corrobora em parte #2; corrobora em parte #3; corrobora em parte #4; corrobora em parte distro/pom.xml:641-655 |
-| 23 | 3.4.7 #8 | 7 documentação | documentação | — | tecnológica | fraca | corrobora #5; corrobora #6; corrobora sites/mosul/pom.xml:171-183 |
-| 24 | 3.4.7 #9 | 7 documentação | documentação | — | tecnológica | fraca | corrobora em parte distro/pom.xml:446-447, 459-463; corrobora em parte sites/mosul/pom.xml:179-182; corrobora em parte #6 |
-| 25 | 3.4.7 #10 | 7 documentação | documentação | — | contexto | fraca | corrobora sites/mosul/pom.xml:171-183; corrobora sites/matsapha/pom.xml:224-237; corrobora sites/bunia/pom.xml:238-251 |
-| 26 | 3.4.7 #11 | 7 documentação | documentação | — | contexto | fraca | corrobora distro/pom.xml:742-746, 958-971; corrobora .github/workflows/maven-publish.yml:107-108 |
-| 27 | 3.4.7 #12 | 7 documentação | documentação | — | arquitetural | fraca | corrobora em parte distro/pom.xml:901-909; corrobora em parte sites/mosul/pom.xml:429-440 |
-| 28 | 3.4.7 #13 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #1 |
-| 29 | 3.4.7 #14 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #5 |
-| 30 | 3.4.7 #15 | 7 documentação | documentação | other | arquitetural | fraca | corrobora #5; corrobora #1 |
-| 31 | 3.4.7 #16 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #6; contradiz #7; contradiz #8 |
-| 32 | 3.4.7 #17 | 7 documentação | documentação | — | arquitetural | fraca | corrobora em parte #1 |
-| 33 | 3.4.7 #18 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #9; corrobora #10; corrobora #11; corrobora #12 |
-| 34 | 3.4.7 #19 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #4 |
-| 35 | 3.4.7 #20 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #6 |
-| 36 | 3.4.7 #21 | 7 documentação | documentação | other | tecnológica | fraca | corrobora #6; corrobora #9; corrobora #13 |
-| 37 | 3.4.7 #22 | 7 documentação | documentação | — | tecnológica | fraca | corrobora em parte distro/configs/openmrs/frontend_config/msf-frontend-config.json:222-231, 273-283 |
-| 38 | 3.4.7 #23 | 7 documentação | documentação | import-maps | arquitetural | fraca | corrobora em parte #2; corrobora em parte #3; corrobora em parte #4 |
-| 39 | 3.4.7 #24 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #1 |
-| 40 | 3.4.7 #25 | 7 documentação | comentário | — | arquitetural | fraca | corrobora em parte distro/pom.xml:643-655 |
-| 41 | 3.4.7 #26 | 7 documentação | comentário | — | contexto | fraca | contradiz distro/pom.xml:958-971 |
-| 42 | 3.4.7 #27 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #1 |
-| 43 | 3.4.7 #28 | 7 documentação | comentário | import-maps | arquitetural | fraca | corrobora em parte scripts/remove-importmap-entries.groovy:71-100, 111-123 |
-| 44 | 3.4.7 #29 | 7 documentação | comentário | import-maps | tecnológica | fraca | — |
-| 45 | 3.4.8 #1 | 8 histórico | histórico | — | contexto | fraca | explica #18 |
-| 46 | 3.4.8 #2 | 8 histórico | histórico | — | arquitetural | fraca | explica #20; explica #28 |
-| 47 | 3.4.8 #3 | 8 histórico | histórico | — | arquitetural | fraca | explica #22; explica #40 |
-| 48 | 3.4.8 #4 | 8 histórico | histórico | — | arquitetural | fraca | explica #31 |
-| 49 | 3.4.8 #5 | 8 histórico | histórico | import-maps | arquitetural | fraca | explica #34 |
-| 50 | 3.4.8 #6 | 8 histórico | histórico | — | contexto | fraca | explica #41 |
-| 51 | 3.4.8 #7 | 8 histórico | histórico | — | arquitetural | fraca | explica #42 |
+| 1 | 3.4.7 #2, #5, #6, #13, #15, #17, #19, #24, #27 (Evidence) | 2 configuration | configuration | import-maps | architectural | strong | — |
+| 2 | 3.4.7 #7, #23 (Evidence) | 2 configuration | configuration | import-maps | architectural | moderate | configures scripts/remove-importmap-entries.groovy:71-100 |
+| 3 | 3.4.7 #7, #23 (Evidence) | 2 configuration | configuration | import-maps | architectural | moderate | configures scripts/remove-importmap-entries.groovy:71-100 |
+| 4 | 3.4.7 #7, #19, #23 (Evidence) | 2 configuration | configuration | import-maps | architectural | moderate | configures scripts/remove-importmap-entries.groovy:71-100 |
+| 5 | 3.4.7 #8, #14, #15, #16, #27 (Evidence) | 2 configuration | configuration | other | architectural | strong | — |
+| 6 | 3.4.7 #8, #9, #16, #20, #21 (Evidence) | 2 configuration | configuration | other | architectural | moderate | — |
+| 7 | 3.4.7 #16 (Evidence) | 2 configuration | configuration | other | architectural | moderate | — |
+| 8 | 3.4.7 #16 (Evidence) | 2 configuration | configuration | other | architectural | moderate | — |
+| 9 | 3.4.7 #18, #21, #27 (Evidence) | 2 configuration | configuration | other | architectural | moderate | — |
+| 10 | 3.4.7 #18 (Evidence) | 2 configuration | configuration | other | architectural | moderate | — |
+| 11 | 3.4.7 #18 (Evidence) | 2 configuration | configuration | other | architectural | moderate | — |
+| 12 | 3.4.7 #18 (Evidence) | 2 configuration | configuration | other | architectural | moderate | — |
+| 13 | 3.4.7 #21 (Evidence) | 2 configuration | configuration | other | architectural | moderate | — |
+| 14 | 3.4.3 (.) | 4 structure | directory | — | context | weak | — |
+| 15 | 3.4.3 (docs) | 4 structure | directory | — | context | weak | — |
+| 16 | 3.4.7 #1 | 7 documentation | documentation | — | context | weak | partially corroborates scripts/docker-compose-traefik.yml:6-11; partially corroborates scripts/docker-compose-openmrs-override.yml:16-18; partially corroborates distro/pom.xml:901-909 |
+| 17 | 3.4.7 #2 | 7 documentation | documentation | — | architectural | weak | corroborates #1; corroborates sites/mosul/pom.xml:22-29, 36-48 |
+| 18 | 3.4.7 #3 | 7 documentation | documentation | — | context | weak | contradicts .github/workflows/ci.yml:25-48; contradicts .github/workflows/deploy.yml:3-4 |
+| 19 | 3.4.7 #4 | 7 documentation | documentation | — | context | weak | partially corroborates scripts/docker-compose-openmrs-override.yml:2-3, 16-18; partially corroborates scripts/docker-compose-traefik.yml:6-26 |
+| 20 | 3.4.7 #5 | 7 documentation | documentation | — | architectural | weak | contradicts #1 |
+| 21 | 3.4.7 #6 | 7 documentation | documentation | — | architectural | weak | corroborates #1 |
+| 22 | 3.4.7 #7 | 7 documentation | documentation | — | architectural | weak | partially corroborates #2; partially corroborates #3; partially corroborates #4; partially corroborates distro/pom.xml:641-655 |
+| 23 | 3.4.7 #8 | 7 documentation | documentation | — | technological | weak | corroborates #5; corroborates #6; corroborates sites/mosul/pom.xml:171-183 |
+| 24 | 3.4.7 #9 | 7 documentation | documentation | — | technological | weak | partially corroborates distro/pom.xml:446-447, 459-463; partially corroborates sites/mosul/pom.xml:179-182; partially corroborates #6 |
+| 25 | 3.4.7 #10 | 7 documentation | documentation | — | context | weak | corroborates sites/mosul/pom.xml:171-183; corroborates sites/matsapha/pom.xml:224-237; corroborates sites/bunia/pom.xml:238-251 |
+| 26 | 3.4.7 #11 | 7 documentation | documentation | — | context | weak | corroborates distro/pom.xml:742-746, 958-971; corroborates .github/workflows/maven-publish.yml:107-108 |
+| 27 | 3.4.7 #12 | 7 documentation | documentation | — | architectural | weak | partially corroborates distro/pom.xml:901-909; partially corroborates sites/mosul/pom.xml:429-440 |
+| 28 | 3.4.7 #13 | 7 documentation | documentation | — | architectural | weak | contradicts #1 |
+| 29 | 3.4.7 #14 | 7 documentation | documentation | — | architectural | weak | corroborates #5 |
+| 30 | 3.4.7 #15 | 7 documentation | documentation | other | architectural | weak | corroborates #5; corroborates #1 |
+| 31 | 3.4.7 #16 | 7 documentation | documentation | — | architectural | weak | contradicts #6; contradicts #7; contradicts #8 |
+| 32 | 3.4.7 #17 | 7 documentation | documentation | — | architectural | weak | partially corroborates #1 |
+| 33 | 3.4.7 #18 | 7 documentation | documentation | — | architectural | weak | corroborates #9; corroborates #10; corroborates #11; corroborates #12 |
+| 34 | 3.4.7 #19 | 7 documentation | documentation | — | architectural | weak | contradicts #4 |
+| 35 | 3.4.7 #20 | 7 documentation | documentation | — | architectural | weak | corroborates #6 |
+| 36 | 3.4.7 #21 | 7 documentation | documentation | other | technological | weak | corroborates #6; corroborates #9; corroborates #13 |
+| 37 | 3.4.7 #22 | 7 documentation | documentation | — | technological | weak | partially corroborates distro/configs/openmrs/frontend_config/msf-frontend-config.json:222-231, 273-283 |
+| 38 | 3.4.7 #23 | 7 documentation | documentation | import-maps | architectural | weak | partially corroborates #2; partially corroborates #3; partially corroborates #4 |
+| 39 | 3.4.7 #24 | 7 documentation | documentation | — | architectural | weak | corroborates #1 |
+| 40 | 3.4.7 #25 | 7 documentation | comment | — | architectural | weak | partially corroborates distro/pom.xml:643-655 |
+| 41 | 3.4.7 #26 | 7 documentation | comment | — | context | weak | contradicts distro/pom.xml:958-971 |
+| 42 | 3.4.7 #27 | 7 documentation | documentation | — | architectural | weak | contradicts #1 |
+| 43 | 3.4.7 #28 | 7 documentation | comment | import-maps | architectural | weak | partially corroborates scripts/remove-importmap-entries.groovy:71-100, 111-123 |
+| 44 | 3.4.7 #29 | 7 documentation | comment | import-maps | technological | weak | — |
+| 45 | 3.4.8 #1 | 8 history | history | — | context | weak | explains #18 |
+| 46 | 3.4.8 #2 | 8 history | history | — | architectural | weak | explains #20; explains #28 |
+| 47 | 3.4.8 #3 | 8 history | history | — | architectural | weak | explains #22; explains #40 |
+| 48 | 3.4.8 #4 | 8 history | history | — | architectural | weak | explains #31 |
+| 49 | 3.4.8 #5 | 8 history | history | import-maps | architectural | weak | explains #34 |
+| 50 | 3.4.8 #6 | 8 history | history | — | context | weak | explains #41 |
+| 51 | 3.4.8 #7 | 8 history | history | — | architectural | weak | explains #42 |
 
-## Resumo
+## Summary
 
-Observações: 51. Dimensões (tecnologia: 0, configuração: 13, código: 0, estrutura: 2, composição: 0, build-deploy: 0, documentação: 29, histórico: 7). Força (forte: 2, moderada: 11, fraca: 38, ambígua: 0). Evidência (tecnológica: 5, arquitetural: 36, contexto: 10).
+Observations: 51. Dimensions (technology: 0, configuration: 13, code: 0, structure: 2, composition: 0, build-deploy: 0, documentation: 29, history: 7). Strength (strong: 2, moderate: 11, weak: 38, ambiguous: 0). Evidence (technological: 5, architectural: 36, context: 10).
+

@@ -17,21 +17,21 @@ annotation:
 
 ## Workspace
 
-Nenhuma declaração de workspace.
+No workspace declaration.
 
-## Unidades
+## Units
 
-| Diretório | Marcadores | Manifesto | Entrada | Build | Workspace | Deploy | Unidade frontend | Motivo |
+| Directory | Markers | Manifest | Entry | Build | Workspace | Deploy | Frontend unit | Rationale |
 |---|---|---|---|---|---|---|---|---|
-| . | index.html;package.json;webpack.common.config.js;webpack.dev.config.js;webpack.prod.config.js | package.json | webpack.common.config.js:7 (`entry:"./index.js"`); index.js:19-20 (`createRoot(...).render(<App/>)`); webpack.common.config.js:37-39 (`HtmlWebpackPlugin` com `template:"index.html"`) | webpack.dev.config.js:5 (`merge(common, …)`) + package.json:9 (`build:dev`: `webpack serve --config webpack.dev.config.js`); webpack.prod.config.js:4-34 + package.json:8 (`build`: `webpack --config webpack.prod.config.js`) | — | — | Yes | Única aplicação React do snapshot (o host), com entrada e build webpack próprios |
+| . | index.html;package.json;webpack.common.config.js;webpack.dev.config.js;webpack.prod.config.js | package.json | webpack.common.config.js:7 (`entry:"./index.js"`); index.js:19-20 (`createRoot(...).render(<App/>)`); webpack.common.config.js:37-39 (`HtmlWebpackPlugin` with `template:"index.html"`) | webpack.dev.config.js:5 (`merge(common, …)`) + package.json:9 (`build:dev`: `webpack serve --config webpack.dev.config.js`); webpack.prod.config.js:4-34 + package.json:8 (`build`: `webpack --config webpack.prod.config.js`) | — | — | Yes | The snapshot’s only React application (the host), with its own entry and webpack build |
 
-## Resumo
+## Summary
 
-Aplicações frontend no snapshot: 1 (.).
+Frontend applications in the snapshot: 1 (.).
 
-## Notas
+## Notes
 
-- A classificação registra `frontend_units: 2`: o host `.` e o remoto `RemoteApp` (`webpack.common.config.js:34`, `RemoteApp@http://localhost:9001/remoteappbuild.js`), que está fora do snapshot.
-- `package.json` aparece como `workspace-config` no `artifacts.csv`, mas não tem campo `workspaces` (`package.json:1-34`); não há outra declaração de workspace.
-- `webpack.prod.config.js:4-34` não declara `entry` nem faz `merge` com a config comum; a entrada `./index.js` é declarada só em `webpack.common.config.js:7`, usada pelo build de desenvolvimento. O build de produção depende do `entry` padrão do webpack (`./src`), ausente do snapshot. Não muda o resultado: o build de desenvolvimento já dá entrada e build próprios.
-- Nenhuma ocorrência `ops-*` ou `ci-*` no `matches.csv` e nenhum Dockerfile, workflow ou configuração de hospedagem no snapshot.
+- The classification records `frontend_units: 2`: the host `.` and the remote `RemoteApp` (`webpack.common.config.js:34`, `RemoteApp@http://localhost:9001/remoteappbuild.js`), which is outside the snapshot.
+- `package.json` appears as `workspace-config` in `artifacts.csv`, but has no `workspaces` field (`package.json:1-34`); there is no other workspace declaration.
+- `webpack.prod.config.js:4-34` neither declares `entry` nor performs `merge` with the common configuration; the `./index.js` entry is declared only in `webpack.common.config.js:7`, used by the development build. The production build depends on webpack’s default `entry` (`./src`), missing from the snapshot. This does not change the result: the development build already provides its own entry and build.
+- No `ops-*` or `ci-*` occurrence in `matches.csv` and no Dockerfile, workflow or hosting configuration in the snapshot.

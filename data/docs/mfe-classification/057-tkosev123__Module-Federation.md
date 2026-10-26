@@ -20,40 +20,40 @@ annotation:
 
 # 057 — tkosev123/Module-Federation
 
-## Contexto
+## Context
 
-- **Abordagem de implementação:** Module Federation para React Native (Re.Pack + Rspack, `ModuleFederationPluginV2`)
-- **Tipo de repositório:** example/proof of concept (app React Native "deposit" recém-criado pelo CLI, com um `Counter` exposto)
-- **Classificação:** MFE-unit (sujeito à decisão de escopo mobile, como o repositório 025)
-- **Commit avaliado:** `75672a76` (único commit)
+- **Implementation approach:** Module Federation for React Native (Re.Pack + Rspack, `ModuleFederationPluginV2`)
+- **Repository type:** example/proof of concept (React Native "deposit" app newly created through the CLI, with an exposed `Counter`)
+- **Classification:** MFE-unit (subject to the mobile scope decision, as in repository 025)
+- **Assessed commit:** `75672a76` (only commit)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | Um único app React Native (`package.json:2` `"name": "deposit"`, `index.js`, `App.tsx`, `android/`, `ios/`); `node_modules/` versionado (dos 34.490 arquivos, quase todos são dependências) | contrária |
-| Tecnologia | `package.json:13-17,27`: `@module-federation/{enhanced,runtime,sdk,…}` 0.10.0 e `@callstack/repack` ^5.1.0-rc.0 | fraca |
-| Configuração | `rspack.config.mjs:39-47`: `Repack.plugins.ModuleFederationPluginV2({ name: 'Deposit', filename: 'Deposit.container.js.bundle', exposes: { './Counter': './Counter' }, shared: … })`; sem `remotes` | moderada |
-| Código-fonte | `Counter.tsx:4`: componente exposto (contador); `App.tsx:8-20`: tela padrão do template (`NewAppScreen`), sem uso de remotes | moderada |
-| Build/deploy (artefatos) | `build/generated/{android,ios}/@mf-types/Counter.d.ts`, `@mf-types.zip`: tipos gerados pelo MF para consumidores | moderada |
-| Composição | Nenhum host no repositório | ausente |
-| Documentação | `README.md`: boilerplate do React Native CLI | ausente |
+| Structure | A single React Native app (`package.json:2` `"name": "deposit"`, `index.js`, `App.tsx`, `android/`, `ios/`); tracked `node_modules/` (of the 34,490 files, almost all are dependencies) | contrary |
+| Technology | `package.json:13-17,27`: `@module-federation/{enhanced,runtime,sdk,…}` 0.10.0 and `@callstack/repack` ^5.1.0-rc.0 | weak |
+| Configuration | `rspack.config.mjs:39-47`: `Repack.plugins.ModuleFederationPluginV2({ name: 'Deposit', filename: 'Deposit.container.js.bundle', exposes: { './Counter': './Counter' }, shared: … })`; no `remotes` | moderate |
+| Source code | `Counter.tsx:4`: exposed component (counter); `App.tsx:8-20`: default template screen (`NewAppScreen`), without remote usage | moderate |
+| Build/deploy (artifacts) | `build/generated/{android,ios}/@mf-types/Counter.d.ts`, `@mf-types.zip`: MF-generated types for consumers | moderate |
+| Composition | No host in the repository | absent |
+| Documentation | `README.md`: React Native CLI boilerplate | absent |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade; a config de composição só tem `exposes` (`rspack.config.mjs:44-46`) |
-| Q2 | Yes (para a unidade) | Bundle de container próprio (`Deposit.container.js.bundle`) |
-| Q3 | Undetermined | O host não está no repositório |
-| Q4 | Undetermined | Lado remote configurado (e tipos gerados para o consumidor); o consumidor não é observável |
-| Q5 | No | Unidade preparada para composição, não uma instância de MFE no repositório |
+| Q1 | No | A single unit; composition config has only `exposes` (`rspack.config.mjs:44-46`) |
+| Q2 | Yes (for this unit) | Its own container bundle (`Deposit.container.js.bundle`) |
+| Q3 | Undetermined | The host is not in the repository |
+| Q4 | Undetermined | Remote side configured (and types generated for the consumer); the consumer is not observable |
+| Q5 | No | A unit prepared for composition, not an MFE instance in the repository |
 
-## Motivo
+## Rationale
 
-- Q1 é No; aplica-se a exceção MFE-unit: remote Re.Pack com `exposes` e tipos gerados para um host externo não observável.
-- Mesmo padrão do 001/050, mas em **React Native**.
+- Q1 is No; the MFE-unit exception applies: a Re.Pack remote with `exposes` and generated types for an unobservable external host.
+- Same pattern as 001/050, but in **React Native**.
 
-## Ponto para revisão conjunta
+## Point for joint review
 
-- **Escopo mobile:** como no repositório 025, as unidades são de um app nativo, não web. Se o estudo se restringir a web, o caso passa a Non-MFE (fora do escopo). Esta é a segunda ocorrência; vale fixar a regra no checklist.
+- **Mobile scope:** as in repository 025, units belong to a native app, not web. If the study is restricted to web, the case becomes Non-MFE (out of scope). This is the second occurrence; the rule should be fixed in the checklist.

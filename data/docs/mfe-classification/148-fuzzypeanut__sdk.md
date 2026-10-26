@@ -20,72 +20,72 @@ annotation:
 
 # 148 — fuzzypeanut/sdk
 
-## Contexto
+## Context
 
-Pacote npm `@fuzzypeanut/sdk`: tipos TypeScript, a interface `FuzzyPeanutSDK` e helpers de runtime que definem o contrato entre o shell “FuzzyPeanut” e seus módulos (`README.md:1–10`; `package.json:2–13`). O shell e os módulos não estão no repositório. O pacote só declara os tipos que eles usariam, como `ModuleManifest`, com `remoteEntry`, e `FPModule`, com `mount`/`unmount` (`src/index.ts:52–88`), além de um singleton compartilhado por `window` (`src/index.ts:308–343`). O nome do repositório não é usado como evidência.
+Npm package `@fuzzypeanut/sdk`: TypeScript types, interface `FuzzyPeanutSDK` and runtime helpers defining contract between “FuzzyPeanut” shell and its modules (`README.md:1–10`; `package.json:2–13`). Shell and modules are absent from repository. Package only declares types they would use, such as `ModuleManifest`, with `remoteEntry`, and `FPModule`, with `mount`/`unmount` (`src/index.ts:52–88`), plus a singleton shared through `window` (`src/index.ts:308–343`). Repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:149` registra rank 148, ID 1163143966, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:149` records rank 148, ID 1163143966, status `cloned`, branch `main` and front-matter commit, which is clone HEAD and `origin/main`. Every clone Git command used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:149` registra a estratégia `technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:25205` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:25212` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:149` records strategy `technology` and eligibility `pass`. Sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). ID appears in `data/discovery/mfe-round-001/candidates.csv:25205` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:25212` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna um hit por rodada, do endpoint `repositories` e com `path` vazio:
+`sqlite3 -readonly` query of tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns one hit per round, at endpoint `repositories` and with empty `path`:
 
-| Consulta (`q`) | Subconsulta | Consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Effective query | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `technology-module-federation-repositories`: `"module federation" in:name,description,readme` | `technology-module-federation-repositories#created:2026-02` | `"module federation" in:name,description,readme pushed:>=2025-04-01 created:2026-02-01..2026-02-28` | 2026-10-07T23:23:27.609Z / 2026-10-08T16:17:10.891Z |
 
-Metadados do hit:
-- descrição “TypeScript SDK — the FuzzyPeanut module contract (@fuzzypeanut/sdk)”, sem “module federation”;
-- sem tópicos, linguagem TypeScript, `fork: false`, tamanho 13;
-- criação em 2026-02-21T06:46:28Z, push em 2026-02-21T10:30:42Z.
+Hit metadata:
+- description “TypeScript SDK — the FuzzyPeanut module contract (@fuzzypeanut/sdk)”, without “module federation”;
+- no topics, TypeScript language, `fork: false`, size 13;
+- creation at 2026-02-21T06:46:28Z, push at 2026-02-21T10:30:42Z.
 
-Como a descrição não tem a frase, o acerto vem de `README.md:14`, “…declared as a shared singleton in Vite module federation config…”, em minúsculas e única ocorrência no README.
+Since description lacks phrase, retrieval comes from `README.md:14`, “…declared as a shared singleton in Vite module federation config…”, lowercase and sole README occurrence.
 
-O README foi criado na raiz `0dfd15f` (2026-02-21) e não foi alterado depois. Ele é anterior às coletas de outubro de 2026, e o README do SHA não é posterior às buscas.
+README was created at root `0dfd15f` (2026-02-21) and unchanged afterward. It predates October 2026 collections, and README at the SHA is not later than searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 7 entradas, todas arquivos regulares `100644`: `.gitignore`, `LICENSE`, `README.md`, `package.json`, `package-lock.json`, `src/index.ts` e `tsconfig.json`. Zero symlinks e zero gitlinks. Não há HTML de entrada, componentes de UI, configuração de bundler ou `manifest.json` de módulo. | contrária |
-| Build | `package.json:14–19`: `build: tsc`, `dev: tsc --watch` e só `typescript` como devDependency. `tsconfig.json:2–15`: compila `src` para `dist` com declarações. `package-lock.json` resolve apenas `typescript` 5.9.3. É um pacote de biblioteca publicado por `exports` (`package.json:8–13`), não uma aplicação. | contrária |
-| Código-fonte (contrato) | `src/index.ts:37–71`: tipos `ModuleInfo`/`ModuleManifest` com `remoteEntry`. `src/index.ts:73–88`: interface `FPModule`, “The interface every module's remoteEntry.js must export as default”. `src/index.ts:189–304`: mapa de eventos e interface `FuzzyPeanutSDK`. São só declarações de tipo; nada no repositório as implementa ou carrega. | fraca |
-| Código-fonte (runtime) | `src/index.ts:308–343`: `initSDK` grava a instância em `window.__fuzzyPeanutSDK` e `getSDK` a lê como fallback para “modules loaded as separate ES bundles”. `src/index.ts:347–392`: acessores `use*` e constantes `Events`. É um singleton de serviço compartilhado, sem carregar ou montar unidades. | contexto |
-| Documentação | `README.md:12–14`: o shell chama `initSDK` e os módulos chamam `getSDK`, com o pacote “declared as a shared singleton in Vite module federation config”. `README.md:34–52`: exemplo de `manifest.json` que “every module repo ships”. Descreve a configuração de outros repositórios, não presente aqui. | fraca |
-| Código-fonte (fronteiras) / Composição (busca) | `src/index.ts` é o único arquivo de código e não tem `import`. `git grep -i` no SHA, em `src` e `package.json`, por `import`, `from`, `federation`, `remoteEntry`, `window`, `customElements`, `iframe` e `single-spa`. Só acha os tipos com `remoteEntry` e o acesso a `window` já citados. Não há `remotes`, `exposes`, `registerApplication`, import map nem plugin de federação. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 7 entries, all regular files `100644`: `.gitignore`, `LICENSE`, `README.md`, `package.json`, `package-lock.json`, `src/index.ts` and `tsconfig.json`. Zero symlinks and zero gitlinks. No entry HTML, UI components, bundler configuration or module `manifest.json`. | contrary |
+| Build | `package.json:14–19`: `build: tsc`, `dev: tsc --watch` and only `typescript` as devDependency. `tsconfig.json:2–15`: compiles `src` to `dist` with declarations. `package-lock.json` resolves only `typescript` 5.9.3. This is a library package published through `exports` (`package.json:8–13`), not an application. | contrary |
+| Source code (contract) | `src/index.ts:37–71`: types `ModuleInfo`/`ModuleManifest` with `remoteEntry`. `src/index.ts:73–88`: interface `FPModule`, “The interface every module's remoteEntry.js must export as default”. `src/index.ts:189–304`: event map and interface `FuzzyPeanutSDK`. These are only type declarations; nothing in repository implements or loads them. | weak |
+| Source code (runtime) | `src/index.ts:308–343`: `initSDK` stores instance in `window.__fuzzyPeanutSDK` and `getSDK` reads it as fallback for “modules loaded as separate ES bundles”. `src/index.ts:347–392`: `use*` accessors and `Events` constants. This is a shared-service singleton, without loading or mounting units. | context |
+| Documentation | `README.md:12–14`: shell calls `initSDK` and modules call `getSDK`, with package “declared as a shared singleton in Vite module federation config”. `README.md:34–52`: example `manifest.json` that “every module repo ships”. Describes configuration of other repositories, absent here. | weak |
+| Source code (boundaries) / Composition (search) | `src/index.ts` is sole code file and has no `import`. `git grep -i` at the SHA, in `src` and `package.json`, for `import`, `from`, `federation`, `remoteEntry`, `window`, `customElements`, `iframe` and `single-spa`. Finds only types with `remoteEntry` and `window` access cited above. No `remotes`, `exposes`, `registerApplication`, import map or federation plugin exists. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso. Há 8 commits, nenhum merge, todos de `trollboy <trollboy@gmail.com>` em 2026-02-21, entre 01:51 e 05:30 (−05:00). A raiz `0dfd15f` (“feat: initial SDK — types, FuzzyPeanutSDK interface, runtime helpers, standard events”) adiciona todos os arquivos, exceto `LICENSE`, que entra em `fcd6431`. Os demais commits só alteram `src/index.ts` (`git log --no-renames --name-status`):
-- `383fa3d` adiciona o fallback por `window`;
-- `b682c87` expande o contrato;
-- `010e381`, `6f9043c`, `e86447f` e o SHA `a304cf3` ajustam eventos.
+Non-shallow clone. There are 8 commits, no merge, all by `trollboy <trollboy@gmail.com>` on 2026-02-21, between 01:51 and 05:30 (−05:00). Root `0dfd15f` (“feat: initial SDK — types, FuzzyPeanutSDK interface, runtime helpers, standard events”) adds all files except `LICENSE`, entering in `fcd6431`. Other commits change only `src/index.ts` (`git log --no-renames --name-status`):
+- `383fa3d` adds `window` fallback;
+- `b682c87` expands contract;
+- `010e381`, `6f9043c`, `e86447f` and SHA `a304cf3` adjust events.
 
-O dono é uma organização (`fuzzypeanut`). Nenhum blob histórico foi lido e não houve objeto ausente.
+Owner is an organization (`fuzzypeanut`). No historical blob was read and no object was missing.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend no repositório, que é só um pacote de tipos e helpers (inventário; `package.json:14–19`). Nenhuma configuração de composição referencia unidades externas: o shell e os módulos do README (`README.md:14`, `36`) não estão referenciados por `remotes`, registro ou import map. |
-| Q2 | No | Sem unidades, não há entradas ou builds de unidades. O único build é `tsc` da biblioteca (`package.json:15`). |
-| Q3 | No | Não há host, shell ou configuração raiz. `initSDK` só injeta um serviço (`src/index.ts:318–323`); não carrega, monta nem roteia unidades. |
-| Q4 | No | Nenhum mecanismo configurado. Module Federation é só mencionado em `README.md:14`, e `remoteEntry` só aparece como campo de tipo (`src/index.ts:41`, `56`, `74`). |
-| Q5 | No | Q1–Q4 são No: biblioteca de contrato de uma plataforma modular cujos shell e módulos estão em outros repositórios. |
+| Q1 | No | No frontend unit in repository, only types/helpers package (inventory; `package.json:14–19`). No composition configuration references external units: README shell and modules (`README.md:14`, `36`) are unreferenced through `remotes`, registry or import map. |
+| Q2 | No | Without units, no unit entries or builds exist. Sole build is library `tsc` (`package.json:15`). |
+| Q3 | No | No host, shell or root configuration. `initSDK` only injects service (`src/index.ts:318–323`); it does not load, mount or route units. |
+| Q4 | No | No configured mechanism. Module Federation is only mentioned in `README.md:14`, and `remoteEntry` appears only as type field (`src/index.ts:41`, `56`, `74`). |
+| Q5 | No | Q1–Q4 are No: contract library of a modular platform whose shell and modules are in other repositories. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “MFE frameworks and libraries (e.g., single-spa itself, federation plugins)” e a “repositories mentioning micro-frontends without implementing them”.
-- Precedente final 015: biblioteca compartilhada de um ecossistema MFE em outros repositórios, `repo_type: library`, 0 unidades, `none`. A exceção MFE-unit não se aplica: o pacote não é uma unidade preparada para ser composta (sem `exposes`, lifecycles exportados nem custom element). `FPModule` só tipa o que os módulos externos deveriam exportar.
-- Diferentemente de 097/103/104, não há host ou remoto deste repositório cuja conectividade precise ser interpretada. Diferentemente de 089/100, não há configuração de federação a julgar como code sharing; o `shared` citado no README está fora do repositório.
-- `ui_technologies: []`: não há UI. O tipo do manifesto do README cita `./src/index.svelte` como exemplo, mas isso não é observado aqui. `build_tools: []`: só `tsc`, que não é bundler de unidades.
-- Não há decisão aberta.
+- `Non-MFE` under rule “at least one question is No”. Matches “MFE frameworks and libraries (e.g., single-spa itself, federation plugins)” and “repositories mentioning micro-frontends without implementing them”.
+- Final precedent 015: shared library of an MFE ecosystem in other repositories, `repo_type: library`, 0 units, `none`. MFE-unit exception does not apply: package is not a unit prepared for composition (without `exposes`, exported lifecycles or custom element). `FPModule` only types what external modules should export.
+- Unlike 097/103/104, no repository host or remote has connectivity requiring interpretation. Unlike 089/100, no federation configuration requires code-sharing judgment; `shared` cited in README lies outside repository.
+- `ui_technologies: []`: no UI. README manifest type cites `./src/index.svelte` as example, but that is not observed here. `build_tools: []`: only `tsc`, not a unit bundler.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** pacote de contrato e tipos de uma plataforma de módulos, com vocabulário de federação (`remoteEntry`, “shared singleton”, módulos carregados como bundles separados), sem nenhuma unidade nem configuração de composição.
-- **RQ3:** o pacote resolve o compartilhamento de estado entre bundles por variável global em `window`, além do `shared` da federação, como reforço (`src/index.ts:312–343`; commit `383fa3d`). Isso só é observável como intenção; os repositórios do shell e dos módulos não fazem parte do snapshot.
-- **Protocolo (busca):** o acerto vem de uma única ocorrência em minúsculas no README (`README.md:14`). A elegibilidade muda de `unknown` (001) para `pass` (002).
-- **Contribuição da revisão independente (Lupa):** concordância integral com Non-MFE, Q1–Q5 No, `library` e zero unidades; sem decisão aberta. O pacote `@fuzzypeanut/sdk` tem sete arquivos e um único arquivo de código (`src/index.ts`): `FPModule` tipa `mount`/`unmount` (`src/index.ts:73–88`), mas é só contrato para o `remoteEntry.js` de cada módulo externo (`README.md:36–45`); o pacote não é esse remoto, não implementa UI nem exporta ciclos de vida de unidade própria, e por isso a exceção MFE-unit não se aplica. O singleton em `window.__fuzzyPeanutSDK` (`src/index.ts:308–343`) é serviço compartilhado, não mecanismo que carregue unidades. Comparável final mais direto: 015 (biblioteca para consumidores MFE, Non-MFE), com este SDK ainda mais estreito, só interfaces e helpers de runtime.
+- **RQ1 (misleading signals):** platform module-contract/types package, with federation vocabulary (`remoteEntry`, “shared singleton”, modules loaded as separate bundles), without any unit or composition configuration.
+- **RQ3:** package resolves cross-bundle state sharing through global variable in `window`, reinforcing federation `shared` (`src/index.ts:312–343`; commit `383fa3d`). This is observable only as intent; shell/module repositories are absent from snapshot.
+- **Protocol (search):** retrieval comes from one lowercase README occurrence (`README.md:14`). Eligibility changes from `unknown` (001) to `pass` (002).
+- **Independent-review contribution (Lupa):** complete agreement with Non-MFE, Q1–Q5 No, `library` and zero units; no open decision. Package `@fuzzypeanut/sdk` has seven files and one code file (`src/index.ts`): `FPModule` types `mount`/`unmount` (`src/index.ts:73–88`), but is only contract for each external module’s `remoteEntry.js` (`README.md:36–45`); package is not that remote, implements no UI or own-unit lifecycle exports, so MFE-unit exception does not apply. Singleton in `window.__fuzzyPeanutSDK` (`src/index.ts:308–343`) is shared service, not unit-loading mechanism. Most direct final comparator: 015 (library for MFE consumers, Non-MFE), with this SDK narrower still, only interfaces and runtime helpers.

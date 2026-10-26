@@ -20,40 +20,40 @@ annotation:
 
 # 052 — sunnywilsonveshapogu/microfrontends-demo
 
-## Contexto
+## Context
 
-- **Abordagem de implementação:** Module Federation (webpack 5)
-- **Tipo de repositório:** example/proof of concept ("Microfrontends Demo - Complete Working Example", `README.md:1`)
+- **Implementation approach:** Module Federation (webpack 5)
+- **Repository type:** example/proof of concept ("Microfrontends Demo - Complete Working Example", `README.md:1`)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | Três apps: `shell/`, `header-mf/` e `products-mf/`, cada uma com `package.json`, `webpack.config.js`, `src/index.js` (`import('./bootstrap')`) e `src/bootstrap.js` | forte |
-| Configuração (host) | `shell/webpack.config.js:23-26`: `name: 'shell'`, `remotes: { headerMf: 'headerMf@http://localhost:3001/remoteEntry.js', productsMf: 'productsMf@http://localhost:3002/remoteEntry.js' }`; porta 3000 (`:7`) | forte |
-| Configuração (remotes) | `header-mf/webpack.config.js:23-26`: `name: 'headerMf'`, `exposes: { './Header' }`; `products-mf/webpack.config.js:23-26`: `name: 'productsMf'`, `exposes: { './Products' }`; `shared` react/react-dom (`:32-39`); portas 3001/3002 | forte |
-| Código-fonte (composição) | `shell/src/App.js:3-17`: `React.lazy(() => import('headerMf/Header'))` e `import('productsMf/Products')` com fallback em erro; `:24-34` monta os dois em `Suspense` na mesma página | forte |
-| Código-fonte | Nenhum import de código-fonte entre as apps (sustenta a independência das unidades) | ausente |
-| Estrutura (lacuna) | `public/index.html` (referenciado em `webpack.config.js:40/46`) não está versionado em nenhuma app; o README pede para "create the project structure" (`README.md:19-20`) (projeto incompleto como está) | ambígua |
-| Build/deploy | Dev servers separados (3000–3002); sem CI/CD | fraca |
-| Documentação | `README.md:3-11`: "3 Working Applications that can run standalone OR together… Bootstrap Pattern" | moderada |
+| Structure | Three apps: `shell/`, `header-mf/` and `products-mf/`, each with `package.json`, `webpack.config.js`, `src/index.js` (`import('./bootstrap')`) and `src/bootstrap.js` | strong |
+| Configuration (host) | `shell/webpack.config.js:23-26`: `name: 'shell'`, `remotes: { headerMf: 'headerMf@http://localhost:3001/remoteEntry.js', productsMf: 'productsMf@http://localhost:3002/remoteEntry.js' }`; port 3000 (`:7`) | strong |
+| Configuration (remotes) | `header-mf/webpack.config.js:23-26`: `name: 'headerMf'`, `exposes: { './Header' }`; `products-mf/webpack.config.js:23-26`: `name: 'productsMf'`, `exposes: { './Products' }`; react/react-dom `shared` (`:32-39`); ports 3001/3002 | strong |
+| Source code (composition) | `shell/src/App.js:3-17`: `React.lazy(() => import('headerMf/Header'))` and `import('productsMf/Products')` with fallback on error; `:24-34` mounts both in `Suspense` on the same page | strong |
+| Source code | No source code imports between apps (supports the units' independence) | absent |
+| Structure (gap) | `public/index.html` (referenced in `webpack.config.js:40/46`) is not tracked in any app; the README asks users to "create the project structure" (`README.md:19-20`) (project incomplete as it stands) | ambiguous |
+| Build/deploy | Separate dev servers (3000–3002); no CI/CD | weak |
+| Documentation | `README.md:3-11`: "3 Working Applications that can run standalone OR together… Bootstrap Pattern" | moderate |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | `shell`, `header-mf` e `products-mf` |
-| Q2 | Yes | `webpack.config.js`, entry e porta próprios; sem import de código-fonte entre as apps |
-| Q3 | Yes | O shell monta Header e Products na mesma página (`App.js:24-34`) |
-| Q4 | Yes | `remotes`/`exposes` configurados e usados via `import('<remote>/<Module>')` (`App.js:5,13`) |
-| Q5 | Yes | Q1–Q4 convergem; a ausência de `public/index.html` não afeta a configuração de composição |
+| Q1 | Yes | `shell`, `header-mf` and `products-mf` |
+| Q2 | Yes | Their own `webpack.config.js`, entry and port; no source code imports between apps |
+| Q3 | Yes | The shell mounts Header and Products on the same page (`App.js:24-34`) |
+| Q4 | Yes | `remotes`/`exposes` configured and used through `import('<remote>/<Module>')` (`App.js:5,13`) |
+| Q5 | Yes | Q1–Q4 converge; the absence of `public/index.html` does not affect composition configuration |
 
-## Motivo
+## Rationale
 
-- Q1–Q5 são todos Yes, o que satisfaz a regra de MFE-implemented.
-- Corresponde a "monorepos containing a host and its remotes" e a "examples… that actually compose frontend units".
+- Q1–Q5 are all Yes, satisfying the MFE-implemented rule.
+- Matches "monorepos containing a host and its remotes" and "examples… that actually compose frontend units".
 
-## Notas para análise
+## Analysis notes
 
-- **Composição por componente** (Header + Products numa página), não por rota; fallback por remote em caso de erro de carga (`App.js:5-7,13-15`).
-- **Protocolo (completude):** os templates HTML não estão versionados; o build exige criá-los. Registrar se a análise considerar "executabilidade" do snapshot.
+- **Component-based composition** (Header + Products on one page), not route-based; per-remote fallback on loading error (`App.js:5-7,13-15`).
+- **Protocol (completeness):** HTML templates are not tracked; the build requires creating them. Record this if analysis considers snapshot "executability".

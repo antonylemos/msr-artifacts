@@ -20,30 +20,30 @@ annotation:
 
 # 065 — kbikash845/portfollio
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** production-oriented (site de portfólio pessoal, deploy na Vercel)
+- **Repository type:** production-oriented (personal portfolio site, deployed on Vercel)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Tecnologia | `package.json`: React 19, Vite, Tailwind, Framer Motion; nenhuma dependência de MFE | ausente |
-| Configuração | `vite.config.js:8-20`: plugin local para variáveis de analytics, `react()` e `tailwindcss()`; sem federação | ausente |
-| Código-fonte | `src/main.jsx:6`: um único `createRoot`; seções (`src/sections/{Hero,About,Experience,Projects,Writing,Contact}.jsx`) importadas por `App.jsx` | contrária |
-| Documentação (conteúdo) | `README.md:23`, `ABOUT.md:23`, `src/sections/Projects.jsx:14-26` e `src/sections/Experience.jsx:12,24`: "Large-Scale Micro-Frontend Operations Platform" e "Micro-frontends" como projeto e experiência profissional do autor (em outra empresa, fora do repositório) | contexto |
+| Technology | `package.json`: React 19, Vite, Tailwind, Framer Motion; no MFE dependency | absent |
+| Configuration | `vite.config.js:8-20`: local analytics-variable plugin, `react()` and `tailwindcss()`; no federation | absent |
+| Source code | `src/main.jsx:6`: a single `createRoot`; sections (`src/sections/{Hero,About,Experience,Projects,Writing,Contact}.jsx`) imported by `App.jsx` | contrary |
+| Documentation (content) | `README.md:23`, `ABOUT.md:23`, `src/sections/Projects.jsx:14-26` and `src/sections/Experience.jsx:12,24`: "Large-Scale Micro-Frontend Operations Platform" and "Micro-frontends" as the author's project and professional experience (at another company, outside the repository) | context |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend (`src/main.jsx:6`) |
-| Q2 | No | Não há unidades a comparar |
-| Q3 | No | Não há host, shell nem root config |
-| Q4 | No | Nenhum mecanismo de composição |
-| Q5 | No | Q1–Q4 convergem |
+| Q1 | No | A single frontend unit (`src/main.jsx:6`) |
+| Q2 | No | No units to compare |
+| Q3 | No | No host, shell or root config |
+| Q4 | No | No composition mechanism |
+| Q5 | No | Q1–Q4 converge |
 
-## Motivo
+## Rationale
 
-- É um site de portfólio React monolítico; "micro-frontend" aparece como conteúdo do currículo do autor.
-- Corresponde a "conventional frontend monoliths" e a "repositories mentioning micro-frontends without implementing them". Mesmo padrão do repositório 032 (termo também dentro de arquivos `.jsx`, como texto).
+- This is a monolithic React portfolio site; "micro-frontend" appears as content from the author's résumé.
+- Matches "conventional frontend monoliths" and "repositories mentioning micro-frontends without implementing them". Same pattern as repository 032 (term also inside `.jsx` files, as text).

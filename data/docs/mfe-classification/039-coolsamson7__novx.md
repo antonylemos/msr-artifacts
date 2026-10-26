@@ -20,49 +20,49 @@ annotation:
 
 # 039 — coolsamson7/novx
 
-## Contexto
+## Context
 
-- **Abordagem de implementação:** Module Federation (webpack 5) orquestrado pelo framework `@novx/portal` (features por manifesto, outlets com carga remota)
-- **Tipo de repositório:** biblioteca/framework com app de referência (monorepo Nx com libs publicadas `@novx/{core,i18n,communication,portal}` e os apps `app` e `microfrontend`)
-- **Classificação:** MFE-implemented (framework com app de referência; regra confirmada pelos pesquisadores)
+- **Implementation approach:** Module Federation (webpack 5) orchestrated by framework `@novx/portal` (manifest-based features, outlets with remote loading)
+- **Repository type:** library/framework with a reference app (Nx monorepo with published libraries `@novx/{core,i18n,communication,portal}` and apps `app` and `microfrontend`)
+- **Classification:** MFE-implemented (framework with a reference app; rule confirmed by the researchers)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Documentação | `README.md:9-14`: monorepo de pacotes, entre eles "[portal] a react microfrontend framework"; `libs/portal/README.md:1-15`: "a react portal framework supporting microfrontends… feature outlets that cover both local and federated components" | fraca |
-| Estrutura | `libs/` (`core`, `i18n`, `communication`, `portal`, publicados no npm, `libs/portal/package.json:2-3,57`) e dois apps: `apps/app` (shell) e `apps/microfrontend` (remote), cada um com `project.json`, `webpack.config.js`, `src/main.tsx` | forte |
-| Configuração (host) | `apps/app/webpack.config.js:78-91`: `ModuleFederationPlugin` com `name: "app"`, `remotes: { microfrontend: "microfrontend@http://localhost:3001/remoteEntry.js" }`, `shared` singletons (react, react-router-dom, `@novx/*` em `foundationShared`, `:6-11`) | forte |
-| Configuração (remote) | `apps/microfrontend/webpack.config.js:53-67`: `name: 'microfrontend'`, `exposes: { './Module', './MicrofrontendFeature' }`, mesmos singletons | forte |
-| Configuração (runtime) | `apps/app/src/environments/environments.ts:2-10`: `deployment: "microfrontend"` com `remotes: [{ name: 'microfrontend', url: 'http://localhost:3001' }]`; `apps/microfrontend/public/manifest.json:1-28`: módulo `microfrontend` com a feature `/microfrontend/feature` (componente `MicrofrontendFeature`); `apps/app/src/manifest.json:1-5`: manifesto do `shell` | forte |
-| Código-fonte (framework) | `libs/portal/src/lib/outlet-loader/remote-component-loader.ts:28-66`: `loadRemoteEntry`/`loadRemoteModule` com `__webpack_init_sharing__` e carga de `${url}/remoteEntry.js`; `:95-140`: as feature outlets carregam o componente remoto pelo `feature.module`/`feature.component` do manifesto | forte |
-| Código-fonte (app) | `apps/app/src/app/App.tsx:4,18-20`: o shell usa `DeploymentManager`/`RouterManager` do portal para montar as features (locais e remotas) | forte |
-| Código-fonte | Nenhum import de código-fonte de `apps/microfrontend` em `apps/app` (sustenta a independência das unidades) | ausente |
-| Build/deploy | `apps/microfrontend/project.json:11-27`: target Nx próprio (scan de metadata gera o manifesto + build webpack) | moderada |
-| Estrutura (ruído) | `apps.zip`, `error.log` e `PUBLISH.TXT` versionados | contexto |
+| Documentation | `README.md:9-14`: package monorepo, including "[portal] a react microfrontend framework"; `libs/portal/README.md:1-15`: "a react portal framework supporting microfrontends… feature outlets that cover both local and federated components" | weak |
+| Structure | `libs/` (`core`, `i18n`, `communication`, `portal`, published on npm, `libs/portal/package.json:2-3,57`) and two apps: `apps/app` (shell) and `apps/microfrontend` (remote), each with `project.json`, `webpack.config.js`, `src/main.tsx` | strong |
+| Configuration (host) | `apps/app/webpack.config.js:78-91`: `ModuleFederationPlugin` with `name: "app"`, `remotes: { microfrontend: "microfrontend@http://localhost:3001/remoteEntry.js" }`, singleton `shared` (react, react-router-dom, `@novx/*` in `foundationShared`, `:6-11`) | strong |
+| Configuration (remote) | `apps/microfrontend/webpack.config.js:53-67`: `name: 'microfrontend'`, `exposes: { './Module', './MicrofrontendFeature' }`, same singletons | strong |
+| Configuration (runtime) | `apps/app/src/environments/environments.ts:2-10`: `deployment: "microfrontend"` with `remotes: [{ name: 'microfrontend', url: 'http://localhost:3001' }]`; `apps/microfrontend/public/manifest.json:1-28`: `microfrontend` module with feature `/microfrontend/feature` (component `MicrofrontendFeature`); `apps/app/src/manifest.json:1-5`: `shell` manifest | strong |
+| Source code (framework) | `libs/portal/src/lib/outlet-loader/remote-component-loader.ts:28-66`: `loadRemoteEntry`/`loadRemoteModule` with `__webpack_init_sharing__` and loading of `${url}/remoteEntry.js`; `:95-140`: feature outlets load the remote component through the manifest's `feature.module`/`feature.component` | strong |
+| Source code (app) | `apps/app/src/app/App.tsx:4,18-20`: the shell uses the portal's `DeploymentManager`/`RouterManager` to mount features (local and remote) | strong |
+| Source code | No source code imports from `apps/microfrontend` in `apps/app` (supports the units' independence) | absent |
+| Build/deploy | `apps/microfrontend/project.json:11-27`: its own Nx target (metadata scanning generates the manifest + webpack build) | moderate |
+| Structure (noise) | Tracked `apps.zip`, `error.log` and `PUBLISH.TXT` | context |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | `apps/app` (shell) e `apps/microfrontend` (remote) |
-| Q2 | Yes | `webpack.config.js`, entry e target Nx próprios; sem import de código-fonte entre os apps (as libs `@novx/*` entram como `shared` singleton) |
-| Q3 | Yes | O shell carrega e roteia a feature remota via manifesto (`environments.ts:6-10`, `remote-component-loader.ts:95-140`) |
-| Q4 | Yes | MF configurado nos dois lados e usado em runtime pelo loader do framework |
-| Q5 | Yes | Q1–Q4 convergem para o app de referência |
+| Q1 | Yes | `apps/app` (shell) and `apps/microfrontend` (remote) |
+| Q2 | Yes | Their own `webpack.config.js`, entry and Nx target; no source code imports between apps (libraries `@novx/*` participate as singleton `shared`) |
+| Q3 | Yes | The shell loads and routes the remote feature through a manifest (`environments.ts:6-10`, `remote-component-loader.ts:95-140`) |
+| Q4 | Yes | MF configured on both sides and used at runtime by the framework loader |
+| Q5 | Yes | Q1–Q4 converge for the reference app |
 
-## Motivo
+## Rationale
 
-- Q1–Q5 são todos Yes para o par `app` + `microfrontend`, o que satisfaz a regra de MFE-implemented.
-- O checklist lista "MFE frameworks and libraries (e.g., single-spa itself…)" como Non-MFE, mas também inclui "examples… that actually compose frontend units". Aqui, além do framework, há um app de referência que compõe de fato um shell e um remote, com config, manifesto e carga em runtime.
+- Q1–Q5 are all Yes for the `app` + `microfrontend` pair, satisfying the MFE-implemented rule.
+- The checklist lists "MFE frameworks and libraries (e.g., single-spa itself…)" as Non-MFE, but also includes "examples… that actually compose frontend units". Here, in addition to the framework, a reference app actually composes a shell and remote, with config, manifest and runtime loading.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** framework de portal próprio sobre MF, com manifestos de features (`manifest.json`) gerados por scan de metadata, uma camada de abstração acima do MF.
-- **RQ3:** relação shell → remote mediada por manifesto + configuração de deployment (`environments.ts`), não só pelo `remotes` do webpack.
+- **RQ2:** a custom portal framework over MF, with feature manifests (`manifest.json`) generated through metadata scanning, an abstraction layer above MF.
+- **RQ3:** shell → remote relationship mediated by manifest + deployment configuration (`environments.ts`), not only webpack `remotes`.
 
-## Ponto para revisão conjunta
+## Point for joint review
 
-- **Framework + app de referência:** se a regra "MFE frameworks and libraries" for aplicada ao repositório como um todo, o caso passa a Non-MFE. Proposta de regra: "repositório de framework conta como MFE-implemented quando contém um app de referência que compõe unidades de fato; o framework sem app de composição é Non-MFE". Isso diferenciaria este caso do repositório do single-spa, por exemplo.
-- Na mineração de artefatos, o framework (`libs/portal`) é o mecanismo de composição; o app de referência é a instância.
-- **Decisão dos pesquisadores:** regra aceita. Repositório de framework com app de referência que compõe unidades de fato é MFE-implemented; framework sem app de composição é Non-MFE.
+- **Framework + reference app:** if the "MFE frameworks and libraries" rule is applied to the repository as a whole, the case becomes Non-MFE. Proposed rule: "a framework repository counts as MFE-implemented when it contains a reference app that actually composes units; the framework without a composition app is Non-MFE". This would distinguish this case from the single-spa repository, for example.
+- In artifact mining, the framework (`libs/portal`) is the composition mechanism; the reference app is the instance.
+- **Researchers' decision:** rule accepted. A framework repository with a reference app that actually composes units is MFE-implemented; a framework without a composition app is Non-MFE.

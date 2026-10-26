@@ -20,71 +20,71 @@ annotation:
 
 # 224 — Nitinkumar0000072/Assignment-2
 
-## Contexto
+## Context
 
-Site WordPress (Playground + SQLite) de trabalho de disciplina, versionado em `wp-content/` e exportado como site estático para o GitHub Pages pela CLI `wp-pwa`. A infraestrutura vem do template `cd-wordpress` da organização `diy-pwa` (`README.md:1–15`; `package.json:2–10`; `.github/workflows/main.yml:28–32`; `LICENSE.txt:3`). O README herdado do template declara a intenção de ser “a consumer of microfrontends” e aponta um exemplo externo de PayPal (`README.md:13–15`). O site não carrega nenhum microfrontend. O nome do repositório não é usado como evidência.
+Coursework WordPress site (Playground + SQLite), versioned in `wp-content/` and exported as static site to GitHub Pages through CLI `wp-pwa`. Infrastructure comes from template `cd-wordpress` of organization `diy-pwa` (`README.md:1–15`; `package.json:2–10`; `.github/workflows/main.yml:28–32`; `LICENSE.txt:3`). Template-inherited README declares intent to be “a consumer of microfrontends” and points to external PayPal example (`README.md:13–15`). Site loads no microfrontend. Repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:225` registra rank 224, ID 1186686612, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Para inspecionar o banco, o blob `wp-content/database/.ht.sqlite` foi copiado para um diretório temporário fora de `data/`, consultado com `sqlite3 -readonly` e apagado. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:225` records rank 224, ID 1186686612, status `cloned`, branch `main` and front-matter commit, which is clone HEAD and `origin/main`. Every clone Git command used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. For database inspection, blob `wp-content/database/.ht.sqlite` was copied to temporary directory outside `data/`, queried with `sqlite3 -readonly` and deleted. No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:225` registra a estratégia `terminology` e elegibilidade `unknown`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:26801` e `data/discovery/mfe-round-002/candidates.csv:26808`, ambos com `unknown`.
+`data/samples/mfe-sample-001/sample.csv:225` records strategy `terminology` and eligibility `unknown`. Sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). ID appears in `data/discovery/mfe-round-001/candidates.csv:26801` and `data/discovery/mfe-round-002/candidates.csv:26808`, both with `unknown`.
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2026-03` e `path` vazio:
+`sqlite3 -readonly` query of tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns same two hits in each round, at endpoint `repositories`, with subquery `…#created:2026-03` and empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | 2026-10-07T20:15:07.163Z / 2026-10-08T15:41:30.708Z |
 | `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | 2026-10-07T22:11:29.411Z / 2026-10-08T15:49:16.695Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2026-03-01..2026-03-31`.
+Effective queries append `pushed:>=2025-04-01 created:2026-03-01..2026-03-31`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem PHP, `fork: false`, tamanho 24.875;
-- criação em 2026-03-19T22:16:06Z, push em 2026-03-24T00:43:24Z.
+Hit metadata:
+- null description, no topics, PHP language, `fork: false`, size 24.875;
+- creation at 2026-03-19T22:16:06Z, push at 2026-03-24T00:43:24Z.
 
-Sem descrição, o acerto vem de `README.md:13`, que traz as duas grafias: “The idea of this is as a consumer of microfrontends. There is an example microfrontend for [paypal standard](…)”.
+Without description, retrieval comes from `README.md:13`, with both spellings: “The idea of this is as a consumer of microfrontends. There is an example microfrontend for [paypal standard](…)”.
 
-A última alteração do README é o próprio SHA, `577efe1` (2026-03-19), que só acrescenta `# Assignment-2` (`README.md:16`). Isso é anterior às coletas de outubro de 2026, e o README do SHA não é posterior às buscas.
+Last README change is SHA itself, `577efe1` (2026-03-19), adding only `# Assignment-2` (`README.md:16`). This predates October 2026 collections, and README at the SHA is not later than searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 1.175 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Na raiz há 6 arquivos do template (`README.md`, `package.json`, `LICENSE.txt`, `.gitignore`, `.github/workflows/main.yml`, `.devcontainer/devcontainer.json`). Os outros 1.169 estão em `wp-content/`: temas `twentytwentyfive`, `twentytwentyfour`, `twentytwentythree` e `wpico`; plugins `akismet`, `ecommerce-product-catalog` e `tiny-gtag-js-analytics`; mu-plugins do Playground; uploads; e o banco `wp-content/database/.ht.sqlite`. | contexto |
-| Configuração / Build/deploy | `package.json:2–10`: só `wp-pwa: latest` e scripts `wp-pwa dev/build/preview`. `.github/workflows/main.yml:28–32`: `diy-pwa/npm-build-2-gh-pages@v1.11`. Não há configuração de host, remote, import map ou carregamento de outra unidade. | contrária |
-| Conteúdo (banco) | Na cópia temporária do banco, `wp_options` tem `template`/`stylesheet` = `twentytwentyfour`, `active_plugins` = `a:0:{}`, `blogname` “assignment 3” e `siteurl` `http://localhost:8000`. Publicados: as páginas “Sample Page”, “About / Experience” e “Why Drivers Choose Velaré”, o post “Hello world!”, uma navegação e um template “Blog Home”. A busca de bytes no banco por `microfrontend`, `paypal`, `<script`, `customElements`, `type="module"`, `github.io`, `wp:html` e `<x-` não retorna nada. `<iframe` aparece 2 vezes, na página “Why Drivers Choose Velaré” (ID 19) e na sua revisão: um embed de vídeo do YouTube. | contrária |
-| Documentação | `README.md:13–15`: intenção de consumir microfrontends e link para um exemplo externo, texto do template (`LICENSE.txt:3`, “Copyright (c) 2024 diy-pwa”). Nada no repositório configura esse consumo. | fraca |
-| Busca | `git grep -i` no SHA (exceto o banco) por `micro.?front`: só `README.md:13`. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 1.175 entries, all regular files `100644`; zero symlinks and zero gitlinks. Root has 6 template files (`README.md`, `package.json`, `LICENSE.txt`, `.gitignore`, `.github/workflows/main.yml`, `.devcontainer/devcontainer.json`). Other 1.169 are in `wp-content/`: themes `twentytwentyfive`, `twentytwentyfour`, `twentytwentythree` and `wpico`; plugins `akismet`, `ecommerce-product-catalog` and `tiny-gtag-js-analytics`; Playground mu-plugins; uploads; database `wp-content/database/.ht.sqlite`. | context |
+| Configuration / Build/deploy | `package.json:2–10`: only `wp-pwa: latest` and scripts `wp-pwa dev/build/preview`. `.github/workflows/main.yml:28–32`: `diy-pwa/npm-build-2-gh-pages@v1.11`. No host, remote, import-map or other-unit loading configuration exists. | contrary |
+| Content (database) | In temporary database copy, `wp_options` has `template`/`stylesheet` = `twentytwentyfour`, `active_plugins` = `a:0:{}`, `blogname` “assignment 3” and `siteurl` `http://localhost:8000`. Published: pages “Sample Page”, “About / Experience” and “Why Drivers Choose Velaré”, post “Hello world!”, navigation and “Blog Home” template. Database byte search for `microfrontend`, `paypal`, `<script`, `customElements`, `type="module"`, `github.io`, `wp:html` and `<x-` returns nothing. `<iframe` appears 2 times, in “Why Drivers Choose Velaré” page (ID 19) and revision: YouTube video embed. | contrary |
+| Documentation | `README.md:13–15`: intent to consume microfrontends and external-example link, template text (`LICENSE.txt:3`, “Copyright (c) 2024 diy-pwa”). Nothing in repository configures this consumption. | weak |
+| Search | `git grep -i` at the SHA (except database) for `micro.?front`: only `README.md:13`. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 3 commits em todos os refs, nenhum merge.
-- **Raiz:** `9c37724` (2026-03-19, “Initial commit”, Arsh Khandpur `<arshkhandpur@gmail.com>`) já adiciona os 1.175 arquivos (template e `wp-content/`).
-- **SHA:** `577efe1` (2026-03-19, “first commit”, mesmo autor) só altera o README.
-- **gh-pages:** `3256488` (“deploy: 577efe1…”, do titular `Nitinkumar0000072`, noreply) é a saída estática publicada e não foi considerada.
+Non-shallow clone; 3 commits across all refs, no merge.
+- **Root:** `9c37724` (2026-03-19, “Initial commit”, Arsh Khandpur `<arshkhandpur@gmail.com>`) already adds 1.175 files (template and `wp-content/`).
+- **SHA:** `577efe1` (2026-03-19, “first commit”, same author) changes only README.
+- **gh-pages:** `3256488` (“deploy: 577efe1…”, by owner `Nitinkumar0000072`, noreply) is published static output and was not considered.
 
-O autor dos commits de conteúdo é diferente do titular da conta. Nenhum blob histórico foi lido e não houve objeto ausente.
+Content-commit author differs from account owner. No historical blob was read and no object was missing.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Um único site WordPress; nenhuma configuração ou conteúdo referencia unidade frontend externa (busca no banco registrada). O exemplo PayPal só aparece como link no README. |
-| Q2 | No | Não há segunda unidade cuja independência possa ser avaliada. |
-| Q3 | No | O site não carrega, monta nem roteia outra unidade. O único iframe é um vídeo do YouTube embutido no conteúdo de uma página. |
-| Q4 | No | Nenhum mecanismo de composição configurado ou usado (`package.json:2–10`; banco sem scripts ou elementos externos). |
-| Q5 | No | Q1–Q4 são No: site WordPress de exercício cujo README de template só declara a intenção. |
+| Q1 | No | One WordPress site; no configuration or content references external frontend unit (recorded database search). PayPal example appears only as README link. |
+| Q2 | No | No second unit exists whose independence could be evaluated. |
+| Q3 | No | Site does not load, mount or route another unit. Sole iframe is YouTube video embedded in page content. |
+| Q4 | No | No composition mechanism configured or used (`package.json:2–10`; database without external scripts or elements). |
+| Q5 | No | Q1–Q4 are No: exercise WordPress site whose template README only declares intent. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “repositories mentioning micro-frontends without implementing them”.
-- É o mesmo perfil dos rascunhos 160 e 206 e de 119/125 (`cd-wordpress`/`wp-pwa`, Non-MFE). Difere de 049 (`MFE-implemented`/review), cujo banco continha `<script type="module">` e um custom element servidos por outra origem.
-- O embed do YouTube é conteúdo de terceiros, não unidade frontend do estudo, por isso não depende da decisão aberta sobre composição por iframe. O texto do README vem do template, um caso de gerador como 075/081/094/105.
-- `repo_type: example`, `ui_technologies: [wordpress]`, `build_tools: []` (a CLI `wp-pwa` encapsula o build), `frontend_units: 1`, `unit_organization: single-unit`.
-- Não há decisão aberta.
+- `Non-MFE` under rule “at least one question is No”. Matches “repositories mentioning micro-frontends without implementing them”.
+- Same profile as drafts 160 and 206 and 119/125 (`cd-wordpress`/`wp-pwa`, Non-MFE). Differs from 049 (`MFE-implemented`/review), whose database contained `<script type="module">` and a custom element served from another origin.
+- YouTube embed is third-party content, not study frontend unit, so case does not depend on open iframe-composition decision. README text comes from template, a generator case as 075/081/094/105.
+- `repo_type: example`, `ui_technologies: [wordpress]`, `build_tools: []` (CLI `wp-pwa` encapsulates build), `frontend_units: 1`, `unit_organization: single-unit`.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** mais um README do template `cd-wordpress` com “consumer of microfrontends” em repositório de aluno.
-- **Protocolo (busca):** as duas grafias buscadas estão literalmente em `README.md:13`. Elegibilidade `unknown` nas duas rodadas; o repositório entrou na amostra com `unknown`.
+- **RQ1 (misleading signals):** another template `cd-wordpress` README with “consumer of microfrontends” in student repository.
+- **Protocol (search):** both searched spellings are literally in `README.md:13`. Eligibility `unknown` in both rounds; repository entered sample with `unknown`.

@@ -13,23 +13,23 @@ annotation:
 
 # 228 — Christian-Encalada/examen-microfrontend
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem um único commit, o próprio snapshot: `9456a39` (2026-02-03, "Initialize microfrontend architecture for academic alert system with Module Federation. Added host application and microfrontends (AlertSender and AlertDashboard) with necessary configurations, dependencies, and basic structure. Included Babel, TypeScript, and Rspack configurations, along with README documentation for setup and usage instructions."). Esse commit adiciona os 42 arquivos do repositório de uma vez: o host na raiz (`package.json`, `rspack.config.ts`, `module-federation.config.ts`, `src/`, incluindo `src/types/federation.d.ts`), os dois remotes `alert-sender/` e `alert-dashboard/`, os tipos gerados em `@mf-types/` e o `README.md`. Tudo o que está no snapshot é, portanto, primeira presença observável nesse commit; o histórico não mostra introdução de nenhum artefato em separado, nem onde o código foi feito antes.
+History up to snapshot has a single commit, snapshot itself: `9456a39` (2026-02-03, "Initialize microfrontend architecture for academic alert system with Module Federation. Added host application and microfrontends (AlertSender and AlertDashboard) with necessary configurations, dependencies, and basic structure. Included Babel, TypeScript, and Rspack configurations, along with README documentation for setup and usage instructions."). This commit adds all 42 repository files at once: root host (`package.json`, `rspack.config.ts`, `module-federation.config.ts`, `src/`, including `src/types/federation.d.ts`), both remotes `alert-sender/` and `alert-dashboard/`, generated types in `@mf-types/` and `README.md`. Everything in snapshot therefore has first observable presence in this commit; history shows no separate artifact introduction or where code was developed before.
 
-Pontos levantados: da 3.4.4, o `declare module "Footer/Footer"` de `src/types/federation.d.ts`, que a revisão de código-fonte marca como `none` e anota como provável resto de outro projeto, sem remote `Footer` na configuração do host; a 3.4.5 retoma o mesmo arquivo na Leitura. A 3.4.2 não tem dependência sem uso (as três declarações de `@module-federation/enhanced` são `Yes`), a 3.4.3 não tem unidade `Undetermined`, a 3.4.4 não tem outra construção inativa, comentada ou `Undetermined` (as quatro linhas de `@mf-types/` são declarações de tipo geradas, `none`), a 3.4.5 não tem relação `Undetermined`, a 3.4.6 não tem deploy `Undetermined` e a 3.4.7 não tem afirmação `parcial` nem `contradita`. O snapshot não resolve o ponto.
+Raised points: from 3.4.4, `declare module "Footer/Footer"` in `src/types/federation.d.ts`, marked `none` by source review and noted as probable remnant of another project, without remote `Footer` in host configuration; 3.4.5 revisits same file in Overview. 3.4.2 has no unused dependency (three declarations of `@module-federation/enhanced` are `Yes`), 3.4.3 has no `Undetermined` unit, 3.4.4 has no other inactive, commented-out or `Undetermined` construct (four `@mf-types/` rows are generated type declarations, `none`), 3.4.5 has no `Undetermined` relationship, 3.4.6 has no `Undetermined` deploy and 3.4.7 has no `partial` or `contradicted` claim. Snapshot does not resolve point.
 
-## Pontos
+## Points
 
-| # | Ponto | Origem | Pergunta | Commits | Resultado |
+| # | Point | Origin | Question | Commits | Result |
 |---|---|---|---|---|---|
-| 1 | `src/types/federation.d.ts` declara o módulo `Footer/Footer` com `mount(el: HTMLElement)`, mas não há remote `Footer` na configuração do host nem import desse módulo | 3.4.4 (src/types/federation.d.ts:2); 3.4.5 (Leitura) | ativo ou abandonado | 9456a39 2026-02-03 Initialize microfrontend architecture for academic alert system with Module Federation. | inconclusivo |
+| 1 | `src/types/federation.d.ts` declares module `Footer/Footer` with `mount(el: HTMLElement)`, but host configuration has no remote `Footer` or import of this module | 3.4.4 (src/types/federation.d.ts:2); 3.4.5 (Overview) | active or abandoned | 9456a39 2026-02-03 Initialize microfrontend architecture for academic alert system with Module Federation. | inconclusive |
 
-## Observações
+## Observations
 
-**1. `Footer/Footer` declarado sem remote.** O histórico mostra só que `src/types/federation.d.ts` já está no único commit, `9456a39`, junto com todo o resto do repositório, e não muda até o snapshot, que é esse mesmo commit. Não há versão anterior em que um remote `Footer` estivesse configurado no host, nem commit que remova um remote ou uma unidade com esse nome. O histórico não mostra de onde a declaração veio nem se houve, antes do primeiro commit, um `Footer` planejado ou usado. A mensagem anuncia a criação do host e dos dois micro-frontends AlertSender e AlertDashboard, sem mencionar um Footer. Inconclusivo: o histórico não distingue entre resto copiado de outro projeto e remote planejado e nunca conectado.
+**1. `Footer/Footer` declared without remote.** History shows only that `src/types/federation.d.ts` already exists in sole commit `9456a39`, together with rest of repository, and does not change up to snapshot, that same commit. There is no earlier version with remote `Footer` configured in host, or commit removing a remote or unit with that name. History does not show declaration source or whether a `Footer` was planned or used before first commit. Message announces creation of host and two micro-frontends AlertSender and AlertDashboard without mentioning Footer. Inconclusive: history does not distinguish a remnant copied from another project from a planned remote never connected.
 
-## Comandos
+## Commands
 
 ```
 docs/mfe-history-review/tools/hist.sh Christian-Encalada__examen-microfrontend rev-list --count 9456a399b086d78c65d167e0d08db5d2b8d31bb8
@@ -39,6 +39,6 @@ docs/mfe-history-review/tools/hist.sh Christian-Encalada__examen-microfrontend s
 docs/mfe-history-review/tools/hist.sh Christian-Encalada__examen-microfrontend show --name-status --format= 9456a399b086d78c65d167e0d08db5d2b8d31bb8
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 1 (2026-02-03 a 2026-02-03). Pontos: 1 (esclarecido: 0, inconclusivo: 1, resolvido pelo snapshot: 0).
+Commits up to the snapshot: 1 (2026-02-03 to 2026-02-03). Points: 1 (clarified: 0, inconclusive: 1, resolved by the snapshot: 0).

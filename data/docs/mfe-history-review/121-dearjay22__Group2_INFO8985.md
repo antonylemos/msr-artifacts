@@ -13,26 +13,26 @@ annotation:
 
 # 121 — dearjay22/Group2_INFO8985
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem 56 commits, 16 deles merges, de 2025-12-02 a 2025-12-08: de `095fa12` (2025-12-02, "Initial commit") a `9f8b0b7` (2025-12-08, "Revise README for Microservices E‑Commerce Project"), o snapshot. As duas aplicações frontend são introduzidas juntas em `ebce825` (2025-12-02, "Added Microfrontend App"), que cria todos os arquivos de `frontend/shell-app` e `frontend/products-mf`, inclusive os `App.js` e o `ProductList.js`; antes disso, `d32ef49` (2025-12-02, "add readme") cria um arquivo chamado `frontend`, removido em `54317c8` (2025-12-02, "updated folder strcuture"). Depois vêm os Dockerfiles em `b3e4f84` (2025-12-05, "updated the front end part with docker file and all the required data"), os `nginx.conf` em `5c59071` (2025-12-06), o `products.json` em `3b6d2f0` (2025-12-07, "Fix product endpoint") e a última mudança no frontend em `9f51b10` (2025-12-07, "Update package").
+History up to snapshot has 56 commits, 16 merges, from 2025-12-02 to 2025-12-08: from `095fa12` (2025-12-02, "Initial commit") to snapshot `9f8b0b7` (2025-12-08, "Revise README for Microservices E‑Commerce Project"). Both frontend applications are introduced together in `ebce825` (2025-12-02, "Added Microfrontend App"), creating all files in `frontend/shell-app` and `frontend/products-mf`, including `App.js` files and `ProductList.js`; previously, `d32ef49` (2025-12-02, "add readme") creates a file named `frontend`, removed in `54317c8` (2025-12-02, "updated folder strcuture"). Next come Dockerfiles in `b3e4f84` (2025-12-05, "updated the front end part with docker file and all the required data"), `nginx.conf` files in `5c59071` (2025-12-06), `products.json` in `3b6d2f0` (2025-12-07, "Fix product endpoint") and last frontend change in `9f51b10` (2025-12-07, "Update package").
 
-O clone não tem o conteúdo das versões antigas dos arquivos consultados: todas as leituras de `App.js`, `ProductList.js` e `docker-compose.yml` em commits anteriores falharam por objeto ausente. Para os pontos abaixo há só as mensagens, as listas de arquivos por commit e os identificadores dos objetos. Nenhum ponto foi resolvido pelo próprio snapshot.
+Clone lacks contents of old versions of queried files: every reading of `App.js`, `ProductList.js` and `docker-compose.yml` at earlier commits failed with missing objects. Points below have only messages, file lists per commit and object identifiers. No point was resolved by snapshot itself.
 
-## Pontos
+## Points
 
-| # | Ponto | Origem | Pergunta | Commits | Resultado |
+| # | Point | Origin | Question | Commits | Result |
 |---|---|---|---|---|---|
-| 1 | O iframe do shell aponta para a porta 3001, que só pelo Compose liga ao products-mf, e o comentário logo acima diz que a URL é a do API Gateway na porta 8080 | 3.4.5 #1; 3.4.7 #5 | estágios em conflito | ebce825 2025-12-02 Added Microfrontend App; b3e4f84 2025-12-05 updated the front end part with docker file and all the required data; 20fcc0c 2025-12-06 updated; 3b6d2f0 2025-12-07 Fix product endpoint; 15495fb 2025-12-07 Added K6 | inconclusivo |
-| 2 | O README diz que os microfrontends funcionam com os backends, mas o products-mf usa um `products.json` local, e o `ProductList.js`, que chamaria o gateway, não é importado | 3.4.7 #4 | ativo ou abandonado | ebce825 2025-12-02 Added Microfrontend App; 20fcc0c 2025-12-06 updated; 3b6d2f0 2025-12-07 Fix product endpoint; 9f51b10 2025-12-07 Update package | inconclusivo |
+| 1 | Shell iframe points to port 3001, linked to products-mf only through Compose, and comment immediately above says URL is API Gateway at port 8080 | 3.4.5 #1; 3.4.7 #5 | conflicting stages | ebce825 2025-12-02 Added Microfrontend App; b3e4f84 2025-12-05 updated the front end part with docker file and all the required data; 20fcc0c 2025-12-06 updated; 3b6d2f0 2025-12-07 Fix product endpoint; 15495fb 2025-12-07 Added K6 | inconclusive |
+| 2 | README says microfrontends work with backends, but products-mf uses local `products.json`, and `ProductList.js`, which would call gateway, is not imported | 3.4.7 #4 | active or abandoned | ebce825 2025-12-02 Added Microfrontend App; 20fcc0c 2025-12-06 updated; 3b6d2f0 2025-12-07 Fix product endpoint; 9f51b10 2025-12-07 Update package | inconclusive |
 
-## Observações
+## Observations
 
-**1. O iframe do shell aponta para a porta 3001, que só pelo Compose liga ao products-mf, e o comentário logo acima diz que a URL é a do API Gateway na porta 8080.** O `frontend/shell-app/src/App.js` é criado em `ebce825` e muda em `b3e4f84`, `20fcc0c` e `3b6d2f0`; o objeto de `3b6d2f0` é o mesmo do snapshot, então o comentário da porta 8080 e a URL com a porta 3001 estão juntos ao menos desde esse commit. As versões de `ebce825`, `b3e4f84` e `20fcc0c` não estão disponíveis, e o histórico não mostra se alguma delas montava a URL do gateway. O `docker-compose.yml` muda pela última vez em `15495fb`, com o mesmo objeto do snapshot; as versões anteriores, inclusive a de `b3e4f84`, que é o commit em que o shell recebe o Dockerfile, também não estão disponíveis, e não dá para saber desde quando o products-mf está na porta 3001. A mensagem de `3b6d2f0` anuncia uma correção do "product endpoint", sem dizer se ela é a URL do iframe ou outra. Conclusão: o histórico não diz se o comentário é resto de um estágio em que o iframe apontava para o gateway.
+**1. Shell iframe points to port 3001, linked to products-mf only through Compose, and comment immediately above says URL is API Gateway at port 8080.** The `frontend/shell-app/src/App.js` is created in `ebce825` and changes in `b3e4f84`, `20fcc0c` and `3b6d2f0`; object at `3b6d2f0` matches snapshot, so port 8080 comment and URL with port 3001 coexist at least since this commit. Versions at `ebce825`, `b3e4f84` and `20fcc0c` are unavailable, and history does not show whether any constructed gateway URL. The `docker-compose.yml` changes for last time in `15495fb`, with same object as snapshot; earlier versions, including `b3e4f84`, commit where shell receives Dockerfile, are also unavailable, so since when products-mf is at port 3001 cannot be known. Message of `3b6d2f0` announces correction of "product endpoint" without saying whether it is iframe URL or another. Conclusion: history does not say whether comment is a remnant of a stage where iframe pointed to gateway.
 
-**2. O README diz que os microfrontends funcionam com os backends, mas o products-mf usa um `products.json` local, e o `ProductList.js`, que chamaria o gateway, não é importado.** O `ProductList.js` é criado em `ebce825`, junto com o `App.js` do products-mf, e muda em `20fcc0c` e em `9f51b10`, o último commit que toca o frontend; o arquivo foi editado até o fim, e não esquecido desde a criação. O `products.json` é criado em `3b6d2f0`, que também altera o `App.js` do products-mf, e a mensagem anuncia uma correção do "product endpoint"; isso é compatível com a troca de uma chamada ao backend por dados locais, mas as versões antigas do `App.js` e do `ProductList.js` não estão disponíveis, e o histórico não mostra se o `App.js` já importou o `ProductList.js` ou chamou o gateway. Conclusão: o histórico não diz se a ligação ao backend foi abandonada ou nunca chegou a ser conectada.
+**2. README says microfrontends work with backends, but products-mf uses local `products.json`, and `ProductList.js`, which would call gateway, is not imported.** The `ProductList.js` is created in `ebce825`, together with products-mf `App.js`, and changes in `20fcc0c` and `9f51b10`, last commit touching frontend; file was edited until the end, rather than forgotten since creation. The `products.json` is created in `3b6d2f0`, also changing products-mf `App.js`, and message announces correction of "product endpoint"; this is consistent with replacing a backend call with local data, but old versions of `App.js` and `ProductList.js` are unavailable, and history does not show whether `App.js` ever imported `ProductList.js` or called gateway. Conclusion: history does not say whether backend connection was abandoned or never connected.
 
-## Comandos
+## Commands
 
 ```
 docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 rev-list --count 9f8b0b7df3c6bcdb67eee8cb21cebde3ff2ce189
@@ -45,16 +45,16 @@ docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 ls-tree 20fcc0c
 docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 ls-tree 3b6d2f0 -- frontend/shell-app/src/App.js frontend/products-mf/src/App.js frontend/products-mf/src/ProductList.js
 docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 ls-tree 9f8b0b7df3c6bcdb67eee8cb21cebde3ff2ce189 -- frontend/shell-app/src/App.js frontend/products-mf/src/App.js frontend/products-mf/src/ProductList.js
 docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 show --format='%h %ad %s' --date=short --name-status 73402bf
-docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 show ebce825:frontend/shell-app/src/App.js   # falhou: objeto ausente (bad object)
-docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 show b3e4f84:frontend/shell-app/src/App.js   # falhou: objeto ausente (bad object)
-docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 show 20fcc0c:frontend/shell-app/src/App.js   # falhou: objeto ausente (bad object)
-docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 show ebce825:frontend/products-mf/src/ProductList.js   # falhou: objeto ausente (bad object)
-docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 show 20fcc0c:frontend/products-mf/src/ProductList.js   # falhou: objeto ausente (bad object)
-docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 show ebce825:frontend/products-mf/src/App.js   # falhou: objeto ausente (bad object)
-docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 show b3e4f84:frontend/products-mf/src/App.js   # falhou: objeto ausente (bad object)
-docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 show 20fcc0c:frontend/products-mf/src/App.js   # falhou: objeto ausente (bad object)
-docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 show 5c59071:frontend/products-mf/src/App.js   # falhou: objeto ausente (bad object)
-docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 show 3b6d2f0:frontend/products-mf/src/App.js   # falhou: objeto ausente (bad object)
+docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 show ebce825:frontend/shell-app/src/App.js   # failed: missing object (bad object)
+docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 show b3e4f84:frontend/shell-app/src/App.js   # failed: missing object (bad object)
+docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 show 20fcc0c:frontend/shell-app/src/App.js   # failed: missing object (bad object)
+docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 show ebce825:frontend/products-mf/src/ProductList.js   # failed: missing object (bad object)
+docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 show 20fcc0c:frontend/products-mf/src/ProductList.js   # failed: missing object (bad object)
+docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 show ebce825:frontend/products-mf/src/App.js   # failed: missing object (bad object)
+docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 show b3e4f84:frontend/products-mf/src/App.js   # failed: missing object (bad object)
+docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 show 20fcc0c:frontend/products-mf/src/App.js   # failed: missing object (bad object)
+docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 show 5c59071:frontend/products-mf/src/App.js   # failed: missing object (bad object)
+docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 show 3b6d2f0:frontend/products-mf/src/App.js   # failed: missing object (bad object)
 docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 log --format='%h %ad %s' --date=short 9f8b0b7df3c6bcdb67eee8cb21cebde3ff2ce189 -- frontend/shell-app/src/App.js
 docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 log --format='%h %ad %s' --date=short 9f8b0b7df3c6bcdb67eee8cb21cebde3ff2ce189 -- frontend/products-mf/src/ProductList.js
 docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 log --format='%h %ad %s' --date=short 9f8b0b7df3c6bcdb67eee8cb21cebde3ff2ce189 -- frontend/products-mf/src/App.js
@@ -68,11 +68,11 @@ docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 ls-tree 5c59071
 docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 ls-tree c976c69 -- docker-compose.yml
 docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 ls-tree 15495fb -- docker-compose.yml
 docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 ls-tree 9f8b0b7df3c6bcdb67eee8cb21cebde3ff2ce189 -- docker-compose.yml
-docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 show b3e4f84:docker-compose.yml   # falhou: objeto ausente (bad object)
-docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 show 5c59071:docker-compose.yml   # falhou: objeto ausente (bad object)
-docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 show c976c69:docker-compose.yml   # falhou: objeto ausente (bad object)
+docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 show b3e4f84:docker-compose.yml   # failed: missing object (bad object)
+docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 show 5c59071:docker-compose.yml   # failed: missing object (bad object)
+docs/mfe-history-review/tools/hist.sh dearjay22__Group2_INFO8985 show c976c69:docker-compose.yml   # failed: missing object (bad object)
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 56 (2025-12-02 a 2025-12-08). Pontos: 2 (esclarecido: 0, inconclusivo: 2, resolvido pelo snapshot: 0).
+Commits up to the snapshot: 56 (2025-12-02 to 2025-12-08). Points: 2 (clarified: 0, inconclusive: 2, resolved by the snapshot: 0).

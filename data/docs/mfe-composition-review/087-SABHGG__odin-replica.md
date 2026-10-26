@@ -20,25 +20,26 @@ annotation:
 
 # 087 — SABHGG/odin-replica
 
-## Leitura do repositório
+## Repository overview
 
-O repositório é um host de demonstração feito sobre um scaffold do Create React App: uma só unidade no snapshot (`.`), que é ao mesmo tempo o root-config single-spa e a aplicação React local. A entrada `src/index.js` importa os lifecycles React estaticamente (src/index.js:4), registra a própria aplicação como `odin-react`, sempre ativa (src/index.js:56-60), registra uma aplicação Angular externa, `leadocs-angular` (src/index.js:63-100), e chama `start()` (src/index.js:103). Os lifecycles de `odin-react` vêm de `singleSpaReact` e montam o `App` em `#root` (src/root.app.js:6-14). Como root e aplicação local estão no mesmo bundle, esse registro é interno à unidade e não virou relação.
+The repository is a demonstration host built on a Create React App scaffold: a single snapshot unit (`.`), simultaneously the single-spa root-config and local React application. The `src/index.js` entry point imports the React lifecycles statically (src/index.js:4), registers its own application as `odin-react`, always active (src/index.js:56-60), registers an external Angular application, `leadocs-angular` (src/index.js:63-100), and calls `start()` (src/index.js:103). The `odin-react` lifecycles come from `singleSpaReact` and mount `App` in `#root` (src/root.app.js:6-14). Because root and local application reside in the same bundle, this registration is internal to the unit and did not become a relationship.
 
-A aplicação externa não está no snapshot. O host a carrega injetando um `<script>` com o bundle `main.js` de um servidor Angular, por padrão `http://localhost:4200/main.js`, configurável por `REACT_APP_LEAPDOCS_ORIGIN` e `REACT_APP_LEAPDOCS_BUNDLE_URL` (src/index.js:7-9, 72-73, 93), e espera que esse bundle publique os lifecycles no global `leapdocs` (src/index.js:69, 76-80). O código de erro admite que isso depende do `angular.json` do outro projeto (src/index.js:83). A ativação não é por rota: a barra lateral do `App` dispara o `CustomEvent` `toggle-leapdocs` (src/App.js:16-23), o listener de `src/index.js` grava `isLeadocsActive` e chama `triggerAppChange()` (src/index.js:45-51), e o single-spa monta o remoto em `#microfrontend-container`, nó que o `App` só renderiza quando a seção "Leapdocs (Microfrontend)" está ativa (src/index.js:96-98; src/App.js:11, 56-58). Emissor e receptor do evento estão na mesma unidade, então ele não virou linha `communication`.
+The external application is absent from the snapshot. The host loads it by injecting a `<script>` with the Angular server's `main.js` bundle, defaulting to `http://localhost:4200/main.js`, configurable through `REACT_APP_LEAPDOCS_ORIGIN` and `REACT_APP_LEAPDOCS_BUNDLE_URL` (src/index.js:7-9, 72-73, 93), and expects the bundle to publish lifecycles on the `leapdocs` global (src/index.js:69, 76-80). The error code acknowledges that this depends on the other project's `angular.json` (src/index.js:83). Activation is not route-based: the `App` sidebar fires the `CustomEvent` `toggle-leapdocs` (src/App.js:16-23), the `src/index.js` listener writes `isLeadocsActive` and calls `triggerAppChange()` (src/index.js:45-51), and single-spa mounts the remote in `#microfrontend-container`, a node rendered by `App` only when the "Leapdocs (Microfrontend)" section is active (src/index.js:96-98; src/App.js:11, 56-58). Event sender and receiver reside in the same unit, so it did not become a `communication` row.
 
-Duas particularidades preparam o host para receber o remoto Angular: o `import 'zone.js'` no topo da entrada (src/index.js:2) e o patch de `history.pushState`/`replaceState` que remove o prefixo `/leapdocs` das URLs (src/index.js:10-42), aparentemente para que o roteamento do Angular não altere a URL do host. Não há Module Federation, import map, custom element nem iframe; o `README.md` é o texto padrão do CRA (README.md:1-3).
+Two features prepare the host to receive the Angular remote: `import 'zone.js'` at the top of the entry point (src/index.js:2) and the `history.pushState`/`replaceState` patch removing the `/leapdocs` URL prefix (src/index.js:10-42), apparently to prevent Angular routing from changing the host URL. There is no Module Federation, import map, custom element or iframe; `README.md` is the standard CRA text (README.md:1-3).
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | . | leadocs-angular | root-config → application | origem → destino | single-spa | No | Yes | — | src/index.js:63; src/index.js:72; src/index.js:103 |
+| 1 | . | leadocs-angular | root-config → application | source → target | single-spa | No | Yes | — | src/index.js:63; src/index.js:72; src/index.js:103 |
 
-## Observações
+## Observations
 
-**1. . → leadocs-angular.** O destino é o nome do registro (src/index.js:63-64); a única localização é a URL do bundle, `http://localhost:4200/main.js` por padrão ou o valor de `REACT_APP_LEAPDOCS_BUNDLE_URL` (src/index.js:7-9), e nenhuma unidade do snapshot produz esse bundle, por isso No snapshot = `No`, como registrado na classificação (`unit_organization: multi-repo`). A relação é mista: o loader injeta o script do bundle (src/index.js:72-73, 93) e devolve o global `leapdocs` (src/index.js:78-80), mas o destino entra no host registrado no orquestrador (src/index.js:63-100), daí o tipo `root-config → application` e o mecanismo `single-spa`. A função de atividade `() => isLeadocsActive` (src/index.js:96) depende do evento interno `toggle-leapdocs` descrito na leitura, e o `domElementGetter` aponta para `#microfrontend-container` (src/index.js:98; src/App.js:57). Configuração = `—`: não há arquivo de configuração no snapshot que declare a ligação; a URL está no próprio código de entrada. Ativa = `Yes` pelas três linhas `Yes` da revisão de código-fonte (registro, script e `start()`); se o bundle remoto não existe, a carga falha com erro no console (src/index.js:88-91), o que não se observa no snapshot.
+**1. . → leadocs-angular.** The target is the registration name (src/index.js:63-64); the only location is the bundle URL, defaulting to `http://localhost:4200/main.js` or the value of `REACT_APP_LEAPDOCS_BUNDLE_URL` (src/index.js:7-9), and no snapshot unit produces that bundle, hence In snapshot = `No`, as recorded in the classification (`unit_organization: multi-repo`). This is a mixed relationship: the loader injects the bundle script (src/index.js:72-73, 93) and returns the `leapdocs` global (src/index.js:78-80), but the target enters the host registered in the orchestrator (src/index.js:63-100), hence type `root-config → application` and mechanism `single-spa`. The activity function `() => isLeadocsActive` (src/index.js:96) depends on the internal `toggle-leapdocs` event described in the overview, and `domElementGetter` points to `#microfrontend-container` (src/index.js:98; src/App.js:57). Configuration = `—`: no snapshot configuration file declares the connection; the URL is in the entry code itself. Active = `Yes` through the three `Yes` source code review lines (registration, script and `start()`); if the remote bundle does not exist, loading fails with a console error (src/index.js:88-91), which is not observable in the snapshot.
 
-## Resumo
+## Summary
 
-Relações: 1 (root-config → application: 1). Ativas: 1. Destino fora do snapshot: 1.
-Unidades sem relação: nenhuma.
+Relationships: 1 (root-config → application: 1). Active: 1. Target outside the snapshot: 1.
+Units without a relationship: none.
+

@@ -20,91 +20,91 @@ annotation:
 
 # 270 — shreyash1086/mfe
 
-## Contexto
+## Context
 
-Plataforma React com Webpack 5 Module Federation, Docker e nginx, organizada num único repositório com:
-- um `shell-app` (host);
-- nove módulos remotos (`module-*`);
-- um `shared-design-system`, que também é remoto federado e pacote local.
+React platform with Webpack 5 Module Federation, Docker and nginx, organized in a single repository with:
+- a `shell-app` (host);
+- nine remote modules (`module-*`);
+- a `shared-design-system`, also a federated remote and local package.
 
-O shell carrega os remotos em runtime, por injeção de `remoteEntry.js` com URLs de uma configuração de runtime, e os monta por rota. Cada unidade tem `webpack.config.js`, `Dockerfile` e `nginx.conf` próprios, orquestrados por `docker-compose.yml` atrás de um gateway nginx. O nome do repositório não é usado como evidência.
+The shell loads remotes at runtime through `remoteEntry.js` injection with URLs from runtime configuration, and mounts them by route. Each unit has its own `webpack.config.js`, `Dockerfile` and `nginx.conf`, orchestrated by `docker-compose.yml` behind an nginx gateway. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:271` registra rank 270, ID 1248756347, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:271` records rank 270, ID 1248756347, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:271` registra as estratégias `terminology;technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:30647` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:30654` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:271` records strategies `terminology;technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:30647` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:30654` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos 14 hits em cada rodada.
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same 14 hits in each round.
 
-**Endpoint `repositories`** (subconsulta `…#created:2026-05`, `path` vazio):
+**Endpoint `repositories`** (subquery `…#created:2026-05`, empty `path`):
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | 2026-10-07T22:36:09.969Z / 2026-10-08T15:59:38.691Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | 2026-10-07T23:04:49.839Z / 2026-10-08T16:09:11.654Z |
 | `technology-module-federation-repositories`: `"module federation" in:name,description,readme` | 2026-10-07T23:26:38.626Z / 2026-10-08T16:18:13.090Z |
 
-**Endpoint `code`** (consulta `technology-module-federation-plugin-js-code`, `ModuleFederationPlugin remotes extension:js`): 11 hits em `webpack.config.js` e `webpack.prod.config.js`.
+**Endpoint `code`** (query `technology-module-federation-plugin-js-code`, `ModuleFederationPlugin remotes extension:js`): 11 hits in `webpack.config.js` and `webpack.prod.config.js`.
 
-| Subconsulta | `path` |
+| Subquery | `path` |
 |---|---|
 | `…#size:2000..2249` | `module-cloud-labs/webpack.config.js`, `shell-app/webpack.prod.config.js`, `module-virtual-machine/webpack.config.js`, `module-assessment/webpack.config.js`, `module-dashboard/webpack.config.js`, `module-logging/webpack.config.js` |
 | `…#size:2250..2499` | `module-cloud-console/webpack.config.js`, `module-code-environment/webpack.config.js`, `module-code-module/webpack.config.js` |
 | `…#size:2750..2999` | `module-content-uploading/webpack.config.js` |
 | `…#size:3000..3999` | `shell-app/webpack.config.js` |
 
-As coletas do endpoint `code` vão de 2026-10-07T22:33:27.157Z a 22:36:52.447Z (001) e de 2026-10-08T16:13:25.514Z a 16:16:07.711Z (002). As consultas efetivas de repositório acrescentam `pushed:>=2025-04-01 created:2026-05-01..2026-05-31`.
+Collections from endpoint `code` range from 2026-10-07T22:33:27.157Z to 22:36:52.447Z (001) and from 2026-10-08T16:13:25.514Z to 16:16:07.711Z (002). Effective repository queries append `pushed:>=2025-04-01 created:2026-05-01..2026-05-31`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem JavaScript, `fork: false`, tamanho 3.209;
-- criação em 2026-05-25T02:51:32Z, push em 2026-06-09T08:08:18Z.
+Hit metadata:
+- null description, no topics, language JavaScript, `fork: false`, size 3.209;
+- created at 2026-05-25T02:51:32Z, pushed at 2026-06-09T08:08:18Z.
 
-Grafias no README:
-- “micro frontend”: hifenizada, em `README.md:1` (“# Micro-Frontend Architecture”), `README.md:4` (“A production-ready micro-frontend setup…”) e `README.md:11`;
-- “micro frontends”: o plural não aparece no README; esse hit depende do processamento textual da busca do GitHub, que não está registrado;
-- “Module Federation”: `README.md:2` (“### React + Webpack Module Federation + Docker”), `72` e `225`.
+Spellings in the README:
+- “micro frontend”: hyphenated, in `README.md:1` (“# Micro-Frontend Architecture”), `README.md:4` (“A production-ready micro-frontend setup…”) and `README.md:11`;
+- “micro frontends”: the plural does not appear in the README; this hit depends on GitHub search text processing, which is not recorded;
+- “Module Federation”: `README.md:2` (“### React + Webpack Module Federation + Docker”), `72` and `225`.
 
-A última alteração do README é `ded9db1` (2026-06-03), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The last README change is `ded9db1` (2026-06-03), before the October 2026 collections. The README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 279 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Pastas `shell-app/` (30 arquivos), nove `module-*/` (19 a 43 arquivos cada) e `shared-design-system/` (22), cada uma com `package.json`, `webpack.config.js`, `src/index.js` → `bootstrap`, `Dockerfile` e `nginx.conf`. Na raiz: `docker-compose.yml`, `nginx/nginx.conf`, `docs/ARCHITECTURE.md` e `README.md`. | contexto |
-| Configuração (remotos) | Cada módulo declara `ModuleFederationPlugin` com `name`, `filename: "remoteEntry.js"` e `exposes` de `./src/App`, por exemplo `module-dashboard/webpack.config.js:29–48` (`dashboard`, `./DashboardApp`, porta 3002, `:75`). O padrão se repete em `module-cloud-labs` (3001), `module-virtual-machine` (3003), `module-cloud-console` (3004), `module-logging` (3005), `module-code-environment` (3006), `module-code-module` (3007), `module-content-uploading` (3008) e `module-assessment` (3009). | forte |
-| Mecanismo (host) | `shell-app/src/remotes/remoteLoader.js:4–65`: injeta o `<script>` do `remoteEntry.js`, chama `__webpack_init_sharing__`/`container.init`, pega o módulo com `container.get` e devolve um factory para `React.lazy`. `shell-app/src/App.jsx:15–77`: nove `React.lazy(loadRemoteComponent({ remoteName, exposedModule }))` com os mesmos nomes expostos pelos módulos. `:167–277`: rotas protegidas que montam cada remoto em `RemoteWrapper` (`:128–153`), com `Suspense` e error boundary. | forte |
-| Configuração de runtime | `shell-app/src/config/remoteConfig.js:8–19`: URLs padrão de cada remoto (portas 3001–3010). `shell-app/public/index.html:14–52`: define `window.__RUNTIME_REMOTE_CONFIG__` com caminhos relativos no Docker (`/dashboard-remote/remoteEntry.js` etc.) ou portas locais. `nginx/nginx.conf:18–134`: roteia cada `/<módulo>-remote/remoteEntry.js` para o container correspondente. `docker-compose.yml:5–26`, `29–165`: um serviço por unidade na rede `micro-net`. | forte |
-| Design system | `shared-design-system/webpack.config.js:36–48`: remoto `sharedDesignSystem` que expõe tokens, estilos e componentes (porta 3010). Os módulos e o shell o declaram como remoto `promise` (`shell-app/webpack.config.js:34–47`; `module-dashboard/webpack.config.js:32–45`) e como `shared` singleton. Também é dependência `file:../shared-design-system` em todos os `package.json` (por exemplo, `module-dashboard/package.json:15`), copiada no build do Dockerfile (`module-dashboard/Dockerfile:6–7`). Os `tailwind.config.js` de todas as unidades fazem `require("../shared-design-system/src/tokens")` (linha 1). | moderada |
-| Código-fonte (fronteiras) | Busca por imports com `../../` em JS/JSX no SHA: nenhum import entre módulos ou entre módulo e shell. A única exceção é `module-virtual-machine/src/useVmManagement.js:2` (`../../contexts/AuthContext`), que aponta para um `contexts/` inexistente na raiz e não entra em outra unidade; o arquivo não é importado por nenhum outro. O acoplamento entre pastas é só com o `shared-design-system`, como biblioteca: tokens no Tailwind, pacote `file:` e remoto federado. | contexto |
-| Documentação | `README.md:4`, `11–30`, `74–114`: descreve só três módulos e exemplos com nomes antigos (`auth`, `profile`), divergentes do código atual com nove. `docs/ARCHITECTURE.md:1–7`: loader de runtime sem URLs fixadas no build. | fraca |
+| Structure | `git ls-tree -r` at the SHA: 279 entries, all regular files `100644`; zero symlinks and zero gitlinks. Folders `shell-app/` (30 files), nine `module-*/` (19 to 43 files each) and `shared-design-system/` (22), each with `package.json`, `webpack.config.js`, `src/index.js` → `bootstrap`, `Dockerfile` and `nginx.conf`. At the root: `docker-compose.yml`, `nginx/nginx.conf`, `docs/ARCHITECTURE.md` and `README.md`. | context |
+| Configuration (remotes) | Each module declares `ModuleFederationPlugin` with `name`, `filename: "remoteEntry.js"` and `exposes` of `./src/App`, for example `module-dashboard/webpack.config.js:29–48` (`dashboard`, `./DashboardApp`, port 3002, `:75`). The pattern repeats in `module-cloud-labs` (3001), `module-virtual-machine` (3003), `module-cloud-console` (3004), `module-logging` (3005), `module-code-environment` (3006), `module-code-module` (3007), `module-content-uploading` (3008) and `module-assessment` (3009). | strong |
+| Mechanism (host) | `shell-app/src/remotes/remoteLoader.js:4–65`: injects the `<script>` for `remoteEntry.js`, calls `__webpack_init_sharing__`/`container.init`, gets the module with `container.get` and returns a factory for `React.lazy`. `shell-app/src/App.jsx:15–77`: nine `React.lazy(loadRemoteComponent({ remoteName, exposedModule }))` with the same names exposed by the modules. `:167–277`: protected routes mounting each remote in `RemoteWrapper` (`:128–153`), with `Suspense` and error boundary. | strong |
+| Runtime configuration | `shell-app/src/config/remoteConfig.js:8–19`: default URLs for each remote (ports 3001–3010). `shell-app/public/index.html:14–52`: defines `window.__RUNTIME_REMOTE_CONFIG__` with relative Docker paths (`/dashboard-remote/remoteEntry.js` etc.) or local ports. `nginx/nginx.conf:18–134`: routes each `/<módulo>-remote/remoteEntry.js` to its corresponding container. `docker-compose.yml:5–26`, `29–165`: one service per unit on network `micro-net`. | strong |
+| Design system | `shared-design-system/webpack.config.js:36–48`: remote `sharedDesignSystem` exposing tokens, styles and components (port 3010). Modules and shell declare it as a `promise` remote (`shell-app/webpack.config.js:34–47`; `module-dashboard/webpack.config.js:32–45`) and singleton `shared`. It is also dependency `file:../shared-design-system` in every `package.json` (for example, `module-dashboard/package.json:15`), copied during the Dockerfile build (`module-dashboard/Dockerfile:6–7`). The `tailwind.config.js` of all units use `require("../shared-design-system/src/tokens")` (line 1). | moderate |
+| Source code (boundaries) | Search for `../../` imports in JS/JSX at the SHA: no import between modules or between module and shell. The only exception is `module-virtual-machine/src/useVmManagement.js:2` (`../../contexts/AuthContext`), pointing to a nonexistent root `contexts/` and not entering another unit; no other file imports it. Cross-folder coupling is only with `shared-design-system` as a library: Tailwind tokens, `file:` package and federated remote. | context |
+| Documentation | `README.md:4`, `11–30`, `74–114`: describes only three modules and examples with old names (`auth`, `profile`), differing from current code with nine. `docs/ARCHITECTURE.md:1–7`: runtime loader without build-fixed URLs. | weak |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 13 commits lineares, nenhum merge, todos de Shreyash Damodar, de 2026-05-25 (`68ea11f`, “Initial deployment”) a 2026-06-09 (SHA `b0fdd18`, “solving small bugs”). Só há o branch `main`. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 13 linear commits, no merges, all by Shreyash Damodar, from 2026-05-25 (`68ea11f`, “Initial deployment”) to 2026-06-09 (SHA `b0fdd18`, “solving small bugs”). Only branch `main` exists. No historical blob was read and there was no missing object.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | Shell e nove remotos com `exposes` (`*/webpack.config.js`), referenciados pela configuração de runtime do host (`shell-app/src/config/remoteConfig.js:8–19`). |
-| Q2 | Yes | Cada unidade tem entry, `webpack.config.js`, Dockerfile e container próprios. Não há import de código-fonte entre módulos ou com o shell; a relação comum é com a biblioteca `shared-design-system`. |
-| Q3 | Yes | O shell roteia e monta os nove remotos (`shell-app/src/App.jsx:167–277`). |
-| Q4 | Yes | Module Federation em runtime: `remoteLoader.js` com `container.init`/`get`, alimentado por `__RUNTIME_REMOTE_CONFIG__` e pelo gateway nginx. |
-| Q5 | Yes | Q1–Q4 são Yes: host e remotos compostos em runtime, com cadeia completa no snapshot. |
+| Q1 | Yes | Shell and nine remotes with `exposes` (`*/webpack.config.js`), referenced by host runtime configuration (`shell-app/src/config/remoteConfig.js:8–19`). |
+| Q2 | Yes | Each unit has its own entry point, `webpack.config.js`, Dockerfile and container. There is no source code import between modules or with the shell; the common relationship is with library `shared-design-system`. |
+| Q3 | Yes | The shell routes and mounts the nine remotes (`shell-app/src/App.jsx:167–277`). |
+| Q4 | Yes | Module Federation at runtime: `remoteLoader.js` with `container.init`/`get`, fed by `__RUNTIME_REMOTE_CONFIG__` and the nginx gateway. |
+| Q5 | Yes | Q1–Q4 are Yes: host and remotes composed at runtime, with a complete chain in the snapshot. |
 
-## Motivo
+## Rationale
 
-- `MFE-implemented` pela regra Q1–Q5 Yes, no caso “monorepos containing a host and its remotes”. A cadeia está completa no snapshot, como em 076/084/096/106/109.
-- **Design system:** o `shared-design-system` é consumido como biblioteca, pelo pacote `file:`, pelos tokens no Tailwind e como remoto `shared`. Como em 128, onde o Tailwind das apps lê o `ui-kit`, é relação de build com uma biblioteca, não entre unidades. Também não é federação usada só para compartilhar código (089/100): os nove módulos são aplicações montadas por rota.
-- **Campos:**
+- `MFE-implemented` under the Q1–Q5 Yes rule, in the case “monorepos containing a host and its remotes”. The chain is complete in the snapshot, as in 076/084/096/106/109.
+- **Design system:** `shared-design-system` is consumed as a library, through package `file:`, Tailwind tokens and as a `shared` remote. As in 128, where app Tailwind reads `ui-kit`, this is a build relationship with a library, not between units. Nor is federation used only for code sharing (089/100): the nine modules are applications mounted by route.
+- **Fields:**
   - `approaches: [module-federation]`, `ui_technologies: [react]`, `build_tools: [webpack]`;
-  - `frontend_units: 10` (shell e nove remotos; o design system é biblioteca e não é contado), `unit_organization: monorepo`;
-  - `repo_type: production`: o README se apresenta como “production-ready”, o código chama APIs reais (por exemplo, `module-virtual-machine/src/useVmManagement.js:4–10`) e há configuração Amplify (`shell-app/src/config/amplify-config.js`).
-- Não há decisão aberta.
+  - `frontend_units: 10` (shell and nine remotes; design system is a library and is not counted), `unit_organization: monorepo`;
+  - `repo_type: production`: the README presents it as “production-ready”, code calls real APIs (for example, `module-virtual-machine/src/useVmManagement.js:4–10`) and there is Amplify configuration (`shell-app/src/config/amplify-config.js`).
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** loader de Module Federation manual (`__webpack_init_sharing__`, `container.init`/`get`) em vez de `remotes` estáticos, com URLs vindas de `window.__RUNTIME_REMOTE_CONFIG__` definidas no `index.html` conforme a porta, e com gateway nginx por prefixo de caminho. O design system é remoto `promise` em todas as unidades.
-- **RQ3:** cada remoto replica `AuthContext.jsx` e `ThemeContext.jsx` locais em vez de recebê-los do shell.
-- **Protocolo (busca):** o hit plural não tem grafia literal. O README está desatualizado em relação ao código (3 contra 9 módulos). A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ2:** manual Module Federation loader (`__webpack_init_sharing__`, `container.init`/`get`) instead of static `remotes`, with URLs from `window.__RUNTIME_REMOTE_CONFIG__` defined in `index.html` according to port, and an nginx gateway by path prefix. The design system is a `promise` remote in all units.
+- **RQ3:** each remote duplicates local `AuthContext.jsx` and `ThemeContext.jsx` instead of receiving them from the shell.
+- **Protocol (search):** the plural hit has no literal spelling. The README is outdated relative to code (3 versus 9 modules). Eligibility changes from `unknown` (001) to `pass` (002).

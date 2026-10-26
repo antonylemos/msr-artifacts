@@ -20,50 +20,50 @@ annotation:
 
 # 009 — pmathulan/frontend-coding-exercises
 
-## Contexto
+## Context
 
-- **Abordagem de implementação:** Module Federation (`@angular-architects/module-federation` + `ngx-build-plus`, Angular 19)
-- **Tipo de repositório:** example/proof of concept (exercícios de avaliação técnica, `README.md:3`)
-- **Commit avaliado:** `89a3c27` (único commit do repositório)
+- **Implementation approach:** Module Federation (`@angular-architects/module-federation` + `ngx-build-plus`, Angular 19)
+- **Repository type:** example/proof of concept (technical assessment exercises, `README.md:3`)
+- **Assessed commit:** `89a3c27` (the repository's only commit)
 
-## Evidências observadas
+## Observed evidence
 
-O repositório reúne seis exercícios independentes (`angular-frontend-practical/`, `microfrontend-workspace/`, `rate-limited-scheduler/`, `react-performance-practical/`, `spa-helm/`, `ssr-app/`). Só `microfrontend-workspace/` tem evidência de MFE; os caminhos abaixo são relativos a ele, salvo indicação.
+The repository brings together six independent exercises (`angular-frontend-practical/`, `microfrontend-workspace/`, `rate-limited-scheduler/`, `react-performance-practical/`, `spa-helm/`, `ssr-app/`). Only `microfrontend-workspace/` has MFE evidence; paths below are relative to it unless indicated otherwise.
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Tecnologia | `package.json:14`: `@angular-architects/module-federation` ^19.0.3; `:10` script `run:all` com o `mf-dev-server` | fraca |
-| Estrutura | Workspace Angular com `projects/shell`, `projects/mfe1` (apps) e `projects/shared` (lib); cada app tem `main.ts`, `bootstrap.ts`, `webpack.config.js` e `webpack.prod.config.js` próprios | forte |
-| Configuração (build) | `angular.json:18` builder `ngx-build-plus:browser`; `:42`, `:60`, `:85` `extraWebpackConfig` apontando para o webpack de cada projeto | moderada |
-| Configuração (host) | `projects/shell/webpack.config.js:5` `name: 'shell'`; `:14-16` `remotes: { mfe1: "mfe1@http://localhost:4201/remoteEntry.js" }` | forte |
-| Configuração (remote) | `projects/mfe1/webpack.config.js:5-10`: `name: 'mfe1'`, `filename: 'remoteEntry.js'`, `exposes: { './Component' }` | forte |
-| Código-fonte (composição) | `projects/shell/src/app/app.routes.ts:5-13`: rota `mfe1` com `loadComponent` → `loadRemoteModule({ remoteEntry: 'http://localhost:4201/remoteEntry.js', exposedModule: './Component' })` → `AppComponent`; `:23` redireciona `''` para `mfe1`; `:14-21` rota `mfe2` comentada | forte |
-| Código-fonte (layout) | `projects/shell/src/app/app.component.html:1-5`: título do shell, input e botão "Send to MFE1" + `<router-outlet>` onde o mfe1 é montado | forte |
-| Código-fonte (comunicação) | `projects/shared/src/lib/message.service.ts:7-13`: `MessageService` com `BehaviorSubject`; usado pelo shell (`shell/src/app/app.component.ts:4,14`) e pelo mfe1 (`mfe1/src/app/app.component.ts:3,13-18`) via lib compartilhada (`tsconfig.json:15-18`, `"shared": ["./dist/shared"]`), singleton via `shareAll` | moderada |
-| Código-fonte | `projects/shell/src/main.ts:1` e `projects/mfe1/src/main.ts:1`: `import('./bootstrap')`; nenhum import de código-fonte entre `shell` e `mfe1` (sustenta a independência das unidades) | moderada |
-| Build/deploy | Nenhum CI/CD nem deploy do workspace; só dev servers em portas distintas (`README.md:28,34`). `spa-helm/` (raiz) é um chart genérico de SPA, não ligado ao workspace. | fraca |
-| Documentação | `README.md:3-7`: "demonstrates a Micro-Frontend architecture using Angular, Module Federation, and a shared library" com Shell, MFE1 e Shared Library; `:41`, `:46-55` descrevem a carga em runtime | moderada |
-| Código-fonte (outros exercícios) | `ssr-app/src/app/app.routes.ts:22-36` usa `loadComponent` com `import()` local (lazy loading comum, não composição); nenhuma outra ocorrência de federation, `remoteEntry` ou `customElements` | contexto |
+| Technology | `package.json:14`: `@angular-architects/module-federation` ^19.0.3; `:10` `run:all` script with `mf-dev-server` | weak |
+| Structure | Angular workspace with `projects/shell`, `projects/mfe1` (apps) and `projects/shared` (library); each app has its own `main.ts`, `bootstrap.ts`, `webpack.config.js` and `webpack.prod.config.js` | strong |
+| Configuration (build) | `angular.json:18` builder `ngx-build-plus:browser`; `:42`, `:60`, `:85` `extraWebpackConfig` pointing to each project's webpack | moderate |
+| Configuration (host) | `projects/shell/webpack.config.js:5` `name: 'shell'`; `:14-16` `remotes: { mfe1: "mfe1@http://localhost:4201/remoteEntry.js" }` | strong |
+| Configuration (remote) | `projects/mfe1/webpack.config.js:5-10`: `name: 'mfe1'`, `filename: 'remoteEntry.js'`, `exposes: { './Component' }` | strong |
+| Source code (composition) | `projects/shell/src/app/app.routes.ts:5-13`: `mfe1` route with `loadComponent` → `loadRemoteModule({ remoteEntry: 'http://localhost:4201/remoteEntry.js', exposedModule: './Component' })` → `AppComponent`; `:23` redirects `''` to `mfe1`; `:14-21` commented-out `mfe2` route | strong |
+| Source code (layout) | `projects/shell/src/app/app.component.html:1-5`: shell title, input and "Send to MFE1" button + `<router-outlet>` where mfe1 is mounted | strong |
+| Source code (communication) | `projects/shared/src/lib/message.service.ts:7-13`: `MessageService` with `BehaviorSubject`; used by the shell (`shell/src/app/app.component.ts:4,14`) and mfe1 (`mfe1/src/app/app.component.ts:3,13-18`) through a shared library (`tsconfig.json:15-18`, `"shared": ["./dist/shared"]`), singleton through `shareAll` | moderate |
+| Source code | `projects/shell/src/main.ts:1` and `projects/mfe1/src/main.ts:1`: `import('./bootstrap')`; no source code imports between `shell` and `mfe1` (supports the units' independence) | moderate |
+| Build/deploy | No CI/CD or workspace deployment; only dev servers on distinct ports (`README.md:28,34`). `spa-helm/` (root) is a generic SPA chart, not linked to the workspace. | weak |
+| Documentation | `README.md:3-7`: "demonstrates a Micro-Frontend architecture using Angular, Module Federation, and a shared library" with Shell, MFE1 and Shared Library; `:41`, `:46-55` describe runtime loading | moderate |
+| Source code (other exercises) | `ssr-app/src/app/app.routes.ts:22-36` uses `loadComponent` with local `import()` (ordinary lazy loading, not composition); no other occurrence of federation, `remoteEntry` or `customElements` | context |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | `shell` e `mfe1` em `microfrontend-workspace/projects/` |
-| Q2 | Yes | Entry, webpack e target de build próprios por app (`angular.json`), servidos separadamente (4200/4201); sem import de código-fonte entre apps, só a lib `shared` |
-| Q3 | Yes | O shell monta o `mfe1` no seu `router-outlet` (`app.routes.ts:5-13`, `app.component.html:5`) |
-| Q4 | Yes | MF configurado nos dois lados (`remotes`/`exposes`) e usado via `loadRemoteModule` (`app.routes.ts:8-12`) |
-| Q5 | Yes | Q1–Q4 convergem; nenhuma divergência a justificar |
+| Q1 | Yes | `shell` and `mfe1` in `microfrontend-workspace/projects/` |
+| Q2 | Yes | Each app has its own entry, webpack and build target (`angular.json`), served separately (4200/4201); no source code imports between apps, only the `shared` library |
+| Q3 | Yes | The shell mounts `mfe1` in its `router-outlet` (`app.routes.ts:5-13`, `app.component.html:5`) |
+| Q4 | Yes | MF configured on both sides (`remotes`/`exposes`) and used through `loadRemoteModule` (`app.routes.ts:8-12`) |
+| Q5 | Yes | Q1–Q4 converge; no discrepancy to justify |
 
-## Motivo
+## Rationale
 
-- Q1–Q5 são todos Yes, o que satisfaz a regra de MFE-implemented.
-- Corresponde a "examples, templates, and proofs of concept that actually compose frontend units" e a "monorepos containing a host and its remotes".
-- O MFE é só um dos seis exercícios do repositório; os outros são apps independentes sem composição. Pelo protocolo (seção 3.1), o repositório é avaliado como um todo, e basta uma implementação observável.
-- A lib `shared` é compartilhada como singleton e serve de canal de comunicação, não como acoplamento de código entre unidades; não compromete Q2.
+- Q1–Q5 are all Yes, satisfying the MFE-implemented rule.
+- Matches "examples, templates, and proofs of concept that actually compose frontend units" and "monorepos containing a host and its remotes".
+- MFE is only one of the repository's six exercises; the others are independent apps without composition. Under the protocol (section 3.1), the repository is assessed as a whole, and one observable implementation is sufficient.
+- The `shared` library is shared as a singleton and serves as a communication channel, not code coupling between units; it does not compromise Q2.
 
-## Notas para análise
+## Analysis notes
 
-- **Protocolo (corpus):** na mineração de artefatos, restringir a análise a `microfrontend-workspace/`; os demais diretórios são ruído (outros exercícios).
-- **RQ3:** comunicação host ↔ remote por serviço singleton compartilhado (`MessageService`), um mecanismo que os repositórios anteriores não tinham.
-- **RQ1:** a composição está duplicada (o `remotes` estático no webpack e a URL fixa no `loadRemoteModule`), um padrão comum em exemplos.
+- **Protocol (corpus):** during artifact mining, restrict analysis to `microfrontend-workspace/`; the other directories are noise (other exercises).
+- **RQ3:** host ↔ remote communication through a shared singleton service (`MessageService`), a mechanism absent from the preceding repositories.
+- **RQ1:** composition is duplicated (static `remotes` in webpack and the fixed URL in `loadRemoteModule`), a common pattern in examples.

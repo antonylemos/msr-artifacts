@@ -20,63 +20,63 @@ annotation:
 
 # 214 — simcepollaro/quantum-projects
 
-## Contexto
+## Context
 
-Projetos de computação quântica com Qiskit (`README.md:1–4`). O conteúdo próprio é um script Python (`QEC_test.py`, correção de erro quântico em pares de Bell), quatro figuras, `README.md`, `LICENSE` e `.gitignore`. O repositório versiona também um ambiente virtual Python inteiro (`quantum/`, com `pyvenv.cfg`) que inclui o JupyterLab. O `package.json` do JupyterLab dentro desse ambiente é a origem do acerto. Não há código frontend próprio. O nome do repositório não é usado como evidência.
+Quantum-computing projects with Qiskit (`README.md:1–4`). Own content is a Python script (`QEC_test.py`, quantum-error correction in Bell pairs), four figures, `README.md`, `LICENSE` and `.gitignore`. Repository also versions entire Python virtual environment (`quantum/`, with `pyvenv.cfg`) including JupyterLab. JupyterLab `package.json` within environment is retrieval origin. No own frontend code exists. Repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:215` registra rank 214, ID 1408914785, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:215` records rank 214, ID 1408914785, status `cloned`, branch `main` and front-matter commit, which is clone HEAD and `origin/main`. Every clone Git command used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. No installation, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:215` registra a estratégia `technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:38550` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:38588` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:215` records strategy `technology` and eligibility `pass`. Sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). ID appears in `data/discovery/mfe-round-001/candidates.csv:38550` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:38588` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna o mesmo hit em cada rodada, do endpoint `code`:
+`sqlite3 -readonly` query of tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns same hit in each round, at endpoint `code`:
 
-| Consulta (`q`) | Subconsulta / consulta efetiva | `path` | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery / effective query | `path` | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `technology-module-federation-package-code`: `"@module-federation" filename:package.json` | `technology-module-federation-package-code#size:>=10000` / `"@module-federation" filename:package.json size:>=10000` | `quantum/share/jupyter/lab/static/package.json` | 2026-10-07T21:13:18.193Z / 2026-10-08T15:44:29.580Z |
 
-O arquivo tem 14.693 bytes no SHA, dentro da faixa. É o manifesto `@jupyterlab/application-top` (`:2`) com `"@module-federation/runtime-tools": "^2.0.0"` em `devDependencies` (`:211`), o mesmo manifesto de terceiros do rascunho 205. Ele entrou em `69b22f5` (2026-10-07T22:43:35+02:00, ou 20:43:35Z), cerca de meia hora antes da coleta da rodada 001, e não foi alterado depois.
+File is 14.693 bytes at SHA, within range. Manifest is `@jupyterlab/application-top` (`:2`) with `"@module-federation/runtime-tools": "^2.0.0"` in `devDependencies` (`:211`), same third-party manifest as draft 205. Entered in `69b22f5` (2026-10-07T22:43:35+02:00, or 20:43:35Z), about half an hour before round 001 collection, unchanged afterward.
 
-Os metadados do hit de código trazem só a descrição “Some examples of quantum computing project with qiskit”, sem tópicos nem datas, e sem o termo. A entrada é só por código. O README (`README.md:1–4`) não menciona micro-frontends nem Module Federation.
+Code-hit metadata provide only description “Some examples of quantum computing project with qiskit”, without topics or dates, and lacking term. Entry is code-only. README (`README.md:1–4`) mentions neither micro-frontends nor Module Federation.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 597 entradas, sendo 545 arquivos regulares `100644`, 48 executáveis `100755` (scripts de `quantum/bin/`) e 4 symlinks `120000` (`quantum/bin/python` → `/usr/bin/python`, `python3` e `python3.12` → `python`, `quantum/lib64` → `lib`); zero gitlinks. Só 8 entradas ficam fora de `quantum/`: `QEC_test.py`, quatro PNGs, `README.md`, `LICENSE` e `.gitignore`. Os 4 `package.json` estão em `quantum/`. | contrária |
-| Código-fonte | `QEC_test.py`: script Qiskit. Não há arquivo `.js`, `.ts`, `.vue` ou `.html` fora de `quantum/`. | contrária |
-| Tecnologia (acerto) | `quantum/share/jupyter/lab/static/package.json:2`, `211`: dependência de desenvolvimento do build do próprio JupyterLab, código de terceiros instalado no ambiente virtual. Não é configuração deste projeto. | contrária |
-| Busca | `git grep -i` no SHA, excluindo `quantum/`, por `micro.?front` e `federation`: nenhuma ocorrência. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 597 entries, including 545 regular files `100644`, 48 executables `100755` (scripts in `quantum/bin/`) and 4 symlinks `120000` (`quantum/bin/python` → `/usr/bin/python`, `python3` and `python3.12` → `python`, `quantum/lib64` → `lib`); zero gitlinks. Only 8 entries lie outside `quantum/`: `QEC_test.py`, four PNGs, `README.md`, `LICENSE` and `.gitignore`. All 4 `package.json` are in `quantum/`. | contrary |
+| Source code | `QEC_test.py`: Qiskit script. No `.js`, `.ts`, `.vue` or `.html` file outside `quantum/`. | contrary |
+| Technology (hit) | `quantum/share/jupyter/lab/static/package.json:2`, `211`: development dependency of JupyterLab’s own build, third-party code installed in virtual environment. Not configuration of this project. | contrary |
+| Search | `git grep -i` at the SHA, excluding `quantum/`, for `micro.?front` and `federation`: no occurrence. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 5 commits lineares, nenhum merge, todos de Simone Cepollaro `<sim.cepollaro@gmail.com>` (dois como `simcepollaro` pela interface web), entre 2026-10-07 e 2026-10-08:
-- `26d6173`: “Initial commit”, com README, LICENSE e `.gitignore`;
-- `69b22f5`: adiciona o script e os 589 arquivos de `quantum/`;
-- `df752a3`: altera o README;
-- `e90118b`: adiciona `N_Bell.py`;
-- SHA `21c54ed` (2026-10-08T01:09:09Z): renomeia `N_Bell.py` para `QEC_test.py`.
+Non-shallow clone; 5 linear commits, no merge, all by Simone Cepollaro `<sim.cepollaro@gmail.com>` (two as `simcepollaro` through web interface), between 2026-10-07 and 2026-10-08:
+- `26d6173`: “Initial commit”, with README, LICENSE and `.gitignore`;
+- `69b22f5`: adds script and 589 files in `quantum/`;
+- `df752a3`: changes README;
+- `e90118b`: adds `N_Bell.py`;
+- SHA `21c54ed` (2026-10-08T01:09:09Z): renames `N_Bell.py` to `QEC_test.py`.
 
-O SHA é posterior à coleta 001 e anterior à 002, mas o arquivo casado não mudou entre elas. Nenhum blob histórico foi lido e não houve objeto ausente.
+SHA is later than collection 001 and earlier than 002, but matched file did not change between them. No historical blob was read and no object was missing.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend própria; o código é um script Python. |
-| Q2 | No | Sem unidades, não há entradas ou builds frontend a avaliar. |
-| Q3 | No | Não há host, shell ou configuração raiz. |
-| Q4 | No | O único sinal é uma dependência declarada no manifesto do JupyterLab vendorizado (`quantum/share/jupyter/lab/static/package.json:211`); “a declared dependency alone is No”, e ela nem pertence ao projeto. |
-| Q5 | No | Q1–Q4 são No: projeto Qiskit com ambiente virtual versionado. |
+| Q1 | No | No own frontend unit; code is a Python script. |
+| Q2 | No | Without units, no frontend entries or builds require evaluation. |
+| Q3 | No | No host, shell or root configuration exists. |
+| Q4 | No | Sole signal is dependency declared in vendored JupyterLab manifest (`quantum/share/jupyter/lab/static/package.json:211`); “a declared dependency alone is No”, and it does not even belong to project. |
+| Q5 | No | Q1–Q4 are No: Qiskit project with versioned virtual environment. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. É o mesmo caso do rascunho 205: código de terceiros (JupyterLab) dentro de um ambiente virtual versionado, sem relação com o projeto. Não é o caso de 102/074/080, em que a plataforma de terceiros hospedava as unidades.
-- `frontend_units: 0`, `unit_organization: none`, `approaches: []`, `ui_technologies: []`, `build_tools: []`, `repo_type: other` (projetos pessoais de estudo, `README.md:3`).
-- Não há decisão aberta.
+- `Non-MFE` under rule “at least one question is No”. Same case as draft 205: third-party code (JupyterLab) inside versioned virtual environment, unrelated to project. Unlike 102/074/080, where third-party platform hosted units.
+- `frontend_units: 0`, `unit_organization: none`, `approaches: []`, `ui_technologies: []`, `build_tools: []`, `repo_type: other` (personal study projects, `README.md:3`).
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** segundo caso na amostra (com 205) de `@module-federation/runtime-tools` do JupyterLab num ambiente virtual versionado casando a busca de código por `package.json`.
-- **Protocolo (busca):** a elegibilidade muda de `unknown` (001) para `pass` (002). O repositório foi criado e casado no mesmo dia da coleta 001.
+- **RQ1 (misleading signals):** second sample case (with 205) of JupyterLab `@module-federation/runtime-tools` in versioned virtual environment matching code search for `package.json`.
+- **Protocol (search):** eligibility changes from `unknown` (001) to `pass` (002). Repository was created and matched on same day as collection 001.

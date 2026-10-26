@@ -16,24 +16,24 @@ annotation:
 
 # 211 — varshinir07/mfe-onehub-shell-app
 
-## Leitura do repositório
+## Repository overview
 
-Repositório com uma só aplicação React, o host `onehub` de Module Federation. Os dois remotes que ele consome (`subscription` e `ownership`) não estão no snapshot: aparecem só como `http://localhost:3001/remoteEntry.js` e `http://localhost:3002/remoteEntry.js` (src/webpack.config.js:76-77). O build e o deploy deles, se existem, estão fora do repositório.
+Repository with a single React application, Module Federation host `onehub`. Both remotes it consumes (`subscription` and `ownership`) are absent from snapshot: appear only as `http://localhost:3001/remoteEntry.js` and `http://localhost:3002/remoteEntry.js` (src/webpack.config.js:76-77). Their build and deploy, if present, are outside repository.
 
-O projeto nasceu do Create React App, mas os scripts `start` e `build` chamam uma configuração Webpack 5 própria: `webpack serve --config src/webpack.config.js --mode development` e `webpack --config src/webpack.config.js --mode development` (package.json:19-20). Até o build fica em modo de desenvolvimento (src/webpack.config.js:7), grava um único `bundle.js` em `dist/` (src/webpack.config.js:25-29) e fixa o `publicPath` em `http://localhost:3000/` (src/webpack.config.js:26), a mesma porta do servidor de desenvolvimento (src/webpack.config.js:19). Essa é a única ocorrência `cfg-public-path` da mineração. É configuração de desenvolvimento.
+Project originated from Create React App, but scripts `start` and `build` call own Webpack 5 configuration: `webpack serve --config src/webpack.config.js --mode development` and `webpack --config src/webpack.config.js --mode development` (package.json:19-20). Even build remains in development mode (src/webpack.config.js:7), writes a single `bundle.js` to `dist/` (src/webpack.config.js:25-29) and fixes `publicPath` at `http://localhost:3000/` (src/webpack.config.js:26), same port as development server (src/webpack.config.js:19). This is the only mined `cfg-public-path` occurrence. It is development configuration.
 
-Não há Dockerfile, workflow de CI, configuração de hospedagem nem script de publicação, e o `matches.csv` não tem ocorrências `ops-*` nem `ci-*`. O README é o padrão do CRA: fala de `npm run build` gerar a pasta `build` "ready to be deployed" (README.md:25-31), o que não confere com o script real, que grava em `dist/` em modo de desenvolvimento.
+No Dockerfile, CI workflow, hosting configuration or publication script exists, and `matches.csv` has no `ops-*` or `ci-*` occurrences. README is CRA default: says `npm run build` generates directory `build` "ready to be deployed" (README.md:25-31), not matching actual script, writing to `dist/` in development mode.
 
-## Aplicações
+## Applications
 
-| # | Aplicação | Build | Deploy | Onde é servida | Versionamento | Artefatos |
+| # | Application | Build | Deploy | Where served | Versioning | Artifacts |
 |---|---|---|---|---|---|---|
-| 1 | . | separado | não observado | `http://localhost:3000` em desenvolvimento (src/webpack.config.js:19, 26) | No | package.json:20 (`webpack --config src/webpack.config.js --mode development`); src/webpack.config.js:5-102 (config webpack com `ModuleFederationPlugin` `onehub`); src/webpack.config.js:25-29 (saída `dist/bundle.js`, `publicPath` `http://localhost:3000/`) |
+| 1 | . | separate | not observed | `http://localhost:3000` in development (src/webpack.config.js:19, 26) | No | package.json:20 (`webpack --config src/webpack.config.js --mode development`); src/webpack.config.js:5-102 (webpack configuration with `ModuleFederationPlugin` `onehub`); src/webpack.config.js:25-29 (output `dist/bundle.js`, `publicPath` `http://localhost:3000/`) |
 
-## Observações
+## Observations
 
-**1. Raiz (`.`).** Aplicação da raiz, o host. Build separado: tem configuração e saída próprias (src/webpack.config.js:10, 25-29), e o código dos remotes não está neste repositório; eles são carregados em tempo de execução pelas URLs de src/webpack.config.js:76-77. Sem deploy observado: só o servidor de desenvolvimento na porta 3000 (package.json:19; src/webpack.config.js:13-22), e nada no snapshot publica a aplicação. Sem versionamento: package.json:3-4 declara `0.1.0` com `private: true`, sem uso em publicação.
+**1. Root (`.`).** Root application, the host. Separate build: own configuration and output (src/webpack.config.js:10, 25-29), and remote code is absent from repository; remotes load at runtime through URLs in src/webpack.config.js:76-77. No observed deploy: only development server on port 3000 (package.json:19; src/webpack.config.js:13-22), and nothing in snapshot publishes application. No versioning: package.json:3-4 declares `0.1.0` with `private: true`, unused in publication.
 
-## Resumo
+## Summary
 
-Aplicações: 1. Build (separado: 1). Deploy (não observado: 1). Versionamento independente: 0.
+Applications: 1. Build (separate: 1). Deploy (not observed: 1). Independent versioning: 0.

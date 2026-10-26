@@ -15,27 +15,27 @@ annotation:
 
 # 235 — mojtaba-arvin/django-react-iou-bnpl
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-remote-import | frontend/shell/src/infrastructure/shell/remote-modules/customer-app.adapter.ts:10 | frontend/shell | dynamic-loading | Yes | `import('customer_app/createAdminAppConfig')` carrega em runtime o módulo exposto pela unidade frontend/customer-app (remote `customer_app@http://localhost:3001/remoteEntry.js` em frontend/shell/webpack.config.js:62; exposto em frontend/customer-app/webpack.config.js:86-87) e chama a fábrica com `onBack` e `basename` (:11-14). `loadCustomerConfig` é chamada em frontend/shell/src/infrastructure/shell/shell-app.bootstrap.tsx:35, arquivo de entrada do shell (frontend/shell/webpack.config.js:7). |
-| src-remote-import | frontend/shell/src/infrastructure/shell/remote-modules/merchant-app.adapter.ts:10 | frontend/shell | dynamic-loading | Yes | `import('merchant_app/createAdminAppConfig')` carrega em runtime o módulo exposto pela unidade frontend/merchant-app (remote `merchant_app@http://localhost:3002/remoteEntry.js` em frontend/shell/webpack.config.js:63; exposto em frontend/merchant-app/webpack.config.js:86-87) e chama a fábrica com `onBack` e `basename` (:11-14). `loadMerchantConfig` é chamada em frontend/shell/src/infrastructure/shell/shell-app.bootstrap.tsx:36, arquivo de entrada do shell (frontend/shell/webpack.config.js:7). |
+| src-remote-import | frontend/shell/src/infrastructure/shell/remote-modules/customer-app.adapter.ts:10 | frontend/shell | dynamic-loading | Yes | `import('customer_app/createAdminAppConfig')` loads at runtime the module exposed by unit frontend/customer-app (remote `customer_app@http://localhost:3001/remoteEntry.js` at frontend/shell/webpack.config.js:62; exposed at frontend/customer-app/webpack.config.js:86-87) and calls the factory with `onBack` and `basename` (:11-14). `loadCustomerConfig` is called at frontend/shell/src/infrastructure/shell/shell-app.bootstrap.tsx:35, the shell entry file (frontend/shell/webpack.config.js:7). |
+| src-remote-import | frontend/shell/src/infrastructure/shell/remote-modules/merchant-app.adapter.ts:10 | frontend/shell | dynamic-loading | Yes | `import('merchant_app/createAdminAppConfig')` loads at runtime the module exposed by unit frontend/merchant-app (remote `merchant_app@http://localhost:3002/remoteEntry.js` at frontend/shell/webpack.config.js:63; exposed at frontend/merchant-app/webpack.config.js:86-87) and calls the factory with `onBack` and `basename` (:11-14). `loadMerchantConfig` is called at frontend/shell/src/infrastructure/shell/shell-app.bootstrap.tsx:36, the shell entry file (frontend/shell/webpack.config.js:7). |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | frontend/shell/src/infrastructure/shell/shell-app.bootstrap.tsx:45 | frontend/shell | host-relationship | Yes | `Routes` declara a página inicial do shell em `/` e as rotas `${customerBasePath}/*` e `${merchantBasePath}/*` para as configurações carregadas de customer-app e merchant-app (frontend/shell/src/infrastructure/shell/shell-app.bootstrap.tsx:45-66); `App` é renderizado na entrada em :81-88. |
-| manual | frontend/shell/src/infrastructure/shell/shell-app.bootstrap.tsx:52 | frontend/shell | runtime-composition | Yes | Renderiza `AdminApp` (de `@bnpl/shared`) com as props devolvidas pela unidade frontend/customer-app, dentro de `ErrorBoundary` e `Suspense` (:50-54); as props trazem os componentes da unidade (`InstallmentList`, `PlanList`, `PlanShow` em frontend/customer-app/src/application/services/create-admin-app-config.service.ts:12-23) e vêm de `loadCustomerConfig` (:35). |
-| manual | frontend/shell/src/infrastructure/shell/shell-app.bootstrap.tsx:62 | frontend/shell | runtime-composition | Yes | Renderiza `AdminApp` (de `@bnpl/shared`) com as props devolvidas pela unidade frontend/merchant-app, dentro de `ErrorBoundary` e `Suspense` (:60-64); as props trazem os componentes da unidade (`Dashboard`, `PlanList`, `PlanShow`, `PlanCreate` em frontend/merchant-app/src/application/services/create-admin-app-config.service.ts:13-21) e vêm de `loadMerchantConfig` (:36). |
+| manual | frontend/shell/src/infrastructure/shell/shell-app.bootstrap.tsx:45 | frontend/shell | host-relationship | Yes | `Routes` declares the shell home page at `/` and routes `${customerBasePath}/*` and `${merchantBasePath}/*` for configurations loaded from customer-app and merchant-app (frontend/shell/src/infrastructure/shell/shell-app.bootstrap.tsx:45-66); `App` is rendered at the entry at :81-88. |
+| manual | frontend/shell/src/infrastructure/shell/shell-app.bootstrap.tsx:52 | frontend/shell | runtime-composition | Yes | Renders `AdminApp` (from `@bnpl/shared`) with props returned by unit frontend/customer-app, inside `ErrorBoundary` and `Suspense` (:50-54); props carry the unit’s components (`InstallmentList`, `PlanList`, `PlanShow` at frontend/customer-app/src/application/services/create-admin-app-config.service.ts:12-23) and come from `loadCustomerConfig` (:35). |
+| manual | frontend/shell/src/infrastructure/shell/shell-app.bootstrap.tsx:62 | frontend/shell | runtime-composition | Yes | Renders `AdminApp` (from `@bnpl/shared`) with props returned by unit frontend/merchant-app, inside `ErrorBoundary` and `Suspense` (:60-64); props carry the unit’s components (`Dashboard`, `PlanList`, `PlanShow`, `PlanCreate` at frontend/merchant-app/src/application/services/create-admin-app-config.service.ts:13-21) and come from `loadMerchantConfig` (:36). |
 
-## Resumo
+## Summary
 
-Construções com composição: 5 (dynamic-loading: 2, host-relationship: 1, runtime-composition: 2).
+Constructs participating in composition: 5 (dynamic-loading: 2, host-relationship: 1, runtime-composition: 2).
 
-## Notas
+## Notes
 
-- Os remotos não expõem componente React montado por eles mesmos: expõem uma fábrica de configuração (`./createAdminAppConfig`) que devolve as props de `AdminApp`, componente da biblioteca `frontend/shared`; o comentário em frontend/customer-app/webpack.config.js:84 explica a escolha ("No root.render files to prevent multi React Trees in shell").
-- As chamadas `loadCustomerConfig()` e `loadMerchantConfig()` em frontend/shell/src/infrastructure/shell/shell-app.bootstrap.tsx:35-36 só envolvem os `import()` da mineração e não viraram linha à parte.
-- As únicas outras ocorrências da busca do passo 4 são `import("@bnpl/shared")` de tipo em frontend/shell/src/infrastructure/shell/remotes.d.ts:3-11 (declarações de módulo, sem carga em runtime) e a palavra "storage" num comentário em frontend/shared/src/infrastructure/auth/provider/auth.provider.ts:138; nenhuma é construção de composição.
+- The remotes do not expose a React component they mount themselves: they expose a configuration factory (`./createAdminAppConfig`) returning props for `AdminApp`, a component from library `frontend/shared`; the comment at frontend/customer-app/webpack.config.js:84 explains the choice ("No root.render files to prevent multi React Trees in shell").
+- The `loadCustomerConfig()` and `loadMerchantConfig()` calls at frontend/shell/src/infrastructure/shell/shell-app.bootstrap.tsx:35-36 only wrap the mined `import()` calls and did not become separate rows.
+- The only other step 4 search occurrences are type `import("@bnpl/shared")` at frontend/shell/src/infrastructure/shell/remotes.d.ts:3-11 (module declarations without runtime loading) and the word "storage" in a comment at frontend/shared/src/infrastructure/auth/provider/auth.provider.ts:138; neither is a composition construct.

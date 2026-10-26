@@ -15,9 +15,9 @@ annotation:
 
 # 033 — abhikukreti/music-library-project
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| main-app/package.json:18 | devDependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | main-app/vite.config.js:3-15 (configuração padrão do Vite importa `federation` e o invoca em plugins com remotes e shared); main-app/package.json:6-10 (build executa `vite build` sem configuração alternativa) |
-| music-library/package.json:20 | devDependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | music-library/vite.config.js:3-16 (configuração padrão do Vite importa `federation` e o invoca em plugins com exposes e shared); music-library/package.json:6-10 (build executa `vite build` sem configuração alternativa) |
+| main-app/package.json:18 | devDependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | main-app/vite.config.js:3-15 (the default Vite configuration imports `federation` and invokes it in plugins with remotes and shared); main-app/package.json:6-10 (the build runs `vite build` with no alternative configuration) |
+| music-library/package.json:20 | devDependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | music-library/vite.config.js:3-16 (the default Vite configuration imports `federation` and invokes it in plugins with exposes and shared); music-library/package.json:6-10 (the build runs `vite build` with no alternative configuration) |

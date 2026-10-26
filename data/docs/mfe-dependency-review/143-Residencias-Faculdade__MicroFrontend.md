@@ -15,6 +15,6 @@ annotation:
 
 # 143 — Residencias-Faculdade/MicroFrontend
 
-## Dependências
+## Dependencies
 
-Nenhuma dependência das tecnologias no dependencies.csv.
+No dependency on the technologies in dependencies.csv.

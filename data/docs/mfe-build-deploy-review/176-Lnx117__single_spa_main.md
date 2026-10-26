@@ -16,24 +16,24 @@ annotation:
 
 # 176 — Lnx117/single_spa_main
 
-## Leitura do repositório
+## Repository overview
 
-O snapshot é só o root config de uma aplicação single-spa: um projeto Vite na raiz, sem workspace, com `package.json`, `package-lock.json`, `vite.config.ts`, `index.html`, `src/main.ts` e `.envtest`. O `package.json` tem três scripts: `dev` (`vite`), `build` (`vite build`) e `preview` (`vite preview`) (package.json:6-10). O build usa a configuração de `vite.config.ts`, com o `vitePluginSingleSpa` em `type: 'root'` (vite.config.ts:12-15); a saída vai para o diretório padrão do Vite, porque a configuração não define `build` nem `base`. O bloco `server` só vale para o dev server: porta 9080 e `host: true` (vite.config.ts:17-22).
+The snapshot contains only a single-spa application root config: a root Vite project without workspace, with `package.json`, `package-lock.json`, `vite.config.ts`, `index.html`, `src/main.ts` and `.envtest`. The `package.json` has three scripts: `dev` (`vite`), `build` (`vite build`) and `preview` (`vite preview`) (package.json:6-10). Build uses `vite.config.ts` configuration, with `vitePluginSingleSpa` in `type: 'root'` (vite.config.ts:12-15); output goes to default Vite directory, because configuration defines neither `build` nor `base`. Block `server` applies only to dev server: port 9080 and `host: true` (vite.config.ts:17-22).
 
-Não há artefato de deploy. O `matches.csv` não tem ocorrências `ops-*`, `ci-*` nem `cfg-public-path`, e o snapshot não tem Dockerfile, compose, workflow de CI nem configuração de hospedagem. O que existe é configuração de desenvolvimento: os dois microfrontends que o root config carrega, `menu` e `base`, estão fora do repositório e são apontados por URLs de dev servers Vite em `localhost` (.envtest:8, 11; src/main.ts:15, 23). Um comentário do `.envtest` menciona, como passo futuro, usar builds publicados num CDN, com uma URL de exemplo (.envtest:5); é um comentário, não um artefato de deploy, e não decide a coluna Deploy.
+No deployment artifact exists. The `matches.csv` has no `ops-*`, `ci-*` or `cfg-public-path` occurrences, and snapshot has no Dockerfile, compose, CI workflow or hosting configuration. Existing configuration is for development: both microfrontends loaded by root config, `menu` and `base`, are outside repository and referenced by Vite dev server URLs at `localhost` (.envtest:8, 11; src/main.ts:15, 23). An `.envtest` comment mentions using CDN-published builds as a future step, with an example URL (.envtest:5); this is a comment, not a deployment artifact, and does not decide Deploy column.
 
-Como `menu` e `base` não estão no snapshot, não entram na tabela; a revisão estrutural só tem a raiz como aplicação. Não há backend nem servidor de API.
+Because `menu` and `base` are absent from snapshot, they do not enter table; structural review has only root as an application. No backend or API server exists.
 
-## Aplicações
+## Applications
 
-| # | Aplicação | Build | Deploy | Onde é servida | Versionamento | Artefatos |
+| # | Application | Build | Deploy | Where served | Versioning | Artifacts |
 |---|---|---|---|---|---|---|
-| 1 | . | separado | não observado | `http://localhost:9080` em desenvolvimento (vite.config.ts:18) | No | package.json:8 (`vite build`); vite.config.ts:5-16 (configuração Vite com `vitePluginSingleSpa` em `type: 'root'`) |
+| 1 | . | separate | not observed | `http://localhost:9080` in development (vite.config.ts:18) | No | package.json:8 (`vite build`); vite.config.ts:5-16 (Vite configuration with `vitePluginSingleSpa` in `type: 'root'`) |
 
-## Observações
+## Observations
 
-**1. Raiz (`.`).** Build próprio: o script `build` roda `vite build` na raiz (package.json:8), com a configuração do root config (vite.config.ts:5-16), e gera um artefato só desta aplicação. Os microfrontends não entram nele: o `import()` das URLs de `VITE_MENU` e `VITE_BASE` é marcado com `@vite-ignore` (src/main.ts:15, 23) e resolvido em tempo de execução. Deploy `não observado`: nenhum artefato do snapshot empacota ou publica a aplicação; `dev` e `preview` (package.json:7, 9) são comandos de desenvolvimento e a porta 9080 é do dev server (vite.config.ts:17-18). A versão `1.0.0` (package.json:3) não é usada em nenhuma publicação, daí Versionamento `No`.
+**1. Root (`.`).** Own build: script `build` runs `vite build` at root (package.json:8), with root config configuration (vite.config.ts:5-16), generating an artifact only for this application. Microfrontends do not enter it: `import()` of `VITE_MENU` and `VITE_BASE` URLs is marked `@vite-ignore` (src/main.ts:15, 23) and resolved at runtime. Deploy `not observed`: no snapshot artifact packages or publishes application; `dev` and `preview` (package.json:7, 9) are development commands and port 9080 belongs to dev server (vite.config.ts:17-18). Version `1.0.0` (package.json:3) is unused in any publication, hence Versioning `No`.
 
-## Resumo
+## Summary
 
-Aplicações: 1. Build (separado: 1). Deploy (não observado: 1). Versionamento independente: 0.
+Applications: 1. Build (separate: 1). Deploy (not observed: 1). Independent versioning: 0.

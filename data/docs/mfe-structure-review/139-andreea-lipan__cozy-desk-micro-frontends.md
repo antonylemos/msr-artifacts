@@ -17,23 +17,23 @@ annotation:
 
 ## Workspace
 
-Nenhuma declaração de workspace.
+No workspace declaration.
 
-## Unidades
+## Units
 
-| Diretório | Marcadores | Manifesto | Entrada | Build | Workspace | Deploy | Unidade frontend | Motivo |
+| Directory | Markers | Manifest | Entry | Build | Workspace | Deploy | Frontend unit | Rationale |
 |---|---|---|---|---|---|---|---|---|
-| sticky-notes | sticky-notes/angular.json;sticky-notes/federation.config.js;sticky-notes/package.json | sticky-notes/package.json:1-48 (pacote próprio `sticky-notes`) | sticky-notes/angular.json:46 (`browser: src/main.ts`); sticky-notes/src/main.ts:3-5 (`initFederation()` e `import('./bootstrap')`); sticky-notes/src/bootstrap.ts:5 (`bootstrapApplication(App, appConfig)`) | sticky-notes/angular.json:16-29 (alvo `build`, builder `@angular-architects/native-federation:build` sobre o alvo `esbuild`, angular.json:43-44 `@angular/build:application`); sticky-notes/package.json:7 (`ng build`) | — | — | Yes | Projeto Angular com pacote, entrada e alvo de build próprios, servido na porta 4333. |
-| tea-tracker | tea-tracker/angular.json;tea-tracker/federation.config.js;tea-tracker/package.json | tea-tracker/package.json:1-48 (pacote próprio `tea-tracker`) | tea-tracker/angular.json:46 (`browser: src/main.ts`); tea-tracker/src/main.ts:3-5 (`initFederation()` e `import('./bootstrap')`); tea-tracker/src/bootstrap.ts:5 (`bootstrapApplication(App, appConfig)`) | tea-tracker/angular.json:16-29 (alvo `build`, builder `@angular-architects/native-federation:build` sobre o alvo `esbuild`, angular.json:43-44 `@angular/build:application`); tea-tracker/package.json:7 (`ng build`) | — | — | Yes | Projeto Angular com pacote, entrada e alvo de build próprios, servido na porta 4222. |
-| test-base | test-base/angular.json;test-base/federation.config.js;test-base/package.json | test-base/package.json:1-48 (pacote próprio `test-base`) | test-base/angular.json:46 (`browser: src/main.ts`); test-base/src/main.ts:3-5 (`initFederation('federation.manifest.json')` e `import('./bootstrap')`); test-base/src/bootstrap.ts:5 (`bootstrapApplication(App, appConfig)`) | test-base/angular.json:16-29 (alvo `build`, builder `@angular-architects/native-federation:build` sobre o alvo `esbuild`, angular.json:43-44 `@angular/build:application`); test-base/package.json:7 (`ng build`) | — | — | Yes | Projeto Angular com pacote, entrada e alvo de build próprios, servido na porta 4200. |
+| sticky-notes | sticky-notes/angular.json;sticky-notes/federation.config.js;sticky-notes/package.json | sticky-notes/package.json:1-48 (own package `sticky-notes`) | sticky-notes/angular.json:46 (`browser: src/main.ts`); sticky-notes/src/main.ts:3-5 (`initFederation()` and `import('./bootstrap')`); sticky-notes/src/bootstrap.ts:5 (`bootstrapApplication(App, appConfig)`) | sticky-notes/angular.json:16-29 (`build` target, builder `@angular-architects/native-federation:build` over the `esbuild` target, angular.json:43-44 `@angular/build:application`); sticky-notes/package.json:7 (`ng build`) | — | — | Yes | Angular project with its own package, entry and build target, served on port 4333. |
+| tea-tracker | tea-tracker/angular.json;tea-tracker/federation.config.js;tea-tracker/package.json | tea-tracker/package.json:1-48 (own package `tea-tracker`) | tea-tracker/angular.json:46 (`browser: src/main.ts`); tea-tracker/src/main.ts:3-5 (`initFederation()` and `import('./bootstrap')`); tea-tracker/src/bootstrap.ts:5 (`bootstrapApplication(App, appConfig)`) | tea-tracker/angular.json:16-29 (`build` target, builder `@angular-architects/native-federation:build` over the `esbuild` target, angular.json:43-44 `@angular/build:application`); tea-tracker/package.json:7 (`ng build`) | — | — | Yes | Angular project with its own package, entry and build target, served on port 4222. |
+| test-base | test-base/angular.json;test-base/federation.config.js;test-base/package.json | test-base/package.json:1-48 (own package `test-base`) | test-base/angular.json:46 (`browser: src/main.ts`); test-base/src/main.ts:3-5 (`initFederation('federation.manifest.json')` and `import('./bootstrap')`); test-base/src/bootstrap.ts:5 (`bootstrapApplication(App, appConfig)`) | test-base/angular.json:16-29 (`build` target, builder `@angular-architects/native-federation:build` over the `esbuild` target, angular.json:43-44 `@angular/build:application`); test-base/package.json:7 (`ng build`) | — | — | Yes | Angular project with its own package, entry and build target, served on port 4200. |
 
-## Resumo
+## Summary
 
-Aplicações frontend no snapshot: 3 (sticky-notes, tea-tracker, test-base).
+Frontend applications in the snapshot: 3 (sticky-notes, tea-tracker, test-base).
 
-## Notas
+## Notes
 
-- Não há manifesto na raiz do snapshot; cada `angular.json` declara um único projeto (`sticky-notes/angular.json:8-9`, `tea-tracker/angular.json:8-9`, `test-base/angular.json:8-9`), e nenhum `package.json` tem `workspaces`. O `artifacts.csv` marca `package.json` e `tsconfig*.json` como `workspace-config`, mas o `matches.csv` não tem ocorrência `ws-*`.
-- As portas vêm do alvo `serve-original` (`sticky-notes/angular.json:96-98`, `tea-tracker/angular.json:96-98`, `test-base/angular.json:96-98`).
-- Não há Dockerfile, CI ou configuração de hospedagem no snapshot, e o `matches.csv` não tem ocorrências `ops-*` ou `ci-*`.
-- A contagem 3 coincide com `frontend_units: 3` da classificação.
+- There is no manifest at the snapshot root; each `angular.json` declares a single project (`sticky-notes/angular.json:8-9`, `tea-tracker/angular.json:8-9`, `test-base/angular.json:8-9`), and no `package.json` has `workspaces`. `artifacts.csv` marks `package.json` and `tsconfig*.json` as `workspace-config`, but `matches.csv` has no `ws-*` occurrence.
+- The ports come from the `serve-original` target (`sticky-notes/angular.json:96-98`, `tea-tracker/angular.json:96-98`, `test-base/angular.json:96-98`).
+- There is no Dockerfile, CI or hosting configuration in the snapshot, and `matches.csv` has no `ops-*` or `ci-*` occurrences.
+- The count of 3 matches the classification’s `frontend_units: 3`.

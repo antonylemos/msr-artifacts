@@ -13,17 +13,17 @@ annotation:
 
 # 123 — PedroHugo11/mf-dashboard-module-federation
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem 4 commits, todos de 2026-01-15, com 1 merge: `9f20c00` ("Initial commit"), `e4f9c06` ("Update README.md"), `01b1d4a` ("feat: microfrontend dashboard POC") e, no snapshot, o merge `184ec1b` ("Merge branch 'main' of https://github.com/pedrohugo11/mf-dashboard-module-federation").
+History up to snapshot has 4 commits, all from 2026-01-15, with 1 merge: `9f20c00` ("Initial commit"), `e4f9c06` ("Update README.md"), `01b1d4a` ("feat: microfrontend dashboard POC") and, at snapshot, merge `184ec1b` ("Merge branch 'main' of https://github.com/pedrohugo11/mf-dashboard-module-federation").
 
-As revisões anteriores não deixaram ponto ambíguo que o histórico pudesse esclarecer: as três dependências de federação estão configuradas (3.4.2), as três unidades são `Yes` (3.4.3), as construções têm composição `Yes` (3.4.4), as duas relações estão ativas (3.4.5), o deploy das três aplicações é `não observado`, e não `Undetermined` (3.4.6), e a documentação não tem afirmação `contradita` nem `parcial` (3.4.7). A afirmação `sem corroboração` sobre deploy independente (3.4.7 #8) não está entre as que o passo 2 levanta e não virou ponto. Por isso o histórico não foi consultado além deste contexto.
+Previous reviews left no ambiguous point history could clarify: three federation dependencies are configured (3.4.2), three units are `Yes` (3.4.3), constructs have composition `Yes` (3.4.4), both relationships are active (3.4.5), deploy of three applications is `not observed`, rather than `Undetermined` (3.4.6), and documentation has no `contradicted` or `partial` claim (3.4.7). The `uncorroborated` claim about independent deploy (3.4.7 #8) is outside those raised by step 2 and did not become a point. Thus history was not consulted beyond this context.
 
-## Pontos
+## Points
 
-Nenhum ponto ambíguo nas revisões anteriores.
+No ambiguous points in previous reviews.
 
-## Comandos
+## Commands
 
 ```
 docs/mfe-history-review/tools/hist.sh PedroHugo11__mf-dashboard-module-federation rev-list --count 184ec1b1762b6ea93f1f8f8de44118412a9ab6a8
@@ -31,6 +31,6 @@ docs/mfe-history-review/tools/hist.sh PedroHugo11__mf-dashboard-module-federatio
 docs/mfe-history-review/tools/hist.sh PedroHugo11__mf-dashboard-module-federation log --format='%h %ad %s' --date=short 184ec1b1762b6ea93f1f8f8de44118412a9ab6a8
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 4 (2026-01-15 a 2026-01-15). Pontos: 0.
+Commits up to the snapshot: 4 (2026-01-15 to 2026-01-15). Points: 0.

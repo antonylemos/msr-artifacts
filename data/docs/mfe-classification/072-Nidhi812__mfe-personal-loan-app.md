@@ -20,41 +20,41 @@ annotation:
 
 # 072 — Nidhi812/mfe-personal-loan-app
 
-## Contexto
+## Context
 
-- **Abordagem de implementação (declarada):** Module Federation (Angular), host + remote
-- **Tipo de repositório:** example/proof of concept ("Module Federation Demo - Host & Remote Applications", `README.md:1`)
-- **Classificação:** Non-MFE (código das unidades inacessível; alternativa: Uncertain)
-- **Commit avaliado:** `245d2d1` (branch padrão `master`)
+- **Implementation approach (declared):** Module Federation (Angular), host + remote
+- **Repository type:** example/proof of concept ("Module Federation Demo - Host & Remote Applications", `README.md:1`)
+- **Classification:** Non-MFE (unit code inaccessible; alternative: Uncertain)
+- **Assessed commit:** `245d2d1` (default branch `master`)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | Só 6 entradas: `README.md`, `.gitignore`, `.github/workflows/{deploy,main}.yml` e dois **gitlinks** (`host-app` e `personal-loan-app`, modo `160000`, commits `314812e` e `b02e940`) sem `.gitmodules`. São repositórios aninhados adicionados por engano (`8aff2f8` "initial import of host-app and personal-loan-app"); o conteúdo das apps não está no repositório nem há URL para recuperá-lo | ausente |
-| Documentação | `README.md:1-35`: host (4200) e remote "Personal Loan App" (4201); `:100` `"personalLoanApp": "http://localhost:4201/remoteEntry.js"`; `:112-113` trecho de `exposes` (não corroborada) | fraca |
-| Build/deploy | `.github/workflows/deploy.yml:24-59`: `npm install` e `npm run build --prod` na raiz, que não tem `package.json`; o workflow não teria o que construir (workflow quebrado) | contexto |
-| Configuração / Código-fonte | Inexistentes no repositório (estão dentro dos gitlinks) | ausente |
+| Structure | Only 6 entries: `README.md`, `.gitignore`, `.github/workflows/{deploy,main}.yml` and two **gitlinks** (`host-app` and `personal-loan-app`, mode `160000`, commits `314812e` and `b02e940`) without `.gitmodules`. These are nested repositories added by mistake (`8aff2f8` "initial import of host-app and personal-loan-app"); app contents are not in the repository, nor is there a URL to retrieve them | absent |
+| Documentation | `README.md:1-35`: host (4200) and remote "Personal Loan App" (4201); `:100` `"personalLoanApp": "http://localhost:4201/remoteEntry.js"`; `:112-113` `exposes` excerpt (uncorroborated) | weak |
+| Build/deploy | `.github/workflows/deploy.yml:24-59`: `npm install` and `npm run build --prod` at the root, which has no `package.json`; the workflow would have nothing to build (broken workflow) | context |
+| Configuration / Source code | Nonexistent in the repository (inside gitlinks) | absent |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend acessível no repositório; as unidades só aparecem no README, não numa configuração de composição versionada |
-| Q2 | Undetermined | Não há como verificar as unidades |
-| Q3 | Undetermined | O host não é observável |
-| Q4 | Undetermined | A configuração de MF existe só como trecho no README |
-| Q5 | No | Documentação sem corroboração em artefatos (protocolo 3.4.7) |
+| Q1 | No | No accessible frontend unit in the repository; units appear only in the README, not in tracked composition configuration |
+| Q2 | Undetermined | No way to verify the units |
+| Q3 | Undetermined | The host is not observable |
+| Q4 | Undetermined | MF configuration exists only as a README excerpt |
+| Q5 | No | Documentation without artifact corroboration (protocol 3.4.7) |
 
-## Motivo
+## Rationale
 
-- Q1 é No pelo critério operacional ("identifiable in the repository or explicitly referenced by its composition configuration"): o código está em gitlinks sem conteúdo nem origem. A exceção MFE-unit não se aplica, pois nenhuma unidade é observável.
-- Na filtragem automática (seção 3.2 do protocolo), cabe em "repositories with no accessible source or configuration artifacts". O README descreve um MFE que o repositório não contém.
+- Q1 is No under the operational criterion ("identifiable in the repository or explicitly referenced by its composition configuration"): code is in gitlinks without content or origin. The MFE-unit exception does not apply because no unit is observable.
+- In automatic filtering (protocol section 3.2), it fits "repositories with no accessible source or configuration artifacts". The README describes an MFE that the repository does not contain.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (artefato incomum):** gitlinks sem `.gitmodules` (repositórios aninhados commitados por engano) deixam o repositório vazio na prática; uma busca por arquivos não encontraria nada além do README.
+- **RQ1 (unusual artifact):** gitlinks without `.gitmodules` (nested repositories committed by mistake) leave the repository effectively empty; a file search would find nothing beyond the README.
 
-## Ponto para revisão conjunta
+## Point for joint review
 
-- Alternativa: **Uncertain**, por coerência com o repositório 038 (código fora do repositório). Diferença: o 038 tinha orquestração (compose, gateway) referenciando as unidades; aqui só há README e workflows quebrados, e os gitlinks não apontam para nenhum repositório recuperável.
+- Alternative: **Uncertain**, for consistency with repository 038 (code outside the repository). Difference: 038 had orchestration (compose, gateway) referencing units; here there is only a README and broken workflows, and gitlinks do not point to any recoverable repository.

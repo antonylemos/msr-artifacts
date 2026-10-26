@@ -19,188 +19,189 @@ annotation:
 
 # 033 — abhikukreti/music-library-project
 
-## Leitura do repositório
+## Repository overview
 
-Duas aplicações React/Vite formam uma cadeia curta de Module Federation:
-- **Dependência:** `@originjs/vite-plugin-federation`, nas duas aplicações (#1, #2).
-- **Configuração:** o host declara o remote no endereço publicado na Netlify, e não em `localhost` (#3). O remote se declara e expõe o componente `MusicLibrary` (#4).
-- **Código:** o host importa o componente remoto pelo nome (#5) e o renderiza depois do login, passando o papel do usuário como prop (#7).
-- **Relação:** isso resulta na relação ativa main-app → music-library (#10).
+Two React/Vite applications form short Module Federation chain:
+- **Dependency:** `@originjs/vite-plugin-federation` in both applications (#1, #2).
+- **Configuration:** host declares remote at published Netlify address rather than `localhost` (#3). Remote declares itself/exposes `MusicLibrary` component (#4).
+- **Code:** host imports remote component by name (#5), rendering after login/passing user role as prop (#7).
+- **Relationship:** active main-app → music-library relationship results (#10).
 
-O build é separado para as duas. O deploy só é separado para o remote (#12). Para o host, o deploy em site próprio é apenas relato do README (#14, #17, #18), sem artefato (#11), e o histórico não confirma a ordem de publicação descrita (#23).
+Build separate for both. Deployment separate only for remote (#12). Host own-site deployment is only README report (#14, #17, #18), without artifact (#11), history not confirming stated publication order (#23).
 
-A documentação tem dez afirmações, sete corroboradas. As não corroboradas tratam do deploy do host. O único sinal que engana é o service worker gerado do MSW, cujo `postMessage` não comunica unidades (#6).
+Documentation has ten claims, seven corroborated. Uncorroborated concern host deployment. Sole misleading signal is generated MSW service worker whose `postMessage` does not communicate units (#6).
 
-## Observações
+## Observations
 
 ### 1. main-app/package.json:18
 
-**Observação:** `@originjs/vite-plugin-federation` (`^1.4.1`) está declarada em `devDependencies`.
+**Observation:** `@originjs/vite-plugin-federation` (`^1.4.1`) declared in `devDependencies`.
 
-**Interpretação:** A tecnologia de federação está presente no build do host.
+**Interpretation:** Federation technology present in host build.
 
 ### 2. music-library/package.json:20
 
-**Observação:** `@originjs/vite-plugin-federation` (`^1.4.1`) está declarada em `devDependencies`.
+**Observation:** `@originjs/vite-plugin-federation` (`^1.4.1`) declared in `devDependencies`.
 
-**Interpretação:** A tecnologia de federação está presente no build do remote.
+**Interpretation:** Federation technology present in remote build.
 
 ### 3. main-app/vite.config.js:1-22
 
-**Observação:** `federation` declara `name: 'main_app'` e o remote `music_library` em `https://astonishing-seahorse-d2decf.netlify.app/assets/remoteEntry.js`, e compartilha `react`, `react-dom` e `@tanstack/react-query`.
+**Observation:** `federation` declares `name: 'main_app'` and remote `music_library` at `https://astonishing-seahorse-d2decf.netlify.app/assets/remoteEntry.js`, sharing `react`, `react-dom` and `@tanstack/react-query`.
 
-**Interpretação:** A configuração do host declara o remote e o endereço publicado dele.
+**Interpretation:** Host configuration declares remote/published address.
 
 ### 4. music-library/vite.config.js:1-24
 
-**Observação:** `federation` declara `name: 'music_library'` e `filename: 'remoteEntry.js'`, expõe `./MusicLibrary` (`./src/MusicLibrary.jsx`) e compartilha as mesmas bibliotecas.
+**Observation:** `federation` declares `name: 'music_library'` and `filename: 'remoteEntry.js'`, exposing `./MusicLibrary` (`./src/MusicLibrary.jsx`), sharing same libraries.
 
-**Interpretação:** O music-library está configurado como remote e oferece seu componente a um host.
+**Interpretation:** Music-library configured as remote offering component to host.
 
-**Nota:** O `music-library/public/_headers`, citado na coluna Deploy da revisão estrutural, é configuração de hospedagem. Ele entra na dimensão 6 (#12), e não aqui.
+**Note:** `music-library/public/_headers`, cited in structural review Deploy column, is hosting configuration. Included in dimension 6 (#12), not here.
 
 ### 5. main-app/src/App.jsx:5
 
-**Observação:** `const MusicLibrary = lazy(() => import('music_library/MusicLibrary'))`.
+**Observation:** `const MusicLibrary = lazy(() => import('music_library/MusicLibrary'))`.
 
-**Interpretação:** O host importa sob demanda o componente exposto pelo remote, pelo nome dele.
+**Interpretation:** Host imports remote-exposed component on demand by name.
 
 ### 6. music-library/public/mockServiceWorker.js:312
 
-**Observação:** `client.postMessage` no service worker gerado do MSW, que simula a API.
+**Observation:** `client.postMessage` in generated API-mocking MSW service worker.
 
-**Interpretação:** É a troca de mensagens do MSW com o seu cliente, e não comunicação entre unidades. É um falso positivo da busca por comunicação.
+**Interpretation:** MSW/client messaging rather than inter-unit communication. Communication-search false positive.
 
 ### 7. main-app/src/App.jsx:21-23; main-app/src/App.jsx:8-12
 
-**Observação:** `<MusicLibrary isAdmin={isAdmin} />` dentro de `Suspense`, renderizado só depois do login.
+**Observation:** `<MusicLibrary isAdmin={isAdmin} />` within `Suspense`, rendered only after login.
 
-**Interpretação:** O host renderiza o componente remoto e lhe passa o papel do usuário.
+**Interpretation:** Host renders remote component, passing user role.
 
 ### 8. main-app; main-app/package.json:1-11; main-app/index.html:10-11; main-app/src/main.jsx:10-18; main-app/vite.config.js:5-20
 
-**Observação:** É uma aplicação React com manifesto, entrada e build Vite próprios.
+**Observation:** React application with own manifest, entry and Vite build.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with own boundary.
 
 ### 9. music-library; music-library/package.json:1-11; music-library/index.html:10-11; music-library/src/main.jsx:9-22; music-library/vite.config.js:5-21
 
-**Observação:** É uma aplicação React com manifesto, entrada standalone e build Vite próprios.
+**Observation:** React application with own manifest, standalone entry and Vite build.
 
-**Interpretação:** É uma unidade frontend com limite próprio, capaz de rodar sozinha.
+**Interpretation:** Frontend unit with own boundary, capable of running alone.
 
 ### 10. main-app/src/App.jsx:5, 22; main-app/vite.config.js:8-12; music-library/vite.config.js:8-13
 
-**Observação:** O host importa `music_library/MusicLibrary` e o renderiza. O nome e o módulo correspondem à configuração do remote, embora a URL aponte para o artefato publicado.
+**Observation:** Host imports/renders `music_library/MusicLibrary`. Name/module match remote configuration although URL points to published artifact.
 
-**Interpretação:** É uma relação host → remote ativa.
+**Interpretation:** Active host → remote relationship.
 
 ### 11. main-app/vite.config.js:5-22; main-app/package.json:8
 
-**Observação:** Tem configuração e `vite build` próprios. Nenhum artefato do snapshot configura a hospedagem do host.
+**Observation:** Own configuration/`vite build`. No snapshot artifact configures host hosting.
 
-**Interpretação:** Há uma fronteira de build própria, sem deploy observado.
+**Interpretation:** Own build boundary without observed deployment.
 
 ### 12. music-library/vite.config.js:5-24; music-library/package.json:8; music-library/public/_headers:1-2; main-app/vite.config.js:11
 
-**Observação:** Tem configuração e `vite build` próprios, que geram o `remoteEntry.js`. É servido num domínio próprio, usado pelo host, e o `_headers` da hospedagem libera CORS para `/assets/*`.
+**Observation:** Own configuration/`vite build`, generating `remoteEntry.js`. Served at own domain used by host, hosting `_headers` allows CORS for `/assets/*`.
 
-**Interpretação:** Há fronteiras de build e de deploy próprias, sem versionamento independente.
+**Interpretation:** Own build/deployment boundaries without independent versioning.
 
 ### 13. README.md:3
 
-**Observação:** "React app split into two parts (main app + music library) connected via Module Federation".
+**Observation:** "React app split into two parts (main app + music library) connected via Module Federation".
 
-**Interpretação:** Descreve as duas aplicações ligadas por Module Federation. A afirmação é corroborada.
+**Interpretation:** Describes two applications linked through Module Federation. Claim corroborated.
 
 ### 14. README.md:6
 
-**Observação:** "Main App: https://fluffy-pika-9e723b.netlify.app".
+**Observation:** "Main App: https://fluffy-pika-9e723b.netlify.app".
 
-**Interpretação:** Dá o endereço publicado do host, que nenhum artefato registra. A afirmação fica sem corroboração.
+**Interpretation:** Gives published host address absent from artifacts. Claim uncorroborated.
 
 ### 15. README.md:7
 
-**Observação:** "Music Library (remote): https://astonishing-seahorse-d2decf.netlify.app".
+**Observation:** "Music Library (remote): https://astonishing-seahorse-d2decf.netlify.app".
 
-**Interpretação:** Dá o endereço publicado do remote, o mesmo que o host usa. A afirmação é corroborada.
+**Interpretation:** Gives published remote address, same used by host. Claim corroborated.
 
 ### 16. README.md:31
 
-**Observação:** "Both apps in one repo".
+**Observation:** "Both apps in one repo".
 
-**Interpretação:** Afirma que as duas aplicações estão no mesmo repositório. A afirmação é corroborada.
+**Interpretation:** Claims both applications in same repository. Claim corroborated.
 
 ### 17. README.md:31
 
-**Observação:** "deployed as 2 separate Netlify sites".
+**Observation:** "deployed as 2 separate Netlify sites".
 
-**Interpretação:** Afirma o deploy separado das duas. A parte do remote se confirma, e a do host fica sem artefato. A afirmação é parcial.
+**Interpretation:** Claims separate deployment of both. Remote confirmed, host lacks artifact. Claim partial.
 
 ### 18. README.md:32, 34
 
-**Observação:** "Deployed music-library first […] Deployed main-app same way".
+**Observation:** "Deployed music-library first […] Deployed main-app same way".
 
-**Interpretação:** Relata a ordem de publicação, que o snapshot não registra. A afirmação fica sem corroboração.
+**Interpretation:** Reports publication order absent from snapshot. Claim uncorroborated.
 
 ### 19. README.md:33
 
-**Observação:** "Copied its live remoteEntry.js URL into main-app's vite.config.js".
+**Observation:** "Copied its live remoteEntry.js URL into main-app's vite.config.js".
 
-**Interpretação:** Afirma que a configuração do host tem a URL publicada do remote. A afirmação é corroborada.
+**Interpretation:** Claims host configuration contains published remote URL. Claim corroborated.
 
 ### 20. README.md:35
 
-**Observação:** "Added _headers file in music-library/public with CORS headers, since remote loads from a different domain".
+**Observation:** "Added _headers file in music-library/public with CORS headers, since remote loads from a different domain".
 
-**Interpretação:** Explica o `_headers` pela diferença de domínios. A afirmação é corroborada.
+**Interpretation:** Explains `_headers` through domain difference. Claim corroborated.
 
 ### 21. README.md:38
 
-**Observação:** "music-library exposes MusicLibrary.jsx using @originjs/vite-plugin-federation, generating remoteEntry.js on build. main-app lazy loads it using React lazy() and Suspense."
+**Observation:** "music-library exposes MusicLibrary.jsx using @originjs/vite-plugin-federation, generating remoteEntry.js on build. main-app lazy loads it using React lazy() and Suspense."
 
-**Interpretação:** Descreve a exposição e a carga do componente remoto. A afirmação é corroborada.
+**Interpretation:** Describes remote component exposure/loading. Claim corroborated.
 
 ### 22. README.md:41
 
-**Observação:** "Role is passed to the remote as a plain prop (isAdmin)."
+**Observation:** "Role is passed to the remote as a plain prop (isAdmin)."
 
-**Interpretação:** Descreve o único contrato de dados entre as aplicações. A afirmação é corroborada.
+**Interpretation:** Describes sole inter-application data contract. Claim corroborated.
 
 ### 23. 445c3aa 2026-07-18 (main-app, music-library); 9bb56ac 2026-07-18 (main-app/vite.config.js); 5876ac6 2026-07-18 (music-library/public/_headers)
 
-**Observação:** As duas aplicações aparecem no primeiro commit. O commit seguinte altera só a configuração do host, e a mensagem anuncia que ele passou a apontar para o remote publicado. Depois, um commit cria o `_headers`. A versão anterior da configuração do host não está disponível.
+**Observation:** Both applications appear in first commit. Following commit changes only host configuration, message announcing it now points to published remote. Later commit creates `_headers`. Prior host configuration version unavailable.
 
-**Interpretação:** A ordem das mudanças de configuração é compatível com o README, mas o histórico não registra as publicações nem o deploy do host. A dúvida é só sobre o passado: no snapshot, o deploy do host continua sem artefato.
+**Interpretation:** Configuration change order matches README, but history records neither publication nor host deployment. Past-only question: host deployment remains without snapshot artifact.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.2 (main-app/package.json:18) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #3 |
-| 2 | 3.4.2 (music-library/package.json:20) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #4 |
-| 3 | 3.4.2 (main-app/package.json:18, Evidência); 3.4.3 (main-app, Marcadores e Build); 3.4.5 #1 (Configuração); 3.4.6 #1, #2 (Artefatos); 3.4.7 #3, #7, #8 (Evidência) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #8; configura #10 |
-| 4 | 3.4.2 (music-library/package.json:20, Evidência); 3.4.3 (music-library, Marcadores e Build); 3.4.5 #1 (Configuração); 3.4.6 #2 (Artefatos); 3.4.7 #9 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #9; configura #10 |
-| 5 | 3.4.4 (main-app/src/App.jsx:5) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #10 |
-| 6 | 3.4.4 (music-library/public/mockServiceWorker.js:312) | 3 código | código-fonte | — | contexto | fraca | — |
-| 7 | 3.4.4 (main-app/src/App.jsx:22) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #10 |
-| 8 | 3.4.3 (main-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 9 | 3.4.3 (music-library) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 10 | 3.4.5 #1 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #8; liga #9 |
-| 11 | 3.4.6 #1 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #8 |
-| 12 | 3.4.6 #2 | 6 build-deploy | deploy | — | arquitetural | moderada | publica #9 |
-| 13 | 3.4.7 #1 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #8; corrobora #9; corrobora #10 |
-| 14 | 3.4.7 #2 | 7 documentação | documentação | — | arquitetural | fraca | — |
-| 15 | 3.4.7 #3 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #12; corrobora #3 |
-| 16 | 3.4.7 #4 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #8; corrobora #9 |
-| 17 | 3.4.7 #5 | 7 documentação | documentação | — | arquitetural | fraca | corrobora em parte #12 |
-| 18 | 3.4.7 #6 | 7 documentação | documentação | — | arquitetural | fraca | — |
-| 19 | 3.4.7 #7 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #3 |
-| 20 | 3.4.7 #8 | 7 documentação | documentação | — | arquitetural | fraca | corrobora music-library/public/_headers:1-2; corrobora #3 |
-| 21 | 3.4.7 #9 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #10; corrobora #4; corrobora #5 |
-| 22 | 3.4.7 #10 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #7 |
-| 23 | 3.4.8 #1 | 8 histórico | histórico | — | arquitetural | fraca | explica #11; explica #17; explica #18 |
+| 1 | 3.4.2 (main-app/package.json:18) | 1 technology | manifest | module-federation | technological | weak | declares #3 |
+| 2 | 3.4.2 (music-library/package.json:20) | 1 technology | manifest | module-federation | technological | weak | declares #4 |
+| 3 | 3.4.2 (main-app/package.json:18, Evidence); 3.4.3 (main-app, Markers and Build); 3.4.5 #1 (Configuration); 3.4.6 #1, #2 (Artifacts); 3.4.7 #3, #7, #8 (Evidence) | 2 configuration | configuration | module-federation | architectural | strong | configures #8; configures #10 |
+| 4 | 3.4.2 (music-library/package.json:20, Evidence); 3.4.3 (music-library, Markers and Build); 3.4.5 #1 (Configuration); 3.4.6 #2 (Artifacts); 3.4.7 #9 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #9; configures #10 |
+| 5 | 3.4.4 (main-app/src/App.jsx:5) | 3 code | source code | module-federation | architectural | strong | implements #10 |
+| 6 | 3.4.4 (music-library/public/mockServiceWorker.js:312) | 3 code | source code | — | context | weak | — |
+| 7 | 3.4.4 (main-app/src/App.jsx:22) | 3 code | source code | module-federation | technological | moderate | implements #10 |
+| 8 | 3.4.3 (main-app) | 4 structure | directory | — | architectural | moderate | — |
+| 9 | 3.4.3 (music-library) | 4 structure | directory | — | architectural | moderate | — |
+| 10 | 3.4.5 #1 | 5 composition | source code | module-federation | architectural | strong | links #8; links #9 |
+| 11 | 3.4.6 #1 | 6 build-deploy | configuration | — | architectural | moderate | publishes #8 |
+| 12 | 3.4.6 #2 | 6 build-deploy | deploy | — | architectural | moderate | publishes #9 |
+| 13 | 3.4.7 #1 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #8; corroborates #9; corroborates #10 |
+| 14 | 3.4.7 #2 | 7 documentation | documentation | — | architectural | weak | — |
+| 15 | 3.4.7 #3 | 7 documentation | documentation | — | architectural | weak | corroborates #12; corroborates #3 |
+| 16 | 3.4.7 #4 | 7 documentation | documentation | — | architectural | weak | corroborates #8; corroborates #9 |
+| 17 | 3.4.7 #5 | 7 documentation | documentation | — | architectural | weak | partially corroborates #12 |
+| 18 | 3.4.7 #6 | 7 documentation | documentation | — | architectural | weak | — |
+| 19 | 3.4.7 #7 | 7 documentation | documentation | — | architectural | weak | corroborates #3 |
+| 20 | 3.4.7 #8 | 7 documentation | documentation | — | architectural | weak | corroborates music-library/public/_headers:1-2; corroborates #3 |
+| 21 | 3.4.7 #9 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #10; corroborates #4; corroborates #5 |
+| 22 | 3.4.7 #10 | 7 documentation | documentation | — | architectural | weak | corroborates #7 |
+| 23 | 3.4.8 #1 | 8 history | history | — | architectural | weak | explains #11; explains #17; explains #18 |
 
-## Resumo
+## Summary
 
-Observações: 23. Dimensões (tecnologia: 2, configuração: 2, código: 3, estrutura: 2, composição: 1, build-deploy: 2, documentação: 10, histórico: 1). Força (forte: 3, moderada: 6, fraca: 14, ambígua: 0). Evidência (tecnológica: 4, arquitetural: 18, contexto: 1).
+Observations: 23. Dimensions (technology: 2, configuration: 2, code: 3, structure: 2, composition: 1, build-deploy: 2, documentation: 10, history: 1). Strength (strong: 3, moderate: 6, weak: 14, ambiguous: 0). Evidence (technological: 4, architectural: 18, context: 1).
+

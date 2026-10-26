@@ -20,59 +20,59 @@ annotation:
 
 # 375 — samriddhimakasare25/UX221Assignment-1
 
-## Contexto
+## Context
 
-Trabalho de disciplina feito a partir do template `cd-wordpress` (`README.md:1–2`; `LICENSE.txt:3`, “Copyright (c) 2024 diy-pwa”): um site WordPress do WordPress Playground (banco SQLite, temas e plugins em `wp-content/`) publicado por `wp-pwa`. O texto “consumer of microfrontends” vem do README do template (`README.md:13`); o site não carrega nenhuma unidade externa. O nome do repositório não é usado como evidência.
+Course assignment based on template `cd-wordpress` (`README.md:1–2`; `LICENSE.txt:3`, “Copyright (c) 2024 diy-pwa”): a WordPress Playground WordPress site (SQLite database, themes and plugins in `wp-content/`) published through `wp-pwa`. Text “consumer of microfrontends” comes from the template README (`README.md:13`); the site loads no external unit. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:376` registra rank 375, ID 1151891106, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. O banco foi lido numa cópia temporária fora do clone (`git show` para arquivo temporário, aberto com `sqlite3 -readonly` e apagado em seguida). Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:376` records rank 375, ID 1151891106, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. The database was read in a temporary copy outside the clone (`git show` to a temporary file, opened with `sqlite3 -readonly` and then deleted). There was no installation, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:376` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:24541` (`terminology`, `unknown`, regra `recent-human-commit` com `activity_incomplete`) e `data/discovery/mfe-round-002/candidates.csv:24547` (`terminology`, `pass`).
+`data/samples/mfe-sample-001/sample.csv:376` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:24541` (`terminology`, `unknown`, rule `recent-human-commit` with `activity_incomplete`) and `data/discovery/mfe-round-002/candidates.csv:24547` (`terminology`, `pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with an empty `path`:
 
-| Consulta (`q`) | Subconsulta | Consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Effective query | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | `terminology-microfrontend-repositories#created:2026-02` | `microfrontend in:name,description,readme pushed:>=2025-04-01 created:2026-02-01..2026-02-28` | 2026-10-07T19:59:46.702Z / 2026-10-08T15:41:09.211Z |
 | `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | `terminology-microfrontends-repositories#created:2026-02` | `microfrontends in:name,description,readme pushed:>=2025-04-01 created:2026-02-01..2026-02-28` | 2026-10-07T22:11:00.482Z / 2026-10-08T15:49:05.274Z |
 
-Metadados do hit: descrição nula, sem tópicos, linguagem PHP, licença MIT, `fork: false`, tamanho 25932, criação em 2026-02-07T03:25:21Z, push em 2026-02-07T04:04:31Z.
+Hit metadata: null description, no topics, language PHP, MIT license, `fork: false`, size 25932, created at 2026-02-07T03:25:21Z, pushed at 2026-02-07T04:04:31Z.
 
-As duas grafias aparecem literalmente em `README.md:13`: “The idea of this is as a consumer of microfrontends. There is an example microfrontend for [paypal standard](https://github.com/diy-pwa/paypal-microfrontend) here.” O README vem do commit-raiz `68b68e0` (2026-02-06, criação a partir do template) e não foi alterado depois; é anterior às coletas de 7 e 8 de outubro de 2026 e não é posterior às buscas.
+Both spellings appear literally in `README.md:13`: “The idea of this is as a consumer of microfrontends. There is an example microfrontend for [paypal standard](https://github.com/diy-pwa/paypal-microfrontend) here.” The README comes from root commit `68b68e0` (2026-02-06, creation from the template) and was not changed later; it predates the collections on October 7 and 8, 2026 and does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 588 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Na raiz, os 6 arquivos do template (`README.md`, `package.json`, `LICENSE.txt`, `.github/`, `.devcontainer/`, `.gitignore`); o restante em `wp-content/`: temas `twentytwentyfive`, `twentytwentyfour`, `twentytwentythree` e `wpico`, plugins `akismet`, `hello.php` e `list-category-posts`, mu-plugins do Playground, uploads e o banco `wp-content/database/.ht.sqlite`. | contexto |
-| Configuração / Build/deploy | `package.json:2–10`: só `wp-pwa: latest` e scripts `wp-pwa dev/build/preview`; `.github/workflows/main.yml:28–32`: publicação por `diy-pwa/npm-build-2-gh-pages@v1.11`. Nenhuma configuração de host, remote, import map ou carregamento de outra unidade; busca por `wp_enqueue_script` nos temas não oficiais não encontra nada. | contrária |
-| Conteúdo (banco) | Na cópia temporária, `wp_options` tem `template`/`stylesheet` = `twentytwentyfive`, `active_plugins` = `list-category-posts` e `blogname` “Assignment 1”. Publicados: cinco páginas (“HomePage”, “About Page”, “CONTACT PAGE”, “First-Time Hackers”, “Event Organizers & Clubs”), cinco posts sobre hackathons e eventos estudantis, uma navegação e estilos globais. A busca de bytes no banco por `microfrontend`, `paypal`, `<script`, `customElements`, `<iframe`, `type="module"`, `github.io`, `wp:html`, `<x-` e `wp:embed` não retorna nada. | contrária |
-| Código de terceiros | `wp-content/mu-plugins/one-click-child-theme/templates/customElements.js:1–7` define `<x-year>`, template do plugin de terceiros para gerar temas filhos, não usado (banco sem `<x-`). | contexto |
-| Documentação | `README.md:13–15`: intenção do template de consumir microfrontends e link para exemplo externo; nada no repositório configura esse consumo. | fraca |
+| Structure | `git ls-tree -r` at the SHA: 588 entries, all regular files `100644`; zero symlinks and zero gitlinks. At the root, the template’s 6 files (`README.md`, `package.json`, `LICENSE.txt`, `.github/`, `.devcontainer/`, `.gitignore`); the rest in `wp-content/`: themes `twentytwentyfive`, `twentytwentyfour`, `twentytwentythree` and `wpico`, plugins `akismet`, `hello.php` and `list-category-posts`, Playground mu-plugins, uploads and database `wp-content/database/.ht.sqlite`. | context |
+| Configuration / Build/deploy | `package.json:2–10`: only `wp-pwa: latest` and scripts `wp-pwa dev/build/preview`; `.github/workflows/main.yml:28–32`: publication through `diy-pwa/npm-build-2-gh-pages@v1.11`. No host, remote, import map or other unit loading configuration; search for `wp_enqueue_script` in unofficial themes finds nothing. | contrary |
+| Content (database) | In the temporary copy, `wp_options` has `template`/`stylesheet` = `twentytwentyfive`, `active_plugins` = `list-category-posts` and `blogname` “Assignment 1”. Published: five pages (“HomePage”, “About Page”, “CONTACT PAGE”, “First-Time Hackers”, “Event Organizers & Clubs”), five posts about hackathons and student events, navigation and global styles. Database byte search for `microfrontend`, `paypal`, `<script`, `customElements`, `<iframe`, `type="module"`, `github.io`, `wp:html`, `<x-` and `wp:embed` returns nothing. | contrary |
+| Third-party code | `wp-content/mu-plugins/one-click-child-theme/templates/customElements.js:1–7` defines `<x-year>`, a third-party plugin template for generating child themes, unused (database without `<x-`). | context |
+| Documentation | `README.md:13–15`: template intent to consume microfrontends and link to external example; nothing in the repository configures this consumption. | weak |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso, parcial (`blob:none`). 3 commits (3 em todos os refs), nenhum merge, todos de “Samriddhi Makasare” (`…+samriddhimakasare25@users.noreply.github.com`): a raiz `68b68e0` (2026-02-06, “Initial commit”, committer GitHub, os 6 arquivos do template), `a166a73` (2026-02-07, “changes”, 582 arquivos do site) e o SHA `0b03b8e` (2026-02-07, “changes”, só o banco). `git rev-list --objects $SHA --missing=print` identifica 1 objeto histórico ausente; os arquivos citados do SHA foram lidos.
+Non-shallow, partial clone (`blob:none`). 3 commits (3 across all refs), no merge, all by “Samriddhi Makasare” (`…+samriddhimakasare25@users.noreply.github.com`): root `68b68e0` (2026-02-06, “Initial commit”, committer GitHub, the template’s 6 files), `a166a73` (2026-02-07, “changes”, 582 site files) and SHA `0b03b8e` (2026-02-07, “changes”, database only). `git rev-list --objects $SHA --missing=print` identifies 1 missing historical object; cited SHA files were read.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Um único site WordPress; nenhuma configuração de composição referencia outras unidades (`package.json:2–10`; busca no banco e nos temas). |
-| Q2 | No | Não há duas unidades a avaliar. |
-| Q3 | No | Não há host que carregue, monte ou roteie outra unidade; o conteúdo é de páginas e posts do próprio site. |
-| Q4 | No | Nenhum mecanismo de composição; o consumo de microfrontends só aparece como texto do template (`README.md:13`). |
-| Q5 | No | Q1–Q4 convergem. |
+| Q1 | No | A single WordPress site; no composition configuration references other units (`package.json:2–10`; database and theme search). |
+| Q2 | No | There are not two units to assess. |
+| Q3 | No | No host loading, mounting or routing another unit; content consists of the site’s own pages and posts. |
+| Q4 | No | No composition mechanism; microfrontend consumption appears only as template text (`README.md:13`). |
+| Q5 | No | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “repositories mentioning micro-frontends without implementing them”.
-- Mesmo perfil dos rascunhos 119/125/160/206/224 (`cd-wordpress`/`wp-pwa` com site próprio, Non-MFE), em que a intenção herdada do template não vira composição. Difere de 049 (`MFE-implemented`/review) e 260 (`Uncertain`/review), que carregam módulos de outra origem; aqui não há `<script type="module">`, enqueue externo nem custom element no conteúdo. Difere de 079/117/326 (template sem site, `frontend_units: 0`).
-- O texto vem do template, caso de gerador como em 075/081/094/105, e o repositório é trabalho de disciplina (“Assignment 1”), como 023.
-- `repo_type: example`, `ui_technologies: [wordpress]`, `build_tools: []` (a CLI `wp-pwa` encapsula o build), `frontend_units: 1`, `unit_organization: single-unit`, como em 160/119/125.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. It matches “repositories mentioning micro-frontends without implementing them”.
+- Same profile as drafts 119/125/160/206/224 (`cd-wordpress`/`wp-pwa` with own site, Non-MFE), where intent inherited from the template does not become composition. It differs from 049 (`MFE-implemented`/review) and 260 (`Uncertain`/review), which load modules from another origin; here there is no `<script type="module">`, external enqueue or custom element in content. It differs from 079/117/326 (template without a site, `frontend_units: 0`).
+- Text comes from the template, a generator case as in 075/081/094/105, and the repository is a course assignment (“Assignment 1”), like 023.
+- `repo_type: example`, `ui_technologies: [wordpress]`, `build_tools: []` (CLI `wp-pwa` encapsulates the build), `frontend_units: 1`, `unit_organization: single-unit`, as in 160/119/125.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** o README do template `cd-wordpress` gera hits terminológicos em todos os sites de disciplina criados a partir dele.
+- **RQ1 (misleading signals):** template `cd-wordpress` README generates terminology hits in all course sites created from it.

@@ -19,667 +19,668 @@ annotation:
 
 # 254 — marcos-roberto-dev/poc-mfe-custom-root
 
-## Leitura do repositório
+## Repository overview
 
-É uma prova de conceito single-spa com Vue 3, em quatro projetos irmãos, sem workspace na raiz. `content-app` e `topbar-app` são aplicações Vite que só exportam lifecycles (#60, #63). Os outros dois projetos são hosts alternativos que compõem os mesmos dois remotos pelas mesmas URLs de dev server: o `root-app`, um "custom root" em Vue (#61), e o `root-classic`, a root config clássica do create-single-spa (#62). Cada projeto tem build próprio e nenhum tem deploy observado (#68 a #71).
+Single-spa proof of concept with Vue 3 in four sibling projects, without root workspace. `content-app` and `topbar-app` Vite applications only export lifecycles (#60, #63). Other two projects alternative hosts composing same two remotes through same development-server URLs: `root-app`, Vue "custom root" (#61), and `root-classic`, classic create-single-spa root config (#62). Each project has own build, none observed deployment (#68 to #71).
 
-A cadeia que sustenta a arquitetura tem dois ramos, um por host.
+Architecture chain has two branches, one per host.
 
-- **Remotos:** `single-spa-vue` é declarado e usado nos dois remotos (#2, #12). `singleSpaVue` cria os lifecycles, que a entrada exporta (#20 a #29). A montagem própria está comentada, então a UI só sobe quando um host chama `mount`.
+- **Remotes:** `single-spa-vue` declared/used in both remotes (#2, #12). `singleSpaVue` creates entry-exported lifecycles (#20 to #29). Own mounting commented, so UI starts only when host calls `mount`.
 - **`root-classic`:**
-  - dependências: `single-spa`, `single-spa-layout` e a configuração webpack do single-spa (#7, #8, #10);
-  - configuração: o builder com nome próprio (#15), o layout, que põe as duas aplicações na rota padrão (#16), e o import map local, que as resolve para as URLs dos dev servers (#14);
-  - código: a página tem o import map (#55) e a tabela de rotas (#56); a root config carrega cada aplicação por `import()` do nome, registra todas e chama `start()` (#57 a #59);
-  - relações: duas relações root-config → application ativas (#65, #66).
+  - dependencies: `single-spa`, `single-spa-layout` and single-spa webpack configuration (#7, #8, #10);
+  - configuration: builder with own name (#15), layout placing both applications in default route (#16), local import map resolving them to development-server URLs (#14);
+  - code: page has import map (#55) and route table (#56); root config loads each application through name `import()`, registers all, calls `start()` (#57 to #59);
+  - relationships: two active root-config → application relationships (#65, #66).
 - **`root-app`:**
-  - dependências: `single-spa` e `single-spa-vue` (#3, #4);
-  - configuração: o import map nativo da página (#13);
-  - código: o template raiz nomeia as duas parcels (#51, #52); o helper as carrega por `import()` nativo (#54), e o wrapper as monta com `mountRootParcel` (#53); a linha do import map nomeia os destinos (#30);
-  - relações: duas relações host → remote ativas (#64, #67).
+  - dependencies: `single-spa` and `single-spa-vue` (#3, #4);
+  - configuration: native page import map (#13);
+  - code: root template names two parcels (#51, #52); helper loads through native `import()` (#54), wrapper mounts through `mountRootParcel` (#53); import map line names targets (#30);
+  - relationships: two active host → remote relationships (#64, #67).
 
-A ressalva do `root-classic` é que o import map das aplicações só é emitido com `isLocal`, pelo script `start`, e o mapa de produção está comentado (#14). O histórico mostra que é assim desde o primeiro commit (#86).
+Qualification for `root-classic`: application import map emitted only with `isLocal` through `start` script; production map commented (#14). History shows this since first commit (#86).
 
-O que fica ambíguo:
-- **Destino de `@org/header-app` (#67):** o `root-app` chama o topbar por um nome que nenhuma unidade tem. A ligação com o `topbar-app` vem só da URL igual à do `@org/topbar-app` no outro host (#13, #14), em que só a porta distingue a unidade. A relação é ativa, e o destino fica com o nome do artefato. O histórico mostra que os dois nomes convivem desde o primeiro commit, sem renomeação (#87).
-- **Fallback SystemJS (#41):** o `System.import` do helper só roda se o `import()` nativo falhar. O único mapa SystemJS está comentado (#31), então o caminho não tem alvo confirmado. O histórico mostra que o caminho chega assim no primeiro commit (#83).
+Ambiguities:
+- **Target of `@org/header-app` (#67):** `root-app` calls topbar by name no unit has. Link to `topbar-app` comes only from same URL as `@org/topbar-app` in other host (#13, #14), where only port distinguishes unit. Relationship active; target retains artifact name. History shows both names coexist since first commit without renaming (#87).
+- **SystemJS fallback (#41):** helper `System.import` runs only if native `import()` fails. Only SystemJS map commented (#31), so path has no confirmed target. History shows path arriving this way in first commit (#83).
 
-Sinais que enganam:
-- **Dependências sem uso:** `single-spa` nos dois remotos (#1, #11), `vite-plugin-single-spa` no `root-app` (#5) e `@types/systemjs` no `root-classic` (#6). O histórico não mostra uso de nenhuma delas (#78 a #80).
-- **Import maps não lidos:** `root-app/mfe-app.json`, `root-app/src/importMap.dev.json` e `root-app/src/importMap.json` nomeiam as duas unidades, mas nenhum arquivo os lê (#17 a #19, #85).
-- **Linhas da mineração:** comentários, logs e declarações de tipo (#34 a #40, #42 a #46). Também as bibliotecas de CDN, `import-map-overrides` e o carregador SystemJS (#32, #33, #47 a #50). Nenhuma carrega uma unidade.
-- **Cópia do topbar no `root-app`:** entra já desligada, depois do `topbar-app` (#82).
+Misleading signals:
+- **Unused dependencies:** `single-spa` in both remotes (#1, #11), `vite-plugin-single-spa` in `root-app` (#5), `@types/systemjs` in `root-classic` (#6). History shows no usage of any (#78 to #80).
+- **Unread import maps:** `root-app/mfe-app.json`, `root-app/src/importMap.dev.json` and `root-app/src/importMap.json` name both units but no file reads them (#17 to #19, #85).
+- **Mining rows:** comments, logs and type declarations (#34 to #40, #42 to #46). Also CDN libraries, `import-map-overrides` and SystemJS loader (#32, #33, #47 to #50). None loads unit.
+- **Topbar copy in `root-app`:** arrives already disconnected after `topbar-app` (#82).
 
-A documentação são comentários do `root-app` e o título da tela do topbar. As afirmações sobre o import map nativo e o `import()` são corroboradas (#72, #74, #75). As que falam de microfrontends SystemJS, só em parte (#73, #76). O título "Topbar - MFE" é corroborado (#77).
+Documentation consists of `root-app` comments and topbar screen title. Native import map and `import()` claims corroborated (#72, #74, #75). Claims about SystemJS microfrontends partially corroborated (#73, #76). Title "Topbar - MFE" corroborated (#77).
 
-Configuração: ficaram 7 blocos, um por arquivo, porque cada arquivo serve uma única unidade. As duas páginas dos hosts entraram pelos import maps (#13, #14), a configuração webpack do `root-classic` pelo builder single-spa com nome próprio (#15), o layout pelo registro de aplicações (#16). Os três JSON do `root-app` entraram como import maps citados no Ponto da 3.4.8 #8 (#17 a #19). Ficaram de fora:
-- `topbar-app/vite.config.ts:8-19`, citado em 3.4.3 (Entrada, Build) e 3.4.6 #4 (Artefatos). A entrada, o `preserveEntrySignatures`, o formato `system` e a saída `app.js` são opções de build do Rollup (dimensão 6), sem builder de federação, nome, módulo exposto, dependência compartilhada ou URL de remote;
-- `content-app/vite.config.ts:1-7` e `root-app/vite.config.ts:1-7`, que só registram `vue()`;
-- `root-classic/tsconfig.json:2`, que só herda os tipos de `ts-config-single-spa`;
-- os `scripts` dos `package.json`, que são build ou servidor de desenvolvimento (dimensão 6);
-- os campos `name` dos `package.json` (content-app/package.json:2; topbar-app/package.json:2), citados em 3.4.5 #1 a #3 (Configuração). São identificadores de pacote que nenhum arquivo do snapshot lê para compor; os nomes usados na composição estão nos import maps e no layout.
+Configuration: 7 blocks retained, one per file, since each file serves single unit. Both host pages included through import maps (#13, #14), `root-classic` webpack configuration through named single-spa builder (#15), layout through application registration (#16). Three `root-app` JSON files included as import maps cited in 3.4.8 #8 Point (#17 to #19). Excluded:
+- `topbar-app/vite.config.ts:8-19`, cited in 3.4.3 (Entry, Build) and 3.4.6 #4 (Artifacts). Entry, `preserveEntrySignatures`, format `system` and output `app.js` Rollup build options (dimension 6), without federation builder, name, exposed module, shared dependency or remote URL;
+- `content-app/vite.config.ts:1-7` and `root-app/vite.config.ts:1-7`, only registering `vue()`;
+- `root-classic/tsconfig.json:2`, only inheriting `ts-config-single-spa` types;
+- `scripts` in `package.json` files, build/development server (dimension 6);
+- `name` fields in `package.json` files (content-app/package.json:2; topbar-app/package.json:2), cited in 3.4.5 #1 to #3 (Configuration). Package identifiers read by no snapshot file for composition; composition names reside in import maps/layout.
 
-## Observações
+## Observations
 
 ### 1. content-app/package.json:12
 
-**Observação:** `single-spa` `^6.0.3` em `dependencies`. A revisão o marca como não configurado: nenhum arquivo de `content-app/` importa o pacote, e content-app/src/main.ts:4 importa só `single-spa-vue`.
+**Observation:** `single-spa` `^6.0.3` in `dependencies`. Review marks not configured: no `content-app/` file imports package; content-app/src/main.ts:4 imports only `single-spa-vue`.
 
-**Interpretação:** É uma declaração sem uso no remoto. O orquestrador fica do lado dos hosts.
+**Interpretation:** Unused remote declaration. Orchestrator on host side.
 
 ### 2. content-app/package.json:13
 
-**Observação:** `single-spa-vue` `^3.0.1` em `dependencies`. A revisão o marca como configurado, pelo import e pela chamada `singleSpaVue(...)` em content-app/src/main.ts:4, 8-22, que cria os lifecycles exportados.
+**Observation:** `single-spa-vue` `^3.0.1` in `dependencies`. Review marks configured through import/call `singleSpaVue(...)` in content-app/src/main.ts:4, 8-22, creating exported lifecycles.
 
-**Interpretação:** O remoto declara o adaptador single-spa para Vue e o usa para se expor aos hosts.
+**Interpretation:** Remote declares single-spa Vue adapter, using it to expose itself to hosts.
 
 ### 3. root-app/package.json:12
 
-**Observação:** `single-spa` `^6.0.3` em `dependencies`. A revisão o marca como configurado, pelo import de `mountRootParcel` em root-app/src/components/ParcelWrapper.vue:11, passado ao `Parcel` em :4 e :46.
+**Observation:** `single-spa` `^6.0.3` in `dependencies`. Review marks configured through import of `mountRootParcel` in root-app/src/components/ParcelWrapper.vue:11, passed to `Parcel` at :4 and :46.
 
-**Interpretação:** O host Vue declara o single-spa e o usa para montar parcels.
+**Interpretation:** Vue host declares single-spa, using it to mount parcels.
 
 ### 4. root-app/package.json:13
 
-**Observação:** `single-spa-vue` `^3.0.1` em `dependencies`. A revisão o marca como configurado, pelo componente `Parcel` de `single-spa-vue/parcel` em root-app/src/components/ParcelWrapper.vue:2-5, 10.
+**Observation:** `single-spa-vue` `^3.0.1` in `dependencies`. Review marks configured through component `Parcel` from `single-spa-vue/parcel` in root-app/src/components/ParcelWrapper.vue:2-5, 10.
 
-**Interpretação:** O host Vue declara o adaptador e usa o seu componente de parcel no template.
+**Interpretation:** Vue host declares adapter, using parcel component in template.
 
 ### 5. root-app/package.json:14
 
-**Observação:** `vite-plugin-single-spa` `^1.1.0` em `dependencies`. A revisão o marca como não configurado: nenhum arquivo do snapshot o importa ou invoca, e root-app/vite.config.ts:1-7 só registra `vue()`.
+**Observation:** `vite-plugin-single-spa` `^1.1.0` in `dependencies`. Review marks not configured: no snapshot file imports/invokes it; root-app/vite.config.ts:1-7 only registers `vue()`.
 
-**Interpretação:** É uma declaração sem uso. O build do `root-app` não passa pelo plugin single-spa.
+**Interpretation:** Unused declaration. Build of `root-app` does not pass through single-spa plugin.
 
 ### 6. root-classic/package.json:44
 
-**Observação:** `@types/systemjs` `^6.1.1` em `dependencies`. A revisão o marca como não configurado: nenhum arquivo de `root-classic/` referencia os tipos ou usa `System.`, e o import map da página usa `@single-spa/import-map-injector` (root-classic/src/index.ejs:11, 17, 41-43).
+**Observation:** `@types/systemjs` `^6.1.1` in `dependencies`. Review marks not configured: no `root-classic/` file references types or uses `System.`; page import map uses `@single-spa/import-map-injector` (root-classic/src/index.ejs:11, 17, 41-43).
 
-**Interpretação:** É uma declaração sem uso. Não indica SystemJS na composição do `root-classic`.
+**Interpretation:** Unused declaration. Does not indicate SystemJS in `root-classic` composition.
 
 ### 7. root-classic/package.json:45
 
-**Observação:** `single-spa` `^5.9.3` em `dependencies`. A revisão o marca como configurado, pelo import e pelas chamadas `registerApplication` e `start()` em root-classic/src/org-root-config.ts:1, 18-20. O import map compartilhado da página aponta para `single-spa@6.0.3` por CDN (root-classic/src/index.ejs:17-24).
+**Observation:** `single-spa` `^5.9.3` in `dependencies`. Review marks configured through import/calls `registerApplication` and `start()` in root-classic/src/org-root-config.ts:1, 18-20. Shared page import map points to `single-spa@6.0.3` through CDN (root-classic/src/index.ejs:17-24).
 
-**Interpretação:** O root declara o orquestrador single-spa e o usa na entrada.
+**Interpretation:** Root declares single-spa orchestrator, using it in entry.
 
 ### 8. root-classic/package.json:47
 
-**Observação:** `single-spa-layout` `^1.6.0` em `dependencies`. A revisão o marca como configurado, pelo import de `constructApplications`, `constructRoutes` e `constructLayoutEngine` e pelo uso com `./microfrontend-layout.html` em root-classic/src/org-root-config.ts:2-19.
+**Observation:** `single-spa-layout` `^1.6.0` in `dependencies`. Review marks configured through imports `constructApplications`, `constructRoutes` and `constructLayoutEngine`, used with `./microfrontend-layout.html` in root-classic/src/org-root-config.ts:2-19.
 
-**Interpretação:** O root declara o motor de layout declarativo do single-spa e o usa para construir as rotas e as aplicações.
+**Interpretation:** Root declares single-spa declarative layout engine, using it to construct routes/applications.
 
 ### 9. root-classic/package.json:40
 
-**Observação:** `ts-config-single-spa` `^3.0.0` em `devDependencies`. A revisão o marca como configurado, pelo `"extends": "ts-config-single-spa"` em root-classic/tsconfig.json:2, lido pelo `tsc` do script `build:types` (root-classic/package.json:12).
+**Observation:** `ts-config-single-spa` `^3.0.0` in `devDependencies`. Review marks configured through `"extends": "ts-config-single-spa"` in root-classic/tsconfig.json:2, read by `tsc` of script `build:types` (root-classic/package.json:12).
 
-**Interpretação:** O root herda a configuração TypeScript padrão do single-spa. Não participa da composição.
+**Interpretation:** Root inherits standard single-spa TypeScript configuration. Does not participate in composition.
 
 ### 10. root-classic/package.json:39
 
-**Observação:** `webpack-config-single-spa-ts` `^8.0.0` em `devDependencies`. A revisão o marca como configurado, por `singleSpaDefaults({ orgName, projectName: "root-config", ... })` em root-classic/webpack.config.js:2, 7-13, lido por `webpack serve` e `webpack --mode=production` (root-classic/package.json:4, 11).
+**Observation:** `webpack-config-single-spa-ts` `^8.0.0` in `devDependencies`. Review marks configured through `singleSpaDefaults({ orgName, projectName: "root-config", ... })` in root-classic/webpack.config.js:2, 7-13, read by `webpack serve` and `webpack --mode=production` (root-classic/package.json:4, 11).
 
-**Interpretação:** O root declara a configuração webpack padrão do single-spa e a usa no build.
+**Interpretation:** Root declares standard single-spa webpack configuration, using it in build.
 
 ### 11. topbar-app/package.json:12
 
-**Observação:** `single-spa` `^6.0.3` em `dependencies`. A revisão o marca como não configurado: nenhum arquivo de `topbar-app/` importa o pacote, e topbar-app/src/main.ts:4 importa só `single-spa-vue`.
+**Observation:** `single-spa` `^6.0.3` in `dependencies`. Review marks not configured: no `topbar-app/` file imports package; topbar-app/src/main.ts:4 imports only `single-spa-vue`.
 
-**Interpretação:** É uma declaração sem uso no remoto, como no `content-app` (#1).
+**Interpretation:** Unused remote declaration as in `content-app` (#1).
 
 ### 12. topbar-app/package.json:13
 
-**Observação:** `single-spa-vue` `^3.0.1` em `dependencies`. A revisão o marca como configurado, pelo import e pela chamada `singleSpaVue(...)` em topbar-app/src/main.ts:4, 8-22, que cria os lifecycles exportados.
+**Observation:** `single-spa-vue` `^3.0.1` in `dependencies`. Review marks configured through import/call `singleSpaVue(...)` in topbar-app/src/main.ts:4, 8-22, creating exported lifecycles.
 
-**Interpretação:** O remoto declara o adaptador single-spa para Vue e o usa para se expor aos hosts.
+**Interpretation:** Remote declares single-spa Vue adapter, using it to expose itself to hosts.
 
 ### 13. root-app/index.html:11-18; root-app/index.html:24-30
 
-**Observação:** `<script type="importmap">` nativo que mapeia `@org/content-app` → `http://127.0.0.1:5174/src/main.ts` (:14) e `@org/header-app` → `http://127.0.0.1:5175/src/main.ts` (:15). Logo abaixo, um `<script type="systemjs-importmap">` que mapearia `@org/header-app` → `http://127.0.0.1:4173/app.js` está inteiro dentro de um comentário HTML (:24-30).
+**Observation:** Native `<script type="importmap">` mapping `@org/content-app` → `http://127.0.0.1:5174/src/main.ts` (:14) and `@org/header-app` → `http://127.0.0.1:5175/src/main.ts` (:15). Immediately below, `<script type="systemjs-importmap">` mapping `@org/header-app` → `http://127.0.0.1:4173/app.js` entirely inside HTML comment (:24-30).
 
-**Interpretação:** O host Vue declara por import map as URLs dos dois remotos que monta como parcels. O mapa SystemJS, a outra forma de resolução prevista na página, está desligado.
+**Interpretation:** Vue host declares through import map URLs of two parcel-mounted remotes. SystemJS map, other resolution form envisaged on page, disabled.
 
 ### 14. root-classic/src/index.ejs:17-23; root-classic/src/index.ejs:27; root-classic/src/index.ejs:29-39; root-classic/webpack.config.js:21-22
 
-**Observação:** A página do root traz dois `<script type="injector-importmap">`. O primeiro mapeia `single-spa` para `single-spa@6.0.3` por CDN (:17-23). O segundo só é gerado com `isLocal` (:29), parâmetro que vem de `--env isLocal` pelo HtmlWebpackPlugin. Ele mapeia `@org/root-config` → `//localhost:9000/org-root-config.js` (:33), `@org/content-app` → `http://127.0.0.1:5174/src/main.ts` (:34) e `@org/topbar-app` → `http://127.0.0.1:5175/src/main.ts` (:35). O mapa de produção está comentado (:27).
+**Observation:** Root page contains two `<script type="injector-importmap">` elements. First maps `single-spa` to `single-spa@6.0.3` through CDN (:17-23). Second generated only with `isLocal` (:29), parameter coming from `--env isLocal` through HtmlWebpackPlugin. Maps `@org/root-config` → `//localhost:9000/org-root-config.js` (:33), `@org/content-app` → `http://127.0.0.1:5174/src/main.ts` (:34) and `@org/topbar-app` → `http://127.0.0.1:5175/src/main.ts` (:35). Production map commented (:27).
 
-**Interpretação:** O root declara por import map as URLs das duas aplicações e a dependência compartilhada por CDN. É a resolução dos destinos da composição, só no modo local.
+**Interpretation:** Root declares through import map URLs of both applications and CDN shared dependency. Composition target resolution only in local mode.
 
 ### 15. root-classic/webpack.config.js:5-27
 
-**Observação:** `singleSpaDefaults({ orgName: "org", projectName: "root-config", ..., disableHtmlGeneration: true })`, combinado com um `HtmlWebpackPlugin` que gera a página a partir de `src/index.ejs`, com os parâmetros `isLocal` e `orgName`.
+**Observation:** `singleSpaDefaults({ orgName: "org", projectName: "root-config", ..., disableHtmlGeneration: true })`, combined with `HtmlWebpackPlugin` generating page from `src/index.ejs` with parameters `isLocal` and `orgName`.
 
-**Interpretação:** Configura o builder single-spa no root, com nome próprio. Também decide, por `isLocal`, se a página recebe o import map das aplicações.
+**Interpretation:** Configures named single-spa builder in root. Also decides through `isLocal` whether page receives application import map.
 
 ### 16. root-classic/src/microfrontend-layout.html:1-26; root-classic/src/org-root-config.ts:7-9
 
-**Observação:** `<single-spa-router>` com `<main>`. A rota `default` tem as aplicações `@org/topbar-app` (:22) e `@org/content-app` (:23). Os exemplos `@org/navbar` e `@org/settings` estão comentados (:9-18). O root config importa o arquivo e o converte em rotas.
+**Observation:** `<single-spa-router>` with `<main>`. Route `default` contains applications `@org/topbar-app` (:22) and `@org/content-app` (:23). Examples `@org/navbar` and `@org/settings` commented (:9-18). Root config imports file, converting to routes.
 
-**Interpretação:** O layout do root declara as duas aplicações e a rota em que elas montam juntas.
+**Interpretation:** Root layout declares two applications and route mounting them together.
 
 ### 17. root-app/mfe-app.json:1-7
 
-**Observação:** Mapa `imports` com `@org/header-app` → `http://127.0.0.1:5175/src/main.ts`, `@org/content-app` → `http://127.0.0.1:5173/src/main.ts` e `vue` → `unpkg.com`. Nenhum arquivo do snapshot lê este arquivo.
+**Observation:** Map `imports` with `@org/header-app` → `http://127.0.0.1:5175/src/main.ts`, `@org/content-app` → `http://127.0.0.1:5173/src/main.ts` and `vue` → `unpkg.com`. No snapshot file reads file.
 
-**Interpretação:** É um import map do host que nomeia os dois remotos, com outra porta para o content. Não participa da composição.
+**Interpretation:** Host import map naming both remotes, with different content port. Does not participate in composition.
 
-**Nota:** A orientação para uma configuração que declara unidades de outra parte é `forte`, mas o arquivo não é lido por nenhum build nem pelo runtime (3.4.8 #8). Fica `fraca`, sem relação `configura`.
+**Note:** Guidance for configuration declaring units elsewhere is `strong`, but file read by neither build nor runtime (3.4.8 #8). Remains `weak`, without `configures` relationship.
 
 ### 18. root-app/src/importMap.dev.json:1-6
 
-**Observação:** Mapa `imports` com `@org/content-app` → `http://127.0.0.1:5174/src/main.ts` e `@org/header-app` → `http://127.0.0.1:5175/src/main.ts`, as mesmas URLs do mapa da página (root-app/index.html:14-15). Nenhum arquivo do snapshot lê este arquivo.
+**Observation:** Map `imports` with `@org/content-app` → `http://127.0.0.1:5174/src/main.ts` and `@org/header-app` → `http://127.0.0.1:5175/src/main.ts`, same URLs as page map (root-app/index.html:14-15). No snapshot file reads file.
 
-**Interpretação:** É uma cópia em JSON do import map ativo do host. Não participa da composição.
+**Interpretation:** JSON copy of active host import map. Does not participate in composition.
 
-**Nota:** Mesma razão da #17: o arquivo não é lido (3.4.8 #8), e por isso fica `fraca` em vez de `forte`, sem relação `configura`.
+**Note:** Same reason as #17: file unread (3.4.8 #8), therefore `weak` rather than `strong`, without `configures` relationship.
 
 ### 19. root-app/src/importMap.json:1-6
 
-**Observação:** Mapa `imports` com `@org/content-app` → `http://127.0.0.1:5174/spa.js` e `@org/header-app` → `http://127.0.0.1:5175/spa.js`. Nenhum arquivo do snapshot lê este arquivo, e nenhum build do snapshot gera `spa.js`.
+**Observation:** Map `imports` with `@org/content-app` → `http://127.0.0.1:5174/spa.js` and `@org/header-app` → `http://127.0.0.1:5175/spa.js`. No snapshot file reads file; no snapshot build generates `spa.js`.
 
-**Interpretação:** É um import map do host que aponta os dois remotos para bundles que o snapshot não produz. Não participa da composição.
+**Interpretation:** Host import map pointing both remotes to bundles snapshot does not produce. Does not participate in composition.
 
-**Nota:** Mesma razão da #17: o arquivo não é lido (3.4.8 #8), e por isso fica `fraca` em vez de `forte`, sem relação `configura`.
+**Note:** Same reason as #17: file unread (3.4.8 #8), therefore `weak` rather than `strong`, without `configures` relationship.
 
 ### 20. content-app/src/main.ts:20; content-app/src/main.ts:8-18
 
-**Observação:** `export const bootstrap = vueLifecycles.bootstrap`, do objeto criado por `singleSpaVue`. A unidade é resolvida como `@org/content-app` pelos import maps dos dois hosts (root-app/index.html:14; root-classic/src/index.ejs:34).
+**Observation:** `export const bootstrap = vueLifecycles.bootstrap`, from object created by `singleSpaVue`. Unit resolved as `@org/content-app` by both host import maps (root-app/index.html:14; root-classic/src/index.ejs:34).
 
-**Interpretação:** É um lifecycle do content, chamado pelos dois hosts ao montar a unidade.
+**Interpretation:** Content lifecycle called by both hosts when mounting unit.
 
 ### 21. content-app/src/main.ts:21
 
-**Observação:** `export const mount = vueLifecycles.mount`, do mesmo objeto. O `root-app` verifica `mount` antes de montar a parcel (root-app/src/components/ParcelWrapper.vue:33), e o `root-classic` o chama ao ativar a rota `default` (root-classic/src/microfrontend-layout.html:21-24).
+**Observation:** `export const mount = vueLifecycles.mount`, from same object. `root-app` checks `mount` before mounting parcel (root-app/src/components/ParcelWrapper.vue:33); `root-classic` calls it on activating route `default` (root-classic/src/microfrontend-layout.html:21-24).
 
-**Interpretação:** É um lifecycle do content, chamado pelos dois hosts ao montar a unidade.
+**Interpretation:** Content lifecycle called by both hosts when mounting unit.
 
 ### 22. content-app/src/main.ts:22
 
-**Observação:** `export const unmount = vueLifecycles.unmount`, do mesmo objeto, com os mesmos consumidores.
+**Observation:** `export const unmount = vueLifecycles.unmount`, from same object with same consumers.
 
-**Interpretação:** É um lifecycle do content, chamado pelos dois hosts ao desmontar a unidade.
+**Interpretation:** Content lifecycle called by both hosts when unmounting unit.
 
 ### 23. topbar-app/src/main.ts:20; topbar-app/src/main.ts:8-18
 
-**Observação:** `export const bootstrap = vueLifecycles.bootstrap`, do objeto criado por `singleSpaVue`. A unidade é resolvida como `@org/topbar-app` no `root-classic` (root-classic/src/index.ejs:35) e, pela mesma URL, como `@org/header-app` no `root-app` (root-app/index.html:15).
+**Observation:** `export const bootstrap = vueLifecycles.bootstrap`, from object created by `singleSpaVue`. Unit resolved as `@org/topbar-app` in `root-classic` (root-classic/src/index.ejs:35), and through same URL as `@org/header-app` in `root-app` (root-app/index.html:15).
 
-**Interpretação:** É um lifecycle do topbar, chamado pelo host que monta a unidade.
+**Interpretation:** Topbar lifecycle called by host mounting unit.
 
 ### 24. topbar-app/src/main.ts:21
 
-**Observação:** `export const mount = vueLifecycles.mount`, do mesmo objeto, chamado pela parcel do `root-app` (root-app/src/components/ParcelWrapper.vue:3-5, 33) e pelo single-spa do `root-classic` (root-classic/src/org-root-config.ts:18-20).
+**Observation:** `export const mount = vueLifecycles.mount`, from same object, called by `root-app` parcel (root-app/src/components/ParcelWrapper.vue:3-5, 33) and `root-classic` single-spa (root-classic/src/org-root-config.ts:18-20).
 
-**Interpretação:** É um lifecycle do topbar, chamado pelo host que monta a unidade.
+**Interpretation:** Topbar lifecycle called by host mounting unit.
 
 ### 25. topbar-app/src/main.ts:22
 
-**Observação:** `export const unmount = vueLifecycles.unmount`, do mesmo objeto, com os mesmos consumidores.
+**Observation:** `export const unmount = vueLifecycles.unmount`, from same object with same consumers.
 
-**Interpretação:** É um lifecycle do topbar, chamado pelo host que desmonta a unidade.
+**Interpretation:** Topbar lifecycle called by host unmounting unit.
 
 ### 26. content-app/src/main.ts:4
 
-**Observação:** `import singleSpaVue from 'single-spa-vue'`, usado em :8.
+**Observation:** `import singleSpaVue from 'single-spa-vue'`, used at :8.
 
-**Interpretação:** O content importa o adaptador com que cria os seus lifecycles.
+**Interpretation:** Content imports adapter creating lifecycles.
 
 ### 27. content-app/src/main.ts:8-18; content-app/src/main.ts:6
 
-**Observação:** `singleSpaVue({ createApp, appOptions: { render() { return h(App) } } })`, com os lifecycles exportados em :20-22. A montagem própria, `createApp(App).mount('#app')`, está comentada (:6).
+**Observation:** `singleSpaVue({ createApp, appOptions: { render() { return h(App) } } })`, with lifecycles exported at :20-22. Own mounting, `createApp(App).mount('#app')`, commented (:6).
 
-**Interpretação:** O App Vue do content é adaptado a lifecycles single-spa e só sobe quando um host chama `mount`.
+**Interpretation:** Content Vue App adapted to single-spa lifecycles, starts only when host calls `mount`.
 
 ### 28. topbar-app/src/main.ts:4
 
-**Observação:** `import singleSpaVue from 'single-spa-vue'`, usado em :8.
+**Observation:** `import singleSpaVue from 'single-spa-vue'`, used at :8.
 
-**Interpretação:** O topbar importa o adaptador com que cria os seus lifecycles.
+**Interpretation:** Topbar imports adapter creating lifecycles.
 
 ### 29. topbar-app/src/main.ts:8-18; topbar-app/src/main.ts:6
 
-**Observação:** `singleSpaVue({ createApp, appOptions: { render() { return h(App) } } })`, com os lifecycles exportados em :20-22. A montagem própria está comentada (:6).
+**Observation:** `singleSpaVue({ createApp, appOptions: { render() { return h(App) } } })`, with lifecycles exported at :20-22. Own mounting commented (:6).
 
-**Interpretação:** O App Vue do topbar é adaptado a lifecycles single-spa e só sobe quando um host chama `mount`.
+**Interpretation:** Topbar Vue App adapted to single-spa lifecycles, starts only when host calls `mount`.
 
 ### 30. root-app/index.html:11-18
 
-**Observação:** `<script type="importmap">` que mapeia `@org/content-app` para `http://127.0.0.1:5174/src/main.ts` (:14) e `@org/header-app` para `http://127.0.0.1:5175/src/main.ts` (:15). Os nomes são os passados aos `ParcelWrapper` (root-app/src/App.vue:8-9) e resolvidos pelo `import()` de root-app/src/utils/dynamicImport.ts:15.
+**Observation:** `<script type="importmap">` mapping `@org/content-app` to `http://127.0.0.1:5174/src/main.ts` (:14) and `@org/header-app` to `http://127.0.0.1:5175/src/main.ts` (:15). Names passed to `ParcelWrapper` (root-app/src/App.vue:8-9), resolved by `import()` in root-app/src/utils/dynamicImport.ts:15.
 
-**Interpretação:** É a resolução dos nomes das duas parcels do host para as URLs dos dev servers dos remotos.
+**Interpretation:** Resolution of two host parcel names to remote development-server URLs.
 
 ### 31. root-app/index.html:24-30
 
-**Observação:** `<!-- <script type="systemjs-importmap">`, que abre um comentário HTML até :30. O mapa comentado aponta `@org/header-app` para `http://127.0.0.1:4173/app.js`.
+**Observation:** `<!-- <script type="systemjs-importmap">`, opening HTML comment through :30. Commented map points `@org/header-app` to `http://127.0.0.1:4173/app.js`.
 
-**Interpretação:** É um mapa SystemJS desligado, não código ativo.
+**Interpretation:** Disabled SystemJS map rather than active code.
 
 ### 32. root-app/index.html:33-34
 
-**Observação:** `<script src="https://cdn.jsdelivr.net/npm/import-map-overrides/dist/import-map-overrides.js">`, apontado pelo padrão de import map.
+**Observation:** `<script src="https://cdn.jsdelivr.net/npm/import-map-overrides/dist/import-map-overrides.js">`, identified by import map pattern.
 
-**Interpretação:** Carrega de CDN a biblioteca de desenvolvimento que sobrescreve entradas do import map. Não carrega o bundle de outra unidade.
+**Interpretation:** Loads development library overriding import map entries from CDN. Does not load another unit bundle.
 
 ### 33. root-app/index.html:41
 
-**Observação:** `<import-map-overrides-full show-when-local-storage="overrides-ui" dev-libs>`, o painel da biblioteca da observação #32, exibido só com a chave `overrides-ui` no localStorage.
+**Observation:** `<import-map-overrides-full show-when-local-storage="overrides-ui" dev-libs>`, library panel from observation #32, displayed only with localStorage key `overrides-ui`.
 
-**Interpretação:** É uma ferramenta de desenvolvimento, não o custom element de outra unidade.
+**Interpretation:** Development tool rather than another unit custom element.
 
 ### 34. root-app/src/global.d.ts:1
 
-**Observação:** Comentário de um arquivo de declarações de tipo: "Global type declarations for single-spa, SystemJS, and import-map-overrides".
+**Observation:** Type declaration file comment: "Global type declarations for single-spa, SystemJS, and import-map-overrides".
 
-**Interpretação:** Descreve tipos. Não é código executável.
+**Interpretation:** Describes types. Not executable code.
 
 ### 35. root-app/src/global.d.ts:14
 
-**Observação:** Comentário JSDoc da propriedade `importMapOverrides` na declaração de tipo de `Window` (:13-17).
+**Observation:** JSDoc comment on property `importMapOverrides` in type declaration of `Window` (:13-17).
 
-**Interpretação:** Descreve um tipo. Não é código executável.
+**Interpretation:** Describes type. Not executable code.
 
 ### 36. root-app/src/global.d.ts:15
 
-**Observação:** URL da documentação do `import-map-overrides`, dentro do mesmo comentário JSDoc (:13-16).
+**Observation:** Documentation URL for `import-map-overrides` inside same JSDoc comment (:13-16).
 
-**Interpretação:** É uma referência de documentação. Não é código executável.
+**Interpretation:** Documentation reference. Not executable code.
 
 ### 37. root-app/src/global.d.ts:17-24
 
-**Observação:** Declaração de tipo `importMapOverrides?: { ... }` em `Window`. Nenhum código do `root-app` usa `window.importMapOverrides`.
+**Observation:** Type declaration `importMapOverrides?: { ... }` in `Window`. No `root-app` code uses `window.importMapOverrides`.
 
-**Interpretação:** É só tipagem. Não participa da composição.
+**Interpretation:** Only typing. Does not participate in composition.
 
 ### 38. root-app/src/utils/dynamicImport.ts:6
 
-**Observação:** Linha do comentário JSDoc que descreve a estratégia do helper (:1-9).
+**Observation:** JSDoc comment line describing helper strategy (:1-9).
 
-**Interpretação:** É documentação do helper, não código executável. A afirmação do mesmo comentário está na #76.
+**Interpretation:** Helper documentation rather than executable code. Claim from same comment in #76.
 
 ### 39. root-app/src/utils/dynamicImport.ts:19
 
-**Observação:** `console.warn(...)` no `catch` do `import()` nativo.
+**Observation:** `console.warn(...)` in `catch` of native `import()`.
 
-**Interpretação:** É só registro de log.
+**Interpretation:** Only logging.
 
 ### 40. root-app/src/utils/dynamicImport.ts:21
 
-**Observação:** Comentário de linha antes do fallback SystemJS (:22-33).
+**Observation:** Line comment before SystemJS fallback (:22-33).
 
-**Interpretação:** É um comentário, não código executável.
+**Interpretation:** Comment rather than executable code.
 
 ### 41. root-app/src/utils/dynamicImport.ts:24; root-app/src/utils/dynamicImport.ts:22-23; root-app/index.html:21; root-app/index.html:24-30
 
-**Observação:** `window.System.import(url)`, executado só quando o `import()` nativo de :15 falha e `window.System` existe. O SystemJS é carregado na página (root-app/index.html:21), mas o único mapa `systemjs-importmap` está comentado (root-app/index.html:24-30). Os nomes `@org/header-app` e `@org/content-app` só estão no import map nativo.
+**Observation:** `window.System.import(url)`, executed only when native `import()` at :15 fails and `window.System` exists. SystemJS loaded on page (root-app/index.html:21), but only `systemjs-importmap` commented (root-app/index.html:24-30). Names `@org/header-app` and `@org/content-app` only in native import map.
 
-**Interpretação:** Duas leituras continuam plausíveis. O fallback pode nunca resolver uma unidade, porque nenhum mapa SystemJS ativo dá URL aos nomes que ele recebe. Ou ele é um segundo caminho de carga para o build SystemJS do topbar, quando um mapa for fornecido fora do snapshot. O snapshot não mostra qual das duas vale.
+**Interpretation:** Two readings remain plausible. Fallback may never resolve unit because no active SystemJS map gives URLs to supplied names. Or second loading path for topbar SystemJS build when map provided outside snapshot. Snapshot does not show which applies.
 
 ### 42. root-app/src/utils/dynamicImport.ts:25
 
-**Observação:** `console.log(...)` de sucesso do fallback.
+**Observation:** `console.log(...)` on fallback success.
 
-**Interpretação:** É só registro de log.
+**Interpretation:** Only logging.
 
 ### 43. root-app/src/utils/dynamicImport.ts:28
 
-**Observação:** `console.error(...)` quando os dois caminhos falham.
+**Observation:** `console.error(...)` when both paths fail.
 
-**Interpretação:** É só registro de log.
+**Interpretation:** Only logging.
 
 ### 44. root-classic/src/index.ejs:12
 
-**Observação:** Comentário HTML: "If you wish to turn off import-map-overrides for specific environments (prod), uncomment the line below".
+**Observation:** HTML comment: "If you wish to turn off import-map-overrides for specific environments (prod), uncomment the line below".
 
-**Interpretação:** É uma instrução do template ao desenvolvedor, não código ativo.
+**Interpretation:** Template instruction to developer rather than active code.
 
 ### 45. root-classic/src/index.ejs:13
 
-**Observação:** Comentário HTML com o link para a documentação de configuração do `import-map-overrides`.
+**Observation:** HTML comment linking to `import-map-overrides` configuration documentation.
 
-**Interpretação:** É uma instrução do template ao desenvolvedor, não código ativo.
+**Interpretation:** Template instruction to developer rather than active code.
 
 ### 46. root-classic/src/index.ejs:14
 
-**Observação:** `<meta name="import-map-overrides-domains" content="denylist:prod.example.com" />`, inteiro dentro de um comentário HTML.
+**Observation:** `<meta name="import-map-overrides-domains" content="denylist:prod.example.com" />`, entirely inside HTML comment.
 
-**Interpretação:** É uma opção de desenvolvimento desligada, não código ativo.
+**Interpretation:** Disabled development option rather than active code.
 
 ### 47. root-classic/src/index.ejs:41
 
-**Observação:** `<script src="https://cdn.jsdelivr.net/npm/import-map-overrides@5.1.1/dist/import-map-overrides.js">`, apontado pelo padrão de import map.
+**Observation:** `<script src="https://cdn.jsdelivr.net/npm/import-map-overrides@5.1.1/dist/import-map-overrides.js">`, identified by import map pattern.
 
-**Interpretação:** Carrega de CDN a biblioteca de desenvolvimento que sobrescreve entradas do import map. Não carrega o bundle de outra unidade.
+**Interpretation:** Loads development library overriding import map entries from CDN. Does not load another unit bundle.
 
 ### 48. root-classic/src/index.ejs:56
 
-**Observação:** `<import-map-overrides-full show-when-local-storage="devtools" dev-libs>`, o painel da biblioteca da observação #47, exibido só com a chave `devtools` no localStorage.
+**Observation:** `<import-map-overrides-full show-when-local-storage="devtools" dev-libs>`, library panel from observation #47, displayed only with localStorage key `devtools`.
 
-**Interpretação:** É uma ferramenta de desenvolvimento, não o custom element de outra unidade.
+**Interpretation:** Development tool rather than another unit custom element.
 
 ### 49. root-app/index.html:21
 
-**Observação:** `<script src="https://cdn.jsdelivr.net/npm/systemjs@6.14.2/dist/system.min.js">`, apontado pelo padrão de script externo. O único código que usa `window.System` é o fallback de root-app/src/utils/dynamicImport.ts:22-24.
+**Observation:** `<script src="https://cdn.jsdelivr.net/npm/systemjs@6.14.2/dist/system.min.js">`, identified by external-script pattern. Only code using `window.System` is fallback in root-app/src/utils/dynamicImport.ts:22-24.
 
-**Interpretação:** Carrega de CDN o carregador SystemJS, uma biblioteca. Não carrega o bundle de outra unidade.
+**Interpretation:** Loads SystemJS loader library from CDN. Does not load another unit bundle.
 
 ### 50. root-classic/src/index.ejs:41
 
-**Observação:** O mesmo `<script>` do `import-map-overrides` da #47, agora apontado pelo padrão de script externo.
+**Observation:** Same `<script>` for `import-map-overrides` as #47, now identified by external-script pattern.
 
-**Interpretação:** É a biblioteca de CDN da observação #47, não o bundle de outra unidade.
+**Interpretation:** CDN library from observation #47 rather than another unit bundle.
 
 ### 51. root-app/src/App.vue:8; root-app/index.html:15
 
-**Observação:** `<ParcelWrapper app-name="@org/header-app">`, a primeira parcel do template raiz do host, montado em root-app/src/main.ts:5. O nome é resolvido para `http://127.0.0.1:5175/src/main.ts`, a mesma URL do `@org/topbar-app` em root-classic/src/index.ejs:35.
+**Observation:** `<ParcelWrapper app-name="@org/header-app">`, first parcel in host root template mounted in root-app/src/main.ts:5. Name resolved to `http://127.0.0.1:5175/src/main.ts`, same URL as `@org/topbar-app` in root-classic/src/index.ejs:35.
 
-**Interpretação:** O host nomeia no template a unidade que entra como primeira parcel, o remoto servido na porta 5175.
+**Interpretation:** Host names first parcel unit in template, remote served at port 5175.
 
 ### 52. root-app/src/App.vue:9; root-app/index.html:14
 
-**Observação:** `<ParcelWrapper app-name="@org/content-app">`, a segunda parcel do template raiz. O nome é resolvido para `http://127.0.0.1:5174/src/main.ts`.
+**Observation:** `<ParcelWrapper app-name="@org/content-app">`, second parcel in root template. Name resolved to `http://127.0.0.1:5174/src/main.ts`.
 
-**Interpretação:** O host nomeia no template o content como segunda parcel.
+**Interpretation:** Host names content as second parcel in template.
 
 ### 53. root-app/src/components/ParcelWrapper.vue:3-5; root-app/src/components/ParcelWrapper.vue:10-11; root-app/src/components/ParcelWrapper.vue:22; root-app/src/components/ParcelWrapper.vue:33; root-app/src/components/ParcelWrapper.vue:46
 
-**Observação:** `<Parcel ... :config="parcelConfigRef" :mountParcel="mountParcel" ...>`, componente de `single-spa-vue/parcel`, com `mountParcel = mountRootParcel` do `single-spa`. A configuração é o módulo carregado por `dynamicImport(props.appName)` (:22), aceito quando tem `mount` e `unmount` (:33).
+**Observation:** `<Parcel ... :config="parcelConfigRef" :mountParcel="mountParcel" ...>`, component from `single-spa-vue/parcel`, with `mountParcel = mountRootParcel` from `single-spa`. Configuration is module loaded by `dynamicImport(props.appName)` (:22), accepted when containing `mount` and `unmount` (:33).
 
-**Interpretação:** O wrapper monta como parcel single-spa o remoto que recebe por parâmetro, sem nomeá-lo.
+**Interpretation:** Wrapper mounts parameter-supplied remote as single-spa parcel without naming it.
 
 ### 54. root-app/src/utils/dynamicImport.ts:15; root-app/index.html:11-18
 
-**Observação:** `await import(/* @vite-ignore */ url)`, chamado por `dynamicImport(props.appName)` em root-app/src/components/ParcelWrapper.vue:22. Os nomes que chegam, `@org/header-app` e `@org/content-app`, são resolvidos pelo import map nativo da página.
+**Observation:** `await import(/* @vite-ignore */ url)`, called by `dynamicImport(props.appName)` in root-app/src/components/ParcelWrapper.vue:22. Supplied names, `@org/header-app` and `@org/content-app`, resolved by native page import map.
 
-**Interpretação:** O host carrega em runtime, por `import()` nativo, o remoto cujo nome recebe por parâmetro.
+**Interpretation:** Host loads parameter-named remote at runtime through native `import()`.
 
 ### 55. root-classic/src/index.ejs:30-38; root-classic/src/index.ejs:29
 
-**Observação:** `<script type="injector-importmap">`, que mapeia `@org/content-app` para `http://127.0.0.1:5174/src/main.ts` (:34) e `@org/topbar-app` para `http://127.0.0.1:5175/src/main.ts` (:35), além do próprio `@org/root-config` (:33). Só é gerado com `isLocal` (:29).
+**Observation:** `<script type="injector-importmap">`, mapping `@org/content-app` to `http://127.0.0.1:5174/src/main.ts` (:34) and `@org/topbar-app` to `http://127.0.0.1:5175/src/main.ts` (:35), plus own `@org/root-config` (:33). Generated only with `isLocal` (:29).
 
-**Interpretação:** É a resolução dos nomes das duas aplicações para as URLs dos dev servers, só no modo local.
+**Interpretation:** Resolution of two application names to development-server URLs only in local mode.
 
 ### 56. root-classic/src/microfrontend-layout.html:1-26
 
-**Observação:** `<single-spa-router>`, a tabela de rotas do root: a rota `default` com `@org/topbar-app` (:22) e `@org/content-app` (:23) dentro de `<main>`. É importada e convertida em rotas em root-classic/src/org-root-config.ts:7-9.
+**Observation:** `<single-spa-router>`, root route table: route `default` with `@org/topbar-app` (:22) and `@org/content-app` (:23) inside `<main>`. Imported/converted to routes in root-classic/src/org-root-config.ts:7-9.
 
-**Interpretação:** É a tabela de rotas que liga a rota padrão às aplicações de outras unidades.
+**Interpretation:** Route table linking default route to other-unit applications.
 
 ### 57. root-classic/src/org-root-config.ts:12-14; root-classic/src/index.ejs:34-35
 
-**Observação:** `loadApp({ name }) { return import(/* webpackIgnore: true */ name); }`, dentro de `constructApplications`. Os nomes vêm do layout e são resolvidos pelo import map local para as URLs das duas aplicações.
+**Observation:** `loadApp({ name }) { return import(/* webpackIgnore: true */ name); }`, inside `constructApplications`. Names from layout resolved by local import map to two application URLs.
 
-**Interpretação:** O root carrega em runtime a aplicação cujo nome recebe por parâmetro, por `import()` nativo.
+**Interpretation:** Root loads parameter-named application at runtime through native `import()`.
 
 ### 58. root-classic/src/org-root-config.ts:18; root-classic/src/org-root-config.ts:9-16; root-classic/src/org-root-config.ts:19
 
-**Observação:** `applications.forEach(registerApplication)`, sobre as aplicações construídas a partir do layout em :9-15. O motor de layout criado em :16 é ativado em :19.
+**Observation:** `applications.forEach(registerApplication)`, over applications constructed from layout at :9-15. Layout engine created at :16 activated at :19.
 
-**Interpretação:** O root registra no single-spa todas as aplicações do layout, sem nomeá-las na linha.
+**Interpretation:** Root registers all layout applications in single-spa without naming them in line.
 
 ### 59. root-classic/src/org-root-config.ts:20; root-classic/src/org-root-config.ts:1
 
-**Observação:** `start()`, importado de `single-spa`.
+**Observation:** `start()`, imported from `single-spa`.
 
-**Interpretação:** Inicia o orquestrador. Sem ele, os registros não montam nenhuma aplicação.
+**Interpretation:** Starts orchestrator. Without it registrations mount no application.
 
 ### 60. content-app; content-app/package.json; content-app/index.html:11; content-app/src/main.ts:8-22; content-app/vite.config.ts:1-7; content-app/package.json:8
 
-**Observação:** Projeto com manifesto, `vite.config.ts` e lockfile próprios. A página carrega `/src/main.ts`, que exporta os lifecycles de `singleSpaVue`. O build é `vue-tsc -b && vite build`. Não declara workspace.
+**Observation:** Project with own manifest, `vite.config.ts` and lockfile. Page loads `/src/main.ts`, exporting `singleSpaVue` lifecycles. Build `vue-tsc -b && vite build`. Declares no workspace.
 
-**Interpretação:** É uma unidade frontend com limite próprio, uma aplicação Vue single-spa.
+**Interpretation:** Frontend unit with own boundary, single-spa Vue application.
 
 ### 61. root-app; root-app/package.json; root-app/index.html:43; root-app/src/main.ts:5; root-app/vite.config.ts:1-7; root-app/package.json:8
 
-**Observação:** Projeto com manifesto, `vite.config.ts` e lockfile próprios. A página carrega `/src/main.ts`, que monta o App Vue em `#app`. O build é `vue-tsc -b && vite build`. Tem uma cópia do topbar em `src/modules/Topbar/`, sem manifesto nem build, com o import comentado.
+**Observation:** Project with own manifest, `vite.config.ts` and lockfile. Page loads `/src/main.ts`, mounting Vue App in `#app`. Build `vue-tsc -b && vite build`. Contains topbar copy in `src/modules/Topbar/`, without manifest/build and with commented import.
 
-**Interpretação:** É uma unidade frontend com limite próprio, o host Vue que monta os remotos como parcels.
+**Interpretation:** Frontend unit with own boundary, Vue host mounting remotes as parcels.
 
 ### 62. root-classic; root-classic/package.json; root-classic/webpack.config.js:7-9, 18-20; root-classic/src/org-root-config.ts:9-20; root-classic/package.json:10-11
 
-**Observação:** Projeto com manifesto, `webpack.config.js` e lockfile próprios. A entrada `src/org-root-config.ts` vem da convenção do `webpack-config-single-spa-ts`, e a página vem de `src/index.ejs`. O build é `concurrently npm:build:*`, com `webpack --mode=production`.
+**Observation:** Project with own manifest, `webpack.config.js` and lockfile. Entry `src/org-root-config.ts` from `webpack-config-single-spa-ts` convention; page from `src/index.ejs`. Build `concurrently npm:build:*`, with `webpack --mode=production`.
 
-**Interpretação:** É uma unidade frontend com limite próprio, a root config single-spa da composição.
+**Interpretation:** Frontend unit with own boundary, composition single-spa root config.
 
 ### 63. topbar-app; topbar-app/package.json; topbar-app/index.html:11; topbar-app/vite.config.ts:8-19; topbar-app/src/main.ts:8-22; topbar-app/package.json:8
 
-**Observação:** Projeto com manifesto, `vite.config.ts` e lockfile próprios. A página e a entrada do Rollup apontam para `src/main.ts`, que exporta os lifecycles de `singleSpaVue`. O build é `vue-tsc -b && vite build`, com saída `app.js` em formato `system`.
+**Observation:** Project with own manifest, `vite.config.ts` and lockfile. Page/Rollup entry point to `src/main.ts`, exporting `singleSpaVue` lifecycles. Build `vue-tsc -b && vite build`, output `app.js` in `system` format.
 
-**Interpretação:** É uma unidade frontend com limite próprio, uma aplicação Vue single-spa.
+**Interpretation:** Frontend unit with own boundary, single-spa Vue application.
 
 ### 64. root-app/src/App.vue:9; root-app/index.html:14; root-app/src/utils/dynamicImport.ts:15; root-app/src/components/ParcelWrapper.vue:3, 46; content-app/src/main.ts:20-22
 
-**Observação:** O `root-app` põe `@org/content-app` como parcel no template raiz e o carrega por `import()` do nome, resolvido pelo import map nativo para `http://127.0.0.1:5174/src/main.ts`. O wrapper monta o módulo com `mountRootParcel`, usando os lifecycles que o content exporta. O destino foi identificado pelo nome, que é o `name` do manifesto da unidade, `content-app`, com o escopo `@org/` (content-app/package.json:2). A porta não está fixada na configuração do content.
+**Observation:** `root-app` places `@org/content-app` as root-template parcel, loading through name `import()`, resolved by native import map to `http://127.0.0.1:5174/src/main.ts`. Wrapper mounts module with `mountRootParcel` using content-exported lifecycles. Target identified by name, unit manifest `name`, `content-app`, with scope `@org/` (content-app/package.json:2). Content configuration does not fix port.
 
-**Interpretação:** É uma relação host → remote ativa entre o `root-app` e o `content-app`, sem registro no orquestrador.
+**Interpretation:** Active host → remote relationship between `root-app` and `content-app` without orchestrator registration.
 
 ### 65. root-classic/src/microfrontend-layout.html:21-23; root-classic/src/index.ejs:34; root-classic/src/org-root-config.ts:13, 18, 20; content-app/src/main.ts:20-22
 
-**Observação:** O `root-classic` põe `@org/content-app` na rota `default`, carrega-o por `import()` do nome, resolvido pelo import map local para `http://127.0.0.1:5174/src/main.ts`, e o registra no single-spa. O nome é o `name` do manifesto da unidade com o escopo `@org/` (content-app/package.json:2). O mapa só existe com `isLocal`.
+**Observation:** `root-classic` places `@org/content-app` in route `default`, loading through name `import()`, resolved by local import map to `http://127.0.0.1:5174/src/main.ts`, registering in single-spa. Name is unit manifest `name` with scope `@org/` (content-app/package.json:2). Map exists only with `isLocal`.
 
-**Interpretação:** É uma relação root-config → application ativa entre o `root-classic` e o `content-app`, no modo local.
+**Interpretation:** Active root-config → application relationship between `root-classic` and `content-app` in local mode.
 
 ### 66. root-classic/src/microfrontend-layout.html:21-22; root-classic/src/index.ejs:35; root-classic/src/org-root-config.ts:13, 18, 20; topbar-app/src/main.ts:20-22
 
-**Observação:** Mesmo caminho da #65, com `@org/topbar-app`, resolvido para `http://127.0.0.1:5175/src/main.ts` e que é o `name` do manifesto do topbar com o escopo `@org/` (topbar-app/package.json:2). O topbar monta antes do content, na mesma rota. O mapa só existe com `isLocal`.
+**Observation:** Same path as #65 with `@org/topbar-app`, resolved to `http://127.0.0.1:5175/src/main.ts`, topbar manifest `name` with scope `@org/` (topbar-app/package.json:2). Topbar mounts before content in same route. Map exists only with `isLocal`.
 
-**Interpretação:** É uma relação root-config → application ativa entre o `root-classic` e o `topbar-app`, no modo local.
+**Interpretation:** Active root-config → application relationship between `root-classic` and `topbar-app` in local mode.
 
 ### 67. root-app/src/App.vue:8; root-app/index.html:15; root-app/src/utils/dynamicImport.ts:15; root-app/src/components/ParcelWrapper.vue:3
 
-**Observação:** O `root-app` carrega e monta como parcel `@org/header-app`, pelo mesmo caminho da #64, resolvido para `http://127.0.0.1:5175/src/main.ts`. Nenhuma unidade do snapshot se chama `header-app`. A mesma URL é a do `@org/topbar-app` no outro host (root-classic/src/index.ejs:35), e só a porta 5175, não fixada na configuração, distingue o remoto.
+**Observation:** `root-app` loads/mounts parcel `@org/header-app` through same path as #64, resolved to `http://127.0.0.1:5175/src/main.ts`. No snapshot unit named `header-app`. Same URL as `@org/topbar-app` in other host (root-classic/src/index.ejs:35); only port 5175, not fixed in configuration, distinguishes remote.
 
-**Interpretação:** É uma relação host → remote ativa. O destino fica com o nome do artefato: a correspondência com o `topbar-app` é plausível pela URL, mas não é explícita.
+**Interpretation:** Active host → remote relationship. Target retains artifact name: correspondence to `topbar-app` plausible through URL but not explicit.
 
 ### 68. content-app/package.json:8; content-app/vite.config.ts:5-7
 
-**Observação:** `"build": "vue-tsc -b && vite build"`, sobre a configuração Vite padrão. Não há artefato de deploy. A versão `0.0.0` de um pacote `private` não é usada em publicação. A unidade só é servida em `127.0.0.1:5174` pelo dev server.
+**Observation:** `"build": "vue-tsc -b && vite build"`, over default Vite configuration. No deployment artifact. Version `0.0.0` of `private` package unused for publication. Unit served only at `127.0.0.1:5174` through development server.
 
-**Interpretação:** O content tem build separado, sem deploy observado nem versionamento independente.
+**Interpretation:** Content has separate build without observed deployment or independent versioning.
 
 ### 69. root-app/package.json:8; root-app/vite.config.ts:5-7
 
-**Observação:** O mesmo script de build, sobre a configuração Vite padrão. Não há artefato de deploy, e a versão `0.0.0` de um pacote `private` não é usada em publicação. Nenhum artefato fixa o endereço do próprio host.
+**Observation:** Same build script over default Vite configuration. No deployment artifact; version `0.0.0` of `private` package unused for publication. No artifact fixes own host address.
 
-**Interpretação:** O host Vue tem build separado, sem deploy observado nem versionamento independente.
+**Interpretation:** Vue host has separate build without observed deployment or independent versioning.
 
 ### 70. root-classic/package.json:10-12; root-classic/webpack.config.js:5-27
 
-**Observação:** `"build": "concurrently npm:build:*"`, com `build:webpack` (`webpack --mode=production`) e `build:types` (`tsc`), sobre `webpack-config-single-spa-ts` com `projectName: "root-config"` e a página de `src/index.ejs`. Não há artefato de deploy, e o manifesto não tem `version`. O root só é servido em `localhost:9000` por `webpack serve`.
+**Observation:** `"build": "concurrently npm:build:*"`, with `build:webpack` (`webpack --mode=production`) and `build:types` (`tsc`), over `webpack-config-single-spa-ts` with `projectName: "root-config"` and page from `src/index.ejs`. No deployment artifact; manifest lacks `version`. Root served only at `localhost:9000` through `webpack serve`.
 
-**Interpretação:** O root tem build separado, sem deploy observado nem versionamento independente.
+**Interpretation:** Root has separate build without observed deployment or independent versioning.
 
 ### 71. topbar-app/package.json:8; topbar-app/vite.config.ts:8-18
 
-**Observação:** O mesmo script de build dos projetos Vite, com saída `app.js` em formato `system` e assinaturas de exportação preservadas. Nenhum host usa esse build, e o mapa que apontaria para ele está comentado. Não há artefato de deploy, e a versão `0.0.0` de um pacote `private` não é usada em publicação.
+**Observation:** Same build script as Vite projects, output `app.js` in `system` format with preserved export signatures. No host uses build; map pointing to it commented. No deployment artifact; version `0.0.0` of `private` package unused for publication.
 
-**Interpretação:** O topbar tem build separado e preparado para ser carregado por um host, sem deploy observado nem versionamento independente.
+**Interpretation:** Topbar has separate build prepared for host loading without observed deployment or independent versioning.
 
 ### 72. root-app/index.html:10
 
-**Observação:** Comentário HTML: "Static import map for microfrontends esmodule".
+**Observation:** HTML comment: "Static import map for microfrontends esmodule".
 
-**Interpretação:** Afirma que o bloco seguinte é o import map estático, de ES modules, dos microfrontends. A afirmação é corroborada: o import map nativo resolve os nomes das duas parcels.
+**Interpretation:** Claims following block is static ES-module microfrontend import map. Claim corroborated: native import map resolves two parcel names.
 
 ### 73. root-app/index.html:20
 
-**Observação:** Comentário HTML: "SystemJS for legacy microfrontends".
+**Observation:** HTML comment: "SystemJS for legacy microfrontends".
 
-**Interpretação:** Afirma que o SystemJS carregado serve a microfrontends legados. O carregador está ativo, mas nenhum microfrontend está mapeado para ele. A afirmação é corroborada em parte.
+**Interpretation:** Claims loaded SystemJS serves legacy microfrontends. Loader active but no microfrontend mapped to it. Claim partially corroborated.
 
 ### 74. root-app/src/utils/dynamicImport.ts:2
 
-**Observação:** Comentário JSDoc: "Hybrid dynamic import helper that supports both modern ESM and legacy SystemJS."
+**Observation:** JSDoc comment: "Hybrid dynamic import helper that supports both modern ESM and legacy SystemJS."
 
-**Interpretação:** Afirma o que o helper suporta. A afirmação é corroborada: o código tem o `import()` nativo e o fallback `System.import`, com o SystemJS carregado na página.
+**Interpretation:** Claims helper capabilities. Claim corroborated: code has native `import()` and fallback `System.import`, with SystemJS loaded on page.
 
 ### 75. root-app/src/utils/dynamicImport.ts:5
 
-**Observação:** Comentário JSDoc: "Try native import() first (for modules in native import map)".
+**Observation:** JSDoc comment: "Try native import() first (for modules in native import map)".
 
-**Interpretação:** Afirma que o helper tenta primeiro o `import()` nativo, para os módulos do import map nativo. A afirmação é corroborada.
+**Interpretation:** Claims helper first tries native `import()` for native import-map modules. Claim corroborated.
 
 ### 76. root-app/src/utils/dynamicImport.ts:6
 
-**Observação:** Comentário JSDoc: "If that fails, try System.import() (for modules in systemjs-importmap)".
+**Observation:** JSDoc comment: "If that fails, try System.import() (for modules in systemjs-importmap)".
 
-**Interpretação:** Afirma o fallback e os módulos que ele serve. A ordem de tentativa está no código; o `systemjs-importmap` está comentado, e os módulos dele ficam sem artefato ativo. A afirmação é corroborada em parte.
+**Interpretation:** Claims fallback and modules served. Attempt order in code; `systemjs-importmap` commented, leaving its modules without active artifact. Claim partially corroborated.
 
 ### 77. topbar-app/src/App.vue:4
 
-**Observação:** Título exibido pelo componente raiz do topbar: "Topbar - MFE".
+**Observation:** Title displayed by topbar root component: "Topbar - MFE".
 
-**Interpretação:** Afirma que o topbar é um micro-frontend. A afirmação é corroborada: o projeto é unidade própria, os lifecycles vêm de `singleSpaVue` e o `root-classic` o registra no layout.
+**Interpretation:** Claims topbar microfrontend. Claim corroborated: own project unit, lifecycles from `singleSpaVue` and `root-classic` layout registration.
 
 ### 78. 546aa27 2026-01-09 (content-app/package.json, topbar-app/package.json); 0cccd59 2026-01-09 (topbar-app/src/main.ts); 6ae6565 2026-01-09 (content-app/src/main.ts)
 
-**Observação:** Os dois manifestos não mudam desde o primeiro commit, com `single-spa` em todas as versões. Os `main.ts` mudam depois, e as versões anteriores não estão disponíveis no clone parcial.
+**Observation:** Both manifests unchanged since first commit, with `single-spa` in all versions. Files `main.ts` change later; earlier versions unavailable in partial clone.
 
-**Interpretação:** O histórico não diz se algum remoto importou `single-spa` diretamente. A dúvida é só sobre o passado: no snapshot, o pacote não tem uso nos remotos.
+**Interpretation:** History does not establish whether remote directly imported `single-spa`. Uncertainty only about past: snapshot package unused in remotes.
 
 ### 79. 546aa27 2026-01-09 (root-app/package.json, root-app/vite.config.ts)
 
-**Observação:** O manifesto e a configuração Vite do `root-app` têm o mesmo objeto em todos os commits. Em nenhuma versão o plugin aparece no `vite.config.ts`.
+**Observation:** Manifest and Vite configuration of `root-app` have same object in all commits. No version has plugin in `vite.config.ts`.
 
-**Interpretação:** O `vite-plugin-single-spa` foi declarado e nunca configurado no histórico. Não foi desconectado depois.
+**Interpretation:** `vite-plugin-single-spa` declared and never configured in history. Not disconnected later.
 
 ### 80. 546aa27 2026-01-09 (root-classic/package.json)
 
-**Observação:** Nenhum arquivo do `root-classic` muda depois do primeiro commit, e em nenhuma versão o pacote é referenciado.
+**Observation:** No `root-classic` file changes after first commit; no version references package.
 
-**Interpretação:** O `@types/systemjs` chega com o projeto e nunca é usado no histórico.
+**Interpretation:** `@types/systemjs` arrives with project, never used in history.
 
 ### 81. 546aa27 2026-01-09 (content-app/src/main.ts, topbar-app/src/main.ts); 0cccd59 2026-01-09 (topbar-app/src/main.ts); 6ae6565 2026-01-09 (content-app/src/main.ts)
 
-**Observação:** Os dois `main.ts` existem desde o primeiro commit e mudam uma vez cada um. As versões anteriores não estão disponíveis.
+**Observation:** Both `main.ts` files exist since first commit, each changes once. Earlier versions unavailable.
 
-**Interpretação:** O histórico não diz se a montagem própria já estava comentada no início nem se algum remoto montou a UI sozinho. A dúvida é só sobre o passado: no snapshot, os dois remotos só sobem pelo `mount` de um host.
+**Interpretation:** History does not establish whether own mounting commented initially or remote mounted UI alone. Uncertainty only about past: snapshot remotes start only through host `mount`.
 
 ### 82. 546aa27 2026-01-09 (topbar-app/src/TopbarApp.vue); 0cccd59 2026-01-09 (topbar-app/src/App.vue); f2f2494 2026-01-09 (root-app/src/modules/Topbar/, root-app/src/App.vue); 6ae6565 2026-01-09 (topbar-app/src/App.vue)
 
-**Observação:** O `topbar-app` existe desde o primeiro commit. A cópia em `root-app/src/modules/Topbar/` só aparece em `f2f2494`, com objetos iguais aos do `topbar-app`, e o `root-app/src/App.vue` desse commit já tem o import e o uso dela comentados.
+**Observation:** `topbar-app` exists since first commit. Copy in `root-app/src/modules/Topbar/` appears only in `f2f2494`, with same objects as `topbar-app`; `root-app/src/App.vue` in that commit already has import/usage commented.
 
-**Interpretação:** O topbar não foi extraído dessa cópia, que é posterior a ele e entra já desligada no host.
+**Interpretation:** Topbar not extracted from copy, which is later and arrives already disconnected in host.
 
 ### 83. 546aa27 2026-01-09 (root-app/index.html, root-app/src/utils/dynamicImport.ts, topbar-app/vite.config.ts)
 
-**Observação:** Os três arquivos do caminho SystemJS têm o mesmo objeto em todos os commits. O `systemjs-importmap` está comentado em todas as versões.
+**Observation:** Three SystemJS-path files have same objects in all commits. `systemjs-importmap` commented in all versions.
 
-**Interpretação:** O caminho SystemJS chega sem alvo no primeiro commit e não foi desligado depois.
+**Interpretation:** SystemJS path arrives without target in first commit, not disabled later.
 
 ### 84. 546aa27 2026-01-09 (root-classic/src/index.ejs)
 
-**Observação:** O `root-classic/src/index.ejs` chega no primeiro commit com as linhas 12 a 14 comentadas e não muda depois.
+**Observation:** `root-classic/src/index.ejs` arrives in first commit with lines 12 to 14 commented, unchanged afterward.
 
-**Interpretação:** A meta `import-map-overrides-domains` nunca esteve ativa no histórico. São comentários do template.
+**Interpretation:** Meta `import-map-overrides-domains` never active in history. Template comments.
 
 ### 85. 546aa27 2026-01-09 (root-app/mfe-app.json, root-app/src/importMap.json, root-app/src/importMap.dev.json, root-app/index.html)
 
-**Observação:** Os três mapas não lidos são criados no mesmo commit do import map nativo da página, e nenhum dos quatro muda depois.
+**Observation:** Three unread maps created in same commit as native page import map; none of four changes afterward.
 
-**Interpretação:** As URLs diferentes não pertencem a um estágio anterior observável: os mapas não lidos e o mapa ativo convivem desde o primeiro commit.
+**Interpretation:** Different URLs do not belong to observable earlier stage: unread maps and active map coexist since first commit.
 
 ### 86. 546aa27 2026-01-09 (root-classic/src/index.ejs)
 
-**Observação:** O mesmo `root-classic/src/index.ejs` chega com o mapa de produção comentado e o mapa local condicionado a `isLocal`, e não muda depois.
+**Observation:** Same `root-classic/src/index.ejs` arrives with production map commented and local map conditional on `isLocal`, unchanged afterward.
 
-**Interpretação:** O histórico não diz se o mapa de produção foi planejado e nunca conectado ou se é só texto do gerador. No snapshot, só o modo local liga as aplicações.
+**Interpretation:** History does not establish whether production map planned/never connected or merely generator text. Snapshot links applications only in local mode.
 
 ### 87. 546aa27 2026-01-09 (root-app/index.html, root-classic/src/index.ejs, root-classic/src/microfrontend-layout.html, topbar-app/package.json); f2f2494 2026-01-09 (root-app/src/App.vue)
 
-**Observação:** Os arquivos com `@org/header-app` e com `@org/topbar-app` não mudam desde o primeiro commit, e nenhum commit renomeia a unidade. O `root-app/src/App.vue` muda em `f2f2494`, mas o mapa que resolve o nome é o mesmo em todas as versões.
+**Observation:** Files with `@org/header-app` and `@org/topbar-app` unchanged since first commit; no commit renames unit. `root-app/src/App.vue` changes in `f2f2494`, but name-resolving map identical in all versions.
 
-**Interpretação:** Os dois nomes do topbar convivem desde o primeiro commit e não pertencem a estágios diferentes. O histórico não liga `@org/header-app` ao `topbar-app`.
+**Interpretation:** Two topbar names coexist since first commit rather than belonging to different stages. History does not link `@org/header-app` to `topbar-app`.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.2 (content-app/package.json:12) | 1 tecnologia | manifesto | single-spa | tecnológica | fraca | — |
-| 2 | 3.4.2 (content-app/package.json:13) | 1 tecnologia | manifesto | single-spa | tecnológica | fraca | declara #26; declara #27 |
-| 3 | 3.4.2 (root-app/package.json:12) | 1 tecnologia | manifesto | single-spa | tecnológica | fraca | declara #53 |
-| 4 | 3.4.2 (root-app/package.json:13) | 1 tecnologia | manifesto | single-spa | tecnológica | fraca | declara #53 |
-| 5 | 3.4.2 (root-app/package.json:14) | 1 tecnologia | manifesto | single-spa | tecnológica | fraca | — |
-| 6 | 3.4.2 (root-classic/package.json:44) | 1 tecnologia | manifesto | import-maps | tecnológica | fraca | — |
-| 7 | 3.4.2 (root-classic/package.json:45) | 1 tecnologia | manifesto | single-spa | tecnológica | fraca | declara #58; declara #59 |
-| 8 | 3.4.2 (root-classic/package.json:47) | 1 tecnologia | manifesto | single-spa | tecnológica | fraca | declara #16; declara #57 |
-| 9 | 3.4.2 (root-classic/package.json:40) | 1 tecnologia | manifesto | single-spa | tecnológica | fraca | declara root-classic/tsconfig.json:2 |
-| 10 | 3.4.2 (root-classic/package.json:39) | 1 tecnologia | manifesto | single-spa | tecnológica | fraca | declara #15 |
-| 11 | 3.4.2 (topbar-app/package.json:12) | 1 tecnologia | manifesto | single-spa | tecnológica | fraca | — |
-| 12 | 3.4.2 (topbar-app/package.json:13) | 1 tecnologia | manifesto | single-spa | tecnológica | fraca | declara #28; declara #29 |
-| 13 | 3.4.2 (content-app/package.json:13, topbar-app/package.json:13, root-app/package.json:12, :13, Evidência); 3.4.3 (root-app, Marcadores e Entrada); 3.4.4 (root-app/index.html:11, :24, :34, :41, Arquivo:linha); 3.4.4 (root-app/index.html:21, src-html-external-script, Arquivo:linha); 3.4.4 (content-app/src/main.ts:20; topbar-app/src/main.ts:20; root-app/src/utils/dynamicImport.ts:24, :15; root-app/src/App.vue:8, :9, Observação); 3.4.5 #1, #4 (Configuração, Código); 3.4.6 #1, #4 (Onde é servida); 3.4.7 #1, #2, #3, #4, #5 (Evidência) | 2 configuração | configuração | import-maps | arquitetural | forte | configura #64; configura #67; configura #54 |
-| 14 | 3.4.2 (content-app/package.json:13, topbar-app/package.json:13, root-classic/package.json:44, :45, :47, Evidência); 3.4.4 (root-classic/src/index.ejs:12, :13, :14, :41, :56, Arquivo:linha); 3.4.4 (root-classic/src/index.ejs:30, Arquivo:linha); 3.4.4 (content-app/src/main.ts:20; topbar-app/src/main.ts:20; root-app/src/App.vue:8; root-classic/src/org-root-config.ts:13, Observação); 3.4.5 #2, #3 (Configuração, Código); 3.4.6 #1, #3, #4 (Onde é servida) | 2 configuração | configuração | import-maps | arquitetural | forte | configura #65; configura #66; configura #57 |
-| 15 | 3.4.2 (root-classic/package.json:45, :47, :39, Evidência); 3.4.3 (root-classic, Marcadores, Entrada e Build); 3.4.4 (root-classic/src/index.ejs:30; root-classic/src/org-root-config.ts:13, Observação); 3.4.6 #3 (Artefatos) | 2 configuração | configuração | single-spa | tecnológica | moderada | configura #62; configura #55 |
-| 16 | 3.4.4 (content-app/src/main.ts:20, :21; topbar-app/src/main.ts:8, Observação); 3.4.4 (root-classic/src/microfrontend-layout.html:1, Arquivo:linha); 3.4.5 #2, #3 (Configuração, Código) | 2 configuração | configuração | single-spa | arquitetural | forte | configura #65; configura #66 |
-| 17 | 3.4.8 #8 (Ponto) | 2 configuração | configuração | import-maps | arquitetural | fraca | — |
-| 18 | 3.4.8 #8 (Ponto) | 2 configuração | configuração | import-maps | arquitetural | fraca | — |
-| 19 | 3.4.8 #8 (Ponto) | 2 configuração | configuração | import-maps | arquitetural | fraca | — |
-| 20 | 3.4.4 (content-app/src/main.ts:20) | 3 código | código-fonte | single-spa | tecnológica | moderada | implementa #64; implementa #65 |
-| 21 | 3.4.4 (content-app/src/main.ts:21) | 3 código | código-fonte | single-spa | tecnológica | moderada | implementa #64; implementa #65 |
-| 22 | 3.4.4 (content-app/src/main.ts:22) | 3 código | código-fonte | single-spa | tecnológica | moderada | implementa #64; implementa #65 |
-| 23 | 3.4.4 (topbar-app/src/main.ts:20) | 3 código | código-fonte | single-spa | tecnológica | moderada | implementa #66 |
-| 24 | 3.4.4 (topbar-app/src/main.ts:21) | 3 código | código-fonte | single-spa | tecnológica | moderada | implementa #66 |
-| 25 | 3.4.4 (topbar-app/src/main.ts:22) | 3 código | código-fonte | single-spa | tecnológica | moderada | implementa #66 |
-| 26 | 3.4.4 (content-app/src/main.ts:4) | 3 código | código-fonte | single-spa | tecnológica | moderada | implementa #64; implementa #65 |
-| 27 | 3.4.4 (content-app/src/main.ts:8) | 3 código | código-fonte | single-spa | tecnológica | moderada | implementa #64; implementa #65 |
-| 28 | 3.4.4 (topbar-app/src/main.ts:4) | 3 código | código-fonte | single-spa | tecnológica | moderada | implementa #66 |
-| 29 | 3.4.4 (topbar-app/src/main.ts:8) | 3 código | código-fonte | single-spa | tecnológica | moderada | implementa #66 |
-| 30 | 3.4.4 (root-app/index.html:11) | 3 código | código-fonte | import-maps | arquitetural | forte | implementa #64; implementa #67 |
-| 31 | 3.4.4 (root-app/index.html:24) | 3 código | comentário | — | contexto | fraca | — |
-| 32 | 3.4.4 (root-app/index.html:34) | 3 código | código-fonte | import-maps | tecnológica | fraca | — |
-| 33 | 3.4.4 (root-app/index.html:41) | 3 código | código-fonte | import-maps | tecnológica | fraca | — |
-| 34 | 3.4.4 (root-app/src/global.d.ts:1) | 3 código | comentário | — | contexto | fraca | — |
-| 35 | 3.4.4 (root-app/src/global.d.ts:14) | 3 código | comentário | — | contexto | fraca | — |
-| 36 | 3.4.4 (root-app/src/global.d.ts:15) | 3 código | comentário | — | contexto | fraca | — |
-| 37 | 3.4.4 (root-app/src/global.d.ts:17) | 3 código | código-fonte | — | contexto | fraca | — |
-| 38 | 3.4.4 (root-app/src/utils/dynamicImport.ts:6) | 3 código | comentário | — | contexto | fraca | — |
-| 39 | 3.4.4 (root-app/src/utils/dynamicImport.ts:19) | 3 código | código-fonte | — | contexto | fraca | — |
-| 40 | 3.4.4 (root-app/src/utils/dynamicImport.ts:21) | 3 código | comentário | — | contexto | fraca | — |
-| 41 | 3.4.4 (root-app/src/utils/dynamicImport.ts:24) | 3 código | código-fonte | import-maps | tecnológica | ambígua | — |
-| 42 | 3.4.4 (root-app/src/utils/dynamicImport.ts:25) | 3 código | código-fonte | — | contexto | fraca | — |
-| 43 | 3.4.4 (root-app/src/utils/dynamicImport.ts:28) | 3 código | código-fonte | — | contexto | fraca | — |
-| 44 | 3.4.4 (root-classic/src/index.ejs:12) | 3 código | comentário | — | contexto | fraca | — |
-| 45 | 3.4.4 (root-classic/src/index.ejs:13) | 3 código | comentário | — | contexto | fraca | — |
-| 46 | 3.4.4 (root-classic/src/index.ejs:14) | 3 código | comentário | — | contexto | fraca | — |
-| 47 | 3.4.4 (root-classic/src/index.ejs:41, src-import-map) | 3 código | código-fonte | import-maps | tecnológica | fraca | — |
-| 48 | 3.4.4 (root-classic/src/index.ejs:56) | 3 código | código-fonte | import-maps | tecnológica | fraca | — |
-| 49 | 3.4.4 (root-app/index.html:21) | 3 código | código-fonte | import-maps | tecnológica | fraca | — |
-| 50 | 3.4.4 (root-classic/src/index.ejs:41, src-html-external-script) | 3 código | código-fonte | import-maps | tecnológica | fraca | — |
-| 51 | 3.4.4 (root-app/src/App.vue:8) | 3 código | código-fonte | single-spa | arquitetural | forte | implementa #67 |
-| 52 | 3.4.4 (root-app/src/App.vue:9) | 3 código | código-fonte | single-spa | arquitetural | forte | implementa #64 |
-| 53 | 3.4.4 (root-app/src/components/ParcelWrapper.vue:3) | 3 código | código-fonte | single-spa | tecnológica | moderada | implementa #64; implementa #67 |
-| 54 | 3.4.4 (root-app/src/utils/dynamicImport.ts:15) | 3 código | código-fonte | import-maps | tecnológica | moderada | implementa #64; implementa #67 |
-| 55 | 3.4.4 (root-classic/src/index.ejs:30) | 3 código | código-fonte | import-maps | arquitetural | forte | implementa #65; implementa #66 |
-| 56 | 3.4.4 (root-classic/src/microfrontend-layout.html:1) | 3 código | código-fonte | single-spa | arquitetural | forte | implementa #65; implementa #66 |
-| 57 | 3.4.4 (root-classic/src/org-root-config.ts:13) | 3 código | código-fonte | single-spa | tecnológica | moderada | implementa #65; implementa #66 |
-| 58 | 3.4.4 (root-classic/src/org-root-config.ts:18) | 3 código | código-fonte | single-spa | tecnológica | moderada | implementa #65; implementa #66 |
-| 59 | 3.4.4 (root-classic/src/org-root-config.ts:20) | 3 código | código-fonte | single-spa | tecnológica | moderada | implementa #65; implementa #66 |
-| 60 | 3.4.3 (content-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 61 | 3.4.3 (root-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 62 | 3.4.3 (root-classic) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 63 | 3.4.3 (topbar-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 64 | 3.4.5 #1 | 5 composição | código-fonte | single-spa | arquitetural | forte | liga #61; liga #60 |
-| 65 | 3.4.5 #2 | 5 composição | configuração | single-spa | arquitetural | forte | liga #62; liga #60 |
-| 66 | 3.4.5 #3 | 5 composição | configuração | single-spa | arquitetural | forte | liga #62; liga #63 |
-| 67 | 3.4.5 #4 | 5 composição | código-fonte | single-spa | arquitetural | forte | liga #61; liga root-app/index.html:15 |
-| 68 | 3.4.6 #1 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #60 |
-| 69 | 3.4.6 #2 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #61 |
-| 70 | 3.4.6 #3 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #62 |
-| 71 | 3.4.6 #4 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #63 |
-| 72 | 3.4.7 #1 | 7 documentação | comentário | import-maps | tecnológica | fraca | corrobora #30; corrobora #13 |
-| 73 | 3.4.7 #2 | 7 documentação | comentário | import-maps | tecnológica | fraca | corrobora em parte #49 |
-| 74 | 3.4.7 #3 | 7 documentação | comentário | import-maps | tecnológica | fraca | corrobora #54; corrobora #49 |
-| 75 | 3.4.7 #4 | 7 documentação | comentário | import-maps | tecnológica | fraca | corrobora #54; corrobora #30 |
-| 76 | 3.4.7 #5 | 7 documentação | comentário | import-maps | tecnológica | fraca | corrobora em parte #54 |
-| 77 | 3.4.7 #6 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #63; corrobora #29; corrobora #66 |
-| 78 | 3.4.8 #1 | 8 histórico | histórico | — | tecnológica | fraca | explica #1; explica #11 |
-| 79 | 3.4.8 #2 | 8 histórico | histórico | — | tecnológica | fraca | explica #5 |
-| 80 | 3.4.8 #3 | 8 histórico | histórico | — | tecnológica | fraca | explica #6 |
-| 81 | 3.4.8 #4 | 8 histórico | histórico | — | arquitetural | fraca | explica #27; explica #29 |
-| 82 | 3.4.8 #5 | 8 histórico | histórico | — | arquitetural | fraca | explica #61 |
-| 83 | 3.4.8 #6 | 8 histórico | histórico | — | tecnológica | fraca | explica #31; explica #41; explica #49; explica #73; explica #76 |
-| 84 | 3.4.8 #7 | 8 histórico | histórico | — | contexto | fraca | explica #44; explica #45; explica #46 |
-| 85 | 3.4.8 #8 | 8 histórico | histórico | — | arquitetural | fraca | explica #17; explica #18; explica #19 |
-| 86 | 3.4.8 #9 | 8 histórico | histórico | — | arquitetural | fraca | explica #14; explica #55 |
-| 87 | 3.4.8 #10 | 8 histórico | histórico | — | arquitetural | fraca | explica #67; explica #51 |
+| 1 | 3.4.2 (content-app/package.json:12) | 1 technology | manifest | single-spa | technological | weak | — |
+| 2 | 3.4.2 (content-app/package.json:13) | 1 technology | manifest | single-spa | technological | weak | declares #26; declares #27 |
+| 3 | 3.4.2 (root-app/package.json:12) | 1 technology | manifest | single-spa | technological | weak | declares #53 |
+| 4 | 3.4.2 (root-app/package.json:13) | 1 technology | manifest | single-spa | technological | weak | declares #53 |
+| 5 | 3.4.2 (root-app/package.json:14) | 1 technology | manifest | single-spa | technological | weak | — |
+| 6 | 3.4.2 (root-classic/package.json:44) | 1 technology | manifest | import-maps | technological | weak | — |
+| 7 | 3.4.2 (root-classic/package.json:45) | 1 technology | manifest | single-spa | technological | weak | declares #58; declares #59 |
+| 8 | 3.4.2 (root-classic/package.json:47) | 1 technology | manifest | single-spa | technological | weak | declares #16; declares #57 |
+| 9 | 3.4.2 (root-classic/package.json:40) | 1 technology | manifest | single-spa | technological | weak | declares root-classic/tsconfig.json:2 |
+| 10 | 3.4.2 (root-classic/package.json:39) | 1 technology | manifest | single-spa | technological | weak | declares #15 |
+| 11 | 3.4.2 (topbar-app/package.json:12) | 1 technology | manifest | single-spa | technological | weak | — |
+| 12 | 3.4.2 (topbar-app/package.json:13) | 1 technology | manifest | single-spa | technological | weak | declares #28; declares #29 |
+| 13 | 3.4.2 (content-app/package.json:13, topbar-app/package.json:13, root-app/package.json:12, :13, Evidence); 3.4.3 (root-app, Markers and Entry); 3.4.4 (root-app/index.html:11, :24, :34, :41, File:line); 3.4.4 (root-app/index.html:21, src-html-external-script, File:line); 3.4.4 (content-app/src/main.ts:20; topbar-app/src/main.ts:20; root-app/src/utils/dynamicImport.ts:24, :15; root-app/src/App.vue:8, :9, Observation); 3.4.5 #1, #4 (Configuration, Code); 3.4.6 #1, #4 (Where served); 3.4.7 #1, #2, #3, #4, #5 (Evidence) | 2 configuration | configuration | import-maps | architectural | strong | configures #64; configures #67; configures #54 |
+| 14 | 3.4.2 (content-app/package.json:13, topbar-app/package.json:13, root-classic/package.json:44, :45, :47, Evidence); 3.4.4 (root-classic/src/index.ejs:12, :13, :14, :41, :56, File:line); 3.4.4 (root-classic/src/index.ejs:30, File:line); 3.4.4 (content-app/src/main.ts:20; topbar-app/src/main.ts:20; root-app/src/App.vue:8; root-classic/src/org-root-config.ts:13, Observation); 3.4.5 #2, #3 (Configuration, Code); 3.4.6 #1, #3, #4 (Where served) | 2 configuration | configuration | import-maps | architectural | strong | configures #65; configures #66; configures #57 |
+| 15 | 3.4.2 (root-classic/package.json:45, :47, :39, Evidence); 3.4.3 (root-classic, Markers, Entry and Build); 3.4.4 (root-classic/src/index.ejs:30; root-classic/src/org-root-config.ts:13, Observation); 3.4.6 #3 (Artifacts) | 2 configuration | configuration | single-spa | technological | moderate | configures #62; configures #55 |
+| 16 | 3.4.4 (content-app/src/main.ts:20, :21; topbar-app/src/main.ts:8, Observation); 3.4.4 (root-classic/src/microfrontend-layout.html:1, File:line); 3.4.5 #2, #3 (Configuration, Code) | 2 configuration | configuration | single-spa | architectural | strong | configures #65; configures #66 |
+| 17 | 3.4.8 #8 (Point) | 2 configuration | configuration | import-maps | architectural | weak | — |
+| 18 | 3.4.8 #8 (Point) | 2 configuration | configuration | import-maps | architectural | weak | — |
+| 19 | 3.4.8 #8 (Point) | 2 configuration | configuration | import-maps | architectural | weak | — |
+| 20 | 3.4.4 (content-app/src/main.ts:20) | 3 code | source code | single-spa | technological | moderate | implements #64; implements #65 |
+| 21 | 3.4.4 (content-app/src/main.ts:21) | 3 code | source code | single-spa | technological | moderate | implements #64; implements #65 |
+| 22 | 3.4.4 (content-app/src/main.ts:22) | 3 code | source code | single-spa | technological | moderate | implements #64; implements #65 |
+| 23 | 3.4.4 (topbar-app/src/main.ts:20) | 3 code | source code | single-spa | technological | moderate | implements #66 |
+| 24 | 3.4.4 (topbar-app/src/main.ts:21) | 3 code | source code | single-spa | technological | moderate | implements #66 |
+| 25 | 3.4.4 (topbar-app/src/main.ts:22) | 3 code | source code | single-spa | technological | moderate | implements #66 |
+| 26 | 3.4.4 (content-app/src/main.ts:4) | 3 code | source code | single-spa | technological | moderate | implements #64; implements #65 |
+| 27 | 3.4.4 (content-app/src/main.ts:8) | 3 code | source code | single-spa | technological | moderate | implements #64; implements #65 |
+| 28 | 3.4.4 (topbar-app/src/main.ts:4) | 3 code | source code | single-spa | technological | moderate | implements #66 |
+| 29 | 3.4.4 (topbar-app/src/main.ts:8) | 3 code | source code | single-spa | technological | moderate | implements #66 |
+| 30 | 3.4.4 (root-app/index.html:11) | 3 code | source code | import-maps | architectural | strong | implements #64; implements #67 |
+| 31 | 3.4.4 (root-app/index.html:24) | 3 code | comment | — | context | weak | — |
+| 32 | 3.4.4 (root-app/index.html:34) | 3 code | source code | import-maps | technological | weak | — |
+| 33 | 3.4.4 (root-app/index.html:41) | 3 code | source code | import-maps | technological | weak | — |
+| 34 | 3.4.4 (root-app/src/global.d.ts:1) | 3 code | comment | — | context | weak | — |
+| 35 | 3.4.4 (root-app/src/global.d.ts:14) | 3 code | comment | — | context | weak | — |
+| 36 | 3.4.4 (root-app/src/global.d.ts:15) | 3 code | comment | — | context | weak | — |
+| 37 | 3.4.4 (root-app/src/global.d.ts:17) | 3 code | source code | — | context | weak | — |
+| 38 | 3.4.4 (root-app/src/utils/dynamicImport.ts:6) | 3 code | comment | — | context | weak | — |
+| 39 | 3.4.4 (root-app/src/utils/dynamicImport.ts:19) | 3 code | source code | — | context | weak | — |
+| 40 | 3.4.4 (root-app/src/utils/dynamicImport.ts:21) | 3 code | comment | — | context | weak | — |
+| 41 | 3.4.4 (root-app/src/utils/dynamicImport.ts:24) | 3 code | source code | import-maps | technological | ambiguous | — |
+| 42 | 3.4.4 (root-app/src/utils/dynamicImport.ts:25) | 3 code | source code | — | context | weak | — |
+| 43 | 3.4.4 (root-app/src/utils/dynamicImport.ts:28) | 3 code | source code | — | context | weak | — |
+| 44 | 3.4.4 (root-classic/src/index.ejs:12) | 3 code | comment | — | context | weak | — |
+| 45 | 3.4.4 (root-classic/src/index.ejs:13) | 3 code | comment | — | context | weak | — |
+| 46 | 3.4.4 (root-classic/src/index.ejs:14) | 3 code | comment | — | context | weak | — |
+| 47 | 3.4.4 (root-classic/src/index.ejs:41, src-import-map) | 3 code | source code | import-maps | technological | weak | — |
+| 48 | 3.4.4 (root-classic/src/index.ejs:56) | 3 code | source code | import-maps | technological | weak | — |
+| 49 | 3.4.4 (root-app/index.html:21) | 3 code | source code | import-maps | technological | weak | — |
+| 50 | 3.4.4 (root-classic/src/index.ejs:41, src-html-external-script) | 3 code | source code | import-maps | technological | weak | — |
+| 51 | 3.4.4 (root-app/src/App.vue:8) | 3 code | source code | single-spa | architectural | strong | implements #67 |
+| 52 | 3.4.4 (root-app/src/App.vue:9) | 3 code | source code | single-spa | architectural | strong | implements #64 |
+| 53 | 3.4.4 (root-app/src/components/ParcelWrapper.vue:3) | 3 code | source code | single-spa | technological | moderate | implements #64; implements #67 |
+| 54 | 3.4.4 (root-app/src/utils/dynamicImport.ts:15) | 3 code | source code | import-maps | technological | moderate | implements #64; implements #67 |
+| 55 | 3.4.4 (root-classic/src/index.ejs:30) | 3 code | source code | import-maps | architectural | strong | implements #65; implements #66 |
+| 56 | 3.4.4 (root-classic/src/microfrontend-layout.html:1) | 3 code | source code | single-spa | architectural | strong | implements #65; implements #66 |
+| 57 | 3.4.4 (root-classic/src/org-root-config.ts:13) | 3 code | source code | single-spa | technological | moderate | implements #65; implements #66 |
+| 58 | 3.4.4 (root-classic/src/org-root-config.ts:18) | 3 code | source code | single-spa | technological | moderate | implements #65; implements #66 |
+| 59 | 3.4.4 (root-classic/src/org-root-config.ts:20) | 3 code | source code | single-spa | technological | moderate | implements #65; implements #66 |
+| 60 | 3.4.3 (content-app) | 4 structure | directory | — | architectural | moderate | — |
+| 61 | 3.4.3 (root-app) | 4 structure | directory | — | architectural | moderate | — |
+| 62 | 3.4.3 (root-classic) | 4 structure | directory | — | architectural | moderate | — |
+| 63 | 3.4.3 (topbar-app) | 4 structure | directory | — | architectural | moderate | — |
+| 64 | 3.4.5 #1 | 5 composition | source code | single-spa | architectural | strong | links #61; links #60 |
+| 65 | 3.4.5 #2 | 5 composition | configuration | single-spa | architectural | strong | links #62; links #60 |
+| 66 | 3.4.5 #3 | 5 composition | configuration | single-spa | architectural | strong | links #62; links #63 |
+| 67 | 3.4.5 #4 | 5 composition | source code | single-spa | architectural | strong | links #61; links root-app/index.html:15 |
+| 68 | 3.4.6 #1 | 6 build-deploy | manifest | — | architectural | moderate | publishes #60 |
+| 69 | 3.4.6 #2 | 6 build-deploy | manifest | — | architectural | moderate | publishes #61 |
+| 70 | 3.4.6 #3 | 6 build-deploy | manifest | — | architectural | moderate | publishes #62 |
+| 71 | 3.4.6 #4 | 6 build-deploy | manifest | — | architectural | moderate | publishes #63 |
+| 72 | 3.4.7 #1 | 7 documentation | comment | import-maps | technological | weak | corroborates #30; corroborates #13 |
+| 73 | 3.4.7 #2 | 7 documentation | comment | import-maps | technological | weak | partially corroborates #49 |
+| 74 | 3.4.7 #3 | 7 documentation | comment | import-maps | technological | weak | corroborates #54; corroborates #49 |
+| 75 | 3.4.7 #4 | 7 documentation | comment | import-maps | technological | weak | corroborates #54; corroborates #30 |
+| 76 | 3.4.7 #5 | 7 documentation | comment | import-maps | technological | weak | partially corroborates #54 |
+| 77 | 3.4.7 #6 | 7 documentation | comment | — | architectural | weak | corroborates #63; corroborates #29; corroborates #66 |
+| 78 | 3.4.8 #1 | 8 history | history | — | technological | weak | explains #1; explains #11 |
+| 79 | 3.4.8 #2 | 8 history | history | — | technological | weak | explains #5 |
+| 80 | 3.4.8 #3 | 8 history | history | — | technological | weak | explains #6 |
+| 81 | 3.4.8 #4 | 8 history | history | — | architectural | weak | explains #27; explains #29 |
+| 82 | 3.4.8 #5 | 8 history | history | — | architectural | weak | explains #61 |
+| 83 | 3.4.8 #6 | 8 history | history | — | technological | weak | explains #31; explains #41; explains #49; explains #73; explains #76 |
+| 84 | 3.4.8 #7 | 8 history | history | — | context | weak | explains #44; explains #45; explains #46 |
+| 85 | 3.4.8 #8 | 8 history | history | — | architectural | weak | explains #17; explains #18; explains #19 |
+| 86 | 3.4.8 #9 | 8 history | history | — | architectural | weak | explains #14; explains #55 |
+| 87 | 3.4.8 #10 | 8 history | history | — | architectural | weak | explains #67; explains #51 |
 
-## Resumo
+## Summary
 
-Observações: 87. Dimensões (tecnologia: 12, configuração: 7, código: 40, estrutura: 4, composição: 4, build-deploy: 4, documentação: 6, histórico: 10). Força (forte: 12, moderada: 24, fraca: 50, ambígua: 1). Evidência (tecnológica: 44, arquitetural: 29, contexto: 14).
+Observations: 87. Dimensions (technology: 12, configuration: 7, code: 40, structure: 4, composition: 4, build-deploy: 4, documentation: 6, history: 10). Strength (strong: 12, moderate: 24, weak: 50, ambiguous: 1). Evidence (technological: 44, architectural: 29, context: 14).
+

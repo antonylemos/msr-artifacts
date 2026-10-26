@@ -20,26 +20,27 @@ annotation:
 
 # 040 — AlanOlimpio/list
 
-## Leitura do repositório
+## Repository overview
 
-O repositório contém uma única aplicação React (webpack 5, Module Federation nativo), `ListApp`, que faz parte de um sistema distribuído em vários repositórios e tem **dois papéis**:
+The repository contains a single React application (webpack 5, native Module Federation), `ListApp`, which belongs to a system distributed across several repositories and has **two roles**:
 
-- **Host:** consome `RegisterApp`, hospedado na Vercel (webpack.config.js:52-55). O modal de cadastro é carregado com `React.lazy` e renderizado na rota `/register` (src/components/ListRoutes/ListRoutes.js:5-12), dentro do `Outlet` do layout da lista (src/components/List/List.js:82-84).
-- **Remote:** expõe as próprias rotas, `./ListRoutes` (webpack.config.js:47-51), para um consumidor que não está no snapshot.
+- **Host:** consumes `RegisterApp`, hosted on Vercel (webpack.config.js:52-55). The registration modal is loaded with `React.lazy` and rendered on the `/register` route (src/components/ListRoutes/ListRoutes.js:5-12), inside the list layout's `Outlet` (src/components/List/List.js:82-84).
+- **Remote:** exposes its own routes, `./ListRoutes` (webpack.config.js:47-51), to a consumer outside the snapshot.
 
-Só o primeiro papel vira relação aqui; o segundo fica registrado nesta leitura. A aplicação tem configuração de hospedagem própria (revisão estrutural).
+Only the first role becomes a relationship here; the second is recorded in this overview. The application has its own hosting configuration (structural review).
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | . | RegisterApp | host → remote | origem → destino | module-federation | No | Yes | webpack.config.js:52-55 (remote `RegisterApp@https://register-navy-ten.vercel.app/remoteEntry.js`) | src/components/ListRoutes/ListRoutes.js:5; src/components/ListRoutes/ListRoutes.js:9; src/components/ListRoutes/ListRoutes.js:11 |
+| 1 | . | RegisterApp | host → remote | source → target | module-federation | No | Yes | webpack.config.js:52-55 (remote `RegisterApp@https://register-navy-ten.vercel.app/remoteEntry.js`) | src/components/ListRoutes/ListRoutes.js:5; src/components/ListRoutes/ListRoutes.js:9; src/components/ListRoutes/ListRoutes.js:11 |
 
-## Observações
+## Observations
 
-**1. . → RegisterApp.** A aplicação importa `RegisterApp/ModalRegister` e o renderiza na rota `/register` (src/components/ListRoutes/ListRoutes.js:5-12). O remote é identificado pelo nome e pela URL da Vercel, fora do snapshot.
+**1. . → RegisterApp.** The application imports `RegisterApp/ModalRegister` and renders it on the `/register` route (src/components/ListRoutes/ListRoutes.js:5-12). The remote is identified by name and Vercel URL, outside the snapshot.
 
-## Resumo
+## Summary
 
-Relações: 1 (host → remote: 1). Ativas: 1. Destino fora do snapshot: 1.
-Unidades sem relação: nenhuma.
+Relationships: 1 (host → remote: 1). Active: 1. Target outside the snapshot: 1.
+Units without a relationship: none.
+

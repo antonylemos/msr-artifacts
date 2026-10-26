@@ -20,78 +20,78 @@ annotation:
 
 # 143 — Residencias-Faculdade/MicroFrontend
 
-## Contexto
+## Context
 
-Casca (“shell”) em Vite + TypeScript sem framework, com autenticação Keycloak, que lê um registro `public/microfrontends.json` e, em runtime, injeta o `main.js` de cada frontend externo e monta seu custom element (`README.md:1–3`; `README.md:28–30`; `src/main.ts:137–232`). O registro do SHA aponta para uma unidade externa, `member-manager`, implantada na Vercel por outra equipe (`public/microfrontends.json:1–8`). Só o host está no repositório. O nome do repositório não é usado como evidência.
+Framework-free Vite + TypeScript shell, with Keycloak authentication, reading registry `public/microfrontends.json` and, at runtime, injecting each external frontend’s `main.js` and mounting its custom element (`README.md:1–3`; `README.md:28–30`; `src/main.ts:137–232`). Registry at SHA points to one external unit, `member-manager`, deployed on Vercel by another team (`public/microfrontends.json:1–8`). Only host is in repository. Repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:144` registra rank 143, ID 1363110249, status `cloned` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede; a unidade externa não foi acessada.
+`data/samples/mfe-sample-001/clones.csv:144` records rank 143, ID 1363110249, status `cloned` and front-matter commit, which is clone HEAD and `origin/main`. Every clone Git command used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. No installation, build, execution or network access occurred; external unit was not accessed.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:144` registra as estratégias `terminology;technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:36985` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:36994` (`pass`), ambos com `terminology;technology`.
+`data/samples/mfe-sample-001/sample.csv:144` records strategies `terminology;technology` and eligibility `pass`. Sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). ID appears in `data/discovery/mfe-round-001/candidates.csv:36985` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:36994` (`pass`), both with `terminology;technology`.
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos seis hits em cada rodada, do endpoint `repositories` e com `path` vazio:
+`sqlite3 -readonly` query of tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns same six hits in each round, at endpoint `repositories` and with empty `path`:
 
-| Consulta (`q`) | Subconsulta | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Collection 001 / 002 (UTC) |
 |---|---|---|
-| `technology-web-components-mfe-repositories`: `"web components" "micro frontends" in:readme` | sem partição | 2026-10-07T23:37:09.864Z / 2026-10-08T16:22:11.019Z |
-| `technology-web-components-microfrontends-repositories`: `"web components" microfrontends in:readme` | sem partição | 2026-10-07T23:38:04.548Z / 2026-10-08T16:22:26.391Z |
+| `technology-web-components-mfe-repositories`: `"web components" "micro frontends" in:readme` | without partition | 2026-10-07T23:37:09.864Z / 2026-10-08T16:22:11.019Z |
+| `technology-web-components-microfrontends-repositories`: `"web components" microfrontends in:readme` | without partition | 2026-10-07T23:38:04.548Z / 2026-10-08T16:22:26.391Z |
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | `…#created:2026-09` | 2026-10-07T22:42:26.531Z / 2026-10-08T16:02:06.454Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | `…#created:2026-09` | 2026-10-07T23:12:51.823Z / 2026-10-08T16:10:51.803Z |
 | `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | `…#created:2026-09` | 2026-10-07T22:03:36.641Z / 2026-10-08T15:44:00.702Z |
 | `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | `…#created:2026-09` | 2026-10-07T22:14:31.271Z / 2026-10-08T15:50:41.576Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01` e, nas terminológicas, `created:2026-09-01..2026-09-30`.
+Effective queries append `pushed:>=2025-04-01` and, for terminology queries, `created:2026-09-01..2026-09-30`.
 
-Metadados do hit:
-- descrição “Casca orquestradora de Micro Frontends com Web Components. Vite + Nginx + Keycloak SSO, descoberta runtime por microfrontends.json, Shadow DOM isolado e deploy desacoplado sem rebuild da shell.”;
-- sem tópicos, linguagem TypeScript, criação em 2026-09-09T19:02:57Z, push em 2026-09-30T19:44:25Z, homepage `micro-frontend-rho.vercel.app`.
+Hit metadata:
+- description “Casca orquestradora de Micro Frontends com Web Components. Vite + Nginx + Keycloak SSO, descoberta runtime por microfrontends.json, Shadow DOM isolado e deploy desacoplado sem rebuild da shell.” (English translation: “Micro Frontends orchestration shell with Web Components. Vite + Nginx + Keycloak SSO, runtime discovery through microfrontends.json, isolated Shadow DOM and decoupled deployment without rebuilding the shell.”);
+- no topics, TypeScript language, creation at 2026-09-09T19:02:57Z, push at 2026-09-30T19:44:25Z, homepage `micro-frontend-rho.vercel.app`.
 
-Grafias no README:
+README spellings:
 - “Micro Frontends” e “Web Components”: `README.md:1`.
-- “micro frontends”: `README.md:68` (“0 micro frontends disponíveis”).
-- “microfrontends”, como token de `microfrontends.json`: `README.md:30`, `60` e `183`.
-- “MICROFRONTEND” / “Microfrontend”, como token de nomes de arquivo: `README.md:172`, `212` e `213`.
+- “micro frontends”: `README.md:68` (“0 micro frontends disponíveis”; English translation: “zero micro frontends available”).
+- “microfrontends”, as token in `microfrontends.json`: `README.md:30`, `60` and `183`.
+- “MICROFRONTEND” / “Microfrontend”, as filename tokens: `README.md:172`, `212` and `213`.
 
-A forma singular separada “micro frontend” não aparece no README nem na descrição; esse hit depende do processamento textual da busca do GitHub, que não está registrado. O README vem da raiz `c296e85` (2026-09-09) e não foi alterado depois, logo é anterior às coletas de outubro de 2026.
+Separated singular form “micro frontend” is absent from README and description; this hit depends on unrecorded GitHub search text processing. README comes from root `c296e85` (2026-09-09) and was unchanged afterward, so predates October 2026 collections.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 23 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Há um único projeto Vite na raiz (`package.json`, `vite.config.ts`, `index.html`, `src/`, `public/`), `Dockerfile`, `Dockerfile.keycloak`, `docker-compose.yml`, `nginx.conf` e `keycloak/realm.json`. Nenhum frontend plugado está no repositório. Os documentos citados `CONEXAO-MICROFRONTEND.md`, `Requisitos-Microfrontend.md` e `Arquitetura-Visual.md` (`README.md:212–214`) não existem no inventário. | contexto |
-| Configuração (registro) | `public/microfrontends.json:1–8`: entrada `{ "tag": "member-manager", "title": "Members CRUD", "url": "https://crud-member-manager.vercel.app/main.js" }`, com comentário “Projeto da equipe 2 (Member Manager)”. O exemplo do README (`posts-crud` em `localhost:4200`, `README.md:62–65`) foi removido no SHA (“fix: Exclusão do localhost project”). | forte |
-| Código-fonte (composição) | `src/main.ts:138–175`: `fetch('/microfrontends.json')`; para cada entrada cria botão na sidebar e wrapper com `<${entry.tag}></${entry.tag}>`. `src/main.ts:179–215`: ao selecionar, chama `loadScript(entry.url, entry.tag)`. `src/main.ts:219–232`: se `customElements.get(tag)` ainda não existe, injeta `<script type="module" src=url>`. `index.html:24–33`: layout com `#sidebarNav` e `#microfrontends`. | forte |
-| Documentação (contrato) | `README.md:89–106`: contrato obrigatório do frontend externo, com `main.js` estável que chama `customElements.define(tag, …)`, tag com hífen, CORS `*` e Shadow DOM. `README.md:153–174`: exemplos Angular/React/Vanilla e “frontend nunca `import` da casca”. `README.md:178–198`: plugar = adicionar entrada no JSON, sem rebuild da casca. | moderada |
-| Código-fonte (fronteiras) | Imports de `src`: `src/main.ts:5` (`keycloak-js`) e `src/main.ts:16` (`./components/loader/box-loader`); `src/components/ui/box-loader.tsx:2` importa `./3d-box-loader-animation`. Nenhum `../` e nenhum código da unidade externa; a ligação é só pela URL e pela tag. Os componentes React em `src/components/ui/*.tsx` não são importados por `main.ts`. | contexto |
-| Build/deploy | `package.json:6–10`: `vite`/`tsc && vite build` do host. `Dockerfile:1–18` e `nginx.conf:1–26` servem a casca. `docker-compose.yml:17–30` prevê o serviço `posts-crud` com contexto `../Caio/aprendendo/primeiro-projeto`, fora do repositório. `keycloak/realm.json:30–37` registra redirect URIs para 3000/4200–4202 e `https://micro-frontend-rho.vercel.app/*`. A unidade `member-manager` tem deploy próprio na Vercel (URL do registro). | moderada |
-| Tecnologia | Lockfile: `keycloak-js` 26.2.4, `vite` 6.4.3 e `react` 19.2.8 (`package-lock.json:1500–1501`, `1769–1770`, `1604–1605`). React/`@vitejs/plugin-react` são declarados (`package.json:11–22`; `vite.config.ts:2`, `6`), mas o shell executado é TypeScript sem framework (`src/main.ts`). | contexto |
+| Structure | `git ls-tree -r` at the SHA: 23 entries, all regular files `100644`; zero symlinks and zero gitlinks. One Vite project at root (`package.json`, `vite.config.ts`, `index.html`, `src/`, `public/`), plus `Dockerfile`, `Dockerfile.keycloak`, `docker-compose.yml`, `nginx.conf` and `keycloak/realm.json`. No plugged-in frontend is in repository. Cited documents `CONEXAO-MICROFRONTEND.md`, `Requisitos-Microfrontend.md` and `Arquitetura-Visual.md` (`README.md:212–214`) do not exist in inventory. | context |
+| Configuration (registry) | `public/microfrontends.json:1–8`: entry `{ "tag": "member-manager", "title": "Members CRUD", "url": "https://crud-member-manager.vercel.app/main.js" }`, with comment “Projeto da equipe 2 (Member Manager)” (English translation: “Team two project (Member Manager)”). README example (`posts-crud` at `localhost:4200`, `README.md:62–65`) was removed at SHA (“fix: Exclusão do localhost project”; English translation: “fix: Removal of localhost project”). | strong |
+| Source code (composition) | `src/main.ts:138–175`: `fetch('/microfrontends.json')`; for each entry creates sidebar button and wrapper with `<${entry.tag}></${entry.tag}>`. `src/main.ts:179–215`: on selection, calls `loadScript(entry.url, entry.tag)`. `src/main.ts:219–232`: if `customElements.get(tag)` does not yet exist, injects `<script type="module" src=url>`. `index.html:24–33`: layout with `#sidebarNav` and `#microfrontends`. | strong |
+| Documentation (contract) | `README.md:89–106`: mandatory external-frontend contract, with stable `main.js` calling `customElements.define(tag, …)`, hyphenated tag, CORS `*` and Shadow DOM. `README.md:153–174`: Angular/React/Vanilla examples and frontend never performing `import` from shell. `README.md:178–198`: plugging in means adding JSON entry, without shell rebuild. | moderate |
+| Source code (boundaries) | Imports in `src`: `src/main.ts:5` (`keycloak-js`) and `src/main.ts:16` (`./components/loader/box-loader`); `src/components/ui/box-loader.tsx:2` imports `./3d-box-loader-animation`. No `../` or external-unit code; connection is only URL and tag. React components in `src/components/ui/*.tsx` are not imported by `main.ts`. | context |
+| Build/deploy | `package.json:6–10`: host `vite`/`tsc && vite build`. `Dockerfile:1–18` and `nginx.conf:1–26` serve shell. `docker-compose.yml:17–30` anticipates service `posts-crud` with context `../Caio/aprendendo/primeiro-projeto`, outside repository. `keycloak/realm.json:30–37` records redirect URIs for 3000/4200–4202 and `https://micro-frontend-rho.vercel.app/*`. Unit `member-manager` has own Vercel deployment (registry URL). | moderate |
+| Technology | Lockfile: `keycloak-js` 26.2.4, `vite` 6.4.3 and `react` 19.2.8 (`package-lock.json:1500–1501`, `1769–1770`, `1604–1605`). React/`@vitejs/plugin-react` are declared (`package.json:11–22`; `vite.config.ts:2`, `6`), but executed shell is framework-free TypeScript (`src/main.ts`). | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 11 commits, nenhum merge, todos de `exdrama23 <alecviniciusflamengo@gmail.com>`. A raiz `c296e85` (2026-09-09, “feat: NGX shell + posts-crud + docs”) adiciona toda a casca. Os demais commits, de 2026-09-30, ajustam dependências, deploy do Keycloak no Render e o registro. Destes, `d48027b` (“registra member-manager da equipe 2 na shell”) e o SHA `5726e54` (“Exclusão do localhost project”) alteram `public/microfrontends.json` (`git log --no-renames --name-status`). A mensagem de `08f2381` menciona “modificação do opencode”, ferramenta de assistência; os metadados não permitem separar autoria intelectual. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 11 commits, no merge, all by `exdrama23 <alecviniciusflamengo@gmail.com>`. Root `c296e85` (2026-09-09, “feat: NGX shell + posts-crud + docs”) adds entire shell. Other commits, from 2026-09-30, adjust dependencies, Keycloak deployment on Render and registry. Among these, `d48027b` (“registra member-manager da equipe 2 na shell”; English translation: “registers team two member-manager in shell”) and SHA `5726e54` (“Exclusão do localhost project”; English translation: “Removal of localhost project”) change `public/microfrontends.json` (`git log --no-renames --name-status`). Message of `08f2381` mentions “modificação do opencode” (English translation: “opencode modification”), an assistance tool; metadata cannot separate intellectual authorship. No historical blob was read and no object was missing.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | Duas unidades: o host (`index.html:34`; `src/main.ts`) e a unidade externa `member-manager`, explicitamente referenciada pela configuração de composição (`public/microfrontends.json:4–6`), como permite o critério para unidades externas. |
-| Q2 | Yes | A unidade externa é implantada separadamente (URL própria na Vercel, `public/microfrontends.json:6`) e não há import de código entre host e unidade; a ligação é só por URL e tag (`src/main.ts:219–232`). |
-| Q3 | Yes | O host carrega e monta a unidade na sua página (`src/main.ts:146–175`, `179–215`). |
-| Q4 | Yes | Mecanismo configurado e usado: registro declarativo, injeção de `<script type="module">` e montagem do custom element (`public/microfrontends.json:1–8`; `src/main.ts:138–232`). |
-| Q5 | Yes | Q1–Q4 são Yes: host que compõe em runtime uma unidade externa por Web Components. |
+| Q1 | Yes | Two units: host (`index.html:34`; `src/main.ts`) and external unit `member-manager`, explicitly referenced by composition configuration (`public/microfrontends.json:4–6`), as external-unit criterion permits. |
+| Q2 | Yes | External unit is separately deployed (own Vercel URL, `public/microfrontends.json:6`) and no code import connects host and unit; only URL and tag connect them (`src/main.ts:219–232`). |
+| Q3 | Yes | Host loads and mounts unit on its page (`src/main.ts:146–175`, `179–215`). |
+| Q4 | Yes | Configured and used mechanism: declarative registry, `<script type="module">` injection and custom-element mounting (`public/microfrontends.json:1–8`; `src/main.ts:138–232`). |
+| Q5 | Yes | Q1–Q4 are Yes: host composing an external unit at runtime through Web Components. |
 
-## Motivo
+## Rationale
 
-- `MFE-implemented` pela regra Q1–Q5 Yes. Corresponde a “repositories containing only the host, which references external remote units”, como 008, 040 e 087 (finais ou propostos), e ao padrão de 043/049, com Web Components carregados de outra origem em runtime.
-- Não é “component library using Web Components”: o host não define componentes, só carrega aplicações externas registradas por URL. Não é plataforma de terceiros (074/080/102): a casca e o contrato são do próprio repositório.
-- `approaches: [web-components]`, por montagem de custom elements definidos pelo bundle externo, carregados por `<script type="module">`, como em 043. `frontend_units: 2` (host + `member-manager`), `unit_organization: multi-repo`. `build_tools: [vite]` (`vite.config.ts:1–14`). `ui_technologies: [react]`: React, ReactDOM e o plugin React são dependências declaradas do host, embora o loader executado não importe os componentes `.tsx`.
-- `repo_type: example`: atividade acadêmica entre equipes (`package.json:2`: `atividadengx-shell`; registro “equipe 2”), com demo publicada (homepage na Vercel).
-- Não há decisão aberta: a composição é por script e custom element em runtime, sem iframe, links entre aplicações ou pacotes em build time.
+- `MFE-implemented` under Q1–Q5 Yes rule. Matches “repositories containing only the host, which references external remote units”, as 008, 040 and 087 (final or proposed), and pattern of 043/049, with Web Components loaded from another origin at runtime.
+- This is not “component library using Web Components”: host defines no components, only loads external applications registered through URL. Not a third-party platform (074/080/102): shell and contract belong to repository itself.
+- `approaches: [web-components]`, for mounting custom elements defined by external bundle, loaded through `<script type="module">`, as in 043. `frontend_units: 2` (host + `member-manager`), `unit_organization: multi-repo`. `build_tools: [vite]` (`vite.config.ts:1–14`). `ui_technologies: [react]`: React, ReactDOM and React plugin are declared host dependencies, although executed loader does not import `.tsx` components.
+- `repo_type: example`: academic activity between teams (`package.json:2`: `atividadengx-shell`; registry “equipe 2”; English translation: “team two”), with published demo (Vercel homepage).
+- No decision remains open: runtime composition through script and custom element, without iframe, links between applications or build-time packages.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** composição por registro JSON em runtime e injeção de script ESM que define custom elements, com contrato documentado para frontends Angular/React/Vanilla externos (`README.md:89–174`).
-- **RQ3:** o host não contém nenhuma unidade plugada. A relação depende de URL externa e de documentos ausentes do repositório (`README.md:212–214`). A existência e o comportamento de `crud-member-manager.vercel.app/main.js` não foram verificados (sem rede).
-- **Protocolo (busca):** seis consultas casam, inclusive as duas de Web Components + micro-frontends em `in:readme`. O hit singular `"micro frontend"` não tem grafia correspondente. A elegibilidade muda de `unknown` (001) para `pass` (002).
-- **Contribuição da revisão independente (Lupa):** concordância integral com MFE-implemented, Q1–Q5 Yes, duas unidades, `multi-repo`, `web-components` e `vite`; sem decisão aberta. Confirmado que o registro vigente (`public/microfrontends.json:1–8`) tem uma única entrada (`member-manager`, URL de deploy externo) e que `src/main.ts:137–232` faz `fetch` do registro, cria a tag e injeta `<script type="module">`; o conteúdo remoto não foi aberto. `docker-compose.yml:17–30` descreve um serviço `posts-crud` fora do registro vigente, não somado como unidade; `README.md:62–65` mostra uma entrada antiga que não é a configuração do SHA. `ui_technologies: [react]` registra as dependências React declaradas; os componentes React de `src/components/ui/*.tsx` não entram no grafo importado por `src/main.ts`. A consulta singular `"micro frontend"` não casa literalmente com o README nem com a descrição, o que depende do processamento textual da busca; o README (`c296e85`, 2026-09-09) é anterior às buscas. `repo_type: example` é razoável pelo nome do pacote (`atividadengx-shell`) e pelo comentário de equipe, embora o README o apresente como biblioteca de casca. Comparáveis finais: 008, 040, 087 (host com remotos externos), com 043 e 049 para a montagem de Web Components.
+- **RQ2:** composition through runtime JSON registry and ESM script injection defining custom elements, with documented contract for external Angular/React/Vanilla frontends (`README.md:89–174`).
+- **RQ3:** host contains no plugged-in unit. Relationship depends on external URL and documents absent from repository (`README.md:212–214`). Existence and behavior of `crud-member-manager.vercel.app/main.js` were not verified (no network).
+- **Protocol (search):** six queries match, including both Web Components + micro-frontends queries in `in:readme`. Singular hit `"micro frontend"` has no corresponding spelling. Eligibility changes from `unknown` (001) to `pass` (002).
+- **Independent-review contribution (Lupa):** complete agreement with MFE-implemented, Q1–Q5 Yes, two units, `multi-repo`, `web-components` and `vite`; no open decision. Confirmed current registry (`public/microfrontends.json:1–8`) has one entry (`member-manager`, external deployment URL) and `src/main.ts:137–232` performs registry `fetch`, creates tag and injects `<script type="module">`; remote content was not opened. `docker-compose.yml:17–30` describes service `posts-crud` outside current registry, not added as unit; `README.md:62–65` shows an old entry, not SHA configuration. `ui_technologies: [react]` records declared React dependencies; React components in `src/components/ui/*.tsx` do not enter graph imported by `src/main.ts`. Singular query `"micro frontend"` matches neither README nor description literally, depending on search text processing; README (`c296e85`, 2026-09-09) predates searches. `repo_type: example` is reasonable given package name (`atividadengx-shell`) and team comment, although README presents it as shell library. Final comparators: 008, 040, 087 (host with external remotes), with 043 and 049 for Web Components mounting.

@@ -20,90 +20,90 @@ annotation:
 
 # 159 — sattasundar/SwiftSuper
 
-## Contexto
+## Context
 
-“Swift SuperApp”: app **iOS nativo** (SwiftUI) apresentado como “demonstrating a micro-frontend architecture for native iOS development” (`README.md:3`). O repositório contém só o host. Os “Mini Apps” são registrados em `MiniAppManager` e exibidos em abas de um `TabView`:
-- `Books` e `PrayerTime`, pacotes Swift remotos de outros repositórios, integrados por Swift Package Manager;
-- `Oblation`, um mini-app React Native carregado por `RCTRootViewFactory` a partir de um bundle JS servido pelo Metro ou embutido no app.
+“Swift SuperApp”: **native iOS** app (SwiftUI) presented as “demonstrating a micro-frontend architecture for native iOS development” (`README.md:3`). The repository contains only the host. “Mini Apps” are registered in `MiniAppManager` and displayed in `TabView` tabs:
+- `Books` and `PrayerTime`, remote Swift packages from other repositories, integrated through Swift Package Manager;
+- `Oblation`, a React Native mini-app loaded by `RCTRootViewFactory` from a JS bundle served by Metro or embedded in the app.
 
-O contrato `MiniApp` vem do pacote remoto `Core`. O código dos mini-apps, inclusive `Packages/Oblation`, não está no repositório. O nome do repositório não é usado como evidência.
+The `MiniApp` contract comes from remote package `Core`. Mini-app code, including `Packages/Oblation`, is not in the repository. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:160` registra rank 159, ID 1131809149, status `cloned`, branch `master` e o commit do front matter, que é o HEAD do clone e de `origin/master`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede; os pacotes remotos não foram acessados.
+`data/samples/mfe-sample-001/clones.csv:160` records rank 159, ID 1131809149, status `cloned`, branch `master` and the front matter commit, which is HEAD of the clone and `origin/master`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, build, execution or network access occurred; remote packages were not accessed.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:160` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:23139` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:23146` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:160` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:23139` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:23146` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2026-01` e `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2026-01` and empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | 2026-10-07T22:30:54.687Z / 2026-10-08T15:57:44.440Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | 2026-10-07T22:59:58.776Z / 2026-10-08T16:07:54.827Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2026-01-01..2026-01-31`.
+Effective queries append `pushed:>=2025-04-01 created:2026-01-01..2026-01-31`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem Swift, `fork: false`, tamanho 68;
-- criação em 2026-01-10T18:28:35Z, push em 2026-01-13T22:31:02Z.
+Hit metadata:
+- null description, no topics, language Swift, `fork: false`, size 68;
+- created at 2026-01-10T18:28:35Z, pushed at 2026-01-13T22:31:02Z.
 
-Sem descrição, o acerto vem de `README.md:3`, “…demonstrating a micro-frontend architecture…”, com grafia hifenizada e única ocorrência. O plural “micro frontends” não aparece no README; esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+Without a description, the hit comes from `README.md:3`, “…demonstrating a micro-frontend architecture…”, hyphenated and the only occurrence. The plural “micro frontends” does not appear in the README; that hit depends on GitHub search text processing, which is not recorded.
 
-A última alteração do README é `6564d15` (2026-01-14), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The README's last change is `6564d15` (2026-01-14), before October 2026 collection. The SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 24 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Há um projeto Xcode (`SwiftSuper.xcodeproj`, `SwiftSuper.xcworkspace`), fontes Swift em `SwiftSuper/`, `Podfile` e `package.json` de React Native. Não há `Packages/` nem `index.js`, embora o README os cite (`README.md:64`, `81`, `205–207`). `.gitignore:1–6` só ignora `node_modules`, `build`, `Pods` e lockfiles. | contexto |
-| Configuração (pacotes) | `SwiftSuper.xcodeproj/project.pbxproj:149–151`, `509–534`: `XCRemoteSwiftPackageReference` para `Core`, `Books` e `PrayerTime` (`github.com/sattasundar/...`). `SwiftSuper.xcworkspace/xcshareddata/swiftpm/Package.resolved:4–30`: as três dependências fixadas no branch `master`. São integradas em build time ao binário do host. | moderada |
-| Código-fonte (registro e montagem) | `SwiftSuper/MiniAppManager.swift:1–25`: importa `Core`, `PrayerTime` e `Books` e registra `PrayerTimeMiniApp()`, `BooksMiniApp()` e `OblationMiniApp()`. `SwiftSuper/ContentView.swift:16–61`: uma aba por mini-app, com `MiniAppWrapper` chamando `makeRootViewController`. | forte |
-| Código-fonte (React Native) | `SwiftSuper/OblationMiniApp.swift:11–37`: `rootViewFactory().view(withModuleName: "Oblation", …)` com bundle de `http://localhost:8081/index.bundle?platform=ios` em debug ou `main.jsbundle` em release. `SwiftSuper/AppDelegate.swift:5–46`: `RCTAppDelegate`, `sourceURL` preferindo bundle OTA local. `SwiftSuper/BundleManager.swift:31–78`: download OTA simulado (“MOCK”). `Podfile:7–22`, `package.json:8–11`: React Native 0.83.1. | moderada |
-| Documentação | `README.md:7–45`: host e “Mini Apps” (`Books`, `PrayerTime`, `Oblation`). `README.md:101–147`: vários mini-apps RN agregados num único `index.js` e bundle pelo Metro. `README.md:156–175`: estratégia de atualização OTA. | moderada |
-| Código-fonte (fronteiras) | O host importa os mini-apps como módulos Swift (`MiniAppManager.swift:2–4`), isto é, código-fonte de pacotes compilado junto. Não há imports relativos para fora do projeto. O `Oblation` só é ligado pelo nome de módulo RN e pela URL do bundle. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 24 entries, all regular `100644` files; zero symlinks and zero gitlinks. There is an Xcode project (`SwiftSuper.xcodeproj`, `SwiftSuper.xcworkspace`), Swift sources in `SwiftSuper/`, `Podfile` and React Native `package.json`. No `Packages/` or `index.js`, although the README cites them (`README.md:64`, `81`, `205–207`). `.gitignore:1–6` ignores only `node_modules`, `build`, `Pods` and lockfiles. | context |
+| Configuration (packages) | `SwiftSuper.xcodeproj/project.pbxproj:149–151`, `509–534`: `XCRemoteSwiftPackageReference` for `Core`, `Books` and `PrayerTime` (`github.com/sattasundar/...`). `SwiftSuper.xcworkspace/xcshareddata/swiftpm/Package.resolved:4–30`: the three dependencies pinned on branch `master`. Integrated at build time into the host binary. | moderate |
+| Source code (registration and mounting) | `SwiftSuper/MiniAppManager.swift:1–25`: imports `Core`, `PrayerTime` and `Books` and registers `PrayerTimeMiniApp()`, `BooksMiniApp()` and `OblationMiniApp()`. `SwiftSuper/ContentView.swift:16–61`: one tab per mini-app, with `MiniAppWrapper` calling `makeRootViewController`. | strong |
+| Source code (React Native) | `SwiftSuper/OblationMiniApp.swift:11–37`: `rootViewFactory().view(withModuleName: "Oblation", …)` with bundle from `http://localhost:8081/index.bundle?platform=ios` in debug or `main.jsbundle` in release. `SwiftSuper/AppDelegate.swift:5–46`: `RCTAppDelegate`, `sourceURL` preferring a local OTA bundle. `SwiftSuper/BundleManager.swift:31–78`: simulated OTA download (“MOCK”). `Podfile:7–22`, `package.json:8–11`: React Native 0.83.1. | moderate |
+| Documentation | `README.md:7–45`: host and “Mini Apps” (`Books`, `PrayerTime`, `Oblation`). `README.md:101–147`: several RN mini-apps aggregated into a single `index.js` and bundled by Metro. `README.md:156–175`: OTA update strategy. | moderate |
+| Source code (boundaries) | The host imports mini-apps as Swift modules (`MiniAppManager.swift:2–4`), i.e., package source code compiled together. No relative imports outside the project. `Oblation` is connected only by RN module name and bundle URL. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 11 commits, 1 merge (`dbc27cc`), todos do mesmo titular. São 10 de `sundarsatta@outlook.com` (9 como “sattasundar”, 1 via GitHub) e a raiz `1d45b1d` (2026-01-10, “Initialize SwiftSuper project structure…”) de `Sattasundar.Parida <sattasundar.parida@gordian.com>`. Pelo `git log --no-renames --name-status`:
-- `8c729e4` adiciona as referências de pacote remoto;
-- `7d725a4` (2026-01-14, “Implement to load react native mini app inside swift superapp”) adiciona `AppDelegate.swift`, `OblationMiniApp.swift`, `Podfile` e `package.json`;
-- `dcbda1e` adiciona `BundleManager.swift`;
-- o SHA só altera `project.pbxproj`.
+Non-shallow clone; 11 commits, 1 merge (`dbc27cc`), all by the same owner. There are 10 by `sundarsatta@outlook.com` (9 as “sattasundar”, 1 through GitHub) and root `1d45b1d` (2026-01-10, “Initialize SwiftSuper project structure…”) by `Sattasundar.Parida <sattasundar.parida@gordian.com>`. According to `git log --no-renames --name-status`:
+- `8c729e4` adds remote package references;
+- `7d725a4` (2026-01-14, “Implement to load react native mini app inside swift superapp”) adds `AppDelegate.swift`, `OblationMiniApp.swift`, `Podfile` and `package.json`;
+- `dcbda1e` adds `BundleManager.swift`;
+- the SHA changes only `project.pbxproj`.
 
-Os repositórios `Core`, `Books` e `PrayerTime` não foram consultados. Nenhum blob histórico foi lido. O clone é parcial (`blob:none`) e `git rev-list --objects --missing=print` reporta 13 objetos promisor ausentes na história alcançável; os blobs do snapshot foram lidos localmente, sem rede, e as conclusões históricas que dependessem deles ficam restritas.
+Repositories `Core`, `Books` and `PrayerTime` were not consulted. No historical blob was read. The clone is partial (`blob:none`) and `git rev-list --objects --missing=print` reports 13 missing promisor objects in reachable history; snapshot blobs were read locally, without network, and historical conclusions depending on them remain limited.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | Host mais três unidades referenciadas pela configuração do host: `Books` e `PrayerTime` (`project.pbxproj:509–534`; `Package.resolved:4–30`) e `Oblation`, módulo RN carregado por nome e URL de bundle (`OblationMiniApp.swift:16–31`). |
-| Q2 | Undetermined | `Books` e `PrayerTime` vivem em repositórios próprios, mas são compilados no binário do host (`MiniAppManager.swift:2–4`): é a decisão aberta “Build-time composition… is independent deployment required?”. O `Oblation` tem bundle JS próprio com atualização OTA prevista, mas seu fonte e build não são observáveis (`README.md:79–96`, `101–147`). |
-| Q3 | Yes | O host registra e monta os mini-apps em abas (`MiniAppManager.swift:17–22`; `ContentView.swift:16–46`). |
-| Q4 | Undetermined | A ligação é por SPM em build time (decisão aberta) e por `RCTRootViewFactory` em runtime para um bundle cujo fonte não está no repositório (`OblationMiniApp.swift:15–31`). O uso real não é verificável no snapshot. |
-| Q5 | No | O caso é um super-app iOS nativo com mini-apps Swift/React Native, fora do escopo de frontends web do estudo. |
+| Q1 | Yes | Host plus three units referenced by host configuration: `Books` and `PrayerTime` (`project.pbxproj:509–534`; `Package.resolved:4–30`) and `Oblation`, an RN module loaded by name and bundle URL (`OblationMiniApp.swift:16–31`). |
+| Q2 | Undetermined | `Books` and `PrayerTime` live in their own repositories, but are compiled into the host binary (`MiniAppManager.swift:2–4`): this is the open decision “Build-time composition… is independent deployment required?”. `Oblation` has its own JS bundle with planned OTA updates, but its source and build are not observable (`README.md:79–96`, `101–147`). |
+| Q3 | Yes | The host registers and mounts mini-apps in tabs (`MiniAppManager.swift:17–22`; `ContentView.swift:16–46`). |
+| Q4 | Undetermined | Connection is through SPM at build time (open decision) and `RCTRootViewFactory` at runtime for a bundle whose source is not in the repository (`OblationMiniApp.swift:15–31`). Actual use cannot be verified in the snapshot. |
+| Q5 | No | The case is a native iOS super-app with Swift/React Native mini-apps, outside the study's web frontend scope. |
 
-## Motivo
+## Rationale
 
-- Aplica-se a regra `Non-MFE`: o estudo é restrito a frontends web, enquanto o host é SwiftUI nativo e as unidades são Swift/React Native.
-- **Build-time:** os mini-apps Swift são pacotes integrados em build time, o caso previsto da decisão aberta sobre composição em build time (`approaches: [build-time-packages]`, slug previsto no template).
-- **Mecanismo RN:** o carregamento do bundle RN por `RCTRootViewFactory` em runtime não tem slug no template; fica registrado nas Notas.
-- **Precedentes que não se aplicam:** não é code sharing (089/100) nem plataforma de terceiros (102/074/080). A cadeia não está completa no snapshot (076/084/096/106/109), porque os mini-apps estão fora.
-- **Campos:** `frontend_units: 4` (host, `Books`, `PrayerTime`, `Oblation`), `unit_organization: multi-repo`. `ui_technologies: [swiftui, react-native]`. `build_tools: []`: o bundler do mini-app RN não é declarado separadamente e a entrada JS de `Oblation` (`index.js`) está ausente do snapshot, o que impede comprovar um bundle de unidade; há, porém, referência a Metro como toolchain (`@react-native/metro-config` e o script `react-native start`, `package.json:5–6,17–21`) e um `.xcodeproj` de host com `Podfile`, de modo que a ausência de configuração explícita seria impreciso. Decisão do campo (registrar Metro ou apenas bundlers de unidade construída no snapshot) fica para a convenção do estudo. `repo_type: example`, pela demonstração com OTA simulado (`BundleManager.swift:31–78`).
+- The `Non-MFE` rule applies: the study is restricted to web frontends, whereas the host is native SwiftUI and units are Swift/React Native.
+- **Build-time:** Swift mini-apps are packages integrated at build time, the case anticipated by the open build-time composition decision (`approaches: [build-time-packages]`, slug anticipated in the template).
+- **RN mechanism:** runtime RN bundle loading through `RCTRootViewFactory` has no template slug; recorded in the Notes.
+- **Inapplicable precedents:** not code sharing (089/100) or a third-party platform (102/074/080). The chain is incomplete in the snapshot (076/084/096/106/109), because mini-apps are external.
+- **Fields:** `frontend_units: 4` (host, `Books`, `PrayerTime`, `Oblation`), `unit_organization: multi-repo`. `ui_technologies: [swiftui, react-native]`. `build_tools: []`: the RN mini-app bundler is not declared separately and `Oblation`'s JS entry (`index.js`) is absent from the snapshot, preventing proof of a unit bundle; however, Metro is referenced as a toolchain (`@react-native/metro-config` and script `react-native start`, `package.json:5–6,17–21`) and there is a host `.xcodeproj` with `Podfile`, so claiming no explicit configuration would be inaccurate. The field decision (record Metro or only bundlers of units built in the snapshot) remains subject to study convention. `repo_type: example`, because of the demonstration with simulated OTA (`BundleManager.swift:31–78`).
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** super-app nativo com mini-apps por três vias: pacotes Swift (build time), bundle React Native carregado por nome de módulo (runtime) e estratégia OTA documentada (`README.md:156–175`). Isso amplia o vocabulário além das abordagens web do catálogo.
-- **RQ3:** a documentação descreve `Packages/` locais (`README.md:205–207`) que não estão no repositório; as unidades efetivas são remotas.
-- **Protocolo (escopo):** terceiro caso mobile ou nativo (após 025 e 057). Convém fixar a regra de escopo no checklist.
-- **Protocolo (busca):** o hit plural não tem grafia correspondente. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ2:** native super-app with mini-apps through three routes: Swift packages (build time), React Native bundle loaded by module name (runtime) and documented OTA strategy (`README.md:156–175`). This broadens vocabulary beyond the catalog's web approaches.
+- **RQ3:** documentation describes local `Packages/` (`README.md:205–207`) absent from the repository; actual units are remote.
+- **Protocol (scope):** third mobile or native case (after 025 and 057). The scope rule should be fixed in the checklist.
+- **Protocol (search):** the plural hit has no corresponding spelling. Eligibility changes from `unknown` (001) to `pass` (002).
 
-## Ponto para revisão conjunta
+## Point for joint review
 
-1. **Escopo nativo e mobile:** unidades de app iOS nativo (SwiftUI e React Native) entram no estudo? Se não, a classe é `Non-MFE` (fora do escopo), como previsto em 025/057.
-2. **Se entrarem:**
-   - **Build time:** os pacotes Swift integrados em build time satisfazem Q2/Q4?
-   - **Oblation:** o carregamento do bundle RN, cujo fonte está fora do snapshot, basta para Q4?
-   - **Desfecho:** com as duas respostas positivas, a classe seria `MFE-implemented`, com host que referencia unidades externas, como 008/040/087.
+1. **Native and mobile scope:** do native iOS app units (SwiftUI and React Native) enter the study? If not, the class is `Non-MFE` (out of scope), as anticipated in 025/057.
+2. **If included:**
+   - **Build time:** do Swift packages integrated at build time satisfy Q2/Q4?
+   - **Oblation:** does loading the RN bundle, whose source is outside the snapshot, suffice for Q4?
+   - **Outcome:** with both answers positive, the class would be `MFE-implemented`, with a host referencing external units, as in 008/040/087.
 
-Não se propõe regra nova. Até a decisão, preservar `Uncertain`/`review`.
-- **Contribuição da revisão independente (Lupa):** concordância com `Uncertain`/`review`. Diverge de Q4: propõe Q4 = Yes para a via SwiftPM, porque os pacotes `Core`, `Books` e `PrayerTime` estão referenciados por URL e revisão no Xcode (`project.pbxproj`; `Package.resolved`), seus nomes são importados e instanciados e o host os registra e monta (`MiniAppManager.swift:17–24`; `ContentView.swift:16–46`), isto é, conexão em build/link e execução do protocolo, e não só dependência declarada; para `Oblation`, faltam registro, entrada JS e bundle demonstrável. Mantido Q4 Undetermined, pois essa via é precisamente a composição em build time cuja suficiência está em aberto no checklist (`docs/mfe-classification-checklist.md:69–72`), e Q2 e Q5 seguem Undetermined; a alternativa fica registrada para a decisão conjunta (Q4 Yes para SwiftPM, com a dúvida normativa deslocada para Q2). Os precedentes 025 e 057 mantêm em revisão o escopo mobile/nativo; se o protocolo for apenas web, o resultado seria Non-MFE por escopo. A limitação de fontes remotas não deve virar conclusão favorável por documentação.
+No new rule is proposed. Until a decision, preserve `Uncertain`/`review`.
+- **Independent review contribution (Lupa):** agreement with `Uncertain`/`review`. Disagrees with Q4: proposes Q4 = Yes for the SwiftPM route, because packages `Core`, `Books` and `PrayerTime` are referenced by URL and revision in Xcode (`project.pbxproj`; `Package.resolved`), their names are imported and instantiated and the host registers and mounts them (`MiniAppManager.swift:17–24`; `ContentView.swift:16–46`), i.e., build/link connection and protocol execution, rather than only a declared dependency; for `Oblation`, registration, JS entry and a demonstrable bundle are missing. Q4 retained as Undetermined, because this route is precisely the build-time composition whose sufficiency is open in the checklist (`docs/mfe-classification-checklist.md:69–72`), and Q2 and Q5 remain Undetermined; the alternative is recorded for joint decision (Q4 Yes for SwiftPM, with the normative uncertainty moved to Q2). Precedents 025 and 057 retain mobile/native scope under review; if the protocol is web-only, the result would be Non-MFE by scope. Remote source limitations must not become a favorable conclusion based on documentation.

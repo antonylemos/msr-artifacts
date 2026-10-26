@@ -13,17 +13,17 @@ annotation:
 
 # 246 — shermondevelopment/microfrontend-shop
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem 66 commits, de 2026-05-27 a 2026-08-27, dos quais 6 são merges. O primeiro commit é `08c6287` (2026-05-27, "chore: initial commit"), e o do snapshot é `913349b` (2026-08-27, "chore(release): 1.1.0 [skip ci]").
+History up to snapshot has 66 commits, from 2026-05-27 to 2026-08-27, of which 6 are merges. First commit is `08c6287` (2026-05-27, "chore: initial commit"), and snapshot is `913349b` (2026-08-27, "chore(release): 1.1.0 [skip ci]").
 
-As revisões anteriores não deixaram ponto ambíguo que o histórico pudesse esclarecer: as duas dependências estão configuradas (3.4.2), as quatro unidades são `Yes` (3.4.3), as sete construções têm composição `Yes` (3.4.4), as quatro relações estão ativas (3.4.5), o deploy das quatro aplicações é `separado`, e não `Undetermined` (3.4.6), e a documentação não tem afirmação `contradita` nem `parcial` (3.4.7). A afirmação `sem corroboração` sobre os endereços CloudFront de cada app (3.4.7 #13) não está entre as que o passo 2 levanta e não virou ponto. Por isso o histórico não foi consultado além deste contexto.
+Previous reviews left no ambiguous point history could clarify: both dependencies are configured (3.4.2), four units are `Yes` (3.4.3), seven constructs have composition `Yes` (3.4.4), four relationships are active (3.4.5), deploy of four applications is `separate`, rather than `Undetermined` (3.4.6), and documentation has no `contradicted` or `partial` claim (3.4.7). The `uncorroborated` claim about each app CloudFront addresses (3.4.7 #13) is outside those raised by step 2 and did not become a point. Thus history was not consulted beyond this context.
 
-## Pontos
+## Points
 
-Nenhum ponto ambíguo nas revisões anteriores.
+No ambiguous points in previous reviews.
 
-## Comandos
+## Commands
 
 ```
 docs/mfe-history-review/tools/hist.sh shermondevelopment__microfrontend-shop rev-list --count 913349b85c59bff3b982808ac6d931b62f1d73bc
@@ -32,6 +32,6 @@ docs/mfe-history-review/tools/hist.sh shermondevelopment__microfrontend-shop log
 docs/mfe-history-review/tools/hist.sh shermondevelopment__microfrontend-shop log --format='%h %ad %s' --date=short 913349b85c59bff3b982808ac6d931b62f1d73bc
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 66 (2026-05-27 a 2026-08-27). Pontos: 0.
+Commits up to the snapshot: 66 (2026-05-27 to 2026-08-27). Points: 0.

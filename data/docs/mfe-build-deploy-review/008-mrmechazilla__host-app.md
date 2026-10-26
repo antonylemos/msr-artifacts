@@ -16,22 +16,22 @@ annotation:
 
 # 008 — mrmechazilla/host-app
 
-## Leitura do repositório
+## Repository overview
 
-Repositório com uma só aplicação Angular, o host. Os dois remotes que ele carrega (`users-mfe` e `payments-mfe`) não estão no snapshot: aparecem só no manifesto, como `localhost:4202` e `localhost:4203` (ver a revisão de composição). O build e o deploy deles, se existem, estão fora do repositório. O build usa `ngx-build-plus` com configuração webpack extra para o Module Federation e grava em `dist/host-app` (angular.json:18-20, 42). Em produção, a configuração extra é `webpack.prod.config.js` (angular.json:63), que só reexporta a de desenvolvimento (webpack.prod.config.js:1).
+Repository with a single Angular application, the host. The two remotes it loads (`users-mfe` and `payments-mfe`) are absent from the snapshot: they appear only in the manifest as `localhost:4202` and `localhost:4203` (see the composition review). Their builds and deployments, if any, are outside the repository. Build uses `ngx-build-plus` with extra webpack configuration for Module Federation and writes to `dist/host-app` (angular.json:18-20, 42). In production, the extra configuration is `webpack.prod.config.js` (angular.json:63), only re-exporting the development configuration (webpack.prod.config.js:1).
 
-Os scripts são os padrões do Angular CLI, mais um `run:all` que chama o servidor de desenvolvimento do pacote de Module Federation (package.json:5-11). Não há Dockerfile, CI, configuração de hospedagem nem script de publicação, e as ocorrências `ops-*`, `ci-*` e `cfg-public-path` da mineração estão vazias. O README não traz instruções de build nem de deploy.
+The scripts are Angular CLI defaults plus a `run:all` calling the Module Federation package development server (package.json:5-11). There is no Dockerfile, CI, hosting configuration or publication script, and mining `ops-*`, `ci-*` and `cfg-public-path` occurrences are empty. README provides no build or deployment instructions.
 
-## Aplicações
+## Applications
 
-| # | Aplicação | Build | Deploy | Onde é servida | Versionamento | Artefatos |
+| # | Application | Build | Deploy | Where served | Versioning | Artifacts |
 |---|---|---|---|---|---|---|
-| 1 | . | separado | não observado | `http://localhost:4201` em desenvolvimento (angular.json:86-87) | No | angular.json:17-20 (target `build` com `ngx-build-plus:browser`, saída `dist/host-app`); angular.json:42 e 63 (configuração webpack extra); package.json:7 (`ng build`) |
+| 1 | . | separate | not observed | `http://localhost:4201` in development (angular.json:86-87) | No | angular.json:17-20 (target `build` with `ngx-build-plus:browser`, output `dist/host-app`); angular.json:42 and 63 (extra webpack configuration); package.json:7 (`ng build`) |
 
-## Observações
+## Observations
 
-**1. Raiz (`.`).** Aplicação da raiz. Build separado: o host tem build e saída próprios, e o código dos remotes não está neste repositório. Sem deploy observado: o servidor de desenvolvimento roda na porta 4201 (angular.json:86-87), e nada no snapshot publica a aplicação. Sem versionamento: package.json:3 declara `0.0.0`.
+**1. Root (`.`).** Root application. Separate build: host has its own build and output, and remote code is absent from this repository. No observed deployment: the development server runs on port 4201 (angular.json:86-87), and nothing in the snapshot publishes the application. No versioning: package.json:3 declares `0.0.0`.
 
-## Resumo
+## Summary
 
-Aplicações: 1. Build (separado: 1). Deploy (não observado: 1). Versionamento independente: 0.
+Applications: 1. Build (separate: 1). Deploy (not observed: 1). Independent versioning: 0.

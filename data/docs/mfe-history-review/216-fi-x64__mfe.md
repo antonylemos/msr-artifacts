@@ -13,17 +13,17 @@ annotation:
 
 # 216 — fi-x64/mfe
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem 6 commits, de 2026-01-14 a 2026-01-15, sem merges. O primeiro commit é `e87f279` (2026-01-14, "first commit"), e o do snapshot é `fa4088a` (2026-01-15, "Added header").
+History up to snapshot has 6 commits, from 2026-01-14 to 2026-01-15, without merges. First commit is `e87f279` (2026-01-14, "first commit"), and snapshot is `fa4088a` (2026-01-15, "Added header").
 
-As revisões anteriores não deixaram ponto ambíguo que o histórico pudesse esclarecer: não há dependência das tecnologias MFE declarada, unidade ou relação `Undetermined`, construção desativada ou comentada, deploy `Undetermined` nem afirmação de documentação `contradita` ou `parcial`. `packages/auth` e `packages/dashboard` são `No` na revisão de estrutura, não `Undetermined`. Por isso o histórico não foi consultado além deste contexto.
+Previous reviews left no ambiguous point history could clarify: no declared MFE technology dependency, `Undetermined` unit or relationship, deactivated or commented-out construct, `Undetermined` deploy or `contradicted` or `partial` documentation claim. The `packages/auth` and `packages/dashboard` are `No` in structural review, not `Undetermined`. Thus history was not consulted beyond this context.
 
-## Pontos
+## Points
 
-Nenhum ponto ambíguo nas revisões anteriores.
+No ambiguous points in previous reviews.
 
-## Comandos
+## Commands
 
 ```
 docs/mfe-history-review/tools/hist.sh fi-x64__mfe rev-list --count fa4088ae3313734c98a027db5fccfee4db34a46d
@@ -31,6 +31,6 @@ docs/mfe-history-review/tools/hist.sh fi-x64__mfe rev-list --count --merges fa40
 docs/mfe-history-review/tools/hist.sh fi-x64__mfe log --format='%h %ad %s' --date=short fa4088ae3313734c98a027db5fccfee4db34a46d
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 6 (2026-01-14 a 2026-01-15). Pontos: 0.
+Commits up to the snapshot: 6 (2026-01-14 to 2026-01-15). Points: 0.

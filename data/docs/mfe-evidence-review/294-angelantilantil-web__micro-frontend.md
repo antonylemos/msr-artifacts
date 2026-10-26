@@ -19,798 +19,799 @@ annotation:
 
 # 294 — angelantilantil-web/micro-frontend
 
-## Leitura do repositório
+## Repository overview
 
-Painel bancário de demonstração com onze aplicações React em diretórios próprios, todas com o `ModuleFederationPlugin` embutido do webpack. Por isso não há observação de dependência: a revisão de dependências não tem linha de tecnologia. A cadeia que sustenta a arquitetura é:
-- **Configuração:** o host declara sete remotes do próprio repositório (#5), e cada um desses remotes se declara com nome próprio e expõe um módulo (#2, #3, #6, #8 a #11).
-- **Código:** o host importa cada remote pelo nome com `React.lazy` (#12 a #18) e monta os sete numa tabela de rotas (#19).
-- **Relações:** isso resulta em sete relações host → remote ativas (#32 a #38).
-- **Estrutura e build:** as onze unidades têm limite (#21 a #31) e build próprios (#39 a #49), mas nenhuma tem deploy observado: o único endereço de cada uma é o servidor de desenvolvimento.
+Demonstration banking dashboard with eleven React applications in own directories, all using webpack built-in `ModuleFederationPlugin`. Therefore no dependency observation: dependency review has no technology row. Architecture chain:
+- **Configuration:** host declares seven repository remotes (#5); each declares own name, exposing module (#2, #3, #6, #8 to #11).
+- **Code:** host imports each remote by name through `React.lazy` (#12 to #18), mounting seven in route table (#19).
+- **Relationships:** yields seven active host → remote relationships (#32 to #38).
+- **Structure/build:** eleven units have own boundaries (#21 to #31) and builds (#39 to #49), none observed deployment: each only address development server.
 
-Sinais que enganam se lidos sozinhos:
-- **Remotes sem consumidor:** accounts-module, cards-module e loans-module estão configurados como remotes, com aplicação e serviço expostos (#1, #4, #7), mas o host não os declara (#5). São unidades (#21, #24, #27) fora da composição.
-- **Event bus:** o host expõe um bus global (#20), sem publicador; os únicos assinantes são os três módulos não carregados. Não há comunicação entre unidades compostas.
-- **Documentação:** ela confirma o conjunto shell e remotes (#50, #63) e a carga por rota das unidades ligadas, mas exagera em três frentes. Diz que o host carrega todos os módulos, inclusive os três sem consumidor (#60, #71, #82, #93, #104); atribui comunicação e store compartilhados ao bus (#66, #72, #73, #83, #84, #94, #95); e promete estilos isolados que o CSS global sem escopo desmente (#70, #77, #81, #92, #97, #100, #103, #106). O deploy independente fica sem corroboração (#65).
+Signals misleading alone:
+- **Consumer-free remotes:** accounts-module, cards-module and loans-module configured as remotes with application/service exposed (#1, #4, #7), but host does not declare them (#5). Units (#21, #24, #27) outside composition.
+- **Event bus:** host exposes global bus (#20) without publisher; only subscribers three unloaded modules. No communication between composed units.
+- **Documentation:** confirms shell/remote group (#50, #63) and route loading of linked units, but overstates three areas. Says host loads all modules including three consumer-free modules (#60, #71, #82, #93, #104); attributes communication/shared store to bus (#66, #72, #73, #83, #84, #94, #95); promises isolated styles contradicted by unscoped global CSS (#70, #77, #81, #92, #97, #100, #103, #106). Independent deployment uncorroborated (#65).
 
-O histórico (#108 a #110) não decide se o host já carregou os três módulos ou se o bus já teve publicador, porque as versões antigas do host não estão no clone; mostra só que a promessa de isolamento e o CSS sem escopo coexistem desde o primeiro commit. Nenhuma dessas dúvidas muda a leitura do snapshot: sete relações ativas e três remotes sem consumidor.
+History (#108 to #110) does not decide whether host formerly loaded three modules or bus had publisher, since old host versions absent from clone; shows only isolation promise/unscoped CSS coexist since first commit. Uncertainties do not change snapshot reading: seven active relationships, three consumer-free remotes.
 
-## Observações
+## Observations
 
 ### 1. accounts-module/webpack.config.js:2, 44-63
 
-**Observação:** Importa o `ModuleFederationPlugin` embutido do webpack (linha 2) e o configura com `name: 'accountsModule'` e `filename: 'remoteEntry.js'`, expõe `./AccountsApp` e `./AccountsService` (`./src/App.js` e `./src/accountsService.js`) e compartilha `react` e `react-dom` como singleton, `eager`. Nenhuma configuração de outra unidade declara esse nome como remote.
+**Observation:** Imports `ModuleFederationPlugin` built into webpack (line 2), configuring with `name: 'accountsModule'` and `filename: 'remoteEntry.js'`, exposes `./AccountsApp` and `./AccountsService` (`./src/App.js` and `./src/accountsService.js`) and shares `react` and `react-dom` as singleton, `eager`. No other unit configuration declares name as remote.
 
-**Interpretação:** `accounts-module` está configurado como remote com nome próprio e oferece aplicação e serviço, mas sem consumidor no snapshot.
+**Interpretation:** `accounts-module` configured as named remote, offering application/service but without snapshot consumer.
 
 ### 2. ai-agent-module/webpack.config.js:2, 44-62
 
-**Observação:** Importa o `ModuleFederationPlugin` embutido do webpack (linha 2) e o configura com `name: 'aiAgent'` e `filename: 'remoteEntry.js'`, expõe `./AIAgentApp` (`./src/App.js`) e compartilha `react` e `react-dom` como singleton, `eager`.
+**Observation:** Imports `ModuleFederationPlugin` built into webpack (line 2), configuring with `name: 'aiAgent'` and `filename: 'remoteEntry.js'`, exposes `./AIAgentApp` (`./src/App.js`) and shares `react` and `react-dom` as singleton, `eager`.
 
-**Interpretação:** `ai-agent-module` está configurado como remote com nome próprio e oferece um módulo a um host.
+**Interpretation:** `ai-agent-module` configured as named remote, offering module to host.
 
 ### 3. business-reports/webpack.config.js:2, 44-62
 
-**Observação:** Importa o `ModuleFederationPlugin` embutido do webpack (linha 2) e o configura com `name: 'businessReports'` e `filename: 'remoteEntry.js'`, expõe `./BusinessReportsApp` (`./src/App.js`) e compartilha `react` e `react-dom` como singleton, `eager`.
+**Observation:** Imports `ModuleFederationPlugin` built into webpack (line 2), configuring with `name: 'businessReports'` and `filename: 'remoteEntry.js'`, exposes `./BusinessReportsApp` (`./src/App.js`) and shares `react` and `react-dom` as singleton, `eager`.
 
-**Interpretação:** `business-reports` está configurado como remote com nome próprio e oferece um módulo a um host.
+**Interpretation:** `business-reports` configured as named remote, offering module to host.
 
 ### 4. cards-module/webpack.config.js:2, 44-63
 
-**Observação:** Importa o `ModuleFederationPlugin` embutido do webpack (linha 2) e o configura com `name: 'cardsModule'` e `filename: 'remoteEntry.js'`, expõe `./CardsApp` e `./CardsService` (`./src/App.js` e `./src/cardsService.js`) e compartilha `react` e `react-dom` como singleton, `eager`. Nenhuma configuração de outra unidade declara esse nome como remote.
+**Observation:** Imports `ModuleFederationPlugin` built into webpack (line 2), configuring with `name: 'cardsModule'` and `filename: 'remoteEntry.js'`, exposes `./CardsApp` and `./CardsService` (`./src/App.js` and `./src/cardsService.js`) and shares `react` and `react-dom` as singleton, `eager`. No other unit configuration declares name as remote.
 
-**Interpretação:** `cards-module` está configurado como remote com nome próprio e oferece aplicação e serviço, mas sem consumidor no snapshot.
+**Interpretation:** `cards-module` configured as named remote, offering application/service but without snapshot consumer.
 
 ### 5. host-app/webpack.config.js:2, 44-68
 
-**Observação:** Importa o `ModuleFederationPlugin` embutido do webpack (`webpack/lib/container/ModuleFederationPlugin`, linha 2) e o configura com `name: 'hdfcHostApp'`, `filename: 'remoteEntry.js'` e sem `exposes`. Declara sete remotes, todos em `http://localhost:30xx/remoteEntry.js`: `businessReports` (3010), `modelPortfolio` (3011), `outgoingApiLogs` (3012), `incomingApiLogs` (3013), `makerRequests` (3014), `vroUploads` (3015) e `aiAgent` (3016) (linhas 47-55). Compartilha `react` e `react-dom` como singleton, `eager`, com a versão do próprio `package.json` (linhas 56-67). Não há remote para `accountsModule`, `cardsModule` nem `loansModule`.
+**Observation:** Imports webpack built-in `ModuleFederationPlugin` (`webpack/lib/container/ModuleFederationPlugin`, line 2), configuring with `name: 'hdfcHostApp'`, `filename: 'remoteEntry.js'` and no `exposes`. Declares seven remotes, all at `http://localhost:30xx/remoteEntry.js`: `businessReports` (3010), `modelPortfolio` (3011), `outgoingApiLogs` (3012), `incomingApiLogs` (3013), `makerRequests` (3014), `vroUploads` (3015) and `aiAgent` (3016) (lines 47-55). Shares `react` and `react-dom` as singleton, `eager`, with version from own `package.json` (lines 56-67). No remote for `accountsModule`, `cardsModule` or `loansModule`.
 
-**Interpretação:** A configuração do host declara sete unidades do repositório como remotes e onde encontrá-las em desenvolvimento; as outras três unidades preparadas como remotes ficam de fora.
+**Interpretation:** Host configuration declares seven repository units as remotes with development locations; other three remote-prepared units excluded.
 
 ### 6. incoming-api-logs/webpack.config.js:2, 44-62
 
-**Observação:** Importa o `ModuleFederationPlugin` embutido do webpack (linha 2) e o configura com `name: 'incomingApiLogs'` e `filename: 'remoteEntry.js'`, expõe `./IncomingApiLogsApp` (`./src/App.js`) e compartilha `react` e `react-dom` como singleton, `eager`.
+**Observation:** Imports `ModuleFederationPlugin` built into webpack (line 2), configuring with `name: 'incomingApiLogs'` and `filename: 'remoteEntry.js'`, exposes `./IncomingApiLogsApp` (`./src/App.js`) and shares `react` and `react-dom` as singleton, `eager`.
 
-**Interpretação:** `incoming-api-logs` está configurado como remote com nome próprio e oferece um módulo a um host.
+**Interpretation:** `incoming-api-logs` configured as named remote, offering module to host.
 
 ### 7. loans-module/webpack.config.js:2, 44-63
 
-**Observação:** Importa o `ModuleFederationPlugin` embutido do webpack (linha 2) e o configura com `name: 'loansModule'` e `filename: 'remoteEntry.js'`, expõe `./LoansApp` e `./LoansService` (`./src/App.js` e `./src/loansService.js`) e compartilha `react` e `react-dom` como singleton, `eager`. Nenhuma configuração de outra unidade declara esse nome como remote.
+**Observation:** Imports `ModuleFederationPlugin` built into webpack (line 2), configuring with `name: 'loansModule'` and `filename: 'remoteEntry.js'`, exposes `./LoansApp` and `./LoansService` (`./src/App.js` and `./src/loansService.js`) and shares `react` and `react-dom` as singleton, `eager`. No other unit configuration declares name as remote.
 
-**Interpretação:** `loans-module` está configurado como remote com nome próprio e oferece aplicação e serviço, mas sem consumidor no snapshot.
+**Interpretation:** `loans-module` configured as named remote, offering application/service but without snapshot consumer.
 
 ### 8. maker-requests/webpack.config.js:2, 44-62
 
-**Observação:** Importa o `ModuleFederationPlugin` embutido do webpack (linha 2) e o configura com `name: 'makerRequests'` e `filename: 'remoteEntry.js'`, expõe `./MakerRequestsApp` (`./src/App.js`) e compartilha `react` e `react-dom` como singleton, `eager`.
+**Observation:** Imports `ModuleFederationPlugin` built into webpack (line 2), configuring with `name: 'makerRequests'` and `filename: 'remoteEntry.js'`, exposes `./MakerRequestsApp` (`./src/App.js`) and shares `react` and `react-dom` as singleton, `eager`.
 
-**Interpretação:** `maker-requests` está configurado como remote com nome próprio e oferece um módulo a um host.
+**Interpretation:** `maker-requests` configured as named remote, offering module to host.
 
 ### 9. model-portfolio-configuration/webpack.config.js:2, 44-62
 
-**Observação:** Importa o `ModuleFederationPlugin` embutido do webpack (linha 2) e o configura com `name: 'modelPortfolio'` e `filename: 'remoteEntry.js'`, expõe `./ModelPortfolioApp` (`./src/App.js`) e compartilha `react` e `react-dom` como singleton, `eager`.
+**Observation:** Imports `ModuleFederationPlugin` built into webpack (line 2), configuring with `name: 'modelPortfolio'` and `filename: 'remoteEntry.js'`, exposes `./ModelPortfolioApp` (`./src/App.js`) and shares `react` and `react-dom` as singleton, `eager`.
 
-**Interpretação:** `model-portfolio-configuration` está configurado como remote com nome próprio e oferece um módulo a um host.
+**Interpretation:** `model-portfolio-configuration` configured as named remote, offering module to host.
 
 ### 10. outgoing-api-logs/webpack.config.js:2, 44-62
 
-**Observação:** Importa o `ModuleFederationPlugin` embutido do webpack (linha 2) e o configura com `name: 'outgoingApiLogs'` e `filename: 'remoteEntry.js'`, expõe `./OutgoingApiLogsApp` (`./src/App.js`) e compartilha `react` e `react-dom` como singleton, `eager`.
+**Observation:** Imports `ModuleFederationPlugin` built into webpack (line 2), configuring with `name: 'outgoingApiLogs'` and `filename: 'remoteEntry.js'`, exposes `./OutgoingApiLogsApp` (`./src/App.js`) and shares `react` and `react-dom` as singleton, `eager`.
 
-**Interpretação:** `outgoing-api-logs` está configurado como remote com nome próprio e oferece um módulo a um host.
+**Interpretation:** `outgoing-api-logs` configured as named remote, offering module to host.
 
 ### 11. vro-uploads/webpack.config.js:2, 44-62
 
-**Observação:** Importa o `ModuleFederationPlugin` embutido do webpack (linha 2) e o configura com `name: 'vroUploads'` e `filename: 'remoteEntry.js'`, expõe `./VroUploadsApp` (`./src/App.js`) e compartilha `react` e `react-dom` como singleton, `eager`.
+**Observation:** Imports `ModuleFederationPlugin` built into webpack (line 2), configuring with `name: 'vroUploads'` and `filename: 'remoteEntry.js'`, exposes `./VroUploadsApp` (`./src/App.js`) and shares `react` and `react-dom` as singleton, `eager`.
 
-**Interpretação:** `vro-uploads` está configurado como remote com nome próprio e oferece um módulo a um host.
+**Interpretation:** `vro-uploads` configured as named remote, offering module to host.
 
 ### 12. host-app/src/App.js:30-33
 
-**Observação:** `React.lazy(() => import('businessReports/BusinessReportsApp'))`, com um `.catch` que registra o erro e devolve um componente `ModuleLoadUnavailable` no lugar do módulo.
+**Observation:** `React.lazy(() => import('businessReports/BusinessReportsApp'))`, with `.catch` logging error, returning component `ModuleLoadUnavailable` instead of module.
 
-**Interpretação:** O host carrega em runtime o módulo exposto pelo remote `businessReports`, a unidade `business-reports`, pelo nome.
+**Interpretation:** Host loads at runtime module exposed by remote `businessReports`, unit `business-reports`, by name.
 
 ### 13. host-app/src/App.js:34-37
 
-**Observação:** `React.lazy(() => import('modelPortfolio/ModelPortfolioApp'))`, com um `.catch` que registra o erro e devolve um componente `ModuleLoadUnavailable` no lugar do módulo.
+**Observation:** `React.lazy(() => import('modelPortfolio/ModelPortfolioApp'))`, with `.catch` logging error, returning component `ModuleLoadUnavailable` instead of module.
 
-**Interpretação:** O host carrega em runtime o módulo exposto pelo remote `modelPortfolio`, a unidade `model-portfolio-configuration`, pelo nome.
+**Interpretation:** Host loads at runtime module exposed by remote `modelPortfolio`, unit `model-portfolio-configuration`, by name.
 
 ### 14. host-app/src/App.js:38-41
 
-**Observação:** `React.lazy(() => import('outgoingApiLogs/OutgoingApiLogsApp'))`, com um `.catch` que registra o erro e devolve um componente `ModuleLoadUnavailable` no lugar do módulo.
+**Observation:** `React.lazy(() => import('outgoingApiLogs/OutgoingApiLogsApp'))`, with `.catch` logging error, returning component `ModuleLoadUnavailable` instead of module.
 
-**Interpretação:** O host carrega em runtime o módulo exposto pelo remote `outgoingApiLogs`, a unidade `outgoing-api-logs`, pelo nome.
+**Interpretation:** Host loads at runtime module exposed by remote `outgoingApiLogs`, unit `outgoing-api-logs`, by name.
 
 ### 15. host-app/src/App.js:42-45
 
-**Observação:** `React.lazy(() => import('incomingApiLogs/IncomingApiLogsApp'))`, com um `.catch` que registra o erro e devolve um componente `ModuleLoadUnavailable` no lugar do módulo.
+**Observation:** `React.lazy(() => import('incomingApiLogs/IncomingApiLogsApp'))`, with `.catch` logging error, returning component `ModuleLoadUnavailable` instead of module.
 
-**Interpretação:** O host carrega em runtime o módulo exposto pelo remote `incomingApiLogs`, a unidade `incoming-api-logs`, pelo nome.
+**Interpretation:** Host loads at runtime module exposed by remote `incomingApiLogs`, unit `incoming-api-logs`, by name.
 
 ### 16. host-app/src/App.js:46-49
 
-**Observação:** `React.lazy(() => import('makerRequests/MakerRequestsApp'))`, com um `.catch` que registra o erro e devolve um componente `ModuleLoadUnavailable` no lugar do módulo.
+**Observation:** `React.lazy(() => import('makerRequests/MakerRequestsApp'))`, with `.catch` logging error, returning component `ModuleLoadUnavailable` instead of module.
 
-**Interpretação:** O host carrega em runtime o módulo exposto pelo remote `makerRequests`, a unidade `maker-requests`, pelo nome.
+**Interpretation:** Host loads at runtime module exposed by remote `makerRequests`, unit `maker-requests`, by name.
 
 ### 17. host-app/src/App.js:50-53
 
-**Observação:** `React.lazy(() => import('vroUploads/VroUploadsApp'))`, com um `.catch` que registra o erro e devolve um componente `ModuleLoadUnavailable` no lugar do módulo.
+**Observation:** `React.lazy(() => import('vroUploads/VroUploadsApp'))`, with `.catch` logging error, returning component `ModuleLoadUnavailable` instead of module.
 
-**Interpretação:** O host carrega em runtime o módulo exposto pelo remote `vroUploads`, a unidade `vro-uploads`, pelo nome.
+**Interpretation:** Host loads at runtime module exposed by remote `vroUploads`, unit `vro-uploads`, by name.
 
 ### 18. host-app/src/App.js:54-57
 
-**Observação:** `React.lazy(() => import('aiAgent/AIAgentApp'))`, com um `.catch` que registra o erro e devolve um componente `ModuleLoadUnavailable` no lugar do módulo.
+**Observation:** `React.lazy(() => import('aiAgent/AIAgentApp'))`, with `.catch` logging error, returning component `ModuleLoadUnavailable` instead of module.
 
-**Interpretação:** O host carrega em runtime o módulo exposto pelo remote `aiAgent`, a unidade `ai-agent-module`, pelo nome.
+**Interpretation:** Host loads at runtime module exposed by remote `aiAgent`, unit `ai-agent-module`, by name.
 
 ### 19. host-app/src/App.js:228-240; host-app/src/index.js:3, 7
 
-**Observação:** Dentro de `ModuleErrorBoundary` e `Suspense`, a tabela de rotas liga `/business-reports`, `/model-portfolio`, `/outgoing-api`, `/incoming-api`, `/maker-requests`, `/vro-uploads` e `/ai-agent` aos sete componentes carregados por `React.lazy`; `/http-access-logs` e `/` mostram só um texto local. O `App` é renderizado na entrada do host.
+**Observation:** Inside `ModuleErrorBoundary` and `Suspense`, route table links `/business-reports`, `/model-portfolio`, `/outgoing-api`, `/incoming-api`, `/maker-requests`, `/vro-uploads` and `/ai-agent` to seven `React.lazy`-loaded components; `/http-access-logs` and `/` display only local text. `App` rendered in host entry.
 
-**Interpretação:** O shell monta cada um dos sete remotes numa rota própria, e as cargas são alcançáveis por navegação.
+**Interpretation:** Shell mounts each of seven remotes at own route, loading reachable through navigation.
 
 ### 20. host-app/src/App.js:6-27; accounts-module/src/App.js:5, 46-48; cards-module/src/App.js:5, 46-48; loans-module/src/App.js:5, 46-48; host-app/webpack.config.js:47-55
 
-**Observação:** Um objeto `EventBus` com `subscribe` e `publish` é atribuído a `window.EventBus`. O host não chama `publish`, e nenhum dos sete remotes carregados usa `EventBus`. Os únicos assinantes são accounts-module, cards-module e loans-module, que o host não declara como remotes.
+**Observation:** Object `EventBus` with `subscribe` and `publish` assigned to `window.EventBus`. Host does not call `publish`; none of seven loaded remotes uses `EventBus`. Only subscribers accounts-module, cards-module and loans-module, not declared as host remotes.
 
-**Interpretação:** É um mecanismo de comunicação disponível no host, mas não conectado a nenhuma unidade composta; não participa da composição.
+**Interpretation:** Communication mechanism available in host but connected to no composed unit; does not participate in composition.
 
 ### 21. accounts-module; accounts-module/webpack.config.js:8, 65; accounts-module/src/index.js:6-7; accounts-module/package.json:6
 
-**Observação:** Diretório com `package.json` e `webpack.config.js` próprios, entrada `./src/index.js` com `createRoot` e `render`, página `./src/index.html` e build `webpack --mode production`. Não há `package.json` na raiz nem workspace.
+**Observation:** Directory with own `package.json` and `webpack.config.js`, entry `./src/index.js` with `createRoot` and `render`, page `./src/index.html` and build `webpack --mode production`. No root `package.json` or workspace.
 
-**Interpretação:** É uma unidade frontend React com limite próprio: um remote que o host não referencia.
+**Interpretation:** React frontend unit with own boundary: remote unreferenced by host.
 
 ### 22. ai-agent-module; ai-agent-module/webpack.config.js:8, 64; ai-agent-module/src/index.js:6-7; ai-agent-module/package.json:6
 
-**Observação:** Diretório com `package.json` e `webpack.config.js` próprios, entrada `./src/index.js` com `createRoot` e `render`, página `./src/index.html` e build `webpack --mode production`. Não há `package.json` na raiz nem workspace.
+**Observation:** Directory with own `package.json` and `webpack.config.js`, entry `./src/index.js` with `createRoot` and `render`, page `./src/index.html` and build `webpack --mode production`. No root `package.json` or workspace.
 
-**Interpretação:** É uma unidade frontend React com limite próprio: um remote carregado pelo host.
+**Interpretation:** React frontend unit with own boundary: host-loaded remote.
 
 ### 23. business-reports; business-reports/webpack.config.js:8, 64; business-reports/src/index.js:6-7; business-reports/package.json:6
 
-**Observação:** Diretório com `package.json` e `webpack.config.js` próprios, entrada `./src/index.js` com `createRoot` e `render`, página `./src/index.html` e build `webpack --mode production`. Não há `package.json` na raiz nem workspace.
+**Observation:** Directory with own `package.json` and `webpack.config.js`, entry `./src/index.js` with `createRoot` and `render`, page `./src/index.html` and build `webpack --mode production`. No root `package.json` or workspace.
 
-**Interpretação:** É uma unidade frontend React com limite próprio: um remote carregado pelo host.
+**Interpretation:** React frontend unit with own boundary: host-loaded remote.
 
 ### 24. cards-module; cards-module/webpack.config.js:8, 65; cards-module/src/index.js:6-7; cards-module/package.json:6
 
-**Observação:** Diretório com `package.json` e `webpack.config.js` próprios, entrada `./src/index.js` com `createRoot` e `render`, página `./src/index.html` e build `webpack --mode production`. Não há `package.json` na raiz nem workspace.
+**Observation:** Directory with own `package.json` and `webpack.config.js`, entry `./src/index.js` with `createRoot` and `render`, page `./src/index.html` and build `webpack --mode production`. No root `package.json` or workspace.
 
-**Interpretação:** É uma unidade frontend React com limite próprio: um remote que o host não referencia.
+**Interpretation:** React frontend unit with own boundary: remote unreferenced by host.
 
 ### 25. host-app; host-app/webpack.config.js:8, 70; host-app/src/index.js:6-7; host-app/package.json:6
 
-**Observação:** Diretório com `package.json` e `webpack.config.js` próprios, entrada `./src/index.js` com `createRoot` e `render`, página `./src/index.html` e build `webpack --mode production`. Não há `package.json` na raiz nem workspace.
+**Observation:** Directory with own `package.json` and `webpack.config.js`, entry `./src/index.js` with `createRoot` and `render`, page `./src/index.html` and build `webpack --mode production`. No root `package.json` or workspace.
 
-**Interpretação:** É uma unidade frontend React com limite próprio: o shell.
+**Interpretation:** React frontend unit with own boundary: shell.
 
 ### 26. incoming-api-logs; incoming-api-logs/webpack.config.js:8, 64; incoming-api-logs/src/index.js:6-7; incoming-api-logs/package.json:6
 
-**Observação:** Diretório com `package.json` e `webpack.config.js` próprios, entrada `./src/index.js` com `createRoot` e `render`, página `./src/index.html` e build `webpack --mode production`. Não há `package.json` na raiz nem workspace.
+**Observation:** Directory with own `package.json` and `webpack.config.js`, entry `./src/index.js` with `createRoot` and `render`, page `./src/index.html` and build `webpack --mode production`. No root `package.json` or workspace.
 
-**Interpretação:** É uma unidade frontend React com limite próprio: um remote carregado pelo host.
+**Interpretation:** React frontend unit with own boundary: host-loaded remote.
 
 ### 27. loans-module; loans-module/webpack.config.js:8, 65; loans-module/src/index.js:6-7; loans-module/package.json:6
 
-**Observação:** Diretório com `package.json` e `webpack.config.js` próprios, entrada `./src/index.js` com `createRoot` e `render`, página `./src/index.html` e build `webpack --mode production`. Não há `package.json` na raiz nem workspace.
+**Observation:** Directory with own `package.json` and `webpack.config.js`, entry `./src/index.js` with `createRoot` and `render`, page `./src/index.html` and build `webpack --mode production`. No root `package.json` or workspace.
 
-**Interpretação:** É uma unidade frontend React com limite próprio: um remote que o host não referencia.
+**Interpretation:** React frontend unit with own boundary: remote unreferenced by host.
 
 ### 28. maker-requests; maker-requests/webpack.config.js:8, 64; maker-requests/src/index.js:6-7; maker-requests/package.json:6
 
-**Observação:** Diretório com `package.json` e `webpack.config.js` próprios, entrada `./src/index.js` com `createRoot` e `render`, página `./src/index.html` e build `webpack --mode production`. Não há `package.json` na raiz nem workspace.
+**Observation:** Directory with own `package.json` and `webpack.config.js`, entry `./src/index.js` with `createRoot` and `render`, page `./src/index.html` and build `webpack --mode production`. No root `package.json` or workspace.
 
-**Interpretação:** É uma unidade frontend React com limite próprio: um remote carregado pelo host.
+**Interpretation:** React frontend unit with own boundary: host-loaded remote.
 
 ### 29. model-portfolio-configuration; model-portfolio-configuration/webpack.config.js:8, 64; model-portfolio-configuration/src/index.js:6-7; model-portfolio-configuration/package.json:6
 
-**Observação:** Diretório com `package.json` e `webpack.config.js` próprios, entrada `./src/index.js` com `createRoot` e `render`, página `./src/index.html` e build `webpack --mode production`. Não há `package.json` na raiz nem workspace.
+**Observation:** Directory with own `package.json` and `webpack.config.js`, entry `./src/index.js` with `createRoot` and `render`, page `./src/index.html` and build `webpack --mode production`. No root `package.json` or workspace.
 
-**Interpretação:** É uma unidade frontend React com limite próprio: um remote carregado pelo host.
+**Interpretation:** React frontend unit with own boundary: host-loaded remote.
 
 ### 30. outgoing-api-logs; outgoing-api-logs/webpack.config.js:8, 64; outgoing-api-logs/src/index.js:6-7; outgoing-api-logs/package.json:6
 
-**Observação:** Diretório com `package.json` e `webpack.config.js` próprios, entrada `./src/index.js` com `createRoot` e `render`, página `./src/index.html` e build `webpack --mode production`. Não há `package.json` na raiz nem workspace.
+**Observation:** Directory with own `package.json` and `webpack.config.js`, entry `./src/index.js` with `createRoot` and `render`, page `./src/index.html` and build `webpack --mode production`. No root `package.json` or workspace.
 
-**Interpretação:** É uma unidade frontend React com limite próprio: um remote carregado pelo host.
+**Interpretation:** React frontend unit with own boundary: host-loaded remote.
 
 ### 31. vro-uploads; vro-uploads/webpack.config.js:8, 64; vro-uploads/src/index.js:6-7; vro-uploads/package.json:6
 
-**Observação:** Diretório com `package.json` e `webpack.config.js` próprios, entrada `./src/index.js` com `createRoot` e `render`, página `./src/index.html` e build `webpack --mode production`. Não há `package.json` na raiz nem workspace.
+**Observation:** Directory with own `package.json` and `webpack.config.js`, entry `./src/index.js` with `createRoot` and `render`, page `./src/index.html` and build `webpack --mode production`. No root `package.json` or workspace.
 
-**Interpretação:** É uma unidade frontend React com limite próprio: um remote carregado pelo host.
+**Interpretation:** React frontend unit with own boundary: host-loaded remote.
 
 ### 32. host-app/src/App.js:30; host-app/src/App.js:231; host-app/webpack.config.js:48; business-reports/webpack.config.js:45-48
 
-**Observação:** O host importa `businessReports/BusinessReportsApp` (host-app/src/App.js:30) e o monta na rota `/business-reports` (host-app/src/App.js:231). O remote `businessReports` do host (host-app/webpack.config.js:48) corresponde a `name: 'businessReports'` e ao `exposes './BusinessReportsApp'` de business-reports/webpack.config.js:45-48.
+**Observation:** Host imports `businessReports/BusinessReportsApp` (host-app/src/App.js:30) and mounts at route `/business-reports` (host-app/src/App.js:231). Remote `businessReports` in host (host-app/webpack.config.js:48) matches `name: 'businessReports'` and `exposes './BusinessReportsApp'` in business-reports/webpack.config.js:45-48.
 
-**Interpretação:** É uma relação host → remote ativa entre host-app e business-reports, por Module Federation.
+**Interpretation:** Active host → remote Module Federation relationship between host-app and business-reports.
 
 ### 33. host-app/src/App.js:34; host-app/src/App.js:232; host-app/webpack.config.js:49; model-portfolio-configuration/webpack.config.js:45-48
 
-**Observação:** O host importa `modelPortfolio/ModelPortfolioApp` (host-app/src/App.js:34) e o monta na rota `/model-portfolio` (host-app/src/App.js:232). O remote `modelPortfolio` do host (host-app/webpack.config.js:49) corresponde a `name: 'modelPortfolio'` e ao `exposes './ModelPortfolioApp'` de model-portfolio-configuration/webpack.config.js:45-48.
+**Observation:** Host imports `modelPortfolio/ModelPortfolioApp` (host-app/src/App.js:34) and mounts at route `/model-portfolio` (host-app/src/App.js:232). Remote `modelPortfolio` in host (host-app/webpack.config.js:49) matches `name: 'modelPortfolio'` and `exposes './ModelPortfolioApp'` in model-portfolio-configuration/webpack.config.js:45-48.
 
-**Interpretação:** É uma relação host → remote ativa entre host-app e model-portfolio-configuration, por Module Federation.
+**Interpretation:** Active host → remote Module Federation relationship between host-app and model-portfolio-configuration.
 
 ### 34. host-app/src/App.js:38; host-app/src/App.js:233; host-app/webpack.config.js:50; outgoing-api-logs/webpack.config.js:45-48
 
-**Observação:** O host importa `outgoingApiLogs/OutgoingApiLogsApp` (host-app/src/App.js:38) e o monta na rota `/outgoing-api` (host-app/src/App.js:233). O remote `outgoingApiLogs` do host (host-app/webpack.config.js:50) corresponde a `name: 'outgoingApiLogs'` e ao `exposes './OutgoingApiLogsApp'` de outgoing-api-logs/webpack.config.js:45-48.
+**Observation:** Host imports `outgoingApiLogs/OutgoingApiLogsApp` (host-app/src/App.js:38) and mounts at route `/outgoing-api` (host-app/src/App.js:233). Remote `outgoingApiLogs` in host (host-app/webpack.config.js:50) matches `name: 'outgoingApiLogs'` and `exposes './OutgoingApiLogsApp'` in outgoing-api-logs/webpack.config.js:45-48.
 
-**Interpretação:** É uma relação host → remote ativa entre host-app e outgoing-api-logs, por Module Federation.
+**Interpretation:** Active host → remote Module Federation relationship between host-app and outgoing-api-logs.
 
 ### 35. host-app/src/App.js:42; host-app/src/App.js:234; host-app/webpack.config.js:51; incoming-api-logs/webpack.config.js:45-48
 
-**Observação:** O host importa `incomingApiLogs/IncomingApiLogsApp` (host-app/src/App.js:42) e o monta na rota `/incoming-api` (host-app/src/App.js:234). O remote `incomingApiLogs` do host (host-app/webpack.config.js:51) corresponde a `name: 'incomingApiLogs'` e ao `exposes './IncomingApiLogsApp'` de incoming-api-logs/webpack.config.js:45-48.
+**Observation:** Host imports `incomingApiLogs/IncomingApiLogsApp` (host-app/src/App.js:42) and mounts at route `/incoming-api` (host-app/src/App.js:234). Remote `incomingApiLogs` in host (host-app/webpack.config.js:51) matches `name: 'incomingApiLogs'` and `exposes './IncomingApiLogsApp'` in incoming-api-logs/webpack.config.js:45-48.
 
-**Interpretação:** É uma relação host → remote ativa entre host-app e incoming-api-logs, por Module Federation.
+**Interpretation:** Active host → remote Module Federation relationship between host-app and incoming-api-logs.
 
 ### 36. host-app/src/App.js:46; host-app/src/App.js:236; host-app/webpack.config.js:52; maker-requests/webpack.config.js:45-48
 
-**Observação:** O host importa `makerRequests/MakerRequestsApp` (host-app/src/App.js:46) e o monta na rota `/maker-requests` (host-app/src/App.js:236). O remote `makerRequests` do host (host-app/webpack.config.js:52) corresponde a `name: 'makerRequests'` e ao `exposes './MakerRequestsApp'` de maker-requests/webpack.config.js:45-48.
+**Observation:** Host imports `makerRequests/MakerRequestsApp` (host-app/src/App.js:46) and mounts at route `/maker-requests` (host-app/src/App.js:236). Remote `makerRequests` in host (host-app/webpack.config.js:52) matches `name: 'makerRequests'` and `exposes './MakerRequestsApp'` in maker-requests/webpack.config.js:45-48.
 
-**Interpretação:** É uma relação host → remote ativa entre host-app e maker-requests, por Module Federation.
+**Interpretation:** Active host → remote Module Federation relationship between host-app and maker-requests.
 
 ### 37. host-app/src/App.js:50; host-app/src/App.js:237; host-app/webpack.config.js:53; vro-uploads/webpack.config.js:45-48
 
-**Observação:** O host importa `vroUploads/VroUploadsApp` (host-app/src/App.js:50) e o monta na rota `/vro-uploads` (host-app/src/App.js:237). O remote `vroUploads` do host (host-app/webpack.config.js:53) corresponde a `name: 'vroUploads'` e ao `exposes './VroUploadsApp'` de vro-uploads/webpack.config.js:45-48.
+**Observation:** Host imports `vroUploads/VroUploadsApp` (host-app/src/App.js:50) and mounts at route `/vro-uploads` (host-app/src/App.js:237). Remote `vroUploads` in host (host-app/webpack.config.js:53) matches `name: 'vroUploads'` and `exposes './VroUploadsApp'` in vro-uploads/webpack.config.js:45-48.
 
-**Interpretação:** É uma relação host → remote ativa entre host-app e vro-uploads, por Module Federation.
+**Interpretation:** Active host → remote Module Federation relationship between host-app and vro-uploads.
 
 ### 38. host-app/src/App.js:54; host-app/src/App.js:238; host-app/webpack.config.js:54; ai-agent-module/webpack.config.js:45-48; ai-agent-module/src/App.js:84-109
 
-**Observação:** O host importa `aiAgent/AIAgentApp` (host-app/src/App.js:54) e o monta na rota `/ai-agent` (host-app/src/App.js:238). O remote `aiAgent` do host (host-app/webpack.config.js:54) corresponde a `name: 'aiAgent'` e ao `exposes './AIAgentApp'` de ai-agent-module/webpack.config.js:45-48. A chamada do módulo a um backend em `http://localhost:8000/chat` está comentada (ai-agent-module/src/App.js:84-109).
+**Observation:** Host imports `aiAgent/AIAgentApp` (host-app/src/App.js:54) and mounts at route `/ai-agent` (host-app/src/App.js:238). Remote `aiAgent` in host (host-app/webpack.config.js:54) matches `name: 'aiAgent'` and `exposes './AIAgentApp'` in ai-agent-module/webpack.config.js:45-48. Module call to backend at `http://localhost:8000/chat` commented (ai-agent-module/src/App.js:84-109).
 
-**Interpretação:** É uma relação host → remote ativa entre host-app e ai-agent-module, por Module Federation.
+**Interpretation:** Active host → remote Module Federation relationship between host-app and ai-agent-module.
 
 ### 39. accounts-module/package.json:3, 5-6; accounts-module/webpack.config.js:8-15; start-all-modules.bat:4-12
 
-**Observação:** `webpack --mode production` gera `accounts-module/dist` com `publicPath: 'auto'`. O único endereço é o do servidor de desenvolvimento na porta 3001. Não há Dockerfile, CI nem configuração de hospedagem, e a versão `1.0.0` do `package.json` não é usada em publicação. O start-all-modules.bat não o sobe.
+**Observation:** `webpack --mode production` generates `accounts-module/dist` with `publicPath: 'auto'`. Only address development server at port 3001. No Dockerfile, CI or hosting configuration; version `1.0.0` in `package.json` unused for publication. File start-all-modules.bat does not start it.
 
-**Interpretação:** Há uma fronteira de build própria da unidade, sem deploy observado.
+**Interpretation:** Own unit build boundary without observed deployment.
 
 ### 40. ai-agent-module/package.json:3, 5-6; ai-agent-module/webpack.config.js:8-15
 
-**Observação:** `webpack --mode production` gera `ai-agent-module/dist` com `publicPath: 'auto'`. O único endereço é o do servidor de desenvolvimento na porta 3016. Não há Dockerfile, CI nem configuração de hospedagem, e a versão `1.0.0` do `package.json` não é usada em publicação.
+**Observation:** `webpack --mode production` generates `ai-agent-module/dist` with `publicPath: 'auto'`. Only address development server at port 3016. No Dockerfile, CI or hosting configuration; version `1.0.0` in `package.json` unused for publication.
 
-**Interpretação:** Há uma fronteira de build própria da unidade, sem deploy observado.
+**Interpretation:** Own unit build boundary without observed deployment.
 
 ### 41. business-reports/package.json:3, 5-6; business-reports/webpack.config.js:8-15
 
-**Observação:** `webpack --mode production` gera `business-reports/dist` com `publicPath: 'auto'`. O único endereço é o do servidor de desenvolvimento na porta 3010. Não há Dockerfile, CI nem configuração de hospedagem, e a versão `1.0.0` do `package.json` não é usada em publicação.
+**Observation:** `webpack --mode production` generates `business-reports/dist` with `publicPath: 'auto'`. Only address development server at port 3010. No Dockerfile, CI or hosting configuration; version `1.0.0` in `package.json` unused for publication.
 
-**Interpretação:** Há uma fronteira de build própria da unidade, sem deploy observado.
+**Interpretation:** Own unit build boundary without observed deployment.
 
 ### 42. cards-module/package.json:3, 5-6; cards-module/webpack.config.js:8-15; start-all-modules.bat:4-12
 
-**Observação:** `webpack --mode production` gera `cards-module/dist` com `publicPath: 'auto'`. O único endereço é o do servidor de desenvolvimento na porta 3003. Não há Dockerfile, CI nem configuração de hospedagem, e a versão `1.0.0` do `package.json` não é usada em publicação. O start-all-modules.bat não o sobe.
+**Observation:** `webpack --mode production` generates `cards-module/dist` with `publicPath: 'auto'`. Only address development server at port 3003. No Dockerfile, CI or hosting configuration; version `1.0.0` in `package.json` unused for publication. File start-all-modules.bat does not start it.
 
-**Interpretação:** Há uma fronteira de build própria da unidade, sem deploy observado.
+**Interpretation:** Own unit build boundary without observed deployment.
 
 ### 43. host-app/package.json:3, 5-6; host-app/webpack.config.js:8-15; host-app/webpack.config.js:47-55
 
-**Observação:** `webpack --mode production` gera `host-app/dist` com `publicPath: 'auto'`. O único endereço é o do servidor de desenvolvimento na porta 3000. Não há Dockerfile, CI nem configuração de hospedagem, e a versão `1.0.0` do `package.json` não é usada em publicação. Os remotes entram em runtime pelos endereços `localhost`, não no bundle.
+**Observation:** `webpack --mode production` generates `host-app/dist` with `publicPath: 'auto'`. Only address development server at port 3000. No Dockerfile, CI or hosting configuration; version `1.0.0` in `package.json` unused for publication. Remotes enter at runtime through `localhost` addresses rather than bundle.
 
-**Interpretação:** Há uma fronteira de build própria da unidade, sem deploy observado.
+**Interpretation:** Own unit build boundary without observed deployment.
 
 ### 44. incoming-api-logs/package.json:3, 5-6; incoming-api-logs/webpack.config.js:8-15
 
-**Observação:** `webpack --mode production` gera `incoming-api-logs/dist` com `publicPath: 'auto'`. O único endereço é o do servidor de desenvolvimento na porta 3013. Não há Dockerfile, CI nem configuração de hospedagem, e a versão `1.0.0` do `package.json` não é usada em publicação.
+**Observation:** `webpack --mode production` generates `incoming-api-logs/dist` with `publicPath: 'auto'`. Only address development server at port 3013. No Dockerfile, CI or hosting configuration; version `1.0.0` in `package.json` unused for publication.
 
-**Interpretação:** Há uma fronteira de build própria da unidade, sem deploy observado.
+**Interpretation:** Own unit build boundary without observed deployment.
 
 ### 45. loans-module/package.json:3, 5-6; loans-module/webpack.config.js:8-15; start-all-modules.bat:4-12
 
-**Observação:** `webpack --mode production` gera `loans-module/dist` com `publicPath: 'auto'`. O único endereço é o do servidor de desenvolvimento na porta 3002. Não há Dockerfile, CI nem configuração de hospedagem, e a versão `1.0.0` do `package.json` não é usada em publicação. O start-all-modules.bat não o sobe.
+**Observation:** `webpack --mode production` generates `loans-module/dist` with `publicPath: 'auto'`. Only address development server at port 3002. No Dockerfile, CI or hosting configuration; version `1.0.0` in `package.json` unused for publication. File start-all-modules.bat does not start it.
 
-**Interpretação:** Há uma fronteira de build própria da unidade, sem deploy observado.
+**Interpretation:** Own unit build boundary without observed deployment.
 
 ### 46. maker-requests/package.json:3, 5-6; maker-requests/webpack.config.js:8-15
 
-**Observação:** `webpack --mode production` gera `maker-requests/dist` com `publicPath: 'auto'`. O único endereço é o do servidor de desenvolvimento na porta 3014. Não há Dockerfile, CI nem configuração de hospedagem, e a versão `1.0.0` do `package.json` não é usada em publicação.
+**Observation:** `webpack --mode production` generates `maker-requests/dist` with `publicPath: 'auto'`. Only address development server at port 3014. No Dockerfile, CI or hosting configuration; version `1.0.0` in `package.json` unused for publication.
 
-**Interpretação:** Há uma fronteira de build própria da unidade, sem deploy observado.
+**Interpretation:** Own unit build boundary without observed deployment.
 
 ### 47. model-portfolio-configuration/package.json:3, 5-6; model-portfolio-configuration/webpack.config.js:8-15
 
-**Observação:** `webpack --mode production` gera `model-portfolio-configuration/dist` com `publicPath: 'auto'`. O único endereço é o do servidor de desenvolvimento na porta 3011. Não há Dockerfile, CI nem configuração de hospedagem, e a versão `1.0.0` do `package.json` não é usada em publicação.
+**Observation:** `webpack --mode production` generates `model-portfolio-configuration/dist` with `publicPath: 'auto'`. Only address development server at port 3011. No Dockerfile, CI or hosting configuration; version `1.0.0` in `package.json` unused for publication.
 
-**Interpretação:** Há uma fronteira de build própria da unidade, sem deploy observado.
+**Interpretation:** Own unit build boundary without observed deployment.
 
 ### 48. outgoing-api-logs/package.json:3, 5-6; outgoing-api-logs/webpack.config.js:8-15
 
-**Observação:** `webpack --mode production` gera `outgoing-api-logs/dist` com `publicPath: 'auto'`. O único endereço é o do servidor de desenvolvimento na porta 3012. Não há Dockerfile, CI nem configuração de hospedagem, e a versão `1.0.0` do `package.json` não é usada em publicação.
+**Observation:** `webpack --mode production` generates `outgoing-api-logs/dist` with `publicPath: 'auto'`. Only address development server at port 3012. No Dockerfile, CI or hosting configuration; version `1.0.0` in `package.json` unused for publication.
 
-**Interpretação:** Há uma fronteira de build própria da unidade, sem deploy observado.
+**Interpretation:** Own unit build boundary without observed deployment.
 
 ### 49. vro-uploads/package.json:3, 5-6; vro-uploads/webpack.config.js:8-15
 
-**Observação:** `webpack --mode production` gera `vro-uploads/dist` com `publicPath: 'auto'`. O único endereço é o do servidor de desenvolvimento na porta 3015. Não há Dockerfile, CI nem configuração de hospedagem, e a versão `1.0.0` do `package.json` não é usada em publicação.
+**Observation:** `webpack --mode production` generates `vro-uploads/dist` with `publicPath: 'auto'`. Only address development server at port 3015. No Dockerfile, CI or hosting configuration; version `1.0.0` in `package.json` unused for publication.
 
-**Interpretação:** Há uma fronteira de build própria da unidade, sem deploy observado.
+**Interpretation:** Own unit build boundary without observed deployment.
 
 ### 50. DOCUMENTATION.md:4
 
-**Observação:** "This repository implements a micro-frontend architecture [...] using `host-app` as the shell and multiple remote modules."
+**Observation:** "This repository implements a micro-frontend architecture [...] using `host-app` as the shell and multiple remote modules."
 
-**Interpretação:** Afirma uma organização de shell e remotes. Há o shell e dez remotes, e sete estão ligados ao shell; a afirmação é corroborada.
+**Interpretation:** Claims shell/remote organization. Shell and ten remotes present, seven linked to shell; claim corroborated.
 
 ### 51. DOCUMENTATION.md:8
 
-**Observação:** "`accounts-module/` - Accounts management micro-frontend"
+**Observation:** "`accounts-module/` - Accounts management micro-frontend"
 
-**Interpretação:** Afirma que accounts-module é um micro frontend. A unidade tem entrada e configuração de remote próprias; a afirmação é corroborada, sem implicar consumo pelo shell.
+**Interpretation:** Claims accounts-module microfrontend. Unit has own entry/remote configuration; claim corroborated without implying shell consumption.
 
 ### 52. DOCUMENTATION.md:9
 
-**Observação:** "`business-reports/` - Business reports micro-frontend"
+**Observation:** "`business-reports/` - Business reports micro-frontend"
 
-**Interpretação:** Afirma que business-reports é um micro frontend. A unidade tem entrada e configuração de remote próprias; a afirmação é corroborada.
+**Interpretation:** Claims business-reports microfrontend. Unit has own entry/remote configuration; claim corroborated.
 
 ### 53. DOCUMENTATION.md:10
 
-**Observação:** "`cards-module/` - Cards management micro-frontend"
+**Observation:** "`cards-module/` - Cards management micro-frontend"
 
-**Interpretação:** Afirma que cards-module é um micro frontend. A unidade tem entrada e configuração de remote próprias; a afirmação é corroborada, sem implicar consumo pelo shell.
+**Interpretation:** Claims cards-module microfrontend. Unit has own entry/remote configuration; claim corroborated without implying shell consumption.
 
 ### 54. DOCUMENTATION.md:11
 
-**Observação:** "`incoming-api-logs/` - Incoming API logs micro-frontend"
+**Observation:** "`incoming-api-logs/` - Incoming API logs micro-frontend"
 
-**Interpretação:** Afirma que incoming-api-logs é um micro frontend. A unidade tem entrada e configuração de remote próprias; a afirmação é corroborada.
+**Interpretation:** Claims incoming-api-logs microfrontend. Unit has own entry/remote configuration; claim corroborated.
 
 ### 55. DOCUMENTATION.md:12
 
-**Observação:** "`loans-module/` - Loans management micro-frontend"
+**Observation:** "`loans-module/` - Loans management micro-frontend"
 
-**Interpretação:** Afirma que loans-module é um micro frontend. A unidade tem entrada e configuração de remote próprias; a afirmação é corroborada, sem implicar consumo pelo shell.
+**Interpretation:** Claims loans-module microfrontend. Unit has own entry/remote configuration; claim corroborated without implying shell consumption.
 
 ### 56. DOCUMENTATION.md:13
 
-**Observação:** "`maker-requests/` - Maker-requests workflow micro-frontend"
+**Observation:** "`maker-requests/` - Maker-requests workflow micro-frontend"
 
-**Interpretação:** Afirma que maker-requests é um micro frontend. A unidade tem entrada e configuração de remote próprias; a afirmação é corroborada.
+**Interpretation:** Claims maker-requests microfrontend. Unit has own entry/remote configuration; claim corroborated.
 
 ### 57. DOCUMENTATION.md:14
 
-**Observação:** "`model-portfolio-configuration/` - Portfolio configuration micro-frontend"
+**Observation:** "`model-portfolio-configuration/` - Portfolio configuration micro-frontend"
 
-**Interpretação:** Afirma que model-portfolio-configuration é um micro frontend. A unidade tem entrada e configuração de remote próprias; a afirmação é corroborada.
+**Interpretation:** Claims model-portfolio-configuration microfrontend. Unit has own entry/remote configuration; claim corroborated.
 
 ### 58. DOCUMENTATION.md:15
 
-**Observação:** "`outgoing-api-logs/` - Outgoing API logs micro-frontend"
+**Observation:** "`outgoing-api-logs/` - Outgoing API logs micro-frontend"
 
-**Interpretação:** Afirma que outgoing-api-logs é um micro frontend. A unidade tem entrada e configuração de remote próprias; a afirmação é corroborada.
+**Interpretation:** Claims outgoing-api-logs microfrontend. Unit has own entry/remote configuration; claim corroborated.
 
 ### 59. DOCUMENTATION.md:16
 
-**Observação:** "`vro-uploads/` - VRO uploads micro-frontend"
+**Observation:** "`vro-uploads/` - VRO uploads micro-frontend"
 
-**Interpretação:** Afirma que vro-uploads é um micro frontend. A unidade tem entrada e configuração de remote próprias; a afirmação é corroborada.
+**Interpretation:** Claims vro-uploads microfrontend. Unit has own entry/remote configuration; claim corroborated.
 
 ### 60. DOCUMENTATION.md:38
 
-**Observação:** "The host uses Webpack Module Federation to load remote entries from each module."
+**Observation:** "The host uses Webpack Module Federation to load remote entries from each module."
 
-**Interpretação:** Afirma que o host carrega por Module Federation todos os módulos. O mecanismo confere para sete, mas o host não declara accounts-module, cards-module nem loans-module; a afirmação é contradita.
+**Interpretation:** Claims host loads all modules through Module Federation. Mechanism matches seven, but host declares no accounts-module, cards-module or loans-module; claim contradicted.
 
 ### 61. DOCUMENTATION.md:39
 
-**Observação:** "Each module is independently runnable and documented at its own folder level."
+**Observation:** "Each module is independently runnable and documented at its own folder level."
 
-**Interpretação:** Afirma que cada módulo roda sozinho. Cada unidade tem entrada, servidor local e documentação próprios; a afirmação é corroborada, sem implicar publicação.
+**Interpretation:** Claims each module runs alone. Each unit has own entry, local server and documentation; claim corroborated without implying publication.
 
 ### 62. README.md:15
 
-**Observação:** "ai-agent-module/ [...] # AI Agent chatbot module"
+**Observation:** "ai-agent-module/ [...] # AI Agent chatbot module"
 
-**Interpretação:** Afirma que ai-agent-module é um módulo do conjunto. A unidade existe com entrada própria; a afirmação é corroborada.
+**Interpretation:** Claims ai-agent-module part of group. Unit exists with own entry; claim corroborated.
 
 ### 63. README.md:21
 
-**Observação:** "This project uses **Webpack Module Federation** to implement a micro-frontend architecture:"
+**Observation:** "This project uses **Webpack Module Federation** to implement a micro-frontend architecture:"
 
-**Interpretação:** Nomeia Module Federation como a tecnologia da arquitetura. O plugin embutido do webpack está configurado e usado nas sete relações; a afirmação é corroborada.
+**Interpretation:** Names Module Federation architectural technology. Webpack built-in plugin configured/used in seven relationships; claim corroborated.
 
 ### 64. README.md:24
 
-**Observação:** "Standalone applications that can be independently developed"
+**Observation:** "Standalone applications that can be independently developed"
 
-**Interpretação:** Afirma que as aplicações são desenvolvidas de forma independente. Manifestos, entradas e builds por unidade a sustentam; a afirmação é corroborada.
+**Interpretation:** Claims independently developed applications. Per-unit manifests, entries/builds support claim; corroborated.
 
 ### 65. README.md:24
 
-**Observação:** "can be independently [...] deployed"
+**Observation:** "can be independently [...] deployed"
 
-**Interpretação:** Afirma que as aplicações podem ser implantadas de forma independente. Não há artefato de deploy no snapshot; a afirmação fica sem corroboração.
+**Interpretation:** Claims independently deployable applications. No snapshot deployment artifact; claim uncorroborated.
 
 ### 66. README.md:135
 
-**Observação:** "Shared event bus for cross-module communication"
+**Observation:** "Shared event bus for cross-module communication"
 
-**Interpretação:** Afirma que um event bus compartilhado comunica os módulos. O bus existe no host, mas não há publicador e os únicos assinantes não são carregados; a afirmação é contradita.
+**Interpretation:** Claims shared event bus communicates modules. Bus exists in host without publisher; only subscribers unloaded; claim contradicted.
 
 ### 67. README.md:145
 
-**Observação:** "Remote module loaded by host app"
+**Observation:** "Remote module loaded by host app"
 
-**Interpretação:** Afirma que outgoing-api-logs é carregado pelo host. O host o declara e o monta na rota `/outgoing-api`; a afirmação é corroborada.
+**Interpretation:** Claims outgoing-api-logs loaded by host. Host declares/mounts at route `/outgoing-api`; claim corroborated.
 
 ### 68. README.md:176
 
-**Observação:** "Build each module for production:"
+**Observation:** "Build each module for production:"
 
-**Interpretação:** Afirma que cada módulo tem build de produção próprio. Os onze `package.json` têm `webpack --mode production`; a afirmação é corroborada.
+**Interpretation:** Claims each module has own production build. Eleven `package.json` files have `webpack --mode production`; claim corroborated.
 
 ### 69. accounts-module/DOCUMENTATION.md:9
 
-**Observação:** "Remote module configuration for Module Federation"
+**Observation:** "Remote module configuration for Module Federation"
 
-**Interpretação:** Afirma que accounts-module tem configuração de remote. O plugin expõe `AccountsApp` e `AccountsService`; a afirmação é corroborada, sem consumidor.
+**Interpretation:** Claims accounts-module remote configuration. Plugin exposes `AccountsApp` and `AccountsService`; corroborated without consumer.
 
 ### 70. accounts-module/DOCUMENTATION.md:15
 
-**Observação:** "Uses isolated module styles and components"
+**Observation:** "Uses isolated module styles and components"
 
-**Interpretação:** Afirma que os estilos do módulo são isolados. O CSS usa seletores globais carregados por `style-loader` e `css-loader`, sem escopo; a afirmação é contradita.
+**Interpretation:** Claims isolated module styles. CSS global selectors loaded by `style-loader` and `css-loader`, unscoped; claim contradicted.
 
 ### 71. accounts-module/DOCUMENTATION.md:26
 
-**Observação:** "The host app loads this module as a federated remote when the user navigates to the Accounts route."
+**Observation:** "The host app loads this module as a federated remote when the user navigates to the Accounts route."
 
-**Interpretação:** Afirma que o host carrega accounts-module numa rota. Não há remote `accountsModule` nem rota Accounts no host; a afirmação é contradita.
+**Interpretation:** Claims host loads accounts-module through route. No remote `accountsModule` or Accounts route in host; claim contradicted.
 
 ### 72. accounts-module/src/App.js:4
 
-**Observação:** "Event Bus for cross-module communication"
+**Observation:** "Event Bus for cross-module communication"
 
-**Interpretação:** Afirma que o bus comunica módulos. accounts-module assina eventos, mas não é carregado pelo host e não há publicador; a afirmação é contradita.
+**Interpretation:** Claims bus communicates modules. Accounts-module subscribes but not host-loaded, no publisher; claim contradicted.
 
 ### 73. accounts-module/src/App.js:36
 
-**Observação:** "Initialize accounts from shared store"
+**Observation:** "Initialize accounts from shared store"
 
-**Interpretação:** Afirma que os dados vêm de um store compartilhado. O bus do host não tem o getter procurado, e o caminho disponível usa dados locais; a afirmação é contradita.
+**Interpretation:** Claims shared-store data. Host bus lacks sought getter; available path uses local data; claim contradicted.
 
 ### 74. ai-agent-module/README.md:21
 
-**Observação:** "This module is built as a Webpack Module Federation remote and is exposed as `AIAgentApp`."
+**Observation:** "This module is built as a Webpack Module Federation remote and is exposed as `AIAgentApp`."
 
-**Interpretação:** Afirma que ai-agent-module é um remote que expõe `AIAgentApp`. A configuração e o import do host conferem; a afirmação é corroborada.
+**Interpretation:** Claims ai-agent-module remote exposing `AIAgentApp`. Configuration/host import match; claim corroborated.
 
 ### 75. ai-agent-module/src/App.js:84
 
-**Observação:** "API integration is currently disabled for static demo mode."
+**Observation:** "API integration is currently disabled for static demo mode."
 
-**Interpretação:** Afirma que a integração com o backend está desligada. A chamada HTTP está comentada e as respostas são locais; a afirmação é corroborada.
+**Interpretation:** Claims backend integration disabled. HTTP call commented, responses local; claim corroborated.
 
 ### 76. business-reports/DOCUMENTATION.md:9
 
-**Observação:** "Remote entry configuration for Module Federation"
+**Observation:** "Remote entry configuration for Module Federation"
 
-**Interpretação:** Afirma que business-reports tem configuração de remote. A exposição de `BusinessReportsApp` confere; a afirmação é corroborada.
+**Interpretation:** Claims business-reports remote configuration. Exposure of `BusinessReportsApp` matches; claim corroborated.
 
 ### 77. business-reports/DOCUMENTATION.md:15
 
-**Observação:** "Uses isolated CSS for module-specific layout"
+**Observation:** "Uses isolated CSS for module-specific layout"
 
-**Interpretação:** Afirma que o CSS do módulo é isolado. A folha usa seletores globais sem escopo no carregador; a afirmação é contradita.
+**Interpretation:** Claims isolated module CSS. Stylesheet global selectors without loader scoping; claim contradicted.
 
 ### 78. business-reports/DOCUMENTATION.md:25
 
-**Observação:** "The module is loaded by `host-app` when the Business Reports route is active."
+**Observation:** "The module is loaded by `host-app` when the Business Reports route is active."
 
-**Interpretação:** Afirma que o host carrega business-reports numa rota. Configuração e rota confirmam; a afirmação é corroborada.
+**Interpretation:** Claims host loads business-reports through route. Configuration/route confirm; claim corroborated.
 
 ### 79. cards-module/DOCUMENTATION.md:9
 
-**Observação:** "Module Federation remote configuration"
+**Observation:** "Module Federation remote configuration"
 
-**Interpretação:** Afirma que cards-module tem configuração de remote. O plugin expõe `CardsApp` e `CardsService`; a afirmação é corroborada, sem consumidor.
+**Interpretation:** Claims cards-module remote configuration. Plugin exposes `CardsApp` and `CardsService`; corroborated without consumer.
 
 ### 80. cards-module/DOCUMENTATION.md:14
 
-**Observação:** "Displays card data as a standalone micro-frontend"
+**Observation:** "Displays card data as a standalone micro-frontend"
 
-**Interpretação:** Afirma que cards-module roda sozinho. Entrada própria e dados locais de exemplo sustentam a execução autônoma; a afirmação é corroborada.
+**Interpretation:** Claims cards-module runs alone. Own entry/local example data support autonomous execution; corroborated.
 
 ### 81. cards-module/DOCUMENTATION.md:15
 
-**Observação:** "Uses isolated styles for module-specific UI"
+**Observation:** "Uses isolated styles for module-specific UI"
 
-**Interpretação:** Afirma que os estilos do módulo são isolados. O CSS é global e sem escopo; a afirmação é contradita.
+**Interpretation:** Claims isolated module styles. CSS global/unscoped; claim contradicted.
 
 ### 82. cards-module/DOCUMENTATION.md:26
 
-**Observação:** "The host shell loads this module dynamically as part of the micro-frontend routing."
+**Observation:** "The host shell loads this module dynamically as part of the micro-frontend routing."
 
-**Interpretação:** Afirma que o shell carrega cards-module por rota. O host não declara `cardsModule` nem monta `CardsApp`; a afirmação é contradita.
+**Interpretation:** Claims shell loads cards-module through route. Host neither declares `cardsModule` nor mounts `CardsApp`; claim contradicted.
 
 ### 83. cards-module/src/App.js:4
 
-**Observação:** "Event Bus for cross-module communication"
+**Observation:** "Event Bus for cross-module communication"
 
-**Interpretação:** Afirma que o bus comunica módulos. cards-module assina eventos, mas não é carregado pelo host e não há publicador; a afirmação é contradita.
+**Interpretation:** Claims bus communicates modules. Cards-module subscribes but not host-loaded, no publisher; claim contradicted.
 
 ### 84. cards-module/src/App.js:36
 
-**Observação:** "Initialize cards from shared store"
+**Observation:** "Initialize cards from shared store"
 
-**Interpretação:** Afirma que os dados vêm de um store compartilhado. O bus do host não tem o getter procurado, e o caminho disponível usa dados locais; a afirmação é contradita.
+**Interpretation:** Claims shared-store data. Host bus lacks sought getter; available path uses local data; claim contradicted.
 
 ### 85. host-app/DOCUMENTATION.md:10
 
-**Observação:** "Global shared styling"
+**Observation:** "Global shared styling"
 
-**Interpretação:** Afirma que o host tem estilo global compartilhado. O host importa CSS global, e os remotes montados nele ficam sujeitos a essas regras; a afirmação é corroborada.
+**Interpretation:** Claims shared global host style. Host imports global CSS; mounted remotes subject to rules; claim corroborated.
 
 ### 86. host-app/DOCUMENTATION.md:26
 
-**Observação:** "Must run together with remote modules so the federated remotes can be loaded."
+**Observation:** "Must run together with remote modules so the federated remotes can be loaded."
 
-**Interpretação:** Afirma que o host depende dos remotes em execução. As URLs dos remotes exigem os servidores dos remotes; a afirmação é corroborada.
+**Interpretation:** Claims host depends on running remotes. Remote URLs require their servers; claim corroborated.
 
 ### 87. host-app/DOCUMENTATION.md:27
 
-**Observação:** "The host app uses route-based loading for each remote module."
+**Observation:** "The host app uses route-based loading for each remote module."
 
-**Interpretação:** Afirma que o host carrega cada remote por rota. Os sete remotes configurados são importados por `React.lazy` e montados por rota; a afirmação é corroborada.
+**Interpretation:** Claims host loads each remote through route. Seven configured remotes imported through `React.lazy` and route-mounted; claim corroborated.
 
 ### 88. host-app/src/App.js:26
 
-**Observação:** "Make EventBus available globally"
+**Observation:** "Make EventBus available globally"
 
-**Interpretação:** Afirma que o bus fica disponível globalmente. A atribuição a `window.EventBus` existe; a afirmação é corroborada, sem implicar comunicação.
+**Interpretation:** Claims global bus availability. Assignment to `window.EventBus` exists; claim corroborated without implying communication.
 
 ### 89. host-app/src/App.js:29
 
-**Observação:** "Lazy load remote modules"
+**Observation:** "Lazy load remote modules"
 
-**Interpretação:** Afirma que os remotes são carregados sob demanda. `React.lazy` envolve as sete importações; a afirmação é corroborada.
+**Interpretation:** Claims on-demand remote loading. `React.lazy` wraps seven imports; claim corroborated.
 
 ### 90. incoming-api-logs/DOCUMENTATION.md:6
 
-**Observação:** "It is designed as a remote micro-frontend that can be loaded into the `host-app` using Webpack Module Federation."
+**Observation:** "It is designed as a remote micro-frontend that can be loaded into the `host-app` using Webpack Module Federation."
 
-**Interpretação:** Afirma que incoming-api-logs é um remote carregado pelo host. Configuração e consumo confirmam; a afirmação é corroborada.
+**Interpretation:** Claims incoming-api-logs host-loaded remote. Configuration/consumption confirm; claim corroborated.
 
 ### 91. loans-module/DOCUMENTATION.md:9
 
-**Observação:** "Module Federation remote configuration"
+**Observation:** "Module Federation remote configuration"
 
-**Interpretação:** Afirma que loans-module tem configuração de remote. O plugin expõe `LoansApp` e `LoansService`; a afirmação é corroborada, sem consumidor.
+**Interpretation:** Claims loans-module remote configuration. Plugin exposes `LoansApp` and `LoansService`; corroborated without consumer.
 
 ### 92. loans-module/DOCUMENTATION.md:14
 
-**Observação:** "Uses independent styling and routing for the loan module"
+**Observation:** "Uses independent styling and routing for the loan module"
 
-**Interpretação:** Afirma que o módulo tem estilo e roteamento independentes. Não há roteador, e o CSS é global e sem escopo; a afirmação é contradita.
+**Interpretation:** Claims independent module styling/routing. No router; CSS global/unscoped; claim contradicted.
 
 ### 93. loans-module/DOCUMENTATION.md:26
 
-**Observação:** "The host loads it dynamically when the Loans route is requested."
+**Observation:** "The host loads it dynamically when the Loans route is requested."
 
-**Interpretação:** Afirma que o host carrega loans-module numa rota. Não há remote `loansModule` nem rota Loans no host; a afirmação é contradita.
+**Interpretation:** Claims host loads loans-module through route. No remote `loansModule` or Loans route in host; claim contradicted.
 
 ### 94. loans-module/src/App.js:4
 
-**Observação:** "Event Bus for cross-module communication"
+**Observation:** "Event Bus for cross-module communication"
 
-**Interpretação:** Afirma que o bus comunica módulos. loans-module assina eventos, mas não é carregado pelo host e não há publicador; a afirmação é contradita.
+**Interpretation:** Claims bus communicates modules. Loans-module subscribes but not host-loaded, no publisher; claim contradicted.
 
 ### 95. loans-module/src/App.js:36
 
-**Observação:** "Initialize loans from shared store"
+**Observation:** "Initialize loans from shared store"
 
-**Interpretação:** Afirma que os dados vêm de um store compartilhado. O bus do host não tem o getter procurado, e o caminho disponível usa dados locais; a afirmação é contradita.
+**Interpretation:** Claims shared-store data. Host bus lacks sought getter; available path uses local data; claim contradicted.
 
 ### 96. maker-requests/DOCUMENTATION.md:13
 
-**Observação:** "Exposes a remote entry to the host shell"
+**Observation:** "Exposes a remote entry to the host shell"
 
-**Interpretação:** Afirma que maker-requests oferece um remote entry ao shell. A unidade expõe `MakerRequestsApp` e o host o consome; a afirmação é corroborada.
+**Interpretation:** Claims maker-requests offers remote entry to shell. Unit exposes `MakerRequestsApp`, consumed by host; claim corroborated.
 
 ### 97. maker-requests/DOCUMENTATION.md:15
 
-**Observação:** "Uses isolated styling to avoid conflicts with other modules"
+**Observation:** "Uses isolated styling to avoid conflicts with other modules"
 
-**Interpretação:** Afirma que os estilos são isolados dos outros módulos. O CSS repete seletores globais sem escopo; a afirmação é contradita.
+**Interpretation:** Claims styles isolated from other modules. CSS repeats global unscoped selectors; claim contradicted.
 
 ### 98. maker-requests/DOCUMENTATION.md:25
 
-**Observação:** "The host app loads this module on the Maker Requests route."
+**Observation:** "The host app loads this module on the Maker Requests route."
 
-**Interpretação:** Afirma que o host carrega maker-requests numa rota. A rota monta `MakerRequestsApp`; a afirmação é corroborada.
+**Interpretation:** Claims host loads maker-requests through route. Route mounts `MakerRequestsApp`; claim corroborated.
 
 ### 99. model-portfolio-configuration/DOCUMENTATION.md:9
 
-**Observação:** "Module Federation remote configuration"
+**Observation:** "Module Federation remote configuration"
 
-**Interpretação:** Afirma que model-portfolio-configuration tem configuração de remote. O plugin expõe `ModelPortfolioApp`; a afirmação é corroborada.
+**Interpretation:** Claims model-portfolio-configuration remote configuration. Plugin exposes `ModelPortfolioApp`; claim corroborated.
 
 ### 100. model-portfolio-configuration/DOCUMENTATION.md:15
 
-**Observação:** "Isolation ensures styles do not leak into the host or other modules"
+**Observation:** "Isolation ensures styles do not leak into the host or other modules"
 
-**Interpretação:** Afirma que os estilos não vazam para o host nem para outros módulos. Não há CSS Modules, Shadow DOM nem escopo no carregador; a afirmação é contradita.
+**Interpretation:** Claims styles do not leak to host/others. No CSS Modules, Shadow DOM or loader scoping; claim contradicted.
 
 ### 101. model-portfolio-configuration/DOCUMENTATION.md:26
 
-**Observação:** "The host app loads it dynamically through Module Federation."
+**Observation:** "The host app loads it dynamically through Module Federation."
 
-**Interpretação:** Afirma que o host carrega model-portfolio-configuration por Module Federation. A carga dinâmica e a rota confirmam; a afirmação é corroborada.
+**Interpretation:** Claims host loads model-portfolio-configuration through Module Federation. Dynamic loading/route confirm; claim corroborated.
 
 ### 102. outgoing-api-logs/DOCUMENTATION.md:9
 
-**Observação:** "Module Federation remote configuration"
+**Observation:** "Module Federation remote configuration"
 
-**Interpretação:** Afirma que outgoing-api-logs tem configuração de remote. O plugin expõe `OutgoingApiLogsApp`; a afirmação é corroborada.
+**Interpretation:** Claims outgoing-api-logs remote configuration. Plugin exposes `OutgoingApiLogsApp`; claim corroborated.
 
 ### 103. outgoing-api-logs/DOCUMENTATION.md:15
 
-**Observação:** "Uses isolated CSS to keep the module visually separated"
+**Observation:** "Uses isolated CSS to keep the module visually separated"
 
-**Interpretação:** Afirma que o CSS do módulo é isolado. A folha usa seletores globais sem escopo; a afirmação é contradita.
+**Interpretation:** Claims isolated module CSS. Stylesheet global unscoped selectors; claim contradicted.
 
 ### 104. start-all-modules.bat:2
 
-**Observação:** "Batch file to run all HDFC micro frontend modules and host app in separate terminals"
+**Observation:** "Batch file to run all HDFC micro frontend modules and host app in separate terminals"
 
-**Interpretação:** Afirma que o script sobe todos os módulos. Ele abre terminais para o host, sete remotes e o backend, mas não para accounts-module, cards-module e loans-module; a afirmação é contradita.
+**Interpretation:** Claims script starts all modules. Opens terminals for host, seven remotes/backend, excluding accounts-module, cards-module and loans-module; claim contradicted.
 
 ### 105. vro-uploads/DOCUMENTATION.md:9
 
-**Observação:** "Module Federation remote configuration"
+**Observation:** "Module Federation remote configuration"
 
-**Interpretação:** Afirma que vro-uploads tem configuração de remote. O plugin expõe `VroUploadsApp`; a afirmação é corroborada.
+**Interpretation:** Claims vro-uploads remote configuration. Plugin exposes `VroUploadsApp`; claim corroborated.
 
 ### 106. vro-uploads/DOCUMENTATION.md:15
 
-**Observação:** "Uses isolated styles so it does not affect the host or other modules"
+**Observation:** "Uses isolated styles so it does not affect the host or other modules"
 
-**Interpretação:** Afirma que os estilos não afetam o host nem outros módulos. Há seletores globais sem escopo; a afirmação é contradita.
+**Interpretation:** Claims styles affect neither host nor others. Global unscoped selectors present; claim contradicted.
 
 ### 107. vro-uploads/DOCUMENTATION.md:25
 
-**Observação:** "This module is loaded when the VRO Uploads route is selected from the host app."
+**Observation:** "This module is loaded when the VRO Uploads route is selected from the host app."
 
-**Interpretação:** Afirma que o host carrega vro-uploads numa rota. A rota monta `VroUploadsApp`; a afirmação é corroborada.
+**Interpretation:** Claims host loads vro-uploads through route. Route mounts `VroUploadsApp`; claim corroborated.
 
 ### 108. c7a7aa3 2026-05-03 (accounts-module/src/App.js, cards-module/src/App.js, loans-module/src/App.js, host-app/src/App.js, README.md); a1d2264 2026-05-25 (host-app/src/App.js, README.md)
 
-**Observação:** Os três assinantes do bus estão no primeiro commit e não mudam até o snapshot. host-app/src/App.js muda uma vez, em `a1d2264` ("testing"), e a versão de `c7a7aa3` não está disponível no clone.
+**Observation:** Three bus subscribers present in first commit, unchanged through snapshot. host-app/src/App.js changes once in `a1d2264` ("testing"); version from `c7a7aa3` unavailable in clone.
 
-**Interpretação:** Não se sabe se o bus é resto de um estágio em que comunicava ou se nunca foi conectado. A dúvida é só sobre o passado: no snapshot, o bus não liga nenhuma unidade composta.
+**Interpretation:** Unknown whether bus remnant of communicating stage or never connected. Uncertainty only about past: snapshot bus links no composed unit.
 
 ### 109. c7a7aa3 2026-05-03 (DOCUMENTATION.md, accounts-module/DOCUMENTATION.md, cards-module/DOCUMENTATION.md, loans-module/DOCUMENTATION.md, host-app/webpack.config.js, host-app/src/App.js, start-all-modules.bat); a1d2264 2026-05-25 (host-app/webpack.config.js, host-app/src/App.js, start-all-modules.bat, ai-agent-module)
 
-**Observação:** A documentação que diz que o host carrega accounts, cards e loans está no primeiro commit e nunca muda. host-app/webpack.config.js, host-app/src/App.js e start-all-modules.bat mudam só em `a1d2264`, que cria o ai-agent-module; as versões de `c7a7aa3` desses arquivos não estão disponíveis no clone.
+**Observation:** Documentation claiming host loads accounts/cards/loans in first commit, never changes. host-app/webpack.config.js, host-app/src/App.js and start-all-modules.bat change only in `a1d2264`, creating ai-agent-module; versions from `c7a7aa3` unavailable in clone.
 
-**Interpretação:** Não se sabe se o host de `c7a7aa3` declarava os três módulos e os perdeu, ou se nunca os declarou. A dúvida é só sobre o passado: no snapshot, o host não os carrega.
+**Interpretation:** Unknown whether host in `c7a7aa3` declared three modules then lost them or never declared them. Uncertainty only about past: snapshot host does not load them.
 
-### 110. c7a7aa3 2026-05-03 (DOCUMENTATION.md, webpack.config.js e src/styles.css de accounts-module, business-reports, cards-module, loans-module, maker-requests, model-portfolio-configuration, outgoing-api-logs e vro-uploads); a1d2264 2026-05-25 (outgoing-api-logs/src/styles.css, vro-uploads/src/styles.css)
+### 110. c7a7aa3 2026-05-03 (DOCUMENTATION.md, webpack.config.js and src/styles.css of accounts-module, business-reports, cards-module, loans-module, maker-requests, model-portfolio-configuration, outgoing-api-logs and vro-uploads); a1d2264 2026-05-25 (outgoing-api-logs/src/styles.css, vro-uploads/src/styles.css)
 
-**Observação:** Os `DOCUMENTATION.md` com as oito afirmações de isolamento e os `webpack.config.js` dos remotos, com `style-loader` e `css-loader`, estão no primeiro commit e não mudam. Só as folhas de outgoing-api-logs e vro-uploads mudam depois, em `a1d2264`.
+**Observation:** Files `DOCUMENTATION.md` with eight isolation claims and remote `webpack.config.js` files with `style-loader` and `css-loader` in first commit, unchanged. Only outgoing-api-logs/vro-uploads stylesheets change afterward in `a1d2264`.
 
-**Interpretação:** A promessa de isolamento e o CSS sem escopo coexistem desde a primeira presença observável; nenhum commit cria ou retira um mecanismo de escopo. O ponto está esclarecido.
+**Interpretation:** Isolation promise/unscoped CSS coexist since first observable presence; no commit creates/removes scoping mechanism. Point clarified.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.3 (accounts-module, Marcadores, Entrada e Build); 3.4.6 #1 (Artefatos); 3.4.7 #2, #20 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #21 |
-| 2 | 3.4.3 (ai-agent-module, Marcadores, Entrada e Build); 3.4.4 (host-app/src/App.js:54, Observação); 3.4.5 #7 (Configuração); 3.4.6 #2 (Artefatos); 3.4.7 #25 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #22; configura #38 |
-| 3 | 3.4.3 (business-reports, Marcadores, Entrada e Build); 3.4.4 (host-app/src/App.js:30, Observação); 3.4.5 #1 (Configuração); 3.4.6 #3 (Artefatos); 3.4.7 #3, #27 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #23; configura #32 |
-| 4 | 3.4.3 (cards-module, Marcadores, Entrada e Build); 3.4.6 #4 (Artefatos); 3.4.7 #4, #30 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #24 |
-| 5 | 3.4.3 (host-app, Marcadores, Entrada e Build); 3.4.4 (host-app/src/App.js:30, 34, 38, 42, 46, 50, 54, 6, Observação); 3.4.5 #1, #2, #3, #4, #5, #6, #7 (Configuração); 3.4.6 #5 (Artefatos); 3.4.7 #11, #14, #22, #23, #33, #34, #37, #44, #45 (Evidência) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #25; configura #32; configura #33; configura #34; configura #35; configura #36; configura #37; configura #38 |
-| 6 | 3.4.3 (incoming-api-logs, Marcadores, Entrada e Build); 3.4.4 (host-app/src/App.js:42, Observação); 3.4.5 #4 (Configuração); 3.4.6 #6 (Artefatos); 3.4.7 #5, #41 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #26; configura #35 |
-| 7 | 3.4.3 (loans-module, Marcadores, Entrada e Build); 3.4.6 #7 (Artefatos); 3.4.7 #6, #42 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #27 |
-| 8 | 3.4.3 (maker-requests, Marcadores, Entrada e Build); 3.4.4 (host-app/src/App.js:46, Observação); 3.4.5 #5 (Configuração); 3.4.6 #8 (Artefatos); 3.4.7 #7, #47 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #28; configura #36 |
-| 9 | 3.4.3 (model-portfolio-configuration, Marcadores, Entrada e Build); 3.4.4 (host-app/src/App.js:34, Observação); 3.4.5 #2 (Configuração); 3.4.6 #9 (Artefatos); 3.4.7 #8, #50 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #29; configura #33 |
-| 10 | 3.4.3 (outgoing-api-logs, Marcadores, Entrada e Build); 3.4.4 (host-app/src/App.js:38, Observação); 3.4.5 #3 (Configuração); 3.4.6 #10 (Artefatos); 3.4.7 #9, #53 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #30; configura #34 |
-| 11 | 3.4.3 (vro-uploads, Marcadores, Entrada e Build); 3.4.4 (host-app/src/App.js:50, Observação); 3.4.5 #6 (Configuração); 3.4.6 #11 (Artefatos); 3.4.7 #10, #56 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #31; configura #37 |
-| 12 | 3.4.4 (host-app/src/App.js:30) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #32 |
-| 13 | 3.4.4 (host-app/src/App.js:34) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #33 |
-| 14 | 3.4.4 (host-app/src/App.js:38) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #34 |
-| 15 | 3.4.4 (host-app/src/App.js:42) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #35 |
-| 16 | 3.4.4 (host-app/src/App.js:46) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #36 |
-| 17 | 3.4.4 (host-app/src/App.js:50) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #37 |
-| 18 | 3.4.4 (host-app/src/App.js:54) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #38 |
-| 19 | 3.4.4 (host-app/src/App.js:230) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #32; implementa #33; implementa #34; implementa #35; implementa #36; implementa #37; implementa #38 |
-| 20 | 3.4.4 (host-app/src/App.js:6) | 3 código | código-fonte | events | tecnológica | fraca | — |
-| 21 | 3.4.3 (accounts-module) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 22 | 3.4.3 (ai-agent-module) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 23 | 3.4.3 (business-reports) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 24 | 3.4.3 (cards-module) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 25 | 3.4.3 (host-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 26 | 3.4.3 (incoming-api-logs) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 27 | 3.4.3 (loans-module) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 28 | 3.4.3 (maker-requests) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 29 | 3.4.3 (model-portfolio-configuration) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 30 | 3.4.3 (outgoing-api-logs) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 31 | 3.4.3 (vro-uploads) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 32 | 3.4.5 #1 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #25; liga #23 |
-| 33 | 3.4.5 #2 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #25; liga #29 |
-| 34 | 3.4.5 #3 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #25; liga #30 |
-| 35 | 3.4.5 #4 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #25; liga #26 |
-| 36 | 3.4.5 #5 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #25; liga #28 |
-| 37 | 3.4.5 #6 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #25; liga #31 |
-| 38 | 3.4.5 #7 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #25; liga #22 |
-| 39 | 3.4.6 #1 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #21 |
-| 40 | 3.4.6 #2 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #22 |
-| 41 | 3.4.6 #3 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #23 |
-| 42 | 3.4.6 #4 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #24 |
-| 43 | 3.4.6 #5 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #25 |
-| 44 | 3.4.6 #6 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #26 |
-| 45 | 3.4.6 #7 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #27 |
-| 46 | 3.4.6 #8 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #28 |
-| 47 | 3.4.6 #9 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #29 |
-| 48 | 3.4.6 #10 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #30 |
-| 49 | 3.4.6 #11 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #31 |
-| 50 | 3.4.7 #1 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #21; corrobora #22; corrobora #23; corrobora #24; corrobora #25; corrobora #26; corrobora #27; corrobora #28; corrobora #29; corrobora #30; corrobora #31; corrobora #32; corrobora #33; corrobora #34; corrobora #35; corrobora #36; corrobora #37; corrobora #38 |
-| 51 | 3.4.7 #2 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #21; corrobora #1 |
-| 52 | 3.4.7 #3 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #23; corrobora #3 |
-| 53 | 3.4.7 #4 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #24; corrobora #4 |
-| 54 | 3.4.7 #5 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #26; corrobora #6 |
-| 55 | 3.4.7 #6 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #27; corrobora #7 |
-| 56 | 3.4.7 #7 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #28; corrobora #8 |
-| 57 | 3.4.7 #8 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #29; corrobora #9 |
-| 58 | 3.4.7 #9 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #30; corrobora #10 |
-| 59 | 3.4.7 #10 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #31; corrobora #11 |
-| 60 | 3.4.7 #11 | 7 documentação | documentação | module-federation | arquitetural | fraca | contradiz #5 |
-| 61 | 3.4.7 #12 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #21; corrobora #22; corrobora #23; corrobora #24; corrobora #25; corrobora #26; corrobora #27; corrobora #28; corrobora #29; corrobora #30; corrobora #31; corrobora #39; corrobora #40; corrobora #41; corrobora #42; corrobora #43; corrobora #44; corrobora #45; corrobora #46; corrobora #47; corrobora #48; corrobora #49 |
-| 62 | 3.4.7 #13 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #22 |
-| 63 | 3.4.7 #14 | 7 documentação | documentação | module-federation | tecnológica | fraca | corrobora #5; corrobora #32; corrobora #33; corrobora #34; corrobora #35; corrobora #36; corrobora #37; corrobora #38 |
-| 64 | 3.4.7 #15 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #21; corrobora #22; corrobora #23; corrobora #24; corrobora #25; corrobora #26; corrobora #27; corrobora #28; corrobora #29; corrobora #30; corrobora #31; corrobora #39; corrobora #40; corrobora #41; corrobora #42; corrobora #43; corrobora #44; corrobora #45; corrobora #46; corrobora #47; corrobora #48; corrobora #49 |
-| 65 | 3.4.7 #16 | 7 documentação | documentação | — | arquitetural | fraca | — |
-| 66 | 3.4.7 #17 | 7 documentação | documentação | events | arquitetural | fraca | contradiz #20; contradiz accounts-module/src/App.js:5-19, 38-48 |
-| 67 | 3.4.7 #18 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #34; corrobora #14; corrobora #19 |
-| 68 | 3.4.7 #19 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #39; corrobora #40; corrobora #41; corrobora #42; corrobora #43; corrobora #44; corrobora #45; corrobora #46; corrobora #47; corrobora #48; corrobora #49 |
-| 69 | 3.4.7 #20 | 7 documentação | documentação | module-federation | tecnológica | fraca | corrobora #1 |
-| 70 | 3.4.7 #21 | 7 documentação | documentação | — | arquitetural | fraca | contradiz accounts-module/src/App.js:1-2; contradiz accounts-module/src/styles.css:8-19; contradiz accounts-module/webpack.config.js:37-40 |
-| 71 | 3.4.7 #22 | 7 documentação | documentação | module-federation | arquitetural | fraca | contradiz #5; contradiz #19 |
-| 72 | 3.4.7 #23 | 7 documentação | comentário | events | arquitetural | fraca | contradiz #20; contradiz accounts-module/src/App.js:5-19, 46-48; contradiz #5 |
-| 73 | 3.4.7 #24 | 7 documentação | comentário | — | arquitetural | fraca | contradiz accounts-module/src/App.js:38-44; contradiz #20 |
-| 74 | 3.4.7 #25 | 7 documentação | documentação | module-federation | tecnológica | fraca | corrobora #2; corrobora #38 |
-| 75 | 3.4.7 #26 | 7 documentação | comentário | — | contexto | fraca | corrobora ai-agent-module/src/App.js:81-109 |
-| 76 | 3.4.7 #27 | 7 documentação | documentação | module-federation | tecnológica | fraca | corrobora #3 |
-| 77 | 3.4.7 #28 | 7 documentação | documentação | — | arquitetural | fraca | contradiz business-reports/src/styles.css:2-26; contradiz business-reports/webpack.config.js:37-40 |
-| 78 | 3.4.7 #29 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #32; corrobora #12; corrobora #19 |
-| 79 | 3.4.7 #30 | 7 documentação | documentação | module-federation | tecnológica | fraca | corrobora #4 |
-| 80 | 3.4.7 #31 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #24; corrobora cards-module/src/App.js:38-44; corrobora #42 |
-| 81 | 3.4.7 #32 | 7 documentação | documentação | — | arquitetural | fraca | contradiz cards-module/src/styles.css:8-19; contradiz cards-module/webpack.config.js:37-40 |
-| 82 | 3.4.7 #33 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #5; contradiz #19 |
-| 83 | 3.4.7 #34 | 7 documentação | comentário | events | arquitetural | fraca | contradiz #20; contradiz cards-module/src/App.js:5-19, 46-48; contradiz #5 |
-| 84 | 3.4.7 #35 | 7 documentação | comentário | — | arquitetural | fraca | contradiz cards-module/src/App.js:38-44; contradiz #20 |
-| 85 | 3.4.7 #36 | 7 documentação | documentação | — | arquitetural | fraca | corrobora host-app/src/App.js:3; corrobora host-app/src/styles.css:2-13; corrobora #19 |
-| 86 | 3.4.7 #37 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #5; corrobora #12; corrobora #13; corrobora #14; corrobora #15; corrobora #16; corrobora #17; corrobora #18 |
-| 87 | 3.4.7 #38 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #12; corrobora #13; corrobora #14; corrobora #15; corrobora #16; corrobora #17; corrobora #18; corrobora #19 |
-| 88 | 3.4.7 #39 | 7 documentação | comentário | events | tecnológica | fraca | corrobora #20 |
-| 89 | 3.4.7 #40 | 7 documentação | comentário | — | tecnológica | fraca | corrobora #12; corrobora #13; corrobora #14; corrobora #15; corrobora #16; corrobora #17; corrobora #18 |
-| 90 | 3.4.7 #41 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #35; corrobora #6; corrobora #15; corrobora #19 |
-| 91 | 3.4.7 #42 | 7 documentação | documentação | module-federation | tecnológica | fraca | corrobora #7 |
-| 92 | 3.4.7 #43 | 7 documentação | documentação | — | arquitetural | fraca | contradiz loans-module/src/App.js:1-51; contradiz loans-module/src/styles.css:8-19; contradiz loans-module/webpack.config.js:37-40 |
-| 93 | 3.4.7 #44 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #5; contradiz #19 |
-| 94 | 3.4.7 #45 | 7 documentação | comentário | events | arquitetural | fraca | contradiz #20; contradiz loans-module/src/App.js:5-19, 46-48; contradiz #5 |
-| 95 | 3.4.7 #46 | 7 documentação | comentário | — | arquitetural | fraca | contradiz loans-module/src/App.js:38-44; contradiz #20 |
-| 96 | 3.4.7 #47 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #8; corrobora #36 |
-| 97 | 3.4.7 #48 | 7 documentação | documentação | — | arquitetural | fraca | contradiz maker-requests/src/styles.css:2-26; contradiz maker-requests/webpack.config.js:37-40 |
-| 98 | 3.4.7 #49 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #36; corrobora #16; corrobora #19 |
-| 99 | 3.4.7 #50 | 7 documentação | documentação | module-federation | tecnológica | fraca | corrobora #9 |
-| 100 | 3.4.7 #51 | 7 documentação | documentação | — | arquitetural | fraca | contradiz model-portfolio-configuration/src/styles.css:2-26; contradiz model-portfolio-configuration/webpack.config.js:37-40 |
-| 101 | 3.4.7 #52 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #33; corrobora #13; corrobora #19 |
-| 102 | 3.4.7 #53 | 7 documentação | documentação | module-federation | tecnológica | fraca | corrobora #10 |
-| 103 | 3.4.7 #54 | 7 documentação | documentação | — | arquitetural | fraca | contradiz outgoing-api-logs/src/styles.css:2-12; contradiz outgoing-api-logs/webpack.config.js:37-40 |
-| 104 | 3.4.7 #55 | 7 documentação | comentário | — | arquitetural | fraca | contradiz start-all-modules.bat:4-12; contradiz #21; contradiz #24; contradiz #27 |
-| 105 | 3.4.7 #56 | 7 documentação | documentação | module-federation | tecnológica | fraca | corrobora #11 |
-| 106 | 3.4.7 #57 | 7 documentação | documentação | — | arquitetural | fraca | contradiz vro-uploads/src/styles.css:1-10; contradiz vro-uploads/webpack.config.js:37-40 |
-| 107 | 3.4.7 #58 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #37; corrobora #17; corrobora #19 |
-| 108 | 3.4.8 #1 | 8 histórico | histórico | events | tecnológica | fraca | explica #20; explica #66; explica #72; explica #73; explica #83; explica #84; explica #94; explica #95 |
-| 109 | 3.4.8 #2 | 8 histórico | histórico | — | arquitetural | fraca | explica #5; explica #60; explica #71; explica #82; explica #93; explica #104 |
-| 110 | 3.4.8 #3 | 8 histórico | histórico | — | arquitetural | fraca | explica #70; explica #77; explica #81; explica #92; explica #97; explica #100; explica #103; explica #106 |
+| 1 | 3.4.3 (accounts-module, Markers, Entry and Build); 3.4.6 #1 (Artifacts); 3.4.7 #2, #20 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #21 |
+| 2 | 3.4.3 (ai-agent-module, Markers, Entry and Build); 3.4.4 (host-app/src/App.js:54, Observation); 3.4.5 #7 (Configuration); 3.4.6 #2 (Artifacts); 3.4.7 #25 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #22; configures #38 |
+| 3 | 3.4.3 (business-reports, Markers, Entry and Build); 3.4.4 (host-app/src/App.js:30, Observation); 3.4.5 #1 (Configuration); 3.4.6 #3 (Artifacts); 3.4.7 #3, #27 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #23; configures #32 |
+| 4 | 3.4.3 (cards-module, Markers, Entry and Build); 3.4.6 #4 (Artifacts); 3.4.7 #4, #30 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #24 |
+| 5 | 3.4.3 (host-app, Markers, Entry and Build); 3.4.4 (host-app/src/App.js:30, 34, 38, 42, 46, 50, 54, 6, Observation); 3.4.5 #1, #2, #3, #4, #5, #6, #7 (Configuration); 3.4.6 #5 (Artifacts); 3.4.7 #11, #14, #22, #23, #33, #34, #37, #44, #45 (Evidence) | 2 configuration | configuration | module-federation | architectural | strong | configures #25; configures #32; configures #33; configures #34; configures #35; configures #36; configures #37; configures #38 |
+| 6 | 3.4.3 (incoming-api-logs, Markers, Entry and Build); 3.4.4 (host-app/src/App.js:42, Observation); 3.4.5 #4 (Configuration); 3.4.6 #6 (Artifacts); 3.4.7 #5, #41 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #26; configures #35 |
+| 7 | 3.4.3 (loans-module, Markers, Entry and Build); 3.4.6 #7 (Artifacts); 3.4.7 #6, #42 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #27 |
+| 8 | 3.4.3 (maker-requests, Markers, Entry and Build); 3.4.4 (host-app/src/App.js:46, Observation); 3.4.5 #5 (Configuration); 3.4.6 #8 (Artifacts); 3.4.7 #7, #47 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #28; configures #36 |
+| 9 | 3.4.3 (model-portfolio-configuration, Markers, Entry and Build); 3.4.4 (host-app/src/App.js:34, Observation); 3.4.5 #2 (Configuration); 3.4.6 #9 (Artifacts); 3.4.7 #8, #50 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #29; configures #33 |
+| 10 | 3.4.3 (outgoing-api-logs, Markers, Entry and Build); 3.4.4 (host-app/src/App.js:38, Observation); 3.4.5 #3 (Configuration); 3.4.6 #10 (Artifacts); 3.4.7 #9, #53 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #30; configures #34 |
+| 11 | 3.4.3 (vro-uploads, Markers, Entry and Build); 3.4.4 (host-app/src/App.js:50, Observation); 3.4.5 #6 (Configuration); 3.4.6 #11 (Artifacts); 3.4.7 #10, #56 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #31; configures #37 |
+| 12 | 3.4.4 (host-app/src/App.js:30) | 3 code | source code | module-federation | architectural | strong | implements #32 |
+| 13 | 3.4.4 (host-app/src/App.js:34) | 3 code | source code | module-federation | architectural | strong | implements #33 |
+| 14 | 3.4.4 (host-app/src/App.js:38) | 3 code | source code | module-federation | architectural | strong | implements #34 |
+| 15 | 3.4.4 (host-app/src/App.js:42) | 3 code | source code | module-federation | architectural | strong | implements #35 |
+| 16 | 3.4.4 (host-app/src/App.js:46) | 3 code | source code | module-federation | architectural | strong | implements #36 |
+| 17 | 3.4.4 (host-app/src/App.js:50) | 3 code | source code | module-federation | architectural | strong | implements #37 |
+| 18 | 3.4.4 (host-app/src/App.js:54) | 3 code | source code | module-federation | architectural | strong | implements #38 |
+| 19 | 3.4.4 (host-app/src/App.js:230) | 3 code | source code | module-federation | architectural | strong | implements #32; implements #33; implements #34; implements #35; implements #36; implements #37; implements #38 |
+| 20 | 3.4.4 (host-app/src/App.js:6) | 3 code | source code | events | technological | weak | — |
+| 21 | 3.4.3 (accounts-module) | 4 structure | directory | — | architectural | moderate | — |
+| 22 | 3.4.3 (ai-agent-module) | 4 structure | directory | — | architectural | moderate | — |
+| 23 | 3.4.3 (business-reports) | 4 structure | directory | — | architectural | moderate | — |
+| 24 | 3.4.3 (cards-module) | 4 structure | directory | — | architectural | moderate | — |
+| 25 | 3.4.3 (host-app) | 4 structure | directory | — | architectural | moderate | — |
+| 26 | 3.4.3 (incoming-api-logs) | 4 structure | directory | — | architectural | moderate | — |
+| 27 | 3.4.3 (loans-module) | 4 structure | directory | — | architectural | moderate | — |
+| 28 | 3.4.3 (maker-requests) | 4 structure | directory | — | architectural | moderate | — |
+| 29 | 3.4.3 (model-portfolio-configuration) | 4 structure | directory | — | architectural | moderate | — |
+| 30 | 3.4.3 (outgoing-api-logs) | 4 structure | directory | — | architectural | moderate | — |
+| 31 | 3.4.3 (vro-uploads) | 4 structure | directory | — | architectural | moderate | — |
+| 32 | 3.4.5 #1 | 5 composition | source code | module-federation | architectural | strong | links #25; links #23 |
+| 33 | 3.4.5 #2 | 5 composition | source code | module-federation | architectural | strong | links #25; links #29 |
+| 34 | 3.4.5 #3 | 5 composition | source code | module-federation | architectural | strong | links #25; links #30 |
+| 35 | 3.4.5 #4 | 5 composition | source code | module-federation | architectural | strong | links #25; links #26 |
+| 36 | 3.4.5 #5 | 5 composition | source code | module-federation | architectural | strong | links #25; links #28 |
+| 37 | 3.4.5 #6 | 5 composition | source code | module-federation | architectural | strong | links #25; links #31 |
+| 38 | 3.4.5 #7 | 5 composition | source code | module-federation | architectural | strong | links #25; links #22 |
+| 39 | 3.4.6 #1 | 6 build-deploy | configuration | — | architectural | moderate | publishes #21 |
+| 40 | 3.4.6 #2 | 6 build-deploy | configuration | — | architectural | moderate | publishes #22 |
+| 41 | 3.4.6 #3 | 6 build-deploy | configuration | — | architectural | moderate | publishes #23 |
+| 42 | 3.4.6 #4 | 6 build-deploy | configuration | — | architectural | moderate | publishes #24 |
+| 43 | 3.4.6 #5 | 6 build-deploy | configuration | — | architectural | moderate | publishes #25 |
+| 44 | 3.4.6 #6 | 6 build-deploy | configuration | — | architectural | moderate | publishes #26 |
+| 45 | 3.4.6 #7 | 6 build-deploy | configuration | — | architectural | moderate | publishes #27 |
+| 46 | 3.4.6 #8 | 6 build-deploy | configuration | — | architectural | moderate | publishes #28 |
+| 47 | 3.4.6 #9 | 6 build-deploy | configuration | — | architectural | moderate | publishes #29 |
+| 48 | 3.4.6 #10 | 6 build-deploy | configuration | — | architectural | moderate | publishes #30 |
+| 49 | 3.4.6 #11 | 6 build-deploy | configuration | — | architectural | moderate | publishes #31 |
+| 50 | 3.4.7 #1 | 7 documentation | documentation | — | architectural | weak | corroborates #21; corroborates #22; corroborates #23; corroborates #24; corroborates #25; corroborates #26; corroborates #27; corroborates #28; corroborates #29; corroborates #30; corroborates #31; corroborates #32; corroborates #33; corroborates #34; corroborates #35; corroborates #36; corroborates #37; corroborates #38 |
+| 51 | 3.4.7 #2 | 7 documentation | documentation | — | architectural | weak | corroborates #21; corroborates #1 |
+| 52 | 3.4.7 #3 | 7 documentation | documentation | — | architectural | weak | corroborates #23; corroborates #3 |
+| 53 | 3.4.7 #4 | 7 documentation | documentation | — | architectural | weak | corroborates #24; corroborates #4 |
+| 54 | 3.4.7 #5 | 7 documentation | documentation | — | architectural | weak | corroborates #26; corroborates #6 |
+| 55 | 3.4.7 #6 | 7 documentation | documentation | — | architectural | weak | corroborates #27; corroborates #7 |
+| 56 | 3.4.7 #7 | 7 documentation | documentation | — | architectural | weak | corroborates #28; corroborates #8 |
+| 57 | 3.4.7 #8 | 7 documentation | documentation | — | architectural | weak | corroborates #29; corroborates #9 |
+| 58 | 3.4.7 #9 | 7 documentation | documentation | — | architectural | weak | corroborates #30; corroborates #10 |
+| 59 | 3.4.7 #10 | 7 documentation | documentation | — | architectural | weak | corroborates #31; corroborates #11 |
+| 60 | 3.4.7 #11 | 7 documentation | documentation | module-federation | architectural | weak | contradicts #5 |
+| 61 | 3.4.7 #12 | 7 documentation | documentation | — | architectural | weak | corroborates #21; corroborates #22; corroborates #23; corroborates #24; corroborates #25; corroborates #26; corroborates #27; corroborates #28; corroborates #29; corroborates #30; corroborates #31; corroborates #39; corroborates #40; corroborates #41; corroborates #42; corroborates #43; corroborates #44; corroborates #45; corroborates #46; corroborates #47; corroborates #48; corroborates #49 |
+| 62 | 3.4.7 #13 | 7 documentation | documentation | — | architectural | weak | corroborates #22 |
+| 63 | 3.4.7 #14 | 7 documentation | documentation | module-federation | technological | weak | corroborates #5; corroborates #32; corroborates #33; corroborates #34; corroborates #35; corroborates #36; corroborates #37; corroborates #38 |
+| 64 | 3.4.7 #15 | 7 documentation | documentation | — | architectural | weak | corroborates #21; corroborates #22; corroborates #23; corroborates #24; corroborates #25; corroborates #26; corroborates #27; corroborates #28; corroborates #29; corroborates #30; corroborates #31; corroborates #39; corroborates #40; corroborates #41; corroborates #42; corroborates #43; corroborates #44; corroborates #45; corroborates #46; corroborates #47; corroborates #48; corroborates #49 |
+| 65 | 3.4.7 #16 | 7 documentation | documentation | — | architectural | weak | — |
+| 66 | 3.4.7 #17 | 7 documentation | documentation | events | architectural | weak | contradicts #20; contradicts accounts-module/src/App.js:5-19, 38-48 |
+| 67 | 3.4.7 #18 | 7 documentation | documentation | — | architectural | weak | corroborates #34; corroborates #14; corroborates #19 |
+| 68 | 3.4.7 #19 | 7 documentation | documentation | — | architectural | weak | corroborates #39; corroborates #40; corroborates #41; corroborates #42; corroborates #43; corroborates #44; corroborates #45; corroborates #46; corroborates #47; corroborates #48; corroborates #49 |
+| 69 | 3.4.7 #20 | 7 documentation | documentation | module-federation | technological | weak | corroborates #1 |
+| 70 | 3.4.7 #21 | 7 documentation | documentation | — | architectural | weak | contradicts accounts-module/src/App.js:1-2; contradicts accounts-module/src/styles.css:8-19; contradicts accounts-module/webpack.config.js:37-40 |
+| 71 | 3.4.7 #22 | 7 documentation | documentation | module-federation | architectural | weak | contradicts #5; contradicts #19 |
+| 72 | 3.4.7 #23 | 7 documentation | comment | events | architectural | weak | contradicts #20; contradicts accounts-module/src/App.js:5-19, 46-48; contradicts #5 |
+| 73 | 3.4.7 #24 | 7 documentation | comment | — | architectural | weak | contradicts accounts-module/src/App.js:38-44; contradicts #20 |
+| 74 | 3.4.7 #25 | 7 documentation | documentation | module-federation | technological | weak | corroborates #2; corroborates #38 |
+| 75 | 3.4.7 #26 | 7 documentation | comment | — | context | weak | corroborates ai-agent-module/src/App.js:81-109 |
+| 76 | 3.4.7 #27 | 7 documentation | documentation | module-federation | technological | weak | corroborates #3 |
+| 77 | 3.4.7 #28 | 7 documentation | documentation | — | architectural | weak | contradicts business-reports/src/styles.css:2-26; contradicts business-reports/webpack.config.js:37-40 |
+| 78 | 3.4.7 #29 | 7 documentation | documentation | — | architectural | weak | corroborates #32; corroborates #12; corroborates #19 |
+| 79 | 3.4.7 #30 | 7 documentation | documentation | module-federation | technological | weak | corroborates #4 |
+| 80 | 3.4.7 #31 | 7 documentation | documentation | — | architectural | weak | corroborates #24; corroborates cards-module/src/App.js:38-44; corroborates #42 |
+| 81 | 3.4.7 #32 | 7 documentation | documentation | — | architectural | weak | contradicts cards-module/src/styles.css:8-19; contradicts cards-module/webpack.config.js:37-40 |
+| 82 | 3.4.7 #33 | 7 documentation | documentation | — | architectural | weak | contradicts #5; contradicts #19 |
+| 83 | 3.4.7 #34 | 7 documentation | comment | events | architectural | weak | contradicts #20; contradicts cards-module/src/App.js:5-19, 46-48; contradicts #5 |
+| 84 | 3.4.7 #35 | 7 documentation | comment | — | architectural | weak | contradicts cards-module/src/App.js:38-44; contradicts #20 |
+| 85 | 3.4.7 #36 | 7 documentation | documentation | — | architectural | weak | corroborates host-app/src/App.js:3; corroborates host-app/src/styles.css:2-13; corroborates #19 |
+| 86 | 3.4.7 #37 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #5; corroborates #12; corroborates #13; corroborates #14; corroborates #15; corroborates #16; corroborates #17; corroborates #18 |
+| 87 | 3.4.7 #38 | 7 documentation | documentation | — | architectural | weak | corroborates #12; corroborates #13; corroborates #14; corroborates #15; corroborates #16; corroborates #17; corroborates #18; corroborates #19 |
+| 88 | 3.4.7 #39 | 7 documentation | comment | events | technological | weak | corroborates #20 |
+| 89 | 3.4.7 #40 | 7 documentation | comment | — | technological | weak | corroborates #12; corroborates #13; corroborates #14; corroborates #15; corroborates #16; corroborates #17; corroborates #18 |
+| 90 | 3.4.7 #41 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #35; corroborates #6; corroborates #15; corroborates #19 |
+| 91 | 3.4.7 #42 | 7 documentation | documentation | module-federation | technological | weak | corroborates #7 |
+| 92 | 3.4.7 #43 | 7 documentation | documentation | — | architectural | weak | contradicts loans-module/src/App.js:1-51; contradicts loans-module/src/styles.css:8-19; contradicts loans-module/webpack.config.js:37-40 |
+| 93 | 3.4.7 #44 | 7 documentation | documentation | — | architectural | weak | contradicts #5; contradicts #19 |
+| 94 | 3.4.7 #45 | 7 documentation | comment | events | architectural | weak | contradicts #20; contradicts loans-module/src/App.js:5-19, 46-48; contradicts #5 |
+| 95 | 3.4.7 #46 | 7 documentation | comment | — | architectural | weak | contradicts loans-module/src/App.js:38-44; contradicts #20 |
+| 96 | 3.4.7 #47 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #8; corroborates #36 |
+| 97 | 3.4.7 #48 | 7 documentation | documentation | — | architectural | weak | contradicts maker-requests/src/styles.css:2-26; contradicts maker-requests/webpack.config.js:37-40 |
+| 98 | 3.4.7 #49 | 7 documentation | documentation | — | architectural | weak | corroborates #36; corroborates #16; corroborates #19 |
+| 99 | 3.4.7 #50 | 7 documentation | documentation | module-federation | technological | weak | corroborates #9 |
+| 100 | 3.4.7 #51 | 7 documentation | documentation | — | architectural | weak | contradicts model-portfolio-configuration/src/styles.css:2-26; contradicts model-portfolio-configuration/webpack.config.js:37-40 |
+| 101 | 3.4.7 #52 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #33; corroborates #13; corroborates #19 |
+| 102 | 3.4.7 #53 | 7 documentation | documentation | module-federation | technological | weak | corroborates #10 |
+| 103 | 3.4.7 #54 | 7 documentation | documentation | — | architectural | weak | contradicts outgoing-api-logs/src/styles.css:2-12; contradicts outgoing-api-logs/webpack.config.js:37-40 |
+| 104 | 3.4.7 #55 | 7 documentation | comment | — | architectural | weak | contradicts start-all-modules.bat:4-12; contradicts #21; contradicts #24; contradicts #27 |
+| 105 | 3.4.7 #56 | 7 documentation | documentation | module-federation | technological | weak | corroborates #11 |
+| 106 | 3.4.7 #57 | 7 documentation | documentation | — | architectural | weak | contradicts vro-uploads/src/styles.css:1-10; contradicts vro-uploads/webpack.config.js:37-40 |
+| 107 | 3.4.7 #58 | 7 documentation | documentation | — | architectural | weak | corroborates #37; corroborates #17; corroborates #19 |
+| 108 | 3.4.8 #1 | 8 history | history | events | technological | weak | explains #20; explains #66; explains #72; explains #73; explains #83; explains #84; explains #94; explains #95 |
+| 109 | 3.4.8 #2 | 8 history | history | — | architectural | weak | explains #5; explains #60; explains #71; explains #82; explains #93; explains #104 |
+| 110 | 3.4.8 #3 | 8 history | history | — | architectural | weak | explains #70; explains #77; explains #81; explains #92; explains #97; explains #100; explains #103; explains #106 |
 
-## Resumo
+## Summary
 
-Observações: 110. Dimensões (tecnologia: 0, configuração: 11, código: 9, estrutura: 11, composição: 7, build-deploy: 11, documentação: 58, histórico: 3). Força (forte: 16, moderada: 32, fraca: 62, ambígua: 0). Evidência (tecnológica: 23, arquitetural: 86, contexto: 1).
+Observations: 110. Dimensions (technology: 0, configuration: 11, code: 9, structure: 11, composition: 7, build-deploy: 11, documentation: 58, history: 3). Strength (strong: 16, moderate: 32, weak: 62, ambiguous: 0). Evidence (technological: 23, architectural: 86, context: 1).
+

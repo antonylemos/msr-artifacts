@@ -20,58 +20,58 @@ annotation:
 
 # 236 — dipanaditya0022-byte/AP-Payment-Fraud-Sentinel
 
-## Contexto
+## Context
 
-“AP Payment Fraud Sentinel”: projeto de hackathon RocketRide (`README.md:6`, `89–99`). Tem um motor Python de risco e investigação de fraudes em pagamentos (`app/`), um pipeline RocketRide (`pipelines/fraud_sentinel.pipe`) e uma UI React em `apps/ap-payment-fraud-sentinel-ui/`.
+“AP Payment Fraud Sentinel”: RocketRide hackathon project (`README.md:6`, `89–99`). It has a Python payment fraud risk and investigation engine (`app/`), a RocketRide pipeline (`pipelines/fraud_sentinel.pipe`) and a React UI in `apps/ap-payment-fraud-sentinel-ui/`.
 
-A UI é uma “RocketRide app” (`apps/ap-payment-fraud-sentinel-ui/package.json:5–20`). É construída como remoto Module Federation que expõe `./AppDescriptor` para o shell da plataforma RocketRide (`rsbuild.config.mts:12–48`; `src/AppDescriptor.ts:6–27`). Os arquivos de configuração e de entrada trazem o cabeçalho “Copyright (c) 2026 Aparavi Software AG” (`rsbuild.config.mts:1–4`), o que indica o scaffold do App Builder da plataforma (`apps/ap-payment-fraud-sentinel-ui/README.md:9–13`). O shell não está no repositório. O nome do repositório não é usado como evidência.
+The UI is a “RocketRide app” (`apps/ap-payment-fraud-sentinel-ui/package.json:5–20`). It is built as a Module Federation remote exposing `./AppDescriptor` to the RocketRide platform shell (`rsbuild.config.mts:12–48`; `src/AppDescriptor.ts:6–27`). Configuration and entry files have the header “Copyright (c) 2026 Aparavi Software AG” (`rsbuild.config.mts:1–4`), indicating the platform’s App Builder scaffold (`apps/ap-payment-fraud-sentinel-ui/README.md:9–13`). The shell is not in the repository. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:237` registra rank 236, ID 1346779318, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:237` records rank 236, ID 1346779318, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:237` registra a estratégia `technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:36092` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:36099` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:237` records strategy `technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:36092` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:36099` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna o mesmo hit em cada rodada, do endpoint `code`:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same hit in each round, from endpoint `code`:
 
-| Consulta (`q`) | Subconsulta / consulta efetiva | `path` | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery / effective query | `path` | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `technology-module-federation-package-code`: `"@module-federation" filename:package.json` | `technology-module-federation-package-code#size:1000..1149` / `"@module-federation" filename:package.json size:1000..1149` | `apps/ap-payment-fraud-sentinel-ui/package.json` | 2026-10-07T18:41:50.721Z / 2026-10-08T15:39:47.769Z |
 
-O arquivo tem 1.118 bytes no SHA, dentro da faixa, e declara `"@module-federation/rsbuild-plugin": "2.5.1"` (`:31`). Os metadados do hit de código vêm vazios. A entrada é só por código; o README não menciona micro-frontends nem Module Federation.
+The file has 1.118 bytes at the SHA, within the range, and declares `"@module-federation/rsbuild-plugin": "2.5.1"` (`:31`). Code hit metadata is empty. Entry is through code only; the README mentions neither micro-frontends nor Module Federation.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 44 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. São o backend Python em `app/` (com testes), `pipelines/fraud_sentinel.pipe`, `data/input/` e uma única aplicação de UI em `apps/ap-payment-fraud-sentinel-ui/`. | contexto |
-| Configuração (remoto) | `apps/ap-payment-fraud-sentinel-ui/rsbuild.config.mts:12`: “Module Federation remote: the shell loads ./AppDescriptor at runtime.” `:19–48`: `pluginModuleFederation({ name: moduleId, filename: 'remoteEntry.js', exposes: { './AppDescriptor': './src/AppDescriptor.ts' }, runtime: false, shareStrategy: 'loaded-first', shared: react, react-dom, 'shell', 'rocketride' })`. O comentário de `:24–26` diz que o runtime de federação é fornecido pelo host (“the shell”). | forte |
-| Contrato com a plataforma | `package.json:7–20`: `appManifest` com `id`, `publisher`, `projectId` e categorias da loja. `src/AppDescriptor.ts:6–27`: “the one module this app exposes to the RocketRide shell”. `ap-payment-fraud-sentinel.rrapp:1–3`: arquivo do App Builder. Os singletons `shell` e `rocketride` (`rsbuild.config.mts:38–41`) são pacotes da plataforma. | forte |
-| Host | O shell RocketRide é da plataforma (terceiro) e não está no snapshot. Nenhuma outra unidade frontend do projeto é referenciada. | contrária |
-| Código-fonte (fronteiras) | `src/App.tsx:10–18`: imports só de componentes e dados locais; nenhum `../..` em `apps/`. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 44 entries, all regular files `100644`; zero symlinks and zero gitlinks. These are the Python backend in `app/` (with tests), `pipelines/fraud_sentinel.pipe`, `data/input/` and a single UI application in `apps/ap-payment-fraud-sentinel-ui/`. | context |
+| Configuration (remote) | `apps/ap-payment-fraud-sentinel-ui/rsbuild.config.mts:12`: “Module Federation remote: the shell loads ./AppDescriptor at runtime.” `:19–48`: `pluginModuleFederation({ name: moduleId, filename: 'remoteEntry.js', exposes: { './AppDescriptor': './src/AppDescriptor.ts' }, runtime: false, shareStrategy: 'loaded-first', shared: react, react-dom, 'shell', 'rocketride' })`. The comment at `:24–26` says the federation runtime is provided by the host (“the shell”). | strong |
+| Platform contract | `package.json:7–20`: `appManifest` with `id`, `publisher`, `projectId` and store categories. `src/AppDescriptor.ts:6–27`: “the one module this app exposes to the RocketRide shell”. `ap-payment-fraud-sentinel.rrapp:1–3`: App Builder file. Singletons `shell` and `rocketride` (`rsbuild.config.mts:38–41`) are platform packages. | strong |
+| Host | The RocketRide shell belongs to the platform (third party) and is not in the snapshot. No other frontend unit of the project is referenced. | contrary |
+| Source code (boundaries) | `src/App.tsx:10–18`: imports only local components and data; no `../..` in `apps/`. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 12 commits, 1 merge (`6f01561`), todos em 2026-08-26. São 9 de Aditya (e-mail local de máquina) e 3 de Shivadarshan-HM (e-mail institucional). A raiz é `865bda7` (“chore: initialize AP Payment Fraud Sentinel”); `dbbca69` (Shivadarshan-HM) adiciona o frontend; o SHA `fddf46a` (“Integrate frontend with backend API”) é o HEAD de `main`. O branch `origin/frontend-dashboard` tem 2 commits além de `main` e não foi considerado. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 12 commits, 1 merge (`6f01561`), all on 2026-08-26. There are 9 by Aditya (local machine email) and 3 by Shivadarshan-HM (institutional email). The root is `865bda7` (“chore: initialize AP Payment Fraud Sentinel”); `dbbca69` (Shivadarshan-HM) adds the frontend; SHA `fddf46a` (“Integrate frontend with backend API”) is HEAD of `main`. Branch `origin/frontend-dashboard` has 2 commits beyond `main` and was not considered. No historical blob was read and there was no missing object.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend; a configuração de federação só tem `exposes`, sem referenciar outra unidade do projeto. |
-| Q2 | Yes | A UI tem entrada, build e porta próprios (`package.json:21–25`; `rsbuild.config.mts:64`, `78–79`). |
-| Q3 | Undetermined | O host é o shell da plataforma RocketRide, não observável (`src/AppDescriptor.ts:7–9`). |
-| Q4 | Undetermined | Mecanismo preparado do lado do remoto; a conexão é feita pela plataforma. |
-| Q5 | No | Extensão de uma plataforma de terceiros carregada por seu shell, não parte de uma aplicação decomposta pelo autor. |
+| Q1 | No | A single frontend unit; the federation configuration has only `exposes`, without referencing another project unit. |
+| Q2 | Yes | The UI has its own entry point, build and port (`package.json:21–25`; `rsbuild.config.mts:64`, `78–79`). |
+| Q3 | Undetermined | The host is the RocketRide platform shell, not observable (`src/AppDescriptor.ts:7–9`). |
+| Q4 | Undetermined | Mechanism prepared on the remote side; connection is made by the platform. |
+| Q5 | No | Extension of a third-party platform loaded by its shell, not part of an application decomposed by the author. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pelo precedente final 037: pela letra do checklist seria MFE-unit (remoto MF preparado para host externo), mas o host é a UI de uma plataforma de terceiros e o MF é o mecanismo oficial de extensão dela. O vetor é o de 037 (`q1: no`, `q2: yes`, `q3/q4: undetermined`, `q5: no`).
-- Difere dos rascunhos 161/189/222, em que a plataforma era da própria organização do titular (`review`). Aqui a plataforma é de terceiros (Aparavi/RocketRide), e a configuração vem do scaffold dela, como no caso de gerador (075/081/094/105).
-- `approaches: []` (como 037), `ui_technologies: [react]`, `build_tools: [rsbuild]`, `frontend_units: 1`, `unit_organization: single-unit`, `repo_type: example` (projeto de hackathon com dados de demonstração em `src/mockData.ts`).
-- Não há decisão aberta.
+- `Non-MFE` under final precedent 037: under the literal checklist it would be MFE-unit (MF remote prepared for an external host), but the host is a third-party platform UI and MF is its official extension mechanism. The vector is that of 037 (`q1: no`, `q2: yes`, `q3/q4: undetermined`, `q5: no`).
+- It differs from drafts 161/189/222, in which the platform belonged to the owner’s own organization (`review`). Here the platform is third-party (Aparavi/RocketRide), and the configuration comes from its scaffold, as in the generator case (075/081/094/105).
+- `approaches: []` (as in 037), `ui_technologies: [react]`, `build_tools: [rsbuild]`, `frontend_units: 1`, `unit_organization: single-unit`, `repo_type: example` (hackathon project with demonstration data in `src/mockData.ts`).
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** o scaffold de apps RocketRide usa Module Federation como mecanismo de plugin; repositórios de hackathon dessa plataforma casam a busca de código por `@module-federation`.
-- **Protocolo (busca):** entrada só por busca de código no `package.json` da UI. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ1 (misleading signals):** the RocketRide app scaffold uses Module Federation as a plugin mechanism; hackathon repositories on this platform match code search for `@module-federation`.
+- **Protocol (search):** entry only through code search in the UI `package.json`. Eligibility changes from `unknown` (001) to `pass` (002).

@@ -20,85 +20,85 @@ annotation:
 
 # 262 — edi2410/master-thesis-microfrontend-vs-monolith
 
-## Contexto
+## Context
 
-Repositório-raiz de uma dissertação de mestrado sobre a migração da plataforma eSUSTAV de um monólito React/Vite para Webpack 5 Module Federation num monorepo Nx (`README.md:1–5`, `13`). O próprio README o descreve como “thesis root”, que referencia o monólito e o projeto MFE como submódulos (`README.md:73`, `87–88`).
+Root repository of a master’s thesis about migration of the eSUSTAV platform from a React/Vite monolith to Webpack 5 Module Federation in an Nx monorepo (`README.md:1–5`, `13`). The README itself describes it as “thesis root”, referencing the monolith and MFE project as submodules (`README.md:73`, `87–88`).
 
-No snapshot há só o texto da dissertação (PDF), o tema submetido, o README e artefatos de medição: logs de build e relatórios Lighthouse. O código das duas aplicações está apenas nos gitlinks, cujos commits não estão no clone; os submódulos não foram inicializados e seu código é declarado proprietário (`README.md:194`). O nome do repositório não é usado como evidência.
+The snapshot contains only the thesis text (PDF), submitted topic, README and measurement artifacts: build logs and Lighthouse reports. Code for both applications is only in gitlinks, whose commits are not in the clone; submodules were not initialized and their code is declared proprietary (`README.md:194`). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:263` registra rank 262, ID 1223459154, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Os JSON do Lighthouse foram lidos em memória a partir dos blobs. Não houve instalação, build, execução, inicialização de submódulos ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:263` records rank 262, ID 1223459154, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. Lighthouse JSONs were read in memory from blobs. There was no installation, build, execution, submodule initialization or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:263` registra as estratégias `terminology;technology` e elegibilidade `unknown`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:29186` e `data/discovery/mfe-round-002/candidates.csv:29192`, ambos com `unknown`. As regras registram `push_since_threshold` e `activity_incomplete`.
+`data/samples/mfe-sample-001/sample.csv:263` records strategies `terminology;technology` and eligibility `unknown`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:29186` and `data/discovery/mfe-round-002/candidates.csv:29192`, both with `unknown`. Rules record `push_since_threshold` and `activity_incomplete`.
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos cinco hits em cada rodada, todos do endpoint `repositories` e com `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same five hits in each round, all from endpoint `repositories` and with an empty `path`:
 
-| Consulta (`q`) | Subconsulta | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Collection 001 / 002 (UTC) |
 |---|---|---|
-| `terminology-topic-microfrontends`: `topic:microfrontends` | (sem partição) | 2026-10-07T18:18:43.496Z / 2026-10-08T15:34:28.993Z |
+| `terminology-topic-microfrontends`: `topic:microfrontends` | (no partition) | 2026-10-07T18:18:43.496Z / 2026-10-08T15:34:28.993Z |
 | `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | `…#created:2026-04` | 2026-10-07T20:32:59.442Z / 2026-10-08T15:42:01.187Z |
 | `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | `…#created:2026-04` | 2026-10-07T22:12:18.488Z / 2026-10-08T15:49:34.133Z |
-| `technology-topic-module-federation`: `topic:module-federation` | (sem partição) | 2026-10-07T23:13:42.957Z / 2026-10-08T16:11:12.560Z |
+| `technology-topic-module-federation`: `topic:module-federation` | (no partition) | 2026-10-07T23:13:42.957Z / 2026-10-08T16:11:12.560Z |
 | `technology-module-federation-repositories`: `"module federation" in:name,description,readme` | `…#created:2026-04` | 2026-10-07T23:25:04.169Z / 2026-10-08T16:17:43.049Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01`; as particionadas também acrescentam `created:2026-04-01..2026-04-30`.
+The effective queries append `pushed:>=2025-04-01`; partitioned queries also append `created:2026-04-01..2026-04-30`.
 
-Metadados do hit:
-- a descrição repete `README.md:5`;
-- 14 tópicos, entre eles `microfrontends`, `module-federation`, `nx-monorepo`, `webpack-5` e `react`;
-- linguagem nula, `fork: false`, tamanho 3.582;
-- criação em 2026-04-28T10:47:03Z, push em 2026-04-29T13:50:50Z.
+Hit metadata:
+- description repeats `README.md:5`;
+- 14 topics, including `microfrontends`, `module-federation`, `nx-monorepo`, `webpack-5` and `react`;
+- null language, `fork: false`, size 3.582;
+- created at 2026-04-28T10:47:03Z, pushed at 2026-04-29T13:50:50Z.
 
-Grafias:
-- **Tópicos:** `microfrontends` e `module-federation` estão nos tópicos.
-- **`microfrontend`:** está em `README.md:5` (“…Webpack 5 Module Federation microfrontend architecture using an Nx monorepo”) e `README.md:13`, além da descrição.
-- **`"module federation"`:** está em `README.md:5`, `13` e `115`, além da descrição.
-- **`microfrontends`:** o plural não aparece literalmente no README nem na descrição. Esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+Spellings:
+- **Topics:** `microfrontends` and `module-federation` are among the topics.
+- **`microfrontend`:** present in `README.md:5` (“…Webpack 5 Module Federation microfrontend architecture using an Nx monorepo”) and `README.md:13`, as well as the description.
+- **`"module federation"`:** present in `README.md:5`, `13` and `115`, as well as the description.
+- **`microfrontends`:** the plural does not appear literally in the README or description. This hit depends on GitHub search text processing, which is not recorded.
 
-O README entrou em `6f13ac2` (2026-04-28) e não mudou no SHA, que só altera o PDF. O README é anterior às coletas de outubro de 2026, portanto o README do SHA não é posterior às buscas.
+The README entered in `6f13ac2` (2026-04-28) and did not change at the SHA, which only changes the PDF. The README predates the October 2026 collections, so the README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 19 entradas, 17 arquivos regulares `100644`, zero symlinks e dois gitlinks `160000`: `dev-esustav-mfe` (`0dc0f71`) e `dev-esustav-public` (`5b8edcc`), declarados em `.gitmodules:1–6` com URLs SSH de outros repositórios do autor. Os commits dos gitlinks não estão no clone (`git cat-file` falha) e os diretórios estão vazios. Não há `package.json`, configuração de build nem código-fonte no snapshot. Os dois `blog_post_*.md` listados em `README.md:84–85` não existem no tree. | contexto |
-| Documentação (arquitetura) | `README.md:42–52`: shell em 3000 e seis remotos (portas 3001–3006), cada um expondo `./App` via Module Federation. `README.md:128–131`: decisões sobre `BrowserRouter` só no shell e `@esustav/shared`, `react`, `react-dom` e `react-router-dom` compartilhados como singletons. É descrição, não configuração. | fraca |
-| Artefato de build | `measurements/build_mfe_cold_1.log:2`, `286`: `nx` executa `build` em 8 projetos (shared, shell e seis remotos). Cada remoto emite `remoteEntry.js` (`:30`, `109`, `149`, `185`, `224`, `259`), com `webpack 5.105.4` (`:53`). | moderada |
-| Artefato de runtime | `measurements/lighthouse_mfe_run{1,2,3}.json` (leitura do audit `network-requests`): página `http://localhost:5173/` (2026-03-28) que requisita `remoteEntry.js` em `localhost:3001` a `3006`, além de chunks de `3006`. `lighthouse_monolith_run1.json` (`localhost:4173`) não tem `remoteEntry`. | moderada |
-| Procedimento | `measurements/measurement_guide.md:546–560`: sobe shell (5173) e remotos (3001–3006). `:690–709`: implantação independente via `docker-compose` reconstruindo só o container `esustav_einfo`. `measurements/baseline_results.md:67–78`, `98–102`: tamanho de `remoteEntry.js` por remoto e H4 “PASS”. São relatos do autor sobre código ausente do snapshot. | fraca |
+| Structure | `git ls-tree -r` at the SHA: 19 entries, 17 regular files `100644`, zero symlinks and two gitlinks `160000`: `dev-esustav-mfe` (`0dc0f71`) and `dev-esustav-public` (`5b8edcc`), declared in `.gitmodules:1–6` with SSH URLs of other author repositories. Gitlink commits are not in the clone (`git cat-file` fails) and directories are empty. There is no `package.json`, build configuration or source code in the snapshot. The two `blog_post_*.md` listed in `README.md:84–85` do not exist in the tree. | context |
+| Documentation (architecture) | `README.md:42–52`: shell on 3000 and six remotes (ports 3001–3006), each exposing `./App` through Module Federation. `README.md:128–131`: decisions about `BrowserRouter` only in the shell and `@esustav/shared`, `react`, `react-dom` and `react-router-dom` shared as singletons. This is description, not configuration. | weak |
+| Build artifact | `measurements/build_mfe_cold_1.log:2`, `286`: `nx` executes `build` in 8 projects (shared, shell and six remotes). Each remote emits `remoteEntry.js` (`:30`, `109`, `149`, `185`, `224`, `259`), with `webpack 5.105.4` (`:53`). | moderate |
+| Runtime artifact | `measurements/lighthouse_mfe_run{1,2,3}.json` (reading the `network-requests` audit): page `http://localhost:5173/` (2026-03-28) requesting `remoteEntry.js` from `localhost:3001` through `3006`, plus chunks from `3006`. `lighthouse_monolith_run1.json` (`localhost:4173`) has no `remoteEntry`. | moderate |
+| Procedure | `measurements/measurement_guide.md:546–560`: starts shell (5173) and remotes (3001–3006). `:690–709`: independent deployment through `docker-compose` rebuilding only container `esustav_einfo`. `measurements/baseline_results.md:67–78`, `98–102`: `remoteEntry.js` size per remote and H4 “PASS”. These are author reports about code absent from the snapshot. | weak |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 3 commits lineares, nenhum merge, todos de Edi Graovac:
-- `e463915` (2026-04-28, “first commit”): `.gitmodules`, gitlinks, `measurements/` e `topic_description.md`;
-- `6f13ac2` (“readme”): README e PDF;
-- o SHA `d2b979d` (2026-04-29, “readme”): altera só o PDF.
+Non-shallow clone; 3 linear commits, no merges, all by Edi Graovac:
+- `e463915` (2026-04-28, “first commit”): `.gitmodules`, gitlinks, `measurements/` and `topic_description.md`;
+- `6f13ac2` (“readme”): README and PDF;
+- SHA `d2b979d` (2026-04-29, “readme”): changes only the PDF.
 
-Só existe o branch `main`. Nenhum objeto dos submódulos está disponível. Nada foi buscado; nenhum blob histórico foi lido além do tree do SHA.
+Only branch `main` exists. No submodule object is available. Nothing was fetched; no historical blob was read beyond the SHA tree.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | O repositório referencia, por gitlink, o projeto MFE (`.gitmodules:4–6`). Os artefatos registram 7 aplicações (shell e seis remotos) e uma biblioteca compartilhada (`build_mfe_cold_1.log:2`). |
-| Q2 | Undetermined | Builds separados por projeto (`nx run <app>:build`) e containers próprios são relatados, mas o código e a configuração das unidades não estão no snapshot para verificar separação ou imports entre unidades. |
-| Q3 | Undetermined | O registro Lighthouse mostra uma página que busca os `remoteEntry.js` dos seis remotos, mas o código do host não está no snapshot. |
-| Q4 | Undetermined | Module Federation aparece em logs de build e de rede, não em configuração observável. Pelo critério, “a declared dependency alone is No” e “a configuration whose actual use is unclear is Undetermined”; aqui não há configuração no snapshot, só artefatos. |
-| Q5 | Undetermined | Nenhuma resposta No; Q2–Q4 dependem de código em submódulos indisponíveis. |
+| Q1 | Yes | The repository references the MFE project through a gitlink (`.gitmodules:4–6`). Artifacts record 7 applications (shell and six remotes) and a shared library (`build_mfe_cold_1.log:2`). |
+| Q2 | Undetermined | Separate builds per project (`nx run <app>:build`) and own containers are reported, but unit code and configuration are not in the snapshot to verify separation or imports between units. |
+| Q3 | Undetermined | The Lighthouse record shows a page fetching `remoteEntry.js` from the six remotes, but host code is not in the snapshot. |
+| Q4 | Undetermined | Module Federation appears in build and network logs, not observable configuration. Under the criterion, “a declared dependency alone is No” and “a configuration whose actual use is unclear is Undetermined”; here there is no configuration in the snapshot, only artifacts. |
+| Q5 | Undetermined | No No answer; Q2–Q4 depend on code in unavailable submodules. |
 
-## Motivo
+## Rationale
 
-- `Uncertain` pela regra “No question is No, but at least one is Undetermined”, com `status: review`.
-- **Comparação:** como em 223 (gitlinks sem objetos no clone) e 103 (configuração não resolvível no snapshot), a implementação está fora do que pode ser lido. Diferentemente dos perfis 011/064/068/073/077/101/111 e do conteúdo 023/075/081/094/105, porém, há artefatos de build e de runtime produzidos por uma composição Module Federation. Não chega a ser cadeia completa como em 076/084/096/106/109, porque nada da configuração está no snapshot.
-- **Campos:** derivados dos artefatos e da descrição. `approaches: [module-federation]`, `ui_technologies: [react]` (`README.md:62`), `build_tools: [webpack]` (`build_mfe_cold_1.log:26`, `53`), `frontend_units: 7` (shell e seis remotos; a biblioteca `shared` não é contada), `unit_organization: monorepo` (Nx dentro do submódulo MFE, `README.md:61`), `repo_type: other` (repositório-raiz de dissertação com dados de medição).
+- `Uncertain` under the rule “No question is No, but at least one is Undetermined”, with `status: review`.
+- **Comparison:** as in 223 (gitlinks without objects in the clone) and 103 (configuration unresolvable in the snapshot), implementation is outside what can be read. Unlike profiles 011/064/068/073/077/101/111 and content 023/075/081/094/105, however, there are build and runtime artifacts produced by Module Federation composition. It does not reach a complete chain as in 076/084/096/106/109, because none of the configuration is in the snapshot.
+- **Fields:** derived from artifacts and description. `approaches: [module-federation]`, `ui_technologies: [react]` (`README.md:62`), `build_tools: [webpack]` (`build_mfe_cold_1.log:26`, `53`), `frontend_units: 7` (shell and six remotes; library `shared` is not counted), `unit_organization: monorepo` (Nx within the MFE submodule, `README.md:61`), `repo_type: other` (thesis root repository with measurement data).
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** migração documentada de monólito Vite para Module Federation com Nx, shell com roteamento único e pacote compartilhado singleton (`README.md:128–131`), com medições de build, Lighthouse e memória (`baseline_results.md:106–117`).
-- **Protocolo (snapshot):** a implementação está em submódulos privados ou proprietários e não pode ser lida no snapshot. Só há evidência indireta, por artefatos de medição.
-- **Protocolo (busca):** o hit plural não tem grafia literal. Elegibilidade `unknown` nas duas rodadas (`activity_incomplete`).
+- **RQ2:** documented migration from Vite monolith to Module Federation with Nx, shell with single routing and singleton shared package (`README.md:128–131`), with build, Lighthouse and memory measurements (`baseline_results.md:106–117`).
+- **Protocol (snapshot):** implementation is in private or proprietary submodules and cannot be read in the snapshot. There is only indirect evidence through measurement artifacts.
+- **Protocol (search):** the plural hit has no literal spelling. Eligibility `unknown` in both rounds (`activity_incomplete`).
 
-## Decisão registrada
+## Recorded decision
 
-Mantido como `Uncertain`. Os logs de build e os registros de rede indicam uma composição de Module Federation, mas o código e a configuração dos submódulos não estão disponíveis no snapshot. A evidência indireta não permite confirmar os critérios de independência, composição e uso efetivo da configuração.
+Retained as `Uncertain`. Build logs and network records indicate Module Federation composition, but submodule code and configuration are not available in the snapshot. Indirect evidence does not allow confirming independence, composition and actual configuration use criteria.

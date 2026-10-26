@@ -20,40 +20,40 @@ annotation:
 
 # 026 — issueset/astro-react-19-hook-issue2
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** example/proof of concept (reprodução de bug, nome "…-hook-issue2", sobre o template oficial `framework-multiple` do Astro)
-- **Commit avaliado:** `f229f38` (único commit, "init")
+- **Repository type:** example/proof of concept (bug reproduction, named "…-hook-issue2", based on Astro's official `framework-multiple` template)
+- **Assessed commit:** `f229f38` (only commit, "init")
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Documentação | `README.md:1` "Kitchen Sink: Microfrontends with Astro"; `:3-5` gerado por `npm create astro@latest -- --template framework-multiple`; `:11` "showcases Astro's built-in support for multiple frameworks" | contexto |
-| Tecnologia | `package.json:2` `@example/framework-multiple`; `:13-22` integrações `@astrojs/{preact,react,solid-js,svelte,vue}` | fraca |
-| Configuração | `astro.config.mjs:13-19`: as cinco integrações de framework num único projeto Astro (multi-framework) | moderada |
-| Código-fonte | `src/pages/index.astro:5-11` importa estaticamente um contador por framework de `src/components/<framework>/`; `:27-40` renderiza cada um como ilha (`client:visible`) | ambígua |
-| Estrutura | Um único projeto (um `package.json`, um build Astro); os componentes são arquivos dentro do mesmo `src/` | contrária |
-| Build/deploy | Um único build; `.codesandbox/Dockerfile` só para sandbox | contrária |
-| Histórico | Um único commit | ausente |
+| Documentation | `README.md:1` "Kitchen Sink: Microfrontends with Astro"; `:3-5` generated through `npm create astro@latest -- --template framework-multiple`; `:11` "showcases Astro's built-in support for multiple frameworks" | context |
+| Technology | `package.json:2` `@example/framework-multiple`; `:13-22` integrations `@astrojs/{preact,react,solid-js,svelte,vue}` | weak |
+| Configuration | `astro.config.mjs:13-19`: all five framework integrations in a single Astro project (multi-framework) | moderate |
+| Source code | `src/pages/index.astro:5-11` statically imports one counter per framework from `src/components/<framework>/`; `:27-40` renders each as an island (`client:visible`) | ambiguous |
+| Structure | A single project (one `package.json`, one Astro build); components are files within the same `src/` | contrary |
+| Build/deploy | A single build; `.codesandbox/Dockerfile` only for the sandbox | contrary |
+| History | A single commit | absent |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend (projeto Astro); os contadores são componentes, não unidades com entry ou build próprios |
-| Q2 | No | Os componentes compartilham build e são importados diretamente (`index.astro:5-11`) |
-| Q3 | No | A página importa componentes; não carrega, monta ou roteia unidades independentes |
-| Q4 | No | Islands do Astro com vários frameworks são composição de componentes em build-time dentro de uma app, não um mecanismo conectando unidades independentes |
-| Q5 | No | Q1–Q4 convergem |
+| Q1 | No | A single frontend unit (Astro project); counters are components, not units with their own entry or build |
+| Q2 | No | Components share a build and are imported directly (`index.astro:5-11`) |
+| Q3 | No | The page imports components; it does not load, mount or route independent units |
+| Q4 | No | Astro islands with multiple frameworks are build-time component composition within one app, not a mechanism connecting independent units |
+| Q5 | No | Q1–Q4 converge |
 
-## Motivo
+## Rationale
 
-- É o template oficial "framework-multiple" do Astro, copiado para reproduzir um bug (React 19 hooks). O título "Microfrontends with Astro" é do template.
-- Misturar frameworks numa mesma página (ilhas) não torna os componentes unidades relativamente independentes: não têm entry, build ou deploy próprios.
-- Corresponde a "conventional frontend monoliths" e a "repositories mentioning micro-frontends without implementing them".
+- This is Astro's official "framework-multiple" template, copied to reproduce a bug (React 19 hooks). The title "Microfrontends with Astro" belongs to the template.
+- Mixing frameworks on the same page (islands) does not make components relatively independent units: they have no entry, build or deployment of their own.
+- Matches "conventional frontend monoliths" and "repositories mentioning micro-frontends without implementing them".
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** multi-framework ≠ MFE. Ter React, Vue, Svelte, Solid e Preact na mesma página aparenta heterogeneidade de MFE, mas é uma única unidade com um build só.
-- **Protocolo (duplicatas):** repositórios de reprodução de issue baseados em templates oficiais tendem a repetir o mesmo conteúdo (o nome sugere que existe um "issue1"). Vale checar se há outros clones do template na amostra.
+- **RQ1 (misleading signals):** multi-framework ≠ MFE. Having React, Vue, Svelte, Solid and Preact on the same page resembles MFE heterogeneity, but it is a single unit with one build.
+- **Protocol (duplicates):** issue-reproduction repositories based on official templates tend to repeat the same content (the name suggests an "issue1" exists). It is worth checking whether other template clones are in the sample.

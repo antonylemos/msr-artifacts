@@ -20,81 +20,81 @@ annotation:
 
 # 310 — Alex18gr/react-ng-vite-systemjs-spa-app
 
-## Contexto
+## Context
 
-Prova de conceito de single-spa com SystemJS e import maps (`README.md:1–2`): um root config (`root-config/`) registra três aplicações — React 17 com webpack (`react-app/`), Angular 12 (`angular-app/`) e React 19 com Vite (`react-vite-app/`) —, que compartilham em runtime dois módulos utilitários próprios (`common-lib-webpack/`, estado de usuário com RxJS; `styleguide/`, componentes React/MUI). Há ainda um projeto Vue de scaffold (`vue-app/`) sem relação com o root config. O README declara que a POC parte do exemplo de terceiro `nitinreddy3/react-ng-spa-app`, sob licença MIT (`README.md:2`). O nome do repositório não é usado como evidência.
+Single-spa proof of concept with SystemJS and import maps (`README.md:1–2`): a root config (`root-config/`) registers three applications — React 17 with webpack (`react-app/`), Angular 12 (`angular-app/`) and React 19 with Vite (`react-vite-app/`) — sharing two custom utility modules at runtime (`common-lib-webpack/`, RxJS user state; `styleguide/`, React/MUI components). Also a scaffold Vue project (`vue-app/`) unrelated to root config. README declares POC derives from third-party example `nitinreddy3/react-ng-spa-app`, under MIT license (`README.md:2`). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:311` registra rank 310, ID 984418769, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:311` records rank 310, ID 984418769, status `cloned`, branch `main` and the front matter commit, which is HEAD of the clone and `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:311` registra as estratégias `terminology;technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:14010` (`terminology;technology`, `unknown`, regra `recent-human-commit` com `activity_incomplete`) e `data/discovery/mfe-round-002/candidates.csv:14016` (`terminology;technology`, `pass`).
+`data/samples/mfe-sample-001/sample.csv:311` records strategies `terminology;technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:14010` (`terminology;technology`, `unknown`, rule `recent-human-commit` with `activity_incomplete`) and `data/discovery/mfe-round-002/candidates.csv:14016` (`terminology;technology`, `pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos oito hits em cada rodada:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns the same eight hits in each round:
 
-| Consulta (`q`) | Endpoint | Subconsulta | `path` |
+| Query (`q`) | Endpoint | Subquery | `path` |
 |---|---|---|---|
-| `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | `repositories` | `…#created:2025-05` | vazio |
-| `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | `repositories` | `…#created:2025-05` | vazio |
+| `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | `repositories` | `…#created:2025-05` | empty |
+| `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | `repositories` | `…#created:2025-05` | empty |
 | `technology-single-spa-package-code`: `"single-spa" filename:package.json` | `code` | `…#size:1000..1149` | `react-vite-app/package.json` |
-| idem | `code` | `…#size:1300..1449` | `angular-app/package.json` |
-| idem | `code` | `…#size:1450..1599` | `root-config/package.json` |
-| idem | `code` | `…#size:1800..1999` | `styleguide/package.json` |
-| idem | `code` | `…#size:2000..2249` | `react-app/package.json` |
-| `technology-single-spa-repositories`: `"single-spa" in:name,description,readme` | `repositories` | `…#created:2025-Q2` | vazio |
+| same | `code` | `…#size:1300..1449` | `angular-app/package.json` |
+| same | `code` | `…#size:1450..1599` | `root-config/package.json` |
+| same | `code` | `…#size:1800..1999` | `styleguide/package.json` |
+| same | `code` | `…#size:2000..2249` | `react-app/package.json` |
+| `technology-single-spa-repositories`: `"single-spa" in:name,description,readme` | `repositories` | `…#created:2025-Q2` | empty |
 
-Coletas: rodada 001 entre 2026-10-07T18:35:16.819Z e 2026-10-07T23:33:38.669Z; rodada 002 entre 2026-10-08T15:38:07.285Z e 2026-10-08T16:20:59.766Z. As consultas de repositório acrescentam `pushed:>=2025-04-01` e a partição de criação; as de código, a faixa de `size`.
+Collection: round 001 between 2026-10-07T18:35:16.819Z and 2026-10-07T23:33:38.669Z; round 002 between 2026-10-08T15:38:07.285Z and 2026-10-08T16:20:59.766Z. Repository queries append `pushed:>=2025-04-01` and creation partition; code queries append `size` range.
 
-Metadados do hit: descrição nula, sem tópicos, linguagem TypeScript, sem licença, `fork: false`, tamanho 1268, criação em 2025-05-15T22:46:06Z, push em 2025-05-15T22:56:13Z.
+Hit metadata: null description, no topics, language TypeScript, no license, `fork: false`, size 1268, created at 2025-05-15T22:46:06Z, pushed at 2025-05-15T22:56:13Z.
 
-Correspondência textual:
-- “microfrontend”: `README.md:2` (“This is a microfrontend architecture poc…”); o plural “microfrontends” não aparece literalmente, e esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+Textual match:
+- “microfrontend”: `README.md:2` (“This is a microfrontend architecture poc…”); plural “microfrontends” does not appear literally, and that hit depends on GitHub search text processing, which is not recorded.
 - “single-spa”: `README.md:1` (“# Single-spa app with React Angular Vite and SystemJS”).
-- Os cinco `package.json` casados contêm `single-spa` (por exemplo, `root-config/package.json:47`, `react-app/package.json:44`, `angular-app/package.json:25–26`, `react-vite-app/package.json:17`, `36`); `styleguide/package.json` não foi aberto além do inventário e não é citado como evidência.
+- Five matched `package.json` contain `single-spa` (for example, `root-config/package.json:47`, `react-app/package.json:44`, `angular-app/package.json:25–26`, `react-vite-app/package.json:17`, `36`); `styleguide/package.json` was not opened beyond inventory and is not cited as evidence.
 
-A última alteração do README é o próprio SHA `1fe831d` (2025-05-16, “Readme improvements”), anterior às coletas de 7 e 8 de outubro de 2026; os `package.json` vêm da raiz `8a9367e` (2025-05-16). Nenhum artefato do SHA é posterior às buscas.
+README's last change is SHA `1fe831d` itself (2025-05-16, “Readme improvements”), before collection on October 7 and 8, 2026; `package.json` files come from root `8a9367e` (2025-05-16). No SHA artifact postdates searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 161 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Sete projetos com `package.json` próprio: `root-config`, `react-app`, `angular-app`, `react-vite-app`, `common-lib-webpack`, `styleguide`, `vue-app`. | forte |
-| Configuração (root) | `root-config/src/org1-root-config.ts:3–19`: `registerApplication` de `@org1/react-app` (`/react`), `angular-app` (`/angular`) e `react-vite-app` (`/react-vite`), cada um por `System.import`; `:21–23`: `start`. `root-config/src/index.ejs:62–84`: import map SystemJS local com `@org1/react-app` → `//localhost:8080/org1-react-app.js`, `angular-app` → `//localhost:4200/main.js`, `react-vite-app` → `//localhost:3001/spa.js`, `styleguide` → `//localhost:3002/styleguide.system.js`, `@paok/common-lib-webpack` → `//localhost:9001/index.js`, com `scopes` que dão React 16 ao `react-app` e React 19 ao `react-vite-app`; `:102–136`: registra dependências compartilhadas no SystemJS e importa o root config; `:177–195`: barra de navegação com `singleSpaNavigate`. `root-config/package.json:4`: porta 9000. | forte |
-| Configuração / Código-fonte (react-app) | `react-app/webpack.config.js:5–10`: preset `webpack-config-single-spa-react-ts` com `orgName: "org1"`, `projectName: "react-app"` (gera `org1-react-app.js`); `:13–16`: `externals` para `@paok/common-lib-webpack` e `styleguide`. `react-app/src/org1-react-app.tsx:6–16`: `singleSpaReact` e exportação de `bootstrap`, `mount`, `unmount`. A porta 8080 não é declarada no repositório (`react-app/package.json:4`, `webpack serve`); corresponde ao padrão do preset, não verificado sem instalação. | forte |
-| Configuração / Código-fonte (angular-app) | `angular-app/angular.json:21–36`: builder `@angular-builders/custom-webpack`, `main: src/main.single-spa.ts`, `libraryName: angular-app`, `libraryTarget: umd`, `deployUrl: http://localhost:4200/`. `angular-app/package.json:11`: `ng s … --port 4200`. `angular-app/src/main.single-spa.ts:20–31`, `112–114`: `singleSpaAngular` e lifecycles exportados (com controle de estilos por atributo). | forte |
-| Configuração / Código-fonte (react-vite-app) | `react-vite-app/vite.config.ts:14–33`: saída `format: "system"` com React e libs compartilhadas como `external`; `:37–41`: `vite-plugin-single-spa` com `type: "mife"`, `serverPort: 3001`, `spaEntryPoints: ["src/spa.tsx"]`. `react-vite-app/src/spa.tsx:8–15`, `99–101`: `singleSpaReact` e lifecycles com CSS. `react-vite-app/package.json:11`: `dev:single-spa` com build em watch e preview. | forte |
-| Código-fonte (módulos utilitários) | `common-lib-webpack/webpack.config.js:34–35`, `49–55`: `index.js` em formato `system`, porta 9001; `common-lib-webpack/src/user-state.ts:3–19`: estado de usuário em `BehaviorSubject`. `styleguide/vite.config.ts:19–41`: biblioteca em formato `system`, preview na porta 3002. Consumidos em runtime: `react-app/src/App.tsx:2`, `react-vite-app/src/App.tsx:5–6`, `angular-app/src/app/app.component.ts:3`, `15–18`, todos marcados como externos nos builds. | moderada |
-| Código-fonte (fronteiras) | Busca por todo `../` em `*.ts`, `*.tsx`, `*.js`, `*.vue`, `*.json`, `*.ejs` e `*.html` (exceto lockfiles): nenhum import de código-fonte entre as aplicações. As únicas referências entre pastas são dependências `file:../common-lib-webpack` e `file:../styleguide` em `react-app/package.json:56`, `65`, `angular-app/package.json:23` e `react-vite-app/package.json:14`, `18`, para os dois módulos utilitários, que os builds externalizam (`react-app/webpack.config.js:13–16`; `angular-app/extra-webpack.config.js:7–10`; `react-vite-app/vite.config.ts:17–23`) e o root config resolve pelo import map. | forte |
-| Estrutura (fora da composição) | `vue-app/package.json:5–9` e `vue-app/src/main.ts:7–11`: scaffold Vue 3 que monta sozinho em `#app`; não aparece no root config nem no import map. | contexto |
-| Documentação | `README.md:12–34`: como subir cada aplicação e o root em `localhost:9000`, com rotas `/react` e `/angular`; não descreve `react-vite`, `styleguide` nem `common-lib-webpack`. | moderada |
+| Structure | `git ls-tree -r` at the SHA: 161 entries, all regular `100644` files; zero symlinks and zero gitlinks. Seven projects with their own `package.json`: `root-config`, `react-app`, `angular-app`, `react-vite-app`, `common-lib-webpack`, `styleguide`, `vue-app`. | strong |
+| Configuration (root) | `root-config/src/org1-root-config.ts:3–19`: `registerApplication` of `@org1/react-app` (`/react`), `angular-app` (`/angular`) and `react-vite-app` (`/react-vite`), each through `System.import`; `:21–23`: `start`. `root-config/src/index.ejs:62–84`: local SystemJS import map with `@org1/react-app` → `//localhost:8080/org1-react-app.js`, `angular-app` → `//localhost:4200/main.js`, `react-vite-app` → `//localhost:3001/spa.js`, `styleguide` → `//localhost:3002/styleguide.system.js`, `@paok/common-lib-webpack` → `//localhost:9001/index.js`, with `scopes` giving React 16 to `react-app` and React 19 to `react-vite-app`; `:102–136`: registers shared dependencies in SystemJS and imports root config; `:177–195`: navigation bar with `singleSpaNavigate`. `root-config/package.json:4`: port 9000. | strong |
+| Configuration / Source code (react-app) | `react-app/webpack.config.js:5–10`: preset `webpack-config-single-spa-react-ts` with `orgName: "org1"`, `projectName: "react-app"` (generates `org1-react-app.js`); `:13–16`: `externals` for `@paok/common-lib-webpack` and `styleguide`. `react-app/src/org1-react-app.tsx:6–16`: `singleSpaReact` and export of `bootstrap`, `mount`, `unmount`. Port 8080 is undeclared in repository (`react-app/package.json:4`, `webpack serve`); corresponds to preset default, unverified without installation. | strong |
+| Configuration / Source code (angular-app) | `angular-app/angular.json:21–36`: builder `@angular-builders/custom-webpack`, `main: src/main.single-spa.ts`, `libraryName: angular-app`, `libraryTarget: umd`, `deployUrl: http://localhost:4200/`. `angular-app/package.json:11`: `ng s … --port 4200`. `angular-app/src/main.single-spa.ts:20–31`, `112–114`: `singleSpaAngular` and exported lifecycles (with attribute-based style control). | strong |
+| Configuration / Source code (react-vite-app) | `react-vite-app/vite.config.ts:14–33`: output `format: "system"` with React and shared libs as `external`; `:37–41`: `vite-plugin-single-spa` with `type: "mife"`, `serverPort: 3001`, `spaEntryPoints: ["src/spa.tsx"]`. `react-vite-app/src/spa.tsx:8–15`, `99–101`: `singleSpaReact` and lifecycles with CSS. `react-vite-app/package.json:11`: `dev:single-spa` with watch build and preview. | strong |
+| Source code (utility modules) | `common-lib-webpack/webpack.config.js:34–35`, `49–55`: `index.js` in `system` format, port 9001; `common-lib-webpack/src/user-state.ts:3–19`: user state in `BehaviorSubject`. `styleguide/vite.config.ts:19–41`: `system` format library, preview on port 3002. Consumed at runtime: `react-app/src/App.tsx:2`, `react-vite-app/src/App.tsx:5–6`, `angular-app/src/app/app.component.ts:3`, `15–18`, all marked as build externals. | moderate |
+| Source code (boundaries) | Search for all `../` in `*.ts`, `*.tsx`, `*.js`, `*.vue`, `*.json`, `*.ejs` and `*.html` (except lockfiles): no source code imports between applications. Only cross-folder references are dependencies `file:../common-lib-webpack` and `file:../styleguide` in `react-app/package.json:56`, `65`, `angular-app/package.json:23` and `react-vite-app/package.json:14`, `18`, for two utility modules, externalized by builds (`react-app/webpack.config.js:13–16`; `angular-app/extra-webpack.config.js:7–10`; `react-vite-app/vite.config.ts:17–23`) and resolved by root config's import map. | strong |
+| Structure (outside composition) | `vue-app/package.json:5–9` and `vue-app/src/main.ts:7–11`: Vue 3 scaffold mounting independently in `#app`; absent from root config and import map. | context |
+| Documentation | `README.md:12–34`: how to start each application and root at `localhost:9000`, with routes `/react` and `/angular`; does not describe `react-vite`, `styleguide` or `common-lib-webpack`. | moderate |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso, parcial (`blob:none`). 2 commits (2 em todos os refs), nenhum merge, autor e committer `alexc <alexchih02@gmail.com>`: a raiz `8a9367e` (2025-05-16, “initial commit”) adiciona todos os projetos em bloco; o SHA `1fe831d` (“Readme improvements”) só altera `README.md`. O README declara derivação de `nitinreddy3/react-ng-spa-app` (MIT) (`README.md:2`); como o histórico começa com tudo pronto, não é possível separar pelos metadados o que veio do exemplo de origem e o que foi acrescentado (por exemplo, `react-vite-app`, `styleguide`, `common-lib-webpack`, ausentes da documentação de execução). `git rev-list --objects $SHA --missing=print` identifica 1 objeto histórico ausente; os arquivos citados do SHA foram lidos.
+Non-shallow, partial clone (`blob:none`). 2 commits (2 across all refs), no merges, author and committer `alexc <alexchih02@gmail.com>`: root `8a9367e` (2025-05-16, “initial commit”) adds all projects together; SHA `1fe831d` (“Readme improvements”) changes only `README.md`. README declares derivation from `nitinreddy3/react-ng-spa-app` (MIT) (`README.md:2`); as history starts with everything ready, metadata cannot separate what came from original example and what was added (for example, `react-vite-app`, `styleguide`, `common-lib-webpack`, absent from execution documentation). `git rev-list --objects $SHA --missing=print` identifies 1 missing historical object; cited SHA files were read.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | `root-config` e as três aplicações registradas (`react-app`, `angular-app`, `react-vite-app`), referenciadas pela configuração de composição (`root-config/src/org1-root-config.ts:3–19`; `index.ejs:62–84`). |
-| Q2 | Yes | Cada aplicação tem entrada e build próprios (preset webpack, Angular CLI com custom-webpack, Vite) e porta própria; não há import de código-fonte entre elas, só consumo em runtime de módulos utilitários externalizados. |
-| Q3 | Yes | O root config registra, roteia (`activeWhen`) e carrega as três aplicações, com navegação por `singleSpaNavigate` (`index.ejs:177–195`). |
-| Q4 | Yes | single-spa configurado nos dois lados: `registerApplication` + import map SystemJS com URLs coerentes com os bundles gerados (`org1-react-app.js`, `main.js` em `deployUrl` 4200, `spa.js` em `serverPort` 3001), e lifecycles exportados em cada aplicação. |
-| Q5 | Yes | Q1–Q4 convergem. |
+| Q1 | Yes | `root-config` and three registered applications (`react-app`, `angular-app`, `react-vite-app`), referenced by composition configuration (`root-config/src/org1-root-config.ts:3–19`; `index.ejs:62–84`). |
+| Q2 | Yes | Each application has its own entry and build (webpack preset, Angular CLI with custom-webpack, Vite) and port; no source code imports between them, only runtime consumption of externalized utility modules. |
+| Q3 | Yes | Root config registers, routes (`activeWhen`) and loads all three applications, with `singleSpaNavigate` navigation (`index.ejs:177–195`). |
+| Q4 | Yes | single-spa configured on both sides: `registerApplication` + SystemJS import map with URLs coherent with generated bundles (`org1-react-app.js`, `main.js` at `deployUrl` 4200, `spa.js` at `serverPort` 3001), and exported lifecycles in each application. |
+| Q5 | Yes | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- Q1–Q5 são Yes, o que satisfaz a regra de `MFE-implemented`. Corresponde a “single-spa root configuration together with its applications” e a “examples… that actually compose frontend units” (`repo_type: example`, “poc”, `README.md:2`).
-- A cadeia é completa e coerente para as três aplicações, comparável aos casos de cadeia completa (076/084/096/106/109) e ao final 058 (lifecycles single-spa com bundle SystemJS), aqui com o root config presente.
-- Os módulos `common-lib-webpack` e `styleguide` são dependências compartilhadas em runtime (utility modules), não unidades compostas; seu uso não caracteriza code sharing como mecanismo único (089/100), porque as aplicações são montadas por rota pelo root config.
-- A origem declarada em exemplo de terceiro (`README.md:2`) não torna a composição externa ao repositório, ao contrário de 102/074/080: o root config, as aplicações e o import map estão no snapshot.
-- `frontend_units: 4` conta o root config e as três aplicações registradas; não conta os dois módulos utilitários nem o `vue-app`, sem relação de composição (como a leitura de 193 para demos não relacionadas). `approaches: [single-spa]`, `ui_technologies: [react, angular]`, `build_tools: [webpack, vite]`, `unit_organization: monorepo`.
-- Não há decisão aberta que mude a classe.
+- Q1–Q5 are Yes, satisfying the `MFE-implemented` rule. Matches “single-spa root configuration together with its applications” and “examples… that actually compose frontend units” (`repo_type: example`, “poc”, `README.md:2`).
+- Chain is complete and coherent for three applications, comparable to complete-chain cases (076/084/096/106/109) and final 058 (single-spa lifecycles with SystemJS bundle), here with root config present.
+- Modules `common-lib-webpack` and `styleguide` are runtime shared dependencies (utility modules), rather than composed units; their use does not make code sharing the sole mechanism (089/100), because applications are route-mounted by root config.
+- Declared third-party example origin (`README.md:2`) does not make composition external to repository, unlike 102/074/080: root config, applications and import map are in snapshot.
+- `frontend_units: 4` counts root config and three registered applications; excludes two utility modules and `vue-app`, without composition relationship (as in reading of 193 for unrelated demos). `approaches: [single-spa]`, `ui_technologies: [react, angular]`, `build_tools: [webpack, vite]`, `unit_organization: monorepo`.
+- No open decision changes class.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** single-spa com import map SystemJS e `scopes` para conviverem React 16 (UMD) e React 19 (ESM via `esm.sh`) na mesma página (`root-config/src/index.ejs:35–48`, `73–82`, `102–134`); aplicação Vite integrada por `vite-plugin-single-spa` (`type: "mife"`); dois utility modules compartilhados por import map.
-- **RQ3:** estado compartilhado entre aplicações de frameworks diferentes por um `BehaviorSubject` em módulo SystemJS (`common-lib-webpack/src/user-state.ts:3–19`), consumido por React e Angular.
-- **RQ1:** a porta 8080 do `react-app` não está escrita no repositório; a coerência com o import map depende do padrão do preset `webpack-config-single-spa`, não verificado sem instalação.
-- **Protocolo (terceiros):** derivação declarada de `nitinreddy3/react-ng-spa-app` (`README.md:2`); a mesma conta tem `Alex18gr/microfrontends-in-action-demos` e `Alex18gr/Alex18gr` nas rodadas (`data/discovery/mfe-round-002/candidates.csv:19652`, `15427`), fora deste snapshot.
-- **Contagem de unidades:** contando também `vue-app`, `styleguide` e `common-lib-webpack` como projetos frontend identificáveis, o valor seria 7; a classe não muda.
+- **RQ2:** single-spa with SystemJS import map and `scopes` for React 16 (UMD) and React 19 (ESM through `esm.sh`) coexistence on same page (`root-config/src/index.ejs:35–48`, `73–82`, `102–134`); Vite application integrated through `vite-plugin-single-spa` (`type: "mife"`); two utility modules shared through import map.
+- **RQ3:** cross-framework shared application state through a `BehaviorSubject` in a SystemJS module (`common-lib-webpack/src/user-state.ts:3–19`), consumed by React and Angular.
+- **RQ1:** `react-app` port 8080 is not written in repository; coherence with import map depends on `webpack-config-single-spa` preset default, unverified without installation.
+- **Protocol (third parties):** declared derivation from `nitinreddy3/react-ng-spa-app` (`README.md:2`); same account has `Alex18gr/microfrontends-in-action-demos` and `Alex18gr/Alex18gr` in rounds (`data/discovery/mfe-round-002/candidates.csv:19652`, `15427`), outside this snapshot.
+- **Unit count:** also counting `vue-app`, `styleguide` and `common-lib-webpack` as identifiable frontend projects would yield 7; class does not change.

@@ -20,84 +20,84 @@ annotation:
 
 # 142 — lavesan/nx-zephyr-module-federation-example
 
-## Contexto
+## Context
 
-Exemplo de micro-frontends com Module Federation em monorepo Nx e pnpm (`pnpm-workspace.yaml:1–3`; `README.md:1–29`). São três aplicações React/Rsbuild: `apps/shell` (host, porta 3000), `apps/courses` (remote, 3001) e `apps/profile` (remote, 3002), mais um plugin local `packages/zephyr-rsbuild-plugin` que envolve o build com Zephyr Cloud. Cada app tem `vercel.json` próprio para deploy separado (`README.md:95–101`). O nome do repositório não é usado como evidência.
+Micro-frontends example with Module Federation in Nx/pnpm monorepo (`pnpm-workspace.yaml:1–3`; `README.md:1–29`). Three React/Rsbuild applications: `apps/shell` (host, port 3000), `apps/courses` (remote, 3001) and `apps/profile` (remote, 3002), plus local plugin `packages/zephyr-rsbuild-plugin` wrapping build with Zephyr Cloud. Each app has own `vercel.json` for separate deployment (`README.md:95–101`). Repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:143` registra rank 142, ID 999205690, branch `master`, status `cloned` e o commit do front matter, que é o HEAD do clone e de `origin/master`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:143` records rank 142, ID 999205690, branch `master`, status `cloned` and front-matter commit, which is clone HEAD and `origin/master`. Every clone Git command used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:143` registra as estratégias `terminology;technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:14938` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:14944` (`pass`), ambos com `terminology;technology`.
+`data/samples/mfe-sample-001/sample.csv:143` records strategies `terminology;technology` and eligibility `pass`. Sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). ID appears in `data/discovery/mfe-round-001/candidates.csv:14938` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:14944` (`pass`), both with `terminology;technology`.
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos quatro hits em cada rodada, do endpoint `repositories` e com `path` vazio:
+`sqlite3 -readonly` query of tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns same four hits in each round, at endpoint `repositories` and with empty `path`:
 
-| Consulta (`q`) | Subconsulta | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Collection 001 / 002 (UTC) |
 |---|---|---|
 | `technology-module-federation-repositories`: `"module federation" in:name,description,readme` | `…#created:2025-06` | 2026-10-07T23:17:55.163Z / 2026-10-08T16:14:22.984Z |
-| `technology-topic-module-federation`: `topic:module-federation` | sem partição | 2026-10-07T23:13:42.957Z / 2026-10-08T16:11:12.560Z |
+| `technology-topic-module-federation`: `topic:module-federation` | without partition | 2026-10-07T23:13:42.957Z / 2026-10-08T16:11:12.560Z |
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | `…#created:2025-06` | 2026-10-07T22:22:33.626Z / 2026-10-08T15:54:38.038Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | `…#created:2025-06` | 2026-10-07T22:54:08.850Z / 2026-10-08T16:05:53.214Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01` e, nas particionadas, `created:2025-06-01..2025-06-30`.
+Effective queries append `pushed:>=2025-04-01` and, for partitioned queries, `created:2025-06-01..2025-06-30`.
 
-Metadados do hit:
-- descrição “Simple example using React, Module Federation, NX, zephyr, RsBuild and Vercel”;
-- tópicos `module-federation`, `nx`, `react`, `rsbuild`, `typescript`, `vercel` e `zephyr`;
-- linguagem TypeScript, `fork: false`, criação em 2025-06-09T22:50:18Z, push em 2025-06-11T01:11:05Z, homepage na Vercel.
+Hit metadata:
+- description “Simple example using React, Module Federation, NX, zephyr, RsBuild and Vercel”;
+- topics `module-federation`, `nx`, `react`, `rsbuild`, `typescript`, `vercel` and `zephyr`;
+- TypeScript language, `fork: false`, creation at 2025-06-09T22:50:18Z, push at 2025-06-11T01:11:05Z, Vercel homepage.
 
-Origem de cada hit:
-- `topic:module-federation` vem do tópico literal.
-- `"module federation"` pode vir da descrição ou de `README.md:3` (“using Module Federation”).
-- `"micro frontend"` corresponde à grafia hifenizada “micro-frontend” em `README.md:3`, `47` e `83`.
-- Não há forma plural no README nem na descrição; o hit de `"micro frontends"` depende do processamento textual da busca do GitHub, que não está registrado.
+Origin of each hit:
+- `topic:module-federation` comes from literal topic.
+- `"module federation"` may come from description or `README.md:3` (“using Module Federation”).
+- `"micro frontend"` corresponds to hyphenated spelling “micro-frontend” in `README.md:3`, `47` and `83`.
+- No plural form exists in README or description; hit for `"micro frontends"` depends on unrecorded GitHub search text processing.
 
-A última alteração do README é `f9593dc` (2025-06-10T15:29:11-03:00), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+Last README change is `f9593dc` (2025-06-10T15:29:11-03:00), before October 2026 collections. README at the SHA is not later than searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 65 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Workspaces `packages/*` e `apps/*` (`pnpm-workspace.yaml:1–3`); três apps com `package.json`, `project.json`, `rsbuild.config.ts`, `module-federation.config.ts`, `src/` e `vercel.json` (o do shell fica na raiz), mais o pacote `zephyr-rsbuild-plugin`. | contexto |
-| Configuração (host) | `apps/shell/module-federation.config.ts:17–24`: `name: "shell"` e `remotes` `courses@${COURSES_URL}/remoteEntry.js` e `profile@${PROFILE_URL}/remoteEntry.js`. Em desenvolvimento, as URLs são `http://localhost:3001` e `http://localhost:3002`; em produção, variáveis `VITE_*` ou URLs padrão na Vercel (`apps/shell/module-federation.config.ts:4–15`). `react`/`react-dom` são singletons `eager` (`apps/shell/module-federation.config.ts:25–37`). A configuração entra no Rsbuild via `moduleFederation.options` (`apps/shell/rsbuild.config.ts:31–33`). | forte |
-| Configuração (remotes) | `apps/courses/module-federation.config.ts:4–9` e `apps/profile/module-federation.config.ts:4–9`: `name` `courses`/`profile`, `filename: "remoteEntry.js"`, `exposes: { "./App": "./src/App" }`. Portas 3001 e 3002 (`apps/courses/rsbuild.config.ts:7–9`; `apps/profile/rsbuild.config.ts:7–9`), coerentes com as URLs de dev do host. | forte |
-| Código-fonte (consumo) | `apps/shell/src/App.tsx:6–7`: `lazy(() => import("courses/App"))` e `lazy(() => import("profile/App"))`, montados nas rotas `/courses*` e `/profile*` dentro de `Suspense` (`apps/shell/src/App.tsx:17–23`), com navegação no `Header` (`apps/shell/src/components/Header.tsx:16–43`). `apps/shell/src/remotes.d.ts:3–11` tipa os módulos. Os remotes exportam `App` por padrão (`apps/courses/src/App.tsx:111`; `apps/profile/src/App.tsx:100`). | forte |
-| Código-fonte (fronteiras) | Busca por `from '../` e `import('../` em `apps` e `packages`: nenhuma ocorrência. Os apps dependem do plugin local só como pacote de build (`zephyr-rsbuild-plugin: workspace:*`, por exemplo em `apps/shell/package.json:18`), e o host acessa os remotes só pelos especificadores federados. | contexto |
-| Build/deploy | Builds e servidores separados: cada app roda `rsbuild build`/`rsbuild dev` (`apps/shell/package.json:6–12`; `apps/courses/package.json:6–12`; `apps/profile/package.json:6–12`), com targets Nx próprios (`apps/courses/project.json:6–20`). Deploy separado na Vercel: `vercel.json:2–3` para o shell, `apps/courses/vercel.json:2–3` e `apps/profile/vercel.json:2–3`. `package.json:5–9` orquestra `dev`/`build` dos três. | moderada |
-| Tecnologia | `pnpm-lock.yaml:33–37` e `pnpm-lock.yaml:67–71` resolvem `@rsbuild/core` 0.4.15 para `courses` e `profile`. `pnpm-lock.yaml:125–127` resolve 1.3.22 para `shell`. Os remotes declaram `@rsbuild/core` `^0.4.5` (`apps/courses/package.json:14`; `apps/profile/package.json:14`). O plugin Zephyr envolve a configuração com `withZephyr()` antes de criar o compilador (`packages/zephyr-rsbuild-plugin/src/index.ts:4–10`). | ambígua |
-| Documentação | `README.md:9–29`: shell host e dois remotes. `README.md:81–93`: diagrama Shell → Courses/Profile. `README.md:117–127`: `pnpm dev` sobe 3000/3001/3002. `README.md:95–101`: deploys separados na Vercel. | moderada |
+| Structure | `git ls-tree -r` at the SHA: 65 entries, all regular files `100644`; zero symlinks and zero gitlinks. Workspaces `packages/*` and `apps/*` (`pnpm-workspace.yaml:1–3`); three apps with `package.json`, `project.json`, `rsbuild.config.ts`, `module-federation.config.ts`, `src/` and `vercel.json` (shell’s is at root), plus package `zephyr-rsbuild-plugin`. | context |
+| Configuration (host) | `apps/shell/module-federation.config.ts:17–24`: `name: "shell"` and `remotes` `courses@${COURSES_URL}/remoteEntry.js` and `profile@${PROFILE_URL}/remoteEntry.js`. Development URLs are `http://localhost:3001` and `http://localhost:3002`; production uses variables `VITE_*` or default Vercel URLs (`apps/shell/module-federation.config.ts:4–15`). `react`/`react-dom` are `eager` singletons (`apps/shell/module-federation.config.ts:25–37`). Configuration enters Rsbuild through `moduleFederation.options` (`apps/shell/rsbuild.config.ts:31–33`). | strong |
+| Configuration (remotes) | `apps/courses/module-federation.config.ts:4–9` and `apps/profile/module-federation.config.ts:4–9`: `name` `courses`/`profile`, `filename: "remoteEntry.js"`, `exposes: { "./App": "./src/App" }`. Ports 3001 and 3002 (`apps/courses/rsbuild.config.ts:7–9`; `apps/profile/rsbuild.config.ts:7–9`), consistent with host dev URLs. | strong |
+| Source code (consumption) | `apps/shell/src/App.tsx:6–7`: `lazy(() => import("courses/App"))` and `lazy(() => import("profile/App"))`, mounted at routes `/courses*` and `/profile*` within `Suspense` (`apps/shell/src/App.tsx:17–23`), with navigation in `Header` (`apps/shell/src/components/Header.tsx:16–43`). `apps/shell/src/remotes.d.ts:3–11` types modules. Remotes default-export `App` (`apps/courses/src/App.tsx:111`; `apps/profile/src/App.tsx:100`). | strong |
+| Source code (boundaries) | Search for `from '../` and `import('../` in `apps` and `packages`: no occurrence. Apps depend on local plugin only as build package (`zephyr-rsbuild-plugin: workspace:*`, for example at `apps/shell/package.json:18`), and host accesses remotes only through federated specifiers. | context |
+| Build/deploy | Separate builds and servers: each app runs `rsbuild build`/`rsbuild dev` (`apps/shell/package.json:6–12`; `apps/courses/package.json:6–12`; `apps/profile/package.json:6–12`), with own Nx targets (`apps/courses/project.json:6–20`). Separate Vercel deployment: `vercel.json:2–3` for shell, `apps/courses/vercel.json:2–3` and `apps/profile/vercel.json:2–3`. `package.json:5–9` orchestrates `dev`/`build` for all three. | moderate |
+| Technology | `pnpm-lock.yaml:33–37` and `pnpm-lock.yaml:67–71` resolve `@rsbuild/core` 0.4.15 for `courses` and `profile`. `pnpm-lock.yaml:125–127` resolves 1.3.22 for `shell`. Remotes declare `@rsbuild/core` `^0.4.5` (`apps/courses/package.json:14`; `apps/profile/package.json:14`). Zephyr plugin wraps configuration with `withZephyr()` before creating compiler (`packages/zephyr-rsbuild-plugin/src/index.ts:4–10`). | ambiguous |
+| Documentation | `README.md:9–29`: shell host and two remotes. `README.md:81–93`: Shell → Courses/Profile diagram. `README.md:117–127`: `pnpm dev` starts 3000/3001/3002. `README.md:95–101`: separate Vercel deployments. | moderate |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 13 commits, nenhum merge, todos de Valdery Alves `<valdery.jur@gmail.com>`, de 2025-06-09 a 2025-06-10. Por caminho (`git log --no-renames`): `apps/shell` 9 commits, `apps/courses` 5, `apps/profile` 6, `packages` 2. Pelo `git log --name-status`:
-- a raiz `5a52004` adiciona `shell` e `profile` com configurações de federação e o plugin Zephyr;
-- `78c42b1` (“divides microfrontends between two page…”) adiciona `courses/module-federation.config.ts`;
-- `9b23a4f` passa as URLs para variáveis de ambiente;
-- o SHA `766b6a2` ajusta o plugin Zephyr.
+Non-shallow clone; 13 commits, no merge, all by Valdery Alves `<valdery.jur@gmail.com>`, from 2025-06-09 to 2025-06-10. By path (`git log --no-renames`): `apps/shell` 9 commits, `apps/courses` 5, `apps/profile` 6, `packages` 2. According to `git log --name-status`:
+- root `5a52004` adds `shell` and `profile` with federation configurations and Zephyr plugin;
+- `78c42b1` (“divides microfrontends between two page…”) adds `courses/module-federation.config.ts`;
+- `9b23a4f` moves URLs to environment variables;
+- SHA `766b6a2` adjusts Zephyr plugin.
 
-O histórico mostra a evolução incremental de uma composição host/remotes por um único autor, sem código de terceiros além das dependências. Nenhum blob histórico foi lido e não houve objeto ausente.
+History shows incremental host/remotes composition evolution by one author, without third-party code beyond dependencies. No historical blob was read and no object was missing.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | Três unidades frontend no repositório, `shell`, `courses` e `profile`, com entradas próprias (`apps/*/src/index.tsx`). O host referencia os dois remotes na configuração de federação (`apps/shell/module-federation.config.ts:20–23`). |
-| Q2 | Yes | Cada unidade tem `package.json`, `rsbuild.config.ts`, porta, target Nx e `vercel.json` próprios. Nenhum import de código-fonte entre elas (busca por `../` sem ocorrências); o host usa só `courses/App` e `profile/App`. |
-| Q3 | Yes | O shell roteia e monta os remotes (`apps/shell/src/App.tsx:6–7`, `17–23`). |
-| Q4 | Yes | Module Federation configurado nos dois lados, com nomes, `filename`, chave `./App` e portas de dev coerentes (`apps/shell/module-federation.config.ts:7–23`; `apps/courses/module-federation.config.ts:4–9`; `apps/profile/module-federation.config.ts:4–9`; `apps/*/rsbuild.config.ts:7–9`, `31–33`) e consumido em código (`apps/shell/src/App.tsx:6–7`). |
-| Q5 | Yes | Q1–Q4 são Yes: cadeia host → dois remotes completa no fluxo de desenvolvimento documentado. |
+| Q1 | Yes | Three frontend units in repository, `shell`, `courses` and `profile`, with own entries (`apps/*/src/index.tsx`). Host references both remotes in federation configuration (`apps/shell/module-federation.config.ts:20–23`). |
+| Q2 | Yes | Each unit has own `package.json`, `rsbuild.config.ts`, port, Nx target and `vercel.json`. No source-code import between them (search for `../` has no occurrences); host uses only `courses/App` and `profile/App`. |
+| Q3 | Yes | Shell routes and mounts remotes (`apps/shell/src/App.tsx:6–7`, `17–23`). |
+| Q4 | Yes | Module Federation configured on both sides, with consistent names, `filename`, key `./App` and dev ports (`apps/shell/module-federation.config.ts:7–23`; `apps/courses/module-federation.config.ts:4–9`; `apps/profile/module-federation.config.ts:4–9`; `apps/*/rsbuild.config.ts:7–9`, `31–33`) and consumed in code (`apps/shell/src/App.tsx:6–7`). |
+| Q5 | Yes | Q1–Q4 are Yes: complete host → two remotes chain in documented development flow. |
 
-## Motivo
+## Rationale
 
-- `MFE-implemented` pela regra Q1–Q5 Yes. Corresponde a “monorepos containing a host and its remotes” e a “examples … that actually compose frontend units”, com `repo_type: example` (descrição “Simple example…”; `README.md:3`: “demonstration”). É a mesma cadeia completa de 076/084/096/106/109.
-- Diferentemente de 089/100, cada remote expõe a aplicação inteira, montada como rota do host. Diferentemente de 097/103/104, nomes, portas e exposes fecham.
-- Zephyr Cloud é plataforma de build/deploy envolvendo o Rspack, não host de terceiros que compõe as unidades. Não se aplica o caso 074/080/102.
-- `approaches: [module-federation]`, `ui_technologies: [react]`. `build_tools: [rsbuild]`, como em 029, pelas configurações explícitas (`apps/*/rsbuild.config.ts`). `frontend_units: 3`, sem contar o plugin de build. `unit_organization: monorepo` (pnpm workspaces + Nx).
-- Não há decisão aberta: composição runtime por Module Federation, sem iframe, links entre aplicações ou pacotes em build time.
+- `MFE-implemented` under Q1–Q5 Yes rule. Matches “monorepos containing a host and its remotes” and “examples … that actually compose frontend units”, with `repo_type: example` (description “Simple example…”; `README.md:3`: “demonstration”). Same complete chain as 076/084/096/106/109.
+- Unlike 089/100, each remote exposes entire application, mounted as host route. Unlike 097/103/104, names, ports and exposes align.
+- Zephyr Cloud is build/deploy platform wrapping Rspack, not third-party host composing units. 074/080/102 case does not apply.
+- `approaches: [module-federation]`, `ui_technologies: [react]`. `build_tools: [rsbuild]`, as in 029, from explicit configurations (`apps/*/rsbuild.config.ts`). `frontend_units: 3`, without counting build plugin. `unit_organization: monorepo` (pnpm workspaces + Nx).
+- No decision remains open: runtime composition through Module Federation, without iframe, links between applications or build-time packages.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** Module Federation pela opção nativa `moduleFederation.options` do Rsbuild, com URLs de remotes por ambiente e deploy de cada unidade como projeto Vercel separado.
-- **RQ1 (operabilidade não verificada):** a linha `ambígua` registra que os remotes usam `@rsbuild/core` 0.4.15 e o host 1.3.22, e que o plugin Zephyr altera a configuração em todo build/dev. Isso pode afetar a execução, que não foi feita, mas não altera a coerência da configuração lida. A demo publicada (`README.md:5`) não foi acessada.
-- **Protocolo (busca):** o hit no plural não tem grafia correspondente no README nem na descrição. A elegibilidade muda de `unknown` (001) para `pass` (002).
-- **Contribuição da revisão independente (Lupa):** concordância integral com MFE-implemented, Q1–Q5 Yes, três unidades, `module-federation` e `rsbuild`; sem decisão aberta. Ressalva de resolução, verificada no SHA: o plugin local declara `@rsbuild/plugin-react: ^0.4.5` e `@rsbuild/shared: ^0.4.5` (`packages/zephyr-rsbuild-plugin/package.json:22–38`), mas o importer correspondente do `pnpm-lock.yaml:141–158` registra `^1.2.0` e `^0.7.10`. O lockfile não representa as especificações atuais do manifesto, de modo que uma instalação congelada não é demonstravelmente reproduzível; os deploys usam `pnpm install --no-frozen-lockfile` (`vercel.json:2`; `apps/courses/vercel.json:2`; `apps/profile/vercel.json:2`). O host resolve Rsbuild 1.3.22 e os dois remotes 0.4.15 (`pnpm-lock.yaml:101–130`, `:33–40`, `:67–74`). Cautela de operabilidade, sem efeito na classe: a configuração e o consumo dos remotes por Module Federation estão no snapshot. Comparáveis finais: 029 (React/Rsbuild em monorepo, MFE-implemented) e 059 (host e remotes, mecanismo diferente).
+- **RQ2:** Module Federation through native Rsbuild option `moduleFederation.options`, with environment-specific remote URLs and each unit deployed as separate Vercel project.
+- **RQ1 (unverified operability):** row `ambígua` (English translation: “ambiguous”) records remotes use `@rsbuild/core` 0.4.15 and host 1.3.22, and Zephyr plugin changes configuration in every build/dev. This may affect execution, not performed, but does not change consistency of read configuration. Published demo (`README.md:5`) was not accessed.
+- **Protocol (search):** plural hit has no corresponding spelling in README or description. Eligibility changes from `unknown` (001) to `pass` (002).
+- **Independent-review contribution (Lupa):** complete agreement with MFE-implemented, Q1–Q5 Yes, three units, `module-federation` and `rsbuild`; no open decision. Resolution caveat, verified at SHA: local plugin declares `@rsbuild/plugin-react: ^0.4.5` and `@rsbuild/shared: ^0.4.5` (`packages/zephyr-rsbuild-plugin/package.json:22–38`), but corresponding importer in `pnpm-lock.yaml:141–158` records `^1.2.0` and `^0.7.10`. Lockfile does not represent current manifest specifications, so frozen installation is not demonstrably reproducible; deployments use `pnpm install --no-frozen-lockfile` (`vercel.json:2`; `apps/courses/vercel.json:2`; `apps/profile/vercel.json:2`). Host resolves Rsbuild 1.3.22 and both remotes 0.4.15 (`pnpm-lock.yaml:101–130`, `:33–40`, `:67–74`). Operability caution without class effect: configuration and Module Federation remote consumption are in snapshot. Final comparators: 029 (React/Rsbuild in monorepo, MFE-implemented) and 059 (host and remotes, different mechanism).

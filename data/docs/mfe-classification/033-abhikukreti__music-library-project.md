@@ -20,42 +20,42 @@ annotation:
 
 # 033 — abhikukreti/music-library-project
 
-## Contexto
+## Context
 
-- **Abordagem de implementação:** Module Federation (`@originjs/vite-plugin-federation`, Vite)
-- **Tipo de repositório:** example/proof of concept (app de demonstração com login mock; provável exercício/teste técnico)
+- **Implementation approach:** Module Federation (`@originjs/vite-plugin-federation`, Vite)
+- **Repository type:** example/proof of concept (demonstration app with mock login; probably an exercise/technical test)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Tecnologia | `main-app/package.json` e `music-library/package.json`: `@originjs/vite-plugin-federation` | fraca |
-| Estrutura | Duas apps: `main-app/` e `music-library/`, cada uma com `package.json`, `vite.config.js`, `index.html` e `src/main.jsx` próprios | forte |
-| Configuração (host) | `main-app/vite.config.js:8-14`: `federation({ name: 'main_app', remotes: { music_library: 'https://astonishing-seahorse-d2decf.netlify.app/assets/remoteEntry.js' }, shared: [react, react-dom, @tanstack/react-query] })`; porta 5000 (`:21`) | forte |
-| Configuração (remote) | `music-library/vite.config.js:8-15`: `name: 'music_library'`, `filename: 'remoteEntry.js'`, `exposes: { './MusicLibrary': './src/MusicLibrary.jsx' }`, mesmo `shared`; porta 5001 (`:22-23`) | forte |
-| Código-fonte (composição) | `main-app/src/App.jsx:5`: `lazy(() => import('music_library/MusicLibrary'))`; `:21-23`: renderiza `<MusicLibrary isAdmin={isAdmin} />` em `Suspense` depois do login (`:10-12`) | forte |
-| Código-fonte (contrato) | O host passa o papel do usuário (`isAdmin`) como prop ao remote; o remote exporta `MusicLibrary` (`music-library/src/MusicLibrary.jsx:104`) | moderada |
-| Código-fonte | Nenhum import de código-fonte entre as duas apps (sustenta a independência das unidades) | ausente |
-| Build/deploy | `README.md:6-8,29-35`: dois sites Netlify separados (main app e remote); `music-library/public/_headers:1-2`: CORS em `/assets/*` para o host em outro domínio | forte |
-| Documentação | `README.md:3` "React app split into two parts (main app + music library) connected via Module Federation"; `:37-38` seção "Micro Frontend" | moderada |
+| Technology | `main-app/package.json` and `music-library/package.json`: `@originjs/vite-plugin-federation` | weak |
+| Structure | Two apps: `main-app/` and `music-library/`, each with its own `package.json`, `vite.config.js`, `index.html` and `src/main.jsx` | strong |
+| Configuration (host) | `main-app/vite.config.js:8-14`: `federation({ name: 'main_app', remotes: { music_library: 'https://astonishing-seahorse-d2decf.netlify.app/assets/remoteEntry.js' }, shared: [react, react-dom, @tanstack/react-query] })`; port 5000 (`:21`) | strong |
+| Configuration (remote) | `music-library/vite.config.js:8-15`: `name: 'music_library'`, `filename: 'remoteEntry.js'`, `exposes: { './MusicLibrary': './src/MusicLibrary.jsx' }`, same `shared`; port 5001 (`:22-23`) | strong |
+| Source code (composition) | `main-app/src/App.jsx:5`: `lazy(() => import('music_library/MusicLibrary'))`; `:21-23`: renders `<MusicLibrary isAdmin={isAdmin} />` in `Suspense` after login (`:10-12`) | strong |
+| Source code (contract) | The host passes the user's role (`isAdmin`) as a prop to the remote; the remote exports `MusicLibrary` (`music-library/src/MusicLibrary.jsx:104`) | moderate |
+| Source code | No source code imports between the two apps (supports the units' independence) | absent |
+| Build/deploy | `README.md:6-8,29-35`: two separate Netlify sites (main app and remote); `music-library/public/_headers:1-2`: CORS on `/assets/*` for the host on another domain | strong |
+| Documentation | `README.md:3` "React app split into two parts (main app + music library) connected via Module Federation"; `:37-38` "Micro Frontend" section | moderate |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | `main-app` e `music-library` |
-| Q2 | Yes | Entry, build e deploy próprios (dois sites Netlify); sem import de código-fonte entre as apps |
-| Q3 | Yes | O host monta o remote após o login (`main-app/src/App.jsx:21-23`) |
-| Q4 | Yes | `remotes`/`exposes` configurados e usados via `import('music_library/MusicLibrary')` (`App.jsx:5`) |
-| Q5 | Yes | Q1–Q4 convergem; nenhuma divergência a justificar |
+| Q1 | Yes | `main-app` and `music-library` |
+| Q2 | Yes | Their own entry, build and deployment (two Netlify sites); no source code imports between the apps |
+| Q3 | Yes | The host mounts the remote after login (`main-app/src/App.jsx:21-23`) |
+| Q4 | Yes | `remotes`/`exposes` configured and used through `import('music_library/MusicLibrary')` (`App.jsx:5`) |
+| Q5 | Yes | Q1–Q4 converge; no discrepancy to justify |
 
-## Motivo
+## Rationale
 
-- Q1–Q5 são todos Yes, o que satisfaz a regra de MFE-implemented.
-- Corresponde a "monorepos containing a host and its remotes" e a "examples… and proofs of concept that actually compose frontend units".
-- O deploy independente é explícito: o host aponta para a URL pública do `remoteEntry.js` do remote em produção, com CORS configurado para a origem cruzada.
+- Q1–Q5 are all Yes, satisfying the MFE-implemented rule.
+- Matches "monorepos containing a host and its remotes" and "examples… and proofs of concept that actually compose frontend units".
+- Independent deployment is explicit: the host points to the remote's public production `remoteEntry.js` URL, with CORS configured for cross-origin access.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ3:** relação host → remote com contrato por props (`isAdmin`) derivadas da autenticação no host; autenticação centralizada no host, autorização aplicada no remote.
-- **RQ1 (build/deploy):** URL de produção fixa no `remotes` do host (`vite.config.js:11`), sem separação dev/prod; o README pede `build` + `preview` do remote para o desenvolvimento local.
+- **RQ3:** host → remote relationship with a props contract (`isAdmin`) derived from authentication in the host; authentication centralized in the host, authorization applied in the remote.
+- **RQ1 (build/deploy):** fixed production URL in the host's `remotes` (`vite.config.js:11`), without development/production separation; the README requests remote `build` + `preview` for local development.

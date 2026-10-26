@@ -20,73 +20,73 @@ annotation:
 
 # 316 — Tutul33/mf-workspace
 
-## Contexto
+## Context
 
-Workspace Angular 20 com `@angular-architects/native-federation`, montado como guia passo a passo (`README.md:1–3`). Tem três projetos em `projects/`:
-- `host-app` (porta 4200);
-- `customer-app` (porta 4301);
-- `orders-app` (porta 4302).
+Angular 20 workspace with `@angular-architects/native-federation`, assembled as a step-by-step guide (`README.md:1–3`). Three projects in `projects/`:
+- `host-app` (port 4200);
+- `customer-app` (port 4301);
+- `orders-app` (port 4302).
 
-O host carrega por rota os módulos de rotas expostos pelos dois remotos, com `loadRemoteModule`. O nome do repositório não é usado como evidência.
+Host route-loads route modules exposed by both remotes, using `loadRemoteModule`. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:317` registra rank 316, ID 1098942873, status `cloned`, branch `master` e o commit do front matter, que é o HEAD do clone e de `origin/master`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:317` records rank 316, ID 1098942873, status `cloned`, branch `master` and the front matter commit, which is HEAD of the clone and `origin/master`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:317` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:21202` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:21208` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:317` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:21202` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:21208` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2025-11` e `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2025-11` and empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | 2026-10-07T19:17:25.775Z / 2026-10-08T15:40:03.503Z |
 | `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | 2026-10-07T22:09:45.099Z / 2026-10-08T15:48:26.230Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2025-11-01..2025-11-30`.
+Effective queries append `pushed:>=2025-04-01 created:2025-11-01..2025-11-30`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem HTML, `fork: false`, tamanho 143;
-- criação em 2025-11-18T10:49:50Z, push em 2025-11-18T11:00:09Z.
+Hit metadata:
+- null description, no topics, language HTML, `fork: false`, size 143;
+- created at 2025-11-18T10:49:50Z, pushed at 2025-11-18T11:00:09Z.
 
-Grafias no README:
-- “Microfrontend”: `README.md:1` (“# Angular 20 + Native Federation (Microfrontend) — Step-by-Step Guide”) e `README.md:3` (“…microfrontend setup…”);
+README spellings:
+- “Microfrontend”: `README.md:1` (“# Angular 20 + Native Federation (Microfrontend) — Step-by-Step Guide”) and `README.md:3` (“…microfrontend setup…”);
 - “microfrontends”: `README.md:258` (“- Two remote microfrontends”).
 
-A última alteração do README é o próprio SHA (2025-11-18), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+README's last change is the SHA itself (2025-11-18), before October 2026 collection. The SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 65 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Há três projetos em `projects/` (54 arquivos), cada um com `federation.config.js`, `src/main.ts` → `bootstrap.ts` e tsconfigs próprios. Na raiz ficam um `angular.json`, um `package.json` e um guia (`angular_20_microfrontend_app_guide.md`). | contexto |
-| Builds | `angular.json`: os três projetos usam o builder `@angular-architects/native-federation:build` (`:18`, `131`, `244`) sobre `@angular/build:application` (`:60`, `173`, `286`), com `dev-server` nas portas 4200, 4301 e 4302 (`:114`, `227`, `340`). | forte |
-| Remotos | `projects/customer-app/federation.config.js:5–10`: `name: 'customer-app'`, `exposes: { './CustomerRoutes': …customer-routes.module.ts }`. `projects/orders-app/federation.config.js:5–10`: `name: 'orders-app'`, `exposes: { './OrdersRoutes': … }`. Os módulos expostos são `RouterModule.forChild` com a página `Home` (`customer-routes.module.ts:5–12`; `orders-routes.module.ts:5–12`). | forte |
-| Host | `projects/host-app/src/app/app.routes.ts:2–20`: rotas `customers` e `orders` com `loadChildren: () => loadRemoteModule({ remoteEntry: 'http://localhost:4301/remoteEntry.json', exposedModule: './CustomerRoutes' })` e o mesmo para `4302`/`./OrdersRoutes`. `app.html:1–3`: links e `<router-outlet>`. `federation.config.js:3–27`: `shareAll` singleton. | forte |
-| Inconsistência | `projects/host-app/src/main.ts:3–5`: `initFederation({ customerApp: 'http://localhost:4200/remoteEntry.json' })` aponta para a porta do próprio host, com um nome que não corresponde a nenhum remoto. As rotas não usam esse mapa: passam a URL do `remoteEntry` diretamente ao `loadRemoteModule`. | ambígua |
-| Código-fonte (fronteiras) | Busca por imports com `../../` em `projects/`: nenhum. Cada projeto só importa os próprios arquivos e pacotes npm. As dependências ficam num único `package.json` de workspace, como é padrão no Angular CLI. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 65 entries, all regular `100644` files; zero symlinks and zero gitlinks. Three projects in `projects/` (54 files), each with `federation.config.js`, `src/main.ts` → `bootstrap.ts` and its own tsconfigs. Root contains one `angular.json`, one `package.json` and a guide (`angular_20_microfrontend_app_guide.md`). | context |
+| Builds | `angular.json`: all three projects use builder `@angular-architects/native-federation:build` (`:18`, `131`, `244`) over `@angular/build:application` (`:60`, `173`, `286`), with `dev-server` on ports 4200, 4301 and 4302 (`:114`, `227`, `340`). | strong |
+| Remotes | `projects/customer-app/federation.config.js:5–10`: `name: 'customer-app'`, `exposes: { './CustomerRoutes': …customer-routes.module.ts }`. `projects/orders-app/federation.config.js:5–10`: `name: 'orders-app'`, `exposes: { './OrdersRoutes': … }`. Exposed modules are `RouterModule.forChild` with page `Home` (`customer-routes.module.ts:5–12`; `orders-routes.module.ts:5–12`). | strong |
+| Host | `projects/host-app/src/app/app.routes.ts:2–20`: routes `customers` and `orders` with `loadChildren: () => loadRemoteModule({ remoteEntry: 'http://localhost:4301/remoteEntry.json', exposedModule: './CustomerRoutes' })` and same for `4302`/`./OrdersRoutes`. `app.html:1–3`: links and `<router-outlet>`. `federation.config.js:3–27`: singleton `shareAll`. | strong |
+| Inconsistency | `projects/host-app/src/main.ts:3–5`: `initFederation({ customerApp: 'http://localhost:4200/remoteEntry.json' })` points to host's own port, with a name matching no remote. Routes do not use this map: pass `remoteEntry` URL directly to `loadRemoteModule`. | ambiguous |
+| Source code (boundaries) | Search for `../../` imports in `projects/`: none. Each project imports only its own files and npm packages. Dependencies live in a single workspace `package.json`, standard in Angular CLI. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 5 commits lineares, nenhum merge, todos de Tutul Chakma, em 2025-11-18, de `1137709` (“initial commit”) ao SHA `eb6d1cc` (“Commit”). Só há o branch `master`. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 5 linear commits, no merges, all by Tutul Chakma, on 2025-11-18, from `1137709` (“initial commit”) to SHA `eb6d1cc` (“Commit”). Only branch `master`. No historical blob was read and no object was missing.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | Host e dois remotos no repositório, referenciados pelas rotas do host (`app.routes.ts:9–10`, `17–18`). |
-| Q2 | Yes | Cada projeto tem entry (`main.ts` → `bootstrap.ts`), build `native-federation` e porta próprios em `angular.json`, sem import de código-fonte entre projetos. |
-| Q3 | Yes | O host roteia e monta os módulos remotos em `customers` e `orders` (`app.routes.ts:4–20`; `app.html:3`). |
-| Q4 | Yes | Native Federation: `loadRemoteModule` com `remoteEntry`/`exposedModule` coerentes com o `exposes` dos remotos e as portas do `angular.json`. |
-| Q5 | Yes | Q1–Q4 são Yes: host e remotos compostos em runtime, com cadeia completa no snapshot. |
+| Q1 | Yes | Host and two remotes in repository, referenced by host routes (`app.routes.ts:9–10`, `17–18`). |
+| Q2 | Yes | Each project has its own entry (`main.ts` → `bootstrap.ts`), `native-federation` build and port in `angular.json`, without source code imports between projects. |
+| Q3 | Yes | Host routes and mounts remote modules at `customers` and `orders` (`app.routes.ts:4–20`; `app.html:3`). |
+| Q4 | Yes | Native Federation: `loadRemoteModule` with `remoteEntry`/`exposedModule` coherent with remote `exposes` and `angular.json` ports. |
+| Q5 | Yes | Q1–Q4 are Yes: host and remotes composed at runtime, with complete snapshot chain. |
 
-## Motivo
+## Rationale
 
-- `MFE-implemented` pela regra Q1–Q5 Yes, no caso “monorepos containing a host and its remotes”. A cadeia está completa no snapshot, como em 076/084/096/106/109.
-- O `initFederation` com URL errada não impede a composição, porque as rotas carregam os remotos por URL direta.
-- **Campos:** `approaches: [native-federation]`, `ui_technologies: [angular]`, `build_tools: [esbuild]` (como no final 059, Angular `application` builder com Native Federation), `frontend_units: 3`, `unit_organization: monorepo`, `repo_type: example` (guia passo a passo).
-- Não há decisão aberta.
+- `MFE-implemented` under the Q1–Q5 Yes rule, in case “monorepos containing a host and its remotes”. Chain is complete in snapshot, as in 076/084/096/106/109.
+- `initFederation` with incorrect URL does not prevent composition, because routes load remotes through direct URLs.
+- **Fields:** `approaches: [native-federation]`, `ui_technologies: [angular]`, `build_tools: [esbuild]` (as in final 059, Angular `application` builder with Native Federation), `frontend_units: 3`, `unit_organization: monorepo`, `repo_type: example` (step-by-step guide).
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** Native Federation no Angular 20 com módulos de rotas (`NgModule` + `RouterModule.forChild`) expostos e carregados via `loadChildren`.
-- **Protocolo (busca):** as duas grafias estão literalmente no README. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ2:** Native Federation in Angular 20 with route modules (`NgModule` + `RouterModule.forChild`) exposed and loaded through `loadChildren`.
+- **Protocol (search):** both spellings are literally in README. Eligibility changes from `unknown` (001) to `pass` (002).

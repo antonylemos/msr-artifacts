@@ -20,66 +20,66 @@ annotation:
 
 # 351 — lguilhermecardoso/mfe-react-vite-example
 
-## Contexto
+## Context
 
-Exemplo de micro-frontends com React, Vite e `@originjs/vite-plugin-federation` (`README.md:1–3`): um container (`root-app/`) e quatro remotes (`mf-login`, `mf-navbar`, `mf-dashboard`, `mf-personagem-detalhe`), cada um projeto independente com `package.json` próprio (`README.md:33`), publicados juntos no GitHub Pages em subpastas. O repositório versiona também a saída de build (`dist/`). O nome do repositório não é usado como evidência.
+Micro-frontends example with React, Vite and `@originjs/vite-plugin-federation` (`README.md:1–3`): a container (`root-app/`) and four remotes (`mf-login`, `mf-navbar`, `mf-dashboard`, `mf-personagem-detalhe`), each an independent project with its own `package.json` (`README.md:33`), published together in GitHub Pages subfolders. The repository also versions build output (`dist/`). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:352` registra rank 351, ID 1019893852, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:352` records rank 351, ID 1019893852, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:352` registra as estratégias `terminology;technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:16376` (`terminology;technology`, `unknown`, regra `recent-human-commit` com `activity_incomplete`) e `data/discovery/mfe-round-002/candidates.csv:16380` (`terminology;technology`, `pass`).
+`data/samples/mfe-sample-001/sample.csv:352` records strategies `terminology;technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:16376` (`terminology;technology`, `unknown`, rule `recent-human-commit` with `activity_incomplete`) and `data/discovery/mfe-round-002/candidates.csv:16380` (`terminology;technology`, `pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos oito hits em cada rodada:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same eight hits in each round:
 
-| Consulta (`q`) | Endpoint | Subconsulta | `path` |
+| Query (`q`) | Endpoint | Subquery | `path` |
 |---|---|---|---|
-| `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | `repositories` | `…#created:2025-07` | vazio |
-| `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | `repositories` | `…#created:2025-07` | vazio |
-| `technology-module-federation-repositories`: `"module federation" in:name,description,readme` | `repositories` | `…#created:2025-07` | vazio |
-| `technology-vite-federation-package-code`: `"@originjs/vite-plugin-federation" filename:package.json` | `code` | `…#size:800..899` | `mf-login/package.json`, `mf-dashboard/package.json`, `mf-navbar/package.json`, `root-app/package.json`, `mf-personagem-detalhe/package.json` (um hit por arquivo) |
+| `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | `repositories` | `…#created:2025-07` | empty |
+| `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | `repositories` | `…#created:2025-07` | empty |
+| `technology-module-federation-repositories`: `"module federation" in:name,description,readme` | `repositories` | `…#created:2025-07` | empty |
+| `technology-vite-federation-package-code`: `"@originjs/vite-plugin-federation" filename:package.json` | `code` | `…#size:800..899` | `mf-login/package.json`, `mf-dashboard/package.json`, `mf-navbar/package.json`, `root-app/package.json`, `mf-personagem-detalhe/package.json` (one hit per file) |
 
-Coletas: rodada 001 entre 2026-10-07T18:38:09.546Z e 2026-10-07T23:18:44.074Z; rodada 002 entre 2026-10-08T15:38:32.098Z e 2026-10-08T16:15:15.681Z. As consultas de repositório acrescentam `pushed:>=2025-04-01 created:2025-07-01..2025-07-31`.
+Collections: round 001 between 2026-10-07T18:38:09.546Z and 2026-10-07T23:18:44.074Z; round 002 between 2026-10-08T15:38:32.098Z and 2026-10-08T16:15:15.681Z. Repository queries append `pushed:>=2025-04-01 created:2025-07-01..2025-07-31`.
 
-Metadados do hit: descrição nula, sem tópicos, linguagem TypeScript, sem licença, `fork: false`, tamanho 347, criação em 2025-07-15T03:34:19Z, push em 2025-07-17T23:37:09Z.
+Hit metadata: null description, no topics, language TypeScript, no license, `fork: false`, size 347, created at 2025-07-15T03:34:19Z, pushed at 2025-07-17T23:37:09Z.
 
-Correspondência textual no README: “MicroFrontend” (singular) em `README.md:1`; “Microfrontends” (plural) em `README.md:3`; “Module Federation” em `README.md:1`, `3`, `24` e `90`. Os cinco `package.json` casados têm entre 834 e 899 bytes no SHA (dentro da faixa). O README vem do commit-raiz `6cdaf6f` (2025-07-15) e não foi alterado depois; não é posterior às buscas de outubro de 2026.
+Text matches in the README: “MicroFrontend” (singular) in `README.md:1`; “Microfrontends” (plural) in `README.md:3`; “Module Federation” in `README.md:1`, `3`, `24` and `90`. The five matched `package.json` have between 834 and 899 bytes at the SHA (within the range). The README comes from root commit `6cdaf6f` (2025-07-15) and was not changed afterward; it does not postdate the October 2026 searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 157 entradas, 156 arquivos regulares `100644` e 1 executável `100755` (`build-all.sh`); zero symlinks e zero gitlinks. Cinco projetos Vite com `package.json`, `vite.config.ts`, `index.html` e `src/` próprios; `dist/` versionado com a saída de cada um. | forte |
-| Configuração (container) | `root-app/vite.config.ts:11–24`: `remotes` `mf_login`, `mf_dashboard`, `mf_personagem_detalhe` e `mf_navbar`, com URL local (`localhost:4173–4176/assets/remoteEntry.js`) ou de produção (`https://lguilhermecardoso.github.io/mfe-react-vite-example/<mf>/assets/remoteEntry.js`), conforme `IS_LOCAL` (`root-app/.env:1`, `false`); `:31–35`: `federation({ name: "root_app", remotes, shared: ["react","react-dom"] })`. | forte |
-| Configuração (remotes) | `mf-login/vite.config.ts:10–17` (`name: "mf_login"`, `exposes: { "./Login": "./src/App.tsx" }`), `mf-navbar/vite.config.ts:10–17` (`./Navbar`), `mf-dashboard/vite.config.ts:10–17` (`./Dashboard`) e `mf-personagem-detalhe/vite.config.ts:10–17` (`./PersonagemDetalhe`), todos com `filename: "remoteEntry.js"` e saída em `../dist/<mf>` (`:22–23`). | forte |
-| Código-fonte (composição) | `root-app/src/App.tsx:5–8`: `React.lazy(() => import("mf_navbar/Navbar"))`, `mf_login/Login`, `mf_dashboard/Dashboard` e `mf_personagem_detalhe/PersonagemDetalhe`; `:56–99`: navbar condicional e rotas `/login`, `/dashboard`, `/personagem/:id`, com props e callbacks entre container e remotes (`onAuthSuccess`, `onCharacterClick`, `onBack`). `root-app/src/declarations.d.ts:1–4`: tipos dos módulos remotos. | forte |
-| Build/deploy | `build-all.sh:8–23`: build separado de cada unidade para `dist/<unidade>` e cópia do container para a raiz; `.github/workflows/deploy.yml:19–27`: publica `dist` no GitHub Pages. O bundle versionado do container contém as quatro URLs de produção (`dist/root-app/assets/index-DVv4evQ9.js:33`), e o `remoteEntry.js` gerado carrega os chunks expostos por caminho relativo (`dist/mf-login/assets/remoteEntry.js`, `"./__federation_expose_Login-…"`). | moderada |
-| Código-fonte (fronteiras) | Busca por `from '../'`/`import('../'` em `*.ts` e `*.tsx`: nenhuma ocorrência. Os remotes não importam o container nem uns aos outros; o estado do usuário passa por props e `localStorage` (`root-app/src/App.tsx:10–13`, `36–46`). | forte |
+| Structure | `git ls-tree -r` at the SHA: 157 entries, 156 regular files `100644` and 1 executable `100755` (`build-all.sh`); zero symlinks and zero gitlinks. Five Vite projects with their own `package.json`, `vite.config.ts`, `index.html` and `src/`; versioned `dist/` with each one’s output. | strong |
+| Configuration (container) | `root-app/vite.config.ts:11–24`: `remotes` `mf_login`, `mf_dashboard`, `mf_personagem_detalhe` and `mf_navbar`, with local URL (`localhost:4173–4176/assets/remoteEntry.js`) or production URL (`https://lguilhermecardoso.github.io/mfe-react-vite-example/<mf>/assets/remoteEntry.js`), according to `IS_LOCAL` (`root-app/.env:1`, `false`); `:31–35`: `federation({ name: "root_app", remotes, shared: ["react","react-dom"] })`. | strong |
+| Configuration (remotes) | `mf-login/vite.config.ts:10–17` (`name: "mf_login"`, `exposes: { "./Login": "./src/App.tsx" }`), `mf-navbar/vite.config.ts:10–17` (`./Navbar`), `mf-dashboard/vite.config.ts:10–17` (`./Dashboard`) and `mf-personagem-detalhe/vite.config.ts:10–17` (`./PersonagemDetalhe`), all with `filename: "remoteEntry.js"` and output in `../dist/<mf>` (`:22–23`). | strong |
+| Source code (composition) | `root-app/src/App.tsx:5–8`: `React.lazy(() => import("mf_navbar/Navbar"))`, `mf_login/Login`, `mf_dashboard/Dashboard` and `mf_personagem_detalhe/PersonagemDetalhe`; `:56–99`: conditional navbar and routes `/login`, `/dashboard`, `/personagem/:id`, with props and callbacks between container and remotes (`onAuthSuccess`, `onCharacterClick`, `onBack`). `root-app/src/declarations.d.ts:1–4`: remote module types. | strong |
+| Build/deploy | `build-all.sh:8–23`: separate build of each unit to `dist/<unidade>` and copy of the container to the root; `.github/workflows/deploy.yml:19–27`: publishes `dist` to GitHub Pages. The versioned container bundle contains four production URLs (`dist/root-app/assets/index-DVv4evQ9.js:33`), and generated `remoteEntry.js` loads exposed chunks by relative path (`dist/mf-login/assets/remoteEntry.js`, `"./__federation_expose_Login-…"`). | moderate |
+| Source code (boundaries) | Search for `from '../'`/`import('../'` in `*.ts` and `*.tsx`: no occurrences. Remotes do not import the container or each other; user state passes through props and `localStorage` (`root-app/src/App.tsx:10–13`, `36–46`). | strong |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso, parcial (`blob:none`). 14 commits alcançáveis (15 em todos os refs, incluindo o ref remoto `gh-pages`, não considerado), nenhum merge, todos de `Guilherme Cardoso <guilherme.cardoso@furk.tech>`, de 2025-07-15 (`6cdaf6f`, “first commit”) a 2025-07-17 (SHA `ddf4741`, “trigger deploy”). `git rev-list --objects $SHA --missing=print` identifica 29 objetos históricos ausentes; os arquivos citados do SHA foram lidos.
+Non-shallow, partial clone (`blob:none`). 14 reachable commits (15 across all refs, including remote ref `gh-pages`, not considered), no merges, all by `Guilherme Cardoso <guilherme.cardoso@furk.tech>`, from 2025-07-15 (`6cdaf6f`, “first commit”) to 2025-07-17 (SHA `ddf4741`, “trigger deploy”). `git rev-list --objects $SHA --missing=print` identifies 29 missing historical objects; cited SHA files were read.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | `root-app` e os quatro remotes, referenciados pela configuração de composição (`root-app/vite.config.ts:11–24`). |
-| Q2 | Yes | `package.json`, `vite.config.ts`, entrada e build próprios por unidade (`build-all.sh:8–21`), sem import de código-fonte entre elas. |
-| Q3 | Yes | O container carrega e roteia os remotes (`root-app/src/App.tsx:5–8`, `56–99`). |
-| Q4 | Yes | Module Federation configurado nos dois lados, com nomes e chaves expostas coincidentes e URLs de produção que correspondem às pastas publicadas, consumido por `import()` federado. |
-| Q5 | Yes | Q1–Q4 convergem. |
+| Q1 | Yes | `root-app` and four remotes, referenced by composition configuration (`root-app/vite.config.ts:11–24`). |
+| Q2 | Yes | Own `package.json`, `vite.config.ts`, entry point and build per unit (`build-all.sh:8–21`), without source code import between them. |
+| Q3 | Yes | The container loads and routes remotes (`root-app/src/App.tsx:5–8`, `56–99`). |
+| Q4 | Yes | Module Federation configured on both sides, with matching names and exposed keys and production URLs corresponding to published folders, consumed through federated `import()`. |
+| Q5 | Yes | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- Q1–Q5 são Yes, o que satisfaz a regra de `MFE-implemented`. Corresponde a “monorepos containing a host and its remotes” e a “examples… that actually compose frontend units” (`repo_type: example`).
-- Cadeia completa e coerente para os quatro remotes (contraste com 097/103/104); comparável aos casos de cadeia completa (076/084/096/106/109). Os remotes expõem telas e a barra de navegação, não utilitários (contraste com 089/100).
-- O deploy é conjunto (um `dist` no GitHub Pages), mas os builds são separados e o container carrega os remotes em runtime por URL, como na nota de deploy do final 059.
+- Q1–Q5 are Yes, satisfying the `MFE-implemented` rule. It matches “monorepos containing a host and its remotes” and “examples… that actually compose frontend units” (`repo_type: example`).
+- Complete and consistent chain for all four remotes (contrast with 097/103/104); comparable to complete-chain cases (076/084/096/106/109). Remotes expose screens and the navigation bar, not utilities (contrast with 089/100).
+- Deployment is joint (one `dist` on GitHub Pages), but builds are separate and the container loads remotes at runtime by URL, as in final 059’s deployment note.
 - `frontend_units: 5`, `unit_organization: monorepo`, `approaches: [module-federation]`, `ui_technologies: [react]`, `build_tools: [vite]`.
-- Não há decisão aberta.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** `@originjs/vite-plugin-federation` com troca de URLs dos remotes entre ambiente local e GitHub Pages por variável de ambiente (`root-app/vite.config.ts:9–24`).
-- **RQ1:** saída de build versionada (`dist/`, com `remoteEntry.js` e `__federation_*`), que gera sinais adicionais em buscas por código.
-- **Protocolo:** o README remete a `ROADMAP.md` (`README.md:106`), mas o arquivo versionado é `roadmap.md`.
+- **RQ2:** `@originjs/vite-plugin-federation` switching remote URLs between local environment and GitHub Pages through an environment variable (`root-app/vite.config.ts:9–24`).
+- **RQ1:** versioned build output (`dist/`, with `remoteEntry.js` and `__federation_*`), generating additional signals in code searches.
+- **Protocol:** the README refers to `ROADMAP.md` (`README.md:106`), but the versioned file is `roadmap.md`.

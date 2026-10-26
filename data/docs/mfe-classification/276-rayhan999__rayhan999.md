@@ -20,70 +20,70 @@ annotation:
 
 # 276 — rayhan999/rayhan999
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** não é projeto de software (README de perfil do GitHub).
+- **Repository type:** not a software project (GitHub profile README).
 
-O snapshot tem o README de apresentação, uma imagem SVG e um arquivo de workflow fora de `.github/`. Micro-frontends aparecem como interesse (“microfrontend architecture”, `README.md:12`) e como experiência profissional (“Led CRM development using **Microfrontends**”, `README.md:32`). O nome do repositório não é usado como evidência.
+The snapshot has the introduction README, an SVG image and a workflow file outside `.github/`. Micro-frontends appear as an interest (“microfrontend architecture”, `README.md:12`) and professional experience (“Led CRM development using **Microfrontends**”, `README.md:32`). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:277` registra rank 276, ID 334730797, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:277` records rank 276, ID 334730797, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:277` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:1870` e `data/discovery/mfe-round-002/candidates.csv:1870`, ambos com `terminology` e `pass`.
+`data/samples/mfe-sample-001/sample.csv:277` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:1870` and `data/discovery/mfe-round-002/candidates.csv:1870`, both with `terminology` and `pass`.
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories` e com `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories` and with an empty `path`:
 
-| Consulta (`q`) | Subconsulta | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Collection 001 / 002 (UTC) |
 |---|---|---|
 | `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | `terminology-microfrontend-repositories#created:2021-01` | 2026-10-07T18:20:16.571Z / 2026-10-08T15:35:33.037Z |
 | `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | `terminology-microfrontends-repositories#created:2021-01` | 2026-10-07T22:05:01.240Z / 2026-10-08T15:45:10.249Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2021-01-01..2021-01-31`.
+The effective queries append `pushed:>=2025-04-01 created:2021-01-01..2021-01-31`.
 
-Metadados do hit (iguais nas duas rodadas, salvo contagens): descrição nula, sem tópicos, linguagem nula, `fork: false`, tamanho 111, 2 forks, criação em 2021-01-31T18:47:18Z, push em 2026-09-24T13:39:33Z.
+Hit metadata (identical in both rounds, except counts): null description, no topics, null language, `fork: false`, size 111, 2 forks, created at 2021-01-31T18:47:18Z, pushed at 2026-09-24T13:39:33Z.
 
-**Grafias no README do SHA:** “microfrontend” em `README.md:12` (“Clean code, microfrontend architecture, and impactful UX”) e “Microfrontends” em `README.md:32`. Elas correspondem às duas consultas.
+**Spellings in the SHA README:** “microfrontend” in `README.md:12` (“Clean code, microfrontend architecture, and impactful UX”) and “Microfrontends” in `README.md:32`. They correspond to both queries.
 
-**README posterior às buscas:** o SHA (`d692f4f`, 2026-10-09T00:35:58+03:00, isto é, 2026-10-08T21:35:58Z) e o commit anterior `38b539f` (2026-10-08T21:34:39Z) alteram o README depois das duas coletas (a última às 2026-10-08T15:45:10Z). As mensagens são “Update README to streamline GitHub stats display” e “Fix duplicate top languages image in README”.
-- A versão indexada nas buscas é a de `3c80398` (2026-02-16). O commit seguinte, `a388c11` (2026-09-24, igual ao `pushed_at`), só adicionou o SVG.
-- O blob dessa versão (`30e7291…`) está ausente no clone parcial, assim como o de `38b539f` (`git cat-file -e` falha com `GIT_NO_LAZY_FETCH=1`).
-- Portanto, não se verificou se as linhas 12 e 32 já existiam na versão buscada. As mensagens indicam mudanças só na seção de estatísticas, mas isso é inferência.
+**README after searches:** the SHA (`d692f4f`, 2026-10-09T00:35:58+03:00, that is, 2026-10-08T21:35:58Z) and previous commit `38b539f` (2026-10-08T21:34:39Z) change the README after both collections (the last at 2026-10-08T15:45:10Z). Messages are “Update README to streamline GitHub stats display” and “Fix duplicate top languages image in README”.
+- The version indexed in searches is from `3c80398` (2026-02-16). The next commit, `a388c11` (2026-09-24, equal to `pushed_at`), only added the SVG.
+- That version’s blob (`30e7291…`) is absent from the partial clone, as is that of `38b539f` (`git cat-file -e` fails with `GIT_NO_LAZY_FETCH=1`).
+- Therefore, whether lines 12 and 32 already existed in the searched version was not verified. Messages indicate changes only in the statistics section, but this is inference.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 3 entradas, `README.md`, `profile-night-green.svg` e `workflows/update-readme.yml`, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Não há código de aplicação, manifesto nem build. | ausente |
-| Documentação | `README.md:7–14`: apresentação como “Frontend-focused Software Engineer”; `README.md:12`: “microfrontend architecture” como interesse; `README.md:18–26`: tabela de tecnologias; `README.md:32`: experiência profissional com “Microfrontends” num CRM de terceiro. | fraca |
-| Build/deploy | `workflows/update-readme.yml:1–16`: workflow `jamesgeorge007/github-activity-readme` para atualizar o README; fica em `workflows/` na raiz, fora de `.github/workflows`. É automação de perfil, não build de aplicação. | contexto |
-| Tecnologia / Configuração / Código-fonte / Composição | Inexistentes; nenhuma configuração de federação, single-spa, import map, iframe ou Web Components. Imports relativos entre unidades não se aplicam (não há código). | ausente |
+| Structure | `git ls-tree -r` at the SHA: 3 entries, `README.md`, `profile-night-green.svg` and `workflows/update-readme.yml`, all regular files `100644`; zero symlinks and zero gitlinks. There is no application code, manifest or build. | absent |
+| Documentation | `README.md:7–14`: introduction as “Frontend-focused Software Engineer”; `README.md:12`: “microfrontend architecture” as an interest; `README.md:18–26`: technology table; `README.md:32`: professional experience with “Microfrontends” in a third-party CRM. | weak |
+| Build/deploy | `workflows/update-readme.yml:1–16`: `jamesgeorge007/github-activity-readme` workflow to update the README; located in `workflows/` at the root, outside `.github/workflows`. This is profile automation, not application build. | context |
+| Technology / Configuration / Source code / Composition | Nonexistent; no federation, single-spa, import map, iframe or Web Components configuration. Relative imports between units do not apply (there is no code). | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso e parcial (`blob:none`). São 62 commits (62 em todos os refs), nenhum merge, todos do titular com o noreply `58140227+rayhan999@users.noreply.github.com` (nomes `rayhan999`, `MD. Sadek Rayhan`, `MD. Sadek Rayhan Mahi` e `Sadek Rayhan Mahi`) e, em quase todos, committer `GitHub` (edições pela interface web), de 2021-02-01 a 2026-10-08. Pelo `git log --no-renames --name-status`:
-- `25959d5` (2021-02-01, “initial commit”, committer `rayhan999`) altera o README e adiciona `workflows/update-readme.yml`;
-- `a388c11` (2026-09-24) adiciona o SVG;
-- todos os demais só adicionam ou modificam `README.md`. `git rev-list --objects $SHA --missing=print` lista 60 objetos ausentes, nenhum na árvore do SHA (versões anteriores do README e afins).
+Non-shallow and partial clone (`blob:none`). There are 62 commits (62 across all refs), no merges, all by the owner with noreply `58140227+rayhan999@users.noreply.github.com` (names `rayhan999`, `MD. Sadek Rayhan`, `MD. Sadek Rayhan Mahi` and `Sadek Rayhan Mahi`) and, in almost all, committer `GitHub` (web interface edits), from 2021-02-01 to 2026-10-08. According to `git log --no-renames --name-status`:
+- `25959d5` (2021-02-01, “initial commit”, committer `rayhan999`) changes the README and adds `workflows/update-readme.yml`;
+- `a388c11` (2026-09-24) adds the SVG;
+- all others only add or modify `README.md`. `git rev-list --objects $SHA --missing=print` lists 60 missing objects, none in the SHA tree (earlier README versions and similar files).
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend: só README, uma imagem e um workflow de perfil (inventário). |
-| Q2 | No | Não há unidades. |
-| Q3 | No | Não há host, shell nem root config. |
-| Q4 | No | Nenhum mecanismo de composição; micro-frontends são interesse e experiência profissional (`README.md:12`, `:32`). |
-| Q5 | No | Q1–Q4 convergem. |
+| Q1 | No | No frontend unit: only README, an image and a profile workflow (inventory). |
+| Q2 | No | There are no units. |
+| Q3 | No | There is no host, shell or root config. |
+| Q4 | No | No composition mechanism; micro-frontends are an interest and professional experience (`README.md:12`, `:32`). |
+| Q5 | No | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “repositories mentioning micro-frontends without implementing them”.
-- Mesmo padrão dos perfis 011/064/068/073/077/101/111; `frontend_units: 0`, `unit_organization: none`, `repo_type: other`, arrays de tecnologia vazios.
-- O fato de o README do SHA ser posterior às buscas não muda a classe: em nenhum momento o histórico tem código de aplicação (os metadados de commits mostram só README e SVG).
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. It matches “repositories mentioning micro-frontends without implementing them”.
+- Same pattern as profiles 011/064/068/073/077/101/111; `frontend_units: 0`, `unit_organization: none`, `repo_type: other`, empty technology arrays.
+- The SHA README postdating searches does not change the class: history never contains application code (commit metadata shows only README and SVG).
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **Protocolo (snapshot posterior às buscas):** o clone (2026-10-12) capturou dois commits de README feitos em 2026-10-08 depois das coletas. A versão indexada não está no clone parcial, então a linha exata que casou nas buscas não é verificável localmente. Registrar o caso para a análise de reprodutibilidade (snapshot × coleta).
-- **Protocolo (busca):** o padrão `owner == name` reforça a sugestão de filtro automático registrada em 011. A elegibilidade é `pass` nas duas rodadas.
+- **Protocol (snapshot after searches):** the clone (2026-10-12) captured two README commits made on 2026-10-08 after collections. The indexed version is not in the partial clone, so the exact line matching searches cannot be verified locally. Record the case for reproducibility analysis (snapshot × collection).
+- **Protocol (search):** pattern `owner == name` reinforces the automatic filter suggestion recorded in 011. Eligibility is `pass` in both rounds.

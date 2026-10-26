@@ -15,32 +15,32 @@ annotation:
 
 # 330 — DoniaMahmoud/react-microfrontend
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-async-bootstrap | cart/src/index.js:4 | cart | dynamic-loading | No | `import("./bootstrap")` carrega o bootstrap da própria unidade (cart/src/bootstrap.js); interno à unidade. |
-| src-async-bootstrap | container/src/index.js:2 | container | dynamic-loading | No | `import("./bootstrap")` carrega o bootstrap da própria unidade (container/src/bootstrap.js); interno à unidade. |
-| src-async-bootstrap | products/src/index.js:4 | products | dynamic-loading | No | `import("./bootstrap")` carrega o bootstrap da própria unidade (products/src/bootstrap.js); interno à unidade. |
-| src-mount-export | cart/src/bootstrap.js:15 | cart | runtime-composition | Yes | Exporta `mount(el)`, definido em cart/src/bootstrap.js:3-6, que escreve a UI do carrinho em `el.innerHTML`; o módulo é exposto como `./CartShow` em cart/webpack.config.js:13-14 e consumido pelo container em container/src/bootstrap.js:2 e :7. |
-| src-mount-export | products/src/bootstrap.js:26 | products | runtime-composition | Yes | Exporta `mount(el)`, definido em products/src/bootstrap.js:4-13, que escreve a lista de produtos em `el.innerHTML`; o módulo é exposto como `./ProductsIndex` em products/webpack.config.js:13-14 e consumido pelo container em container/src/bootstrap.js:1 e :6. |
-| src-mount-call | cart/src/bootstrap.js:11 | cart | runtime-composition | No | cart/src/bootstrap.js:8-13 chama `mount` no próprio elemento `#dev-cart` (cart/public/index.html:4), só em desenvolvimento isolado; montagem interna à unidade cart. |
-| src-mount-call | products/src/bootstrap.js:23 | products | runtime-composition | No | products/src/bootstrap.js:17-25 chama `mount` no próprio elemento `#dev-products` (products/public/index.html:5), só em desenvolvimento isolado; montagem interna à unidade products. |
-| src-mount-import | container/src/bootstrap.js:1 | container | runtime-composition | Yes | Importa `mount` de `products/ProductsIndex` sob o alias `mountProducts`, chamado em container/src/bootstrap.js:6; o remote `products` aponta para `http://localhost:8081/remoteEntry.js` (container/webpack.config.js:13) e o bootstrap é carregado por container/src/index.js:2. |
-| src-mount-import | container/src/bootstrap.js:2 | container | runtime-composition | Yes | Importa `mount` de `cart/CartShow` sob o alias `mountCart`, chamado em container/src/bootstrap.js:7; o remote `cart` aponta para `http://localhost:8082/remoteEntry.js` (container/webpack.config.js:14) e o bootstrap é carregado por container/src/index.js:2. |
+| src-async-bootstrap | cart/src/index.js:4 | cart | dynamic-loading | No | `import("./bootstrap")` loads the unit’s own bootstrap (cart/src/bootstrap.js); internal to the unit. |
+| src-async-bootstrap | container/src/index.js:2 | container | dynamic-loading | No | `import("./bootstrap")` loads the unit’s own bootstrap (container/src/bootstrap.js); internal to the unit. |
+| src-async-bootstrap | products/src/index.js:4 | products | dynamic-loading | No | `import("./bootstrap")` loads the unit’s own bootstrap (products/src/bootstrap.js); internal to the unit. |
+| src-mount-export | cart/src/bootstrap.js:15 | cart | runtime-composition | Yes | Exports `mount(el)`, defined at cart/src/bootstrap.js:3-6, which writes the cart UI to `el.innerHTML`; the module is exposed as `./CartShow` at cart/webpack.config.js:13-14 and consumed by container at container/src/bootstrap.js:2 and :7. |
+| src-mount-export | products/src/bootstrap.js:26 | products | runtime-composition | Yes | Exports `mount(el)`, defined at products/src/bootstrap.js:4-13, which writes the product list to `el.innerHTML`; the module is exposed as `./ProductsIndex` at products/webpack.config.js:13-14 and consumed by container at container/src/bootstrap.js:1 and :6. |
+| src-mount-call | cart/src/bootstrap.js:11 | cart | runtime-composition | No | cart/src/bootstrap.js:8-13 calls `mount` on its own `#dev-cart` element (cart/public/index.html:4), only in isolated development; mounting internal to unit cart. |
+| src-mount-call | products/src/bootstrap.js:23 | products | runtime-composition | No | products/src/bootstrap.js:17-25 calls `mount` on its own `#dev-products` element (products/public/index.html:5), only in isolated development; mounting internal to unit products. |
+| src-mount-import | container/src/bootstrap.js:1 | container | runtime-composition | Yes | Imports `mount` from `products/ProductsIndex` under alias `mountProducts`, called at container/src/bootstrap.js:6; remote `products` points to `http://localhost:8081/remoteEntry.js` (container/webpack.config.js:13), and bootstrap is loaded by container/src/index.js:2. |
+| src-mount-import | container/src/bootstrap.js:2 | container | runtime-composition | Yes | Imports `mount` from `cart/CartShow` under alias `mountCart`, called at container/src/bootstrap.js:7; remote `cart` points to `http://localhost:8082/remoteEntry.js` (container/webpack.config.js:14), and bootstrap is loaded by container/src/index.js:2. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | container/src/bootstrap.js:6 | container | runtime-composition | Yes | `mountProducts(document.querySelector("#my-products"))` monta a UI da unidade products no elemento `#my-products` do container (container/public/index.html:5); import remoto em container/src/bootstrap.js:1 e entrada em container/src/index.js:2. |
-| manual | container/src/bootstrap.js:7 | container | runtime-composition | Yes | `mountCart(document.querySelector("#my-cart"))` monta a UI da unidade cart no elemento `#my-cart` do container (container/public/index.html:6); import remoto em container/src/bootstrap.js:2 e entrada em container/src/index.js:2. |
+| manual | container/src/bootstrap.js:6 | container | runtime-composition | Yes | `mountProducts(document.querySelector("#my-products"))` mounts unit products’ UI on the container’s `#my-products` element (container/public/index.html:5); remote import at container/src/bootstrap.js:1 and entry at container/src/index.js:2. |
+| manual | container/src/bootstrap.js:7 | container | runtime-composition | Yes | `mountCart(document.querySelector("#my-cart"))` mounts unit cart’s UI on the container’s `#my-cart` element (container/public/index.html:6); remote import at container/src/bootstrap.js:2 and entry at container/src/index.js:2. |
 
-## Resumo
+## Summary
 
-Construções com composição: 6 (runtime-composition: 6).
+Constructs participating in composition: 6 (runtime-composition: 6).
 
-## Notas
+## Notes
 
-- O padrão `src-mount-call` pegou só as montagens isoladas de desenvolvimento (cart/src/bootstrap.js:11; products/src/bootstrap.js:23), não as chamadas com alias do container (container/src/bootstrap.js:6-7), registradas como linhas manuais.
-- A busca do passo 4 não achou `customElements`, `<iframe`, `postMessage`, `CustomEvent`, `BroadcastChannel` nem carga de script nos arquivos de código das três unidades.
+- The `src-mount-call` pattern captured only isolated development mounts (cart/src/bootstrap.js:11; products/src/bootstrap.js:23), rather than the container’s aliased calls (container/src/bootstrap.js:6-7), recorded as manual rows.
+- The step 4 search found no `customElements`, `<iframe`, `postMessage`, `CustomEvent`, `BroadcastChannel` or script loading in the three units’ code files.

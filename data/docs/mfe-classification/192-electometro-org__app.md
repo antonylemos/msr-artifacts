@@ -20,77 +20,77 @@ annotation:
 
 # 192 — electometro-org/app
 
-## Contexto
+## Context
 
-“Electometro” (homepage `electometro.org`): webapp React + Vite de alinhamento eleitoral, um quiz com resultados, eleições do Peru e do Chile, implantada no Cloudflare Workers. Há uma única aplicação frontend. Ativos e configuração do Worker vêm de dois submódulos (`external/peru-assets`, `external/cf-workers`). Uma configuração Vercel com microfrontends existiu e foi removida (ADR 0002, `docs/DECISIONS/0002-architecture-refactor.md:30–31`; `CHANGELOG.md:38–39`). O README ainda diz que a SPA é às vezes montada sob o sub-caminho `/electometro` de um “host microfrontend” (`README.md:299–301`). O nome do repositório não é usado como evidência.
+“Electometro” (homepage `electometro.org`): React + Vite voting alignment webapp, a quiz with results, Peru and Chile elections, deployed on Cloudflare Workers. A single frontend application. Assets and Worker configuration come from two submodules (`external/peru-assets`, `external/cf-workers`). A Vercel microfrontends configuration existed and was removed (ADR 0002, `docs/DECISIONS/0002-architecture-refactor.md:30–31`; `CHANGELOG.md:38–39`). README still says the SPA is sometimes mounted under subpath `/electometro` of a “host microfrontend” (`README.md:299–301`). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:193` registra rank 192, ID 1147440284, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede; os submódulos não foram obtidos.
+`data/samples/mfe-sample-001/clones.csv:193` records rank 192, ID 1147440284, status `cloned`, branch `main` and the front matter commit, which is HEAD of the clone and `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, build, execution or network access occurred; submodules were not obtained.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:193` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:24254` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:24261` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:193` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:24254` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:24261` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2026-02` e `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2026-02` and empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | 2026-10-07T19:59:56.167Z / 2026-10-08T15:41:20.219Z |
 | `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | 2026-10-07T22:11:17.037Z / 2026-10-08T15:49:10.515Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2026-02-01..2026-02-28`.
+Effective queries append `pushed:>=2025-04-01 created:2026-02-01..2026-02-28`.
 
-Metadados do hit:
-- descrição “Voting Alignment WebApp”, sem os termos;
-- sem tópicos, linguagem JavaScript, `fork: false`, tamanho 1.396;
-- criação em 2026-02-01T18:43:40Z, push em 2026-10-04T19:49:30Z.
+Hit metadata:
+- description “Voting Alignment WebApp”, without the terms;
+- no topics, language JavaScript, `fork: false`, size 1,396;
+- created at 2026-02-01T18:43:40Z, pushed at 2026-10-04T19:49:30Z.
 
-O acerto vem de `README.md:301`, “microfrontend. Hash routing avoids server rewrite requirements for deep links.”, continuação de “mounted under a sub-path (`/electometro`) of a host” (`README.md:300`). A forma “microfrontends” não aparece no README; esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+The hit comes from `README.md:301`, “microfrontend. Hash routing avoids server rewrite requirements for deep links.”, continuing “mounted under a sub-path (`/electometro`) of a host” (`README.md:300`). Form “microfrontends” does not appear in README; that hit depends on GitHub search text processing, which is not recorded.
 
-A última alteração do README no histórico do SHA é `eb3d4b6` (2026-08-04), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas. O `pushed_at` (2026-10-04) corresponde a algum dos branches remotos, não ao SHA (2026-08-04).
+The README's last change in SHA history is `eb3d4b6` (2026-08-04), before October 2026 collection. The SHA's README does not postdate searches. `pushed_at` (2026-10-04) corresponds to one of the remote branches, rather than SHA (2026-08-04).
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 152 entradas, 150 arquivos regulares `100644` e **2 gitlinks `160000`**: `external/cf-workers` (`dea6a02…`) e `external/peru-assets` (`ada4e0d…`), declarados em `.gitmodules:1–8` (repositórios `electometro-org/cf-workers` e `electometro-org/peru`). Os objetos não estão no clone. Zero symlinks versionados; os symlinks `public`, `i18n` e `wrangler` para os submódulos são criados localmente (`AGENTS.md:24–27`). Há uma única aplicação em `src/` (contextos, hooks, widgets, eleições). | contexto |
-| Configuração / Build | `vite.config.js:1–5`, `178–180`: `react()`, `legacy()`, plugin Cloudflare e `base: '/electometro/'` (`ASSETS_SUBDIR`, `:28`). `package.json:6–19`, `20–49`: `vite build` e `wrangler deploy`, sem dependência de federação, single-spa ou import maps. | contrária |
-| Histórico de decisão | `docs/DECISIONS/0002-architecture-refactor.md:30–31`: “Remove the multi-target (`DEPLOY_TARGET`) matrix and Vercel/microfrontends configuration”. `AGENTS.md:28–29`, `91`: “do not reintroduce `vercel.json`, `microfrontends.json`…”, “Don't reintroduce Vercel/microfrontend config”. `CHANGELOG.md:38–39`: mesma remoção. | contrária |
-| Documentação (montagem em host) | `README.md:299–301`: a SPA estática é “sometimes mounted under a sub-path (`/electometro`) of a host microfrontend”. O `base` `/electometro/` e o `HashRouter` dão suporte a essa montagem por caminho. O host não está no repositório, e nenhum artefato do snapshot configura essa integração. | ambígua |
-| Busca | `git grep -i` no SHA (exceto lockfiles) por `micro.?front`, `federation`, `remoteEntry` e `single-spa`: só `README.md:301`, `AGENTS.md:29`, `91`, `CHANGELOG.md:39` e o ADR citado. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 152 entries, 150 regular `100644` files and **2 gitlinks `160000`**: `external/cf-workers` (`dea6a02…`) and `external/peru-assets` (`ada4e0d…`), declared in `.gitmodules:1–8` (repositories `electometro-org/cf-workers` and `electometro-org/peru`). Objects are not in the clone. Zero versioned symlinks; symlinks `public`, `i18n` and `wrangler` to submodules are created locally (`AGENTS.md:24–27`). A single application in `src/` (contexts, hooks, widgets, elections). | context |
+| Configuration / Build | `vite.config.js:1–5`, `178–180`: `react()`, `legacy()`, Cloudflare plugin and `base: '/electometro/'` (`ASSETS_SUBDIR`, `:28`). `package.json:6–19`, `20–49`: `vite build` and `wrangler deploy`, without federation, single-spa or import map dependencies. | contrary |
+| Decision history | `docs/DECISIONS/0002-architecture-refactor.md:30–31`: “Remove the multi-target (`DEPLOY_TARGET`) matrix and Vercel/microfrontends configuration”. `AGENTS.md:28–29`, `91`: “do not reintroduce `vercel.json`, `microfrontends.json`…”, “Don't reintroduce Vercel/microfrontend config”. `CHANGELOG.md:38–39`: same removal. | contrary |
+| Documentation (host mounting) | `README.md:299–301`: static SPA is “sometimes mounted under a sub-path (`/electometro`) of a host microfrontend”. `base` `/electometro/` and `HashRouter` support this path mounting. Host is not in the repository, and no snapshot artifact configures this integration. | ambiguous |
+| Search | `git grep -i` at the SHA (except lockfiles) for `micro.?front`, `federation`, `remoteEntry` and `single-spa`: only `README.md:301`, `AGENTS.md:29`, `91`, `CHANGELOG.md:39` and cited ADR. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso. Há 441 commits alcançáveis a partir do SHA (37 merges; 524 em todos os refs). Os autores são `seffs`/“Seff” (noreply, 417 no total do SHA), `chrissummer1311` (23) e `nicolasleonri` (1). A raiz é `57ee939` (2026-02-04, “Initial release”); o SHA é `2ca5381` (2026-08-04, “fix(wrangler): restore wrangler.toml”). O histórico registra o deploy na Vercel (`7255e5d`, 2026-05-11, “feat: deploy into vercel”) e a revisão dessa migração (`eb5de1d`, 2026-08-04). Os oito branches remotos (`feat/*`, `architecture/analytics` etc.) não foram considerados. O `git log -S microfrontends.json` não completou por blob ausente no clone parcial (`dc1cc5d9…`), que não foi buscado; o clone ficou inalterado.
+Non-shallow clone. There are 441 commits reachable from the SHA (37 merges; 524 across all refs). Authors are `seffs`/“Seff” (noreply, 417 total at the SHA), `chrissummer1311` (23) and `nicolasleonri` (1). Root is `57ee939` (2026-02-04, “Initial release”); SHA is `2ca5381` (2026-08-04, “fix(wrangler): restore wrangler.toml”). History records Vercel deployment (`7255e5d`, 2026-05-11, “feat: deploy into vercel”) and revision of that migration (`eb5de1d`, 2026-08-04). Eight remote branches (`feat/*`, `architecture/analytics` etc.) were not considered. `git log -S microfrontends.json` did not complete because of a missing blob in the partial clone (`dc1cc5d9…`), which was not fetched; the clone remained unchanged.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única aplicação frontend; nenhuma configuração de composição no snapshot. Os submódulos são ativos e configuração de Worker, não unidades frontend. |
-| Q2 | No | Não há segunda unidade cuja independência possa ser avaliada. |
-| Q3 | No | O repositório não contém host. A montagem sob host externo é só mencionada (`README.md:299–301`). |
-| Q4 | No | Nenhum mecanismo de composição configurado; a configuração de microfrontends da Vercel foi removida (`docs/DECISIONS/0002-architecture-refactor.md:30–31`; `AGENTS.md:28–29`). |
-| Q5 | No | Q1–Q4 são No: SPA única cuja integração em host é externa e só por sub-caminho. |
+| Q1 | No | A single frontend application; no composition configuration in the snapshot. Submodules are assets and Worker configuration, rather than frontend units. |
+| Q2 | No | There is no second unit whose independence could be assessed. |
+| Q3 | No | Repository contains no host. Mounting under an external host is only mentioned (`README.md:299–301`). |
+| Q4 | No | No configured composition mechanism; Vercel microfrontends configuration was removed (`docs/DECISIONS/0002-architecture-refactor.md:30–31`; `AGENTS.md:28–29`). |
+| Q5 | No | Q1–Q4 are No: single SPA whose host integration is external and only through a subpath. |
 
-## Motivo
+## Rationale
 
-- Proposta `Non-MFE` com `status: review`. Corresponde a “conventional frontend monoliths” e, para o histórico, a “MFE-related dependencies that are unused”: a configuração de microfrontends existiu e foi deliberadamente removida.
-- A revisão se justifica pela frase do README sobre montagem sob o sub-caminho de um “host microfrontend”, junto com `base: '/electometro/'`. Isso é composição por caminho (roteamento/link no host), o tipo da decisão aberta do checklist “Link-only or iframe composition”, aqui sem host nem configuração observáveis.
-- Não se aplica MFE-unit com segurança: a preparação é só servir a SPA sob um caminho base, sem `exposes`, lifecycles, custom element ou registro.
-- `frontend_units: 1`, `single-unit`, `ui_technologies: [react]`, `build_tools: [vite]`. `repo_type: production` (site público, deploy em Cloudflare).
+- Proposed `Non-MFE` with `status: review`. Matches “conventional frontend monoliths” and, historically, “MFE-related dependencies that are unused”: microfrontends configuration existed and was deliberately removed.
+- Review is justified by README phrase about mounting under a “host microfrontend” subpath, together with `base: '/electometro/'`. This is path composition (host routing/linking), the type in open checklist decision “Link-only or iframe composition”, here without observable host or configuration.
+- MFE-unit cannot safely apply: preparation is only serving the SPA under a base path, without `exposes`, lifecycles, custom element or registration.
+- `frontend_units: 1`, `single-unit`, `ui_technologies: [react]`, `build_tools: [vite]`. `repo_type: production` (public site, Cloudflare deployment).
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** projeto que abandonou uma configuração de microfrontends (Vercel) mas mantém referências no README, no ADR, no CHANGELOG e nas instruções de agente.
-- **RQ3:** o histórico registra a passagem por microfrontends da Vercel e o retorno a build único. Pode interessar como caso de reversão, fora do snapshot.
-- **Protocolo (busca):** o hit plural não tem grafia literal no README. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ1 (misleading signals):** project abandoning a microfrontends configuration (Vercel) but retaining references in README, ADR, CHANGELOG and agent instructions.
+- **RQ3:** history records passage through Vercel microfrontends and return to a single build. Potentially interesting as a reversal case, outside the snapshot.
+- **Protocol (search):** plural hit has no literal spelling in README. Eligibility changes from `unknown` (001) to `pass` (002).
 
-## Ponto para revisão conjunta
+## Point for joint review
 
-Decidir se a menção a montagem sob o sub-caminho de um host externo (`README.md:299–301`), com `base` dedicado e sem configuração de composição no snapshot, basta para tratar o repositório como unidade preparada para composição.
+Decide whether mentioning mounting under an external host subpath (`README.md:299–301`), with dedicated `base` and no snapshot composition configuration, suffices to treat repository as a unit prepared for composition.
 
-- **Non-MFE (proposto):** não há mecanismo configurado; a configuração MFE foi removida (ADR 0002), e o caso se reduz a uma SPA servida sob caminho.
-- **MFE-unit:** se a composição por caminho (zonas, links) contar como mecanismo e o `base` com `HashRouter` for preparação explícita para o host externo.
+- **Non-MFE (proposed):** no configured mechanism; MFE configuration was removed (ADR 0002), and case reduces to an SPA served under a path.
+- **MFE-unit:** if path composition (zones, links) counts as a mechanism and `base` with `HashRouter` is explicit preparation for the external host.
 
-Não se propõe regra nova. Até a decisão, preservar `Non-MFE`/`review`.
-- **Contribuição da revisão independente (Lupa):** concordância com Non-MFE (provisória) e `review`; não há base para promover a `final`. Q1 a Q5 No descrevem corretamente o snapshot pela leitura literal do checklist; a alternativa real é MFE-unit por montagem em subcaminho: o README diz que a SPA às vezes é montada sob `/electometro` de um host microfrontend (`README.md:299–301`), o Vite configura esse `base` (`vite.config.js:212–221`) e a aplicação usa `HashRouter`. O repositório não contém a configuração do host, e o checklist deixa em aberto se composição por caminho conta; a questão não resolvida é essa regra, e não uma configuração MFE cujo uso seja obscuro. Os submódulos ausentes são identificados como ativos de tradução e backend/Worker (`external/peru-assets`, `external/cf-workers`), não como aplicações frontend nem remotes. Correções de rastreabilidade: Q1, Q2 e Q5 devem citar `src/main.jsx:13–31`, `src/App.jsx:2,302–328` e `vite.config.js:212–221`; os symlinks `public`, `i18n` e `wrangler` descritos em `AGENTS.md:25–27` não existem no clone inspecionado (os submódulos estão vazios), e devem ser apresentados como configuração esperada não materializada, não como conteúdo observado no checkout, de modo que o build e a configuração externos não foram integralmente resolvidos offline. A busca histórica `git log -S'microfrontends.json'` e a travessia ampla de `git log --name-status` falham por blobs promisor ausentes (`dc1cc5d…`, `aacaae4…`), e os refs locais mostram 16 branches além de `origin/HEAD`.
+No new rule is proposed. Until a decision, preserve `Non-MFE`/`review`.
+- **Independent review contribution (Lupa):** agreement with Non-MFE (provisional) and `review`; no basis for promotion to `final`. Q1 through Q5 No correctly describe the snapshot under a literal checklist reading; the real alternative is MFE-unit through subpath mounting: README says SPA is sometimes mounted under `/electometro` of a host microfrontend (`README.md:299–301`), Vite configures that `base` (`vite.config.js:212–221`) and application uses `HashRouter`. Repository does not contain host configuration, and checklist leaves open whether path composition counts; that rule is unresolved, rather than an MFE configuration with obscure use. Missing submodules are identified as translation assets and backend/Worker (`external/peru-assets`, `external/cf-workers`), rather than frontend applications or remotes. Traceability corrections: Q1, Q2 and Q5 should cite `src/main.jsx:13–31`, `src/App.jsx:2,302–328` and `vite.config.js:212–221`; symlinks `public`, `i18n` and `wrangler` described in `AGENTS.md:25–27` do not exist in the inspected clone (submodules are empty), and should be presented as expected, unmaterialized configuration, rather than observed checkout content, so build and external configuration were not fully resolved offline. Historical search `git log -S'microfrontends.json'` and broad `git log --name-status` traversal fail because of missing promisor blobs (`dc1cc5d…`, `aacaae4…`), and local refs show 16 branches besides `origin/HEAD`.

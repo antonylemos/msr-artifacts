@@ -20,56 +20,57 @@ annotation:
 
 # 143 — Residencias-Faculdade/MicroFrontend
 
-## Leitura do repositório
+## Repository overview
 
-O repositório contém só a casca (`.`), uma aplicação Vite + TypeScript sem framework que se
-apresenta como "Biblioteca Shell para Micro Frontends via Web Components" e promete plugar
-"qualquer frontend que exponha um `Custom Element`" sem rebuild da casca (README.md:1-3). Os
-frontends plugados ficam em outros repositórios, de outras equipes: o registro diz "Projeto da
-equipe 2 (Member Manager)" (public/microfrontends.json:3).
+The repository contains only the shell (`.`), a framework-free Vite + TypeScript application presenting itself
+as "Biblioteca Shell para Micro Frontends via Web Components" (English translation: Shell Library for Micro Frontends via Web Components) and promising to plug in
+"qualquer frontend que exponha um `Custom Element`" (English translation: any frontend exposing a Custom Element) without rebuilding the shell (README.md:1-3). The
+plugged-in frontends reside in other repositories, belonging to other teams: the registry says "Projeto da
+equipe 2 (Member Manager)" (English translation: Team Two project (Member Manager)) (public/microfrontends.json:3).
 
-A composição é por registro lido em runtime. Depois do login obrigatório no Keycloak
-(`onLoad: 'login-required'`, src/main.ts:74-78), a casca busca `/microfrontends.json`
-(src/main.ts:139) e, para cada entrada, cria um botão na barra lateral e um wrapper com a tag do
-custom element (``mount.innerHTML = `<${entry.tag}></${entry.tag}>` ``, src/main.ts:167),
-anexado ao container `#microfrontends` (src/main.ts:169, index.html:31). Ao selecionar uma
-entrada, a casca injeta `<script type="module" src=url>` no `head` se a tag ainda não estiver
-definida (src/main.ts:219-231); o bundle externo é que deve chamar `customElements.define(tag)`
-(comentário em src/main.ts:218). A única entrada do registro é `member-manager`, servida de
-`https://crud-member-manager.vercel.app/main.js` (public/microfrontends.json:4-6), fora do
-snapshot. O propósito é de exemplo de integração entre equipes.
+Composition uses a registry read at runtime. After mandatory Keycloak login
+(`onLoad: 'login-required'`, src/main.ts:74-78), the shell fetches `/microfrontends.json`
+(src/main.ts:139) and, for each entry, creates a sidebar button and a wrapper with the
+custom element tag (``mount.innerHTML = `<${entry.tag}></${entry.tag}>` ``, src/main.ts:167),
+appended to container `#microfrontends` (src/main.ts:169, index.html:31). When an entry is
+selected, the shell injects `<script type="module" src=url>` into `head` if the tag is not yet
+defined (src/main.ts:219-231); the external bundle must call `customElements.define(tag)`
+(comment in src/main.ts:218). The registry's only entry is `member-manager`, served from
+`https://crud-member-manager.vercel.app/main.js` (public/microfrontends.json:4-6), outside the
+snapshot. Its purpose is an example of integration between teams.
 
-O que não virou relação: o `docker-compose.yml` sobe um serviço `posts-crud`, descrito como
-"Micro frontend Angular (outro repo)" que deve registrar `customElements.define('posts-crud')`
-(docker-compose.yml:17-18), com `context` fora do repositório (docker-compose.yml:21), e o
-comentário src/main.ts:165 usa `<posts-crud></posts-crud>` como exemplo; mas `posts-crud` não
-está no registro (public/microfrontends.json:1-8) e nenhum código da casca o carrega, então não há
-relação. A página `public/silent-check-sso.html` faz `postMessage` para a biblioteca do Keycloak,
-não para outra unidade frontend. Não há troca de mensagens nem repasse de token entre a casca e o
-custom element no snapshot.
+What did not become a relationship: `docker-compose.yml` starts a `posts-crud` service, described as
+"Micro frontend Angular (outro repo)" (English translation: Angular micro frontend (another repo)), which must register `customElements.define('posts-crud')`
+(docker-compose.yml:17-18), with `context` outside the repository (docker-compose.yml:21), and the
+src/main.ts:165 comment uses `<posts-crud></posts-crud>` as an example; however, `posts-crud` is not
+in the registry (public/microfrontends.json:1-8) and no shell code loads it, so there is no
+relationship. The `public/silent-check-sso.html` page calls `postMessage` to the Keycloak library,
+not another frontend unit. There is no message exchange or token forwarding between shell and
+custom element in the snapshot.
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | . | member-manager | application → custom-element | origem → destino | web-components | No | Yes | public/microfrontends.json:4-6 (`tag: member-manager`, `url: https://crud-member-manager.vercel.app/main.js`) | src/main.ts:225; public/microfrontends.json:4; src/main.ts:167 |
+| 1 | . | member-manager | application → custom-element | source → target | web-components | No | Yes | public/microfrontends.json:4-6 (`tag: member-manager`, `url: https://crud-member-manager.vercel.app/main.js`) | src/main.ts:225; public/microfrontends.json:4; src/main.ts:167 |
 
-## Observações
+## Observations
 
-**1. . → member-manager.** A casca usa a tag `<member-manager>`, montada por template string a
-partir do registro (src/main.ts:167; tag em public/microfrontends.json:4), e carrega o script que
-a define com `document.createElement('script')`, `type = 'module'` e `src = url`
-(src/main.ts:225-227, anexado em src/main.ts:230); pela regra do tipo, o script entra na mesma
-relação da tag. O destino é o nome da tag como aparece no registro: o bundle vem de
-`https://crud-member-manager.vercel.app/main.js` (public/microfrontends.json:6), e nenhuma
-unidade do snapshot define esse elemento, por isso No snapshot `No`. Ativa `Yes`: as três linhas
-da revisão de código-fonte são `Yes`, numa cadeia que parte da entrada (index.html:34 →
-`initAuth()` em src/main.ts:234 → `loadMicrofrontends()` em src/main.ts:81 →
-`selectMicrofrontend()` em src/main.ts:174 → `loadScript` em src/main.ts:210). O registro
-aparece na Configuração por ser a declaração que liga a casca à unidade, e no Código porque a
-revisão de código-fonte o registrou como construção manual.
+**1. . → member-manager.** The shell uses tag `<member-manager>`, assembled by template string from
+the registry (src/main.ts:167; tag in public/microfrontends.json:4), and loads the script defining
+it with `document.createElement('script')`, `type = 'module'` and `src = url`
+(src/main.ts:225-227, appended in src/main.ts:230); under the type rule, the script belongs to the same
+relationship as the tag. The target is the tag name as appearing in the registry: the bundle comes from
+`https://crud-member-manager.vercel.app/main.js` (public/microfrontends.json:6), and no
+snapshot unit defines that element, hence In snapshot `No`. Active `Yes`: all three source code review
+lines are `Yes`, in a chain originating at the entry point (index.html:34 →
+`initAuth()` in src/main.ts:234 → `loadMicrofrontends()` in src/main.ts:81 →
+`selectMicrofrontend()` in src/main.ts:174 → `loadScript` in src/main.ts:210). The registry
+appears in Configuration as the declaration connecting shell to unit, and in Code because the
+source code review recorded it as a manual construct.
 
-## Resumo
+## Summary
 
-Relações: 1 (application → custom-element: 1). Ativas: 1. Destino fora do snapshot: 1.
-Unidades sem relação: nenhuma.
+Relationships: 1 (application → custom-element: 1). Active: 1. Target outside the snapshot: 1.
+Units without a relationship: none.
+

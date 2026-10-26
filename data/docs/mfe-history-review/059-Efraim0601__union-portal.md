@@ -13,43 +13,43 @@ annotation:
 
 # 059 — Efraim0601/union-portal
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem 37 commits em seis dias, de 2026-07-11 a 2026-07-16, com dois merges de branches de funcionalidade.
+History up to snapshot has 37 commits over six days, from 2026-07-11 to 2026-07-16, with two feature branch merges.
 
-A composição por Native Federation já está presente no primeiro commit observado, `012b229` (2026-07-11, "Portail unifié Afriland : shell + promote + diaspora (Native Federation)"). Esse commit tem 103 arquivos em `projects/`, e as rotas do shell já chamam `loadRemoteModule` para os dois remotes. O histórico disponível não mostra uma preparação anterior. O README declara que as páginas do promote foram "migrées de `promoteApp/frontend`" (README.md:28), mas este histórico não permite verificar uma extração de aplicação.
+Native Federation composition is already present in first observed commit, `012b229` (2026-07-11, "Portail unifié Afriland : shell + promote + diaspora (Native Federation)" (English translation: "Unified Afriland portal: shell + promote + diaspora (Native Federation)")). This commit has 103 files in `projects/`, and shell routes already call `loadRemoteModule` for both remotes. Available history shows no earlier preparation. README states promote pages were "migrées de `promoteApp/frontend`" (English translation: "migrated from promoteApp/frontend") (README.md:28), but this history cannot verify application extraction.
 
-O clone permite ver mensagens, datas, arquivos tocados por commit e os identificadores dos objetos de cada versão. O conteúdo de versões antigas só pode ser lido quando o objeto está disponível localmente. Aqui, `012b229:package.json` e `81b1158:deploy/nginx.conf` não estão; `cd974b8:package.json` e `1cea70e:projects/diaspora/src/app/core/admin-auth.ts` estão.
+Clone reveals messages, dates, files touched per commit and object identifiers of each version. Old version contents can only be read when object is locally available. Here, `012b229:package.json` and `81b1158:deploy/nginx.conf` are not; `cd974b8:package.json` and `1cea70e:projects/diaspora/src/app/core/admin-auth.ts` are.
 
-Não virou ponto o "module federation" da abertura do README (afirmação 8 da revisão de documentação). O próprio README nomeia a tecnologia certa na linha 17, e a dúvida é só de nome.
+Opening README "module federation" did not become a point (claim 8 of documentation review). README itself names correct technology on line 17, and uncertainty concerns only naming.
 
-## Pontos
+## Points
 
-| # | Ponto | Origem | Pergunta | Commits | Resultado |
+| # | Point | Origin | Question | Commits | Result |
 |---|---|---|---|---|---|
-| 1 | `@softarc/native-federation-node` declarada e sem uso | 3.4.2 (package.json:28) | uso de dependência | cd974b8 2026-07-14 feat(diaspora): parcours d'ouverture de compte particulier complet; 012b229 2026-07-11 Portail unifié Afriland : shell + promote + diaspora (Native Federation) | inconclusivo |
-| 2 | O iframe do fluxo legado conta com um reverse proxy que o nginx do snapshot não tem | 3.4.4 (projects/diaspora/src/app/pages/legacy-onboarding.ts:31); 3.4.5 #3; 3.4.7 #22, #24 | estágios em conflito | 1e8d9fb 2026-07-15 feat(diaspora): route optionnelle « onboarding-legacy » (iframe FastAPI); 81b1158 2026-07-15 feat(deploy): exposer le back-office diaspora via le gateway du portail; 092eff1 2026-07-16 fix(gateway): servir /mediapipe à la racine pour la capture selfie en fédération; bf7d95d 2026-07-16 merge(deploy): exposer le back-office diaspora via le gateway (feat/backoffice-gateway) | inconclusivo |
-| 3 | `@union/auth` existe e nenhuma aplicação a usa, apesar do SSO documentado | 3.4.4 (projects/auth/src/lib/client-auth-store.ts:71); 3.4.7 #3, #11, #12 | ativo ou abandonado | 012b229 2026-07-11 Portail unifié Afriland : shell + promote + diaspora (Native Federation); 77c7b4f 2026-07-12 fix(promote): attache le JWT en fédération (403 sur tout l'espace authentifié); 1cea70e 2026-07-15 Nouveau maj | inconclusivo |
-| 4 | Os componentes do design-system não são usados, e o README fala em adoção "progressive" | 3.4.7 #18 | ativo ou abandonado | 012b229 2026-07-11 Portail unifié Afriland : shell + promote + diaspora (Native Federation) | inconclusivo |
-| 5 | O shell "provisionne" o `ClientAuthStore` no bootstrap, segundo o comentário, mas não o faz | 3.4.7 #26 | ativo ou abandonado | 012b229 2026-07-11 Portail unifié Afriland : shell + promote + diaspora (Native Federation) | esclarecido |
+| 1 | `@softarc/native-federation-node` declared and unused | 3.4.2 (package.json:28) | dependency use | cd974b8 2026-07-14 feat(diaspora): parcours d'ouverture de compte particulier complet (English translation: "feat(diaspora): complete personal account opening flow"); 012b229 2026-07-11 Portail unifié Afriland : shell + promote + diaspora (Native Federation) (English translation: "Unified Afriland portal: shell + promote + diaspora (Native Federation)") | inconclusive |
+| 2 | Legacy flow iframe relies on a reverse proxy absent from snapshot nginx | 3.4.4 (projects/diaspora/src/app/pages/legacy-onboarding.ts:31); 3.4.5 #3; 3.4.7 #22, #24 | conflicting stages | 1e8d9fb 2026-07-15 feat(diaspora): route optionnelle « onboarding-legacy » (iframe FastAPI) (English translation: "feat(diaspora): optional onboarding-legacy route (FastAPI iframe)"); 81b1158 2026-07-15 feat(deploy): exposer le back-office diaspora via le gateway du portail (English translation: "feat(deploy): expose diaspora back-office through portal gateway"); 092eff1 2026-07-16 fix(gateway): servir /mediapipe à la racine pour la capture selfie en fédération (English translation: "fix(gateway): serve /mediapipe at root for federated selfie capture"); bf7d95d 2026-07-16 merge(deploy): exposer le back-office diaspora via le gateway (feat/backoffice-gateway) (English translation: "merge(deploy): expose diaspora back-office through gateway (feat/backoffice-gateway)") | inconclusive |
+| 3 | `@union/auth` exists and no application uses it, despite documented SSO | 3.4.4 (projects/auth/src/lib/client-auth-store.ts:71); 3.4.7 #3, #11, #12 | active or abandoned | 012b229 2026-07-11 Portail unifié Afriland : shell + promote + diaspora (Native Federation) (English translation: "Unified Afriland portal: shell + promote + diaspora (Native Federation)"); 77c7b4f 2026-07-12 fix(promote): attache le JWT en fédération (403 sur tout l'espace authentifié) (English translation: "fix(promote): attach JWT in federation (403 throughout authenticated area)"); 1cea70e 2026-07-15 Nouveau maj (English translation: "New update") | inconclusive |
+| 4 | Design-system components are unused, and README discusses "progressive" adoption | 3.4.7 #18 | active or abandoned | 012b229 2026-07-11 Portail unifié Afriland : shell + promote + diaspora (Native Federation) (English translation: "Unified Afriland portal: shell + promote + diaspora (Native Federation)") | inconclusive |
+| 5 | Shell "provisionne" (English translation: "provides") `ClientAuthStore` at bootstrap, according to comment, but does not | 3.4.7 #26 | active or abandoned | 012b229 2026-07-11 Portail unifié Afriland : shell + promote + diaspora (Native Federation) (English translation: "Unified Afriland portal: shell + promote + diaspora (Native Federation)") | clarified |
 
-## Observações
+## Observations
 
-**1. `@softarc/native-federation-node` declarada e sem uso.** O `package.json` mudou só duas vezes: no commit inicial e em `cd974b8`. Pelas mensagens e pelos arquivos tocados, `cd974b8` também cria o servidor `server/diaspora-otp`. A versão de `cd974b8` já declara a dependência, mas a do commit inicial não está disponível. Não dá para saber se ela entrou no início ou junto com o servidor, nem se algum arquivo a usou antes. A dependência continua `No` no snapshot.
+**1. `@softarc/native-federation-node` declared and unused.** The `package.json` changed only twice: initial commit and `cd974b8`. According to messages and touched files, `cd974b8` also creates server `server/diaspora-otp`. Version at `cd974b8` already declares dependency, but initial commit version is unavailable. Whether it entered initially or with server, or whether any file used it earlier, cannot be known. Dependency remains `No` in snapshot.
 
-**2. O iframe do fluxo legado conta com um reverse proxy que o nginx do snapshot não tem.** O commit que cria o iframe, `1e8d9fb`, alterou só `projects/diaspora/src/app/app.routes.ts` e criou `legacy-onboarding.ts`, sem tocar no deploy. As mensagens dos commits seguintes no `deploy/nginx.conf` anunciam o back-office e o MediaPipe. A versão do nginx em `81b1158` não está disponível, e não dá para saber se alguma versão anterior teve rota para `/open-account-flow-test`. O comentário pode se referir a um proxy fora do repositório.
+**2. Legacy flow iframe relies on a reverse proxy absent from snapshot nginx.** Commit creating iframe, `1e8d9fb`, changed only `projects/diaspora/src/app/app.routes.ts` and created `legacy-onboarding.ts`, without touching deploy. Messages of following commits in `deploy/nginx.conf` announce back-office and MediaPipe. Nginx version at `81b1158` is unavailable, so whether any earlier version routed `/open-account-flow-test` cannot be known. Comment may refer to a proxy outside repository.
 
-**3. `@union/auth` existe e nenhuma aplicação a usa, apesar do SSO documentado.** A biblioteca (`client-auth-store.ts` e `public-api.ts`) aparece no commit inicial e não muda até o snapshot. Do lado das aplicações:
-- o `auth.ts` do promote mudou em `77c7b4f`, cuja mensagem anuncia uma correção no envio do JWT em federação;
-- o `admin-auth.ts` do diaspora é criado em `1cea70e` (2026-07-15), e a versão desse commit, disponível no clone, já traz o comentário de que `@union/auth` "n'est branché nulle part".
+**3. `@union/auth` exists and no application uses it, despite documented SSO.** Library (`client-auth-store.ts` and `public-api.ts`) appears in initial commit and never changes up to snapshot. On application side:
+- promote `auth.ts` changed in `77c7b4f`, whose message announces a JWT transmission fix in federation;
+- diaspora `admin-auth.ts` is created in `1cea70e` (2026-07-15), and that commit’s version, available in clone, already comments that `@union/auth` "n'est branché nulle part" (English translation: "is not connected anywhere").
 
-A versão inicial de `projects/promote/src/app/core/auth.ts` não está disponível, e não dá para excluir que as aplicações tenham usado a biblioteca antes. O que o histórico confirma é que a biblioteca nunca mudou e que, de 2026-07-15 até o snapshot, ela está documentada como não conectada.
+Initial version of `projects/promote/src/app/core/auth.ts` is unavailable, so earlier application use of library cannot be excluded. History confirms library never changed and was documented as unconnected from 2026-07-15 to snapshot.
 
-**4. Os componentes do design-system não são usados, e o README fala em adoção "progressive".** A pasta `projects/design-system` aparece no commit inicial e não muda até o snapshot. Não dá para saber, pelo histórico disponível, se alguma aplicação usou os componentes antes e deixou de usar, ou se nunca usou. "Progressive" não tem confirmação nem desmentido.
+**4. Design-system components are unused, and README discusses "progressive" adoption.** Directory `projects/design-system` appears in initial commit and never changes up to snapshot. Available history cannot establish whether an application previously used components then stopped, or never used them. "Progressive" is neither confirmed nor disproved.
 
-**5. O shell "provisionne" o `ClientAuthStore` no bootstrap, segundo o comentário, mas não o faz.** `bootstrap.ts`, `main.ts`, `app.config.ts` e `app.ts` do shell aparecem no commit inicial com os mesmos identificadores de objeto que têm no snapshot, e nenhum commit os altera. O provisionamento anunciado no comentário (projects/shell/src/app/app.ts:7) está ausente desse bootstrap desde o primeiro commit observado, e não houve remoção nesses arquivos. O histórico não diz por que o comentário anuncia algo que o código nunca fez.
+**5. Shell "provisionne" (English translation: "provides") `ClientAuthStore` at bootstrap, according to comment, but does not.** Shell `bootstrap.ts`, `main.ts`, `app.config.ts` and `app.ts` appear in initial commit with same object identifiers as snapshot, and no commit changes them. Provisioning announced by comment (projects/shell/src/app/app.ts:7) has been absent from this bootstrap since first observed commit, without removal in these files. History does not say why comment announces something code never did.
 
-## Comandos
+## Commands
 
 ```
 docs/mfe-history-review/tools/hist.sh Efraim0601__union-portal rev-list --count b11a3e3aa55aff8195e0cde0026ccbd45245266d
@@ -58,16 +58,16 @@ docs/mfe-history-review/tools/hist.sh Efraim0601__union-portal log --merges --fo
 docs/mfe-history-review/tools/hist.sh Efraim0601__union-portal ls-tree -r --name-only 012b229
 docs/mfe-history-review/tools/hist.sh Efraim0601__union-portal show 012b229:projects/shell/src/app/app.routes.ts
 docs/mfe-history-review/tools/hist.sh Efraim0601__union-portal log --format='%h %ad %s' --date=short b11a3e3aa55aff8195e0cde0026ccbd45245266d -- package.json
-docs/mfe-history-review/tools/hist.sh Efraim0601__union-portal show 012b229:package.json   # falha: objeto ausente
+docs/mfe-history-review/tools/hist.sh Efraim0601__union-portal show 012b229:package.json   # failure: missing object
 docs/mfe-history-review/tools/hist.sh Efraim0601__union-portal show cd974b8:package.json
 docs/mfe-history-review/tools/hist.sh Efraim0601__union-portal show --name-status --format='%h %ad %s' --date=short cd974b8
 docs/mfe-history-review/tools/hist.sh Efraim0601__union-portal show --name-status --format='%h %ad %s' 1e8d9fb
 docs/mfe-history-review/tools/hist.sh Efraim0601__union-portal log --format='%h %ad %s' --date=short b11a3e3aa55aff8195e0cde0026ccbd45245266d -- deploy/nginx.conf docker-compose.yml
-docs/mfe-history-review/tools/hist.sh Efraim0601__union-portal show 81b1158:deploy/nginx.conf   # falha: objeto ausente
+docs/mfe-history-review/tools/hist.sh Efraim0601__union-portal show 81b1158:deploy/nginx.conf   # failure: missing object
 docs/mfe-history-review/tools/hist.sh Efraim0601__union-portal log --format='%h %ad' --date=short b11a3e3aa55aff8195e0cde0026ccbd45245266d -- projects/auth/src/lib/client-auth-store.ts
 docs/mfe-history-review/tools/hist.sh Efraim0601__union-portal log --format='%h %ad' --date=short b11a3e3aa55aff8195e0cde0026ccbd45245266d -- projects/auth/src/public-api.ts
 docs/mfe-history-review/tools/hist.sh Efraim0601__union-portal log --format='%h %ad %s' --date=short b11a3e3aa55aff8195e0cde0026ccbd45245266d -- projects/promote/src/app/core/auth.ts projects/diaspora/src/app/core/admin-auth.ts
-docs/mfe-history-review/tools/hist.sh Efraim0601__union-portal show 012b229:projects/promote/src/app/core/auth.ts   # falha: objeto ausente
+docs/mfe-history-review/tools/hist.sh Efraim0601__union-portal show 012b229:projects/promote/src/app/core/auth.ts   # failure: missing object
 docs/mfe-history-review/tools/hist.sh Efraim0601__union-portal show --name-status --format='%h %ad %s' --date=short 1cea70e
 docs/mfe-history-review/tools/hist.sh Efraim0601__union-portal show 1cea70e:projects/diaspora/src/app/core/admin-auth.ts
 docs/mfe-history-review/tools/hist.sh Efraim0601__union-portal log --format='%h %ad %s' --date=short b11a3e3aa55aff8195e0cde0026ccbd45245266d -- projects/design-system
@@ -79,6 +79,6 @@ docs/mfe-history-review/tools/hist.sh Efraim0601__union-portal ls-tree 012b229 -
 docs/mfe-history-review/tools/hist.sh Efraim0601__union-portal ls-tree b11a3e3aa55aff8195e0cde0026ccbd45245266d -- projects/shell/src/bootstrap.ts projects/shell/src/main.ts projects/shell/src/app/app.config.ts projects/shell/src/app/app.ts
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 37 (2026-07-11 a 2026-07-16). Pontos: 5 (esclarecido: 1, inconclusivo: 4, resolvido pelo snapshot: 0).
+Commits up to the snapshot: 37 (2026-07-11 to 2026-07-16). Points: 5 (clarified: 1, inconclusive: 4, resolved by the snapshot: 0).

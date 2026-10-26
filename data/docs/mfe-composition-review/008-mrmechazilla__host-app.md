@@ -20,26 +20,27 @@ annotation:
 
 # 008 — mrmechazilla/host-app
 
-## Leitura do repositório
+## Repository overview
 
-O repositório contém só o host Angular de um sistema distribuído em vários repositórios. Os remotes `users-mfe` e `payments-mfe` estão fora do snapshot e são conhecidos apenas pelo manifesto `public/mf.manifest.json`, que aponta para `localhost:4202` e `localhost:4203`. O host carrega esse manifesto antes do bootstrap (src/main.ts:4-7) e monta as rotas de `users-mfe` na rota raiz (src/app/app.routes.ts:4-15). Se o remote falhar, apenas registra "service unavailable" (src/app/app.routes.ts:14).
+The repository contains only the Angular host of a system distributed across several repositories. The `users-mfe` and `payments-mfe` remotes are outside the snapshot and known only through the `public/mf.manifest.json` manifest, which points to `localhost:4202` and `localhost:4203`. The host loads this manifest before bootstrap (src/main.ts:4-7) and mounts the `users-mfe` routes at the root route (src/app/app.routes.ts:4-15). If the remote fails, it only logs "service unavailable" (src/app/app.routes.ts:14).
 
-O manifesto traz metadados além do necessário para carregar (`displayName`, `routePath`, `exportName`, `type`; public/mf.manifest.json:2-19), sugerindo um menu ou roteamento gerado a partir dele, mas o código ativo usa só `users-mfe`, com valores fixos. `payments-mfe` é resolvido e nunca carregado. Há ainda um carregador genérico todo comentado (src/app/shared/utils/remote-loader.ts) e um tipo `RemoteConfig` sem uso (src/app/core/models/remote-config.ts:2), restos de uma versão mais dinâmica. O próprio host se declara `host-mfe`, com `exposes` vazio (webpack.config.js:3-7).
+The manifest contains metadata beyond what loading requires (`displayName`, `routePath`, `exportName`, `type`; public/mf.manifest.json:2-19), suggesting a menu or routing generated from it, but the active code uses only `users-mfe`, with fixed values. `payments-mfe` is resolved and never loaded. There is also an entirely commented-out generic loader (src/app/shared/utils/remote-loader.ts) and an unused `RemoteConfig` type (src/app/core/models/remote-config.ts:2), remnants of a more dynamic version. The host itself declares itself as `host-mfe`, with empty `exposes` (webpack.config.js:3-7).
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | . | users-mfe | host → remote | origem → destino | module-federation | No | Yes | public/mf.manifest.json:2-9 (`users-mfe` com `remoteEntry` `http://localhost:4202/remoteEntry.js` e `exposedModule` `./users`) | src/app/app.routes.ts:1; src/app/app.routes.ts:8; src/main.ts:2; src/main.ts:4 |
-| 2 | . | payments-mfe | host → remote | origem → destino | module-federation | No | Yes | public/mf.manifest.json:11-18 (`payments-mfe` com `remoteEntry` `http://localhost:4203/remoteEntry.js` e `exposedModule` `./payments`) | src/main.ts:2; src/main.ts:4 |
+| 1 | . | users-mfe | host → remote | source → target | module-federation | No | Yes | public/mf.manifest.json:2-9 (`users-mfe` with `remoteEntry` `http://localhost:4202/remoteEntry.js` and `exposedModule` `./users`) | src/app/app.routes.ts:1; src/app/app.routes.ts:8; src/main.ts:2; src/main.ts:4 |
+| 2 | . | payments-mfe | host → remote | source → target | module-federation | No | Yes | public/mf.manifest.json:11-18 (`payments-mfe` with `remoteEntry` `http://localhost:4203/remoteEntry.js` and `exposedModule` `./payments`) | src/main.ts:2; src/main.ts:4 |
 
-## Observações
+## Observations
 
-**1. . → users-mfe.** O host carrega `./users` de `users-mfe` pelo manifesto (src/app/app.routes.ts:8-13), depois de resolvê-lo em src/main.ts:4. O snapshot tem uma única unidade, e o remote está fora dele.
+**1. . → users-mfe.** The host loads `./users` from `users-mfe` through the manifest (src/app/app.routes.ts:8-13), after resolving it in src/main.ts:4. The snapshot has a single unit, and the remote is outside it.
 
-**2. . → payments-mfe.** O `loadManifest` ativo (src/main.ts:4) resolve `payments-mfe`, mas nenhuma rota o carrega (src/app/app.routes.ts:4-15 só usa `users-mfe`). Ativa = Yes porque a linha que o resolve é Yes na revisão de código-fonte; o uso efetivo do módulo não é observado. Fora do snapshot.
+**2. . → payments-mfe.** The active `loadManifest` (src/main.ts:4) resolves `payments-mfe`, but no route loads it (src/app/app.routes.ts:4-15 uses only `users-mfe`). Active = Yes because the line resolving it is Yes in the source code review; actual use of the module is not observed. Outside the snapshot.
 
-## Resumo
+## Summary
 
-Relações: 2 (host → remote: 2). Ativas: 2. Destino fora do snapshot: 2.
-Unidades sem relação: nenhuma.
+Relationships: 2 (host → remote: 2). Active: 2. Target outside the snapshot: 2.
+Units without a relationship: none.
+

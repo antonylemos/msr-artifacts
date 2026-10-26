@@ -13,30 +13,30 @@ annotation:
 
 # 163 — irfanswr/react-microfrontend
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem um único commit, `00ca0bf` (2025-08-21, "initial"), que é o próprio snapshot, sem merges. Os três projetos, `parent-app`, `react-child-app` e `vue-child-app`, chegaram de uma vez: todos os arquivos consultados têm nele a sua primeira presença observável, e não há commit que os introduza nem versão anterior. O histórico não traz nenhuma informação além do snapshot: não mostra estágios anteriores, abandonos nem onde o código foi feito antes do primeiro commit, e por isso não distingue o que veio dos geradores (create-single-spa, Vue CLI) do que foi escrito para o projeto.
+History up to snapshot has a single commit, `00ca0bf` (2025-08-21, "initial"), snapshot itself, without merges. Three projects, `parent-app`, `react-child-app` and `vue-child-app`, arrived together: every queried file has its first observable presence there, and there is no introduction commit or earlier version. History provides no information beyond snapshot: it shows no earlier stages, abandonment or where code was developed before first commit, and thus does not distinguish generator output (create-single-spa, Vue CLI) from code written for project.
 
-## Pontos
+## Points
 
-| # | Ponto | Origem | Pergunta | Commits | Resultado |
+| # | Point | Origin | Question | Commits | Result |
 |---|---|---|---|---|---|
-| 1 | `@types/systemjs` declarada e sem uso | 3.4.2 (parent-app/package.json:41) | uso de dependência | 00ca0bf 2025-08-21 initial | inconclusivo |
-| 2 | `vue-cli-plugin-single-spa` declarado sem import, invocação ou configuração, e o formato do bundle Vue depende dele | 3.4.2 (vue-child-app/package.json:24); 3.4.4 (Notas) | uso de dependência | 00ca0bf 2025-08-21 initial | inconclusivo |
-| 3 | A meta `import-map-overrides-domains` e as instruções sobre ela estão comentadas | 3.4.4 (parent-app/src/index.ejs:10, 11, 12) | ativo ou abandonado | 00ca0bf 2025-08-21 initial | inconclusivo |
-| 4 | O import map de produção está comentado, e só o modo local liga as aplicações | 3.4.4 (Notas; parent-app/src/index.ejs:30) | ativo ou abandonado | 00ca0bf 2025-08-21 initial | inconclusivo |
+| 1 | `@types/systemjs` declared and unused | 3.4.2 (parent-app/package.json:41) | dependency use | 00ca0bf 2025-08-21 initial | inconclusive |
+| 2 | `vue-cli-plugin-single-spa` declared without import, invocation or configuration, and Vue bundle format depends on it | 3.4.2 (vue-child-app/package.json:24); 3.4.4 (Notes) | dependency use | 00ca0bf 2025-08-21 initial | inconclusive |
+| 3 | Meta `import-map-overrides-domains` and its instructions are commented out | 3.4.4 (parent-app/src/index.ejs:10, 11, 12) | active or abandoned | 00ca0bf 2025-08-21 initial | inconclusive |
+| 4 | Production import map is commented out, and only local mode connects applications | 3.4.4 (Notes; parent-app/src/index.ejs:30) | active or abandoned | 00ca0bf 2025-08-21 initial | inconclusive |
 
-## Observações
+## Observations
 
-**1. `@types/systemjs` declarada e sem uso.** O `parent-app/package.json` chega com a declaração no único commit e não tem outra versão. O histórico não diz se o pacote chegou a ser usado antes do primeiro commit nem se veio apenas do gerador; continua sem uso no snapshot.
+**1. `@types/systemjs` declared and unused.** The `parent-app/package.json` arrives with declaration in sole commit and has no other version. History does not say whether package was ever used before first commit or came only from generator; it remains unused in snapshot.
 
-**2. `vue-cli-plugin-single-spa` declarado sem import, invocação ou configuração.** O `vue-child-app/package.json`, com o plugin em devDependencies, e o `vue-child-app/vue.config.js`, sem opções de saída, chegam juntos no único commit. Não há versão anterior de nenhum dos dois em que o plugin aparecesse configurado. O histórico não responde se o plugin é carregado pelo Vue CLI nem qual é o formato do bundle; a dúvida das revisões de dependências e de código-fonte fica como estava.
+**2. `vue-cli-plugin-single-spa` declared without import, invocation or configuration.** The `vue-child-app/package.json`, with plugin in devDependencies, and `vue-child-app/vue.config.js`, without output options, arrive together in sole commit. Neither has an earlier version showing plugin configured. History does not answer whether Vue CLI loads plugin or what bundle format is; uncertainty in dependency and source reviews remains unchanged.
 
-**3. A meta `import-map-overrides-domains` está comentada.** O `parent-app/src/index.ejs` chega com as linhas 10 a 12 já comentadas no único commit. Não dá para saber se a meta esteve ativa antes do primeiro commit ou se nunca foi descomentada.
+**3. Meta `import-map-overrides-domains` is commented out.** The `parent-app/src/index.ejs` arrives with lines 10 to 12 already commented out in sole commit. Whether meta was active before first commit or never uncommented cannot be known.
 
-**4. O import map de produção está comentado.** O mesmo `parent-app/src/index.ejs` chega no único commit com o mapa de produção comentado e o espaço reservado `src="/importmap.json"`, ao lado do mapa local. Não há versão em que o mapa de produção estivesse ativo nem commit que o comente. O histórico não diz se ele foi planejado e nunca conectado ou se é só o texto do gerador.
+**4. Production import map is commented out.** Same `parent-app/src/index.ejs` arrives in sole commit with production map commented out and placeholder `src="/importmap.json"`, alongside local map. There is no version where production map was active or commit commenting it out. History does not say whether it was planned and never connected or is only generator text.
 
-## Comandos
+## Commands
 
 ```
 docs/mfe-history-review/tools/hist.sh irfanswr__react-microfrontend rev-list --count 00ca0bf8640b7015f760f377f76c971b11fdc95c
@@ -48,6 +48,6 @@ docs/mfe-history-review/tools/hist.sh irfanswr__react-microfrontend log --format
 docs/mfe-history-review/tools/hist.sh irfanswr__react-microfrontend log --format='%h %ad' --date=short 00ca0bf8640b7015f760f377f76c971b11fdc95c -- parent-app/src/index.ejs
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 1 (2025-08-21 a 2025-08-21). Pontos: 4 (esclarecido: 0, inconclusivo: 4, resolvido pelo snapshot: 0).
+Commits up to the snapshot: 1 (2025-08-21 to 2025-08-21). Points: 4 (clarified: 0, inconclusive: 4, resolved by the snapshot: 0).

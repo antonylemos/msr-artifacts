@@ -16,23 +16,23 @@ annotation:
 
 # 335 — AstroSoup/web-lab-4
 
-## Leitura do repositório
+## Repository overview
 
-O único documento marcado como `documentation` no `artifacts.csv` é o README da raiz, lido integralmente: contém apenas o título “web-lab-4” (README.md:1), sem texto explicativo em português ou inglês. Não apresenta unidades, fronteiras, mecanismo de composição, compartilhamento ou condições de build e deploy. O `matches.csv` não contém ocorrências `doc-*`; portanto, não há ocorrências documentais a distribuir entre a tabela e esta leitura, nem README de template ou documento de terceiros a registrar.
+The sole document marked `documentation` in `artifacts.csv` is root README, read in full: only title “web-lab-4” (README.md:1), without Portuguese or English explanatory text. It presents no units, boundaries, composition mechanism, sharing or build/deployment conditions. `matches.csv` contains no `doc-*` occurrences; thus no documentary occurrences need distributing between table/overview, nor tool template README or third-party document recording.
 
-Foram conferidos os comentários e campos descritivos dos artefatos citados nas revisões 3.4.2–3.4.6: os três `package.json`, `vite.config.js` e `index.html` sob `frontend/vite/{host,remote-inputs,remote-results}`; no host, `src/main.js`, `src/App.vue`, `src/pages/MainPage.vue`, `src/common/Header.vue` e `src/stores/{HistoryStore,ErrorStore}.js`; no remote de entrada, `src/InputsContainer.vue` e `src/elements/GraphCanvas.vue`; no remote de resultados, `src/ResultsContainer.vue` e `src/elements/{GroupInput,Table}.vue`; além de `.gitignore`, `config/docker-compose.yaml`, `config/nginx/{Dockerfile,nginx.conf}`, `config/backend/{auth,broker,geometry,history}/Dockerfile` e `config/prometheus/prometheus.yml`. Os três manifestos não têm `description` e usam o nome genérico `vite-vue-starter` (frontend/vite/host/package.json:1-21; frontend/vite/remote-inputs/package.json:1-20; frontend/vite/remote-results/package.json:1-20). Os comentários nas configurações dos remotes são links para a documentação do Vite (frontend/vite/remote-inputs/vite.config.js:4; frontend/vite/remote-results/vite.config.js:4). Os demais comentários tratam de layout e desenho locais, como “Shared styles” dentro de uma folha de estilo (frontend/vite/host/src/pages/MainPage.vue:102; frontend/vite/remote-inputs/src/InputsContainer.vue:150; frontend/vite/remote-results/src/ResultsContainer.vue:93), ou são código de rota desativado (frontend/vite/host/src/main.js:13). Não afirmam compartilhamento entre unidades nem outra propriedade arquitetural do conjunto. O `config/frontend/Dockerfile` e os dois `src/main.js` dos remotes estão vazios.
+Comments/descriptive fields checked in artifacts cited by reviews 3.4.2–3.4.6: three `package.json`, `vite.config.js` and `index.html` under `frontend/vite/{host,remote-inputs,remote-results}`; host `src/main.js`, `src/App.vue`, `src/pages/MainPage.vue`, `src/common/Header.vue` and `src/stores/{HistoryStore,ErrorStore}.js`; input remote `src/InputsContainer.vue` and `src/elements/GraphCanvas.vue`; results remote `src/ResultsContainer.vue` and `src/elements/{GroupInput,Table}.vue`; plus `.gitignore`, `config/docker-compose.yaml`, `config/nginx/{Dockerfile,nginx.conf}`, `config/backend/{auth,broker,geometry,history}/Dockerfile` and `config/prometheus/prometheus.yml`. Three manifests lack `description`, using generic name `vite-vue-starter` (frontend/vite/host/package.json:1-21; frontend/vite/remote-inputs/package.json:1-20; frontend/vite/remote-results/package.json:1-20). Remote configuration comments link Vite documentation (frontend/vite/remote-inputs/vite.config.js:4; frontend/vite/remote-results/vite.config.js:4). Other comments concern local layout/drawing, such as “Shared styles” within stylesheet (frontend/vite/host/src/pages/MainPage.vue:102; frontend/vite/remote-inputs/src/InputsContainer.vue:150; frontend/vite/remote-results/src/ResultsContainer.vue:93), or disabled route code (frontend/vite/host/src/main.js:13). They claim neither inter-unit sharing nor another collective architectural property. `config/frontend/Dockerfile` and both remote `src/main.js` are empty.
 
-A ausência de afirmações documentais não contradiz nem acrescenta suporte semântico à implementação registrada nas revisões anteriores. O código do host importa e renderiza os dois painéis remotos (frontend/vite/host/src/pages/MainPage.vue:6-7,23-24; 3.4.5 #1–2), e o Dockerfile reúne os três `dist` em uma imagem nginx (config/nginx/Dockerfile:5-7; 3.4.6 #1–3). Essas são evidências de implementação, sem frase documental correspondente a confrontar nesta etapa. As cinco revisões anteriores estão `final`, com ID e commit iguais aos da classificação e da aquisição.
+Absence of documentary claims neither contradicts nor adds semantic support to implementation recorded by previous reviews. Host code imports/renders both remote panels (frontend/vite/host/src/pages/MainPage.vue:6-7,23-24; 3.4.5 #1–2), and Dockerfile combines three `dist` into one nginx image (config/nginx/Dockerfile:5-7; 3.4.6 #1–3). These are implementation evidence without a corresponding documentary sentence to compare at this stage. All five previous reviews are `final`, with classification/acquisition ID and commit.
 
-## Afirmações
+## Claims
 
-| # | Documento | Afirmação | Tema | Corroboração | Evidência |
+| # | Document | Claim | Theme | Corroboration | Evidence |
 |---|---|---|---|---|---|
 
-## Observações
+## Observations
 
-Nenhuma afirmação arquitetural identificada nos textos examinados.
+No architectural claims identified in examined texts.
 
-## Resumo
+## Summary
 
-Afirmações: 0.
+Claims: 0.

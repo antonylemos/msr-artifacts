@@ -20,59 +20,59 @@ annotation:
 
 # 366 — Erik786/univo-docs
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** não é projeto de software com implementação. É a documentação de produto (GitBook) de uma plataforma LMS (“LXS Univo — Product documentation, developer guides and roadmap”), só em Markdown e duas imagens. A documentação descreve três micro-frontends React mantidos em outros repositórios (`lms-mfe-app`, `lms-mfe-auth`, `lms-mfe-admin`, `architecture/micro-frontends.md:7–11`), cujo código não está neste snapshot. O nome do repositório não é usado como evidência.
+- **Repository type:** not a software project with an implementation. It is product documentation (GitBook) for an LMS platform (“LXS Univo — Product documentation, developer guides and roadmap”), comprising only Markdown and two images. Documentation describes three React micro-frontends maintained in other repositories (`lms-mfe-app`, `lms-mfe-auth`, `lms-mfe-admin`, `architecture/micro-frontends.md:7–11`), whose code is not in this snapshot. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:367` registra rank 366, ID 1322173014, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:367` records rank 366, ID 1322173014, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:367` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:34710` (`terminology`, `unknown`, regra `recent-human-commit` com `activity_incomplete`) e `data/discovery/mfe-round-002/candidates.csv:34716` (`terminology`, `pass`).
+`data/samples/mfe-sample-001/sample.csv:367` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:34710` (`terminology`, `unknown`, rule `recent-human-commit` with `activity_incomplete`) and `data/discovery/mfe-round-002/candidates.csv:34716` (`terminology`, `pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with an empty `path`:
 
-| Consulta (`q`) | Subconsulta | Consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Effective query | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | `terminology-micro-frontend-repositories#created:2026-08` | `"micro frontend" in:name,description,readme pushed:>=2025-04-01 created:2026-08-01..2026-08-31` | 2026-10-07T22:40:50.062Z / 2026-10-08T16:01:32.208Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | `terminology-micro-frontends-repositories#created:2026-08` | `"micro frontends" in:name,description,readme pushed:>=2025-04-01 created:2026-08-01..2026-08-31` | 2026-10-07T23:10:56.388Z / 2026-10-08T16:10:16.961Z |
 
-Metadados do hit: descrição “LXS Univo — Product documentation, developer guides and roadmap”, sem tópicos, linguagem nula, sem licença, `fork: false`, tamanho 3239, 1 estrela, criação em 2026-08-03T19:37:40Z, push em 2026-09-07T08:53:00Z.
+Hit metadata: description “LXS Univo — Product documentation, developer guides and roadmap”, no topics, null language, no license, `fork: false`, size 3239, 1 star, created at 2026-08-03T19:37:40Z, pushed at 2026-09-07T08:53:00Z.
 
-As duas grafias aparecem hifenizadas no README (hífen como separador): o plural em `README.md:33` (“React micro-frontends, GraphQL on AWS Lambda…”) e o singular em `README.md:71–73` (“React 17 SPA (micro-frontend)”, linhas da tabela de componentes). A última alteração do README é `1ce0772` (2026-09-04), anterior às coletas de 7 e 8 de outubro de 2026; não é posterior às buscas.
+Both spellings appear hyphenated in the README (hyphen as separator): plural in `README.md:33` (“React micro-frontends, GraphQL on AWS Lambda…”) and singular in `README.md:71–73` (“React 17 SPA (micro-frontend)”, component table rows). The last README change is `1ce0772` (2026-09-04), before the collections on October 7 and 8, 2026; it does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 41 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. São 39 arquivos Markdown (inclusive `SUMMARY.md` do GitBook e tradução em `fr/`) e duas imagens em `.gitbook/assets/`. Nenhum commit do histórico adicionou outro tipo de arquivo. | ausente |
-| Documentação (arquitetura) | `architecture/micro-frontends.md:3`: “three independent micro-frontends, each a separate Create React App (React 17) codebase”; `:7–11`: repositórios `lms-mfe-app`, `lms-mfe-auth`, `lms-mfe-admin`, servidos em `/app`, `/auth`, `/v2-admin`; `:15–17`: builds e deploys separados em S3/CloudFront sob um domínio; `:21–25`: sessão por JWT em `localStorage` e navegação entre MFEs por URLs de ambiente. | fraca |
-| Documentação (guias) | `developer-guides/mfe-app.md`, `mfe-admin.md`, `mfe-auth.md`: guias de desenvolvimento dos MFEs externos; `README.md:69–78`: tabela de componentes da plataforma. | contexto |
-| Tecnologia / Configuração / Código-fonte / Composição / Build/deploy | Inexistentes no snapshot; os três MFEs e sua configuração estão em outros repositórios, não referenciados por nenhuma configuração versionada aqui. Sem código, não há imports a buscar. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 41 entries, all regular files `100644`; zero symlinks and zero gitlinks. There are 39 Markdown files (including GitBook `SUMMARY.md` and a translation in `fr/`) and two images in `.gitbook/assets/`. No historical commit added another file type. | absent |
+| Documentation (architecture) | `architecture/micro-frontends.md:3`: “three independent micro-frontends, each a separate Create React App (React 17) codebase”; `:7–11`: repositories `lms-mfe-app`, `lms-mfe-auth`, `lms-mfe-admin`, served at `/app`, `/auth`, `/v2-admin`; `:15–17`: separate builds and deployments to S3/CloudFront under one domain; `:21–25`: JWT session in `localStorage` and navigation between MFEs through environment URLs. | weak |
+| Documentation (guides) | `developer-guides/mfe-app.md`, `mfe-admin.md`, `mfe-auth.md`: development guides for external MFEs; `README.md:69–78`: platform components table. | context |
+| Technology / Configuration / Source code / Composition / Build/deploy | Nonexistent in the snapshot; the three MFEs and their configuration are in other repositories, not referenced by any configuration versioned here. Without code, there are no imports to search. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso, parcial (`blob:none`). 34 commits alcançáveis (36 em todos os refs), 1 merge, de 2026-08-03 (`1b44191`, “Initial commit”) a 2026-09-07 (SHA `84bd176`, “docs(summary): rename Tutor operations entry”). Autoria: “Eric G” em 19 commits (18 pela interface web, 1 pelo `gitbook-bot`), uma identidade `root` de servidor em 14 e “Salim (CTO)” em 1. Refs remotos `docs/qa-fixes-fr-specs` e `gitbook-home-export` não considerados à parte. `git rev-list --objects $SHA --missing=print` identifica 91 objetos históricos ausentes; os arquivos citados do SHA foram lidos.
+Non-shallow, partial clone (`blob:none`). 34 reachable commits (36 across all refs), 1 merge, from 2026-08-03 (`1b44191`, “Initial commit”) to 2026-09-07 (SHA `84bd176`, “docs(summary): rename Tutor operations entry”). Authorship: “Eric G” in 19 commits (18 through the web interface, 1 through `gitbook-bot`), a server `root` identity in 14 and “Salim (CTO)” in 1. Remote refs `docs/qa-fixes-fr-specs` and `gitbook-home-export` not considered separately. `git rev-list --objects $SHA --missing=print` identifies 91 missing historical objects; cited SHA files were read.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend no repositório; os MFEs são só descritos (`architecture/micro-frontends.md:7–11`) e não há configuração de composição que os referencie. |
-| Q2 | No | Não há unidades. |
-| Q3 | No | Não há host, shell nem root config no snapshot. |
-| Q4 | No | Nenhum mecanismo configurado; a composição por rotas sob CloudFront e por redirecionamento é descrita em texto (`architecture/micro-frontends.md:15–25`). |
-| Q5 | No | Q1–Q4 convergem. |
+| Q1 | No | No frontend unit in the repository; MFEs are only described (`architecture/micro-frontends.md:7–11`), and no composition configuration references them. |
+| Q2 | No | There are no units. |
+| Q3 | No | There is no host, shell or root config in the snapshot. |
+| Q4 | No | No mechanism configured; composition through routes under CloudFront and redirection is described in text (`architecture/micro-frontends.md:15–25`). |
+| Q5 | No | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “repositories mentioning micro-frontends without implementing them”; na seção 3.2 do protocolo, a “repositories that are purely documentation without an implementation”, como o final 023 e a exclusão de conteúdo de 075/081/094/105.
-- A documentação descreve uma arquitetura MFE real em outros repositórios, mas o critério de Q1 exige unidades no repositório ou referenciadas por configuração de composição; aqui não há configuração alguma.
-- `repo_type: other`, `frontend_units: 0`, `unit_organization: none`, arrays vazios.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. It matches “repositories mentioning micro-frontends without implementing them”; in protocol section 3.2, “repositories that are purely documentation without an implementation”, like final 023 and the content exclusion in 075/081/094/105.
+- Documentation describes a real MFE architecture in other repositories, but Q1 requires units in the repository or referenced by composition configuration; here there is no configuration at all.
+- `repo_type: other`, `frontend_units: 0`, `unit_organization: none`, empty arrays.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **Protocolo (ecossistema multi-repositório):** os repositórios `lms-mfe-app`, `lms-mfe-auth` e `lms-mfe-admin` citados não aparecem nas rodadas sob nenhum dono (busca por `/lms-mfe-(app|auth|admin)` em `data/discovery/mfe-round-002/candidates.csv`: nenhuma ocorrência; da conta só há `Erik786/univo-docs`, `:34716`); se forem privados ou de outra organização, a arquitetura documentada não é observável no corpus.
-- **RQ1 (sinais enganosos):** documentação de produto com página dedicada à arquitetura micro-frontend gera hits terminológicos sem código.
-- **RQ2 (documentado, não observado):** composição descrita por rotas sob CloudFront, sessão compartilhada por `localStorage` e URLs de MFEs irmãos em variáveis de build, sem federação em runtime.
+- **Protocol (multi-repository ecosystem):** cited repositories `lms-mfe-app`, `lms-mfe-auth` and `lms-mfe-admin` do not appear in the rounds under any owner (search for `/lms-mfe-(app|auth|admin)` in `data/discovery/mfe-round-002/candidates.csv`: no occurrence; the account has only `Erik786/univo-docs`, `:34716`); if private or owned by another organization, the documented architecture is not observable in the corpus.
+- **RQ1 (misleading signals):** product documentation with a page dedicated to micro-frontend architecture generates terminology hits without code.
+- **RQ2 (documented, not observed):** composition described through routes under CloudFront, shared session through `localStorage` and sibling MFE URLs in build variables, without runtime federation.

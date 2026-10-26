@@ -1,22 +1,22 @@
-# Clones para consulta histórica
+# Clones for historical consultation
 
-Esta pasta contém os 100 repositórios do corpus, com a árvore de trabalho e o diretório `.git`. O [manifesto](manifest.json) relaciona cada clone ao commit de `acquisition.csv` e registra os hashes dos arquivos e das partes. A seleção é a mesma da revisão histórica.
+This folder contains the 100 corpus repositories, including their working tree and `.git` directory. The [manifest](manifest.json) links each clone to its `acquisition.csv` commit and records file and part hashes. Selection is the same as for the historical review.
 
-Os arquivos menores são `OWNER__REPO.tar.gz`. Arquivos maiores foram divididos em partes binárias de até 25 MiB, com sufixos `.part-00001`, `.part-00002` etc. Uma parte isolada não é um arquivo tar válido. A concatenação em ordem numérica recompõe o arquivo compactado original.
+Smaller archives are `OWNER__REPO.tar.gz`. Larger archives were split into binary parts of up to 25 MiB, with suffixes `.part-00001`, `.part-00002`, etc. A single part is not a valid tar archive. Concatenation in numeric order reconstructs the original archive.
 
-Para conferir os arquivos, execute nesta pasta:
+To check the files, run in this folder:
 
 ```sh
 shasum -a 256 -c SHA256SUMS
 ```
 
-Para extrair um arquivo inteiro ou dividido, substitua `OWNER__REPO` pelo nome desejado:
+To extract a whole or split archive, replace `OWNER__REPO` with the desired name:
 
 ```sh
 mkdir -p unpacked
 tar -xzf OWNER__REPO.tar.gz -C unpacked
-# Para um clone dividido, use este comando no lugar do anterior:
+# For a split clone, use this command instead of the previous one:
 cat OWNER__REPO.tar.gz.part-* | tar -xz -C unpacked
 ```
 
-Consulte o histórico com `git -C unpacked/OWNER__REPO log`. A pasta `unpacked/` é ignorada pelo Git deste pacote. A importação conferiu o commit de cada clone e comparou o conteúdo de cada membro do arquivo compactado com sua fonte; os hashes das partes também foram verificados após a divisão.
+Consult history with `git -C unpacked/OWNER__REPO log`. The `unpacked/` folder is ignored by this package's Git rules. Import checked each clone's commit and compared the contents of every archive member with its source; part hashes were also verified after splitting.

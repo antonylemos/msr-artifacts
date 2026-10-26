@@ -17,21 +17,21 @@ annotation:
 
 ## Workspace
 
-Nenhuma declaração de workspace.
+No workspace declaration.
 
-## Unidades
+## Units
 
-| Diretório | Marcadores | Manifesto | Entrada | Build | Workspace | Deploy | Unidade frontend | Motivo |
+| Directory | Markers | Manifest | Entry | Build | Workspace | Deploy | Frontend unit | Rationale |
 |---|---|---|---|---|---|---|---|---|
-| . | package.json | package.json | — (`package.json:5` declara `main: index.js`, ausente do snapshot) | — (`package.json:6-9` só tem scripts `playwright test`) | — | — | No | Pacote de testes e2e (Playwright), sem entrada nem build de aplicação frontend |
-| docs | docs/index.html | — | docs/index.html:15-35 (`<div id="app">` e `window.$docsify` com `docsify.min.js` do CDN) | — (estático, sem build) | — | — | No | Site de documentação Docsify, não é aplicação frontend do sistema |
+| . | package.json | package.json | — (`package.json:5` declares `main: index.js`, missing from the snapshot) | — (`package.json:6-9` has only `playwright test` scripts) | — | — | No | e2e testing package (Playwright), with neither frontend application entry nor build |
+| docs | docs/index.html | — | docs/index.html:15-35 (`<div id="app">` and `window.$docsify` with `docsify.min.js` from the CDN) | — (static, no build) | — | — | No | Docsify documentation site, not a frontend application of the system |
 
-## Resumo
+## Summary
 
-Aplicações frontend no snapshot: 0.
+Frontend applications in the snapshot: 0.
 
-## Notas
+## Notes
 
-- A classificação registra `frontend_units: 42`: módulos ESM externos listados em `distro/configs/openmrs/frontend_assembly/spa-assemble-config.json`, cujas fontes não estão no snapshot. Por isso a contagem aqui é 0.
-- O `artifacts.csv` marca `package.json` como `workspace-config`, mas o arquivo não tem campo `workspaces` (`package.json:1-19`) e o `matches.csv` não tem ocorrência `ws-*`.
-- As ocorrências `ops-*` do `matches.csv` são Dockerfiles e compose de OpenFn, OpenMRS core, MariaDB e Traefik em `scripts/`, não deploy de `.` nem de `docs`. Os workflows `ci-*` empacotam a distribuição Maven ou rodam os testes Playwright (`.github/workflows/playwright.yml:15-19`); nenhum constrói ou publica `docs`.
+- The classification records `frontend_units: 42`: external ESM modules listed in `distro/configs/openmrs/frontend_assembly/spa-assemble-config.json`, whose sources are not in the snapshot. Therefore the count here is 0.
+- `artifacts.csv` marks `package.json` as `workspace-config`, but the file has no `workspaces` field (`package.json:1-19`) and `matches.csv` has no `ws-*` occurrence.
+- The `ops-*` occurrences in `matches.csv` are Dockerfiles and compose for OpenFn, OpenMRS core, MariaDB and Traefik in `scripts/`, not deployment of `.` or `docs`. The `ci-*` workflows package the Maven distribution or run the Playwright tests (`.github/workflows/playwright.yml:15-19`); none builds or publishes `docs`.

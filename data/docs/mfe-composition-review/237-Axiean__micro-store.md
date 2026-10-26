@@ -20,69 +20,70 @@ annotation:
 
 # 237 — Axiean/micro-store
 
-## Leitura do repositório
+## Repository overview
 
-Exemplo feito como avaliação técnica de frontend (README.md:3): uma loja com duas aplicações
-Next.js independentes unidas por Next.js Multi-Zones (README.md:5-12). O `store-app` é a vitrine
-e o ponto de entrada dos usuários (docker-compose.yml:6-7, porta 3000 em :15); o `cart-app` é o
-carrinho, servido sob `basePath: "/cart"` (cart-app/next.config.ts:4).
+An example made as a frontend technical assessment (README.md:3): a store with two independent
+Next.js applications joined by Next.js Multi-Zones (README.md:5-12). `store-app` is the storefront
+and user entry point (docker-compose.yml:6-7, port 3000 at :15); `cart-app` is the
+cart, served under `basePath: "/cart"` (cart-app/next.config.ts:4).
 
-A composição é por rota no servidor, não por montagem na página. O `store-app` declara em
-`rewrites()` que toda requisição `/cart/:path*` vai para `http://cart-app:3000/cart/:path*`
-(store-app/next.config.ts:32-41), e o próprio comentário chama isso de "the core of the
-Multi-Zone micro-frontend architecture" (store-app/next.config.ts:28). O hostname `cart-app` é o
-nome do serviço do Compose construído de `./cart-app` (docker-compose.yml:20-24). Cada zona
-renderiza a página inteira com layout próprio. Como em 013, nenhum dos tipos `host → remote`,
-`root-config → application`, `application → custom-element` ou `page → embedded-frontend`
-descreve essa forma de entrada, por isso a relação de rota está como `other`.
+Composition uses server routes, rather than mounting on the page. `store-app` declares in
+`rewrites()` that every `/cart/:path*` request goes to `http://cart-app:3000/cart/:path*`
+(store-app/next.config.ts:32-41), and the comment itself calls this "the core of the
+Multi-Zone micro-frontend architecture" (store-app/next.config.ts:28). Hostname `cart-app` is the
+Compose service name built from `./cart-app` (docker-compose.yml:20-24). Each zone
+renders the entire page with its own layout. As in 013, none of the types `host → remote`,
+`root-config → application`, `application → custom-element` or `page → embedded-frontend`
+describes this entry method, hence the route relationship is `other`.
 
-A segunda ligação é o estado do carrinho. As duas zonas têm uma cópia do mesmo store zustand,
-persistido na mesma chave `cart-storage` do `localStorage` (store-app/src/store/cartStore.ts:83-84;
-cart-app/src/store/cartStore.ts:83-84). O `store-app` grava ao adicionar produtos e o `cart-app`
-lê a lista para exibir o carrinho. Isso funciona porque o rewrite coloca o `cart-app` sob a origem
-do `store-app`; acessado direto pela porta 3001 (docker-compose.yml:25-28), o `cart-app` fica em
-outra origem e não vê o mesmo `localStorage`.
+The second connection is cart state. Both zones have a copy of the same zustand store,
+persisted under the same `cart-storage` key in `localStorage` (store-app/src/store/cartStore.ts:83-84;
+cart-app/src/store/cartStore.ts:83-84). `store-app` writes when adding products and `cart-app`
+reads the list to display the cart. This works because the rewrite places `cart-app` under the
+`store-app` origin; accessed directly on port 3001 (docker-compose.yml:25-28), `cart-app` is under
+another origin and does not see the same `localStorage`.
 
-O que não virou relação: a navegação do `store-app` para o carrinho é um link de página inteira
-(`<a href="/cart">`, store-app/src/components/Header.tsx:29), que não é tipo de relação. O
-`cartStore.ts` é cópia em cada zona, não import entre unidades. O alias `@repo/ui/*` para
-`../../packages/ui/*` nos dois `tsconfig.json` aponta para um diretório ausente do snapshot e não
-é usado. Não há dependência das tecnologias inspecionadas (revisão de dependências) nem
-carregamento de módulos de uma zona pela outra.
+What did not become a relationship: navigation from `store-app` to cart is a full-page link
+(`<a href="/cart">`, store-app/src/components/Header.tsx:29), not a relationship type.
+`cartStore.ts` is copied in each zone, rather than imported between units. Alias `@repo/ui/*` to
+`../../packages/ui/*` in both `tsconfig.json` files points to an absent snapshot directory and is
+unused. There is no dependency on inspected technologies (dependency review) or
+module loading by one zone from another.
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | store-app | cart-app | other | origem → destino | other | Yes | Yes | store-app/next.config.ts:36-39 (`/cart/:path*` → `http://cart-app:3000/cart/:path*`); docker-compose.yml:20-24 (serviço `cart-app`, `context: ./cart-app`); cart-app/next.config.ts:4 (`basePath: "/cart"`) | store-app/next.config.ts:32 |
-| 2 | store-app | cart-app | communication | origem → destino | other | Yes | Yes | — | store-app/src/store/cartStore.ts:83 |
+| 1 | store-app | cart-app | other | source → target | other | Yes | Yes | store-app/next.config.ts:36-39 (`/cart/:path*` → `http://cart-app:3000/cart/:path*`); docker-compose.yml:20-24 (service `cart-app`, `context: ./cart-app`); cart-app/next.config.ts:4 (`basePath: "/cart"`) | store-app/next.config.ts:32 |
+| 2 | store-app | cart-app | communication | source → target | other | Yes | Yes | — | store-app/src/store/cartStore.ts:83 |
 
-## Observações
+## Observations
 
-**1. store-app → cart-app.** O `store-app` repassa `/cart/:path*` para
-`http://cart-app:3000/cart/:path*` (store-app/next.config.ts:36-39). O destino foi resolvido por
-duas correspondências: o hostname `cart-app` é o serviço do Compose construído de `./cart-app`
-(docker-compose.yml:20-23), com o contêiner na porta interna 3000 (docker-compose.yml:28;
-`EXPOSE 3000` em cart-app/Dockerfile:32); e o prefixo `/cart` do destino é o `basePath` da zona
-(cart-app/next.config.ts:4), cuja página `Home` monta o carrinho (cart-app/src/app/page.tsx:10).
-Tipo e mecanismo são `other`: o `store-app` não carrega módulos da zona nem a registra num
-orquestrador; ele encaminha requisições de um caminho para outra aplicação, que responde com a
-página inteira (Next.js Multi-Zones por `rewrites`), como nas relações 1-3 de 013. A direção é a
-do encaminhamento. Diferente de 013, o destino está fixo na configuração, sem variável de ambiente.
+**1. store-app → cart-app.** `store-app` forwards `/cart/:path*` to
+`http://cart-app:3000/cart/:path*` (store-app/next.config.ts:36-39). The target was resolved through
+two matches: hostname `cart-app` is the Compose service built from `./cart-app`
+(docker-compose.yml:20-23), with the container on internal port 3000 (docker-compose.yml:28;
+`EXPOSE 3000` in cart-app/Dockerfile:32); and target prefix `/cart` is the zone's `basePath`
+(cart-app/next.config.ts:4), whose `Home` page mounts the cart (cart-app/src/app/page.tsx:10).
+Type and mechanism are `other`: `store-app` neither loads zone modules nor registers it in an
+orchestrator; it forwards requests from a path to another application, responding with the
+entire page (Next.js Multi-Zones through `rewrites`), as in relationships 1-3 of 013. Direction follows
+forwarding. Unlike 013, the target is fixed in configuration, without an environment variable.
 
-**2. store-app → cart-app.** O `store-app` grava o carrinho no store persistido na chave
-`cart-storage` (store-app/src/store/cartStore.ts:83-84; `localStorage.setItem` em :26) ao adicionar
-produtos (`addToCart`, :38-55), chamado por `ProductCard` (store-app/src/components/ProductCart.tsx:17).
-O `cart-app` declara o mesmo store na mesma chave (cart-app/src/store/cartStore.ts:83-84) e lê os
-itens em `CartDisplay` (cart-app/src/components/CartDisplay.tsx:15). Mecanismo `other`: é estado
-compartilhado por `localStorage` sob a mesma origem, não troca de eventos, como as relações 4-6 de
-013. A leitura só vê os dados porque o rewrite da relação 1 une as zonas numa origem. O `cart-app`
-também regrava a chave em `removeItem` e `updateQuantity` (cart-app/src/store/cartStore.ts:58-80),
-e o `Header` do `store-app` lê os itens persistidos (store-app/src/components/Header.tsx:8). A
-revisão de código-fonte não registrou essas linhas como construção, então, como em 013, a direção
-fica a da gravação registrada (store-app/src/store/cartStore.ts:83) e não `bidirecional`.
+**2. store-app → cart-app.** `store-app` writes the cart to the store persisted under key
+`cart-storage` (store-app/src/store/cartStore.ts:83-84; `localStorage.setItem` at :26) when adding
+products (`addToCart`, :38-55), called by `ProductCard` (store-app/src/components/ProductCart.tsx:17).
+`cart-app` declares the same store under the same key (cart-app/src/store/cartStore.ts:83-84) and reads
+items in `CartDisplay` (cart-app/src/components/CartDisplay.tsx:15). Mechanism `other`: this is state
+shared through `localStorage` under the same origin, rather than event exchange, as in relationships 4-6 of
+013. Reading sees the data only because relationship 1's rewrite joins zones under one origin. `cart-app`
+also rewrites the key in `removeItem` and `updateQuantity` (cart-app/src/store/cartStore.ts:58-80),
+and the `Header` of `store-app` reads persisted items (store-app/src/components/Header.tsx:8). The
+source code review did not record those lines as constructs, so, as in 013, direction
+remains that of the recorded write (store-app/src/store/cartStore.ts:83), rather than `bidirectional`.
 
-## Resumo
+## Summary
 
-Relações: 2 (other: 1, communication: 1). Ativas: 2. Destino fora do snapshot: 0.
-Unidades sem relação: nenhuma.
+Relationships: 2 (other: 1, communication: 1). Active: 2. Target outside the snapshot: 0.
+Units without a relationship: none.
+

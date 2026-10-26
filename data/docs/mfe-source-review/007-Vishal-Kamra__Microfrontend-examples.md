@@ -15,39 +15,39 @@ annotation:
 
 # 007 — Vishal-Kamra/Microfrontend-examples
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-async-bootstrap | react-js/container/src/index.js:1 | react-js/container | dynamic-loading | No | react-js/container/src/index.js:1 importa o bootstrap da própria aplicação. |
-| src-async-bootstrap | react-js/marketing/src/index.js:1 | react-js/marketing | dynamic-loading | No | react-js/marketing/src/index.js:1 importa o bootstrap local. |
-| src-async-bootstrap | simple-js/Cart/src/index.js:1 | simple-js/Cart | dynamic-loading | No | simple-js/Cart/src/index.js:1 importa o bootstrap local. |
-| src-async-bootstrap | simple-js/Container/src/index.js:1 | simple-js/Container | dynamic-loading | No | simple-js/Container/src/index.js:1 importa o bootstrap local. |
-| src-async-bootstrap | simple-js/Products/src/index.js:1 | simple-js/Products | dynamic-loading | No | simple-js/Products/src/index.js:1 importa o bootstrap local. |
-| src-mount-export | react-js/container/src/bootstrap.js:22 | react-js/container | runtime-composition | No | Exporta mount do próprio container em react-js/container/src/bootstrap.js:22, mas não há consumidor de outro frontend nem exposição desse bootstrap; seu uso em react-js/container/src/bootstrap.js:12-17 é standalone interno. |
-| src-mount-export | react-js/marketing/src/bootstrap.js:22 | react-js/marketing | runtime-composition | Yes | Exporta mount em react-js/marketing/src/bootstrap.js:22, exposto por react-js/marketing/config/webpack.dev.js:22-23 e consumido pelo wrapper do container em react-js/container/src/components/MarketingApp.js:3-9. |
-| src-mount-export | simple-js/Cart/src/bootstrap.js:3 | simple-js/Cart | runtime-composition | Yes | Exporta mount em simple-js/Cart/src/bootstrap.js:3-8, exposto em simple-js/Cart/webpack.config.js:13-14 e consumido pelo container em simple-js/Container/src/bootstrap.js:2-5. |
-| src-mount-export | simple-js/Products/src/bootstrap.js:3 | simple-js/Products | runtime-composition | Yes | Exporta mount em simple-js/Products/src/bootstrap.js:3-12, exposto em simple-js/Products/webpack.config.js:13-14 e consumido pelo container em simple-js/Container/src/bootstrap.js:1-4. |
-| src-mount-call | react-js/container/src/components/MarketingApp.js:9 | react-js/container | runtime-composition | Yes | Monta o remote marketing no ref do wrapper em react-js/container/src/components/MarketingApp.js:8-10; wrapper renderizado em react-js/container/src/App.js:8, usado pelo bootstrap em react-js/container/src/bootstrap.js:3-7. |
-| src-mount-call | simple-js/Cart/src/bootstrap.js:13 | simple-js/Cart | runtime-composition | No | simple-js/Cart/src/bootstrap.js:10-14 chama mount no próprio elemento de desenvolvimento; montagem interna à unidade Cart. |
-| src-mount-call | simple-js/Products/src/bootstrap.js:17 | simple-js/Products | runtime-composition | No | simple-js/Products/src/bootstrap.js:14-18 chama mount no próprio elemento de desenvolvimento; montagem interna à unidade Products. |
-| src-mount-import | react-js/container/src/components/MarketingApp.js:3 | react-js/container | runtime-composition | Yes | Importa mount de marketing/MarketingApp, invocado em react-js/container/src/components/MarketingApp.js:9; o wrapper está no App ativo em react-js/container/src/App.js:8. |
-| src-mount-import | simple-js/Container/src/bootstrap.js:1 | simple-js/Container | runtime-composition | Yes | Importa mount de products/ProductsIndex sob alias mountProducts, chamado em simple-js/Container/src/bootstrap.js:4; bootstrap carregado por simple-js/Container/src/index.js:1. |
-| src-mount-import | simple-js/Container/src/bootstrap.js:2 | simple-js/Container | runtime-composition | Yes | Importa mount de cart/CartShow sob alias mountCart, chamado em simple-js/Container/src/bootstrap.js:5; bootstrap carregado por simple-js/Container/src/index.js:1. |
+| src-async-bootstrap | react-js/container/src/index.js:1 | react-js/container | dynamic-loading | No | react-js/container/src/index.js:1 imports the application’s own bootstrap. |
+| src-async-bootstrap | react-js/marketing/src/index.js:1 | react-js/marketing | dynamic-loading | No | react-js/marketing/src/index.js:1 imports the local bootstrap. |
+| src-async-bootstrap | simple-js/Cart/src/index.js:1 | simple-js/Cart | dynamic-loading | No | simple-js/Cart/src/index.js:1 imports the local bootstrap. |
+| src-async-bootstrap | simple-js/Container/src/index.js:1 | simple-js/Container | dynamic-loading | No | simple-js/Container/src/index.js:1 imports the local bootstrap. |
+| src-async-bootstrap | simple-js/Products/src/index.js:1 | simple-js/Products | dynamic-loading | No | simple-js/Products/src/index.js:1 imports the local bootstrap. |
+| src-mount-export | react-js/container/src/bootstrap.js:22 | react-js/container | runtime-composition | No | Exports the container’s own mount at react-js/container/src/bootstrap.js:22, but there is no consumer from another frontend or exposure of this bootstrap; its use at react-js/container/src/bootstrap.js:12-17 is internal standalone use. |
+| src-mount-export | react-js/marketing/src/bootstrap.js:22 | react-js/marketing | runtime-composition | Yes | Exports mount at react-js/marketing/src/bootstrap.js:22, exposed by react-js/marketing/config/webpack.dev.js:22-23 and consumed by the container wrapper at react-js/container/src/components/MarketingApp.js:3-9. |
+| src-mount-export | simple-js/Cart/src/bootstrap.js:3 | simple-js/Cart | runtime-composition | Yes | Exports mount at simple-js/Cart/src/bootstrap.js:3-8, exposed at simple-js/Cart/webpack.config.js:13-14 and consumed by the container at simple-js/Container/src/bootstrap.js:2-5. |
+| src-mount-export | simple-js/Products/src/bootstrap.js:3 | simple-js/Products | runtime-composition | Yes | Exports mount at simple-js/Products/src/bootstrap.js:3-12, exposed at simple-js/Products/webpack.config.js:13-14 and consumed by the container at simple-js/Container/src/bootstrap.js:1-4. |
+| src-mount-call | react-js/container/src/components/MarketingApp.js:9 | react-js/container | runtime-composition | Yes | Mounts the marketing remote on the wrapper ref at react-js/container/src/components/MarketingApp.js:8-10; wrapper rendered at react-js/container/src/App.js:8, used by the bootstrap at react-js/container/src/bootstrap.js:3-7. |
+| src-mount-call | simple-js/Cart/src/bootstrap.js:13 | simple-js/Cart | runtime-composition | No | simple-js/Cart/src/bootstrap.js:10-14 calls mount on its own development element; mounting internal to the Cart unit. |
+| src-mount-call | simple-js/Products/src/bootstrap.js:17 | simple-js/Products | runtime-composition | No | simple-js/Products/src/bootstrap.js:14-18 calls mount on its own development element; mounting internal to the Products unit. |
+| src-mount-import | react-js/container/src/components/MarketingApp.js:3 | react-js/container | runtime-composition | Yes | Imports mount from marketing/MarketingApp, invoked at react-js/container/src/components/MarketingApp.js:9; the wrapper is in the active App at react-js/container/src/App.js:8. |
+| src-mount-import | simple-js/Container/src/bootstrap.js:1 | simple-js/Container | runtime-composition | Yes | Imports mount from products/ProductsIndex under the alias mountProducts, called at simple-js/Container/src/bootstrap.js:4; bootstrap loaded by simple-js/Container/src/index.js:1. |
+| src-mount-import | simple-js/Container/src/bootstrap.js:2 | simple-js/Container | runtime-composition | Yes | Imports mount from cart/CartShow under the alias mountCart, called at simple-js/Container/src/bootstrap.js:5; bootstrap loaded by simple-js/Container/src/index.js:1. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | simple-js/Container/src/bootstrap.js:4 | simple-js/Container | runtime-composition | Yes | mountProducts monta a UI da unidade Products no container; import remoto em simple-js/Container/src/bootstrap.js:1 e entrada em simple-js/Container/src/index.js:1. |
-| manual | simple-js/Container/src/bootstrap.js:5 | simple-js/Container | runtime-composition | Yes | mountCart monta a UI da unidade Cart no container; import remoto em simple-js/Container/src/bootstrap.js:2 e entrada em simple-js/Container/src/index.js:1. |
+| manual | simple-js/Container/src/bootstrap.js:4 | simple-js/Container | runtime-composition | Yes | mountProducts mounts the Products unit UI in the container; remote import at simple-js/Container/src/bootstrap.js:1 and entry at simple-js/Container/src/index.js:1. |
+| manual | simple-js/Container/src/bootstrap.js:5 | simple-js/Container | runtime-composition | Yes | mountCart mounts the Cart unit UI in the container; remote import at simple-js/Container/src/bootstrap.js:2 and entry at simple-js/Container/src/index.js:1. |
 
-## Resumo
+## Summary
 
-Construções com composição: 9 (runtime-composition: 9).
+Constructs participating in composition: 9 (runtime-composition: 9).
 
-## Notas
+## Notes
 
-- As chamadas com aliases mountProducts e mountCart não casaram com o padrão src-mount-call e foram registradas manualmente.
-- O export mount do container React é resíduo de um contrato de montagem: há uso local para standalone, mas nenhuma outra unidade observável o importa. Já o mount de marketing é exposto e consumido pelo container.
-- As configurações de desenvolvimento ligam o exemplo React aos pontos de entrada convencionais; esta revisão descreve o código ativo nesse fluxo, sem afirmar build de produção (webpack.prod.js está vazio, conforme a revisão estrutural).
+- Calls using the mountProducts and mountCart aliases did not match the src-mount-call pattern and were recorded manually.
+- The React container’s mount export is a remnant of a mounting contract: there is local standalone use, but no other observable unit imports it. The marketing mount, however, is exposed and consumed by the container.
+- The development configurations connect the React example to the conventional entry points; this review describes the active code in that flow without asserting a production build (webpack.prod.js is empty, according to the structural review).

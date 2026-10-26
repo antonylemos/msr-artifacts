@@ -20,62 +20,62 @@ annotation:
 
 # 359 — Gabrial-8467/karan_homeo_pharmacy
 
-## Contexto
+## Context
 
-Plataforma de e-commerce full-stack com backend Node.js/Express (`backend/`) e duas aplicações React + Vite separadas: `admin` (porta 4444) e `frontend`, a loja do cliente (porta 3000). Cada aplicação tem o próprio `vercel.json` (`README.md:1–4`, `27–33`). O README chama isso de arquitetura “micro‑frontend”: “each UI has its own build pipeline, `package.json`, and deployment configuration, while sharing a common backend API.” (`README.md:4`). Não há host nem mecanismo que componha as duas aplicações. O nome do repositório não é usado como evidência.
+Full-stack e-commerce platform with Node.js/Express backend (`backend/`) and two separate React + Vite applications: `admin` (port 4444) and `frontend`, the customer store (port 3000). Each application has its own `vercel.json` (`README.md:1–4`, `27–33`). The README calls this “micro‑frontend” architecture: “each UI has its own build pipeline, `package.json`, and deployment configuration, while sharing a common backend API.” (`README.md:4`). There is no host or mechanism composing both applications. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:360` registra rank 359, ID 1023722918, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:360` records rank 359, ID 1023722918, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:360` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:16664` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:16668` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:360` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:16664` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:16668` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2025-07` e `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2025-07` and an empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | 2026-10-07T22:24:04.410Z / 2026-10-08T15:55:14.653Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | 2026-10-07T22:55:39.933Z / 2026-10-08T16:06:16.274Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2025-07-01..2025-07-31`.
+The effective queries append `pushed:>=2025-04-01 created:2025-07-01..2025-07-31`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem JavaScript, `fork: false`, tamanho 11.578;
-- criação em 2025-07-21T15:37:46Z, push em 2026-07-02T06:38:21Z.
+Hit metadata:
+- null description, no topics, language JavaScript, `fork: false`, size 11.578;
+- created at 2025-07-21T15:37:46Z, pushed at 2026-07-02T06:38:21Z.
 
-A única grafia é “micro‑frontend”, com hífen não separável (U+2011), em `README.md:4`. O plural não aparece; ambos os hits dependem do processamento textual da busca do GitHub, que não está registrado. A última alteração do README é o próprio SHA (2026-07-02), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The only spelling is “micro‑frontend”, with a nonbreaking hyphen (U+2011), in `README.md:4`. The plural does not appear; both hits depend on GitHub search text processing, which is not recorded. The last README change is the SHA itself (2026-07-02), before the October 2026 collections. The README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 80 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Há `admin/`, `frontend/` (32 arquivos em `src/` somados), `backend/` (Express, rotas, modelos) e o `README.md` da raiz. | contexto |
-| Aplicações | `admin/vite.config.js:1–15` e `frontend/vite.config.js:1–43`: só React e Tailwind, portas 4444 e 3000. Os `vercel.json` de cada app têm só o rewrite de SPA para o próprio `index`. | contrária |
-| Busca de mecanismos | `git grep` em `admin/` e `frontend/`, sem lockfiles, por `federation`, `remoteEntry`, `iframe`, `single-spa` e `import()` de URL: nada. Não há imports com `../../` em `admin/src` e `frontend/src`. | ausente |
-| Documentação | `README.md:4`: “micro‑frontend” definido como UIs com build, `package.json` e deploy próprios que compartilham o backend, sem composição. | contrária |
+| Structure | `git ls-tree -r` at the SHA: 80 entries, all regular files `100644`; zero symlinks and zero gitlinks. There are `admin/`, `frontend/` (32 files in `src/` combined), `backend/` (Express, routes, models) and root `README.md`. | context |
+| Applications | `admin/vite.config.js:1–15` and `frontend/vite.config.js:1–43`: only React and Tailwind, ports 4444 and 3000. Each app’s `vercel.json` has only a SPA rewrite to its own `index`. | contrary |
+| Mechanism search | `git grep` in `admin/` and `frontend/`, without lockfiles, for `federation`, `remoteEntry`, `iframe`, `single-spa` and URL `import()`: nothing. No `../../` imports in `admin/src` and `frontend/src`. | absent |
+| Documentation | `README.md:4`: “micro‑frontend” defined as UIs with their own build, `package.json` and deployment sharing a backend, without composition. | contrary |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 181 commits em todos os refs, 2 merges, de 2025-07-21 a 2026-07-02 (SHA `32f56c8`). Os autores aparecem como `gabrialdeora`, “Gabrial Deora” e `Gabrial-8467`; parte dos commits foi feita pela interface do GitHub. Só há o branch `main`. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 181 commits across all refs, 2 merges, from 2025-07-21 to 2026-07-02 (SHA `32f56c8`). Authors appear as `gabrialdeora`, “Gabrial Deora” and `Gabrial-8467`; some commits were made through the GitHub interface. Only branch `main` exists. No historical blob was read and there was no missing object.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | Duas aplicações frontend identificáveis (`admin`, `frontend`). |
-| Q2 | Yes | Cada uma tem `package.json`, Vite, porta e deploy próprios, sem import de código entre elas. |
-| Q3 | No | Nenhum host, shell ou configuração raiz carrega, monta ou roteia as aplicações. |
-| Q4 | No | Nenhum mecanismo de composição configurado. |
-| Q5 | No | Duas SPAs independentes que compartilham só o backend. |
+| Q1 | Yes | Two identifiable frontend applications (`admin`, `frontend`). |
+| Q2 | Yes | Each has its own `package.json`, Vite, port and deployment, without code import between them. |
+| Q3 | No | No host, shell or root configuration loads, mounts or routes the applications. |
+| Q4 | No | No composition mechanism configured. |
+| Q5 | No | Two independent SPAs sharing only the backend. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “multiple frontend applications without explicit composition”.
-- Mesmo enquadramento do rascunho 278 (SPAs por perfil chamadas de micro-frontends, sem composição).
-- **Campos:** `frontend_units: 2`, `unit_organization: monorepo`, `approaches: []`, `ui_technologies: [react]`, `build_tools: [vite]`, `repo_type: production` (e-commerce com configuração de deploy na Vercel; é juízo, e `example` seria a alternativa).
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. It matches “multiple frontend applications without explicit composition”.
+- Same categorization as draft 278 (role-based SPAs called micro-frontends, without composition).
+- **Fields:** `frontend_units: 2`, `unit_organization: monorepo`, `approaches: []`, `ui_technologies: [react]`, `build_tools: [vite]`, `repo_type: production` (e-commerce with Vercel deployment configuration; a judgment, with `example` as the alternative).
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** “micro‑frontend” usado para SPAs separadas com backend comum casa as consultas terminológicas.
-- **Protocolo (busca):** o README usa hífen não separável (U+2011), e o plural não aparece. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ1 (misleading signals):** “micro‑frontend” used for separate SPAs with a common backend matches terminology queries.
+- **Protocol (search):** the README uses a nonbreaking hyphen (U+2011), and plural does not appear. Eligibility changes from `unknown` (001) to `pass` (002).

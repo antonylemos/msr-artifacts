@@ -20,30 +20,30 @@ annotation:
 
 # 020 — mustafasavul/mustafasavul
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** não é projeto de software (repositório de perfil do GitHub, `<usuário>/<usuário>`)
-- **Classificação:** Non-MFE (classificado pelos pesquisadores no `catalog.csv`; arquivo registrado depois)
+- **Repository type:** not a software project (GitHub profile repository, `<user>/<user>`)
+- **Classification:** Non-MFE (classified by the researchers in `catalog.csv`; file recorded afterwards)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | Dois arquivos versionados: `README.md` e `banner.png` | ausente |
-| Documentação | `README.md:20` "Micro Frontend architecture — Module Federation, Lerna, monorepos"; `:61` badge "Module Federation"; `:64` "Architecture: Micro Frontend (Module Federation, Lerna)"; `:108` plataforma multi-tenant em MFE com 3+ times (experiência profissional) | fraca |
-| Tecnologia / Configuração / Código-fonte / Build/deploy | Inexistentes | ausente |
+| Structure | Two tracked files: `README.md` and `banner.png` | absent |
+| Documentation | `README.md:20` "Micro Frontend architecture — Module Federation, Lerna, monorepos"; `:61` "Module Federation" badge; `:64` "Architecture: Micro Frontend (Module Federation, Lerna)"; `:108` multi-tenant MFE platform with 3+ teams (professional experience) | weak |
+| Technology / Configuration / Source code / Build/deploy | Nonexistent | absent |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend; só `README.md` e uma imagem |
-| Q2 | No | Não há unidades |
-| Q3 | No | Não há host, shell nem root config |
-| Q4 | No | Nenhum mecanismo de composição |
-| Q5 | No | Q1–Q4 convergem |
+| Q1 | No | No frontend units; only `README.md` and an image |
+| Q2 | No | No units |
+| Q3 | No | No host, shell or root config |
+| Q4 | No | No composition mechanism |
+| Q5 | No | Q1–Q4 converge |
 
-## Motivo
+## Rationale
 
-- README de perfil do GitHub; "Micro Frontend" e "Module Federation" aparecem como competências e experiência profissional do autor.
-- Corresponde a "repositories mentioning micro-frontends without implementing them"; na filtragem automática (seção 3.2 do protocolo), "clearly not software projects".
+- GitHub profile README; "Micro Frontend" and "Module Federation" appear as the author's skills and professional experience.
+- Matches "repositories mentioning micro-frontends without implementing them"; in automatic filtering (protocol section 3.2), "clearly not software projects".

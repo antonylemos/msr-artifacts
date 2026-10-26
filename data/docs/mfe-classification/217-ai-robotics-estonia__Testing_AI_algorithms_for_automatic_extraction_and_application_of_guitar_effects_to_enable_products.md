@@ -20,71 +20,71 @@ annotation:
 
 # 217 — ai-robotics-estonia/Testing_AI_algorithms_for_automatic_extraction_and_application_of_guitar_effects_to_enable_products
 
-## Contexto
+## Context
 
-“Blind Extraction and Modelling of Guitar Effects” (`README.md:1–9`): projeto de demonstração (empresa Noise Machine OÜ, equipe da TalTech, dez/2024–abr/2025) com um pipeline de IA para áudio em três blocos:
-- separação de stems com HT Demucs (`block1/`);
-- remoção de efeito (`block2/`);
-- modelagem de efeito com GCNTF (`block3/`).
+“Blind Extraction and Modelling of Guitar Effects” (`README.md:1–9`): demonstration project (Noise Machine OÜ company, TalTech team, Dec/2024–Apr/2025) with three-block audio AI pipeline:
+- stem separation through HT Demucs (`block1/`);
+- effect removal (`block2/`);
+- effect modeling through GCNTF (`block3/`).
 
-Há uma interface Gradio em Python (`app.py`). Modelos, áudios, PDF e imagens são ponteiros Git LFS (`.gitattributes:1–6`). O acerto da busca vem da frase “serves as the frontend, orchestrating calls to backend Python scripts” (`README.md:138`), não de orquestração de frontends. O nome do repositório não é usado como evidência.
+One Python Gradio interface (`app.py`). Models, audio, PDF and images are Git LFS pointers (`.gitattributes:1–6`). Search retrieval comes from phrase “serves as the frontend, orchestrating calls to backend Python scripts” (`README.md:138`), not frontend orchestration. Repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:218` registra rank 217, ID 990440505, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução, download de LFS ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:218` records rank 217, ID 990440505, status `cloned`, branch `main` and front-matter commit, which is clone HEAD and `origin/main`. Every clone Git command used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. No installation, execution, LFS download or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:218` registra a estratégia `broader` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:14370` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:14376` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:218` records strategy `broader` and eligibility `pass`. Sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). ID appears in `data/discovery/mfe-round-001/candidates.csv:14370` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:14376` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna o mesmo hit em cada rodada, do endpoint `repositories` e com `path` vazio:
+`sqlite3 -readonly` query of tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns same hit in each round, at endpoint `repositories` and with empty `path`:
 
-| Consulta (`q`) | Subconsulta / consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery / effective query | Collection 001 / 002 (UTC) |
 |---|---|---|
 | `broader-frontend-orchestration`: `"frontend orchestration" in:name,description,readme` | `broader-frontend-orchestration#created:2025-Q2` / `"frontend orchestration" in:name,description,readme pushed:>=2025-04-01 created:2025-04-01..2025-06-30` | 2026-10-07T23:40:41.203Z / 2026-10-08T16:23:48.452Z |
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem Python, `fork: false`, tamanho 49;
-- criação em 2025-05-26T05:55:45Z, push em 2025-06-26T08:59:23Z.
+Hit metadata:
+- null description, no topics, Python language, `fork: false`, size 49;
+- creation at 2025-05-26T05:55:45Z, push at 2025-06-26T08:59:23Z.
 
-A grafia literal “frontend orchestration” não aparece. O trecho mais próximo é `README.md:138`, “The Gradio application (`app.py`) serves as the frontend, orchestrating calls to backend Python scripts…”, e “orchestrates” aparece em `:113`. O acerto depende do processamento textual da busca do GitHub (stemming e pontuação), que não está registrado.
+Literal spelling “frontend orchestration” is absent. Closest excerpt is `README.md:138`, “The Gradio application (`app.py`) serves as the frontend, orchestrating calls to backend Python scripts…”, and “orchestrates” appears in `:113`. Retrieval depends on unrecorded GitHub search text processing (stemming and punctuation).
 
-A última alteração do README é o próprio SHA, `9795d08` (2025-06-26), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+Last README change is SHA itself, `9795d08` (2025-06-26), before October 2026 collections. README at the SHA is not later than searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 41 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Código Python (`app.py`, `block1/`, `block2/`, `block3/gcntf/`, `utils/`), ambientes conda (`env.yaml`, `env_cuda.yaml`) e ponteiros LFS (`Report.pdf`, `diagram.png`, `.wav`, `.pt`, `.th`, `.onnx`). Não há `package.json`, HTML ou JavaScript. | contrária |
-| Código-fonte | `app.py:8`, `14–17`, `279`: uma aplicação `gr.Blocks` que importa os wrappers dos três blocos. É uma única interface Python que chama funções locais. | contrária |
-| Documentação | `README.md:113`, `121`, `138`: a aplicação Gradio é “the frontend”, que orquestra chamadas a scripts de backend. Trata-se de orquestração de etapas de processamento, não de unidades frontend. | contrária |
-| Busca | `git grep -i` no SHA por `micro.?front`, `federation`, `single.?spa` e `orchestrat`: só as linhas do README citadas. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 41 entries, all regular files `100644`; zero symlinks and zero gitlinks. Python code (`app.py`, `block1/`, `block2/`, `block3/gcntf/`, `utils/`), conda environments (`env.yaml`, `env_cuda.yaml`) and LFS pointers (`Report.pdf`, `diagram.png`, `.wav`, `.pt`, `.th`, `.onnx`). No `package.json`, HTML or JavaScript. | contrary |
+| Source code | `app.py:8`, `14–17`, `279`: one `gr.Blocks` application importing wrappers of three blocks. Single Python interface calling local functions. | contrary |
+| Documentation | `README.md:113`, `121`, `138`: Gradio application is “the frontend”, orchestrating backend-script calls. Processing-step orchestration, not frontend units. | contrary |
+| Search | `git grep -i` at the SHA for `micro.?front`, `federation`, `single.?spa` and `orchestrat`: only cited README lines. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 4 commits, nenhum merge:
-- `60f7dab` (2025-05-26, “Initial commit”): de DmitriDerevjanko, pela interface web, com `LICENSE` e `README.md`;
-- `0c8fc00` e `0096f26` (2025-06-26): de Andrei Gužovski `<anguzo@taltech.ee>`, adicionam gitignore/LFS, relatório, README e o código;
-- SHA `9795d08` (2025-06-26, “Update README.md”): de katreeljas, pela interface web.
+Non-shallow clone; 4 commits, no merge:
+- `60f7dab` (2025-05-26, “Initial commit”): by DmitriDerevjanko through web interface, with `LICENSE` and `README.md`;
+- `0c8fc00` and `0096f26` (2025-06-26): by Andrei Gužovski `<anguzo@taltech.ee>`, add gitignore/LFS, report, README and code;
+- SHA `9795d08` (2025-06-26, “Update README.md”): by katreeljas through web interface.
 
-Nenhum blob histórico foi lido, e os objetos LFS não foram baixados.
+No historical blob was read, and LFS objects were not downloaded.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única interface (Gradio, `app.py:279`); nenhuma outra unidade frontend é referenciada. |
-| Q2 | No | Não há segunda unidade cuja independência possa ser avaliada. |
-| Q3 | No | Não há host compondo unidades; `app.py` chama funções Python locais. |
-| Q4 | No | Nenhum mecanismo de composição; “orchestrating” descreve chamadas a scripts (`README.md:138`). |
-| Q5 | No | Q1–Q4 são No: pipeline de IA para áudio com UI Gradio, captado pela consulta ampla. |
+| Q1 | No | Single interface (Gradio, `app.py:279`); no other frontend unit referenced. |
+| Q2 | No | No second unit exists whose independence could be evaluated. |
+| Q3 | No | No host composes units; `app.py` calls local Python functions. |
+| Q4 | No | No composition mechanism; “orchestrating” describes script calls (`README.md:138`). |
+| Q5 | No | Q1–Q4 are No: audio AI pipeline with Gradio UI, retrieved through broad query. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. O acerto é lexical, como no rascunho 178 e nos casos anteriores da consulta `"frontend orchestration"`: “frontend” orquestrando chamadas a backend ou ferramentas.
-- `frontend_units: 1`, `unit_organization: single-unit` (a interface Gradio), `ui_technologies: [gradio]`, `build_tools: []` (sem bundler), `repo_type: other` (projeto de demonstração de P&D).
-- Não há decisão aberta.
+- `Non-MFE` under rule “at least one question is No”. Retrieval is lexical, as draft 178 and previous cases of query `"frontend orchestration"`: “frontend” orchestrating backend or tool calls.
+- `frontend_units: 1`, `unit_organization: single-unit` (Gradio interface), `ui_technologies: [gradio]`, `build_tools: []` (no bundler), `repo_type: other` (R&D demonstration project).
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** a consulta ampla `"frontend orchestration"` capta “serves as the frontend, orchestrating calls” num projeto Python sem frontend web próprio.
-- **Protocolo (busca):** a grafia buscada não é literal. A elegibilidade muda de `unknown` (001) para `pass` (002).
-- **Protocolo (snapshot):** artefatos binários em LFS ficam como ponteiros no clone.
+- **RQ1 (misleading signals):** broad query `"frontend orchestration"` captures “serves as the frontend, orchestrating calls” in Python project without own web frontend.
+- **Protocol (search):** searched spelling is not literal. Eligibility changes from `unknown` (001) to `pass` (002).
+- **Protocol (snapshot):** LFS binary artifacts remain pointers in clone.

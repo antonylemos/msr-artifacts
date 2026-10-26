@@ -15,6 +15,6 @@ annotation:
 
 # 076 — anish0714/devpulse-mfe
 
-## Dependências
+## Dependencies
 
-Nenhuma dependência das tecnologias no dependencies.csv.
+No dependency on the technologies in dependencies.csv.

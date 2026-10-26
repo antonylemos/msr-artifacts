@@ -13,17 +13,17 @@ annotation:
 
 # 017 — a-kelen/mfe
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem 20 commits, de 2025-06-24 a 2025-06-29, com 1 merge. O primeiro commit é `d82d676` (2025-06-24, "Init commit"), e o do snapshot é `80e4481` (2025-06-29, "Created Dashboard. Deployed Dashboard page").
+History up to snapshot has 20 commits, from 2025-06-24 to 2025-06-29, with 1 merge. First commit is `d82d676` (2025-06-24, "Init commit"), and snapshot commit is `80e4481` (2025-06-29, "Created Dashboard. Deployed Dashboard page").
 
-As revisões anteriores não deixaram ponto ambíguo que o histórico pudesse esclarecer: não há dependência sem uso, unidade ou relação `Undetermined`, construção desativada nem afirmação de documentação `contradita` ou `parcial`. Por isso o histórico não foi consultado além deste contexto.
+Previous reviews left no ambiguous point history could clarify: no unused dependency, `Undetermined` unit or relationship, disabled construct or `contradicted` or `partial` documentation claim exists. Thus history was not consulted beyond this context.
 
-## Pontos
+## Points
 
-Nenhum ponto ambíguo nas revisões anteriores.
+No ambiguous points in previous reviews.
 
-## Comandos
+## Commands
 
 ```
 docs/mfe-history-review/tools/hist.sh a-kelen__mfe rev-list --count 80e4481f9b927142d2c57f4c2787da93ad01b54e
@@ -32,6 +32,6 @@ docs/mfe-history-review/tools/hist.sh a-kelen__mfe log --format=%ad --date=short
 docs/mfe-history-review/tools/hist.sh a-kelen__mfe log --format='%h %ad %s' --date=short 80e4481f9b927142d2c57f4c2787da93ad01b54e
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 20 (2025-06-24 a 2025-06-29). Pontos: 0.
+Commits up to the snapshot: 20 (2025-06-24 to 2025-06-29). Points: 0.

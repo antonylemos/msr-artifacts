@@ -16,24 +16,24 @@ annotation:
 
 # 087 — SABHGG/odin-replica
 
-## Leitura do repositório
+## Repository overview
 
-O snapshot é um único projeto Create React App na raiz, sem workspace. O build é só local, pelo script `build: react-scripts build` (package.json:20), sem arquivo de configuração próprio; os demais scripts são os do CRA (`start`, `test`, `eject`, package.json:19-22). A saída `/build` é ignorada pelo git (.gitignore:11-12). O `package.json` não declara `homepage` nem script de publicação (package.json:1-45).
+The snapshot is a single Create React App project at root, without a workspace. Build is local only, through script `build: react-scripts build` (package.json:20), without its own configuration file; other scripts are CRA defaults (`start`, `test`, `eject`, package.json:19-22). Output `/build` is ignored by git (.gitignore:11-12). The `package.json` declares neither `homepage` nor a publication script (package.json:1-45).
 
-Não há nenhum artefato de deploy: nem Dockerfile, compose, workflow de CI, configuração de hospedagem ou proxy. O `matches.csv` não tem nenhuma ocorrência `ops-*`, `ci-*` ou `cfg-public-path`. O `README.md` é o texto padrão do CRA (README.md:1-3) e só descreve o servidor de desenvolvimento em `http://localhost:3000` (README.md:9-12), o que não é artefato de deploy.
+There are no deployment artifacts: no Dockerfile, compose, CI workflow, hosting configuration or proxy. The `matches.csv` has no `ops-*`, `ci-*` or `cfg-public-path` occurrences. The `README.md` contains standard CRA text (README.md:1-3) and only describes the development server at `http://localhost:3000` (README.md:9-12), which is not a deployment artifact.
 
-O host carrega em execução o bundle de uma aplicação Angular externa, por padrão `http://localhost:4200/main.js`, o `ng serve` de desenvolvimento segundo o comentário do código, configurável por `REACT_APP_LEAPDOCS_ORIGIN` e `REACT_APP_LEAPDOCS_BUNDLE_URL` (src/index.js:7-9). Esse remoto não está no snapshot, não é linha da revisão estrutural, e nada no repositório o constrói ou publica. É uma configuração de desenvolvimento e demonstração, sem publicação.
+Host loads an external Angular application bundle at runtime, by default `http://localhost:4200/main.js`, development `ng serve` according to the code comment, configurable through `REACT_APP_LEAPDOCS_ORIGIN` and `REACT_APP_LEAPDOCS_BUNDLE_URL` (src/index.js:7-9). This remote is absent from the snapshot, is not a structural review row, and nothing in the repository builds or publishes it. This is a development and demonstration configuration, without publication.
 
-## Aplicações
+## Applications
 
-| # | Aplicação | Build | Deploy | Onde é servida | Versionamento | Artefatos |
+| # | Application | Build | Deploy | Where served | Versioning | Artifacts |
 |---|---|---|---|---|---|---|
-| 1 | . | separado | não observado | — | No | package.json:20 (`react-scripts build`); .gitignore:11-12 (saída `/build`) |
+| 1 | . | separate | not observed | — | No | package.json:20 (`react-scripts build`); .gitignore:11-12 (output `/build`) |
 
-## Observações
+## Observations
 
-**1. Raiz (`.`).** Build próprio: `react-scripts build` (package.json:20) gera o artefato desta única aplicação do snapshot, que inclui a unidade local `odin-react` registrada no mesmo bundle (src/index.js:56-60). O remoto `leadocs-angular` não entra nesse artefato; é carregado por URL em execução (src/index.js:7-9), por isso Build `separado` e não `conjunto`. Deploy `não observado`: nenhum artefato do snapshot empacota ou publica a aplicação, e a porta 3000 só aparece no README, para o servidor de desenvolvimento (README.md:9-12). A versão `0.1.0` de um pacote `private` (package.json:3-4) não é usada em publicação, daí Versionamento `No`.
+**1. Root (`.`).** Own build: `react-scripts build` (package.json:20) generates the artifact of this single snapshot application, including local unit `odin-react` registered in the same bundle (src/index.js:56-60). Remote `leadocs-angular` does not enter this artifact; it is loaded by URL at runtime (src/index.js:7-9), hence Build `separate` rather than `joint`. Deploy `not observed`: no snapshot artifact packages or publishes the application, and port 3000 appears only in README, for the development server (README.md:9-12). Version `0.1.0` of a `private` package (package.json:3-4) is unused in publication, hence Versioning `No`.
 
-## Resumo
+## Summary
 
-Aplicações: 1. Build (separado: 1). Deploy (não observado: 1). Versionamento independente: 0.
+Applications: 1. Build (separate: 1). Deploy (not observed: 1). Independent versioning: 0.

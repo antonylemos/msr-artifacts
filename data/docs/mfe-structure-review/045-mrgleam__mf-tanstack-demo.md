@@ -17,20 +17,20 @@ annotation:
 
 ## Workspace
 
-Nenhuma declaração de workspace.
+No workspace declaration.
 
-## Unidades
+## Units
 
-| Diretório | Marcadores | Manifesto | Entrada | Build | Workspace | Deploy | Unidade frontend | Motivo |
+| Directory | Markers | Manifest | Entry | Build | Workspace | Deploy | Frontend unit | Rationale |
 |---|---|---|---|---|---|---|---|---|
-| shell | shell/index.html;shell/package.json;shell/vite.config.ts | shell/package.json:1-9 (manifesto próprio) | shell/index.html:10-11 (entrada main.tsx); shell/src/main.tsx:6-8 (monta React) | shell/vite.config.ts:5-29 (configuração própria); shell/package.json:7 (`vite build`) | — | — | Yes | Aplicação React com entrada e build Vite próprios. |
-| shop | shop/index.html;shop/package.json;shop/vite.config.ts | shop/package.json:1-10 (manifesto próprio) | shop/index.html:10-11 (entrada main.tsx); shop/src/main.tsx:6-8 (monta React) | shop/vite.config.ts:5-25 (configuração própria); shop/package.json:7 (`vite build`) | — | — | Yes | Aplicação React com entrada e build Vite próprios. |
+| shell | shell/index.html;shell/package.json;shell/vite.config.ts | shell/package.json:1-9 (own manifest) | shell/index.html:10-11 (main.tsx entry); shell/src/main.tsx:6-8 (mounts React) | shell/vite.config.ts:5-29 (own configuration); shell/package.json:7 (`vite build`) | — | — | Yes | React application with its own entry and Vite build. |
+| shop | shop/index.html;shop/package.json;shop/vite.config.ts | shop/package.json:1-10 (own manifest) | shop/index.html:10-11 (main.tsx entry); shop/src/main.tsx:6-8 (mounts React) | shop/vite.config.ts:5-25 (own configuration); shop/package.json:7 (`vite build`) | — | — | Yes | React application with its own entry and Vite build. |
 
-## Resumo
+## Summary
 
-Aplicações frontend no snapshot: 2 (shell, shop).
+Frontend applications in the snapshot: 2 (shell, shop).
 
-## Notas
+## Notes
 
-- kong-shell/docker-compose.yml:3-16 e kong-remote/docker-compose.yml:3-12 implantam apenas o gateway Kong. As rotas em kong-remote/kong.yml:3-13 apontam para servidores já externos ao container; não constroem nem publicam shell ou shop, por isso Deploy permanece —.
-- Os diretórios kong-shell e kong-remote não constam de units.csv e não foram acrescentados à tabela.
+- kong-shell/docker-compose.yml:3-16 and kong-remote/docker-compose.yml:3-12 deploy only the Kong gateway. The routes in kong-remote/kong.yml:3-13 point to servers already external to the container; they neither build nor publish shell or shop, so Deploy remains —.
+- The kong-shell and kong-remote directories are absent from units.csv and were not added to the table.

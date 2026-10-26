@@ -20,95 +20,96 @@ annotation:
 
 # 013 — nikJovanovic/ita-vaje
 
-## Leitura do repositório
+## Repository overview
 
-Trabalho acadêmico ("PC Build Planner") com quatro aplicações Next.js unidas por Next.js
-Multi-Zones: um `shell` e três zonas (`catalog-mfe`, `builds-mfe`, `auth-mfe`), "stitched together
-by path rewrites" (README.md:11). O repositório também tem três serviços backend e dois BFFs
-(README.md:9-10), que não são unidades frontend.
+An academic project ("PC Build Planner") with four Next.js applications joined by Next.js
+Multi-Zones: a `shell` and three zones (`catalog-mfe`, `builds-mfe`, `auth-mfe`), "stitched together
+by path rewrites" (README.md:11). The repository also has three backend services and two BFFs
+(README.md:9-10), which are not frontend units.
 
-A composição é por rota no servidor, não por montagem na página. O `shell` declara em `rewrites()`
-que `/catalog`, `/builds` e `/auth` (e as subrotas) vão para `CATALOG_URL`, `BUILDS_URL` e
-`AUTH_URL`, junto com os assets `/<zona>-static/_next/*` de cada zona (shell/next.config.ts:6-29).
-Cada zona serve seus assets com um `assetPrefix` próprio (catalog-mfe/next.config.ts:6,
-builds-mfe/next.config.ts:6, auth-mfe/next.config.ts:6), para coexistir sob a origem do shell. O
-`docker-compose.yml` liga as variáveis aos serviços das zonas (docker-compose.yml:200-202,
-209-211). Cada zona renderiza a página inteira com layout próprio. Nenhum dos tipos de relação
-`host → remote`, `root-config → application`, `application → custom-element` ou
-`page → embedded-frontend` descreve essa forma de entrada, por isso as três relações do shell
-estão como `other`.
+Composition occurs through server routes, rather than mounting on the page. The `shell` declares in `rewrites()`
+that `/catalog`, `/builds` and `/auth` (and their subroutes) go to `CATALOG_URL`, `BUILDS_URL` and
+`AUTH_URL`, together with each zone's `/<zona>-static/_next/*` assets (English translation of the path placeholder: zone) (shell/next.config.ts:6-29).
+Each zone serves its assets with its own `assetPrefix` (catalog-mfe/next.config.ts:6,
+builds-mfe/next.config.ts:6, auth-mfe/next.config.ts:6), to coexist under the shell's origin. The
+`docker-compose.yml` connects the variables to the zone services (docker-compose.yml:200-202,
+209-211). Each zone renders the entire page with its own layout. None of the relationship types
+`host → remote`, `root-config → application`, `application → custom-element` or
+`page → embedded-frontend` describes this entry method, so the shell's three relationships
+are marked `other`.
 
-A segunda forma de ligação é a sessão. O `auth-mfe` grava o cookie `jwt` com `path=/` depois do
-login e do registro (auth-mfe/src/lib/auth-client.ts:20-23, auth-mfe/src/app/auth/login/page.tsx:41,
-auth-mfe/src/app/auth/register/page.tsx:46), e as outras três apps o leem no `Header`
+The second connection is the session. `auth-mfe` writes the `jwt` cookie with `path=/` after
+login and registration (auth-mfe/src/lib/auth-client.ts:20-23, auth-mfe/src/app/auth/login/page.tsx:41,
+auth-mfe/src/app/auth/register/page.tsx:46), and the other three apps read it in `Header`
 (shell/src/components/Header.tsx:12, catalog-mfe/src/components/Header.tsx:12,
-builds-mfe/src/components/Header.tsx:12), relendo quando a janela ganha foco (`focus`, linha 16
-dos três arquivos). Isso funciona porque as zonas ficam sob a mesma origem do shell.
+builds-mfe/src/components/Header.tsx:12), reading it again when the window gains focus (`focus`, line 16
+in all three files). This works because the zones share the shell's origin.
 
-O que não virou relação: a navegação entre zonas é por link de página inteira (`<a href>` em
-shell/src/components/Header.tsx:32, 35, 51 e na lista `sections` de shell/src/app/page.tsx:12, 19,
-26), que não é um tipo de relação. O `Header`, o `Footer` e `src/lib/{auth,auth-client,bff,jwt}.ts`
-são cópias em cada app, não imports entre unidades. A comunicação com `web-bff`/`mobile-bff` é com
-backend, não entre frontends.
+What did not become a relationship: navigation between zones uses full-page links (`<a href>` in
+shell/src/components/Header.tsx:32, 35, 51 and in the `sections` list in shell/src/app/page.tsx:12, 19,
+26), which is not a relationship type. `Header`, `Footer` and `src/lib/{auth,auth-client,bff,jwt}.ts`
+are copies in each app, rather than imports between units. Communication with `web-bff`/`mobile-bff` is with
+the backend, not between frontends.
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | shell | auth-mfe | other | origem → destino | other | Yes | Yes | shell/next.config.ts:9, 23-28 (`AUTH_URL`; `/auth`, `/auth/:path+`, `/auth-static/_next/:path+`); docker-compose.yml:202, 211 (`AUTH_URL: http://auth-mfe:3003`); auth-mfe/next.config.ts:6 (`assetPrefix: "/auth-static"`) | shell/next.config.ts:6 |
-| 2 | shell | builds-mfe | other | origem → destino | other | Yes | Yes | shell/next.config.ts:8, 17-22 (`BUILDS_URL`; `/builds`, `/builds/:path+`, `/builds-static/_next/:path+`); docker-compose.yml:201, 210 (`BUILDS_URL: http://builds-mfe:3002`); builds-mfe/next.config.ts:6 (`assetPrefix: "/builds-static"`) | shell/next.config.ts:6 |
-| 3 | shell | catalog-mfe | other | origem → destino | other | Yes | Yes | shell/next.config.ts:7, 11-16 (`CATALOG_URL`; `/catalog`, `/catalog/:path+`, `/catalog-static/_next/:path+`); docker-compose.yml:200, 209 (`CATALOG_URL: http://catalog-mfe:3001`); catalog-mfe/next.config.ts:6 (`assetPrefix: "/catalog-static"`) | shell/next.config.ts:6 |
-| 4 | auth-mfe | builds-mfe | communication | origem → destino | other | Yes | Yes | — | auth-mfe/src/lib/auth-client.ts:20 |
-| 5 | auth-mfe | catalog-mfe | communication | origem → destino | other | Yes | Yes | — | auth-mfe/src/lib/auth-client.ts:20 |
-| 6 | auth-mfe | shell | communication | origem → destino | other | Yes | Yes | — | auth-mfe/src/lib/auth-client.ts:20 |
+| 1 | shell | auth-mfe | other | source → target | other | Yes | Yes | shell/next.config.ts:9, 23-28 (`AUTH_URL`; `/auth`, `/auth/:path+`, `/auth-static/_next/:path+`); docker-compose.yml:202, 211 (`AUTH_URL: http://auth-mfe:3003`); auth-mfe/next.config.ts:6 (`assetPrefix: "/auth-static"`) | shell/next.config.ts:6 |
+| 2 | shell | builds-mfe | other | source → target | other | Yes | Yes | shell/next.config.ts:8, 17-22 (`BUILDS_URL`; `/builds`, `/builds/:path+`, `/builds-static/_next/:path+`); docker-compose.yml:201, 210 (`BUILDS_URL: http://builds-mfe:3002`); builds-mfe/next.config.ts:6 (`assetPrefix: "/builds-static"`) | shell/next.config.ts:6 |
+| 3 | shell | catalog-mfe | other | source → target | other | Yes | Yes | shell/next.config.ts:7, 11-16 (`CATALOG_URL`; `/catalog`, `/catalog/:path+`, `/catalog-static/_next/:path+`); docker-compose.yml:200, 209 (`CATALOG_URL: http://catalog-mfe:3001`); catalog-mfe/next.config.ts:6 (`assetPrefix: "/catalog-static"`) | shell/next.config.ts:6 |
+| 4 | auth-mfe | builds-mfe | communication | source → target | other | Yes | Yes | — | auth-mfe/src/lib/auth-client.ts:20 |
+| 5 | auth-mfe | catalog-mfe | communication | source → target | other | Yes | Yes | — | auth-mfe/src/lib/auth-client.ts:20 |
+| 6 | auth-mfe | shell | communication | source → target | other | Yes | Yes | — | auth-mfe/src/lib/auth-client.ts:20 |
 
-## Observações
+## Observations
 
-**1. shell → auth-mfe.** O shell repassa `/auth`, `/auth/:path+` e os assets `/auth-static/_next/:path+`
-para `AUTH_URL` (shell/next.config.ts:9, 23-28). O destino foi resolvido por três
-correspondências: `AUTH_URL: http://auth-mfe:3003` aponta para o serviço `auth-mfe`
-(docker-compose.yml:211, também como build arg em docker-compose.yml:202), que é construído de
-`./auth-mfe` (docker-compose.yml:158); o prefixo `/auth-static` é o `assetPrefix` da zona
-(auth-mfe/next.config.ts:6); e a rota `/auth` existe em `auth-mfe/src/app/auth/page.tsx`. Tipo e
-mecanismo são `other`: o shell não carrega módulos da zona nem a registra num orquestrador. Ele
-encaminha requisições de um caminho para outra aplicação, que responde com a página inteira (Next.js
-Multi-Zones, roteamento por `rewrites`). A direção é a do encaminhamento.
+**1. shell → auth-mfe.** The shell forwards `/auth`, `/auth/:path+` and the `/auth-static/_next/:path+` assets
+to `AUTH_URL` (shell/next.config.ts:9, 23-28). The target was resolved through three
+matches: `AUTH_URL: http://auth-mfe:3003` points to the `auth-mfe` service
+(docker-compose.yml:211, also as a build arg in docker-compose.yml:202), built from
+`./auth-mfe` (docker-compose.yml:158); the `/auth-static` prefix is the zone's `assetPrefix`
+(auth-mfe/next.config.ts:6); and the `/auth` route exists in `auth-mfe/src/app/auth/page.tsx`. Type and
+mechanism are `other`: the shell neither loads zone modules nor registers the zone in an orchestrator. It
+forwards requests from a path to another application, which responds with the entire page (Next.js
+Multi-Zones, routing through `rewrites`). Direction follows forwarding.
 
-**2. shell → builds-mfe.** Mesmo padrão com `/builds`, `/builds/:path+` e `/builds-static/_next/:path+`
-para `BUILDS_URL` (shell/next.config.ts:8, 17-22). `BUILDS_URL: http://builds-mfe:3002`
-(docker-compose.yml:201, 210) aponta para o serviço construído de `./builds-mfe`
-(docker-compose.yml:184), cujo `assetPrefix` é `/builds-static` (builds-mfe/next.config.ts:6), e a
-rota `/builds` existe em `builds-mfe/src/app/builds/page.tsx`.
+**2. shell → builds-mfe.** The same pattern with `/builds`, `/builds/:path+` and `/builds-static/_next/:path+`
+to `BUILDS_URL` (shell/next.config.ts:8, 17-22). `BUILDS_URL: http://builds-mfe:3002`
+(docker-compose.yml:201, 210) points to the service built from `./builds-mfe`
+(docker-compose.yml:184), whose `assetPrefix` is `/builds-static` (builds-mfe/next.config.ts:6), and the
+`/builds` route exists in `builds-mfe/src/app/builds/page.tsx`.
 
-**3. shell → catalog-mfe.** Mesmo padrão com `/catalog`, `/catalog/:path+` e
-`/catalog-static/_next/:path+` para `CATALOG_URL` (shell/next.config.ts:7, 11-16).
-`CATALOG_URL: http://catalog-mfe:3001` (docker-compose.yml:200, 209) aponta para o serviço
-construído de `./catalog-mfe` (docker-compose.yml:171), cujo `assetPrefix` é `/catalog-static`
-(catalog-mfe/next.config.ts:6), e a rota `/catalog` existe em `catalog-mfe/src/app/catalog/page.tsx`.
-Os valores-padrão em `localhost:3001-3003` (shell/next.config.ts:7-9) só corroboram as três
-resoluções.
+**3. shell → catalog-mfe.** The same pattern with `/catalog`, `/catalog/:path+` and
+`/catalog-static/_next/:path+` to `CATALOG_URL` (shell/next.config.ts:7, 11-16).
+`CATALOG_URL: http://catalog-mfe:3001` (docker-compose.yml:200, 209) points to the service
+built from `./catalog-mfe` (docker-compose.yml:171), whose `assetPrefix` is `/catalog-static`
+(catalog-mfe/next.config.ts:6), and the `/catalog` route exists in `catalog-mfe/src/app/catalog/page.tsx`.
+The defaults at `localhost:3001-3003` (shell/next.config.ts:7-9) only corroborate the three
+resolutions.
 
-**4. auth-mfe → builds-mfe.** O `auth-mfe` grava o cookie `jwt` com `path=/`
-(auth-mfe/src/lib/auth-client.ts:20-23; nome em auth-mfe/src/lib/jwt.ts:7) após o login e o
-registro (auth-mfe/src/app/auth/login/page.tsx:41, auth-mfe/src/app/auth/register/page.tsx:46).
-O `builds-mfe` lê o cookie no `Header` (builds-mfe/src/components/Header.tsx:12) e antes de criar
-uma build, mandando para `/auth/login` quando não há sessão
-(builds-mfe/src/app/builds/new/new-build-form.tsx:59-62). Mecanismo `other`: é estado
-compartilhado por cookie sob a mesma origem, não troca de eventos. A leitura só vê o cookie porque
-o shell une as zonas numa origem (relações 1-3). O logout de cada app apaga o cookie
-(`clearJwtCookie` em builds-mfe/src/components/Header.tsx:21, e igual nos outros três `Header.tsx`).
-A revisão de código-fonte não registrou essas linhas, então a direção fica a da gravação da
-sessão, a única construção registrada.
+**4. auth-mfe → builds-mfe.** `auth-mfe` writes the `jwt` cookie with `path=/`
+(auth-mfe/src/lib/auth-client.ts:20-23; name in auth-mfe/src/lib/jwt.ts:7) after login and
+registration (auth-mfe/src/app/auth/login/page.tsx:41, auth-mfe/src/app/auth/register/page.tsx:46).
+`builds-mfe` reads the cookie in `Header` (builds-mfe/src/components/Header.tsx:12) and before creating
+a build, sending users to `/auth/login` when there is no session
+(builds-mfe/src/app/builds/new/new-build-form.tsx:59-62). Mechanism `other`: this is state
+shared through a cookie under the same origin, rather than event exchange. Reading sees the cookie only because
+the shell joins the zones under one origin (relationships 1-3). Each app's logout deletes the cookie
+(`clearJwtCookie` in builds-mfe/src/components/Header.tsx:21, and the same in the other three `Header.tsx` files).
+The source code review did not record those lines, so direction remains that of writing the
+session, the only recorded construct.
 
-**5. auth-mfe → catalog-mfe.** Mesma sessão: o `catalog-mfe` lê o cookie no `Header`
-(catalog-mfe/src/components/Header.tsx:12) para mostrar o usuário e o botão de logout. Vale a mesma
-observação sobre `clearJwtCookie` (catalog-mfe/src/components/Header.tsx:21).
+**5. auth-mfe → catalog-mfe.** The same session: `catalog-mfe` reads the cookie in `Header`
+(catalog-mfe/src/components/Header.tsx:12) to display the user and logout button. The same
+observation about `clearJwtCookie` applies (catalog-mfe/src/components/Header.tsx:21).
 
-**6. auth-mfe → shell.** Mesma sessão: o shell lê o cookie no `Header`
-(shell/src/components/Header.tsx:12). Vale a mesma observação sobre `clearJwtCookie`
+**6. auth-mfe → shell.** The same session: the shell reads the cookie in `Header`
+(shell/src/components/Header.tsx:12). The same observation about `clearJwtCookie` applies
 (shell/src/components/Header.tsx:21).
 
-## Resumo
+## Summary
 
-Relações: 6 (other: 3, communication: 3). Ativas: 6. Destino fora do snapshot: 0.
-Unidades sem relação: nenhuma.
+Relationships: 6 (other: 3, communication: 3). Active: 6. Target outside the snapshot: 0.
+Units without a relationship: none.
+

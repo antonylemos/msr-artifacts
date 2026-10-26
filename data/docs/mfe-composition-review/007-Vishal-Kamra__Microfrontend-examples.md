@@ -20,32 +20,33 @@ annotation:
 
 # 007 — Vishal-Kamra/Microfrontend-examples
 
-## Leitura do repositório
+## Repository overview
 
-Repositório de estudo com dois exemplos independentes de Module Federation, ambos com o plugin nativo do webpack 5 (por isso a revisão de dependências não encontrou pacote específico):
+A study repository with two independent Module Federation examples, both using webpack 5's native plugin (hence the dependency review found no specific package):
 
-- **simple-js:** um `Container` em JavaScript puro e dois remotes, `Products` e `Cart`, que expõem `mount(el)` e são montados em elementos fixos da página (simple-js/Container/src/bootstrap.js:1-5).
-- **react-js:** um `container` React e o remote `marketing`. Os diretórios `auth` e `dashboard` só têm manifesto e lockfile, sem código, e não participam da composição.
+- **simple-js:** a plain JavaScript `Container` and two remotes, `Products` and `Cart`, which expose `mount(el)` and are mounted on fixed page elements (simple-js/Container/src/bootstrap.js:1-5).
+- **react-js:** a React `container` and the `marketing` remote. The `auth` and `dashboard` directories have only a manifest and lockfile, with no code, and do not participate in composition.
 
-Nos dois exemplos, o contrato entre as unidades é a função `mount` exportada pelo remote, independente de framework. No exemplo React, a federação só existe na configuração de desenvolvimento: `webpack.prod.js` está vazio (revisão estrutural). O `mount` exportado pelo próprio container React não tem consumidor.
+In both examples, the contract between units is the `mount` function exported by the remote, independent of framework. In the React example, federation exists only in the development configuration: `webpack.prod.js` is empty (structural review). The `mount` exported by the React container itself has no consumer.
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | react-js/container | react-js/marketing | host → remote | origem → destino | module-federation | Yes | Yes | react-js/container/config/webpack.dev.js:19-23 (remote `marketing@http://localhost:8081/remoteEntry.js`); react-js/marketing/config/webpack.dev.js:19-23 (`name: 'marketing'`, `filename: 'remoteEntry.js'`, expõe `./MarketingApp`); react-js/marketing/config/webpack.dev.js:10 (porta 8081) | react-js/marketing/src/bootstrap.js:22; react-js/container/src/components/MarketingApp.js:9; react-js/container/src/components/MarketingApp.js:3 |
-| 2 | simple-js/Container | simple-js/Cart | host → remote | origem → destino | module-federation | Yes | Yes | simple-js/Container/webpack.config.js:10-14 (remote `cart@http://localhost:8082/remoteEntry.js`); simple-js/Cart/webpack.config.js:10-15 (`name: 'cart'`, `filename: 'remoteEntry.js'`, expõe `./CartShow`); simple-js/Cart/webpack.config.js:7 (porta 8082) | simple-js/Cart/src/bootstrap.js:3; simple-js/Container/src/bootstrap.js:2; simple-js/Container/src/bootstrap.js:5 |
-| 3 | simple-js/Container | simple-js/Products | host → remote | origem → destino | module-federation | Yes | Yes | simple-js/Container/webpack.config.js:10-13 (remote `products@http://localhost:8081/remoteEntry.js`); simple-js/Products/webpack.config.js:10-15 (`name: 'products'`, `filename: 'remoteEntry.js'`, expõe `./ProductsIndex`); simple-js/Products/webpack.config.js:7 (porta 8081) | simple-js/Products/src/bootstrap.js:3; simple-js/Container/src/bootstrap.js:1; simple-js/Container/src/bootstrap.js:4 |
+| 1 | react-js/container | react-js/marketing | host → remote | source → target | module-federation | Yes | Yes | react-js/container/config/webpack.dev.js:19-23 (remote `marketing@http://localhost:8081/remoteEntry.js`); react-js/marketing/config/webpack.dev.js:19-23 (`name: 'marketing'`, `filename: 'remoteEntry.js'`, exposes `./MarketingApp`); react-js/marketing/config/webpack.dev.js:10 (port 8081) | react-js/marketing/src/bootstrap.js:22; react-js/container/src/components/MarketingApp.js:9; react-js/container/src/components/MarketingApp.js:3 |
+| 2 | simple-js/Container | simple-js/Cart | host → remote | source → target | module-federation | Yes | Yes | simple-js/Container/webpack.config.js:10-14 (remote `cart@http://localhost:8082/remoteEntry.js`); simple-js/Cart/webpack.config.js:10-15 (`name: 'cart'`, `filename: 'remoteEntry.js'`, exposes `./CartShow`); simple-js/Cart/webpack.config.js:7 (port 8082) | simple-js/Cart/src/bootstrap.js:3; simple-js/Container/src/bootstrap.js:2; simple-js/Container/src/bootstrap.js:5 |
+| 3 | simple-js/Container | simple-js/Products | host → remote | source → target | module-federation | Yes | Yes | simple-js/Container/webpack.config.js:10-13 (remote `products@http://localhost:8081/remoteEntry.js`); simple-js/Products/webpack.config.js:10-15 (`name: 'products'`, `filename: 'remoteEntry.js'`, exposes `./ProductsIndex`); simple-js/Products/webpack.config.js:7 (port 8081) | simple-js/Products/src/bootstrap.js:3; simple-js/Container/src/bootstrap.js:1; simple-js/Container/src/bootstrap.js:4 |
 
-## Observações
+## Observations
 
-**1. react-js/container → react-js/marketing.** O container importa `mount` de `marketing/MarketingApp` (react-js/container/src/components/MarketingApp.js:3) e monta o remote no ref de um componente wrapper (react-js/container/src/components/MarketingApp.js:8-10). O nome e o módulo correspondem a react-js/marketing/config/webpack.dev.js:20-23; a porta 8081 só corrobora.
+**1. react-js/container → react-js/marketing.** The container imports `mount` from `marketing/MarketingApp` (react-js/container/src/components/MarketingApp.js:3) and mounts the remote on the ref of a wrapper component (react-js/container/src/components/MarketingApp.js:8-10). The name and module match react-js/marketing/config/webpack.dev.js:20-23; port 8081 only corroborates.
 
-**2. simple-js/Container → simple-js/Cart.** O container importa `mount` de `cart/CartShow` como `mountCart` e o chama sobre `#dev-cart` (simple-js/Container/src/bootstrap.js:2, 5). O nome e o módulo correspondem a simple-js/Cart/webpack.config.js:11-14; a porta 8082 só corrobora.
+**2. simple-js/Container → simple-js/Cart.** The container imports `mount` from `cart/CartShow` as `mountCart` and calls it on `#dev-cart` (simple-js/Container/src/bootstrap.js:2, 5). The name and module match simple-js/Cart/webpack.config.js:11-14; port 8082 only corroborates.
 
-**3. simple-js/Container → simple-js/Products.** Mesmo padrão com `products/ProductsIndex` como `mountProducts`, sobre `#dev-products` (simple-js/Container/src/bootstrap.js:1, 4). O nome e o módulo correspondem a simple-js/Products/webpack.config.js:11-14. A porta 8081 também é usada por react-js/marketing, mas cada uma vale dentro do seu exemplo.
+**3. simple-js/Container → simple-js/Products.** The same pattern with `products/ProductsIndex` as `mountProducts`, on `#dev-products` (simple-js/Container/src/bootstrap.js:1, 4). The name and module match simple-js/Products/webpack.config.js:11-14. Port 8081 is also used by react-js/marketing, but each applies within its own example.
 
-## Resumo
+## Summary
 
-Relações: 3 (host → remote: 3). Ativas: 3. Destino fora do snapshot: 0.
-Unidades sem relação: nenhuma.
+Relationships: 3 (host → remote: 3). Active: 3. Target outside the snapshot: 0.
+Units without a relationship: none.
+

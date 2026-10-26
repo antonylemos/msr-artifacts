@@ -15,30 +15,30 @@ annotation:
 
 # 234 — sharif7761/Micro-frontend-project-with-react-js
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-remote-import | core_simple/src/App.tsx:9 | core_simple | dynamic-loading | Yes | `lazy(() => import('users_simple/UserList'))` carrega em runtime o módulo exposto pela unidade users_simple (`'./UserList': './src/App.tsx'` em users_simple/rsbuild.config.ts:11-13), resolvido pelo remote `users_simple@http://localhost:3002/remoteEntry.js` (core_simple/rsbuild.config.ts:13); renderizado na rota `/users` em core_simple/src/App.tsx:59, dentro de `Suspense` (:56-61). App é montado em core_simple/src/bootstrap.tsx:5-10, carregado por core_simple/src/index.tsx:1 |
-| src-async-bootstrap | core_simple/src/index.tsx:1 | core_simple | dynamic-loading | No | `import('./bootstrap')` carrega o próprio bootstrap (core_simple/src/bootstrap.tsx); interno à unidade |
-| src-async-bootstrap | users_simple/src/index.tsx:1 | users_simple | dynamic-loading | No | `import('./bootstrap')` carrega o próprio bootstrap (users_simple/src/bootstrap.tsx); interno à unidade |
+| src-remote-import | core_simple/src/App.tsx:9 | core_simple | dynamic-loading | Yes | `lazy(() => import('users_simple/UserList'))` loads at runtime the module exposed by unit users_simple (`'./UserList': './src/App.tsx'` at users_simple/rsbuild.config.ts:11-13), resolved by remote `users_simple@http://localhost:3002/remoteEntry.js` (core_simple/rsbuild.config.ts:13); rendered in route `/users` at core_simple/src/App.tsx:59, inside `Suspense` (:56-61). App is mounted at core_simple/src/bootstrap.tsx:5-10, loaded by core_simple/src/index.tsx:1 |
+| src-async-bootstrap | core_simple/src/index.tsx:1 | core_simple | dynamic-loading | No | `import('./bootstrap')` loads its own bootstrap (core_simple/src/bootstrap.tsx); internal to the unit |
+| src-async-bootstrap | users_simple/src/index.tsx:1 | users_simple | dynamic-loading | No | `import('./bootstrap')` loads its own bootstrap (users_simple/src/bootstrap.tsx); internal to the unit |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | core_simple/src/App.tsx:15 | core_simple | runtime-composition | Yes | Renderiza `<Card>`, componente da unidade common_simple, na página `Home` do shell (core_simple/src/App.tsx:15-23); vem do import estático `common_simple/Card` em core_simple/src/App.tsx:6, resolvido pelo remote `common_simple@http://localhost:3001/remoteEntry.js` (core_simple/rsbuild.config.ts:12) e exposto em common_simple/rsbuild.config.ts:13. `Home` é o element da rota `/` (core_simple/src/App.tsx:58) |
-| manual | core_simple/src/App.tsx:24 | core_simple | runtime-composition | Yes | Segunda renderização de `<Card>`, componente da unidade common_simple, na mesma página `Home` (core_simple/src/App.tsx:24-26), independente da de :15; usa o mesmo import estático `common_simple/Card` (core_simple/src/App.tsx:6) |
-| manual | core_simple/src/App.tsx:57 | core_simple | host-relationship | Yes | `Routes` declara onde o shell usa a outra unidade: `/` → `Home` local e `/users` → `UserList` de users_simple (core_simple/src/App.tsx:57-60), dentro de `BrowserRouter` e `Suspense` (:46, :56); links de navegação em :49-50. App montado em core_simple/src/bootstrap.tsx:5-10 |
-| manual | users_simple/src/App.tsx:40 | users_simple | runtime-composition | Yes | Renderiza `<Button>`, componente da unidade common_simple (users_simple/src/App.tsx:40-42); vem do import estático `common_simple/Button` em users_simple/src/App.tsx:3, resolvido pelo remote `common_simple@http://localhost:3001/remoteEntry.js` (users_simple/rsbuild.config.ts:15) e exposto em common_simple/rsbuild.config.ts:12. App é montado em users_simple/src/bootstrap.tsx:5-10 e também exposto como `./UserList` (users_simple/rsbuild.config.ts:12) |
-| manual | users_simple/src/App.tsx:49 | users_simple | runtime-composition | Yes | Renderiza `<Card>`, componente da unidade common_simple, para cada usuário (users_simple/src/App.tsx:48-53); vem do import estático `common_simple/Card` em users_simple/src/App.tsx:5, resolvido pelo remote de users_simple/rsbuild.config.ts:15 e exposto em common_simple/rsbuild.config.ts:13 |
+| manual | core_simple/src/App.tsx:15 | core_simple | runtime-composition | Yes | Renders `<Card>`, a component of unit common_simple, in the shell’s `Home` page (core_simple/src/App.tsx:15-23); comes from static import `common_simple/Card` at core_simple/src/App.tsx:6, resolved by remote `common_simple@http://localhost:3001/remoteEntry.js` (core_simple/rsbuild.config.ts:12) and exposed at common_simple/rsbuild.config.ts:13. `Home` is the element of route `/` (core_simple/src/App.tsx:58) |
+| manual | core_simple/src/App.tsx:24 | core_simple | runtime-composition | Yes | Second rendering of `<Card>`, a component of unit common_simple, on the same `Home` page (core_simple/src/App.tsx:24-26), independent of :15; uses the same static import `common_simple/Card` (core_simple/src/App.tsx:6) |
+| manual | core_simple/src/App.tsx:57 | core_simple | host-relationship | Yes | `Routes` declares where shell uses the other unit: `/` → local `Home` and `/users` → `UserList` from users_simple (core_simple/src/App.tsx:57-60), inside `BrowserRouter` and `Suspense` (:46, :56); navigation links at :49-50. App mounted at core_simple/src/bootstrap.tsx:5-10 |
+| manual | users_simple/src/App.tsx:40 | users_simple | runtime-composition | Yes | Renders `<Button>`, a component of unit common_simple (users_simple/src/App.tsx:40-42); comes from static import `common_simple/Button` at users_simple/src/App.tsx:3, resolved by remote `common_simple@http://localhost:3001/remoteEntry.js` (users_simple/rsbuild.config.ts:15) and exposed at common_simple/rsbuild.config.ts:12. App is mounted at users_simple/src/bootstrap.tsx:5-10 and also exposed as `./UserList` (users_simple/rsbuild.config.ts:12) |
+| manual | users_simple/src/App.tsx:49 | users_simple | runtime-composition | Yes | Renders `<Card>`, a component of unit common_simple, for each user (users_simple/src/App.tsx:48-53); comes from static import `common_simple/Card` at users_simple/src/App.tsx:5, resolved by the remote at users_simple/rsbuild.config.ts:15 and exposed at common_simple/rsbuild.config.ts:13 |
 
-## Resumo
+## Summary
 
-Construções com composição: 6 (dynamic-loading: 1, runtime-composition: 4, host-relationship: 1).
+Constructs participating in composition: 6 (dynamic-loading: 1, runtime-composition: 4, host-relationship: 1).
 
-## Notas
+## Notes
 
-- core_simple importa `common_simple/Button` (core_simple/src/App.tsx:4), mas não renderiza `<Button>` em nenhum ponto do arquivo; por isso não há linha para Button no shell.
-- A busca do passo 4 só encontrou as três linhas da mineração; nenhum `public/index.html` tem `<script>` ou `<iframe>`, e não há custom elements nem mecanismo de comunicação entre unidades.
-- common_simple não consome outras unidades: seu App só usa os componentes locais (common_simple/src/App.tsx:2-3).
+- core_simple imports `common_simple/Button` (core_simple/src/App.tsx:4), but never renders `<Button>` in the file; there is therefore no Button row in shell.
+- The step 4 search found only the three mining rows; no `public/index.html` has a `<script>` or `<iframe>`, and there are no custom elements or communication mechanism between units.
+- common_simple does not consume other units: its App uses only local components (common_simple/src/App.tsx:2-3).

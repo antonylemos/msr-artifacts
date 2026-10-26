@@ -20,73 +20,73 @@ annotation:
 
 # 130 — kstv364/FitResume
 
-## Contexto
+## Context
 
-Aplicação Python para adaptar currículos com LLM: um backend FastAPI com fluxo de agentes LangGraph (`backend/`) e uma única UI Streamlit (`frontend/app.py`), orquestrados por Docker Compose (`README.md:5`; `docker-compose.yml:3–20`). “Orquestração” se refere aos contêineres frontend/backend, não a unidades frontend compostas. O nome do repositório não é usado como evidência.
+Python application tailoring resumes with an LLM: FastAPI backend with LangGraph agent flow (`backend/`) and a single Streamlit UI (`frontend/app.py`), orchestrated through Docker Compose (`README.md:5`; `docker-compose.yml:3–20`). “Orchestration” concerns frontend/backend containers, not composed frontend units. Repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:131` registra rank 130, ID 1037493163, branch `master`, status `cloned` e o commit do front matter, que é o HEAD do clone e de `origin/master`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:131` records rank 130, ID 1037493163, branch `master`, status `cloned` and front-matter commit, which is clone HEAD and `origin/master`. Every clone Git command used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. No installation, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:131` registra a estratégia `broader` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:17616` (`broader`, elegibilidade `unknown`) e em `data/discovery/mfe-round-002/candidates.csv:17621` (`broader`, elegibilidade `pass`).
+`data/samples/mfe-sample-001/sample.csv:131` records strategy `broader` and eligibility `pass`. Sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). ID appears in `data/discovery/mfe-round-001/candidates.csv:17616` (`broader`, eligibility `unknown`) and `data/discovery/mfe-round-002/candidates.csv:17621` (`broader`, eligibility `pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna um hit por rodada, do endpoint `repositories` e com `path` vazio:
+`sqlite3 -readonly` query of tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns one hit per round, at endpoint `repositories` and with empty `path`:
 
-| Consulta (`q`) | Subconsulta | Consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Effective query | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `broader-frontend-orchestration`: `"frontend orchestration" in:name,description,readme` | `broader-frontend-orchestration#created:2025-Q3` | `"frontend orchestration" in:name,description,readme pushed:>=2025-04-01 created:2025-07-01..2025-09-30` | 2026-10-07T23:40:56.106Z / 2026-10-08T16:23:53.186Z |
 
-Metadados do hit:
-- descrição truncada que termina em “… a Python-based backend (FastAPI) and a Streamlit frontend,”;
-- sem tópicos, linguagem Python, `fork: false`;
-- criação em 2025-08-13T16:51:15Z, push em 2025-11-08T16:05:50Z, homepage `https://kaustavchanda-fitmyresume.hf.space`.
+Hit metadata:
+- truncated description ending in “… a Python-based backend (FastAPI) and a Streamlit frontend,”;
+- no topics, Python language, `fork: false`;
+- creation at 2025-08-13T16:51:15Z, push at 2025-11-08T16:05:50Z, homepage `https://kaustavchanda-fitmyresume.hf.space`.
 
-A frase literal “frontend orchestration” não aparece na descrição, no README nem em outro arquivo do SHA (`git grep -i 'orchestrat'`). A ocorrência mais próxima é `README.md:5` (“… and a Streamlit frontend, orchestrated using Docker Compose.”), com “frontend” seguido de vírgula e “orchestrated”. `README.md:20` diz “orchestrating the frontend and backend services”. O casamento depende do processamento textual da busca do GitHub, que não está registrado.
+Literal phrase “frontend orchestration” appears neither in description, README nor another SHA file (`git grep -i 'orchestrat'`). Closest occurrence is `README.md:5` (“… and a Streamlit frontend, orchestrated using Docker Compose.”), with “frontend” followed by comma and “orchestrated”. `README.md:20` says “orchestrating the frontend and backend services”. Matching depends on unrecorded GitHub search text processing.
 
-A última alteração de `README.md` alcançável é o próprio SHA, `23da349` (2025-11-08T21:35:50+05:30), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+Last reachable change to `README.md` is SHA itself, `23da349` (2025-11-08T21:35:50+05:30), before October 2026 collections. README at the SHA is not later than searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 14 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. São dois diretórios de serviço, `backend/` (FastAPI, agentes e utilitários) e `frontend/` (um `app.py`), além de `docker-compose.yml`, `.env.example`, README e LICENSE. Não há `package.json`, JavaScript, HTML ou configuração de bundler. | contrária |
-| Código-fonte (UI) | `frontend/app.py:13–17`: uma página Streamlit com duas abas (`st.tabs`) no mesmo script. `frontend/Dockerfile:18`: `streamlit run app.py`. É a única interface do repositório. | contrária |
-| Código-fonte (integração) | `frontend/app.py:10`, `53`, `88–96`: a UI chama o backend por HTTP (`requests.post`) em `/tailor_resume/` e `/generate_outreach/`, definidos em `backend/main.py:60` e `135`. É uma integração frontend → API, não composição de UI. | contexto |
-| Código-fonte (fronteiras) | Busca por todos os `import`/`from` em `*.py`: `frontend/app.py:1–5` só importa bibliotecas externas. `backend/main.py:10–11` importa `backend.utils` e `backend.agents`, do próprio backend. Não há import relativo nem cruzamento entre `frontend/` e `backend/`. | contexto |
-| Configuração / Build/deploy | `docker-compose.yml:3–20`: serviços `backend` (porta 9000→8000) e `frontend` (8501), cada um construído do seu diretório (`backend/Dockerfile:21`; `frontend/Dockerfile:18`). A orquestração é de um backend e uma UI. `README.md:1` aponta uma implantação no Hugging Face Spaces. | contexto |
-| Tecnologia / Configuração / Composição (busca) | `git grep -i` em todo o SHA por `orchestrat`, `micro.?front`, `federation`, `single.?spa`, `iframe`, `components.html`, `st.components`, `remoteEntry`, `import.?map` e `customElements`. Só há os acertos de texto em `README.md:5` e `README.md:20`. Nenhum mecanismo de composição de UI. | ausente |
-| Tecnologia | `frontend/requirements.txt:1–3`: `streamlit`, `requests` e `python-dotenv`, sem versões fixadas. `backend/requirements.txt:1–12`: FastAPI, LangChain/LangGraph, Gemini, PyGithub. | contexto |
-| Documentação | `frontend/README.md:20–24` descreve a dependência da API via `BACKEND_URL`. `frontend/README.md:51` manda rodar `streamlit run frontend/app.py`. Não há documentação de arquitetura frontend além disso. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 14 entries, all regular files `100644`; zero symlinks and zero gitlinks. Two service directories, `backend/` (FastAPI, agents and utilities) and `frontend/` (one `app.py`), plus `docker-compose.yml`, `.env.example`, README and LICENSE. No `package.json`, JavaScript, HTML or bundler configuration. | contrary |
+| Source code (UI) | `frontend/app.py:13–17`: one Streamlit page with two tabs (`st.tabs`) in same script. `frontend/Dockerfile:18`: `streamlit run app.py`. This is repository’s sole interface. | contrary |
+| Source code (integration) | `frontend/app.py:10`, `53`, `88–96`: UI calls backend through HTTP (`requests.post`) at `/tailor_resume/` and `/generate_outreach/`, defined in `backend/main.py:60` and `135`. This is frontend → API integration, not UI composition. | context |
+| Source code (boundaries) | Search for all `import`/`from` in `*.py`: `frontend/app.py:1–5` imports only external libraries. `backend/main.py:10–11` imports `backend.utils` and `backend.agents` from backend itself. No relative import or crossing between `frontend/` and `backend/` exists. | context |
+| Configuration / Build/deploy | `docker-compose.yml:3–20`: services `backend` (port 9000→8000) and `frontend` (8501), each built from own directory (`backend/Dockerfile:21`; `frontend/Dockerfile:18`). Orchestration concerns one backend and one UI. `README.md:1` points to Hugging Face Spaces deployment. | context |
+| Technology / Configuration / Composition (search) | `git grep -i` across entire SHA for `orchestrat`, `micro.?front`, `federation`, `single.?spa`, `iframe`, `components.html`, `st.components`, `remoteEntry`, `import.?map` and `customElements`. Only text hits in `README.md:5` and `README.md:20` exist. No UI composition mechanism. | absent |
+| Technology | `frontend/requirements.txt:1–3`: `streamlit`, `requests` and `python-dotenv`, without pinned versions. `backend/requirements.txt:1–12`: FastAPI, LangChain/LangGraph, Gemini, PyGithub. | context |
+| Documentation | `frontend/README.md:20–24` describes API dependency through `BACKEND_URL`. `frontend/README.md:51` instructs running `streamlit run frontend/app.py`. No further frontend architecture documentation exists. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 27 commits, 1 merge, uma raiz `a0b2501` (“initial commit”, 2025-08-13T16:33:43+05:30), que já adiciona `frontend/app.py`. Todos os commits são de Kaustav Chanda: 25 com `kstvkmrchanda2@gmail.com` e 2 com o e-mail noreply do GitHub. `git log --no-renames --name-status` por caminho:
-- `frontend`: 9 commits; `frontend/Dockerfile` adicionado em `9688fd3` (2025-08-13) e `frontend/README.md` em `eb0a3aa` (2025-09-13).
-- `backend`: ajustes de prompt e de integração com GitHub, de 2025-08-13 a 2025-09-14.
-- `docker-compose.yml`: adicionado em `9688fd3`.
-- `README.md`: adicionado em `95a6d60` (2025-08-16), alterado em `aeec720` e no SHA.
+Non-shallow clone; 27 commits, 1 merge, one root `a0b2501` (“initial commit”, 2025-08-13T16:33:43+05:30), already adding `frontend/app.py`. All commits are by Kaustav Chanda: 25 with `kstvkmrchanda2@gmail.com` and 2 with GitHub noreply email. `git log --no-renames --name-status` by path:
+- `frontend`: 9 commits; `frontend/Dockerfile` added in `9688fd3` (2025-08-13) and `frontend/README.md` in `eb0a3aa` (2025-09-13).
+- `backend`: prompt and GitHub-integration adjustments, from 2025-08-13 to 2025-09-14.
+- `docker-compose.yml`: added in `9688fd3`.
+- `README.md`: added in `95a6d60` (2025-08-16), changed in `aeec720` and SHA.
 
-Os metadados registram um único autor e não indicam código de terceiros. Refs `origin/cover-letter` (`d64e99a`) e `origin/fetch-github-profile` (`067b463`) existem no clone; seu conteúdo não foi considerado. Nenhum blob histórico foi lido e não houve objeto ausente.
+Metadata record a single author and indicate no third-party code. Refs `origin/cover-letter` (`d64e99a`) and `origin/fetch-github-profile` (`067b463`) exist in clone; content was not considered. No historical blob was read and no object was missing.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Só há uma unidade frontend, o script Streamlit `frontend/app.py` (`frontend/app.py:13–17`). O backend FastAPI não é unidade frontend, e não existe configuração de composição que referencie unidades externas (busca registrada). |
-| Q2 | No | Sem duas unidades frontend, não há entradas ou builds frontend independentes a comparar; o serviço separado é a API (`docker-compose.yml:4–11`). |
-| Q3 | No | Nenhum host ou shell carrega unidades; a UI apenas chama endpoints HTTP (`frontend/app.py:53`, `88–96`). |
-| Q4 | No | O Docker Compose orquestra contêineres frontend/backend (`docker-compose.yml:3–20`), não unidades de UI. Nenhum mecanismo de composição foi encontrado. |
-| Q5 | No | Q1–Q4 são No: aplicação full-stack convencional com uma UI Streamlit. |
+| Q1 | No | Only one frontend unit exists, Streamlit script `frontend/app.py` (`frontend/app.py:13–17`). FastAPI backend is not frontend unit, and no composition configuration references external units (recorded search). |
+| Q2 | No | Without two frontend units, no independent frontend entries or builds exist to compare; separate service is API (`docker-compose.yml:4–11`). |
+| Q3 | No | No host or shell loads units; UI only calls HTTP endpoints (`frontend/app.py:53`, `88–96`). |
+| Q4 | No | Docker Compose orchestrates frontend/backend containers (`docker-compose.yml:3–20`), not UI units. No composition mechanism was found. |
+| Q5 | No | Q1–Q4 are No: conventional full-stack application with one Streamlit UI. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “conventional frontend monoliths”: uma UI e uma API, sem unidades frontend compostas. `MFE-unit` não se aplica.
-- Mesmo perfil de 066: UI Streamlit única, com “orchestration” se referindo a backend/serviços, registrada como `ui_technologies: [streamlit]`, `frontend_units: 1` e `single-unit`. `build_tools: []` porque o Streamlit não usa bundler configurado no repositório.
-- `repo_type: production`: o README aponta uma aplicação implantada (`README.md:1`) e a licença é proprietária (`README.md:77`). A implantação não foi verificada. Diferentemente de 066 (`example`), aqui o repositório se apresenta como produto em uso, não como demonstração.
-- Não há decisão aberta: nenhum iframe, link entre aplicações ou composição em build time.
+- `Non-MFE` under rule “at least one question is No”. Matches “conventional frontend monoliths”: one UI and one API, without composed frontend units. `MFE-unit` does not apply.
+- Same profile as 066: single Streamlit UI, with “orchestration” referring to backend/services, recorded as `ui_technologies: [streamlit]`, `frontend_units: 1` and `single-unit`. `build_tools: []` because Streamlit uses no bundler configured in repository.
+- `repo_type: production`: README points to deployed application (`README.md:1`) and license is proprietary (`README.md:77`). Deployment was not verified. Unlike 066 (`example`), repository here presents itself as a product in use, not demonstration.
+- No decision remains open: no iframe, link between applications or build-time composition.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** a consulta ampla `"frontend orchestration"` casou um repositório em que “frontend, orchestrated” descreve Docker Compose (`README.md:5`), sem a frase literal. Repete o padrão de 066, em que “orchestration” descrevia serviços backend.
-- **Protocolo (busca/elegibilidade):** o hit depende do processamento textual do GitHub, que não está registrado. A elegibilidade muda de `unknown` na rodada 001 para `pass` na 002.
-- **Contribuição da revisão independente (Lupa):** concordância integral com Non-MFE, Q1–Q5 No, `streamlit`, uma unidade e `production`; sem decisão aberta. Ajustes, sem efeito na classe: (1) defeito de configuração verificável: `.env.example:5` define `BACKEND_URL=http://backend:9000/tailor_resume/`, mas dentro da rede Compose o backend escuta em 8000 (`backend/Dockerfile:21`) e 9000 é a porta publicada para o host (`docker-compose.yml:7`, `9000:8000`); `README.md:43` mostra corretamente `backend:8000`; o default `localhost:9000` de `frontend/app.py` serve à UI executada fora dos containers; o deploy não é descrito como validado; (2) o backend importa apenas bibliotecas externas e padrão, além de módulos locais do próprio backend, e a UI usa `requests` sem importar fontes do backend; (3) a origem do acerto é o README por eliminação de nome e descrição, sem casamento lexical exato atribuído ao GitHub; (4) `production` se apoia na apresentação, no uso e no link de deploy declarado, não na licença proprietária.
+- **RQ1 (misleading signals):** broad query `"frontend orchestration"` matched a repository where “frontend, orchestrated” describes Docker Compose (`README.md:5`), without literal phrase. Repeats 066 pattern, where “orchestration” described backend services.
+- **Protocol (search/eligibility):** hit depends on unrecorded GitHub text processing. Eligibility changes from `unknown` in round 001 to `pass` in 002.
+- **Independent-review contribution (Lupa):** complete agreement with Non-MFE, Q1–Q5 No, `streamlit`, one unit and `production`; no open decision. Adjustments without class effect: (1) verifiable configuration defect: `.env.example:5` defines `BACKEND_URL=http://backend:9000/tailor_resume/`, but inside Compose network backend listens on 8000 (`backend/Dockerfile:21`) and 9000 is host-published port (`docker-compose.yml:7`, `9000:8000`); `README.md:43` correctly shows `backend:8000`; default `localhost:9000` in `frontend/app.py` serves UI executed outside containers; deployment is not described as validated; (2) backend imports only external and standard libraries plus backend’s own local modules, and UI uses `requests` without importing backend sources; (3) retrieval originates in README by elimination of name and description, without exact lexical matching attributed to GitHub; (4) `production` rests on presentation, use and declared deployment link, not proprietary license.

@@ -20,61 +20,61 @@ annotation:
 
 # 335 — AstroSoup/web-lab-4
 
-## Contexto
+## Context
 
-Trabalho de laboratório de uma disciplina web (o primeiro serviço é “mostly refactored code from third lab”, commit `d4f78cf`): três microsserviços Java (`backend/authService`, `backend/geometryService`, `backend/authMessageBroker`) e um frontend Vue/Vite dividido em host (`frontend/vite/host/`) e dois remotes (`remote-inputs/`, `remote-results/`) com `@module-federation/vite`, servidos por um nginx que publica tudo sob `https://localhost`. O README só tem o título (`README.md:1`). O nome do repositório não é usado como evidência.
+Lab assignment for a web course (the first service is “mostly refactored code from third lab”, commit `d4f78cf`): three Java microservices (`backend/authService`, `backend/geometryService`, `backend/authMessageBroker`) and a Vue/Vite frontend split into host (`frontend/vite/host/`) and two remotes (`remote-inputs/`, `remote-results/`) with `@module-federation/vite`, served by nginx publishing everything under `https://localhost`. The README has only the title (`README.md:1`). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:336` registra rank 335, ID 1105927418, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:336` records rank 335, ID 1105927418, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:336` registra a estratégia `technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:21584` (`technology`, `unknown`, regra `recent-human-commit` com `activity_incomplete`) e `data/discovery/mfe-round-002/candidates.csv:21590` (`technology`, `pass`).
+`data/samples/mfe-sample-001/sample.csv:336` records strategy `technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:21584` (`technology`, `unknown`, rule `recent-human-commit` with `activity_incomplete`) and `data/discovery/mfe-round-002/candidates.csv:21590` (`technology`, `pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos três hits em cada rodada, todos do endpoint `code` e da consulta `technology-module-federation-package-code` (`"@module-federation" filename:package.json`):
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same three hits in each round, all from endpoint `code` and query `technology-module-federation-package-code` (`"@module-federation" filename:package.json`):
 
-| Subconsulta | `path` | Coleta 001 / 002 (UTC) |
+| Subquery | `path` | Collection 001 / 002 (UTC) |
 |---|---|---|
 | `…#size:300..399` | `frontend/vite/remote-inputs/package.json` | 2026-10-07T18:18:51.057Z / 2026-10-08T15:34:35.243Z |
 | `…#size:300..399` | `frontend/vite/remote-results/package.json` | 2026-10-07T18:18:51.057Z / 2026-10-08T15:34:35.243Z |
 | `…#size:400..499` | `frontend/vite/host/package.json` | 2026-10-07T18:19:19.038Z / 2026-10-08T15:34:58.705Z |
 
-Os arquivos casados declaram `"@module-federation/vite": "latest"` (`frontend/vite/host/package.json:17`; `frontend/vite/remote-inputs/package.json:16`; `frontend/vite/remote-results/package.json:16`) e têm 413, 385 e 385 bytes no SHA, dentro das faixas. Os metadados do candidato registram apenas `description: null` e `fork: false`. O acerto não depende do README, que só contém o título; o README vem do commit-raiz `4441231` (2025-11-28) e não é posterior às buscas de outubro de 2026.
+The matched files declare `"@module-federation/vite": "latest"` (`frontend/vite/host/package.json:17`; `frontend/vite/remote-inputs/package.json:16`; `frontend/vite/remote-results/package.json:16`) and have 413, 385 and 385 bytes at the SHA, within the ranges. Candidate metadata records only `description: null` and `fork: false`. The match does not depend on the README, containing only the title; the README comes from root commit `4441231` (2025-11-28) and does not postdate the October 2026 searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 152 entradas, 148 arquivos regulares `100644` e 4 executáveis `100755` (`gradlew` e `config/prometheus/prometheus.yml`); zero symlinks e zero gitlinks. Três projetos frontend com `package.json`, `vite.config.js`, `index.html` e `src/` próprios, três serviços Gradle e `config/` (compose, nginx, Dockerfiles). `config/frontend/Dockerfile` está vazio (0 bytes). | forte |
-| Configuração (host) | `frontend/vite/host/vite.config.js:13–38`: `federation` com `name: 'host'`, `remotes` `remote_inputs` → `https://localhost/remote-inputs/remoteEntry.js` e `remote_results` → `https://localhost/remote-results/remoteEntry.js` (`type: "module"`), `exposes` de três stores Pinia e de `PopupWindow`, e `shared` Vue/Pinia singleton. | forte |
-| Configuração (remotes) | `frontend/vite/remote-inputs/vite.config.js:6–30`: `base: '/remote-inputs/'`, porta 3001, `name: 'remote_inputs'`, `exposes: { "./InputsContainer" }` e remote `host` → `https://localhost/remoteEntry.js`. `frontend/vite/remote-results/vite.config.js:6–30`: mesmo padrão com `/remote-results/`, porta 3002, `name: 'remote_results'`, `exposes: { "./ResultsContainer" }`. | forte |
-| Código-fonte (composição) | `frontend/vite/host/src/pages/MainPage.vue:6–7`, `11`, `23–24`: importa `remote_inputs/InputsContainer` e `remote_results/ResultsContainer` e os renderiza na rota `/app` (`frontend/vite/host/src/main.js:14`). Os remotes consomem os stores expostos pelo host: `remote-inputs/src/InputsContainer.vue:5–6`, `remote-inputs/src/elements/GraphCanvas.vue:2–3`, `remote-results/src/elements/GroupInput.vue:3–4`, `remote-results/src/elements/Table.vue:2` (`host/HistoryStore`, `host/ErrorStore`, `host/PopupWindow`). | forte |
-| Build/deploy | `config/nginx/nginx.conf:18–71`: um servidor por unidade (3000 host, 3001 e 3002 remotes) com CORS; `:73–103`: servidor TLS que publica o host em `/` e os remotes em `/remote-inputs/` e `/remote-results/`, coerente com as URLs dos `remotes` e com os `base` dos remotes. `config/nginx/Dockerfile:5–7`: copia os três `dist` separados. `config/docker-compose.yaml:38–52`: um único contêiner nginx. | moderada |
-| Código-fonte (fronteiras) | Busca por `../` em `*.js` e `*.vue` do frontend: só imports internos do host (`host/src/common/Header.vue:3–4`, `host/src/pages/MainPage.vue:3–4`, `host/src/pages/StartPage.vue:2–3`) e um asset (`host/src/common/Footer.vue:38`). Nenhum import de código-fonte entre `host`, `remote-inputs` e `remote-results`; a dependência mútua passa só por módulos federados. | forte |
+| Structure | `git ls-tree -r` at the SHA: 152 entries, 148 regular files `100644` and 4 executables `100755` (`gradlew` and `config/prometheus/prometheus.yml`); zero symlinks and zero gitlinks. Three frontend projects with their own `package.json`, `vite.config.js`, `index.html` and `src/`, three Gradle services and `config/` (compose, nginx, Dockerfiles). `config/frontend/Dockerfile` is empty (0 bytes). | strong |
+| Configuration (host) | `frontend/vite/host/vite.config.js:13–38`: `federation` with `name: 'host'`, `remotes` `remote_inputs` → `https://localhost/remote-inputs/remoteEntry.js` and `remote_results` → `https://localhost/remote-results/remoteEntry.js` (`type: "module"`), `exposes` of three Pinia stores and `PopupWindow`, and singleton `shared` Vue/Pinia. | strong |
+| Configuration (remotes) | `frontend/vite/remote-inputs/vite.config.js:6–30`: `base: '/remote-inputs/'`, port 3001, `name: 'remote_inputs'`, `exposes: { "./InputsContainer" }` and remote `host` → `https://localhost/remoteEntry.js`. `frontend/vite/remote-results/vite.config.js:6–30`: same pattern with `/remote-results/`, port 3002, `name: 'remote_results'`, `exposes: { "./ResultsContainer" }`. | strong |
+| Source code (composition) | `frontend/vite/host/src/pages/MainPage.vue:6–7`, `11`, `23–24`: imports `remote_inputs/InputsContainer` and `remote_results/ResultsContainer` and renders them at route `/app` (`frontend/vite/host/src/main.js:14`). Remotes consume stores exposed by the host: `remote-inputs/src/InputsContainer.vue:5–6`, `remote-inputs/src/elements/GraphCanvas.vue:2–3`, `remote-results/src/elements/GroupInput.vue:3–4`, `remote-results/src/elements/Table.vue:2` (`host/HistoryStore`, `host/ErrorStore`, `host/PopupWindow`). | strong |
+| Build/deploy | `config/nginx/nginx.conf:18–71`: one server per unit (3000 host, 3001 and 3002 remotes) with CORS; `:73–103`: TLS server publishing host at `/` and remotes at `/remote-inputs/` and `/remote-results/`, consistent with `remotes` URLs and remote `base`. `config/nginx/Dockerfile:5–7`: copies three separate `dist`. `config/docker-compose.yaml:38–52`: a single nginx container. | moderate |
+| Source code (boundaries) | Search for `../` in frontend `*.js` and `*.vue`: only internal host imports (`host/src/common/Header.vue:3–4`, `host/src/pages/MainPage.vue:3–4`, `host/src/pages/StartPage.vue:2–3`) and an asset (`host/src/common/Footer.vue:38`). No source code import between `host`, `remote-inputs` and `remote-results`; mutual dependency uses only federated modules. | strong |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso, parcial (`blob:none`). 29 commits alcançáveis (29 em todos os refs), 1 merge, de 2025-11-28 (`4441231`, “Initial commit”) a 2025-12-08 (SHA `2214561`, “cleanup x2.”); o ref remoto `feat/authMessageBrocker` não foi considerado à parte. Autoria: `Semyon <1234snsks@gmail.com>` em todos os commits (27 locais, 2 pela interface web). A configuração federada dos remotes surge em `53e46c0` (2025-12-05, “working frontend build.”) e o deploy em `f5cb3ef` (2025-12-08, “Deploy configs for frontend.”). `git rev-list --objects $SHA --missing=print` identifica 79 objetos históricos ausentes; os arquivos citados do SHA foram lidos.
+Non-shallow, partial clone (`blob:none`). 29 reachable commits (29 across all refs), 1 merge, from 2025-11-28 (`4441231`, “Initial commit”) to 2025-12-08 (SHA `2214561`, “cleanup x2.”); remote ref `feat/authMessageBrocker` was not considered separately. Authorship: `Semyon <1234snsks@gmail.com>` in all commits (27 local, 2 through the web interface). Remote federation configuration appears in `53e46c0` (2025-12-05, “working frontend build.”) and deployment in `f5cb3ef` (2025-12-08, “Deploy configs for frontend.”). `git rev-list --objects $SHA --missing=print` identifies 79 missing historical objects; cited SHA files were read.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | `host`, `remote-inputs` e `remote-results`, referenciados pela configuração de composição (`frontend/vite/host/vite.config.js:22–33`). |
-| Q2 | Yes | Entrada, `vite.config.js`, porta e `dist` próprios por unidade (`config/nginx/Dockerfile:5–7`); nenhum import de código-fonte entre elas, só especificadores federados. |
-| Q3 | Yes | O host monta os dois remotes na página `/app` (`MainPage.vue:23–24`; `main.js:14`). |
-| Q4 | Yes | Module Federation configurado nos dois lados, com nomes, chaves expostas e URLs coerentes com o roteamento do nginx (`host/vite.config.js:22–33` × `remote-*/vite.config.js:6`, `14–18`; `nginx.conf:90–103`), e consumido por import federado. |
-| Q5 | Yes | Q1–Q4 convergem. |
+| Q1 | Yes | `host`, `remote-inputs` and `remote-results`, referenced by composition configuration (`frontend/vite/host/vite.config.js:22–33`). |
+| Q2 | Yes | Own entry point, `vite.config.js`, port and `dist` per unit (`config/nginx/Dockerfile:5–7`); no source code import between them, only federated specifiers. |
+| Q3 | Yes | The host mounts both remotes on page `/app` (`MainPage.vue:23–24`; `main.js:14`). |
+| Q4 | Yes | Module Federation configured on both sides, with names, exposed keys and URLs consistent with nginx routing (`host/vite.config.js:22–33` × `remote-*/vite.config.js:6`, `14–18`; `nginx.conf:90–103`), and consumed through federated imports. |
+| Q5 | Yes | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- Q1–Q5 são Yes, o que satisfaz a regra de `MFE-implemented`. Corresponde a “monorepos containing a host and its remotes” e a “examples… that actually compose frontend units” (`repo_type: example`, trabalho de laboratório).
-- A cadeia é completa e conectável nos dois sentidos, sem divergência de nome, rota ou chave exposta (contraste com 097/103/104); comparável aos casos de cadeia completa (076/084/096/106/109).
-- Os remotes expõem painéis de tela (entrada de dados com canvas e tabela de resultados), não utilitários; o compartilhamento dos stores Pinia do host é parte do contrato, não o único uso de federação (contraste com 089/100).
+- Q1–Q5 are Yes, satisfying the `MFE-implemented` rule. It matches “monorepos containing a host and its remotes” and “examples… that actually compose frontend units” (`repo_type: example`, lab assignment).
+- The chain is complete and connectable in both directions, without name, route or exposed key mismatch (contrast with 097/103/104); comparable to complete-chain cases (076/084/096/106/109).
+- Remotes expose screen panels (data input with canvas and results table), not utilities; sharing host Pinia stores is part of the contract, not federation’s only use (contrast with 089/100).
 - `frontend_units: 3`, `unit_organization: monorepo`, `approaches: [module-federation]`, `ui_technologies: [vue]`, `build_tools: [vite]`.
-- Não há decisão aberta.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** `@module-federation/vite` com federação bidirecional: o host consome os remotes e também expõe seus stores Pinia e um componente, que os remotes importam como `host/...`; Vue e Pinia compartilhados como singleton.
-- **RQ3:** acoplamento de estado pelo store Pinia do host compartilhado entre as três unidades; os `src/main.js` dos remotes estão vazios (0 bytes), de modo que os remotes não executam isolados e dependem do host em runtime.
-- **Protocolo:** o repositório versiona uma chave privada em `backend/authService/src/main/resources/META-INF/private_key.pem`, não reproduzida aqui; os metadados do candidato nas rodadas têm só `description` e `fork`.
+- **RQ2:** `@module-federation/vite` with bidirectional federation: the host consumes remotes and also exposes its Pinia stores and a component, imported by remotes as `host/...`; Vue and Pinia shared as singletons.
+- **RQ3:** state coupling through the host Pinia store shared across all three units; remote `src/main.js` are empty (0 bytes), so remotes do not run independently and depend on the host at runtime.
+- **Protocol:** the repository versions a private key at `backend/authService/src/main/resources/META-INF/private_key.pem`, not reproduced here; candidate metadata in the rounds has only `description` and `fork`.

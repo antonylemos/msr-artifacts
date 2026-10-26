@@ -1,172 +1,172 @@
-# Método: revisão de documentação
+# Method: documentation review
 
-Os caminhos começados por `docs/` preservam a organização do projeto de origem (`repo-miner`). Neste pacote, as análises correspondentes estão em `data/docs/`. Os caminhos e hashes registrados nas análises mantêm sua função de proveniência.
+Paths beginning with `docs/` preserve the organization of the source project (`repo-miner`). In this package, the corresponding analyses are in `data/docs/`. The paths and hashes recorded in the analyses retain their provenance role.
 
-Este documento descreve como foi feita a revisão de documentação e como ler os arquivos
-`NNN-<owner>__<name>.md` desta pasta. Cada arquivo registra a revisão de um repositório do corpus.
+This document describes how the documentation review was conducted and how to read the
+`NNN-<owner>__<name>.md` files in this folder. Each file records the review of one corpus repository.
 
-## Objetivo
+## Objective
 
-Seção 3.4.7 do protocolo (*Documentation and semantic mining*): registrar o que a documentação
-afirma sobre a arquitetura e confrontar cada afirmação com os artefatos de implementação.
-A documentação é evidência semântica: vale como contexto, mas não é aceita quando contradiz os
-artefatos, e não basta sozinha para sustentar uma interpretação arquitetural.
+Protocol section 3.4.7 (*Documentation and semantic mining*): record what the documentation
+claims about the architecture and compare each claim with implementation artifacts.
+Documentation is semantic evidence: it provides context, but is not accepted when it contradicts
+artifacts and is insufficient on its own to support an architectural interpretation.
 
-As revisões anteriores (seções 3.4.2 a 3.4.6 do protocolo) já registraram o que os artefatos mostram. Esta etapa lê
-o que os textos **dizem** e aponta, para cada afirmação, se as revisões e o snapshot a confirmam.
-No repositório 033, o README diz que as duas aplicações foram "deployed as 2 separate Netlify
-sites"; a revisão de build e deploy encontrou artefato só para o remote. A afirmação é `parcial`.
+Previous reviews (protocol sections 3.4.2 through 3.4.6) already recorded what the artifacts show. This stage reads
+what the texts **say** and indicates, for each claim, whether the reviews and snapshot confirm it.
+In repository 033, the README says that the two applications were "deployed as 2 separate Netlify
+sites"; the build and deployment review found an artifact only for the remote. The claim is `partial`.
 
-O arquivo tem duas partes com papéis diferentes:
+The file has two parts with different roles:
 
-- **A tabela é o critério.** Cada coluna tem vocabulário fixo e regra, para que as afirmações
-  possam ser contadas e comparadas entre repositórios.
-- **O texto é a leitura.** A "Leitura do repositório" e os parágrafos de "Observações" são livres.
-  Eles registram o que a tabela não expressa, para que quem lê entenda a documentação sem abri-la.
+- **The table expresses the criteria.** Each column has a fixed vocabulary and rule, so claims
+  can be counted and compared across repositories.
+- **The text provides the interpretation.** The "Repository overview" and "Observations" paragraphs are free-form.
+  They record what the table cannot express, allowing readers to understand the documentation without opening it.
 
-Esta etapa não reclassifica o repositório e não altera as revisões anteriores.
+This stage does not reclassify the repository or modify previous reviews.
 
-## Fontes consultadas (somente leitura)
+## Sources consulted (read only)
 
-| O quê | Caminho |
+| What | Path |
 |---|---|
-| Lista de repositórios | `data/acquisitions/mfe-corpus-001/acquisition.csv` |
-| Ocorrências de documentação | `data/mining/mfe-mining-001/repos/<owner>__<name>/matches.csv` (padrões `doc-*`) |
-| Documentos | `data/mining/mfe-mining-001/repos/<owner>__<name>/artifacts.csv` (tipo `documentation`) |
-| Revisões anteriores | `docs/mfe-dependency-review/`, `docs/mfe-structure-review/`, `docs/mfe-source-review/`, `docs/mfe-composition-review/`, `docs/mfe-build-deploy-review/` (mesmo nome de arquivo) |
+| Repository list | `data/acquisitions/mfe-corpus-001/acquisition.csv` |
+| Documentation occurrences | `data/mining/mfe-mining-001/repos/<owner>__<name>/matches.csv` (`doc-*` patterns) |
+| Documents | `data/mining/mfe-mining-001/repos/<owner>__<name>/artifacts.csv` (`documentation` type) |
+| Previous reviews | `docs/mfe-dependency-review/`, `docs/mfe-structure-review/`, `docs/mfe-source-review/`, `docs/mfe-composition-review/`, `docs/mfe-build-deploy-review/` (same filename) |
 | Manifest | `data/mining/mfe-mining-001/manifest.json` |
-| Arquivos do snapshot | `data/acquisitions/mfe-corpus-001/corpus/<owner>__<name>/files/` |
-| Classificação (id, commit) | `docs/mfe-classification/NNN-<owner>__<name>.md` |
+| Snapshot files | `data/acquisitions/mfe-corpus-001/corpus/<owner>__<name>/files/` |
+| Classification (id, commit) | `docs/mfe-classification/NNN-<owner>__<name>.md` |
 
-Todo `artefato:linha` é relativo a `files/` do snapshot. A revisão nunca usa `data/samples/` e não modifica nada em `data/`.
+Every `artifact:line` is relative to the snapshot's `files/` directory. The review never uses `data/samples/` or modifies anything in `data/`.
 
-As revisões anteriores, os dados e as configurações consultados são fontes de evidência e não
-são alterados nesta etapa. A validação final cabe ao pesquisador.
+Previous reviews, data and configurations consulted are sources of evidence and are not
+modified in this stage. Final validation is the researcher's responsibility.
 
-## Produto
+## Output
 
-Um arquivo `docs/mfe-documentation-review/NNN-<owner>__<name>.md` por repositório, com o **mesmo nome**
-do arquivo de classificação.
+One `docs/mfe-documentation-review/NNN-<owner>__<name>.md` file per repository, with the **same name**
+as its classification file.
 
-Cada arquivo tem esta estrutura:
+Each file has this structure:
 
-1. Front matter com os campos descritos no passo 1.
-2. Título `# NNN — <owner>/<name>`.
-3. Seção "Leitura do repositório": texto livre.
-4. Seção "Afirmações": uma tabela com as colunas `#`, `Documento`, `Afirmação`, `Tema`, `Corroboração` e `Evidência`.
-5. Seção "Observações": um parágrafo por afirmação.
-6. Seção "Resumo".
+1. Front matter with the fields described in step 1.
+2. Title `# NNN — <owner>/<name>`.
+3. "Repository overview" section: free-form text.
+4. "Claims" section: a table with the columns `#`, `Document`, `Claim`, `Theme`, `Corroboration` and `Evidence`.
+5. "Observations" section: one paragraph per claim.
+6. "Summary" section.
 
-## Procedimento por repositório
+## Procedure per repository
 
-### 1. Cabeçalho do arquivo
+### 1. File header
 
-O front matter registra `id`, `full_name` e `commit`, copiados da classificação; `inputs.mining`,
-copiado do manifest; `status: draft` enquanto a revisão não foi validada (só o pesquisador promove o
-status para `final`); e a data da revisão.
+The front matter records `id`, `full_name` and `commit`, copied from the classification; `inputs.mining`,
+copied from the manifest; `status: draft` while the review has not been validated (only the researcher promotes the
+status to `final`); and the review date.
 
-As cinco revisões anteriores devem estar `final` e ter o mesmo `commit` do `acquisition.csv`.
-Se algo divergir, o `status` passa a `review` e a divergência é registrada em "Ponto para revisão conjunta".
+The five previous reviews must be `final` and have the same `commit` as `acquisition.csv`.
+If anything differs, change `status` to `review` and record the discrepancy in "Point for joint review".
 
-### 2. Levantamento dos textos
+### 2. Gathering the texts
 
-- **Documentos:** todos os arquivos `documentation` do `artifacts.csv` (`.md`) que
-  falam do projeto são lidos inteiros. Arquivos de terceiros ou gerados por template de ferramenta (ex.: README padrão
-  do Vite ou do Angular CLI, changelog automático) são citados na Leitura, sem virar linha, salvo
-  se trouxerem afirmação sobre este projeto.
-  Dentro de um documento, blocos de código que reproduzem arquivos-fonte, configurações ou comandos
-  não viram linha (são citados na Leitura); diagramas e árvores de pastas comentadas são documentação e
-  viram linha como qualquer outro texto.
-- **Ocorrências `doc-*`:** cada uma é aberta. Toda ocorrência aparece numa linha da tabela ou é citada
-  na Leitura como não afirmação (título, menção solta, instrução de execução).
-- **Comentários e campos descritivos:** nos artefatos que as revisões anteriores citam (configurações,
-  Dockerfiles, workflows, código de composição), os comentários e campos como a `description`
-  do `package.json` são lidos. Os que fazem afirmação arquitetural também viram linha.
+- **Documents:** read in full all `documentation` files from `artifacts.csv` (`.md`) that
+  discuss the project. Cite third-party files or files generated from a tool template (e.g., the default Vite
+  or Angular CLI README, an automatic changelog) in the Overview, without creating a row, unless
+  they contain a claim about this project.
+  Within a document, code blocks reproducing source files, configurations or commands
+  do not become rows (cite them in the Overview); diagrams and annotated directory trees are documentation and
+  become rows like any other text.
+- **`doc-*` occurrences:** open each one. Every occurrence appears in a table row or is cited
+  in the Overview as a non-claim (title, isolated mention, execution instruction).
+- **Comments and descriptive fields:** read comments and fields such as the `package.json`
+  `description` in artifacts cited by previous reviews (configurations,
+  Dockerfiles, workflows, composition code). Those making architectural claims also become rows.
 
-### 3. Preenchimento da tabela
+### 3. Filling in the table
 
-**Afirmação arquitetural** é uma frase que diz algo verificável sobre as unidades frontend como
-conjunto: que o projeto é ou contém micro-frontends; quais unidades existem e que papel têm (host,
-remote, shell); como se compõem (tecnologia, carregamento em runtime); como são construídas e
-implantadas; se rodam, são desenvolvidas ou evoluem sozinhas; o que compartilham entre si
-(bibliotecas, assets, sessão) e de que infraestrutura dependem (gateway, proxy, backends). A
-afirmação é extraída mesmo quando vem dentro de um comando, de uma lista ou de uma descrição funcional (ex.:
-"(app complète, standalone)" ao lado de um `npm run`).
+An **architectural claim** is a sentence stating something verifiable about frontend units as a
+whole: that the project is or contains micro-frontends; which units exist and their roles (host,
+remote, shell); how they compose (technology, runtime loading); how they are built and
+deployed; whether they run, are developed or evolve independently; what they share
+(libraries, assets, session) and what infrastructure they depend on (gateway, proxy, backends). Extract the
+claim even when it appears within a command, a list or a functional description (e.g.,
+"(app complète, standalone)" [English translation: "complete, standalone app"] beside an `npm run`).
 
-Não entram: detalhes internos de uma unidade (injeção de dependências, interceptadores, autenticação
-simulada), relações só entre backends, detalhes da infraestrutura que não mudam como as unidades são
-compostas ou implantadas (porta, certificado, variáveis de ambiente, restrição de acesso), sistemas
-fora do snapshot que não se ligam às unidades, e negócio, aparência ou instalação. O que for relevante
-entre eles vai na Leitura.
+Exclude: internal details of a unit (dependency injection, interceptors, simulated authentication),
+relationships only between backends, infrastructure details that do not change how units are
+composed or deployed (port, certificate, environment variables, access restriction), systems
+outside the snapshot that do not connect to the units, and business, appearance or installation details. Include any relevant
+ones in the Overview.
 
-A mesma afirmação repetida em vários lugares vira **uma** linha, no primeiro lugar pela ordem
-abaixo; os demais vão no parágrafo dela. Para decidir se trechos em lugares diferentes são a mesma
-afirmação: mudar o sujeito, o mecanismo ou a propriedade verificável faz outra afirmação (ex.: "arquitetura host/remotes" e "o shell carrega cada remote por
-`loadRemoteModule`" são duas). O nome de uma tecnologia conta como mecanismo: um texto que nomeia
-tecnologia diferente da registrada na revisão de dependências (ex.: "module federation" onde há
-`native-federation`) é outra afirmação, `contradita`, mesmo que outro trecho corrija o nome.
+The same claim repeated in several places becomes **one** row, at the first location according to the order
+below; include the others in its paragraph. To decide whether passages in different places make the same
+claim: changing the subject, mechanism or verifiable property creates another claim (e.g., "host/remotes architecture" and "the shell loads each remote through
+`loadRemoteModule`" are two claims). A technology name counts as a mechanism: text naming
+a different technology from that recorded in the dependency review (e.g., "module federation" where there is
+`native-federation`) is another, `contradicted` claim, even if another passage corrects the name.
 
-Dentro de uma mesma frase, a afirmação se divide em mais de uma linha só quando as partes receberiam corroborações
-diferentes. Se a frase não se divide e fala de mais de um tema, o Tema é o da primeira propriedade
-que ela menciona.
+Within a single sentence, split a claim into more than one row only when the parts would receive different
+corroboration values. If the sentence is not split and covers more than one theme, the Theme is the first property
+it mentions.
 
-Uma biblioteca, um asset ou uma sessão "compartilhados" são `corroborada` quando ao menos duas
-unidades os usam no snapshot; existir ou estar disponível (alias, pasta) não basta.
+A "shared" library, asset or session is `corroborated` when at least two
+units use it in the snapshot; existing or being available (alias, folder) is insufficient.
 
-**Ordem das linhas:** pelo caminho do documento, em ordem de bytes (maiúsculas antes de minúsculas, como `LC_ALL=C sort`), depois pela linha.
+**Row order:** by document path, in byte order (uppercase before lowercase, as in `LC_ALL=C sort`), then by line.
 
-| Coluna | Valores |
+| Column | Values |
 |---|---|
-| # | Número da afirmação, usado nos parágrafos de "Observações". |
-| Documento | `artefato:linha` (ou intervalo). |
-| Afirmação | Trecho curto entre aspas, no idioma original. Se não for português nem inglês, a tradução vem entre parênteses. |
-| Tema | `estrutura` (unidades e fronteiras), `composição` (como as unidades se ligam, tecnologia, runtime), `build-deploy` (build, deploy, hospedagem), `independência` (a unidade roda, é desenvolvida ou evolui sozinha, sem referência a build ou deploy), `outro`. |
-| Corroboração | `corroborada`: as revisões anteriores ou o snapshot confirmam a afirmação. `parcial`: confirmam parte dela, e o resto não tem artefato. `contradita`: os artefatos mostram o contrário, ao menos em parte. `sem corroboração`: nenhum artefato do snapshot confirma nem contradiz (ex.: uso em produção, endereço publicado sem configuração). |
-| Evidência | A revisão anterior e a linha ou relação dela (ex.: `3.4.6 #2`, `3.4.5 #1`) e/ou `artefato:linha` do snapshot, separados por `; `. `—` só em `sem corroboração`. |
+| # | Claim number, used in the "Observations" paragraphs. |
+| Document | `artifact:line` (or range). |
+| Claim | A short passage in quotation marks, in its original language. If it is neither Portuguese nor English, the translation follows in parentheses. |
+| Theme | `structure` (units and boundaries), `composition` (how units connect, technology, runtime), `build-deploy` (build, deployment, hosting), `independence` (the unit runs, is developed or evolves independently, without reference to build or deployment), `other`. |
+| Corroboration | `corroborated`: previous reviews or the snapshot confirm the claim. `partial`: they confirm part of it, and the remainder has no artifact. `contradicted`: artifacts show the opposite, at least in part. `uncorroborated`: no artifact in the snapshot confirms or contradicts it (e.g., production usage, a published address without configuration). |
+| Evidence | The previous review and its row or relationship (e.g., `3.4.6 #2`, `3.4.5 #1`) and/or `artifact:line` from the snapshot, separated by `; `. `—` only for `uncorroborated`. |
 
-Dentro de uma afirmação que não se divide, `contradita` prevalece sobre `parcial`: se uma parte é
-confirmada e outra é desmentida, a afirmação é `contradita`, e o parágrafo diz qual parte se confirma.
+Within a claim that is not split, `contradicted` takes precedence over `partial`: if one part is
+confirmed and another refuted, the claim is `contradicted`, and the paragraph states which part is confirmed.
 
-### 4. Textos
+### 4. Texts
 
-**Leitura do repositório.** Um ou mais parágrafos livres: que documentação existe, em que idioma,
-o que ela diz do projeto como um todo e como se compara com o que as revisões anteriores mostram.
-O texto lista as ocorrências `doc-*` que não viraram linha, os documentos de template sem afirmação e os
-artefatos cujos comentários foram lidos.
+**Repository overview.** One or more free-form paragraphs: what documentation exists, in which language,
+what it says about the project as a whole and how it compares with what previous reviews show.
+List the `doc-*` occurrences that did not become rows, template documents without claims and the
+artifacts whose comments were read.
 
-**Observações.** Um parágrafo por afirmação, na ordem da tabela, começando por `**N. Documento.**`.
-O texto é livre: o que a afirmação diz, o que a sustenta, limita ou contradiz.
+**Observations.** One paragraph per claim, in table order, beginning with `**N. Document.**`.
+The text is free-form: what the claim says and what supports, limits or contradicts it.
 
-Nos dois textos, `artefato:linha` é citado ao afirmar algo sobre o código, e cada citação é aberta no snapshot.
+In both texts, cite `artifact:line` when making a claim about the code, and open each citation in the snapshot.
 
-### 5. Resumo
+### 5. Summary
 
-O resumo tem exatamente uma linha:
+The summary has exactly one line:
 
 ```
-Afirmações: N (corroborada: c, parcial: p, contradita: x, sem corroboração: s). Temas: (tema: n, ...).
+Claims: N (corroborated: c, partial: p, contradicted: x, uncorroborated: s). Themes: (theme: n, ...).
 ```
 
-Na Corroboração, os quatro valores aparecem sempre, nessa ordem; em Temas, só os presentes, na ordem do
-vocabulário. Sem afirmações: "Afirmações: 0."
+In Corroboration, all four values always appear in this order; in Themes, only those present, in vocabulary
+order. Without claims: "Claims: 0."
 
-Quando algo contradiz a classificação do repositório, a revisão não propõe mudá-la; a divergência
-é registrada na "Leitura do repositório".
+When something contradicts the repository classification, the review does not propose changing it; record
+the discrepancy in "Repository overview".
 
-## Verificações de consistência
+## Consistency checks
 
-Antes de considerar um arquivo concluído, confere-se que:
+Before considering a file complete, check that:
 
-- o front matter segue o passo 1;
-- toda ocorrência `doc-*` está numa linha da tabela ou citada na Leitura;
-- nenhuma afirmação aparece em duas linhas, e a ordem segue o passo 3;
-- os valores usam os vocabulários do passo 3, e só `sem corroboração` tem Evidência `—`;
-- há um parágrafo em "Observações" para cada linha da tabela;
-- toda citação foi aberta no snapshot;
-- o "Resumo" confere com a tabela;
-- o arquivo não contém comentários ou marcações de preenchimento.
+- the front matter follows step 1;
+- every `doc-*` occurrence is in a table row or cited in the Overview;
+- no claim appears in two rows, and the order follows step 3;
+- values use the vocabularies from step 3, and only `uncorroborated` has Evidence `—`;
+- there is one "Observations" paragraph for each table row;
+- every citation was opened in the snapshot;
+- the "Summary" agrees with the table;
+- the file contains no comments or completion placeholders.
 
-## Quando uma revisão anterior mudar
+## When a previous review changes
 
-Se uma revisão anterior de um repositório mudar, o arquivo desse repositório precisa ser revisado
-de novo, com `annotation.date` atualizado.
+If a previous review of a repository changes, that repository's file must be reviewed
+again, with `annotation.date` updated.

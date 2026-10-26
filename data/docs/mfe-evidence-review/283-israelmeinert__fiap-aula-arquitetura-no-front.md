@@ -19,732 +19,733 @@ annotation:
 
 # 283 — israelmeinert/fiap-aula-arquitetura-no-front
 
-## Leitura do repositório
+## Repository overview
 
-A revisão de dependências não encontrou biblioteca das tecnologias de MFE, portanto não há observação na dimensão 1. A composição é implementada com recursos do navegador: o manifesto do shell nomeia dois remotos (#1), o shell resolve seus nomes (#8), importa o ESM (#9) e chama `mount` com limpeza (#10). Os remotos React e Angular oferecem os adaptadores (#2, #3). Essa cadeia forma duas relações ativas por `script` (#42, #43), entre as três unidades do bloco 10 (#30–#32), cada uma com build separado (#62–#64). A carga ESM por URL é o mecanismo que a 3.4.5 chama `script`, correspondente ao `runtime-script` da classificação.
+Dependency review found no MFE technology library, therefore no dimension 1 observation. Composition implemented through browser features: shell manifest names two remotes (#1), shell resolves names (#8), imports ESM (#9), calling `mount` with cleanup (#10). React/Angular remotes offer adapters (#2, #3). Chain forms two active `script` relationships (#42, #43) between three block 10 units (#30–#32), each with separate build (#62–#64). URL-based ESM loading is mechanism 3.4.5 calls `script`, corresponding to classification `runtime-script`.
 
-A estrutura contém 29 aplicações frontend (#12–#37, #39–#41); as outras 26 são exemplos isolados e não participam das duas relações. A raiz coordena o workspace (#11), e o BFF é apoio de backend (#38). Os quatro achados no HTML da apresentação são contexto: custom element, iframe e mensagens pertencem ao runtime dos slides (#4–#7). Builds próprios nas aplicações isoladas (#44–#61, #65–#72) não as tornam participantes da composição. Nenhum dos 29 registros de build e deploy tem deploy observado ou versionamento independente.
+Structure contains 29 frontend applications (#12–#37, #39–#41); other 26 isolated examples do not participate in two relationships. Root coordinates workspace (#11); BFF backend support (#38). Four presentation HTML findings context: custom element, iframe and messages belong to slide runtime (#4–#7). Own isolated application builds (#44–#61, #65–#72) do not make them composition participants. None of 29 build/deployment records has observed deployment or independent versioning.
 
-Só o manifesto gera observação de configuração: os demais arquivos citados nas tabelas declaram workspace, compilação, estilos, integração de framework ou proxies locais, sem os elementos de composição definidos na 3.5. O contrato TypeScript é código de tipos; não é configuração de ferramenta. Os scripts comuns de build e serviço dão suporte às observações estruturais, de composição e de build, sem configurar federação ou registrar destinos remotos.
+Only manifest generates configuration observation: other files cited in tables declare workspace, compilation, styles, framework integration or local proxies without composition elements defined in 3.5. TypeScript contract type code rather than tool configuration. Common build/serve scripts support structural, composition and build observations without configuring federation or registering remote targets.
 
-As 27 afirmações documentais são apoio semântico fraco (#73–#99). A árvore dos slides atribui rotas ao shell, mas os botões e a ausência de roteador desmentem essa parte (#78). A publicação independente é apenas parcialmente corroborada (#92); a própria documentação declara não provisionar deploy (#93). A troca das origens também exige ajustar a lista fixa do shell (#94). O histórico de commit único não esclarece a intenção passada de roteamento (#100), enquanto a dúvida sobre publicação é resolvida pelo próprio snapshot (#101). Não permanece ambiguidade arquitetural do snapshot nesses dois pontos.
+27 documentary claims weak semantic support (#73–#99). Slide tree attributes routes to shell, but buttons/absent router contradict portion (#78). Independent publication only partially corroborated (#92); documentation itself declares no deployment provision (#93). Origin changes also require adjusting fixed shell list (#94). Single-commit history does not clarify past routing intent (#100), while publication uncertainty resolved by snapshot (#101). No snapshot architectural ambiguity remains in two points.
 
-## Observações
+## Observations
 
 ### 1. exemplos/10-micro-frontends/apps/shell/public/remotes.json:1-5
 
-**Observação:** O manifesto declara `version: 1`, `catalogo: "http://127.0.0.1:4301/microfrontend.js"` e `checkout: "http://127.0.0.1:4302/microfrontend.js"`.
+**Observation:** Manifest declares `version: 1`, `catalogo: "http://127.0.0.1:4301/microfrontend.js"` and `checkout: "http://127.0.0.1:4302/microfrontend.js"`.
 
-**Interpretação:** A configuração do shell nomeia dois destinos remotos e seus pontos de entrada ESM.
+**Interpretation:** Shell configuration names two remote targets and ESM entry points.
 
 ### 2. exemplos/10-micro-frontends/apps/catalogo-react/src/mount.tsx:3-6
 
-**Observação:** `mount(host)` cria uma raiz React, renderiza `App` e devolve uma função que chama `root.unmount()`.
+**Observation:** `mount(host)` creates React root, renders `App`, returning function calling `root.unmount()`.
 
-**Interpretação:** O remoto React fornece um adaptador de montagem e limpeza para um host recebido por parâmetro.
+**Interpretation:** React remote provides mounting/cleanup adapter for parameter-supplied host.
 
 ### 3. exemplos/10-micro-frontends/apps/checkout-angular/src/mount.ts:4-12
 
-**Observação:** `mount(host)` cria uma aplicação Angular, instancia `CheckoutApp` com `hostElement: host`, anexa sua view e devolve a limpeza da view, do componente e da aplicação.
+**Observation:** `mount(host)` creates Angular application, instantiates `CheckoutApp` with `hostElement: host`, attaches view, returning view/component/application cleanup.
 
-**Interpretação:** O remoto Angular fornece seu ciclo de montagem e limpeza para um host recebido por parâmetro.
+**Interpretation:** Angular remote provides mounting/cleanup cycle for parameter-supplied host.
 
 ### 4. aula-arquitetura-front-end.html:20284
 
-**Observação:** O script embutido declara uma classe que estende `HTMLElement`, usa `attachShadow` e registra `marp-auto-scaling` com `customElements.define`.
+**Observation:** Embedded script declares class extending `HTMLElement`, uses `attachShadow` and registers `marp-auto-scaling` through `customElements.define`.
 
-**Interpretação:** O custom element atende ao escalonamento do material Marp, sem constituir composição de unidades frontend.
+**Interpretation:** Custom element serves Marp material scaling without constituting frontend unit composition.
 
 ### 5. aula-arquitetura-front-end.html:20635
 
-**Observação:** O script dos slides cria um `iframe` para a visão geral da própria apresentação (`view=overview`).
+**Observation:** Slide script creates `iframe` for presentation’s own overview (`view=overview`).
 
-**Interpretação:** O iframe é interno ao deck e não embute outra aplicação do domínio.
+**Interpretation:** Iframe internal to deck, embedding no other domain application.
 
 ### 6. aula-arquitetura-front-end.html:20284
 
-**Observação:** O runtime dos slides seleciona seus `iframe` e chama `postMessage` para eles.
+**Observation:** Slide runtime selects own `iframe` elements, calling `postMessage` for them.
 
-**Interpretação:** A comunicação é interna à apresentação e não conecta unidades frontend.
+**Interpretation:** Communication internal to presentation without connecting frontend units.
 
 ### 7. aula-arquitetura-front-end.html:20635
 
-**Observação:** O script de apresentação usa `window.parent.postMessage("closeOverview", ...)` e mensagens `navigate:...` entre as janelas do deck.
+**Observation:** Presentation script uses `window.parent.postMessage("closeOverview", ...)` and messages `navigate:...` between deck windows.
 
-**Interpretação:** As mensagens controlam as janelas da apresentação; não são comunicação entre aplicações do domínio.
+**Interpretation:** Messages control presentation windows rather than communication between domain applications.
 
 ### 8. exemplos/10-micro-frontends/apps/shell/src/main.ts:8-22; exemplos/10-micro-frontends/apps/shell/src/main.ts:36-37; exemplos/10-micro-frontends/apps/shell/public/remotes.json:1-5
 
-**Observação:** `abrir(nome)` busca `/remotes.json`, valida a versão, extrai `manifesto[nome]` e verifica a origem. Os botões chamam `abrir("catalogo")` e `abrir("checkout")`.
+**Observation:** `abrir(nome)` retrieves `/remotes.json`, validates version, extracts `manifesto[nome]` and checks origin. Buttons call `abrir("catalogo")` and `abrir("checkout")`.
 
-**Interpretação:** O shell resolve os dois destinos de composição nomeados pelos botões e pelo manifesto.
+**Interpretation:** Shell resolves two composition targets named by buttons/manifest.
 
 ### 9. exemplos/10-micro-frontends/apps/shell/src/main.ts:20-25; exemplos/10-micro-frontends/packages/contracts/mount.ts:4
 
-**Observação:** `import(/* @vite-ignore */ url.href)` carrega o módulo ESM da URL resolvida pelo manifesto; o resultado é tipado como `Remote`.
+**Observation:** `import(/* @vite-ignore */ url.href)` loads ESM module from manifest-resolved URL; result typed as `Remote`.
 
-**Interpretação:** O shell usa um mecanismo de carga ESM em runtime; esta chamada recebe a URL por variável, sem nomear sozinha um destino.
+**Interpretation:** Shell uses runtime ESM loading mechanism; call receives URL through variable without independently naming target.
 
 ### 10. exemplos/10-micro-frontends/apps/shell/src/main.ts:7-13; exemplos/10-micro-frontends/apps/shell/src/main.ts:26-28; exemplos/10-micro-frontends/apps/shell/src/main.ts:38
 
-**Observação:** `remote.mount(slot)` monta no elemento criado pelo shell. A função devolvida é guardada em `cleanup` e chamada ao desmontar ou trocar a montagem.
+**Observation:** `remote.mount(slot)` mounts in shell-created element. Returned function stored in `cleanup`, called on unmount/switch.
 
-**Interpretação:** O consumidor executa o contrato de montagem e limpeza do remoto; a chamada recebe o módulo previamente carregado.
+**Interpretation:** Consumer executes remote mounting/cleanup contract; call receives previously loaded module.
 
 ### 11. .; package.json:9-15; package.json:23; scripts/build.mjs:6-11; README.md:5
 
-**Observação:** A raiz declara os workspaces npm e o script que percorre seus builds. A apresentação da aula fica em `aula-arquitetura-front-end.html`.
+**Observation:** Root declares npm workspaces and script iterating their builds. Class presentation in `aula-arquitetura-front-end.html`.
 
-**Interpretação:** É a raiz de coordenação do material, sem UI própria; não constitui unidade frontend.
+**Interpretation:** Material coordination root without own UI; not frontend unit.
 
 ### 12. exemplos/01-componentes/angular; angular.json:15-16; exemplos/01-componentes/angular/src/main.ts:6; angular.json:12-13; exemplos/01-componentes/angular/package.json:8
 
-**Observação:** O diretório contém manifesto próprio. Entrada: angular.json:15-16 (`browser` exemplos/01-componentes/angular/src/main.ts, `index` exemplos/01-componentes/angular/src/index.html); exemplos/01-componentes/angular/src/main.ts:6 (`bootstrapApplication`). Build: angular.json:12-13 (alvo `build`, `@angular/build:application`); exemplos/01-componentes/angular/package.json:8 (`ng build 01-angular`).
+**Observation:** Directory has own manifest. Entry: angular.json:15-16 (`browser` exemplos/01-componentes/angular/src/main.ts, `index` exemplos/01-componentes/angular/src/index.html); exemplos/01-componentes/angular/src/main.ts:6 (`bootstrapApplication`). Build: angular.json:12-13 (target `build`, `@angular/build:application`); exemplos/01-componentes/angular/package.json:8 (`ng build 01-angular`).
 
-**Interpretação:** Aplicação Angular com entrada e alvo de build próprios no angular.json. É uma aplicação isolada do material; este limite não estabelece ligação com outra unidade.
+**Interpretation:** Angular application with own entry/build target in angular.json. Isolated material application; boundary establishes no other-unit link.
 
 ### 13. exemplos/01-componentes/react; exemplos/01-componentes/react/index.html:2; exemplos/01-componentes/react/src/main.tsx:6; exemplos/01-componentes/react/vite.config.ts:1-3; exemplos/01-componentes/react/package.json:8
 
-**Observação:** O diretório contém manifesto próprio. Entrada: exemplos/01-componentes/react/index.html:2 (`<script type="module" src="/src/main.tsx">`); exemplos/01-componentes/react/src/main.tsx:6 (`createRoot(host).render(<App />)`). Build: exemplos/01-componentes/react/vite.config.ts:1-3 (Vite com plugin React); exemplos/01-componentes/react/package.json:8 (`tsc --noEmit && vite build`).
+**Observation:** Directory has own manifest. Entry: exemplos/01-componentes/react/index.html:2 (`<script type="module" src="/src/main.tsx">`); exemplos/01-componentes/react/src/main.tsx:6 (`createRoot(host).render(<App />)`). Build: exemplos/01-componentes/react/vite.config.ts:1-3 (Vite with React plugin); exemplos/01-componentes/react/package.json:8 (`tsc --noEmit && vite build`).
 
-**Interpretação:** Aplicação React com entrada e build Vite próprios. É uma aplicação isolada do material; este limite não estabelece ligação com outra unidade.
+**Interpretation:** React application with own entry/Vite build. Isolated material application; boundary establishes no other-unit link.
 
 ### 14. exemplos/02-atomic-design/angular; angular.json:61-62; exemplos/02-atomic-design/angular/src/main.ts:6; angular.json:58-59; exemplos/02-atomic-design/angular/package.json:8
 
-**Observação:** O diretório contém manifesto próprio. Entrada: angular.json:61-62 (`browser` exemplos/02-atomic-design/angular/src/main.ts, `index` exemplos/02-atomic-design/angular/src/index.html); exemplos/02-atomic-design/angular/src/main.ts:6 (`bootstrapApplication`). Build: angular.json:58-59 (alvo `build`, `@angular/build:application`); exemplos/02-atomic-design/angular/package.json:8 (`ng build 02-angular`).
+**Observation:** Directory has own manifest. Entry: angular.json:61-62 (`browser` exemplos/02-atomic-design/angular/src/main.ts, `index` exemplos/02-atomic-design/angular/src/index.html); exemplos/02-atomic-design/angular/src/main.ts:6 (`bootstrapApplication`). Build: angular.json:58-59 (target `build`, `@angular/build:application`); exemplos/02-atomic-design/angular/package.json:8 (`ng build 02-angular`).
 
-**Interpretação:** Aplicação Angular com entrada e alvo de build próprios no angular.json. É uma aplicação isolada do material; este limite não estabelece ligação com outra unidade.
+**Interpretation:** Angular application with own entry/build target in angular.json. Isolated material application; boundary establishes no other-unit link.
 
 ### 15. exemplos/02-atomic-design/react; exemplos/02-atomic-design/react/index.html:2; exemplos/02-atomic-design/react/src/main.tsx:6; exemplos/02-atomic-design/react/vite.config.ts:1-3; exemplos/02-atomic-design/react/package.json:8
 
-**Observação:** O diretório contém manifesto próprio. Entrada: exemplos/02-atomic-design/react/index.html:2 (`<script type="module" src="/src/main.tsx">`); exemplos/02-atomic-design/react/src/main.tsx:6 (`createRoot(host).render(<App />)`). Build: exemplos/02-atomic-design/react/vite.config.ts:1-3 (Vite com plugin React); exemplos/02-atomic-design/react/package.json:8 (`tsc --noEmit && vite build`).
+**Observation:** Directory has own manifest. Entry: exemplos/02-atomic-design/react/index.html:2 (`<script type="module" src="/src/main.tsx">`); exemplos/02-atomic-design/react/src/main.tsx:6 (`createRoot(host).render(<App />)`). Build: exemplos/02-atomic-design/react/vite.config.ts:1-3 (Vite with React plugin); exemplos/02-atomic-design/react/package.json:8 (`tsc --noEmit && vite build`).
 
-**Interpretação:** Aplicação React com entrada e build Vite próprios. É uma aplicação isolada do material; este limite não estabelece ligação com outra unidade.
+**Interpretation:** React application with own entry/Vite build. Isolated material application; boundary establishes no other-unit link.
 
 ### 16. exemplos/03-camadas/angular; angular.json:107-108; exemplos/03-camadas/angular/src/main.ts:6; angular.json:104-105; exemplos/03-camadas/angular/package.json:8
 
-**Observação:** O diretório contém manifesto próprio. Entrada: angular.json:107-108 (`browser` exemplos/03-camadas/angular/src/main.ts, `index` exemplos/03-camadas/angular/src/index.html); exemplos/03-camadas/angular/src/main.ts:6 (`bootstrapApplication`). Build: angular.json:104-105 (alvo `build`, `@angular/build:application`); exemplos/03-camadas/angular/package.json:8 (`ng build 03-angular`).
+**Observation:** Directory has own manifest. Entry: angular.json:107-108 (`browser` exemplos/03-camadas/angular/src/main.ts, `index` exemplos/03-camadas/angular/src/index.html); exemplos/03-camadas/angular/src/main.ts:6 (`bootstrapApplication`). Build: angular.json:104-105 (target `build`, `@angular/build:application`); exemplos/03-camadas/angular/package.json:8 (`ng build 03-angular`).
 
-**Interpretação:** Aplicação Angular com entrada e alvo de build próprios no angular.json. É uma aplicação isolada do material; este limite não estabelece ligação com outra unidade.
+**Interpretation:** Angular application with own entry/build target in angular.json. Isolated material application; boundary establishes no other-unit link.
 
 ### 17. exemplos/03-camadas/react; exemplos/03-camadas/react/index.html:2; exemplos/03-camadas/react/src/main.tsx:6; exemplos/03-camadas/react/vite.config.ts:1-3; exemplos/03-camadas/react/package.json:8
 
-**Observação:** O diretório contém manifesto próprio. Entrada: exemplos/03-camadas/react/index.html:2 (`<script type="module" src="/src/main.tsx">`); exemplos/03-camadas/react/src/main.tsx:6 (`createRoot(host).render(<App />)`). Build: exemplos/03-camadas/react/vite.config.ts:1-3 (Vite com plugin React); exemplos/03-camadas/react/package.json:8 (`tsc --noEmit && vite build`).
+**Observation:** Directory has own manifest. Entry: exemplos/03-camadas/react/index.html:2 (`<script type="module" src="/src/main.tsx">`); exemplos/03-camadas/react/src/main.tsx:6 (`createRoot(host).render(<App />)`). Build: exemplos/03-camadas/react/vite.config.ts:1-3 (Vite with React plugin); exemplos/03-camadas/react/package.json:8 (`tsc --noEmit && vite build`).
 
-**Interpretação:** Aplicação React com entrada e build Vite próprios. É uma aplicação isolada do material; este limite não estabelece ligação com outra unidade.
+**Interpretation:** React application with own entry/Vite build. Isolated material application; boundary establishes no other-unit link.
 
 ### 18. exemplos/04-feature-based/angular; angular.json:153-154; exemplos/04-feature-based/angular/src/main.ts:6; angular.json:150-151; exemplos/04-feature-based/angular/package.json:8
 
-**Observação:** O diretório contém manifesto próprio. Entrada: angular.json:153-154 (`browser` exemplos/04-feature-based/angular/src/main.ts, `index` exemplos/04-feature-based/angular/src/index.html); exemplos/04-feature-based/angular/src/main.ts:6 (`bootstrapApplication`). Build: angular.json:150-151 (alvo `build`, `@angular/build:application`); exemplos/04-feature-based/angular/package.json:8 (`ng build 04-angular`).
+**Observation:** Directory has own manifest. Entry: angular.json:153-154 (`browser` exemplos/04-feature-based/angular/src/main.ts, `index` exemplos/04-feature-based/angular/src/index.html); exemplos/04-feature-based/angular/src/main.ts:6 (`bootstrapApplication`). Build: angular.json:150-151 (target `build`, `@angular/build:application`); exemplos/04-feature-based/angular/package.json:8 (`ng build 04-angular`).
 
-**Interpretação:** Aplicação Angular com entrada e alvo de build próprios no angular.json. É uma aplicação isolada do material; este limite não estabelece ligação com outra unidade.
+**Interpretation:** Angular application with own entry/build target in angular.json. Isolated material application; boundary establishes no other-unit link.
 
 ### 19. exemplos/04-feature-based/react; exemplos/04-feature-based/react/index.html:2; exemplos/04-feature-based/react/src/main.tsx:6; exemplos/04-feature-based/react/vite.config.ts:1-3; exemplos/04-feature-based/react/package.json:8
 
-**Observação:** O diretório contém manifesto próprio. Entrada: exemplos/04-feature-based/react/index.html:2 (`<script type="module" src="/src/main.tsx">`); exemplos/04-feature-based/react/src/main.tsx:6 (`createRoot(host).render(<App />)`). Build: exemplos/04-feature-based/react/vite.config.ts:1-3 (Vite com plugin React); exemplos/04-feature-based/react/package.json:8 (`tsc --noEmit && vite build`).
+**Observation:** Directory has own manifest. Entry: exemplos/04-feature-based/react/index.html:2 (`<script type="module" src="/src/main.tsx">`); exemplos/04-feature-based/react/src/main.tsx:6 (`createRoot(host).render(<App />)`). Build: exemplos/04-feature-based/react/vite.config.ts:1-3 (Vite with React plugin); exemplos/04-feature-based/react/package.json:8 (`tsc --noEmit && vite build`).
 
-**Interpretação:** Aplicação React com entrada e build Vite próprios. É uma aplicação isolada do material; este limite não estabelece ligação com outra unidade.
+**Interpretation:** React application with own entry/Vite build. Isolated material application; boundary establishes no other-unit link.
 
 ### 20. exemplos/05-clean-architecture/angular; angular.json:199-200; exemplos/05-clean-architecture/angular/src/main.ts:6; angular.json:196-197; exemplos/05-clean-architecture/angular/package.json:8
 
-**Observação:** O diretório contém manifesto próprio. Entrada: angular.json:199-200 (`browser` exemplos/05-clean-architecture/angular/src/main.ts, `index` exemplos/05-clean-architecture/angular/src/index.html); exemplos/05-clean-architecture/angular/src/main.ts:6 (`bootstrapApplication`). Build: angular.json:196-197 (alvo `build`, `@angular/build:application`); exemplos/05-clean-architecture/angular/package.json:8 (`ng build 05-angular`).
+**Observation:** Directory has own manifest. Entry: angular.json:199-200 (`browser` exemplos/05-clean-architecture/angular/src/main.ts, `index` exemplos/05-clean-architecture/angular/src/index.html); exemplos/05-clean-architecture/angular/src/main.ts:6 (`bootstrapApplication`). Build: angular.json:196-197 (target `build`, `@angular/build:application`); exemplos/05-clean-architecture/angular/package.json:8 (`ng build 05-angular`).
 
-**Interpretação:** Aplicação Angular com entrada e alvo de build próprios no angular.json. É uma aplicação isolada do material; este limite não estabelece ligação com outra unidade.
+**Interpretation:** Angular application with own entry/build target in angular.json. Isolated material application; boundary establishes no other-unit link.
 
 ### 21. exemplos/05-clean-architecture/react; exemplos/05-clean-architecture/react/index.html:2; exemplos/05-clean-architecture/react/src/main.tsx:6; exemplos/05-clean-architecture/react/vite.config.ts:1-3; exemplos/05-clean-architecture/react/package.json:8
 
-**Observação:** O diretório contém manifesto próprio. Entrada: exemplos/05-clean-architecture/react/index.html:2 (`<script type="module" src="/src/main.tsx">`); exemplos/05-clean-architecture/react/src/main.tsx:6 (`createRoot(host).render(<App />)`). Build: exemplos/05-clean-architecture/react/vite.config.ts:1-3 (Vite com plugin React); exemplos/05-clean-architecture/react/package.json:8 (`tsc --noEmit && vite build`).
+**Observation:** Directory has own manifest. Entry: exemplos/05-clean-architecture/react/index.html:2 (`<script type="module" src="/src/main.tsx">`); exemplos/05-clean-architecture/react/src/main.tsx:6 (`createRoot(host).render(<App />)`). Build: exemplos/05-clean-architecture/react/vite.config.ts:1-3 (Vite with React plugin); exemplos/05-clean-architecture/react/package.json:8 (`tsc --noEmit && vite build`).
 
-**Interpretação:** Aplicação React com entrada e build Vite próprios. É uma aplicação isolada do material; este limite não estabelece ligação com outra unidade.
+**Interpretation:** React application with own entry/Vite build. Isolated material application; boundary establishes no other-unit link.
 
 ### 22. exemplos/06-hexagonal/angular; angular.json:245-246; exemplos/06-hexagonal/angular/src/main.ts:6; angular.json:242-243; exemplos/06-hexagonal/angular/package.json:8
 
-**Observação:** O diretório contém manifesto próprio. Entrada: angular.json:245-246 (`browser` exemplos/06-hexagonal/angular/src/main.ts, `index` exemplos/06-hexagonal/angular/src/index.html); exemplos/06-hexagonal/angular/src/main.ts:6 (`bootstrapApplication`). Build: angular.json:242-243 (alvo `build`, `@angular/build:application`); exemplos/06-hexagonal/angular/package.json:8 (`ng build 06-angular`).
+**Observation:** Directory has own manifest. Entry: angular.json:245-246 (`browser` exemplos/06-hexagonal/angular/src/main.ts, `index` exemplos/06-hexagonal/angular/src/index.html); exemplos/06-hexagonal/angular/src/main.ts:6 (`bootstrapApplication`). Build: angular.json:242-243 (target `build`, `@angular/build:application`); exemplos/06-hexagonal/angular/package.json:8 (`ng build 06-angular`).
 
-**Interpretação:** Aplicação Angular com entrada e alvo de build próprios no angular.json. É uma aplicação isolada do material; este limite não estabelece ligação com outra unidade.
+**Interpretation:** Angular application with own entry/build target in angular.json. Isolated material application; boundary establishes no other-unit link.
 
 ### 23. exemplos/06-hexagonal/react; exemplos/06-hexagonal/react/index.html:2; exemplos/06-hexagonal/react/src/main.tsx:6; exemplos/06-hexagonal/react/vite.config.ts:1-3; exemplos/06-hexagonal/react/package.json:8
 
-**Observação:** O diretório contém manifesto próprio. Entrada: exemplos/06-hexagonal/react/index.html:2 (`<script type="module" src="/src/main.tsx">`); exemplos/06-hexagonal/react/src/main.tsx:6 (`createRoot(host).render(<App />)`). Build: exemplos/06-hexagonal/react/vite.config.ts:1-3 (Vite com plugin React); exemplos/06-hexagonal/react/package.json:8 (`tsc --noEmit && vite build`).
+**Observation:** Directory has own manifest. Entry: exemplos/06-hexagonal/react/index.html:2 (`<script type="module" src="/src/main.tsx">`); exemplos/06-hexagonal/react/src/main.tsx:6 (`createRoot(host).render(<App />)`). Build: exemplos/06-hexagonal/react/vite.config.ts:1-3 (Vite with React plugin); exemplos/06-hexagonal/react/package.json:8 (`tsc --noEmit && vite build`).
 
-**Interpretação:** Aplicação React com entrada e build Vite próprios. É uma aplicação isolada do material; este limite não estabelece ligação com outra unidade.
+**Interpretation:** React application with own entry/Vite build. Isolated material application; boundary establishes no other-unit link.
 
 ### 24. exemplos/07-feature-sliced-design/angular; angular.json:291-292; exemplos/07-feature-sliced-design/angular/src/main.ts:6; angular.json:288-289; exemplos/07-feature-sliced-design/angular/package.json:8
 
-**Observação:** O diretório contém manifesto próprio. Entrada: angular.json:291-292 (`browser` exemplos/07-feature-sliced-design/angular/src/main.ts, `index` exemplos/07-feature-sliced-design/angular/src/index.html); exemplos/07-feature-sliced-design/angular/src/main.ts:6 (`bootstrapApplication`). Build: angular.json:288-289 (alvo `build`, `@angular/build:application`); exemplos/07-feature-sliced-design/angular/package.json:8 (`ng build 07-angular`).
+**Observation:** Directory has own manifest. Entry: angular.json:291-292 (`browser` exemplos/07-feature-sliced-design/angular/src/main.ts, `index` exemplos/07-feature-sliced-design/angular/src/index.html); exemplos/07-feature-sliced-design/angular/src/main.ts:6 (`bootstrapApplication`). Build: angular.json:288-289 (target `build`, `@angular/build:application`); exemplos/07-feature-sliced-design/angular/package.json:8 (`ng build 07-angular`).
 
-**Interpretação:** Aplicação Angular com entrada e alvo de build próprios no angular.json. É uma aplicação isolada do material; este limite não estabelece ligação com outra unidade.
+**Interpretation:** Angular application with own entry/build target in angular.json. Isolated material application; boundary establishes no other-unit link.
 
 ### 25. exemplos/07-feature-sliced-design/react; exemplos/07-feature-sliced-design/react/index.html:2; exemplos/07-feature-sliced-design/react/src/main.tsx:6; exemplos/07-feature-sliced-design/react/vite.config.ts:1-3; exemplos/07-feature-sliced-design/react/package.json:8
 
-**Observação:** O diretório contém manifesto próprio. Entrada: exemplos/07-feature-sliced-design/react/index.html:2 (`<script type="module" src="/src/main.tsx">`); exemplos/07-feature-sliced-design/react/src/main.tsx:6 (`createRoot(host).render(<App />)`). Build: exemplos/07-feature-sliced-design/react/vite.config.ts:1-3 (Vite com plugin React); exemplos/07-feature-sliced-design/react/package.json:8 (`tsc --noEmit && vite build`).
+**Observation:** Directory has own manifest. Entry: exemplos/07-feature-sliced-design/react/index.html:2 (`<script type="module" src="/src/main.tsx">`); exemplos/07-feature-sliced-design/react/src/main.tsx:6 (`createRoot(host).render(<App />)`). Build: exemplos/07-feature-sliced-design/react/vite.config.ts:1-3 (Vite with React plugin); exemplos/07-feature-sliced-design/react/package.json:8 (`tsc --noEmit && vite build`).
 
-**Interpretação:** Aplicação React com entrada e build Vite próprios. É uma aplicação isolada do material; este limite não estabelece ligação com outra unidade.
+**Interpretation:** React application with own entry/Vite build. Isolated material application; boundary establishes no other-unit link.
 
 ### 26. exemplos/08-mvvm/angular; angular.json:337-338; exemplos/08-mvvm/angular/src/main.ts:6; angular.json:334-335; exemplos/08-mvvm/angular/package.json:8
 
-**Observação:** O diretório contém manifesto próprio. Entrada: angular.json:337-338 (`browser` exemplos/08-mvvm/angular/src/main.ts, `index` exemplos/08-mvvm/angular/src/index.html); exemplos/08-mvvm/angular/src/main.ts:6 (`bootstrapApplication`). Build: angular.json:334-335 (alvo `build`, `@angular/build:application`); exemplos/08-mvvm/angular/package.json:8 (`ng build 08-angular`).
+**Observation:** Directory has own manifest. Entry: angular.json:337-338 (`browser` exemplos/08-mvvm/angular/src/main.ts, `index` exemplos/08-mvvm/angular/src/index.html); exemplos/08-mvvm/angular/src/main.ts:6 (`bootstrapApplication`). Build: angular.json:334-335 (target `build`, `@angular/build:application`); exemplos/08-mvvm/angular/package.json:8 (`ng build 08-angular`).
 
-**Interpretação:** Aplicação Angular com entrada e alvo de build próprios no angular.json. É uma aplicação isolada do material; este limite não estabelece ligação com outra unidade.
+**Interpretation:** Angular application with own entry/build target in angular.json. Isolated material application; boundary establishes no other-unit link.
 
 ### 27. exemplos/08-mvvm/react; exemplos/08-mvvm/react/index.html:2; exemplos/08-mvvm/react/src/main.tsx:6; exemplos/08-mvvm/react/vite.config.ts:1-3; exemplos/08-mvvm/react/package.json:8
 
-**Observação:** O diretório contém manifesto próprio. Entrada: exemplos/08-mvvm/react/index.html:2 (`<script type="module" src="/src/main.tsx">`); exemplos/08-mvvm/react/src/main.tsx:6 (`createRoot(host).render(<App />)`). Build: exemplos/08-mvvm/react/vite.config.ts:1-3 (Vite com plugin React); exemplos/08-mvvm/react/package.json:8 (`tsc --noEmit && vite build`).
+**Observation:** Directory has own manifest. Entry: exemplos/08-mvvm/react/index.html:2 (`<script type="module" src="/src/main.tsx">`); exemplos/08-mvvm/react/src/main.tsx:6 (`createRoot(host).render(<App />)`). Build: exemplos/08-mvvm/react/vite.config.ts:1-3 (Vite with React plugin); exemplos/08-mvvm/react/package.json:8 (`tsc --noEmit && vite build`).
 
-**Interpretação:** Aplicação React com entrada e build Vite próprios. É uma aplicação isolada do material; este limite não estabelece ligação com outra unidade.
+**Interpretation:** React application with own entry/Vite build. Isolated material application; boundary establishes no other-unit link.
 
 ### 28. exemplos/09-flux/angular; angular.json:383-384; exemplos/09-flux/angular/src/main.ts:6; angular.json:380-381; exemplos/09-flux/angular/package.json:8
 
-**Observação:** O diretório contém manifesto próprio. Entrada: angular.json:383-384 (`browser` exemplos/09-flux/angular/src/main.ts, `index` exemplos/09-flux/angular/src/index.html); exemplos/09-flux/angular/src/main.ts:6 (`bootstrapApplication`). Build: angular.json:380-381 (alvo `build`, `@angular/build:application`); exemplos/09-flux/angular/package.json:8 (`ng build 09-angular`).
+**Observation:** Directory has own manifest. Entry: angular.json:383-384 (`browser` exemplos/09-flux/angular/src/main.ts, `index` exemplos/09-flux/angular/src/index.html); exemplos/09-flux/angular/src/main.ts:6 (`bootstrapApplication`). Build: angular.json:380-381 (target `build`, `@angular/build:application`); exemplos/09-flux/angular/package.json:8 (`ng build 09-angular`).
 
-**Interpretação:** Aplicação Angular com entrada e alvo de build próprios no angular.json. É uma aplicação isolada do material; este limite não estabelece ligação com outra unidade.
+**Interpretation:** Angular application with own entry/build target in angular.json. Isolated material application; boundary establishes no other-unit link.
 
 ### 29. exemplos/09-flux/react; exemplos/09-flux/react/index.html:2; exemplos/09-flux/react/src/main.tsx:6; exemplos/09-flux/react/vite.config.ts:1-3; exemplos/09-flux/react/package.json:8
 
-**Observação:** O diretório contém manifesto próprio. Entrada: exemplos/09-flux/react/index.html:2 (`<script type="module" src="/src/main.tsx">`); exemplos/09-flux/react/src/main.tsx:6 (`createRoot(host).render(<App />)`). Build: exemplos/09-flux/react/vite.config.ts:1-3 (Vite com plugin React); exemplos/09-flux/react/package.json:8 (`tsc --noEmit && vite build`).
+**Observation:** Directory has own manifest. Entry: exemplos/09-flux/react/index.html:2 (`<script type="module" src="/src/main.tsx">`); exemplos/09-flux/react/src/main.tsx:6 (`createRoot(host).render(<App />)`). Build: exemplos/09-flux/react/vite.config.ts:1-3 (Vite with React plugin); exemplos/09-flux/react/package.json:8 (`tsc --noEmit && vite build`).
 
-**Interpretação:** Aplicação React com entrada e build Vite próprios. É uma aplicação isolada do material; este limite não estabelece ligação com outra unidade.
+**Interpretation:** React application with own entry/Vite build. Isolated material application; boundary establishes no other-unit link.
 
 ### 30. exemplos/10-micro-frontends/apps/catalogo-react; scripts/build-remoto.mjs:21; exemplos/10-micro-frontends/apps/catalogo-react/src/mount.tsx:3-5; exemplos/10-micro-frontends/apps/catalogo-react/package.json:7; scripts/build-remoto.mjs:21-26
 
-**Observação:** O diretório contém manifesto próprio. Entrada: scripts/build-remoto.mjs:21 (`entryPoints` `src/mount.tsx` no modo react); exemplos/10-micro-frontends/apps/catalogo-react/src/mount.tsx:3-5 (`mount` cria raiz React e devolve o cleanup). Build: exemplos/10-micro-frontends/apps/catalogo-react/package.json:7 (`node ../../../../scripts/build-remoto.mjs react`); scripts/build-remoto.mjs:21-26 (esbuild gera `dist/microfrontend.js` ESM).
+**Observation:** Directory has own manifest. Entry: scripts/build-remoto.mjs:21 (`entryPoints` `src/mount.tsx` in react mode); exemplos/10-micro-frontends/apps/catalogo-react/src/mount.tsx:3-5 (`mount` creates React root and returns cleanup). Build: exemplos/10-micro-frontends/apps/catalogo-react/package.json:7 (`node ../../../../scripts/build-remoto.mjs react`); scripts/build-remoto.mjs:21-26 (esbuild generates `dist/microfrontend.js` ESM).
 
-**Interpretação:** Remoto React com função de montagem e build esbuild próprio, servido em porta própria. Integra o conjunto composto do bloco 10.
+**Interpretation:** React remote with mounting function/own esbuild build, served at own port. Part of block 10 composed group.
 
 ### 31. exemplos/10-micro-frontends/apps/checkout-angular; exemplos/10-micro-frontends/apps/checkout-angular/tsconfig.json:13-15; scripts/build-remoto.mjs:21; exemplos/10-micro-frontends/apps/checkout-angular/src/mount.ts:4-12; exemplos/10-micro-frontends/apps/checkout-angular/package.json:7; scripts/build-remoto.mjs:9-26
 
-**Observação:** O diretório contém manifesto próprio. Entrada: exemplos/10-micro-frontends/apps/checkout-angular/tsconfig.json:13-15 (`files` `src/mount.ts` para o ngc); scripts/build-remoto.mjs:21 (`entryPoints` `dist/compiled/mount.js` no modo angular); exemplos/10-micro-frontends/apps/checkout-angular/src/mount.ts:4-12 (`mount` cria a aplicação Angular e devolve o cleanup). Build: exemplos/10-micro-frontends/apps/checkout-angular/package.json:7 (`ngc -p tsconfig.json && node ../../../../scripts/build-remoto.mjs angular`); scripts/build-remoto.mjs:9-26 (linker Angular e esbuild ESM).
+**Observation:** Directory has own manifest. Entry: exemplos/10-micro-frontends/apps/checkout-angular/tsconfig.json:13-15 (`files` `src/mount.ts` for ngc); scripts/build-remoto.mjs:21 (`entryPoints` `dist/compiled/mount.js` in angular mode); exemplos/10-micro-frontends/apps/checkout-angular/src/mount.ts:4-12 (`mount` creates Angular application and returns cleanup). Build: exemplos/10-micro-frontends/apps/checkout-angular/package.json:7 (`ngc -p tsconfig.json && node ../../../../scripts/build-remoto.mjs angular`); scripts/build-remoto.mjs:9-26 (Angular linker and esbuild ESM).
 
-**Interpretação:** Remoto Angular com função de montagem e build ngc + esbuild próprio, servido em porta própria. Integra o conjunto composto do bloco 10.
+**Interpretation:** Angular remote with mounting function/own ngc + esbuild build, served at own port. Part of block 10 composed group.
 
 ### 32. exemplos/10-micro-frontends/apps/shell; exemplos/10-micro-frontends/apps/shell/index.html:1; exemplos/10-micro-frontends/apps/shell/src/main.ts:36-38; exemplos/10-micro-frontends/apps/shell/package.json:8
 
-**Observação:** O diretório contém manifesto próprio. Entrada: exemplos/10-micro-frontends/apps/shell/index.html:1 (`<script type="module" src="/src/main.ts">`); exemplos/10-micro-frontends/apps/shell/src/main.ts:36-38 (liga os botões que montam os remotos). Build: exemplos/10-micro-frontends/apps/shell/package.json:8 (`tsc --noEmit && vite build`, Vite sem arquivo de configuração).
+**Observation:** Directory has own manifest. Entry: exemplos/10-micro-frontends/apps/shell/index.html:1 (`<script type="module" src="/src/main.ts">`); exemplos/10-micro-frontends/apps/shell/src/main.ts:36-38 (connects remote-mounting buttons). Build: exemplos/10-micro-frontends/apps/shell/package.json:8 (`tsc --noEmit && vite build`, Vite without configuration file).
 
-**Interpretação:** Shell Vite/TypeScript com entrada e build próprios. Integra o conjunto composto do bloco 10.
+**Interpretation:** Vite/TypeScript shell with own entry/build. Part of block 10 composed group.
 
 ### 33. exemplos/11-renderizacao/angular; angular.json:429-430; exemplos/11-renderizacao/angular/src/main.ts:4; angular.json:437-441; angular.json:426-427; exemplos/11-renderizacao/angular/package.json:8
 
-**Observação:** O diretório contém manifesto próprio. Entrada: angular.json:429-430 (`browser` exemplos/11-renderizacao/angular/src/main.ts, `index` exemplos/11-renderizacao/angular/src/index.html); exemplos/11-renderizacao/angular/src/main.ts:4 (`bootstrapApplication`); angular.json:437-441 (`server` main.server.ts, `outputMode: server`, `ssr.entry` server.ts). Build: angular.json:426-427 (alvo `build`, `@angular/build:application`); exemplos/11-renderizacao/angular/package.json:8 (`ng build 11-angular`).
+**Observation:** Directory has own manifest. Entry: angular.json:429-430 (`browser` exemplos/11-renderizacao/angular/src/main.ts, `index` exemplos/11-renderizacao/angular/src/index.html); exemplos/11-renderizacao/angular/src/main.ts:4 (`bootstrapApplication`); angular.json:437-441 (`server` main.server.ts, `outputMode: server`, `ssr.entry` server.ts). Build: angular.json:426-427 (target `build`, `@angular/build:application`); exemplos/11-renderizacao/angular/package.json:8 (`ng build 11-angular`).
 
-**Interpretação:** Aplicação Angular com entrada e alvo de build próprios no angular.json. É uma aplicação isolada do material; este limite não estabelece ligação com outra unidade.
+**Interpretation:** Angular application with own entry/build target in angular.json. Isolated material application; boundary establishes no other-unit link.
 
 ### 34. exemplos/11-renderizacao/next; exemplos/11-renderizacao/next/src/app/layout.tsx:4; exemplos/11-renderizacao/next/next.config.mjs:1-2; exemplos/11-renderizacao/next/package.json:8
 
-**Observação:** O diretório contém manifesto próprio. Entrada: exemplos/11-renderizacao/next/src/app/layout.tsx:4 (`Layout`, App Router); exemplos/11-renderizacao/next/src/app/evento/page.tsx (rota `/evento`). Build: exemplos/11-renderizacao/next/next.config.mjs:1-2 (configuração Next); exemplos/11-renderizacao/next/package.json:8 (`next build --webpack`).
+**Observation:** Directory has own manifest. Entry: exemplos/11-renderizacao/next/src/app/layout.tsx:4 (`Layout`, App Router); exemplos/11-renderizacao/next/src/app/evento/page.tsx (route `/evento`). Build: exemplos/11-renderizacao/next/next.config.mjs:1-2 (Next configuration); exemplos/11-renderizacao/next/package.json:8 (`next build --webpack`).
 
-**Interpretação:** App Next.js com entrada e build próprios. É uma aplicação isolada do material; este limite não estabelece ligação com outra unidade.
+**Interpretation:** Next.js application with own entry/build. Isolated material application; boundary establishes no other-unit link.
 
 ### 35. exemplos/12-ilhas/angular; angular.json:480-481; exemplos/12-ilhas/angular/src/main.ts:6; angular.json:477-478; exemplos/12-ilhas/angular/package.json:8
 
-**Observação:** O diretório contém manifesto próprio. Entrada: angular.json:480-481 (`browser` exemplos/12-ilhas/angular/src/main.ts, `index` exemplos/12-ilhas/angular/src/index.html); exemplos/12-ilhas/angular/src/main.ts:6 (`bootstrapApplication`). Build: angular.json:477-478 (alvo `build`, `@angular/build:application`); exemplos/12-ilhas/angular/package.json:8 (`ng build 12-angular`).
+**Observation:** Directory has own manifest. Entry: angular.json:480-481 (`browser` exemplos/12-ilhas/angular/src/main.ts, `index` exemplos/12-ilhas/angular/src/index.html); exemplos/12-ilhas/angular/src/main.ts:6 (`bootstrapApplication`). Build: angular.json:477-478 (target `build`, `@angular/build:application`); exemplos/12-ilhas/angular/package.json:8 (`ng build 12-angular`).
 
-**Interpretação:** Aplicação Angular com entrada e alvo de build próprios no angular.json. É uma aplicação isolada do material; este limite não estabelece ligação com outra unidade.
+**Interpretation:** Angular application with own entry/build target in angular.json. Isolated material application; boundary establishes no other-unit link.
 
 ### 36. exemplos/12-ilhas/astro; exemplos/12-ilhas/astro/src/pages/index.astro:1-5; exemplos/12-ilhas/astro/astro.config.mjs:1-3; exemplos/12-ilhas/astro/package.json:8
 
-**Observação:** O diretório contém manifesto próprio. Entrada: exemplos/12-ilhas/astro/src/pages/index.astro:1-5 (página Astro com a ilha `<Selecionar client:visible />`). Build: exemplos/12-ilhas/astro/astro.config.mjs:1-3 (Astro com integração React); exemplos/12-ilhas/astro/package.json:8 (`astro build`).
+**Observation:** Directory has own manifest. Entry: exemplos/12-ilhas/astro/src/pages/index.astro:1-5 (Astro page with island `<Selecionar client:visible />`). Build: exemplos/12-ilhas/astro/astro.config.mjs:1-3 (Astro with React integration); exemplos/12-ilhas/astro/package.json:8 (`astro build`).
 
-**Interpretação:** Site Astro com entrada e build próprios. É uma aplicação isolada do material; este limite não estabelece ligação com outra unidade.
+**Interpretation:** Astro application with own entry/build. Isolated material application; boundary establishes no other-unit link.
 
 ### 37. exemplos/13-bff/apps/web-angular; angular.json:526-527; exemplos/13-bff/apps/web-angular/src/main.ts:5; angular.json:523-524; exemplos/13-bff/apps/web-angular/package.json:8
 
-**Observação:** O diretório contém manifesto próprio. Entrada: angular.json:526-527 (`browser` exemplos/13-bff/apps/web-angular/src/main.ts, `index` exemplos/13-bff/apps/web-angular/src/index.html); exemplos/13-bff/apps/web-angular/src/main.ts:5 (`bootstrapApplication`). Build: angular.json:523-524 (alvo `build`, `@angular/build:application`); exemplos/13-bff/apps/web-angular/package.json:8 (`ng build 13-angular`).
+**Observation:** Directory has own manifest. Entry: angular.json:526-527 (`browser` exemplos/13-bff/apps/web-angular/src/main.ts, `index` exemplos/13-bff/apps/web-angular/src/index.html); exemplos/13-bff/apps/web-angular/src/main.ts:5 (`bootstrapApplication`). Build: angular.json:523-524 (target `build`, `@angular/build:application`); exemplos/13-bff/apps/web-angular/package.json:8 (`ng build 13-angular`).
 
-**Interpretação:** Aplicação Angular com entrada e alvo de build próprios no angular.json. É uma aplicação isolada do material; este limite não estabelece ligação com outra unidade.
+**Interpretation:** Angular application with own entry/build target in angular.json. Isolated material application; boundary establishes no other-unit link.
 
 ### 38. exemplos/13-bff/apps/web-bff; exemplos/13-bff/apps/web-bff/src/main.ts:1-5; exemplos/13-bff/apps/web-bff/package.json:8
 
-**Observação:** `src/main.ts` inicia um servidor Express na porta 4011. O script `build` executa apenas `tsc -p tsconfig.json --noEmit`.
+**Observation:** `src/main.ts` starts Express server at port 4011. Script `build` executes only `tsc -p tsconfig.json --noEmit`.
 
-**Interpretação:** O diretório contém o BFF de apoio, sem uma unidade frontend.
+**Interpretation:** Directory contains supporting BFF without frontend unit.
 
 ### 39. exemplos/13-bff/next; exemplos/13-bff/next/src/app/layout.tsx:4; exemplos/13-bff/next/next.config.mjs:1-2; exemplos/13-bff/next/package.json:8
 
-**Observação:** O diretório contém manifesto próprio. Entrada: exemplos/13-bff/next/src/app/layout.tsx:4 (`Layout`, App Router); exemplos/13-bff/next/src/app/evento/page.tsx (rota `/evento`). Build: exemplos/13-bff/next/next.config.mjs:1-2 (configuração Next); exemplos/13-bff/next/package.json:8 (`next build --webpack`).
+**Observation:** Directory has own manifest. Entry: exemplos/13-bff/next/src/app/layout.tsx:4 (`Layout`, App Router); exemplos/13-bff/next/src/app/evento/page.tsx (route `/evento`). Build: exemplos/13-bff/next/next.config.mjs:1-2 (Next configuration); exemplos/13-bff/next/package.json:8 (`next build --webpack`).
 
-**Interpretação:** App Next.js com entrada e build próprios. É uma aplicação isolada do material; este limite não estabelece ligação com outra unidade.
+**Interpretation:** Next.js application with own entry/build. Isolated material application; boundary establishes no other-unit link.
 
 ### 40. exemplos/14-escolha-e-evolucao/angular; angular.json:572-573; exemplos/14-escolha-e-evolucao/angular/src/main.ts:6; angular.json:569-570; exemplos/14-escolha-e-evolucao/angular/package.json:8
 
-**Observação:** O diretório contém manifesto próprio. Entrada: angular.json:572-573 (`browser` exemplos/14-escolha-e-evolucao/angular/src/main.ts, `index` exemplos/14-escolha-e-evolucao/angular/src/index.html); exemplos/14-escolha-e-evolucao/angular/src/main.ts:6 (`bootstrapApplication`). Build: angular.json:569-570 (alvo `build`, `@angular/build:application`); exemplos/14-escolha-e-evolucao/angular/package.json:8 (`ng build 14-angular`).
+**Observation:** Directory has own manifest. Entry: angular.json:572-573 (`browser` exemplos/14-escolha-e-evolucao/angular/src/main.ts, `index` exemplos/14-escolha-e-evolucao/angular/src/index.html); exemplos/14-escolha-e-evolucao/angular/src/main.ts:6 (`bootstrapApplication`). Build: angular.json:569-570 (target `build`, `@angular/build:application`); exemplos/14-escolha-e-evolucao/angular/package.json:8 (`ng build 14-angular`).
 
-**Interpretação:** Aplicação Angular com entrada e alvo de build próprios no angular.json. É uma aplicação isolada do material; este limite não estabelece ligação com outra unidade.
+**Interpretation:** Angular application with own entry/build target in angular.json. Isolated material application; boundary establishes no other-unit link.
 
 ### 41. exemplos/14-escolha-e-evolucao/react; exemplos/14-escolha-e-evolucao/react/index.html:2; exemplos/14-escolha-e-evolucao/react/src/main.tsx:6; exemplos/14-escolha-e-evolucao/react/vite.config.ts:1-3; exemplos/14-escolha-e-evolucao/react/package.json:8
 
-**Observação:** O diretório contém manifesto próprio. Entrada: exemplos/14-escolha-e-evolucao/react/index.html:2 (`<script type="module" src="/src/main.tsx">`); exemplos/14-escolha-e-evolucao/react/src/main.tsx:6 (`createRoot(host).render(<App />)`). Build: exemplos/14-escolha-e-evolucao/react/vite.config.ts:1-3 (Vite com plugin React); exemplos/14-escolha-e-evolucao/react/package.json:8 (`tsc --noEmit && vite build`).
+**Observation:** Directory has own manifest. Entry: exemplos/14-escolha-e-evolucao/react/index.html:2 (`<script type="module" src="/src/main.tsx">`); exemplos/14-escolha-e-evolucao/react/src/main.tsx:6 (`createRoot(host).render(<App />)`). Build: exemplos/14-escolha-e-evolucao/react/vite.config.ts:1-3 (Vite with React plugin); exemplos/14-escolha-e-evolucao/react/package.json:8 (`tsc --noEmit && vite build`).
 
-**Interpretação:** Aplicação React com entrada e build Vite próprios. É uma aplicação isolada do material; este limite não estabelece ligação com outra unidade.
+**Interpretation:** React application with own entry/Vite build. Isolated material application; boundary establishes no other-unit link.
 
 ### 42. exemplos/10-micro-frontends/apps/shell/src/main.ts:16-28; exemplos/10-micro-frontends/apps/shell/src/main.ts:36-37; exemplos/10-micro-frontends/apps/shell/public/remotes.json:3; exemplos/10-micro-frontends/apps/catalogo-react/package.json:7-8; scripts/build-remoto.mjs:21-26; scripts/servir-remoto.mjs:2-6; exemplos/10-micro-frontends/apps/catalogo-react/src/mount.tsx:3-6
 
-**Observação:** O botão de catálogo chama `abrir`; a chave `catalogo` do manifesto resolve o bundle ESM servido na porta 4301. O build de `catalogo-react` gera esse `microfrontend.js`, e o shell o importa e chama seu `mount`.
+**Observation:** Catalogo button calls `abrir`; manifest key `catalogo` resolves ESM bundle served at port 4301. Build of `catalogo-react` generates `microfrontend.js`; shell imports it, calling `mount`.
 
-**Interpretação:** O shell compõe o remoto catalogo-react em runtime pelo mecanismo `script`, com carga ESM por URL e ciclo de montagem e limpeza. A relação está ativa no snapshot.
+**Interpretation:** Shell composes remote catalogo-react at runtime through mechanism `script`, with ESM loading by URL and mounting/cleanup cycle. Relationship active in snapshot.
 
 ### 43. exemplos/10-micro-frontends/apps/shell/src/main.ts:16-28; exemplos/10-micro-frontends/apps/shell/src/main.ts:36-37; exemplos/10-micro-frontends/apps/shell/public/remotes.json:4; exemplos/10-micro-frontends/apps/checkout-angular/package.json:7-8; scripts/build-remoto.mjs:21-26; scripts/servir-remoto.mjs:2-6; exemplos/10-micro-frontends/apps/checkout-angular/src/mount.ts:4-12
 
-**Observação:** O botão de checkout chama `abrir`; a chave `checkout` do manifesto resolve o bundle ESM servido na porta 4302. O build de `checkout-angular` gera esse `microfrontend.js`, e o shell o importa e chama seu `mount`.
+**Observation:** Checkout button calls `abrir`; manifest key `checkout` resolves ESM bundle served at port 4302. Build of `checkout-angular` generates `microfrontend.js`; shell imports it, calling `mount`.
 
-**Interpretação:** O shell compõe o remoto checkout-angular em runtime pelo mecanismo `script`, com carga ESM por URL e ciclo de montagem e limpeza. A relação está ativa no snapshot.
+**Interpretation:** Shell composes remote checkout-angular at runtime through mechanism `script`, with ESM loading by URL and mounting/cleanup cycle. Relationship active in snapshot.
 
 ### 44. angular.json:12-13; angular.json:21; exemplos/01-componentes/angular/package.json:8; exemplos/01-componentes/angular/package.json:7
 
-**Observação:** O script `build` chama `ng build 01-angular`. O alvo correspondente do `angular.json` usa `@angular/build:application` e produz saída própria em `exemplos/01-componentes/angular/dist`. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Script `build` calls `ng build 01-angular`. Corresponding `angular.json` target uses `@angular/build:application` and produces own output in `exemplos/01-componentes/angular/dist`. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O build próprio não conecta esta aplicação isolada às demais. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Own build does not connect isolated application to others. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 45. exemplos/01-componentes/react/vite.config.ts:1-3; exemplos/01-componentes/react/package.json:8; exemplos/01-componentes/react/package.json:7
 
-**Observação:** O manifesto declara `build: "tsc --noEmit && vite build"`, que produz o `dist/` próprio da aplicação. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Manifest declares `build: "tsc --noEmit && vite build"`, producing own application `dist/`. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O build próprio não conecta esta aplicação isolada às demais. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Own build does not connect isolated application to others. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 46. angular.json:58-59; angular.json:67; exemplos/02-atomic-design/angular/package.json:8; exemplos/02-atomic-design/angular/package.json:7
 
-**Observação:** O script `build` chama `ng build 02-angular`. O alvo correspondente do `angular.json` usa `@angular/build:application` e produz saída própria em `exemplos/02-atomic-design/angular/dist`. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Script `build` calls `ng build 02-angular`. Corresponding `angular.json` target uses `@angular/build:application` and produces own output in `exemplos/02-atomic-design/angular/dist`. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O build próprio não conecta esta aplicação isolada às demais. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Own build does not connect isolated application to others. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 47. exemplos/02-atomic-design/react/vite.config.ts:1-3; exemplos/02-atomic-design/react/package.json:8; exemplos/02-atomic-design/react/package.json:7
 
-**Observação:** O manifesto declara `build: "tsc --noEmit && vite build"`, que produz o `dist/` próprio da aplicação. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Manifest declares `build: "tsc --noEmit && vite build"`, producing own application `dist/`. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O build próprio não conecta esta aplicação isolada às demais. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Own build does not connect isolated application to others. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 48. angular.json:104-105; angular.json:113; exemplos/03-camadas/angular/package.json:8; exemplos/03-camadas/angular/package.json:7
 
-**Observação:** O script `build` chama `ng build 03-angular`. O alvo correspondente do `angular.json` usa `@angular/build:application` e produz saída própria em `exemplos/03-camadas/angular/dist`. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Script `build` calls `ng build 03-angular`. Corresponding `angular.json` target uses `@angular/build:application` and produces own output in `exemplos/03-camadas/angular/dist`. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O build próprio não conecta esta aplicação isolada às demais. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Own build does not connect isolated application to others. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 49. exemplos/03-camadas/react/vite.config.ts:1-3; exemplos/03-camadas/react/package.json:8; exemplos/03-camadas/react/package.json:7
 
-**Observação:** O manifesto declara `build: "tsc --noEmit && vite build"`, que produz o `dist/` próprio da aplicação. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Manifest declares `build: "tsc --noEmit && vite build"`, producing own application `dist/`. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O build próprio não conecta esta aplicação isolada às demais. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Own build does not connect isolated application to others. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 50. angular.json:150-151; angular.json:159; exemplos/04-feature-based/angular/package.json:8; exemplos/04-feature-based/angular/package.json:7
 
-**Observação:** O script `build` chama `ng build 04-angular`. O alvo correspondente do `angular.json` usa `@angular/build:application` e produz saída própria em `exemplos/04-feature-based/angular/dist`. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Script `build` calls `ng build 04-angular`. Corresponding `angular.json` target uses `@angular/build:application` and produces own output in `exemplos/04-feature-based/angular/dist`. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O build próprio não conecta esta aplicação isolada às demais. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Own build does not connect isolated application to others. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 51. exemplos/04-feature-based/react/vite.config.ts:1-3; exemplos/04-feature-based/react/package.json:8; exemplos/04-feature-based/react/package.json:7
 
-**Observação:** O manifesto declara `build: "tsc --noEmit && vite build"`, que produz o `dist/` próprio da aplicação. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Manifest declares `build: "tsc --noEmit && vite build"`, producing own application `dist/`. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O build próprio não conecta esta aplicação isolada às demais. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Own build does not connect isolated application to others. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 52. angular.json:196-197; angular.json:205; exemplos/05-clean-architecture/angular/package.json:8; exemplos/05-clean-architecture/angular/package.json:7
 
-**Observação:** O script `build` chama `ng build 05-angular`. O alvo correspondente do `angular.json` usa `@angular/build:application` e produz saída própria em `exemplos/05-clean-architecture/angular/dist`. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Script `build` calls `ng build 05-angular`. Corresponding `angular.json` target uses `@angular/build:application` and produces own output in `exemplos/05-clean-architecture/angular/dist`. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O build próprio não conecta esta aplicação isolada às demais. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Own build does not connect isolated application to others. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 53. exemplos/05-clean-architecture/react/vite.config.ts:1-3; exemplos/05-clean-architecture/react/package.json:8; exemplos/05-clean-architecture/react/package.json:7
 
-**Observação:** O manifesto declara `build: "tsc --noEmit && vite build"`, que produz o `dist/` próprio da aplicação. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Manifest declares `build: "tsc --noEmit && vite build"`, producing own application `dist/`. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O build próprio não conecta esta aplicação isolada às demais. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Own build does not connect isolated application to others. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 54. angular.json:242-243; angular.json:251; exemplos/06-hexagonal/angular/package.json:8; exemplos/06-hexagonal/angular/package.json:7
 
-**Observação:** O script `build` chama `ng build 06-angular`. O alvo correspondente do `angular.json` usa `@angular/build:application` e produz saída própria em `exemplos/06-hexagonal/angular/dist`. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Script `build` calls `ng build 06-angular`. Corresponding `angular.json` target uses `@angular/build:application` and produces own output in `exemplos/06-hexagonal/angular/dist`. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O build próprio não conecta esta aplicação isolada às demais. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Own build does not connect isolated application to others. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 55. exemplos/06-hexagonal/react/vite.config.ts:1-3; exemplos/06-hexagonal/react/package.json:8; exemplos/06-hexagonal/react/package.json:7
 
-**Observação:** O manifesto declara `build: "tsc --noEmit && vite build"`, que produz o `dist/` próprio da aplicação. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Manifest declares `build: "tsc --noEmit && vite build"`, producing own application `dist/`. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O build próprio não conecta esta aplicação isolada às demais. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Own build does not connect isolated application to others. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 56. angular.json:288-289; angular.json:297; exemplos/07-feature-sliced-design/angular/package.json:8; exemplos/07-feature-sliced-design/angular/package.json:7
 
-**Observação:** O script `build` chama `ng build 07-angular`. O alvo correspondente do `angular.json` usa `@angular/build:application` e produz saída própria em `exemplos/07-feature-sliced-design/angular/dist`. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Script `build` calls `ng build 07-angular`. Corresponding `angular.json` target uses `@angular/build:application` and produces own output in `exemplos/07-feature-sliced-design/angular/dist`. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O build próprio não conecta esta aplicação isolada às demais. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Own build does not connect isolated application to others. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 57. exemplos/07-feature-sliced-design/react/vite.config.ts:1-3; exemplos/07-feature-sliced-design/react/package.json:8; exemplos/07-feature-sliced-design/react/package.json:7
 
-**Observação:** O manifesto declara `build: "tsc --noEmit && vite build"`, que produz o `dist/` próprio da aplicação. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Manifest declares `build: "tsc --noEmit && vite build"`, producing own application `dist/`. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O build próprio não conecta esta aplicação isolada às demais. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Own build does not connect isolated application to others. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 58. angular.json:334-335; angular.json:343; exemplos/08-mvvm/angular/package.json:8; exemplos/08-mvvm/angular/package.json:7
 
-**Observação:** O script `build` chama `ng build 08-angular`. O alvo correspondente do `angular.json` usa `@angular/build:application` e produz saída própria em `exemplos/08-mvvm/angular/dist`. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Script `build` calls `ng build 08-angular`. Corresponding `angular.json` target uses `@angular/build:application` and produces own output in `exemplos/08-mvvm/angular/dist`. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O build próprio não conecta esta aplicação isolada às demais. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Own build does not connect isolated application to others. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 59. exemplos/08-mvvm/react/vite.config.ts:1-3; exemplos/08-mvvm/react/package.json:8; exemplos/08-mvvm/react/package.json:7
 
-**Observação:** O manifesto declara `build: "tsc --noEmit && vite build"`, que produz o `dist/` próprio da aplicação. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Manifest declares `build: "tsc --noEmit && vite build"`, producing own application `dist/`. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O build próprio não conecta esta aplicação isolada às demais. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Own build does not connect isolated application to others. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 60. angular.json:380-381; angular.json:389; exemplos/09-flux/angular/package.json:8; exemplos/09-flux/angular/package.json:7
 
-**Observação:** O script `build` chama `ng build 09-angular`. O alvo correspondente do `angular.json` usa `@angular/build:application` e produz saída própria em `exemplos/09-flux/angular/dist`. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Script `build` calls `ng build 09-angular`. Corresponding `angular.json` target uses `@angular/build:application` and produces own output in `exemplos/09-flux/angular/dist`. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O build próprio não conecta esta aplicação isolada às demais. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Own build does not connect isolated application to others. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 61. exemplos/09-flux/react/vite.config.ts:1-3; exemplos/09-flux/react/package.json:8; exemplos/09-flux/react/package.json:7
 
-**Observação:** O manifesto declara `build: "tsc --noEmit && vite build"`, que produz o `dist/` próprio da aplicação. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Manifest declares `build: "tsc --noEmit && vite build"`, producing own application `dist/`. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O build próprio não conecta esta aplicação isolada às demais. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Own build does not connect isolated application to others. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 62. exemplos/10-micro-frontends/apps/catalogo-react/package.json:7; scripts/build-remoto.mjs:21-26; exemplos/10-micro-frontends/apps/catalogo-react/package.json:8; scripts/servir-remoto.mjs:2-6; exemplos/10-micro-frontends/apps/shell/public/remotes.json:3
 
-**Observação:** O script de build chama `build-remoto.mjs react`: esbuild empacota `src/mount.tsx` como `dist/microfrontend.js` ESM. O script `dev` serve o próprio `dist` na porta 4301 com CORS para o shell. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Build script calls `build-remoto.mjs react`: esbuild bundles `src/mount.tsx` as `dist/microfrontend.js` ESM. Script `dev` serves own `dist` at port 4301 with shell CORS. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O bundle pode ser recompilado separadamente das outras unidades do bloco 10. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Bundle can be recompiled separately from other block 10 units. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 63. exemplos/10-micro-frontends/apps/checkout-angular/package.json:7; scripts/build-remoto.mjs:9-26; exemplos/10-micro-frontends/apps/checkout-angular/package.json:8; scripts/servir-remoto.mjs:2-6; exemplos/10-micro-frontends/apps/shell/public/remotes.json:4
 
-**Observação:** O build chama `ngc -p tsconfig.json` e `build-remoto.mjs angular`: linker e esbuild empacotam `dist/compiled/mount.js` como `dist/microfrontend.js` ESM. O script `dev` serve esse `dist` na porta 4302 com CORS para o shell. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Build calls `ngc -p tsconfig.json` and `build-remoto.mjs angular`: linker/esbuild bundle `dist/compiled/mount.js` as `dist/microfrontend.js` ESM. Script `dev` serves `dist` at port 4302 with shell CORS. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O bundle pode ser recompilado separadamente das outras unidades do bloco 10. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Bundle can be recompiled separately from other block 10 units. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 64. exemplos/10-micro-frontends/apps/shell/package.json:8; exemplos/10-micro-frontends/apps/shell/package.json:7
 
-**Observação:** O manifesto declara `build: "tsc --noEmit && vite build"`, que produz o `dist/` próprio da aplicação. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Manifest declares `build: "tsc --noEmit && vite build"`, producing own application `dist/`. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O bundle pode ser recompilado separadamente das outras unidades do bloco 10. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Bundle can be recompiled separately from other block 10 units. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 65. angular.json:426-427; angular.json:435-441; exemplos/11-renderizacao/angular/package.json:8; exemplos/11-renderizacao/angular/package.json:7; exemplos/11-renderizacao/angular/src/server.ts:10
 
-**Observação:** O script `build` chama `ng build 11-angular`. O alvo correspondente do `angular.json` usa `@angular/build:application` e produz saída própria em `exemplos/11-renderizacao/angular/dist`. O alvo também gera o servidor SSR, que serve o diretório `browser` em `127.0.0.1:4200`. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Script `build` calls `ng build 11-angular`. Corresponding `angular.json` target uses `@angular/build:application` and produces own output in `exemplos/11-renderizacao/angular/dist`. Target also generates SSR server serving directory `browser` at `127.0.0.1:4200`. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O build próprio não conecta esta aplicação isolada às demais. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Own build does not connect isolated application to others. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 66. exemplos/11-renderizacao/next/next.config.mjs:1-2; exemplos/11-renderizacao/next/package.json:8; exemplos/11-renderizacao/next/package.json:7
 
-**Observação:** O manifesto declara `next build --webpack` e `next start` em `127.0.0.1:3000`; a configuração Next define `outputFileTracingRoot`. A saída própria é `.next/`. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Manifest declares `next build --webpack` and `next start` at `127.0.0.1:3000`; Next configuration defines `outputFileTracingRoot`. Own output is `.next/`. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O build próprio não conecta esta aplicação isolada às demais. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Own build does not connect isolated application to others. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 67. angular.json:477-478; angular.json:486; exemplos/12-ilhas/angular/package.json:8; exemplos/12-ilhas/angular/package.json:7
 
-**Observação:** O script `build` chama `ng build 12-angular`. O alvo correspondente do `angular.json` usa `@angular/build:application` e produz saída própria em `exemplos/12-ilhas/angular/dist`. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Script `build` calls `ng build 12-angular`. Corresponding `angular.json` target uses `@angular/build:application` and produces own output in `exemplos/12-ilhas/angular/dist`. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O build próprio não conecta esta aplicação isolada às demais. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Own build does not connect isolated application to others. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 68. exemplos/12-ilhas/astro/astro.config.mjs:1-3; exemplos/12-ilhas/astro/package.json:8; exemplos/12-ilhas/astro/package.json:7
 
-**Observação:** O manifesto declara `astro build`; a configuração Astro inclui a integração React. A aplicação gera seu próprio `dist/`. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Manifest declares `astro build`; Astro configuration includes React integration. Application generates own `dist/`. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O build próprio não conecta esta aplicação isolada às demais. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Own build does not connect isolated application to others. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 69. angular.json:523-524; angular.json:532; exemplos/13-bff/apps/web-angular/package.json:8; exemplos/13-bff/apps/web-angular/package.json:7
 
-**Observação:** O script `build` chama `ng build 13-angular`. O alvo correspondente do `angular.json` usa `@angular/build:application` e produz saída própria em `exemplos/13-bff/apps/web-angular/dist`. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Script `build` calls `ng build 13-angular`. Corresponding `angular.json` target uses `@angular/build:application` and produces own output in `exemplos/13-bff/apps/web-angular/dist`. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O build próprio não conecta esta aplicação isolada às demais. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Own build does not connect isolated application to others. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 70. exemplos/13-bff/next/next.config.mjs:1-2; exemplos/13-bff/next/package.json:8; exemplos/13-bff/next/package.json:7
 
-**Observação:** O manifesto declara `next build --webpack` e `next start` em `127.0.0.1:3000`; a configuração Next define `outputFileTracingRoot`. A saída própria é `.next/`. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Manifest declares `next build --webpack` and `next start` at `127.0.0.1:3000`; Next configuration defines `outputFileTracingRoot`. Own output is `.next/`. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O build próprio não conecta esta aplicação isolada às demais. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Own build does not connect isolated application to others. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 71. angular.json:569-570; angular.json:578; exemplos/14-escolha-e-evolucao/angular/package.json:8; exemplos/14-escolha-e-evolucao/angular/package.json:7
 
-**Observação:** O script `build` chama `ng build 14-angular`. O alvo correspondente do `angular.json` usa `@angular/build:application` e produz saída própria em `exemplos/14-escolha-e-evolucao/angular/dist`. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Script `build` calls `ng build 14-angular`. Corresponding `angular.json` target uses `@angular/build:application` and produces own output in `exemplos/14-escolha-e-evolucao/angular/dist`. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O build próprio não conecta esta aplicação isolada às demais. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Own build does not connect isolated application to others. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 72. exemplos/14-escolha-e-evolucao/react/vite.config.ts:1-3; exemplos/14-escolha-e-evolucao/react/package.json:8; exemplos/14-escolha-e-evolucao/react/package.json:7
 
-**Observação:** O manifesto declara `build: "tsc --noEmit && vite build"`, que produz o `dist/` próprio da aplicação. Não há artefato de deploy nem versionamento independente registrado para a aplicação.
+**Observation:** Manifest declares `build: "tsc --noEmit && vite build"`, producing own application `dist/`. No deployment artifact or independent versioning recorded for application.
 
-**Interpretação:** O build confirma o limite próprio desta aplicação. O build próprio não conecta esta aplicação isolada às demais. A execução local não demonstra publicação independente: o Deploy permanece `não observado`.
+**Interpretation:** Build confirms own application boundary. Own build does not connect isolated application to others. Local execution does not demonstrate independent publication: Deploy remains `not observed`.
 
 ### 73. README.md:3
 
-**Observação:** O documento afirma: "As pastas seguem os 14 blocos da apresentação e implementam alternativas do mesmo problema".
+**Observation:** Document states: "As pastas seguem os 14 blocos da apresentação e implementam alternativas do mesmo problema". English translation: "Folders follow fourteen presentation blocks, implementing alternatives for same problem."
 
-**Interpretação:** A documentação apresenta aplicações alternativas organizadas em blocos; a contagem de diretórios não equivale à quantidade de unidades compostas.
+**Interpretation:** Documentation presents alternative applications organized in blocks; directory count not equal to composed unit count.
 
 ### 74. README.md:22
 
-**Observação:** O documento afirma: "`10` inicia o conjunto de micro-frontends".
+**Observation:** Document states: "`10` inicia o conjunto de micro-frontends". English translation: "The numbered block starts microfrontend group."
 
-**Interpretação:** O texto identifica o bloco 10 como conjunto composto, em acordo com as duas relações ativas.
+**Interpretation:** Text identifies block 10 as composed group, matching two active relationships.
 
 ### 75. README.md:28
 
-**Observação:** O documento afirma: "Shell dos micro-frontends".
+**Observation:** Document states: "Shell dos micro-frontends". English translation: "Microfrontend shell."
 
-**Interpretação:** O nome atribui ao shell o papel de consumidor e coordenador dos remotos.
+**Interpretation:** Name assigns shell consumer/coordinator role for remotes.
 
 ### 76. README.md:93
 
-**Observação:** O documento afirma: "Cada pasta é uma alternativa independente. Os exemplos não importam regras uns dos outros; compartilham apenas o estilo visual de demonstração.".
+**Observation:** Document states: "Cada pasta é uma alternativa independente. Os exemplos não importam regras uns dos outros; compartilham apenas o estilo visual de demonstração.". English translation: "Each folder an independent alternative. Examples do not import each other’s rules; share only demonstration visual style."
 
-**Interpretação:** A afirmação descreve a separação entre alternativas e o compartilhamento de estilo, sem declarar composição entre os blocos.
+**Interpretation:** Claim describes separation of alternatives/style sharing without declaring inter-block composition.
 
 ### 77. conteudo/aula-arquitetura-front-end.md:2059-2069
 
-**Observação:** O documento afirma: árvore "workspace/ # monorepo é opcional … apps/ shell/ catalogo-react/ … checkout-angular/ … packages/ contracts/mount.ts".
+**Observation:** Document states: tree "workspace/ # monorepo é opcional … apps/ shell/ catalogo-react/ … checkout-angular/ … packages/ contracts/mount.ts". English translation: "Workspace: monorepo optional; apps include shell, React catalog and Angular checkout; packages contain mounting contract."
 
-**Interpretação:** A árvore descreve as três unidades do bloco 10 num workspace e distingue delas o pacote de tipos do contrato.
+**Interpretation:** Tree describes three block 10 units in workspace, distinguishing contract type package.
 
 ### 78. conteudo/aula-arquitetura-front-end.md:2062
 
-**Observação:** O documento afirma: "shell/ # descoberta, rotas, fallback".
+**Observation:** Document states: "shell/ # descoberta, rotas, fallback". English translation: "Shell: discovery, routes, fallback."
 
-**Interpretação:** A afirmação atribui ao shell um papel de roteamento que o snapshot desmente: os remotos são acionados por botões. Descoberta e fallback têm implementação, mas a corroboração da linha permanece `contradita`.
+**Interpretation:** Claim assigns shell routing role contradicted by snapshot: remotes activated by buttons. Discovery/fallback implemented, but row corroboration remains `contradicted`.
 
 ### 79. conteudo/aula-arquitetura-front-end.md:2068
 
-**Observação:** O documento afirma: "contracts/mount.ts # contrato estável, sem store global".
+**Observation:** Document states: "contracts/mount.ts # contrato estável, sem store global". English translation: "Mounting contract: stable contract without global store."
 
-**Interpretação:** O texto descreve um contrato de integração sem store global; os tipos definem montagem e limpeza.
+**Interpretation:** Text describes integration contract without global store; types define mounting/cleanup.
 
 ### 80. conteudo/aula-arquitetura-front-end.md:2073
 
-**Observação:** O documento afirma: "**adaptadores de montagem**, não uma configuração completa de federação".
+**Observation:** Document states: "**adaptadores de montagem**, não uma configuração completa de federação". English translation: "Mounting adapters rather than complete federation configuration."
 
-**Interpretação:** A documentação descreve adaptadores próprios de montagem, em acordo com a composição por script sem biblioteca de federação.
+**Interpretation:** Documentation describes own mounting adapters matching script composition without federation library.
 
 ### 81. conteudo/aula-arquitetura-front-end.md:2102
 
-**Observação:** O documento afirma: "Contrato com o shell: **receber um elemento e devolver a limpeza**.".
+**Observation:** Document states: "Contrato com o shell: **receber um elemento e devolver a limpeza**.". English translation: "Shell contract: receive element and return cleanup."
 
-**Interpretação:** O texto descreve o ciclo de integração entre host e remotos, baseado no elemento recebido e na função de limpeza devolvida.
+**Interpretation:** Text describes host/remote integration cycle based on received element/returned cleanup function.
 
 ### 82. conteudo/aula-arquitetura-front-end.md:2104
 
-**Observação:** O documento afirma: "A origem do módulo pode mudar sem expor os componentes internos ao shell.".
+**Observation:** Document states: "A origem do módulo pode mudar sem expor os componentes internos ao shell.". English translation: "Module origin can change without exposing internal components to shell."
 
-**Interpretação:** A afirmação descreve encapsulamento dos componentes atrás de uma URL e de um contrato de montagem. A troca de origem exige também ajustar a lista de origens do shell.
+**Interpretation:** Claim describes components encapsulated behind URL/mounting contract. Origin change also requires adjusting shell origin list.
 
 ### 83. conteudo/aula-arquitetura-front-end.md:2107
 
-**Observação:** O documento afirma: "Este é um contrato didático próprio, não o contrato exato bootstrap/mount/unmount de single-spa.".
+**Observation:** Document states: "Este é um contrato didático próprio, não o contrato exato bootstrap/mount/unmount de single-spa.". English translation: "Own teaching contract rather than exact single-spa bootstrap/mount/unmount contract."
 
-**Interpretação:** A afirmação distingue o contrato didático do ciclo de vida nomeado do single-spa; nomear essa tecnologia não mostra seu uso.
+**Interpretation:** Claim distinguishes teaching contract from named single-spa lifecycle; naming technology does not show usage.
 
 ### 84. conteudo/aula-arquitetura-front-end.md:2107
 
-**Observação:** O documento afirma: "O shell chama a limpeza antes de descartar a montagem.".
+**Observation:** Document states: "O shell chama a limpeza antes de descartar a montagem.". English translation: "Shell calls cleanup before discarding mount."
 
-**Interpretação:** O texto descreve a responsabilidade do consumidor de executar o cleanup ao descartar a montagem.
+**Interpretation:** Text describes consumer responsibility to execute cleanup when discarding mount.
 
 ### 85. conteudo/aula-arquitetura-front-end.md:2141
 
-**Observação:** O documento afirma: "o shell mantém o mesmo contrato".
+**Observation:** Document states: "o shell mantém o mesmo contrato". English translation: "Shell maintains same contract."
 
-**Interpretação:** A afirmação descreve o mesmo contrato do shell para integrar ambos os remotos.
+**Interpretation:** Claim describes same shell contract integrating both remotes.
 
 ### 86. exemplos/10-micro-frontends/README.md:3
 
-**Observação:** O documento afirma: "Compor aplicações que possuem artefatos de build separados.".
+**Observation:** Document states: "Compor aplicações que possuem artefatos de build separados.". English translation: "Compose applications with separate build artifacts."
 
-**Interpretação:** O texto associa a composição de aplicações a artefatos de build separados, em acordo com as relações e os builds do bloco 10.
+**Interpretation:** Text associates application composition with separate build artifacts, matching block 10 relationships/builds.
 
 ### 87. exemplos/10-micro-frontends/README.md:18
 
-**Observação:** O documento afirma: "Shell → manifesto → módulo ESM remoto → mount(host) → cleanup()".
+**Observation:** Document states: "Shell → manifesto → módulo ESM remoto → mount(host) → cleanup()". English translation: "Shell → manifest → remote ESM module → mount host → cleanup."
 
-**Interpretação:** O diagrama descreve a cadeia de descoberta, carga ESM, montagem e limpeza que o shell implementa.
+**Interpretation:** Diagram describes discovery, ESM loading, mounting/cleanup chain implemented by shell.
 
 ### 88. exemplos/10-micro-frontends/README.md:21
 
-**Observação:** O documento afirma: "Catálogo React e Checkout Angular são compilados separadamente e servidos em 4301 e 4302.".
+**Observation:** Document states: "Catálogo React e Checkout Angular são compilados separadamente e servidos em 4301 e 4302.". English translation: "React catalog and Angular checkout compiled separately, served at respective stated ports."
 
-**Interpretação:** A afirmação descreve dois limites de build e servidores locais separados; as portas não demonstram deploy.
+**Interpretation:** Claim describes two build boundaries/separate local servers; ports do not demonstrate deployment.
 
 ### 89. exemplos/10-micro-frontends/README.md:23
 
-**Observação:** O documento afirma: "O shell em 4300 carrega um remoto por vez, trata falha de carregamento".
+**Observation:** Document states: "O shell em 4300 carrega um remoto por vez, trata falha de carregamento". English translation: "Shell at stated port loads one remote at a time, handling loading failures."
 
-**Interpretação:** O texto descreve alternância de remotos e fallback do consumidor; a documentação é apoio semântico à implementação.
+**Interpretation:** Text describes remote switching/consumer fallback; documentation semantic implementation support.
 
 ### 90. exemplos/10-micro-frontends/README.md:23
 
-**Observação:** O documento afirma: "O Angular remoto usa AOT: ngc compila os componentes e o linker finaliza as bibliotecas antes do bundle ESM.".
+**Observation:** Document states: "O Angular remoto usa AOT: ngc compila os componentes e o linker finaliza as bibliotecas antes do bundle ESM.". English translation: "Angular remote uses AOT: ngc compiles components and linker finalizes libraries before ESM bundle."
 
-**Interpretação:** A afirmação descreve a cadeia de build da unidade Angular remota, sem estabelecer publicação.
+**Interpretation:** Claim describes remote Angular unit build chain without establishing publication.
 
 ### 91. exemplos/10-micro-frontends/README.md:107
 
-**Observação:** O documento afirma: "Recompile apenas catálogo e confirme que o shell continua sem novo build.".
+**Observation:** Document states: "Recompile apenas catálogo e confirme que o shell continua sem novo build.". English translation: "Recompile only catalog, confirming shell continues without new build."
 
-**Interpretação:** O exercício descreve a possibilidade de reconstruir o catálogo sem reconstruir o shell, sustentada pela carga em runtime. A troca de origem continua sujeita à lista fixa do consumidor.
+**Interpretation:** Exercise describes rebuilding catalog without shell rebuild, supported by runtime loading. Origin change remains subject to fixed consumer list.
 
 ### 92. exemplos/10-micro-frontends/README.md:111
 
-**Observação:** O documento afirma: "Há bundles separados e um caminho de publicação independente".
+**Observation:** Document states: "Há bundles separados e um caminho de publicação independente". English translation: "Separate bundles and independent publication path."
 
-**Interpretação:** A afirmação é parcialmente corroborada: builds separados e URLs externas ao bundle dão base ao caminho descrito, mas não há publicação provisionada.
+**Interpretation:** Claim partially corroborated: separate builds/URLs external to bundle support described path without provisioned publication.
 
 ### 93. exemplos/10-micro-frontends/README.md:111
 
-**Observação:** O documento afirma: "o laboratório não provisiona um pipeline de deploy".
+**Observation:** Document states: "o laboratório não provisiona um pipeline de deploy". English translation: "Laboratory does not provision deployment pipeline."
 
-**Interpretação:** A declaração de ausência de pipeline de deploy confere com o resultado `não observado` das 29 aplicações.
+**Interpretation:** Declared absence of deployment pipeline matches `not observed` result for 29 applications.
 
 ### 94. exemplos/10-micro-frontends/README.md:125
 
-**Observação:** O documento afirma: "ajuste as URLs em `apps/shell/public/remotes.json` e a lista de origens permitidas do shell".
+**Observation:** Document states: "ajuste as URLs em `apps/shell/public/remotes.json` e a lista de origens permitidas do shell". English translation: "Adjust URLs in stated shell manifest and shell allowed-origin list."
 
-**Interpretação:** A documentação explicita que a operação dos remotos depende tanto das URLs do manifesto quanto da lista de origens embutida no shell.
+**Interpretation:** Documentation explicit remote operation depends on both manifest URLs and shell-embedded origin list.
 
 ### 95. exemplos/10-micro-frontends/README.md:125
 
-**Observação:** O documento afirma: "Neste laboratório o shell fornece os estilos".
+**Observation:** Document states: "Neste laboratório o shell fornece os estilos". English translation: "Shell supplies laboratory styles."
 
-**Interpretação:** O texto descreve a dependência visual dos remotos em relação ao documento do shell.
+**Interpretation:** Text describes remote visual dependency on shell document.
 
 ### 96. exemplos/10-micro-frontends/README.md:125
 
-**Observação:** O documento afirma: "o contrato é de montagem, sem comunicação de seleção entre catálogo e checkout".
+**Observation:** Document states: "o contrato é de montagem, sem comunicação de seleção entre catálogo e checkout". English translation: "Mounting contract without selection communication between catalog and checkout."
 
-**Interpretação:** A afirmação delimita a integração a montagem e limpeza, sem troca da seleção do catálogo com o checkout.
+**Interpretation:** Claim delimits integration to mounting/cleanup without catalog selection exchange with checkout.
 
 ### 97. exemplos/10-micro-frontends/README.md:125
 
-**Observação:** O documento afirma: "Cada remoto embute seu framework.".
+**Observation:** Document states: "Cada remoto embute seu framework.". English translation: "Each remote embeds own framework."
 
-**Interpretação:** O texto descreve bundles que incluem o framework de cada remoto, sem compartilhamento dessas dependências em runtime.
+**Interpretation:** Text describes bundles including each remote framework without runtime sharing of dependencies.
 
 ### 98. exemplos/10-micro-frontends/packages/contracts/mount.ts:1
 
-**Observação:** O documento afirma: "Contrato de integração versionado, sem componentes ou estado global compartilhados.".
+**Observation:** Document states: "Contrato de integração versionado, sem componentes ou estado global compartilhados.". English translation: "Versioned integration contract without shared components/global state."
 
-**Interpretação:** O comentário descreve o contrato tipado e versionado entre shell e remotos, sem componentes ou estado global compartilhado.
+**Interpretation:** Comment describes typed/versioned shell/remote contract without shared components/global state.
 
 ### 99. material/gabarito.md:16
 
-**Observação:** O documento afirma: "montar e desmontar destrói a raiz React ou a aplicação Angular; a próxima montagem começa com estado novo".
+**Observation:** Document states: "montar e desmontar destrói a raiz React ou a aplicação Angular; a próxima montagem começa com estado novo". English translation: "Mounting and unmounting destroys React root or Angular application; next mount begins with new state."
 
-**Interpretação:** O gabarito descreve o efeito da limpeza na identidade e no estado local das instâncias React e Angular.
+**Interpretation:** Answer key describes cleanup effect on identity/local state of React/Angular instances.
 
 ### 100. e1c6fb92488afd39e2c1d704ee1243ed52d862b6 2026-10-06 (conteudo/aula-arquitetura-front-end.md; exemplos/10-micro-frontends/apps/shell/)
 
-**Observação:** O único commit adiciona os slides e o shell juntos. Não há versão anterior nem arquivo de rota do bloco 10 no histórico registrado pela 3.4.8.
+**Observation:** Only commit adds slides/shell together. No earlier version or block 10 route file in history recorded by 3.4.8.
 
-**Interpretação:** O histórico não esclarece se o comentário sobre rotas era intenção ou resto anterior ao primeiro commit. A dúvida diz respeito ao passado; no snapshot, a composição por botões está clara e a afirmação sobre rotas permanece contradita.
+**Interpretation:** History does not clarify whether route comment intent or remnant predating first commit. Uncertainty about past; snapshot button composition clear, route claim remains contradicted.
 
 ### 101. exemplos/10-micro-frontends/README.md:111; exemplos/10-micro-frontends/README.md:125
 
-**Observação:** Na mesma frase que descreve um caminho de publicação independente, o README declara que o laboratório não provisiona pipeline de deploy. A publicação de cada `dist/` aparece como instrução.
+**Observation:** In same sentence describing independent publication path, README declares laboratory provisions no deployment pipeline. Publication of each `dist/` appears as instruction.
 
-**Interpretação:** O snapshot resolve a dúvida: há uma possibilidade documentada de publicação, sem artefato de deploy abandonado a explicar. Não é necessário inferir um estágio de deploy anterior.
+**Interpretation:** Snapshot resolves uncertainty: documented publication possibility without abandoned deployment artifact to explain. No need to infer earlier deployment stage.
 
-**Nota:** A 3.4.8 registra Commits `—` para este ponto, resolvido pelo snapshot; por isso o cabeçalho aponta aos trechos que o resolvem, sem atribuir um commit de investigação.
+**Note:** Section 3.4.8 records Commits `—` for point resolved by snapshot; header therefore points to resolving excerpts without attributing investigation commit.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.4 (linha manual main.ts:16, Observação); 3.4.5 #1, #2 (Configuração); 3.4.6 #19, #20 (Onde é servida); 3.4.7 #10, #19, #20, #22 (Evidência) | 2 configuração | configuração | script | arquitetural | forte | configura #8; configura #42; configura #43 |
-| 2 | 3.4.4 (src-mount-export, exemplos/10-micro-frontends/apps/catalogo-react/src/mount.tsx:3) | 3 código | código-fonte | script | tecnológica | moderada | implementa #42 |
-| 3 | 3.4.4 (src-mount-export, exemplos/10-micro-frontends/apps/checkout-angular/src/mount.ts:4) | 3 código | código-fonte | script | tecnológica | moderada | implementa #43 |
-| 4 | 3.4.4 (src-custom-element, aula-arquitetura-front-end.html:20284) | 3 código | código-fonte | — | contexto | fraca | — |
-| 5 | 3.4.4 (src-iframe, aula-arquitetura-front-end.html:20635) | 3 código | código-fonte | — | contexto | fraca | — |
-| 6 | 3.4.4 (src-cross-unit-communication, aula-arquitetura-front-end.html:20284) | 3 código | código-fonte | — | contexto | fraca | — |
-| 7 | 3.4.4 (src-cross-unit-communication, aula-arquitetura-front-end.html:20635) | 3 código | código-fonte | — | contexto | fraca | — |
-| 8 | 3.4.4 (manual, exemplos/10-micro-frontends/apps/shell/src/main.ts:16) | 3 código | código-fonte | script | arquitetural | forte | implementa #42; implementa #43 |
-| 9 | 3.4.4 (manual, exemplos/10-micro-frontends/apps/shell/src/main.ts:23) | 3 código | código-fonte | script | tecnológica | moderada | implementa #42; implementa #43 |
-| 10 | 3.4.4 (manual, exemplos/10-micro-frontends/apps/shell/src/main.ts:26) | 3 código | código-fonte | script | tecnológica | moderada | implementa #42; implementa #43 |
-| 11 | 3.4.3 (.) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 12 | 3.4.3 (exemplos/01-componentes/angular) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 13 | 3.4.3 (exemplos/01-componentes/react) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 14 | 3.4.3 (exemplos/02-atomic-design/angular) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 15 | 3.4.3 (exemplos/02-atomic-design/react) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 16 | 3.4.3 (exemplos/03-camadas/angular) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 17 | 3.4.3 (exemplos/03-camadas/react) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 18 | 3.4.3 (exemplos/04-feature-based/angular) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 19 | 3.4.3 (exemplos/04-feature-based/react) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 20 | 3.4.3 (exemplos/05-clean-architecture/angular) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 21 | 3.4.3 (exemplos/05-clean-architecture/react) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 22 | 3.4.3 (exemplos/06-hexagonal/angular) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 23 | 3.4.3 (exemplos/06-hexagonal/react) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 24 | 3.4.3 (exemplos/07-feature-sliced-design/angular) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 25 | 3.4.3 (exemplos/07-feature-sliced-design/react) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 26 | 3.4.3 (exemplos/08-mvvm/angular) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 27 | 3.4.3 (exemplos/08-mvvm/react) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 28 | 3.4.3 (exemplos/09-flux/angular) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 29 | 3.4.3 (exemplos/09-flux/react) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 30 | 3.4.3 (exemplos/10-micro-frontends/apps/catalogo-react) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 31 | 3.4.3 (exemplos/10-micro-frontends/apps/checkout-angular) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 32 | 3.4.3 (exemplos/10-micro-frontends/apps/shell) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 33 | 3.4.3 (exemplos/11-renderizacao/angular) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 34 | 3.4.3 (exemplos/11-renderizacao/next) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 35 | 3.4.3 (exemplos/12-ilhas/angular) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 36 | 3.4.3 (exemplos/12-ilhas/astro) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 37 | 3.4.3 (exemplos/13-bff/apps/web-angular) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 38 | 3.4.3 (exemplos/13-bff/apps/web-bff) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 39 | 3.4.3 (exemplos/13-bff/next) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 40 | 3.4.3 (exemplos/14-escolha-e-evolucao/angular) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 41 | 3.4.3 (exemplos/14-escolha-e-evolucao/react) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 42 | 3.4.5 #1 | 5 composição | código-fonte | script | arquitetural | forte | liga #32; liga #30 |
-| 43 | 3.4.5 #2 | 5 composição | código-fonte | script | arquitetural | forte | liga #32; liga #31 |
-| 44 | 3.4.6 #1 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #12 |
-| 45 | 3.4.6 #2 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #13 |
-| 46 | 3.4.6 #3 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #14 |
-| 47 | 3.4.6 #4 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #15 |
-| 48 | 3.4.6 #5 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #16 |
-| 49 | 3.4.6 #6 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #17 |
-| 50 | 3.4.6 #7 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #18 |
-| 51 | 3.4.6 #8 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #19 |
-| 52 | 3.4.6 #9 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #20 |
-| 53 | 3.4.6 #10 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #21 |
-| 54 | 3.4.6 #11 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #22 |
-| 55 | 3.4.6 #12 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #23 |
-| 56 | 3.4.6 #13 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #24 |
-| 57 | 3.4.6 #14 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #25 |
-| 58 | 3.4.6 #15 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #26 |
-| 59 | 3.4.6 #16 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #27 |
-| 60 | 3.4.6 #17 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #28 |
-| 61 | 3.4.6 #18 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #29 |
-| 62 | 3.4.6 #19 | 6 build-deploy | manifesto | script | arquitetural | moderada | publica #30 |
-| 63 | 3.4.6 #20 | 6 build-deploy | manifesto | script | arquitetural | moderada | publica #31 |
-| 64 | 3.4.6 #21 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #32 |
-| 65 | 3.4.6 #22 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #33 |
-| 66 | 3.4.6 #23 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #34 |
-| 67 | 3.4.6 #24 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #35 |
-| 68 | 3.4.6 #25 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #36 |
-| 69 | 3.4.6 #26 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #37 |
-| 70 | 3.4.6 #27 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #39 |
-| 71 | 3.4.6 #28 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #40 |
-| 72 | 3.4.6 #29 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #41 |
-| 73 | 3.4.7 #1 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #12; corrobora #13; corrobora #14; corrobora #15; corrobora #16; corrobora #17; corrobora #18; corrobora #19; corrobora #20; corrobora #21; corrobora #22; corrobora #23; corrobora #24; corrobora #25; corrobora #26; corrobora #27; corrobora #28; corrobora #29; corrobora #30; corrobora #31; corrobora #32; corrobora #33; corrobora #34; corrobora #35; corrobora #36; corrobora #37; corrobora #39; corrobora #40; corrobora #41 |
-| 74 | 3.4.7 #2 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #42; corrobora #43 |
-| 75 | 3.4.7 #3 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #32; corrobora #42; corrobora #43 |
-| 76 | 3.4.7 #4 | 7 documentação | documentação | — | arquitetural | fraca | corrobora exemplos/01-componentes/react/src/main.tsx:3; corrobora exemplos/11-renderizacao/next/src/app/layout.tsx:2; corrobora exemplos/10-micro-frontends/apps/shell/src/main.ts:2; corrobora angular.json:18-20 |
-| 77 | 3.4.7 #5 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #30; corrobora #31; corrobora #32; corrobora exemplos/10-micro-frontends/packages/contracts/mount.ts:2-5 |
-| 78 | 3.4.7 #6 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #8; contradiz exemplos/10-micro-frontends/apps/shell/index.html:1 |
-| 79 | 3.4.7 #7 | 7 documentação | documentação | — | arquitetural | fraca | corrobora exemplos/10-micro-frontends/packages/contracts/mount.ts:2-5 |
-| 80 | 3.4.7 #8 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #2; corrobora #3; corrobora #42; corrobora #43 |
-| 81 | 3.4.7 #9 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #2; corrobora #3; corrobora exemplos/10-micro-frontends/packages/contracts/mount.ts:2-4 |
-| 82 | 3.4.7 #10 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #1; corrobora #8; corrobora #9; corrobora #10 |
-| 83 | 3.4.7 #11 | 7 documentação | documentação | single-spa | tecnológica | fraca | corrobora exemplos/10-micro-frontends/packages/contracts/mount.ts:3-4 |
-| 84 | 3.4.7 #12 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #10 |
-| 85 | 3.4.7 #13 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #8; corrobora #9; corrobora #10; corrobora exemplos/10-micro-frontends/packages/contracts/mount.ts:4 |
-| 86 | 3.4.7 #14 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #42; corrobora #43; corrobora #62; corrobora #63; corrobora #64 |
-| 87 | 3.4.7 #15 | 7 documentação | documentação | script | arquitetural | fraca | corrobora #8; corrobora #9; corrobora #10; corrobora #42; corrobora #43 |
-| 88 | 3.4.7 #16 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #62; corrobora #63 |
-| 89 | 3.4.7 #17 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #10; corrobora exemplos/10-micro-frontends/apps/shell/src/main.ts:30-33; corrobora tests/e2e/aula.spec.ts:148-149; corrobora tests/e2e/aula.spec.ts:153-156 |
-| 90 | 3.4.7 #18 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #63 |
-| 91 | 3.4.7 #19 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #62; corrobora #64; corrobora #1; corrobora #9 |
-| 92 | 3.4.7 #20 | 7 documentação | documentação | — | arquitetural | fraca | corrobora em parte #62; corrobora em parte #63; corrobora em parte #64; corrobora em parte #1 |
-| 93 | 3.4.7 #21 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #44; corrobora #45; corrobora #46; corrobora #47; corrobora #48; corrobora #49; corrobora #50; corrobora #51; corrobora #52; corrobora #53; corrobora #54; corrobora #55; corrobora #56; corrobora #57; corrobora #58; corrobora #59; corrobora #60; corrobora #61; corrobora #62; corrobora #63; corrobora #64; corrobora #65; corrobora #66; corrobora #67; corrobora #68; corrobora #69; corrobora #70; corrobora #71; corrobora #72 |
-| 94 | 3.4.7 #22 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #1; corrobora #8 |
-| 95 | 3.4.7 #23 | 7 documentação | documentação | — | arquitetural | fraca | corrobora exemplos/10-micro-frontends/apps/shell/src/main.ts:2; corrobora exemplos/10-micro-frontends/apps/catalogo-react/src/App.tsx:4; corrobora exemplos/10-micro-frontends/apps/checkout-angular/src/app/checkout-app.ts:3-5 |
-| 96 | 3.4.7 #24 | 7 documentação | documentação | — | arquitetural | fraca | corrobora exemplos/10-micro-frontends/apps/catalogo-react/src/App.tsx:3-4; corrobora exemplos/10-micro-frontends/packages/contracts/mount.ts:2-5 |
-| 97 | 3.4.7 #25 | 7 documentação | documentação | — | arquitetural | fraca | corrobora scripts/build-remoto.mjs:21-24; corrobora #62; corrobora #63 |
-| 98 | 3.4.7 #26 | 7 documentação | comentário | — | arquitetural | fraca | corrobora exemplos/10-micro-frontends/packages/contracts/mount.ts:2-5; corrobora #8 |
-| 99 | 3.4.7 #27 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #2; corrobora #3; corrobora tests/e2e/aula.spec.ts:150-152 |
-| 100 | 3.4.8 #1 | 8 histórico | histórico | — | arquitetural | fraca | explica #78 |
-| 101 | 3.4.8 #2 | 8 histórico | histórico | — | arquitetural | fraca | explica #92; explica #93 |
+| 1 | 3.4.4 (manual row main.ts:16, Observation); 3.4.5 #1, #2 (Configuration); 3.4.6 #19, #20 (Where served); 3.4.7 #10, #19, #20, #22 (Evidence) | 2 configuration | configuration | script | architectural | strong | configures #8; configures #42; configures #43 |
+| 2 | 3.4.4 (src-mount-export, exemplos/10-micro-frontends/apps/catalogo-react/src/mount.tsx:3) | 3 code | source code | script | technological | moderate | implements #42 |
+| 3 | 3.4.4 (src-mount-export, exemplos/10-micro-frontends/apps/checkout-angular/src/mount.ts:4) | 3 code | source code | script | technological | moderate | implements #43 |
+| 4 | 3.4.4 (src-custom-element, aula-arquitetura-front-end.html:20284) | 3 code | source code | — | context | weak | — |
+| 5 | 3.4.4 (src-iframe, aula-arquitetura-front-end.html:20635) | 3 code | source code | — | context | weak | — |
+| 6 | 3.4.4 (src-cross-unit-communication, aula-arquitetura-front-end.html:20284) | 3 code | source code | — | context | weak | — |
+| 7 | 3.4.4 (src-cross-unit-communication, aula-arquitetura-front-end.html:20635) | 3 code | source code | — | context | weak | — |
+| 8 | 3.4.4 (manual, exemplos/10-micro-frontends/apps/shell/src/main.ts:16) | 3 code | source code | script | architectural | strong | implements #42; implements #43 |
+| 9 | 3.4.4 (manual, exemplos/10-micro-frontends/apps/shell/src/main.ts:23) | 3 code | source code | script | technological | moderate | implements #42; implements #43 |
+| 10 | 3.4.4 (manual, exemplos/10-micro-frontends/apps/shell/src/main.ts:26) | 3 code | source code | script | technological | moderate | implements #42; implements #43 |
+| 11 | 3.4.3 (.) | 4 structure | directory | — | context | weak | — |
+| 12 | 3.4.3 (exemplos/01-componentes/angular) | 4 structure | directory | — | architectural | moderate | — |
+| 13 | 3.4.3 (exemplos/01-componentes/react) | 4 structure | directory | — | architectural | moderate | — |
+| 14 | 3.4.3 (exemplos/02-atomic-design/angular) | 4 structure | directory | — | architectural | moderate | — |
+| 15 | 3.4.3 (exemplos/02-atomic-design/react) | 4 structure | directory | — | architectural | moderate | — |
+| 16 | 3.4.3 (exemplos/03-camadas/angular) | 4 structure | directory | — | architectural | moderate | — |
+| 17 | 3.4.3 (exemplos/03-camadas/react) | 4 structure | directory | — | architectural | moderate | — |
+| 18 | 3.4.3 (exemplos/04-feature-based/angular) | 4 structure | directory | — | architectural | moderate | — |
+| 19 | 3.4.3 (exemplos/04-feature-based/react) | 4 structure | directory | — | architectural | moderate | — |
+| 20 | 3.4.3 (exemplos/05-clean-architecture/angular) | 4 structure | directory | — | architectural | moderate | — |
+| 21 | 3.4.3 (exemplos/05-clean-architecture/react) | 4 structure | directory | — | architectural | moderate | — |
+| 22 | 3.4.3 (exemplos/06-hexagonal/angular) | 4 structure | directory | — | architectural | moderate | — |
+| 23 | 3.4.3 (exemplos/06-hexagonal/react) | 4 structure | directory | — | architectural | moderate | — |
+| 24 | 3.4.3 (exemplos/07-feature-sliced-design/angular) | 4 structure | directory | — | architectural | moderate | — |
+| 25 | 3.4.3 (exemplos/07-feature-sliced-design/react) | 4 structure | directory | — | architectural | moderate | — |
+| 26 | 3.4.3 (exemplos/08-mvvm/angular) | 4 structure | directory | — | architectural | moderate | — |
+| 27 | 3.4.3 (exemplos/08-mvvm/react) | 4 structure | directory | — | architectural | moderate | — |
+| 28 | 3.4.3 (exemplos/09-flux/angular) | 4 structure | directory | — | architectural | moderate | — |
+| 29 | 3.4.3 (exemplos/09-flux/react) | 4 structure | directory | — | architectural | moderate | — |
+| 30 | 3.4.3 (exemplos/10-micro-frontends/apps/catalogo-react) | 4 structure | directory | — | architectural | moderate | — |
+| 31 | 3.4.3 (exemplos/10-micro-frontends/apps/checkout-angular) | 4 structure | directory | — | architectural | moderate | — |
+| 32 | 3.4.3 (exemplos/10-micro-frontends/apps/shell) | 4 structure | directory | — | architectural | moderate | — |
+| 33 | 3.4.3 (exemplos/11-renderizacao/angular) | 4 structure | directory | — | architectural | moderate | — |
+| 34 | 3.4.3 (exemplos/11-renderizacao/next) | 4 structure | directory | — | architectural | moderate | — |
+| 35 | 3.4.3 (exemplos/12-ilhas/angular) | 4 structure | directory | — | architectural | moderate | — |
+| 36 | 3.4.3 (exemplos/12-ilhas/astro) | 4 structure | directory | — | architectural | moderate | — |
+| 37 | 3.4.3 (exemplos/13-bff/apps/web-angular) | 4 structure | directory | — | architectural | moderate | — |
+| 38 | 3.4.3 (exemplos/13-bff/apps/web-bff) | 4 structure | directory | — | context | weak | — |
+| 39 | 3.4.3 (exemplos/13-bff/next) | 4 structure | directory | — | architectural | moderate | — |
+| 40 | 3.4.3 (exemplos/14-escolha-e-evolucao/angular) | 4 structure | directory | — | architectural | moderate | — |
+| 41 | 3.4.3 (exemplos/14-escolha-e-evolucao/react) | 4 structure | directory | — | architectural | moderate | — |
+| 42 | 3.4.5 #1 | 5 composition | source code | script | architectural | strong | links #32; links #30 |
+| 43 | 3.4.5 #2 | 5 composition | source code | script | architectural | strong | links #32; links #31 |
+| 44 | 3.4.6 #1 | 6 build-deploy | configuration | — | architectural | moderate | publishes #12 |
+| 45 | 3.4.6 #2 | 6 build-deploy | manifest | — | architectural | moderate | publishes #13 |
+| 46 | 3.4.6 #3 | 6 build-deploy | configuration | — | architectural | moderate | publishes #14 |
+| 47 | 3.4.6 #4 | 6 build-deploy | manifest | — | architectural | moderate | publishes #15 |
+| 48 | 3.4.6 #5 | 6 build-deploy | configuration | — | architectural | moderate | publishes #16 |
+| 49 | 3.4.6 #6 | 6 build-deploy | manifest | — | architectural | moderate | publishes #17 |
+| 50 | 3.4.6 #7 | 6 build-deploy | configuration | — | architectural | moderate | publishes #18 |
+| 51 | 3.4.6 #8 | 6 build-deploy | manifest | — | architectural | moderate | publishes #19 |
+| 52 | 3.4.6 #9 | 6 build-deploy | configuration | — | architectural | moderate | publishes #20 |
+| 53 | 3.4.6 #10 | 6 build-deploy | manifest | — | architectural | moderate | publishes #21 |
+| 54 | 3.4.6 #11 | 6 build-deploy | configuration | — | architectural | moderate | publishes #22 |
+| 55 | 3.4.6 #12 | 6 build-deploy | manifest | — | architectural | moderate | publishes #23 |
+| 56 | 3.4.6 #13 | 6 build-deploy | configuration | — | architectural | moderate | publishes #24 |
+| 57 | 3.4.6 #14 | 6 build-deploy | manifest | — | architectural | moderate | publishes #25 |
+| 58 | 3.4.6 #15 | 6 build-deploy | configuration | — | architectural | moderate | publishes #26 |
+| 59 | 3.4.6 #16 | 6 build-deploy | manifest | — | architectural | moderate | publishes #27 |
+| 60 | 3.4.6 #17 | 6 build-deploy | configuration | — | architectural | moderate | publishes #28 |
+| 61 | 3.4.6 #18 | 6 build-deploy | manifest | — | architectural | moderate | publishes #29 |
+| 62 | 3.4.6 #19 | 6 build-deploy | manifest | script | architectural | moderate | publishes #30 |
+| 63 | 3.4.6 #20 | 6 build-deploy | manifest | script | architectural | moderate | publishes #31 |
+| 64 | 3.4.6 #21 | 6 build-deploy | manifest | — | architectural | moderate | publishes #32 |
+| 65 | 3.4.6 #22 | 6 build-deploy | configuration | — | architectural | moderate | publishes #33 |
+| 66 | 3.4.6 #23 | 6 build-deploy | manifest | — | architectural | moderate | publishes #34 |
+| 67 | 3.4.6 #24 | 6 build-deploy | configuration | — | architectural | moderate | publishes #35 |
+| 68 | 3.4.6 #25 | 6 build-deploy | manifest | — | architectural | moderate | publishes #36 |
+| 69 | 3.4.6 #26 | 6 build-deploy | configuration | — | architectural | moderate | publishes #37 |
+| 70 | 3.4.6 #27 | 6 build-deploy | manifest | — | architectural | moderate | publishes #39 |
+| 71 | 3.4.6 #28 | 6 build-deploy | configuration | — | architectural | moderate | publishes #40 |
+| 72 | 3.4.6 #29 | 6 build-deploy | manifest | — | architectural | moderate | publishes #41 |
+| 73 | 3.4.7 #1 | 7 documentation | documentation | — | architectural | weak | corroborates #12; corroborates #13; corroborates #14; corroborates #15; corroborates #16; corroborates #17; corroborates #18; corroborates #19; corroborates #20; corroborates #21; corroborates #22; corroborates #23; corroborates #24; corroborates #25; corroborates #26; corroborates #27; corroborates #28; corroborates #29; corroborates #30; corroborates #31; corroborates #32; corroborates #33; corroborates #34; corroborates #35; corroborates #36; corroborates #37; corroborates #39; corroborates #40; corroborates #41 |
+| 74 | 3.4.7 #2 | 7 documentation | documentation | — | architectural | weak | corroborates #42; corroborates #43 |
+| 75 | 3.4.7 #3 | 7 documentation | documentation | — | architectural | weak | corroborates #32; corroborates #42; corroborates #43 |
+| 76 | 3.4.7 #4 | 7 documentation | documentation | — | architectural | weak | corroborates exemplos/01-componentes/react/src/main.tsx:3; corroborates exemplos/11-renderizacao/next/src/app/layout.tsx:2; corroborates exemplos/10-micro-frontends/apps/shell/src/main.ts:2; corroborates angular.json:18-20 |
+| 77 | 3.4.7 #5 | 7 documentation | documentation | — | architectural | weak | corroborates #30; corroborates #31; corroborates #32; corroborates exemplos/10-micro-frontends/packages/contracts/mount.ts:2-5 |
+| 78 | 3.4.7 #6 | 7 documentation | documentation | — | architectural | weak | contradicts #8; contradicts exemplos/10-micro-frontends/apps/shell/index.html:1 |
+| 79 | 3.4.7 #7 | 7 documentation | documentation | — | architectural | weak | corroborates exemplos/10-micro-frontends/packages/contracts/mount.ts:2-5 |
+| 80 | 3.4.7 #8 | 7 documentation | documentation | — | architectural | weak | corroborates #2; corroborates #3; corroborates #42; corroborates #43 |
+| 81 | 3.4.7 #9 | 7 documentation | documentation | — | architectural | weak | corroborates #2; corroborates #3; corroborates exemplos/10-micro-frontends/packages/contracts/mount.ts:2-4 |
+| 82 | 3.4.7 #10 | 7 documentation | documentation | — | architectural | weak | corroborates #1; corroborates #8; corroborates #9; corroborates #10 |
+| 83 | 3.4.7 #11 | 7 documentation | documentation | single-spa | technological | weak | corroborates exemplos/10-micro-frontends/packages/contracts/mount.ts:3-4 |
+| 84 | 3.4.7 #12 | 7 documentation | documentation | — | architectural | weak | corroborates #10 |
+| 85 | 3.4.7 #13 | 7 documentation | documentation | — | architectural | weak | corroborates #8; corroborates #9; corroborates #10; corroborates exemplos/10-micro-frontends/packages/contracts/mount.ts:4 |
+| 86 | 3.4.7 #14 | 7 documentation | documentation | — | architectural | weak | corroborates #42; corroborates #43; corroborates #62; corroborates #63; corroborates #64 |
+| 87 | 3.4.7 #15 | 7 documentation | documentation | script | architectural | weak | corroborates #8; corroborates #9; corroborates #10; corroborates #42; corroborates #43 |
+| 88 | 3.4.7 #16 | 7 documentation | documentation | — | architectural | weak | corroborates #62; corroborates #63 |
+| 89 | 3.4.7 #17 | 7 documentation | documentation | — | architectural | weak | corroborates #10; corroborates exemplos/10-micro-frontends/apps/shell/src/main.ts:30-33; corroborates tests/e2e/aula.spec.ts:148-149; corroborates tests/e2e/aula.spec.ts:153-156 |
+| 90 | 3.4.7 #18 | 7 documentation | documentation | — | architectural | weak | corroborates #63 |
+| 91 | 3.4.7 #19 | 7 documentation | documentation | — | architectural | weak | corroborates #62; corroborates #64; corroborates #1; corroborates #9 |
+| 92 | 3.4.7 #20 | 7 documentation | documentation | — | architectural | weak | partially corroborates #62; partially corroborates #63; partially corroborates #64; partially corroborates #1 |
+| 93 | 3.4.7 #21 | 7 documentation | documentation | — | architectural | weak | corroborates #44; corroborates #45; corroborates #46; corroborates #47; corroborates #48; corroborates #49; corroborates #50; corroborates #51; corroborates #52; corroborates #53; corroborates #54; corroborates #55; corroborates #56; corroborates #57; corroborates #58; corroborates #59; corroborates #60; corroborates #61; corroborates #62; corroborates #63; corroborates #64; corroborates #65; corroborates #66; corroborates #67; corroborates #68; corroborates #69; corroborates #70; corroborates #71; corroborates #72 |
+| 94 | 3.4.7 #22 | 7 documentation | documentation | — | architectural | weak | corroborates #1; corroborates #8 |
+| 95 | 3.4.7 #23 | 7 documentation | documentation | — | architectural | weak | corroborates exemplos/10-micro-frontends/apps/shell/src/main.ts:2; corroborates exemplos/10-micro-frontends/apps/catalogo-react/src/App.tsx:4; corroborates exemplos/10-micro-frontends/apps/checkout-angular/src/app/checkout-app.ts:3-5 |
+| 96 | 3.4.7 #24 | 7 documentation | documentation | — | architectural | weak | corroborates exemplos/10-micro-frontends/apps/catalogo-react/src/App.tsx:3-4; corroborates exemplos/10-micro-frontends/packages/contracts/mount.ts:2-5 |
+| 97 | 3.4.7 #25 | 7 documentation | documentation | — | architectural | weak | corroborates scripts/build-remoto.mjs:21-24; corroborates #62; corroborates #63 |
+| 98 | 3.4.7 #26 | 7 documentation | comment | — | architectural | weak | corroborates exemplos/10-micro-frontends/packages/contracts/mount.ts:2-5; corroborates #8 |
+| 99 | 3.4.7 #27 | 7 documentation | documentation | — | architectural | weak | corroborates #2; corroborates #3; corroborates tests/e2e/aula.spec.ts:150-152 |
+| 100 | 3.4.8 #1 | 8 history | history | — | architectural | weak | explains #78 |
+| 101 | 3.4.8 #2 | 8 history | history | — | architectural | weak | explains #92; explains #93 |
 
-## Resumo
+## Summary
 
-Observações: 101. Dimensões (tecnologia: 0, configuração: 1, código: 9, estrutura: 31, composição: 2, build-deploy: 29, documentação: 27, histórico: 2). Força (forte: 4, moderada: 62, fraca: 35, ambígua: 0). Evidência (tecnológica: 5, arquitetural: 90, contexto: 6).
+Observations: 101. Dimensions (technology: 0, configuration: 1, code: 9, structure: 31, composition: 2, build-deploy: 29, documentation: 27, history: 2). Strength (strong: 4, moderate: 62, weak: 35, ambiguous: 0). Evidence (technological: 5, architectural: 90, context: 6).
+

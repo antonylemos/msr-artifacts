@@ -15,32 +15,32 @@ annotation:
 
 # 342 — bank20baht/poc-angular-native-federation-tailwindcss
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-async-bootstrap | host/src/main.ts:7 | host | dynamic-loading | No | `import('./bootstrap')` de arquivo local, depois do `initFederation` (host/src/main.ts:3-8); interno ao host. |
-| src-async-bootstrap | remote/src/main.ts:5 | remote | dynamic-loading | No | `import('./bootstrap')` de arquivo local, depois do `initFederation()` (remote/src/main.ts:3-6); interno ao remote. |
-| src-load-remote | host/src/app/app.routes.ts:1 | host | remote-resolution | Yes | Import de `loadRemoteModule`, que habilita as resoluções de host/src/app/app.routes.ts:11 e :22 (ambas `Yes`). |
-| src-load-remote | host/src/app/app.routes.ts:11 | host | remote-resolution | Yes | `loadRemoteModule('remote', './Component')` na rota `''` com `loadComponent` (host/src/app/app.routes.ts:8-16); resolve o `App` exposto pelo remote em `./Component` (remote/federation.config.js:7-8), com `Fallback` em caso de erro. Ativo: `routes` registrado por `provideRouter` (host/src/app/app.config.ts:10), usado em host/src/bootstrap.ts:5, carregado por host/src/main.ts:7. |
-| src-load-remote | host/src/app/app.routes.ts:22 | host | remote-resolution | Yes | `loadRemoteModule('remote', './routes')` na rota `flights` com `loadChildren` (host/src/app/app.routes.ts:18-28); resolve `APP_ROUTES` exposto pelo remote em `./routes` (remote/federation.config.js:9; remote/src/app/modules/home/home.routes.ts:3), com `fallbackRoutes` em caso de erro. Mesma cadeia ativa da linha 11. |
-| src-load-remote | host/src/main.ts:1 | host | remote-resolution | Yes | Import de `initFederation`, que habilita a chamada de host/src/main.ts:3 (`Yes`). |
-| src-load-remote | host/src/main.ts:3 | host | remote-resolution | Yes | `initFederation` com o mapa `'remote': 'http://localhost:4201/remoteEntry.json'` (host/src/main.ts:3-5); registra o remote, servido na porta 4201 (remote/angular.json:108), antes do bootstrap do host (host/src/main.ts:7). Ponto de entrada do host (host/angular.json:60). |
-| src-load-remote | remote/src/main.ts:1 | remote | remote-resolution | No | Import de `initFederation`, que habilita a chamada de remote/src/main.ts:3 (`No`). |
-| src-load-remote | remote/src/main.ts:3 | remote | remote-resolution | No | `initFederation()` sem manifesto nem remotes (remote/src/main.ts:3); o remote só expõe `./Component` e `./routes` (remote/federation.config.js:7-10) e não resolve outra unidade. |
+| src-async-bootstrap | host/src/main.ts:7 | host | dynamic-loading | No | `import('./bootstrap')` of a local file after `initFederation` (host/src/main.ts:3-8); internal to host. |
+| src-async-bootstrap | remote/src/main.ts:5 | remote | dynamic-loading | No | `import('./bootstrap')` of a local file after `initFederation()` (remote/src/main.ts:3-6); internal to remote. |
+| src-load-remote | host/src/app/app.routes.ts:1 | host | remote-resolution | Yes | Import of `loadRemoteModule`, enabling resolutions at host/src/app/app.routes.ts:11 and :22 (both `Yes`). |
+| src-load-remote | host/src/app/app.routes.ts:11 | host | remote-resolution | Yes | `loadRemoteModule('remote', './Component')` in route `''` with `loadComponent` (host/src/app/app.routes.ts:8-16); resolves the `App` exposed by remote at `./Component` (remote/federation.config.js:7-8), with `Fallback` on error. Active: `routes` registered by `provideRouter` (host/src/app/app.config.ts:10), used at host/src/bootstrap.ts:5, loaded by host/src/main.ts:7. |
+| src-load-remote | host/src/app/app.routes.ts:22 | host | remote-resolution | Yes | `loadRemoteModule('remote', './routes')` in route `flights` with `loadChildren` (host/src/app/app.routes.ts:18-28); resolves `APP_ROUTES` exposed by remote at `./routes` (remote/federation.config.js:9; remote/src/app/modules/home/home.routes.ts:3), with `fallbackRoutes` on error. Same active chain as line 11. |
+| src-load-remote | host/src/main.ts:1 | host | remote-resolution | Yes | Import of `initFederation`, enabling the call at host/src/main.ts:3 (`Yes`). |
+| src-load-remote | host/src/main.ts:3 | host | remote-resolution | Yes | `initFederation` with map `'remote': 'http://localhost:4201/remoteEntry.json'` (host/src/main.ts:3-5); registers remote, served on port 4201 (remote/angular.json:108), before host bootstrap (host/src/main.ts:7). Host entry point (host/angular.json:60). |
+| src-load-remote | remote/src/main.ts:1 | remote | remote-resolution | No | Import of `initFederation`, enabling the call at remote/src/main.ts:3 (`No`). |
+| src-load-remote | remote/src/main.ts:3 | remote | remote-resolution | No | `initFederation()` without a manifest or remotes (remote/src/main.ts:3); remote only exposes `./Component` and `./routes` (remote/federation.config.js:7-10) and does not resolve another unit. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | host/src/app/app.routes.ts:7 | host | host-relationship | Yes | Tabela de rotas do host que nomeia o remote e onde ele entra: `''` → `remote/./Component` e `flights` → `remote/./routes` (host/src/app/app.routes.ts:7-29); registrada por `provideRouter(routes)` em host/src/app/app.config.ts:10, e o host renderiza o resultado no `<router-outlet>` de host/src/app/app.html:2. |
+| manual | host/src/app/app.routes.ts:7 | host | host-relationship | Yes | Host route table naming remote and where it enters: `''` → `remote/./Component` and `flights` → `remote/./routes` (host/src/app/app.routes.ts:7-29); registered by `provideRouter(routes)` at host/src/app/app.config.ts:10, and host renders the result in the `<router-outlet>` at host/src/app/app.html:2. |
 
-## Resumo
+## Summary
 
-Construções com composição: 6 (remote-resolution: 5, host-relationship: 1).
+Constructs participating in composition: 6 (remote-resolution: 5, host-relationship: 1).
 
-## Notas
+## Notes
 
-- Os `import()` das rotas do próprio remote (remote/src/app/app.routes.ts:7; remote/src/app/modules/home/home.routes.ts:7, :12) são de arquivos locais e não entram na tabela manual.
-- host/src/remote.d.ts:1 declara o módulo `remote/Styles?inline`, mas nenhum arquivo do host o importa e o remote não expõe `./Styles` (remote/federation.config.js:7-10); não é construção de composição.
-- Não há `cfg-route-rewrites` no `matches.csv` deste repositório; a regra da opção B não se aplica.
+- The `import()` calls in remote’s own routes (remote/src/app/app.routes.ts:7; remote/src/app/modules/home/home.routes.ts:7, :12) are local files and do not enter the manual table.
+- host/src/remote.d.ts:1 declares module `remote/Styles?inline`, but no host file imports it and remote does not expose `./Styles` (remote/federation.config.js:7-10); not a composition construct.
+- There is no `cfg-route-rewrites` in this repository’s `matches.csv`; the option B rule does not apply.

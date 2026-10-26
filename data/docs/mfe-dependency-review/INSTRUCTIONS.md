@@ -1,149 +1,149 @@
-# Método: revisão manual de dependências
+# Method: manual dependency review
 
-Os caminhos começados por `docs/` preservam a organização do projeto de origem (`repo-miner`). Neste pacote, as análises correspondentes estão em `data/docs/`. Os caminhos e hashes registrados nas análises mantêm sua função de proveniência.
+Paths beginning with `docs/` preserve the organization of the source project (`repo-miner`). In this package, the corresponding analyses are in `data/docs/`. The paths and hashes recorded in the analyses retain their provenance role.
 
-Este documento descreve como foi feita a revisão manual de dependências e como ler os arquivos
-`NNN-<owner>__<name>.md` desta pasta. Cada arquivo registra a revisão de um repositório do corpus,
-e a ordem dos passos abaixo é a ordem em que a revisão é conduzida: ler os arquivos do snapshot
-vem antes de qualquer julgamento.
+This document describes how the manual dependency review was conducted and how to read the
+`NNN-<owner>__<name>.md` files in this folder. Each file records the review of one corpus repository,
+and the steps below follow the order in which the review is conducted: reading the snapshot files
+comes before any judgment.
 
-## Objetivo
+## Objective
 
-Para cada dependência listada pelo `inspect-dependencies`, decidir se o pacote está
-**configurado e em uso** no snapshot, citando arquivo e linha. A inspeção já extraiu
-nome, versão, seção e linha de forma mecânica; esta etapa só acrescenta o julgamento.
+For each dependency listed by `inspect-dependencies`, decide whether the package is
+**configured and in use** in the snapshot, citing the file and line. The inspection has already
+extracted the name, version, section and line mechanically; this stage adds only the judgment.
 
-Esta etapa **não** reclassifica o repositório, não altera os arquivos de
-`../mfe-classification/` e não avalia arquitetura. Ela responde a uma pergunta por linha: o pacote
-está configurado e em uso?
+This stage does **not** reclassify the repository, modify the files in
+`../mfe-classification/`, or assess architecture. It answers one question per row: is the package
+configured and in use?
 
-## Fontes consultadas (somente leitura)
+## Sources consulted (read only)
 
-| O quê                                | Caminho                                                                           |
-| ------------------------------------ | --------------------------------------------------------------------------------- |
-| Lista de repositórios                | `data/inspections/mfe-dependencies-001/summary.csv`                               |
-| Dependências do repositório          | `data/inspections/mfe-dependencies-001/repos/<owner>__<name>/dependencies.csv`    |
-| Versão e hash da inspeção            | `data/inspections/mfe-dependencies-001/manifest.json` (`version`, `configSha256`) |
-| Arquivos do snapshot                 | `data/acquisitions/mfe-corpus-001/corpus/<owner>__<name>/files/`                  |
-| Classificação (id, commit, contexto) | `docs/mfe-classification/NNN-<owner>__<name>.md`                                  |
-| Critério do Q4 | `docs/mfe-classification-checklist.md` |
+| What | Path |
+| ---- | ---- |
+| Repository list | `data/inspections/mfe-dependencies-001/summary.csv` |
+| Repository dependencies | `data/inspections/mfe-dependencies-001/repos/<owner>__<name>/dependencies.csv` |
+| Inspection version and hash | `data/inspections/mfe-dependencies-001/manifest.json` (`version`, `configSha256`) |
+| Snapshot files | `data/acquisitions/mfe-corpus-001/corpus/<owner>__<name>/files/` |
+| Classification (id, commit, context) | `docs/mfe-classification/NNN-<owner>__<name>.md` |
+| Q4 criterion | `docs/mfe-classification-checklist.md` |
 
-O checklist citado é uma referência metodológica do projeto de origem e não foi reproduzido neste pacote.
+The cited checklist is a methodological reference from the source project and is not reproduced in this package.
 
-Todo `artefato:linha` é relativo a `files/` do snapshot. A revisão nunca usa o clone em
-`data/samples/`: o snapshot é a árvore do commit classificado, e o clone pode estar em outro estado.
+Every `artifact:line` is relative to the snapshot's `files/` directory. The review never uses the clone in
+`data/samples/`: the snapshot is the tree of the classified commit, whereas the clone may be in another state.
 
-A revisão não modifica nada em `data/` e não reexecuta `mine` nem `inspect-dependencies`.
+The review does not modify anything in `data/` or rerun `mine` or `inspect-dependencies`.
 
-As classificações, as revisões anteriores e as configurações em `config/` são consultadas sem alteração.
+Classifications, previous reviews and configurations in `config/` are consulted without modification.
 
-## Produto
+## Output
 
-Um arquivo `docs/mfe-dependency-review/NNN-<owner>__<name>.md` por repositório, com o
-**mesmo nome** do arquivo de classificação. O exemplo completo é `008-mrmechazilla__host-app.md`.
+One `docs/mfe-dependency-review/NNN-<owner>__<name>.md` file per repository, with the
+**same name** as its classification file. The complete example is `008-mrmechazilla__host-app.md`.
 
-Cada arquivo tem esta estrutura:
+Each file has this structure:
 
-1. Front matter com os campos descritos no passo 1.
-2. Título `# NNN — <owner>/<name>`.
-3. Seção "Dependências": uma tabela com as colunas `Manifesto:linha`, `Seção`, `Pacote`, `Versão`,
-   `Tecnologia`, `Configurada` e `Evidência (artefato:linha)`.
-4. Seção "Notas" (opcional) e, quando o `status` é `review`, a seção "Ponto para revisão conjunta".
+1. Front matter with the fields described in step 1.
+2. Title `# NNN — <owner>/<name>`.
+3. "Dependencies" section: a table with the columns `Manifest:line`, `Section`, `Package`, `Version`,
+   `Technology`, `Configured` and `Evidence (artifact:line)`.
+4. Optional "Notes" section and, when `status` is `review`, the "Point for joint review" section.
 
-## Procedimento por repositório
+## Procedure per repository
 
-### 1. Cabeçalho do arquivo
+### 1. File header
 
-O `NNN` do nome vem do arquivo correspondente em `../mfe-classification/`. O front matter registra:
+The `NNN` in the filename comes from the corresponding file in `../mfe-classification/`. The front matter records:
 
-- `id`, `full_name`, `commit`: copiados do front matter da classificação.
+- `id`, `full_name`, `commit`: copied from the classification's front matter.
 - `inspection.output`: `data/inspections/mfe-dependencies-001`.
-- `inspection.version` e `inspection.config_sha256`: copiados de `version` e `configSha256` do `manifest.json` da inspeção.
+- `inspection.version` and `inspection.config_sha256`: copied from `version` and `configSha256` in the inspection's `manifest.json`.
 - `annotation.method`: `manual`.
-- `annotation.status`: `draft` enquanto a revisão não foi validada. A validação final cabe ao pesquisador, e só ele promove o status para `final`.
-- `annotation.date`: data da revisão, no formato `AAAA-MM-DD`.
+- `annotation.status`: `draft` while the review has not been validated. Final validation is the researcher's responsibility, and only the researcher promotes the status to `final`.
+- `annotation.date`: review date, in `YYYY-MM-DD` format.
 
-O `commit` deve ser o mesmo do `acquisition.csv` da aquisição. Se divergir, a revisão é interrompida
-e a divergência é registrada em "Ponto para revisão conjunta".
+The `commit` must match the acquisition's `acquisition.csv`. If it differs, the review is interrupted
+and the discrepancy is recorded in "Point for joint review".
 
-### 2. Cópia das linhas do CSV
+### 2. Copying the CSV rows
 
-A tabela tem uma linha para cada linha de `dependencies.csv`, **na mesma ordem**, sem juntar nem omitir linhas:
+The table has one row for each row of `dependencies.csv`, **in the same order**, without merging or omitting rows:
 
-| Coluna da tabela | Coluna do CSV                                                     |
-| ---------------- | ----------------------------------------------------------------- |
-| Manifesto:linha  | `manifest` + `:` + `line` (só `manifest` se `line` estiver vazia) |
-| Seção            | `section`                                                         |
-| Pacote           | `package`                                                         |
-| Versão           | `version`                                                         |
-| Tecnologia       | `technology`                                                      |
+| Table column | CSV column |
+| ------------ | ---------- |
+| Manifest:line | `manifest` + `:` + `line` (only `manifest` if `line` is empty) |
+| Section | `section` |
+| Package | `package` |
+| Version | `version` |
+| Technology | `technology` |
 
-Os valores não são corrigidos nem normalizados: aparecem exatamente como estão no CSV.
+Values are neither corrected nor normalized: they appear exactly as they do in the CSV.
 
-**CSV só com o cabeçalho:** a tabela é substituída pela frase
-"Nenhuma dependência das tecnologias no dependencies.csv."
-Nesse caso não se procura configuração para preencher o arquivo: a tecnologia sem pacote próprio
-(por exemplo, Module Federation embutido no webpack 5) já fica registrada na classificação.
+**CSV containing only the header:** replace the table with the sentence
+"No dependencies for the technologies in dependencies.csv."
+In this case, do not search for configuration to fill the file: a technology without its own package
+(for example, Module Federation built into webpack 5) is already recorded in the classification.
 
-### 3. Julgamento de cada linha
+### 3. Judging each row
 
-Para cada linha, os arquivos são abertos e a coluna `Configurada` é decidida.
+For each row, open the files and decide the `Configured` column.
 
-1. Abrir o manifesto na linha indicada e confirmar que o pacote está declarado ali, na seção indicada.
-2. Abrir cada item de `same_package_matches` na linha indicada e, depois, os de `other_package_matches`.
-   O pacote de um arquivo é o diretório do `package.json` mais próximo acima dele; subdiretórios sem `package.json` próprio (`src/`, `projects/<app>/`) pertencem ao pacote de cima.
-   O trecho em volta (bloco ou função) é lido, não só a linha.
-3. **Procurar também fora das listas.** As listas só trazem os padrões que a configuração da inspeção
-   associou à tecnologia (em geral `cfg-*`). Uso em código, como `import ... from '<pacote>'`, pode não estar nelas.
-   O nome do pacote é procurado nos arquivos de código e de build do snapshot, por exemplo com:
+1. Open the manifest at the indicated line and confirm that the package is declared there, in the indicated section.
+2. Open each item in `same_package_matches` at the indicated line, then those in `other_package_matches`.
+   A file's package is the directory of the nearest `package.json` above it; subdirectories without their own `package.json` (`src/`, `projects/<app>/`) belong to the package above.
+   Read the surrounding block or function, rather than just the line.
+3. **Also search outside the lists.** The lists contain only the patterns that the inspection configuration
+   associated with the technology (usually `cfg-*`). Code usage, such as `import ... from '<pacote>'`, may be absent from them.
+   Search for the package name in the snapshot's source and build files, for example with:
    `grep -rn "<pacote>" data/acquisitions/mfe-corpus-001/corpus/<owner>__<name>/files --include='*.{js,ts,mjs,cjs,json}'`
-   (lockfiles e `node_modules`, se houver, são ignorados).
-4. A decisão segue estas regras, nesta ordem:
+   (ignore lockfiles and `node_modules`, if present). The original command placeholder `<pacote>` means `<package>`.
+4. Apply these decision rules in this order:
 
-| Resposta       | Quando                                                                                                                                                                                                                              |
-| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Yes`          | Um arquivo de build ou de código importa ou invoca o pacote (plugin, função, builder), **e** esse arquivo é usado: referenciado pelo build (ex.: `angular.json` → `extraWebpackConfig`) ou é um ponto de entrada/rota da aplicação. |
-| `Undetermined` | Há configuração ou código que usa o pacote, mas não dá para confirmar que é usado: arquivo não referenciado por nenhum build, código comentado, configuração incompleta ou contraditória.                                           |
-| `No`           | Nenhum arquivo importa ou invoca o pacote; só a declaração no manifesto (e, talvez, scripts ou documentação).                                                                                                                       |
+| Answer | When |
+| ------ | ---- |
+| `Yes` | A build or source file imports or invokes the package (plugin, function, builder), **and** that file is used: referenced by the build (e.g., `angular.json` → `extraWebpackConfig`) or an application entry point/route. |
+| `Undetermined` | Configuration or code uses the package, but its use cannot be confirmed: a file not referenced by any build, commented-out code, or incomplete or contradictory configuration. |
+| `No` | No file imports or invokes the package; there is only the manifest declaration (and perhaps scripts or documentation). |
 
-Observações:
-- Mencionar o pacote em um script do `package.json`, em `README` ou em lockfile **não** é uso.
-- A ocorrência em outro pacote conta, desde que o arquivo use **este** pacote (ex.: dependência hoisted na raiz de um monorepo, plugin configurado em `apps/shell/`).
-- Cada linha corresponde a uma tecnologia: se o mesmo pacote aparece em duas tecnologias, cada linha é julgada pela evidência daquela tecnologia.
-- Na dúvida entre `Yes` e `Undetermined`, a resposta é `Undetermined`, com a explicação em "Notas".
+Observations:
+- Mentioning the package in a `package.json` script, a `README` or a lockfile is **not** usage.
+- An occurrence in another package counts, provided the file uses **this** package (e.g., a dependency hoisted to the monorepo root, with the plugin configured in `apps/shell/`).
+- Each row corresponds to a technology: if the same package appears under two technologies, judge each row using the evidence for that technology.
+- When in doubt between `Yes` and `Undetermined`, answer `Undetermined` and explain in "Notes".
 
-### 4. Registro da evidência
+### 4. Recording the evidence
 
-A coluna `Evidência (artefato:linha)` traz:
-- a evidência mínima que sustenta a resposta: onde o pacote é importado ou invocado e, para `Yes`, o que mostra que o arquivo é usado;
-- o formato `caminho:linha` ou `caminho:inicio-fim`, separados por `; `, com uma descrição curta entre parênteses e o código entre crases;
-- para `No`, o que foi procurado e onde (ex.: `sem import de "@scope/x" em src/ e configs de build (grep)`);
-- para `Undetermined`, o que existe e o motivo da dúvida.
+The `Evidence (artifact:line)` column contains:
+- the minimum evidence supporting the answer: where the package is imported or invoked and, for `Yes`, what shows that the file is used;
+- `path:line` or `path:start-end`, separated by `; `, with a short description in parentheses and code in backticks;
+- for `No`, what was searched for and where (e.g., `no import of "@scope/x" in src/ and build configs (grep)`);
+- for `Undetermined`, what exists and why there is uncertainty.
 
-### 5. Notas e revisão conjunta
+### 5. Notes and joint review
 
-- **Notas** (opcional): sinais enganosos, evidência que só apareceu fora das listas da inspeção, regex de pacote que pareceu ampla demais, ou caso que deveria virar regra.
-- **Ponto para revisão conjunta**: obrigatório se `status: review`. Registra a linha cuja resposta depende de decisão do pesquisador.
+- **Notes** (optional): misleading signals, evidence found only outside the inspection lists, a package regex that seemed too broad, or a case that should become a rule.
+- **Point for joint review**: required if `status: review`. Records the row whose answer depends on the researcher's decision.
 
-Quando algo contradiz a classificação do repositório, a revisão não propõe mudá-la; a contradição
-é registrada em "Notas".
+When something contradicts the repository classification, the review does not propose changing it; record
+the contradiction in "Notes".
 
-## Verificações de consistência
+## Consistency checks
 
-Antes de considerar um arquivo concluído, confere-se que:
+Before considering a file complete, check that:
 
-- o nome do arquivo é igual ao da classificação;
-- `commit` é igual ao da classificação e ao do `acquisition.csv`;
-- `version` e `config_sha256` são os do `manifest.json` da inspeção;
-- o número de linhas da tabela é igual ao de linhas de dados do `dependencies.csv` (ou a frase fixa está presente);
-- as cinco colunas copiadas são idênticas ao CSV;
-- toda linha tem `Configurada` em `Yes | No | Undetermined` e pelo menos uma evidência;
-- toda evidência foi aberta no snapshot, e a linha citada contém o que foi descrito;
-- o arquivo não contém comentários ou marcações de preenchimento;
-- `status` é `draft` ou o valor definido pelo pesquisador.
+- its filename matches the classification's;
+- `commit` matches the classification and `acquisition.csv`;
+- `version` and `config_sha256` match the inspection's `manifest.json`;
+- the number of table rows equals the number of data rows in `dependencies.csv` (or the fixed sentence is present);
+- the five copied columns are identical to the CSV;
+- every row has `Configured` in `Yes | No | Undetermined` and at least one piece of evidence;
+- every cited piece of evidence was opened in the snapshot, and the cited line contains what was described;
+- the file contains no comments or completion placeholders;
+- `status` is `draft` or the value set by the researcher.
 
-## Quando a inspeção mudar
+## When the inspection changes
 
-Se `inspect-dependencies` for executado com outra configuração (nova `version`, novo `config_sha256`),
-os arquivos desta pasta continuam válidos só para a versão registrada no front matter.
-Os repositórios cujo `dependencies.csv` mudou precisam ser revisados de novo, com o bloco `inspection` atualizado.
+If `inspect-dependencies` runs with another configuration (new `version`, new `config_sha256`),
+the files in this folder remain valid only for the version recorded in the front matter.
+Repositories whose `dependencies.csv` changed must be reviewed again, with the `inspection` block updated.

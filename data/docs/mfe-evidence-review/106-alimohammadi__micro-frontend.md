@@ -19,360 +19,361 @@ annotation:
 
 # 106 — alimohammadi/micro-frontend
 
-## Leitura do repositório
+## Repository overview
 
-O repositório traz o código de um curso, com dois exemplos independentes de Module Federation: `ecomm/` (container, products e cart, em JavaScript puro) e `packages/` (container e marketing, em React). Os dois usam o plugin nativo do webpack 5, e por isso não há observação de dependência. Nos dois exemplos a cadeia é a mesma:
-- **Configuração:**
-  - o host declara os remotes (#2 no `ecomm`; #4 e #5 no `packages`);
-  - cada remote se declara e expõe um módulo cujo contrato é uma função `mount` (#1, #3, #6, #7).
-- **Código:** o host importa o módulo remoto pelo nome (#17 a #19) e chama `mount` num elemento próprio (#16, #20, #21). Os remotes exportam `mount` (#11 a #13).
-- **Relações:** daí as três relações ativas: container → cart e container → products no `ecomm` (#31, #32), e container → marketing no `packages` (#33).
+Repository contains course code, with two independent Module Federation examples: `ecomm/` (container, products and cart, in plain JavaScript) and `packages/` (container and marketing, in React). Both use native webpack 5 plugin, so there is no dependency observation. Both examples have same chain:
+- **Configuration:**
+  - host declares remotes (#2 in `ecomm`; #4 and #5 in `packages`);
+  - each remote declares itself and exposes a module whose contract is a `mount` function (#1, #3, #6, #7).
+- **Code:** host imports remote module by name (#17 through #19) and calls `mount` in its own element (#16, #20, #21). Remotes export `mount` (#11 through #13).
+- **Relationships:** three active relationships result: container → cart and container → products in `ecomm` (#31, #32), and container → marketing in `packages` (#33).
 
-As cinco aplicações têm build próprio (#34 a #38). Não há deploy observado. No `ecomm` só existe o servidor de desenvolvimento. No `packages` há também build de produção, mas o endereço do remote depende de `PRODUCTION_DOMAIN`, que não tem valor no snapshot (#5). A relação ativa se apoia na configuração de desenvolvimento (#4).
+Five applications have their own builds (#34 through #38). No observed deployment. In `ecomm` only development server exists. In `packages` there is also production build, but remote address depends on `PRODUCTION_DOMAIN`, without a snapshot value (#5). Active relationship relies on development configuration (#4).
 
-Sinais que enganam se lidos sozinhos:
-- **Bootstrap assíncrono e montagem local:** os bootstraps assíncronos (#8 a #10) e as montagens no elemento de desenvolvimento do próprio remote (#14, #15) são internos a cada unidade.
-- **Pastas só com manifesto:** `packages/auth` e `packages/dashboard` só têm `package.json` e lockfile (#25, #28). O histórico mostra que nunca tiveram outro arquivo (#46).
-- **"development or production":** os comentários dos `mount.js` do `ecomm` dizem que o remote roda pelo container também em produção (#40, #43). O exemplo, porém, só tem configuração de desenvolvimento, e o histórico mostra que é assim desde o commit que trouxe o comentário (#47).
+Signals misleading when read alone:
+- **Asynchronous bootstrap and local mounting:** asynchronous bootstraps (#8 through #10) and mounting in remote's own development element (#14, #15) are internal to each unit.
+- **Manifest-only folders:** `packages/auth` and `packages/dashboard` only contain `package.json` and lockfile (#25, #28). History shows they never contained another file (#46).
+- **"development or production":** `mount.js` comments in `ecomm` say remote also runs through container in production (#40, #43). Example only has development configuration, and history shows this has been true since commit introducing comment (#47).
 
-Os comentários dos remotes (#39 a #45) descrevem o padrão de montagem isolada e montagem pelo container, e conferem com o código. Nada fica ambíguo no snapshot.
+Remote comments (#39 through #45) describe standalone mounting and mounting through container, matching code. Nothing remains ambiguous in snapshot.
 
-## Observações
+## Observations
 
 ### 1. ecomm/cart/webpack.config.js:1-26
 
-**Observação:** `ModuleFederationPlugin` declara `name: "cart"` e `filename: "remoteEntry.js"`, expõe `./CartShow` (`./src/mount`) e compartilha `faker` com `singleton: true`. A configuração é só de desenvolvimento (`mode: "development"`, porta 8082).
+**Observation:** `ModuleFederationPlugin` declares `name: "cart"` and `filename: "remoteEntry.js"`, exposes `./CartShow` (`./src/mount`) and shares `faker` with `singleton: true`. Configuration is development-only (`mode: "development"`, port 8082).
 
-**Interpretação:** O cart está configurado como remote e oferece seu `mount` a um host.
+**Interpretation:** Cart is configured as remote and offers its `mount` to a host.
 
 ### 2. ecomm/container/webpack.config.js:1-29
 
-**Observação:** `ModuleFederationPlugin` declara `name: "container"` e os remotes `products: "products@http://localhost:8081/remoteEntry.js"` e `carts: "cart@http://localhost:8082/remoteEntry.js"`. A configuração é só de desenvolvimento (`mode: "development"`, porta 8080).
+**Observation:** `ModuleFederationPlugin` declares `name: "container"` and remotes `products: "products@http://localhost:8081/remoteEntry.js"` and `carts: "cart@http://localhost:8082/remoteEntry.js"`. Configuration is development-only (`mode: "development"`, port 8080).
 
-**Interpretação:** A configuração do host declara os dois remotes e onde encontrá-los em desenvolvimento. O nome local `carts` aponta para o container `cart`.
+**Interpretation:** Host configuration declares two remotes and where to find them in development. Local name `carts` points to container `cart`.
 
 ### 3. ecomm/products/webpack.config.js:1-22
 
-**Observação:** `ModuleFederationPlugin` declara `name: "products"` e `filename: "remoteEntry.js"`, expõe `./ProductsIndex` (`./src/mount.js`) e compartilha `faker`. A configuração é só de desenvolvimento (`mode: "development"`, porta 8081).
+**Observation:** `ModuleFederationPlugin` declares `name: "products"` and `filename: "remoteEntry.js"`, exposes `./ProductsIndex` (`./src/mount.js`) and shares `faker`. Configuration is development-only (`mode: "development"`, port 8081).
 
-**Interpretação:** O products está configurado como remote e oferece seu `mount` a um host.
+**Interpretation:** Products is configured as remote and offers its `mount` to a host.
 
 ### 4. packages/container/config/webpack.dev.js:1-26
 
-**Observação:** `ModuleFederationPlugin` declara `name: "container"` e o remote `marketing: "marketing@http://localhost:8081/remoteEntry.js"`, e compartilha as `dependencies` do `package.json`. A configuração é de desenvolvimento (`mode: "development"`, porta 8080) e se junta à `webpack.common.js`.
+**Observation:** `ModuleFederationPlugin` declares `name: "container"` and remote `marketing: "marketing@http://localhost:8081/remoteEntry.js"`, sharing `dependencies` from `package.json`. Configuration is for development (`mode: "development"`, port 8080) and merges with `webpack.common.js`.
 
-**Interpretação:** A configuração do host declara o remote marketing e onde encontrá-lo em desenvolvimento.
+**Interpretation:** Host configuration declares marketing remote and where to find it in development.
 
 ### 5. packages/container/config/webpack.prod.js:1-25
 
-**Observação:** `ModuleFederationPlugin` declara `name: "container"` e o remote `` marketing: `marketing@${domain}/marketing/remoteEntry.js` ``, com `domain` lido de `process.env.PRODUCTION_DOMAIN`, e compartilha as `dependencies` do `package.json`. O build é de produção, com `publicPath: "/container/latest/"`.
+**Observation:** `ModuleFederationPlugin` declares `name: "container"` and remote `` marketing: `marketing@${domain}/marketing/remoteEntry.js` ``, with `domain` read from `process.env.PRODUCTION_DOMAIN`, sharing `dependencies` from `package.json`. Build is for production, with `publicPath: "/container/latest/"`.
 
-**Interpretação:** A configuração de produção do host declara o mesmo remote marketing. O endereço depende de uma variável de ambiente que não tem valor no snapshot.
+**Interpretation:** Host production configuration declares same marketing remote. Address depends on environment variable without snapshot value.
 
 ### 6. packages/marketing/config/webpack.dev.js:1-31
 
-**Observação:** `ModuleFederationPlugin` declara `name: "marketing"` e `filename: "remoteEntry.js"`, expõe `./MarketingApp` (`./src/bootstrap`) e compartilha as `dependencies` do `package.json`. A configuração é de desenvolvimento (porta 8081).
+**Observation:** `ModuleFederationPlugin` declares `name: "marketing"` and `filename: "remoteEntry.js"`, exposes `./MarketingApp` (`./src/bootstrap`) and shares `dependencies` from `package.json`. Configuration is for development (port 8081).
 
-**Interpretação:** O marketing está configurado como remote e oferece seu bootstrap a um host.
+**Interpretation:** Marketing is configured as remote and offers its bootstrap to a host.
 
 ### 7. packages/marketing/config/webpack.prod.js:1-23
 
-**Observação:** `ModuleFederationPlugin` repete `name: "marketing"`, `filename: "remoteEntry.js"`, a exposição `./MarketingApp` (`./src/bootstrap`) e o compartilhamento das `dependencies`. O build é de produção, com nomes de arquivo com hash.
+**Observation:** `ModuleFederationPlugin` repeats `name: "marketing"`, `filename: "remoteEntry.js"`, exposure `./MarketingApp` (`./src/bootstrap`) and sharing of `dependencies`. Build is for production, with hashed filenames.
 
-**Interpretação:** O marketing também é configurado como remote no build de produção.
+**Interpretation:** Marketing is also configured as remote in production build.
 
 ### 8. ecomm/container/src/index.js:1
 
-**Observação:** `import('./bootstrap')`.
+**Observation:** `import('./bootstrap')`.
 
-**Interpretação:** É um bootstrap assíncrono interno à unidade.
+**Interpretation:** An asynchronous bootstrap internal to unit.
 
 ### 9. packages/container/src/index.js:1
 
-**Observação:** `import('./bootstrap')`.
+**Observation:** `import('./bootstrap')`.
 
-**Interpretação:** É um bootstrap assíncrono interno à unidade.
+**Interpretation:** An asynchronous bootstrap internal to unit.
 
 ### 10. packages/marketing/src/index.js:1
 
-**Observação:** `import("./bootstrap")`.
+**Observation:** `import("./bootstrap")`.
 
-**Interpretação:** É um bootstrap assíncrono interno à unidade.
+**Interpretation:** An asynchronous bootstrap internal to unit.
 
 ### 11. ecomm/cart/src/mount.js:26; ecomm/cart/src/mount.js:3-7
 
-**Observação:** `export { mount }`. A função `mount(el)` escreve no elemento recebido o texto do carrinho, com um número gerado pelo `faker`. O arquivo é o exposto como `./CartShow`.
+**Observation:** `export { mount }`. Function `mount(el)` writes cart text into received element, with a number generated by `faker`. File is exposed as `./CartShow`.
 
-**Interpretação:** O cart oferece a função de montagem ao host.
+**Interpretation:** Cart offers mount function to host.
 
 ### 12. ecomm/products/src/mount.js:31; ecomm/products/src/mount.js:5-12
 
-**Observação:** `export { mount }`. A função `mount(el)` escreve no elemento recebido três nomes de produto gerados pelo `faker`. O arquivo é o exposto como `./ProductsIndex`.
+**Observation:** `export { mount }`. Function `mount(el)` writes three product names generated by `faker` into received element. File is exposed as `./ProductsIndex`.
 
-**Interpretação:** O products oferece a função de montagem ao host.
+**Interpretation:** Products offers mount function to host.
 
 ### 13. packages/marketing/src/bootstrap.js:17; packages/marketing/src/bootstrap.js:6-8
 
-**Observação:** `export { mount }`. A função `mount(el)` executa `ReactDom.render(<App />, el)`. O arquivo é o exposto como `./MarketingApp`.
+**Observation:** `export { mount }`. Function `mount(el)` executes `ReactDom.render(<App />, el)`. File is exposed as `./MarketingApp`.
 
-**Interpretação:** O marketing oferece ao host a função que monta a sua aplicação.
+**Interpretation:** Marketing offers host function mounting its application.
 
 ### 14. ecomm/cart/src/mount.js:17; ecomm/cart/src/mount.js:14-19; ecomm/cart/public/index.html:9
 
-**Observação:** Em `NODE_ENV === "development"`, chama `mount` sobre `#dev-cart` quando esse elemento existe. O elemento está no `index.html` do próprio cart.
+**Observation:** In `NODE_ENV === "development"`, calls `mount` on `#dev-cart` when element exists. Element is in cart own `index.html`.
 
-**Interpretação:** É uma montagem interna à unidade, para rodá-la sozinha.
+**Interpretation:** Mounting internal to unit, to run it standalone.
 
 ### 15. ecomm/products/src/mount.js:22; ecomm/products/src/mount.js:19-24; ecomm/products/public/index.html:9
 
-**Observação:** Em `NODE_ENV === "development"`, chama `mount` sobre `#dev-products` quando esse elemento existe. O elemento está no `index.html` do próprio products.
+**Observation:** In `NODE_ENV === "development"`, calls `mount` on `#dev-products` when element exists. Element is in products own `index.html`.
 
-**Interpretação:** É uma montagem interna à unidade, para rodá-la sozinha.
+**Interpretation:** Mounting internal to unit, to run it standalone.
 
 ### 16. packages/container/src/components/MarketingApp.js:8; packages/container/src/components/MarketingApp.js:7-11; packages/container/src/App.js:10
 
-**Observação:** `mount(ref.current)` dentro de um `useEffect`, sobre o `div` que o componente renderiza. O componente é renderizado pelo `App` do container.
+**Observation:** `mount(ref.current)` inside a `useEffect`, on `div` rendered by component. Component is rendered by container `App`.
 
-**Interpretação:** O host monta o remote num elemento próprio, pela função importada.
+**Interpretation:** Host mounts remote in its own element through imported function.
 
 ### 17. ecomm/container/src/bootstrap.js:1
 
-**Observação:** `import { mount as productsMount } from "products/ProductsIndex"`.
+**Observation:** `import { mount as productsMount } from "products/ProductsIndex"`.
 
-**Interpretação:** O host importa o módulo exposto pelo remote products, pelo nome dele.
+**Interpretation:** Host imports module exposed by products remote, through its name.
 
 ### 18. ecomm/container/src/bootstrap.js:3
 
-**Observação:** `import { mount as cartMount } from "carts/CartShow"`.
+**Observation:** `import { mount as cartMount } from "carts/CartShow"`.
 
-**Interpretação:** O host importa o módulo exposto pelo remote cart, pelo nome local `carts`.
+**Interpretation:** Host imports module exposed by cart remote, through local name `carts`.
 
 ### 19. packages/container/src/components/MarketingApp.js:1
 
-**Observação:** `import { mount } from "marketing/MarketingApp"`.
+**Observation:** `import { mount } from "marketing/MarketingApp"`.
 
-**Interpretação:** O host importa o módulo exposto pelo remote marketing, pelo nome dele.
+**Interpretation:** Host imports module exposed by marketing remote, through its name.
 
 ### 20. ecomm/container/src/bootstrap.js:5; ecomm/container/public/index.html:9
 
-**Observação:** `productsMount(document.querySelector("#my-products"))`. O elemento está no `index.html` do container.
+**Observation:** `productsMount(document.querySelector("#my-products"))`. Element is in `index.html` of container.
 
-**Interpretação:** O host monta o remote num elemento fixo da sua página, pela função importada.
+**Interpretation:** Host mounts remote in a fixed element on its page through imported function.
 
 ### 21. ecomm/container/src/bootstrap.js:6; ecomm/container/public/index.html:10
 
-**Observação:** `cartMount(document.querySelector("#my-cart"))`. O elemento está no `index.html` do container.
+**Observation:** `cartMount(document.querySelector("#my-cart"))`. Element is in `index.html` of container.
 
-**Interpretação:** O host monta o remote num elemento fixo da sua página, pela função importada.
+**Interpretation:** Host mounts remote in a fixed element on its page through imported function.
 
 ### 22. ecomm/cart; ecomm/cart/package.json:1-24; ecomm/cart/src/index.js:1; ecomm/cart/webpack.config.js:4-26; ecomm/cart/package.json:6
 
-**Observação:** É uma aplicação JavaScript com manifesto, entrada e configuração webpack próprios, servida por `webpack serve`.
+**Observation:** JavaScript application with its own manifest, entry and webpack configuration, served through `webpack serve`.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with its own boundary.
 
 ### 23. ecomm/container; ecomm/container/package.json:1-22; ecomm/container/src/index.js:1; ecomm/container/webpack.config.js:4-29; ecomm/container/package.json:6
 
-**Observação:** É uma aplicação JavaScript com manifesto, entrada e configuração webpack próprios, servida por `webpack serve`.
+**Observation:** JavaScript application with its own manifest, entry and webpack configuration, served through `webpack serve`.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with its own boundary.
 
 ### 24. ecomm/products; ecomm/products/package.json:1-24; ecomm/products/src/index.js:1; ecomm/products/webpack.config.js:4-22; ecomm/products/package.json:6
 
-**Observação:** É uma aplicação JavaScript com manifesto, entrada e configuração webpack próprios, servida por `webpack serve`. O manifesto declara `name` `container`.
+**Observation:** JavaScript application with its own manifest, entry and webpack configuration, served through `webpack serve`. Manifest declares `name` `container`.
 
-**Interpretação:** É uma unidade frontend com limite próprio. O `name` do manifesto não muda o nome federado, que vem do plugin.
+**Interpretation:** Frontend unit with its own boundary. Manifest `name` does not change federated name, which comes from plugin.
 
 ### 25. packages/auth; packages/auth/package.json:1-29
 
-**Observação:** A pasta só tem `package.json`, com um script de teste, e o lockfile. Não tem código, entrada nem build.
+**Observation:** Folder only contains `package.json`, with a test script, and lockfile. No code, entry or build.
 
-**Interpretação:** Não é uma unidade frontend no snapshot.
+**Interpretation:** Not a frontend unit in snapshot.
 
 ### 26. packages/container; packages/container/package.json:1-30; packages/container/src/index.js:1; packages/container/src/bootstrap.js:5; packages/container/config/webpack.dev.js:6-26; packages/container/config/webpack.prod.js:8-25; packages/container/package.json:5-6
 
-**Observação:** É uma aplicação React com entrada própria e builds webpack de desenvolvimento e de produção, acionados pelos scripts `start` e `build`.
+**Observation:** React application with its own entry and development and production webpack builds, triggered by `start` and `build` scripts.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with its own boundary.
 
 ### 27. packages/container/config
 
-**Observação:** A pasta contém as configurações webpack do container.
+**Observation:** Folder contains container webpack configurations.
 
-**Interpretação:** É parte do build do container, e não uma aplicação.
+**Interpretation:** Part of container build rather than application.
 
 ### 28. packages/dashboard; packages/dashboard/package.json:1-33
 
-**Observação:** A pasta só tem `package.json`, com um script de teste, e o lockfile. Não tem código, entrada nem build.
+**Observation:** Folder only contains `package.json`, with a test script, and lockfile. No code, entry or build.
 
-**Interpretação:** Não é uma unidade frontend no snapshot.
+**Interpretation:** Not a frontend unit in snapshot.
 
 ### 29. packages/marketing; packages/marketing/package.json:1-30; packages/marketing/src/index.js:1; packages/marketing/src/bootstrap.js:10-14; packages/marketing/config/webpack.dev.js:7-31; packages/marketing/config/webpack.prod.js:6-23; packages/marketing/package.json:5-6
 
-**Observação:** É uma aplicação React com entrada própria e builds webpack de desenvolvimento e de produção, acionados pelos scripts `start` e `build`.
+**Observation:** React application with its own entry and development and production webpack builds, triggered by `start` and `build` scripts.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with its own boundary.
 
 ### 30. packages/marketing/config
 
-**Observação:** A pasta contém as configurações webpack do marketing.
+**Observation:** Folder contains marketing webpack configurations.
 
-**Interpretação:** É parte do build do marketing, e não uma aplicação.
+**Interpretation:** Part of marketing build rather than application.
 
 ### 31. ecomm/container/src/bootstrap.js:3, 6; ecomm/container/webpack.config.js:20-23; ecomm/cart/webpack.config.js:10-15; ecomm/cart/src/mount.js:26
 
-**Observação:** O container importa `mount` de `carts/CartShow` e o chama sobre `#my-cart`. O nome local `carts` aponta para `cart@http://localhost:8082/remoteEntry.js`, e o nome e o módulo correspondem à configuração do cart.
+**Observation:** Container imports `mount` from `carts/CartShow` and calls it on `#my-cart`. Local name `carts` points to `cart@http://localhost:8082/remoteEntry.js`, and name and module match cart configuration.
 
-**Interpretação:** É uma relação host → remote ativa.
+**Interpretation:** An active host → remote relationship.
 
 ### 32. ecomm/container/src/bootstrap.js:1, 5; ecomm/container/webpack.config.js:20-21; ecomm/products/webpack.config.js:10-15; ecomm/products/src/mount.js:31
 
-**Observação:** O container importa `mount` de `products/ProductsIndex` e o chama sobre `#my-products`. O nome e o módulo correspondem à configuração do products.
+**Observation:** Container imports `mount` from `products/ProductsIndex` and calls it on `#my-products`. Name and module match products configuration.
 
-**Interpretação:** É uma relação host → remote ativa.
+**Interpretation:** An active host → remote relationship.
 
 ### 33. packages/container/src/components/MarketingApp.js:1, 8; packages/container/config/webpack.dev.js:16-20; packages/container/config/webpack.prod.js:15-19; packages/marketing/config/webpack.dev.js:17-22; packages/marketing/config/webpack.prod.js:12-17; packages/marketing/src/bootstrap.js:17
 
-**Observação:** O adaptador do container importa `mount` de `marketing/MarketingApp` e o chama sobre o seu `div`. O nome e o módulo correspondem à configuração do marketing, em desenvolvimento e em produção.
+**Observation:** Container adapter imports `mount` from `marketing/MarketingApp` and calls it on its `div`. Name and module match marketing configuration in development and production.
 
-**Interpretação:** É uma relação host → remote ativa, apoiada na configuração de desenvolvimento acionada por `webpack serve`.
+**Interpretation:** An active host → remote relationship, supported by development configuration triggered through `webpack serve`.
 
 ### 34. ecomm/cart/webpack.config.js:4-26; ecomm/cart/package.json:6
 
-**Observação:** Configuração webpack própria em modo de desenvolvimento, usada por `webpack serve` na porta 8082, que gera o `remoteEntry.js`. Não há build de produção nem artefato de deploy.
+**Observation:** Own webpack configuration in development mode, used by `webpack serve` on port 8082, generating `remoteEntry.js`. No production build or deployment artifact.
 
-**Interpretação:** Há uma fronteira de build própria, restrita ao desenvolvimento, sem deploy observado.
+**Interpretation:** Own build boundary restricted to development, without observed deployment.
 
 ### 35. ecomm/container/webpack.config.js:4-29; ecomm/container/package.json:6
 
-**Observação:** Configuração webpack própria em modo de desenvolvimento, usada por `webpack serve` na porta 8080. Não há build de produção nem artefato de deploy.
+**Observation:** Own webpack configuration in development mode, used by `webpack serve` on port 8080. No production build or deployment artifact.
 
-**Interpretação:** Há uma fronteira de build própria, restrita ao desenvolvimento, sem deploy observado.
+**Interpretation:** Own build boundary restricted to development, without observed deployment.
 
 ### 36. ecomm/products/webpack.config.js:4-22; ecomm/products/package.json:6
 
-**Observação:** Configuração webpack própria em modo de desenvolvimento, usada por `webpack serve` na porta 8081, que gera o `remoteEntry.js`. Não há build de produção nem artefato de deploy.
+**Observation:** Own webpack configuration in development mode, used by `webpack serve` on port 8081, generating `remoteEntry.js`. No production build or deployment artifact.
 
-**Interpretação:** Há uma fronteira de build própria, restrita ao desenvolvimento, sem deploy observado.
+**Interpretation:** Own build boundary restricted to development, without observed deployment.
 
 ### 37. packages/container/config/webpack.prod.js:8-25; packages/container/package.json:6; packages/container/config/webpack.dev.js:6-26; packages/container/package.json:5
 
-**Observação:** Configurações webpack próprias de desenvolvimento (`webpack serve`, porta 8080) e de produção (`webpack --config config/webpack.prod.js`, `publicPath` `/container/latest/`). Não há artefato que publique o build.
+**Observation:** Own development (`webpack serve`, port 8080) and production (`webpack --config config/webpack.prod.js`, `publicPath` `/container/latest/`) webpack configurations. No artifact publishes build.
 
-**Interpretação:** Há uma fronteira de build própria, inclusive de produção, sem deploy observado.
+**Interpretation:** Own build boundary including production, without observed deployment.
 
 ### 38. packages/marketing/config/webpack.prod.js:6-23; packages/marketing/package.json:6; packages/marketing/config/webpack.dev.js:7-31; packages/marketing/package.json:5
 
-**Observação:** Configurações webpack próprias de desenvolvimento (`webpack serve`, porta 8081) e de produção (`webpack --config config/webpack.prod.js`), que geram o `remoteEntry.js`. O caminho de produção `${PRODUCTION_DOMAIN}/marketing/remoteEntry.js` só aparece do lado do container. Não há artefato que publique o build.
+**Observation:** Own development (`webpack serve`, port 8081) and production (`webpack --config config/webpack.prod.js`) webpack configurations, generating `remoteEntry.js`. Production path `${PRODUCTION_DOMAIN}/marketing/remoteEntry.js` only appears on container side. No artifact publishes build.
 
-**Interpretação:** Há uma fronteira de build própria, inclusive de produção, sem deploy observado.
+**Interpretation:** Own build boundary including production, without observed deployment.
 
 ### 39. ecomm/cart/src/mount.js:9-13
 
-**Observação:** "we are running this file in development in isolation / we are using our local index.html file / ... / we want to immediately render our app into that element".
+**Observation:** "we are running this file in development in isolation / we are using our local index.html file / ... / we want to immediately render our app into that element".
 
-**Interpretação:** Afirma que o cart monta a si mesmo quando isolado. A afirmação é corroborada. O elemento `'dev-products'` citado no comentário é resto da cópia do products; o código usa `#dev-cart`.
+**Interpretation:** Claims cart mounts itself when standalone. Claim corroborated. Element `'dev-products'` cited in comment remains from products copy; code uses `#dev-cart`.
 
 ### 40. ecomm/cart/src/mount.js:21-25
 
-**Observação:** "we are running this file in development or production / we are running through the container app / ... / we want to NOT immediately render the app".
+**Observation:** "we are running this file in development or production / we are running through the container app / ... / we want to NOT immediately render the app".
 
-**Interpretação:** Afirma que o cart é carregado pelo container, em desenvolvimento ou em produção, e só exporta `mount`. A carga pelo container é corroborada; a menção a produção não tem artefato, porque o exemplo só tem configuração de desenvolvimento. A afirmação é corroborada em parte.
+**Interpretation:** Claims cart loads through container in development or production and only exports `mount`. Container loading corroborated; production mention has no artifact because example only has development configuration. Claim partially corroborated.
 
 ### 41. ecomm/cart/webpack.config.js:18
 
-**Observação:** "load only one single faker no matter what", no `shared` do `faker` com `singleton: true`.
+**Observation:** "load only one single faker no matter what", in `shared` for `faker` with `singleton: true`.
 
-**Interpretação:** Afirma que haverá uma só instância do `faker` compartilhado. A afirmação é corroborada: o cart e o products compartilham `faker` e o importam.
+**Interpretation:** Claims there will be a single shared `faker` instance. Claim corroborated: cart and products share `faker` and import it.
 
 ### 42. ecomm/products/src/mount.js:14-18
 
-**Observação:** "we are running this file in development in isolation / we are using our local index.html file / which DEFINITELY has an element with id of 'dev-products' / we want to immediately render our app into that element".
+**Observation:** "we are running this file in development in isolation / we are using our local index.html file / which DEFINITELY has an element with id of 'dev-products' / we want to immediately render our app into that element".
 
-**Interpretação:** Afirma que o products monta a si mesmo quando isolado. A afirmação é corroborada.
+**Interpretation:** Claims products mounts itself when standalone. Claim corroborated.
 
 ### 43. ecomm/products/src/mount.js:26-30
 
-**Observação:** "we are running this file in development or production / we are running through the container app / ... / we want to NOT immediately render the app".
+**Observation:** "we are running this file in development or production / we are running through the container app / ... / we want to NOT immediately render the app".
 
-**Interpretação:** Afirma que o products é carregado pelo container, em desenvolvimento ou em produção, e só exporta `mount`. A carga pelo container é corroborada; a menção a produção não tem artefato. A afirmação é corroborada em parte.
+**Interpretation:** Claims products loads through container in development or production and only exports `mount`. Container loading corroborated; production mention has no artifact. Claim partially corroborated.
 
 ### 44. packages/marketing/src/bootstrap.js:9
 
-**Observação:** "if we are in development mode and in isolation call mount imediately".
+**Observation:** "if we are in development mode and in isolation call mount imediately".
 
-**Interpretação:** Afirma que o marketing monta a si mesmo quando isolado. A afirmação é corroborada.
+**Interpretation:** Claims marketing mounts itself when standalone. Claim corroborated.
 
 ### 45. packages/marketing/src/bootstrap.js:16
 
-**Observação:** "We are running through container and we should export the mount function".
+**Observation:** "We are running through container and we should export the mount function".
 
-**Interpretação:** Afirma que o marketing é carregado pelo container por meio de `mount`. A afirmação é corroborada.
+**Interpretation:** Claims marketing loads through container using `mount`. Claim corroborated.
 
 ### 46. 00dbb64 2025-04-27 (packages/auth, packages/dashboard)
 
-**Observação:** As duas pastas são criadas nesse commit só com `package.json` e `package-lock.json`, e nenhum commit posterior até o snapshot as toca.
+**Observation:** Both folders are created in this commit with only `package.json` and `package-lock.json`, untouched by any later commit through snapshot.
 
-**Interpretação:** As pastas nunca tiveram código, e não houve código removido. Não se sabe se as aplicações eram planejadas; no snapshot, não são unidades.
+**Interpretation:** Folders never contained code, and no code was removed. Whether applications were planned is unknown; they are not units in snapshot.
 
 ### 47. de130a5 2025-04-24 (ecomm/products/package.json); 3817fd6 2025-04-24 (ecomm/cart/package.json); a8c742c 2025-04-26 (ecomm/products/src/mount.js, ecomm/products/webpack.config.js); c784f55 2025-04-26 (ecomm/cart/src/mount.js, ecomm/cart/webpack.config.js)
 
-**Observação:** Os `mount.js` são criados em `a8c742c` e `c784f55` e não mudam depois. As configurações webpack mudam pela última vez nesses commits, já com `mode: "development"`. Os `package.json`, com o único script `webpack serve`, não mudam desde a criação.
+**Observation:** `mount.js` files are created in `a8c742c` and `c784f55` and never change afterward. Webpack configurations change last in those commits, already with `mode: "development"`. `package.json` files, with sole script `webpack serve`, do not change after creation.
 
-**Interpretação:** O comentário "development or production" e a configuração só de desenvolvimento estão juntos desde o commit que trouxe o comentário. Não houve estágio com build de produção a que a menção corresponda.
+**Interpretation:** Comment "development or production" and development-only configuration have coexisted since commit introducing comment. No production-build stage corresponded to mention.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.3 (ecomm/cart, Marcadores, Entrada e Build); 3.4.4 (ecomm/cart/src/mount.js:26, Observação); 3.4.5 #1 (Configuração); 3.4.6 #1 (Onde é servida e Artefatos); 3.4.7 #2 (Evidência); 3.4.7 #3 (Documento e Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #22; configura #31 |
-| 2 | 3.4.3 (ecomm/container, Marcadores, Entrada e Build); 3.4.4 (ecomm/container/src/bootstrap.js:1, :3, Observação); 3.4.5 #1, #2 (Configuração); 3.4.6 #2 (Onde é servida e Artefatos) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #23; configura #31; configura #32 |
-| 3 | 3.4.3 (ecomm/products, Marcadores, Entrada e Build); 3.4.4 (ecomm/products/src/mount.js:31, Observação); 3.4.5 #2 (Configuração); 3.4.6 #3 (Onde é servida e Artefatos); 3.4.7 #3 (Evidência); 3.4.7 #5 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #24; configura #32 |
-| 4 | 3.4.3 (packages/container, Build); 3.4.3 (packages/container/config, Marcadores); 3.4.4 (packages/container/src/components/MarketingApp.js:1, Observação); 3.4.5 #3 (Configuração); 3.4.6 #4 (Onde é servida e Artefatos) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #26; configura #33 |
-| 5 | 3.4.3 (packages/container, Build); 3.4.3 (packages/container/config, Marcadores); 3.4.5 #3 (Configuração); 3.4.6 #4 (Onde é servida e Artefatos); 3.4.6 #5 (Onde é servida) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #26; configura #33 |
-| 6 | 3.4.3 (packages/marketing, Entrada e Build); 3.4.3 (packages/marketing/config, Marcadores); 3.4.4 (packages/marketing/src/bootstrap.js:17, Observação); 3.4.5 #3 (Configuração); 3.4.6 #5 (Onde é servida e Artefatos); 3.4.7 #7 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #29; configura #33 |
-| 7 | 3.4.3 (packages/marketing, Build); 3.4.3 (packages/marketing/config, Marcadores); 3.4.5 #3 (Configuração); 3.4.6 #5 (Artefatos) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #29; configura #33 |
-| 8 | 3.4.4 (ecomm/container/src/index.js:1) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 9 | 3.4.4 (packages/container/src/index.js:1) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 10 | 3.4.4 (packages/marketing/src/index.js:1) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 11 | 3.4.4 (ecomm/cart/src/mount.js:26) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #31 |
-| 12 | 3.4.4 (ecomm/products/src/mount.js:31) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #32 |
-| 13 | 3.4.4 (packages/marketing/src/bootstrap.js:17) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #33 |
-| 14 | 3.4.4 (ecomm/cart/src/mount.js:17) | 3 código | código-fonte | module-federation | tecnológica | fraca | — |
-| 15 | 3.4.4 (ecomm/products/src/mount.js:22) | 3 código | código-fonte | module-federation | tecnológica | fraca | — |
-| 16 | 3.4.4 (packages/container/src/components/MarketingApp.js:8) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #33 |
-| 17 | 3.4.4 (ecomm/container/src/bootstrap.js:1) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #32 |
-| 18 | 3.4.4 (ecomm/container/src/bootstrap.js:3) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #31 |
-| 19 | 3.4.4 (packages/container/src/components/MarketingApp.js:1) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #33 |
-| 20 | 3.4.4 (ecomm/container/src/bootstrap.js:5) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #32 |
-| 21 | 3.4.4 (ecomm/container/src/bootstrap.js:6) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #31 |
-| 22 | 3.4.3 (ecomm/cart) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 23 | 3.4.3 (ecomm/container) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 24 | 3.4.3 (ecomm/products) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 25 | 3.4.3 (packages/auth) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 26 | 3.4.3 (packages/container) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 27 | 3.4.3 (packages/container/config) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 28 | 3.4.3 (packages/dashboard) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 29 | 3.4.3 (packages/marketing) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 30 | 3.4.3 (packages/marketing/config) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 31 | 3.4.5 #1 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #23; liga #22 |
-| 32 | 3.4.5 #2 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #23; liga #24 |
-| 33 | 3.4.5 #3 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #26; liga #29 |
-| 34 | 3.4.6 #1 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #22 |
-| 35 | 3.4.6 #2 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #23 |
-| 36 | 3.4.6 #3 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #24 |
-| 37 | 3.4.6 #4 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #26 |
-| 38 | 3.4.6 #5 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #29 |
-| 39 | 3.4.7 #1 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #22; corrobora #14 |
-| 40 | 3.4.7 #2 | 7 documentação | comentário | — | arquitetural | fraca | corrobora em parte #31; corrobora em parte #11; corrobora em parte #18; corrobora em parte #21 |
-| 41 | 3.4.7 #3 | 7 documentação | comentário | — | tecnológica | fraca | corrobora #1; corrobora #3; corrobora ecomm/cart/src/mount.js:1; corrobora ecomm/products/src/mount.js:1 |
-| 42 | 3.4.7 #4 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #24; corrobora #15 |
-| 43 | 3.4.7 #5 | 7 documentação | comentário | — | arquitetural | fraca | corrobora em parte #32; corrobora em parte #12; corrobora em parte #17; corrobora em parte #20 |
-| 44 | 3.4.7 #6 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #29; corrobora packages/marketing/src/bootstrap.js:10-14 |
-| 45 | 3.4.7 #7 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #33; corrobora #13; corrobora #6; corrobora #19; corrobora #16 |
-| 46 | 3.4.8 #1 | 8 histórico | histórico | — | arquitetural | fraca | explica #25; explica #28 |
-| 47 | 3.4.8 #2 | 8 histórico | histórico | — | arquitetural | fraca | explica #40; explica #43 |
+| 1 | 3.4.3 (ecomm/cart, Markers, Entry and Build); 3.4.4 (ecomm/cart/src/mount.js:26, Observation); 3.4.5 #1 (Configuration); 3.4.6 #1 (Where served and Artifacts); 3.4.7 #2 (Evidence); 3.4.7 #3 (Document and Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #22; configures #31 |
+| 2 | 3.4.3 (ecomm/container, Markers, Entry and Build); 3.4.4 (ecomm/container/src/bootstrap.js:1, :3, Observation); 3.4.5 #1, #2 (Configuration); 3.4.6 #2 (Where served and Artifacts) | 2 configuration | configuration | module-federation | architectural | strong | configures #23; configures #31; configures #32 |
+| 3 | 3.4.3 (ecomm/products, Markers, Entry and Build); 3.4.4 (ecomm/products/src/mount.js:31, Observation); 3.4.5 #2 (Configuration); 3.4.6 #3 (Where served and Artifacts); 3.4.7 #3 (Evidence); 3.4.7 #5 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #24; configures #32 |
+| 4 | 3.4.3 (packages/container, Build); 3.4.3 (packages/container/config, Markers); 3.4.4 (packages/container/src/components/MarketingApp.js:1, Observation); 3.4.5 #3 (Configuration); 3.4.6 #4 (Where served and Artifacts) | 2 configuration | configuration | module-federation | architectural | strong | configures #26; configures #33 |
+| 5 | 3.4.3 (packages/container, Build); 3.4.3 (packages/container/config, Markers); 3.4.5 #3 (Configuration); 3.4.6 #4 (Where served and Artifacts); 3.4.6 #5 (Where served) | 2 configuration | configuration | module-federation | architectural | strong | configures #26; configures #33 |
+| 6 | 3.4.3 (packages/marketing, Entry and Build); 3.4.3 (packages/marketing/config, Markers); 3.4.4 (packages/marketing/src/bootstrap.js:17, Observation); 3.4.5 #3 (Configuration); 3.4.6 #5 (Where served and Artifacts); 3.4.7 #7 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #29; configures #33 |
+| 7 | 3.4.3 (packages/marketing, Build); 3.4.3 (packages/marketing/config, Markers); 3.4.5 #3 (Configuration); 3.4.6 #5 (Artifacts) | 2 configuration | configuration | module-federation | technological | moderate | configures #29; configures #33 |
+| 8 | 3.4.4 (ecomm/container/src/index.js:1) | 3 code | source code | — | technological | weak | — |
+| 9 | 3.4.4 (packages/container/src/index.js:1) | 3 code | source code | — | technological | weak | — |
+| 10 | 3.4.4 (packages/marketing/src/index.js:1) | 3 code | source code | — | technological | weak | — |
+| 11 | 3.4.4 (ecomm/cart/src/mount.js:26) | 3 code | source code | module-federation | technological | moderate | implements #31 |
+| 12 | 3.4.4 (ecomm/products/src/mount.js:31) | 3 code | source code | module-federation | technological | moderate | implements #32 |
+| 13 | 3.4.4 (packages/marketing/src/bootstrap.js:17) | 3 code | source code | module-federation | technological | moderate | implements #33 |
+| 14 | 3.4.4 (ecomm/cart/src/mount.js:17) | 3 code | source code | module-federation | technological | weak | — |
+| 15 | 3.4.4 (ecomm/products/src/mount.js:22) | 3 code | source code | module-federation | technological | weak | — |
+| 16 | 3.4.4 (packages/container/src/components/MarketingApp.js:8) | 3 code | source code | module-federation | technological | moderate | implements #33 |
+| 17 | 3.4.4 (ecomm/container/src/bootstrap.js:1) | 3 code | source code | module-federation | architectural | strong | implements #32 |
+| 18 | 3.4.4 (ecomm/container/src/bootstrap.js:3) | 3 code | source code | module-federation | architectural | strong | implements #31 |
+| 19 | 3.4.4 (packages/container/src/components/MarketingApp.js:1) | 3 code | source code | module-federation | architectural | strong | implements #33 |
+| 20 | 3.4.4 (ecomm/container/src/bootstrap.js:5) | 3 code | source code | module-federation | technological | moderate | implements #32 |
+| 21 | 3.4.4 (ecomm/container/src/bootstrap.js:6) | 3 code | source code | module-federation | technological | moderate | implements #31 |
+| 22 | 3.4.3 (ecomm/cart) | 4 structure | directory | — | architectural | moderate | — |
+| 23 | 3.4.3 (ecomm/container) | 4 structure | directory | — | architectural | moderate | — |
+| 24 | 3.4.3 (ecomm/products) | 4 structure | directory | — | architectural | moderate | — |
+| 25 | 3.4.3 (packages/auth) | 4 structure | directory | — | context | weak | — |
+| 26 | 3.4.3 (packages/container) | 4 structure | directory | — | architectural | moderate | — |
+| 27 | 3.4.3 (packages/container/config) | 4 structure | directory | — | context | weak | — |
+| 28 | 3.4.3 (packages/dashboard) | 4 structure | directory | — | context | weak | — |
+| 29 | 3.4.3 (packages/marketing) | 4 structure | directory | — | architectural | moderate | — |
+| 30 | 3.4.3 (packages/marketing/config) | 4 structure | directory | — | context | weak | — |
+| 31 | 3.4.5 #1 | 5 composition | source code | module-federation | architectural | strong | links #23; links #22 |
+| 32 | 3.4.5 #2 | 5 composition | source code | module-federation | architectural | strong | links #23; links #24 |
+| 33 | 3.4.5 #3 | 5 composition | source code | module-federation | architectural | strong | links #26; links #29 |
+| 34 | 3.4.6 #1 | 6 build-deploy | configuration | — | architectural | moderate | publishes #22 |
+| 35 | 3.4.6 #2 | 6 build-deploy | configuration | — | architectural | moderate | publishes #23 |
+| 36 | 3.4.6 #3 | 6 build-deploy | configuration | — | architectural | moderate | publishes #24 |
+| 37 | 3.4.6 #4 | 6 build-deploy | configuration | — | architectural | moderate | publishes #26 |
+| 38 | 3.4.6 #5 | 6 build-deploy | configuration | — | architectural | moderate | publishes #29 |
+| 39 | 3.4.7 #1 | 7 documentation | comment | — | architectural | weak | corroborates #22; corroborates #14 |
+| 40 | 3.4.7 #2 | 7 documentation | comment | — | architectural | weak | partially corroborates #31; partially corroborates #11; partially corroborates #18; partially corroborates #21 |
+| 41 | 3.4.7 #3 | 7 documentation | comment | — | technological | weak | corroborates #1; corroborates #3; corroborates ecomm/cart/src/mount.js:1; corroborates ecomm/products/src/mount.js:1 |
+| 42 | 3.4.7 #4 | 7 documentation | comment | — | architectural | weak | corroborates #24; corroborates #15 |
+| 43 | 3.4.7 #5 | 7 documentation | comment | — | architectural | weak | partially corroborates #32; partially corroborates #12; partially corroborates #17; partially corroborates #20 |
+| 44 | 3.4.7 #6 | 7 documentation | comment | — | architectural | weak | corroborates #29; corroborates packages/marketing/src/bootstrap.js:10-14 |
+| 45 | 3.4.7 #7 | 7 documentation | comment | — | architectural | weak | corroborates #33; corroborates #13; corroborates #6; corroborates #19; corroborates #16 |
+| 46 | 3.4.8 #1 | 8 history | history | — | architectural | weak | explains #25; explains #28 |
+| 47 | 3.4.8 #2 | 8 history | history | — | architectural | weak | explains #40; explains #43 |
 
-## Resumo
+## Summary
 
-Observações: 47. Dimensões (tecnologia: 0, configuração: 7, código: 14, estrutura: 9, composição: 3, build-deploy: 5, documentação: 7, histórico: 2). Força (forte: 9, moderada: 20, fraca: 18, ambígua: 0). Evidência (tecnológica: 16, arquitetural: 27, contexto: 4).
+Observations: 47. Dimensions (technology: 0, configuration: 7, code: 14, structure: 9, composition: 3, build-deploy: 5, documentation: 7, history: 2). Strength (strong: 9, moderate: 20, weak: 18, ambiguous: 0). Evidence (technological: 16, architectural: 27, context: 4).
+

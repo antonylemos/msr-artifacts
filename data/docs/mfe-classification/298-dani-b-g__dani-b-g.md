@@ -20,60 +20,60 @@ annotation:
 
 # 298 — dani-b-g/dani-b-g
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** não é projeto de software. É o README de perfil do GitHub (repositório `<usuário>/<usuário>`), com apresentação profissional, badges de tecnologias, divulgação de um projeto paralelo (TournamentZZZ, hospedado fora do GitHub) e cartões de atividade. A coincidência entre dono e nome é registrada só como tipo de repositório, não como evidência arquitetural.
+- **Repository type:** not a software project. GitHub profile README (repository `<user>/<user>`), with professional presentation, technology badges, promotion of a side project (TournamentZZZ, hosted outside GitHub) and activity cards. Owner/name equality is recorded only as repository type, rather than architectural evidence.
 
-`data/samples/mfe-sample-001/clones.csv:299` registra rank 298, ID 1250413921, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:299` records rank 298, ID 1250413921, status `cloned`, branch `main` and the front matter commit, which is HEAD of the clone and `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:299` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:30744` (`terminology`, `unknown`, regra `recent-human-commit` com `activity_incomplete`) e `data/discovery/mfe-round-002/candidates.csv:30751` (`terminology`, `pass`).
+`data/samples/mfe-sample-001/sample.csv:299` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:30744` (`terminology`, `unknown`, rule `recent-human-commit` with `activity_incomplete`) and `data/discovery/mfe-round-002/candidates.csv:30751` (`terminology`, `pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with empty `path`:
 
-| Consulta (`q`) | Subconsulta | Consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Effective query | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | `terminology-microfrontend-repositories#created:2026-05` | `microfrontend in:name,description,readme pushed:>=2025-04-01 created:2026-05-01..2026-05-31` | 2026-10-07T21:13:18.648Z / 2026-10-08T15:42:32.629Z |
 | `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | `terminology-microfrontends-repositories#created:2026-05` | `microfrontends in:name,description,readme pushed:>=2025-04-01 created:2026-05-01..2026-05-31` | 2026-10-07T22:12:42.392Z / 2026-10-08T15:49:48.534Z |
 
-Metadados do hit: descrição nula, sem tópicos, linguagem nula, sem licença, `fork: false`, tamanho 212, criação em 2026-05-26T15:53:06Z, push em 2026-05-26T16:22:03Z.
+Hit metadata: null description, no topics, null language, no license, `fork: false`, size 212, created at 2026-05-26T15:53:06Z, pushed at 2026-05-26T16:22:03Z.
 
-Ambas as grafias aparecem literalmente no README:
+Both spellings appear literally in README:
 - singular “microfrontend”: `README.md:14` (“a strong focus on Angular, microfrontend architecture, accessibility…”);
-- plural “microfrontends”: `README.md:22` (“design systems, microfrontends and scalable UI platforms”), `README.md:89` (badge “Microfrontends”) e `README.md:178` (“Microfrontends → independent delivery without losing product consistency”); também na URL do cabeçalho (`README.md:2`, “Microfrontends” codificado no parâmetro `desc`).
+- plural “microfrontends”: `README.md:22` (“design systems, microfrontends and scalable UI platforms”), `README.md:89` (“Microfrontends” badge) and `README.md:178` (“Microfrontends → independent delivery without losing product consistency”); also in header URL (`README.md:2`, “Microfrontends” encoded in `desc` parameter).
 
-A última alteração do README é o próprio SHA `dfdddc9` (2026-05-26, “fix images activity”), anterior às coletas de 7 e 8 de outubro de 2026. O README do SHA não é posterior às buscas.
+README's last change is SHA `dfdddc9` itself (2026-05-26, “fix images activity”), before collection on October 7 and 8, 2026. The SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 4 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks: `.gitignore` (só `/SETUP.md`, `.gitignore:1`), `README.md` e duas capturas PNG em `assets/` referenciadas pelo README (`README.md:64–65`). Não há manifesto, código, configuração de build nem workflow. | ausente |
-| Documentação | `README.md:14`, `22`, `89` e `178`: micro-frontends como foco profissional, badge e princípio de engenharia; `README.md:37–66`: projeto paralelo TournamentZZZ (Angular 21, NestJS) descrito e linkado a um site externo (`README.md:8`, `25`), sem código no repositório; `README.md:119–134`: links para outros repositórios do autor, não seguidos. | fraca |
-| Tecnologia / Configuração / Código-fonte / Composição / Build/deploy | Inexistentes no snapshot; sem código, portanto sem imports relativos a buscar. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 4 entries, all regular `100644` files; zero symlinks and zero gitlinks: `.gitignore` (only `/SETUP.md`, `.gitignore:1`), `README.md` and two PNG screenshots in `assets/` referenced by README (`README.md:64–65`). No manifest, code, build configuration or workflow. | absent |
+| Documentation | `README.md:14`, `22`, `89` and `178`: micro-frontends as professional focus, badge and engineering principle; `README.md:37–66`: side project TournamentZZZ (Angular 21, NestJS) described and linked to an external website (`README.md:8`, `25`), without repository code; `README.md:119–134`: other author repository links, not followed. | weak |
+| Technology / Configuration / Source code / Composition / Build/deploy | Nonexistent in snapshot; no code, hence no relative imports to search for. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso, parcial (`blob:none`). 3 commits alcançáveis (3 em todos os refs), nenhum merge, todos de `dani-b-g <daniel.barriga.grados@gmail.com>` (autor e committer) em 2026-05-26: a raiz `dd7834d` (“first commit”) adiciona os quatro arquivos; `e3be20d` (“fix: cambio github activity”) e o SHA `dfdddc9` (“fix images activity”) só alteram `README.md`. O histórico nunca conteve código. Nenhum blob histórico foi lido. `git rev-list --objects $SHA --missing=print` identifica 2 objetos históricos ausentes; os blobs do SHA citados foram lidos (as PNG apenas como entradas da árvore).
+Non-shallow, partial clone (`blob:none`). 3 reachable commits (3 across all refs), no merges, all by `dani-b-g <daniel.barriga.grados@gmail.com>` (author and committer) on 2026-05-26: root `dd7834d` (“first commit”) adds all four files; `e3be20d` (“fix: cambio github activity”, English translation: “fix: change github activity”) and SHA `dfdddc9` (“fix images activity”) change only `README.md`. History never contained code. No historical blob was read. `git rev-list --objects $SHA --missing=print` identifies 2 missing historical objects; cited SHA blobs were read (PNGs only as tree entries).
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend; só README, `.gitignore` e duas imagens (inventário). |
-| Q2 | No | Não há unidades. |
-| Q3 | No | Não há host, shell nem root config. |
-| Q4 | No | Nenhum mecanismo de composição; micro-frontends aparecem só como competência e princípio (`README.md:22`, `178`). |
-| Q5 | No | Q1–Q4 convergem. |
+| Q1 | No | No frontend unit; only README, `.gitignore` and two images (inventory). |
+| Q2 | No | No units. |
+| Q3 | No | No host, shell or root config. |
+| Q4 | No | No composition mechanism; micro-frontends appear only as skill and principle (`README.md:22`, `178`). |
+| Q5 | No | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “repositories mentioning micro-frontends without implementing them”, como os perfis 011/064/068/073/077/101/111. Na seção 3.2 do protocolo, cabe em “purely documentation without an implementation”.
-- `repo_type: other`, `frontend_units: 0`, `unit_organization: none`, arrays vazios.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. Matches “repositories mentioning micro-frontends without implementing them”, like profiles 011/064/068/073/077/101/111. In protocol section 3.2, fits “purely documentation without an implementation”.
+- `repo_type: other`, `frontend_units: 0`, `unit_organization: none`, empty arrays.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** README de perfil (`owner == name`) com várias menções a “microfrontend(s)”, inclusive em badge e em URL de imagem gerada, que casam as duas consultas terminológicas; mesmo padrão de 011.
-- **Protocolo (busca):** as duas grafias têm ocorrência literal. A elegibilidade muda de `unknown` (001, `activity_incomplete`) para `pass` (002).
+- **RQ1 (misleading signals):** profile README (`owner == name`) with several “microfrontend(s)” mentions, including a badge and generated image URL, matching both terminology queries; same pattern as 011.
+- **Protocol (search):** both spellings have literal occurrences. Eligibility changes from `unknown` (001, `activity_incomplete`) to `pass` (002).

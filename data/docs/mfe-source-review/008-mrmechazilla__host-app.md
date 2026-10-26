@@ -15,28 +15,28 @@ annotation:
 
 # 008 — mrmechazilla/host-app
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-async-bootstrap | src/main.ts:6 | . | dynamic-loading | No | `import('./bootstrap')` carrega o próprio bootstrap depois do manifesto; interno à unidade |
-| src-load-remote | src/app/app.routes.ts:1 | . | remote-resolution | Yes | Importa `loadRemoteModule`, usado em src/app/app.routes.ts:8 |
-| src-load-remote | src/app/app.routes.ts:8 | . | remote-resolution | Yes | `loadRemoteModule({ type: 'manifest', remoteName: 'users-mfe', exposedModule: './users' })` em src/app/app.routes.ts:8-12 carrega as rotas do remote externo `users-mfe`; rotas registradas por `provideRouter(routes)` em src/app/app.config.ts:13 |
-| src-load-remote | src/app/shared/utils/remote-loader.ts:1 | . | remote-resolution | No | Arquivo inteiro comentado (`/*` em src/app/shared/utils/remote-loader.ts:1, `*/` na linha 28) |
-| src-load-remote | src/app/shared/utils/remote-loader.ts:14 | . | remote-resolution | No | Dentro do bloco comentado de src/app/shared/utils/remote-loader.ts:1-28 |
-| src-load-remote | src/main.ts:2 | . | remote-resolution | Yes | Importa `loadManifest`, usado em src/main.ts:4 |
-| src-load-remote | src/main.ts:4 | . | remote-resolution | Yes | `loadManifest("mf.manifest.json")` resolve os remotes `users-mfe` (public/mf.manifest.json:2-10) e `payments-mfe` (public/mf.manifest.json:11-19) antes do bootstrap; `main` em angular.json:41 |
+| src-async-bootstrap | src/main.ts:6 | . | dynamic-loading | No | `import('./bootstrap')` loads its own bootstrap after the manifest; internal to the unit |
+| src-load-remote | src/app/app.routes.ts:1 | . | remote-resolution | Yes | Imports `loadRemoteModule`, used at src/app/app.routes.ts:8 |
+| src-load-remote | src/app/app.routes.ts:8 | . | remote-resolution | Yes | `loadRemoteModule({ type: 'manifest', remoteName: 'users-mfe', exposedModule: './users' })` at src/app/app.routes.ts:8-12 loads the external `users-mfe` remote’s routes; routes registered by `provideRouter(routes)` at src/app/app.config.ts:13 |
+| src-load-remote | src/app/shared/utils/remote-loader.ts:1 | . | remote-resolution | No | Entire file commented out (`/*` at src/app/shared/utils/remote-loader.ts:1, `*/` on line 28) |
+| src-load-remote | src/app/shared/utils/remote-loader.ts:14 | . | remote-resolution | No | Inside the commented block at src/app/shared/utils/remote-loader.ts:1-28 |
+| src-load-remote | src/main.ts:2 | . | remote-resolution | Yes | Imports `loadManifest`, used at src/main.ts:4 |
+| src-load-remote | src/main.ts:4 | . | remote-resolution | Yes | `loadManifest("mf.manifest.json")` resolves the `users-mfe` (public/mf.manifest.json:2-10) and `payments-mfe` (public/mf.manifest.json:11-19) remotes before bootstrap; `main` at angular.json:41 |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-Nenhuma construção adicional.
+No additional constructs.
 
-## Resumo
+## Summary
 
-Construções com composição: 4 (remote-resolution: 4).
+Constructs participating in composition: 4 (remote-resolution: 4).
 
-## Notas
+## Notes
 
-- Os arquivos estão em `src`, que a revisão estrutural julgou `No` (parte da aplicação `.`); por isso a unidade é `.`.
-- `payments-mfe` só é resolvido pelo manifesto; nenhuma rota ativa o carrega (o único `loadRemoteModule` ativo é o de `users-mfe`).
-- A busca por construções fora da mineração (passo 4 do método) encontrou só `import()` de arquivos locais dentro do bloco comentado de src/app/shared/utils/remote-loader.ts (linhas 5 e 9) e o campo `remoteEntry` de um tipo em src/app/core/models/remote-config.ts:2; nenhum é construção de composição ativa.
+- The files are in `src`, which the structural review judged `No` (part of application `.`); the unit is therefore `.`.
+- `payments-mfe` is only resolved through the manifest; no active route loads it (the only active `loadRemoteModule` is for `users-mfe`).
+- The search for constructs outside mining (method step 4) found only `import()` of local files inside the commented block in src/app/shared/utils/remote-loader.ts (lines 5 and 9) and the `remoteEntry` field of a type at src/app/core/models/remote-config.ts:2; neither is an active composition construct.

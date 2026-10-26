@@ -20,63 +20,63 @@ annotation:
 
 # 219 — vinnywesker/vinnywesker
 
-## Contexto
+## Context
 
-Repositório de perfil pessoal do GitHub: um único `readme.md` (79 linhas) com apresentação profissional de engenheiro mobile/fullstack, badges de tecnologias e links de contato. Micro-frontends aparecem como foco declarado de trabalho: “Arquitetura de Microfrontends e Superapps com React Native” (`readme.md:17`). Não há código. O nome do repositório não é usado como evidência.
+Personal GitHub profile repository: one `readme.md` (79 lines) with professional introduction as mobile/fullstack engineer, technology badges and contact links. Micro-frontends appear as declared work focus: “Arquitetura de Microfrontends e Superapps com React Native” (English translation: “Microfrontends and Superapps architecture with React Native”) (`readme.md:17`). No code. Repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:220` registra rank 219, ID 1104672701, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:220` records rank 219, ID 1104672701, status `cloned`, branch `main` and front-matter commit, which is clone HEAD and `origin/main`. Every clone Git command used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. No installation, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:220` registra a estratégia `terminology` e elegibilidade `unknown`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:21519` e `data/discovery/mfe-round-002/candidates.csv:21525`, ambos com `unknown`.
+`data/samples/mfe-sample-001/sample.csv:220` records strategy `terminology` and eligibility `unknown`. Sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). ID appears in `data/discovery/mfe-round-001/candidates.csv:21519` and `data/discovery/mfe-round-002/candidates.csv:21525`, both with `unknown`.
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2025-11` e `path` vazio:
+`sqlite3 -readonly` query of tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns same two hits in each round, at endpoint `repositories`, with subquery `…#created:2025-11` and empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | 2026-10-07T19:25:47.089Z / 2026-10-08T15:40:08.457Z |
 | `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | 2026-10-07T22:09:45.099Z / 2026-10-08T15:48:26.230Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2025-11-01..2025-11-30`.
+Effective queries append `pushed:>=2025-04-01 created:2025-11-01..2025-11-30`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem nula, `fork: false`, tamanho 3;
-- criação em 2025-11-26T14:27:35Z, push em 2025-11-26T15:00:35Z.
+Hit metadata:
+- null description, no topics, null language, `fork: false`, size 3;
+- creation at 2025-11-26T14:27:35Z, push at 2025-11-26T15:00:35Z.
 
-O acerto vem de `readme.md:17`, “🔭 **Foco Atual:** Arquitetura de Microfrontends e Superapps com React Native.”, única ocorrência. O singular “microfrontend” não aparece literalmente; esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+Retrieval comes from `readme.md:17`, “🔭 **Foco Atual:** Arquitetura de Microfrontends e Superapps com React Native.” (English translation: “🔭 **Current Focus:** Microfrontends and Superapps architecture with React Native.”), sole occurrence. Singular “microfrontend” does not appear literally; this hit depends on unrecorded GitHub search text processing.
 
-O `readme.md` foi alterado pela última vez no próprio SHA (2025-11-26), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+`readme.md` was last changed at SHA itself (2025-11-26), before October 2026 collections. README at the SHA is not later than searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 1 entrada, `readme.md` (`100644`, 4.187 bytes); zero symlinks e zero gitlinks. Não há código, manifesto nem configuração. | contrária |
-| Documentação | `readme.md:11–20`: apresentação pessoal; `:17` declara o foco em “Arquitetura de Microfrontends e Superapps com React Native”. `readme.md:24–57`: badges de tecnologias. É uma competência declarada, sem projeto descrito. | fraca |
-| Busca | Com o inventário reduzido a um arquivo, a busca por `micro.?front`, `federation` e `single.?spa` acha só `readme.md:17`. Nenhum mecanismo. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 1 entry, `readme.md` (`100644`, 4.187 bytes); zero symlinks and zero gitlinks. No code, manifest or configuration. | contrary |
+| Documentation | `readme.md:11–20`: personal introduction; `:17` declares focus on “Arquitetura de Microfrontends e Superapps com React Native” (English translation: “Microfrontends and Superapps architecture with React Native”). `readme.md:24–57`: technology badges. Declared skill, without described project. | weak |
+| Search | With inventory reduced to one file, search for `micro.?front`, `federation` and `single.?spa` finds only `readme.md:17`. No mechanism. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 4 commits lineares, nenhum merge, todos de Vinicius Rodrigues com e-mail corporativo e com a mesma mensagem “first commit”, em 2025-11-26 entre 11:39 e 12:00 (-03:00). O primeiro (`db67a07`) adiciona `readme.md`, e os demais o editam. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 4 linear commits, no merge, all by Vinicius Rodrigues with corporate email and same message “first commit”, on 2025-11-26 between 11:39 and 12:00 (-03:00). First (`db67a07`) adds `readme.md`, and others edit it. No historical blob was read and no object was missing.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend; o inventário é só `readme.md`. |
-| Q2 | No | Sem unidades, não há entradas ou builds. |
-| Q3 | No | Não há host, shell ou configuração raiz. |
-| Q4 | No | Nenhum mecanismo de composição; micro-frontends só aparecem como foco profissional (`readme.md:17`). |
-| Q5 | No | Q1–Q4 são No: README de perfil pessoal. |
+| Q1 | No | No frontend unit; inventory is only `readme.md`. |
+| Q2 | No | Without units, no entries or builds exist. |
+| Q3 | No | No host, shell or root configuration exists. |
+| Q4 | No | No composition mechanism; micro-frontends appear only as professional focus (`readme.md:17`). |
+| Q5 | No | Q1–Q4 are No: personal-profile README. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “repositories mentioning micro-frontends without implementing them”.
-- Repositório de perfil sem implementação, como os finais 011/064/068/073/077/101/111 e os rascunhos 158/166/173/179/182/188/195/198: `frontend_units: 0`, `unit_organization: none`, `repo_type: other`, `ui_technologies: []` e `build_tools: []`.
-- Não há decisão aberta.
+- `Non-MFE` under rule “at least one question is No”. Matches “repositories mentioning micro-frontends without implementing them”.
+- Profile repository without implementation, as finals 011/064/068/073/077/101/111 and drafts 158/166/173/179/182/188/195/198: `frontend_units: 0`, `unit_organization: none`, `repo_type: other`, `ui_technologies: []` and `build_tools: []`.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** foco profissional em “Microfrontends e Superapps com React Native” num README de perfil.
-- **Protocolo (busca):** o hit singular `microfrontend` não tem grafia literal. Elegibilidade `unknown` nas duas rodadas; o repositório entrou na amostra com `unknown`.
-- **Protocolo (inventário):** o arquivo é `readme.md` em minúsculas; num sistema de arquivos sem distinção de caixa, `README.md` resolve no disco mas não no objeto Git.
+- **RQ1 (misleading signals):** professional focus on “Microfrontends e Superapps com React Native” (English translation: “Microfrontends and Superapps with React Native”) in profile README.
+- **Protocol (search):** singular hit `microfrontend` has no literal spelling. Eligibility `unknown` in both rounds; repository entered sample with `unknown`.
+- **Protocol (inventory):** file is lowercase `readme.md`; on case-insensitive filesystem, `README.md` resolves on disk but not Git object.

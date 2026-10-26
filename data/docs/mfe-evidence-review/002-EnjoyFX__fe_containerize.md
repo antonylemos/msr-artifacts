@@ -19,224 +19,225 @@ annotation:
 
 # 002 — EnjoyFX/fe_containerize
 
-## Leitura do repositório
+## Repository overview
 
-A composição não usa biblioteca de MFE: a revisão de dependências não encontrou nenhuma, e não há observação de tecnologia. A cadeia é feita só com recursos do navegador e do Vite:
-- **Configuração:** o Vite do `microfrontend` empacota o widget como bundle IIFE que publica a global `MicroFrontendWidget` (#1).
-- **Código do widget:** o widget exporta `mount` e `unmount` (#2, #3, #6, #7).
-- **Código do host:** o `frontend` passa a URL do bundle ao componente que injeta o script (#9, #10) e chama `mount` e `unmount` pela global (#4, #5).
-- **Relação:** tudo isso resulta na única relação, ativa, frontend → microfrontend (#14), entre duas unidades com limites próprios (#12, #13).
+Composition uses no MFE library: dependency review found none, so no technology observation exists. Chain uses only browser/Vite resources:
+- **Configuration:** `microfrontend` Vite packages widget as IIFE bundle publishing global `MicroFrontendWidget` (#1).
+- **Widget code:** exports `mount` and `unmount` (#2, #3, #6, #7).
+- **Host code:** `frontend` passes bundle URL to script-injecting component (#9, #10), calling `mount` and `unmount` through global (#4, #5).
+- **Relationship:** results in sole active frontend → microfrontend relationship (#14), between two independently bounded units (#12, #13).
 
-Build e deploy são separados para as duas aplicações (#15, #16). Cada uma tem imagem, serviço no compose e Deployment no chart. O microfrontend não tem endereço público próprio: chega ao navegador pelo caminho `/mfe/` do nginx do frontend.
+Build/deployment are separate for both applications (#15, #16). Each has image, compose service and chart Deployment. Microfrontend has no own public address: reaches browser through frontend nginx `/mfe/` path.
 
-Um sinal engana: um dos achados da mineração de URL de bundle é texto YAML exibido na interface, e não carregamento de código (#8). O backend NestJS é contexto (#11).
+One misleading signal: a mined bundle-URL finding is interface-displayed YAML text rather than code loading (#8). NestJS backend is context (#11).
 
-A documentação tem 11 afirmações, todas corroboradas e todas fracas pelo critério do protocolo. Ela descreve sobretudo o deploy, e uma delas trata só do proxy para o backend (#21, contexto).
+Documentation has 11 claims, all corroborated/all weak under protocol criterion. Mainly describes deployment; one concerns only backend proxy (#21, context).
 
-Não há pontos históricos: a revisão histórica não encontrou ambiguidade a esclarecer.
+No historical points: history review found no ambiguity to clarify.
 
-## Observações
+## Observations
 
 ### 1. microfrontend/vite.config.js:19-39
 
-**Observação:** `build.lib` usa `entry: 'src/main.jsx'`, `name: 'MicroFrontendWidget'`, `fileName: 'widget'` e `formats: ['iife']`, com `cssCodeSplit: false`. O servidor de desenvolvimento usa a porta 3001 e encaminha `/api` ao backend.
+**Observation:** `build.lib` uses `entry: 'src/main.jsx'`, `name: 'MicroFrontendWidget'`, `fileName: 'widget'` and `formats: ['iife']`, with `cssCodeSplit: false`. Development server uses port 3001, forwarding `/api` to backend.
 
-**Interpretação:** O widget está configurado para ser publicado como um script autônomo que expõe sua API numa global.
+**Interpretation:** Widget is configured for publication as standalone script exposing API through global.
 
 ### 2. microfrontend/src/main.jsx:7-12
 
-**Observação:** `export function mount(container)` cria uma raiz React no elemento recebido e renderiza `Widget`.
+**Observation:** `export function mount(container)` creates React root in received element, rendering `Widget`.
 
-**Interpretação:** O widget oferece uma função de montagem para que outra aplicação o insira num elemento próprio.
+**Interpretation:** Widget offers mounting function so another application can insert it into own element.
 
 ### 3. microfrontend/src/main.jsx:14-20
 
-**Observação:** `export function unmount(container)` desmonta a raiz React associada ao elemento.
+**Observation:** `export function unmount(container)` unmounts React root associated with element.
 
-**Interpretação:** O widget oferece a função de desmontagem que completa o ciclo de vida.
+**Interpretation:** Widget offers unmounting function completing lifecycle.
 
 ### 4. frontend/src/RemoteWidget.jsx:12-14
 
-**Observação:** Depois que o script carrega, o componente chama `window.MicroFrontendWidget.mount(containerRef.current)`.
+**Observation:** After script loads, component calls `window.MicroFrontendWidget.mount(containerRef.current)`.
 
-**Interpretação:** O host monta o widget de outra unidade pelo nome da global.
+**Interpretation:** Host mounts another unit’s widget through global name.
 
 ### 5. frontend/src/RemoteWidget.jsx:24-26
 
-**Observação:** Na limpeza do efeito, o componente chama `window.MicroFrontendWidget.unmount(containerRef.current)`.
+**Observation:** Effect cleanup calls `window.MicroFrontendWidget.unmount(containerRef.current)`.
 
-**Interpretação:** O host desmonta o widget de outra unidade pelo nome da global.
+**Interpretation:** Host unmounts another unit’s widget through global name.
 
 ### 6. microfrontend/src/main.jsx:7
 
-**Observação:** É a mesma declaração de `mount` do #2, reconhecida pelo padrão de chamada de montagem.
+**Observation:** Same `mount` declaration as #2, recognized by mount-call pattern.
 
-**Interpretação:** O widget oferece a função de montagem, sem chamá-la.
+**Interpretation:** Widget offers mounting function without calling it.
 
-**Nota:** A revisão de código-fonte (3.4.4) manteve as duas linhas por sobreposição de padrões, e esta etapa (3.5) mantém uma observação por linha.
+**Note:** Source-code review (3.4.4) retained both rows due to overlapping patterns, and this stage (3.5) retains one observation per row.
 
 ### 7. microfrontend/src/main.jsx:14
 
-**Observação:** É a mesma declaração de `unmount` do #3, reconhecida pelo padrão de chamada de montagem.
+**Observation:** Same `unmount` declaration as #3, recognized by mount-call pattern.
 
-**Interpretação:** O widget oferece a função de desmontagem, sem chamá-la.
+**Interpretation:** Widget offers unmounting function without calling it.
 
 ### 8. frontend/src/App.jsx:475
 
-**Observação:** Texto YAML (`path: /widget.iife.js`) dentro de uma string de exemplo exibida na interface.
+**Observation:** YAML text (`path: /widget.iife.js`) inside an example string displayed in interface.
 
-**Interpretação:** Não é carregamento de código. É um falso positivo da busca por URL de bundle.
+**Interpretation:** Not code loading. False positive from bundle-URL search.
 
 ### 9. frontend/src/App.jsx:800-803
 
-**Observação:** O painel lateral renderiza `<RemoteWidget src={`/mfe/widget.iife.js?v=${Date.now()}`} />`.
+**Observation:** Side panel renders `<RemoteWidget src={`/mfe/widget.iife.js?v=${Date.now()}`} />`.
 
-**Interpretação:** O host aponta para o bundle do widget, com um parâmetro que evita cache.
+**Interpretation:** Host points to widget bundle with cache-busting parameter.
 
 ### 10. frontend/src/RemoteWidget.jsx:8-22
 
-**Observação:** O componente cria um elemento `script` com a URL recebida, define `async` e o anexa ao `head`.
+**Observation:** Component creates `script` element with received URL, sets `async` and appends to `head`.
 
-**Interpretação:** O host carrega em runtime um script indicado por propriedade.
+**Interpretation:** Host loads property-specified script at runtime.
 
 ### 11. backend; backend/package.json:1-8; backend/src/main.ts:5-21; backend/Dockerfile:2-17; docker-compose.yml:18-19
 
-**Observação:** É o pacote NestJS de um servidor HTTP, com build e imagem próprios e sem UI.
+**Observation:** NestJS HTTP server package, with own build/image, no UI.
 
-**Interpretação:** É um backend no mesmo repositório, e não uma unidade frontend.
+**Interpretation:** Backend in same repository rather than frontend unit.
 
 ### 12. frontend; frontend/package.json:1-10; frontend/index.html:9-10; frontend/src/main.jsx:6-9; frontend/vite.config.js:4-13
 
-**Observação:** É uma aplicação React com manifesto, entrada e build Vite próprios.
+**Observation:** React application with own manifest, entry and Vite build.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with own boundary.
 
 ### 13. microfrontend; microfrontend/package.json:1-10; microfrontend/index.html:9-12; microfrontend/src/main.jsx:7-11; microfrontend/vite.config.js:19-32
 
-**Observação:** É um widget com manifesto, função de montagem e build próprio, e também uma página local que o executa isoladamente.
+**Observation:** Widget with own manifest, mounting function/build, plus local page running it in isolation.
 
-**Interpretação:** É uma unidade frontend com limite próprio, capaz de rodar sozinha.
+**Interpretation:** Frontend unit with own boundary, capable of running alone.
 
 ### 14. frontend/src/RemoteWidget.jsx:8-14, 24-26; frontend/src/App.jsx:802; microfrontend/src/main.jsx:7-19; microfrontend/vite.config.js:25-29; frontend/nginx.conf:57-58
 
-**Observação:** O frontend carrega `/mfe/widget.iife.js` e chama `mount` e `unmount` da global `MicroFrontendWidget`. O arquivo e a global correspondem ao bundle do widget, e o nginx do frontend encaminha `/mfe/` ao serviço `microfrontend`.
+**Observation:** Frontend loads `/mfe/widget.iife.js`, calling `mount` and `unmount` on global `MicroFrontendWidget`. File/global match widget bundle; frontend nginx forwards `/mfe/` to service `microfrontend`.
 
-**Interpretação:** É uma relação page → embedded-frontend ativa.
+**Interpretation:** Active page → embedded-frontend relationship.
 
 ### 15. frontend/package.json:8; frontend/Dockerfile:2-14; docker-compose.yml:39-40; helm/fe-containerize/templates/frontend.yaml:1-84; helm/fe-containerize/values.yaml:5
 
-**Observação:** O frontend tem `vite build` e imagem nginx próprios, serviço próprio no compose e Deployment, Service e Ingress próprios no chart. A imagem usa a tag `latest`.
+**Observation:** Frontend has own `vite build`/nginx image, own compose service and own chart Deployment, Service and Ingress. Image uses tag `latest`.
 
-**Interpretação:** Há fronteiras de build e de deploy próprias, sem versionamento independente.
+**Interpretation:** Own build/deployment boundaries without independent versioning.
 
 ### 16. microfrontend/package.json:8; microfrontend/Dockerfile:2-14; docker-compose.yml:35-36; helm/fe-containerize/templates/microfrontend.yaml:1-56; helm/fe-containerize/values.yaml:7; frontend/nginx.conf:57-58
 
-**Observação:** O microfrontend tem `vite build` e imagem nginx próprios, serviço próprio no compose e Deployment e Service próprios no chart, sem Ingress. Chega ao navegador pelo `/mfe/` do nginx do frontend. A imagem usa a tag `latest`.
+**Observation:** Microfrontend has own `vite build`/nginx image, own compose service and own chart Deployment/Service without Ingress. Reaches browser through frontend nginx `/mfe/`. Image uses tag `latest`.
 
-**Interpretação:** Há fronteiras de build e de deploy próprias, mas não uma origem própria. Não há versionamento independente.
+**Interpretation:** Own build/deployment boundaries without own origin. No independent versioning.
 
 ### 17. README.docker-compose.md:3-8
 
-**Observação:** "Демо застосунок з 4 сервісів […] `microfrontend`: окремий React widget у форматі IIFE".
+**Observation:** "Демо застосунок з 4 сервісів […] `microfrontend`: окремий React widget у форматі IIFE". English translation: "Demo application with four services; the named microfrontend is a separate React widget in IIFE format."
 
-**Interpretação:** Descreve os quatro serviços e o microfrontend como widget IIFE separado. A afirmação é corroborada.
+**Interpretation:** Describes four services/microfrontend as separate IIFE widget. Claim corroborated.
 
 ### 18. README.docker-compose.md:19
 
-**Observação:** É um diagrama: o frontend "loads JS bundle at runtime" do micro-frontend.
+**Observation:** Diagram: frontend "loads JS bundle at runtime" from micro-frontend.
 
-**Interpretação:** Descreve a carga do widget em runtime. A afirmação é corroborada.
+**Interpretation:** Describes runtime widget loading. Claim corroborated.
 
 ### 19. README.docker-compose.md:21-24
 
-**Observação:** É um diagrama que marca o micro-frontend como "internal".
+**Observation:** Diagram marking micro-frontend "internal".
 
-**Interpretação:** Afirma que o microfrontend não é exposto diretamente. A afirmação é corroborada.
+**Interpretation:** Claims microfrontend is not directly exposed. Claim corroborated.
 
 ### 20. README.docker-compose.md:150-152
 
-**Observação:** "`frontend/vite.config.js` проксіює `/api` […] `/mfe` на `http://localhost:3001` […] `microfrontend/vite.config.js` проксіює `/api`".
+**Observation:** "`frontend/vite.config.js` проксіює `/api` […] `/mfe` на `http://localhost:3001` […] `microfrontend/vite.config.js` проксіює `/api`". English translation: "Frontend Vite configuration proxies API and microfrontend paths to the stated address; microfrontend Vite configuration proxies the API path."
 
-**Interpretação:** Descreve como o frontend alcança o microfrontend em desenvolvimento. A afirmação é corroborada.
+**Interpretation:** Describes frontend access to microfrontend in development. Claim corroborated.
 
 ### 21. README.docker-compose.md:158
 
-**Observação:** "`frontend/nginx.conf` проксіює `/api` до `backend:8000`".
+**Observation:** "`frontend/nginx.conf` проксіює `/api` до `backend:8000`". English translation: "Frontend nginx configuration proxies the API path to the stated backend."
 
-**Interpretação:** Descreve o proxy do frontend para o backend. A afirmação é corroborada.
+**Interpretation:** Describes frontend/backend proxy. Claim corroborated.
 
 ### 22. README.docker-compose.md:159
 
-**Observação:** "`frontend/nginx.conf` проксіює `/mfe` до `microfrontend:80`".
+**Observation:** "`frontend/nginx.conf` проксіює `/mfe` до `microfrontend:80`". English translation: "Frontend nginx configuration proxies the microfrontend path to the stated service."
 
-**Interpretação:** Descreve como o frontend alcança o microfrontend em produção. A afirmação é corroborada.
+**Interpretation:** Describes frontend access to microfrontend in production. Claim corroborated.
 
 ### 23. README.md:3-6
 
-**Observação:** "два варіанти деплою: Docker Compose […] k3s + Helm".
+**Observation:** "два варіанти деплою: Docker Compose […] k3s + Helm". English translation: "Two deployment options: Docker Compose and the stated Kubernetes distribution with Helm."
 
-**Interpretação:** Afirma que há duas formas de deploy para as aplicações. A afirmação é corroborada.
+**Interpretation:** Claims two application deployment options exist. Claim corroborated.
 
 ### 24. README.md:32
 
-**Observação:** "`microfrontend` […] Незалежний widget".
+**Observation:** "`microfrontend` […] Незалежний widget". English translation: "The named microfrontend is an independent widget."
 
-**Interpretação:** Afirma que o widget é independente, no sentido de rodar e ser construído sozinho. A afirmação é corroborada.
+**Interpretation:** Claims widget independence in running/building alone. Claim corroborated.
 
 ### 25. frontend/nginx.conf:56
 
-**Observação:** "Proxy micro-frontend assets (no cache — bundle changes on redeploy)".
+**Observation:** "Proxy micro-frontend assets (no cache — bundle changes on redeploy)".
 
-**Interpretação:** Supõe que o microfrontend é republicado à parte. A afirmação é corroborada.
+**Interpretation:** Assumes microfrontend is republished separately. Claim corroborated.
 
 ### 26. helm/README.md:47
 
-**Observação:** "microfrontend.yaml # MFE: Deployment + Service".
+**Observation:** "microfrontend.yaml # MFE: Deployment + Service".
 
-**Interpretação:** Afirma que o microfrontend tem Deployment e Service próprios. A afirmação é corroborada.
+**Interpretation:** Claims microfrontend has own Deployment/Service. Claim corroborated.
 
 ### 27. helm/README.md:154-158
 
-**Observação:** "Редеплой після змін у коді […] Один сервіс (наприклад frontend)".
+**Observation:** "Редеплой після змін у коді […] Один сервіс (наприклад frontend)". English translation: "Redeploy after code changes; one service, for example frontend."
 
-**Interpretação:** Descreve o redeploy de uma aplicação sem as outras. A afirmação é corroborada.
+**Interpretation:** Describes one-application redeploy without others. Claim corroborated.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.3 (microfrontend, Marcadores, Entrada e Build); 3.4.4 (microfrontend/src/main.jsx:7, Observação); 3.4.5 #1 (Configuração); 3.4.7 #1 (Evidência) | 2 configuração | configuração | script | tecnológica | moderada | configura #13; configura #14 |
-| 2 | 3.4.4 (microfrontend/src/main.jsx:7, src-mount-export) | 3 código | código-fonte | script | tecnológica | moderada | implementa #14 |
-| 3 | 3.4.4 (microfrontend/src/main.jsx:14, src-mount-export) | 3 código | código-fonte | script | tecnológica | moderada | implementa #14 |
-| 4 | 3.4.4 (frontend/src/RemoteWidget.jsx:14) | 3 código | código-fonte | script | arquitetural | forte | implementa #14 |
-| 5 | 3.4.4 (frontend/src/RemoteWidget.jsx:26) | 3 código | código-fonte | script | arquitetural | forte | implementa #14 |
-| 6 | 3.4.4 (microfrontend/src/main.jsx:7, src-mount-call) | 3 código | código-fonte | script | tecnológica | moderada | implementa #14 |
-| 7 | 3.4.4 (microfrontend/src/main.jsx:14, src-mount-call) | 3 código | código-fonte | script | tecnológica | moderada | implementa #14 |
-| 8 | 3.4.4 (frontend/src/App.jsx:475) | 3 código | código-fonte | — | contexto | fraca | — |
-| 9 | 3.4.4 (frontend/src/App.jsx:802) | 3 código | código-fonte | script | arquitetural | forte | implementa #14 |
-| 10 | 3.4.4 (frontend/src/RemoteWidget.jsx:8) | 3 código | código-fonte | script | tecnológica | moderada | implementa #14 |
-| 11 | 3.4.3 (backend) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 12 | 3.4.3 (frontend) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 13 | 3.4.3 (microfrontend) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 14 | 3.4.5 #1 | 5 composição | código-fonte | script | arquitetural | forte | liga #12; liga #13 |
-| 15 | 3.4.6 #1 | 6 build-deploy | deploy | — | arquitetural | moderada | publica #12 |
-| 16 | 3.4.6 #2 | 6 build-deploy | deploy | — | arquitetural | moderada | publica #13 |
-| 17 | 3.4.7 #1 | 7 documentação | documentação | script | arquitetural | fraca | corrobora #12; corrobora #13; corrobora #1 |
-| 18 | 3.4.7 #2 | 7 documentação | documentação | script | arquitetural | fraca | corrobora #10; corrobora #14 |
-| 19 | 3.4.7 #3 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #16 |
-| 20 | 3.4.7 #4 | 7 documentação | documentação | — | arquitetural | fraca | corrobora frontend/vite.config.js:8-10; corrobora microfrontend/vite.config.js:35-37 |
-| 21 | 3.4.7 #5 | 7 documentação | documentação | — | contexto | fraca | corrobora frontend/nginx.conf:45-46 |
-| 22 | 3.4.7 #6 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #14 |
-| 23 | 3.4.7 #7 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #15; corrobora #16 |
-| 24 | 3.4.7 #8 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #13 |
-| 25 | 3.4.7 #9 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #16 |
-| 26 | 3.4.7 #10 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #16 |
-| 27 | 3.4.7 #11 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #15; corrobora #16 |
+| 1 | 3.4.3 (microfrontend, Markers, Entry and Build); 3.4.4 (microfrontend/src/main.jsx:7, Observation); 3.4.5 #1 (Configuration); 3.4.7 #1 (Evidence) | 2 configuration | configuration | script | technological | moderate | configures #13; configures #14 |
+| 2 | 3.4.4 (microfrontend/src/main.jsx:7, src-mount-export) | 3 code | source code | script | technological | moderate | implements #14 |
+| 3 | 3.4.4 (microfrontend/src/main.jsx:14, src-mount-export) | 3 code | source code | script | technological | moderate | implements #14 |
+| 4 | 3.4.4 (frontend/src/RemoteWidget.jsx:14) | 3 code | source code | script | architectural | strong | implements #14 |
+| 5 | 3.4.4 (frontend/src/RemoteWidget.jsx:26) | 3 code | source code | script | architectural | strong | implements #14 |
+| 6 | 3.4.4 (microfrontend/src/main.jsx:7, src-mount-call) | 3 code | source code | script | technological | moderate | implements #14 |
+| 7 | 3.4.4 (microfrontend/src/main.jsx:14, src-mount-call) | 3 code | source code | script | technological | moderate | implements #14 |
+| 8 | 3.4.4 (frontend/src/App.jsx:475) | 3 code | source code | — | context | weak | — |
+| 9 | 3.4.4 (frontend/src/App.jsx:802) | 3 code | source code | script | architectural | strong | implements #14 |
+| 10 | 3.4.4 (frontend/src/RemoteWidget.jsx:8) | 3 code | source code | script | technological | moderate | implements #14 |
+| 11 | 3.4.3 (backend) | 4 structure | directory | — | context | weak | — |
+| 12 | 3.4.3 (frontend) | 4 structure | directory | — | architectural | moderate | — |
+| 13 | 3.4.3 (microfrontend) | 4 structure | directory | — | architectural | moderate | — |
+| 14 | 3.4.5 #1 | 5 composition | source code | script | architectural | strong | links #12; links #13 |
+| 15 | 3.4.6 #1 | 6 build-deploy | deploy | — | architectural | moderate | publishes #12 |
+| 16 | 3.4.6 #2 | 6 build-deploy | deploy | — | architectural | moderate | publishes #13 |
+| 17 | 3.4.7 #1 | 7 documentation | documentation | script | architectural | weak | corroborates #12; corroborates #13; corroborates #1 |
+| 18 | 3.4.7 #2 | 7 documentation | documentation | script | architectural | weak | corroborates #10; corroborates #14 |
+| 19 | 3.4.7 #3 | 7 documentation | documentation | — | architectural | weak | corroborates #16 |
+| 20 | 3.4.7 #4 | 7 documentation | documentation | — | architectural | weak | corroborates frontend/vite.config.js:8-10; corroborates microfrontend/vite.config.js:35-37 |
+| 21 | 3.4.7 #5 | 7 documentation | documentation | — | context | weak | corroborates frontend/nginx.conf:45-46 |
+| 22 | 3.4.7 #6 | 7 documentation | documentation | — | architectural | weak | corroborates #14 |
+| 23 | 3.4.7 #7 | 7 documentation | documentation | — | architectural | weak | corroborates #15; corroborates #16 |
+| 24 | 3.4.7 #8 | 7 documentation | documentation | — | architectural | weak | corroborates #13 |
+| 25 | 3.4.7 #9 | 7 documentation | comment | — | architectural | weak | corroborates #16 |
+| 26 | 3.4.7 #10 | 7 documentation | documentation | — | architectural | weak | corroborates #16 |
+| 27 | 3.4.7 #11 | 7 documentation | documentation | — | architectural | weak | corroborates #15; corroborates #16 |
 
-## Resumo
+## Summary
 
-Observações: 27. Dimensões (tecnologia: 0, configuração: 1, código: 9, estrutura: 3, composição: 1, build-deploy: 2, documentação: 11, histórico: 0). Força (forte: 4, moderada: 10, fraca: 13, ambígua: 0). Evidência (tecnológica: 6, arquitetural: 18, contexto: 3).
+Observations: 27. Dimensions (technology: 0, configuration: 1, code: 9, structure: 3, composition: 1, build-deploy: 2, documentation: 11, history: 0). Strength (strong: 4, moderate: 10, weak: 13, ambiguous: 0). Evidence (technological: 6, architectural: 18, context: 3).
 
-## Decisão registrada
+## Recorded decision
 
-`frontend/vite.config.js` (citado na coluna Marcadores da revisão estrutural, 3.4.3, e na Evidência da afirmação 4 da revisão de documentação, 3.4.7) tem um `server.proxy` que encaminha `/mfe` ao servidor de desenvolvimento do microfrontend (frontend/vite.config.js:8-10). Decisão do pesquisador (2026-10-21): o proxy de desenvolvimento é tratado como o `location` do nginx, isto é, encaminhamento de caminho e não declaração do remote, cuja URL está no código (#9). Fica fora da dimensão 2. A regra foi acrescentada ao passo 2 (derivação das observações) do método descrito em `INSTRUCTIONS.md`.
+`frontend/vite.config.js` (cited in structural review Markers column, 3.4.3, and documentation review claim 4 Evidence, 3.4.7) has a `server.proxy` forwarding `/mfe` to microfrontend development server (frontend/vite.config.js:8-10). Researcher decision (2026-10-21): development proxy treated like nginx `location`, i.e. path forwarding rather than remote declaration, whose URL is in code (#9). Excluded from dimension 2. Rule added to step 2 (deriving observations) of method in `INSTRUCTIONS.md`.
+

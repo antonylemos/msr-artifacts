@@ -20,74 +20,74 @@ annotation:
 
 # 381 — kamulupraneeth/nextjs-mfe-platform
 
-## Contexto
+## Context
 
-Plataforma de demonstração em Next.js 16 Multi-Zones (`README.md:1–10`, decodificado de UTF-16). Tem três aplicações Next.js independentes:
-- `host-shell` (porta 3000), com navegação global;
+Next.js 16 Multi-Zones demonstration platform (`README.md:1–10`, decoded from UTF-16). It has three independent Next.js applications:
+- `host-shell` (port 3000), with global navigation;
 - `analytics-dashboard` (3001, `basePath: '/analytics'`);
 - `workspace-document` (3002, `basePath: '/workspace'`).
 
-O shell faz `rewrites` das rotas e dos assets de cada zona para os servidores correspondentes, e a navegação entre zonas usa `<a>` com recarga completa. O nome do repositório não é usado como evidência.
+The shell performs `rewrites` of each zone’s routes and assets to the corresponding servers, and cross-zone navigation uses `<a>` with a full reload. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:382` registra rank 381, ID 1254311775, status `cloned`, branch `main`, o commit do front matter, que é o HEAD do clone e de `origin/main`, e `replaces` = `979558095`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:382` records rank 381, ID 1254311775, status `cloned`, branch `main`, the front matter commit, which is the HEAD of the clone and of `origin/main`, and `replaces` = `979558095`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-O candidato não está em `sample.csv`. Entrou como substituto do rank 259 (`979558095`, `surendra190/microfrontend`), cujo clone falhou (`data/samples/mfe-sample-001/clones.csv:260`, status `failed`). A posição dele no ranking é `data/samples/mfe-sample-001/ranking.csv:382` (rank 381, estratégia `terminology`, elegibilidade `pass`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:30961` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:30969` (`pass`).
+The candidate is not in `sample.csv`. It entered as a replacement for rank 259 (`979558095`, `surendra190/microfrontend`), whose clone failed (`data/samples/mfe-sample-001/clones.csv:260`, status `failed`). Its ranking position is `data/samples/mfe-sample-001/ranking.csv:382` (rank 381, strategy `terminology`, eligibility `pass`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:30961` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:30969` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2026-05` e `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2026-05` and an empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | 2026-10-07T22:35:41.883Z / 2026-10-08T15:59:28.928Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | 2026-10-07T23:04:12.402Z / 2026-10-08T16:09:04.849Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2026-05-01..2026-05-31`.
+The effective queries append `pushed:>=2025-04-01 created:2026-05-01..2026-05-31`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem TypeScript, `fork: false`, tamanho 231;
-- criação em 2026-05-30T12:09:58Z, push em 2026-05-31T15:16:03Z.
+Hit metadata:
+- null description, no topics, language TypeScript, `fork: false`, size 231;
+- created at 2026-05-30T12:09:58Z, pushed at 2026-05-31T15:16:03Z.
 
-O `README.md` da raiz está em UTF-16 LE (com BOM). Decodificado, traz “Micro-Frontend” em `README.md:1` e “micro-frontend” em `:3` e `:7`; o plural não aparece. Como o GitHub indexa um arquivo UTF-16 não está registrado, assim como o processamento textual da busca. A última alteração do README é `c201365` (2026-05-31), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+Root `README.md` is UTF-16 LE (with BOM). Decoded, it has “Micro-Frontend” in `README.md:1` and “micro-frontend” in `:3` and `:7`; plural does not appear. How GitHub indexes a UTF-16 file is not recorded, nor is search text processing. The last README change is `c201365` (2026-05-31), before the October 2026 collections. The README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 67 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Há três apps Next.js (`host-shell`, `analytics-dashboard`, `workspace-document`), cada uma com `package.json`, lockfile, `next.config.ts` e `src/`, além do README da raiz. | contexto |
-| Composição (shell) | `host-shell/next.config.ts:3–6`, `10–48`: `rewrites` (`beforeFiles`) de `/analytics`, `/analytics/api/metrics`, `/analytics/:path` e `/analytics-assets/_next/:path*` para `ANALYTICS_URL` (`http://localhost:3001` por padrão). O mesmo vale para `/workspace`, `/workspace/:path*` e `/workspace-assets/_next/:path*` → `WORKSPACE_URL` (3002). | forte |
-| Zonas | `analytics-dashboard/next.config.ts:5–6`: `basePath: '/analytics'`, `assetPrefix: '/analytics-assets'`. `workspace-document/next.config.ts:5–7`: `basePath: '/workspace'`, `assetPrefix: '/workspace-assets'`. Portas em `*/package.json:6` (3000, 3001, 3002). | forte |
-| Navegação | `host-shell/src/components/GlobalNavbar.tsx:10–14`, `40–52`: links `<a href>` para `/`, `/analytics` e `/workspace` (comentário `:37–39` sobre trocar `Link` por `<a>`). | moderada |
-| Código-fonte (fronteiras) | Busca por imports com `../../` no SHA: nenhum. Cada app só importa os próprios arquivos e pacotes; não há pacote compartilhado. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 67 entries, all regular files `100644`; zero symlinks and zero gitlinks. There are three Next.js apps (`host-shell`, `analytics-dashboard`, `workspace-document`), each with `package.json`, lockfile, `next.config.ts` and `src/`, plus the root README. | context |
+| Composition (shell) | `host-shell/next.config.ts:3–6`, `10–48`: `rewrites` (`beforeFiles`) from `/analytics`, `/analytics/api/metrics`, `/analytics/:path` and `/analytics-assets/_next/:path*` to `ANALYTICS_URL` (`http://localhost:3001` by default). The same applies to `/workspace`, `/workspace/:path*` and `/workspace-assets/_next/:path*` → `WORKSPACE_URL` (3002). | strong |
+| Zones | `analytics-dashboard/next.config.ts:5–6`: `basePath: '/analytics'`, `assetPrefix: '/analytics-assets'`. `workspace-document/next.config.ts:5–7`: `basePath: '/workspace'`, `assetPrefix: '/workspace-assets'`. Ports in `*/package.json:6` (3000, 3001, 3002). | strong |
+| Navigation | `host-shell/src/components/GlobalNavbar.tsx:10–14`, `40–52`: `<a href>` links to `/`, `/analytics` and `/workspace` (comment `:37–39` about replacing `Link` with `<a>`). | moderate |
+| Source code (boundaries) | Search for imports with `../../` at the SHA: none. Each app imports only its own files and packages; there is no shared package. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 16 commits em todos os refs, 4 merges de PR feitos na interface do GitHub, de 2026-05-30 (`1dedac6`, “feat(analytics): engineer multi-zone app router architecture…”) a 2026-05-31 (SHA `750571a`). O autor aparece como “Kamulu Praneeth”, “Praneeth-Kamulu” e `kamulupraneeth`. Há cinco branches `feature/*`, não considerados. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 16 commits across all refs, 4 PR merges through the GitHub interface, from 2026-05-30 (`1dedac6`, “feat(analytics): engineer multi-zone app router architecture…”) to 2026-05-31 (SHA `750571a`). The author appears as “Kamulu Praneeth”, “Praneeth-Kamulu” and `kamulupraneeth`. There are five `feature/*` branches, not considered. No historical blob was read and there was no missing object.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | Três apps Next.js, com as zonas referenciadas pelos `rewrites` do shell (`host-shell/next.config.ts:10–48`). |
-| Q2 | Yes | Cada app tem `package.json`, `next.config.ts`, porta e build próprios, sem import de código entre apps. |
-| Q3 | Yes | O shell roteia `/analytics` e `/workspace`, com assets, para as zonas sob uma origem. |
-| Q4 | Yes | Multi-Zones: `rewrites` no shell e `basePath`/`assetPrefix` nas zonas, com navegação por `<a>`. É configuração explícita de composição, sujeita à decisão em aberto sobre composição só por rota ou link. |
-| Q5 | Yes | Q1–Q4 Yes, com a mesma ressalva de 013. |
+| Q1 | Yes | Three Next.js apps, with zones referenced by shell `rewrites` (`host-shell/next.config.ts:10–48`). |
+| Q2 | Yes | Each app has its own `package.json`, `next.config.ts`, port and build, without code import between apps. |
+| Q3 | Yes | The shell routes `/analytics` and `/workspace`, with assets, to zones under one origin. |
+| Q4 | Yes | Multi-Zones: `rewrites` in the shell and `basePath`/`assetPrefix` in zones, with `<a>` navigation. Explicit composition configuration, subject to the open decision about composition through routes or links alone. |
+| Q5 | Yes | Q1–Q4 Yes, with the same caveat as 013. |
 
-## Motivo
+## Rationale
 
-- `MFE-implemented` pela regra Q1–Q5 Yes, no caso “monorepos containing a host and its remotes”, com `status: review` pela decisão em aberto. Mesmo padrão de 013 (final, `review`), 237 e 273: shell com `rewrites`, zonas com `basePath`/`assetPrefix` e navegação de página inteira.
-- **Campos:**
-  - `approaches: [multi-zones]`, `ui_technologies: [react, next]`, `build_tools: []` (Next.js sem bundler explícito, como em 013);
+- `MFE-implemented` under the Q1–Q5 Yes rule, in the case “monorepos containing a host and its remotes”, with `status: review` because of the open decision. Same pattern as 013 (final, `review`), 237 and 273: shell with `rewrites`, zones with `basePath`/`assetPrefix` and full-page navigation.
+- **Fields:**
+  - `approaches: [multi-zones]`, `ui_technologies: [react, next]`, `build_tools: []` (Next.js without explicit bundler, as in 013);
   - `frontend_units: 3`, `unit_organization: monorepo`;
-  - `repo_type: example` (plataforma de demonstração com estudo de caso no README).
+  - `repo_type: example` (demonstration platform with case study in the README).
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** Multi-Zones do Next.js 16 com `assetPrefix` por zona para isolar os chunks e `rewrites` `beforeFiles` também para rotas de API da zona.
-- **Protocolo (amostra):** candidato de substituição (`replaces` 979558095) após falha do clone do rank 259.
-- **Protocolo (busca):** README em UTF-16 LE; o plural não tem grafia literal. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ2:** Next.js 16 Multi-Zones with per-zone `assetPrefix` to isolate chunks and `rewrites` `beforeFiles` also for zone API routes.
+- **Protocol (sample):** replacement candidate (`replaces` 979558095) after clone failure for rank 259.
+- **Protocol (search):** UTF-16 LE README; plural has no literal spelling. Eligibility changes from `unknown` (001) to `pass` (002).
 
-## Ponto para revisão conjunta
+## Point for joint review
 
-1. **Composição por zonas:** Multi-Zones por `rewrites` e navegação de página inteira conta como mecanismo de composição para Q4? É a mesma pergunta pendente em 013, 199, 237 e 273. Se contar, o caso fica `MFE-implemented`; se a composição só por rota não contar, vira `Non-MFE`. Não se propõe regra nova; até a decisão, preservar `review`.
+1. **Composition through zones:** do Multi-Zones through `rewrites` and full-page navigation count as a composition mechanism for Q4? The same question is pending in 013, 199, 237 and 273. If they count, the case remains `MFE-implemented`; if composition through routes alone does not count, it becomes `Non-MFE`. No new rule is proposed; until the decision, preserve `review`.

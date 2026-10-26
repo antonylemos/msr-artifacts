@@ -16,87 +16,87 @@ annotation:
 
 # 177 — Varshithknaik/mfe-lect
 
-## Leitura do repositório
+## Repository overview
 
-O único documento é o `README.md`, em inglês, com 11 linhas. Ele apresenta o repositório como um projeto de aprendizado de Module Federation com webpack, com um shell React, remotes React de marketing e de autenticação e um dashboard Vue "legacy" (README.md:1-5). O resto do README remete a um guia em capítulos, `docs/README.md` (README.md:7-11), que não existe no snapshot. O README não menciona que há duas árvores com os mesmos nomes de unidade. Na raiz, `container`, `marketing` e `auth` são publicados por workflows. Em `packages/`, uma cópia completa acrescenta o dashboard e não tem workflow (3.4.3; 3.4.6). O que ele afirma confere com as revisões anteriores. O dashboard Vue só existe como unidade na cópia de `packages/` (3.4.5 #4).
+Sole document is English `README.md`, 11 lines. It presents webpack Module Federation learning project with React shell, React marketing/authentication remotes and "legacy" Vue dashboard (README.md:1-5). Rest refers to chapter-based guide `docs/README.md` (README.md:7-11), absent from snapshot. README omits two trees with same unit names. Root `container`, `marketing` and `auth` publish through workflows. Complete copy in `packages/` adds dashboard without workflow (3.4.3; 3.4.6). Claims match previous reviews. Vue dashboard exists as unit only in `packages/` copy (3.4.5 #4).
 
-As quatro ocorrências `doc-*` estão no README. `doc-mfe-term` (README.md:1) é a linha 1. `doc-integration-technology` (README.md:3) e `doc-host-remote` (README.md:4) estão na linha 2. `doc-runtime-loading` (README.md:9) não virou linha: a frase lista os assuntos do guia ausente ("the current implementation, webpack, runtime integration, modern implementation options, production concerns, and a phased improvement plan", README.md:9-11) e não diz como as unidades se compõem. A instrução de começar pelo guia (README.md:7) também não é afirmação.
+Four `doc-*` occurrences in README. `doc-mfe-term` (README.md:1) is row 1. `doc-integration-technology` (README.md:3) and `doc-host-remote` (README.md:4) are row 2. `doc-runtime-loading` (README.md:9) yields no row: sentence lists absent guide topics ("the current implementation, webpack, runtime integration, modern implementation options, production concerns, and a phased improvement plan", README.md:9-11), without describing unit composition. Instruction to start with guide (README.md:7) is also no claim.
 
-O resto da documentação são comentários do padrão de curso, em inglês:
-- **`bootstrap.js` de cada remote:** cada um monta a si mesmo quando roda isolado em desenvolvimento e exporta `mount` para o container. Os comentários estão nos cinco remotes: auth, marketing, packages/auth, packages/dashboard e packages/marketing.
-- **Wrappers do container de `packages/`:** os de auth e marketing montam o remote uma vez e sincronizam a navegação do container para o remote. Os wrappers do container da raiz fazem o mesmo, sem comentários (container/src/components/AuthApp.js:11-27).
+Remaining documentation is English course-pattern comments:
+- **Each remote's `bootstrap.js`:** mounts itself in isolated development, exporting `mount` for container. Comments in five remotes: auth, marketing, packages/auth, packages/dashboard and packages/marketing.
+- **Container wrappers in `packages/`:** auth/marketing wrappers mount remote once, syncing container navigation to remote. Root container wrappers do same without comments (container/src/components/AuthApp.js:11-27).
 
-Os comentários são iguais nos remotes, mas cada um fala da própria unidade e foi conferido nela; por isso viraram uma linha por arquivo.
+Remote comments are identical but each addresses own unit and was checked there, yielding one row per file.
 
-Ficaram fora da tabela alguns comentários de detalhe interno de cada remote:
-- "Mount function to start up the app", sobre a função `mount` (auth/src/bootstrap.js:6; marketing/src/bootstrap.js:6; packages/auth/src/bootstrap.js:6; packages/dashboard/src/bootstrap.js:4; packages/marketing/src/bootstrap.js:6);
-- "Listen to history changes and update location state" e o da limpeza do listener (auth/src/App.js:12, 17; packages/auth/src/App.js:12, 17; packages/marketing/src/App.js:12, 17).
+Excluded internal remote comments:
+- "Mount function to start up the app", about function `mount` (auth/src/bootstrap.js:6; marketing/src/bootstrap.js:6; packages/auth/src/bootstrap.js:6; packages/dashboard/src/bootstrap.js:4; packages/marketing/src/bootstrap.js:6);
+- "Listen to history changes and update location state" and listener cleanup comment (auth/src/App.js:12, 17; packages/auth/src/App.js:12, 17; packages/marketing/src/App.js:12, 17).
 
-Também ficaram fora os comentários de layout (marketing/src/components/Landing.js:100; marketing/src/components/Pricing.js:127; packages/marketing/src/components/Landing.js:95; packages/marketing/src/components/Pricing.js:127; packages/dashboard/src/components/Dashboard.vue:394-564). As linhas comentadas do container da raiz são código desativado, não texto: o remote `dashboard` (container/config/webpack.prod.js:20), o `DashboardLazy` e a rota `/dashboard` (container/src/App.js:16, 40-43). Elas entram só como contexto da linha 2.
+Also excluded layout comments (marketing/src/components/Landing.js:100; marketing/src/components/Pricing.js:127; packages/marketing/src/components/Landing.js:95; packages/marketing/src/components/Pricing.js:127; packages/dashboard/src/components/Dashboard.vue:394-564). Commented root container lines are disabled code rather than prose: remote `dashboard` (container/config/webpack.prod.js:20), `DashboardLazy` and `/dashboard` route (container/src/App.js:16, 40-43). Only context for row 2.
 
-Também foram lidos os artefatos que as revisões anteriores citam:
-- os três workflows de deploy;
-- as configurações webpack das duas árvores;
-- os `package.json` (nenhum tem `description`), os `index.js` e os `public/index.html`;
-- `container/src/App.js` e `packages/container/src/App.js`, e os wrappers `AuthApp.js`, `MarketingApp.js` e `DashboardApp.js`.
+Also read artifacts cited by previous reviews:
+- Three deployment workflows;
+- Webpack configurations in both trees;
+- `package.json` files (none with `description`), `index.js` and `public/index.html`;
+- `container/src/App.js` and `packages/container/src/App.js`, wrappers `AuthApp.js`, `MarketingApp.js` and `DashboardApp.js`.
 
-Os workflows, as configurações webpack e os `index.html` não têm comentários; `.vscode/settings.json` só configura o editor.
+Workflows, webpack configurations and `index.html` files have no comments; `.vscode/settings.json` only configures editor.
 
-## Afirmações
+## Claims
 
-| # | Documento | Afirmação | Tema | Corroboração | Evidência |
+| # | Document | Claim | Theme | Corroboration | Evidence |
 |---|---|---|---|---|---|
-| 1 | README.md:1 | "MFE learning project" | estrutura | corroborada | 3.4.3 (sete aplicações `Yes`); 3.4.5 #1-#5 |
-| 2 | README.md:3-5 | "a webpack Module Federation learning project containing a React shell, React marketing and authentication remotes, and a legacy Vue dashboard example" | composição | corroborada | 3.4.3 (container, auth, marketing, packages/dashboard `Yes`); 3.4.5 #1-#5; container/config/webpack.prod.js:2, 15-21; packages/dashboard/src/bootstrap.js:1, 5-7 |
-| 3 | auth/src/bootstrap.js:34-35 | "If we are in development and in isolation, call mount immediately" (o auth monta a si mesmo quando isolado) | independência | corroborada | 3.4.3 (auth `Yes`); auth/src/bootstrap.js:36-42; auth/public/index.html:7 |
-| 4 | auth/src/bootstrap.js:44-45 | "We are running through container and we should export the mount function" (o auth é montado pelo container) | composição | corroborada | 3.4.5 #1; auth/src/bootstrap.js:46; container/src/components/AuthApp.js:1, 12 |
-| 5 | marketing/src/bootstrap.js:32 | "If we are development and in isolation, call mount immediately" (o marketing monta a si mesmo quando isolado) | independência | corroborada | 3.4.3 (marketing `Yes`); marketing/src/bootstrap.js:33-38; marketing/public/index.html:5 |
-| 6 | marketing/src/bootstrap.js:40 | "We are running through container and we should export the mount function" (o marketing é montado pelo container) | composição | corroborada | 3.4.5 #2; marketing/src/bootstrap.js:41; container/src/components/MarketingApp.js:1, 13 |
-| 7 | packages/auth/src/bootstrap.js:34-35 | "If we are in development and in isolation, call mount immediately" (o auth de `packages/` monta a si mesmo quando isolado) | independência | corroborada | 3.4.3 (packages/auth `Yes`); packages/auth/src/bootstrap.js:36-42; packages/auth/public/index.html:5 |
-| 8 | packages/auth/src/bootstrap.js:44-45 | "We are running through container and we should export the mount function" (o auth de `packages/` é montado pelo container) | composição | corroborada | 3.4.5 #3; packages/auth/src/bootstrap.js:46; packages/container/src/components/AuthApp.js:1, 13 |
-| 9 | packages/container/src/components/AuthApp.js:11 | "Mount the microfrontend once" (o container monta o auth uma única vez) | composição | corroborada | 3.4.4 (packages/container/src/components/AuthApp.js:13); packages/container/src/components/AuthApp.js:12-22 |
-| 10 | packages/container/src/components/AuthApp.js:24 | "Sync navigation from container to child" (a navegação do container é repassada ao auth) | composição | corroborada | packages/container/src/components/AuthApp.js:21, 25-29; packages/auth/src/bootstrap.js:23-30 |
-| 11 | packages/container/src/components/MarketingApp.js:11 | "Mount the microfrontend once" (o container monta o marketing uma única vez) | composição | corroborada | 3.4.4 (packages/container/src/components/MarketingApp.js:13); packages/container/src/components/MarketingApp.js:12-21 |
-| 12 | packages/container/src/components/MarketingApp.js:23 | "Sync navigation from container to child" (a navegação do container é repassada ao marketing) | composição | corroborada | packages/container/src/components/MarketingApp.js:20, 24-28; packages/marketing/src/bootstrap.js:23-30 |
-| 13 | packages/dashboard/src/bootstrap.js:10-11 | "If we are in development and in isolation, call mount immediately" (o dashboard monta a si mesmo quando isolado) | independência | corroborada | 3.4.3 (packages/dashboard `Yes`); packages/dashboard/src/bootstrap.js:12-18; packages/dashboard/public/index.html:5 |
-| 14 | packages/dashboard/src/bootstrap.js:20-21 | "We are running through container and we should export the mount function" (o dashboard é montado pelo container) | composição | corroborada | 3.4.5 #4; packages/dashboard/src/bootstrap.js:22; packages/container/src/components/DashboardApp.js:1, 8 |
-| 15 | packages/marketing/src/bootstrap.js:34-35 | "If we are in development and in isolation, call mount immediately" (o marketing de `packages/` monta a si mesmo quando isolado) | independência | corroborada | 3.4.3 (packages/marketing `Yes`); packages/marketing/src/bootstrap.js:36-42; packages/marketing/public/index.html:5 |
-| 16 | packages/marketing/src/bootstrap.js:44-45 | "We are running through container and we should export the mount function" (o marketing de `packages/` é montado pelo container) | composição | corroborada | 3.4.5 #5; packages/marketing/src/bootstrap.js:46; packages/container/src/components/MarketingApp.js:1, 13 |
+| 1 | README.md:1 | "MFE learning project" | structure | corroborated | 3.4.3 (seven applications `Yes`); 3.4.5 #1-#5 |
+| 2 | README.md:3-5 | "a webpack Module Federation learning project containing a React shell, React marketing and authentication remotes, and a legacy Vue dashboard example" | composition | corroborated | 3.4.3 (container, auth, marketing, packages/dashboard `Yes`); 3.4.5 #1-#5; container/config/webpack.prod.js:2, 15-21; packages/dashboard/src/bootstrap.js:1, 5-7 |
+| 3 | auth/src/bootstrap.js:34-35 | "If we are in development and in isolation, call mount immediately" (auth mounts itself when isolated) | independence | corroborated | 3.4.3 (auth `Yes`); auth/src/bootstrap.js:36-42; auth/public/index.html:7 |
+| 4 | auth/src/bootstrap.js:44-45 | "We are running through container and we should export the mount function" (auth is mounted by container) | composition | corroborated | 3.4.5 #1; auth/src/bootstrap.js:46; container/src/components/AuthApp.js:1, 12 |
+| 5 | marketing/src/bootstrap.js:32 | "If we are development and in isolation, call mount immediately" (marketing mounts itself when isolated) | independence | corroborated | 3.4.3 (marketing `Yes`); marketing/src/bootstrap.js:33-38; marketing/public/index.html:5 |
+| 6 | marketing/src/bootstrap.js:40 | "We are running through container and we should export the mount function" (marketing is mounted by container) | composition | corroborated | 3.4.5 #2; marketing/src/bootstrap.js:41; container/src/components/MarketingApp.js:1, 13 |
+| 7 | packages/auth/src/bootstrap.js:34-35 | "If we are in development and in isolation, call mount immediately" (auth in `packages/` mounts itself when isolated) | independence | corroborated | 3.4.3 (packages/auth `Yes`); packages/auth/src/bootstrap.js:36-42; packages/auth/public/index.html:5 |
+| 8 | packages/auth/src/bootstrap.js:44-45 | "We are running through container and we should export the mount function" (auth in `packages/` is mounted by container) | composition | corroborated | 3.4.5 #3; packages/auth/src/bootstrap.js:46; packages/container/src/components/AuthApp.js:1, 13 |
+| 9 | packages/container/src/components/AuthApp.js:11 | "Mount the microfrontend once" (container mounts auth once) | composition | corroborated | 3.4.4 (packages/container/src/components/AuthApp.js:13); packages/container/src/components/AuthApp.js:12-22 |
+| 10 | packages/container/src/components/AuthApp.js:24 | "Sync navigation from container to child" (container navigation passed to auth) | composition | corroborated | packages/container/src/components/AuthApp.js:21, 25-29; packages/auth/src/bootstrap.js:23-30 |
+| 11 | packages/container/src/components/MarketingApp.js:11 | "Mount the microfrontend once" (container mounts marketing once) | composition | corroborated | 3.4.4 (packages/container/src/components/MarketingApp.js:13); packages/container/src/components/MarketingApp.js:12-21 |
+| 12 | packages/container/src/components/MarketingApp.js:23 | "Sync navigation from container to child" (container navigation passed to marketing) | composition | corroborated | packages/container/src/components/MarketingApp.js:20, 24-28; packages/marketing/src/bootstrap.js:23-30 |
+| 13 | packages/dashboard/src/bootstrap.js:10-11 | "If we are in development and in isolation, call mount immediately" (dashboard mounts itself when isolated) | independence | corroborated | 3.4.3 (packages/dashboard `Yes`); packages/dashboard/src/bootstrap.js:12-18; packages/dashboard/public/index.html:5 |
+| 14 | packages/dashboard/src/bootstrap.js:20-21 | "We are running through container and we should export the mount function" (dashboard mounted by container) | composition | corroborated | 3.4.5 #4; packages/dashboard/src/bootstrap.js:22; packages/container/src/components/DashboardApp.js:1, 8 |
+| 15 | packages/marketing/src/bootstrap.js:34-35 | "If we are in development and in isolation, call mount immediately" (marketing in `packages/` mounts itself when isolated) | independence | corroborated | 3.4.3 (packages/marketing `Yes`); packages/marketing/src/bootstrap.js:36-42; packages/marketing/public/index.html:5 |
+| 16 | packages/marketing/src/bootstrap.js:44-45 | "We are running through container and we should export the mount function" (marketing in `packages/` mounted by container) | composition | corroborated | 3.4.5 #5; packages/marketing/src/bootstrap.js:46; packages/container/src/components/MarketingApp.js:1, 13 |
 
-## Observações
+## Observations
 
-**1. README.md:1.** O título apresenta o projeto como micro-frontends. A revisão estrutural tem sete aplicações nas duas árvores (3.4.3), e a de composição tem cinco relações host → remote por Module Federation, todas ativas (3.4.5 #1-#5).
+**1. README.md:1.** Title presents micro-frontend project. Structural review has seven applications in both trees (3.4.3), composition review five host → remote Module Federation relationships, all active (3.4.5 #1-#5).
 
-**2. README.md:3-5.** A tecnologia nomeada é a do snapshot: todos os containers e remotes usam o `ModuleFederationPlugin` que vem com o webpack (container/config/webpack.prod.js:2, 15-21), e 3.4.5 registra as cinco relações com o mecanismo `module-federation`. A revisão de dependências não tem linha porque o plugin vem no próprio webpack, então não há nome divergente. O shell React é o `container`, único host em cada árvore. Os remotes React de marketing e de autenticação são `marketing` e `auth` (3.4.5 #1, #2, #3, #5). O dashboard Vue é `packages/dashboard`, que monta um componente Vue com `createApp` (packages/dashboard/src/bootstrap.js:1, 5-7) e é remote do container de `packages/` (3.4.5 #4). Na árvore da raiz, que o autor publica, o dashboard está desativado: o remote e a rota estão comentados (container/config/webpack.prod.js:20; container/src/App.js:16, 40-43), e `dashboard/` só tem `package.json` (3.4.3). Isso combina com o "legacy" do README, mas a palavra não tem propriedade verificável. O README descreve um projeto só e não diz que há duas cópias. Isso não contradiz nenhuma parte da frase, porque cada unidade citada existe no snapshot.
+**2. README.md:3-5.** Named technology matches snapshot: all containers/remotes use webpack's `ModuleFederationPlugin` (container/config/webpack.prod.js:2, 15-21), and 3.4.5 records five relationships with mechanism `module-federation`. Dependency review lacks row because plugin built into webpack, so no naming difference. React shell is `container`, sole host per tree. React marketing/authentication remotes are `marketing` and `auth` (3.4.5 #1, #2, #3, #5). Vue dashboard is `packages/dashboard`, mounting Vue component through `createApp` (packages/dashboard/src/bootstrap.js:1, 5-7), remote of container in `packages/` (3.4.5 #4). Published root tree disables dashboard: remote/route commented (container/config/webpack.prod.js:20; container/src/App.js:16, 40-43), `dashboard/` containing only `package.json` (3.4.3). Fits README "legacy", without verifiable property. README describes one project without mentioning two copies; contradicts no sentence part because each named unit exists.
 
-**3. auth/src/bootstrap.js:34-35.** Em desenvolvimento, o auth procura `#_auth-dev-root` e, se o elemento existir, monta a si mesmo com um histórico do navegador (auth/src/bootstrap.js:36-42). Esse elemento só existe no `index.html` do próprio auth (auth/public/index.html:7). A revisão estrutural registrou essa montagem na coluna Entrada (3.4.3).
+**3. auth/src/bootstrap.js:34-35.** In development, auth seeks `#_auth-dev-root`, mounting itself with browser history if element exists (auth/src/bootstrap.js:36-42). Element only exists in own `index.html` (auth/public/index.html:7). Structural review records mounting in Entry column (3.4.3).
 
-**4. auth/src/bootstrap.js:44-45.** O auth exporta `mount` (auth/src/bootstrap.js:46). O container da raiz importa essa função de `auth/AuthApp` e a chama no seu wrapper (container/src/components/AuthApp.js:1, 12), que é a relação 3.4.5 #1.
+**4. auth/src/bootstrap.js:44-45.** Auth exports `mount` (auth/src/bootstrap.js:46). Root container imports from `auth/AuthApp`, calling it in wrapper (container/src/components/AuthApp.js:1, 12), relationship 3.4.5 #1.
 
-**5. marketing/src/bootstrap.js:32.** O mesmo comentário, em uma linha e com "If we are development" sem o "in". Em desenvolvimento, o marketing monta a si mesmo em `#_marketing-dev-root` (marketing/src/bootstrap.js:33-38), elemento do seu próprio `index.html` (marketing/public/index.html:5).
+**5. marketing/src/bootstrap.js:32.** Same comment on one line with "If we are development" omitting "in". In development marketing mounts itself on `#_marketing-dev-root` (marketing/src/bootstrap.js:33-38), element in own `index.html` (marketing/public/index.html:5).
 
-**6. marketing/src/bootstrap.js:40.** O marketing exporta `mount` (marketing/src/bootstrap.js:41), e o wrapper do container da raiz o importa e o chama (container/src/components/MarketingApp.js:1, 13). É a relação 3.4.5 #2.
+**6. marketing/src/bootstrap.js:40.** Marketing exports `mount` (marketing/src/bootstrap.js:41), root container wrapper importing/calling it (container/src/components/MarketingApp.js:1, 13). Relationship 3.4.5 #2.
 
-**7. packages/auth/src/bootstrap.js:34-35.** É a cópia de `packages/`, com o mesmo código da raiz: monta em `#_auth-dev-root` quando isolado em desenvolvimento (packages/auth/src/bootstrap.js:36-42; packages/auth/public/index.html:5).
+**7. packages/auth/src/bootstrap.js:34-35.** Copy in `packages/`, same root code: mounts on `#_auth-dev-root` in isolated development (packages/auth/src/bootstrap.js:36-42; packages/auth/public/index.html:5).
 
-**8. packages/auth/src/bootstrap.js:44-45.** O `mount` exportado (packages/auth/src/bootstrap.js:46) é importado e chamado pelo wrapper do container de `packages/` (packages/container/src/components/AuthApp.js:1, 13). É a relação 3.4.5 #3.
+**8. packages/auth/src/bootstrap.js:44-45.** Exported `mount` (packages/auth/src/bootstrap.js:46) imported/called by container wrapper in `packages/` (packages/container/src/components/AuthApp.js:1, 13). Relationship 3.4.5 #3.
 
-**9. packages/container/src/components/AuthApp.js:11.** O `useEffect` chama `mount` com a lista de dependências vazia (packages/container/src/components/AuthApp.js:12-22), e por isso roda só na primeira renderização do wrapper. O comentário da linha 22, "Empty dependency - mount once", repete a afirmação. A revisão de código-fonte registrou a chamada como `runtime-composition` (3.4.4).
+**9. packages/container/src/components/AuthApp.js:11.** `useEffect` calls `mount` with empty dependency list (packages/container/src/components/AuthApp.js:12-22), running only on first wrapper render. Comment at line 22, "Empty dependency - mount once", repeats claim. Source-code review records call as `runtime-composition` (3.4.4).
 
-**10. packages/container/src/components/AuthApp.js:24.** O wrapper guarda o `onParentNavigate` que o `mount` devolve (packages/container/src/components/AuthApp.js:21). A cada mudança de `location`, chama essa função com o caminho atual (packages/container/src/components/AuthApp.js:25-29). Do lado do auth, ela empurra o caminho no histórico em memória se ele for diferente (packages/auth/src/bootstrap.js:23-30). O sentido inverso, do remote para o container, passa pelo `onNavigate` e não é o que o comentário afirma. A 3.4.5 descreve essa troca na Leitura, sem relação própria.
+**10. packages/container/src/components/AuthApp.js:24.** Wrapper retains `onParentNavigate` returned by `mount` (packages/container/src/components/AuthApp.js:21). Each `location` change calls function with current path (packages/container/src/components/AuthApp.js:25-29). Auth side pushes path into memory history if different (packages/auth/src/bootstrap.js:23-30). Reverse direction, remote to container, uses `onNavigate`, outside comment claim. 3.4.5 describes exchange in Repository overview, without separate relationship.
 
-**11. packages/container/src/components/MarketingApp.js:11.** Como na linha 9: `mount` é chamado num `useEffect` com dependências vazias (packages/container/src/components/MarketingApp.js:12-21), com o comentário repetido na linha 21. A chamada está em 3.4.4.
+**11. packages/container/src/components/MarketingApp.js:11.** As row 9: `mount` called in `useEffect` with empty dependencies (packages/container/src/components/MarketingApp.js:12-21), comment repeated at line 21. Call in 3.4.4.
 
-**12. packages/container/src/components/MarketingApp.js:23.** Como na linha 10: o wrapper guarda `onParentNavigate` (packages/container/src/components/MarketingApp.js:20) e o chama a cada mudança de `location` (packages/container/src/components/MarketingApp.js:24-28). O marketing de `packages/` atualiza o próprio histórico (packages/marketing/src/bootstrap.js:23-30).
+**12. packages/container/src/components/MarketingApp.js:23.** As row 10: wrapper retains `onParentNavigate` (packages/container/src/components/MarketingApp.js:20), calling on each `location` change (packages/container/src/components/MarketingApp.js:24-28). Marketing in `packages/` updates own history (packages/marketing/src/bootstrap.js:23-30).
 
-**13. packages/dashboard/src/bootstrap.js:10-11.** Em desenvolvimento, o dashboard monta o componente Vue em `#_dashboard-dev-root` (packages/dashboard/src/bootstrap.js:12-18), elemento do seu `index.html` (packages/dashboard/public/index.html:5). Diferente dos remotes React, o `mount` não recebe histórico (packages/dashboard/src/bootstrap.js:5-8), o que não muda a afirmação.
+**13. packages/dashboard/src/bootstrap.js:10-11.** In development dashboard mounts Vue component on `#_dashboard-dev-root` (packages/dashboard/src/bootstrap.js:12-18), own `index.html` element (packages/dashboard/public/index.html:5). Unlike React remotes, `mount` receives no history (packages/dashboard/src/bootstrap.js:5-8), without changing claim.
 
-**14. packages/dashboard/src/bootstrap.js:20-21.** O dashboard exporta `mount` (packages/dashboard/src/bootstrap.js:22), e o container de `packages/` o importa e o chama só com o elemento (packages/container/src/components/DashboardApp.js:1, 8). É a relação 3.4.5 #4. O container da raiz não carrega o dashboard (linha 2).
+**14. packages/dashboard/src/bootstrap.js:20-21.** Dashboard exports `mount` (packages/dashboard/src/bootstrap.js:22), container in `packages/` importing/calling with element alone (packages/container/src/components/DashboardApp.js:1, 8). Relationship 3.4.5 #4. Root container does not load dashboard (row 2).
 
-**15. packages/marketing/src/bootstrap.js:34-35.** É a cópia de `packages/`: monta em `#_marketing-dev-root` quando isolado em desenvolvimento (packages/marketing/src/bootstrap.js:36-42; packages/marketing/public/index.html:5).
+**15. packages/marketing/src/bootstrap.js:34-35.** Copy in `packages/`: mounts on `#_marketing-dev-root` in isolated development (packages/marketing/src/bootstrap.js:36-42; packages/marketing/public/index.html:5).
 
-**16. packages/marketing/src/bootstrap.js:44-45.** O `mount` exportado (packages/marketing/src/bootstrap.js:46) é importado e chamado pelo wrapper do container de `packages/` (packages/container/src/components/MarketingApp.js:1, 13). É a relação 3.4.5 #5.
+**16. packages/marketing/src/bootstrap.js:44-45.** Exported `mount` (packages/marketing/src/bootstrap.js:46) imported/called by container wrapper in `packages/` (packages/container/src/components/MarketingApp.js:1, 13). Relationship 3.4.5 #5.
 
-## Resumo
+## Summary
 
-Afirmações: 16 (corroborada: 16, parcial: 0, contradita: 0, sem corroboração: 0). Temas: (estrutura: 1, composição: 10, independência: 5).
+Claims: 16 (corroborated: 16, partial: 0, contradicted: 0, uncorroborated: 0). Themes: (structure: 1, composition: 10, independence: 5).

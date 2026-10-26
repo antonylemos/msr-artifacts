@@ -20,69 +20,69 @@ annotation:
 
 # 318 — farzanemadani/todo-app-using-mfe
 
-## Contexto
+## Context
 
-Exemplo pequeno de Module Federation com webpack 5 e React 19: um host (`host-app/`) roteia dois remotes, um formulário de tarefas (`todoForm-app/`) e uma lista (`todoList-app/`), que compartilham os dados por `localStorage` (`README.md:3–11`). Cada app tem `package.json`, configs de webpack de desenvolvimento e produção e entrada própria; não há `package.json` na raiz (`README.md:127`). O nome do repositório não é usado como evidência.
+Small Module Federation example with webpack 5 and React 19: a host (`host-app/`) routes two remotes, a task form (`todoForm-app/`) and a list (`todoList-app/`), sharing data through `localStorage` (`README.md:3–11`). Each app has its own `package.json`, development and production webpack configs and entry; there is no root `package.json` (`README.md:127`). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:319` registra rank 318, ID 1205888629, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:319` records rank 318, ID 1205888629, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:319` registra as estratégias `terminology;technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:28074` (`terminology;technology`, `unknown`, regra `recent-human-commit` com `activity_incomplete`) e `data/discovery/mfe-round-002/candidates.csv:28080` (`terminology;technology`, `pass`).
+`data/samples/mfe-sample-001/sample.csv:319` records strategies `terminology;technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:28074` (`terminology;technology`, `unknown`, rule `recent-human-commit` with `activity_incomplete`) and `data/discovery/mfe-round-002/candidates.csv:28080` (`terminology;technology`, `pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos três hits em cada rodada, do endpoint `repositories`, com `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same three hits in each round, from endpoint `repositories`, with an empty `path`:
 
-| Consulta (`q`) | Subconsulta | Consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Effective query | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | `…#created:2026-04` | `… pushed:>=2025-04-01 created:2026-04-01..2026-04-30` | 2026-10-07T22:34:23.585Z / 2026-10-08T15:59:00.892Z |
-| `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | `…#created:2026-04` | idem | 2026-10-07T23:02:41.710Z / 2026-10-08T16:08:48.189Z |
-| `technology-module-federation-repositories`: `"module federation" in:name,description,readme` | `…#created:2026-04` | idem | 2026-10-07T23:25:04.169Z / 2026-10-08T16:17:43.049Z |
+| `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | `…#created:2026-04` | same | 2026-10-07T23:02:41.710Z / 2026-10-08T16:08:48.189Z |
+| `technology-module-federation-repositories`: `"module federation" in:name,description,readme` | `…#created:2026-04` | same | 2026-10-07T23:25:04.169Z / 2026-10-08T16:17:43.049Z |
 
-Metadados do hit: descrição “Built with React 19, Webpack 5, Module Federation”, sem tópicos, linguagem JavaScript, sem licença, `fork: false`, tamanho 9, criação em 2026-04-09T11:31:37Z, push em 2026-04-26T09:15:18Z.
+Hit metadata: description “Built with React 19, Webpack 5, Module Federation”, no topics, language JavaScript, no license, `fork: false`, size 9, created at 2026-04-09T11:31:37Z, pushed at 2026-04-26T09:15:18Z.
 
-Correspondência textual:
+Text matches:
 - “micro frontends”: `README.md:1` (“# Todo App Using Micro Frontends”), literal;
-- “micro frontend”: só nas formas hifenizadas `README.md:3` (“micro-frontend project”) e `README.md:15` (“Micro-frontend architecture”), com o hífen tratado como separador;
-- “module federation”: descrição do repositório e `README.md:3`, `11`, `26`, `113`.
+- “micro frontend”: only hyphenated forms `README.md:3` (“micro-frontend project”) and `README.md:15` (“Micro-frontend architecture”), with the hyphen treated as a separator;
+- “module federation”: repository description and `README.md:3`, `11`, `26`, `113`.
 
-O README foi introduzido em `3847612` e alterado no próprio SHA `21fc477` (ambos em 2026-04-26), anteriores às coletas de 7 e 8 de outubro de 2026. O README do SHA não é posterior às buscas.
+The README was introduced in `3847612` and changed at SHA `21fc477` itself (both on 2026-04-26), before the collections on October 7 and 8, 2026. The README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 29 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Três projetos (`host-app`, `todoForm-app`, `todoList-app`), cada um com `package.json`, `webpack.dev.js`, `webpack.prod.js`, `public/index.html` e `src/` com `bootstrap.js` → `index.js`. | forte |
-| Configuração (host) | `host-app/webpack.dev.js:45–55`: `ModuleFederationPlugin` com `name: 'host_app'` e `remotes` `todoForm_app@http://localhost:3001/remoteEntry.js` e `todoList_app@http://localhost:3002/remoteEntry.js`; `shared` com as dependências do `package.json` (`:5`, `52–54`); porta 3000 (`:13–16`). `host-app/webpack.prod.js:7–8`, `49–59`: mesmos remotes via constantes, ainda em `localhost` (o README reconhece, `README.md:128`). | forte |
-| Configuração (remotes) | `todoForm-app/webpack.dev.js:15–18`, `48–57`: porta 3001, `name: 'todoForm_app'`, `exposes: { "./TodoForm": './src/components/todoForm.jsx' }`. `todoList-app/webpack.dev.js:14–17`, `47–56`: porta 3002, `name: 'todoList_app'`, `exposes: { "./todoList": './src/components/ToDoList.jsx' }`. Os `webpack.prod.js` repetem `name` e `exposes`. | forte |
-| Código-fonte (composição) | `host-app/src/App.jsx:2–3`: `React.lazy(() => import('todoForm_app/TodoForm'))` e `import('todoList_app/todoList')`, com chaves e nomes iguais aos expostos; `:12–22`: rotas `/` (lista), `/add` e `/edit/:id` (formulário) em `Suspense`. `host-app/src/bootstrap.js:1` e `host-app/src/index.js:5–10`: entrada assíncrona e `BrowserRouter`. | forte |
-| Código-fonte (remotes) | `todoForm-app/src/components/todoForm.jsx:5–98` e `todoList-app/src/components/ToDoList.jsx:6–60`: telas funcionais (criar/editar e listar/excluir) que usam `useNavigate`/`useParams` do roteador do host e `localStorage` (`todoForm.jsx:16`, `27–29`; `ToDoList.jsx:8`, `12`). Cada remote monta isolado por `src/index.js:3–4`. | forte |
-| Código-fonte (fronteiras) | Busca por `../` em `*.js`, `*.jsx`, `*.json` e `*.html`: só `todoForm-app/src/components/todoForm.jsx:4` e `todoList-app/src/components/ToDoList.jsx:3` (`'../index.css'`, internos ao próprio app). Nenhum import de código-fonte entre os três projetos; o host só alcança os remotes pelos especificadores federados. | forte |
-| Build/deploy | Scripts `start`/`build` próprios por app (`host-app/package.json:5–9`; idem nos remotes), saídas separadas em `build/` (`README.md:97–105`). Sem pipeline nem deploy. | moderada |
+| Structure | `git ls-tree -r` at the SHA: 29 entries, all regular files `100644`; zero symlinks and zero gitlinks. Three projects (`host-app`, `todoForm-app`, `todoList-app`), each with `package.json`, `webpack.dev.js`, `webpack.prod.js`, `public/index.html` and `src/` with `bootstrap.js` → `index.js`. | strong |
+| Configuration (host) | `host-app/webpack.dev.js:45–55`: `ModuleFederationPlugin` with `name: 'host_app'` and `remotes` `todoForm_app@http://localhost:3001/remoteEntry.js` and `todoList_app@http://localhost:3002/remoteEntry.js`; `shared` with `package.json` dependencies (`:5`, `52–54`); port 3000 (`:13–16`). `host-app/webpack.prod.js:7–8`, `49–59`: same remotes through constants, still at `localhost` (acknowledged by the README, `README.md:128`). | strong |
+| Configuration (remotes) | `todoForm-app/webpack.dev.js:15–18`, `48–57`: port 3001, `name: 'todoForm_app'`, `exposes: { "./TodoForm": './src/components/todoForm.jsx' }`. `todoList-app/webpack.dev.js:14–17`, `47–56`: port 3002, `name: 'todoList_app'`, `exposes: { "./todoList": './src/components/ToDoList.jsx' }`. The `webpack.prod.js` repeat `name` and `exposes`. | strong |
+| Source code (composition) | `host-app/src/App.jsx:2–3`: `React.lazy(() => import('todoForm_app/TodoForm'))` and `import('todoList_app/todoList')`, with keys and names matching exposed ones; `:12–22`: routes `/` (list), `/add` and `/edit/:id` (form) in `Suspense`. `host-app/src/bootstrap.js:1` and `host-app/src/index.js:5–10`: asynchronous entry and `BrowserRouter`. | strong |
+| Source code (remotes) | `todoForm-app/src/components/todoForm.jsx:5–98` and `todoList-app/src/components/ToDoList.jsx:6–60`: functional screens (create/edit and list/delete) using `useNavigate`/`useParams` from the host router and `localStorage` (`todoForm.jsx:16`, `27–29`; `ToDoList.jsx:8`, `12`). Each remote mounts standalone through `src/index.js:3–4`. | strong |
+| Source code (boundaries) | Search for `../` in `*.js`, `*.jsx`, `*.json` and `*.html`: only `todoForm-app/src/components/todoForm.jsx:4` and `todoList-app/src/components/ToDoList.jsx:3` (`'../index.css'`, internal to the app itself). No source code import between the three projects; the host reaches remotes only through federated specifiers. | strong |
+| Build/deploy | Own `start`/`build` scripts per app (`host-app/package.json:5–9`; likewise in remotes), separate outputs in `build/` (`README.md:97–105`). No pipeline or deployment. | moderate |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso, parcial (`blob:none`). 3 commits (3 em todos os refs), nenhum merge, autor e committer `farzanemadani <farzane.madani@gmail.com>`: a raiz `67d1b09` (2026-04-12, “first commit”) adiciona os três apps e `.gitignore`; `3847612` e o SHA `21fc477` (2026-04-26, “feat:add readme”) adicionam e ajustam o README. A estrutura federada já está no commit-raiz; os metadados não separam autoria intelectual. `git rev-list --objects $SHA --missing=print` identifica 1 objeto histórico ausente; os arquivos citados do SHA foram lidos.
+Non-shallow, partial clone (`blob:none`). 3 commits (3 across all refs), no merge, author and committer `farzanemadani <farzane.madani@gmail.com>`: root `67d1b09` (2026-04-12, “first commit”) adds the three apps and `.gitignore`; `3847612` and SHA `21fc477` (2026-04-26, “feat:add readme”) add and adjust the README. The federated structure already exists in the root commit; metadata does not distinguish intellectual authorship. `git rev-list --objects $SHA --missing=print` identifies 1 missing historical object; cited SHA files were read.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | `host-app`, `todoForm-app` e `todoList-app`, os dois remotes referenciados pela configuração do host (`host-app/webpack.dev.js:48–51`). |
-| Q2 | Yes | Entrada (`src/bootstrap.js`), webpack e porta próprios por app; nenhum import de código-fonte entre eles. |
-| Q3 | Yes | O host roteia e carrega os remotes (`host-app/src/App.jsx:2–3`, `12–22`). |
-| Q4 | Yes | Module Federation configurado nos dois lados, com nomes, portas e chaves expostas coincidentes (`host-app/webpack.dev.js:49–50` × `todoForm-app/webpack.dev.js:16`, `49–52` e `todoList-app/webpack.dev.js:15`, `48–51`), consumido por `import()` federado. |
-| Q5 | Yes | Q1–Q4 convergem. |
+| Q1 | Yes | `host-app`, `todoForm-app` and `todoList-app`, both remotes referenced by host configuration (`host-app/webpack.dev.js:48–51`). |
+| Q2 | Yes | Own entry (`src/bootstrap.js`), webpack and port per app; no source code import between them. |
+| Q3 | Yes | The host routes and loads the remotes (`host-app/src/App.jsx:2–3`, `12–22`). |
+| Q4 | Yes | Module Federation configured on both sides, with matching names, ports and exposed keys (`host-app/webpack.dev.js:49–50` × `todoForm-app/webpack.dev.js:16`, `49–52` and `todoList-app/webpack.dev.js:15`, `48–51`), consumed through federated `import()`. |
+| Q5 | Yes | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- Q1–Q5 são Yes, o que satisfaz a regra de `MFE-implemented`. Corresponde a “monorepos containing a host and its remotes” e a “examples… that actually compose frontend units” (`repo_type: example`, “A small React micro-frontend project”, `README.md:3`).
-- A cadeia é completa e conectável, sem divergência de nome, porta ou chave exposta (contraste com 097/103/104); comparável aos casos de cadeia completa (076/084/096/106/109).
-- Não é code sharing (089/100): cada remote expõe uma tela inteira montada como rota do host.
+- Q1–Q5 are Yes, satisfying the `MFE-implemented` rule. It matches “monorepos containing a host and its remotes” and “examples… that actually compose frontend units” (`repo_type: example`, “A small React micro-frontend project”, `README.md:3`).
+- The chain is complete and connectable, without a name, port or exposed key mismatch (contrast with 097/103/104); comparable to complete-chain cases (076/084/096/106/109).
+- It is not code sharing (089/100): each remote exposes an entire screen mounted as a host route.
 - `frontend_units: 3`, `unit_organization: monorepo`, `approaches: [module-federation]`, `ui_technologies: [react]`, `build_tools: [webpack]`.
-- Não há decisão aberta.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** Module Federation do webpack 5 com `shared` gerado a partir de todas as `dependencies` do `package.json` (sem `singleton`), e remotes que dependem do contexto de roteamento do host (`useNavigate`, `useParams`).
-- **RQ3:** integração de estado entre unidades por `localStorage` (chave `todos`), sem API nem event bus (`README.md:11`, `54`).
-- **RQ1:** o título do cabeçalho do host é “Monolyth - TodoApp” (`host-app/src/components/header.jsx:7`), texto de interface sem efeito arquitetural.
+- **RQ2:** webpack 5 Module Federation with `shared` generated from all `dependencies` in `package.json` (without `singleton`), and remotes depending on host routing context (`useNavigate`, `useParams`).
+- **RQ3:** cross-unit state integration through `localStorage` (key `todos`), without API or event bus (`README.md:11`, `54`).
+- **RQ1:** the host header title is “Monolyth - TodoApp” (`host-app/src/components/header.jsx:7`), interface text without architectural effect.

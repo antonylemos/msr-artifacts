@@ -15,13 +15,14 @@ annotation:
 
 # 009 — pmathulan/frontend-coding-exercises
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| microfrontend-workspace/package.json:14 | dependencies | @angular-architects/module-federation | ^19.0.3 | module-federation | Yes | microfrontend-workspace/projects/shell/webpack.config.js:1-16 (`withModuleFederationPlugin` e `shareAll` importados e invocados); microfrontend-workspace/angular.json:18 e microfrontend-workspace/angular.json:41-42 (builder `ngx-build-plus:browser` e configuração do shell); microfrontend-workspace/angular.json:60 (configuração de produção); microfrontend-workspace/projects/shell/webpack.prod.config.js:1 (reusa `webpack.config`) |
+| microfrontend-workspace/package.json:14 | dependencies | @angular-architects/module-federation | ^19.0.3 | module-federation | Yes | microfrontend-workspace/projects/shell/webpack.config.js:1-16 (`withModuleFederationPlugin` and `shareAll` imported and invoked); microfrontend-workspace/angular.json:18 and microfrontend-workspace/angular.json:41-42 (builder `ngx-build-plus:browser` and shell configuration); microfrontend-workspace/angular.json:60 (production configuration); microfrontend-workspace/projects/shell/webpack.prod.config.js:1 (reuses `webpack.config`) |
 
-## Notas
+## Notes
 
-- A rota mfe2 em microfrontend-workspace/projects/shell/src/app/app.routes.ts:14-21 está comentada. A rota mfe1 em :5-12 usa loadRemoteModule; o julgamento já é sustentado pela configuração de build ativa.
-- projects/shell/ e projects/mfe1/ não possuem package.json próprio no snapshot; pertencem ao pacote microfrontend-workspace/.
+- The mfe2 route in microfrontend-workspace/projects/shell/src/app/app.routes.ts:14-21 is commented out. The mfe1 route at :5-12 uses loadRemoteModule; the judgment is already supported by the active build configuration.
+- projects/shell/ and projects/mfe1/ have no package.json of their own in the snapshot; they belong to the microfrontend-workspace/ package.
+

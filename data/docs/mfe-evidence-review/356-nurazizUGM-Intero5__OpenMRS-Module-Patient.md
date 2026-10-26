@@ -19,2009 +19,2009 @@ annotation:
 
 # 356 — nurazizUGM-Intero5/OpenMRS-Module-Patient
 
-## Leitura do repositório
+## Repository overview
 
-O snapshot reúne 18 módulos frontend OpenMRS em um monorepo Yarn, além da raiz de coordenação e de uma biblioteca compartilhada (#134–#153). Cada aplicação tem entrada, bundle e publicação npm próprios (#212–#229); a versão e a release são coordenadas. O ambiente Docker que reúne 17 apps é destinado a testes e2e, e exclui o wrapper Angular. O app shell e o import map que carregam esses módulos ficam fora do snapshot.
+Snapshot brings 18 OpenMRS frontend modules in Yarn monorepo plus coordination root/shared library (#134–#153). Each application has own entry, bundle/npm publication (#212–#229); version/release coordinated. Docker environment bringing 17 apps intended for e2e tests, excluding Angular wrapper. App shell/import map loading modules outside snapshot.
 
-A cadeia observável começa nas declarações de `@openmrs/esm-framework` e `single-spa-angular` (#1, #3, #5 e demais manifestos), passa pelos registros de extensões, workspaces e modais (#30–#47), pelos pontos de código que os montam ou abrem (#48–#133), e chega às relações entre unidades (#154–#211). O chart fornece navegação, dashboards e slots preenchidos pelos widgets; forms e vitals recebem os motores de formulário pelo `form-widget-slot`. Orders, medications e tests combinam workspaces, painéis e o carrinho de pedidos. A biblioteca comum auxilia essas ligações, mas não é contada como unidade frontend (PR 142).
+Observable chain starts in `@openmrs/esm-framework`/`single-spa-angular` declarations (#1, #3, #5 and other manifests), passes through extension/workspace/modal registries (#30–#47), code points mounting/opening them (#48–#133), reaches inter-unit relationships (#154–#211). Chart provides navigation, dashboards/slots filled by widgets; forms/vitals receive form engines through `form-widget-slot`. Orders, medications/tests combine workspaces, panels/order basket. Common library supports links but not counted frontend unit (PR 142).
 
-O wrapper Angular configura localmente um container Module Federation, com nome próprio, `./start` e dependências singleton (PR 29), e exporta lifecycles single-spa (#50–#54). Esse container não declara remotes consumidores. As relações forms/vitals → form-entry preservam o mecanismo single-spa registrado pela 3.4.5 (#154–#155); as demais montagens usam o sistema de extensões OpenMRS (`other`). Os builds React delegam a configuração padrão ao pacote externo `openmrs`. Não se estende o container Angular aos demais apps por inferência.
+Angular wrapper locally configures Module Federation container with own name, `./start`/singleton dependencies (PR 29), exports single-spa lifecycles (#50–#54). Container declares no consumer remotes. Forms/vitals → form-entry relationships preserve single-spa mechanism recorded in 3.4.5 (#154–#155); other mounts use OpenMRS extension system (`other`). React builds delegate default configuration to external `openmrs` package. Angular container not extended to other apps by inference.
 
-Há também estado reativo compartilhado no `order-basket` e no `patient-chart-global-store` (#94–#95, #189–#196), eventos do shell (#60, #159) e a integração da página externa HFE-UI por iframe e mensagem de fechamento (#56, #100, #156, #198). O iframe de visualização de PDF é conteúdo de anexo, sem composição frontend (PR 55). O bootstrap assíncrono local e a declaração de tipos não demonstram ligação entre unidades (#48–#49). Dependências sem uso observado continuam sinais isolados (#4, #6, #14, #15, #17); o Turbo é contexto de orquestração (PR 2).
+Also shared reactive state in `order-basket`/`patient-chart-global-store` (#94–#95, #189–#196), shell events (#60, #159), external HFE-UI page integration through iframe/closure message (#56, #100, #156, #198). PDF-preview iframe attachment content without frontend composition (PR 55). Local asynchronous bootstrap/type declaration demonstrate no inter-unit link (#48–#49). Unused observed dependencies remain isolated signals (#4, #6, #14, #15, #17); Turbo orchestration context (PR 2).
 
-Os pontos sem contraparte identificada conservam a indeterminação: os dois eventos do toggle, os slots sem fornecedor, os nomes dinâmicos e `appointments-form-workspace` podem receber unidades externas ou permanecer desconectados (#157–#158, #162, #173, #176–#179, #181, #188, #200, #205–#207, #209). Nos ramos de vitals que escolhem o motor externo, a atividade Yes é a da revisão final, embora `config.vitals.useFormEngine` seja false por padrão (#130–#131, #210–#211). A 3.5 não altera esses valores.
+Points without identified counterpart retain undetermined judgments: both toggle events, providerless slots, dynamic names/`appointments-form-workspace` may receive external units or remain disconnected (#157–#158, #162, #173, #176–#179, #181, #188, #200, #205–#207, #209). Vitals branches choosing external engine preserve final review’s Active Yes although `config.vitals.useFormEngine` defaults false (#130–#131, #210–#211). Section 3.5 does not alter values.
 
-A documentação descreve o conjunto, mas conserva Biometrics como pacote separado e chama a biblioteca de microfrontend (#231–#232, #235); dois comentários e2e também divergem do script (#239–#240). O histórico confirma a remoção de Biometrics e a coexistência das duas divergências e2e desde junho de 2024 (#274, #278–#279). Os demais pontos históricos não autorizam inferir retirada ou abandono: faltam conteúdos antigos ou a contraparte é externa (#255–#273, #275–#277, #280–#282). Quando a dúvida é só sobre o passado de uma declaração, a força é fraca; quando mantém aberta a ligação arquitetural no snapshot, é ambígua.
+Documentation describes group but retains Biometrics as separate package/calls library microfrontend (#231–#232, #235); two e2e comments also diverge from script (#239–#240). History confirms Biometrics removal/coexistence of e2e divergences since June 2024 (#274, #278–#279). Other historical points authorize no withdrawal/abandonment inference: old contents missing or counterpart external (#255–#273, #275–#277, #280–#282). Past-only declaration uncertainty weak strength; uncertainty leaving snapshot architectural link open ambiguous.
 
-## Observações
+## Observations
 
 ### 1. package.json:27; packages/esm-patient-chart-app/src/index.ts:1-6; package.json:5-7; packages/esm-patient-chart-app/package.json:7; packages/esm-form-entry-app/src/index.ts:3; packages/esm-form-entry-app/angular.json:42
 
-**Observação:** O manifesto declara `@openmrs/esm-framework` em `devDependencies`, versão `next`.
+**Observation:** Manifest declares `@openmrs/esm-framework` in `devDependencies`, version `next`.
 
-**Interpretação:** A declaração é um sinal isolado de other-mfe-framework. A revisão 3.4.2 registra Configurada `Yes`. O uso registrado é: packages/esm-patient-chart-app/src/index.ts:1-6 (import de `@openmrs/esm-framework`, pacote hoisted da raiz em `workspaces`, package.json:5-7); packages/esm-patient-chart-app/package.json:7 (`main: src/index.ts`) e :13 (`webpack --mode production`); packages/esm-form-entry-app/src/index.ts:3 (import do pacote; `main` em packages/esm-form-entry-app/angular.json:42)
+**Interpretation:** Declaration is an isolated signal of other-mfe-framework. Review 3.4.2 records Configured `Yes`. Recorded usage: packages/esm-patient-chart-app/src/index.ts:1-6 (import from `@openmrs/esm-framework`, root-hoisted package in `workspaces`, package.json:5-7); packages/esm-patient-chart-app/package.json:7 (`main: src/index.ts`) and :13 (`webpack --mode production`); packages/esm-form-entry-app/src/index.ts:3 (import from package; `main` in packages/esm-form-entry-app/angular.json:42)
 
 ### 2. package.json:75; turbo.json:3-11; .github/workflows/ci.yml:52; .github/workflows/ci.yml:90; .github/workflows/ci.yml:159; .github/workflows/e2e.yml:66; .github/workflows/bundle-size.yml:33
 
-**Observação:** O manifesto declara `turbo` em `devDependencies`, versão `^2.5.2`.
+**Observation:** Manifest declares `turbo` in `devDependencies`, version `^2.5.2`.
 
-**Interpretação:** A declaração é um sinal isolado de monorepo-tool. A revisão 3.4.2 registra Configurada `Yes`. O uso registrado é: turbo.json:3-11 (tarefa `build` com `dependsOn: ["^build"]` e `outputs: ["dist/**"]`); .github/workflows/ci.yml:52, :90 e :159 e .github/workflows/e2e.yml:66 (`yarn turbo run build`); .github/workflows/bundle-size.yml:33 (`build-script: 'turbo run build'`)
+**Interpretation:** Declaration is an isolated signal of monorepo-tool. Review 3.4.2 records Configured `Yes`. Recorded usage: turbo.json:3-11 (task `build` with `dependsOn: ["^build"]` and `outputs: ["dist/**"]`); .github/workflows/ci.yml:52, :90 and :159 and .github/workflows/e2e.yml:66 (`yarn turbo run build`); .github/workflows/bundle-size.yml:33 (`build-script: 'turbo run build'`)
 
 ### 3. packages/esm-form-engine-app/package.json:46; packages/esm-form-engine-app/src/index.ts:1; packages/esm-form-engine-app/package.json:7
 
-**Observação:** O manifesto declara `@openmrs/esm-framework` em `peerDependencies`, versão `6.x`.
+**Observation:** Manifest declares `@openmrs/esm-framework` in `peerDependencies`, version `6.x`.
 
-**Interpretação:** A declaração é um sinal isolado de other-mfe-framework. A revisão 3.4.2 registra Configurada `Yes`. O uso registrado é: packages/esm-form-engine-app/src/index.ts:1 (import de `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-form-engine-app/package.json:7 (`main: src/index.ts`) e :13 (`webpack --mode production`)
+**Interpretation:** Declaration is an isolated signal of other-mfe-framework. Review 3.4.2 records Configured `Yes`. Recorded usage: packages/esm-form-engine-app/src/index.ts:1 (import from `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-form-engine-app/package.json:7 (`main: src/index.ts`) and :13 (`webpack --mode production`)
 
 ### 4. packages/esm-form-entry-app/package.json:38
 
-**Observação:** O manifesto declara `@angular-extensions/elements` em `dependencies`, versão `^17.1.1`.
+**Observation:** Manifest declares `@angular-extensions/elements` in `dependencies`, version `^17.1.1`.
 
-**Interpretação:** A declaração é um sinal isolado de web-components. A revisão 3.4.2 registra Configurada `No`. A revisão não identifica uso da dependência no snapshot; a declaração não demonstra composição.
+**Interpretation:** Declaration is an isolated signal of web-components. Review 3.4.2 records Configured `No`. Review identifies no snapshot dependency usage; declaration does not demonstrate composition.
 
 ### 5. packages/esm-form-entry-app/package.json:59; packages/esm-form-entry-app/src/bootstrap.ts:3; packages/esm-form-entry-app/src/index.ts:66; packages/esm-form-entry-app/angular.json:42
 
-**Observação:** O manifesto declara `single-spa-angular` em `dependencies`, versão `^9.0.1`.
+**Observation:** Manifest declares `single-spa-angular` in `dependencies`, version `^9.0.1`.
 
-**Interpretação:** A declaração é um sinal isolado de single-spa. A revisão 3.4.2 registra Configurada `Yes`. O uso registrado é: packages/esm-form-entry-app/src/bootstrap.ts:3 (import de `singleSpaAngular`) e :12-23 (`singleSpaAngular({...})` e exportação de `bootstrap`/`mount`/`unmount`); packages/esm-form-entry-app/src/index.ts:66 (`formWidget = () => import('./bootstrap')`); packages/esm-form-entry-app/angular.json:42 (`main: src/index.ts`)
+**Interpretation:** Declaration is an isolated signal of single-spa. Review 3.4.2 records Configured `Yes`. Recorded usage: packages/esm-form-entry-app/src/bootstrap.ts:3 (import from `singleSpaAngular`) and :12-23 (`singleSpaAngular({...})` and export of `bootstrap`/`mount`/`unmount`); packages/esm-form-entry-app/src/index.ts:66 (`formWidget = () => import('./bootstrap')`); packages/esm-form-entry-app/angular.json:42 (`main: src/index.ts`)
 
 ### 6. packages/esm-form-entry-app/package.json:61
 
-**Observação:** O manifesto declara `systemjs-webpack-interop` em `dependencies`, versão `^2.3.7`.
+**Observation:** Manifest declares `systemjs-webpack-interop` in `dependencies`, version `^2.3.7`.
 
-**Interpretação:** A declaração é um sinal isolado de import-maps. A revisão 3.4.2 registra Configurada `No`. A revisão não identifica uso da dependência no snapshot; a declaração não demonstra composição.
+**Interpretation:** Declaration is an isolated signal of import-maps. Review 3.4.2 records Configured `No`. Review identifies no snapshot dependency usage; declaration does not demonstrate composition.
 
 ### 7. packages/esm-form-entry-app/package.json:68; packages/esm-form-entry-app/src/index.ts:3; packages/esm-form-entry-app/angular.json:42; packages/esm-form-entry-app/webpack.config.js:48
 
-**Observação:** O manifesto declara `@openmrs/esm-framework` em `peerDependencies`, versão `6.x`.
+**Observation:** Manifest declares `@openmrs/esm-framework` in `peerDependencies`, version `6.x`.
 
-**Interpretação:** A declaração é um sinal isolado de other-mfe-framework. A revisão 3.4.2 registra Configurada `Yes`. O uso registrado é: packages/esm-form-entry-app/src/index.ts:3 (`defineConfigSchema`, `messageOmrsServiceWorker` do pacote) e :63 (`defineConfigSchema(moduleName, configSchema)`); packages/esm-form-entry-app/angular.json:42 (`main: src/index.ts`) e :52 (`extraWebpackConfig: webpack.config.js`); packages/esm-form-entry-app/webpack.config.js:48 (`entry: src/index.ts`) e :116 (alias `@openmrs/esm-framework`)
+**Interpretation:** Declaration is an isolated signal of other-mfe-framework. Review 3.4.2 records Configured `Yes`. Recorded usage: packages/esm-form-entry-app/src/index.ts:3 (`defineConfigSchema`, `messageOmrsServiceWorker` from package) and :63 (`defineConfigSchema(moduleName, configSchema)`); packages/esm-form-entry-app/angular.json:42 (`main: src/index.ts`) and :52 (`extraWebpackConfig: webpack.config.js`); packages/esm-form-entry-app/webpack.config.js:48 (`entry: src/index.ts`) and :116 (alias `@openmrs/esm-framework`)
 
 ### 8. packages/esm-form-entry-app/package.json:69; packages/esm-form-entry-app/src/single-spa-props.ts:2; packages/esm-form-entry-app/src/bootstrap.ts:6; packages/esm-form-entry-app/src/bootstrap.ts:14; packages/esm-form-entry-app/webpack.config.js:77-86; packages/esm-form-entry-app/angular.json:52
 
-**Observação:** O manifesto declara `single-spa` em `peerDependencies`, versão `6.x`.
+**Observation:** Manifest declares `single-spa` in `peerDependencies`, version `6.x`.
 
-**Interpretação:** A declaração é um sinal isolado de single-spa. A revisão 3.4.2 registra Configurada `Yes`. O uso registrado é: packages/esm-form-entry-app/src/single-spa-props.ts:2 (`import { AppProps } from 'single-spa'`) e :47 (tipo `SingleSpaProps`), usado em packages/esm-form-entry-app/src/bootstrap.ts:6 e :14; packages/esm-form-entry-app/webpack.config.js:77-86 (`peerDependencies`, que inclui `single-spa`, compartilhadas como `singleton` no `ModuleFederationPlugin`), referenciado por packages/esm-form-entry-app/angular.json:52
+**Interpretation:** Declaration is an isolated signal of single-spa. Review 3.4.2 records Configured `Yes`. Recorded usage: packages/esm-form-entry-app/src/single-spa-props.ts:2 (`import { AppProps } from 'single-spa'`) and :47 (type `SingleSpaProps`), used in packages/esm-form-entry-app/src/bootstrap.ts:6 and :14; packages/esm-form-entry-app/webpack.config.js:77-86 (`peerDependencies`, which includes `single-spa`, shared as `singleton` no `ModuleFederationPlugin`), referenced by packages/esm-form-entry-app/angular.json:52
 
 ### 9. packages/esm-generic-patient-widgets-app/package.json:45; packages/esm-generic-patient-widgets-app/src/index.ts:1; packages/esm-generic-patient-widgets-app/package.json:7
 
-**Observação:** O manifesto declara `@openmrs/esm-framework` em `peerDependencies`, versão `6.x`.
+**Observation:** Manifest declares `@openmrs/esm-framework` in `peerDependencies`, version `6.x`.
 
-**Interpretação:** A declaração é um sinal isolado de other-mfe-framework. A revisão 3.4.2 registra Configurada `Yes`. O uso registrado é: packages/esm-generic-patient-widgets-app/src/index.ts:1 (import de `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-generic-patient-widgets-app/package.json:7 (`main: src/index.ts`) e :13 (`webpack --mode production`)
+**Interpretation:** Declaration is an isolated signal of other-mfe-framework. Review 3.4.2 records Configured `Yes`. Recorded usage: packages/esm-generic-patient-widgets-app/src/index.ts:1 (import from `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-generic-patient-widgets-app/package.json:7 (`main: src/index.ts`) and :13 (`webpack --mode production`)
 
 ### 10. packages/esm-patient-allergies-app/package.json:44; packages/esm-patient-allergies-app/src/index.ts:1-9; packages/esm-patient-allergies-app/package.json:7
 
-**Observação:** O manifesto declara `@openmrs/esm-framework` em `peerDependencies`, versão `6.x`.
+**Observation:** Manifest declares `@openmrs/esm-framework` in `peerDependencies`, version `6.x`.
 
-**Interpretação:** A declaração é um sinal isolado de other-mfe-framework. A revisão 3.4.2 registra Configurada `Yes`. O uso registrado é: packages/esm-patient-allergies-app/src/index.ts:1-9 (import de `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-allergies-app/package.json:7 (`main: src/index.ts`) e :13 (`webpack --mode production`)
+**Interpretation:** Declaration is an isolated signal of other-mfe-framework. Review 3.4.2 records Configured `Yes`. Recorded usage: packages/esm-patient-allergies-app/src/index.ts:1-9 (import from `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-allergies-app/package.json:7 (`main: src/index.ts`) and :13 (`webpack --mode production`)
 
 ### 11. packages/esm-patient-attachments-app/package.json:49; packages/esm-patient-attachments-app/src/index.ts:2; packages/esm-patient-attachments-app/package.json:7
 
-**Observação:** O manifesto declara `@openmrs/esm-framework` em `peerDependencies`, versão `6.x`.
+**Observation:** Manifest declares `@openmrs/esm-framework` in `peerDependencies`, version `6.x`.
 
-**Interpretação:** A declaração é um sinal isolado de other-mfe-framework. A revisão 3.4.2 registra Configurada `Yes`. O uso registrado é: packages/esm-patient-attachments-app/src/index.ts:2 (import de `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-attachments-app/package.json:7 (`main: src/index.ts`) e :13 (`webpack --mode production`)
+**Interpretation:** Declaration is an isolated signal of other-mfe-framework. Review 3.4.2 records Configured `Yes`. Recorded usage: packages/esm-patient-attachments-app/src/index.ts:2 (import from `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-attachments-app/package.json:7 (`main: src/index.ts`) and :13 (`webpack --mode production`)
 
 ### 12. packages/esm-patient-banner-app/package.json:45; packages/esm-patient-banner-app/src/index.ts:1-7; packages/esm-patient-banner-app/package.json:7
 
-**Observação:** O manifesto declara `@openmrs/esm-framework` em `peerDependencies`, versão `6.x`.
+**Observation:** Manifest declares `@openmrs/esm-framework` in `peerDependencies`, version `6.x`.
 
-**Interpretação:** A declaração é um sinal isolado de other-mfe-framework. A revisão 3.4.2 registra Configurada `Yes`. O uso registrado é: packages/esm-patient-banner-app/src/index.ts:1-7 (import de `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-banner-app/package.json:7 (`main: src/index.ts`) e :13 (`webpack --mode production`)
+**Interpretation:** Declaration is an isolated signal of other-mfe-framework. Review 3.4.2 records Configured `Yes`. Recorded usage: packages/esm-patient-banner-app/src/index.ts:1-7 (import from `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-banner-app/package.json:7 (`main: src/index.ts`) and :13 (`webpack --mode production`)
 
 ### 13. packages/esm-patient-chart-app/package.json:45; packages/esm-patient-chart-app/src/index.ts:1-6; packages/esm-patient-chart-app/package.json:7
 
-**Observação:** O manifesto declara `@openmrs/esm-framework` em `peerDependencies`, versão `6.x`.
+**Observation:** Manifest declares `@openmrs/esm-framework` in `peerDependencies`, version `6.x`.
 
-**Interpretação:** A declaração é um sinal isolado de other-mfe-framework. A revisão 3.4.2 registra Configurada `Yes`. O uso registrado é: packages/esm-patient-chart-app/src/index.ts:1-6 (import de `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-chart-app/package.json:7 (`main: src/index.ts`) e :13 (`webpack --mode production`)
+**Interpretation:** Declaration is an isolated signal of other-mfe-framework. Review 3.4.2 records Configured `Yes`. Recorded usage: packages/esm-patient-chart-app/src/index.ts:1-6 (import from `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-chart-app/package.json:7 (`main: src/index.ts`) and :13 (`webpack --mode production`)
 
 ### 14. packages/esm-patient-chart-app/package.json:53
 
-**Observação:** O manifesto declara `single-spa` em `peerDependencies`, versão `6.x`.
+**Observation:** Manifest declares `single-spa` in `peerDependencies`, version `6.x`.
 
-**Interpretação:** A declaração é um sinal isolado de single-spa. A revisão 3.4.2 registra Configurada `No`. A revisão não identifica uso da dependência no snapshot; a declaração não demonstra composição.
+**Interpretation:** Declaration is an isolated signal of single-spa. Review 3.4.2 records Configured `No`. Review identifies no snapshot dependency usage; declaration does not demonstrate composition.
 
 ### 15. packages/esm-patient-chart-app/package.json:54
 
-**Observação:** O manifesto declara `single-spa-react` em `peerDependencies`, versão `6.x`.
+**Observation:** Manifest declares `single-spa-react` in `peerDependencies`, version `6.x`.
 
-**Interpretação:** A declaração é um sinal isolado de single-spa. A revisão 3.4.2 registra Configurada `No`. A revisão não identifica uso da dependência no snapshot; a declaração não demonstra composição.
+**Interpretation:** Declaration is an isolated signal of single-spa. Review 3.4.2 records Configured `No`. Review identifies no snapshot dependency usage; declaration does not demonstrate composition.
 
 ### 16. packages/esm-patient-common-lib/package.json:37; packages/esm-patient-common-lib/src/launchStartVisitPrompt.tsx:1; packages/esm-patient-common-lib/src/index.ts:9; packages/esm-patient-common-lib/package.json:7; packages/esm-patient-allergies-app/src/index.ts:10; packages/esm-patient-allergies-app/package.json:54
 
-**Observação:** O manifesto declara `@openmrs/esm-framework` em `peerDependencies`, versão `6.x`.
+**Observation:** Manifest declares `@openmrs/esm-framework` in `peerDependencies`, version `6.x`.
 
-**Interpretação:** A declaração é um sinal isolado de other-mfe-framework. A revisão 3.4.2 registra Configurada `Yes`. O uso registrado é: packages/esm-patient-common-lib/src/launchStartVisitPrompt.tsx:1 (`import { showModal } from '@openmrs/esm-framework'`); packages/esm-patient-common-lib/src/index.ts:9 (reexporta o módulo); packages/esm-patient-common-lib/package.json:7 (`main: src/index.ts`); packages/esm-patient-allergies-app/src/index.ts:10 (app importa `@openmrs/esm-patient-common-lib`, `workspace:*` em packages/esm-patient-allergies-app/package.json:54)
+**Interpretation:** Declaration is an isolated signal of other-mfe-framework. Review 3.4.2 records Configured `Yes`. Recorded usage: packages/esm-patient-common-lib/src/launchStartVisitPrompt.tsx:1 (`import { showModal } from '@openmrs/esm-framework'`); packages/esm-patient-common-lib/src/index.ts:9 (reexports module); packages/esm-patient-common-lib/package.json:7 (`main: src/index.ts`); packages/esm-patient-allergies-app/src/index.ts:10 (app imports `@openmrs/esm-patient-common-lib`, `workspace:*` in packages/esm-patient-allergies-app/package.json:54)
 
 ### 17. packages/esm-patient-common-lib/package.json:39
 
-**Observação:** O manifesto declara `single-spa` em `peerDependencies`, versão `6.x`.
+**Observation:** Manifest declares `single-spa` in `peerDependencies`, version `6.x`.
 
-**Interpretação:** A declaração é um sinal isolado de single-spa. A revisão 3.4.2 registra Configurada `No`. A revisão não identifica uso da dependência no snapshot; a declaração não demonstra composição.
+**Interpretation:** Declaration is an isolated signal of single-spa. Review 3.4.2 records Configured `No`. Review identifies no snapshot dependency usage; declaration does not demonstrate composition.
 
 ### 18. packages/esm-patient-conditions-app/package.json:45; packages/esm-patient-conditions-app/src/index.ts:1; packages/esm-patient-conditions-app/package.json:7
 
-**Observação:** O manifesto declara `@openmrs/esm-framework` em `peerDependencies`, versão `6.x`.
+**Observation:** Manifest declares `@openmrs/esm-framework` in `peerDependencies`, version `6.x`.
 
-**Interpretação:** A declaração é um sinal isolado de other-mfe-framework. A revisão 3.4.2 registra Configurada `Yes`. O uso registrado é: packages/esm-patient-conditions-app/src/index.ts:1 (import de `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-conditions-app/package.json:7 (`main: src/index.ts`) e :13 (`webpack --mode production`)
+**Interpretation:** Declaration is an isolated signal of other-mfe-framework. Review 3.4.2 records Configured `Yes`. Recorded usage: packages/esm-patient-conditions-app/src/index.ts:1 (import from `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-conditions-app/package.json:7 (`main: src/index.ts`) and :13 (`webpack --mode production`)
 
 ### 19. packages/esm-patient-flags-app/package.json:43; packages/esm-patient-flags-app/src/index.ts:1; packages/esm-patient-flags-app/package.json:7
 
-**Observação:** O manifesto declara `@openmrs/esm-framework` em `peerDependencies`, versão `6.x`.
+**Observation:** Manifest declares `@openmrs/esm-framework` in `peerDependencies`, version `6.x`.
 
-**Interpretação:** A declaração é um sinal isolado de other-mfe-framework. A revisão 3.4.2 registra Configurada `Yes`. O uso registrado é: packages/esm-patient-flags-app/src/index.ts:1 (import de `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-flags-app/package.json:7 (`main: src/index.ts`) e :12 (`webpack --mode production`)
+**Interpretation:** Declaration is an isolated signal of other-mfe-framework. Review 3.4.2 records Configured `Yes`. Recorded usage: packages/esm-patient-flags-app/src/index.ts:1 (import from `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-flags-app/package.json:7 (`main: src/index.ts`) and :12 (`webpack --mode production`)
 
 ### 20. packages/esm-patient-forms-app/package.json:46; packages/esm-patient-forms-app/src/index.ts:1-7; packages/esm-patient-forms-app/package.json:7
 
-**Observação:** O manifesto declara `@openmrs/esm-framework` em `peerDependencies`, versão `6.x`.
+**Observation:** Manifest declares `@openmrs/esm-framework` in `peerDependencies`, version `6.x`.
 
-**Interpretação:** A declaração é um sinal isolado de other-mfe-framework. A revisão 3.4.2 registra Configurada `Yes`. O uso registrado é: packages/esm-patient-forms-app/src/index.ts:1-7 (import de `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-forms-app/package.json:7 (`main: src/index.ts`) e :13 (`webpack --mode production`)
+**Interpretation:** Declaration is an isolated signal of other-mfe-framework. Review 3.4.2 records Configured `Yes`. Recorded usage: packages/esm-patient-forms-app/src/index.ts:1-7 (import from `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-forms-app/package.json:7 (`main: src/index.ts`) and :13 (`webpack --mode production`)
 
 ### 21. packages/esm-patient-immunizations-app/package.json:47; packages/esm-patient-immunizations-app/src/index.ts:1; packages/esm-patient-immunizations-app/package.json:7
 
-**Observação:** O manifesto declara `@openmrs/esm-framework` em `peerDependencies`, versão `6.x`.
+**Observation:** Manifest declares `@openmrs/esm-framework` in `peerDependencies`, version `6.x`.
 
-**Interpretação:** A declaração é um sinal isolado de other-mfe-framework. A revisão 3.4.2 registra Configurada `Yes`. O uso registrado é: packages/esm-patient-immunizations-app/src/index.ts:1 (import de `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-immunizations-app/package.json:7 (`main: src/index.ts`) e :13 (`webpack --mode production`)
+**Interpretation:** Declaration is an isolated signal of other-mfe-framework. Review 3.4.2 records Configured `Yes`. Recorded usage: packages/esm-patient-immunizations-app/src/index.ts:1 (import from `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-immunizations-app/package.json:7 (`main: src/index.ts`) and :13 (`webpack --mode production`)
 
 ### 22. packages/esm-patient-lists-app/package.json:43; packages/esm-patient-lists-app/src/index.ts:1; packages/esm-patient-lists-app/package.json:7
 
-**Observação:** O manifesto declara `@openmrs/esm-framework` em `peerDependencies`, versão `6.x`.
+**Observation:** Manifest declares `@openmrs/esm-framework` in `peerDependencies`, version `6.x`.
 
-**Interpretação:** A declaração é um sinal isolado de other-mfe-framework. A revisão 3.4.2 registra Configurada `Yes`. O uso registrado é: packages/esm-patient-lists-app/src/index.ts:1 (import de `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-lists-app/package.json:7 (`main: src/index.ts`) e :12 (`webpack --mode production`)
+**Interpretation:** Declaration is an isolated signal of other-mfe-framework. Review 3.4.2 records Configured `Yes`. Recorded usage: packages/esm-patient-lists-app/src/index.ts:1 (import from `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-lists-app/package.json:7 (`main: src/index.ts`) and :12 (`webpack --mode production`)
 
 ### 23. packages/esm-patient-medications-app/package.json:45; packages/esm-patient-medications-app/src/index.ts:1; packages/esm-patient-medications-app/package.json:7
 
-**Observação:** O manifesto declara `@openmrs/esm-framework` em `peerDependencies`, versão `6.x`.
+**Observation:** Manifest declares `@openmrs/esm-framework` in `peerDependencies`, version `6.x`.
 
-**Interpretação:** A declaração é um sinal isolado de other-mfe-framework. A revisão 3.4.2 registra Configurada `Yes`. O uso registrado é: packages/esm-patient-medications-app/src/index.ts:1 (import de `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-medications-app/package.json:7 (`main: src/index.ts`) e :13 (`webpack --mode production`)
+**Interpretation:** Declaration is an isolated signal of other-mfe-framework. Review 3.4.2 records Configured `Yes`. Recorded usage: packages/esm-patient-medications-app/src/index.ts:1 (import from `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-medications-app/package.json:7 (`main: src/index.ts`) and :13 (`webpack --mode production`)
 
 ### 24. packages/esm-patient-notes-app/package.json:43; packages/esm-patient-notes-app/src/index.ts:1-7; packages/esm-patient-notes-app/package.json:7
 
-**Observação:** O manifesto declara `@openmrs/esm-framework` em `peerDependencies`, versão `6.x`.
+**Observation:** Manifest declares `@openmrs/esm-framework` in `peerDependencies`, version `6.x`.
 
-**Interpretação:** A declaração é um sinal isolado de other-mfe-framework. A revisão 3.4.2 registra Configurada `Yes`. O uso registrado é: packages/esm-patient-notes-app/src/index.ts:1-7 (import de `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-notes-app/package.json:7 (`main: src/index.ts`) e :13 (`webpack --mode production`)
+**Interpretation:** Declaration is an isolated signal of other-mfe-framework. Review 3.4.2 records Configured `Yes`. Recorded usage: packages/esm-patient-notes-app/src/index.ts:1-7 (import from `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-notes-app/package.json:7 (`main: src/index.ts`) and :13 (`webpack --mode production`)
 
 ### 25. packages/esm-patient-orders-app/package.json:45; packages/esm-patient-orders-app/src/index.ts:1; packages/esm-patient-orders-app/package.json:7
 
-**Observação:** O manifesto declara `@openmrs/esm-framework` em `peerDependencies`, versão `6.x`.
+**Observation:** Manifest declares `@openmrs/esm-framework` in `peerDependencies`, version `6.x`.
 
-**Interpretação:** A declaração é um sinal isolado de other-mfe-framework. A revisão 3.4.2 registra Configurada `Yes`. O uso registrado é: packages/esm-patient-orders-app/src/index.ts:1 (import de `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-orders-app/package.json:7 (`main: src/index.ts`) e :13 (`webpack --mode production`)
+**Interpretation:** Declaration is an isolated signal of other-mfe-framework. Review 3.4.2 records Configured `Yes`. Recorded usage: packages/esm-patient-orders-app/src/index.ts:1 (import from `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-orders-app/package.json:7 (`main: src/index.ts`) and :13 (`webpack --mode production`)
 
 ### 26. packages/esm-patient-programs-app/package.json:45; packages/esm-patient-programs-app/src/index.ts:1; packages/esm-patient-programs-app/package.json:7
 
-**Observação:** O manifesto declara `@openmrs/esm-framework` em `peerDependencies`, versão `6.x`.
+**Observation:** Manifest declares `@openmrs/esm-framework` in `peerDependencies`, version `6.x`.
 
-**Interpretação:** A declaração é um sinal isolado de other-mfe-framework. A revisão 3.4.2 registra Configurada `Yes`. O uso registrado é: packages/esm-patient-programs-app/src/index.ts:1 (import de `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-programs-app/package.json:7 (`main: src/index.ts`) e :13 (`webpack --mode production`)
+**Interpretation:** Declaration is an isolated signal of other-mfe-framework. Review 3.4.2 records Configured `Yes`. Recorded usage: packages/esm-patient-programs-app/src/index.ts:1 (import from `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-programs-app/package.json:7 (`main: src/index.ts`) and :13 (`webpack --mode production`)
 
 ### 27. packages/esm-patient-tests-app/package.json:47; packages/esm-patient-tests-app/src/index.ts:1-7; packages/esm-patient-tests-app/package.json:7
 
-**Observação:** O manifesto declara `@openmrs/esm-framework` em `peerDependencies`, versão `6.x`.
+**Observation:** Manifest declares `@openmrs/esm-framework` in `peerDependencies`, version `6.x`.
 
-**Interpretação:** A declaração é um sinal isolado de other-mfe-framework. A revisão 3.4.2 registra Configurada `Yes`. O uso registrado é: packages/esm-patient-tests-app/src/index.ts:1-7 (import de `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-tests-app/package.json:7 (`main: src/index.ts`) e :13 (`webpack --mode production`)
+**Interpretation:** Declaration is an isolated signal of other-mfe-framework. Review 3.4.2 records Configured `Yes`. Recorded usage: packages/esm-patient-tests-app/src/index.ts:1-7 (import from `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-tests-app/package.json:7 (`main: src/index.ts`) and :13 (`webpack --mode production`)
 
 ### 28. packages/esm-patient-vitals-app/package.json:46; packages/esm-patient-vitals-app/src/index.ts:1-8; packages/esm-patient-vitals-app/package.json:7
 
-**Observação:** O manifesto declara `@openmrs/esm-framework` em `peerDependencies`, versão `6.x`.
+**Observation:** Manifest declares `@openmrs/esm-framework` in `peerDependencies`, version `6.x`.
 
-**Interpretação:** A declaração é um sinal isolado de other-mfe-framework. A revisão 3.4.2 registra Configurada `Yes`. O uso registrado é: packages/esm-patient-vitals-app/src/index.ts:1-8 (import de `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-vitals-app/package.json:7 (`main: src/index.ts`) e :13 (`webpack --mode production`)
+**Interpretation:** Declaration is an isolated signal of other-mfe-framework. Review 3.4.2 records Configured `Yes`. Recorded usage: packages/esm-patient-vitals-app/src/index.ts:1-8 (import from `@openmrs/esm-framework`, `getSyncLifecycle`/`getAsyncLifecycle`/`defineConfigSchema`); packages/esm-patient-vitals-app/package.json:7 (`main: src/index.ts`) and :13 (`webpack --mode production`)
 
 ### 29. packages/esm-form-entry-app/webpack.config.js:27-31; packages/esm-form-entry-app/webpack.config.js:70-87; packages/esm-form-entry-app/package.json:2; packages/esm-form-entry-app/package.json:6-7; packages/esm-form-entry-app/package.json:67-70
 
-**Observação:** O `ModuleFederationPlugin` recebe o nome do pacote `@openmrs/esm-form-entry-app`, a biblioteca global `_openmrs_esm_form_entry_app` e o filename derivado de `browser`. Expõe `./start` para `src/index.ts`. Compartilha os `peerDependencies` e `@openmrs/esm-framework/src/internal`, com `singleton: true` e `shareScope: default`.
+**Observation:** `ModuleFederationPlugin` receives package name `@openmrs/esm-form-entry-app`, global library `_openmrs_esm_form_entry_app`, filename derived from `browser`. Exposes `./start` to `src/index.ts`. Shares `peerDependencies` and `@openmrs/esm-framework/src/internal`, with `singleton: true`, `shareScope: default`.
 
-**Interpretação:** Configura o container de uma unidade, incluindo exposição e compartilhamento. Não declara outra unidade como remote; o consumidor pertence ao shell externo.
+**Interpretation:** Configures unit container including exposure/sharing. Declares no other remote unit; consumer belongs to external shell.
 
 ### 30. packages/esm-form-engine-app/src/routes.json:1-25
 
-**Observação:** O registro da unidade declara `extensions`: {"name": "react-form-engine-widget", "component": "formRenderer", "slot": "form-widget-slot"}; `extensions`: {"name": "rfe-form-collapse-toggle", "component": "formCollapseToggle", "slot": "workspace-header-patient-chart-slot"}; `modals`: {"name": "form-engine-delete-question-confirm-modal", "component": "deleteQuestionModal"}.
+**Observation:** Unit registry declares `extensions`: {"name": "react-form-engine-widget", "component": "formRenderer", "slot": "form-widget-slot"}; `extensions`: {"name": "rfe-form-collapse-toggle", "component": "formCollapseToggle", "slot": "workspace-header-patient-chart-slot"}; `modals`: {"name": "form-engine-delete-question-confirm-modal", "component": "deleteQuestionModal"}.
 
-**Interpretação:** Parametriza os componentes expostos pela unidade para o sistema de extensões do OpenMRS. Os nomes de slots e registros permitem sua resolução pelo framework; este arquivo sozinho não identifica uma segunda unidade consumidora.
+**Interpretation:** Parameterizes components exposed by unit for OpenMRS extension system. Slot/registry names allow framework resolution; file alone identifies no second consuming unit.
 
 ### 31. packages/esm-generic-patient-widgets-app/src/routes.json:1-17
 
-**Observação:** O registro da unidade declara `extensions`: {"name": "obs-by-encounter-widget", "component": "switchableObs"}.
+**Observation:** Unit registry declares `extensions`: {"name": "obs-by-encounter-widget", "component": "switchableObs"}.
 
-**Interpretação:** Parametriza os componentes expostos pela unidade para o sistema de extensões do OpenMRS. Os nomes de slots e registros permitem sua resolução pelo framework; este arquivo sozinho não identifica uma segunda unidade consumidora.
+**Interpretation:** Parameterizes components exposed by unit for OpenMRS extension system. Slot/registry names allow framework resolution; file alone identifies no second consuming unit.
 
 ### 32. packages/esm-patient-allergies-app/src/routes.json:1-48
 
-**Observação:** O registro da unidade declara `extensions`: {"name": "allergy-tile", "component": "allergyTile", "slot": "patient-details-header-slot"}; `extensions`: {"name": "allergies-details-widget", "component": "allergiesDetailedSummary", "slot": "patient-chart-allergies-dashboard-slot"}; `extensions`: {"name": "allergies-summary-dashboard", "component": "allergiesDashboardLink", "slot": "patient-chart-dashboard-slot"}; `extensions`: {"name": "allergy-delete-confirmation-dialog", "component": "allergyDeleteConfirmationDialog"}; `workspaces`: {"name": "patient-allergy-form-workspace", "component": "allergyFormWorkspace"}.
+**Observation:** Unit registry declares `extensions`: {"name": "allergy-tile", "component": "allergyTile", "slot": "patient-details-header-slot"}; `extensions`: {"name": "allergies-details-widget", "component": "allergiesDetailedSummary", "slot": "patient-chart-allergies-dashboard-slot"}; `extensions`: {"name": "allergies-summary-dashboard", "component": "allergiesDashboardLink", "slot": "patient-chart-dashboard-slot"}; `extensions`: {"name": "allergy-delete-confirmation-dialog", "component": "allergyDeleteConfirmationDialog"}; `workspaces`: {"name": "patient-allergy-form-workspace", "component": "allergyFormWorkspace"}.
 
-**Interpretação:** Parametriza os componentes expostos pela unidade para o sistema de extensões do OpenMRS. Os nomes de slots e registros permitem sua resolução pelo framework; este arquivo sozinho não identifica uma segunda unidade consumidora.
+**Interpretation:** Parameterizes components exposed by unit for OpenMRS extension system. Slot/registry names allow framework resolution; file alone identifies no second consuming unit.
 
 ### 33. packages/esm-patient-attachments-app/src/routes.json:1-39
 
-**Observação:** O registro da unidade declara `extensions`: {"name": "attachments-overview-widget", "component": "attachmentsOverview", "slot": "patient-chart-attachments-dashboard-slot"}; `extensions`: {"name": "attachments-results-summary-dashboard", "component": "attachmentsSummaryResultsDashboard", "slot": "patient-chart-dashboard-slot"}; `extensions`: {"name": "capture-photo-widget", "component": "capturePhotoWidget", "slot": "capture-patient-photo-slot"}; `modals`: {"name": "capture-photo-modal", "component": "capturePhotoModal"}; `modals`: {"name": "delete-attachment-modal", "component": "deleteAttachmentModal"}.
+**Observation:** Unit registry declares `extensions`: {"name": "attachments-overview-widget", "component": "attachmentsOverview", "slot": "patient-chart-attachments-dashboard-slot"}; `extensions`: {"name": "attachments-results-summary-dashboard", "component": "attachmentsSummaryResultsDashboard", "slot": "patient-chart-dashboard-slot"}; `extensions`: {"name": "capture-photo-widget", "component": "capturePhotoWidget", "slot": "capture-patient-photo-slot"}; `modals`: {"name": "capture-photo-modal", "component": "capturePhotoModal"}; `modals`: {"name": "delete-attachment-modal", "component": "deleteAttachmentModal"}.
 
-**Interpretação:** Parametriza os componentes expostos pela unidade para o sistema de extensões do OpenMRS. Os nomes de slots e registros permitem sua resolução pelo framework; este arquivo sozinho não identifica uma segunda unidade consumidora.
+**Interpretation:** Parameterizes components exposed by unit for OpenMRS extension system. Slot/registry names allow framework resolution; file alone identifies no second consuming unit.
 
 ### 34. packages/esm-patient-banner-app/src/routes.json:1-49
 
-**Observação:** O registro da unidade declara `extensions`: {"name": "visit-tag", "component": "visitTag", "slot": "patient-banner-tags-slot"}; `extensions`: {"name": "deceased-patient-tag", "component": "deceasedPatientTag", "slot": "patient-banner-tags-slot"}; `extensions`: {"name": "patient-banner", "component": "patientBanner", "slot": "patient-header-slot"}; `extensions`: {"name": "print-identifier-sticker-button", "component": "printIdentifierStickerActionButton", "slot": "patient-actions-slot"}; `modals`: {"name": "print-identifier-sticker-modal", "component": "printIdentifierStickerModal"}.
+**Observation:** Unit registry declares `extensions`: {"name": "visit-tag", "component": "visitTag", "slot": "patient-banner-tags-slot"}; `extensions`: {"name": "deceased-patient-tag", "component": "deceasedPatientTag", "slot": "patient-banner-tags-slot"}; `extensions`: {"name": "patient-banner", "component": "patientBanner", "slot": "patient-header-slot"}; `extensions`: {"name": "print-identifier-sticker-button", "component": "printIdentifierStickerActionButton", "slot": "patient-actions-slot"}; `modals`: {"name": "print-identifier-sticker-modal", "component": "printIdentifierStickerModal"}.
 
-**Interpretação:** Parametriza os componentes expostos pela unidade para o sistema de extensões do OpenMRS. Os nomes de slots e registros permitem sua resolução pelo framework; este arquivo sozinho não identifica uma segunda unidade consumidora.
+**Interpretation:** Parameterizes components exposed by unit for OpenMRS extension system. Slot/registry names allow framework resolution; file alone identifies no second consuming unit.
 
 ### 35. packages/esm-patient-chart-app/src/routes.json:1-244
 
-**Observação:** O registro da unidade declara `extensions`: {"name": "charts-summary-dashboard", "component": "patientSummaryDashboardLink", "slot": "patient-chart-dashboard-slot"}; `extensions`: {"name": "encounter-list", "component": "encounterListTableTabs"}; `extensions`: {"name": "start-visit-button", "component": "startVisitActionButton", "slot": "patient-actions-slot"}; `extensions`: {"name": "clinical-views-summary", "component": "clinicalViewsSummary"}; `extensions`: {"name": "stop-visit-button", "component": "stopVisitActionButton", "slot": "patient-actions-slot"}; `extensions`: {"name": "mark-alive-button", "component": "markPatientAliveActionButton", "slot": "patient-actions-slot"}; `extensions`: {"name": "stop-visit-button-patient-search", "component": "stopVisitPatientSearchActionButton", "slot": "patient-search-actions-slot"}; `extensions`: {"name": "delete-visit-button", "component": "deleteVisitActionMenuButton", "slot": "patient-actions-slot"}; `extensions`: {"name": "delete-visit-button", "component": "deleteVisitActionMenuButton", "slot": "patient-search-actions-slot"}; `extensions`: {"name": "mark-patient-deceased-button", "component": "markPatientDeceasedActionButton", "slot": "patient-actions-slot"}; `extensions`: {"name": "encounters-summary-dashboard", "component": "encountersSummaryDashboardLink", "slot": "patient-chart-dashboard-slot"}; `extensions`: {"name": "past-visits-detail-overview", "component": "pastVisitsDetailOverview", "slot": "patient-chart-encounters-dashboard-slot"}; `extensions`: {"name": "patient-details-tile", "component": "patientDetailsTile", "slot": "visit-form-header-slot"}; `extensions`: {"name": "nav-group", "component": "genericNavGroup"}; `extensions`: {"name": "dashboard", "component": "genericDashboard"}; `extensions`: {"name": "start-visit-button-patient-search", "component": "startVisitPatientSearchActionButton", "slot": "start-visit-button-slot"}; `extensions`: {"name": "visit-attribute-tags", "component": "visitAttributeTags", "slot": "patient-banner-tags-slot"}; `extensions`: {"name": "current-visit-summary", "component": "currentVisitSummary"}; `extensions`: {"name": "edit-visit-action-button", "component": "editVisitDetailsActionButton", "slot": "visit-detail-overview-actions"}; `extensions`: {"name": "delete-visit-action-button", "component": "deleteVisitActionButton", "slot": "visit-detail-overview-actions"}; `extensions`: {"name": "active-visit-action-button", "component": "activeVisitActionsComponent", "slot": "active-visit-actions"}; `extensions`: {"name": "visit-context-header", "component": "visitContextHeader", "slot": "visit-context-header-slot"}; `workspaces`: {"name": "mark-patient-deceased-workspace-form", "component": "markPatientDeceasedForm"}; `workspaces`: {"name": "start-visit-workspace-form", "component": "startVisitWorkspace"}; `modals`: {"name": "delete-encounter-modal", "component": "deleteEncounterModal"}; `modals`: {"name": "delete-visit-dialog", "component": "deleteVisitModal"}; `modals`: {"name": "end-visit-dialog", "component": "endVisitModal"}; `modals`: {"name": "mark-patient-alive-modal", "component": "markPatientAliveModal"}; `modals`: {"name": "modify-visit-date-dialog", "component": "modifyVisitDateModal"}; `modals`: {"name": "start-visit-dialog", "component": "startVisitModal"}; `modals`: {"name": "visit-context-switcher", "component": "visitContextSwitcherModal"}; `pages`: {"component": "root", "routeRegex": "^patient/.+/chart"}.
+**Observation:** Unit registry declares `extensions`: {"name": "charts-summary-dashboard", "component": "patientSummaryDashboardLink", "slot": "patient-chart-dashboard-slot"}; `extensions`: {"name": "encounter-list", "component": "encounterListTableTabs"}; `extensions`: {"name": "start-visit-button", "component": "startVisitActionButton", "slot": "patient-actions-slot"}; `extensions`: {"name": "clinical-views-summary", "component": "clinicalViewsSummary"}; `extensions`: {"name": "stop-visit-button", "component": "stopVisitActionButton", "slot": "patient-actions-slot"}; `extensions`: {"name": "mark-alive-button", "component": "markPatientAliveActionButton", "slot": "patient-actions-slot"}; `extensions`: {"name": "stop-visit-button-patient-search", "component": "stopVisitPatientSearchActionButton", "slot": "patient-search-actions-slot"}; `extensions`: {"name": "delete-visit-button", "component": "deleteVisitActionMenuButton", "slot": "patient-actions-slot"}; `extensions`: {"name": "delete-visit-button", "component": "deleteVisitActionMenuButton", "slot": "patient-search-actions-slot"}; `extensions`: {"name": "mark-patient-deceased-button", "component": "markPatientDeceasedActionButton", "slot": "patient-actions-slot"}; `extensions`: {"name": "encounters-summary-dashboard", "component": "encountersSummaryDashboardLink", "slot": "patient-chart-dashboard-slot"}; `extensions`: {"name": "past-visits-detail-overview", "component": "pastVisitsDetailOverview", "slot": "patient-chart-encounters-dashboard-slot"}; `extensions`: {"name": "patient-details-tile", "component": "patientDetailsTile", "slot": "visit-form-header-slot"}; `extensions`: {"name": "nav-group", "component": "genericNavGroup"}; `extensions`: {"name": "dashboard", "component": "genericDashboard"}; `extensions`: {"name": "start-visit-button-patient-search", "component": "startVisitPatientSearchActionButton", "slot": "start-visit-button-slot"}; `extensions`: {"name": "visit-attribute-tags", "component": "visitAttributeTags", "slot": "patient-banner-tags-slot"}; `extensions`: {"name": "current-visit-summary", "component": "currentVisitSummary"}; `extensions`: {"name": "edit-visit-action-button", "component": "editVisitDetailsActionButton", "slot": "visit-detail-overview-actions"}; `extensions`: {"name": "delete-visit-action-button", "component": "deleteVisitActionButton", "slot": "visit-detail-overview-actions"}; `extensions`: {"name": "active-visit-action-button", "component": "activeVisitActionsComponent", "slot": "active-visit-actions"}; `extensions`: {"name": "visit-context-header", "component": "visitContextHeader", "slot": "visit-context-header-slot"}; `workspaces`: {"name": "mark-patient-deceased-workspace-form", "component": "markPatientDeceasedForm"}; `workspaces`: {"name": "start-visit-workspace-form", "component": "startVisitWorkspace"}; `modals`: {"name": "delete-encounter-modal", "component": "deleteEncounterModal"}; `modals`: {"name": "delete-visit-dialog", "component": "deleteVisitModal"}; `modals`: {"name": "end-visit-dialog", "component": "endVisitModal"}; `modals`: {"name": "mark-patient-alive-modal", "component": "markPatientAliveModal"}; `modals`: {"name": "modify-visit-date-dialog", "component": "modifyVisitDateModal"}; `modals`: {"name": "start-visit-dialog", "component": "startVisitModal"}; `modals`: {"name": "visit-context-switcher", "component": "visitContextSwitcherModal"}; `pages`: {"component": "root", "routeRegex": "^patient/.+/chart"}.
 
-**Interpretação:** Parametriza os componentes expostos pela unidade para o sistema de extensões do OpenMRS. Os nomes de slots e registros permitem sua resolução pelo framework; este arquivo sozinho não identifica uma segunda unidade consumidora.
+**Interpretation:** Parameterizes components exposed by unit for OpenMRS extension system. Slot/registry names allow framework resolution; file alone identifies no second consuming unit.
 
 ### 36. packages/esm-patient-conditions-app/src/routes.json:1-51
 
-**Observação:** O registro da unidade declara `extensions`: {"name": "conditions-overview-widget", "component": "conditionsOverview", "slot": "patient-chart-summary-dashboard-slot"}; `extensions`: {"name": "conditions-details-widget", "component": "conditionsDetailedSummary", "slot": "patient-chart-conditions-dashboard-slot"}; `extensions`: {"name": "conditions-summary-dashboard", "component": "conditionsDashboardLink", "slot": "patient-chart-dashboard-slot"}; `extensions`: {"name": "conditions-widget", "component": "conditionsWidget"}; `extensions`: {"name": "condition-delete-confirmation-dialog", "component": "conditionDeleteConfirmationDialog"}; `workspaces`: {"name": "conditions-form-workspace", "component": "conditionsFormWorkspace"}.
+**Observation:** Unit registry declares `extensions`: {"name": "conditions-overview-widget", "component": "conditionsOverview", "slot": "patient-chart-summary-dashboard-slot"}; `extensions`: {"name": "conditions-details-widget", "component": "conditionsDetailedSummary", "slot": "patient-chart-conditions-dashboard-slot"}; `extensions`: {"name": "conditions-summary-dashboard", "component": "conditionsDashboardLink", "slot": "patient-chart-dashboard-slot"}; `extensions`: {"name": "conditions-widget", "component": "conditionsWidget"}; `extensions`: {"name": "condition-delete-confirmation-dialog", "component": "conditionDeleteConfirmationDialog"}; `workspaces`: {"name": "conditions-form-workspace", "component": "conditionsFormWorkspace"}.
 
-**Interpretação:** Parametriza os componentes expostos pela unidade para o sistema de extensões do OpenMRS. Os nomes de slots e registros permitem sua resolução pelo framework; este arquivo sozinho não identifica uma segunda unidade consumidora.
+**Interpretation:** Parameterizes components exposed by unit for OpenMRS extension system. Slot/registry names allow framework resolution; file alone identifies no second consuming unit.
 
 ### 37. packages/esm-patient-flags-app/src/routes.json:1-43
 
-**Observação:** O registro da unidade declara `extensions`: {"name": "edit-flags-side-panel-form", "component": "editPatientFlagsWorkspace"}; `extensions`: {"name": "patient-flag-tags", "component": "flagTags", "slot": "patient-highlights-bar-slot"}; `extensions`: {"name": "patient-flags-overview", "component": "flagsOverview", "slot": "patient-chart-summary-dashboard-slot"}.
+**Observation:** Unit registry declares `extensions`: {"name": "edit-flags-side-panel-form", "component": "editPatientFlagsWorkspace"}; `extensions`: {"name": "patient-flag-tags", "component": "flagTags", "slot": "patient-highlights-bar-slot"}; `extensions`: {"name": "patient-flags-overview", "component": "flagsOverview", "slot": "patient-chart-summary-dashboard-slot"}.
 
-**Interpretação:** Parametriza os componentes expostos pela unidade para o sistema de extensões do OpenMRS. Os nomes de slots e registros permitem sua resolução pelo framework; este arquivo sozinho não identifica uma segunda unidade consumidora.
+**Interpretation:** Parameterizes components exposed by unit for OpenMRS extension system. Slot/registry names allow framework resolution; file alone identifies no second consuming unit.
 
 ### 38. packages/esm-patient-forms-app/src/routes.json:1-92
 
-**Observação:** O registro da unidade declara `extensions`: {"name": "offline-tools-dashboard-forms-card", "component": "offlineFormOverviewCard", "slot": "offline-tools-dashboard-cards"}; `extensions`: {"name": "offline-tools-page-forms-link", "component": "offlineFormsNavLink", "slot": "offline-tools-page-slot"}; `extensions`: {"name": "offline-tools-page-forms", "component": "offlineForms", "slot": "offline-tools-page-forms-slot"}; `extensions`: {"name": "clinical-form-action-menu", "component": "clinicalFormActionMenu", "slot": "action-menu-patient-chart-items-slot"}; `extensions`: {"name": "clinical-forms-workspaceExtension", "component": "clinicalFormsWorkspaceExtension", "slot": "ward-patient-clinical-forms-workspace-slot"}; `workspaces`: {"name": "patient-form-entry-workspace", "component": "patientFormEntryWorkspace"}; `workspaces`: {"name": "ward-patient-form-entry-workspace", "component": "patientFormEntryWorkspace"}; `workspaces`: {"name": "patient-html-form-entry-workspace", "component": "patientHtmlFormEntryWorkspace"}; `workspaces`: {"name": "ward-patient-html-form-entry-workspace", "component": "patientHtmlFormEntryWorkspace"}; `workspaces`: {"name": "clinical-forms-workspace", "component": "clinicalFormsWorkspace"}.
+**Observation:** Unit registry declares `extensions`: {"name": "offline-tools-dashboard-forms-card", "component": "offlineFormOverviewCard", "slot": "offline-tools-dashboard-cards"}; `extensions`: {"name": "offline-tools-page-forms-link", "component": "offlineFormsNavLink", "slot": "offline-tools-page-slot"}; `extensions`: {"name": "offline-tools-page-forms", "component": "offlineForms", "slot": "offline-tools-page-forms-slot"}; `extensions`: {"name": "clinical-form-action-menu", "component": "clinicalFormActionMenu", "slot": "action-menu-patient-chart-items-slot"}; `extensions`: {"name": "clinical-forms-workspaceExtension", "component": "clinicalFormsWorkspaceExtension", "slot": "ward-patient-clinical-forms-workspace-slot"}; `workspaces`: {"name": "patient-form-entry-workspace", "component": "patientFormEntryWorkspace"}; `workspaces`: {"name": "ward-patient-form-entry-workspace", "component": "patientFormEntryWorkspace"}; `workspaces`: {"name": "patient-html-form-entry-workspace", "component": "patientHtmlFormEntryWorkspace"}; `workspaces`: {"name": "ward-patient-html-form-entry-workspace", "component": "patientHtmlFormEntryWorkspace"}; `workspaces`: {"name": "clinical-forms-workspace", "component": "clinicalFormsWorkspace"}.
 
-**Interpretação:** Parametriza os componentes expostos pela unidade para o sistema de extensões do OpenMRS. Os nomes de slots e registros permitem sua resolução pelo framework; este arquivo sozinho não identifica uma segunda unidade consumidora.
+**Interpretation:** Parameterizes components exposed by unit for OpenMRS extension system. Slot/registry names allow framework resolution; file alone identifies no second consuming unit.
 
 ### 39. packages/esm-patient-immunizations-app/src/routes.json:1-37
 
-**Observação:** O registro da unidade declara `extensions`: {"name": "immunization-overview-widget", "component": "immunizationsOverview"}; `extensions`: {"name": "immunization-details-widget", "component": "immunizationsDetailedSummary", "slot": "patient-chart-immunizations-dashboard-slot"}; `extensions`: {"name": "immunization-summary-dashboard", "component": "immunizationsDashboardLink", "slot": "patient-chart-dashboard-slot"}; `workspaces`: {"name": "immunization-form-workspace", "component": "immunizationFormWorkspace"}.
+**Observation:** Unit registry declares `extensions`: {"name": "immunization-overview-widget", "component": "immunizationsOverview"}; `extensions`: {"name": "immunization-details-widget", "component": "immunizationsDetailedSummary", "slot": "patient-chart-immunizations-dashboard-slot"}; `extensions`: {"name": "immunization-summary-dashboard", "component": "immunizationsDashboardLink", "slot": "patient-chart-dashboard-slot"}; `workspaces`: {"name": "immunization-form-workspace", "component": "immunizationFormWorkspace"}.
 
-**Interpretação:** Parametriza os componentes expostos pela unidade para o sistema de extensões do OpenMRS. Os nomes de slots e registros permitem sua resolução pelo framework; este arquivo sozinho não identifica uma segunda unidade consumidora.
+**Interpretation:** Parameterizes components exposed by unit for OpenMRS extension system. Slot/registry names allow framework resolution; file alone identifies no second consuming unit.
 
 ### 40. packages/esm-patient-lists-app/src/routes.json:1-31
 
-**Observação:** O registro da unidade declara `extensions`: {"name": "patient-lists-action-menu", "component": "patientListsActionMenu", "slot": "action-menu-patient-chart-items-slot"}; `workspaces`: {"name": "patient-lists", "component": "patientListsWorkspace"}; `workspaces`: {"name": "patient-list-details", "component": "patientListDetailsWorkspace"}.
+**Observation:** Unit registry declares `extensions`: {"name": "patient-lists-action-menu", "component": "patientListsActionMenu", "slot": "action-menu-patient-chart-items-slot"}; `workspaces`: {"name": "patient-lists", "component": "patientListsWorkspace"}; `workspaces`: {"name": "patient-list-details", "component": "patientListDetailsWorkspace"}.
 
-**Interpretação:** Parametriza os componentes expostos pela unidade para o sistema de extensões do OpenMRS. Os nomes de slots e registros permitem sua resolução pelo framework; este arquivo sozinho não identifica uma segunda unidade consumidora.
+**Interpretation:** Parameterizes components exposed by unit for OpenMRS extension system. Slot/registry names allow framework resolution; file alone identifies no second consuming unit.
 
 ### 41. packages/esm-patient-medications-app/src/routes.json:1-49
 
-**Observação:** O registro da unidade declara `extensions`: {"name": "medications-details-widget", "component": "medicationsSummary", "slot": "patient-chart-medications-dashboard-slot"}; `extensions`: {"name": "active-medications-widget", "component": "activeMedications", "slot": "patient-chart-summary-dashboard-slot"}; `extensions`: {"name": "medications-summary-dashboard", "component": "medicationsDashboardLink", "slot": "patient-chart-dashboard-slot"}; `extensions`: {"name": "drug-order-panel", "component": "drugOrderPanel", "slot": "order-basket-slot"}; `workspaces`: {"name": "add-drug-order", "component": "addDrugOrderWorkspace"}.
+**Observation:** Unit registry declares `extensions`: {"name": "medications-details-widget", "component": "medicationsSummary", "slot": "patient-chart-medications-dashboard-slot"}; `extensions`: {"name": "active-medications-widget", "component": "activeMedications", "slot": "patient-chart-summary-dashboard-slot"}; `extensions`: {"name": "medications-summary-dashboard", "component": "medicationsDashboardLink", "slot": "patient-chart-dashboard-slot"}; `extensions`: {"name": "drug-order-panel", "component": "drugOrderPanel", "slot": "order-basket-slot"}; `workspaces`: {"name": "add-drug-order", "component": "addDrugOrderWorkspace"}.
 
-**Interpretação:** Parametriza os componentes expostos pela unidade para o sistema de extensões do OpenMRS. Os nomes de slots e registros permitem sua resolução pelo framework; este arquivo sozinho não identifica uma segunda unidade consumidora.
+**Interpretation:** Parameterizes components exposed by unit for OpenMRS extension system. Slot/registry names allow framework resolution; file alone identifies no second consuming unit.
 
 ### 42. packages/esm-patient-notes-app/src/routes.json:1-32
 
-**Observação:** O registro da unidade declara `extensions`: {"name": "notes-overview-widget", "component": "notesOverview"}; `extensions`: {"name": "visit-note-nav-button", "component": "visitNotesActionButton", "slot": "action-menu-patient-chart-items-slot"}; `workspaces`: {"name": "visit-notes-form-workspace", "component": "visitNotesFormWorkspace"}.
+**Observation:** Unit registry declares `extensions`: {"name": "notes-overview-widget", "component": "notesOverview"}; `extensions`: {"name": "visit-note-nav-button", "component": "visitNotesActionButton", "slot": "action-menu-patient-chart-items-slot"}; `workspaces`: {"name": "visit-notes-form-workspace", "component": "visitNotesFormWorkspace"}.
 
-**Interpretação:** Parametriza os componentes expostos pela unidade para o sistema de extensões do OpenMRS. Os nomes de slots e registros permitem sua resolução pelo framework; este arquivo sozinho não identifica uma segunda unidade consumidora.
+**Interpretation:** Parameterizes components exposed by unit for OpenMRS extension system. Slot/registry names allow framework resolution; file alone identifies no second consuming unit.
 
 ### 43. packages/esm-patient-orders-app/src/routes.json:1-101
 
-**Observação:** O registro da unidade declara `extensions`: {"name": "order-price-details", "component": "orderPriceDetailsExtension", "slot": "order-item-additional-info-slot"}; `extensions`: {"name": "order-stock-details", "component": "orderStockDetailsExtension", "slot": "order-item-additional-info-slot"}; `extensions`: {"name": "order-basket-action-menu", "component": "orderBasketActionMenu"}; `extensions`: {"name": "lab-result", "component": "labResult", "slot": "completed-lab-order-results-slot"}; `extensions`: {"name": "print-lab-results-action-button", "component": "printLabResultsButton", "slot": "print-lab-results-action-button-slot"}; `extensions`: {"name": "patient-orders-summary-dashboard", "component": "ordersDashboardLink", "slot": "patient-chart-dashboard-slot"}; `extensions`: {"name": "patient-orders-dashboard", "component": "ordersDashboard", "slot": "patient-chart-orders-dashboard-slot"}; `workspaces`: {"name": "order-basket", "component": "orderBasketWorkspace"}; `workspaces`: {"name": "patient-orders-form-workspace", "component": "patientOrdersFormWorkspace"}; `workspaces`: {"name": "test-results-form-workspace", "component": "testResultsFormWorkspace"}; `workspaces`: {"name": "orderable-concept-workspace", "component": "orderableConceptSearch"}; `modals`: {"name": "print-lab-results-modal", "component": "printLabResultModal"}.
+**Observation:** Unit registry declares `extensions`: {"name": "order-price-details", "component": "orderPriceDetailsExtension", "slot": "order-item-additional-info-slot"}; `extensions`: {"name": "order-stock-details", "component": "orderStockDetailsExtension", "slot": "order-item-additional-info-slot"}; `extensions`: {"name": "order-basket-action-menu", "component": "orderBasketActionMenu"}; `extensions`: {"name": "lab-result", "component": "labResult", "slot": "completed-lab-order-results-slot"}; `extensions`: {"name": "print-lab-results-action-button", "component": "printLabResultsButton", "slot": "print-lab-results-action-button-slot"}; `extensions`: {"name": "patient-orders-summary-dashboard", "component": "ordersDashboardLink", "slot": "patient-chart-dashboard-slot"}; `extensions`: {"name": "patient-orders-dashboard", "component": "ordersDashboard", "slot": "patient-chart-orders-dashboard-slot"}; `workspaces`: {"name": "order-basket", "component": "orderBasketWorkspace"}; `workspaces`: {"name": "patient-orders-form-workspace", "component": "patientOrdersFormWorkspace"}; `workspaces`: {"name": "test-results-form-workspace", "component": "testResultsFormWorkspace"}; `workspaces`: {"name": "orderable-concept-workspace", "component": "orderableConceptSearch"}; `modals`: {"name": "print-lab-results-modal", "component": "printLabResultModal"}.
 
-**Interpretação:** Parametriza os componentes expostos pela unidade para o sistema de extensões do OpenMRS. Os nomes de slots e registros permitem sua resolução pelo framework; este arquivo sozinho não identifica uma segunda unidade consumidora.
+**Interpretation:** Parameterizes components exposed by unit for OpenMRS extension system. Slot/registry names allow framework resolution; file alone identifies no second consuming unit.
 
 ### 44. packages/esm-patient-programs-app/src/routes.json:1-47
 
-**Observação:** O registro da unidade declara `extensions`: {"name": "programs-overview-widget", "component": "programsOverview"}; `extensions`: {"name": "programs-details-widget", "component": "programsDetailedSummary", "slot": "patient-chart-programs-dashboard-slot"}; `extensions`: {"name": "programs-summary-dashboard", "component": "programsDashboardLink", "slot": "patient-chart-dashboard-slot"}; `workspaces`: {"name": "programs-form-workspace", "component": "programsFormWorkspace"}; `modals`: {"name": "program-delete-confirmation-modal", "component": "deleteProgramConfirmationModal"}.
+**Observation:** Unit registry declares `extensions`: {"name": "programs-overview-widget", "component": "programsOverview"}; `extensions`: {"name": "programs-details-widget", "component": "programsDetailedSummary", "slot": "patient-chart-programs-dashboard-slot"}; `extensions`: {"name": "programs-summary-dashboard", "component": "programsDashboardLink", "slot": "patient-chart-dashboard-slot"}; `workspaces`: {"name": "programs-form-workspace", "component": "programsFormWorkspace"}; `modals`: {"name": "program-delete-confirmation-modal", "component": "deleteProgramConfirmationModal"}.
 
-**Interpretação:** Parametriza os componentes expostos pela unidade para o sistema de extensões do OpenMRS. Os nomes de slots e registros permitem sua resolução pelo framework; este arquivo sozinho não identifica uma segunda unidade consumidora.
+**Interpretation:** Parameterizes components exposed by unit for OpenMRS extension system. Slot/registry names allow framework resolution; file alone identifies no second consuming unit.
 
 ### 45. packages/esm-patient-tests-app/src/routes.json:1-58
 
-**Observação:** O registro da unidade declara `extensions`: {"name": "test-results-summary-dashboard", "component": "testResultsDashboardLink", "slot": "patient-chart-dashboard-slot"}; `extensions`: {"name": "test-results-filtered-overview", "component": "externalOverview", "slot": "test-results-filtered-overview-slot"}; `extensions`: {"name": "results-viewer", "component": "resultsViewer"}; `extensions`: {"name": "lab-order-panel", "component": "labOrderPanel", "slot": "order-basket-slot"}; `workspaces`: {"name": "add-lab-order", "component": "addLabOrderWorkspace"}; `modals`: {"name": "timeline-results-modal", "component": "timelineResultsModal"}; `modals`: {"name": "print-modal", "component": "printModal"}.
+**Observation:** Unit registry declares `extensions`: {"name": "test-results-summary-dashboard", "component": "testResultsDashboardLink", "slot": "patient-chart-dashboard-slot"}; `extensions`: {"name": "test-results-filtered-overview", "component": "externalOverview", "slot": "test-results-filtered-overview-slot"}; `extensions`: {"name": "results-viewer", "component": "resultsViewer"}; `extensions`: {"name": "lab-order-panel", "component": "labOrderPanel", "slot": "order-basket-slot"}; `workspaces`: {"name": "add-lab-order", "component": "addLabOrderWorkspace"}; `modals`: {"name": "timeline-results-modal", "component": "timelineResultsModal"}; `modals`: {"name": "print-modal", "component": "printModal"}.
 
-**Interpretação:** Parametriza os componentes expostos pela unidade para o sistema de extensões do OpenMRS. Os nomes de slots e registros permitem sua resolução pelo framework; este arquivo sozinho não identifica uma segunda unidade consumidora.
+**Interpretation:** Parameterizes components exposed by unit for OpenMRS extension system. Slot/registry names allow framework resolution; file alone identifies no second consuming unit.
 
 ### 46. packages/esm-patient-vitals-app/src/routes.json:1-83
 
-**Observação:** O registro da unidade declara `extensions`: {"name": "vitals-overview-widget", "component": "vitalsSummary", "slot": "patient-chart-summary-dashboard-slot"}; `extensions`: {"name": "vitals-details-widget", "component": "vitalsMain", "slot": "patient-chart-vitals-biometrics-dashboard-slot"}; `extensions`: {"name": "patient-vitals-info", "component": "vitalsHeader", "slot": "patient-info-slot"}; `extensions`: {"name": "biometrics-overview-widget", "component": "biometricsOverview", "slot": "patient-chart-summary-dashboard-slot"}; `extensions`: {"name": "biometrics-details-widget", "component": "biometricsDetailedSummary", "slot": "patient-chart-vitals-biometrics-dashboard-slot"}; `extensions`: {"name": "results-summary-dashboard", "component": "vitalsAndBiometricsDashboardLink", "slot": "patient-chart-dashboard-slot"}; `extensions`: {"name": "weight-tile", "component": "weightTile", "slot": "visit-form-header-slot"}; `workspaces`: {"name": "patient-vitals-biometrics-form-workspace", "component": "vitalsBiometricsFormWorkspace"}; `modals`: {"name": "vitals-biometrics-delete-confirmation-modal", "component": "vitalsAndBiometricsDeleteConfirmationModal"}.
+**Observation:** Unit registry declares `extensions`: {"name": "vitals-overview-widget", "component": "vitalsSummary", "slot": "patient-chart-summary-dashboard-slot"}; `extensions`: {"name": "vitals-details-widget", "component": "vitalsMain", "slot": "patient-chart-vitals-biometrics-dashboard-slot"}; `extensions`: {"name": "patient-vitals-info", "component": "vitalsHeader", "slot": "patient-info-slot"}; `extensions`: {"name": "biometrics-overview-widget", "component": "biometricsOverview", "slot": "patient-chart-summary-dashboard-slot"}; `extensions`: {"name": "biometrics-details-widget", "component": "biometricsDetailedSummary", "slot": "patient-chart-vitals-biometrics-dashboard-slot"}; `extensions`: {"name": "results-summary-dashboard", "component": "vitalsAndBiometricsDashboardLink", "slot": "patient-chart-dashboard-slot"}; `extensions`: {"name": "weight-tile", "component": "weightTile", "slot": "visit-form-header-slot"}; `workspaces`: {"name": "patient-vitals-biometrics-form-workspace", "component": "vitalsBiometricsFormWorkspace"}; `modals`: {"name": "vitals-biometrics-delete-confirmation-modal", "component": "vitalsAndBiometricsDeleteConfirmationModal"}.
 
-**Interpretação:** Parametriza os componentes expostos pela unidade para o sistema de extensões do OpenMRS. Os nomes de slots e registros permitem sua resolução pelo framework; este arquivo sozinho não identifica uma segunda unidade consumidora.
+**Interpretation:** Parameterizes components exposed by unit for OpenMRS extension system. Slot/registry names allow framework resolution; file alone identifies no second consuming unit.
 
 ### 47. packages/esm-form-entry-app/src/routes.json:1-16
 
-**Observação:** O registro da unidade declara `extensions`: {"name": "form-widget", "component": "formWidget", "slot": "form-widget-slot"}.
+**Observation:** Unit registry declares `extensions`: {"name": "form-widget", "component": "formWidget", "slot": "form-widget-slot"}.
 
-**Interpretação:** Parametriza os componentes expostos pela unidade para o sistema de extensões do OpenMRS. Os nomes de slots e registros permitem sua resolução pelo framework; este arquivo sozinho não identifica uma segunda unidade consumidora.
+**Interpretation:** Parameterizes components exposed by unit for OpenMRS extension system. Slot/registry names allow framework resolution; file alone identifies no second consuming unit.
 
 ### 48. packages/esm-form-entry-app/src/index.ts:66; packages/esm-form-entry-app/src/routes.json:8-11
 
-**Observação:** O trecho contém ` export const formWidget = () => import('./bootstrap'); `. Nos registros citados, packages/esm-form-entry-app/src/routes.json:8-11 declara "name": "form-widget", "component": "formWidget", "slot": "form-widget-slot".
+**Observation:** Excerpt contains ` export const formWidget = () => import('./bootstrap'); `. In cited registries, packages/esm-form-entry-app/src/routes.json:8-11 declares "name": "form-widget", "component": "formWidget", "slot": "form-widget-slot".
 
-**Interpretação:** `formWidget = () => import('./bootstrap')` carrega o próprio `src/bootstrap.ts` da unidade; é `import()` de arquivo local, interno à unidade. O `formWidget` é o componente da extensão `form-widget` (packages/esm-form-entry-app/src/routes.json:8-11); a composição está nos lifecycles abaixo
+**Interpretation:** `formWidget = () => import('./bootstrap')` loads unit’s own `src/bootstrap.ts`; `import()` of local file internal to unit. `formWidget` is extension `form-widget` component (packages/esm-form-entry-app/src/routes.json:8-11); composition in lifecycles below
 
 ### 49. packages/esm-form-entry-app/src/declarations.d.ts:3
 
-**Observação:** O trecho contém ` declare const __webpack_share_scopes__; `.
+**Observation:** Excerpt contains ` declare const __webpack_share_scopes__; `.
 
-**Interpretação:** `declare const __webpack_share_scopes__;` só declara o tipo do global num `.d.ts`; não executa resolução remota
+**Interpretation:** `declare const __webpack_share_scopes__;` only declares global type in `.d.ts`; executes no remote resolution
 
 ### 50. packages/esm-form-entry-app/src/bootstrap.ts:21; packages/esm-form-entry-app/src/index.ts:66; packages/esm-form-entry-app/src/routes.json:8-11; packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:95; packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:249-250; packages/esm-form-entry-app/src/bootstrap.ts:3; packages/esm-form-entry-app/src/bootstrap.ts:12-23
 
-**Observação:** O trecho contém ` export const bootstrap = lifecycles.bootstrap; `. Nos registros citados, packages/esm-form-entry-app/src/routes.json:8-11 declara "name": "form-widget", "component": "formWidget", "slot": "form-widget-slot".
+**Observation:** Excerpt contains ` export const bootstrap = lifecycles.bootstrap; `. In cited registries, packages/esm-form-entry-app/src/routes.json:8-11 declares "name": "form-widget", "component": "formWidget", "slot": "form-widget-slot".
 
-**Interpretação:** Exporta o lifecycle `bootstrap` criado por `singleSpaAngular` (:12-19). O módulo chega ao framework por `formWidget` (packages/esm-form-entry-app/src/index.ts:66), registrado em `form-widget-slot` (packages/esm-form-entry-app/src/routes.json:8-11); o slot é montado por outras unidades em packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:95 e packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:249-250
+**Interpretation:** Exports lifecycle `bootstrap` created by `singleSpaAngular` (:12-19). Module reaches framework through `formWidget` (packages/esm-form-entry-app/src/index.ts:66), registered in `form-widget-slot` (packages/esm-form-entry-app/src/routes.json:8-11); slot mounted by other units at packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:95 and packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:249-250
 
 ### 51. packages/esm-form-entry-app/src/bootstrap.ts:22; packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:95; packages/esm-form-entry-app/src/bootstrap.ts:3; packages/esm-form-entry-app/src/bootstrap.ts:12-23
 
-**Observação:** O trecho contém ` export const mount = lifecycles.mount; `.
+**Observation:** Excerpt contains ` export const mount = lifecycles.mount; `.
 
-**Interpretação:** Exporta o lifecycle `mount` do mesmo `singleSpaAngular` (:12-19), que o framework chama ao montar a extensão `form-widget` no `form-widget-slot` de packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:95
+**Interpretation:** Exports lifecycle `mount` from same `singleSpaAngular` (:12-19), called by framework when mounting extension `form-widget` in `form-widget-slot` at packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:95
 
 ### 52. packages/esm-form-entry-app/src/bootstrap.ts:23; packages/esm-form-entry-app/src/routes.json:8-11; packages/esm-form-entry-app/src/bootstrap.ts:3; packages/esm-form-entry-app/src/bootstrap.ts:12-23
 
-**Observação:** O trecho contém ` export const unmount = lifecycles.unmount; `. Nos registros citados, packages/esm-form-entry-app/src/routes.json:8-11 declara "name": "form-widget", "component": "formWidget", "slot": "form-widget-slot".
+**Observation:** Excerpt contains ` export const unmount = lifecycles.unmount; `. In cited registries, packages/esm-form-entry-app/src/routes.json:8-11 declares "name": "form-widget", "component": "formWidget", "slot": "form-widget-slot".
 
-**Interpretação:** Exporta o lifecycle `unmount` do mesmo `singleSpaAngular` (:12-19), usado na desmontagem da extensão `form-widget` (packages/esm-form-entry-app/src/routes.json:8-11)
+**Interpretation:** Exports lifecycle `unmount` from same `singleSpaAngular` (:12-19), used when unmounting extension `form-widget` (packages/esm-form-entry-app/src/routes.json:8-11)
 
 ### 53. packages/esm-form-entry-app/src/bootstrap.ts:3; packages/esm-form-entry-app/src/bootstrap.ts:3; packages/esm-form-entry-app/src/bootstrap.ts:12-23
 
-**Observação:** O trecho contém ` import { singleSpaAngular, getSingleSpaExtraProviders } from 'single-spa-angular'; `.
+**Observation:** Excerpt contains ` import { singleSpaAngular, getSingleSpaExtraProviders } from 'single-spa-angular'; `.
 
-**Interpretação:** `import { singleSpaAngular, getSingleSpaExtraProviders } from 'single-spa-angular'` habilita a criação dos lifecycles em :12-19, exportados em :21-23 para o framework
+**Interpretation:** `import { singleSpaAngular, getSingleSpaExtraProviders } from 'single-spa-angular'` enables lifecycle creation at :12-19, exported at :21-23 to framework
 
 ### 54. packages/esm-form-entry-app/src/bootstrap.ts:12; packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:95; packages/esm-form-entry-app/src/bootstrap.ts:3; packages/esm-form-entry-app/src/bootstrap.ts:12-23
 
-**Observação:** O trecho contém ` const lifecycles = singleSpaAngular({ `.
+**Observation:** Excerpt contains ` const lifecycles = singleSpaAngular({ `.
 
-**Interpretação:** `singleSpaAngular({ bootstrapFunction, template: '<my-app-root />', NgZone })` (:12-19) cria os lifecycles do app Angular, que recebe as props do single-spa em `singleSpaPropsSubject` (:14) e é montado como extensão `form-widget` por outras unidades (packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:95)
+**Interpretation:** `singleSpaAngular({ bootstrapFunction, template: '<my-app-root />', NgZone })` (:12-19) creates Angular app lifecycles, receiving single-spa props in `singleSpaPropsSubject` (:14) and mounted as extension `form-widget` by other units (packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:95)
 
 ### 55. packages/esm-patient-attachments-app/src/attachments/attachment-preview.component.tsx:56; packages/esm-patient-attachments-app/src/attachments/attachment-preview.component.tsx:53-57
 
-**Observação:** O trecho contém ` <iframe className={styles.pdfViewer} src={attachmentToPreview.src} title="PDFViewer" /> `.
+**Observation:** Excerpt contains ` <iframe className={styles.pdfViewer} src={attachmentToPreview.src} title="PDFViewer" /> `.
 
-**Interpretação:** `<iframe className={styles.pdfViewer} src={attachmentToPreview.src}>` no ramo `isPdf` (:53-57): mostra o PDF do anexo do paciente, conteúdo e não unidade frontend
+**Interpretation:** `<iframe className={styles.pdfViewer} src={attachmentToPreview.src}>` in `isPdf` branch (:53-57): shows patient attachment PDF, content rather than frontend unit
 
 ### 56. packages/esm-patient-forms-app/src/htmlformentry/html-form-entry-wrapper.component.tsx:43; packages/esm-patient-forms-app/src/htmlformentry/html-form-entry.workspace.tsx:29-44; packages/esm-patient-forms-app/src/htmlformentry/html-form-entry.workspace.tsx:50-53; packages/esm-patient-forms-app/src/index.ts:36; packages/esm-patient-forms-app/src/routes.json:67
 
-**Observação:** O trecho contém ` <iframe ref={iframeRef} src={src} className={styles.wrapper} onLoad={onLoad}></iframe> `. Nos registros citados, packages/esm-patient-forms-app/src/routes.json:67 declara "name": "patient-html-form-entry-workspace", "component": "patientHtmlFormEntryWorkspace". A URL recebida pelo iframe é montada como `${window.openmrsBase}/htmlformentryui/htmlform/${uiPage}.page?`, com `returnUrl=post-message:close-workspace`.
+**Observation:** Excerpt contains ` <iframe ref={iframeRef} src={src} className={styles.wrapper} onLoad={onLoad}></iframe> `. In cited registries, packages/esm-patient-forms-app/src/routes.json:67 declares "name": "patient-html-form-entry-workspace", "component": "patientHtmlFormEntryWorkspace". URL received by iframe built as `${window.openmrsBase}/htmlformentryui/htmlform/${uiPage}.page?`, with `returnUrl=post-message:close-workspace`.
 
-**Interpretação:** Embute a página do HFE-UI do OpenMRS 2.x: o `src` é `${window.openmrsBase}/htmlformentryui/htmlform/<page>.page?...` com `returnUrl=post-message:close-workspace` (packages/esm-patient-forms-app/src/htmlformentry/html-form-entry.workspace.tsx:29-44, :50-53); no `onLoad` remove cabeçalho e breadcrumbs da página embutida (:22-38). Ativo pelo workspace `patient-html-form-entry-workspace` (packages/esm-patient-forms-app/src/index.ts:36, packages/esm-patient-forms-app/src/routes.json:67). Unidade alvo externa ao snapshot
+**Interpretation:** Embeds OpenMRS 2.x HFE-UI page: `src` is `${window.openmrsBase}/htmlformentryui/htmlform/<page>.page?...` with `returnUrl=post-message:close-workspace` (packages/esm-patient-forms-app/src/htmlformentry/html-form-entry.workspace.tsx:29-44, :50-53); `onLoad` removes embedded-page header/breadcrumbs (:22-38). Active through workspace `patient-html-form-entry-workspace` (packages/esm-patient-forms-app/src/index.ts:36, packages/esm-patient-forms-app/src/routes.json:67). Target unit external to snapshot
 
 ### 57. packages/esm-form-engine-app/src/form-collapse-toggle/form-collapse-toggle.component.tsx:15; packages/esm-form-engine-app/src/routes.json:13-15; packages/esm-form-engine-app/src/index.ts:19-25
 
-**Observação:** O trecho contém ` window.addEventListener('openmrs:form-view-embedded', handleFormEmbedded); `. Nos registros citados, packages/esm-form-engine-app/src/routes.json:13-15 declara "name": "rfe-form-collapse-toggle", "component": "formCollapseToggle", "slot": "workspace-header-patient-chart-slot".
+**Observation:** Excerpt contains ` window.addEventListener('openmrs:form-view-embedded', handleFormEmbedded); `. In cited registries, packages/esm-form-engine-app/src/routes.json:13-15 declares "name": "rfe-form-collapse-toggle", "component": "formCollapseToggle", "slot": "workspace-header-patient-chart-slot".
 
-**Interpretação:** Assina o evento `openmrs:form-view-embedded` em `window` (:14-20) para mostrar o toggle. O componente é a extensão `rfe-form-collapse-toggle` no `workspace-header-patient-chart-slot` (packages/esm-form-engine-app/src/routes.json:13-15, packages/esm-form-engine-app/src/index.ts:19-25). Nenhum arquivo do snapshot dispara esse evento; quem o dispara está fora do snapshot e pode ser a biblioteca `@openmrs/esm-form-engine-lib` renderizada pela própria unidade (packages/esm-form-engine-app/src/form-renderer/form-renderer.component.tsx) . A contraparte pode pertencer a outra unidade externa ao snapshot ou o ponto pode permanecer sem conexão; essas leituras continuam plausíveis.
+**Interpretation:** Subscribes to `openmrs:form-view-embedded` in `window` (:14-20) to show toggle. Component is extension `rfe-form-collapse-toggle` in `workspace-header-patient-chart-slot` (packages/esm-form-engine-app/src/routes.json:13-15, packages/esm-form-engine-app/src/index.ts:19-25). No snapshot file emits event; sender outside snapshot may be library `@openmrs/esm-form-engine-lib` rendered by own unit (packages/esm-form-engine-app/src/form-renderer/form-renderer.component.tsx). Counterpart may belong to another external unit or point remain disconnected; both readings remain plausible.
 
 ### 58. packages/esm-form-engine-app/src/form-collapse-toggle/form-collapse-toggle.component.tsx:23
 
-**Observação:** O trecho contém ` const FormCollapseToggleEvent = new CustomEvent('openmrs:form-collapse-toggle', { detail: { value } }); `.
+**Observation:** Excerpt contains ` const FormCollapseToggleEvent = new CustomEvent('openmrs:form-collapse-toggle', { detail: { value } }); `.
 
-**Interpretação:** Cria o `CustomEvent('openmrs:form-collapse-toggle', { detail: { value } })` no `onToggle` (:22-25). Nenhum arquivo do snapshot escuta esse evento, então a unidade alvo não se confirma. A contraparte pode pertencer a outra unidade externa ao snapshot ou o ponto pode permanecer sem conexão; essas leituras continuam plausíveis.
+**Interpretation:** Creates `CustomEvent('openmrs:form-collapse-toggle', { detail: { value } })` in `onToggle` (:22-25). No snapshot file listens, so target unit unconfirmed. Counterpart may belong to another external unit or point remain disconnected; both readings remain plausible.
 
 ### 59. packages/esm-form-engine-app/src/form-collapse-toggle/form-collapse-toggle.component.tsx:24
 
-**Observação:** O trecho contém ` window.dispatchEvent(FormCollapseToggleEvent); `.
+**Observation:** Excerpt contains ` window.dispatchEvent(FormCollapseToggleEvent); `.
 
-**Interpretação:** `window.dispatchEvent(FormCollapseToggleEvent)` dispara o evento criado em :23; o ouvinte está fora do snapshot, como na linha anterior. A contraparte pode pertencer a outra unidade externa ao snapshot ou o ponto pode permanecer sem conexão; essas leituras continuam plausíveis.
+**Interpretation:** `window.dispatchEvent(FormCollapseToggleEvent)` dispatches event created at :23; listener outside snapshot as previous row. Counterpart may belong to another external unit or point remain disconnected; both readings remain plausible.
 
 ### 60. packages/esm-patient-flags-app/src/flags/hooks/usePatientFlags.tsx:56; packages/esm-patient-flags-app/src/flags/flags-highlight-bar.component.tsx:14; packages/esm-patient-flags-app/src/index.ts:3; packages/esm-patient-flags-app/src/routes.json:20
 
-**Observação:** O trecho contém ` window.addEventListener('single-spa:routing-event', listenToRoutingEvent); `. Nos registros citados, packages/esm-patient-flags-app/src/routes.json:20 declara "name": "patient-flag-tags", "slot": "patient-highlights-bar-slot", "component": "flagTags".
+**Observation:** Excerpt contains ` window.addEventListener('single-spa:routing-event', listenToRoutingEvent); `. In cited registries, packages/esm-patient-flags-app/src/routes.json:20 declares "name": "patient-flag-tags", "slot": "patient-highlights-bar-slot", "component": "flagTags".
 
-**Interpretação:** Assina `single-spa:routing-event` (:55-60) para acompanhar a URL (`e.detail.newUrl`, :47-53). O evento é disparado pelo single-spa do app shell, unidade externa ao snapshot. Ativo: `useCurrentPath` é usado em packages/esm-patient-flags-app/src/flags/flags-highlight-bar.component.tsx:14, componente importado em packages/esm-patient-flags-app/src/index.ts:3 e registrado no `patient-highlights-bar-slot` (packages/esm-patient-flags-app/src/routes.json:20)
+**Interpretation:** Subscribes to `single-spa:routing-event` (:55-60) to follow URL (`e.detail.newUrl`, :47-53). Event dispatched by single-spa app shell, external snapshot unit. Active: `useCurrentPath` used in packages/esm-patient-flags-app/src/flags/flags-highlight-bar.component.tsx:14, component imported in packages/esm-patient-flags-app/src/index.ts:3 and registered in `patient-highlights-bar-slot` (packages/esm-patient-flags-app/src/routes.json:20)
 
 ### 61. packages/esm-form-engine-app/src/form-renderer/form-error.component.tsx:20; packages/esm-patient-common-lib/src/form-entry-interop.ts:5; packages/esm-patient-forms-app/src/routes.json:85
 
-**Observação:** O trecho contém ` launchPatientWorkspace(clinicalFormsWorkspaceName); `. Nos registros citados, packages/esm-patient-forms-app/src/routes.json:85 declara "name": "clinical-forms-workspace", "component": "clinicalFormsWorkspace".
+**Observation:** Excerpt contains ` launchPatientWorkspace(clinicalFormsWorkspaceName); `. In cited registries, packages/esm-patient-forms-app/src/routes.json:85 declares "name": "clinical-forms-workspace", "component": "clinicalFormsWorkspace".
 
-**Interpretação:** `launchPatientWorkspace(clinicalFormsWorkspaceName)`, com padrão `clinicalFormsWorkspace` (:14) = `'clinical-forms-workspace'` (packages/esm-patient-common-lib/src/form-entry-interop.ts:5): abre o workspace registrado por packages/esm-patient-forms-app/src/routes.json:85
+**Interpretation:** `launchPatientWorkspace(clinicalFormsWorkspaceName)` with default `clinicalFormsWorkspace` (:14) = `'clinical-forms-workspace'` (packages/esm-patient-common-lib/src/form-entry-interop.ts:5): opens workspace registered by packages/esm-patient-forms-app/src/routes.json:85
 
 ### 62. packages/esm-form-engine-app/src/form-renderer/form-renderer.component.tsx:42; packages/esm-patient-forms-app/src/routes.json:85
 
-**Observação:** O trecho contém ` !encounterUuid && openClinicalFormsWorkspaceOnFormClose && launchPatientWorkspace(clinicalFormsWorkspaceName); `. Nos registros citados, packages/esm-patient-forms-app/src/routes.json:85 declara "name": "clinical-forms-workspace", "component": "clinicalFormsWorkspace".
+**Observation:** Excerpt contains ` !encounterUuid && openClinicalFormsWorkspaceOnFormClose && launchPatientWorkspace(clinicalFormsWorkspaceName); `. In cited registries, packages/esm-patient-forms-app/src/routes.json:85 declares "name": "clinical-forms-workspace", "component": "clinicalFormsWorkspace".
 
-**Interpretação:** Ao fechar o formulário sem encontro, `launchPatientWorkspace(clinicalFormsWorkspaceName)` (padrão em :33) reabre o workspace `clinical-forms-workspace` de packages/esm-patient-forms-app/src/routes.json:85
+**Interpretation:** When closing form without encounter, `launchPatientWorkspace(clinicalFormsWorkspaceName)` (default at :33) reopens workspace `clinical-forms-workspace` from packages/esm-patient-forms-app/src/routes.json:85
 
 ### 63. packages/esm-form-entry-app/src/app/fe-wrapper/fe-wrapper.component.ts:259; packages/esm-patient-chart-app/src/routes.json:210
 
-**Observação:** O trecho contém ` const dispose = showModal('modify-visit-date-dialog', { `. Nos registros citados, packages/esm-patient-chart-app/src/routes.json:210 declara "name": "modify-visit-date-dialog", "component": "modifyVisitDateModal".
+**Observation:** Excerpt contains ` const dispose = showModal('modify-visit-date-dialog', { `. In cited registries, packages/esm-patient-chart-app/src/routes.json:210 declares "name": "modify-visit-date-dialog", "component": "modifyVisitDateModal".
 
-**Interpretação:** `showModal('modify-visit-date-dialog', ...)` abre o modal registrado por packages/esm-patient-chart-app/src/routes.json:210
+**Interpretation:** `showModal('modify-visit-date-dialog', ...)` opens modal registered by packages/esm-patient-chart-app/src/routes.json:210
 
 ### 64. packages/esm-generic-patient-widgets-app/src/obs-graph/obs-graph.component.tsx:113
 
-**Observação:** O trecho contém ` <ExtensionSlot name={config.interpretationSlot} style={{ gridTemplateColumns: '1fr' }} /> `.
+**Observation:** Excerpt contains ` <ExtensionSlot name={config.interpretationSlot} style={{ gridTemplateColumns: '1fr' }} /> `.
 
-**Interpretação:** `<ExtensionSlot name={config.interpretationSlot}>` (:111-115) monta as extensões de um slot cujo nome vem da configuração; nenhum `routes.json` do snapshot o preenche, então a unidade alvo não se confirma. A contraparte pode pertencer a outra unidade externa ao snapshot ou o ponto pode permanecer sem conexão; essas leituras continuam plausíveis.
+**Interpretation:** `<ExtensionSlot name={config.interpretationSlot}>` (:111-115) mounts extensions of configuration-named slot; no snapshot `routes.json` fills it, so target unit unconfirmed. Counterpart may belong to another external unit or point remain disconnected; both readings remain plausible.
 
 ### 65. packages/esm-patient-chart-app/src/clinical-views/utils/helpers.ts:24; packages/esm-patient-chart-app/src/clinical-views/encounter-list/encounter-list.component.tsx:7; packages/esm-patient-forms-app/src/routes.json:49
 
-**Observação:** O trecho contém ` launchPatientWorkspace('patient-form-entry-workspace', { `. Nos registros citados, packages/esm-patient-forms-app/src/routes.json:49 declara "name": "patient-form-entry-workspace", "component": "patientFormEntryWorkspace".
+**Observation:** Excerpt contains ` launchPatientWorkspace('patient-form-entry-workspace', { `. In cited registries, packages/esm-patient-forms-app/src/routes.json:49 declares "name": "patient-form-entry-workspace", "component": "patientFormEntryWorkspace".
 
-**Interpretação:** `launchPatientWorkspace('patient-form-entry-workspace', ...)` em `launchEncounterForm` (usado em packages/esm-patient-chart-app/src/clinical-views/encounter-list/encounter-list.component.tsx:7) abre o workspace registrado por packages/esm-patient-forms-app/src/routes.json:49
+**Interpretation:** `launchPatientWorkspace('patient-form-entry-workspace', ...)` in `launchEncounterForm` (used in packages/esm-patient-chart-app/src/clinical-views/encounter-list/encounter-list.component.tsx:7) opens workspace registered by packages/esm-patient-forms-app/src/routes.json:49
 
 ### 66. packages/esm-patient-chart-app/src/mark-patient-deceased/mark-patient-deceased-form.workspace.tsx:124; packages/esm-patient-chart-app/src/routes.json:114; packages/esm-patient-vitals-app/src/routes.json:65
 
-**Observação:** O trecho contém ` <ExtensionSlot className={styles.dataGridRow} name="visit-form-header-slot" state={memoizedPatientUuid} /> `. Nos registros citados, packages/esm-patient-chart-app/src/routes.json:114 declara "name": "patient-details-tile", "slot": "visit-form-header-slot", "component": "patientDetailsTile"; packages/esm-patient-vitals-app/src/routes.json:65 declara "name": "weight-tile", "component": "weightTile", "slot": "visit-form-header-slot".
+**Observation:** Excerpt contains ` <ExtensionSlot className={styles.dataGridRow} name="visit-form-header-slot" state={memoizedPatientUuid} /> `. In cited registries, packages/esm-patient-chart-app/src/routes.json:114 declares "name": "patient-details-tile", "slot": "visit-form-header-slot", "component": "patientDetailsTile"; packages/esm-patient-vitals-app/src/routes.json:65 declares "name": "weight-tile", "component": "weightTile", "slot": "visit-form-header-slot".
 
-**Interpretação:** `<ExtensionSlot name="visit-form-header-slot">` monta as extensões do slot, preenchido pela própria unidade (packages/esm-patient-chart-app/src/routes.json:114) e por packages/esm-patient-vitals-app/src/routes.json:65
+**Interpretation:** `<ExtensionSlot name="visit-form-header-slot">` mounts slot extensions filled by own unit (packages/esm-patient-chart-app/src/routes.json:114) and packages/esm-patient-vitals-app/src/routes.json:65
 
 ### 67. packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37; packages/esm-patient-orders-app/src/routes.json:49; packages/esm-patient-allergies-app/src/routes.json:26; packages/esm-patient-vitals-app/src/routes.json:55
 
-**Observação:** O trecho contém ` const ungroupedDashboards = extensionStore.slots['patient-chart-dashboard-slot'].assignedExtensions.map((e) => `. Nos registros citados, packages/esm-patient-orders-app/src/routes.json:49 declara "name": "patient-orders-summary-dashboard", "component": "ordersDashboardLink", "slot": "patient-chart-dashboard-slot", "slot": "patient-chart-orders-dashboard-slot"; packages/esm-patient-allergies-app/src/routes.json:26 declara "name": "allergies-summary-dashboard", "component": "allergiesDashboardLink", "slot": "patient-chart-dashboard-slot", "slot": "patient-chart-allergies-dashboard-slot"; packages/esm-patient-vitals-app/src/routes.json:55 declara "name": "results-summary-dashboard", "component": "vitalsAndBiometricsDashboardLink", "slot": "patient-chart-dashboard-slot", "slot": "patient-chart-vitals-biometrics-dashboard-slot".
+**Observation:** Excerpt contains ` const ungroupedDashboards = extensionStore.slots['patient-chart-dashboard-slot'].assignedExtensions.map((e) => `. In cited registries, packages/esm-patient-orders-app/src/routes.json:49 declares "name": "patient-orders-summary-dashboard", "component": "ordersDashboardLink", "slot": "patient-chart-dashboard-slot", "slot": "patient-chart-orders-dashboard-slot"; packages/esm-patient-allergies-app/src/routes.json:26 declares "name": "allergies-summary-dashboard", "component": "allergiesDashboardLink", "slot": "patient-chart-dashboard-slot", "slot": "patient-chart-allergies-dashboard-slot"; packages/esm-patient-vitals-app/src/routes.json:55 declares "name": "results-summary-dashboard", "component": "vitalsAndBiometricsDashboardLink", "slot": "patient-chart-dashboard-slot", "slot": "patient-chart-vitals-biometrics-dashboard-slot".
 
-**Interpretação:** Lê do `useExtensionStore()` (:34) as extensões atribuídas a `patient-chart-dashboard-slot` (:37-39) e aos grupos de navegação (:40-45) para montar os dashboards. O slot é preenchido por orders, attachments, allergies, programs, immunizations, medications, conditions, tests, vitals e a própria unidade (`"slot": "patient-chart-dashboard-slot"` em packages/esm-patient-orders-app/src/routes.json:49, packages/esm-patient-allergies-app/src/routes.json:26, packages/esm-patient-vitals-app/src/routes.json:55, entre outros)
+**Interpretation:** Reads `useExtensionStore()` (:34) extensions assigned to `patient-chart-dashboard-slot` (:37-39) and navigation groups (:40-45) to assemble dashboards. Slot filled by orders, attachments, allergies, programs, immunizations, medications, conditions, tests, vitals and own unit (`"slot": "patient-chart-dashboard-slot"` in packages/esm-patient-orders-app/src/routes.json:49, packages/esm-patient-allergies-app/src/routes.json:26, packages/esm-patient-vitals-app/src/routes.json:55, among others)
 
 ### 68. packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:66
 
-**Observação:** O trecho contém ` <ExtensionSlot state={state} name="top-of-all-patient-dashboards-slot" /> `.
+**Observation:** Excerpt contains ` <ExtensionSlot state={state} name="top-of-all-patient-dashboards-slot" /> `.
 
-**Interpretação:** `<ExtensionSlot name="top-of-all-patient-dashboards-slot">` monta extensões no topo de todo dashboard; nenhum `routes.json` do snapshot preenche o slot . A contraparte pode pertencer a outra unidade externa ao snapshot ou o ponto pode permanecer sem conexão; essas leituras continuam plausíveis.
+**Interpretation:** `<ExtensionSlot name="top-of-all-patient-dashboards-slot">` mounts extensions atop every dashboard; no snapshot `routes.json` fills slot. Counterpart may belong to another external unit or point remain disconnected; both readings remain plausible.
 
 ### 69. packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69; packages/esm-patient-chart-app/src/dashboard.meta.ts:2; packages/esm-patient-flags-app/src/routes.json:27; packages/esm-patient-medications-app/src/routes.json:18; packages/esm-patient-conditions-app/src/routes.json:10; packages/esm-patient-vitals-app/src/routes.json:11
 
-**Observação:** O trecho contém ` <ExtensionSlot key={dashboard.slot} name={dashboard.slot} className={styles.dashboard}> `. Nos registros citados, packages/esm-patient-flags-app/src/routes.json:27 declara "name": "patient-flags-overview", "slot": "patient-chart-summary-dashboard-slot", "component": "flagsOverview"; packages/esm-patient-medications-app/src/routes.json:18 declara "name": "active-medications-widget", "component": "activeMedications", "slot": "patient-chart-summary-dashboard-slot"; packages/esm-patient-conditions-app/src/routes.json:10 declara "name": "conditions-overview-widget", "slot": "patient-chart-summary-dashboard-slot", "component": "conditionsOverview"; packages/esm-patient-vitals-app/src/routes.json:11 declara "name": "vitals-overview-widget", "component": "vitalsSummary", "slot": "patient-chart-summary-dashboard-slot".
+**Observation:** Excerpt contains ` <ExtensionSlot key={dashboard.slot} name={dashboard.slot} className={styles.dashboard}> `. In cited registries, packages/esm-patient-flags-app/src/routes.json:27 declares "name": "patient-flags-overview", "slot": "patient-chart-summary-dashboard-slot", "component": "flagsOverview"; packages/esm-patient-medications-app/src/routes.json:18 declares "name": "active-medications-widget", "component": "activeMedications", "slot": "patient-chart-summary-dashboard-slot"; packages/esm-patient-conditions-app/src/routes.json:10 declares "name": "conditions-overview-widget", "slot": "patient-chart-summary-dashboard-slot", "component": "conditionsOverview"; packages/esm-patient-vitals-app/src/routes.json:11 declares "name": "vitals-overview-widget", "component": "vitalsSummary", "slot": "patient-chart-summary-dashboard-slot".
 
-**Interpretação:** `<ExtensionSlot name={dashboard.slot}>` com `<Extension state={state}>` (:69-78) monta os widgets do dashboard escolhido, com metadados de largura de `useExtensionSlotMeta` (:35). Os slots dos dashboards são preenchidos por outras unidades, por exemplo `patient-chart-summary-dashboard-slot` (packages/esm-patient-chart-app/src/dashboard.meta.ts:2) por packages/esm-patient-flags-app/src/routes.json:27, packages/esm-patient-medications-app/src/routes.json:18, packages/esm-patient-conditions-app/src/routes.json:10 e packages/esm-patient-vitals-app/src/routes.json:11
+**Interpretation:** `<ExtensionSlot name={dashboard.slot}>` with `<Extension state={state}>` (:69-78) mounts chosen dashboard widgets, with width metadata from `useExtensionSlotMeta` (:35). Dashboard slots filled by other units, for example `patient-chart-summary-dashboard-slot` (packages/esm-patient-chart-app/src/dashboard.meta.ts:2) by packages/esm-patient-flags-app/src/routes.json:27, packages/esm-patient-medications-app/src/routes.json:18, packages/esm-patient-conditions-app/src/routes.json:10 and packages/esm-patient-vitals-app/src/routes.json:11
 
 ### 70. packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47; packages/esm-patient-orders-app/src/routes.json:47-51; packages/esm-patient-allergies-app/src/routes.json:24-31; packages/esm-patient-vitals-app/src/routes.json:53-58
 
-**Observação:** O trecho contém ` setLeftNav({ name: 'patient-chart-dashboard-slot', basePath: leftNavBasePath }); `.
+**Observation:** Excerpt contains ` setLeftNav({ name: 'patient-chart-dashboard-slot', basePath: leftNavBasePath }); `.
 
-**Interpretação:** `setLeftNav({ name: 'patient-chart-dashboard-slot', ... })` entrega ao framework a navegação lateral formada pelas extensões desse slot, registradas por várias unidades (ver linha de chart-review.component.tsx:37); `unsetLeftNav` na limpeza (:48)
+**Interpretation:** `setLeftNav({ name: 'patient-chart-dashboard-slot', ... })` hands framework side navigation formed by slot extensions registered by multiple units (see chart-review.component.tsx:37 row); `unsetLeftNav` on cleanup (:48)
 
 ### 71. packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:67; packages/esm-patient-banner-app/src/routes.json:23
 
-**Observação:** O trecho contém ` <ExtensionSlot name="patient-header-slot" state={state} /> `. Nos registros citados, packages/esm-patient-banner-app/src/routes.json:23 declara "name": "patient-banner", "slot": "patient-header-slot", "component": "patientBanner".
+**Observation:** Excerpt contains ` <ExtensionSlot name="patient-header-slot" state={state} /> `. In cited registries, packages/esm-patient-banner-app/src/routes.json:23 declares "name": "patient-banner", "slot": "patient-header-slot", "component": "patientBanner".
 
-**Interpretação:** `<ExtensionSlot name="patient-header-slot">` monta o banner do paciente registrado por packages/esm-patient-banner-app/src/routes.json:23
+**Interpretation:** `<ExtensionSlot name="patient-header-slot">` mounts patient banner registered by packages/esm-patient-banner-app/src/routes.json:23
 
 ### 72. packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:68; packages/esm-patient-flags-app/src/routes.json:20
 
-**Observação:** O trecho contém ` <ExtensionSlot name="patient-highlights-bar-slot" state={state} /> `. Nos registros citados, packages/esm-patient-flags-app/src/routes.json:20 declara "name": "patient-flag-tags", "slot": "patient-highlights-bar-slot", "component": "flagTags".
+**Observation:** Excerpt contains ` <ExtensionSlot name="patient-highlights-bar-slot" state={state} /> `. In cited registries, packages/esm-patient-flags-app/src/routes.json:20 declares "name": "patient-flag-tags", "slot": "patient-highlights-bar-slot", "component": "flagTags".
 
-**Interpretação:** `<ExtensionSlot name="patient-highlights-bar-slot">` monta a barra de flags registrada por packages/esm-patient-flags-app/src/routes.json:20
+**Interpretation:** `<ExtensionSlot name="patient-highlights-bar-slot">` mounts flags bar registered by packages/esm-patient-flags-app/src/routes.json:20
 
 ### 73. packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:69; packages/esm-patient-vitals-app/src/routes.json:31
 
-**Observação:** O trecho contém ` <ExtensionSlot name="patient-info-slot" state={state} /> `. Nos registros citados, packages/esm-patient-vitals-app/src/routes.json:31 declara "name": "patient-vitals-info", "component": "vitalsHeader", "slot": "patient-info-slot".
+**Observation:** Excerpt contains ` <ExtensionSlot name="patient-info-slot" state={state} /> `. In cited registries, packages/esm-patient-vitals-app/src/routes.json:31 declares "name": "patient-vitals-info", "component": "vitalsHeader", "slot": "patient-info-slot".
 
-**Interpretação:** `<ExtensionSlot name="patient-info-slot">` monta a extensão registrada por packages/esm-patient-vitals-app/src/routes.json:31
+**Interpretation:** `<ExtensionSlot name="patient-info-slot">` mounts extension registered by packages/esm-patient-vitals-app/src/routes.json:31
 
 ### 74. packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:389-392; packages/esm-patient-banner-app/src/routes.json:23
 
-**Observação:** O trecho contém ` <ExtensionSlot name="patient-header-slot" state={{ patient, `. Nos registros citados, packages/esm-patient-banner-app/src/routes.json:23 declara "name": "patient-banner", "slot": "patient-header-slot", "component": "patientBanner".
+**Observation:** Excerpt contains ` <ExtensionSlot name="patient-header-slot" state={{ patient, `. In cited registries, packages/esm-patient-banner-app/src/routes.json:23 declares "name": "patient-banner", "slot": "patient-header-slot", "component": "patientBanner".
 
-**Interpretação:** `<ExtensionSlot name="patient-header-slot">` (:389-390) no formulário de visita monta o banner de packages/esm-patient-banner-app/src/routes.json:23
+**Interpretation:** `<ExtensionSlot name="patient-header-slot">` (:389-390) in visit form mounts banner from packages/esm-patient-banner-app/src/routes.json:23
 
 ### 75. packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:410-413; packages/esm-patient-vitals-app/src/routes.json:65
 
-**Observação:** O trecho contém ` <ExtensionSlot name="visit-form-header-slot" className={styles.dataGridRow} state={visitHeaderSlotState} `. Nos registros citados, packages/esm-patient-vitals-app/src/routes.json:65 declara "name": "weight-tile", "component": "weightTile", "slot": "visit-form-header-slot".
+**Observation:** Excerpt contains ` <ExtensionSlot name="visit-form-header-slot" className={styles.dataGridRow} state={visitHeaderSlotState} `. In cited registries, packages/esm-patient-vitals-app/src/routes.json:65 declares "name": "weight-tile", "component": "weightTile", "slot": "visit-form-header-slot".
 
-**Interpretação:** `<ExtensionSlot name="visit-form-header-slot">` (:410-411) monta extensões da própria unidade e de packages/esm-patient-vitals-app/src/routes.json:65
+**Interpretation:** `<ExtensionSlot name="visit-form-header-slot">` (:410-411) mounts extensions from own unit and packages/esm-patient-vitals-app/src/routes.json:65
 
 ### 76. packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:452
 
-**Observação:** O trecho contém ` name="visit-form-top-slot" `.
+**Observation:** Excerpt contains ` name="visit-form-top-slot" `.
 
-**Interpretação:** `VisitFormExtensionSlot name="visit-form-top-slot"` (:451-456), que monta `<ExtensionSlot name={name}>` com `<Extension>` (:633-645); nenhum `routes.json` do snapshot preenche o slot . A contraparte pode pertencer a outra unidade externa ao snapshot ou o ponto pode permanecer sem conexão; essas leituras continuam plausíveis.
+**Interpretation:** `VisitFormExtensionSlot name="visit-form-top-slot"` (:451-456), mounting `<ExtensionSlot name={name}>` with `<Extension>` (:633-645); no snapshot `routes.json` fills slot. Counterpart may belong to another external unit or point remain disconnected; both readings remain plausible.
 
 ### 77. packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:547
 
-**Observação:** O trecho contém ` <ExtensionSlot state={{ patientUuid, setExtraVisitInfo }} name="extra-visit-attribute-slot" /> `.
+**Observation:** Excerpt contains ` <ExtensionSlot state={{ patientUuid, setExtraVisitInfo }} name="extra-visit-attribute-slot" /> `.
 
-**Interpretação:** `<ExtensionSlot name="extra-visit-attribute-slot">`; nenhum `routes.json` do snapshot preenche o slot . A contraparte pode pertencer a outra unidade externa ao snapshot ou o ponto pode permanecer sem conexão; essas leituras continuam plausíveis.
+**Interpretation:** `<ExtensionSlot name="extra-visit-attribute-slot">`; no snapshot `routes.json` fills slot. Counterpart may belong to another external unit or point remain disconnected; both readings remain plausible.
 
 ### 78. packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:562
 
-**Observação:** O trecho contém ` name="visit-form-bottom-slot" `.
+**Observation:** Excerpt contains ` name="visit-form-bottom-slot" `.
 
-**Interpretação:** `VisitFormExtensionSlot name="visit-form-bottom-slot"` (:561-566), mesmo mecanismo de :633-645; nenhum `routes.json` do snapshot preenche o slot . A contraparte pode pertencer a outra unidade externa ao snapshot ou o ponto pode permanecer sem conexão; essas leituras continuam plausíveis.
+**Interpretation:** `VisitFormExtensionSlot name="visit-form-bottom-slot"` (:561-566), same mechanism at :633-645; no snapshot `routes.json` fills slot. Counterpart may belong to another external unit or point remain disconnected; both readings remain plausible.
 
 ### 79. packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:23; packages/esm-patient-allergies-app/src/routes.json:42; packages/esm-patient-chart-app/src/index.ts:195; packages/esm-patient-chart-app/src/routes.json:174
 
-**Observação:** O trecho contém ` const launchAllergiesFormWorkspace = useLaunchWorkspaceRequiringVisit('patient-allergy-form-workspace'); `. Nos registros citados, packages/esm-patient-allergies-app/src/routes.json:42 declara "name": "patient-allergy-form-workspace", "component": "allergyFormWorkspace"; packages/esm-patient-chart-app/src/routes.json:174 declara "name": "active-visit-action-button", "slot": "active-visit-actions", "component": "activeVisitActionsComponent".
+**Observation:** Excerpt contains ` const launchAllergiesFormWorkspace = useLaunchWorkspaceRequiringVisit('patient-allergy-form-workspace'); `. In cited registries, packages/esm-patient-allergies-app/src/routes.json:42 declares "name": "patient-allergy-form-workspace", "component": "allergyFormWorkspace"; packages/esm-patient-chart-app/src/routes.json:174 declares "name": "active-visit-action-button", "slot": "active-visit-actions", "component": "activeVisitActionsComponent".
 
-**Interpretação:** `useLaunchWorkspaceRequiringVisit('patient-allergy-form-workspace')`, acionado nos botões (:67, :121), abre o workspace de packages/esm-patient-allergies-app/src/routes.json:42. Componente ativo: `activeVisitActionsComponent` (packages/esm-patient-chart-app/src/index.ts:195, packages/esm-patient-chart-app/src/routes.json:174)
+**Interpretation:** `useLaunchWorkspaceRequiringVisit('patient-allergy-form-workspace')`, triggered in buttons (:67, :121), opens workspace from packages/esm-patient-allergies-app/src/routes.json:42. Active component: `activeVisitActionsComponent` (packages/esm-patient-chart-app/src/index.ts:195, packages/esm-patient-chart-app/src/routes.json:174)
 
 ### 80. packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:24
 
-**Observação:** O trecho contém ` const launchAppointmentsFormWorkspace = useLaunchWorkspaceRequiringVisit('appointments-form-workspace'); `.
+**Observation:** Excerpt contains ` const launchAppointmentsFormWorkspace = useLaunchWorkspaceRequiringVisit('appointments-form-workspace'); `.
 
-**Interpretação:** `useLaunchWorkspaceRequiringVisit('appointments-form-workspace')` (botões em :73, :127); nenhum `routes.json` do snapshot registra esse workspace, então a unidade alvo não se confirma. A contraparte pode pertencer a outra unidade externa ao snapshot ou o ponto pode permanecer sem conexão; essas leituras continuam plausíveis.
+**Interpretation:** `useLaunchWorkspaceRequiringVisit('appointments-form-workspace')` (buttons at :73, :127); no snapshot `routes.json` registers workspace, so target unit unconfirmed. Counterpart may belong to another external unit or point remain disconnected; both readings remain plausible.
 
 ### 81. packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:25; packages/esm-patient-forms-app/src/routes.json:85
 
-**Observação:** O trecho contém ` const launchClinicalFormsWorkspace = useLaunchWorkspaceRequiringVisit('clinical-forms-workspace'); `. Nos registros citados, packages/esm-patient-forms-app/src/routes.json:85 declara "name": "clinical-forms-workspace", "component": "clinicalFormsWorkspace".
+**Observation:** Excerpt contains ` const launchClinicalFormsWorkspace = useLaunchWorkspaceRequiringVisit('clinical-forms-workspace'); `. In cited registries, packages/esm-patient-forms-app/src/routes.json:85 declares "name": "clinical-forms-workspace", "component": "clinicalFormsWorkspace".
 
-**Interpretação:** `useLaunchWorkspaceRequiringVisit('clinical-forms-workspace')` (botões em :79, :133) abre o workspace de packages/esm-patient-forms-app/src/routes.json:85
+**Interpretation:** `useLaunchWorkspaceRequiringVisit('clinical-forms-workspace')` (buttons at :79, :133) opens workspace from packages/esm-patient-forms-app/src/routes.json:85
 
 ### 82. packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:26; packages/esm-patient-conditions-app/src/routes.json:46
 
-**Observação:** O trecho contém ` const launchConditionsFormWorkspace = useLaunchWorkspaceRequiringVisit('conditions-form-workspace'); `. Nos registros citados, packages/esm-patient-conditions-app/src/routes.json:46 declara "name": "conditions-form-workspace", "component": "conditionsFormWorkspace".
+**Observation:** Excerpt contains ` const launchConditionsFormWorkspace = useLaunchWorkspaceRequiringVisit('conditions-form-workspace'); `. In cited registries, packages/esm-patient-conditions-app/src/routes.json:46 declares "name": "conditions-form-workspace", "component": "conditionsFormWorkspace".
 
-**Interpretação:** `useLaunchWorkspaceRequiringVisit('conditions-form-workspace')` (botões em :61, :115) abre o workspace de packages/esm-patient-conditions-app/src/routes.json:46
+**Interpretation:** `useLaunchWorkspaceRequiringVisit('conditions-form-workspace')` (buttons at :61, :115) opens workspace from packages/esm-patient-conditions-app/src/routes.json:46
 
 ### 83. packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:27; packages/esm-patient-orders-app/src/routes.json:68
 
-**Observação:** O trecho contém ` const launchOrderBasketFormWorkspace = useLaunchWorkspaceRequiringVisit('order-basket'); `. Nos registros citados, packages/esm-patient-orders-app/src/routes.json:68 declara "name": "order-basket", "component": "orderBasketWorkspace".
+**Observation:** Excerpt contains ` const launchOrderBasketFormWorkspace = useLaunchWorkspaceRequiringVisit('order-basket'); `. In cited registries, packages/esm-patient-orders-app/src/routes.json:68 declares "name": "order-basket", "component": "orderBasketWorkspace".
 
-**Interpretação:** `useLaunchWorkspaceRequiringVisit('order-basket')` (botões em :49, :98) abre o workspace de packages/esm-patient-orders-app/src/routes.json:68
+**Interpretation:** `useLaunchWorkspaceRequiringVisit('order-basket')` (buttons at :49, :98) opens workspace from packages/esm-patient-orders-app/src/routes.json:68
 
 ### 84. packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:28; packages/esm-patient-notes-app/src/routes.json:25
 
-**Observação:** O trecho contém ` const launchVisitNotesFormWorkspace = useLaunchWorkspaceRequiringVisit('visit-notes-form-workspace'); `. Nos registros citados, packages/esm-patient-notes-app/src/routes.json:25 declara "name": "visit-notes-form-workspace", "component": "visitNotesFormWorkspace".
+**Observation:** Excerpt contains ` const launchVisitNotesFormWorkspace = useLaunchWorkspaceRequiringVisit('visit-notes-form-workspace'); `. In cited registries, packages/esm-patient-notes-app/src/routes.json:25 declares "name": "visit-notes-form-workspace", "component": "visitNotesFormWorkspace".
 
-**Interpretação:** `useLaunchWorkspaceRequiringVisit('visit-notes-form-workspace')` (botões em :43, :90) abre o workspace de packages/esm-patient-notes-app/src/routes.json:25
+**Interpretation:** `useLaunchWorkspaceRequiringVisit('visit-notes-form-workspace')` (buttons at :43, :90) opens workspace from packages/esm-patient-notes-app/src/routes.json:25
 
 ### 85. packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:29; packages/esm-patient-vitals-app/src/routes.json:72
 
-**Observação:** O trecho contém ` const launchVitalsAndBiometricsFormWorkspace = useLaunchWorkspaceRequiringVisit( `. Nos registros citados, packages/esm-patient-vitals-app/src/routes.json:72 declara "name": "patient-vitals-biometrics-form-workspace", "component": "vitalsBiometricsFormWorkspace".
+**Observation:** Excerpt contains ` const launchVitalsAndBiometricsFormWorkspace = useLaunchWorkspaceRequiringVisit( `. In cited registries, packages/esm-patient-vitals-app/src/routes.json:72 declares "name": "patient-vitals-biometrics-form-workspace", "component": "vitalsBiometricsFormWorkspace".
 
-**Interpretação:** `useLaunchWorkspaceRequiringVisit('patient-vitals-biometrics-form-workspace')` (:29-31; botões em :55, :109) abre o workspace de packages/esm-patient-vitals-app/src/routes.json:72
+**Interpretation:** `useLaunchWorkspaceRequiringVisit('patient-vitals-biometrics-form-workspace')` (:29-31; buttons at :55, :109) opens workspace from packages/esm-patient-vitals-app/src/routes.json:72
 
 ### 86. packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/encounters-table/encounters-table.component.tsx:236; packages/esm-patient-notes-app/src/routes.json:25
 
-**Observação:** O trecho contém ` launchWorkspace('visit-notes-form-workspace', { `. Nos registros citados, packages/esm-patient-notes-app/src/routes.json:25 declara "name": "visit-notes-form-workspace", "component": "visitNotesFormWorkspace".
+**Observation:** Excerpt contains ` launchWorkspace('visit-notes-form-workspace', { `. In cited registries, packages/esm-patient-notes-app/src/routes.json:25 declares "name": "visit-notes-form-workspace", "component": "visitNotesFormWorkspace".
 
-**Interpretação:** `launchWorkspace('visit-notes-form-workspace', ...)` para editar a nota de visita abre o workspace de packages/esm-patient-notes-app/src/routes.json:25; nos demais encontros chama `launchFormEntryOrHtmlForms` (:242), registrado nas linhas de packages/esm-patient-common-lib/src/form-entry-interop.ts
+**Interpretation:** `launchWorkspace('visit-notes-form-workspace', ...)` for visit-note editing opens workspace from packages/esm-patient-notes-app/src/routes.json:25; for other encounters calls `launchFormEntryOrHtmlForms` (:242), recorded in packages/esm-patient-common-lib/src/form-entry-interop.ts rows
 
 ### 87. packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/encounters-table/encounters-table.component.tsx:281; packages/esm-patient-notes-app/src/routes.json:25
 
-**Observação:** O trecho contém ` launchWorkspace('visit-notes-form-workspace', { `. Nos registros citados, packages/esm-patient-notes-app/src/routes.json:25 declara "name": "visit-notes-form-workspace", "component": "visitNotesFormWorkspace".
+**Observation:** Excerpt contains ` launchWorkspace('visit-notes-form-workspace', { `. In cited registries, packages/esm-patient-notes-app/src/routes.json:25 declares "name": "visit-notes-form-workspace", "component": "visitNotesFormWorkspace".
 
-**Interpretação:** Segundo ponto de edição da tabela: `launchWorkspace('visit-notes-form-workspace', ...)` abre o mesmo workspace de packages/esm-patient-notes-app/src/routes.json:25; alternativa `launchFormEntryOrHtmlForms` em :287
+**Interpretation:** Second table-edit point: `launchWorkspace('visit-notes-form-workspace', ...)` opens same workspace from packages/esm-patient-notes-app/src/routes.json:25; alternative `launchFormEntryOrHtmlForms` at :287
 
 ### 88. packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/tests-summary.component.tsx:13; packages/esm-patient-tests-app/src/routes.json:22
 
-**Observação:** O trecho contém ` return <ExtensionSlot name="test-results-filtered-overview-slot" state={{ filter, patientUuid }} />; `. Nos registros citados, packages/esm-patient-tests-app/src/routes.json:22 declara "name": "test-results-filtered-overview", "slot": "test-results-filtered-overview-slot", "component": "externalOverview".
+**Observation:** Excerpt contains ` return <ExtensionSlot name="test-results-filtered-overview-slot" state={{ filter, patientUuid }} />; `. In cited registries, packages/esm-patient-tests-app/src/routes.json:22 declares "name": "test-results-filtered-overview", "slot": "test-results-filtered-overview-slot", "component": "externalOverview".
 
-**Interpretação:** `<ExtensionSlot name="test-results-filtered-overview-slot">` monta a extensão registrada por packages/esm-patient-tests-app/src/routes.json:22
+**Interpretation:** `<ExtensionSlot name="test-results-filtered-overview-slot">` mounts extension registered by packages/esm-patient-tests-app/src/routes.json:22
 
 ### 89. packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/visit-summary.component.tsx:159
 
-**Observação:** O trecho contém ` <ExtensionSlot name={visitSummaryPanelSlot}> `.
+**Observation:** Excerpt contains ` <ExtensionSlot name={visitSummaryPanelSlot}> `.
 
-**Interpretação:** `<ExtensionSlot name={visitSummaryPanelSlot}>` com `<Extension>` (:159-163), slot `visit-summary-panels` (:30), cujas abas vêm de `useAssignedExtensions` (:35); nenhum `routes.json` do snapshot preenche o slot . A contraparte pode pertencer a outra unidade externa ao snapshot ou o ponto pode permanecer sem conexão; essas leituras continuam plausíveis.
+**Interpretation:** `<ExtensionSlot name={visitSummaryPanelSlot}>` with `<Extension>` (:159-163), slot `visit-summary-panels` (:30), tabs from `useAssignedExtensions` (:35); no snapshot `routes.json` fills slot. Counterpart may belong to another external unit or point remain disconnected; both readings remain plausible.
 
 ### 90. packages/esm-patient-common-lib/src/form-entry-interop.ts:70; packages/esm-patient-forms-app/src/routes.json:49; packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/encounters-table/encounters-table.component.tsx:242; packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/encounters-table/encounters-table.component.tsx:287
 
-**Observação:** O trecho contém ` launchWorkspace(formEntryWorkspaceName, { `. Nos registros citados, packages/esm-patient-forms-app/src/routes.json:49 declara "name": "patient-form-entry-workspace", "component": "patientFormEntryWorkspace".
+**Observation:** Excerpt contains ` launchWorkspace(formEntryWorkspaceName, { `. In cited registries, packages/esm-patient-forms-app/src/routes.json:49 declares "name": "patient-form-entry-workspace", "component": "patientFormEntryWorkspace".
 
-**Interpretação:** `launchWorkspace(formEntryWorkspaceName, ...)` em `launchFormEntry`, com padrão `'patient-form-entry-workspace'` (:6, :68), abre o workspace de packages/esm-patient-forms-app/src/routes.json:49. Chamado por `launchFormEntryOrHtmlForms` (:36) a partir de outra unidade em packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/encounters-table/encounters-table.component.tsx:242 e :287. Unidade `—`: a biblioteca é `No` na revisão estrutural
+**Interpretation:** `launchWorkspace(formEntryWorkspaceName, ...)` in `launchFormEntry`, default `'patient-form-entry-workspace'` (:6, :68), opens workspace from packages/esm-patient-forms-app/src/routes.json:49. Called by `launchFormEntryOrHtmlForms` (:36) from another unit at packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/encounters-table/encounters-table.component.tsx:242 and :287. Unit `—`: library `No` in structure review
 
 ### 91. packages/esm-patient-common-lib/src/form-entry-interop.ts:97; packages/esm-patient-forms-app/src/routes.json:67
 
-**Observação:** O trecho contém ` launchWorkspace(workspaceName, { `. Nos registros citados, packages/esm-patient-forms-app/src/routes.json:67 declara "name": "patient-html-form-entry-workspace", "component": "patientHtmlFormEntryWorkspace".
+**Observation:** Excerpt contains ` launchWorkspace(workspaceName, { `. In cited registries, packages/esm-patient-forms-app/src/routes.json:67 declares "name": "patient-html-form-entry-workspace", "component": "patientHtmlFormEntryWorkspace".
 
-**Interpretação:** `launchWorkspace(workspaceName, ...)` em `launchHtmlFormEntry`, com padrão `'patient-html-form-entry-workspace'` (:7, :95), abre o workspace de packages/esm-patient-forms-app/src/routes.json:67; chamado por `launchFormEntryOrHtmlForms` (:34), usado pelo chart nos mesmos pontos da linha anterior
+**Interpretation:** `launchWorkspace(workspaceName, ...)` in `launchHtmlFormEntry`, default `'patient-html-form-entry-workspace'` (:7, :95), opens workspace from packages/esm-patient-forms-app/src/routes.json:67; called by `launchFormEntryOrHtmlForms` (:34), used by chart at same points as previous row
 
 ### 92. packages/esm-patient-common-lib/src/launchStartVisitPrompt.tsx:4; packages/esm-patient-chart-app/src/routes.json:214; packages/esm-patient-immunizations-app/src/immunizations/immunizations-detailed-summary.component.tsx:67; packages/esm-patient-notes-app/src/notes/notes-main.component.tsx:36; packages/esm-patient-common-lib/src/form-entry-interop.ts:52; packages/esm-patient-common-lib/src/workspaces.ts:62
 
-**Observação:** O trecho contém ` const dispose = showModal('start-visit-dialog', { `. Nos registros citados, packages/esm-patient-chart-app/src/routes.json:214 declara "name": "start-visit-dialog", "component": "startVisitModal".
+**Observation:** Excerpt contains ` const dispose = showModal('start-visit-dialog', { `. In cited registries, packages/esm-patient-chart-app/src/routes.json:214 declares "name": "start-visit-dialog", "component": "startVisitModal".
 
-**Interpretação:** `showModal('start-visit-dialog', ...)` abre o modal de packages/esm-patient-chart-app/src/routes.json:214. Chamado por outras unidades em packages/esm-patient-immunizations-app/src/immunizations/immunizations-detailed-summary.component.tsx:67 e packages/esm-patient-notes-app/src/notes/notes-main.component.tsx:36, e pelos helpers da própria biblioteca (packages/esm-patient-common-lib/src/form-entry-interop.ts:52, packages/esm-patient-common-lib/src/workspaces.ts:62)
+**Interpretation:** `showModal('start-visit-dialog', ...)` opens modal from packages/esm-patient-chart-app/src/routes.json:214. Called by other units at packages/esm-patient-immunizations-app/src/immunizations/immunizations-detailed-summary.component.tsx:67 and packages/esm-patient-notes-app/src/notes/notes-main.component.tsx:36, and own-library helpers (packages/esm-patient-common-lib/src/form-entry-interop.ts:52, packages/esm-patient-common-lib/src/workspaces.ts:62)
 
 ### 93. packages/esm-patient-common-lib/src/nav-group/DashboardGroupExtension.tsx:24; packages/esm-patient-chart-app/src/side-nav/generic-nav-group.component.tsx:36
 
-**Observação:** O trecho contém ` <ExtensionSlot name={slotName ?? title} state={{ basePath }} /> `.
+**Observation:** Excerpt contains ` <ExtensionSlot name={slotName ?? title} state={{ basePath }} /> `.
 
-**Interpretação:** `<ExtensionSlot name={slotName ?? title}>` monta os links de um grupo de navegação cujo slot vem de quem chama (packages/esm-patient-chart-app/src/side-nav/generic-nav-group.component.tsx:36); nenhum `routes.json` do snapshot preenche esses slots . A contraparte pode pertencer a outra unidade externa ao snapshot ou o ponto pode permanecer sem conexão; essas leituras continuam plausíveis.
+**Interpretation:** `<ExtensionSlot name={slotName ?? title}>` mounts navigation group links with caller-supplied slot (packages/esm-patient-chart-app/src/side-nav/generic-nav-group.component.tsx:36); no snapshot `routes.json` fills slots. Counterpart may belong to another external unit or point remain disconnected; both readings remain plausible.
 
 ### 94. packages/esm-patient-common-lib/src/orders/store.ts:24; packages/esm-patient-common-lib/src/orders/useOrderBasket.ts:90; packages/esm-patient-common-lib/src/orders/useOrderBasket.ts:86-94; packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:38; packages/esm-patient-medications-app/src/add-drug-order/add-drug-order.workspace.tsx:31
 
-**Observação:** O trecho contém ` export const orderBasketStore = createGlobalStore<OrderBasketStore>('order-basket', initialState); `. O helper `useOrderBasket` lê e escreve o store; os consumidores identificados na 3.4.4 são orders e medications.
+**Observation:** Excerpt contains ` export const orderBasketStore = createGlobalStore<OrderBasketStore>('order-basket', initialState); `. Helper `useOrderBasket` reads/writes store; consumers identified in 3.4.4 are orders and medications.
 
-**Interpretação:** `createGlobalStore<OrderBasketStore>('order-basket', initialState)` define o store global do carrinho de pedidos, compartilhado pelo nome no framework. Lido e escrito por orders e medications via `useOrderBasket` (packages/esm-patient-common-lib/src/orders/useOrderBasket.ts:90), por exemplo em packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx e packages/esm-patient-medications-app/src/add-drug-order/add-drug-order.workspace.tsx
+**Interpretation:** `createGlobalStore<OrderBasketStore>('order-basket', initialState)` defines global order basket store shared by name in framework. Read/written by orders and medications through `useOrderBasket` (packages/esm-patient-common-lib/src/orders/useOrderBasket.ts:90), for example in packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx and packages/esm-patient-medications-app/src/add-drug-order/add-drug-order.workspace.tsx
 
 ### 95. packages/esm-patient-common-lib/src/store/patient-chart-store.ts:10; packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:39; packages/esm-patient-common-lib/src/workspaces.ts:44; packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:38-41; packages/esm-patient-medications-app/src/add-drug-order/drug-order-form.component.tsx:362; packages/esm-patient-orders-app/src/order-basket/general-order-type/orderable-concept-search/orderable-concept-search.workspace.tsx:51
 
-**Observação:** O trecho contém ` const patientChartStore = createGlobalStore<PatientChartStore>(patientChartStoreName, {}); `. O chart grava o paciente no store; medications e orders o leem pelos consumidores citados na revisão.
+**Observation:** Excerpt contains ` const patientChartStore = createGlobalStore<PatientChartStore>(patientChartStoreName, {}); `. Chart writes patient to store; medications and orders read it through consumers cited in review.
 
-**Interpretação:** `createGlobalStore<PatientChartStore>('patient-chart-global-store', {})` (:8-10) define o store global do paciente corrente. Escrito pela unidade chart (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:39) e lido por outras unidades, por exemplo packages/esm-patient-medications-app/src/add-drug-order/drug-order-form.component.tsx e packages/esm-patient-orders-app/src/order-basket/general-order-type/orderable-concept-search/orderable-concept-search.workspace.tsx, além de `useLaunchWorkspaceRequiringVisit` (packages/esm-patient-common-lib/src/workspaces.ts:44)
+**Interpretation:** `createGlobalStore<PatientChartStore>('patient-chart-global-store', {})` (:8-10) defines current-patient global store. Written by chart unit (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:39), read by other units, for example packages/esm-patient-medications-app/src/add-drug-order/drug-order-form.component.tsx and packages/esm-patient-orders-app/src/order-basket/general-order-type/orderable-concept-search/orderable-concept-search.workspace.tsx, plus `useLaunchWorkspaceRequiringVisit` (packages/esm-patient-common-lib/src/workspaces.ts:44)
 
 ### 96. packages/esm-patient-common-lib/src/workspaces.ts:55; packages/esm-patient-chart-app/src/routes.json:218
 
-**Observação:** O trecho contém ` const dispose = showModal('visit-context-switcher', { `. Nos registros citados, packages/esm-patient-chart-app/src/routes.json:218 declara "name": "visit-context-switcher", "component": "visitContextSwitcherModal".
+**Observation:** Excerpt contains ` const dispose = showModal('visit-context-switcher', { `. In cited registries, packages/esm-patient-chart-app/src/routes.json:218 declares "name": "visit-context-switcher", "component": "visitContextSwitcherModal".
 
-**Interpretação:** Em `useLaunchWorkspaceRequiringVisit`, sem visita ativa e com `rde`, `showModal('visit-context-switcher', ...)` abre o modal de packages/esm-patient-chart-app/src/routes.json:218; os `launchWorkspace(workspaceName)` de :52 e :58 abrem o workspace nomeado por quem chama, registrado nas linhas das unidades chamadoras
+**Interpretation:** In `useLaunchWorkspaceRequiringVisit`, without active visit and with `rde`, `showModal('visit-context-switcher', ...)` opens modal from packages/esm-patient-chart-app/src/routes.json:218; `launchWorkspace(workspaceName)` at :52 and :58 open caller-named workspace recorded in calling-unit rows
 
 ### 97. packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:94; packages/esm-patient-chart-app/src/routes.json:181
 
-**Observação:** O trecho contém ` <ExtensionSlot name="visit-context-header-slot" state={{ patientUuid }} /> `. Nos registros citados, packages/esm-patient-chart-app/src/routes.json:181 declara "name": "visit-context-header", "slot": "visit-context-header-slot", "component": "visitContextHeader".
+**Observation:** Excerpt contains ` <ExtensionSlot name="visit-context-header-slot" state={{ patientUuid }} /> `. In cited registries, packages/esm-patient-chart-app/src/routes.json:181 declares "name": "visit-context-header", "slot": "visit-context-header-slot", "component": "visitContextHeader".
 
-**Interpretação:** `<ExtensionSlot name="visit-context-header-slot">` monta a extensão registrada por packages/esm-patient-chart-app/src/routes.json:181
+**Interpretation:** `<ExtensionSlot name="visit-context-header-slot">` mounts extension registered by packages/esm-patient-chart-app/src/routes.json:181
 
 ### 98. packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:95; packages/esm-form-engine-app/src/routes.json:8-10; packages/esm-form-entry-app/src/routes.json:8-11
 
-**Observação:** O trecho contém ` {showForm && formInfo && patientUuid && patient && <ExtensionSlot name="form-widget-slot" state={state} />} `. Nos registros citados, packages/esm-form-engine-app/src/routes.json:8-10 declara "name": "react-form-engine-widget", "component": "formRenderer", "slot": "form-widget-slot"; packages/esm-form-entry-app/src/routes.json:8-11 declara "name": "form-widget", "component": "formWidget", "slot": "form-widget-slot".
+**Observation:** Excerpt contains ` {showForm && formInfo && patientUuid && patient && <ExtensionSlot name="form-widget-slot" state={state} />} `. In cited registries, packages/esm-form-engine-app/src/routes.json:8-10 declares "name": "react-form-engine-widget", "component": "formRenderer", "slot": "form-widget-slot"; packages/esm-form-entry-app/src/routes.json:8-11 declares "name": "form-widget", "component": "formWidget", "slot": "form-widget-slot".
 
-**Interpretação:** `<ExtensionSlot name="form-widget-slot" state={state}>` monta o motor de formulário das unidades form-engine (packages/esm-form-engine-app/src/routes.json:8-10) e form-entry (packages/esm-form-entry-app/src/routes.json:8-11)
+**Interpretation:** `<ExtensionSlot name="form-widget-slot" state={state}>` mounts form engine from form-engine (packages/esm-form-engine-app/src/routes.json:8-10) and form-entry (packages/esm-form-entry-app/src/routes.json:8-11) units
 
 ### 99. packages/esm-patient-forms-app/src/forms/forms-dashboard.workspace.tsx:12; packages/esm-patient-chart-app/src/routes.json:181
 
-**Observação:** O trecho contém ` <ExtensionSlot name="visit-context-header-slot" state={{ patientUuid }} /> `. Nos registros citados, packages/esm-patient-chart-app/src/routes.json:181 declara "name": "visit-context-header", "slot": "visit-context-header-slot", "component": "visitContextHeader".
+**Observation:** Excerpt contains ` <ExtensionSlot name="visit-context-header-slot" state={{ patientUuid }} /> `. In cited registries, packages/esm-patient-chart-app/src/routes.json:181 declares "name": "visit-context-header", "slot": "visit-context-header-slot", "component": "visitContextHeader".
 
-**Interpretação:** `<ExtensionSlot name="visit-context-header-slot">` monta a extensão de packages/esm-patient-chart-app/src/routes.json:181
+**Interpretation:** `<ExtensionSlot name="visit-context-header-slot">` mounts extension from packages/esm-patient-chart-app/src/routes.json:181
 
 ### 100. packages/esm-patient-forms-app/src/htmlformentry/html-form-entry-wrapper.component.tsx:17; packages/esm-patient-forms-app/src/htmlformentry/html-form-entry.workspace.tsx:26-27; packages/esm-patient-forms-app/src/htmlformentry/html-form-entry.workspace.tsx:44; packages/esm-patient-forms-app/src/htmlformentry/html-form-entry-wrapper.component.tsx:15-19
 
-**Observação:** O trecho contém ` window.addEventListener('message', callback); `.
+**Observation:** Excerpt contains ` window.addEventListener('message', callback); `.
 
-**Interpretação:** `window.addEventListener('message', callback)` (:15-19) recebe `'close-workspace'` da página HFE-UI embutida no iframe de :43, que envia a mensagem por causa do `returnUrl=post-message:close-workspace` (packages/esm-patient-forms-app/src/htmlformentry/html-form-entry.workspace.tsx:26-27, :44). O regex de `src-cross-unit-communication` não pega `'message'`
+**Interpretation:** `window.addEventListener('message', callback)` (:15-19) receives `'close-workspace'` from HFE-UI page embedded in iframe at :43, sending message because of `returnUrl=post-message:close-workspace` (packages/esm-patient-forms-app/src/htmlformentry/html-form-entry.workspace.tsx:26-27, :44). Regex for `src-cross-unit-communication` does not catch `'message'`
 
 ### 101. packages/esm-patient-medications-app/src/add-drug-order/add-drug-order.workspace.tsx:37; packages/esm-patient-orders-app/src/routes.json:68
 
-**Observação:** O trecho contém ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), `. Nos registros citados, packages/esm-patient-orders-app/src/routes.json:68 declara "name": "order-basket", "component": "orderBasketWorkspace".
+**Observation:** Excerpt contains ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), `. In cited registries, packages/esm-patient-orders-app/src/routes.json:68 declares "name": "order-basket", "component": "orderBasketWorkspace".
 
-**Interpretação:** `launchPatientWorkspace('order-basket')` no `onWorkspaceClose` do próprio workspace reabre o carrinho de packages/esm-patient-orders-app/src/routes.json:68
+**Interpretation:** `launchPatientWorkspace('order-basket')` in own workspace’s `onWorkspaceClose` reopens basket from packages/esm-patient-orders-app/src/routes.json:68
 
 ### 102. packages/esm-patient-medications-app/src/add-drug-order/add-drug-order.workspace.tsx:71; packages/esm-patient-orders-app/src/routes.json:68
 
-**Observação:** O trecho contém ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), `. Nos registros citados, packages/esm-patient-orders-app/src/routes.json:68 declara "name": "order-basket", "component": "orderBasketWorkspace".
+**Observation:** Excerpt contains ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), `. In cited registries, packages/esm-patient-orders-app/src/routes.json:68 declares "name": "order-basket", "component": "orderBasketWorkspace".
 
-**Interpretação:** Segundo ponto do mesmo workspace: `launchPatientWorkspace('order-basket')` reabre o workspace de packages/esm-patient-orders-app/src/routes.json:68
+**Interpretation:** Second point in same workspace: `launchPatientWorkspace('order-basket')` reopens workspace from packages/esm-patient-orders-app/src/routes.json:68
 
 ### 103. packages/esm-patient-medications-app/src/add-drug-order/drug-order-form.component.tsx:213
 
-**Observação:** O trecho contém ` <ExtensionSlot name="medication-info-slot" state={{ order: orderBasketItem }} /> `.
+**Observation:** Excerpt contains ` <ExtensionSlot name="medication-info-slot" state={{ order: orderBasketItem }} /> `.
 
-**Interpretação:** `<ExtensionSlot name="medication-info-slot">`; nenhum `routes.json` do snapshot preenche o slot . A contraparte pode pertencer a outra unidade externa ao snapshot ou o ponto pode permanecer sem conexão; essas leituras continuam plausíveis.
+**Interpretation:** `<ExtensionSlot name="medication-info-slot">`; no snapshot `routes.json` fills slot. Counterpart may belong to another external unit or point remain disconnected; both readings remain plausible.
 
 ### 104. packages/esm-patient-medications-app/src/add-drug-order/drug-search/drug-search.component.tsx:25; packages/esm-patient-orders-app/src/routes.json:68
 
-**Observação:** O trecho contém ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), `. Nos registros citados, packages/esm-patient-orders-app/src/routes.json:68 declara "name": "order-basket", "component": "orderBasketWorkspace".
+**Observation:** Excerpt contains ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), `. In cited registries, packages/esm-patient-orders-app/src/routes.json:68 declares "name": "order-basket", "component": "orderBasketWorkspace".
 
-**Interpretação:** `launchPatientWorkspace('order-basket')` ao fechar a busca de medicamentos abre o workspace de packages/esm-patient-orders-app/src/routes.json:68
+**Interpretation:** `launchPatientWorkspace('order-basket')` on drug-search close opens workspace from packages/esm-patient-orders-app/src/routes.json:68
 
 ### 105. packages/esm-patient-medications-app/src/add-drug-order/drug-search/order-basket-search-results.component.tsx:149; packages/esm-patient-orders-app/src/routes.json:68
 
-**Observação:** O trecho contém ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), `. Nos registros citados, packages/esm-patient-orders-app/src/routes.json:68 declara "name": "order-basket", "component": "orderBasketWorkspace".
+**Observation:** Excerpt contains ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), `. In cited registries, packages/esm-patient-orders-app/src/routes.json:68 declares "name": "order-basket", "component": "orderBasketWorkspace".
 
-**Interpretação:** `launchPatientWorkspace('order-basket')` depois de adicionar o item abre o workspace de packages/esm-patient-orders-app/src/routes.json:68
+**Interpretation:** `launchPatientWorkspace('order-basket')` after adding item opens workspace from packages/esm-patient-orders-app/src/routes.json:68
 
 ### 106. packages/esm-patient-medications-app/src/components/medications-details-table.component.tsx:71; packages/esm-patient-orders-app/src/routes.json:68
 
-**Observação:** O trecho contém ` const launchOrderBasket = useLaunchWorkspaceRequiringVisit('order-basket'); `. Nos registros citados, packages/esm-patient-orders-app/src/routes.json:68 declara "name": "order-basket", "component": "orderBasketWorkspace".
+**Observation:** Excerpt contains ` const launchOrderBasket = useLaunchWorkspaceRequiringVisit('order-basket'); `. In cited registries, packages/esm-patient-orders-app/src/routes.json:68 declares "name": "order-basket", "component": "orderBasketWorkspace".
 
-**Interpretação:** `useLaunchWorkspaceRequiringVisit('order-basket')` abre o workspace de packages/esm-patient-orders-app/src/routes.json:68
+**Interpretation:** `useLaunchWorkspaceRequiringVisit('order-basket')` opens workspace from packages/esm-patient-orders-app/src/routes.json:68
 
 ### 107. packages/esm-patient-medications-app/src/drug-order-basket-panel/drug-order-basket-panel.extension.tsx:58; packages/esm-patient-orders-app/src/routes.json:68
 
-**Observação:** O trecho contém ` closeWorkspace('order-basket', { `. Nos registros citados, packages/esm-patient-orders-app/src/routes.json:68 declara "name": "order-basket", "component": "orderBasketWorkspace".
+**Observation:** Excerpt contains ` closeWorkspace('order-basket', { `. In cited registries, packages/esm-patient-orders-app/src/routes.json:68 declares "name": "order-basket", "component": "orderBasketWorkspace".
 
-**Interpretação:** `closeWorkspace('order-basket', ...)` fecha o workspace de packages/esm-patient-orders-app/src/routes.json:68 e, no `onWorkspaceClose`, abre o `add-drug-order` da própria unidade (:57-63)
+**Interpretation:** `closeWorkspace('order-basket', ...)` closes workspace from packages/esm-patient-orders-app/src/routes.json:68 and in `onWorkspaceClose` opens own-unit `add-drug-order` (:57-63)
 
 ### 108. packages/esm-patient-medications-app/src/drug-order-basket-panel/drug-order-basket-panel.extension.tsx:66; packages/esm-patient-orders-app/src/routes.json:68
 
-**Observação:** O trecho contém ` closeWorkspace('order-basket', { `. Nos registros citados, packages/esm-patient-orders-app/src/routes.json:68 declara "name": "order-basket", "component": "orderBasketWorkspace".
+**Observation:** Excerpt contains ` closeWorkspace('order-basket', { `. In cited registries, packages/esm-patient-orders-app/src/routes.json:68 declares "name": "order-basket", "component": "orderBasketWorkspace".
 
-**Interpretação:** Segundo ponto (`openDrugForm`, :65-71): `closeWorkspace('order-basket', ...)` fecha o workspace de packages/esm-patient-orders-app/src/routes.json:68 antes de abrir o formulário da própria unidade
+**Interpretation:** Second point (`openDrugForm`, :65-71): `closeWorkspace('order-basket', ...)` closes workspace from packages/esm-patient-orders-app/src/routes.json:68 before opening own-unit form
 
 ### 109. packages/esm-patient-medications-app/src/drug-order-basket-panel/order-basket-item-tile.component.tsx:103-106; packages/esm-patient-orders-app/src/routes.json:15; packages/esm-patient-orders-app/src/routes.json:21
 
-**Observação:** O trecho contém ` <ExtensionSlot name="order-item-additional-info-slot" state={additionalInfoSlotState} className={styles.additionalInfoContainer} `. Nos registros citados, packages/esm-patient-orders-app/src/routes.json:15 declara "name": "order-price-details", "component": "orderPriceDetailsExtension", "slot": "order-item-additional-info-slot"; packages/esm-patient-orders-app/src/routes.json:21 declara "name": "order-stock-details", "component": "orderStockDetailsExtension", "slot": "order-item-additional-info-slot".
+**Observation:** Excerpt contains ` <ExtensionSlot name="order-item-additional-info-slot" state={additionalInfoSlotState} className={styles.additionalInfoContainer} `. In cited registries, packages/esm-patient-orders-app/src/routes.json:15 declares "name": "order-price-details", "component": "orderPriceDetailsExtension", "slot": "order-item-additional-info-slot"; packages/esm-patient-orders-app/src/routes.json:21 declares "name": "order-stock-details", "component": "orderStockDetailsExtension", "slot": "order-item-additional-info-slot".
 
-**Interpretação:** `<ExtensionSlot name="order-item-additional-info-slot">` (:103-104) monta as extensões de packages/esm-patient-orders-app/src/routes.json:15 e :21
+**Interpretation:** `<ExtensionSlot name="order-item-additional-info-slot">` (:103-104) mounts extensions from packages/esm-patient-orders-app/src/routes.json:15 and :21
 
 ### 110. packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:315; packages/esm-patient-attachments-app/src/routes.json:30
 
-**Observação:** O trecho contém ` const close = showModal('capture-photo-modal', { `. Nos registros citados, packages/esm-patient-attachments-app/src/routes.json:30 declara "name": "capture-photo-modal", "component": "capturePhotoModal".
+**Observation:** Excerpt contains ` const close = showModal('capture-photo-modal', { `. In cited registries, packages/esm-patient-attachments-app/src/routes.json:30 declares "name": "capture-photo-modal", "component": "capturePhotoModal".
 
-**Interpretação:** `showModal('capture-photo-modal', ...)` abre o modal de packages/esm-patient-attachments-app/src/routes.json:30
+**Interpretation:** `showModal('capture-photo-modal', ...)` opens modal from packages/esm-patient-attachments-app/src/routes.json:30
 
 ### 111. packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:497; packages/esm-patient-chart-app/src/routes.json:181
 
-**Observação:** O trecho contém ` <ExtensionSlot name="visit-context-header-slot" state={{ patientUuid }} /> `. Nos registros citados, packages/esm-patient-chart-app/src/routes.json:181 declara "name": "visit-context-header", "slot": "visit-context-header-slot", "component": "visitContextHeader".
+**Observation:** Excerpt contains ` <ExtensionSlot name="visit-context-header-slot" state={{ patientUuid }} /> `. In cited registries, packages/esm-patient-chart-app/src/routes.json:181 declares "name": "visit-context-header", "slot": "visit-context-header-slot", "component": "visitContextHeader".
 
-**Interpretação:** `<ExtensionSlot name="visit-context-header-slot">` monta a extensão de packages/esm-patient-chart-app/src/routes.json:181
+**Interpretation:** `<ExtensionSlot name="visit-context-header-slot">` mounts extension from packages/esm-patient-chart-app/src/routes.json:181
 
 ### 112. packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:501; packages/esm-patient-chart-app/src/routes.json:114; packages/esm-patient-vitals-app/src/routes.json:65
 
-**Observação:** O trecho contém ` <ExtensionSlot name="visit-form-header-slot" className={styles.dataGridRow} state={memoizedState} /> `. Nos registros citados, packages/esm-patient-chart-app/src/routes.json:114 declara "name": "patient-details-tile", "slot": "visit-form-header-slot", "component": "patientDetailsTile"; packages/esm-patient-vitals-app/src/routes.json:65 declara "name": "weight-tile", "component": "weightTile", "slot": "visit-form-header-slot".
+**Observation:** Excerpt contains ` <ExtensionSlot name="visit-form-header-slot" className={styles.dataGridRow} state={memoizedState} /> `. In cited registries, packages/esm-patient-chart-app/src/routes.json:114 declares "name": "patient-details-tile", "slot": "visit-form-header-slot", "component": "patientDetailsTile"; packages/esm-patient-vitals-app/src/routes.json:65 declares "name": "weight-tile", "component": "weightTile", "slot": "visit-form-header-slot".
 
-**Interpretação:** `<ExtensionSlot name="visit-form-header-slot">` monta as extensões de packages/esm-patient-chart-app/src/routes.json:114 e packages/esm-patient-vitals-app/src/routes.json:65
+**Interpretation:** `<ExtensionSlot name="visit-form-header-slot">` mounts extensions from packages/esm-patient-chart-app/src/routes.json:114 and packages/esm-patient-vitals-app/src/routes.json:65
 
 ### 113. packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:120; packages/esm-patient-medications-app/src/routes.json:43
 
-**Observação:** O trecho contém ` const launchAddDrugOrder = useLaunchWorkspaceRequiringVisit('add-drug-order'); `. Nos registros citados, packages/esm-patient-medications-app/src/routes.json:43 declara "name": "add-drug-order", "component": "addDrugOrderWorkspace".
+**Observation:** Excerpt contains ` const launchAddDrugOrder = useLaunchWorkspaceRequiringVisit('add-drug-order'); `. In cited registries, packages/esm-patient-medications-app/src/routes.json:43 declares "name": "add-drug-order", "component": "addDrugOrderWorkspace".
 
-**Interpretação:** `useLaunchWorkspaceRequiringVisit('add-drug-order')` abre o workspace de packages/esm-patient-medications-app/src/routes.json:43
+**Interpretation:** `useLaunchWorkspaceRequiringVisit('add-drug-order')` opens workspace from packages/esm-patient-medications-app/src/routes.json:43
 
 ### 114. packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:121; packages/esm-patient-tests-app/src/routes.json:52
 
-**Observação:** O trecho contém ` const launchModifyLabOrder = useLaunchWorkspaceRequiringVisit('add-lab-order'); `. Nos registros citados, packages/esm-patient-tests-app/src/routes.json:52 declara "name": "add-lab-order", "component": "addLabOrderWorkspace".
+**Observation:** Excerpt contains ` const launchModifyLabOrder = useLaunchWorkspaceRequiringVisit('add-lab-order'); `. In cited registries, packages/esm-patient-tests-app/src/routes.json:52 declares "name": "add-lab-order", "component": "addLabOrderWorkspace".
 
-**Interpretação:** `useLaunchWorkspaceRequiringVisit('add-lab-order')` abre o workspace de packages/esm-patient-tests-app/src/routes.json:52
+**Interpretation:** `useLaunchWorkspaceRequiringVisit('add-lab-order')` opens workspace from packages/esm-patient-tests-app/src/routes.json:52
 
 ### 115. packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:534-537
 
-**Observação:** O trecho contém `` <ExtensionSlot name={`${matchingOrder.type}-action-menu-items-slot`} state={{ className: styles.menuItem, ``.
+**Observation:** Excerpt contains `` <ExtensionSlot name={`${matchingOrder.type}-action-menu-items-slot`} state={{ className: styles.menuItem, ``.
 
-**Interpretação:** `` <ExtensionSlot name={`${matchingOrder.type}-action-menu-items-slot`}> `` (:534-535); o nome depende do tipo do pedido e nenhum `routes.json` do snapshot preenche slots com esse sufixo . A contraparte pode pertencer a outra unidade externa ao snapshot ou o ponto pode permanecer sem conexão; essas leituras continuam plausíveis.
+**Interpretation:** `` <ExtensionSlot name={`${matchingOrder.type}-action-menu-items-slot`}> `` (:534-535); name depends on order type/no snapshot `routes.json` fills slots with suffix. Counterpart may belong to another external unit or point remain disconnected; both readings remain plausible.
 
 ### 116. packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:561-564
 
-**Observação:** O trecho contém `` <ExtensionSlot name={`${matchingOrder.type}-detail-slot`} state={{ orderItem: matchingOrder, ``.
+**Observation:** Excerpt contains `` <ExtensionSlot name={`${matchingOrder.type}-detail-slot`} state={{ orderItem: matchingOrder, ``.
 
-**Interpretação:** `` <ExtensionSlot name={`${matchingOrder.type}-detail-slot`}> `` (:561-562); nenhum `routes.json` do snapshot preenche slots com esse sufixo . A contraparte pode pertencer a outra unidade externa ao snapshot ou o ponto pode permanecer sem conexão; essas leituras continuam plausíveis.
+**Interpretation:** `` <ExtensionSlot name={`${matchingOrder.type}-detail-slot`}> `` (:561-562); no snapshot `routes.json` fills slots with suffix. Counterpart may belong to another external unit or point remain disconnected; both readings remain plausible.
 
 ### 117. packages/esm-patient-orders-app/src/order-basket/general-order-type/general-order-form/general-order-form.component.tsx:169
 
-**Observação:** O trecho contém ` <ExtensionSlot name="top-of-lab-order-form-slot" state={{ order: initialOrder }} /> `.
+**Observation:** Excerpt contains ` <ExtensionSlot name="top-of-lab-order-form-slot" state={{ order: initialOrder }} /> `.
 
-**Interpretação:** `<ExtensionSlot name="top-of-lab-order-form-slot">`; nenhum `routes.json` do snapshot preenche o slot . A contraparte pode pertencer a outra unidade externa ao snapshot ou o ponto pode permanecer sem conexão; essas leituras continuam plausíveis.
+**Interpretation:** `<ExtensionSlot name="top-of-lab-order-form-slot">`; no snapshot `routes.json` fills slot. Counterpart may belong to another external unit or point remain disconnected; both readings remain plausible.
 
 ### 118. packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:57; packages/esm-patient-chart-app/src/routes.json:214
 
-**Observação:** O trecho contém ` const dispose = showModal('start-visit-dialog', { `. Nos registros citados, packages/esm-patient-chart-app/src/routes.json:214 declara "name": "start-visit-dialog", "component": "startVisitModal".
+**Observation:** Excerpt contains ` const dispose = showModal('start-visit-dialog', { `. In cited registries, packages/esm-patient-chart-app/src/routes.json:214 declares "name": "start-visit-dialog", "component": "startVisitModal".
 
-**Interpretação:** `showModal('start-visit-dialog', ...)` abre o modal de packages/esm-patient-chart-app/src/routes.json:214
+**Interpretation:** `showModal('start-visit-dialog', ...)` opens modal from packages/esm-patient-chart-app/src/routes.json:214
 
 ### 119. packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:154; packages/esm-patient-chart-app/src/routes.json:181
 
-**Observação:** O trecho contém ` <ExtensionSlot name="visit-context-header-slot" state={{ patientUuid }} /> `. Nos registros citados, packages/esm-patient-chart-app/src/routes.json:181 declara "name": "visit-context-header", "slot": "visit-context-header-slot", "component": "visitContextHeader".
+**Observation:** Excerpt contains ` <ExtensionSlot name="visit-context-header-slot" state={{ patientUuid }} /> `. In cited registries, packages/esm-patient-chart-app/src/routes.json:181 declares "name": "visit-context-header", "slot": "visit-context-header-slot", "component": "visitContextHeader".
 
-**Interpretação:** `<ExtensionSlot name="visit-context-header-slot">` monta a extensão de packages/esm-patient-chart-app/src/routes.json:181
+**Interpretation:** `<ExtensionSlot name="visit-context-header-slot">` mounts extension from packages/esm-patient-chart-app/src/routes.json:181
 
 ### 120. packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:156-159; packages/esm-patient-medications-app/src/routes.json:37; packages/esm-patient-tests-app/src/routes.json:36
 
-**Observação:** O trecho contém ` <ExtensionSlot className={classNames(styles.orderBasketSlot, { [styles.orderBasketSlotTablet]: isTablet, })} `. Nos registros citados, packages/esm-patient-medications-app/src/routes.json:37 declara "name": "drug-order-panel", "component": "drugOrderPanel", "slot": "order-basket-slot"; packages/esm-patient-tests-app/src/routes.json:36 declara "name": "lab-order-panel", "component": "labOrderPanel", "slot": "order-basket-slot".
+**Observation:** Excerpt contains ` <ExtensionSlot className={classNames(styles.orderBasketSlot, { [styles.orderBasketSlotTablet]: isTablet, })} `. In cited registries, packages/esm-patient-medications-app/src/routes.json:37 declares "name": "drug-order-panel", "component": "drugOrderPanel", "slot": "order-basket-slot"; packages/esm-patient-tests-app/src/routes.json:36 declares "name": "lab-order-panel", "component": "labOrderPanel", "slot": "order-basket-slot".
 
-**Interpretação:** `<ExtensionSlot>` do `order-basket-slot` monta os painéis de packages/esm-patient-medications-app/src/routes.json:37 e packages/esm-patient-tests-app/src/routes.json:36
+**Interpretation:** `<ExtensionSlot>` of `order-basket-slot` mounts panels from packages/esm-patient-medications-app/src/routes.json:37 and packages/esm-patient-tests-app/src/routes.json:36
 
 ### 121. packages/esm-patient-tests-app/src/test-orders/add-test-order/add-test-order.workspace.tsx:78; packages/esm-patient-orders-app/src/routes.json:68
 
-**Observação:** O trecho contém ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), `. Nos registros citados, packages/esm-patient-orders-app/src/routes.json:68 declara "name": "order-basket", "component": "orderBasketWorkspace".
+**Observation:** Excerpt contains ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), `. In cited registries, packages/esm-patient-orders-app/src/routes.json:68 declares "name": "order-basket", "component": "orderBasketWorkspace".
 
-**Interpretação:** `launchPatientWorkspace('order-basket')` no `onWorkspaceClose` reabre o workspace de packages/esm-patient-orders-app/src/routes.json:68
+**Interpretation:** `launchPatientWorkspace('order-basket')` in `onWorkspaceClose` reopens workspace from packages/esm-patient-orders-app/src/routes.json:68
 
 ### 122. packages/esm-patient-tests-app/src/test-orders/add-test-order/test-order-form.component.tsx:153; packages/esm-patient-orders-app/src/routes.json:68
 
-**Observação:** O trecho contém ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), `. Nos registros citados, packages/esm-patient-orders-app/src/routes.json:68 declara "name": "order-basket", "component": "orderBasketWorkspace".
+**Observation:** Excerpt contains ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), `. In cited registries, packages/esm-patient-orders-app/src/routes.json:68 declares "name": "order-basket", "component": "orderBasketWorkspace".
 
-**Interpretação:** `launchPatientWorkspace('order-basket')` depois de salvar o pedido abre o workspace de packages/esm-patient-orders-app/src/routes.json:68
+**Interpretation:** `launchPatientWorkspace('order-basket')` after saving order opens workspace from packages/esm-patient-orders-app/src/routes.json:68
 
 ### 123. packages/esm-patient-tests-app/src/test-orders/add-test-order/test-order-form.component.tsx:163; packages/esm-patient-orders-app/src/routes.json:68
 
-**Observação:** O trecho contém ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), `. Nos registros citados, packages/esm-patient-orders-app/src/routes.json:68 declara "name": "order-basket", "component": "orderBasketWorkspace".
+**Observation:** Excerpt contains ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), `. In cited registries, packages/esm-patient-orders-app/src/routes.json:68 declares "name": "order-basket", "component": "orderBasketWorkspace".
 
-**Interpretação:** Segundo ponto do formulário: `launchPatientWorkspace('order-basket')` abre o workspace de packages/esm-patient-orders-app/src/routes.json:68
+**Interpretation:** Second form point: `launchPatientWorkspace('order-basket')` opens workspace from packages/esm-patient-orders-app/src/routes.json:68
 
 ### 124. packages/esm-patient-tests-app/src/test-orders/add-test-order/test-order-form.component.tsx:193
 
-**Observação:** O trecho contém ` <ExtensionSlot name="top-of-lab-order-form-slot" state={{ order: initialOrder }} /> `.
+**Observation:** Excerpt contains ` <ExtensionSlot name="top-of-lab-order-form-slot" state={{ order: initialOrder }} /> `.
 
-**Interpretação:** `<ExtensionSlot name="top-of-lab-order-form-slot">`; nenhum `routes.json` do snapshot preenche o slot . A contraparte pode pertencer a outra unidade externa ao snapshot ou o ponto pode permanecer sem conexão; essas leituras continuam plausíveis.
+**Interpretation:** `<ExtensionSlot name="top-of-lab-order-form-slot">`; no snapshot `routes.json` fills slot. Counterpart may belong to another external unit or point remain disconnected; both readings remain plausible.
 
 ### 125. packages/esm-patient-tests-app/src/test-orders/add-test-order/test-type-search.component.tsx:54; packages/esm-patient-orders-app/src/routes.json:68
 
-**Observação:** O trecho contém ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), `. Nos registros citados, packages/esm-patient-orders-app/src/routes.json:68 declara "name": "order-basket", "component": "orderBasketWorkspace".
+**Observation:** Excerpt contains ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), `. In cited registries, packages/esm-patient-orders-app/src/routes.json:68 declares "name": "order-basket", "component": "orderBasketWorkspace".
 
-**Interpretação:** `launchPatientWorkspace('order-basket')` ao fechar a busca abre o workspace de packages/esm-patient-orders-app/src/routes.json:68
+**Interpretation:** `launchPatientWorkspace('order-basket')` on search close opens workspace from packages/esm-patient-orders-app/src/routes.json:68
 
 ### 126. packages/esm-patient-tests-app/src/test-orders/add-test-order/test-type-search.component.tsx:208; packages/esm-patient-orders-app/src/routes.json:68
 
-**Observação:** O trecho contém ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), `. Nos registros citados, packages/esm-patient-orders-app/src/routes.json:68 declara "name": "order-basket", "component": "orderBasketWorkspace".
+**Observation:** Excerpt contains ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), `. In cited registries, packages/esm-patient-orders-app/src/routes.json:68 declares "name": "order-basket", "component": "orderBasketWorkspace".
 
-**Interpretação:** Segundo ponto da busca: `launchPatientWorkspace('order-basket')` abre o workspace de packages/esm-patient-orders-app/src/routes.json:68
+**Interpretation:** Second search point: `launchPatientWorkspace('order-basket')` opens workspace from packages/esm-patient-orders-app/src/routes.json:68
 
 ### 127. packages/esm-patient-tests-app/src/test-orders/lab-order-basket-panel/lab-order-basket-item-tile.component.tsx:68-71; packages/esm-patient-orders-app/src/routes.json:15; packages/esm-patient-orders-app/src/routes.json:21
 
-**Observação:** O trecho contém ` <ExtensionSlot name="order-item-additional-info-slot" state={additionalInfoSlotState} className={styles.additionalInfoContainer} `. Nos registros citados, packages/esm-patient-orders-app/src/routes.json:15 declara "name": "order-price-details", "component": "orderPriceDetailsExtension", "slot": "order-item-additional-info-slot"; packages/esm-patient-orders-app/src/routes.json:21 declara "name": "order-stock-details", "component": "orderStockDetailsExtension", "slot": "order-item-additional-info-slot".
+**Observation:** Excerpt contains ` <ExtensionSlot name="order-item-additional-info-slot" state={additionalInfoSlotState} className={styles.additionalInfoContainer} `. In cited registries, packages/esm-patient-orders-app/src/routes.json:15 declares "name": "order-price-details", "component": "orderPriceDetailsExtension", "slot": "order-item-additional-info-slot"; packages/esm-patient-orders-app/src/routes.json:21 declares "name": "order-stock-details", "component": "orderStockDetailsExtension", "slot": "order-item-additional-info-slot".
 
-**Interpretação:** `<ExtensionSlot name="order-item-additional-info-slot">` (:68-69) monta as extensões de packages/esm-patient-orders-app/src/routes.json:15 e :21
+**Interpretation:** `<ExtensionSlot name="order-item-additional-info-slot">` (:68-69) mounts extensions from packages/esm-patient-orders-app/src/routes.json:15 and :21
 
 ### 128. packages/esm-patient-tests-app/src/test-orders/lab-order-basket-panel/lab-order-basket-panel.extension.tsx:99; packages/esm-patient-orders-app/src/routes.json:68
 
-**Observação:** O trecho contém ` closeWorkspace('order-basket', { `. Nos registros citados, packages/esm-patient-orders-app/src/routes.json:68 declara "name": "order-basket", "component": "orderBasketWorkspace".
+**Observation:** Excerpt contains ` closeWorkspace('order-basket', { `. In cited registries, packages/esm-patient-orders-app/src/routes.json:68 declares "name": "order-basket", "component": "orderBasketWorkspace".
 
-**Interpretação:** `closeWorkspace('order-basket', ...)` fecha o workspace de packages/esm-patient-orders-app/src/routes.json:68 e abre o `add-lab-order` da própria unidade no `onWorkspaceClose` (:98-107)
+**Interpretation:** `closeWorkspace('order-basket', ...)` closes workspace from packages/esm-patient-orders-app/src/routes.json:68 and opens own-unit `add-lab-order` in `onWorkspaceClose` (:98-107)
 
 ### 129. packages/esm-patient-tests-app/src/test-orders/lab-order-basket-panel/lab-order-basket-panel.extension.tsx:111; packages/esm-patient-orders-app/src/routes.json:68
 
-**Observação:** O trecho contém ` closeWorkspace('order-basket', { `. Nos registros citados, packages/esm-patient-orders-app/src/routes.json:68 declara "name": "order-basket", "component": "orderBasketWorkspace".
+**Observation:** Excerpt contains ` closeWorkspace('order-basket', { `. In cited registries, packages/esm-patient-orders-app/src/routes.json:68 declares "name": "order-basket", "component": "orderBasketWorkspace".
 
-**Interpretação:** Segundo ponto (`openEditLabForm`, :109-120): `closeWorkspace('order-basket', ...)` fecha o workspace de packages/esm-patient-orders-app/src/routes.json:68
+**Interpretation:** Second point (`openEditLabForm`, :109-120): `closeWorkspace('order-basket', ...)` closes workspace from packages/esm-patient-orders-app/src/routes.json:68
 
 ### 130. packages/esm-patient-vitals-app/src/utils.ts:16-19; packages/esm-patient-forms-app/src/routes.json:49; packages/esm-patient-vitals-app/src/config-schema.ts:51-53; packages/esm-patient-vitals-app/src/constants.ts:1; packages/esm-patient-vitals-app/src/routes.json:72; packages/esm-patient-vitals-app/src/vitals/vitals-overview.component.tsx:42; packages/esm-patient-vitals-app/src/biometrics/biometrics-base.component.tsx:33; packages/esm-patient-vitals-app/src/vitals-and-biometrics-header/vitals-header.component.tsx:48; packages/esm-patient-vitals-app/src/routes.json:29-30
 
-**Observação:** O trecho contém ` const launchVitalsAndBiometricsForm = useLaunchWorkspaceRequiringVisit( useFormEngine ? 'patient-form-entry-workspace' : patientVitalsBiometricsFormWorkspace, );  `. Nos registros citados, packages/esm-patient-forms-app/src/routes.json:49 declara "name": "patient-form-entry-workspace", "component": "patientFormEntryWorkspace"; packages/esm-patient-vitals-app/src/routes.json:72 declara "name": "patient-vitals-biometrics-form-workspace", "component": "vitalsBiometricsFormWorkspace"; packages/esm-patient-vitals-app/src/routes.json:29-30 declara "name": "patient-vitals-info", "component": "vitalsHeader", "slot": "patient-info-slot".
+**Observation:** Excerpt contains ` const launchVitalsAndBiometricsForm = useLaunchWorkspaceRequiringVisit( useFormEngine ? 'patient-form-entry-workspace' : patientVitalsBiometricsFormWorkspace, );  `. In cited registries, packages/esm-patient-forms-app/src/routes.json:49 declares "name": "patient-form-entry-workspace", "component": "patientFormEntryWorkspace"; packages/esm-patient-vitals-app/src/routes.json:72 declares "name": "patient-vitals-biometrics-form-workspace", "component": "vitalsBiometricsFormWorkspace"; packages/esm-patient-vitals-app/src/routes.json:29-30 declares "name": "patient-vitals-info", "component": "vitalsHeader", "slot": "patient-info-slot".
 
-**Interpretação:** Em `useLaunchVitalsAndBiometricsForm`, `useLaunchWorkspaceRequiringVisit(useFormEngine ? 'patient-form-entry-workspace' : patientVitalsBiometricsFormWorkspace)` (:16-18): com `config.vitals.useFormEngine` ligado, abre o workspace de packages/esm-patient-forms-app/src/routes.json:49; desligado (padrão `false`, packages/esm-patient-vitals-app/src/config-schema.ts:51-53), abre o workspace da própria unidade (packages/esm-patient-vitals-app/src/constants.ts:1, packages/esm-patient-vitals-app/src/routes.json:72). Chamado em packages/esm-patient-vitals-app/src/vitals/vitals-overview.component.tsx:42, packages/esm-patient-vitals-app/src/biometrics/biometrics-base.component.tsx:33 e packages/esm-patient-vitals-app/src/vitals-and-biometrics-header/vitals-header.component.tsx:48 (`vitalsHeader`, packages/esm-patient-vitals-app/src/routes.json:29-30). Ver Notas
+**Interpretation:** In `useLaunchVitalsAndBiometricsForm`, `useLaunchWorkspaceRequiringVisit(useFormEngine ? 'patient-form-entry-workspace' : patientVitalsBiometricsFormWorkspace)` (:16-18): with `config.vitals.useFormEngine` enabled opens workspace from packages/esm-patient-forms-app/src/routes.json:49; disabled (default `false`, packages/esm-patient-vitals-app/src/config-schema.ts:51-53), opens own-unit workspace (packages/esm-patient-vitals-app/src/constants.ts:1, packages/esm-patient-vitals-app/src/routes.json:72). Called in packages/esm-patient-vitals-app/src/vitals/vitals-overview.component.tsx:42, packages/esm-patient-vitals-app/src/biometrics/biometrics-base.component.tsx:33 and packages/esm-patient-vitals-app/src/vitals-and-biometrics-header/vitals-header.component.tsx:48 (`vitalsHeader`, packages/esm-patient-vitals-app/src/routes.json:29-30). See Notes
 
 ### 131. packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:249-252; packages/esm-form-engine-app/src/routes.json:8-10; packages/esm-form-entry-app/src/routes.json:8-11
 
-**Observação:** O trecho contém ` <ExtensionSlot name="form-widget-slot" state={{ view: 'form', `. Nos registros citados, packages/esm-form-engine-app/src/routes.json:8-10 declara "name": "react-form-engine-widget", "component": "formRenderer", "slot": "form-widget-slot"; packages/esm-form-entry-app/src/routes.json:8-11 declara "name": "form-widget", "component": "formWidget", "slot": "form-widget-slot".
+**Observation:** Excerpt contains ` <ExtensionSlot name="form-widget-slot" state={{ view: 'form', `. In cited registries, packages/esm-form-engine-app/src/routes.json:8-10 declares "name": "react-form-engine-widget", "component": "formRenderer", "slot": "form-widget-slot"; packages/esm-form-entry-app/src/routes.json:8-11 declares "name": "form-widget", "component": "formWidget", "slot": "form-widget-slot".
 
-**Interpretação:** `<ExtensionSlot name="form-widget-slot">` (:249-250) monta o motor de formulário de packages/esm-form-engine-app/src/routes.json:8-10 e packages/esm-form-entry-app/src/routes.json:8-11
+**Interpretation:** `<ExtensionSlot name="form-widget-slot">` (:249-250) mounts form engine from packages/esm-form-engine-app/src/routes.json:8-10 and packages/esm-form-entry-app/src/routes.json:8-11
 
 ### 132. packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:268; packages/esm-patient-chart-app/src/routes.json:181
 
-**Observação:** O trecho contém ` <ExtensionSlot name="visit-context-header-slot" state={{ patientUuid }} /> `. Nos registros citados, packages/esm-patient-chart-app/src/routes.json:181 declara "name": "visit-context-header", "slot": "visit-context-header-slot", "component": "visitContextHeader".
+**Observation:** Excerpt contains ` <ExtensionSlot name="visit-context-header-slot" state={{ patientUuid }} /> `. In cited registries, packages/esm-patient-chart-app/src/routes.json:181 declares "name": "visit-context-header", "slot": "visit-context-header-slot", "component": "visitContextHeader".
 
-**Interpretação:** No ramo de carregamento (:265-268), `<ExtensionSlot name="visit-context-header-slot">` monta a extensão de packages/esm-patient-chart-app/src/routes.json:181
+**Interpretation:** In loading branch (:265-268), `<ExtensionSlot name="visit-context-header-slot">` mounts extension from packages/esm-patient-chart-app/src/routes.json:181
 
 ### 133. packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:300; packages/esm-patient-chart-app/src/routes.json:181
 
-**Observação:** O trecho contém ` <ExtensionSlot name="visit-context-header-slot" state={{ patientUuid }} /> `. Nos registros citados, packages/esm-patient-chart-app/src/routes.json:181 declara "name": "visit-context-header", "slot": "visit-context-header-slot", "component": "visitContextHeader".
+**Observation:** Excerpt contains ` <ExtensionSlot name="visit-context-header-slot" state={{ patientUuid }} /> `. In cited registries, packages/esm-patient-chart-app/src/routes.json:181 declares "name": "visit-context-header", "slot": "visit-context-header-slot", "component": "visitContextHeader".
 
-**Interpretação:** No ramo principal do formulário (:298-300), `<ExtensionSlot name="visit-context-header-slot">` monta a extensão de packages/esm-patient-chart-app/src/routes.json:181
+**Interpretation:** In main form branch (:298-300), `<ExtensionSlot name="visit-context-header-slot">` mounts extension from packages/esm-patient-chart-app/src/routes.json:181
 
 ### 134. .; package.json:5-7
 
-**Observação:** O diretório `.` tem manifesto `package.json`. Entrada: —. Build: — (só `turbo run` em scripts e CI, sem build próprio). Workspace: package.json:5-7 (raiz que declara `workspaces: ["packages/*"]`).
+**Observation:** Directory `.` has manifest `package.json`. Entry: —. Build: — (only `turbo run` in scripts and CI, no own build). Workspace: package.json:5-7 (root declaring `workspaces: ["packages/*"]`).
 
-**Interpretação:** Raiz do workspace sem entrada de aplicação; o build é orquestrado nos pacotes.
+**Interpretation:** Workspace root without application entry; build orchestrated in packages.
 
 ### 135. packages/esm-form-engine-app; packages/esm-form-engine-app/package.json:7; packages/esm-form-engine-app/webpack.config.js:2; packages/esm-form-engine-app/package.json:13; package.json:5-7
 
-**Observação:** O diretório `packages/esm-form-engine-app` tem manifesto `packages/esm-form-engine-app/package.json`. Entrada: packages/esm-form-engine-app/package.json:7 (`main: src/index.ts`, lifecycles de componentes React; `src/routes.json`). Build: packages/esm-form-engine-app/webpack.config.js:2 (`openmrs/default-webpack-config`) + packages/esm-form-engine-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
+**Observation:** Directory `packages/esm-form-engine-app` has manifest `packages/esm-form-engine-app/package.json`. Entry: packages/esm-form-engine-app/package.json:7 (`main: src/index.ts`, React component lifecycles; `src/routes.json`). Build: packages/esm-form-engine-app/webpack.config.js:2 (`openmrs/default-webpack-config`) + packages/esm-form-engine-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
 
-**Interpretação:** Módulo ESM com entrada própria que expõe componentes de UI e build webpack próprio.
+**Interpretation:** ESM module with own entry exposing UI components and own webpack build.
 
 ### 136. packages/esm-form-entry-app; packages/esm-form-entry-app/angular.json:42; packages/esm-form-entry-app/webpack.config.js:48; packages/esm-form-entry-app/angular.json:26-27; packages/esm-form-entry-app/package.json:13; package.json:5-7
 
-**Observação:** O diretório `packages/esm-form-entry-app` tem manifesto `packages/esm-form-entry-app/package.json`. Entrada: packages/esm-form-entry-app/angular.json:42 (`main: src/index.ts`); packages/esm-form-entry-app/webpack.config.js:48 (`entry`) e :75 (`exposes ./start`). Build: packages/esm-form-entry-app/angular.json:26-27 (target `build`, `ngx-build-plus:browser`) e :52 (`extraWebpackConfig: webpack.config.js`); packages/esm-form-entry-app/package.json:13 (`ng build --configuration production`). Workspace: package.json:5-7 (`packages/*`).
+**Observation:** Directory `packages/esm-form-entry-app` has manifest `packages/esm-form-entry-app/package.json`. Entry: packages/esm-form-entry-app/angular.json:42 (`main: src/index.ts`); packages/esm-form-entry-app/webpack.config.js:48 (`entry`) and :75 (`exposes ./start`). Build: packages/esm-form-entry-app/angular.json:26-27 (target `build`, `ngx-build-plus:browser`) and :52 (`extraWebpackConfig: webpack.config.js`); packages/esm-form-entry-app/package.json:13 (`ng build --configuration production`). Workspace: package.json:5-7 (`packages/*`).
 
-**Interpretação:** App Angular com entrada própria (lifecycles single-spa em `src/bootstrap.ts`) e build Angular CLI + webpack próprio.
+**Interpretation:** Angular app with own entry (single-spa lifecycles in `src/bootstrap.ts`) and own Angular CLI + webpack build.
 
 ### 137. packages/esm-generic-patient-widgets-app; packages/esm-generic-patient-widgets-app/package.json:7; packages/esm-generic-patient-widgets-app/webpack.config.js:1; packages/esm-generic-patient-widgets-app/package.json:13; package.json:5-7
 
-**Observação:** O diretório `packages/esm-generic-patient-widgets-app` tem manifesto `packages/esm-generic-patient-widgets-app/package.json`. Entrada: packages/esm-generic-patient-widgets-app/package.json:7 (`main: src/index.ts`, lifecycles de componentes React; `src/routes.json`). Build: packages/esm-generic-patient-widgets-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-generic-patient-widgets-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
+**Observation:** Directory `packages/esm-generic-patient-widgets-app` has manifest `packages/esm-generic-patient-widgets-app/package.json`. Entry: packages/esm-generic-patient-widgets-app/package.json:7 (`main: src/index.ts`, React component lifecycles; `src/routes.json`). Build: packages/esm-generic-patient-widgets-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-generic-patient-widgets-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
 
-**Interpretação:** Módulo ESM com entrada própria que expõe componentes de UI e build webpack próprio.
+**Interpretation:** ESM module with own entry exposing UI components and own webpack build.
 
 ### 138. packages/esm-patient-allergies-app; packages/esm-patient-allergies-app/package.json:7; packages/esm-patient-allergies-app/webpack.config.js:1; packages/esm-patient-allergies-app/package.json:13; package.json:5-7
 
-**Observação:** O diretório `packages/esm-patient-allergies-app` tem manifesto `packages/esm-patient-allergies-app/package.json`. Entrada: packages/esm-patient-allergies-app/package.json:7 (`main: src/index.ts`, lifecycles de componentes React; `src/routes.json`). Build: packages/esm-patient-allergies-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-patient-allergies-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
+**Observation:** Directory `packages/esm-patient-allergies-app` has manifest `packages/esm-patient-allergies-app/package.json`. Entry: packages/esm-patient-allergies-app/package.json:7 (`main: src/index.ts`, React component lifecycles; `src/routes.json`). Build: packages/esm-patient-allergies-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-patient-allergies-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
 
-**Interpretação:** Módulo ESM com entrada própria que expõe componentes de UI e build webpack próprio.
+**Interpretation:** ESM module with own entry exposing UI components and own webpack build.
 
 ### 139. packages/esm-patient-attachments-app; packages/esm-patient-attachments-app/package.json:7; packages/esm-patient-attachments-app/webpack.config.js:1-3; packages/esm-patient-attachments-app/package.json:13; package.json:5-7
 
-**Observação:** O diretório `packages/esm-patient-attachments-app` tem manifesto `packages/esm-patient-attachments-app/package.json`. Entrada: packages/esm-patient-attachments-app/package.json:7 (`main: src/index.ts`, lifecycles de componentes React; `src/routes.json`). Build: packages/esm-patient-attachments-app/webpack.config.js:1-3 (`openmrs/default-webpack-config`) + packages/esm-patient-attachments-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
+**Observation:** Directory `packages/esm-patient-attachments-app` has manifest `packages/esm-patient-attachments-app/package.json`. Entry: packages/esm-patient-attachments-app/package.json:7 (`main: src/index.ts`, React component lifecycles; `src/routes.json`). Build: packages/esm-patient-attachments-app/webpack.config.js:1-3 (`openmrs/default-webpack-config`) + packages/esm-patient-attachments-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
 
-**Interpretação:** Módulo ESM com entrada própria que expõe componentes de UI e build webpack próprio.
+**Interpretation:** ESM module with own entry exposing UI components and own webpack build.
 
 ### 140. packages/esm-patient-banner-app; packages/esm-patient-banner-app/package.json:7; packages/esm-patient-banner-app/webpack.config.js:1; packages/esm-patient-banner-app/package.json:13; package.json:5-7
 
-**Observação:** O diretório `packages/esm-patient-banner-app` tem manifesto `packages/esm-patient-banner-app/package.json`. Entrada: packages/esm-patient-banner-app/package.json:7 (`main: src/index.ts`, lifecycles de componentes React; `src/routes.json`). Build: packages/esm-patient-banner-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-patient-banner-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
+**Observation:** Directory `packages/esm-patient-banner-app` has manifest `packages/esm-patient-banner-app/package.json`. Entry: packages/esm-patient-banner-app/package.json:7 (`main: src/index.ts`, React component lifecycles; `src/routes.json`). Build: packages/esm-patient-banner-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-patient-banner-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
 
-**Interpretação:** Módulo ESM com entrada própria que expõe componentes de UI e build webpack próprio.
+**Interpretation:** ESM module with own entry exposing UI components and own webpack build.
 
 ### 141. packages/esm-patient-chart-app; packages/esm-patient-chart-app/package.json:7; packages/esm-patient-chart-app/webpack.config.js:1; packages/esm-patient-chart-app/package.json:13; package.json:5-7
 
-**Observação:** O diretório `packages/esm-patient-chart-app` tem manifesto `packages/esm-patient-chart-app/package.json`. Entrada: packages/esm-patient-chart-app/package.json:7 (`main: src/index.ts`, lifecycles de componentes React; `src/routes.json`). Build: packages/esm-patient-chart-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-patient-chart-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
+**Observation:** Directory `packages/esm-patient-chart-app` has manifest `packages/esm-patient-chart-app/package.json`. Entry: packages/esm-patient-chart-app/package.json:7 (`main: src/index.ts`, React component lifecycles; `src/routes.json`). Build: packages/esm-patient-chart-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-patient-chart-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
 
-**Interpretação:** Módulo ESM com entrada própria que expõe componentes de UI e build webpack próprio.
+**Interpretation:** ESM module with own entry exposing UI components and own webpack build.
 
 ### 142. packages/esm-patient-common-lib; packages/esm-patient-common-lib/package.json:7; packages/esm-patient-common-lib/webpack.config.js:1; packages/esm-patient-common-lib/package.json:9-13; package.json:5-7
 
-**Observação:** O diretório `packages/esm-patient-common-lib` tem manifesto `packages/esm-patient-common-lib/package.json`. Entrada: packages/esm-patient-common-lib/package.json:7 (`main: src/index.ts`, só reexportações de componentes). Build: packages/esm-patient-common-lib/webpack.config.js:1 (`openmrs/default-webpack-config`), sem script `build` em packages/esm-patient-common-lib/package.json:9-13. Workspace: package.json:5-7 (`packages/*`).
+**Observation:** Directory `packages/esm-patient-common-lib` has manifest `packages/esm-patient-common-lib/package.json`. Entry: packages/esm-patient-common-lib/package.json:7 (`main: src/index.ts`, only component reexports). Build: packages/esm-patient-common-lib/webpack.config.js:1 (`openmrs/default-webpack-config`), without script `build` in packages/esm-patient-common-lib/package.json:9-13. Workspace: package.json:5-7 (`packages/*`).
 
-**Interpretação:** Biblioteca compartilhada consumida pelos apps (`workspace:*`), sem `routes.json` nem script de build.
+**Interpretation:** Shared library consumed by apps (`workspace:*`), without `routes.json` or build script.
 
 ### 143. packages/esm-patient-conditions-app; packages/esm-patient-conditions-app/package.json:7; packages/esm-patient-conditions-app/webpack.config.js:1; packages/esm-patient-conditions-app/package.json:13; package.json:5-7
 
-**Observação:** O diretório `packages/esm-patient-conditions-app` tem manifesto `packages/esm-patient-conditions-app/package.json`. Entrada: packages/esm-patient-conditions-app/package.json:7 (`main: src/index.ts`, lifecycles de componentes React; `src/routes.json`). Build: packages/esm-patient-conditions-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-patient-conditions-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
+**Observation:** Directory `packages/esm-patient-conditions-app` has manifest `packages/esm-patient-conditions-app/package.json`. Entry: packages/esm-patient-conditions-app/package.json:7 (`main: src/index.ts`, React component lifecycles; `src/routes.json`). Build: packages/esm-patient-conditions-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-patient-conditions-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
 
-**Interpretação:** Módulo ESM com entrada própria que expõe componentes de UI e build webpack próprio.
+**Interpretation:** ESM module with own entry exposing UI components and own webpack build.
 
 ### 144. packages/esm-patient-flags-app; packages/esm-patient-flags-app/package.json:7; packages/esm-patient-flags-app/webpack.config.js:1; packages/esm-patient-flags-app/package.json:12; package.json:5-7
 
-**Observação:** O diretório `packages/esm-patient-flags-app` tem manifesto `packages/esm-patient-flags-app/package.json`. Entrada: packages/esm-patient-flags-app/package.json:7 (`main: src/index.ts`, lifecycles de componentes React; `src/routes.json`). Build: packages/esm-patient-flags-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-patient-flags-app/package.json:12 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
+**Observation:** Directory `packages/esm-patient-flags-app` has manifest `packages/esm-patient-flags-app/package.json`. Entry: packages/esm-patient-flags-app/package.json:7 (`main: src/index.ts`, React component lifecycles; `src/routes.json`). Build: packages/esm-patient-flags-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-patient-flags-app/package.json:12 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
 
-**Interpretação:** Módulo ESM com entrada própria que expõe componentes de UI e build webpack próprio.
+**Interpretation:** ESM module with own entry exposing UI components and own webpack build.
 
 ### 145. packages/esm-patient-forms-app; packages/esm-patient-forms-app/package.json:7; packages/esm-patient-forms-app/webpack.config.js:1; packages/esm-patient-forms-app/package.json:13; package.json:5-7
 
-**Observação:** O diretório `packages/esm-patient-forms-app` tem manifesto `packages/esm-patient-forms-app/package.json`. Entrada: packages/esm-patient-forms-app/package.json:7 (`main: src/index.ts`, lifecycles de componentes React; `src/routes.json`). Build: packages/esm-patient-forms-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-patient-forms-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
+**Observation:** Directory `packages/esm-patient-forms-app` has manifest `packages/esm-patient-forms-app/package.json`. Entry: packages/esm-patient-forms-app/package.json:7 (`main: src/index.ts`, React component lifecycles; `src/routes.json`). Build: packages/esm-patient-forms-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-patient-forms-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
 
-**Interpretação:** Módulo ESM com entrada própria que expõe componentes de UI e build webpack próprio.
+**Interpretation:** ESM module with own entry exposing UI components and own webpack build.
 
 ### 146. packages/esm-patient-immunizations-app; packages/esm-patient-immunizations-app/package.json:7; packages/esm-patient-immunizations-app/webpack.config.js:1; packages/esm-patient-immunizations-app/package.json:13; package.json:5-7
 
-**Observação:** O diretório `packages/esm-patient-immunizations-app` tem manifesto `packages/esm-patient-immunizations-app/package.json`. Entrada: packages/esm-patient-immunizations-app/package.json:7 (`main: src/index.ts`, lifecycles de componentes React; `src/routes.json`). Build: packages/esm-patient-immunizations-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-patient-immunizations-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
+**Observation:** Directory `packages/esm-patient-immunizations-app` has manifest `packages/esm-patient-immunizations-app/package.json`. Entry: packages/esm-patient-immunizations-app/package.json:7 (`main: src/index.ts`, React component lifecycles; `src/routes.json`). Build: packages/esm-patient-immunizations-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-patient-immunizations-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
 
-**Interpretação:** Módulo ESM com entrada própria que expõe componentes de UI e build webpack próprio.
+**Interpretation:** ESM module with own entry exposing UI components and own webpack build.
 
 ### 147. packages/esm-patient-lists-app; packages/esm-patient-lists-app/package.json:7; packages/esm-patient-lists-app/webpack.config.js:1; packages/esm-patient-lists-app/package.json:12; package.json:5-7
 
-**Observação:** O diretório `packages/esm-patient-lists-app` tem manifesto `packages/esm-patient-lists-app/package.json`. Entrada: packages/esm-patient-lists-app/package.json:7 (`main: src/index.ts`, lifecycles de componentes React; `src/routes.json`). Build: packages/esm-patient-lists-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-patient-lists-app/package.json:12 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
+**Observation:** Directory `packages/esm-patient-lists-app` has manifest `packages/esm-patient-lists-app/package.json`. Entry: packages/esm-patient-lists-app/package.json:7 (`main: src/index.ts`, React component lifecycles; `src/routes.json`). Build: packages/esm-patient-lists-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-patient-lists-app/package.json:12 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
 
-**Interpretação:** Módulo ESM com entrada própria que expõe componentes de UI e build webpack próprio.
+**Interpretation:** ESM module with own entry exposing UI components and own webpack build.
 
 ### 148. packages/esm-patient-medications-app; packages/esm-patient-medications-app/package.json:7; packages/esm-patient-medications-app/webpack.config.js:1; packages/esm-patient-medications-app/package.json:13; package.json:5-7
 
-**Observação:** O diretório `packages/esm-patient-medications-app` tem manifesto `packages/esm-patient-medications-app/package.json`. Entrada: packages/esm-patient-medications-app/package.json:7 (`main: src/index.ts`, lifecycles de componentes React; `src/routes.json`). Build: packages/esm-patient-medications-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-patient-medications-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
+**Observation:** Directory `packages/esm-patient-medications-app` has manifest `packages/esm-patient-medications-app/package.json`. Entry: packages/esm-patient-medications-app/package.json:7 (`main: src/index.ts`, React component lifecycles; `src/routes.json`). Build: packages/esm-patient-medications-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-patient-medications-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
 
-**Interpretação:** Módulo ESM com entrada própria que expõe componentes de UI e build webpack próprio.
+**Interpretation:** ESM module with own entry exposing UI components and own webpack build.
 
 ### 149. packages/esm-patient-notes-app; packages/esm-patient-notes-app/package.json:7; packages/esm-patient-notes-app/webpack.config.js:1; packages/esm-patient-notes-app/package.json:13; package.json:5-7
 
-**Observação:** O diretório `packages/esm-patient-notes-app` tem manifesto `packages/esm-patient-notes-app/package.json`. Entrada: packages/esm-patient-notes-app/package.json:7 (`main: src/index.ts`, lifecycles de componentes React; `src/routes.json`). Build: packages/esm-patient-notes-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-patient-notes-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
+**Observation:** Directory `packages/esm-patient-notes-app` has manifest `packages/esm-patient-notes-app/package.json`. Entry: packages/esm-patient-notes-app/package.json:7 (`main: src/index.ts`, React component lifecycles; `src/routes.json`). Build: packages/esm-patient-notes-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-patient-notes-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
 
-**Interpretação:** Módulo ESM com entrada própria que expõe componentes de UI e build webpack próprio.
+**Interpretation:** ESM module with own entry exposing UI components and own webpack build.
 
 ### 150. packages/esm-patient-orders-app; packages/esm-patient-orders-app/package.json:7; packages/esm-patient-orders-app/webpack.config.js:1; packages/esm-patient-orders-app/package.json:13; package.json:5-7
 
-**Observação:** O diretório `packages/esm-patient-orders-app` tem manifesto `packages/esm-patient-orders-app/package.json`. Entrada: packages/esm-patient-orders-app/package.json:7 (`main: src/index.ts`, lifecycles de componentes React; `src/routes.json`). Build: packages/esm-patient-orders-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-patient-orders-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
+**Observation:** Directory `packages/esm-patient-orders-app` has manifest `packages/esm-patient-orders-app/package.json`. Entry: packages/esm-patient-orders-app/package.json:7 (`main: src/index.ts`, React component lifecycles; `src/routes.json`). Build: packages/esm-patient-orders-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-patient-orders-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
 
-**Interpretação:** Módulo ESM com entrada própria que expõe componentes de UI e build webpack próprio.
+**Interpretation:** ESM module with own entry exposing UI components and own webpack build.
 
 ### 151. packages/esm-patient-programs-app; packages/esm-patient-programs-app/package.json:7; packages/esm-patient-programs-app/webpack.config.js:1; packages/esm-patient-programs-app/package.json:13; package.json:5-7
 
-**Observação:** O diretório `packages/esm-patient-programs-app` tem manifesto `packages/esm-patient-programs-app/package.json`. Entrada: packages/esm-patient-programs-app/package.json:7 (`main: src/index.ts`, lifecycles de componentes React; `src/routes.json`). Build: packages/esm-patient-programs-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-patient-programs-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
+**Observation:** Directory `packages/esm-patient-programs-app` has manifest `packages/esm-patient-programs-app/package.json`. Entry: packages/esm-patient-programs-app/package.json:7 (`main: src/index.ts`, React component lifecycles; `src/routes.json`). Build: packages/esm-patient-programs-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-patient-programs-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
 
-**Interpretação:** Módulo ESM com entrada própria que expõe componentes de UI e build webpack próprio.
+**Interpretation:** ESM module with own entry exposing UI components and own webpack build.
 
 ### 152. packages/esm-patient-tests-app; packages/esm-patient-tests-app/package.json:7; packages/esm-patient-tests-app/webpack.config.js:1; packages/esm-patient-tests-app/package.json:13; package.json:5-7
 
-**Observação:** O diretório `packages/esm-patient-tests-app` tem manifesto `packages/esm-patient-tests-app/package.json`. Entrada: packages/esm-patient-tests-app/package.json:7 (`main: src/index.ts`, lifecycles de componentes React; `src/routes.json`). Build: packages/esm-patient-tests-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-patient-tests-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
+**Observation:** Directory `packages/esm-patient-tests-app` has manifest `packages/esm-patient-tests-app/package.json`. Entry: packages/esm-patient-tests-app/package.json:7 (`main: src/index.ts`, React component lifecycles; `src/routes.json`). Build: packages/esm-patient-tests-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-patient-tests-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
 
-**Interpretação:** Módulo ESM com entrada própria que expõe componentes de UI e build webpack próprio.
+**Interpretation:** ESM module with own entry exposing UI components and own webpack build.
 
 ### 153. packages/esm-patient-vitals-app; packages/esm-patient-vitals-app/package.json:7; packages/esm-patient-vitals-app/webpack.config.js:1; packages/esm-patient-vitals-app/package.json:13; package.json:5-7
 
-**Observação:** O diretório `packages/esm-patient-vitals-app` tem manifesto `packages/esm-patient-vitals-app/package.json`. Entrada: packages/esm-patient-vitals-app/package.json:7 (`main: src/index.ts`, lifecycles de componentes React; `src/routes.json`). Build: packages/esm-patient-vitals-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-patient-vitals-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
+**Observation:** Directory `packages/esm-patient-vitals-app` has manifest `packages/esm-patient-vitals-app/package.json`. Entry: packages/esm-patient-vitals-app/package.json:7 (`main: src/index.ts`, React component lifecycles; `src/routes.json`). Build: packages/esm-patient-vitals-app/webpack.config.js:1 (`openmrs/default-webpack-config`) + packages/esm-patient-vitals-app/package.json:13 (`webpack --mode production --color`). Workspace: package.json:5-7 (`packages/*`).
 
-**Interpretação:** Módulo ESM com entrada própria que expõe componentes de UI e build webpack próprio.
+**Interpretation:** ESM module with own entry exposing UI components and own webpack build.
 
 ### 154. packages/esm-form-entry-app/src/bootstrap.ts:21; packages/esm-form-entry-app/src/bootstrap.ts:22; packages/esm-form-entry-app/src/bootstrap.ts:23; packages/esm-form-entry-app/src/bootstrap.ts:3; packages/esm-form-entry-app/src/bootstrap.ts:12; packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:95; packages/esm-form-entry-app/src/routes.json:9-11; packages/esm-form-entry-app/webpack.config.js:70-76; packages/esm-form-entry-app/src/index.ts:66; packages/esm-form-entry-app/src/bootstrap.ts:12-19; packages/esm-form-entry-app/src/bootstrap.ts:21-23; packages/esm-form-entry-app/webpack.config.js:74-76
 
-**Observação:** Os trechos citados contêm ` export const bootstrap = lifecycles.bootstrap; ` (packages/esm-form-entry-app/src/bootstrap.ts:21); ` export const mount = lifecycles.mount; ` (packages/esm-form-entry-app/src/bootstrap.ts:22); ` export const unmount = lifecycles.unmount; ` (packages/esm-form-entry-app/src/bootstrap.ts:23); ` import { singleSpaAngular, getSingleSpaExtraProviders } from 'single-spa-angular'; ` (packages/esm-form-entry-app/src/bootstrap.ts:3); ` const lifecycles = singleSpaAngular({ ` (packages/esm-form-entry-app/src/bootstrap.ts:12); ` {showForm && formInfo && patientUuid && patient && <ExtensionSlot name="form-widget-slot" state={state} />} ` (packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:95). Os registros associados são packages/esm-form-entry-app/src/routes.json:9-11 (extensão `form-widget`, componente `formWidget`, em `form-widget-slot`); packages/esm-form-entry-app/webpack.config.js:70-76 (`ModuleFederationPlugin` com `name` do package.json e `exposes` `./start`).
+**Observation:** Cited excerpts contain ` export const bootstrap = lifecycles.bootstrap; ` (packages/esm-form-entry-app/src/bootstrap.ts:21); ` export const mount = lifecycles.mount; ` (packages/esm-form-entry-app/src/bootstrap.ts:22); ` export const unmount = lifecycles.unmount; ` (packages/esm-form-entry-app/src/bootstrap.ts:23); ` import { singleSpaAngular, getSingleSpaExtraProviders } from 'single-spa-angular'; ` (packages/esm-form-entry-app/src/bootstrap.ts:3); ` const lifecycles = singleSpaAngular({ ` (packages/esm-form-entry-app/src/bootstrap.ts:12); ` {showForm && formInfo && patientUuid && patient && <ExtensionSlot name="form-widget-slot" state={state} />} ` (packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:95). Associated registries: packages/esm-form-entry-app/src/routes.json:9-11 (extension `form-widget`, component `formWidget`, in `form-widget-slot`); packages/esm-form-entry-app/webpack.config.js:70-76 (`ModuleFederationPlugin` with `name` from package.json and `exposes` `./start`).
 
-**Interpretação:** A relação 3.4.5 #1 é `host → remote`, de `packages/esm-patient-forms-app` para `packages/esm-form-entry-app`, mecanismo `single-spa`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #1 is `host → remote`, from `packages/esm-patient-forms-app` to `packages/esm-form-entry-app`, mechanism `single-spa`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 155. packages/esm-form-entry-app/src/bootstrap.ts:21; packages/esm-form-entry-app/src/bootstrap.ts:22; packages/esm-form-entry-app/src/bootstrap.ts:23; packages/esm-form-entry-app/src/bootstrap.ts:3; packages/esm-form-entry-app/src/bootstrap.ts:12; packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:249; packages/esm-form-entry-app/src/routes.json:9-11; packages/esm-form-entry-app/webpack.config.js:70-76; packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:249-250
 
-**Observação:** Os trechos citados contêm ` export const bootstrap = lifecycles.bootstrap; ` (packages/esm-form-entry-app/src/bootstrap.ts:21); ` export const mount = lifecycles.mount; ` (packages/esm-form-entry-app/src/bootstrap.ts:22); ` export const unmount = lifecycles.unmount; ` (packages/esm-form-entry-app/src/bootstrap.ts:23); ` import { singleSpaAngular, getSingleSpaExtraProviders } from 'single-spa-angular'; ` (packages/esm-form-entry-app/src/bootstrap.ts:3); ` const lifecycles = singleSpaAngular({ ` (packages/esm-form-entry-app/src/bootstrap.ts:12); ` <ExtensionSlot name="form-widget-slot" state={{ view: 'form', ` (packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:249). Os registros associados são packages/esm-form-entry-app/src/routes.json:9-11 (extensão `form-widget`, componente `formWidget`, em `form-widget-slot`); packages/esm-form-entry-app/webpack.config.js:70-76 (`ModuleFederationPlugin` com `name` do package.json e `exposes` `./start`).
+**Observation:** Cited excerpts contain ` export const bootstrap = lifecycles.bootstrap; ` (packages/esm-form-entry-app/src/bootstrap.ts:21); ` export const mount = lifecycles.mount; ` (packages/esm-form-entry-app/src/bootstrap.ts:22); ` export const unmount = lifecycles.unmount; ` (packages/esm-form-entry-app/src/bootstrap.ts:23); ` import { singleSpaAngular, getSingleSpaExtraProviders } from 'single-spa-angular'; ` (packages/esm-form-entry-app/src/bootstrap.ts:3); ` const lifecycles = singleSpaAngular({ ` (packages/esm-form-entry-app/src/bootstrap.ts:12); ` <ExtensionSlot name="form-widget-slot" state={{ view: 'form', ` (packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:249). Associated registries: packages/esm-form-entry-app/src/routes.json:9-11 (extension `form-widget`, component `formWidget`, in `form-widget-slot`); packages/esm-form-entry-app/webpack.config.js:70-76 (`ModuleFederationPlugin` with `name` from package.json and `exposes` `./start`).
 
-**Interpretação:** A relação 3.4.5 #2 é `host → remote`, de `packages/esm-patient-vitals-app` para `packages/esm-form-entry-app`, mecanismo `single-spa`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado. O ramo depende de `config.vitals.useFormEngine`; a atividade Yes preserva a decisão da 3.4.
+**Interpretation:** Relationship 3.4.5 #2 is `host → remote`, from `packages/esm-patient-vitals-app` to `packages/esm-form-entry-app`, mechanism `single-spa`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism. Branch depends on `config.vitals.useFormEngine`; Yes activity preserves 3.4 decision.
 
 ### 156. packages/esm-patient-forms-app/src/htmlformentry/html-form-entry-wrapper.component.tsx:43; packages/esm-patient-forms-app/src/htmlformentry/html-form-entry.workspace.tsx:29-30
 
-**Observação:** Os trechos citados contêm ` <iframe ref={iframeRef} src={src} className={styles.wrapper} onLoad={onLoad}></iframe> ` (packages/esm-patient-forms-app/src/htmlformentry/html-form-entry-wrapper.component.tsx:43). O `src` recebe a URL `${window.openmrsBase}/htmlformentryui/htmlform/${uiPage}.page?`, montada no workspace citado.
+**Observation:** Cited excerpts contain ` <iframe ref={iframeRef} src={src} className={styles.wrapper} onLoad={onLoad}></iframe> ` (packages/esm-patient-forms-app/src/htmlformentry/html-form-entry-wrapper.component.tsx:43). `src` receives URL `${window.openmrsBase}/htmlformentryui/htmlform/${uiPage}.page?`, built in cited workspace.
 
-**Interpretação:** A relação 3.4.5 #3 é `page → embedded-frontend`, de `packages/esm-patient-forms-app` para `htmlformentryui`, mecanismo `iframe`, direção `origem → destino`, No snapshot `No` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #3 is `page → embedded-frontend`, from `packages/esm-patient-forms-app` to `htmlformentryui`, mechanism `iframe`, direction `source → target`, In snapshot `No` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 157. packages/esm-form-engine-app/src/form-collapse-toggle/form-collapse-toggle.component.tsx:15; packages/esm-form-engine-app/src/form-collapse-toggle/form-collapse-toggle.component.tsx:14-20
 
-**Observação:** Os trechos citados contêm ` window.addEventListener('openmrs:form-view-embedded', handleFormEmbedded); ` (packages/esm-form-engine-app/src/form-collapse-toggle/form-collapse-toggle.component.tsx:15).
+**Observation:** Cited excerpts contain ` window.addEventListener('openmrs:form-view-embedded', handleFormEmbedded); ` (packages/esm-form-engine-app/src/form-collapse-toggle/form-collapse-toggle.component.tsx:15).
 
-**Interpretação:** A relação 3.4.5 #4 é `communication`, de `packages/esm-form-engine-app` para `openmrs:form-view-embedded`, mecanismo `events`, direção `Undetermined`, No snapshot `Undetermined` e Ativa `Undetermined`. O destino pode ser fornecido por outra unidade externa ou permanecer sem conexão; o snapshot não permite decidir.
+**Interpretation:** Relationship 3.4.5 #4 is `communication`, from `packages/esm-form-engine-app` to `openmrs:form-view-embedded`, mechanism `events`, direction `Undetermined`, In snapshot `Undetermined` and Active `Undetermined`. Target may be supplied by another external unit or remain disconnected; snapshot cannot decide.
 
 ### 158. packages/esm-form-engine-app/src/form-collapse-toggle/form-collapse-toggle.component.tsx:23; packages/esm-form-engine-app/src/form-collapse-toggle/form-collapse-toggle.component.tsx:24; packages/esm-form-engine-app/src/form-collapse-toggle/form-collapse-toggle.component.tsx:22-25
 
-**Observação:** Os trechos citados contêm ` const FormCollapseToggleEvent = new CustomEvent('openmrs:form-collapse-toggle', { detail: { value } }); ` (packages/esm-form-engine-app/src/form-collapse-toggle/form-collapse-toggle.component.tsx:23); ` window.dispatchEvent(FormCollapseToggleEvent); ` (packages/esm-form-engine-app/src/form-collapse-toggle/form-collapse-toggle.component.tsx:24).
+**Observation:** Cited excerpts contain ` const FormCollapseToggleEvent = new CustomEvent('openmrs:form-collapse-toggle', { detail: { value } }); ` (packages/esm-form-engine-app/src/form-collapse-toggle/form-collapse-toggle.component.tsx:23); ` window.dispatchEvent(FormCollapseToggleEvent); ` (packages/esm-form-engine-app/src/form-collapse-toggle/form-collapse-toggle.component.tsx:24).
 
-**Interpretação:** A relação 3.4.5 #5 é `communication`, de `packages/esm-form-engine-app` para `openmrs:form-collapse-toggle`, mecanismo `events`, direção `origem → destino`, No snapshot `Undetermined` e Ativa `Undetermined`. O destino pode ser fornecido por outra unidade externa ou permanecer sem conexão; o snapshot não permite decidir.
+**Interpretation:** Relationship 3.4.5 #5 is `communication`, from `packages/esm-form-engine-app` to `openmrs:form-collapse-toggle`, mechanism `events`, direction `source → target`, In snapshot `Undetermined` and Active `Undetermined`. Target may be supplied by another external unit or remain disconnected; snapshot cannot decide.
 
 ### 159. packages/esm-patient-flags-app/src/flags/hooks/usePatientFlags.tsx:56; packages/esm-patient-flags-app/src/flags/hooks/usePatientFlags.tsx:47-60
 
-**Observação:** Os trechos citados contêm ` window.addEventListener('single-spa:routing-event', listenToRoutingEvent); ` (packages/esm-patient-flags-app/src/flags/hooks/usePatientFlags.tsx:56).
+**Observation:** Cited excerpts contain ` window.addEventListener('single-spa:routing-event', listenToRoutingEvent); ` (packages/esm-patient-flags-app/src/flags/hooks/usePatientFlags.tsx:56).
 
-**Interpretação:** A relação 3.4.5 #6 é `communication`, de `packages/esm-patient-flags-app` para `single-spa`, mecanismo `events`, direção `origem → destino`, No snapshot `No` e Ativa `Yes`. Os trechos ligam as unidades por estado reativo ou mensagens, conforme a relação final; a organização de montagem não é estabelecida por essa troca sozinha. A direção registrada preserva a convenção decidida pelo pesquisador na 3.4.5: a mensagem chega do destino externo à origem local.
+**Interpretation:** Relationship 3.4.5 #6 is `communication`, from `packages/esm-patient-flags-app` to `single-spa`, mechanism `events`, direction `source → target`, In snapshot `No` and Active `Yes`. Excerpts link units through reactive state or messages per final relationship; exchange alone does not establish mounting organization. Recorded direction preserves researcher-decided 3.4.5 convention: message arrives from external target to local source.
 
 ### 160. packages/esm-form-engine-app/src/form-renderer/form-error.component.tsx:20; packages/esm-form-engine-app/src/form-renderer/form-renderer.component.tsx:42; packages/esm-patient-forms-app/src/routes.json:85; packages/esm-form-engine-app/src/form-renderer/form-error.component.tsx:14; packages/esm-form-engine-app/src/form-renderer/form-renderer.component.tsx:33; packages/esm-patient-common-lib/src/form-entry-interop.ts:5
 
-**Observação:** Os trechos citados contêm ` launchPatientWorkspace(clinicalFormsWorkspaceName); ` (packages/esm-form-engine-app/src/form-renderer/form-error.component.tsx:20); ` !encounterUuid && openClinicalFormsWorkspaceOnFormClose && launchPatientWorkspace(clinicalFormsWorkspaceName); ` (packages/esm-form-engine-app/src/form-renderer/form-renderer.component.tsx:42). O parâmetro `clinicalFormsWorkspaceName` tem valor padrão `clinicalFormsWorkspace` em packages/esm-form-engine-app/src/form-renderer/form-error.component.tsx:14 e packages/esm-form-engine-app/src/form-renderer/form-renderer.component.tsx:33; packages/esm-patient-common-lib/src/form-entry-interop.ts:5 declara `export const clinicalFormsWorkspace = 'clinical-forms-workspace';`. Os registros associados são packages/esm-patient-forms-app/src/routes.json:85 (workspace `clinical-forms-workspace`).
+**Observation:** Cited excerpts contain ` launchPatientWorkspace(clinicalFormsWorkspaceName); ` (packages/esm-form-engine-app/src/form-renderer/form-error.component.tsx:20); ` !encounterUuid && openClinicalFormsWorkspaceOnFormClose && launchPatientWorkspace(clinicalFormsWorkspaceName); ` (packages/esm-form-engine-app/src/form-renderer/form-renderer.component.tsx:42). Parameter `clinicalFormsWorkspaceName` has default value `clinicalFormsWorkspace` in packages/esm-form-engine-app/src/form-renderer/form-error.component.tsx:14 and packages/esm-form-engine-app/src/form-renderer/form-renderer.component.tsx:33; packages/esm-patient-common-lib/src/form-entry-interop.ts:5 declares `export const clinicalFormsWorkspace = 'clinical-forms-workspace';`. Associated registries: packages/esm-patient-forms-app/src/routes.json:85 (workspace `clinical-forms-workspace`).
 
-**Interpretação:** A relação 3.4.5 #7 é `host → remote`, de `packages/esm-form-engine-app` para `packages/esm-patient-forms-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #7 is `host → remote`, from `packages/esm-form-engine-app` to `packages/esm-patient-forms-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 161. packages/esm-form-entry-app/src/app/fe-wrapper/fe-wrapper.component.ts:259; packages/esm-patient-chart-app/src/routes.json:210
 
-**Observação:** Os trechos citados contêm ` const dispose = showModal('modify-visit-date-dialog', { ` (packages/esm-form-entry-app/src/app/fe-wrapper/fe-wrapper.component.ts:259). Os registros associados são packages/esm-patient-chart-app/src/routes.json:210 (modal `modify-visit-date-dialog`).
+**Observation:** Cited excerpts contain ` const dispose = showModal('modify-visit-date-dialog', { ` (packages/esm-form-entry-app/src/app/fe-wrapper/fe-wrapper.component.ts:259). Associated registries: packages/esm-patient-chart-app/src/routes.json:210 (modal `modify-visit-date-dialog`).
 
-**Interpretação:** A relação 3.4.5 #8 é `host → remote`, de `packages/esm-form-entry-app` para `packages/esm-patient-chart-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #8 is `host → remote`, from `packages/esm-form-entry-app` to `packages/esm-patient-chart-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 162. packages/esm-generic-patient-widgets-app/src/obs-graph/obs-graph.component.tsx:113; packages/esm-generic-patient-widgets-app/src/obs-graph/obs-graph.component.tsx:111-113; packages/esm-generic-patient-widgets-app/src/config-schema.ts:19-23
 
-**Observação:** Os trechos citados contêm ` <ExtensionSlot name={config.interpretationSlot} style={{ gridTemplateColumns: '1fr' }} /> ` (packages/esm-generic-patient-widgets-app/src/obs-graph/obs-graph.component.tsx:113).
+**Observation:** Cited excerpts contain ` <ExtensionSlot name={config.interpretationSlot} style={{ gridTemplateColumns: '1fr' }} /> ` (packages/esm-generic-patient-widgets-app/src/obs-graph/obs-graph.component.tsx:113).
 
-**Interpretação:** A relação 3.4.5 #9 é `host → remote`, de `packages/esm-generic-patient-widgets-app` para `config.interpretationSlot`, mecanismo `other`, direção `origem → destino`, No snapshot `Undetermined` e Ativa `Undetermined`. O destino pode ser fornecido por outra unidade externa ou permanecer sem conexão; o snapshot não permite decidir.
+**Interpretation:** Relationship 3.4.5 #9 is `host → remote`, from `packages/esm-generic-patient-widgets-app` to `config.interpretationSlot`, mechanism `other`, direction `source → target`, In snapshot `Undetermined` and Active `Undetermined`. Target may be supplied by another external unit or remain disconnected; snapshot cannot decide.
 
 ### 163. packages/esm-patient-chart-app/src/clinical-views/utils/helpers.ts:24; packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:25; packages/esm-patient-common-lib/src/form-entry-interop.ts:70; packages/esm-patient-common-lib/src/form-entry-interop.ts:97; packages/esm-patient-forms-app/src/routes.json:49; packages/esm-patient-forms-app/src/routes.json:67; packages/esm-patient-forms-app/src/routes.json:85; packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/encounters-table/encounters-table.component.tsx:242; packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/encounters-table/encounters-table.component.tsx:287; packages/esm-patient-forms-app/src/forms/forms-dashboard.component.tsx:47
 
-**Observação:** Os trechos citados contêm ` launchPatientWorkspace('patient-form-entry-workspace', { ` (packages/esm-patient-chart-app/src/clinical-views/utils/helpers.ts:24); ` const launchClinicalFormsWorkspace = useLaunchWorkspaceRequiringVisit('clinical-forms-workspace'); ` (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:25); ` launchWorkspace(formEntryWorkspaceName, { ` (packages/esm-patient-common-lib/src/form-entry-interop.ts:70); ` launchWorkspace(workspaceName, { ` (packages/esm-patient-common-lib/src/form-entry-interop.ts:97). Os registros associados são packages/esm-patient-forms-app/src/routes.json:49 (workspace `patient-form-entry-workspace`); packages/esm-patient-forms-app/src/routes.json:67 (workspace `patient-html-form-entry-workspace`); packages/esm-patient-forms-app/src/routes.json:85 (workspace `clinical-forms-workspace`).
+**Observation:** Cited excerpts contain ` launchPatientWorkspace('patient-form-entry-workspace', { ` (packages/esm-patient-chart-app/src/clinical-views/utils/helpers.ts:24); ` const launchClinicalFormsWorkspace = useLaunchWorkspaceRequiringVisit('clinical-forms-workspace'); ` (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:25); ` launchWorkspace(formEntryWorkspaceName, { ` (packages/esm-patient-common-lib/src/form-entry-interop.ts:70); ` launchWorkspace(workspaceName, { ` (packages/esm-patient-common-lib/src/form-entry-interop.ts:97). Associated registries: packages/esm-patient-forms-app/src/routes.json:49 (workspace `patient-form-entry-workspace`); packages/esm-patient-forms-app/src/routes.json:67 (workspace `patient-html-form-entry-workspace`); packages/esm-patient-forms-app/src/routes.json:85 (workspace `clinical-forms-workspace`).
 
-**Interpretação:** A relação 3.4.5 #10 é `host → remote`, de `packages/esm-patient-chart-app` para `packages/esm-patient-forms-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #10 is `host → remote`, from `packages/esm-patient-chart-app` to `packages/esm-patient-forms-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 164. packages/esm-patient-chart-app/src/mark-patient-deceased/mark-patient-deceased-form.workspace.tsx:124; packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37; packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69; packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47; packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:69; packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:410; packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:29; packages/esm-patient-vitals-app/src/routes.json:53-58; packages/esm-patient-vitals-app/src/routes.json:9-11; packages/esm-patient-vitals-app/src/routes.json:34-36; packages/esm-patient-vitals-app/src/routes.json:18-20; packages/esm-patient-vitals-app/src/routes.json:43-45; packages/esm-patient-vitals-app/src/routes.json:29-31; packages/esm-patient-vitals-app/src/routes.json:63-65; packages/esm-patient-vitals-app/src/routes.json:72
 
-**Observação:** Os trechos citados contêm ` <ExtensionSlot className={styles.dataGridRow} name="visit-form-header-slot" state={memoizedPatientUuid} /> ` (packages/esm-patient-chart-app/src/mark-patient-deceased/mark-patient-deceased-form.workspace.tsx:124); ` const ungroupedDashboards = extensionStore.slots['patient-chart-dashboard-slot'].assignedExtensions.map((e) => ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37); ` <ExtensionSlot key={dashboard.slot} name={dashboard.slot} className={styles.dashboard}> ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69); ` setLeftNav({ name: 'patient-chart-dashboard-slot', basePath: leftNavBasePath }); ` (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47); ` <ExtensionSlot name="patient-info-slot" state={state} /> ` (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:69); ` <ExtensionSlot name="visit-form-header-slot" className={styles.dataGridRow} state={visitHeaderSlotState} ` (packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:410); ` const launchVitalsAndBiometricsFormWorkspace = useLaunchWorkspaceRequiringVisit( ` (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:29). Os registros associados são packages/esm-patient-vitals-app/src/routes.json:53-58 (`results-summary-dashboard` em `patient-chart-dashboard-slot`, dashboard `patient-chart-vitals-biometrics-dashboard-slot`); packages/esm-patient-vitals-app/src/routes.json:9-11, :34-36 (widgets em `patient-chart-summary-dashboard-slot`); packages/esm-patient-vitals-app/src/routes.json:18-20, :43-45 (widgets em `patient-chart-vitals-biometrics-dashboard-slot`); packages/esm-patient-vitals-app/src/routes.json:29-31 (`patient-vitals-info` em `patient-info-slot`); packages/esm-patient-vitals-app/src/routes.json:63-65 (`weight-tile` em `visit-form-header-slot`); packages/esm-patient-vitals-app/src/routes.json:72 (workspace `patient-vitals-biometrics-form-workspace`).
+**Observation:** Cited excerpts contain ` <ExtensionSlot className={styles.dataGridRow} name="visit-form-header-slot" state={memoizedPatientUuid} /> ` (packages/esm-patient-chart-app/src/mark-patient-deceased/mark-patient-deceased-form.workspace.tsx:124); ` const ungroupedDashboards = extensionStore.slots['patient-chart-dashboard-slot'].assignedExtensions.map((e) => ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37); ` <ExtensionSlot key={dashboard.slot} name={dashboard.slot} className={styles.dashboard}> ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69); ` setLeftNav({ name: 'patient-chart-dashboard-slot', basePath: leftNavBasePath }); ` (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47); ` <ExtensionSlot name="patient-info-slot" state={state} /> ` (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:69); ` <ExtensionSlot name="visit-form-header-slot" className={styles.dataGridRow} state={visitHeaderSlotState} ` (packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:410); ` const launchVitalsAndBiometricsFormWorkspace = useLaunchWorkspaceRequiringVisit( ` (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:29). Associated registries: packages/esm-patient-vitals-app/src/routes.json:53-58 (`results-summary-dashboard` in `patient-chart-dashboard-slot`, dashboard `patient-chart-vitals-biometrics-dashboard-slot`); packages/esm-patient-vitals-app/src/routes.json:9-11, :34-36 (widgets in `patient-chart-summary-dashboard-slot`); packages/esm-patient-vitals-app/src/routes.json:18-20, :43-45 (widgets in `patient-chart-vitals-biometrics-dashboard-slot`); packages/esm-patient-vitals-app/src/routes.json:29-31 (`patient-vitals-info` in `patient-info-slot`); packages/esm-patient-vitals-app/src/routes.json:63-65 (`weight-tile` in `visit-form-header-slot`); packages/esm-patient-vitals-app/src/routes.json:72 (workspace `patient-vitals-biometrics-form-workspace`).
 
-**Interpretação:** A relação 3.4.5 #11 é `host → remote`, de `packages/esm-patient-chart-app` para `packages/esm-patient-vitals-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #11 is `host → remote`, from `packages/esm-patient-chart-app` to `packages/esm-patient-vitals-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 165. packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37; packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69; packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47; packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:23; packages/esm-patient-allergies-app/src/routes.json:24-31; packages/esm-patient-allergies-app/src/routes.json:17-19; packages/esm-patient-allergies-app/src/routes.json:42
 
-**Observação:** Os trechos citados contêm ` const ungroupedDashboards = extensionStore.slots['patient-chart-dashboard-slot'].assignedExtensions.map((e) => ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37); ` <ExtensionSlot key={dashboard.slot} name={dashboard.slot} className={styles.dashboard}> ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69); ` setLeftNav({ name: 'patient-chart-dashboard-slot', basePath: leftNavBasePath }); ` (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47); ` const launchAllergiesFormWorkspace = useLaunchWorkspaceRequiringVisit('patient-allergy-form-workspace'); ` (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:23). Os registros associados são packages/esm-patient-allergies-app/src/routes.json:24-31 (`allergies-summary-dashboard` em `patient-chart-dashboard-slot`, dashboard `patient-chart-allergies-dashboard-slot`); packages/esm-patient-allergies-app/src/routes.json:17-19 (`allergies-details-widget` no slot do dashboard); packages/esm-patient-allergies-app/src/routes.json:42 (workspace `patient-allergy-form-workspace`).
+**Observation:** Cited excerpts contain ` const ungroupedDashboards = extensionStore.slots['patient-chart-dashboard-slot'].assignedExtensions.map((e) => ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37); ` <ExtensionSlot key={dashboard.slot} name={dashboard.slot} className={styles.dashboard}> ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69); ` setLeftNav({ name: 'patient-chart-dashboard-slot', basePath: leftNavBasePath }); ` (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47); ` const launchAllergiesFormWorkspace = useLaunchWorkspaceRequiringVisit('patient-allergy-form-workspace'); ` (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:23). Associated registries: packages/esm-patient-allergies-app/src/routes.json:24-31 (`allergies-summary-dashboard` in `patient-chart-dashboard-slot`, dashboard `patient-chart-allergies-dashboard-slot`); packages/esm-patient-allergies-app/src/routes.json:17-19 (`allergies-details-widget` in dashboard slot); packages/esm-patient-allergies-app/src/routes.json:42 (workspace `patient-allergy-form-workspace`).
 
-**Interpretação:** A relação 3.4.5 #12 é `host → remote`, de `packages/esm-patient-chart-app` para `packages/esm-patient-allergies-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #12 is `host → remote`, from `packages/esm-patient-chart-app` to `packages/esm-patient-allergies-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 166. packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37; packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69; packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47; packages/esm-patient-attachments-app/src/routes.json:13-17; packages/esm-patient-attachments-app/src/routes.json:8-10
 
-**Observação:** Os trechos citados contêm ` const ungroupedDashboards = extensionStore.slots['patient-chart-dashboard-slot'].assignedExtensions.map((e) => ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37); ` <ExtensionSlot key={dashboard.slot} name={dashboard.slot} className={styles.dashboard}> ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69); ` setLeftNav({ name: 'patient-chart-dashboard-slot', basePath: leftNavBasePath }); ` (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47). Os registros associados são packages/esm-patient-attachments-app/src/routes.json:13-17 (`attachments-results-summary-dashboard` em `patient-chart-dashboard-slot`, dashboard `patient-chart-attachments-dashboard-slot`); packages/esm-patient-attachments-app/src/routes.json:8-10 (`attachments-overview-widget` no slot do dashboard).
+**Observation:** Cited excerpts contain ` const ungroupedDashboards = extensionStore.slots['patient-chart-dashboard-slot'].assignedExtensions.map((e) => ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37); ` <ExtensionSlot key={dashboard.slot} name={dashboard.slot} className={styles.dashboard}> ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69); ` setLeftNav({ name: 'patient-chart-dashboard-slot', basePath: leftNavBasePath }); ` (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47). Associated registries: packages/esm-patient-attachments-app/src/routes.json:13-17 (`attachments-results-summary-dashboard` in `patient-chart-dashboard-slot`, dashboard `patient-chart-attachments-dashboard-slot`); packages/esm-patient-attachments-app/src/routes.json:8-10 (`attachments-overview-widget` in dashboard slot).
 
-**Interpretação:** A relação 3.4.5 #13 é `host → remote`, de `packages/esm-patient-chart-app` para `packages/esm-patient-attachments-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #13 is `host → remote`, from `packages/esm-patient-chart-app` to `packages/esm-patient-attachments-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 167. packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37; packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69; packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47; packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:26; packages/esm-patient-conditions-app/src/routes.json:26-31; packages/esm-patient-conditions-app/src/routes.json:9-10; packages/esm-patient-conditions-app/src/routes.json:18-19; packages/esm-patient-conditions-app/src/routes.json:46
 
-**Observação:** Os trechos citados contêm ` const ungroupedDashboards = extensionStore.slots['patient-chart-dashboard-slot'].assignedExtensions.map((e) => ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37); ` <ExtensionSlot key={dashboard.slot} name={dashboard.slot} className={styles.dashboard}> ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69); ` setLeftNav({ name: 'patient-chart-dashboard-slot', basePath: leftNavBasePath }); ` (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47); ` const launchConditionsFormWorkspace = useLaunchWorkspaceRequiringVisit('conditions-form-workspace'); ` (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:26). Os registros associados são packages/esm-patient-conditions-app/src/routes.json:26-31 (`conditions-summary-dashboard` em `patient-chart-dashboard-slot`, dashboard `patient-chart-conditions-dashboard-slot`); packages/esm-patient-conditions-app/src/routes.json:9-10 (`conditions-overview-widget` em `patient-chart-summary-dashboard-slot`); packages/esm-patient-conditions-app/src/routes.json:18-19 (`conditions-details-widget` no slot do dashboard); packages/esm-patient-conditions-app/src/routes.json:46 (workspace `conditions-form-workspace`).
+**Observation:** Cited excerpts contain ` const ungroupedDashboards = extensionStore.slots['patient-chart-dashboard-slot'].assignedExtensions.map((e) => ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37); ` <ExtensionSlot key={dashboard.slot} name={dashboard.slot} className={styles.dashboard}> ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69); ` setLeftNav({ name: 'patient-chart-dashboard-slot', basePath: leftNavBasePath }); ` (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47); ` const launchConditionsFormWorkspace = useLaunchWorkspaceRequiringVisit('conditions-form-workspace'); ` (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:26). Associated registries: packages/esm-patient-conditions-app/src/routes.json:26-31 (`conditions-summary-dashboard` in `patient-chart-dashboard-slot`, dashboard `patient-chart-conditions-dashboard-slot`); packages/esm-patient-conditions-app/src/routes.json:9-10 (`conditions-overview-widget` in `patient-chart-summary-dashboard-slot`); packages/esm-patient-conditions-app/src/routes.json:18-19 (`conditions-details-widget` in dashboard slot); packages/esm-patient-conditions-app/src/routes.json:46 (workspace `conditions-form-workspace`).
 
-**Interpretação:** A relação 3.4.5 #14 é `host → remote`, de `packages/esm-patient-chart-app` para `packages/esm-patient-conditions-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #14 is `host → remote`, from `packages/esm-patient-chart-app` to `packages/esm-patient-conditions-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 168. packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37; packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69; packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47; packages/esm-patient-immunizations-app/src/routes.json:18-22; packages/esm-patient-immunizations-app/src/routes.json:13-15; packages/esm-patient-immunizations-app/src/routes.json:13-22
 
-**Observação:** Os trechos citados contêm ` const ungroupedDashboards = extensionStore.slots['patient-chart-dashboard-slot'].assignedExtensions.map((e) => ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37); ` <ExtensionSlot key={dashboard.slot} name={dashboard.slot} className={styles.dashboard}> ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69); ` setLeftNav({ name: 'patient-chart-dashboard-slot', basePath: leftNavBasePath }); ` (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47). Os registros associados são packages/esm-patient-immunizations-app/src/routes.json:18-22 (`immunization-summary-dashboard` em `patient-chart-dashboard-slot`, dashboard `patient-chart-immunizations-dashboard-slot`); packages/esm-patient-immunizations-app/src/routes.json:13-15 (`immunization-details-widget` no slot do dashboard).
+**Observation:** Cited excerpts contain ` const ungroupedDashboards = extensionStore.slots['patient-chart-dashboard-slot'].assignedExtensions.map((e) => ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37); ` <ExtensionSlot key={dashboard.slot} name={dashboard.slot} className={styles.dashboard}> ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69); ` setLeftNav({ name: 'patient-chart-dashboard-slot', basePath: leftNavBasePath }); ` (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47). Associated registries: packages/esm-patient-immunizations-app/src/routes.json:18-22 (`immunization-summary-dashboard` in `patient-chart-dashboard-slot`, dashboard `patient-chart-immunizations-dashboard-slot`); packages/esm-patient-immunizations-app/src/routes.json:13-15 (`immunization-details-widget` in dashboard slot).
 
-**Interpretação:** A relação 3.4.5 #15 é `host → remote`, de `packages/esm-patient-chart-app` para `packages/esm-patient-immunizations-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #15 is `host → remote`, from `packages/esm-patient-chart-app` to `packages/esm-patient-immunizations-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 169. packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37; packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69; packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47; packages/esm-patient-medications-app/src/routes.json:25-30; packages/esm-patient-medications-app/src/routes.json:8-10; packages/esm-patient-medications-app/src/routes.json:16-18
 
-**Observação:** Os trechos citados contêm ` const ungroupedDashboards = extensionStore.slots['patient-chart-dashboard-slot'].assignedExtensions.map((e) => ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37); ` <ExtensionSlot key={dashboard.slot} name={dashboard.slot} className={styles.dashboard}> ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69); ` setLeftNav({ name: 'patient-chart-dashboard-slot', basePath: leftNavBasePath }); ` (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47). Os registros associados são packages/esm-patient-medications-app/src/routes.json:25-30 (`medications-summary-dashboard` em `patient-chart-dashboard-slot`, dashboard `patient-chart-medications-dashboard-slot`); packages/esm-patient-medications-app/src/routes.json:8-10 (`medications-details-widget` no slot do dashboard); packages/esm-patient-medications-app/src/routes.json:16-18 (`active-medications-widget` em `patient-chart-summary-dashboard-slot`).
+**Observation:** Cited excerpts contain ` const ungroupedDashboards = extensionStore.slots['patient-chart-dashboard-slot'].assignedExtensions.map((e) => ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37); ` <ExtensionSlot key={dashboard.slot} name={dashboard.slot} className={styles.dashboard}> ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69); ` setLeftNav({ name: 'patient-chart-dashboard-slot', basePath: leftNavBasePath }); ` (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47). Associated registries: packages/esm-patient-medications-app/src/routes.json:25-30 (`medications-summary-dashboard` in `patient-chart-dashboard-slot`, dashboard `patient-chart-medications-dashboard-slot`); packages/esm-patient-medications-app/src/routes.json:8-10 (`medications-details-widget` in dashboard slot); packages/esm-patient-medications-app/src/routes.json:16-18 (`active-medications-widget` in `patient-chart-summary-dashboard-slot`).
 
-**Interpretação:** A relação 3.4.5 #16 é `host → remote`, de `packages/esm-patient-chart-app` para `packages/esm-patient-medications-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #16 is `host → remote`, from `packages/esm-patient-chart-app` to `packages/esm-patient-medications-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 170. packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37; packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69; packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47; packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:27; packages/esm-patient-orders-app/src/routes.json:47-51; packages/esm-patient-orders-app/src/routes.json:58-60; packages/esm-patient-orders-app/src/routes.json:68
 
-**Observação:** Os trechos citados contêm ` const ungroupedDashboards = extensionStore.slots['patient-chart-dashboard-slot'].assignedExtensions.map((e) => ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37); ` <ExtensionSlot key={dashboard.slot} name={dashboard.slot} className={styles.dashboard}> ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69); ` setLeftNav({ name: 'patient-chart-dashboard-slot', basePath: leftNavBasePath }); ` (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47); ` const launchOrderBasketFormWorkspace = useLaunchWorkspaceRequiringVisit('order-basket'); ` (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:27). Os registros associados são packages/esm-patient-orders-app/src/routes.json:47-51 (`patient-orders-summary-dashboard` em `patient-chart-dashboard-slot`, dashboard `patient-chart-orders-dashboard-slot`); packages/esm-patient-orders-app/src/routes.json:58-60 (`patient-orders-dashboard` no slot do dashboard); packages/esm-patient-orders-app/src/routes.json:68 (workspace `order-basket`).
+**Observation:** Cited excerpts contain ` const ungroupedDashboards = extensionStore.slots['patient-chart-dashboard-slot'].assignedExtensions.map((e) => ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37); ` <ExtensionSlot key={dashboard.slot} name={dashboard.slot} className={styles.dashboard}> ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69); ` setLeftNav({ name: 'patient-chart-dashboard-slot', basePath: leftNavBasePath }); ` (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47); ` const launchOrderBasketFormWorkspace = useLaunchWorkspaceRequiringVisit('order-basket'); ` (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:27). Associated registries: packages/esm-patient-orders-app/src/routes.json:47-51 (`patient-orders-summary-dashboard` in `patient-chart-dashboard-slot`, dashboard `patient-chart-orders-dashboard-slot`); packages/esm-patient-orders-app/src/routes.json:58-60 (`patient-orders-dashboard` in dashboard slot); packages/esm-patient-orders-app/src/routes.json:68 (workspace `order-basket`).
 
-**Interpretação:** A relação 3.4.5 #17 é `host → remote`, de `packages/esm-patient-chart-app` para `packages/esm-patient-orders-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #17 is `host → remote`, from `packages/esm-patient-chart-app` to `packages/esm-patient-orders-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 171. packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37; packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69; packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47; packages/esm-patient-programs-app/src/routes.json:22-26; packages/esm-patient-programs-app/src/routes.json:16-17; packages/esm-patient-programs-app/src/routes.json:16-26
 
-**Observação:** Os trechos citados contêm ` const ungroupedDashboards = extensionStore.slots['patient-chart-dashboard-slot'].assignedExtensions.map((e) => ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37); ` <ExtensionSlot key={dashboard.slot} name={dashboard.slot} className={styles.dashboard}> ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69); ` setLeftNav({ name: 'patient-chart-dashboard-slot', basePath: leftNavBasePath }); ` (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47). Os registros associados são packages/esm-patient-programs-app/src/routes.json:22-26 (`programs-summary-dashboard` em `patient-chart-dashboard-slot`, dashboard `patient-chart-programs-dashboard-slot`); packages/esm-patient-programs-app/src/routes.json:16-17 (`programs-details-widget` no slot do dashboard).
+**Observation:** Cited excerpts contain ` const ungroupedDashboards = extensionStore.slots['patient-chart-dashboard-slot'].assignedExtensions.map((e) => ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37); ` <ExtensionSlot key={dashboard.slot} name={dashboard.slot} className={styles.dashboard}> ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69); ` setLeftNav({ name: 'patient-chart-dashboard-slot', basePath: leftNavBasePath }); ` (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47). Associated registries: packages/esm-patient-programs-app/src/routes.json:22-26 (`programs-summary-dashboard` in `patient-chart-dashboard-slot`, dashboard `patient-chart-programs-dashboard-slot`); packages/esm-patient-programs-app/src/routes.json:16-17 (`programs-details-widget` in dashboard slot).
 
-**Interpretação:** A relação 3.4.5 #18 é `host → remote`, de `packages/esm-patient-chart-app` para `packages/esm-patient-programs-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #18 is `host → remote`, from `packages/esm-patient-chart-app` to `packages/esm-patient-programs-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 172. packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37; packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69; packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47; packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/tests-summary.component.tsx:13; packages/esm-patient-tests-app/src/routes.json:9-13; packages/esm-patient-tests-app/src/routes.json:26-29; packages/esm-patient-tests-app/src/routes.json:21-22
 
-**Observação:** Os trechos citados contêm ` const ungroupedDashboards = extensionStore.slots['patient-chart-dashboard-slot'].assignedExtensions.map((e) => ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37); ` <ExtensionSlot key={dashboard.slot} name={dashboard.slot} className={styles.dashboard}> ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69); ` setLeftNav({ name: 'patient-chart-dashboard-slot', basePath: leftNavBasePath }); ` (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47); ` return <ExtensionSlot name="test-results-filtered-overview-slot" state={{ filter, patientUuid }} />; ` (packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/tests-summary.component.tsx:13). Os registros associados são packages/esm-patient-tests-app/src/routes.json:9-13 (`test-results-summary-dashboard` em `patient-chart-dashboard-slot`, dashboard `patient-chart-test-results-dashboard-slot`); packages/esm-patient-tests-app/src/routes.json:26-29 (`results-viewer` no slot do dashboard); packages/esm-patient-tests-app/src/routes.json:21-22 (`test-results-filtered-overview` em `test-results-filtered-overview-slot`).
+**Observation:** Cited excerpts contain ` const ungroupedDashboards = extensionStore.slots['patient-chart-dashboard-slot'].assignedExtensions.map((e) => ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37); ` <ExtensionSlot key={dashboard.slot} name={dashboard.slot} className={styles.dashboard}> ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69); ` setLeftNav({ name: 'patient-chart-dashboard-slot', basePath: leftNavBasePath }); ` (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47); ` return <ExtensionSlot name="test-results-filtered-overview-slot" state={{ filter, patientUuid }} />; ` (packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/tests-summary.component.tsx:13). Associated registries: packages/esm-patient-tests-app/src/routes.json:9-13 (`test-results-summary-dashboard` in `patient-chart-dashboard-slot`, dashboard `patient-chart-test-results-dashboard-slot`); packages/esm-patient-tests-app/src/routes.json:26-29 (`results-viewer` in dashboard slot); packages/esm-patient-tests-app/src/routes.json:21-22 (`test-results-filtered-overview` in `test-results-filtered-overview-slot`).
 
-**Interpretação:** A relação 3.4.5 #19 é `host → remote`, de `packages/esm-patient-chart-app` para `packages/esm-patient-tests-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #19 is `host → remote`, from `packages/esm-patient-chart-app` to `packages/esm-patient-tests-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 173. packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:66
 
-**Observação:** Os trechos citados contêm ` <ExtensionSlot state={state} name="top-of-all-patient-dashboards-slot" /> ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:66).
+**Observation:** Cited excerpts contain ` <ExtensionSlot state={state} name="top-of-all-patient-dashboards-slot" /> ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:66).
 
-**Interpretação:** A relação 3.4.5 #20 é `host → remote`, de `packages/esm-patient-chart-app` para `top-of-all-patient-dashboards-slot`, mecanismo `other`, direção `origem → destino`, No snapshot `Undetermined` e Ativa `Undetermined`. O destino pode ser fornecido por outra unidade externa ou permanecer sem conexão; o snapshot não permite decidir.
+**Interpretation:** Relationship 3.4.5 #20 is `host → remote`, from `packages/esm-patient-chart-app` to `top-of-all-patient-dashboards-slot`, mechanism `other`, direction `source → target`, In snapshot `Undetermined` and Active `Undetermined`. Target may be supplied by another external unit or remain disconnected; snapshot cannot decide.
 
 ### 174. packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69; packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:68; packages/esm-patient-flags-app/src/routes.json:26-27; packages/esm-patient-flags-app/src/routes.json:19-20
 
-**Observação:** Os trechos citados contêm ` <ExtensionSlot key={dashboard.slot} name={dashboard.slot} className={styles.dashboard}> ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69); ` <ExtensionSlot name="patient-highlights-bar-slot" state={state} /> ` (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:68). Os registros associados são packages/esm-patient-flags-app/src/routes.json:26-27 (`patient-flags-overview` em `patient-chart-summary-dashboard-slot`); packages/esm-patient-flags-app/src/routes.json:19-20 (`patient-flag-tags` em `patient-highlights-bar-slot`).
+**Observation:** Cited excerpts contain ` <ExtensionSlot key={dashboard.slot} name={dashboard.slot} className={styles.dashboard}> ` (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69); ` <ExtensionSlot name="patient-highlights-bar-slot" state={state} /> ` (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:68). Associated registries: packages/esm-patient-flags-app/src/routes.json:26-27 (`patient-flags-overview` in `patient-chart-summary-dashboard-slot`); packages/esm-patient-flags-app/src/routes.json:19-20 (`patient-flag-tags` in `patient-highlights-bar-slot`).
 
-**Interpretação:** A relação 3.4.5 #21 é `host → remote`, de `packages/esm-patient-chart-app` para `packages/esm-patient-flags-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #21 is `host → remote`, from `packages/esm-patient-chart-app` to `packages/esm-patient-flags-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 175. packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:67; packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:389; packages/esm-patient-banner-app/src/routes.json:22-23
 
-**Observação:** Os trechos citados contêm ` <ExtensionSlot name="patient-header-slot" state={state} /> ` (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:67); ` <ExtensionSlot name="patient-header-slot" state={{ patient, ` (packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:389). Os registros associados são packages/esm-patient-banner-app/src/routes.json:22-23 (`patient-banner` em `patient-header-slot`).
+**Observation:** Cited excerpts contain ` <ExtensionSlot name="patient-header-slot" state={state} /> ` (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:67); ` <ExtensionSlot name="patient-header-slot" state={{ patient, ` (packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:389). Associated registries: packages/esm-patient-banner-app/src/routes.json:22-23 (`patient-banner` in `patient-header-slot`).
 
-**Interpretação:** A relação 3.4.5 #22 é `host → remote`, de `packages/esm-patient-chart-app` para `packages/esm-patient-banner-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #22 is `host → remote`, from `packages/esm-patient-chart-app` to `packages/esm-patient-banner-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 176. packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:452; packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:451-456
 
-**Observação:** Os trechos citados contêm ` name="visit-form-top-slot" ` (packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:452).
+**Observation:** Cited excerpts contain ` name="visit-form-top-slot" ` (packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:452).
 
-**Interpretação:** A relação 3.4.5 #23 é `host → remote`, de `packages/esm-patient-chart-app` para `visit-form-top-slot`, mecanismo `other`, direção `origem → destino`, No snapshot `Undetermined` e Ativa `Undetermined`. O destino pode ser fornecido por outra unidade externa ou permanecer sem conexão; o snapshot não permite decidir.
+**Interpretation:** Relationship 3.4.5 #23 is `host → remote`, from `packages/esm-patient-chart-app` to `visit-form-top-slot`, mechanism `other`, direction `source → target`, In snapshot `Undetermined` and Active `Undetermined`. Target may be supplied by another external unit or remain disconnected; snapshot cannot decide.
 
 ### 177. packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:547
 
-**Observação:** Os trechos citados contêm ` <ExtensionSlot state={{ patientUuid, setExtraVisitInfo }} name="extra-visit-attribute-slot" /> ` (packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:547).
+**Observation:** Cited excerpts contain ` <ExtensionSlot state={{ patientUuid, setExtraVisitInfo }} name="extra-visit-attribute-slot" /> ` (packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:547).
 
-**Interpretação:** A relação 3.4.5 #24 é `host → remote`, de `packages/esm-patient-chart-app` para `extra-visit-attribute-slot`, mecanismo `other`, direção `origem → destino`, No snapshot `Undetermined` e Ativa `Undetermined`. O destino pode ser fornecido por outra unidade externa ou permanecer sem conexão; o snapshot não permite decidir.
+**Interpretation:** Relationship 3.4.5 #24 is `host → remote`, from `packages/esm-patient-chart-app` to `extra-visit-attribute-slot`, mechanism `other`, direction `source → target`, In snapshot `Undetermined` and Active `Undetermined`. Target may be supplied by another external unit or remain disconnected; snapshot cannot decide.
 
 ### 178. packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:562; packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:561-566
 
-**Observação:** Os trechos citados contêm ` name="visit-form-bottom-slot" ` (packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:562).
+**Observation:** Cited excerpts contain ` name="visit-form-bottom-slot" ` (packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:562).
 
-**Interpretação:** A relação 3.4.5 #25 é `host → remote`, de `packages/esm-patient-chart-app` para `visit-form-bottom-slot`, mecanismo `other`, direção `origem → destino`, No snapshot `Undetermined` e Ativa `Undetermined`. O destino pode ser fornecido por outra unidade externa ou permanecer sem conexão; o snapshot não permite decidir.
+**Interpretation:** Relationship 3.4.5 #25 is `host → remote`, from `packages/esm-patient-chart-app` to `visit-form-bottom-slot`, mechanism `other`, direction `source → target`, In snapshot `Undetermined` and Active `Undetermined`. Target may be supplied by another external unit or remain disconnected; snapshot cannot decide.
 
 ### 179. packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:24
 
-**Observação:** Os trechos citados contêm ` const launchAppointmentsFormWorkspace = useLaunchWorkspaceRequiringVisit('appointments-form-workspace'); ` (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:24).
+**Observation:** Cited excerpts contain ` const launchAppointmentsFormWorkspace = useLaunchWorkspaceRequiringVisit('appointments-form-workspace'); ` (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:24).
 
-**Interpretação:** A relação 3.4.5 #26 é `host → remote`, de `packages/esm-patient-chart-app` para `appointments-form-workspace`, mecanismo `other`, direção `origem → destino`, No snapshot `Undetermined` e Ativa `Undetermined`. O destino pode ser fornecido por outra unidade externa ou permanecer sem conexão; o snapshot não permite decidir.
+**Interpretation:** Relationship 3.4.5 #26 is `host → remote`, from `packages/esm-patient-chart-app` to `appointments-form-workspace`, mechanism `other`, direction `source → target`, In snapshot `Undetermined` and Active `Undetermined`. Target may be supplied by another external unit or remain disconnected; snapshot cannot decide.
 
 ### 180. packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:28; packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/encounters-table/encounters-table.component.tsx:236; packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/encounters-table/encounters-table.component.tsx:281; packages/esm-patient-notes-app/src/routes.json:25
 
-**Observação:** Os trechos citados contêm ` const launchVisitNotesFormWorkspace = useLaunchWorkspaceRequiringVisit('visit-notes-form-workspace'); ` (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:28); ` launchWorkspace('visit-notes-form-workspace', { ` (packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/encounters-table/encounters-table.component.tsx:236); ` launchWorkspace('visit-notes-form-workspace', { ` (packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/encounters-table/encounters-table.component.tsx:281). Os registros associados são packages/esm-patient-notes-app/src/routes.json:25 (workspace `visit-notes-form-workspace`).
+**Observation:** Cited excerpts contain ` const launchVisitNotesFormWorkspace = useLaunchWorkspaceRequiringVisit('visit-notes-form-workspace'); ` (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:28); ` launchWorkspace('visit-notes-form-workspace', { ` (packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/encounters-table/encounters-table.component.tsx:236); ` launchWorkspace('visit-notes-form-workspace', { ` (packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/encounters-table/encounters-table.component.tsx:281). Associated registries: packages/esm-patient-notes-app/src/routes.json:25 (workspace `visit-notes-form-workspace`).
 
-**Interpretação:** A relação 3.4.5 #27 é `host → remote`, de `packages/esm-patient-chart-app` para `packages/esm-patient-notes-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #27 is `host → remote`, from `packages/esm-patient-chart-app` to `packages/esm-patient-notes-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 181. packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/visit-summary.component.tsx:159; packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/visit-summary.component.tsx:30
 
-**Observação:** Os trechos citados contêm ` <ExtensionSlot name={visitSummaryPanelSlot}> ` (packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/visit-summary.component.tsx:159).
+**Observation:** Cited excerpts contain ` <ExtensionSlot name={visitSummaryPanelSlot}> ` (packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/visit-summary.component.tsx:159).
 
-**Interpretação:** A relação 3.4.5 #28 é `host → remote`, de `packages/esm-patient-chart-app` para `visit-summary-panels`, mecanismo `other`, direção `origem → destino`, No snapshot `Undetermined` e Ativa `Undetermined`. O destino pode ser fornecido por outra unidade externa ou permanecer sem conexão; o snapshot não permite decidir.
+**Interpretation:** Relationship 3.4.5 #28 is `host → remote`, from `packages/esm-patient-chart-app` to `visit-summary-panels`, mechanism `other`, direction `source → target`, In snapshot `Undetermined` and Active `Undetermined`. Target may be supplied by another external unit or remain disconnected; snapshot cannot decide.
 
 ### 182. packages/esm-patient-common-lib/src/launchStartVisitPrompt.tsx:4; packages/esm-patient-common-lib/src/workspaces.ts:55; packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:94; packages/esm-patient-forms-app/src/forms/forms-dashboard.workspace.tsx:12; packages/esm-patient-chart-app/src/routes.json:180-181; packages/esm-patient-chart-app/src/routes.json:214; packages/esm-patient-chart-app/src/routes.json:218; packages/esm-patient-forms-app/src/forms/forms-dashboard.component.tsx:47; packages/esm-patient-common-lib/src/form-entry-interop.ts:52; packages/esm-patient-forms-app/src/clinical-form-action-button.component.tsx:15; packages/esm-patient-common-lib/src/workspaces.ts:62
 
-**Observação:** Os trechos citados contêm ` const dispose = showModal('start-visit-dialog', { ` (packages/esm-patient-common-lib/src/launchStartVisitPrompt.tsx:4); ` const dispose = showModal('visit-context-switcher', { ` (packages/esm-patient-common-lib/src/workspaces.ts:55); ` <ExtensionSlot name="visit-context-header-slot" state={{ patientUuid }} /> ` (packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:94); ` <ExtensionSlot name="visit-context-header-slot" state={{ patientUuid }} /> ` (packages/esm-patient-forms-app/src/forms/forms-dashboard.workspace.tsx:12). Os registros associados são packages/esm-patient-chart-app/src/routes.json:180-181 (`visit-context-header` em `visit-context-header-slot`); packages/esm-patient-chart-app/src/routes.json:214 (modal `start-visit-dialog`); packages/esm-patient-chart-app/src/routes.json:218 (modal `visit-context-switcher`).
+**Observation:** Cited excerpts contain ` const dispose = showModal('start-visit-dialog', { ` (packages/esm-patient-common-lib/src/launchStartVisitPrompt.tsx:4); ` const dispose = showModal('visit-context-switcher', { ` (packages/esm-patient-common-lib/src/workspaces.ts:55); ` <ExtensionSlot name="visit-context-header-slot" state={{ patientUuid }} /> ` (packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:94); ` <ExtensionSlot name="visit-context-header-slot" state={{ patientUuid }} /> ` (packages/esm-patient-forms-app/src/forms/forms-dashboard.workspace.tsx:12). Associated registries: packages/esm-patient-chart-app/src/routes.json:180-181 (`visit-context-header` in `visit-context-header-slot`); packages/esm-patient-chart-app/src/routes.json:214 (modal `start-visit-dialog`); packages/esm-patient-chart-app/src/routes.json:218 (modal `visit-context-switcher`).
 
-**Interpretação:** A relação 3.4.5 #29 é `host → remote`, de `packages/esm-patient-forms-app` para `packages/esm-patient-chart-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #29 is `host → remote`, from `packages/esm-patient-forms-app` to `packages/esm-patient-chart-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 183. packages/esm-patient-common-lib/src/launchStartVisitPrompt.tsx:4; packages/esm-patient-chart-app/src/routes.json:214; packages/esm-patient-immunizations-app/src/immunizations/immunizations-detailed-summary.component.tsx:67
 
-**Observação:** Os trechos citados contêm ` const dispose = showModal('start-visit-dialog', { ` (packages/esm-patient-common-lib/src/launchStartVisitPrompt.tsx:4). Os registros associados são packages/esm-patient-chart-app/src/routes.json:214 (modal `start-visit-dialog`).
+**Observation:** Cited excerpts contain ` const dispose = showModal('start-visit-dialog', { ` (packages/esm-patient-common-lib/src/launchStartVisitPrompt.tsx:4). Associated registries: packages/esm-patient-chart-app/src/routes.json:214 (modal `start-visit-dialog`).
 
-**Interpretação:** A relação 3.4.5 #30 é `host → remote`, de `packages/esm-patient-immunizations-app` para `packages/esm-patient-chart-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #30 is `host → remote`, from `packages/esm-patient-immunizations-app` to `packages/esm-patient-chart-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 184. packages/esm-patient-common-lib/src/launchStartVisitPrompt.tsx:4; packages/esm-patient-common-lib/src/workspaces.ts:55; packages/esm-patient-chart-app/src/routes.json:214; packages/esm-patient-chart-app/src/routes.json:218; packages/esm-patient-medications-app/src/active-medications/active-medications.component.tsx:19; packages/esm-patient-medications-app/src/components/medications-details-table.component.tsx:71; packages/esm-patient-common-lib/src/workspaces.ts:62
 
-**Observação:** Os trechos citados contêm ` const dispose = showModal('start-visit-dialog', { ` (packages/esm-patient-common-lib/src/launchStartVisitPrompt.tsx:4); ` const dispose = showModal('visit-context-switcher', { ` (packages/esm-patient-common-lib/src/workspaces.ts:55). Os registros associados são packages/esm-patient-chart-app/src/routes.json:214 (modal `start-visit-dialog`); packages/esm-patient-chart-app/src/routes.json:218 (modal `visit-context-switcher`).
+**Observation:** Cited excerpts contain ` const dispose = showModal('start-visit-dialog', { ` (packages/esm-patient-common-lib/src/launchStartVisitPrompt.tsx:4); ` const dispose = showModal('visit-context-switcher', { ` (packages/esm-patient-common-lib/src/workspaces.ts:55). Associated registries: packages/esm-patient-chart-app/src/routes.json:214 (modal `start-visit-dialog`); packages/esm-patient-chart-app/src/routes.json:218 (modal `visit-context-switcher`).
 
-**Interpretação:** A relação 3.4.5 #31 é `host → remote`, de `packages/esm-patient-medications-app` para `packages/esm-patient-chart-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #31 is `host → remote`, from `packages/esm-patient-medications-app` to `packages/esm-patient-chart-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 185. packages/esm-patient-common-lib/src/launchStartVisitPrompt.tsx:4; packages/esm-patient-common-lib/src/workspaces.ts:55; packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:497; packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:501; packages/esm-patient-chart-app/src/routes.json:180-181; packages/esm-patient-chart-app/src/routes.json:113-114; packages/esm-patient-chart-app/src/routes.json:214; packages/esm-patient-chart-app/src/routes.json:218; packages/esm-patient-notes-app/src/notes/notes-main.component.tsx:36; packages/esm-patient-notes-app/src/visit-note-action-button.extension.tsx:9
 
-**Observação:** Os trechos citados contêm ` const dispose = showModal('start-visit-dialog', { ` (packages/esm-patient-common-lib/src/launchStartVisitPrompt.tsx:4); ` const dispose = showModal('visit-context-switcher', { ` (packages/esm-patient-common-lib/src/workspaces.ts:55); ` <ExtensionSlot name="visit-context-header-slot" state={{ patientUuid }} /> ` (packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:497); ` <ExtensionSlot name="visit-form-header-slot" className={styles.dataGridRow} state={memoizedState} /> ` (packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:501). Os registros associados são packages/esm-patient-chart-app/src/routes.json:180-181 (`visit-context-header` em `visit-context-header-slot`); packages/esm-patient-chart-app/src/routes.json:113-114 (`patient-details-tile` em `visit-form-header-slot`); packages/esm-patient-chart-app/src/routes.json:214 (modal `start-visit-dialog`); packages/esm-patient-chart-app/src/routes.json:218 (modal `visit-context-switcher`).
+**Observation:** Cited excerpts contain ` const dispose = showModal('start-visit-dialog', { ` (packages/esm-patient-common-lib/src/launchStartVisitPrompt.tsx:4); ` const dispose = showModal('visit-context-switcher', { ` (packages/esm-patient-common-lib/src/workspaces.ts:55); ` <ExtensionSlot name="visit-context-header-slot" state={{ patientUuid }} /> ` (packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:497); ` <ExtensionSlot name="visit-form-header-slot" className={styles.dataGridRow} state={memoizedState} /> ` (packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:501). Associated registries: packages/esm-patient-chart-app/src/routes.json:180-181 (`visit-context-header` in `visit-context-header-slot`); packages/esm-patient-chart-app/src/routes.json:113-114 (`patient-details-tile` in `visit-form-header-slot`); packages/esm-patient-chart-app/src/routes.json:214 (modal `start-visit-dialog`); packages/esm-patient-chart-app/src/routes.json:218 (modal `visit-context-switcher`).
 
-**Interpretação:** A relação 3.4.5 #32 é `host → remote`, de `packages/esm-patient-notes-app` para `packages/esm-patient-chart-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #32 is `host → remote`, from `packages/esm-patient-notes-app` to `packages/esm-patient-chart-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 186. packages/esm-patient-common-lib/src/launchStartVisitPrompt.tsx:4; packages/esm-patient-common-lib/src/workspaces.ts:55; packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:57; packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:154; packages/esm-patient-chart-app/src/routes.json:180-181; packages/esm-patient-chart-app/src/routes.json:214; packages/esm-patient-chart-app/src/routes.json:218; packages/esm-patient-orders-app/src/order-basket-action-button/order-basket-action-button.extension.tsx:9
 
-**Observação:** Os trechos citados contêm ` const dispose = showModal('start-visit-dialog', { ` (packages/esm-patient-common-lib/src/launchStartVisitPrompt.tsx:4); ` const dispose = showModal('visit-context-switcher', { ` (packages/esm-patient-common-lib/src/workspaces.ts:55); ` const dispose = showModal('start-visit-dialog', { ` (packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:57); ` <ExtensionSlot name="visit-context-header-slot" state={{ patientUuid }} /> ` (packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:154). Os registros associados são packages/esm-patient-chart-app/src/routes.json:180-181 (`visit-context-header` em `visit-context-header-slot`); packages/esm-patient-chart-app/src/routes.json:214 (modal `start-visit-dialog`); packages/esm-patient-chart-app/src/routes.json:218 (modal `visit-context-switcher`).
+**Observation:** Cited excerpts contain ` const dispose = showModal('start-visit-dialog', { ` (packages/esm-patient-common-lib/src/launchStartVisitPrompt.tsx:4); ` const dispose = showModal('visit-context-switcher', { ` (packages/esm-patient-common-lib/src/workspaces.ts:55); ` const dispose = showModal('start-visit-dialog', { ` (packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:57); ` <ExtensionSlot name="visit-context-header-slot" state={{ patientUuid }} /> ` (packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:154). Associated registries: packages/esm-patient-chart-app/src/routes.json:180-181 (`visit-context-header` in `visit-context-header-slot`); packages/esm-patient-chart-app/src/routes.json:214 (modal `start-visit-dialog`); packages/esm-patient-chart-app/src/routes.json:218 (modal `visit-context-switcher`).
 
-**Interpretação:** A relação 3.4.5 #33 é `host → remote`, de `packages/esm-patient-orders-app` para `packages/esm-patient-chart-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #33 is `host → remote`, from `packages/esm-patient-orders-app` to `packages/esm-patient-chart-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 187. packages/esm-patient-common-lib/src/launchStartVisitPrompt.tsx:4; packages/esm-patient-common-lib/src/workspaces.ts:55; packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:268; packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:300; packages/esm-patient-chart-app/src/routes.json:180-181; packages/esm-patient-chart-app/src/routes.json:214; packages/esm-patient-chart-app/src/routes.json:218; packages/esm-patient-vitals-app/src/utils.ts:16
 
-**Observação:** Os trechos citados contêm ` const dispose = showModal('start-visit-dialog', { ` (packages/esm-patient-common-lib/src/launchStartVisitPrompt.tsx:4); ` const dispose = showModal('visit-context-switcher', { ` (packages/esm-patient-common-lib/src/workspaces.ts:55); ` <ExtensionSlot name="visit-context-header-slot" state={{ patientUuid }} /> ` (packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:268); ` <ExtensionSlot name="visit-context-header-slot" state={{ patientUuid }} /> ` (packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:300). Os registros associados são packages/esm-patient-chart-app/src/routes.json:180-181 (`visit-context-header` em `visit-context-header-slot`); packages/esm-patient-chart-app/src/routes.json:214 (modal `start-visit-dialog`); packages/esm-patient-chart-app/src/routes.json:218 (modal `visit-context-switcher`).
+**Observation:** Cited excerpts contain ` const dispose = showModal('start-visit-dialog', { ` (packages/esm-patient-common-lib/src/launchStartVisitPrompt.tsx:4); ` const dispose = showModal('visit-context-switcher', { ` (packages/esm-patient-common-lib/src/workspaces.ts:55); ` <ExtensionSlot name="visit-context-header-slot" state={{ patientUuid }} /> ` (packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:268); ` <ExtensionSlot name="visit-context-header-slot" state={{ patientUuid }} /> ` (packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:300). Associated registries: packages/esm-patient-chart-app/src/routes.json:180-181 (`visit-context-header` in `visit-context-header-slot`); packages/esm-patient-chart-app/src/routes.json:214 (modal `start-visit-dialog`); packages/esm-patient-chart-app/src/routes.json:218 (modal `visit-context-switcher`).
 
-**Interpretação:** A relação 3.4.5 #34 é `host → remote`, de `packages/esm-patient-vitals-app` para `packages/esm-patient-chart-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #34 is `host → remote`, from `packages/esm-patient-vitals-app` to `packages/esm-patient-chart-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 188. packages/esm-patient-common-lib/src/nav-group/DashboardGroupExtension.tsx:24; packages/esm-patient-chart-app/src/side-nav/generic-nav-group.component.tsx:36-38; packages/esm-patient-chart-app/src/side-nav/generic-nav-group.component.tsx:11-14
 
-**Observação:** Os trechos citados contêm ` <ExtensionSlot name={slotName ?? title} state={{ basePath }} /> ` (packages/esm-patient-common-lib/src/nav-group/DashboardGroupExtension.tsx:24).
+**Observation:** Cited excerpts contain ` <ExtensionSlot name={slotName ?? title} state={{ basePath }} /> ` (packages/esm-patient-common-lib/src/nav-group/DashboardGroupExtension.tsx:24).
 
-**Interpretação:** A relação 3.4.5 #35 é `host → remote`, de `packages/esm-patient-chart-app` para `slotName ?? title`, mecanismo `other`, direção `origem → destino`, No snapshot `Undetermined` e Ativa `Undetermined`. O destino pode ser fornecido por outra unidade externa ou permanecer sem conexão; o snapshot não permite decidir.
+**Interpretation:** Relationship 3.4.5 #35 is `host → remote`, from `packages/esm-patient-chart-app` to `slotName ?? title`, mechanism `other`, direction `source → target`, In snapshot `Undetermined` and Active `Undetermined`. Target may be supplied by another external unit or remain disconnected; snapshot cannot decide.
 
 ### 189. packages/esm-patient-common-lib/src/orders/store.ts:24; packages/esm-patient-common-lib/src/orders/useOrderBasket.ts:86-94; packages/esm-patient-medications-app/src/drug-order-basket-panel/drug-order-basket-panel.extension.tsx:19; packages/esm-patient-medications-app/src/add-drug-order/add-drug-order.workspace.tsx:31; packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:38; packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:106; packages/esm-patient-common-lib/src/orders/useOrderBasket.ts:37-60
 
-**Observação:** Os trechos citados contêm ` export const orderBasketStore = createGlobalStore<OrderBasketStore>('order-basket', initialState); ` (packages/esm-patient-common-lib/src/orders/store.ts:24). `packages/esm-patient-medications-app` e `packages/esm-patient-orders-app` leem e alteram o `order-basket` por `useOrderBasket`; o carrinho lê e limpa os pedidos, enquanto a outra unidade mantém sua chave de grupo.
+**Observation:** Cited excerpts contain ` export const orderBasketStore = createGlobalStore<OrderBasketStore>('order-basket', initialState); ` (packages/esm-patient-common-lib/src/orders/store.ts:24). `packages/esm-patient-medications-app` and `packages/esm-patient-orders-app` read and modify `order-basket` through `useOrderBasket`; basket reads and clears orders while other unit maintains group key.
 
-**Interpretação:** A relação 3.4.5 #36 é `communication`, de `packages/esm-patient-medications-app` para `packages/esm-patient-orders-app`, mecanismo `events`, direção `bidirecional`, No snapshot `Yes` e Ativa `Yes`. Os trechos ligam as unidades por estado reativo ou mensagens, conforme a relação final; a organização de montagem não é estabelecida por essa troca sozinha.
+**Interpretation:** Relationship 3.4.5 #36 is `communication`, from `packages/esm-patient-medications-app` to `packages/esm-patient-orders-app`, mechanism `events`, direction `bidirectional`, In snapshot `Yes` and Active `Yes`. Excerpts link units through reactive state or messages per final relationship; exchange alone does not establish mounting organization.
 
 ### 190. packages/esm-patient-common-lib/src/orders/store.ts:24; packages/esm-patient-tests-app/src/test-orders/lab-order-basket-panel/lab-order-basket-panel.extension.tsx:60; packages/esm-patient-tests-app/src/test-orders/add-test-order/test-type-search.component.tsx:188
 
-**Observação:** Os trechos citados contêm ` export const orderBasketStore = createGlobalStore<OrderBasketStore>('order-basket', initialState); ` (packages/esm-patient-common-lib/src/orders/store.ts:24). `packages/esm-patient-orders-app` e `packages/esm-patient-tests-app` leem e alteram o `order-basket` por `useOrderBasket`; o carrinho lê e limpa os pedidos, enquanto a outra unidade mantém sua chave de grupo.
+**Observation:** Cited excerpts contain ` export const orderBasketStore = createGlobalStore<OrderBasketStore>('order-basket', initialState); ` (packages/esm-patient-common-lib/src/orders/store.ts:24). `packages/esm-patient-orders-app` and `packages/esm-patient-tests-app` read and modify `order-basket` through `useOrderBasket`; basket reads and clears orders while other unit maintains group key.
 
-**Interpretação:** A relação 3.4.5 #37 é `communication`, de `packages/esm-patient-orders-app` para `packages/esm-patient-tests-app`, mecanismo `events`, direção `bidirecional`, No snapshot `Yes` e Ativa `Yes`. Os trechos ligam as unidades por estado reativo ou mensagens, conforme a relação final; a organização de montagem não é estabelecida por essa troca sozinha.
+**Interpretation:** Relationship 3.4.5 #37 is `communication`, from `packages/esm-patient-orders-app` to `packages/esm-patient-tests-app`, mechanism `events`, direction `bidirectional`, In snapshot `Yes` and Active `Yes`. Excerpts link units through reactive state or messages per final relationship; exchange alone does not establish mounting organization.
 
 ### 191. packages/esm-patient-common-lib/src/store/patient-chart-store.ts:10; packages/esm-patient-common-lib/src/store/patient-chart-store.ts:8-10; packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:38-41; packages/esm-patient-common-lib/src/workspaces.ts:44
 
-**Observação:** Os trechos citados contêm ` const patientChartStore = createGlobalStore<PatientChartStore>(patientChartStoreName, {}); ` (packages/esm-patient-common-lib/src/store/patient-chart-store.ts:10). O chart grava o paciente corrente; `packages/esm-patient-forms-app` lê o estado por meio dos consumidores indicados na revisão 3.4.5 #38.
+**Observation:** Cited excerpts contain ` const patientChartStore = createGlobalStore<PatientChartStore>(patientChartStoreName, {}); ` (packages/esm-patient-common-lib/src/store/patient-chart-store.ts:10). Chart writes current patient; `packages/esm-patient-forms-app` reads state through consumers indicated in review 3.4.5 #38.
 
-**Interpretação:** A relação 3.4.5 #38 é `communication`, de `packages/esm-patient-chart-app` para `packages/esm-patient-forms-app`, mecanismo `events`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. Os trechos ligam as unidades por estado reativo ou mensagens, conforme a relação final; a organização de montagem não é estabelecida por essa troca sozinha.
+**Interpretation:** Relationship 3.4.5 #38 is `communication`, from `packages/esm-patient-chart-app` to `packages/esm-patient-forms-app`, mechanism `events`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Excerpts link units through reactive state or messages per final relationship; exchange alone does not establish mounting organization.
 
 ### 192. packages/esm-patient-common-lib/src/store/patient-chart-store.ts:10; packages/esm-patient-medications-app/src/add-drug-order/drug-order-form.component.tsx:362; packages/esm-patient-medications-app/src/add-drug-order/drug-search/order-basket-search-results.component.tsx:116; packages/esm-patient-common-lib/src/orders/useOrderBasket.ts:38
 
-**Observação:** Os trechos citados contêm ` const patientChartStore = createGlobalStore<PatientChartStore>(patientChartStoreName, {}); ` (packages/esm-patient-common-lib/src/store/patient-chart-store.ts:10). O chart grava o paciente corrente; `packages/esm-patient-medications-app` lê o estado por meio dos consumidores indicados na revisão 3.4.5 #39.
+**Observation:** Cited excerpts contain ` const patientChartStore = createGlobalStore<PatientChartStore>(patientChartStoreName, {}); ` (packages/esm-patient-common-lib/src/store/patient-chart-store.ts:10). Chart writes current patient; `packages/esm-patient-medications-app` reads state through consumers indicated in review 3.4.5 #39.
 
-**Interpretação:** A relação 3.4.5 #39 é `communication`, de `packages/esm-patient-chart-app` para `packages/esm-patient-medications-app`, mecanismo `events`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. Os trechos ligam as unidades por estado reativo ou mensagens, conforme a relação final; a organização de montagem não é estabelecida por essa troca sozinha.
+**Interpretation:** Relationship 3.4.5 #39 is `communication`, from `packages/esm-patient-chart-app` to `packages/esm-patient-medications-app`, mechanism `events`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Excerpts link units through reactive state or messages per final relationship; exchange alone does not establish mounting organization.
 
 ### 193. packages/esm-patient-common-lib/src/store/patient-chart-store.ts:10; packages/esm-patient-notes-app/src/visit-note-action-button.extension.tsx:9; packages/esm-patient-common-lib/src/workspaces.ts:44
 
-**Observação:** Os trechos citados contêm ` const patientChartStore = createGlobalStore<PatientChartStore>(patientChartStoreName, {}); ` (packages/esm-patient-common-lib/src/store/patient-chart-store.ts:10). O chart grava o paciente corrente; `packages/esm-patient-notes-app` lê o estado por meio dos consumidores indicados na revisão 3.4.5 #40.
+**Observation:** Cited excerpts contain ` const patientChartStore = createGlobalStore<PatientChartStore>(patientChartStoreName, {}); ` (packages/esm-patient-common-lib/src/store/patient-chart-store.ts:10). Chart writes current patient; `packages/esm-patient-notes-app` reads state through consumers indicated in review 3.4.5 #40.
 
-**Interpretação:** A relação 3.4.5 #40 é `communication`, de `packages/esm-patient-chart-app` para `packages/esm-patient-notes-app`, mecanismo `events`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. Os trechos ligam as unidades por estado reativo ou mensagens, conforme a relação final; a organização de montagem não é estabelecida por essa troca sozinha.
+**Interpretation:** Relationship 3.4.5 #40 is `communication`, from `packages/esm-patient-chart-app` to `packages/esm-patient-notes-app`, mechanism `events`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Excerpts link units through reactive state or messages per final relationship; exchange alone does not establish mounting organization.
 
 ### 194. packages/esm-patient-common-lib/src/store/patient-chart-store.ts:10; packages/esm-patient-orders-app/src/order-basket/general-order-type/orderable-concept-search/orderable-concept-search.workspace.tsx:51
 
-**Observação:** Os trechos citados contêm ` const patientChartStore = createGlobalStore<PatientChartStore>(patientChartStoreName, {}); ` (packages/esm-patient-common-lib/src/store/patient-chart-store.ts:10). O chart grava o paciente corrente; `packages/esm-patient-orders-app` lê o estado por meio dos consumidores indicados na revisão 3.4.5 #41.
+**Observation:** Cited excerpts contain ` const patientChartStore = createGlobalStore<PatientChartStore>(patientChartStoreName, {}); ` (packages/esm-patient-common-lib/src/store/patient-chart-store.ts:10). Chart writes current patient; `packages/esm-patient-orders-app` reads state through consumers indicated in review 3.4.5 #41.
 
-**Interpretação:** A relação 3.4.5 #41 é `communication`, de `packages/esm-patient-chart-app` para `packages/esm-patient-orders-app`, mecanismo `events`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. Os trechos ligam as unidades por estado reativo ou mensagens, conforme a relação final; a organização de montagem não é estabelecida por essa troca sozinha.
+**Interpretation:** Relationship 3.4.5 #41 is `communication`, from `packages/esm-patient-chart-app` to `packages/esm-patient-orders-app`, mechanism `events`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Excerpts link units through reactive state or messages per final relationship; exchange alone does not establish mounting organization.
 
 ### 195. packages/esm-patient-common-lib/src/store/patient-chart-store.ts:10; packages/esm-patient-tests-app/src/test-orders/add-test-order/add-test-order.workspace.tsx:46; packages/esm-patient-tests-app/src/test-results/individual-results-table/individual-results-table.component.tsx:56
 
-**Observação:** Os trechos citados contêm ` const patientChartStore = createGlobalStore<PatientChartStore>(patientChartStoreName, {}); ` (packages/esm-patient-common-lib/src/store/patient-chart-store.ts:10). O chart grava o paciente corrente; `packages/esm-patient-tests-app` lê o estado por meio dos consumidores indicados na revisão 3.4.5 #42.
+**Observation:** Cited excerpts contain ` const patientChartStore = createGlobalStore<PatientChartStore>(patientChartStoreName, {}); ` (packages/esm-patient-common-lib/src/store/patient-chart-store.ts:10). Chart writes current patient; `packages/esm-patient-tests-app` reads state through consumers indicated in review 3.4.5 #42.
 
-**Interpretação:** A relação 3.4.5 #42 é `communication`, de `packages/esm-patient-chart-app` para `packages/esm-patient-tests-app`, mecanismo `events`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. Os trechos ligam as unidades por estado reativo ou mensagens, conforme a relação final; a organização de montagem não é estabelecida por essa troca sozinha.
+**Interpretation:** Relationship 3.4.5 #42 is `communication`, from `packages/esm-patient-chart-app` to `packages/esm-patient-tests-app`, mechanism `events`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Excerpts link units through reactive state or messages per final relationship; exchange alone does not establish mounting organization.
 
 ### 196. packages/esm-patient-common-lib/src/store/patient-chart-store.ts:10; packages/esm-patient-vitals-app/src/components/action-menu/vitals-biometrics-action-menu.component.tsx:15; packages/esm-patient-vitals-app/src/utils.ts:16
 
-**Observação:** Os trechos citados contêm ` const patientChartStore = createGlobalStore<PatientChartStore>(patientChartStoreName, {}); ` (packages/esm-patient-common-lib/src/store/patient-chart-store.ts:10). O chart grava o paciente corrente; `packages/esm-patient-vitals-app` lê o estado por meio dos consumidores indicados na revisão 3.4.5 #43.
+**Observation:** Cited excerpts contain ` const patientChartStore = createGlobalStore<PatientChartStore>(patientChartStoreName, {}); ` (packages/esm-patient-common-lib/src/store/patient-chart-store.ts:10). Chart writes current patient; `packages/esm-patient-vitals-app` reads state through consumers indicated in review 3.4.5 #43.
 
-**Interpretação:** A relação 3.4.5 #43 é `communication`, de `packages/esm-patient-chart-app` para `packages/esm-patient-vitals-app`, mecanismo `events`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. Os trechos ligam as unidades por estado reativo ou mensagens, conforme a relação final; a organização de montagem não é estabelecida por essa troca sozinha.
+**Interpretation:** Relationship 3.4.5 #43 is `communication`, from `packages/esm-patient-chart-app` to `packages/esm-patient-vitals-app`, mechanism `events`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Excerpts link units through reactive state or messages per final relationship; exchange alone does not establish mounting organization.
 
 ### 197. packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:95; packages/esm-form-engine-app/src/routes.json:8-10
 
-**Observação:** Os trechos citados contêm ` {showForm && formInfo && patientUuid && patient && <ExtensionSlot name="form-widget-slot" state={state} />} ` (packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:95). Os registros associados são packages/esm-form-engine-app/src/routes.json:8-10 (extensão `react-form-engine-widget`, componente `formRenderer`, em `form-widget-slot`).
+**Observation:** Cited excerpts contain ` {showForm && formInfo && patientUuid && patient && <ExtensionSlot name="form-widget-slot" state={state} />} ` (packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:95). Associated registries: packages/esm-form-engine-app/src/routes.json:8-10 (extension `react-form-engine-widget`, component `formRenderer`, in `form-widget-slot`).
 
-**Interpretação:** A relação 3.4.5 #44 é `host → remote`, de `packages/esm-patient-forms-app` para `packages/esm-form-engine-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #44 is `host → remote`, from `packages/esm-patient-forms-app` to `packages/esm-form-engine-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 198. packages/esm-patient-forms-app/src/htmlformentry/html-form-entry-wrapper.component.tsx:17; packages/esm-patient-forms-app/src/htmlformentry/html-form-entry-wrapper.component.tsx:15-19; packages/esm-patient-forms-app/src/htmlformentry/html-form-entry.workspace.tsx:26-27; packages/esm-patient-forms-app/src/htmlformentry/html-form-entry.workspace.tsx:44
 
-**Observação:** Os trechos citados contêm ` window.addEventListener('message', callback); ` (packages/esm-patient-forms-app/src/htmlformentry/html-form-entry-wrapper.component.tsx:17). O callback verifica `event.data` igual a `close-workspace` e fecha o workspace; a URL do iframe inclui `returnUrl=post-message:close-workspace`.
+**Observation:** Cited excerpts contain ` window.addEventListener('message', callback); ` (packages/esm-patient-forms-app/src/htmlformentry/html-form-entry-wrapper.component.tsx:17). Callback checks `event.data` equal to `close-workspace` and closes workspace; iframe URL includes `returnUrl=post-message:close-workspace`.
 
-**Interpretação:** A relação 3.4.5 #45 é `communication`, de `packages/esm-patient-forms-app` para `htmlformentryui`, mecanismo `events`, direção `origem → destino`, No snapshot `No` e Ativa `Yes`. Os trechos ligam as unidades por estado reativo ou mensagens, conforme a relação final; a organização de montagem não é estabelecida por essa troca sozinha. A direção registrada preserva a convenção decidida pelo pesquisador na 3.4.5: a mensagem chega do destino externo à origem local.
+**Interpretation:** Relationship 3.4.5 #45 is `communication`, from `packages/esm-patient-forms-app` to `htmlformentryui`, mechanism `events`, direction `source → target`, In snapshot `No` and Active `Yes`. Excerpts link units through reactive state or messages per final relationship; exchange alone does not establish mounting organization. Recorded direction preserves researcher-decided 3.4.5 convention: message arrives from external target to local source.
 
 ### 199. packages/esm-patient-medications-app/src/add-drug-order/add-drug-order.workspace.tsx:37; packages/esm-patient-medications-app/src/add-drug-order/add-drug-order.workspace.tsx:71; packages/esm-patient-medications-app/src/add-drug-order/drug-search/drug-search.component.tsx:25; packages/esm-patient-medications-app/src/add-drug-order/drug-search/order-basket-search-results.component.tsx:149; packages/esm-patient-medications-app/src/components/medications-details-table.component.tsx:71; packages/esm-patient-medications-app/src/drug-order-basket-panel/drug-order-basket-panel.extension.tsx:58; packages/esm-patient-medications-app/src/drug-order-basket-panel/drug-order-basket-panel.extension.tsx:66; packages/esm-patient-medications-app/src/drug-order-basket-panel/order-basket-item-tile.component.tsx:103; packages/esm-patient-orders-app/src/routes.json:68; packages/esm-patient-orders-app/src/routes.json:12-21
 
-**Observação:** Os trechos citados contêm ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), ` (packages/esm-patient-medications-app/src/add-drug-order/add-drug-order.workspace.tsx:37); ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), ` (packages/esm-patient-medications-app/src/add-drug-order/add-drug-order.workspace.tsx:71); ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), ` (packages/esm-patient-medications-app/src/add-drug-order/drug-search/drug-search.component.tsx:25); ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), ` (packages/esm-patient-medications-app/src/add-drug-order/drug-search/order-basket-search-results.component.tsx:149); ` const launchOrderBasket = useLaunchWorkspaceRequiringVisit('order-basket'); ` (packages/esm-patient-medications-app/src/components/medications-details-table.component.tsx:71); ` closeWorkspace('order-basket', { ` (packages/esm-patient-medications-app/src/drug-order-basket-panel/drug-order-basket-panel.extension.tsx:58); ` closeWorkspace('order-basket', { ` (packages/esm-patient-medications-app/src/drug-order-basket-panel/drug-order-basket-panel.extension.tsx:66); ` <ExtensionSlot name="order-item-additional-info-slot" state={additionalInfoSlotState} className={styles.additionalInfoContainer} ` (packages/esm-patient-medications-app/src/drug-order-basket-panel/order-basket-item-tile.component.tsx:103). Os registros associados são packages/esm-patient-orders-app/src/routes.json:68 (workspace `order-basket`); packages/esm-patient-orders-app/src/routes.json:12-21 (`order-price-details` e `order-stock-details` em `order-item-additional-info-slot`).
+**Observation:** Cited excerpts contain ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), ` (packages/esm-patient-medications-app/src/add-drug-order/add-drug-order.workspace.tsx:37); ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), ` (packages/esm-patient-medications-app/src/add-drug-order/add-drug-order.workspace.tsx:71); ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), ` (packages/esm-patient-medications-app/src/add-drug-order/drug-search/drug-search.component.tsx:25); ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), ` (packages/esm-patient-medications-app/src/add-drug-order/drug-search/order-basket-search-results.component.tsx:149); ` const launchOrderBasket = useLaunchWorkspaceRequiringVisit('order-basket'); ` (packages/esm-patient-medications-app/src/components/medications-details-table.component.tsx:71); ` closeWorkspace('order-basket', { ` (packages/esm-patient-medications-app/src/drug-order-basket-panel/drug-order-basket-panel.extension.tsx:58); ` closeWorkspace('order-basket', { ` (packages/esm-patient-medications-app/src/drug-order-basket-panel/drug-order-basket-panel.extension.tsx:66); ` <ExtensionSlot name="order-item-additional-info-slot" state={additionalInfoSlotState} className={styles.additionalInfoContainer} ` (packages/esm-patient-medications-app/src/drug-order-basket-panel/order-basket-item-tile.component.tsx:103). Associated registries: packages/esm-patient-orders-app/src/routes.json:68 (workspace `order-basket`); packages/esm-patient-orders-app/src/routes.json:12-21 (`order-price-details` and `order-stock-details` in `order-item-additional-info-slot`).
 
-**Interpretação:** A relação 3.4.5 #46 é `host → remote`, de `packages/esm-patient-medications-app` para `packages/esm-patient-orders-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #46 is `host → remote`, from `packages/esm-patient-medications-app` to `packages/esm-patient-orders-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 200. packages/esm-patient-medications-app/src/add-drug-order/drug-order-form.component.tsx:213
 
-**Observação:** Os trechos citados contêm ` <ExtensionSlot name="medication-info-slot" state={{ order: orderBasketItem }} /> ` (packages/esm-patient-medications-app/src/add-drug-order/drug-order-form.component.tsx:213).
+**Observation:** Cited excerpts contain ` <ExtensionSlot name="medication-info-slot" state={{ order: orderBasketItem }} /> ` (packages/esm-patient-medications-app/src/add-drug-order/drug-order-form.component.tsx:213).
 
-**Interpretação:** A relação 3.4.5 #47 é `host → remote`, de `packages/esm-patient-medications-app` para `medication-info-slot`, mecanismo `other`, direção `origem → destino`, No snapshot `Undetermined` e Ativa `Undetermined`. O destino pode ser fornecido por outra unidade externa ou permanecer sem conexão; o snapshot não permite decidir.
+**Interpretation:** Relationship 3.4.5 #47 is `host → remote`, from `packages/esm-patient-medications-app` to `medication-info-slot`, mechanism `other`, direction `source → target`, In snapshot `Undetermined` and Active `Undetermined`. Target may be supplied by another external unit or remain disconnected; snapshot cannot decide.
 
 ### 201. packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:315; packages/esm-patient-attachments-app/src/routes.json:30
 
-**Observação:** Os trechos citados contêm ` const close = showModal('capture-photo-modal', { ` (packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:315). Os registros associados são packages/esm-patient-attachments-app/src/routes.json:30 (modal `capture-photo-modal`).
+**Observation:** Cited excerpts contain ` const close = showModal('capture-photo-modal', { ` (packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:315). Associated registries: packages/esm-patient-attachments-app/src/routes.json:30 (modal `capture-photo-modal`).
 
-**Interpretação:** A relação 3.4.5 #48 é `host → remote`, de `packages/esm-patient-notes-app` para `packages/esm-patient-attachments-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #48 is `host → remote`, from `packages/esm-patient-notes-app` to `packages/esm-patient-attachments-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 202. packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:501; packages/esm-patient-vitals-app/src/routes.json:63-65
 
-**Observação:** Os trechos citados contêm ` <ExtensionSlot name="visit-form-header-slot" className={styles.dataGridRow} state={memoizedState} /> ` (packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:501). Os registros associados são packages/esm-patient-vitals-app/src/routes.json:63-65 (`weight-tile` em `visit-form-header-slot`).
+**Observation:** Cited excerpts contain ` <ExtensionSlot name="visit-form-header-slot" className={styles.dataGridRow} state={memoizedState} /> ` (packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:501). Associated registries: packages/esm-patient-vitals-app/src/routes.json:63-65 (`weight-tile` in `visit-form-header-slot`).
 
-**Interpretação:** A relação 3.4.5 #49 é `host → remote`, de `packages/esm-patient-notes-app` para `packages/esm-patient-vitals-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #49 is `host → remote`, from `packages/esm-patient-notes-app` to `packages/esm-patient-vitals-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 203. packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:120; packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:156; packages/esm-patient-medications-app/src/routes.json:43; packages/esm-patient-medications-app/src/routes.json:35-37
 
-**Observação:** Os trechos citados contêm ` const launchAddDrugOrder = useLaunchWorkspaceRequiringVisit('add-drug-order'); ` (packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:120); ` <ExtensionSlot className={classNames(styles.orderBasketSlot, { [styles.orderBasketSlotTablet]: isTablet, })} ` (packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:156). Os registros associados são packages/esm-patient-medications-app/src/routes.json:43 (workspace `add-drug-order`); packages/esm-patient-medications-app/src/routes.json:35-37 (`drug-order-panel` em `order-basket-slot`).
+**Observation:** Cited excerpts contain ` const launchAddDrugOrder = useLaunchWorkspaceRequiringVisit('add-drug-order'); ` (packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:120); ` <ExtensionSlot className={classNames(styles.orderBasketSlot, { [styles.orderBasketSlotTablet]: isTablet, })} ` (packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:156). Associated registries: packages/esm-patient-medications-app/src/routes.json:43 (workspace `add-drug-order`); packages/esm-patient-medications-app/src/routes.json:35-37 (`drug-order-panel` in `order-basket-slot`).
 
-**Interpretação:** A relação 3.4.5 #50 é `host → remote`, de `packages/esm-patient-orders-app` para `packages/esm-patient-medications-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #50 is `host → remote`, from `packages/esm-patient-orders-app` to `packages/esm-patient-medications-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 204. packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:121; packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:156; packages/esm-patient-tests-app/src/routes.json:52; packages/esm-patient-tests-app/src/routes.json:34-36
 
-**Observação:** Os trechos citados contêm ` const launchModifyLabOrder = useLaunchWorkspaceRequiringVisit('add-lab-order'); ` (packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:121); ` <ExtensionSlot className={classNames(styles.orderBasketSlot, { [styles.orderBasketSlotTablet]: isTablet, })} ` (packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:156). Os registros associados são packages/esm-patient-tests-app/src/routes.json:52 (workspace `add-lab-order`); packages/esm-patient-tests-app/src/routes.json:34-36 (`lab-order-panel` em `order-basket-slot`).
+**Observation:** Cited excerpts contain ` const launchModifyLabOrder = useLaunchWorkspaceRequiringVisit('add-lab-order'); ` (packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:121); ` <ExtensionSlot className={classNames(styles.orderBasketSlot, { [styles.orderBasketSlotTablet]: isTablet, })} ` (packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:156). Associated registries: packages/esm-patient-tests-app/src/routes.json:52 (workspace `add-lab-order`); packages/esm-patient-tests-app/src/routes.json:34-36 (`lab-order-panel` in `order-basket-slot`).
 
-**Interpretação:** A relação 3.4.5 #51 é `host → remote`, de `packages/esm-patient-orders-app` para `packages/esm-patient-tests-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #51 is `host → remote`, from `packages/esm-patient-orders-app` to `packages/esm-patient-tests-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 205. packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:534; packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:534-535
 
-**Observação:** Os trechos citados contêm `` <ExtensionSlot name={`${matchingOrder.type}-action-menu-items-slot`} state={{ className: styles.menuItem, `` (packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:534).
+**Observation:** Cited excerpts contain `` <ExtensionSlot name={`${matchingOrder.type}-action-menu-items-slot`} state={{ className: styles.menuItem, `` (packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:534).
 
-**Interpretação:** A relação 3.4.5 #52 é `host → remote`, de `packages/esm-patient-orders-app` para `${matchingOrder.type}-action-menu-items-slot`, mecanismo `other`, direção `origem → destino`, No snapshot `Undetermined` e Ativa `Undetermined`. O destino pode ser fornecido por outra unidade externa ou permanecer sem conexão; o snapshot não permite decidir.
+**Interpretation:** Relationship 3.4.5 #52 is `host → remote`, from `packages/esm-patient-orders-app` to `${matchingOrder.type}-action-menu-items-slot`, mechanism `other`, direction `source → target`, In snapshot `Undetermined` and Active `Undetermined`. Target may be supplied by another external unit or remain disconnected; snapshot cannot decide.
 
 ### 206. packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:561; packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:561-562
 
-**Observação:** Os trechos citados contêm `` <ExtensionSlot name={`${matchingOrder.type}-detail-slot`} state={{ orderItem: matchingOrder, `` (packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:561).
+**Observation:** Cited excerpts contain `` <ExtensionSlot name={`${matchingOrder.type}-detail-slot`} state={{ orderItem: matchingOrder, `` (packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:561).
 
-**Interpretação:** A relação 3.4.5 #53 é `host → remote`, de `packages/esm-patient-orders-app` para `${matchingOrder.type}-detail-slot`, mecanismo `other`, direção `origem → destino`, No snapshot `Undetermined` e Ativa `Undetermined`. O destino pode ser fornecido por outra unidade externa ou permanecer sem conexão; o snapshot não permite decidir.
+**Interpretation:** Relationship 3.4.5 #53 is `host → remote`, from `packages/esm-patient-orders-app` to `${matchingOrder.type}-detail-slot`, mechanism `other`, direction `source → target`, In snapshot `Undetermined` and Active `Undetermined`. Target may be supplied by another external unit or remain disconnected; snapshot cannot decide.
 
 ### 207. packages/esm-patient-orders-app/src/order-basket/general-order-type/general-order-form/general-order-form.component.tsx:169
 
-**Observação:** Os trechos citados contêm ` <ExtensionSlot name="top-of-lab-order-form-slot" state={{ order: initialOrder }} /> ` (packages/esm-patient-orders-app/src/order-basket/general-order-type/general-order-form/general-order-form.component.tsx:169).
+**Observation:** Cited excerpts contain ` <ExtensionSlot name="top-of-lab-order-form-slot" state={{ order: initialOrder }} /> ` (packages/esm-patient-orders-app/src/order-basket/general-order-type/general-order-form/general-order-form.component.tsx:169).
 
-**Interpretação:** A relação 3.4.5 #54 é `host → remote`, de `packages/esm-patient-orders-app` para `top-of-lab-order-form-slot`, mecanismo `other`, direção `origem → destino`, No snapshot `Undetermined` e Ativa `Undetermined`. O destino pode ser fornecido por outra unidade externa ou permanecer sem conexão; o snapshot não permite decidir.
+**Interpretation:** Relationship 3.4.5 #54 is `host → remote`, from `packages/esm-patient-orders-app` to `top-of-lab-order-form-slot`, mechanism `other`, direction `source → target`, In snapshot `Undetermined` and Active `Undetermined`. Target may be supplied by another external unit or remain disconnected; snapshot cannot decide.
 
 ### 208. packages/esm-patient-tests-app/src/test-orders/add-test-order/add-test-order.workspace.tsx:78; packages/esm-patient-tests-app/src/test-orders/add-test-order/test-order-form.component.tsx:153; packages/esm-patient-tests-app/src/test-orders/add-test-order/test-order-form.component.tsx:163; packages/esm-patient-tests-app/src/test-orders/add-test-order/test-type-search.component.tsx:54; packages/esm-patient-tests-app/src/test-orders/add-test-order/test-type-search.component.tsx:208; packages/esm-patient-tests-app/src/test-orders/lab-order-basket-panel/lab-order-basket-item-tile.component.tsx:68; packages/esm-patient-tests-app/src/test-orders/lab-order-basket-panel/lab-order-basket-panel.extension.tsx:99; packages/esm-patient-tests-app/src/test-orders/lab-order-basket-panel/lab-order-basket-panel.extension.tsx:111; packages/esm-patient-orders-app/src/routes.json:68; packages/esm-patient-orders-app/src/routes.json:12-21
 
-**Observação:** Os trechos citados contêm ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), ` (packages/esm-patient-tests-app/src/test-orders/add-test-order/add-test-order.workspace.tsx:78); ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), ` (packages/esm-patient-tests-app/src/test-orders/add-test-order/test-order-form.component.tsx:153); ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), ` (packages/esm-patient-tests-app/src/test-orders/add-test-order/test-order-form.component.tsx:163); ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), ` (packages/esm-patient-tests-app/src/test-orders/add-test-order/test-type-search.component.tsx:54); ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), ` (packages/esm-patient-tests-app/src/test-orders/add-test-order/test-type-search.component.tsx:208); ` <ExtensionSlot name="order-item-additional-info-slot" state={additionalInfoSlotState} className={styles.additionalInfoContainer} ` (packages/esm-patient-tests-app/src/test-orders/lab-order-basket-panel/lab-order-basket-item-tile.component.tsx:68); ` closeWorkspace('order-basket', { ` (packages/esm-patient-tests-app/src/test-orders/lab-order-basket-panel/lab-order-basket-panel.extension.tsx:99); ` closeWorkspace('order-basket', { ` (packages/esm-patient-tests-app/src/test-orders/lab-order-basket-panel/lab-order-basket-panel.extension.tsx:111). Os registros associados são packages/esm-patient-orders-app/src/routes.json:68 (workspace `order-basket`); packages/esm-patient-orders-app/src/routes.json:12-21 (`order-price-details` e `order-stock-details` em `order-item-additional-info-slot`).
+**Observation:** Cited excerpts contain ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), ` (packages/esm-patient-tests-app/src/test-orders/add-test-order/add-test-order.workspace.tsx:78); ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), ` (packages/esm-patient-tests-app/src/test-orders/add-test-order/test-order-form.component.tsx:153); ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), ` (packages/esm-patient-tests-app/src/test-orders/add-test-order/test-order-form.component.tsx:163); ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), ` (packages/esm-patient-tests-app/src/test-orders/add-test-order/test-type-search.component.tsx:54); ` onWorkspaceClose: () => launchPatientWorkspace('order-basket'), ` (packages/esm-patient-tests-app/src/test-orders/add-test-order/test-type-search.component.tsx:208); ` <ExtensionSlot name="order-item-additional-info-slot" state={additionalInfoSlotState} className={styles.additionalInfoContainer} ` (packages/esm-patient-tests-app/src/test-orders/lab-order-basket-panel/lab-order-basket-item-tile.component.tsx:68); ` closeWorkspace('order-basket', { ` (packages/esm-patient-tests-app/src/test-orders/lab-order-basket-panel/lab-order-basket-panel.extension.tsx:99); ` closeWorkspace('order-basket', { ` (packages/esm-patient-tests-app/src/test-orders/lab-order-basket-panel/lab-order-basket-panel.extension.tsx:111). Associated registries: packages/esm-patient-orders-app/src/routes.json:68 (workspace `order-basket`); packages/esm-patient-orders-app/src/routes.json:12-21 (`order-price-details` and `order-stock-details` in `order-item-additional-info-slot`).
 
-**Interpretação:** A relação 3.4.5 #55 é `host → remote`, de `packages/esm-patient-tests-app` para `packages/esm-patient-orders-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado.
+**Interpretation:** Relationship 3.4.5 #55 is `host → remote`, from `packages/esm-patient-tests-app` to `packages/esm-patient-orders-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism.
 
 ### 209. packages/esm-patient-tests-app/src/test-orders/add-test-order/test-order-form.component.tsx:193
 
-**Observação:** Os trechos citados contêm ` <ExtensionSlot name="top-of-lab-order-form-slot" state={{ order: initialOrder }} /> ` (packages/esm-patient-tests-app/src/test-orders/add-test-order/test-order-form.component.tsx:193).
+**Observation:** Cited excerpts contain ` <ExtensionSlot name="top-of-lab-order-form-slot" state={{ order: initialOrder }} /> ` (packages/esm-patient-tests-app/src/test-orders/add-test-order/test-order-form.component.tsx:193).
 
-**Interpretação:** A relação 3.4.5 #56 é `host → remote`, de `packages/esm-patient-tests-app` para `top-of-lab-order-form-slot`, mecanismo `other`, direção `origem → destino`, No snapshot `Undetermined` e Ativa `Undetermined`. O destino pode ser fornecido por outra unidade externa ou permanecer sem conexão; o snapshot não permite decidir.
+**Interpretation:** Relationship 3.4.5 #56 is `host → remote`, from `packages/esm-patient-tests-app` to `top-of-lab-order-form-slot`, mechanism `other`, direction `source → target`, In snapshot `Undetermined` and Active `Undetermined`. Target may be supplied by another external unit or remain disconnected; snapshot cannot decide.
 
 ### 210. packages/esm-patient-vitals-app/src/utils.ts:16; packages/esm-patient-forms-app/src/routes.json:49; packages/esm-patient-vitals-app/src/utils.ts:14-18
 
-**Observação:** Os trechos citados contêm ` const launchVitalsAndBiometricsForm = useLaunchWorkspaceRequiringVisit( ` (packages/esm-patient-vitals-app/src/utils.ts:16). Os registros associados são packages/esm-patient-forms-app/src/routes.json:49 (workspace `patient-form-entry-workspace`).
+**Observation:** Cited excerpts contain ` const launchVitalsAndBiometricsForm = useLaunchWorkspaceRequiringVisit( ` (packages/esm-patient-vitals-app/src/utils.ts:16). Associated registries: packages/esm-patient-forms-app/src/routes.json:49 (workspace `patient-form-entry-workspace`).
 
-**Interpretação:** A relação 3.4.5 #57 é `host → remote`, de `packages/esm-patient-vitals-app` para `packages/esm-patient-forms-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado. O ramo depende de `config.vitals.useFormEngine`; a atividade Yes preserva a decisão da 3.4.
+**Interpretation:** Relationship 3.4.5 #57 is `host → remote`, from `packages/esm-patient-vitals-app` to `packages/esm-patient-forms-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism. Branch depends on `config.vitals.useFormEngine`; Yes activity preserves 3.4 decision.
 
 ### 211. packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:249; packages/esm-form-engine-app/src/routes.json:8-10
 
-**Observação:** Os trechos citados contêm ` <ExtensionSlot name="form-widget-slot" state={{ view: 'form', ` (packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:249). Os registros associados são packages/esm-form-engine-app/src/routes.json:8-10 (extensão `react-form-engine-widget`, componente `formRenderer`, em `form-widget-slot`).
+**Observation:** Cited excerpts contain ` <ExtensionSlot name="form-widget-slot" state={{ view: 'form', ` (packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:249). Associated registries: packages/esm-form-engine-app/src/routes.json:8-10 (extension `react-form-engine-widget`, component `formRenderer`, in `form-widget-slot`).
 
-**Interpretação:** A relação 3.4.5 #58 é `host → remote`, de `packages/esm-patient-vitals-app` para `packages/esm-form-engine-app`, mecanismo `other`, direção `origem → destino`, No snapshot `Yes` e Ativa `Yes`. O consumidor nomeia ou monta a contribuição do destino mediante o mecanismo registrado. O ramo depende de `config.vitals.useFormEngine`; a atividade Yes preserva a decisão da 3.4.
+**Interpretation:** Relationship 3.4.5 #58 is `host → remote`, from `packages/esm-patient-vitals-app` to `packages/esm-form-engine-app`, mechanism `other`, direction `source → target`, In snapshot `Yes` and Active `Yes`. Consumer names or mounts target contribution through recorded mechanism. Branch depends on `config.vitals.useFormEngine`; Yes activity preserves 3.4 decision.
 
 ### 212. packages/esm-form-engine-app/package.json:13; packages/esm-form-engine-app/webpack.config.js:2; packages/esm-form-engine-app/package.json:2-3; packages/esm-form-engine-app/package.json:6; package.json:10; .github/workflows/ci.yml:161-162; packages/esm-form-engine-app/package.json:2; .github/workflows/ci.yml:139
 
-**Observação:** A aplicação `packages/esm-form-engine-app` declara os artefatos: packages/esm-form-engine-app/package.json:13 (`webpack --mode production`); packages/esm-form-engine-app/webpack.config.js:2 (`openmrs/default-webpack-config`); packages/esm-form-engine-app/package.json:2-3, :6 (nome `@openmrs/esm-form-engine-app`, versão `10.2.0`, bundle `dist/openmrs-esm-form-engine-app.js`); package.json:10 (`npm publish` de cada workspace); .github/workflows/ci.yml:161-162 (publicação na release). Publicação: pacote npm `@openmrs/esm-form-engine-app` em `https://registry.npmjs.org` (packages/esm-form-engine-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
+**Observation:** Application `packages/esm-form-engine-app` declares artifacts: packages/esm-form-engine-app/package.json:13 (`webpack --mode production`); packages/esm-form-engine-app/webpack.config.js:2 (`openmrs/default-webpack-config`); packages/esm-form-engine-app/package.json:2-3, :6 (name `@openmrs/esm-form-engine-app`, version `10.2.0`, bundle `dist/openmrs-esm-form-engine-app.js`); package.json:10 (`npm publish` for each workspace); .github/workflows/ci.yml:161-162 (publication on release). Publication: npm package `@openmrs/esm-form-engine-app` in `https://registry.npmjs.org` (packages/esm-form-engine-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
 
-**Interpretação:** Build `separado` e deploy `separado` delimitam um bundle e pacote npm próprios da unidade. O versionamento registrado é `Yes`; a versão 10.2.0 e a publicação são coordenadas na release do monorepo. A imagem conjunta de testes e2e não define seu deploy produtivo.
+**Interpretation:** Build `separate` and deployment `separate` delimit own unit bundle/npm package. Recorded versioning `Yes`; version 10.2.0/publication coordinated in monorepo release. Joint e2e test image does not define production deployment.
 
 ### 213. packages/esm-form-entry-app/package.json:13; packages/esm-form-entry-app/angular.json:27; packages/esm-form-entry-app/angular.json:40; packages/esm-form-entry-app/angular.json:52; packages/esm-form-entry-app/webpack.config.js:70-76; packages/esm-form-entry-app/package.json:2-3; packages/esm-form-entry-app/package.json:6; package.json:10; .github/workflows/ci.yml:161-162; packages/esm-form-entry-app/package.json:2; .github/workflows/ci.yml:139
 
-**Observação:** A aplicação `packages/esm-form-entry-app` declara os artefatos: packages/esm-form-entry-app/package.json:13 (`ng build --configuration production`); packages/esm-form-entry-app/angular.json:27, :40, :52 (builder `ngx-build-plus:browser`, saída `dist`, webpack extra); packages/esm-form-entry-app/webpack.config.js:70-76 (container `ModuleFederationPlugin` com `exposes ./start`); packages/esm-form-entry-app/package.json:2-3, :6 (nome `@openmrs/esm-form-entry-app`, versão `10.2.0`, bundle `dist/openmrs-esm-form-entry-app.js`); package.json:10 (`npm publish` de cada workspace); .github/workflows/ci.yml:161-162 (publicação na release). Publicação: pacote npm `@openmrs/esm-form-entry-app` em `https://registry.npmjs.org` (packages/esm-form-entry-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
+**Observation:** Application `packages/esm-form-entry-app` declares artifacts: packages/esm-form-entry-app/package.json:13 (`ng build --configuration production`); packages/esm-form-entry-app/angular.json:27, :40, :52 (builder `ngx-build-plus:browser`, output `dist`, webpack extra); packages/esm-form-entry-app/webpack.config.js:70-76 (container `ModuleFederationPlugin` with `exposes ./start`); packages/esm-form-entry-app/package.json:2-3, :6 (name `@openmrs/esm-form-entry-app`, version `10.2.0`, bundle `dist/openmrs-esm-form-entry-app.js`); package.json:10 (`npm publish` for each workspace); .github/workflows/ci.yml:161-162 (publication on release). Publication: npm package `@openmrs/esm-form-entry-app` in `https://registry.npmjs.org` (packages/esm-form-entry-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
 
-**Interpretação:** Build `separado` e deploy `separado` delimitam um bundle e pacote npm próprios da unidade. O versionamento registrado é `Yes`; a versão 10.2.0 e a publicação são coordenadas na release do monorepo. A imagem conjunta de testes e2e não define seu deploy produtivo.
+**Interpretation:** Build `separate` and deployment `separate` delimit own unit bundle/npm package. Recorded versioning `Yes`; version 10.2.0/publication coordinated in monorepo release. Joint e2e test image does not define production deployment.
 
 ### 214. packages/esm-generic-patient-widgets-app/package.json:13; packages/esm-generic-patient-widgets-app/webpack.config.js:1; packages/esm-generic-patient-widgets-app/package.json:2-3; packages/esm-generic-patient-widgets-app/package.json:6; package.json:10; .github/workflows/ci.yml:161-162; packages/esm-generic-patient-widgets-app/package.json:2; .github/workflows/ci.yml:139
 
-**Observação:** A aplicação `packages/esm-generic-patient-widgets-app` declara os artefatos: packages/esm-generic-patient-widgets-app/package.json:13 (`webpack --mode production`); packages/esm-generic-patient-widgets-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-generic-patient-widgets-app/package.json:2-3, :6 (nome `@openmrs/esm-generic-patient-widgets-app`, versão `10.2.0`, bundle `dist/openmrs-esm-generic-patient-widgets-app.js`); package.json:10 (`npm publish` de cada workspace); .github/workflows/ci.yml:161-162 (publicação na release). Publicação: pacote npm `@openmrs/esm-generic-patient-widgets-app` em `https://registry.npmjs.org` (packages/esm-generic-patient-widgets-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
+**Observation:** Application `packages/esm-generic-patient-widgets-app` declares artifacts: packages/esm-generic-patient-widgets-app/package.json:13 (`webpack --mode production`); packages/esm-generic-patient-widgets-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-generic-patient-widgets-app/package.json:2-3, :6 (name `@openmrs/esm-generic-patient-widgets-app`, version `10.2.0`, bundle `dist/openmrs-esm-generic-patient-widgets-app.js`); package.json:10 (`npm publish` for each workspace); .github/workflows/ci.yml:161-162 (publication on release). Publication: npm package `@openmrs/esm-generic-patient-widgets-app` in `https://registry.npmjs.org` (packages/esm-generic-patient-widgets-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
 
-**Interpretação:** Build `separado` e deploy `separado` delimitam um bundle e pacote npm próprios da unidade. O versionamento registrado é `Yes`; a versão 10.2.0 e a publicação são coordenadas na release do monorepo. A imagem conjunta de testes e2e não define seu deploy produtivo.
+**Interpretation:** Build `separate` and deployment `separate` delimit own unit bundle/npm package. Recorded versioning `Yes`; version 10.2.0/publication coordinated in monorepo release. Joint e2e test image does not define production deployment.
 
 ### 215. packages/esm-patient-allergies-app/package.json:13; packages/esm-patient-allergies-app/webpack.config.js:1; packages/esm-patient-allergies-app/package.json:2-3; packages/esm-patient-allergies-app/package.json:6; package.json:10; .github/workflows/ci.yml:161-162; packages/esm-patient-allergies-app/package.json:2; .github/workflows/ci.yml:139
 
-**Observação:** A aplicação `packages/esm-patient-allergies-app` declara os artefatos: packages/esm-patient-allergies-app/package.json:13 (`webpack --mode production`); packages/esm-patient-allergies-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-patient-allergies-app/package.json:2-3, :6 (nome `@openmrs/esm-patient-allergies-app`, versão `10.2.0`, bundle `dist/openmrs-esm-patient-allergies-app.js`); package.json:10 (`npm publish` de cada workspace); .github/workflows/ci.yml:161-162 (publicação na release). Publicação: pacote npm `@openmrs/esm-patient-allergies-app` em `https://registry.npmjs.org` (packages/esm-patient-allergies-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
+**Observation:** Application `packages/esm-patient-allergies-app` declares artifacts: packages/esm-patient-allergies-app/package.json:13 (`webpack --mode production`); packages/esm-patient-allergies-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-patient-allergies-app/package.json:2-3, :6 (name `@openmrs/esm-patient-allergies-app`, version `10.2.0`, bundle `dist/openmrs-esm-patient-allergies-app.js`); package.json:10 (`npm publish` for each workspace); .github/workflows/ci.yml:161-162 (publication on release). Publication: npm package `@openmrs/esm-patient-allergies-app` in `https://registry.npmjs.org` (packages/esm-patient-allergies-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
 
-**Interpretação:** Build `separado` e deploy `separado` delimitam um bundle e pacote npm próprios da unidade. O versionamento registrado é `Yes`; a versão 10.2.0 e a publicação são coordenadas na release do monorepo. A imagem conjunta de testes e2e não define seu deploy produtivo.
+**Interpretation:** Build `separate` and deployment `separate` delimit own unit bundle/npm package. Recorded versioning `Yes`; version 10.2.0/publication coordinated in monorepo release. Joint e2e test image does not define production deployment.
 
 ### 216. packages/esm-patient-attachments-app/package.json:13; packages/esm-patient-attachments-app/webpack.config.js:1-3; packages/esm-patient-attachments-app/package.json:2-3; packages/esm-patient-attachments-app/package.json:6; package.json:10; .github/workflows/ci.yml:161-162; packages/esm-patient-attachments-app/package.json:2; .github/workflows/ci.yml:139
 
-**Observação:** A aplicação `packages/esm-patient-attachments-app` declara os artefatos: packages/esm-patient-attachments-app/package.json:13 (`webpack --mode production`); packages/esm-patient-attachments-app/webpack.config.js:1-3 (`openmrs/default-webpack-config`); packages/esm-patient-attachments-app/package.json:2-3, :6 (nome `@openmrs/esm-patient-attachments-app`, versão `10.2.0`, bundle `dist/openmrs-esm-patient-attachments-app.js`); package.json:10 (`npm publish` de cada workspace); .github/workflows/ci.yml:161-162 (publicação na release). Publicação: pacote npm `@openmrs/esm-patient-attachments-app` em `https://registry.npmjs.org` (packages/esm-patient-attachments-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
+**Observation:** Application `packages/esm-patient-attachments-app` declares artifacts: packages/esm-patient-attachments-app/package.json:13 (`webpack --mode production`); packages/esm-patient-attachments-app/webpack.config.js:1-3 (`openmrs/default-webpack-config`); packages/esm-patient-attachments-app/package.json:2-3, :6 (name `@openmrs/esm-patient-attachments-app`, version `10.2.0`, bundle `dist/openmrs-esm-patient-attachments-app.js`); package.json:10 (`npm publish` for each workspace); .github/workflows/ci.yml:161-162 (publication on release). Publication: npm package `@openmrs/esm-patient-attachments-app` in `https://registry.npmjs.org` (packages/esm-patient-attachments-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
 
-**Interpretação:** Build `separado` e deploy `separado` delimitam um bundle e pacote npm próprios da unidade. O versionamento registrado é `Yes`; a versão 10.2.0 e a publicação são coordenadas na release do monorepo. A imagem conjunta de testes e2e não define seu deploy produtivo.
+**Interpretation:** Build `separate` and deployment `separate` delimit own unit bundle/npm package. Recorded versioning `Yes`; version 10.2.0/publication coordinated in monorepo release. Joint e2e test image does not define production deployment.
 
 ### 217. packages/esm-patient-banner-app/package.json:13; packages/esm-patient-banner-app/webpack.config.js:1; packages/esm-patient-banner-app/package.json:2-3; packages/esm-patient-banner-app/package.json:6; package.json:10; .github/workflows/ci.yml:161-162; packages/esm-patient-banner-app/package.json:2; .github/workflows/ci.yml:139
 
-**Observação:** A aplicação `packages/esm-patient-banner-app` declara os artefatos: packages/esm-patient-banner-app/package.json:13 (`webpack --mode production`); packages/esm-patient-banner-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-patient-banner-app/package.json:2-3, :6 (nome `@openmrs/esm-patient-banner-app`, versão `10.2.0`, bundle `dist/openmrs-esm-patient-banner-app.js`); package.json:10 (`npm publish` de cada workspace); .github/workflows/ci.yml:161-162 (publicação na release). Publicação: pacote npm `@openmrs/esm-patient-banner-app` em `https://registry.npmjs.org` (packages/esm-patient-banner-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
+**Observation:** Application `packages/esm-patient-banner-app` declares artifacts: packages/esm-patient-banner-app/package.json:13 (`webpack --mode production`); packages/esm-patient-banner-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-patient-banner-app/package.json:2-3, :6 (name `@openmrs/esm-patient-banner-app`, version `10.2.0`, bundle `dist/openmrs-esm-patient-banner-app.js`); package.json:10 (`npm publish` for each workspace); .github/workflows/ci.yml:161-162 (publication on release). Publication: npm package `@openmrs/esm-patient-banner-app` in `https://registry.npmjs.org` (packages/esm-patient-banner-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
 
-**Interpretação:** Build `separado` e deploy `separado` delimitam um bundle e pacote npm próprios da unidade. O versionamento registrado é `Yes`; a versão 10.2.0 e a publicação são coordenadas na release do monorepo. A imagem conjunta de testes e2e não define seu deploy produtivo.
+**Interpretation:** Build `separate` and deployment `separate` delimit own unit bundle/npm package. Recorded versioning `Yes`; version 10.2.0/publication coordinated in monorepo release. Joint e2e test image does not define production deployment.
 
 ### 218. packages/esm-patient-chart-app/package.json:13; packages/esm-patient-chart-app/webpack.config.js:1; packages/esm-patient-chart-app/package.json:2-3; packages/esm-patient-chart-app/package.json:6; package.json:10; .github/workflows/ci.yml:161-162; packages/esm-patient-chart-app/package.json:2; .github/workflows/ci.yml:139
 
-**Observação:** A aplicação `packages/esm-patient-chart-app` declara os artefatos: packages/esm-patient-chart-app/package.json:13 (`webpack --mode production`); packages/esm-patient-chart-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-patient-chart-app/package.json:2-3, :6 (nome `@openmrs/esm-patient-chart-app`, versão `10.2.0`, bundle `dist/openmrs-esm-patient-chart-app.js`); package.json:10 (`npm publish` de cada workspace); .github/workflows/ci.yml:161-162 (publicação na release). Publicação: pacote npm `@openmrs/esm-patient-chart-app` em `https://registry.npmjs.org` (packages/esm-patient-chart-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
+**Observation:** Application `packages/esm-patient-chart-app` declares artifacts: packages/esm-patient-chart-app/package.json:13 (`webpack --mode production`); packages/esm-patient-chart-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-patient-chart-app/package.json:2-3, :6 (name `@openmrs/esm-patient-chart-app`, version `10.2.0`, bundle `dist/openmrs-esm-patient-chart-app.js`); package.json:10 (`npm publish` for each workspace); .github/workflows/ci.yml:161-162 (publication on release). Publication: npm package `@openmrs/esm-patient-chart-app` in `https://registry.npmjs.org` (packages/esm-patient-chart-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
 
-**Interpretação:** Build `separado` e deploy `separado` delimitam um bundle e pacote npm próprios da unidade. O versionamento registrado é `Yes`; a versão 10.2.0 e a publicação são coordenadas na release do monorepo. A imagem conjunta de testes e2e não define seu deploy produtivo.
+**Interpretation:** Build `separate` and deployment `separate` delimit own unit bundle/npm package. Recorded versioning `Yes`; version 10.2.0/publication coordinated in monorepo release. Joint e2e test image does not define production deployment.
 
 ### 219. packages/esm-patient-conditions-app/package.json:13; packages/esm-patient-conditions-app/webpack.config.js:1; packages/esm-patient-conditions-app/package.json:2-3; packages/esm-patient-conditions-app/package.json:6; package.json:10; .github/workflows/ci.yml:161-162; packages/esm-patient-conditions-app/package.json:2; .github/workflows/ci.yml:139
 
-**Observação:** A aplicação `packages/esm-patient-conditions-app` declara os artefatos: packages/esm-patient-conditions-app/package.json:13 (`webpack --mode production`); packages/esm-patient-conditions-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-patient-conditions-app/package.json:2-3, :6 (nome `@openmrs/esm-patient-conditions-app`, versão `10.2.0`, bundle `dist/openmrs-esm-patient-conditions-app.js`); package.json:10 (`npm publish` de cada workspace); .github/workflows/ci.yml:161-162 (publicação na release). Publicação: pacote npm `@openmrs/esm-patient-conditions-app` em `https://registry.npmjs.org` (packages/esm-patient-conditions-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
+**Observation:** Application `packages/esm-patient-conditions-app` declares artifacts: packages/esm-patient-conditions-app/package.json:13 (`webpack --mode production`); packages/esm-patient-conditions-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-patient-conditions-app/package.json:2-3, :6 (name `@openmrs/esm-patient-conditions-app`, version `10.2.0`, bundle `dist/openmrs-esm-patient-conditions-app.js`); package.json:10 (`npm publish` for each workspace); .github/workflows/ci.yml:161-162 (publication on release). Publication: npm package `@openmrs/esm-patient-conditions-app` in `https://registry.npmjs.org` (packages/esm-patient-conditions-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
 
-**Interpretação:** Build `separado` e deploy `separado` delimitam um bundle e pacote npm próprios da unidade. O versionamento registrado é `Yes`; a versão 10.2.0 e a publicação são coordenadas na release do monorepo. A imagem conjunta de testes e2e não define seu deploy produtivo.
+**Interpretation:** Build `separate` and deployment `separate` delimit own unit bundle/npm package. Recorded versioning `Yes`; version 10.2.0/publication coordinated in monorepo release. Joint e2e test image does not define production deployment.
 
 ### 220. packages/esm-patient-flags-app/package.json:12; packages/esm-patient-flags-app/webpack.config.js:1; packages/esm-patient-flags-app/package.json:2-3; packages/esm-patient-flags-app/package.json:6; package.json:10; .github/workflows/ci.yml:161-162; packages/esm-patient-flags-app/package.json:2; .github/workflows/ci.yml:139
 
-**Observação:** A aplicação `packages/esm-patient-flags-app` declara os artefatos: packages/esm-patient-flags-app/package.json:12 (`webpack --mode production`); packages/esm-patient-flags-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-patient-flags-app/package.json:2-3, :6 (nome `@openmrs/esm-patient-flags-app`, versão `10.2.0`, bundle `dist/openmrs-esm-patient-flags-app.js`); package.json:10 (`npm publish` de cada workspace); .github/workflows/ci.yml:161-162 (publicação na release). Publicação: pacote npm `@openmrs/esm-patient-flags-app` em `https://registry.npmjs.org` (packages/esm-patient-flags-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
+**Observation:** Application `packages/esm-patient-flags-app` declares artifacts: packages/esm-patient-flags-app/package.json:12 (`webpack --mode production`); packages/esm-patient-flags-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-patient-flags-app/package.json:2-3, :6 (name `@openmrs/esm-patient-flags-app`, version `10.2.0`, bundle `dist/openmrs-esm-patient-flags-app.js`); package.json:10 (`npm publish` for each workspace); .github/workflows/ci.yml:161-162 (publication on release). Publication: npm package `@openmrs/esm-patient-flags-app` in `https://registry.npmjs.org` (packages/esm-patient-flags-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
 
-**Interpretação:** Build `separado` e deploy `separado` delimitam um bundle e pacote npm próprios da unidade. O versionamento registrado é `Yes`; a versão 10.2.0 e a publicação são coordenadas na release do monorepo. A imagem conjunta de testes e2e não define seu deploy produtivo.
+**Interpretation:** Build `separate` and deployment `separate` delimit own unit bundle/npm package. Recorded versioning `Yes`; version 10.2.0/publication coordinated in monorepo release. Joint e2e test image does not define production deployment.
 
 ### 221. packages/esm-patient-forms-app/package.json:13; packages/esm-patient-forms-app/webpack.config.js:1; packages/esm-patient-forms-app/package.json:2-3; packages/esm-patient-forms-app/package.json:6; package.json:10; .github/workflows/ci.yml:161-162; packages/esm-patient-forms-app/package.json:2; .github/workflows/ci.yml:139
 
-**Observação:** A aplicação `packages/esm-patient-forms-app` declara os artefatos: packages/esm-patient-forms-app/package.json:13 (`webpack --mode production`); packages/esm-patient-forms-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-patient-forms-app/package.json:2-3, :6 (nome `@openmrs/esm-patient-forms-app`, versão `10.2.0`, bundle `dist/openmrs-esm-patient-forms-app.js`); package.json:10 (`npm publish` de cada workspace); .github/workflows/ci.yml:161-162 (publicação na release). Publicação: pacote npm `@openmrs/esm-patient-forms-app` em `https://registry.npmjs.org` (packages/esm-patient-forms-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
+**Observation:** Application `packages/esm-patient-forms-app` declares artifacts: packages/esm-patient-forms-app/package.json:13 (`webpack --mode production`); packages/esm-patient-forms-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-patient-forms-app/package.json:2-3, :6 (name `@openmrs/esm-patient-forms-app`, version `10.2.0`, bundle `dist/openmrs-esm-patient-forms-app.js`); package.json:10 (`npm publish` for each workspace); .github/workflows/ci.yml:161-162 (publication on release). Publication: npm package `@openmrs/esm-patient-forms-app` in `https://registry.npmjs.org` (packages/esm-patient-forms-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
 
-**Interpretação:** Build `separado` e deploy `separado` delimitam um bundle e pacote npm próprios da unidade. O versionamento registrado é `Yes`; a versão 10.2.0 e a publicação são coordenadas na release do monorepo. A imagem conjunta de testes e2e não define seu deploy produtivo.
+**Interpretation:** Build `separate` and deployment `separate` delimit own unit bundle/npm package. Recorded versioning `Yes`; version 10.2.0/publication coordinated in monorepo release. Joint e2e test image does not define production deployment.
 
 ### 222. packages/esm-patient-immunizations-app/package.json:13; packages/esm-patient-immunizations-app/webpack.config.js:1; packages/esm-patient-immunizations-app/package.json:2-3; packages/esm-patient-immunizations-app/package.json:6; package.json:10; .github/workflows/ci.yml:161-162; packages/esm-patient-immunizations-app/package.json:2; .github/workflows/ci.yml:139
 
-**Observação:** A aplicação `packages/esm-patient-immunizations-app` declara os artefatos: packages/esm-patient-immunizations-app/package.json:13 (`webpack --mode production`); packages/esm-patient-immunizations-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-patient-immunizations-app/package.json:2-3, :6 (nome `@openmrs/esm-patient-immunizations-app`, versão `10.2.0`, bundle `dist/openmrs-esm-patient-immunizations-app.js`); package.json:10 (`npm publish` de cada workspace); .github/workflows/ci.yml:161-162 (publicação na release). Publicação: pacote npm `@openmrs/esm-patient-immunizations-app` em `https://registry.npmjs.org` (packages/esm-patient-immunizations-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
+**Observation:** Application `packages/esm-patient-immunizations-app` declares artifacts: packages/esm-patient-immunizations-app/package.json:13 (`webpack --mode production`); packages/esm-patient-immunizations-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-patient-immunizations-app/package.json:2-3, :6 (name `@openmrs/esm-patient-immunizations-app`, version `10.2.0`, bundle `dist/openmrs-esm-patient-immunizations-app.js`); package.json:10 (`npm publish` for each workspace); .github/workflows/ci.yml:161-162 (publication on release). Publication: npm package `@openmrs/esm-patient-immunizations-app` in `https://registry.npmjs.org` (packages/esm-patient-immunizations-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
 
-**Interpretação:** Build `separado` e deploy `separado` delimitam um bundle e pacote npm próprios da unidade. O versionamento registrado é `Yes`; a versão 10.2.0 e a publicação são coordenadas na release do monorepo. A imagem conjunta de testes e2e não define seu deploy produtivo.
+**Interpretation:** Build `separate` and deployment `separate` delimit own unit bundle/npm package. Recorded versioning `Yes`; version 10.2.0/publication coordinated in monorepo release. Joint e2e test image does not define production deployment.
 
 ### 223. packages/esm-patient-lists-app/package.json:12; packages/esm-patient-lists-app/webpack.config.js:1; packages/esm-patient-lists-app/package.json:2-3; packages/esm-patient-lists-app/package.json:6; package.json:10; .github/workflows/ci.yml:161-162; packages/esm-patient-lists-app/package.json:2; .github/workflows/ci.yml:139
 
-**Observação:** A aplicação `packages/esm-patient-lists-app` declara os artefatos: packages/esm-patient-lists-app/package.json:12 (`webpack --mode production`); packages/esm-patient-lists-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-patient-lists-app/package.json:2-3, :6 (nome `@openmrs/esm-patient-lists-app`, versão `10.2.0`, bundle `dist/openmrs-esm-patient-lists-app.js`); package.json:10 (`npm publish` de cada workspace); .github/workflows/ci.yml:161-162 (publicação na release). Publicação: pacote npm `@openmrs/esm-patient-lists-app` em `https://registry.npmjs.org` (packages/esm-patient-lists-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
+**Observation:** Application `packages/esm-patient-lists-app` declares artifacts: packages/esm-patient-lists-app/package.json:12 (`webpack --mode production`); packages/esm-patient-lists-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-patient-lists-app/package.json:2-3, :6 (name `@openmrs/esm-patient-lists-app`, version `10.2.0`, bundle `dist/openmrs-esm-patient-lists-app.js`); package.json:10 (`npm publish` for each workspace); .github/workflows/ci.yml:161-162 (publication on release). Publication: npm package `@openmrs/esm-patient-lists-app` in `https://registry.npmjs.org` (packages/esm-patient-lists-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
 
-**Interpretação:** Build `separado` e deploy `separado` delimitam um bundle e pacote npm próprios da unidade. O versionamento registrado é `Yes`; a versão 10.2.0 e a publicação são coordenadas na release do monorepo. A imagem conjunta de testes e2e não define seu deploy produtivo.
+**Interpretation:** Build `separate` and deployment `separate` delimit own unit bundle/npm package. Recorded versioning `Yes`; version 10.2.0/publication coordinated in monorepo release. Joint e2e test image does not define production deployment.
 
 ### 224. packages/esm-patient-medications-app/package.json:13; packages/esm-patient-medications-app/webpack.config.js:1; packages/esm-patient-medications-app/package.json:2-3; packages/esm-patient-medications-app/package.json:6; package.json:10; .github/workflows/ci.yml:161-162; packages/esm-patient-medications-app/package.json:2; .github/workflows/ci.yml:139
 
-**Observação:** A aplicação `packages/esm-patient-medications-app` declara os artefatos: packages/esm-patient-medications-app/package.json:13 (`webpack --mode production`); packages/esm-patient-medications-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-patient-medications-app/package.json:2-3, :6 (nome `@openmrs/esm-patient-medications-app`, versão `10.2.0`, bundle `dist/openmrs-esm-patient-medications-app.js`); package.json:10 (`npm publish` de cada workspace); .github/workflows/ci.yml:161-162 (publicação na release). Publicação: pacote npm `@openmrs/esm-patient-medications-app` em `https://registry.npmjs.org` (packages/esm-patient-medications-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
+**Observation:** Application `packages/esm-patient-medications-app` declares artifacts: packages/esm-patient-medications-app/package.json:13 (`webpack --mode production`); packages/esm-patient-medications-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-patient-medications-app/package.json:2-3, :6 (name `@openmrs/esm-patient-medications-app`, version `10.2.0`, bundle `dist/openmrs-esm-patient-medications-app.js`); package.json:10 (`npm publish` for each workspace); .github/workflows/ci.yml:161-162 (publication on release). Publication: npm package `@openmrs/esm-patient-medications-app` in `https://registry.npmjs.org` (packages/esm-patient-medications-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
 
-**Interpretação:** Build `separado` e deploy `separado` delimitam um bundle e pacote npm próprios da unidade. O versionamento registrado é `Yes`; a versão 10.2.0 e a publicação são coordenadas na release do monorepo. A imagem conjunta de testes e2e não define seu deploy produtivo.
+**Interpretation:** Build `separate` and deployment `separate` delimit own unit bundle/npm package. Recorded versioning `Yes`; version 10.2.0/publication coordinated in monorepo release. Joint e2e test image does not define production deployment.
 
 ### 225. packages/esm-patient-notes-app/package.json:13; packages/esm-patient-notes-app/webpack.config.js:1; packages/esm-patient-notes-app/package.json:2-3; packages/esm-patient-notes-app/package.json:6; package.json:10; .github/workflows/ci.yml:161-162; packages/esm-patient-notes-app/package.json:2; .github/workflows/ci.yml:139
 
-**Observação:** A aplicação `packages/esm-patient-notes-app` declara os artefatos: packages/esm-patient-notes-app/package.json:13 (`webpack --mode production`); packages/esm-patient-notes-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-patient-notes-app/package.json:2-3, :6 (nome `@openmrs/esm-patient-notes-app`, versão `10.2.0`, bundle `dist/openmrs-esm-patient-notes-app.js`); package.json:10 (`npm publish` de cada workspace); .github/workflows/ci.yml:161-162 (publicação na release). Publicação: pacote npm `@openmrs/esm-patient-notes-app` em `https://registry.npmjs.org` (packages/esm-patient-notes-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
+**Observation:** Application `packages/esm-patient-notes-app` declares artifacts: packages/esm-patient-notes-app/package.json:13 (`webpack --mode production`); packages/esm-patient-notes-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-patient-notes-app/package.json:2-3, :6 (name `@openmrs/esm-patient-notes-app`, version `10.2.0`, bundle `dist/openmrs-esm-patient-notes-app.js`); package.json:10 (`npm publish` for each workspace); .github/workflows/ci.yml:161-162 (publication on release). Publication: npm package `@openmrs/esm-patient-notes-app` in `https://registry.npmjs.org` (packages/esm-patient-notes-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
 
-**Interpretação:** Build `separado` e deploy `separado` delimitam um bundle e pacote npm próprios da unidade. O versionamento registrado é `Yes`; a versão 10.2.0 e a publicação são coordenadas na release do monorepo. A imagem conjunta de testes e2e não define seu deploy produtivo.
+**Interpretation:** Build `separate` and deployment `separate` delimit own unit bundle/npm package. Recorded versioning `Yes`; version 10.2.0/publication coordinated in monorepo release. Joint e2e test image does not define production deployment.
 
 ### 226. packages/esm-patient-orders-app/package.json:13; packages/esm-patient-orders-app/webpack.config.js:1; packages/esm-patient-orders-app/package.json:2-3; packages/esm-patient-orders-app/package.json:6; package.json:10; .github/workflows/ci.yml:161-162; packages/esm-patient-orders-app/package.json:2; .github/workflows/ci.yml:139
 
-**Observação:** A aplicação `packages/esm-patient-orders-app` declara os artefatos: packages/esm-patient-orders-app/package.json:13 (`webpack --mode production`); packages/esm-patient-orders-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-patient-orders-app/package.json:2-3, :6 (nome `@openmrs/esm-patient-orders-app`, versão `10.2.0`, bundle `dist/openmrs-esm-patient-orders-app.js`); package.json:10 (`npm publish` de cada workspace); .github/workflows/ci.yml:161-162 (publicação na release). Publicação: pacote npm `@openmrs/esm-patient-orders-app` em `https://registry.npmjs.org` (packages/esm-patient-orders-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
+**Observation:** Application `packages/esm-patient-orders-app` declares artifacts: packages/esm-patient-orders-app/package.json:13 (`webpack --mode production`); packages/esm-patient-orders-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-patient-orders-app/package.json:2-3, :6 (name `@openmrs/esm-patient-orders-app`, version `10.2.0`, bundle `dist/openmrs-esm-patient-orders-app.js`); package.json:10 (`npm publish` for each workspace); .github/workflows/ci.yml:161-162 (publication on release). Publication: npm package `@openmrs/esm-patient-orders-app` in `https://registry.npmjs.org` (packages/esm-patient-orders-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
 
-**Interpretação:** Build `separado` e deploy `separado` delimitam um bundle e pacote npm próprios da unidade. O versionamento registrado é `Yes`; a versão 10.2.0 e a publicação são coordenadas na release do monorepo. A imagem conjunta de testes e2e não define seu deploy produtivo.
+**Interpretation:** Build `separate` and deployment `separate` delimit own unit bundle/npm package. Recorded versioning `Yes`; version 10.2.0/publication coordinated in monorepo release. Joint e2e test image does not define production deployment.
 
 ### 227. packages/esm-patient-programs-app/package.json:13; packages/esm-patient-programs-app/webpack.config.js:1; packages/esm-patient-programs-app/package.json:2-3; packages/esm-patient-programs-app/package.json:6; package.json:10; .github/workflows/ci.yml:161-162; packages/esm-patient-programs-app/package.json:2; .github/workflows/ci.yml:139
 
-**Observação:** A aplicação `packages/esm-patient-programs-app` declara os artefatos: packages/esm-patient-programs-app/package.json:13 (`webpack --mode production`); packages/esm-patient-programs-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-patient-programs-app/package.json:2-3, :6 (nome `@openmrs/esm-patient-programs-app`, versão `10.2.0`, bundle `dist/openmrs-esm-patient-programs-app.js`); package.json:10 (`npm publish` de cada workspace); .github/workflows/ci.yml:161-162 (publicação na release). Publicação: pacote npm `@openmrs/esm-patient-programs-app` em `https://registry.npmjs.org` (packages/esm-patient-programs-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
+**Observation:** Application `packages/esm-patient-programs-app` declares artifacts: packages/esm-patient-programs-app/package.json:13 (`webpack --mode production`); packages/esm-patient-programs-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-patient-programs-app/package.json:2-3, :6 (name `@openmrs/esm-patient-programs-app`, version `10.2.0`, bundle `dist/openmrs-esm-patient-programs-app.js`); package.json:10 (`npm publish` for each workspace); .github/workflows/ci.yml:161-162 (publication on release). Publication: npm package `@openmrs/esm-patient-programs-app` in `https://registry.npmjs.org` (packages/esm-patient-programs-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
 
-**Interpretação:** Build `separado` e deploy `separado` delimitam um bundle e pacote npm próprios da unidade. O versionamento registrado é `Yes`; a versão 10.2.0 e a publicação são coordenadas na release do monorepo. A imagem conjunta de testes e2e não define seu deploy produtivo.
+**Interpretation:** Build `separate` and deployment `separate` delimit own unit bundle/npm package. Recorded versioning `Yes`; version 10.2.0/publication coordinated in monorepo release. Joint e2e test image does not define production deployment.
 
 ### 228. packages/esm-patient-tests-app/package.json:13; packages/esm-patient-tests-app/webpack.config.js:1; packages/esm-patient-tests-app/package.json:2-3; packages/esm-patient-tests-app/package.json:6; package.json:10; .github/workflows/ci.yml:161-162; packages/esm-patient-tests-app/package.json:2; .github/workflows/ci.yml:139
 
-**Observação:** A aplicação `packages/esm-patient-tests-app` declara os artefatos: packages/esm-patient-tests-app/package.json:13 (`webpack --mode production`); packages/esm-patient-tests-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-patient-tests-app/package.json:2-3, :6 (nome `@openmrs/esm-patient-tests-app`, versão `10.2.0`, bundle `dist/openmrs-esm-patient-tests-app.js`); package.json:10 (`npm publish` de cada workspace); .github/workflows/ci.yml:161-162 (publicação na release). Publicação: pacote npm `@openmrs/esm-patient-tests-app` em `https://registry.npmjs.org` (packages/esm-patient-tests-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
+**Observation:** Application `packages/esm-patient-tests-app` declares artifacts: packages/esm-patient-tests-app/package.json:13 (`webpack --mode production`); packages/esm-patient-tests-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-patient-tests-app/package.json:2-3, :6 (name `@openmrs/esm-patient-tests-app`, version `10.2.0`, bundle `dist/openmrs-esm-patient-tests-app.js`); package.json:10 (`npm publish` for each workspace); .github/workflows/ci.yml:161-162 (publication on release). Publication: npm package `@openmrs/esm-patient-tests-app` in `https://registry.npmjs.org` (packages/esm-patient-tests-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
 
-**Interpretação:** Build `separado` e deploy `separado` delimitam um bundle e pacote npm próprios da unidade. O versionamento registrado é `Yes`; a versão 10.2.0 e a publicação são coordenadas na release do monorepo. A imagem conjunta de testes e2e não define seu deploy produtivo.
+**Interpretation:** Build `separate` and deployment `separate` delimit own unit bundle/npm package. Recorded versioning `Yes`; version 10.2.0/publication coordinated in monorepo release. Joint e2e test image does not define production deployment.
 
 ### 229. packages/esm-patient-vitals-app/package.json:13; packages/esm-patient-vitals-app/webpack.config.js:1; packages/esm-patient-vitals-app/package.json:2-3; packages/esm-patient-vitals-app/package.json:6; package.json:10; .github/workflows/ci.yml:161-162; packages/esm-patient-vitals-app/package.json:2; .github/workflows/ci.yml:139
 
-**Observação:** A aplicação `packages/esm-patient-vitals-app` declara os artefatos: packages/esm-patient-vitals-app/package.json:13 (`webpack --mode production`); packages/esm-patient-vitals-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-patient-vitals-app/package.json:2-3, :6 (nome `@openmrs/esm-patient-vitals-app`, versão `10.2.0`, bundle `dist/openmrs-esm-patient-vitals-app.js`); package.json:10 (`npm publish` de cada workspace); .github/workflows/ci.yml:161-162 (publicação na release). Publicação: pacote npm `@openmrs/esm-patient-vitals-app` em `https://registry.npmjs.org` (packages/esm-patient-vitals-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
+**Observation:** Application `packages/esm-patient-vitals-app` declares artifacts: packages/esm-patient-vitals-app/package.json:13 (`webpack --mode production`); packages/esm-patient-vitals-app/webpack.config.js:1 (`openmrs/default-webpack-config`); packages/esm-patient-vitals-app/package.json:2-3, :6 (name `@openmrs/esm-patient-vitals-app`, version `10.2.0`, bundle `dist/openmrs-esm-patient-vitals-app.js`); package.json:10 (`npm publish` for each workspace); .github/workflows/ci.yml:161-162 (publication on release). Publication: npm package `@openmrs/esm-patient-vitals-app` in `https://registry.npmjs.org` (packages/esm-patient-vitals-app/package.json:2; .github/workflows/ci.yml:139, :161-162).
 
-**Interpretação:** Build `separado` e deploy `separado` delimitam um bundle e pacote npm próprios da unidade. O versionamento registrado é `Yes`; a versão 10.2.0 e a publicação são coordenadas na release do monorepo. A imagem conjunta de testes e2e não define seu deploy produtivo.
+**Interpretation:** Build `separate` and deployment `separate` delimit own unit bundle/npm package. Recorded versioning `Yes`; version 10.2.0/publication coordinated in monorepo release. Joint e2e test image does not define production deployment.
 
 ### 230. README.md:7-21; packages/esm-patient-allergies-app/README.md:3; packages/esm-patient-allergies-app/package.json:5; packages/esm-patient-attachments-app/README.md:3; packages/esm-patient-attachments-app/package.json:5; packages/esm-patient-conditions-app/README.md:3; packages/esm-patient-conditions-app/package.json:5; packages/esm-patient-forms-app/README.md:3; packages/esm-patient-forms-app/package.json:5; packages/esm-patient-immunizations-app/README.md:3; packages/esm-patient-immunizations-app/package.json:5; packages/esm-patient-medications-app/README.md:3; packages/esm-patient-medications-app/package.json:5; packages/esm-patient-notes-app/README.md:3; packages/esm-patient-notes-app/package.json:5; packages/esm-patient-banner-app/README.md:3; packages/esm-patient-banner-app/package.json:5; packages/esm-patient-chart-app/README.md:3; packages/esm-patient-chart-app/package.json:5; packages/esm-patient-programs-app/README.md:3; packages/esm-patient-programs-app/package.json:5; packages/esm-patient-tests-app/README.md:3; packages/esm-patient-tests-app/package.json:5; packages/esm-patient-vitals-app/README.md:3; packages/esm-patient-vitals-app/package.json:5
 
-**Observação:** O texto afirma: "It contains various microfrontends that constitute widgets in a patient dashboard".
+**Observation:** Text states: "It contains various microfrontends that constitute widgets in a patient dashboard".
 
-**Interpretação:** A descrição do conjunto é confirmada pelas unidades e seus registros de extensões. A lista identifica allergies, attachments, conditions, forms, immunizations, medications, notes, banner, chart, programs, tests e vitals; as descrições individuais nos READMEs e manifestos dos pacotes listados no cabeçalho repetem esses papéis, sem linhas adicionais. Biometrics é separado abaixo porque recebe outra corroboração. A lista não pretende enumerar os 18 apps atuais.
+**Interpretation:** Group description confirmed by units/extension registries. List identifies allergies, attachments, conditions, forms, immunizations, medications, notes, banner, chart, programs, tests and vitals; individual README/manifest descriptions listed in heading repeat roles without extra rows. Biometrics separated below because differently corroborated. List does not intend to enumerate current 18 apps.
 
 ### 231. README.md:11; packages/esm-patient-vitals-app/README.md:3
 
-**Observação:** O texto afirma: "Biometrics".
+**Observation:** Text states: "Biometrics".
 
-**Interpretação:** O item é uma afirmação de existência de widget com pacote próprio: aponta para packages/esm-patient-biometrics-app/README.md. Esse diretório não existe no snapshot. Biometrics aparece como funcionalidade do vitals, não como aquela unidade separada (packages/esm-patient-vitals-app/README.md:3).
+**Interpretation:** Item asserts widget with own package: points to packages/esm-patient-biometrics-app/README.md. Directory absent in snapshot. Biometrics a vitals feature rather than separate unit (packages/esm-patient-vitals-app/README.md:3).
 
 ### 232. README.md:23-26; packages/esm-patient-common-lib/src/index.ts:1-23; packages/esm-patient-common-lib/package.json:9-13; packages/esm-patient-common-lib/README.md:3
 
-**Observação:** O texto afirma: "two other microfrontends exist that encapsulate cross-cutting concerns".
+**Observation:** Text states: "two other microfrontends exist that encapsulate cross-cutting concerns".
 
-**Interpretação:** A frase chama Common lib e Patient chart de dois microfrontends. O chart é unidade frontend, mas a common-lib é uma biblioteca de reexportações, sem routes.json nem build próprio. Seu papel transversal existe; contá-la como microfrontend contradiz os artefatos. O próprio packages/esm-patient-common-lib/README.md:3 descreve-a como biblioteca.
+**Interpretation:** Sentence calls Common lib and Patient chart two microfrontends. Chart frontend unit, common-lib reexport library without routes.json/own build. Cross-cutting role exists; counting it as microfrontend contradicts artifacts. packages/esm-patient-common-lib/README.md:3 itself describes library.
 
 ### 233. README.md:32; package.json:5-7; package.json:87
 
-**Observação:** O texto afirma: "This monorepo uses yarn".
+**Observation:** Text states: "This monorepo uses yarn".
 
-**Interpretação:** Workspaces packages/* e packageManager yarn@4.9.1 corroboram monorepo e ferramenta.
+**Interpretation:** Workspaces packages/* and packageManager yarn@4.9.1 corroborate monorepo/tool.
 
 ### 234. README.md:46; package.json:9; packages/esm-patient-allergies-app/package.json:10-11
 
-**Observação:** O texto afirma: "a dev server running `esm-patient-chart` as well as the specified microfrontend".
+**Observation:** Text states: "a dev server running `esm-patient-chart` as well as the specified microfrontend".
 
-**Interpretação:** O script raiz fixa o chart como source e permite encaminhar argumentos ao openmrs develop. O servidor e o processamento adicional de --sources pertencem ao tooling externo, ausente do snapshot; a configuração local confirma a intenção, mas não toda a execução descrita.
+**Interpretation:** Root script fixes chart as source/allows forwarding arguments to openmrs develop. Server/additional --sources processing belong to external tooling absent in snapshot; local configuration confirms intent rather than entire described execution.
 
 ### 235. README.md:50; packages/esm-patient-vitals-app/package.json:10-11; README.md:53
 
-**Observação:** O texto afirma: "run the biometrics and vitals microfrontends simultaneously".
+**Observation:** Text states: "run the biometrics and vitals microfrontends simultaneously".
 
-**Interpretação:** A frase afirma que essas duas unidades podem compor o ambiente simultâneo; o exemplo de README.md:53 usa o diretório inexistente esm-patient-biometrics-app. Vitals tem servidor próprio, mas Biometrics não existe como pacote. É uma propriedade diferente da simples existência registrada na afirmação anterior sobre Biometrics.
+**Interpretation:** Sentence claims two units can compose simultaneous environment; README.md:53 example uses nonexistent esm-patient-biometrics-app directory. Vitals has own server but Biometrics no package. Distinct property from simple existence in earlier Biometrics claim.
 
 ### 236. README.md:56; packages/esm-patient-allergies-app/package.json:11; packages/esm-form-entry-app/package.json:11
 
-**Observação:** O texto afirma: "run `yarn serve` from within the individual packages and then use import map overrides".
+**Observation:** Text states: "run `yarn serve` from within the individual packages and then use import map overrides".
 
-**Interpretação:** Os scripts serve por app são observáveis. Não há import map nem implementação de overrides no snapshot; essa parte é delegada ao shell/tooling externo. A frase não afirma que os módulos montem uma página isolada.
+**Interpretation:** Per-app serve scripts observable. No snapshot import map/override implementation; delegated to external shell/tooling. Sentence does not claim modules mount isolated page.
 
 ### 237. README.md:145; packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:67; packages/esm-patient-banner-app/src/routes.json:22-24
 
-**Observação:** O texto afirma: "The patient header contains the patient banner".
+**Observation:** Text states: "The patient header contains the patient banner".
 
-**Interpretação:** O chart monta patient-header-slot e o banner registra patientBanner nesse slot. A localização na tela e as notificações são detalhes visuais, sem novas afirmações arquiteturais.
+**Interpretation:** Chart mounts patient-header-slot/banner registers patientBanner there. Screen position/notifications visual details without new architectural claims.
 
 ### 238. README.md:149; packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69-78; README.md:135-153
 
-**Observação:** O texto afirma: "A dashboard is a collection of widgets".
+**Observation:** Text states: "A dashboard is a collection of widgets".
 
-**Interpretação:** DashboardView monta o slot do dashboard e renderiza cada extensão. A descrição de layout em README.md:135-153 contextualiza essa composição; menu, cores e ocupação da tela não são fronteiras adicionais.
+**Interpretation:** DashboardView mounts dashboard slot/renders each extension. README.md:135-153 layout description contextualizes composition; menu, colors/screen occupation no extra boundaries.
 
 ### 239. e2e/support/github/run-e2e-docker-env.sh:7; e2e/support/github/run-e2e-docker-env.sh:8
 
-**Observação:** O texto afirma: "get a list of all the apps in this workspace".
+**Observation:** Text states: "get a list of all the apps in this workspace".
 
-**Interpretação:** O comentário promete todos os apps, mas o filtro exclui expressamente form-entry-app. A lista contém os outros 17 apps e não a biblioteca. Trata-se do conjunto destinado ao ambiente e2e, não de uma nova contagem do produto.
+**Interpretation:** Comment promises all apps but filter explicitly excludes form-entry-app. List contains other 17 apps without library. Set intended for e2e environment rather than new product count.
 
 ### 240. e2e/support/github/run-e2e-docker-env.sh:26-28; e2e/support/github/run-e2e-docker-env.sh:29-38
 
-**Observação:** O texto afirma: "prepending the login app and primary navigation apps".
+**Observation:** Text states: "prepending the login app and primary navigation apps".
 
-**Interpretação:** O comentário descreve a montagem dos módulos na imagem. O objeto efetivamente prefixado contém esm-primary-navigation-app e esm-home-app, não login. Os arquivos empacotados locais são mapeados para /app, como diz a continuação do comentário; a divergência sobre login torna a frase contradita.
+**Interpretation:** Comment describes image module assembly. Actually prepended object contains esm-primary-navigation-app/esm-home-app, not login. Local packaged files mapped to /app as comment continues; login divergence makes sentence contradicted.
 
 ### 241. packages/esm-form-entry-app/README.md:3; packages/esm-form-entry-app/src/bootstrap.ts:12-23; packages/esm-form-entry-app/src/routes.json:8-13; packages/esm-form-entry-app/package.json:5
 
-**Observação:** O texto afirma: "It's essentially a wrapper around an Angular application".
+**Observation:** Text states: "It's essentially a wrapper around an Angular application".
 
-**Interpretação:** O widget expõe uma aplicação Angular por lifecycles singleSpaAngular e pelo form-widget-slot consumido por forms e vitals. O campo description em packages/esm-form-entry-app/package.json:5 repete a identificação Angular. A transformação de JSON em formulários e o funcionamento interno do motor não recebem linhas próprias.
+**Interpretation:** Widget exposes Angular application through singleSpaAngular lifecycles/form-widget-slot consumed by forms/vitals. Description field in packages/esm-form-entry-app/package.json:5 repeats Angular identity. JSON-to-form transformation/internal engine behavior receive no own rows.
 
 ### 242. packages/esm-generic-patient-widgets-app/README.md:3; packages/esm-generic-patient-widgets-app/src/routes.json:6-15; packages/esm-generic-patient-widgets-app/src/config-schema.ts:3-23; packages/esm-generic-patient-widgets-app/package.json:5
 
-**Observação:** O texto afirma: "a generic widget that can be added to the patient chart using configuration".
+**Observation:** Text states: "a generic widget that can be added to the patient chart using configuration".
 
-**Interpretação:** O módulo oferece a extensão switchableObs sem slot fixo, com esquema de configuração. Isso sustenta a possibilidade de atribuí-la por configuração; a intenção de reutilização futura não é evidência de múltiplos consumidores. O campo description em packages/esm-generic-patient-widgets-app/package.json:5 repete seu papel de widget genérico.
+**Interpretation:** Module offers switchableObs extension without fixed slot, with configuration schema. Supports possible configuration assignment; future-reuse intent no evidence of multiple consumers. Description field in packages/esm-generic-patient-widgets-app/package.json:5 repeats generic widget role.
 
 ### 243. packages/esm-patient-chart-app/README.md:3; packages/esm-patient-chart-app/src/root.component.tsx:11-16; packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47-92; packages/esm-patient-chart-app/src/index.ts:33-42; README.md:23-26; packages/esm-patient-chart-app/package.json:5
 
-**Observação:** O texto afirma: "provides the underlying framework on top of which all the individual widgets are run".
+**Observation:** Text states: "provides the underlying framework on top of which all the individual widgets are run".
 
-**Interpretação:** O chart fornece layout, roteamento, workspace e pontos de extensão do prontuário; não se deve confundir esse papel com o shell OpenMRS externo que carrega os bundles. O roteamento local escolhe resumo e dashboards; startupApp instala sincronização offline e rotas cacheáveis. README.md:23-26 e packages/esm-patient-chart-app/package.json:5 reiteram o papel do chart. Visitas, menus e modo offline são capacidades da unidade citadas na mesma frase, não outras unidades.
+**Interpretation:** Chart provides chart layout, routing, workspace/extension points; role distinct from external OpenMRS shell loading bundles. Local routing chooses summary/dashboards; startupApp installs offline sync/cacheable routes. README.md:23-26 and packages/esm-patient-chart-app/package.json:5 reiterate chart role. Visits, menus/offline mode are same-sentence unit capabilities rather than other units.
 
 ### 244. packages/esm-patient-chart-app/src/index.ts:27-28; packages/esm-patient-chart-app/src/index.ts:7-8; packages/esm-patient-chart-app/src/index.ts:29; packages/esm-form-entry-app/src/app/fe-wrapper/fe-wrapper.component.ts:3
 
-**Observação:** O texto afirma: "allows @openmrs/esm-patient-common-lib to be accessed by modules that are not using webpack. This is used for ngx-formentry.".
+**Observation:** Text states: "allows @openmrs/esm-patient-common-lib to be accessed by modules that are not using webpack. This is used for ngx-formentry.".
 
-**Interpretação:** A atribuição a window disponibiliza a biblioteca. Existe import de @openmrs/ngx-formentry no app Angular, mas não há consumidor de _openmrs_esm_patient_common_lib no snapshot além da atribuição. A disponibilidade está confirmada; o consumo alegado e a propriedade de não usar webpack desse consumidor externo não estão demonstrados.
+**Interpretation:** Window assignment makes library available. Angular app imports @openmrs/ngx-formentry, but no snapshot _openmrs_esm_patient_common_lib consumer beyond assignment. Availability confirmed; alleged consumption/consumer’s non-webpack property undemonstrated.
 
 ### 245. packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:28-31; packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:4; packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:32-36
 
-**Observação:** O texto afirma: "Anything used outside the patient chart [...] must be updated in the callback, which is called when the patient chart unmounts".
+**Observation:** Text states: "Anything used outside the patient chart [...] must be updated in the callback, which is called when the patient chart unmounts".
 
-**Interpretação:** O comentário afirma que o estado da visita atual é usado fora do chart pelo Active Visit Tag do patient search e que deve ser atualizado no callback de desmontagem. O lado local está comprovado: setCurrentVisit é importado do framework (:4 do mesmo artefato) e o cleanup do useEffect chama setCurrentVisit(null, null) (:32-36). O consumidor Active Visit Tag do patient search não está demonstrado no snapshot; a limpeza local não comprova o compartilhamento alegado com essa unidade externa. Por isso, a afirmação é parcial.
+**Interpretation:** Comment claims current-visit state used outside chart by patient-search Active Visit Tag/must update on unmount callback. Local side proven: setCurrentVisit imported from framework (:4 of same artifact), useEffect cleanup calls setCurrentVisit(null, null) (:32-36). Patient-search Active Visit Tag consumer undemonstrated in snapshot; local cleanup proves no alleged sharing with external unit. Hence partial claim.
 
 ### 246. packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:15
 
-**Observação:** O texto afirma: "used not in the refapp, but in other distributions".
+**Observation:** Text states: "used not in the refapp, but in other distributions".
 
-**Interpretação:** O componente e suas chamadas a workspaces estão presentes nas linhas 17-30 do mesmo artefato, mas os manifests das distribuições que confirmariam onde é usado ou excluído não estão no snapshot. Sua existência não confirma uso efetivo em outras distribuições.
+**Interpretation:** Component/workspace calls present at lines 17-30 of same artifact, but distribution manifests confirming usage/exclusion absent. Existence does not confirm effective other-distribution usage.
 
 ### 247. packages/esm-patient-common-lib/README.md:3; packages/esm-patient-allergies-app/src/index.ts:10; packages/esm-patient-chart-app/src/index.ts:7-8; packages/esm-patient-common-lib/src/index.ts:1-23; packages/esm-patient-common-lib/package.json:5
 
-**Observação:** O texto afirma: "components and utilities shared across widgets in the patient chart".
+**Observation:** Text states: "components and utilities shared across widgets in the patient chart".
 
-**Interpretação:** Há consumidores reais em ao menos duas unidades, não apenas um pacote disponível: allergies usa createDashboardLink e chart importa a biblioteca e o mesmo helper. As reexportações incluem cards, empty-state, error-state, pagination e workspaces. A description em packages/esm-patient-common-lib/package.json:5 repete a finalidade da biblioteca.
+**Interpretation:** Actual consumers in at least two units, beyond available package: allergies uses createDashboardLink/chart imports library/same helper. Reexports include cards, empty-state, error-state, pagination/workspaces. Description in packages/esm-patient-common-lib/package.json:5 repeats library purpose.
 
 ### 248. packages/esm-patient-common-lib/src/orders/store.ts:4-7; packages/esm-patient-common-lib/src/orders/useOrderBasket.ts:37-40; packages/esm-patient-medications-app/src/drug-order-basket-panel/drug-order-basket-panel.extension.tsx:19; packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:38; packages/esm-patient-common-lib/src/orders/useOrderBasket.ts:71-78
 
-**Observação:** O texto afirma: "different parts of the application may manage their own order lists".
+**Observation:** Text states: "different parts of the application may manage their own order lists".
 
-**Interpretação:** O store indexa itens por paciente e grupo. Medications usa o grupo medications, enquanto orders lê o conjunto sem grupo. O comentário de packages/esm-patient-common-lib/src/orders/useOrderBasket.ts:71-78 detalha a mesma afirmação e não gera duplicação. Isso documenta compartilhamento de estado entre unidades.
+**Interpretation:** Store indexes items by patient/group. Medications uses medications group, orders reads ungrouped set. Comment in packages/esm-patient-common-lib/src/orders/useOrderBasket.ts:71-78 details same claim without duplication. Documents inter-unit state sharing.
 
 ### 249. packages/esm-patient-flags-app/README.md:3; packages/esm-patient-flags-app/src/routes.json:25-30; packages/esm-patient-flags-app/package.json:5; packages/esm-patient-flags-app/src/routes.json:40; packages/esm-patient-flags-app/README.md:7
 
-**Observação:** O texto afirma: "Flags are displayed in the Patient Summary".
+**Observation:** Text states: "Flags are displayed in the Patient Summary".
 
-**Interpretação:** O papel do módulo e sua integração ao resumo do chart são sustentados pela relação de composição já registrada. packages/esm-patient-flags-app/package.json:5 repete a existência do módulo; a description de packages/esm-patient-flags-app/src/routes.json:40 repete a integração ao resumo; o hook de API descrito em packages/esm-patient-flags-app/README.md:7 é funcionamento interno e não outra afirmação.
+**Interpretation:** Module role/integration in chart summary supported by recorded composition relationship. packages/esm-patient-flags-app/package.json:5 repeats module existence; description in packages/esm-patient-flags-app/src/routes.json:40 repeats summary integration; API hook described in packages/esm-patient-flags-app/README.md:7 internal behavior rather than another claim.
 
 ### 250. packages/esm-patient-forms-app/src/htmlformentry/html-form-entry-wrapper.component.tsx:14; packages/esm-patient-forms-app/src/htmlformentry/html-form-entry-wrapper.component.tsx:15-19
 
-**Observação:** O texto afirma: "listen for a message from HFE-UI to close the workspace".
+**Observation:** Text states: "listen for a message from HFE-UI to close the workspace".
 
-**Interpretação:** O receptor verifica event.data igual a close-workspace e chama o fechamento. Esse contrato de comunicação é explícito, embora a página emissora externa não esteja no snapshot.
+**Interpretation:** Receiver checks event.data equal to close-workspace/calls closure. Explicit communication contract although external sending page absent.
 
 ### 251. packages/esm-patient-forms-app/src/htmlformentry/html-form-entry-wrapper.component.tsx:21; packages/esm-patient-forms-app/src/htmlformentry/html-form-entry-wrapper.component.tsx:22-43
 
-**Observação:** O texto afirma: "hide the headers and breadcrumbs of the O2 page on load".
+**Observation:** Text states: "hide the headers and breadcrumbs of the O2 page on load".
 
-**Interpretação:** O comentário identifica a integração da página O2 embutida: o iframe recebe src e o onLoad remove header, patient-header e breadcrumbs. A remoção visual isoladamente não seria linha; aqui identifica a adaptação da unidade frontend externa dentro do workspace.
+**Interpretation:** Comment identifies embedded O2 page integration: iframe receives src/onLoad removes header, patient-header, breadcrumbs. Visual removal alone would not warrant row; here identifies adaptation of external frontend unit within workspace.
 
 ### 252. packages/esm-patient-forms-app/src/htmlformentry/html-form-entry.workspace.tsx:26-27; packages/esm-patient-forms-app/src/htmlformentry/html-form-entry.workspace.tsx:29-44; packages/esm-patient-forms-app/src/htmlformentry/html-form-entry-wrapper.component.tsx:15-19
 
-**Observação:** O texto afirma: "tells HFE-UI to send a message to the parent window to close the workspace when the form is saved or cancelled".
+**Observation:** Text states: "tells HFE-UI to send a message to the parent window to close the workspace when the form is saved or cancelled".
 
-**Interpretação:** A URL aponta para htmlformentryui e inclui returnUrl=post-message:close-workspace, com receptor correspondente. A emissão nos eventos de salvar/cancelar pertence à página externa, ausente do snapshot, portanto só o lado local do contrato é corroborado. Distingue-se da afirmação do receptor pelo sujeito e pela propriedade verificável.
+**Interpretation:** URL points to htmlformentryui/includes returnUrl=post-message:close-workspace with matching receiver. Save/cancel emission belongs to external page absent in snapshot, so only local contract side corroborated. Distinct from receiver claim by subject/verifiable property.
 
 ### 253. packages/esm-patient-lists-app/README.md:3-8; packages/esm-patient-lists-app/src/routes.json:13-29; packages/esm-patient-lists-app/package.json:5
 
-**Observação:** O texto afirma: "The Patient Lists app renders a workspace in the Patient Chart".
+**Observation:** Text states: "The Patient Lists app renders a workspace in the Patient Chart".
 
-**Interpretação:** O módulo declara workspaces patient-lists e patient-list-details. Seu papel restrito ao prontuário é diferente do app de gerenciamento da home, que não está neste snapshot; não se afirma integração observada com esse app externo. A description em packages/esm-patient-lists-app/package.json:5 repete o papel local.
+**Interpretation:** Module declares patient-lists/patient-list-details workspaces. Chart-restricted role distinct from home management app absent in snapshot; no observed integration claimed with external app. Description in packages/esm-patient-lists-app/package.json:5 repeats local role.
 
 ### 254. packages/esm-patient-orders-app/package.json:5; packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:38; packages/esm-patient-orders-app/README.md:3-4
 
-**Observação:** O texto afirma: "Microfrontend for the OpenMRS SPA providing the order basket for the patient chart".
+**Observation:** Text states: "Microfrontend for the OpenMRS SPA providing the order basket for the patient chart".
 
-**Interpretação:** Orders é unidade frontend própria e agrega os pedidos do carrinho. O texto em packages/esm-patient-orders-app/README.md:3-4 descreve a função de negócio de acesso a pedidos, enquanto a description torna explícito o papel de microfrontend. As relações 50 e 51 documentam a composição com medications e tests.
+**Interpretation:** Orders own frontend unit/aggregates basket orders. Text in packages/esm-patient-orders-app/README.md:3-4 describes order-access business function while description makes microfrontend role explicit. Relationships 50 and 51 document medications/tests composition.
 
 ### 255. b50eb9b3 2021-08-08 (packages/esm-form-entry-app/package.json); 3d1e771d 2023-05-22 (packages/esm-form-entry-app/webpack.config.js)
 
-**Observação:** O ponto histórico trata de `@angular-extensions/elements` declarado sem uso em `packages/esm-form-entry-app`. A tabela registra `inconclusivo` e os commits: b50eb9b3 2021-08-08 Moved form entry.
+**Observation:** Historical point concerns `@angular-extensions/elements` declared unused in `packages/esm-form-entry-app`. Table records `inconclusive` and commits: b50eb9b3 2021-08-08 Moved form entry.
 
-**Interpretação:** O log do manifesto começa em b50eb9b3 (2021-08-08, “Moved form entry”), mas seu blob está ausente. A mensagem de 3d1e771d (2023-05-22, “(fix) Setup `esm-form-entry` to use webpack module federation (PR 1168)”) anuncia uma configuração do wrapper; o webpack desse estágio também não pôde ser lido. Não se confirma uso anterior, substituição ou abandono de elements.
+**Interpretation:** Manifest log starts at b50eb9b3 (2021-08-08, “Moved form entry”), but blob absent. Message of 3d1e771d (2023-05-22, “(fix) Setup `esm-form-entry` to use webpack module federation (PR 1168)”) announces wrapper configuration; that stage’s webpack also unreadable. No confirmed earlier elements usage, replacement or abandonment.
 
 ### 256. b50eb9b3 2021-08-08 (packages/esm-form-entry-app/package.json); 3d1e771d 2023-05-22 (packages/esm-form-entry-app/webpack.config.js)
 
-**Observação:** O ponto histórico trata de `systemjs-webpack-interop` declarado sem uso em `packages/esm-form-entry-app`. A tabela registra `inconclusivo` e os commits: b50eb9b3 2021-08-08 Moved form entry; 3d1e771d 2023-05-22 (fix) Setup `esm-form-entry` to use webpack module federation (PR 1168).
+**Observation:** Historical point concerns `systemjs-webpack-interop` declared unused in `packages/esm-form-entry-app`. Table records `inconclusive` and commits: b50eb9b3 2021-08-08 Moved form entry; 3d1e771d 2023-05-22 (fix) Setup `esm-form-entry` to use webpack module federation (PR 1168).
 
-**Interpretação:** Os blobs do manifesto em b50eb9b3 e do webpack em 3d1e771d estão ausentes. O anúncio de Module Federation não demonstra o destino de systemjs-webpack-interop, nem que tenha existido uma chamada removida. A declaração sem uso do snapshot permanece sem explicação histórica.
+**Interpretation:** Manifest blob at b50eb9b3/webpack blob at 3d1e771d absent. Module Federation announcement demonstrates neither fate of systemjs-webpack-interop nor removed call. Snapshot unused declaration historically unexplained.
 
 ### 257. 28f77b89 2021-03-04 (packages/esm-patient-chart-app/package.json; packages/esm-patient-chart-app/src/index.ts)
 
-**Observação:** O ponto histórico trata de `single-spa` declarado sem uso em `packages/esm-patient-chart-app`. A tabela registra `inconclusivo` e os commits: 28f77b89 2021-03-04 Migrated to monorepo.
+**Observation:** Historical point concerns `single-spa` declared unused in `packages/esm-patient-chart-app`. Table records `inconclusive` and commits: 28f77b89 2021-03-04 Migrated to monorepo.
 
-**Interpretação:** O log do manifesto e da entrada do chart alcança 28f77b89 (2021-03-04, “Migrated to monorepo”); ambos os conteúdos desse estágio estão ausentes. Não se pode distinguir peer contract mantido para tooling externo de um import que teria sido retirado. O uso atual via framework não comprova uso direto deste pacote no passado.
+**Interpretation:** Chart manifest/entry log reaches 28f77b89 (2021-03-04, “Migrated to monorepo”); both stage contents absent. Cannot distinguish retained peer contract for external tooling from removed import. Current framework-based usage proves no past direct package usage.
 
 ### 258. 28f77b89 2021-03-04 (packages/esm-patient-chart-app/package.json; packages/esm-patient-chart-app/src/index.ts)
 
-**Observação:** O ponto histórico trata de `single-spa-react` declarado sem uso em `packages/esm-patient-chart-app`. A tabela registra `inconclusivo` e os commits: 28f77b89 2021-03-04 Migrated to monorepo.
+**Observation:** Historical point concerns `single-spa-react` declared unused in `packages/esm-patient-chart-app`. Table records `inconclusive` and commits: 28f77b89 2021-03-04 Migrated to monorepo.
 
-**Interpretação:** A mesma lacuna do manifesto e da entrada em 28f77b89 impede verificar se single-spa-react foi usado diretamente antes da delegação ao framework observável no snapshot. Nenhuma intenção ou remoção de uso é inferida da dependência declarada.
+**Interpretation:** Same manifest/entry gap at 28f77b89 prevents checking direct single-spa-react usage before framework delegation observable in snapshot. No intent/usage removal inferred from declared dependency.
 
 ### 259. ddb858ef 2021-04-27 (packages/esm-patient-common-lib/package.json)
 
-**Observação:** O ponto histórico trata de `single-spa` declarado sem uso em `packages/esm-patient-common-lib`. A tabela registra `inconclusivo` e os commits: ddb858ef 2021-04-27 Common lib (PR 228).
+**Observation:** Historical point concerns `single-spa` declared unused in `packages/esm-patient-common-lib`. Table records `inconclusive` and commits: ddb858ef 2021-04-27 Common lib (PR 228).
 
-**Interpretação:** O log do manifesto da biblioteca chega a ddb858ef (2021-04-27, “Common lib (PR 228)”), mas o blob está ausente. A mensagem não informa o papel de single-spa. Não há base para afirmar uso anterior nem abandono dessa declaração.
+**Interpretation:** Library manifest log reaches ddb858ef (2021-04-27, “Common lib (PR 228)”), but blob absent. Message gives no single-spa role. No basis for earlier usage/abandonment claim.
 
 ### 260. ef475921 2024-04-29 (packages/esm-form-engine-app/src/form-collapse-toggle/form-collapse-toggle.component.tsx)
 
-**Observação:** O ponto histórico trata de Emissor de `openmrs:form-view-embedded` não identificado. A tabela registra `inconclusivo` e os commits: ef475921 2024-04-29 (feat) O3-3112: Add form collapse toggle to the `esm-form-engine-app` (PR 1814).
+**Observation:** Historical point concerns Sender of `openmrs:form-view-embedded` unidentified. Table records `inconclusive` and commits: ef475921 2024-04-29 (feat) O3-3112: Add form collapse toggle to the `esm-form-engine-app` (PR 1814).
 
-**Interpretação:** A mensagem de ef475921 anuncia a adição do toggle; o conteúdo desse commit está ausente. O log registra depois dc7b090e (2024-06-05, “(fix) Change the form collapse toggle color on tablet (PR 1857)”), sem esclarecer por mensagem quem emite o evento. Não se identifica uma unidade emissora nem se prova abandono. A conexão com unidade externa e a permanência sem contraparte continuam alternativas plausíveis no snapshot.
+**Interpretation:** Message of ef475921 announces toggle addition; commit content absent. Log later records dc7b090e (2024-06-05, “(fix) Change the form collapse toggle color on tablet (PR 1857)”) without message identifying event sender. No sending unit identified/abandonment proven. Connection to external unit and remaining without counterpart continue as plausible snapshot alternatives.
 
 ### 261. ef475921 2024-04-29 (packages/esm-form-engine-app/src/form-collapse-toggle/form-collapse-toggle.component.tsx)
 
-**Observação:** O ponto histórico trata de Receptor de `openmrs:form-collapse-toggle` não identificado. A tabela registra `inconclusivo` e os commits: ef475921 2024-04-29 (feat) O3-3112: Add form collapse toggle to the `esm-form-engine-app` (PR 1814).
+**Observation:** Historical point concerns Receiver of `openmrs:form-collapse-toggle` unidentified. Table records `inconclusive` and commits: ef475921 2024-04-29 (feat) O3-3112: Add form collapse toggle to the `esm-form-engine-app` (PR 1814).
 
-**Interpretação:** O mesmo arquivo concentra o envio do segundo evento. Seu conteúdo em ef475921 está indisponível. Saber quando o toggle aparece não identifica o ouvinte externo, nem demonstra que o canal tenha sido desconectado. A conexão com unidade externa e a permanência sem contraparte continuam alternativas plausíveis no snapshot.
+**Interpretation:** Same file contains second-event send. Content at ef475921 unavailable. Knowing when toggle appears identifies no external listener/demonstrates no disconnected channel. Connection to external unit and remaining without counterpart continue as plausible snapshot alternatives.
 
 ### 262. 6af19736 2022-11-17 (packages/esm-generic-patient-widgets-app/src/obs-graph/obs-graph.component.tsx)
 
-**Observação:** O ponto histórico trata de `config.interpretationSlot` sem extensão identificada. A tabela registra `inconclusivo` e os commits: 6af19736 2022-11-17 Possibility to add an ExtensionSlot under graph (PR 848).
+**Observation:** Historical point concerns `config.interpretationSlot` without identified extension. Table records `inconclusive` and commits: 6af19736 2022-11-17 Possibility to add an ExtensionSlot under graph (PR 848).
 
-**Interpretação:** A mensagem de 6af19736 anuncia um ExtensionSlot sob o gráfico, mas seu conteúdo e o primeiro conteúdo do caminho atual (dddc1457) estão ausentes. O padrão vazio no snapshot (config-schema.ts:19-23) explica a condição local de renderização, sem identificar configuração externa ou uso anterior. A conexão com unidade externa e a permanência sem contraparte continuam alternativas plausíveis no snapshot.
+**Interpretation:** Message of 6af19736 announces ExtensionSlot under graph, but content/first current-path content (dddc1457) absent. Snapshot empty default (config-schema.ts:19-23) explains local rendering condition without identifying external configuration/earlier usage. Connection to external unit and remaining without counterpart continue as plausible snapshot alternatives.
 
 ### 263. 8a8f19cb 2022-09-08 (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx)
 
-**Observação:** O ponto histórico trata de `top-of-all-patient-dashboards-slot` sem fornecedor. A tabela registra `inconclusivo` e os commits: 8a8f19cb 2022-09-08 fix: Adjust `top-of-all-patient-dashboard-slot` appears before dashboard title (PR 800).
+**Observation:** Historical point concerns `top-of-all-patient-dashboards-slot` without provider. Table records `inconclusive` and commits: 8a8f19cb 2022-09-08 fix: Adjust `top-of-all-patient-dashboard-slot` appears before dashboard title (PR 800).
 
-**Interpretação:** A mensagem de 8a8f19cb anuncia ajuste de posição de um slot de dashboard; não demonstra qual unidade o preenchia. O conteúdo inicial do caminho atual em e20f1c9a está ausente. Não se conclui se o slot perdeu consumidor ou permanece como ponto de extensão externo. A conexão com unidade externa e a permanência sem contraparte continuam alternativas plausíveis no snapshot.
+**Interpretation:** Message of 8a8f19cb announces dashboard-slot position adjustment without demonstrating filling unit. Initial current-path content in e20f1c9a absent. Cannot conclude whether slot lost consumer or remains external extension point. Connection to external unit and remaining without counterpart continue as plausible snapshot alternatives.
 
 ### 264. 164cd3f8 2025-01-09 (packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx)
 
-**Observação:** O ponto histórico trata de `visit-form-top-slot` sem fornecedor. A tabela registra `inconclusivo` e os commits: 164cd3f8 2025-01-09 (fix) O3-4312: Add translation to start visit workspace title (PR 2169).
+**Observation:** Historical point concerns `visit-form-top-slot` without provider. Table records `inconclusive` and commits: 164cd3f8 2025-01-09 (fix) O3-4312: Add translation to start visit workspace title (PR 2169).
 
-**Interpretação:** O log do caminho atual começa em 164cd3f8, cujo blob está ausente. As alterações do arquivo não bastam para datar esse slot específico ou mostrar um fornecedor removido. Não se reconstrói o caminho anterior a eventuais reorganizações. A conexão com unidade externa e a permanência sem contraparte continuam alternativas plausíveis no snapshot.
+**Interpretation:** Current-path log starts at 164cd3f8, blob absent. File changes insufficient to date specific slot/show removed provider. Earlier path before possible reorganizations unreconstructed. Connection to external unit and remaining without counterpart continue as plausible snapshot alternatives.
 
 ### 265. 164cd3f8 2025-01-09 (packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx)
 
-**Observação:** O ponto histórico trata de `extra-visit-attribute-slot` sem fornecedor. A tabela registra `inconclusivo` e os commits: 164cd3f8 2025-01-09 (fix) O3-4312: Add translation to start visit workspace title (PR 2169).
+**Observation:** Historical point concerns `extra-visit-attribute-slot` without provider. Table records `inconclusive` and commits: 164cd3f8 2025-01-09 (fix) O3-4312: Add translation to start visit workspace title (PR 2169).
 
-**Interpretação:** A indisponibilidade do conteúdo em 164cd3f8 impede comparar o slot com esse estágio. A chamada atual sem registro local não demonstra abandono; o log de mudanças do arquivo não identifica consumidores. A conexão com unidade externa e a permanência sem contraparte continuam alternativas plausíveis no snapshot.
+**Interpretation:** Unavailable content at 164cd3f8 prevents comparing slot with stage. Current call without local registration demonstrates no abandonment; file change log identifies no consumers. Connection to external unit and remaining without counterpart continue as plausible snapshot alternatives.
 
 ### 266. 164cd3f8 2025-01-09 (packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx)
 
-**Observação:** O ponto histórico trata de `visit-form-bottom-slot` sem fornecedor. A tabela registra `inconclusivo` e os commits: 164cd3f8 2025-01-09 (fix) O3-4312: Add translation to start visit workspace title (PR 2169).
+**Observation:** Historical point concerns `visit-form-bottom-slot` without provider. Table records `inconclusive` and commits: 164cd3f8 2025-01-09 (fix) O3-4312: Add translation to start visit workspace title (PR 2169).
 
-**Interpretação:** O mesmo limite de conteúdo em 164cd3f8 impede estabelecer a história desse segundo ponto de extensão do formulário. Não se infere uma unidade destino por proximidade com os demais slots. A conexão com unidade externa e a permanência sem contraparte continuam alternativas plausíveis no snapshot.
+**Interpretation:** Same content limit at 164cd3f8 prevents establishing history of second form extension point. No target unit inferred through proximity to other slots. Connection to external unit and remaining without counterpart continue as plausible snapshot alternatives.
 
 ### 267. 71a16388 2024-03-05 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx)
 
-**Observação:** O ponto histórico trata de `appointments-form-workspace` e uso em distribuições externas sem confirmação. A tabela registra `inconclusivo` e os commits: 71a16388 2024-03-05 O3-2857 Add visit actions extension in visits (PR 1692).
+**Observation:** Historical point concerns `appointments-form-workspace` and unconfirmed external-distribution usage. Table records `inconclusive` and commits: 71a16388 2024-03-05 O3-2857 Add visit actions extension in visits (PR 1692).
 
-**Interpretação:** O conteúdo em 71a16388 está ausente. A mensagem anuncia ações de visita, sem identificar um registro de appointments ou os manifests de outras distribuições. O snapshot contém o botão e o comentário sobre distribuições externas (active-visit-buttons.tsx:15), mas nenhum deles comprova a integração externa ou abandono. A conexão com unidade externa e a permanência sem contraparte continuam alternativas plausíveis no snapshot.
+**Interpretation:** Content at 71a16388 absent. Message announces visit actions without identifying appointments registration/other-distribution manifests. Snapshot button/external-distribution comment (active-visit-buttons.tsx:15) prove neither external integration nor abandonment. Connection to external unit and remaining without counterpart continue as plausible snapshot alternatives.
 
 ### 268. 57a6db1b 2023-07-24 (packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/visit-summary.component.tsx)
 
-**Observação:** O ponto histórico trata de `visit-summary-panels` sem fornecedor. A tabela registra `inconclusivo` e os commits: 57a6db1b 2023-07-24 (feat) Add an extension slot for additional visit summary items (PR 1286).
+**Observation:** Historical point concerns `visit-summary-panels` without provider. Table records `inconclusive` and commits: 57a6db1b 2023-07-24 (feat) Add an extension slot for additional visit summary items (PR 1286).
 
-**Interpretação:** A mensagem de 57a6db1b anuncia um slot para itens adicionais de resumo; não foi inspecionado o conteúdo dessa mudança. O primeiro blob consultado do caminho, em 9970d8a5, está ausente. A mensagem não resolve quem preenche o slot nem se houve remoção de consumidor. A conexão com unidade externa e a permanência sem contraparte continuam alternativas plausíveis no snapshot.
+**Interpretation:** Message of 57a6db1b announces additional summary-item slot; change content uninspected. First consulted path blob at 9970d8a5 absent. Message resolves neither slot provider nor removed consumer. Connection to external unit and remaining without counterpart continue as plausible snapshot alternatives.
 
 ### 269. 449a6faa 2022-03-09 (packages/esm-patient-common-lib/src/nav-group/DashboardGroupExtension.tsx)
 
-**Observação:** O ponto histórico trata de `slotName ?? title` sem fornecedor identificado. A tabela registra `inconclusivo` e os commits: 449a6faa 2022-03-09 (feat) O3-1108  Left nav should support groupings (PR 595).
+**Observation:** Historical point concerns `slotName ?? title` without identified provider. Table records `inconclusive` and commits: 449a6faa 2022-03-09 (feat) O3-1108  Left nav should support groupings (PR 595).
 
-**Interpretação:** O log chega a 449a6faa, cuja mensagem anuncia agrupamentos da navegação. O blob desse estágio está ausente; não se determina quando a expressão atual surgiu nem que unidades configurariam os grupos. A existência do helper não prova conexão externa. A conexão com unidade externa e a permanência sem contraparte continuam alternativas plausíveis no snapshot.
+**Interpretation:** Log reaches 449a6faa, message announcing navigation groups. Stage blob absent; cannot determine current expression introduction/group-configuring units. Helper existence proves no external connection. Connection to external unit and remaining without counterpart continue as plausible snapshot alternatives.
 
 ### 270. a371ea27 2024-05-13 (packages/esm-patient-medications-app/src/add-drug-order/drug-order-form.component.tsx)
 
-**Observação:** O ponto histórico trata de `medication-info-slot` sem fornecedor. A tabela registra `inconclusivo` e os commits: a371ea27 2024-05-13 (feat) O3 3128: Add extension slots to lab and drug order forms (PR 1818).
+**Observation:** Historical point concerns `medication-info-slot` without provider. Table records `inconclusive` and commits: a371ea27 2024-05-13 (feat) O3 3128: Add extension slots to lab and drug order forms (PR 1818).
 
-**Interpretação:** A mensagem de a371ea27 anuncia slots nos formulários de pedidos. O conteúdo inicial consultado em 64389b35 está ausente; não foi lido o conteúdo do commit anunciado. A mensagem não identifica extensões fornecedoras nem prova abandono. A conexão com unidade externa e a permanência sem contraparte continuam alternativas plausíveis no snapshot.
+**Interpretation:** Message of a371ea27 announces order-form slots. Initial consulted content at 64389b35 absent; announced commit content unread. Message identifies no providing extensions/proves no abandonment. Connection to external unit and remaining without counterpart continue as plausible snapshot alternatives.
 
 ### 271. 24cd98cc 2025-04-24 (packages/esm-patient-orders-app/src/components/order-details-table.component.tsx)
 
-**Observação:** O ponto histórico trata de `${matchingOrder.type}-action-menu-items-slot` sem fornecedor. A tabela registra `inconclusivo` e os commits: 24cd98cc 2025-04-24 (fix) O3-4419: Fix order type filtering in order details table (PR 2385).
+**Observation:** Historical point concerns `${matchingOrder.type}-action-menu-items-slot` without provider. Table records `inconclusive` and commits: 24cd98cc 2025-04-24 (fix) O3-4419: Fix order type filtering in order details table (PR 2385).
 
-**Interpretação:** O conteúdo de 24cd98cc pôde ser lido e já contém este slot dinâmico; o log do caminho atual registra só esse commit até o snapshot. Isso estabelece presença nesse caminho e estabilidade posterior, mas não introdução original: o arquivo pode ter vindo de outro caminho. O consumidor continua não identificado. A conexão com unidade externa e a permanência sem contraparte continuam alternativas plausíveis no snapshot.
+**Interpretation:** Content of 24cd98cc readable/already contains dynamic slot; current-path log only that commit through snapshot. Establishes presence at path/later stability, not original introduction: file may come from other path. Consumer unidentified. Connection to external unit and remaining without counterpart continue as plausible snapshot alternatives.
 
 ### 272. 24cd98cc 2025-04-24 (packages/esm-patient-orders-app/src/components/order-details-table.component.tsx)
 
-**Observação:** O ponto histórico trata de `${matchingOrder.type}-detail-slot` sem fornecedor. A tabela registra `inconclusivo` e os commits: 24cd98cc 2025-04-24 (fix) O3-4419: Fix order type filtering in order details table (PR 2385).
+**Observation:** Historical point concerns `${matchingOrder.type}-detail-slot` without provider. Table records `inconclusive` and commits: 24cd98cc 2025-04-24 (fix) O3-4419: Fix order type filtering in order details table (PR 2385).
 
-**Interpretação:** O mesmo conteúdo de 24cd98cc já contém o segundo slot dinâmico e não há alteração posterior desse caminho no log. Isso não mostra se uma extensão externa já o preenchia ou se foi desconectada. Não se confunde estabilidade do arquivo com esclarecimento do uso. A conexão com unidade externa e a permanência sem contraparte continuam alternativas plausíveis no snapshot.
+**Interpretation:** Same 24cd98cc content already contains second dynamic slot/no later path change in log. Does not show whether external extension filled it or disconnected. File stability distinct from clarified usage. Connection to external unit and remaining without counterpart continue as plausible snapshot alternatives.
 
 ### 273. 14c1f1ff 2024-12-06 (packages/esm-patient-orders-app/src/order-basket/general-order-type/general-order-form/general-order-form.component.tsx; packages/esm-patient-tests-app/src/test-orders/add-test-order/test-order-form.component.tsx)
 
-**Observação:** O ponto histórico trata de `top-of-lab-order-form-slot` sem fornecedor nos dois formulários. A tabela registra `inconclusivo` e os commits: 14c1f1ff 2024-12-06 (feat) O3-4223: Allow adding different order types in the order basket (PR 2109).
+**Observation:** Historical point concerns `top-of-lab-order-form-slot` without provider in both forms. Table records `inconclusive` and commits: 14c1f1ff 2024-12-06 (feat) O3-4223: Allow adding different order types in the order basket (PR 2109).
 
-**Interpretação:** Os dois caminhos atuais aparecem no log em 14c1f1ff, cuja mensagem anuncia diferentes tipos de pedido no carrinho; ambos os blobs estão ausentes. A mesma dúvida foi reunida num ponto porque os dois formulários montam o mesmo slot. Não se comprova introdução do slot, fornecedor removido ou abandono. A conexão com unidade externa e a permanência sem contraparte continuam alternativas plausíveis no snapshot.
+**Interpretation:** Both current paths appear in log at 14c1f1ff, message announcing different basket order types; both blobs absent. Same uncertainty grouped because forms mount same slot. Proves no slot introduction, removed provider or abandonment. Connection to external unit and remaining without counterpart continue as plausible snapshot alternatives.
 
 ### 274. e87b8ace 2023-11-08 (README.md; packages/esm-patient-biometrics-app; packages/esm-patient-vitals-app); README.md:11; README.md:50-53
 
-**Observação:** O ponto histórico trata de README mantém Biometrics como app separado e exemplo de composição com Vitals. A tabela registra `esclarecido` e os commits: e87b8ace 2023-11-08 BREAKING: Merge vitals and biometrics apps (PR 1429).
+**Observation:** Historical point concerns README retains Biometrics as separate app/example of Vitals composition. Table records `clarified` and commits: e87b8ace 2023-11-08 BREAKING: Merge vitals and biometrics apps (PR 1429).
 
-**Interpretação:** O name-status de e87b8ace confirma a remoção do README, manifesto, entrada e routes.json de esm-patient-biometrics-app, com adições de arquivos de biometria no app vitals. Isso sustenta a mudança entre estágios anunciada pela mensagem de fusão, sem afirmar identidade do conteúdo movido, pois os blobs antigos não foram lidos. O README desse commit está ausente, mas o snapshot ainda aponta ao diretório removido e o usa no comando de desenvolvimento (README.md:11, :50-53). A divergência refere-se a uma unidade que existiu antes; não se data a criação original dos exemplos.
+**Interpretation:** Name-status of e87b8ace confirms removal of esm-patient-biometrics-app README, manifest, entry and routes.json with biometric-file additions in vitals. Supports inter-stage change announced by merge message without moved-content identity assertion, since old blobs unread. Commit README absent, but snapshot still points to removed directory/uses it in development command (README.md:11, :50-53). Divergence concerns earlier-existing unit; original examples undated.
 
 ### 275. ddb858ef 2021-04-27 (packages/esm-patient-common-lib/package.json); 04e7221e 2021-07-28 (README.md)
 
-**Observação:** O ponto histórico trata de README chama Common lib de microfrontend. A tabela registra `inconclusivo` e os commits: ddb858ef 2021-04-27 Common lib (PR 228); 04e7221e 2021-07-28 Rewrite the README, removing most of it (PR 311).
+**Observation:** Historical point concerns README calls Common lib microfrontend. Table records `inconclusive` and commits: ddb858ef 2021-04-27 Common lib (PR 228); 04e7221e 2021-07-28 Rewrite the README, removing most of it (PR 311).
 
-**Interpretação:** O snapshot resolve o papel atual como biblioteca, mas não a origem de sua inclusão na lista de microfrontends. A mensagem de ddb858ef anuncia Common lib e a de 04e7221e uma reescrita do README. Os blobs do manifesto da biblioteca e desse README estão ausentes, impedindo verificar se a expressão descreveu outra organização ou sempre foi imprecisa.
+**Interpretation:** Snapshot resolves current library role, not origin of microfrontend-list inclusion. Message of ddb858ef announces Common lib/04e7221e README rewrite. Library manifest/README blobs absent, preventing checking other earlier organization versus always-imprecise phrase.
 
 ### 276. 04e7221e 2021-07-28 (README.md)
 
-**Observação:** O ponto histórico trata de Execução conjunta por `openmrs develop` só parcialmente observável. A tabela registra `inconclusivo` e os commits: 04e7221e 2021-07-28 Rewrite the README, removing most of it (PR 311).
+**Observation:** Historical point concerns Joint execution through `openmrs develop` only partly observable. Table records `inconclusive` and commits: 04e7221e 2021-07-28 Rewrite the README, removing most of it (PR 311).
 
-**Interpretação:** O snapshot mostra o script e a documentação, mas o tooling que executa --sources é externo. O README antigo consultado em 04e7221e está ausente; o log não fornece a implementação externa nem esclarece eventual mudança do contrato. Não se transforma a limitação do corpus em evidência de abandono. A conexão com unidade externa e a permanência sem contraparte continuam alternativas plausíveis no snapshot.
+**Interpretation:** Snapshot shows script/documentation but --sources-executing tooling external. Old consulted README at 04e7221e absent; log supplies neither external implementation nor eventual contract change. Corpus limitation not evidence of abandonment. Connection to external unit and remaining without counterpart continue as plausible snapshot alternatives.
 
 ### 277. 04e7221e 2021-07-28 (README.md)
 
-**Observação:** O ponto histórico trata de Import map overrides documentados sem implementação local. A tabela registra `inconclusivo` e os commits: 04e7221e 2021-07-28 Rewrite the README, removing most of it (PR 311).
+**Observation:** Historical point concerns Import map overrides documented without local implementation. Table records `inconclusive` and commits: 04e7221e 2021-07-28 Rewrite the README, removing most of it (PR 311).
 
-**Interpretação:** Os scripts serve estão presentes no snapshot; os overrides pertencem ao ambiente externo descrito pelo README. Seu conteúdo antigo em 04e7221e não está disponível. A documentação e o log do arquivo não mostram se o shell externo mantém esse recurso nem se alguma configuração local foi retirada. A conexão com unidade externa e a permanência sem contraparte continuam alternativas plausíveis no snapshot.
+**Interpretation:** Serve scripts present; overrides belong to README-described external environment. Old content at 04e7221e unavailable. Documentation/file log show neither whether external shell retains feature nor removed local configuration. Connection to external unit and remaining without counterpart continue as plausible snapshot alternatives.
 
 ### 278. ac9ae85e 2024-06-26 (e2e/support/github/run-e2e-docker-env.sh)
 
-**Observação:** O ponto histórico trata de Comentário e2e promete todos os apps, mas exclui form-entry. A tabela registra `esclarecido` e os commits: ac9ae85e 2024-06-26 (chore) O3-3372: Use React Form Engine in E2E Tests (PR 1859).
+**Observation:** Historical point concerns E2e comment promises all apps but excludes form-entry. Table records `clarified` and commits: ac9ae85e 2024-06-26 (chore) O3-3372: Use React Form Engine in E2E Tests (PR 1859).
 
-**Interpretação:** O script de ac9ae85e foi lido: já contém o comentário “all the apps” e o filtro que exclui form-entry-app. Não há alteração posterior desse caminho no log até o snapshot. A mensagem anuncia uso do React Form Engine nos testes. Assim, comentário e exclusão coexistem comprovadamente desde esse estágio; não se deve atribuir a divergência a uma mudança posterior. O conteúdo inicial de 07069195 está ausente, portanto não se data a primeira ocorrência da divergência.
+**Interpretation:** Read script at ac9ae85e already contains “all the apps” comment/filter excluding form-entry-app. No later path change in log through snapshot. Message announces React Form Engine in tests. Comment/exclusion therefore provably coexist since stage; divergence cannot be attributed to later change. Initial 07069195 content absent, so first divergence occurrence undated.
 
 ### 279. ac9ae85e 2024-06-26 (e2e/support/github/run-e2e-docker-env.sh)
 
-**Observação:** O ponto histórico trata de Comentário e2e anuncia login, mas prefixa home e navegação. A tabela registra `esclarecido` e os commits: ac9ae85e 2024-06-26 (chore) O3-3372: Use React Form Engine in E2E Tests (PR 1859).
+**Observation:** Historical point concerns E2e comment announces login but prepends home/navigation. Table records `clarified` and commits: ac9ae85e 2024-06-26 (chore) O3-3372: Use React Form Engine in E2E Tests (PR 1859).
 
-**Interpretação:** O mesmo script de ac9ae85e já tem o comentário sobre login e o objeto que só prefixa esm-primary-navigation-app e esm-home-app. O arquivo não muda depois até o snapshot. A divergência já coexistia nesse estágio, sem ser possível reconstruir seu nascimento: o script de 07069195 está ausente. Não se afirma que login nunca foi montado em outro estágio ou pelo shell externo.
+**Interpretation:** Same ac9ae85e script already has login comment/object only prepending esm-primary-navigation-app and esm-home-app. File unchanged through snapshot. Divergence coexisted then without reconstructable origin: 07069195 script absent. Does not claim login never mounted in other stage/external shell.
 
 ### 280. 93fcb73a 2023-10-25 (packages/esm-patient-chart-app/src/index.ts)
 
-**Observação:** O ponto histórico trata de Consumo externo da biblioteca exposta em window não confirmado. A tabela registra `inconclusivo` e os commits: 93fcb73a 2023-10-25 (feat) Supporting O3-2510: Expose patient-common-lib on window (PR 1430).
+**Observation:** Historical point concerns Unconfirmed external consumption of window-exposed library. Table records `inconclusive` and commits: 93fcb73a 2023-10-25 (feat) Supporting O3-2510: Expose patient-common-lib on window (PR 1430).
 
-**Interpretação:** A mensagem de 93fcb73a anuncia a exposição de patient-common-lib em window, mas seu src/index.ts está ausente. O snapshot confirma a atribuição e o import de ngx-formentry, sem mostrar o consumidor do global. A mensagem não comprova o consumo alegado, sua duração ou abandono. A conexão com unidade externa e a permanência sem contraparte continuam alternativas plausíveis no snapshot.
+**Interpretation:** Message of 93fcb73a announces patient-common-lib exposure on window but src/index.ts absent. Snapshot confirms assignment/ngx-formentry import without global consumer. Message proves neither alleged consumption, duration nor abandonment. Connection to external unit and remaining without counterpart continue as plausible snapshot alternatives.
 
 ### 281. e20f1c9a 2022-03-07 (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx)
 
-**Observação:** O ponto histórico trata de Compartilhamento de current visit com patient search externo não confirmado. A tabela registra `inconclusivo` e os commits: e20f1c9a 2022-03-07 (refactor) esm-patient-chart to organize by functionality; eslint ts files (PR 594).
+**Observation:** Historical point concerns Unconfirmed current-visit sharing with external patient search. Table records `inconclusive` and commits: e20f1c9a 2022-03-07 (refactor) esm-patient-chart to organize by functionality; eslint ts files (PR 594).
 
-**Interpretação:** O conteúdo inicial consultado do componente em e20f1c9a está ausente. O snapshot mostra a limpeza com setCurrentVisit, mas não o Active Visit Tag externo citado no comentário. O log local não permite verificar esse consumidor nem concluir se o comentário descreve integração atual ou um estágio anterior. A conexão com unidade externa e a permanência sem contraparte continuam alternativas plausíveis no snapshot.
+**Interpretation:** Initial consulted component content at e20f1c9a absent. Snapshot shows setCurrentVisit cleanup, not comment-cited external Active Visit Tag. Local log cannot verify consumer/decide whether comment describes current integration or earlier stage. Connection to external unit and remaining without counterpart continue as plausible snapshot alternatives.
 
 ### 282. 30f4782c 2024-08-26 (packages/esm-patient-forms-app/src/htmlformentry/html-form-entry.workspace.tsx)
 
-**Observação:** O ponto histórico trata de HFE-UI externo emitiria mensagem ao salvar ou cancelar. A tabela registra `inconclusivo` e os commits: 30f4782c 2024-08-26 (feat) O3-3799: Open HTML Form Entry Forms within Form Workspace (PR 1963).
+**Observation:** Historical point concerns External HFE-UI would send message on save/cancel. Table records `inconclusive` and commits: 30f4782c 2024-08-26 (feat) O3-3799: Open HTML Form Entry Forms within Form Workspace (PR 1963).
 
-**Interpretação:** A mensagem de 30f4782c anuncia a abertura dos formulários HTML num workspace; o conteúdo desse estágio está ausente. A URL e o receptor local estão no snapshot, mas o emissor HFE-UI é externo. Não se confirma historicamente a emissão nos eventos de salvar/cancelar nem se infere abandono do contrato. A conexão com unidade externa e a permanência sem contraparte continuam alternativas plausíveis no snapshot.
+**Interpretation:** Message of 30f4782c announces HTML forms opened in workspace; stage content absent. URL/local receiver present, HFE-UI sender external. Neither historically confirmed save/cancel emission nor inferred contract abandonment. Connection to external unit and remaining without counterpart continue as plausible snapshot alternatives.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.2 (package.json:27) | 1 tecnologia | manifesto | other-mfe-framework | tecnológica | fraca | declara packages/esm-patient-chart-app/src/index.ts:1-6 |
-| 2 | 3.4.2 (package.json:75) | 1 tecnologia | manifesto | — | contexto | fraca | declara turbo.json:3-11 |
-| 3 | 3.4.2 (packages/esm-form-engine-app/package.json:46) | 1 tecnologia | manifesto | other-mfe-framework | tecnológica | fraca | declara packages/esm-form-engine-app/src/index.ts:1 |
-| 4 | 3.4.2 (packages/esm-form-entry-app/package.json:38) | 1 tecnologia | manifesto | web-components | tecnológica | fraca | — |
-| 5 | 3.4.2 (packages/esm-form-entry-app/package.json:59) | 1 tecnologia | manifesto | single-spa | tecnológica | fraca | declara #53; declara #48 |
-| 6 | 3.4.2 (packages/esm-form-entry-app/package.json:61) | 1 tecnologia | manifesto | import-maps | tecnológica | fraca | — |
-| 7 | 3.4.2 (packages/esm-form-entry-app/package.json:68) | 1 tecnologia | manifesto | other-mfe-framework | tecnológica | fraca | declara packages/esm-form-entry-app/src/index.ts:3 |
-| 8 | 3.4.2 (packages/esm-form-entry-app/package.json:69) | 1 tecnologia | manifesto | single-spa | tecnológica | fraca | declara #29 |
-| 9 | 3.4.2 (packages/esm-generic-patient-widgets-app/package.json:45) | 1 tecnologia | manifesto | other-mfe-framework | tecnológica | fraca | declara packages/esm-generic-patient-widgets-app/src/index.ts:1 |
-| 10 | 3.4.2 (packages/esm-patient-allergies-app/package.json:44) | 1 tecnologia | manifesto | other-mfe-framework | tecnológica | fraca | declara packages/esm-patient-allergies-app/src/index.ts:1-9 |
-| 11 | 3.4.2 (packages/esm-patient-attachments-app/package.json:49) | 1 tecnologia | manifesto | other-mfe-framework | tecnológica | fraca | declara packages/esm-patient-attachments-app/src/index.ts:2 |
-| 12 | 3.4.2 (packages/esm-patient-banner-app/package.json:45) | 1 tecnologia | manifesto | other-mfe-framework | tecnológica | fraca | declara packages/esm-patient-banner-app/src/index.ts:1-7 |
-| 13 | 3.4.2 (packages/esm-patient-chart-app/package.json:45) | 1 tecnologia | manifesto | other-mfe-framework | tecnológica | fraca | declara packages/esm-patient-chart-app/src/index.ts:1-6 |
-| 14 | 3.4.2 (packages/esm-patient-chart-app/package.json:53) | 1 tecnologia | manifesto | single-spa | tecnológica | fraca | — |
-| 15 | 3.4.2 (packages/esm-patient-chart-app/package.json:54) | 1 tecnologia | manifesto | single-spa | tecnológica | fraca | — |
-| 16 | 3.4.2 (packages/esm-patient-common-lib/package.json:37) | 1 tecnologia | manifesto | other-mfe-framework | tecnológica | fraca | declara packages/esm-patient-common-lib/src/launchStartVisitPrompt.tsx:1 |
-| 17 | 3.4.2 (packages/esm-patient-common-lib/package.json:39) | 1 tecnologia | manifesto | single-spa | tecnológica | fraca | — |
-| 18 | 3.4.2 (packages/esm-patient-conditions-app/package.json:45) | 1 tecnologia | manifesto | other-mfe-framework | tecnológica | fraca | declara packages/esm-patient-conditions-app/src/index.ts:1 |
-| 19 | 3.4.2 (packages/esm-patient-flags-app/package.json:43) | 1 tecnologia | manifesto | other-mfe-framework | tecnológica | fraca | declara packages/esm-patient-flags-app/src/index.ts:1 |
-| 20 | 3.4.2 (packages/esm-patient-forms-app/package.json:46) | 1 tecnologia | manifesto | other-mfe-framework | tecnológica | fraca | declara packages/esm-patient-forms-app/src/index.ts:1-7 |
-| 21 | 3.4.2 (packages/esm-patient-immunizations-app/package.json:47) | 1 tecnologia | manifesto | other-mfe-framework | tecnológica | fraca | declara packages/esm-patient-immunizations-app/src/index.ts:1 |
-| 22 | 3.4.2 (packages/esm-patient-lists-app/package.json:43) | 1 tecnologia | manifesto | other-mfe-framework | tecnológica | fraca | declara packages/esm-patient-lists-app/src/index.ts:1 |
-| 23 | 3.4.2 (packages/esm-patient-medications-app/package.json:45) | 1 tecnologia | manifesto | other-mfe-framework | tecnológica | fraca | declara packages/esm-patient-medications-app/src/index.ts:1 |
-| 24 | 3.4.2 (packages/esm-patient-notes-app/package.json:43) | 1 tecnologia | manifesto | other-mfe-framework | tecnológica | fraca | declara packages/esm-patient-notes-app/src/index.ts:1-7 |
-| 25 | 3.4.2 (packages/esm-patient-orders-app/package.json:45) | 1 tecnologia | manifesto | other-mfe-framework | tecnológica | fraca | declara packages/esm-patient-orders-app/src/index.ts:1 |
-| 26 | 3.4.2 (packages/esm-patient-programs-app/package.json:45) | 1 tecnologia | manifesto | other-mfe-framework | tecnológica | fraca | declara packages/esm-patient-programs-app/src/index.ts:1 |
-| 27 | 3.4.2 (packages/esm-patient-tests-app/package.json:47) | 1 tecnologia | manifesto | other-mfe-framework | tecnológica | fraca | declara packages/esm-patient-tests-app/src/index.ts:1-7 |
-| 28 | 3.4.2 (packages/esm-patient-vitals-app/package.json:46) | 1 tecnologia | manifesto | other-mfe-framework | tecnológica | fraca | declara packages/esm-patient-vitals-app/src/index.ts:1-8 |
-| 29 | 3.4.2 (packages/esm-form-entry-app/package.json:69) (Evidência); 3.4.3 (packages/esm-form-entry-app) (Marcadores); 3.4.5 #1 (Configuração); 3.4.5 #2 (Configuração); 3.4.6 #2 (Artefatos) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #136; configura #154; configura #155 |
-| 30 | 3.4.3 (packages/esm-form-engine-app) (Entrada); 3.4.4 (packages/esm-form-engine-app/src/form-collapse-toggle/form-collapse-toggle.component.tsx:15) (Observação); 3.4.4 (packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:95) (Observação); 3.4.4 (packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:249) (Observação); 3.4.5 #44 (Configuração); 3.4.5 #58 (Configuração) | 2 configuração | configuração | other | tecnológica | moderada | configura #135; configura #197; configura #211 |
-| 31 | 3.4.3 (packages/esm-generic-patient-widgets-app) (Entrada); 3.4.7 #13 (Evidência) | 2 configuração | configuração | other | tecnológica | moderada | configura #137 |
-| 32 | 3.4.3 (packages/esm-patient-allergies-app) (Entrada); 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37) (Observação); 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:23) (Observação); 3.4.5 #12 (Configuração) | 2 configuração | configuração | other | tecnológica | moderada | configura #138; configura #165 |
-| 33 | 3.4.3 (packages/esm-patient-attachments-app) (Entrada); 3.4.4 (packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:315) (Observação); 3.4.5 #13 (Configuração); 3.4.5 #48 (Configuração) | 2 configuração | configuração | other | tecnológica | moderada | configura #139; configura #166; configura #201 |
-| 34 | 3.4.3 (packages/esm-patient-banner-app) (Entrada); 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:67) (Observação); 3.4.4 (packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:389) (Observação); 3.4.5 #22 (Configuração); 3.4.7 #8 (Evidência) | 2 configuração | configuração | other | tecnológica | moderada | configura #140; configura #175 |
-| 35 | 3.4.3 (packages/esm-patient-chart-app) (Entrada); 3.4.4 (packages/esm-form-entry-app/src/app/fe-wrapper/fe-wrapper.component.ts:259) (Observação); 3.4.4 (packages/esm-patient-chart-app/src/mark-patient-deceased/mark-patient-deceased-form.workspace.tsx:124) (Observação); 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:23) (Observação); 3.4.4 (packages/esm-patient-common-lib/src/launchStartVisitPrompt.tsx:4) (Observação); 3.4.4 (packages/esm-patient-common-lib/src/workspaces.ts:55) (Observação); 3.4.4 (packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:94) (Observação); 3.4.4 (packages/esm-patient-forms-app/src/forms/forms-dashboard.workspace.tsx:12) (Observação); 3.4.4 (packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:497) (Observação); 3.4.4 (packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:501) (Observação); 3.4.4 (packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:57) (Observação); 3.4.4 (packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:154) (Observação); 3.4.4 (packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:268) (Observação); 3.4.4 (packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:300) (Observação); 3.4.5 #8 (Configuração); 3.4.5 #29 (Configuração); 3.4.5 #30 (Configuração); 3.4.5 #31 (Configuração); 3.4.5 #32 (Configuração); 3.4.5 #33 (Configuração); 3.4.5 #34 (Configuração) | 2 configuração | configuração | other | tecnológica | moderada | configura #141; configura #161; configura #182; configura #183; configura #184; configura #185; configura #186; configura #187 |
-| 36 | 3.4.3 (packages/esm-patient-conditions-app) (Entrada); 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69) (Observação); 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:26) (Observação); 3.4.5 #14 (Configuração) | 2 configuração | configuração | other | tecnológica | moderada | configura #143; configura #167 |
-| 37 | 3.4.3 (packages/esm-patient-flags-app) (Entrada); 3.4.4 (packages/esm-patient-flags-app/src/flags/hooks/usePatientFlags.tsx:56) (Observação); 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69) (Observação); 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:68) (Observação); 3.4.5 #21 (Configuração); 3.4.7 #20 (Evidência) | 2 configuração | configuração | other | tecnológica | moderada | configura #144; configura #174 |
-| 38 | 3.4.3 (packages/esm-patient-forms-app) (Entrada); 3.4.4 (packages/esm-patient-forms-app/src/htmlformentry/html-form-entry-wrapper.component.tsx:43) (Observação); 3.4.4 (packages/esm-form-engine-app/src/form-renderer/form-error.component.tsx:20) (Observação); 3.4.4 (packages/esm-form-engine-app/src/form-renderer/form-renderer.component.tsx:42) (Observação); 3.4.4 (packages/esm-patient-chart-app/src/clinical-views/utils/helpers.ts:24) (Observação); 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:25) (Observação); 3.4.4 (packages/esm-patient-common-lib/src/form-entry-interop.ts:70) (Observação); 3.4.4 (packages/esm-patient-common-lib/src/form-entry-interop.ts:97) (Observação); 3.4.4 (packages/esm-patient-vitals-app/src/utils.ts:16) (Observação); 3.4.5 #7 (Configuração); 3.4.5 #10 (Configuração); 3.4.5 #57 (Configuração) | 2 configuração | configuração | other | tecnológica | moderada | configura #145; configura #160; configura #163; configura #210 |
-| 39 | 3.4.3 (packages/esm-patient-immunizations-app) (Entrada); 3.4.5 #15 (Configuração) | 2 configuração | configuração | other | tecnológica | moderada | configura #146; configura #168 |
-| 40 | 3.4.3 (packages/esm-patient-lists-app) (Entrada); 3.4.7 #24 (Evidência) | 2 configuração | configuração | other | tecnológica | moderada | configura #147 |
-| 41 | 3.4.3 (packages/esm-patient-medications-app) (Entrada); 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69) (Observação); 3.4.4 (packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:120) (Observação); 3.4.4 (packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:156) (Observação); 3.4.5 #16 (Configuração); 3.4.5 #50 (Configuração) | 2 configuração | configuração | other | tecnológica | moderada | configura #148; configura #169; configura #203 |
-| 42 | 3.4.3 (packages/esm-patient-notes-app) (Entrada); 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:28) (Observação); 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/encounters-table/encounters-table.component.tsx:236) (Observação); 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/encounters-table/encounters-table.component.tsx:281) (Observação); 3.4.5 #27 (Configuração) | 2 configuração | configuração | other | tecnológica | moderada | configura #149; configura #180 |
-| 43 | 3.4.3 (packages/esm-patient-orders-app) (Entrada); 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37) (Observação); 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:27) (Observação); 3.4.4 (packages/esm-patient-medications-app/src/add-drug-order/add-drug-order.workspace.tsx:37) (Observação); 3.4.4 (packages/esm-patient-medications-app/src/add-drug-order/add-drug-order.workspace.tsx:71) (Observação); 3.4.4 (packages/esm-patient-medications-app/src/add-drug-order/drug-search/drug-search.component.tsx:25) (Observação); 3.4.4 (packages/esm-patient-medications-app/src/add-drug-order/drug-search/order-basket-search-results.component.tsx:149) (Observação); 3.4.4 (packages/esm-patient-medications-app/src/components/medications-details-table.component.tsx:71) (Observação); 3.4.4 (packages/esm-patient-medications-app/src/drug-order-basket-panel/drug-order-basket-panel.extension.tsx:58) (Observação); 3.4.4 (packages/esm-patient-medications-app/src/drug-order-basket-panel/drug-order-basket-panel.extension.tsx:66) (Observação); 3.4.4 (packages/esm-patient-medications-app/src/drug-order-basket-panel/order-basket-item-tile.component.tsx:103) (Observação); 3.4.4 (packages/esm-patient-tests-app/src/test-orders/add-test-order/add-test-order.workspace.tsx:78) (Observação); 3.4.4 (packages/esm-patient-tests-app/src/test-orders/add-test-order/test-order-form.component.tsx:153) (Observação); 3.4.4 (packages/esm-patient-tests-app/src/test-orders/add-test-order/test-order-form.component.tsx:163) (Observação); 3.4.4 (packages/esm-patient-tests-app/src/test-orders/add-test-order/test-type-search.component.tsx:54) (Observação); 3.4.4 (packages/esm-patient-tests-app/src/test-orders/add-test-order/test-type-search.component.tsx:208) (Observação); 3.4.4 (packages/esm-patient-tests-app/src/test-orders/lab-order-basket-panel/lab-order-basket-item-tile.component.tsx:68) (Observação); 3.4.4 (packages/esm-patient-tests-app/src/test-orders/lab-order-basket-panel/lab-order-basket-panel.extension.tsx:99) (Observação); 3.4.4 (packages/esm-patient-tests-app/src/test-orders/lab-order-basket-panel/lab-order-basket-panel.extension.tsx:111) (Observação); 3.4.5 #17 (Configuração); 3.4.5 #46 (Configuração); 3.4.5 #55 (Configuração) | 2 configuração | configuração | other | tecnológica | moderada | configura #150; configura #170; configura #199; configura #208 |
-| 44 | 3.4.3 (packages/esm-patient-programs-app) (Entrada); 3.4.5 #18 (Configuração) | 2 configuração | configuração | other | tecnológica | moderada | configura #151; configura #171 |
-| 45 | 3.4.3 (packages/esm-patient-tests-app) (Entrada); 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/tests-summary.component.tsx:13) (Observação); 3.4.4 (packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:121) (Observação); 3.4.4 (packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:156) (Observação); 3.4.5 #19 (Configuração); 3.4.5 #51 (Configuração) | 2 configuração | configuração | other | tecnológica | moderada | configura #152; configura #172; configura #204 |
-| 46 | 3.4.3 (packages/esm-patient-vitals-app) (Entrada); 3.4.4 (packages/esm-patient-chart-app/src/mark-patient-deceased/mark-patient-deceased-form.workspace.tsx:124) (Observação); 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37) (Observação); 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69) (Observação); 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:69) (Observação); 3.4.4 (packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:410) (Observação); 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:29) (Observação); 3.4.4 (packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:501) (Observação); 3.4.4 (packages/esm-patient-vitals-app/src/utils.ts:16) (Observação); 3.4.5 #11 (Configuração); 3.4.5 #49 (Configuração) | 2 configuração | configuração | other | tecnológica | moderada | configura #153; configura #164; configura #202 |
-| 47 | 3.4.4 (packages/esm-form-entry-app/src/index.ts:66) (Observação); 3.4.4 (packages/esm-form-entry-app/src/bootstrap.ts:21) (Observação); 3.4.4 (packages/esm-form-entry-app/src/bootstrap.ts:23) (Observação); 3.4.4 (packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:95) (Observação); 3.4.4 (packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:249) (Observação); 3.4.5 #1 (Configuração); 3.4.5 #2 (Configuração); 3.4.7 #12 (Evidência) | 2 configuração | configuração | other | tecnológica | moderada | configura #136; configura #154; configura #155 |
-| 48 | 3.4.4 (packages/esm-form-entry-app/src/index.ts:66) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 49 | 3.4.4 (packages/esm-form-entry-app/src/declarations.d.ts:3) | 3 código | código-fonte | — | contexto | fraca | — |
-| 50 | 3.4.4 (packages/esm-form-entry-app/src/bootstrap.ts:21) | 3 código | código-fonte | single-spa | arquitetural | moderada | implementa #154; implementa #155 |
-| 51 | 3.4.4 (packages/esm-form-entry-app/src/bootstrap.ts:22) | 3 código | código-fonte | single-spa | arquitetural | moderada | implementa #154; implementa #155 |
-| 52 | 3.4.4 (packages/esm-form-entry-app/src/bootstrap.ts:23) | 3 código | código-fonte | single-spa | arquitetural | moderada | implementa #154; implementa #155 |
-| 53 | 3.4.4 (packages/esm-form-entry-app/src/bootstrap.ts:3) | 3 código | código-fonte | single-spa | arquitetural | moderada | implementa #154; implementa #155 |
-| 54 | 3.4.4 (packages/esm-form-entry-app/src/bootstrap.ts:12) | 3 código | código-fonte | single-spa | arquitetural | moderada | implementa #154; implementa #155 |
-| 55 | 3.4.4 (packages/esm-patient-attachments-app/src/attachments/attachment-preview.component.tsx:56) | 3 código | código-fonte | iframe | contexto | fraca | — |
-| 56 | 3.4.4 (packages/esm-patient-forms-app/src/htmlformentry/html-form-entry-wrapper.component.tsx:43) | 3 código | código-fonte | iframe | arquitetural | forte | implementa #156 |
-| 57 | 3.4.4 (packages/esm-form-engine-app/src/form-collapse-toggle/form-collapse-toggle.component.tsx:15) | 3 código | código-fonte | events | tecnológica | ambígua | implementa #157 |
-| 58 | 3.4.4 (packages/esm-form-engine-app/src/form-collapse-toggle/form-collapse-toggle.component.tsx:23) | 3 código | código-fonte | events | tecnológica | ambígua | implementa #158 |
-| 59 | 3.4.4 (packages/esm-form-engine-app/src/form-collapse-toggle/form-collapse-toggle.component.tsx:24) | 3 código | código-fonte | events | tecnológica | ambígua | implementa #158 |
-| 60 | 3.4.4 (packages/esm-patient-flags-app/src/flags/hooks/usePatientFlags.tsx:56) | 3 código | código-fonte | single-spa | arquitetural | moderada | implementa #159 |
-| 61 | 3.4.4 (packages/esm-form-engine-app/src/form-renderer/form-error.component.tsx:20) | 3 código | código-fonte | other | arquitetural | moderada | implementa #160 |
-| 62 | 3.4.4 (packages/esm-form-engine-app/src/form-renderer/form-renderer.component.tsx:42) | 3 código | código-fonte | other | arquitetural | moderada | implementa #160 |
-| 63 | 3.4.4 (packages/esm-form-entry-app/src/app/fe-wrapper/fe-wrapper.component.ts:259) | 3 código | código-fonte | other | arquitetural | forte | implementa #161 |
-| 64 | 3.4.4 (packages/esm-generic-patient-widgets-app/src/obs-graph/obs-graph.component.tsx:113) | 3 código | código-fonte | other | tecnológica | ambígua | implementa #162 |
-| 65 | 3.4.4 (packages/esm-patient-chart-app/src/clinical-views/utils/helpers.ts:24) | 3 código | código-fonte | other | arquitetural | forte | implementa #163 |
-| 66 | 3.4.4 (packages/esm-patient-chart-app/src/mark-patient-deceased/mark-patient-deceased-form.workspace.tsx:124) | 3 código | código-fonte | other | arquitetural | forte | implementa #164 |
-| 67 | 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37) | 3 código | código-fonte | other | arquitetural | moderada | implementa #164; implementa #165; implementa #166; implementa #167; implementa #168; implementa #169; implementa #170; implementa #171; implementa #172 |
-| 68 | 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:66) | 3 código | código-fonte | other | tecnológica | ambígua | implementa #173 |
-| 69 | 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69) | 3 código | código-fonte | other | arquitetural | moderada | implementa #164; implementa #165; implementa #166; implementa #167; implementa #168; implementa #169; implementa #170; implementa #171; implementa #172; implementa #174 |
-| 70 | 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47) | 3 código | código-fonte | other | arquitetural | forte | implementa #164; implementa #165; implementa #166; implementa #167; implementa #168; implementa #169; implementa #170; implementa #171; implementa #172 |
-| 71 | 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:67) | 3 código | código-fonte | other | arquitetural | forte | implementa #175 |
-| 72 | 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:68) | 3 código | código-fonte | other | arquitetural | forte | implementa #174 |
-| 73 | 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:69) | 3 código | código-fonte | other | arquitetural | forte | implementa #164 |
-| 74 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:389) | 3 código | código-fonte | other | arquitetural | forte | implementa #175 |
-| 75 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:410) | 3 código | código-fonte | other | arquitetural | forte | implementa #164 |
-| 76 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:452) | 3 código | código-fonte | other | tecnológica | ambígua | implementa #176 |
-| 77 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:547) | 3 código | código-fonte | other | tecnológica | ambígua | implementa #177 |
-| 78 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:562) | 3 código | código-fonte | other | tecnológica | ambígua | implementa #178 |
-| 79 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:23) | 3 código | código-fonte | other | arquitetural | forte | implementa #165 |
-| 80 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:24) | 3 código | código-fonte | other | tecnológica | ambígua | implementa #179 |
-| 81 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:25) | 3 código | código-fonte | other | arquitetural | forte | implementa #163 |
-| 82 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:26) | 3 código | código-fonte | other | arquitetural | forte | implementa #167 |
-| 83 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:27) | 3 código | código-fonte | other | arquitetural | forte | implementa #170 |
-| 84 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:28) | 3 código | código-fonte | other | arquitetural | forte | implementa #180 |
-| 85 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:29) | 3 código | código-fonte | other | arquitetural | forte | implementa #164 |
-| 86 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/encounters-table/encounters-table.component.tsx:236) | 3 código | código-fonte | other | arquitetural | forte | implementa #180 |
-| 87 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/encounters-table/encounters-table.component.tsx:281) | 3 código | código-fonte | other | arquitetural | forte | implementa #180 |
-| 88 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/tests-summary.component.tsx:13) | 3 código | código-fonte | other | arquitetural | forte | implementa #172 |
-| 89 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/visit-summary.component.tsx:159) | 3 código | código-fonte | other | tecnológica | ambígua | implementa #181 |
-| 90 | 3.4.4 (packages/esm-patient-common-lib/src/form-entry-interop.ts:70) | 3 código | código-fonte | other | arquitetural | moderada | implementa #163 |
-| 91 | 3.4.4 (packages/esm-patient-common-lib/src/form-entry-interop.ts:97) | 3 código | código-fonte | other | arquitetural | moderada | implementa #163 |
-| 92 | 3.4.4 (packages/esm-patient-common-lib/src/launchStartVisitPrompt.tsx:4) | 3 código | código-fonte | other | arquitetural | forte | implementa #182; implementa #183; implementa #184; implementa #185; implementa #186; implementa #187 |
-| 93 | 3.4.4 (packages/esm-patient-common-lib/src/nav-group/DashboardGroupExtension.tsx:24) | 3 código | código-fonte | other | tecnológica | ambígua | implementa #188 |
-| 94 | 3.4.4 (packages/esm-patient-common-lib/src/orders/store.ts:24) | 3 código | código-fonte | events | arquitetural | moderada | implementa #189; implementa #190 |
-| 95 | 3.4.4 (packages/esm-patient-common-lib/src/store/patient-chart-store.ts:10) | 3 código | código-fonte | events | arquitetural | moderada | implementa #191; implementa #192; implementa #193; implementa #194; implementa #195; implementa #196 |
-| 96 | 3.4.4 (packages/esm-patient-common-lib/src/workspaces.ts:55) | 3 código | código-fonte | other | arquitetural | forte | implementa #182; implementa #184; implementa #185; implementa #186; implementa #187 |
-| 97 | 3.4.4 (packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:94) | 3 código | código-fonte | other | arquitetural | forte | implementa #182 |
-| 98 | 3.4.4 (packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:95) | 3 código | código-fonte | other | arquitetural | forte | implementa #154; implementa #197 |
-| 99 | 3.4.4 (packages/esm-patient-forms-app/src/forms/forms-dashboard.workspace.tsx:12) | 3 código | código-fonte | other | arquitetural | forte | implementa #182 |
-| 100 | 3.4.4 (packages/esm-patient-forms-app/src/htmlformentry/html-form-entry-wrapper.component.tsx:17) | 3 código | código-fonte | events | arquitetural | moderada | implementa #198 |
-| 101 | 3.4.4 (packages/esm-patient-medications-app/src/add-drug-order/add-drug-order.workspace.tsx:37) | 3 código | código-fonte | other | arquitetural | forte | implementa #199 |
-| 102 | 3.4.4 (packages/esm-patient-medications-app/src/add-drug-order/add-drug-order.workspace.tsx:71) | 3 código | código-fonte | other | arquitetural | forte | implementa #199 |
-| 103 | 3.4.4 (packages/esm-patient-medications-app/src/add-drug-order/drug-order-form.component.tsx:213) | 3 código | código-fonte | other | tecnológica | ambígua | implementa #200 |
-| 104 | 3.4.4 (packages/esm-patient-medications-app/src/add-drug-order/drug-search/drug-search.component.tsx:25) | 3 código | código-fonte | other | arquitetural | forte | implementa #199 |
-| 105 | 3.4.4 (packages/esm-patient-medications-app/src/add-drug-order/drug-search/order-basket-search-results.component.tsx:149) | 3 código | código-fonte | other | arquitetural | forte | implementa #199 |
-| 106 | 3.4.4 (packages/esm-patient-medications-app/src/components/medications-details-table.component.tsx:71) | 3 código | código-fonte | other | arquitetural | forte | implementa #199 |
-| 107 | 3.4.4 (packages/esm-patient-medications-app/src/drug-order-basket-panel/drug-order-basket-panel.extension.tsx:58) | 3 código | código-fonte | other | arquitetural | forte | implementa #199 |
-| 108 | 3.4.4 (packages/esm-patient-medications-app/src/drug-order-basket-panel/drug-order-basket-panel.extension.tsx:66) | 3 código | código-fonte | other | arquitetural | forte | implementa #199 |
-| 109 | 3.4.4 (packages/esm-patient-medications-app/src/drug-order-basket-panel/order-basket-item-tile.component.tsx:103) | 3 código | código-fonte | other | arquitetural | forte | implementa #199 |
-| 110 | 3.4.4 (packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:315) | 3 código | código-fonte | other | arquitetural | forte | implementa #201 |
-| 111 | 3.4.4 (packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:497) | 3 código | código-fonte | other | arquitetural | forte | implementa #185 |
-| 112 | 3.4.4 (packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:501) | 3 código | código-fonte | other | arquitetural | forte | implementa #185; implementa #202 |
-| 113 | 3.4.4 (packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:120) | 3 código | código-fonte | other | arquitetural | forte | implementa #203 |
-| 114 | 3.4.4 (packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:121) | 3 código | código-fonte | other | arquitetural | forte | implementa #204 |
-| 115 | 3.4.4 (packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:534) | 3 código | código-fonte | other | tecnológica | ambígua | implementa #205 |
-| 116 | 3.4.4 (packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:561) | 3 código | código-fonte | other | tecnológica | ambígua | implementa #206 |
-| 117 | 3.4.4 (packages/esm-patient-orders-app/src/order-basket/general-order-type/general-order-form/general-order-form.component.tsx:169) | 3 código | código-fonte | other | tecnológica | ambígua | implementa #207 |
-| 118 | 3.4.4 (packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:57) | 3 código | código-fonte | other | arquitetural | forte | implementa #186 |
-| 119 | 3.4.4 (packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:154) | 3 código | código-fonte | other | arquitetural | forte | implementa #186 |
-| 120 | 3.4.4 (packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:156) | 3 código | código-fonte | other | arquitetural | forte | implementa #203; implementa #204 |
-| 121 | 3.4.4 (packages/esm-patient-tests-app/src/test-orders/add-test-order/add-test-order.workspace.tsx:78) | 3 código | código-fonte | other | arquitetural | forte | implementa #208 |
-| 122 | 3.4.4 (packages/esm-patient-tests-app/src/test-orders/add-test-order/test-order-form.component.tsx:153) | 3 código | código-fonte | other | arquitetural | forte | implementa #208 |
-| 123 | 3.4.4 (packages/esm-patient-tests-app/src/test-orders/add-test-order/test-order-form.component.tsx:163) | 3 código | código-fonte | other | arquitetural | forte | implementa #208 |
-| 124 | 3.4.4 (packages/esm-patient-tests-app/src/test-orders/add-test-order/test-order-form.component.tsx:193) | 3 código | código-fonte | other | tecnológica | ambígua | implementa #209 |
-| 125 | 3.4.4 (packages/esm-patient-tests-app/src/test-orders/add-test-order/test-type-search.component.tsx:54) | 3 código | código-fonte | other | arquitetural | forte | implementa #208 |
-| 126 | 3.4.4 (packages/esm-patient-tests-app/src/test-orders/add-test-order/test-type-search.component.tsx:208) | 3 código | código-fonte | other | arquitetural | forte | implementa #208 |
-| 127 | 3.4.4 (packages/esm-patient-tests-app/src/test-orders/lab-order-basket-panel/lab-order-basket-item-tile.component.tsx:68) | 3 código | código-fonte | other | arquitetural | forte | implementa #208 |
-| 128 | 3.4.4 (packages/esm-patient-tests-app/src/test-orders/lab-order-basket-panel/lab-order-basket-panel.extension.tsx:99) | 3 código | código-fonte | other | arquitetural | forte | implementa #208 |
-| 129 | 3.4.4 (packages/esm-patient-tests-app/src/test-orders/lab-order-basket-panel/lab-order-basket-panel.extension.tsx:111) | 3 código | código-fonte | other | arquitetural | forte | implementa #208 |
-| 130 | 3.4.4 (packages/esm-patient-vitals-app/src/utils.ts:16) | 3 código | código-fonte | other | arquitetural | forte | implementa #210 |
-| 131 | 3.4.4 (packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:249) | 3 código | código-fonte | other | arquitetural | forte | implementa #155; implementa #211 |
-| 132 | 3.4.4 (packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:268) | 3 código | código-fonte | other | arquitetural | forte | implementa #187 |
-| 133 | 3.4.4 (packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:300) | 3 código | código-fonte | other | arquitetural | forte | implementa #187 |
-| 134 | 3.4.3 (.) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 135 | 3.4.3 (packages/esm-form-engine-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 136 | 3.4.3 (packages/esm-form-entry-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 137 | 3.4.3 (packages/esm-generic-patient-widgets-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 138 | 3.4.3 (packages/esm-patient-allergies-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 139 | 3.4.3 (packages/esm-patient-attachments-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 140 | 3.4.3 (packages/esm-patient-banner-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 141 | 3.4.3 (packages/esm-patient-chart-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 142 | 3.4.3 (packages/esm-patient-common-lib) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 143 | 3.4.3 (packages/esm-patient-conditions-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 144 | 3.4.3 (packages/esm-patient-flags-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 145 | 3.4.3 (packages/esm-patient-forms-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 146 | 3.4.3 (packages/esm-patient-immunizations-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 147 | 3.4.3 (packages/esm-patient-lists-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 148 | 3.4.3 (packages/esm-patient-medications-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 149 | 3.4.3 (packages/esm-patient-notes-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 150 | 3.4.3 (packages/esm-patient-orders-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 151 | 3.4.3 (packages/esm-patient-programs-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 152 | 3.4.3 (packages/esm-patient-tests-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 153 | 3.4.3 (packages/esm-patient-vitals-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 154 | 3.4.5 #1 | 5 composição | código-fonte | single-spa | arquitetural | forte | liga #145; liga #136 |
-| 155 | 3.4.5 #2 | 5 composição | código-fonte | single-spa | arquitetural | forte | liga #153; liga #136 |
-| 156 | 3.4.5 #3 | 5 composição | código-fonte | iframe | arquitetural | forte | liga #145 |
-| 157 | 3.4.5 #4 | 5 composição | código-fonte | events | tecnológica | ambígua | liga #135 |
-| 158 | 3.4.5 #5 | 5 composição | código-fonte | events | tecnológica | ambígua | liga #135 |
-| 159 | 3.4.5 #6 | 5 composição | código-fonte | events | arquitetural | forte | liga #144 |
-| 160 | 3.4.5 #7 | 5 composição | código-fonte | other | arquitetural | forte | liga #135; liga #145 |
-| 161 | 3.4.5 #8 | 5 composição | código-fonte | other | arquitetural | forte | liga #136; liga #141 |
-| 162 | 3.4.5 #9 | 5 composição | código-fonte | other | tecnológica | ambígua | liga #137 |
-| 163 | 3.4.5 #10 | 5 composição | código-fonte | other | arquitetural | forte | liga #141; liga #145 |
-| 164 | 3.4.5 #11 | 5 composição | código-fonte | other | arquitetural | forte | liga #141; liga #153 |
-| 165 | 3.4.5 #12 | 5 composição | código-fonte | other | arquitetural | forte | liga #141; liga #138 |
-| 166 | 3.4.5 #13 | 5 composição | código-fonte | other | arquitetural | forte | liga #141; liga #139 |
-| 167 | 3.4.5 #14 | 5 composição | código-fonte | other | arquitetural | forte | liga #141; liga #143 |
-| 168 | 3.4.5 #15 | 5 composição | código-fonte | other | arquitetural | forte | liga #141; liga #146 |
-| 169 | 3.4.5 #16 | 5 composição | código-fonte | other | arquitetural | forte | liga #141; liga #148 |
-| 170 | 3.4.5 #17 | 5 composição | código-fonte | other | arquitetural | forte | liga #141; liga #150 |
-| 171 | 3.4.5 #18 | 5 composição | código-fonte | other | arquitetural | forte | liga #141; liga #151 |
-| 172 | 3.4.5 #19 | 5 composição | código-fonte | other | arquitetural | forte | liga #141; liga #152 |
-| 173 | 3.4.5 #20 | 5 composição | código-fonte | other | tecnológica | ambígua | liga #141 |
-| 174 | 3.4.5 #21 | 5 composição | código-fonte | other | arquitetural | forte | liga #141; liga #144 |
-| 175 | 3.4.5 #22 | 5 composição | código-fonte | other | arquitetural | forte | liga #141; liga #140 |
-| 176 | 3.4.5 #23 | 5 composição | código-fonte | other | tecnológica | ambígua | liga #141 |
-| 177 | 3.4.5 #24 | 5 composição | código-fonte | other | tecnológica | ambígua | liga #141 |
-| 178 | 3.4.5 #25 | 5 composição | código-fonte | other | tecnológica | ambígua | liga #141 |
-| 179 | 3.4.5 #26 | 5 composição | código-fonte | other | tecnológica | ambígua | liga #141 |
-| 180 | 3.4.5 #27 | 5 composição | código-fonte | other | arquitetural | forte | liga #141; liga #149 |
-| 181 | 3.4.5 #28 | 5 composição | código-fonte | other | tecnológica | ambígua | liga #141 |
-| 182 | 3.4.5 #29 | 5 composição | código-fonte | other | arquitetural | forte | liga #145; liga #141 |
-| 183 | 3.4.5 #30 | 5 composição | código-fonte | other | arquitetural | forte | liga #146; liga #141 |
-| 184 | 3.4.5 #31 | 5 composição | código-fonte | other | arquitetural | forte | liga #148; liga #141 |
-| 185 | 3.4.5 #32 | 5 composição | código-fonte | other | arquitetural | forte | liga #149; liga #141 |
-| 186 | 3.4.5 #33 | 5 composição | código-fonte | other | arquitetural | forte | liga #150; liga #141 |
-| 187 | 3.4.5 #34 | 5 composição | código-fonte | other | arquitetural | forte | liga #153; liga #141 |
-| 188 | 3.4.5 #35 | 5 composição | código-fonte | other | tecnológica | ambígua | liga #141 |
-| 189 | 3.4.5 #36 | 5 composição | código-fonte | events | arquitetural | forte | liga #148; liga #150 |
-| 190 | 3.4.5 #37 | 5 composição | código-fonte | events | arquitetural | forte | liga #150; liga #152 |
-| 191 | 3.4.5 #38 | 5 composição | código-fonte | events | arquitetural | forte | liga #141; liga #145 |
-| 192 | 3.4.5 #39 | 5 composição | código-fonte | events | arquitetural | forte | liga #141; liga #148 |
-| 193 | 3.4.5 #40 | 5 composição | código-fonte | events | arquitetural | forte | liga #141; liga #149 |
-| 194 | 3.4.5 #41 | 5 composição | código-fonte | events | arquitetural | forte | liga #141; liga #150 |
-| 195 | 3.4.5 #42 | 5 composição | código-fonte | events | arquitetural | forte | liga #141; liga #152 |
-| 196 | 3.4.5 #43 | 5 composição | código-fonte | events | arquitetural | forte | liga #141; liga #153 |
-| 197 | 3.4.5 #44 | 5 composição | código-fonte | other | arquitetural | forte | liga #145; liga #135 |
-| 198 | 3.4.5 #45 | 5 composição | código-fonte | events | arquitetural | forte | liga #145 |
-| 199 | 3.4.5 #46 | 5 composição | código-fonte | other | arquitetural | forte | liga #148; liga #150 |
-| 200 | 3.4.5 #47 | 5 composição | código-fonte | other | tecnológica | ambígua | liga #148 |
-| 201 | 3.4.5 #48 | 5 composição | código-fonte | other | arquitetural | forte | liga #149; liga #139 |
-| 202 | 3.4.5 #49 | 5 composição | código-fonte | other | arquitetural | forte | liga #149; liga #153 |
-| 203 | 3.4.5 #50 | 5 composição | código-fonte | other | arquitetural | forte | liga #150; liga #148 |
-| 204 | 3.4.5 #51 | 5 composição | código-fonte | other | arquitetural | forte | liga #150; liga #152 |
-| 205 | 3.4.5 #52 | 5 composição | código-fonte | other | tecnológica | ambígua | liga #150 |
-| 206 | 3.4.5 #53 | 5 composição | código-fonte | other | tecnológica | ambígua | liga #150 |
-| 207 | 3.4.5 #54 | 5 composição | código-fonte | other | tecnológica | ambígua | liga #150 |
-| 208 | 3.4.5 #55 | 5 composição | código-fonte | other | arquitetural | forte | liga #152; liga #150 |
-| 209 | 3.4.5 #56 | 5 composição | código-fonte | other | tecnológica | ambígua | liga #152 |
-| 210 | 3.4.5 #57 | 5 composição | código-fonte | other | arquitetural | forte | liga #153; liga #145 |
-| 211 | 3.4.5 #58 | 5 composição | código-fonte | other | arquitetural | forte | liga #153; liga #135 |
-| 212 | 3.4.6 #1 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #135 |
-| 213 | 3.4.6 #2 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #136 |
-| 214 | 3.4.6 #3 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #137 |
-| 215 | 3.4.6 #4 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #138 |
-| 216 | 3.4.6 #5 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #139 |
-| 217 | 3.4.6 #6 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #140 |
-| 218 | 3.4.6 #7 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #141 |
-| 219 | 3.4.6 #8 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #143 |
-| 220 | 3.4.6 #9 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #144 |
-| 221 | 3.4.6 #10 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #145 |
-| 222 | 3.4.6 #11 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #146 |
-| 223 | 3.4.6 #12 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #147 |
-| 224 | 3.4.6 #13 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #148 |
-| 225 | 3.4.6 #14 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #149 |
-| 226 | 3.4.6 #15 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #150 |
-| 227 | 3.4.6 #16 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #151 |
-| 228 | 3.4.6 #17 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #152 |
-| 229 | 3.4.6 #18 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #153 |
-| 230 | 3.4.7 #1 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #164; corrobora #165; corrobora #166; corrobora #167; corrobora #168; corrobora #169; corrobora #170; corrobora #171; corrobora #172; corrobora #174; corrobora #175; corrobora #135; corrobora #136; corrobora #137; corrobora #138; corrobora #139; corrobora #140; corrobora #141; corrobora #143; corrobora #144; corrobora #145; corrobora #146; corrobora #147; corrobora #148; corrobora #149; corrobora #150; corrobora #151; corrobora #152; corrobora #153 |
-| 231 | 3.4.7 #2 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #153; contradiz packages/esm-patient-vitals-app/README.md:3 |
-| 232 | 3.4.7 #3 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #142; contradiz packages/esm-patient-common-lib/src/index.ts:1-23; contradiz packages/esm-patient-common-lib/package.json:9-13 |
-| 233 | 3.4.7 #4 | 7 documentação | documentação | — | arquitetural | fraca | corrobora package.json:5-7; corrobora package.json:87 |
-| 234 | 3.4.7 #5 | 7 documentação | documentação | — | arquitetural | fraca | corrobora em parte package.json:9; corrobora em parte packages/esm-patient-allergies-app/package.json:10-11 |
-| 235 | 3.4.7 #6 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #153; contradiz packages/esm-patient-vitals-app/package.json:10-11 |
-| 236 | 3.4.7 #7 | 7 documentação | documentação | import-maps | arquitetural | fraca | corrobora em parte packages/esm-patient-allergies-app/package.json:11; corrobora em parte packages/esm-form-entry-app/package.json:11 |
-| 237 | 3.4.7 #8 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #71; corrobora #34 |
-| 238 | 3.4.7 #9 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #164; corrobora #165; corrobora #166; corrobora #167; corrobora #168; corrobora #169; corrobora #170; corrobora #171; corrobora #172; corrobora #174; corrobora #175; corrobora packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69-78 |
-| 239 | 3.4.7 #10 | 7 documentação | comentário | — | arquitetural | fraca | contradiz e2e/support/github/run-e2e-docker-env.sh:8 |
-| 240 | 3.4.7 #11 | 7 documentação | comentário | — | arquitetural | fraca | contradiz e2e/support/github/run-e2e-docker-env.sh:29-38 |
-| 241 | 3.4.7 #12 | 7 documentação | documentação | single-spa | arquitetural | fraca | corrobora #154; corrobora #155; corrobora packages/esm-form-entry-app/src/bootstrap.ts:12-23; corrobora #47 |
-| 242 | 3.4.7 #13 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #31; corrobora packages/esm-generic-patient-widgets-app/src/config-schema.ts:3-23 |
-| 243 | 3.4.7 #14 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #164; corrobora #165; corrobora #166; corrobora #167; corrobora #168; corrobora #169; corrobora #170; corrobora #171; corrobora #172; corrobora #174; corrobora #175; corrobora packages/esm-patient-chart-app/src/root.component.tsx:11-16; corrobora packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47-92; corrobora packages/esm-patient-chart-app/src/index.ts:33-42 |
-| 244 | 3.4.7 #15 | 7 documentação | comentário | — | arquitetural | fraca | corrobora em parte packages/esm-patient-chart-app/src/index.ts:7-8; corrobora em parte packages/esm-patient-chart-app/src/index.ts:29; corrobora em parte packages/esm-form-entry-app/src/app/fe-wrapper/fe-wrapper.component.ts:3 |
-| 245 | 3.4.7 #16 | 7 documentação | comentário | — | arquitetural | fraca | corrobora em parte packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:4; corrobora em parte packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:32-36 |
-| 246 | 3.4.7 #17 | 7 documentação | comentário | — | arquitetural | fraca | — |
-| 247 | 3.4.7 #18 | 7 documentação | documentação | — | arquitetural | fraca | corrobora packages/esm-patient-allergies-app/src/index.ts:10; corrobora packages/esm-patient-chart-app/src/index.ts:7-8; corrobora packages/esm-patient-common-lib/src/index.ts:1-23 |
-| 248 | 3.4.7 #19 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #189; corrobora #190; corrobora packages/esm-patient-common-lib/src/orders/useOrderBasket.ts:37-40; corrobora packages/esm-patient-medications-app/src/drug-order-basket-panel/drug-order-basket-panel.extension.tsx:19; corrobora packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:38 |
-| 249 | 3.4.7 #20 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #174; corrobora #37 |
-| 250 | 3.4.7 #21 | 7 documentação | comentário | iframe | arquitetural | fraca | corrobora #198; corrobora packages/esm-patient-forms-app/src/htmlformentry/html-form-entry-wrapper.component.tsx:15-19 |
-| 251 | 3.4.7 #22 | 7 documentação | comentário | iframe | arquitetural | fraca | corrobora #156; corrobora packages/esm-patient-forms-app/src/htmlformentry/html-form-entry-wrapper.component.tsx:22-43 |
-| 252 | 3.4.7 #23 | 7 documentação | comentário | iframe | arquitetural | fraca | corrobora em parte packages/esm-patient-forms-app/src/htmlformentry/html-form-entry.workspace.tsx:29-44; corrobora em parte packages/esm-patient-forms-app/src/htmlformentry/html-form-entry-wrapper.component.tsx:15-19 |
-| 253 | 3.4.7 #24 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #147; corrobora #40 |
-| 254 | 3.4.7 #25 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #203; corrobora #204; corrobora #150; corrobora packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:38 |
-| 255 | 3.4.8 #1 | 8 histórico | histórico | — | tecnológica | fraca | explica #4 |
-| 256 | 3.4.8 #2 | 8 histórico | histórico | — | tecnológica | fraca | explica #6 |
-| 257 | 3.4.8 #3 | 8 histórico | histórico | — | tecnológica | fraca | explica #14 |
-| 258 | 3.4.8 #4 | 8 histórico | histórico | — | tecnológica | fraca | explica #15 |
-| 259 | 3.4.8 #5 | 8 histórico | histórico | — | tecnológica | fraca | explica #17 |
-| 260 | 3.4.8 #6 | 8 histórico | histórico | — | tecnológica | ambígua | explica #157; explica #57 |
-| 261 | 3.4.8 #7 | 8 histórico | histórico | — | tecnológica | ambígua | explica #158; explica #58; explica #59 |
-| 262 | 3.4.8 #8 | 8 histórico | histórico | — | tecnológica | ambígua | explica #162; explica #64 |
-| 263 | 3.4.8 #9 | 8 histórico | histórico | — | tecnológica | ambígua | explica #173; explica #68 |
-| 264 | 3.4.8 #10 | 8 histórico | histórico | — | tecnológica | ambígua | explica #176; explica #76 |
-| 265 | 3.4.8 #11 | 8 histórico | histórico | — | tecnológica | ambígua | explica #177; explica #77 |
-| 266 | 3.4.8 #12 | 8 histórico | histórico | — | tecnológica | ambígua | explica #178; explica #78 |
-| 267 | 3.4.8 #13 | 8 histórico | histórico | — | tecnológica | ambígua | explica #179; explica #246; explica #80 |
-| 268 | 3.4.8 #14 | 8 histórico | histórico | — | tecnológica | ambígua | explica #181; explica #89 |
-| 269 | 3.4.8 #15 | 8 histórico | histórico | — | tecnológica | ambígua | explica #188; explica #93 |
-| 270 | 3.4.8 #16 | 8 histórico | histórico | — | tecnológica | ambígua | explica #200; explica #103 |
-| 271 | 3.4.8 #17 | 8 histórico | histórico | — | tecnológica | ambígua | explica #205; explica #115 |
-| 272 | 3.4.8 #18 | 8 histórico | histórico | — | tecnológica | ambígua | explica #206; explica #116 |
-| 273 | 3.4.8 #19 | 8 histórico | histórico | — | tecnológica | ambígua | explica #207; explica #209; explica #117; explica #124 |
-| 274 | 3.4.8 #20 | 8 histórico | histórico | — | arquitetural | fraca | explica #231; explica #235 |
-| 275 | 3.4.8 #21 | 8 histórico | histórico | — | arquitetural | fraca | explica #232 |
-| 276 | 3.4.8 #22 | 8 histórico | histórico | — | arquitetural | ambígua | explica #234 |
-| 277 | 3.4.8 #23 | 8 histórico | histórico | — | arquitetural | ambígua | explica #236 |
-| 278 | 3.4.8 #24 | 8 histórico | histórico | — | arquitetural | fraca | explica #239 |
-| 279 | 3.4.8 #25 | 8 histórico | histórico | — | arquitetural | fraca | explica #240 |
-| 280 | 3.4.8 #26 | 8 histórico | histórico | — | arquitetural | ambígua | explica #244 |
-| 281 | 3.4.8 #27 | 8 histórico | histórico | — | arquitetural | ambígua | explica #245 |
-| 282 | 3.4.8 #28 | 8 histórico | histórico | — | arquitetural | ambígua | explica #252 |
+| 1 | 3.4.2 (package.json:27) | 1 technology | manifest | other-mfe-framework | technological | weak | declares packages/esm-patient-chart-app/src/index.ts:1-6 |
+| 2 | 3.4.2 (package.json:75) | 1 technology | manifest | — | context | weak | declares turbo.json:3-11 |
+| 3 | 3.4.2 (packages/esm-form-engine-app/package.json:46) | 1 technology | manifest | other-mfe-framework | technological | weak | declares packages/esm-form-engine-app/src/index.ts:1 |
+| 4 | 3.4.2 (packages/esm-form-entry-app/package.json:38) | 1 technology | manifest | web-components | technological | weak | — |
+| 5 | 3.4.2 (packages/esm-form-entry-app/package.json:59) | 1 technology | manifest | single-spa | technological | weak | declares #53; declares #48 |
+| 6 | 3.4.2 (packages/esm-form-entry-app/package.json:61) | 1 technology | manifest | import-maps | technological | weak | — |
+| 7 | 3.4.2 (packages/esm-form-entry-app/package.json:68) | 1 technology | manifest | other-mfe-framework | technological | weak | declares packages/esm-form-entry-app/src/index.ts:3 |
+| 8 | 3.4.2 (packages/esm-form-entry-app/package.json:69) | 1 technology | manifest | single-spa | technological | weak | declares #29 |
+| 9 | 3.4.2 (packages/esm-generic-patient-widgets-app/package.json:45) | 1 technology | manifest | other-mfe-framework | technological | weak | declares packages/esm-generic-patient-widgets-app/src/index.ts:1 |
+| 10 | 3.4.2 (packages/esm-patient-allergies-app/package.json:44) | 1 technology | manifest | other-mfe-framework | technological | weak | declares packages/esm-patient-allergies-app/src/index.ts:1-9 |
+| 11 | 3.4.2 (packages/esm-patient-attachments-app/package.json:49) | 1 technology | manifest | other-mfe-framework | technological | weak | declares packages/esm-patient-attachments-app/src/index.ts:2 |
+| 12 | 3.4.2 (packages/esm-patient-banner-app/package.json:45) | 1 technology | manifest | other-mfe-framework | technological | weak | declares packages/esm-patient-banner-app/src/index.ts:1-7 |
+| 13 | 3.4.2 (packages/esm-patient-chart-app/package.json:45) | 1 technology | manifest | other-mfe-framework | technological | weak | declares packages/esm-patient-chart-app/src/index.ts:1-6 |
+| 14 | 3.4.2 (packages/esm-patient-chart-app/package.json:53) | 1 technology | manifest | single-spa | technological | weak | — |
+| 15 | 3.4.2 (packages/esm-patient-chart-app/package.json:54) | 1 technology | manifest | single-spa | technological | weak | — |
+| 16 | 3.4.2 (packages/esm-patient-common-lib/package.json:37) | 1 technology | manifest | other-mfe-framework | technological | weak | declares packages/esm-patient-common-lib/src/launchStartVisitPrompt.tsx:1 |
+| 17 | 3.4.2 (packages/esm-patient-common-lib/package.json:39) | 1 technology | manifest | single-spa | technological | weak | — |
+| 18 | 3.4.2 (packages/esm-patient-conditions-app/package.json:45) | 1 technology | manifest | other-mfe-framework | technological | weak | declares packages/esm-patient-conditions-app/src/index.ts:1 |
+| 19 | 3.4.2 (packages/esm-patient-flags-app/package.json:43) | 1 technology | manifest | other-mfe-framework | technological | weak | declares packages/esm-patient-flags-app/src/index.ts:1 |
+| 20 | 3.4.2 (packages/esm-patient-forms-app/package.json:46) | 1 technology | manifest | other-mfe-framework | technological | weak | declares packages/esm-patient-forms-app/src/index.ts:1-7 |
+| 21 | 3.4.2 (packages/esm-patient-immunizations-app/package.json:47) | 1 technology | manifest | other-mfe-framework | technological | weak | declares packages/esm-patient-immunizations-app/src/index.ts:1 |
+| 22 | 3.4.2 (packages/esm-patient-lists-app/package.json:43) | 1 technology | manifest | other-mfe-framework | technological | weak | declares packages/esm-patient-lists-app/src/index.ts:1 |
+| 23 | 3.4.2 (packages/esm-patient-medications-app/package.json:45) | 1 technology | manifest | other-mfe-framework | technological | weak | declares packages/esm-patient-medications-app/src/index.ts:1 |
+| 24 | 3.4.2 (packages/esm-patient-notes-app/package.json:43) | 1 technology | manifest | other-mfe-framework | technological | weak | declares packages/esm-patient-notes-app/src/index.ts:1-7 |
+| 25 | 3.4.2 (packages/esm-patient-orders-app/package.json:45) | 1 technology | manifest | other-mfe-framework | technological | weak | declares packages/esm-patient-orders-app/src/index.ts:1 |
+| 26 | 3.4.2 (packages/esm-patient-programs-app/package.json:45) | 1 technology | manifest | other-mfe-framework | technological | weak | declares packages/esm-patient-programs-app/src/index.ts:1 |
+| 27 | 3.4.2 (packages/esm-patient-tests-app/package.json:47) | 1 technology | manifest | other-mfe-framework | technological | weak | declares packages/esm-patient-tests-app/src/index.ts:1-7 |
+| 28 | 3.4.2 (packages/esm-patient-vitals-app/package.json:46) | 1 technology | manifest | other-mfe-framework | technological | weak | declares packages/esm-patient-vitals-app/src/index.ts:1-8 |
+| 29 | 3.4.2 (packages/esm-form-entry-app/package.json:69) (Evidence); 3.4.3 (packages/esm-form-entry-app) (Markers); 3.4.5 #1 (Configuration); 3.4.5 #2 (Configuration); 3.4.6 #2 (Artifacts) | 2 configuration | configuration | module-federation | technological | moderate | configures #136; configures #154; configures #155 |
+| 30 | 3.4.3 (packages/esm-form-engine-app) (Entry); 3.4.4 (packages/esm-form-engine-app/src/form-collapse-toggle/form-collapse-toggle.component.tsx:15) (Observation); 3.4.4 (packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:95) (Observation); 3.4.4 (packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:249) (Observation); 3.4.5 #44 (Configuration); 3.4.5 #58 (Configuration) | 2 configuration | configuration | other | technological | moderate | configures #135; configures #197; configures #211 |
+| 31 | 3.4.3 (packages/esm-generic-patient-widgets-app) (Entry); 3.4.7 #13 (Evidence) | 2 configuration | configuration | other | technological | moderate | configures #137 |
+| 32 | 3.4.3 (packages/esm-patient-allergies-app) (Entry); 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37) (Observation); 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:23) (Observation); 3.4.5 #12 (Configuration) | 2 configuration | configuration | other | technological | moderate | configures #138; configures #165 |
+| 33 | 3.4.3 (packages/esm-patient-attachments-app) (Entry); 3.4.4 (packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:315) (Observation); 3.4.5 #13 (Configuration); 3.4.5 #48 (Configuration) | 2 configuration | configuration | other | technological | moderate | configures #139; configures #166; configures #201 |
+| 34 | 3.4.3 (packages/esm-patient-banner-app) (Entry); 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:67) (Observation); 3.4.4 (packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:389) (Observation); 3.4.5 #22 (Configuration); 3.4.7 #8 (Evidence) | 2 configuration | configuration | other | technological | moderate | configures #140; configures #175 |
+| 35 | 3.4.3 (packages/esm-patient-chart-app) (Entry); 3.4.4 (packages/esm-form-entry-app/src/app/fe-wrapper/fe-wrapper.component.ts:259) (Observation); 3.4.4 (packages/esm-patient-chart-app/src/mark-patient-deceased/mark-patient-deceased-form.workspace.tsx:124) (Observation); 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:23) (Observation); 3.4.4 (packages/esm-patient-common-lib/src/launchStartVisitPrompt.tsx:4) (Observation); 3.4.4 (packages/esm-patient-common-lib/src/workspaces.ts:55) (Observation); 3.4.4 (packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:94) (Observation); 3.4.4 (packages/esm-patient-forms-app/src/forms/forms-dashboard.workspace.tsx:12) (Observation); 3.4.4 (packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:497) (Observation); 3.4.4 (packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:501) (Observation); 3.4.4 (packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:57) (Observation); 3.4.4 (packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:154) (Observation); 3.4.4 (packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:268) (Observation); 3.4.4 (packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:300) (Observation); 3.4.5 #8 (Configuration); 3.4.5 #29 (Configuration); 3.4.5 #30 (Configuration); 3.4.5 #31 (Configuration); 3.4.5 #32 (Configuration); 3.4.5 #33 (Configuration); 3.4.5 #34 (Configuration) | 2 configuration | configuration | other | technological | moderate | configures #141; configures #161; configures #182; configures #183; configures #184; configures #185; configures #186; configures #187 |
+| 36 | 3.4.3 (packages/esm-patient-conditions-app) (Entry); 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69) (Observation); 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:26) (Observation); 3.4.5 #14 (Configuration) | 2 configuration | configuration | other | technological | moderate | configures #143; configures #167 |
+| 37 | 3.4.3 (packages/esm-patient-flags-app) (Entry); 3.4.4 (packages/esm-patient-flags-app/src/flags/hooks/usePatientFlags.tsx:56) (Observation); 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69) (Observation); 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:68) (Observation); 3.4.5 #21 (Configuration); 3.4.7 #20 (Evidence) | 2 configuration | configuration | other | technological | moderate | configures #144; configures #174 |
+| 38 | 3.4.3 (packages/esm-patient-forms-app) (Entry); 3.4.4 (packages/esm-patient-forms-app/src/htmlformentry/html-form-entry-wrapper.component.tsx:43) (Observation); 3.4.4 (packages/esm-form-engine-app/src/form-renderer/form-error.component.tsx:20) (Observation); 3.4.4 (packages/esm-form-engine-app/src/form-renderer/form-renderer.component.tsx:42) (Observation); 3.4.4 (packages/esm-patient-chart-app/src/clinical-views/utils/helpers.ts:24) (Observation); 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:25) (Observation); 3.4.4 (packages/esm-patient-common-lib/src/form-entry-interop.ts:70) (Observation); 3.4.4 (packages/esm-patient-common-lib/src/form-entry-interop.ts:97) (Observation); 3.4.4 (packages/esm-patient-vitals-app/src/utils.ts:16) (Observation); 3.4.5 #7 (Configuration); 3.4.5 #10 (Configuration); 3.4.5 #57 (Configuration) | 2 configuration | configuration | other | technological | moderate | configures #145; configures #160; configures #163; configures #210 |
+| 39 | 3.4.3 (packages/esm-patient-immunizations-app) (Entry); 3.4.5 #15 (Configuration) | 2 configuration | configuration | other | technological | moderate | configures #146; configures #168 |
+| 40 | 3.4.3 (packages/esm-patient-lists-app) (Entry); 3.4.7 #24 (Evidence) | 2 configuration | configuration | other | technological | moderate | configures #147 |
+| 41 | 3.4.3 (packages/esm-patient-medications-app) (Entry); 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69) (Observation); 3.4.4 (packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:120) (Observation); 3.4.4 (packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:156) (Observation); 3.4.5 #16 (Configuration); 3.4.5 #50 (Configuration) | 2 configuration | configuration | other | technological | moderate | configures #148; configures #169; configures #203 |
+| 42 | 3.4.3 (packages/esm-patient-notes-app) (Entry); 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:28) (Observation); 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/encounters-table/encounters-table.component.tsx:236) (Observation); 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/encounters-table/encounters-table.component.tsx:281) (Observation); 3.4.5 #27 (Configuration) | 2 configuration | configuration | other | technological | moderate | configures #149; configures #180 |
+| 43 | 3.4.3 (packages/esm-patient-orders-app) (Entry); 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37) (Observation); 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:27) (Observation); 3.4.4 (packages/esm-patient-medications-app/src/add-drug-order/add-drug-order.workspace.tsx:37) (Observation); 3.4.4 (packages/esm-patient-medications-app/src/add-drug-order/add-drug-order.workspace.tsx:71) (Observation); 3.4.4 (packages/esm-patient-medications-app/src/add-drug-order/drug-search/drug-search.component.tsx:25) (Observation); 3.4.4 (packages/esm-patient-medications-app/src/add-drug-order/drug-search/order-basket-search-results.component.tsx:149) (Observation); 3.4.4 (packages/esm-patient-medications-app/src/components/medications-details-table.component.tsx:71) (Observation); 3.4.4 (packages/esm-patient-medications-app/src/drug-order-basket-panel/drug-order-basket-panel.extension.tsx:58) (Observation); 3.4.4 (packages/esm-patient-medications-app/src/drug-order-basket-panel/drug-order-basket-panel.extension.tsx:66) (Observation); 3.4.4 (packages/esm-patient-medications-app/src/drug-order-basket-panel/order-basket-item-tile.component.tsx:103) (Observation); 3.4.4 (packages/esm-patient-tests-app/src/test-orders/add-test-order/add-test-order.workspace.tsx:78) (Observation); 3.4.4 (packages/esm-patient-tests-app/src/test-orders/add-test-order/test-order-form.component.tsx:153) (Observation); 3.4.4 (packages/esm-patient-tests-app/src/test-orders/add-test-order/test-order-form.component.tsx:163) (Observation); 3.4.4 (packages/esm-patient-tests-app/src/test-orders/add-test-order/test-type-search.component.tsx:54) (Observation); 3.4.4 (packages/esm-patient-tests-app/src/test-orders/add-test-order/test-type-search.component.tsx:208) (Observation); 3.4.4 (packages/esm-patient-tests-app/src/test-orders/lab-order-basket-panel/lab-order-basket-item-tile.component.tsx:68) (Observation); 3.4.4 (packages/esm-patient-tests-app/src/test-orders/lab-order-basket-panel/lab-order-basket-panel.extension.tsx:99) (Observation); 3.4.4 (packages/esm-patient-tests-app/src/test-orders/lab-order-basket-panel/lab-order-basket-panel.extension.tsx:111) (Observation); 3.4.5 #17 (Configuration); 3.4.5 #46 (Configuration); 3.4.5 #55 (Configuration) | 2 configuration | configuration | other | technological | moderate | configures #150; configures #170; configures #199; configures #208 |
+| 44 | 3.4.3 (packages/esm-patient-programs-app) (Entry); 3.4.5 #18 (Configuration) | 2 configuration | configuration | other | technological | moderate | configures #151; configures #171 |
+| 45 | 3.4.3 (packages/esm-patient-tests-app) (Entry); 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/tests-summary.component.tsx:13) (Observation); 3.4.4 (packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:121) (Observation); 3.4.4 (packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:156) (Observation); 3.4.5 #19 (Configuration); 3.4.5 #51 (Configuration) | 2 configuration | configuration | other | technological | moderate | configures #152; configures #172; configures #204 |
+| 46 | 3.4.3 (packages/esm-patient-vitals-app) (Entry); 3.4.4 (packages/esm-patient-chart-app/src/mark-patient-deceased/mark-patient-deceased-form.workspace.tsx:124) (Observation); 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37) (Observation); 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69) (Observation); 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:69) (Observation); 3.4.4 (packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:410) (Observation); 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:29) (Observation); 3.4.4 (packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:501) (Observation); 3.4.4 (packages/esm-patient-vitals-app/src/utils.ts:16) (Observation); 3.4.5 #11 (Configuration); 3.4.5 #49 (Configuration) | 2 configuration | configuration | other | technological | moderate | configures #153; configures #164; configures #202 |
+| 47 | 3.4.4 (packages/esm-form-entry-app/src/index.ts:66) (Observation); 3.4.4 (packages/esm-form-entry-app/src/bootstrap.ts:21) (Observation); 3.4.4 (packages/esm-form-entry-app/src/bootstrap.ts:23) (Observation); 3.4.4 (packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:95) (Observation); 3.4.4 (packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:249) (Observation); 3.4.5 #1 (Configuration); 3.4.5 #2 (Configuration); 3.4.7 #12 (Evidence) | 2 configuration | configuration | other | technological | moderate | configures #136; configures #154; configures #155 |
+| 48 | 3.4.4 (packages/esm-form-entry-app/src/index.ts:66) | 3 code | source code | — | technological | weak | — |
+| 49 | 3.4.4 (packages/esm-form-entry-app/src/declarations.d.ts:3) | 3 code | source code | — | context | weak | — |
+| 50 | 3.4.4 (packages/esm-form-entry-app/src/bootstrap.ts:21) | 3 code | source code | single-spa | architectural | moderate | implements #154; implements #155 |
+| 51 | 3.4.4 (packages/esm-form-entry-app/src/bootstrap.ts:22) | 3 code | source code | single-spa | architectural | moderate | implements #154; implements #155 |
+| 52 | 3.4.4 (packages/esm-form-entry-app/src/bootstrap.ts:23) | 3 code | source code | single-spa | architectural | moderate | implements #154; implements #155 |
+| 53 | 3.4.4 (packages/esm-form-entry-app/src/bootstrap.ts:3) | 3 code | source code | single-spa | architectural | moderate | implements #154; implements #155 |
+| 54 | 3.4.4 (packages/esm-form-entry-app/src/bootstrap.ts:12) | 3 code | source code | single-spa | architectural | moderate | implements #154; implements #155 |
+| 55 | 3.4.4 (packages/esm-patient-attachments-app/src/attachments/attachment-preview.component.tsx:56) | 3 code | source code | iframe | context | weak | — |
+| 56 | 3.4.4 (packages/esm-patient-forms-app/src/htmlformentry/html-form-entry-wrapper.component.tsx:43) | 3 code | source code | iframe | architectural | strong | implements #156 |
+| 57 | 3.4.4 (packages/esm-form-engine-app/src/form-collapse-toggle/form-collapse-toggle.component.tsx:15) | 3 code | source code | events | technological | ambiguous | implements #157 |
+| 58 | 3.4.4 (packages/esm-form-engine-app/src/form-collapse-toggle/form-collapse-toggle.component.tsx:23) | 3 code | source code | events | technological | ambiguous | implements #158 |
+| 59 | 3.4.4 (packages/esm-form-engine-app/src/form-collapse-toggle/form-collapse-toggle.component.tsx:24) | 3 code | source code | events | technological | ambiguous | implements #158 |
+| 60 | 3.4.4 (packages/esm-patient-flags-app/src/flags/hooks/usePatientFlags.tsx:56) | 3 code | source code | single-spa | architectural | moderate | implements #159 |
+| 61 | 3.4.4 (packages/esm-form-engine-app/src/form-renderer/form-error.component.tsx:20) | 3 code | source code | other | architectural | moderate | implements #160 |
+| 62 | 3.4.4 (packages/esm-form-engine-app/src/form-renderer/form-renderer.component.tsx:42) | 3 code | source code | other | architectural | moderate | implements #160 |
+| 63 | 3.4.4 (packages/esm-form-entry-app/src/app/fe-wrapper/fe-wrapper.component.ts:259) | 3 code | source code | other | architectural | strong | implements #161 |
+| 64 | 3.4.4 (packages/esm-generic-patient-widgets-app/src/obs-graph/obs-graph.component.tsx:113) | 3 code | source code | other | technological | ambiguous | implements #162 |
+| 65 | 3.4.4 (packages/esm-patient-chart-app/src/clinical-views/utils/helpers.ts:24) | 3 code | source code | other | architectural | strong | implements #163 |
+| 66 | 3.4.4 (packages/esm-patient-chart-app/src/mark-patient-deceased/mark-patient-deceased-form.workspace.tsx:124) | 3 code | source code | other | architectural | strong | implements #164 |
+| 67 | 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/chart-review/chart-review.component.tsx:37) | 3 code | source code | other | architectural | moderate | implements #164; implements #165; implements #166; implements #167; implements #168; implements #169; implements #170; implements #171; implements #172 |
+| 68 | 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:66) | 3 code | source code | other | technological | ambiguous | implements #173 |
+| 69 | 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69) | 3 code | source code | other | architectural | moderate | implements #164; implements #165; implements #166; implements #167; implements #168; implements #169; implements #170; implements #171; implements #172; implements #174 |
+| 70 | 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47) | 3 code | source code | other | architectural | strong | implements #164; implements #165; implements #166; implements #167; implements #168; implements #169; implements #170; implements #171; implements #172 |
+| 71 | 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:67) | 3 code | source code | other | architectural | strong | implements #175 |
+| 72 | 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:68) | 3 code | source code | other | architectural | strong | implements #174 |
+| 73 | 3.4.4 (packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:69) | 3 code | source code | other | architectural | strong | implements #164 |
+| 74 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:389) | 3 code | source code | other | architectural | strong | implements #175 |
+| 75 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:410) | 3 code | source code | other | architectural | strong | implements #164 |
+| 76 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:452) | 3 code | source code | other | technological | ambiguous | implements #176 |
+| 77 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:547) | 3 code | source code | other | technological | ambiguous | implements #177 |
+| 78 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visit-form/visit-form.workspace.tsx:562) | 3 code | source code | other | technological | ambiguous | implements #178 |
+| 79 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:23) | 3 code | source code | other | architectural | strong | implements #165 |
+| 80 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:24) | 3 code | source code | other | technological | ambiguous | implements #179 |
+| 81 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:25) | 3 code | source code | other | architectural | strong | implements #163 |
+| 82 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:26) | 3 code | source code | other | architectural | strong | implements #167 |
+| 83 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:27) | 3 code | source code | other | architectural | strong | implements #170 |
+| 84 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:28) | 3 code | source code | other | architectural | strong | implements #180 |
+| 85 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/active-visit-buttons/active-visit-buttons.tsx:29) | 3 code | source code | other | architectural | strong | implements #164 |
+| 86 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/encounters-table/encounters-table.component.tsx:236) | 3 code | source code | other | architectural | strong | implements #180 |
+| 87 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/encounters-table/encounters-table.component.tsx:281) | 3 code | source code | other | architectural | strong | implements #180 |
+| 88 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/tests-summary.component.tsx:13) | 3 code | source code | other | architectural | strong | implements #172 |
+| 89 | 3.4.4 (packages/esm-patient-chart-app/src/visit/visits-widget/past-visits-components/visit-summary.component.tsx:159) | 3 code | source code | other | technological | ambiguous | implements #181 |
+| 90 | 3.4.4 (packages/esm-patient-common-lib/src/form-entry-interop.ts:70) | 3 code | source code | other | architectural | moderate | implements #163 |
+| 91 | 3.4.4 (packages/esm-patient-common-lib/src/form-entry-interop.ts:97) | 3 code | source code | other | architectural | moderate | implements #163 |
+| 92 | 3.4.4 (packages/esm-patient-common-lib/src/launchStartVisitPrompt.tsx:4) | 3 code | source code | other | architectural | strong | implements #182; implements #183; implements #184; implements #185; implements #186; implements #187 |
+| 93 | 3.4.4 (packages/esm-patient-common-lib/src/nav-group/DashboardGroupExtension.tsx:24) | 3 code | source code | other | technological | ambiguous | implements #188 |
+| 94 | 3.4.4 (packages/esm-patient-common-lib/src/orders/store.ts:24) | 3 code | source code | events | architectural | moderate | implements #189; implements #190 |
+| 95 | 3.4.4 (packages/esm-patient-common-lib/src/store/patient-chart-store.ts:10) | 3 code | source code | events | architectural | moderate | implements #191; implements #192; implements #193; implements #194; implements #195; implements #196 |
+| 96 | 3.4.4 (packages/esm-patient-common-lib/src/workspaces.ts:55) | 3 code | source code | other | architectural | strong | implements #182; implements #184; implements #185; implements #186; implements #187 |
+| 97 | 3.4.4 (packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:94) | 3 code | source code | other | architectural | strong | implements #182 |
+| 98 | 3.4.4 (packages/esm-patient-forms-app/src/forms/form-entry.workspace.tsx:95) | 3 code | source code | other | architectural | strong | implements #154; implements #197 |
+| 99 | 3.4.4 (packages/esm-patient-forms-app/src/forms/forms-dashboard.workspace.tsx:12) | 3 code | source code | other | architectural | strong | implements #182 |
+| 100 | 3.4.4 (packages/esm-patient-forms-app/src/htmlformentry/html-form-entry-wrapper.component.tsx:17) | 3 code | source code | events | architectural | moderate | implements #198 |
+| 101 | 3.4.4 (packages/esm-patient-medications-app/src/add-drug-order/add-drug-order.workspace.tsx:37) | 3 code | source code | other | architectural | strong | implements #199 |
+| 102 | 3.4.4 (packages/esm-patient-medications-app/src/add-drug-order/add-drug-order.workspace.tsx:71) | 3 code | source code | other | architectural | strong | implements #199 |
+| 103 | 3.4.4 (packages/esm-patient-medications-app/src/add-drug-order/drug-order-form.component.tsx:213) | 3 code | source code | other | technological | ambiguous | implements #200 |
+| 104 | 3.4.4 (packages/esm-patient-medications-app/src/add-drug-order/drug-search/drug-search.component.tsx:25) | 3 code | source code | other | architectural | strong | implements #199 |
+| 105 | 3.4.4 (packages/esm-patient-medications-app/src/add-drug-order/drug-search/order-basket-search-results.component.tsx:149) | 3 code | source code | other | architectural | strong | implements #199 |
+| 106 | 3.4.4 (packages/esm-patient-medications-app/src/components/medications-details-table.component.tsx:71) | 3 code | source code | other | architectural | strong | implements #199 |
+| 107 | 3.4.4 (packages/esm-patient-medications-app/src/drug-order-basket-panel/drug-order-basket-panel.extension.tsx:58) | 3 code | source code | other | architectural | strong | implements #199 |
+| 108 | 3.4.4 (packages/esm-patient-medications-app/src/drug-order-basket-panel/drug-order-basket-panel.extension.tsx:66) | 3 code | source code | other | architectural | strong | implements #199 |
+| 109 | 3.4.4 (packages/esm-patient-medications-app/src/drug-order-basket-panel/order-basket-item-tile.component.tsx:103) | 3 code | source code | other | architectural | strong | implements #199 |
+| 110 | 3.4.4 (packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:315) | 3 code | source code | other | architectural | strong | implements #201 |
+| 111 | 3.4.4 (packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:497) | 3 code | source code | other | architectural | strong | implements #185 |
+| 112 | 3.4.4 (packages/esm-patient-notes-app/src/notes/visit-notes-form.workspace.tsx:501) | 3 code | source code | other | architectural | strong | implements #185; implements #202 |
+| 113 | 3.4.4 (packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:120) | 3 code | source code | other | architectural | strong | implements #203 |
+| 114 | 3.4.4 (packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:121) | 3 code | source code | other | architectural | strong | implements #204 |
+| 115 | 3.4.4 (packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:534) | 3 code | source code | other | technological | ambiguous | implements #205 |
+| 116 | 3.4.4 (packages/esm-patient-orders-app/src/components/order-details-table.component.tsx:561) | 3 code | source code | other | technological | ambiguous | implements #206 |
+| 117 | 3.4.4 (packages/esm-patient-orders-app/src/order-basket/general-order-type/general-order-form/general-order-form.component.tsx:169) | 3 code | source code | other | technological | ambiguous | implements #207 |
+| 118 | 3.4.4 (packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:57) | 3 code | source code | other | architectural | strong | implements #186 |
+| 119 | 3.4.4 (packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:154) | 3 code | source code | other | architectural | strong | implements #186 |
+| 120 | 3.4.4 (packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:156) | 3 code | source code | other | architectural | strong | implements #203; implements #204 |
+| 121 | 3.4.4 (packages/esm-patient-tests-app/src/test-orders/add-test-order/add-test-order.workspace.tsx:78) | 3 code | source code | other | architectural | strong | implements #208 |
+| 122 | 3.4.4 (packages/esm-patient-tests-app/src/test-orders/add-test-order/test-order-form.component.tsx:153) | 3 code | source code | other | architectural | strong | implements #208 |
+| 123 | 3.4.4 (packages/esm-patient-tests-app/src/test-orders/add-test-order/test-order-form.component.tsx:163) | 3 code | source code | other | architectural | strong | implements #208 |
+| 124 | 3.4.4 (packages/esm-patient-tests-app/src/test-orders/add-test-order/test-order-form.component.tsx:193) | 3 code | source code | other | technological | ambiguous | implements #209 |
+| 125 | 3.4.4 (packages/esm-patient-tests-app/src/test-orders/add-test-order/test-type-search.component.tsx:54) | 3 code | source code | other | architectural | strong | implements #208 |
+| 126 | 3.4.4 (packages/esm-patient-tests-app/src/test-orders/add-test-order/test-type-search.component.tsx:208) | 3 code | source code | other | architectural | strong | implements #208 |
+| 127 | 3.4.4 (packages/esm-patient-tests-app/src/test-orders/lab-order-basket-panel/lab-order-basket-item-tile.component.tsx:68) | 3 code | source code | other | architectural | strong | implements #208 |
+| 128 | 3.4.4 (packages/esm-patient-tests-app/src/test-orders/lab-order-basket-panel/lab-order-basket-panel.extension.tsx:99) | 3 code | source code | other | architectural | strong | implements #208 |
+| 129 | 3.4.4 (packages/esm-patient-tests-app/src/test-orders/lab-order-basket-panel/lab-order-basket-panel.extension.tsx:111) | 3 code | source code | other | architectural | strong | implements #208 |
+| 130 | 3.4.4 (packages/esm-patient-vitals-app/src/utils.ts:16) | 3 code | source code | other | architectural | strong | implements #210 |
+| 131 | 3.4.4 (packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:249) | 3 code | source code | other | architectural | strong | implements #155; implements #211 |
+| 132 | 3.4.4 (packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:268) | 3 code | source code | other | architectural | strong | implements #187 |
+| 133 | 3.4.4 (packages/esm-patient-vitals-app/src/vitals-biometrics-form/vitals-biometrics-form.workspace.tsx:300) | 3 code | source code | other | architectural | strong | implements #187 |
+| 134 | 3.4.3 (.) | 4 structure | directory | — | context | weak | — |
+| 135 | 3.4.3 (packages/esm-form-engine-app) | 4 structure | directory | — | architectural | moderate | — |
+| 136 | 3.4.3 (packages/esm-form-entry-app) | 4 structure | directory | — | architectural | moderate | — |
+| 137 | 3.4.3 (packages/esm-generic-patient-widgets-app) | 4 structure | directory | — | architectural | moderate | — |
+| 138 | 3.4.3 (packages/esm-patient-allergies-app) | 4 structure | directory | — | architectural | moderate | — |
+| 139 | 3.4.3 (packages/esm-patient-attachments-app) | 4 structure | directory | — | architectural | moderate | — |
+| 140 | 3.4.3 (packages/esm-patient-banner-app) | 4 structure | directory | — | architectural | moderate | — |
+| 141 | 3.4.3 (packages/esm-patient-chart-app) | 4 structure | directory | — | architectural | moderate | — |
+| 142 | 3.4.3 (packages/esm-patient-common-lib) | 4 structure | directory | — | context | weak | — |
+| 143 | 3.4.3 (packages/esm-patient-conditions-app) | 4 structure | directory | — | architectural | moderate | — |
+| 144 | 3.4.3 (packages/esm-patient-flags-app) | 4 structure | directory | — | architectural | moderate | — |
+| 145 | 3.4.3 (packages/esm-patient-forms-app) | 4 structure | directory | — | architectural | moderate | — |
+| 146 | 3.4.3 (packages/esm-patient-immunizations-app) | 4 structure | directory | — | architectural | moderate | — |
+| 147 | 3.4.3 (packages/esm-patient-lists-app) | 4 structure | directory | — | architectural | moderate | — |
+| 148 | 3.4.3 (packages/esm-patient-medications-app) | 4 structure | directory | — | architectural | moderate | — |
+| 149 | 3.4.3 (packages/esm-patient-notes-app) | 4 structure | directory | — | architectural | moderate | — |
+| 150 | 3.4.3 (packages/esm-patient-orders-app) | 4 structure | directory | — | architectural | moderate | — |
+| 151 | 3.4.3 (packages/esm-patient-programs-app) | 4 structure | directory | — | architectural | moderate | — |
+| 152 | 3.4.3 (packages/esm-patient-tests-app) | 4 structure | directory | — | architectural | moderate | — |
+| 153 | 3.4.3 (packages/esm-patient-vitals-app) | 4 structure | directory | — | architectural | moderate | — |
+| 154 | 3.4.5 #1 | 5 composition | source code | single-spa | architectural | strong | links #145; links #136 |
+| 155 | 3.4.5 #2 | 5 composition | source code | single-spa | architectural | strong | links #153; links #136 |
+| 156 | 3.4.5 #3 | 5 composition | source code | iframe | architectural | strong | links #145 |
+| 157 | 3.4.5 #4 | 5 composition | source code | events | technological | ambiguous | links #135 |
+| 158 | 3.4.5 #5 | 5 composition | source code | events | technological | ambiguous | links #135 |
+| 159 | 3.4.5 #6 | 5 composition | source code | events | architectural | strong | links #144 |
+| 160 | 3.4.5 #7 | 5 composition | source code | other | architectural | strong | links #135; links #145 |
+| 161 | 3.4.5 #8 | 5 composition | source code | other | architectural | strong | links #136; links #141 |
+| 162 | 3.4.5 #9 | 5 composition | source code | other | technological | ambiguous | links #137 |
+| 163 | 3.4.5 #10 | 5 composition | source code | other | architectural | strong | links #141; links #145 |
+| 164 | 3.4.5 #11 | 5 composition | source code | other | architectural | strong | links #141; links #153 |
+| 165 | 3.4.5 #12 | 5 composition | source code | other | architectural | strong | links #141; links #138 |
+| 166 | 3.4.5 #13 | 5 composition | source code | other | architectural | strong | links #141; links #139 |
+| 167 | 3.4.5 #14 | 5 composition | source code | other | architectural | strong | links #141; links #143 |
+| 168 | 3.4.5 #15 | 5 composition | source code | other | architectural | strong | links #141; links #146 |
+| 169 | 3.4.5 #16 | 5 composition | source code | other | architectural | strong | links #141; links #148 |
+| 170 | 3.4.5 #17 | 5 composition | source code | other | architectural | strong | links #141; links #150 |
+| 171 | 3.4.5 #18 | 5 composition | source code | other | architectural | strong | links #141; links #151 |
+| 172 | 3.4.5 #19 | 5 composition | source code | other | architectural | strong | links #141; links #152 |
+| 173 | 3.4.5 #20 | 5 composition | source code | other | technological | ambiguous | links #141 |
+| 174 | 3.4.5 #21 | 5 composition | source code | other | architectural | strong | links #141; links #144 |
+| 175 | 3.4.5 #22 | 5 composition | source code | other | architectural | strong | links #141; links #140 |
+| 176 | 3.4.5 #23 | 5 composition | source code | other | technological | ambiguous | links #141 |
+| 177 | 3.4.5 #24 | 5 composition | source code | other | technological | ambiguous | links #141 |
+| 178 | 3.4.5 #25 | 5 composition | source code | other | technological | ambiguous | links #141 |
+| 179 | 3.4.5 #26 | 5 composition | source code | other | technological | ambiguous | links #141 |
+| 180 | 3.4.5 #27 | 5 composition | source code | other | architectural | strong | links #141; links #149 |
+| 181 | 3.4.5 #28 | 5 composition | source code | other | technological | ambiguous | links #141 |
+| 182 | 3.4.5 #29 | 5 composition | source code | other | architectural | strong | links #145; links #141 |
+| 183 | 3.4.5 #30 | 5 composition | source code | other | architectural | strong | links #146; links #141 |
+| 184 | 3.4.5 #31 | 5 composition | source code | other | architectural | strong | links #148; links #141 |
+| 185 | 3.4.5 #32 | 5 composition | source code | other | architectural | strong | links #149; links #141 |
+| 186 | 3.4.5 #33 | 5 composition | source code | other | architectural | strong | links #150; links #141 |
+| 187 | 3.4.5 #34 | 5 composition | source code | other | architectural | strong | links #153; links #141 |
+| 188 | 3.4.5 #35 | 5 composition | source code | other | technological | ambiguous | links #141 |
+| 189 | 3.4.5 #36 | 5 composition | source code | events | architectural | strong | links #148; links #150 |
+| 190 | 3.4.5 #37 | 5 composition | source code | events | architectural | strong | links #150; links #152 |
+| 191 | 3.4.5 #38 | 5 composition | source code | events | architectural | strong | links #141; links #145 |
+| 192 | 3.4.5 #39 | 5 composition | source code | events | architectural | strong | links #141; links #148 |
+| 193 | 3.4.5 #40 | 5 composition | source code | events | architectural | strong | links #141; links #149 |
+| 194 | 3.4.5 #41 | 5 composition | source code | events | architectural | strong | links #141; links #150 |
+| 195 | 3.4.5 #42 | 5 composition | source code | events | architectural | strong | links #141; links #152 |
+| 196 | 3.4.5 #43 | 5 composition | source code | events | architectural | strong | links #141; links #153 |
+| 197 | 3.4.5 #44 | 5 composition | source code | other | architectural | strong | links #145; links #135 |
+| 198 | 3.4.5 #45 | 5 composition | source code | events | architectural | strong | links #145 |
+| 199 | 3.4.5 #46 | 5 composition | source code | other | architectural | strong | links #148; links #150 |
+| 200 | 3.4.5 #47 | 5 composition | source code | other | technological | ambiguous | links #148 |
+| 201 | 3.4.5 #48 | 5 composition | source code | other | architectural | strong | links #149; links #139 |
+| 202 | 3.4.5 #49 | 5 composition | source code | other | architectural | strong | links #149; links #153 |
+| 203 | 3.4.5 #50 | 5 composition | source code | other | architectural | strong | links #150; links #148 |
+| 204 | 3.4.5 #51 | 5 composition | source code | other | architectural | strong | links #150; links #152 |
+| 205 | 3.4.5 #52 | 5 composition | source code | other | technological | ambiguous | links #150 |
+| 206 | 3.4.5 #53 | 5 composition | source code | other | technological | ambiguous | links #150 |
+| 207 | 3.4.5 #54 | 5 composition | source code | other | technological | ambiguous | links #150 |
+| 208 | 3.4.5 #55 | 5 composition | source code | other | architectural | strong | links #152; links #150 |
+| 209 | 3.4.5 #56 | 5 composition | source code | other | technological | ambiguous | links #152 |
+| 210 | 3.4.5 #57 | 5 composition | source code | other | architectural | strong | links #153; links #145 |
+| 211 | 3.4.5 #58 | 5 composition | source code | other | architectural | strong | links #153; links #135 |
+| 212 | 3.4.6 #1 | 6 build-deploy | manifest | — | architectural | moderate | publishes #135 |
+| 213 | 3.4.6 #2 | 6 build-deploy | manifest | — | architectural | moderate | publishes #136 |
+| 214 | 3.4.6 #3 | 6 build-deploy | manifest | — | architectural | moderate | publishes #137 |
+| 215 | 3.4.6 #4 | 6 build-deploy | manifest | — | architectural | moderate | publishes #138 |
+| 216 | 3.4.6 #5 | 6 build-deploy | manifest | — | architectural | moderate | publishes #139 |
+| 217 | 3.4.6 #6 | 6 build-deploy | manifest | — | architectural | moderate | publishes #140 |
+| 218 | 3.4.6 #7 | 6 build-deploy | manifest | — | architectural | moderate | publishes #141 |
+| 219 | 3.4.6 #8 | 6 build-deploy | manifest | — | architectural | moderate | publishes #143 |
+| 220 | 3.4.6 #9 | 6 build-deploy | manifest | — | architectural | moderate | publishes #144 |
+| 221 | 3.4.6 #10 | 6 build-deploy | manifest | — | architectural | moderate | publishes #145 |
+| 222 | 3.4.6 #11 | 6 build-deploy | manifest | — | architectural | moderate | publishes #146 |
+| 223 | 3.4.6 #12 | 6 build-deploy | manifest | — | architectural | moderate | publishes #147 |
+| 224 | 3.4.6 #13 | 6 build-deploy | manifest | — | architectural | moderate | publishes #148 |
+| 225 | 3.4.6 #14 | 6 build-deploy | manifest | — | architectural | moderate | publishes #149 |
+| 226 | 3.4.6 #15 | 6 build-deploy | manifest | — | architectural | moderate | publishes #150 |
+| 227 | 3.4.6 #16 | 6 build-deploy | manifest | — | architectural | moderate | publishes #151 |
+| 228 | 3.4.6 #17 | 6 build-deploy | manifest | — | architectural | moderate | publishes #152 |
+| 229 | 3.4.6 #18 | 6 build-deploy | manifest | — | architectural | moderate | publishes #153 |
+| 230 | 3.4.7 #1 | 7 documentation | documentation | — | architectural | weak | corroborates #164; corroborates #165; corroborates #166; corroborates #167; corroborates #168; corroborates #169; corroborates #170; corroborates #171; corroborates #172; corroborates #174; corroborates #175; corroborates #135; corroborates #136; corroborates #137; corroborates #138; corroborates #139; corroborates #140; corroborates #141; corroborates #143; corroborates #144; corroborates #145; corroborates #146; corroborates #147; corroborates #148; corroborates #149; corroborates #150; corroborates #151; corroborates #152; corroborates #153 |
+| 231 | 3.4.7 #2 | 7 documentation | documentation | — | architectural | weak | contradicts #153; contradicts packages/esm-patient-vitals-app/README.md:3 |
+| 232 | 3.4.7 #3 | 7 documentation | documentation | — | architectural | weak | contradicts #142; contradicts packages/esm-patient-common-lib/src/index.ts:1-23; contradicts packages/esm-patient-common-lib/package.json:9-13 |
+| 233 | 3.4.7 #4 | 7 documentation | documentation | — | architectural | weak | corroborates package.json:5-7; corroborates package.json:87 |
+| 234 | 3.4.7 #5 | 7 documentation | documentation | — | architectural | weak | partially corroborates package.json:9; partially corroborates packages/esm-patient-allergies-app/package.json:10-11 |
+| 235 | 3.4.7 #6 | 7 documentation | documentation | — | architectural | weak | contradicts #153; contradicts packages/esm-patient-vitals-app/package.json:10-11 |
+| 236 | 3.4.7 #7 | 7 documentation | documentation | import-maps | architectural | weak | partially corroborates packages/esm-patient-allergies-app/package.json:11; partially corroborates packages/esm-form-entry-app/package.json:11 |
+| 237 | 3.4.7 #8 | 7 documentation | documentation | — | architectural | weak | corroborates #71; corroborates #34 |
+| 238 | 3.4.7 #9 | 7 documentation | documentation | — | architectural | weak | corroborates #164; corroborates #165; corroborates #166; corroborates #167; corroborates #168; corroborates #169; corroborates #170; corroborates #171; corroborates #172; corroborates #174; corroborates #175; corroborates packages/esm-patient-chart-app/src/patient-chart/chart-review/dashboard-view.component.tsx:69-78 |
+| 239 | 3.4.7 #10 | 7 documentation | comment | — | architectural | weak | contradicts e2e/support/github/run-e2e-docker-env.sh:8 |
+| 240 | 3.4.7 #11 | 7 documentation | comment | — | architectural | weak | contradicts e2e/support/github/run-e2e-docker-env.sh:29-38 |
+| 241 | 3.4.7 #12 | 7 documentation | documentation | single-spa | architectural | weak | corroborates #154; corroborates #155; corroborates packages/esm-form-entry-app/src/bootstrap.ts:12-23; corroborates #47 |
+| 242 | 3.4.7 #13 | 7 documentation | documentation | — | architectural | weak | corroborates #31; corroborates packages/esm-generic-patient-widgets-app/src/config-schema.ts:3-23 |
+| 243 | 3.4.7 #14 | 7 documentation | documentation | — | architectural | weak | corroborates #164; corroborates #165; corroborates #166; corroborates #167; corroborates #168; corroborates #169; corroborates #170; corroborates #171; corroborates #172; corroborates #174; corroborates #175; corroborates packages/esm-patient-chart-app/src/root.component.tsx:11-16; corroborates packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:47-92; corroborates packages/esm-patient-chart-app/src/index.ts:33-42 |
+| 244 | 3.4.7 #15 | 7 documentation | comment | — | architectural | weak | partially corroborates packages/esm-patient-chart-app/src/index.ts:7-8; partially corroborates packages/esm-patient-chart-app/src/index.ts:29; partially corroborates packages/esm-form-entry-app/src/app/fe-wrapper/fe-wrapper.component.ts:3 |
+| 245 | 3.4.7 #16 | 7 documentation | comment | — | architectural | weak | partially corroborates packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:4; partially corroborates packages/esm-patient-chart-app/src/patient-chart/patient-chart.component.tsx:32-36 |
+| 246 | 3.4.7 #17 | 7 documentation | comment | — | architectural | weak | — |
+| 247 | 3.4.7 #18 | 7 documentation | documentation | — | architectural | weak | corroborates packages/esm-patient-allergies-app/src/index.ts:10; corroborates packages/esm-patient-chart-app/src/index.ts:7-8; corroborates packages/esm-patient-common-lib/src/index.ts:1-23 |
+| 248 | 3.4.7 #19 | 7 documentation | comment | — | architectural | weak | corroborates #189; corroborates #190; corroborates packages/esm-patient-common-lib/src/orders/useOrderBasket.ts:37-40; corroborates packages/esm-patient-medications-app/src/drug-order-basket-panel/drug-order-basket-panel.extension.tsx:19; corroborates packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:38 |
+| 249 | 3.4.7 #20 | 7 documentation | documentation | — | architectural | weak | corroborates #174; corroborates #37 |
+| 250 | 3.4.7 #21 | 7 documentation | comment | iframe | architectural | weak | corroborates #198; corroborates packages/esm-patient-forms-app/src/htmlformentry/html-form-entry-wrapper.component.tsx:15-19 |
+| 251 | 3.4.7 #22 | 7 documentation | comment | iframe | architectural | weak | corroborates #156; corroborates packages/esm-patient-forms-app/src/htmlformentry/html-form-entry-wrapper.component.tsx:22-43 |
+| 252 | 3.4.7 #23 | 7 documentation | comment | iframe | architectural | weak | partially corroborates packages/esm-patient-forms-app/src/htmlformentry/html-form-entry.workspace.tsx:29-44; partially corroborates packages/esm-patient-forms-app/src/htmlformentry/html-form-entry-wrapper.component.tsx:15-19 |
+| 253 | 3.4.7 #24 | 7 documentation | documentation | — | architectural | weak | corroborates #147; corroborates #40 |
+| 254 | 3.4.7 #25 | 7 documentation | comment | — | architectural | weak | corroborates #203; corroborates #204; corroborates #150; corroborates packages/esm-patient-orders-app/src/order-basket/order-basket.workspace.tsx:38 |
+| 255 | 3.4.8 #1 | 8 history | history | — | technological | weak | explains #4 |
+| 256 | 3.4.8 #2 | 8 history | history | — | technological | weak | explains #6 |
+| 257 | 3.4.8 #3 | 8 history | history | — | technological | weak | explains #14 |
+| 258 | 3.4.8 #4 | 8 history | history | — | technological | weak | explains #15 |
+| 259 | 3.4.8 #5 | 8 history | history | — | technological | weak | explains #17 |
+| 260 | 3.4.8 #6 | 8 history | history | — | technological | ambiguous | explains #157; explains #57 |
+| 261 | 3.4.8 #7 | 8 history | history | — | technological | ambiguous | explains #158; explains #58; explains #59 |
+| 262 | 3.4.8 #8 | 8 history | history | — | technological | ambiguous | explains #162; explains #64 |
+| 263 | 3.4.8 #9 | 8 history | history | — | technological | ambiguous | explains #173; explains #68 |
+| 264 | 3.4.8 #10 | 8 history | history | — | technological | ambiguous | explains #176; explains #76 |
+| 265 | 3.4.8 #11 | 8 history | history | — | technological | ambiguous | explains #177; explains #77 |
+| 266 | 3.4.8 #12 | 8 history | history | — | technological | ambiguous | explains #178; explains #78 |
+| 267 | 3.4.8 #13 | 8 history | history | — | technological | ambiguous | explains #179; explains #246; explains #80 |
+| 268 | 3.4.8 #14 | 8 history | history | — | technological | ambiguous | explains #181; explains #89 |
+| 269 | 3.4.8 #15 | 8 history | history | — | technological | ambiguous | explains #188; explains #93 |
+| 270 | 3.4.8 #16 | 8 history | history | — | technological | ambiguous | explains #200; explains #103 |
+| 271 | 3.4.8 #17 | 8 history | history | — | technological | ambiguous | explains #205; explains #115 |
+| 272 | 3.4.8 #18 | 8 history | history | — | technological | ambiguous | explains #206; explains #116 |
+| 273 | 3.4.8 #19 | 8 history | history | — | technological | ambiguous | explains #207; explains #209; explains #117; explains #124 |
+| 274 | 3.4.8 #20 | 8 history | history | — | architectural | weak | explains #231; explains #235 |
+| 275 | 3.4.8 #21 | 8 history | history | — | architectural | weak | explains #232 |
+| 276 | 3.4.8 #22 | 8 history | history | — | architectural | ambiguous | explains #234 |
+| 277 | 3.4.8 #23 | 8 history | history | — | architectural | ambiguous | explains #236 |
+| 278 | 3.4.8 #24 | 8 history | history | — | architectural | weak | explains #239 |
+| 279 | 3.4.8 #25 | 8 history | history | — | architectural | weak | explains #240 |
+| 280 | 3.4.8 #26 | 8 history | history | — | architectural | ambiguous | explains #244 |
+| 281 | 3.4.8 #27 | 8 history | history | — | architectural | ambiguous | explains #245 |
+| 282 | 3.4.8 #28 | 8 history | history | — | architectural | ambiguous | explains #252 |
 
-## Resumo
+## Summary
 
-Observações: 282. Dimensões (tecnologia: 28, configuração: 19, código: 86, estrutura: 20, composição: 58, build-deploy: 18, documentação: 25, histórico: 28). Força (forte: 95, moderada: 70, fraca: 67, ambígua: 50). Evidência (tecnológica: 97, arquitetural: 180, contexto: 5).
+Observations: 282. Dimensions (technology: 28, configuration: 19, code: 86, structure: 20, composition: 58, build-deploy: 18, documentation: 25, history: 28). Strength (strong: 95, moderate: 70, weak: 67, ambiguous: 50). Evidence (technological: 97, architectural: 180, context: 5).
 
-## Notas
+## Notes
 
-As regras comuns foram lidas em `docs/mfe-source-review/regras-comuns.md`, pois `docs/mfe-review-pipeline/regras-comuns.md` não existe neste checkout. As sete revisões finais têm o mesmo ID e commit da classificação. Foram usadas somente essas revisões e os trechos citados do snapshot adquirido.
+Common rules were read in `docs/mfe-source-review/regras-comuns.md`, because `docs/mfe-review-pipeline/regras-comuns.md` does not exist in this checkout. Seven final reviews have same ID/commit as classification. Only these reviews/cited acquired-snapshot excerpts used.
 
-Os 18 `src/routes.json` são configurações de registro por unidade; cada arquivo constitui um bloco da sua unidade, reunindo suas origens nas tabelas. O webpack de form-entry constitui outro bloco, com o plugin de federação. Os demais webpack delegam ao tooling externo; `webpack.prod.config.js` apenas reexporta a configuração; `angular.json` aponta para ela, sem declarar por si um builder de federação. Workspaces de package.json, tarefas Turbo, aliases, portas, URLs de desenvolvimento e os artefatos do ambiente e2e não acrescentam blocos elegíveis de configuração de composição. O JSON de montagem e2e é gerado por um script, não um arquivo de configuração disponível no snapshot.
+The 18 `src/routes.json` files are per-unit registry configurations; each forms one unit block, gathering origins from tables. Form-entry webpack forms another block with federation plugin. Other webpack files delegate to external tooling; `webpack.prod.config.js` merely reexports configuration; `angular.json` points to it without itself declaring federation builder. package.json workspaces, Turbo tasks, aliases, ports, development URLs/e2e environment artifacts add no eligible composition-configuration blocks. E2e mounting JSON generated by script rather than configuration file available in snapshot.
 
-As direções das relações com o shell e HFE-UI preservam as decisões registradas na 3.4.5: a origem é a unidade local participante, embora a mensagem venha do destino externo. A força das afirmações permanece fraca, mesmo quando corroboradas; a corroboração aparece somente nas relações dirigidas da tabela.
+Shell/HFE-UI relationship directions preserve recorded 3.4.5 decisions: source is local participating unit although message comes from external target. Claim strength remains weak even corroborated; corroboration appears only in table’s directed relationships.

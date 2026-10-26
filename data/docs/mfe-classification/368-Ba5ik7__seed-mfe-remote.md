@@ -20,80 +20,80 @@ annotation:
 
 # 368 — Ba5ik7/seed-mfe-remote
 
-## Contexto
+## Context
 
-Workspace Angular CLI 19 com dois projetos:
-- `seed-mfe-remote`: um remote Module Federation (`@angular-architects/module-federation` + `ngx-build-plus`) que expõe um componente `RemoteWidget`;
-- `demo`: um host que carrega esse componente de duas formas, montado num `ViewContainerRef` e por uma rota `remote`.
+Angular CLI 19 workspace with two projects:
+- `seed-mfe-remote`: a Module Federation remote (`@angular-architects/module-federation` + `ngx-build-plus`) exposing a `RemoteWidget` component;
+- `demo`: a host loading this component in two ways, mounted in a `ViewContainerRef` and through a `remote` route.
 
-O conteúdo é mínimo (“Remote Widget LOADED!!!!”). O conjunto funciona como semente de remote acompanhada de um host de demonstração. O README é o texto padrão gerado pelo Angular CLI, com a porta ajustada para 4202 (`README.md:1–3`, `:13`). O nome do repositório não é usado como evidência.
+Content is minimal (“Remote Widget LOADED!!!!”). The set serves as a remote seed accompanied by a demonstration host. The README is standard Angular CLI generated text, with the port adjusted to 4202 (`README.md:1–3`, `:13`). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:369` registra rank 368, ID 969679126, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:369` records rank 368, ID 969679126, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:369` registra a estratégia `technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:13189` (`technology`, `unknown`) e `data/discovery/mfe-round-002/candidates.csv:13194` (`technology`, `pass`).
+`data/samples/mfe-sample-001/sample.csv:369` records strategy `technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:13189` (`technology`, `unknown`) and `data/discovery/mfe-round-002/candidates.csv:13194` (`technology`, `pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, ambos do endpoint `code`:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same two hits in each round, both from endpoint `code`:
 
-| Consulta (`q`) | Subconsulta | `path` | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | `path` | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `technology-angular-module-federation-package-code`: `"@angular-architects/module-federation" filename:package.json` | `…#size:1150..1299` | `package.json` | 2026-10-07T22:09:45.284Z / 2026-10-08T15:52:53.240Z |
 | `technology-module-federation-plugin-js-code`: `ModuleFederationPlugin remotes extension:js` | `…#size:300..399` | `projects/demo/webpack.config.js` | 2026-10-07T22:21:49.595Z / 2026-10-08T16:04:25.151Z |
 
-Os metadados do hit de código e de `candidates.csv` registram só descrição nula e `fork: false`.
+Code hit and `candidates.csv` metadata record only a null description and `fork: false`.
 
-Correspondências no SHA:
-- **`package.json`** (1.236 bytes, dentro da faixa): `"@angular-architects/module-federation": "^19.0.3"` em `package.json:14`.
-- **`projects/demo/webpack.config.js`** (345 bytes, dentro da faixa): `withModuleFederationPlugin` em `:1` e `:3`, e `remotes` em `:5–7`.
-  - O termo `ModuleFederationPlugin` aparece só como parte de `withModuleFederationPlugin`.
-  - O casamento depende da tokenização da busca de código do GitHub, que não está registrada.
+Matches at the SHA:
+- **`package.json`** (1.236 bytes, within range): `"@angular-architects/module-federation": "^19.0.3"` in `package.json:14`.
+- **`projects/demo/webpack.config.js`** (345 bytes, within range): `withModuleFederationPlugin` in `:1` and `:3`, and `remotes` in `:5–7`.
+  - Term `ModuleFederationPlugin` appears only as part of `withModuleFederationPlugin`.
+  - Matching depends on GitHub code search tokenization, which is not recorded.
 
-O acerto não depende do README, que não menciona micro-frontends nem federação. Os dois arquivos foram alterados pela última vez no SHA (2025-04-20), antes das coletas de outubro de 2026.
+The hit does not depend on the README, which mentions neither micro-frontends nor federation. Both files were last changed at the SHA (2025-04-20), before the October 2026 collections.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 35 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Raiz com `angular.json`, `package.json`, `tsconfig.json` e `.vscode/`; `projects/demo/` e `projects/seed-mfe-remote/` com `src/main.ts`, `src/bootstrap.ts`, `index.html` e `webpack.config.js`/`webpack.prod.config.js`. | forte |
-| Configuração (remote) | `projects/seed-mfe-remote/webpack.config.js:3–14`: `withModuleFederationPlugin({ name: 'seedMfeRemote', exposes: { './RemoteWidget': './projects/seed-mfe-remote/src/app/remote-widget/remote-widget.component.ts' }, shared: shareAll(singleton, strictVersion) })`. | forte |
-| Configuração (host) | `projects/demo/webpack.config.js:3–12`: `remotes: { "seedMfeRemote": "http://localhost:4202/remoteEntry.js" }` e `shareAll`. | forte |
-| Código-fonte (composição) | `projects/demo/src/app/app.component.ts:24–36`: `loadRemoteModule({ type: 'module', remoteEntry: 'http://localhost:4202/remoteEntry.js', exposedModule: './RemoteWidget' })` e `createComponent(RemoteWidgetComponent)` no `ViewContainerRef` (`:12`, `:21–22`). `projects/demo/src/app/app.routes.ts:5–13`: rota `remote` com `loadComponent` pelo mesmo `loadRemoteModule`. `projects/seed-mfe-remote/src/app/remote-widget/remote-widget.component.ts:3–10`: componente exportado. | forte |
-| Configuração (correspondência da cadeia) | A URL `http://localhost:4202/remoteEntry.js` do host coincide com a porta do dev-server do remote (`angular.json:80`), e `./RemoteWidget` coincide com `exposes`. O host serve na porta 4201 (`angular.json:185`). | forte |
-| Build | `angular.json:18–39`, `:68–82`: `ngx-build-plus:browser`/`dev-server` para `seed-mfe-remote`, `outputPath: dist/seed-mfe-remote`, `main` e `extraWebpackConfig` próprios. `angular.json:123–144`, `:173–187`: idem para `demo` (`dist/demo`). Os entries delegam a `bootstrap.ts` (`projects/demo/src/main.ts:1–2`; `projects/seed-mfe-remote/src/main.ts:1–2`). | moderada |
-| Código-fonte (fronteiras) | Busca ativa por imports com `../` e por caminhos do outro projeto em `projects/`: nenhum import cruzado; a única ocorrência de `seed-mfe-remote/` é o caminho em `exposes` (`projects/seed-mfe-remote/webpack.config.js:8`). | contexto |
-| Documentação | `README.md:1–59`: README padrão do Angular CLI, sem menção a micro-frontends; `:13` com a porta 4202. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 35 entries, all regular files `100644`; zero symlinks and zero gitlinks. Root with `angular.json`, `package.json`, `tsconfig.json` and `.vscode/`; `projects/demo/` and `projects/seed-mfe-remote/` with `src/main.ts`, `src/bootstrap.ts`, `index.html` and `webpack.config.js`/`webpack.prod.config.js`. | strong |
+| Configuration (remote) | `projects/seed-mfe-remote/webpack.config.js:3–14`: `withModuleFederationPlugin({ name: 'seedMfeRemote', exposes: { './RemoteWidget': './projects/seed-mfe-remote/src/app/remote-widget/remote-widget.component.ts' }, shared: shareAll(singleton, strictVersion) })`. | strong |
+| Configuration (host) | `projects/demo/webpack.config.js:3–12`: `remotes: { "seedMfeRemote": "http://localhost:4202/remoteEntry.js" }` and `shareAll`. | strong |
+| Source code (composition) | `projects/demo/src/app/app.component.ts:24–36`: `loadRemoteModule({ type: 'module', remoteEntry: 'http://localhost:4202/remoteEntry.js', exposedModule: './RemoteWidget' })` and `createComponent(RemoteWidgetComponent)` in `ViewContainerRef` (`:12`, `:21–22`). `projects/demo/src/app/app.routes.ts:5–13`: route `remote` with `loadComponent` through the same `loadRemoteModule`. `projects/seed-mfe-remote/src/app/remote-widget/remote-widget.component.ts:3–10`: exported component. | strong |
+| Configuration (chain matching) | Host URL `http://localhost:4202/remoteEntry.js` matches the remote dev server port (`angular.json:80`), and `./RemoteWidget` matches `exposes`. The host serves on port 4201 (`angular.json:185`). | strong |
+| Build | `angular.json:18–39`, `:68–82`: `ngx-build-plus:browser`/`dev-server` for `seed-mfe-remote`, `outputPath: dist/seed-mfe-remote`, own `main` and `extraWebpackConfig`. `angular.json:123–144`, `:173–187`: likewise for `demo` (`dist/demo`). Entries delegate to `bootstrap.ts` (`projects/demo/src/main.ts:1–2`; `projects/seed-mfe-remote/src/main.ts:1–2`). | moderate |
+| Source code (boundaries) | Active search for imports with `../` and other project paths in `projects/`: no cross-import; the only occurrence of `seed-mfe-remote/` is the path in `exposes` (`projects/seed-mfe-remote/webpack.config.js:8`). | context |
+| Documentation | `README.md:1–59`: standard Angular CLI README, without mention of micro-frontends; `:13` with port 4202. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso e parcial (`blob:none`). Há 2 commits (2 em todos os refs), sem merges, ambos de `Wesley DuSell <dusellfam@gmail.com>` (autor e committer):
-- `b95ce7d` (2025-04-19, “initial commit”): adiciona o workspace gerado pelo Angular CLI (README, `angular.json`, `package.json`, configurações);
-- `3565dd8` (2025-04-20, “INIT”), o SHA: adiciona `projects/demo/` e `projects/seed-mfe-remote/` e altera `angular.json`, `package.json`, README e `tsconfig.json`.
+Non-shallow, partial clone (`blob:none`). There are 2 commits (2 across all refs), no merges, both by `Wesley DuSell <dusellfam@gmail.com>` (author and committer):
+- `b95ce7d` (2025-04-19, “initial commit”): adds the Angular CLI generated workspace (README, `angular.json`, `package.json`, configurations);
+- `3565dd8` (2025-04-20, “INIT”), the SHA: adds `projects/demo/` and `projects/seed-mfe-remote/` and changes `angular.json`, `package.json`, README and `tsconfig.json`.
 
-`git rev-list --objects $SHA --missing=print` lista 6 objetos ausentes, nenhum na árvore do SHA.
+`git rev-list --objects $SHA --missing=print` lists 6 missing objects, none in the SHA tree.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | Duas unidades: o remote `seedMfeRemote` e o host `demo`, que o referencia em `remotes` (`projects/demo/webpack.config.js:5–7`). |
-| Q2 | Yes | Cada projeto tem entry, configuração webpack, `outputPath` e dev-server próprios (`angular.json:18–39`, `:68–82`, `:123–144`, `:173–187`). Não há import de código-fonte entre eles (busca registrada). |
-| Q3 | Yes | O host monta o componente remoto (`projects/demo/src/app/app.component.ts:24–36`) e o roteia em `remote` (`projects/demo/src/app/app.routes.ts:5–13`). |
-| Q4 | Yes | Module Federation configurada nos dois lados e usada por `loadRemoteModule`, com URL, porta e módulo exposto correspondentes. |
-| Q5 | Yes | Q1–Q4 convergem. |
+| Q1 | Yes | Two units: remote `seedMfeRemote` and host `demo`, which references it in `remotes` (`projects/demo/webpack.config.js:5–7`). |
+| Q2 | Yes | Each project has its own entry, webpack configuration, `outputPath` and dev server (`angular.json:18–39`, `:68–82`, `:123–144`, `:173–187`). No source code import between them (recorded search). |
+| Q3 | Yes | The host mounts the remote component (`projects/demo/src/app/app.component.ts:24–36`) and routes it at `remote` (`projects/demo/src/app/app.routes.ts:5–13`). |
+| Q4 | Yes | Module Federation configured on both sides and used through `loadRemoteModule`, with matching URL, port and exposed module. |
+| Q5 | Yes | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- `MFE-implemented`: Q1–Q5 Yes. Corresponde a “examples, templates… that actually compose frontend units”, como o final 046 (template com host e remotes).
-- Cadeia completa como em 076/084/096/106/109, em escala mínima.
-- Difere do final 051 (template de remote sozinho, `MFE-unit`): aqui o host está no repositório e consome o remote.
-- Não é code sharing (089/100): o host carrega e monta um componente remoto em runtime, embora o componente seja trivial.
-- Não é conteúdo, gerador ou exercício (023/075/081/094/105): a composição está configurada e conectada.
-- `frontend_units: 2`, `unit_organization: monorepo` (dois projetos no mesmo workspace Angular), `approaches: [module-federation]`, `ui_technologies: [angular]`, `build_tools: [webpack]` (`ngx-build-plus` com webpack). `repo_type: template` (semente de remote com host de demonstração).
-- Não há decisão aberta.
+- `MFE-implemented`: Q1–Q5 Yes. It matches “examples, templates… that actually compose frontend units”, like final 046 (template with host and remotes).
+- Complete chain as in 076/084/096/106/109, at minimal scale.
+- It differs from final 051 (standalone remote template, `MFE-unit`): here the host is in the repository and consumes the remote.
+- It is not code sharing (089/100): the host loads and mounts a remote component at runtime, although the component is trivial.
+- It is not content, a generator or an exercise (023/075/081/094/105): composition is configured and connected.
+- `frontend_units: 2`, `unit_organization: monorepo` (two projects in the same Angular workspace), `approaches: [module-federation]`, `ui_technologies: [angular]`, `build_tools: [webpack]` (`ngx-build-plus` with webpack). `repo_type: template` (remote seed with demonstration host).
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** o host combina `remotes` estáticos no webpack (`projects/demo/webpack.config.js:5–7`) com `loadRemoteModule` de `type: 'module'` e URL explícita (`app.component.ts:26–30`). A entrada `seedMfeRemote` em `remotes` não é usada pelas chamadas, que passam a URL direto.
-- **RQ1:** repositório mínimo, com conteúdo de teste (“Remote Widget LOADED!!!!”) e README padrão do CLI; a classe vem só da configuração. O `demo` funciona como host de verificação da semente, papel que corresponde ao do container em templates como o 046.
-- **Protocolo (busca):** o hit `ModuleFederationPlugin remotes extension:js` casou um arquivo em que o termo só aparece dentro de `withModuleFederationPlugin`. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ2:** the host combines static `remotes` in webpack (`projects/demo/webpack.config.js:5–7`) with `loadRemoteModule` of `type: 'module'` and an explicit URL (`app.component.ts:26–30`). Entry `seedMfeRemote` in `remotes` is not used by the calls, which pass the URL directly.
+- **RQ1:** minimal repository, with test content (“Remote Widget LOADED!!!!”) and standard CLI README; classification comes only from configuration. The `demo` serves as a seed verification host, a role matching the container in templates such as 046.
+- **Protocol (search):** hit `ModuleFederationPlugin remotes extension:js` matched a file where the term appears only inside `withModuleFederationPlugin`. Eligibility changes from `unknown` (001) to `pass` (002).

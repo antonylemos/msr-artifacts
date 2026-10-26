@@ -15,30 +15,30 @@ annotation:
 
 # 318 — farzanemadani/todo-app-using-mfe
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-remote-import | host-app/src/App.jsx:2 | host-app | dynamic-loading | Yes | `React.lazy(() => import('todoForm_app/TodoForm'))` carrega o módulo `./TodoForm` exposto por todoForm-app (todoForm-app/webpack.prod.js:51-52), resolvido pelo remote `todoForm_app` em host-app/webpack.prod.js:53 e host-app/webpack.dev.js:49; renderizado em host-app/src/App.jsx:17 e :20. Cadeia ativa: host-app/webpack.prod.js:11 (`./src/bootstrap.js`) → host-app/src/bootstrap.js:1 → host-app/src/index.js:2-10 |
-| src-remote-import | host-app/src/App.jsx:3 | host-app | dynamic-loading | Yes | `React.lazy(() => import('todoList_app/todoList'))` carrega o módulo `./todoList` exposto por todoList-app (todoList-app/webpack.prod.js:50-51), resolvido pelo remote `todoList_app` em host-app/webpack.prod.js:54 e host-app/webpack.dev.js:50; renderizado em host-app/src/App.jsx:14. Mesma cadeia ativa da linha anterior |
+| src-remote-import | host-app/src/App.jsx:2 | host-app | dynamic-loading | Yes | `React.lazy(() => import('todoForm_app/TodoForm'))` loads module `./TodoForm` exposed by todoForm-app (todoForm-app/webpack.prod.js:51-52), resolved by remote `todoForm_app` at host-app/webpack.prod.js:53 and host-app/webpack.dev.js:49; rendered at host-app/src/App.jsx:17 and :20. Active chain: host-app/webpack.prod.js:11 (`./src/bootstrap.js`) → host-app/src/bootstrap.js:1 → host-app/src/index.js:2-10 |
+| src-remote-import | host-app/src/App.jsx:3 | host-app | dynamic-loading | Yes | `React.lazy(() => import('todoList_app/todoList'))` loads module `./todoList` exposed by todoList-app (todoList-app/webpack.prod.js:50-51), resolved by remote `todoList_app` at host-app/webpack.prod.js:54 and host-app/webpack.dev.js:50; rendered at host-app/src/App.jsx:14. Same active chain as the preceding row |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | host-app/src/App.jsx:12 | host-app | host-relationship | Yes | `Routes` declara onde cada remote entra na UI do host: `/` → `ToDoList` (todoList-app), `/add` e `/edit/:id` → `TodoForm` (todoForm-app) (host-app/src/App.jsx:12-22); roteador `BrowserRouter` em host-app/src/index.js:7-9 |
-| manual | host-app/src/App.jsx:14 | host-app | runtime-composition | Yes | Renderiza o componente remoto `ToDoList` dentro de `Suspense` na rota `/` (host-app/src/App.jsx:13-15), resolvido pelo import remoto em host-app/src/App.jsx:3 |
-| manual | host-app/src/App.jsx:17 | host-app | runtime-composition | Yes | Renderiza o componente remoto `TodoForm` dentro de `Suspense` na rota `/add` (host-app/src/App.jsx:16-18), resolvido pelo import remoto em host-app/src/App.jsx:2 |
-| manual | host-app/src/App.jsx:20 | host-app | runtime-composition | Yes | Renderiza o componente remoto `TodoForm` na rota `/edit/:id` com a prop `type='edit'` (host-app/src/App.jsx:19-21); o remote lê o parâmetro com `useParams` em todoForm-app/src/components/todoForm.jsx:14 |
-| manual | todoForm-app/src/components/todoForm.jsx:29 | todoForm-app | communication | Yes | `localStorage.setItem('todos', ...)` grava a lista de tarefas ao adicionar (todoForm-app/src/components/todoForm.jsx:27-29) e ao editar (:33-40); `TodoForm` é o módulo exposto `./TodoForm` (todoForm-app/webpack.prod.js:51-52), montado pelo host nas rotas `/add` e `/edit/:id` (host-app/src/App.jsx:17, :20). A mesma chave é lida por `ToDoList` de todoList-app (todoList-app/src/components/ToDoList.jsx:8; regravada na exclusão, :12), montado na rota `/` (host-app/src/App.jsx:14). Os dois remotes rodam na página do host, na mesma origem, e compartilham o `localStorage`; não há evento `storage`, a lista é relida quando `ToDoList` monta após `navigate('/')` (todoForm-app/src/components/todoForm.jsx:31, :42) |
+| manual | host-app/src/App.jsx:12 | host-app | host-relationship | Yes | `Routes` declares where each remote enters the host UI: `/` → `ToDoList` (todoList-app), `/add` and `/edit/:id` → `TodoForm` (todoForm-app) (host-app/src/App.jsx:12-22); router `BrowserRouter` at host-app/src/index.js:7-9 |
+| manual | host-app/src/App.jsx:14 | host-app | runtime-composition | Yes | Renders remote component `ToDoList` inside `Suspense` in route `/` (host-app/src/App.jsx:13-15), resolved through the remote import at host-app/src/App.jsx:3 |
+| manual | host-app/src/App.jsx:17 | host-app | runtime-composition | Yes | Renders remote component `TodoForm` inside `Suspense` in route `/add` (host-app/src/App.jsx:16-18), resolved through the remote import at host-app/src/App.jsx:2 |
+| manual | host-app/src/App.jsx:20 | host-app | runtime-composition | Yes | Renders remote component `TodoForm` in route `/edit/:id` with prop `type='edit'` (host-app/src/App.jsx:19-21); the remote reads the parameter with `useParams` at todoForm-app/src/components/todoForm.jsx:14 |
+| manual | todoForm-app/src/components/todoForm.jsx:29 | todoForm-app | communication | Yes | `localStorage.setItem('todos', ...)` writes the task list when adding (todoForm-app/src/components/todoForm.jsx:27-29) and editing (:33-40); `TodoForm` is exposed module `./TodoForm` (todoForm-app/webpack.prod.js:51-52), mounted by the host at routes `/add` and `/edit/:id` (host-app/src/App.jsx:17, :20). The same key is read by `ToDoList` from todoList-app (todoList-app/src/components/ToDoList.jsx:8; rewritten on deletion, :12), mounted in route `/` (host-app/src/App.jsx:14). Both remotes run in the host page, at the same origin, and share `localStorage`; there is no `storage` event, and the list is reread when `ToDoList` mounts after `navigate('/')` (todoForm-app/src/components/todoForm.jsx:31, :42) |
 
-## Resumo
+## Summary
 
-Construções com composição: 7 (dynamic-loading: 2, host-relationship: 1, runtime-composition: 3, communication: 1).
+Constructs participating in composition: 7 (dynamic-loading: 2, host-relationship: 1, runtime-composition: 3, communication: 1).
 
-## Notas
+## Notes
 
-- Os três `bootstrap.js` (host-app/src/bootstrap.js:1, todoForm-app/src/bootstrap.js:1, todoList-app/src/bootstrap.js:1) fazem `import('./index.js')` local; são internos a cada unidade e não viram linha manual.
-- A chave `todos` do `localStorage`, gravada por todoForm-app e lida por todoList-app, virou a linha manual communication de todoForm-app/src/components/todoForm.jsx:29. Não há evento `storage` nem outro canal entre os remotes; a navegação entre eles (`navigate('/add')`, `navigate('/edit/...')`, `navigate('/')`) usa o roteador do host.
-- As duas renderizações de `TodoForm` (linhas 17 e 20) ficaram em linhas separadas porque são pontos de montagem em rotas diferentes, com props diferentes.
-- O `App.jsx` standalone de todoList-app renderiza `<ToDoList/>` (todoList-app/src/App.jsx:7); o de todoForm-app só renderiza `<div>App</div>` (todoForm-app/src/App.jsx:3-7) e não importa nem renderiza `TodoForm`. Os componentes expostos são os de `src/components/`.
+- The three `bootstrap.js` files (host-app/src/bootstrap.js:1, todoForm-app/src/bootstrap.js:1, todoList-app/src/bootstrap.js:1) perform local `import('./index.js')`; internal to each unit and do not become manual rows.
+- Key `todos` in `localStorage`, written by todoForm-app and read by todoList-app, became the manual communication row at todoForm-app/src/components/todoForm.jsx:29. There is no `storage` event or other channel between remotes; navigation between them (`navigate('/add')`, `navigate('/edit/...')`, `navigate('/')`) uses the host router.
+- The two `TodoForm` renderings (lines 17 and 20) remain separate rows because they are mounting points in different routes with different props.
+- The standalone todoList-app `App.jsx` renders `<ToDoList/>` (todoList-app/src/App.jsx:7); todoForm-app’s only renders `<div>App</div>` (todoForm-app/src/App.jsx:3-7) and does not import or render `TodoForm`. The exposed components are those in `src/components/`.

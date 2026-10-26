@@ -20,34 +20,34 @@ annotation:
 
 # 011 — Ivo-Jr/Ivo-Jr
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** não é projeto de software (repositório de perfil do GitHub, `<usuário>/<usuário>`)
+- **Repository type:** not a software project (GitHub profile repository, `<user>/<user>`)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | O repositório tem um único arquivo versionado: `README.md` | ausente |
-| Documentação | `README.md:11` "Design and evolve scalable front-end architectures (microfrontends, modular systems)"; `README.md:24` "**Architecture:** Microfrontends, …" como competência profissional | fraca |
-| Tecnologia / Configuração / Código-fonte / Build/deploy | Inexistentes | ausente |
+| Structure | The repository has a single tracked file: `README.md` | absent |
+| Documentation | `README.md:11` "Design and evolve scalable front-end architectures (microfrontends, modular systems)"; `README.md:24` "**Architecture:** Microfrontends, …" as a professional skill | weak |
+| Technology / Configuration / Source code / Build/deploy | Nonexistent | absent |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend; só `README.md` |
-| Q2 | No | Não há unidades |
-| Q3 | No | Não há host, shell nem root config |
-| Q4 | No | Nenhum mecanismo de composição |
-| Q5 | No | Q1–Q4 convergem |
+| Q1 | No | No frontend units; only `README.md` |
+| Q2 | No | No units |
+| Q3 | No | No host, shell or root config |
+| Q4 | No | No composition mechanism |
+| Q5 | No | Q1–Q4 converge |
 
-## Motivo
+## Rationale
 
-- É o README de perfil do GitHub (repositório com o mesmo nome do usuário), não um projeto de software.
-- "Microfrontends" aparece só como competência listada pelo autor (`README.md:11,24`).
-- Corresponde ao caso Non-MFE "repositories mentioning micro-frontends without implementing them". Na filtragem automática (seção 3.2 do protocolo), já seria eliminado como "clearly not software projects" / "purely documentation without an implementation".
+- This is a GitHub profile README (repository with the same name as the user), not a software project.
+- "Microfrontends" appears only as a skill listed by the author (`README.md:11,24`).
+- Matches the Non-MFE case "repositories mentioning micro-frontends without implementing them". In automatic filtering (protocol section 3.2), it would already be excluded as "clearly not software projects" / "purely documentation without an implementation".
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** repositórios de perfil (`owner == name`) entram pelo termo explícito "microfrontend" no README. Sugere um filtro automático para esse padrão na etapa de filtragem.
+- **RQ1 (misleading signals):** profile repositories (`owner == name`) enter through the explicit term "microfrontend" in the README. Suggests an automatic filter for this pattern during filtering.

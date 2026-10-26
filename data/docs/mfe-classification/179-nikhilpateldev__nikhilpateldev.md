@@ -20,63 +20,63 @@ annotation:
 
 # 179 — nikhilpateldev/nikhilpateldev
 
-## Contexto
+## Context
 
-Repositório de perfil pessoal: só um `README.md` de 110 linhas, com apresentação profissional (“Full Stack & AI Solutions Engineer”), competências e badges (`README.md:1–10`). “Micro Frontend” aparece numa lista de arquiteturas (`README.md:49`). Não há código. O nome do repositório não é usado como evidência.
+Personal profile repository: only a 110-line `README.md`, with professional presentation (“Full Stack & AI Solutions Engineer”), skills and badges (`README.md:1–10`). “Micro Frontend” appears in an architecture list (`README.md:49`). There is no code. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:180` registra rank 179, ID 1111214944, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:180` records rank 179, ID 1111214944, status `cloned`, branch `main` and the front matter commit, which is HEAD of the clone and `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:180` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:21865` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:21871` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:180` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:21865` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:21871` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2025-12` e `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2025-12` and empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | 2026-10-07T22:29:12.648Z / 2026-10-08T15:57:08.965Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | 2026-10-07T22:59:03.849Z / 2026-10-08T16:07:33.094Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2025-12-01..2025-12-31`.
+Effective queries append `pushed:>=2025-04-01 created:2025-12-01..2025-12-31`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem nula, `fork: false`, tamanho 23;
-- criação em 2025-12-06T13:58:29Z, push em 2025-12-08T15:07:59Z.
+Hit metadata:
+- null description, no topics, null language, `fork: false`, size 23;
+- created at 2025-12-06T13:58:29Z, pushed at 2025-12-08T15:07:59Z.
 
-Sem descrição, o acerto vem de `README.md:49`, “Microservices | Micro Frontend | Event-Driven Architecture | …”, única ocorrência. O plural “micro frontends” não aparece literalmente; esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+Without a description, the hit comes from `README.md:49`, “Microservices | Micro Frontend | Event-Driven Architecture | …”, the only occurrence. The plural “micro frontends” does not appear literally; that hit depends on GitHub search text processing, which is not recorded.
 
-A última alteração do README é o próprio SHA, `6316dcb` (2025-12-08), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The README's last change is the SHA itself, `6316dcb` (2025-12-08), before October 2026 collection. The SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 1 entrada, `README.md` (`100644`); zero symlinks e zero gitlinks. Não há código, manifesto ou configuração. | contrária |
-| Documentação | `README.md:1–10`: apresentação profissional. `README.md:49`: “Micro Frontend” numa lista de estilos de arquitetura, junto de Microservices, DDD, CQRS etc. É competência declarada, sem projeto descrito. | fraca |
-| Tecnologia / Configuração / Composição (busca) | Com o inventário reduzido ao README, `grep -i` por `micro.?front`, `federation` e `single.?spa` só acha `README.md:49`. Nenhum mecanismo. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 1 entry, `README.md` (`100644`); zero symlinks and zero gitlinks. No code, manifest or configuration. | contrary |
+| Documentation | `README.md:1–10`: professional presentation. `README.md:49`: “Micro Frontend” in a list of architecture styles, alongside Microservices, DDD, CQRS etc. A declared skill, without a described project. | weak |
+| Technology / Configuration / Composition (search) | With inventory limited to the README, `grep -i` for `micro.?front`, `federation` and `single.?spa` finds only `README.md:49`. No mechanism. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 8 commits, nenhum merge, todos de Nikhil Patel `<nikhilpateldev@gmail.com>` pela interface web (committer GitHub), de 2025-12-06 (`a4e657d`, “Create README.md with professional overview”) a 2025-12-08 (SHA, “Format correction”). Todos alteram só o README. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 8 commits, no merges, all by Nikhil Patel `<nikhilpateldev@gmail.com>` through the web interface (GitHub committer), from 2025-12-06 (`a4e657d`, “Create README.md with professional overview”) to 2025-12-08 (SHA, “Format correction”). All change only the README. No historical blob was read and no object was missing.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend; o inventário é só o README. |
-| Q2 | No | Sem unidades, não há entradas ou builds. |
-| Q3 | No | Não há host, shell ou configuração raiz. |
-| Q4 | No | Nenhum mecanismo de composição; “Micro Frontend” só aparece numa lista de competências (`README.md:49`). |
-| Q5 | No | Q1–Q4 são No: README de perfil pessoal. |
+| Q1 | No | No frontend unit; inventory is only the README. |
+| Q2 | No | Without units, there are no entries or builds. |
+| Q3 | No | No host, shell or root configuration. |
+| Q4 | No | No composition mechanism; “Micro Frontend” appears only in a skill list (`README.md:49`). |
+| Q5 | No | Q1–Q4 are No: personal profile README. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “repositories mentioning micro-frontends without implementing them”.
-- Repositório sem implementação, como os perfis 011/064/068/073/077/101/111 (e os rascunhos 158/166/173): `frontend_units: 0`, `unit_organization: none`, `repo_type: other`, `ui_technologies: []` e `build_tools: []`.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. Matches “repositories mentioning micro-frontends without implementing them”.
+- Repository without implementation, like profiles 011/064/068/073/077/101/111 (and drafts 158/166/173): `frontend_units: 0`, `unit_organization: none`, `repo_type: other`, `ui_technologies: []` and `build_tools: []`.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** item “Micro Frontend” em lista de competências de README de perfil.
-- **Protocolo (busca):** o hit plural `"micro frontends"` não tem grafia literal. A elegibilidade muda de `unknown` (001) para `pass` (002).
-- **Contribuição da revisão independente (Lupa):** concordância integral com Non-MFE e Q1–Q5 No; sem divergência nem decisão aberta (`draft`). O commit contém somente um README de perfil, em que "Micro Frontend" é uma competência listada, e não uma implementação.
+- **RQ1 (misleading signals):** “Micro Frontend” item in a profile README skill list.
+- **Protocol (search):** plural hit `"micro frontends"` has no literal spelling. Eligibility changes from `unknown` (001) to `pass` (002).
+- **Independent review contribution (Lupa):** full agreement with Non-MFE and Q1–Q5 No; no disagreement or open decision (`draft`). The commit contains only a profile README, where “Micro Frontend” is a listed skill, rather than an implementation.

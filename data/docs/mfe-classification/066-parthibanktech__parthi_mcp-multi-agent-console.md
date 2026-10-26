@@ -20,36 +20,36 @@ annotation:
 
 # 066 — parthibanktech/parthi_mcp-multi-agent-console
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** example/proof of concept (console multiagente com MCP em Python)
+- **Repository type:** example/proof of concept (Python multi-agent console with MCP)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | Só Python: `client_agent.py` (UI Streamlit + orquestração LangChain/LangGraph), `finance_mcp_server.py` e `hr_mcp_server.py` (servidores MCP), `Dockerfile.{client,finance,hr}`, `docker-compose.yml`, `render.yaml` e vários guias em Markdown | contrária |
-| Código-fonte (UI) | `client_agent.py:1,14`: `import streamlit as st`, `st.set_page_config(...)`, uma única interface Streamlit | contrária |
-| Composição | Os "agentes" (Finance, HR) são **servidores MCP de backend** consultados pelo LLM; não há unidades frontend compostas | ausente |
-| Documentação | `README.md:3` (UTF-16): "unifies multiple AI agents (Finance & HR) into a single, cohesive Streamlit interface… specialized micro-agents"; nenhuma menção a micro-frontends | contexto |
-| Tecnologia (MFE) | Nenhuma dependência nem configuração de MFE | ausente |
+| Structure | Python only: `client_agent.py` (Streamlit UI + LangChain/LangGraph orchestration), `finance_mcp_server.py` and `hr_mcp_server.py` (MCP servers), `Dockerfile.{client,finance,hr}`, `docker-compose.yml`, `render.yaml` and several Markdown guides | contrary |
+| Source code (UI) | `client_agent.py:1,14`: `import streamlit as st`, `st.set_page_config(...)`, a single Streamlit interface | contrary |
+| Composition | The "agents" (Finance, HR) are **backend MCP servers** queried by the LLM; there are no composed frontend units | absent |
+| Documentation | `README.md:3` (UTF-16): "unifies multiple AI agents (Finance & HR) into a single, cohesive Streamlit interface… specialized micro-agents"; no mention of micro-frontends | context |
+| Technology (MFE) | No MFE dependency or configuration | absent |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única UI (Streamlit, `client_agent.py`); os demais componentes são servidores backend |
-| Q2 | No | Não há unidades frontend a comparar |
-| Q3 | No | Não há host, shell nem root config compondo frontends |
-| Q4 | No | A "orquestração" é de agentes de IA no backend (MCP), não de frontends |
-| Q5 | No | Q1–Q4 convergem |
+| Q1 | No | A single UI (Streamlit, `client_agent.py`); the other components are backend servers |
+| Q2 | No | No frontend units to compare |
+| Q3 | No | No host, shell or root config composing frontends |
+| Q4 | No | "Orchestration" concerns backend AI agents (MCP), not frontends |
+| Q5 | No | Q1–Q4 converge |
 
-## Motivo
+## Rationale
 
-- É uma aplicação de IA multiagente; "orchestration", "unifies multiple… agents" e "micro-agents" descrevem a composição de serviços MCP no backend, não de unidades frontend.
-- Na filtragem automática do protocolo (seção 3.2), cabe em "repositories containing no relevant frontend implementation" (a UI é Streamlit, gerada em Python).
-- Provavelmente entrou por termos amplos ("orchestration", "unifies… into a single interface").
+- This is a multi-agent AI application; "orchestration", "unifies multiple… agents" and "micro-agents" describe composition of backend MCP services, not frontend units.
+- In the protocol's automatic filtering (section 3.2), it fits "repositories containing no relevant frontend implementation" (the UI is Streamlit, generated in Python).
+- It probably entered through broad terms ("orchestration", "unifies… into a single interface").
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** vocabulário de composição ("orchestration platform", "micro-agents", "single cohesive interface") aplicado a agentes de IA; esse padrão deve crescer com projetos de MCP/LLM.
+- **RQ1 (misleading signals):** composition vocabulary ("orchestration platform", "micro-agents", "single cohesive interface") applied to AI agents; this pattern should grow with MCP/LLM projects.

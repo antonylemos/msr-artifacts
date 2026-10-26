@@ -20,30 +20,30 @@ annotation:
 
 # 064 — rafaelx0liveira/rafaelx0liveira
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** não é projeto de software (repositório de perfil do GitHub, `<usuário>/<usuário>`)
-- **Classificação:** Non-MFE (classificado pelos pesquisadores no `catalog.csv`; arquivo registrado depois)
+- **Repository type:** not a software project (GitHub profile repository, `<user>/<user>`)
+- **Classification:** Non-MFE (classified by the researchers in `catalog.csv`; file recorded afterwards)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `README.md` e `.github/workflows/main.yml` (gera a animação "snake" do perfil, `main.yml:1,21-29`) | ausente |
-| Documentação | `README.md:63`: "Microfrontend" na lista de tecnologias de front-end do autor | fraca |
-| Tecnologia / Configuração / Código-fonte / Build/deploy | Inexistentes | ausente |
+| Structure | `README.md` and `.github/workflows/main.yml` (generates the profile's "snake" animation, `main.yml:1,21-29`) | absent |
+| Documentation | `README.md:63`: "Microfrontend" in the author's frontend technology list | weak |
+| Technology / Configuration / Source code / Build/deploy | Nonexistent | absent |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend |
-| Q2 | No | Não há unidades |
-| Q3 | No | Não há host, shell nem root config |
-| Q4 | No | Nenhum mecanismo de composição |
-| Q5 | No | Q1–Q4 convergem |
+| Q1 | No | No frontend units |
+| Q2 | No | No units |
+| Q3 | No | No host, shell or root config |
+| Q4 | No | No composition mechanism |
+| Q5 | No | Q1–Q4 converge |
 
-## Motivo
+## Rationale
 
-- README de perfil do GitHub; "Microfrontend" é só uma competência listada.
-- Corresponde a "repositories mentioning micro-frontends without implementing them"; na filtragem automática (seção 3.2 do protocolo), "clearly not software projects".
+- GitHub profile README; "Microfrontend" is only a listed skill.
+- Matches "repositories mentioning micro-frontends without implementing them"; in automatic filtering (protocol section 3.2), "clearly not software projects".

@@ -13,24 +13,24 @@ annotation:
 
 # 052 — sunnywilsonveshapogu/microfrontends-demo
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem 3 commits, todos de 2025-09-27, com um merge.
-- **`31e1ab9` ("Initial commit"):** cria só o `.gitignore`, o README e o `package.json` da raiz, o que corresponde ao estado que o README dá como "already exists".
-- **`5e5227d` ("Add complete microfrontend architecture with Module Federation"):** cria as três aplicações.
-- **`f56f903`:** é o merge dessa branch e o commit do snapshot.
+History up to snapshot has 3 commits, all on 2025-09-27, with one merge.
+- **`31e1ab9` ("Initial commit"):** creates only `.gitignore`, README and root `package.json`, matching state described by README as "already exists".
+- **`5e5227d` ("Add complete microfrontend architecture with Module Federation"):** creates all three applications.
+- **`f56f903`:** merge of this branch and snapshot commit.
 
-## Pontos
+## Points
 
-| # | Ponto | Origem | Pergunta | Commits | Resultado |
+| # | Point | Origin | Question | Commits | Result |
 |---|---|---|---|---|---|
-| 1 | As três aplicações exigem um `public/index.html` que não está no snapshot | 3.4.3 (header-mf, products-mf e shell `Undetermined`); 3.4.7 #1, #3, #8 | ativo ou abandonado | 31e1ab9 2025-09-27 Initial commit; 5e5227d 2025-09-27 Add complete microfrontend architecture with Module Federation | resolvido pelo snapshot |
+| 1 | All three applications require a `public/index.html` absent from snapshot | 3.4.3 (header-mf, products-mf and shell `Undetermined`); 3.4.7 #1, #3, #8 | active or abandoned | 31e1ab9 2025-09-27 Initial commit; 5e5227d 2025-09-27 Add complete microfrontend architecture with Module Federation | resolved by the snapshot |
 
-## Observações
+## Observations
 
-**1. As três aplicações exigem um `public/index.html` que não está no snapshot.** O próprio snapshot delimita o ponto: o `.gitignore` da raiz ignora `public` (.gitignore:79), uma regra compatível com a ausência dos templates. O histórico confere: o `.gitignore` vem do primeiro commit, e nenhuma árvore do histórico observado contém um caminho com `public/`. Os templates nunca foram versionados, e não foram apagados. Não é possível confirmar se chegaram a ser criados localmente. Isso cobre a parte das afirmações "complete" e "production-ready" que depende dos templates. A falta de deploy e os remotes em `localhost`, também citados contra o "production-ready", não têm relação com essa regra.
+**1. All three applications require a `public/index.html` absent from snapshot.** Snapshot itself bounds point: root `.gitignore` ignores `public` (.gitignore:79), a rule compatible with missing templates. History agrees: `.gitignore` comes from first commit, and no observed historical tree contains a path with `public/`. Templates were never versioned, not deleted. Whether they were ever created locally cannot be confirmed. This covers portion of "complete" and "production-ready" claims depending on templates. Missing deploy and remotes at `localhost`, also cited against "production-ready", are unrelated to this rule.
 
-## Comandos
+## Commands
 
 ```
 docs/mfe-history-review/tools/hist.sh sunnywilsonveshapogu__microfrontends-demo rev-list --count f56f903190312e938d0ad5a9a146ad4dbe333589
@@ -44,6 +44,6 @@ docs/mfe-history-review/tools/hist.sh sunnywilsonveshapogu__microfrontends-demo 
 docs/mfe-history-review/tools/hist.sh sunnywilsonveshapogu__microfrontends-demo ls-tree -r --name-only f56f903190312e938d0ad5a9a146ad4dbe333589
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 3 (2025-09-27 a 2025-09-27). Pontos: 1 (esclarecido: 0, inconclusivo: 0, resolvido pelo snapshot: 1).
+Commits up to the snapshot: 3 (2025-09-27 to 2025-09-27). Points: 1 (clarified: 0, inconclusive: 0, resolved by the snapshot: 1).

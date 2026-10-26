@@ -16,62 +16,27 @@ annotation:
 
 # 378 — cMancillaValle/ARGOS-SiVIA
 
-## Leitura do repositório
+## Repository overview
 
-Projeto acadêmico com backend FastAPI e duas unidades frontend, sem workspace: o
-`package-lock.json` da raiz não tem `package.json` correspondente e lista `"packages": {}`
-(`package-lock.json:1-6`). `frontend` é um conjunto de páginas HTML/JS sem build. `frontend-hermes`
-é o único pacote npm (`frontend-hermes/package.json:1-31`); seu script `build` roda
-`tsc -b && vite build` (`frontend-hermes/package.json:8`), e o Vite gera uma biblioteca IIFE de
-arquivo único `hermes-widget.js`, com React embutido e CSS injetado pelo próprio JS
-(`frontend-hermes/vite.config.ts:6-9`, `:11-15`, `:17-19`). O `dist` não está versionado
-(`frontend-hermes/.gitignore:11`).
+Academic project with FastAPI backend and two frontend units, without workspace: root `package-lock.json` has no corresponding `package.json` and lists `"packages": {}` (`package-lock.json:1-6`). The `frontend` is a set of HTML/JS pages without build. The `frontend-hermes` is the only npm package (`frontend-hermes/package.json:1-31`); its script `build` runs `tsc -b && vite build` (`frontend-hermes/package.json:8`), and Vite generates a single-file IIFE library `hermes-widget.js`, with embedded React and CSS injected by JS itself (`frontend-hermes/vite.config.ts:6-9`, `:11-15`, `:17-19`). The `dist` is not versioned (`frontend-hermes/.gitignore:11`).
 
-Não há servidor próprio para nenhuma das unidades. O mesmo processo FastAPI serve as páginas de
-`frontend` (`/`, `/login`, `/dashboard` em `backend/main.py:257`, `:265`, `:273`, e os demais
-arquivos estáticos montados em `/` em `backend/main.py:292-293`) e o `dist` de `frontend-hermes`
-no caminho `/hermes/` (`backend/main.py:92`, `:281-288`). O único artefato de deploy é o
-`docker-compose.yml`, com um só serviço, `argos-backend-ia`: imagem `python:3.11-slim`, o
-repositório inteiro montado em `/app`, instalação das dependências Python e `uvicorn` na porta
-5000, com healthcheck e `restart: unless-stopped` (`docker-compose.yml:3-35`, em especial `:5`,
-`:12`, `:17-22`, `:24`). O compose não roda `npm` nem build do widget: o `/hermes/` só responde
-se `frontend-hermes/dist` já existir no diretório montado; caso contrário a rota devolve 404
-(`backend/main.py:286-287`).
+Neither unit has its own server. Same FastAPI process serves pages of `frontend` (`/`, `/login`, `/dashboard` at `backend/main.py:257`, `:265`, `:273`, and other static files mounted at `/` in `backend/main.py:292-293`) and `dist` of `frontend-hermes` at path `/hermes/` (`backend/main.py:92`, `:281-288`). The only deployment artifact is `docker-compose.yml`, with a single service, `argos-backend-ia`: image `python:3.11-slim`, entire repository mounted at `/app`, Python dependency installation and `uvicorn` on port 5000, with healthcheck and `restart: unless-stopped` (`docker-compose.yml:3-35`, particularly `:5`, `:12`, `:17-22`, `:24`). Compose runs neither `npm` nor widget build: `/hermes/` only responds if `frontend-hermes/dist` already exists in mounted directory; otherwise route returns 404 (`backend/main.py:286-287`).
 
-O build do widget aparece amarrado à publicação em `ngrok_tunnel.py`: o script roda
-`npm run build` em `frontend-hermes` (`ngrok_tunnel.py:52-62`), sobe o mesmo `uvicorn main:app`
-(`ngrok_tunnel.py:95-111`) e abre um túnel HTTP público para a porta dele
-(`ngrok_tunnel.py:153-161`); `start_ngrok.sh:29` só chama esse script. `start.py:34-36` sobe o
-mesmo servidor sem construir o widget. Os três caminhos (compose, `start.py`, túnel ngrok)
-publicam as duas unidades juntas, pelo mesmo servidor e porta. O README descreve a mesma
-execução local e o túnel opcional (`README.md:248-265`) e cita um instalador Windows por Inno
-Setup (`README.md:221`), que não tem artefato no snapshot. Não há CI, Dockerfile, nginx nem
-configuração de hospedagem.
+Widget build is tied to publication in `ngrok_tunnel.py`: script runs `npm run build` in `frontend-hermes` (`ngrok_tunnel.py:52-62`), starts same `uvicorn main:app` (`ngrok_tunnel.py:95-111`) and opens a public HTTP tunnel to its port (`ngrok_tunnel.py:153-161`); `start_ngrok.sh:29` only calls this script. The `start.py:34-36` starts same server without building widget. All three paths (compose, `start.py`, ngrok tunnel) publish both units together through same server and port. README describes same local execution and optional tunnel (`README.md:248-265`) and mentions a Windows installer through Inno Setup (`README.md:221`), without a snapshot artifact. No CI, Dockerfile, nginx or hosting configuration exists.
 
-## Aplicações
+## Applications
 
-| # | Aplicação | Build | Deploy | Onde é servida | Versionamento | Artefatos |
+| # | Application | Build | Deploy | Where served | Versioning | Artifacts |
 |---|---|---|---|---|---|---|
-| 1 | frontend | sem build | conjunto | `/`, `/login`, `/dashboard` e estáticos em `/` (backend/main.py:257; backend/main.py:265; backend/main.py:273; backend/main.py:293); porta 5000 (docker-compose.yml:24) | No | backend/main.py:91 (aponta o diretório `frontend`); backend/main.py:257-293 (serve as páginas e os estáticos); docker-compose.yml:3-24 (serviço único que monta o repositório e sobe o FastAPI na porta 5000); ngrok_tunnel.py:95-111 (sobe o mesmo FastAPI); ngrok_tunnel.py:153-161 (túnel público para a porta) |
-| 2 | frontend-hermes | separado | conjunto | `/hermes/hermes-widget.js` (backend/main.py:281; frontend/dashboard.html:366); porta 5000 (docker-compose.yml:24) | No | frontend-hermes/package.json:8 (`tsc -b && vite build`); frontend-hermes/vite.config.ts:11-15 (biblioteca IIFE `hermes-widget.js`); backend/main.py:92 (aponta `frontend-hermes/dist`); backend/main.py:281-288 (serve o `dist` em `/hermes/`); docker-compose.yml:3-24 (mesmo serviço); ngrok_tunnel.py:52-62 (`npm run build` antes de subir o servidor); ngrok_tunnel.py:153-161 (mesmo túnel) |
+| 1 | frontend | no build | joint | `/`, `/login`, `/dashboard` and static files at `/` (backend/main.py:257; backend/main.py:265; backend/main.py:273; backend/main.py:293); port 5000 (docker-compose.yml:24) | No | backend/main.py:91 (points to directory `frontend`); backend/main.py:257-293 (serves pages and static files); docker-compose.yml:3-24 (single service mounting repository and starting FastAPI on port 5000); ngrok_tunnel.py:95-111 (starts same FastAPI); ngrok_tunnel.py:153-161 (public tunnel to port) |
+| 2 | frontend-hermes | separate | joint | `/hermes/hermes-widget.js` (backend/main.py:281; frontend/dashboard.html:366); port 5000 (docker-compose.yml:24) | No | frontend-hermes/package.json:8 (`tsc -b && vite build`); frontend-hermes/vite.config.ts:11-15 (IIFE library `hermes-widget.js`); backend/main.py:92 (points to `frontend-hermes/dist`); backend/main.py:281-288 (serves `dist` at `/hermes/`); docker-compose.yml:3-24 (same service); ngrok_tunnel.py:52-62 (`npm run build` before starting server); ngrok_tunnel.py:153-161 (same tunnel) |
 
-## Observações
+## Observations
 
-**1. frontend.** Páginas HTML com scripts estáticos e CDNs, sem `package.json` nem passo de
-build: os arquivos saem como estão no repositório (`backend/main.py:91`, `:257-278`). Deploy
-`conjunto`: o serviço `argos-backend-ia` (`docker-compose.yml:3-24`) e o túnel de
-`ngrok_tunnel.py` publicam o mesmo processo FastAPI que também serve `frontend-hermes`. É a
-unidade host: `dashboard.html` carrega o widget pelo caminho relativo ao mesmo servidor
-(`frontend/dashboard.html:366`). Sem versão própria.
+**1. frontend.** HTML pages with static scripts and CDNs, without `package.json` or build step: files are released as they exist in repository (`backend/main.py:91`, `:257-278`). Deploy `joint`: service `argos-backend-ia` (`docker-compose.yml:3-24`) and tunnel of `ngrok_tunnel.py` publish same FastAPI process also serving `frontend-hermes`. Host unit: `dashboard.html` loads widget through path relative to same server (`frontend/dashboard.html:366`). No own version.
 
-**2. frontend-hermes.** Build `separado`: tem pacote e build Vite próprios, que geram um bundle só
-dele (`frontend-hermes/package.json:8`, `frontend-hermes/vite.config.ts:11-15`), sem nenhum
-código de `frontend`. Deploy `conjunto`: o `dist` não tem empacotamento próprio e é servido pelo
-mesmo FastAPI, em `/hermes/` (`backend/main.py:92`, `:281-288`), dentro do mesmo serviço do
-compose e do mesmo túnel. O compose não constrói o widget; só `ngrok_tunnel.py:52-62` dispara o
-build antes de subir o servidor. Versionamento `No`: `version` `0.0.0` e `private: true`
-(`frontend-hermes/package.json:3-4`), sem uso na publicação.
+**2. frontend-hermes.** Build `separate`: own package and Vite build, generating its own bundle (`frontend-hermes/package.json:8`, `frontend-hermes/vite.config.ts:11-15`), without any `frontend` code. Deploy `joint`: `dist` has no own packaging and is served by same FastAPI at `/hermes/` (`backend/main.py:92`, `:281-288`), within same compose service and tunnel. Compose does not build widget; only `ngrok_tunnel.py:52-62` triggers build before starting server. Versioning `No`: `version` `0.0.0` and `private: true` (`frontend-hermes/package.json:3-4`), unused in publication.
 
-## Resumo
+## Summary
 
-Aplicações: 2. Build (separado: 1, sem build: 1). Deploy (conjunto: 2). Versionamento independente: 0.
+Applications: 2. Build (separate: 1, no build: 1). Deploy (joint: 2). Independent versioning: 0.

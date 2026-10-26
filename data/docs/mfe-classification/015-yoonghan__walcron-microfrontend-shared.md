@@ -20,39 +20,39 @@ annotation:
 
 # 015 — yoonghan/walcron-microfrontend-shared
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** production-oriented (biblioteca de componentes publicada no GitHub Packages, versão 12.1.2, CI e SonarCloud)
+- **Repository type:** production-oriented (component library published on GitHub Packages, version 12.1.2, CI and SonarCloud)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Tecnologia | Nenhuma dependência de Module Federation, single-spa ou Web Components; nenhuma ocorrência de `federation`, `remoteEntry`, `customElements` ou `single-spa` fora de `dist/` | ausente |
-| Configuração (build) | `vite.config.ts:15-29`: `build.lib` com entry `src/index.ts`, `name: "Micro Frontend Shared"`, `react`/`react-dom` como `external`; ou seja, build de biblioteca npm, não de app | ambígua |
-| Configuração (pacote) | `package.json:2` `@yoonghan/walcron-microfrontend-shared`; `:11-12` `publishConfig` para `npm.pkg.github.com`; `:22` versão 12.1.2; `:24-27` `main`/`module`/`exports` | contrária |
-| Código-fonte | `src/components/` com `Accordion`, `Announcement`, `Menu`, `MiniMenu` e `ScrollableCard`, mais `helpers`, `hooks` e `util`, exportados por `src/index.ts` | contrária |
-| Estrutura | `pages/`, `renderer/` e `server/` formam um site de demonstração (Vike, só em `development`, `vite.config.ts:13`); `.storybook/` documenta os componentes | contrária |
-| Build/deploy | `.github/workflows/*.yml` com testes, compliance e publicação do pacote; `dist/` versionado | contrária |
-| Documentação | `README.md:1-3` "A shared library used within the eco-system of Walcron. All components can be reused…"; `:46-52` instruções de `npm version` e `npm publish` | fraca |
+| Technology | No Module Federation, single-spa or Web Components dependency; no occurrences of `federation`, `remoteEntry`, `customElements` or `single-spa` outside `dist/` | absent |
+| Configuration (build) | `vite.config.ts:15-29`: `build.lib` with entry `src/index.ts`, `name: "Micro Frontend Shared"`, `react`/`react-dom` as `external`; that is, an npm library build, not an app build | ambiguous |
+| Configuration (package) | `package.json:2` `@yoonghan/walcron-microfrontend-shared`; `:11-12` `publishConfig` for `npm.pkg.github.com`; `:22` version 12.1.2; `:24-27` `main`/`module`/`exports` | contrary |
+| Source code | `src/components/` with `Accordion`, `Announcement`, `Menu`, `MiniMenu` and `ScrollableCard`, plus `helpers`, `hooks` and `util`, exported through `src/index.ts` | contrary |
+| Structure | `pages/`, `renderer/` and `server/` form a demonstration site (Vike, only in `development`, `vite.config.ts:13`); `.storybook/` documents the components | contrary |
+| Build/deploy | `.github/workflows/*.yml` with testing, compliance and package publication; tracked `dist/` | contrary |
+| Documentation | `README.md:1-3` "A shared library used within the eco-system of Walcron. All components can be reused…"; `:46-52` instructions for `npm version` and `npm publish` | weak |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Não há unidades frontend de aplicação; o repositório é uma biblioteca de componentes React (`vite.config.ts:16-20`) |
-| Q2 | No | Não há unidades a avaliar |
-| Q3 | No | Não há host, shell nem root config |
-| Q4 | No | Nenhum mecanismo de composição; a lib é consumida por import de pacote npm |
-| Q5 | No | Q1–Q4 convergem |
+| Q1 | No | No frontend application units; the repository is a React component library (`vite.config.ts:16-20`) |
+| Q2 | No | No units to assess |
+| Q3 | No | No host, shell or root config |
+| Q4 | No | No composition mechanism; the library is consumed through npm package imports |
+| Q5 | No | Q1–Q4 converge |
 
-## Motivo
+## Rationale
 
-- É uma biblioteca de componentes compartilhada, publicada como pacote npm para ser usada pelos MFEs de um ecossistema ("Walcron") que está em outros repositórios.
-- A exceção MFE-unit não se aplica: a lib não é uma unidade preparada para ser composta em runtime por um host (sem `exposes`, lifecycles nem custom element), e sim uma dependência de build.
-- Corresponde aos casos Non-MFE "repositories mentioning micro-frontends without implementing them" (o termo está só no nome) e, por analogia, "component libraries". O nome "microfrontend" indica o contexto de uso, não a arquitetura deste repositório.
+- This is a shared component library, published as an npm package for use by MFEs in an ecosystem ("Walcron") located in other repositories.
+- The MFE-unit exception does not apply: the library is not a unit prepared for runtime composition by a host (no `exposes`, lifecycles or custom element), but a build dependency.
+- Matches the Non-MFE cases "repositories mentioning micro-frontends without implementing them" (the term is only in the name) and, by analogy, "component libraries". The name "microfrontend" indicates the usage context, not this repository's architecture.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** o termo "microfrontend" aparece no nome do repositório e do pacote, o que provavelmente o trouxe pela busca explícita. É um artefato de apoio a um ecossistema de MFEs, mas não uma implementação.
-- **Protocolo (ecossistema multi-repositório):** nenhum outro repositório do ecossistema Walcron está na amostra. O ecossistema poderia ser investigado se o estudo considerasse implementações multi-repositório.
+- **RQ1 (misleading signals):** "microfrontend" appears in the repository and package names, which probably brought it in through the explicit search. It supports an MFE ecosystem but is not an implementation.
+- **Protocol (multi-repository ecosystem):** no other Walcron ecosystem repository is in the sample. The ecosystem could be investigated if the study considered multi-repository implementations.

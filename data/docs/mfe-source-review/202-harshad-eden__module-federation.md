@@ -15,29 +15,29 @@ annotation:
 
 # 202 — harshad-eden/module-federation
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-remote-import | apps/shell/src/components/ProductConfig.tsx:5 | apps/shell | dynamic-loading | Yes | `React.lazy` carrega `productConfig/App` (apps/shell/src/components/ProductConfig.tsx:4-5), com fallback local se a carga falhar (:5-26); o remote `productConfig` aponta para `http://localhost:3004/dist/assets/remoteEntry.js` em apps/shell/vite.config.ts:13, e apps/product-config/vite.config.ts:11-12 expõe `./App`. Ativo: rota `/products/*` em apps/shell/src/App.tsx:16, App montado em apps/shell/src/main.tsx:7-13. |
-| src-remote-import | apps/shell/src/components/SalesPortal.tsx:5 | apps/shell | dynamic-loading | Yes | `React.lazy` carrega `salesPortal/App` (apps/shell/src/components/SalesPortal.tsx:4-5), com fallback local se a carga falhar (:5-27); o remote `salesPortal` aponta para `http://localhost:3001/dist/assets/remoteEntry.js` em apps/shell/vite.config.ts:11, e apps/sales-portal/vite.config.ts:11-12 expõe `./App`. Ativo: rota `/sales/*` em apps/shell/src/App.tsx:14. |
-| src-remote-import | apps/shell/src/components/UnderwriterPortal.tsx:5 | apps/shell | dynamic-loading | Yes | `React.lazy` carrega `underwriterPortal/App` (apps/shell/src/components/UnderwriterPortal.tsx:4-5), com fallback local se a carga falhar (:5-26); o remote `underwriterPortal` aponta para `http://localhost:3002/dist/assets/remoteEntry.js` em apps/shell/vite.config.ts:12, e apps/underwriter-portal/vite.config.ts:11-12 expõe `./App`. Ativo: rota `/underwriter/*` em apps/shell/src/App.tsx:15. |
+| src-remote-import | apps/shell/src/components/ProductConfig.tsx:5 | apps/shell | dynamic-loading | Yes | `React.lazy` loads `productConfig/App` (apps/shell/src/components/ProductConfig.tsx:4-5), with a local fallback on load failure (:5-26); remote `productConfig` points to `http://localhost:3004/dist/assets/remoteEntry.js` at apps/shell/vite.config.ts:13, and apps/product-config/vite.config.ts:11-12 exposes `./App`. Active: route `/products/*` at apps/shell/src/App.tsx:16, App mounted at apps/shell/src/main.tsx:7-13. |
+| src-remote-import | apps/shell/src/components/SalesPortal.tsx:5 | apps/shell | dynamic-loading | Yes | `React.lazy` loads `salesPortal/App` (apps/shell/src/components/SalesPortal.tsx:4-5), with a local fallback on load failure (:5-27); remote `salesPortal` points to `http://localhost:3001/dist/assets/remoteEntry.js` at apps/shell/vite.config.ts:11, and apps/sales-portal/vite.config.ts:11-12 exposes `./App`. Active: route `/sales/*` at apps/shell/src/App.tsx:14. |
+| src-remote-import | apps/shell/src/components/UnderwriterPortal.tsx:5 | apps/shell | dynamic-loading | Yes | `React.lazy` loads `underwriterPortal/App` (apps/shell/src/components/UnderwriterPortal.tsx:4-5), with a local fallback on load failure (:5-26); remote `underwriterPortal` points to `http://localhost:3002/dist/assets/remoteEntry.js` at apps/shell/vite.config.ts:12, and apps/underwriter-portal/vite.config.ts:11-12 exposes `./App`. Active: route `/underwriter/*` at apps/shell/src/App.tsx:15. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | apps/shell/src/App.tsx:12 | apps/shell | host-relationship | Yes | `Routes` declara onde o shell usa cada remote: `/sales/*` → `SalesPortal`, `/underwriter/*` → `UnderwriterPortal`, `/products/*` → `ProductConfig` (apps/shell/src/App.tsx:12-17), componentes importados em apps/shell/src/App.tsx:5-7; App é montado dentro de `BrowserRouter` em apps/shell/src/main.tsx:7-13. |
-| manual | apps/shell/src/components/ProductConfig.tsx:75 | apps/shell | runtime-composition | Yes | Renderiza `RemoteProductConfig`, componente da unidade apps/product-config, dentro de `ErrorBoundary` + `Suspense` (apps/shell/src/components/ProductConfig.tsx:62-77); o componente vem do lazy import em apps/shell/src/components/ProductConfig.tsx:4-5. |
-| manual | apps/shell/src/components/SalesPortal.tsx:84 | apps/shell | runtime-composition | Yes | Renderiza `RemoteSalesPortal`, componente da unidade apps/sales-portal, dentro de `ErrorBoundary` + `Suspense` (apps/shell/src/components/SalesPortal.tsx:69-86); o componente vem do lazy import em apps/shell/src/components/SalesPortal.tsx:4-5. |
-| manual | apps/shell/src/components/UnderwriterPortal.tsx:75 | apps/shell | runtime-composition | Yes | Renderiza `RemoteUnderwriterPortal`, componente da unidade apps/underwriter-portal, dentro de `ErrorBoundary` + `Suspense` (apps/shell/src/components/UnderwriterPortal.tsx:62-77); o componente vem do lazy import em apps/shell/src/components/UnderwriterPortal.tsx:4-5. |
+| manual | apps/shell/src/App.tsx:12 | apps/shell | host-relationship | Yes | `Routes` declares where shell uses each remote: `/sales/*` → `SalesPortal`, `/underwriter/*` → `UnderwriterPortal`, `/products/*` → `ProductConfig` (apps/shell/src/App.tsx:12-17), components imported at apps/shell/src/App.tsx:5-7; App is mounted inside `BrowserRouter` at apps/shell/src/main.tsx:7-13. |
+| manual | apps/shell/src/components/ProductConfig.tsx:75 | apps/shell | runtime-composition | Yes | Renders `RemoteProductConfig`, a component of unit apps/product-config, inside `ErrorBoundary` + `Suspense` (apps/shell/src/components/ProductConfig.tsx:62-77); the component comes from the lazy import at apps/shell/src/components/ProductConfig.tsx:4-5. |
+| manual | apps/shell/src/components/SalesPortal.tsx:84 | apps/shell | runtime-composition | Yes | Renders `RemoteSalesPortal`, a component of unit apps/sales-portal, inside `ErrorBoundary` + `Suspense` (apps/shell/src/components/SalesPortal.tsx:69-86); the component comes from the lazy import at apps/shell/src/components/SalesPortal.tsx:4-5. |
+| manual | apps/shell/src/components/UnderwriterPortal.tsx:75 | apps/shell | runtime-composition | Yes | Renders `RemoteUnderwriterPortal`, a component of unit apps/underwriter-portal, inside `ErrorBoundary` + `Suspense` (apps/shell/src/components/UnderwriterPortal.tsx:62-77); the component comes from the lazy import at apps/shell/src/components/UnderwriterPortal.tsx:4-5. |
 
-## Resumo
+## Summary
 
-Construções com composição: 7 (dynamic-loading: 3, host-relationship: 1, runtime-composition: 3).
+Constructs participating in composition: 7 (dynamic-loading: 3, host-relationship: 1, runtime-composition: 3).
 
-## Notas
+## Notes
 
-- Os módulos remotos são declarados para o TypeScript em apps/shell/src/types/remotes.d.ts:1-14; é só tipagem, não vira linha.
-- A busca do passo 4 não achou mecanismo de comunicação entre unidades: os únicos `addEventListener` estão em packages/shared-ui (packages/shared-ui/src/hooks/use-mobile.tsx:13, packages/shared-ui/src/components/ui/sidebar.tsx:115), biblioteca julgada `No` e de uso interno de UI.
-- Os links do menu em apps/shell/src/components/Layout.tsx:9-12 só navegam para as rotas do shell; não viram linha.
+- The remote modules are declared for TypeScript at apps/shell/src/types/remotes.d.ts:1-14; this is only typing and does not become a row.
+- The step 4 search found no communication mechanism between units: the only `addEventListener` calls are in packages/shared-ui (packages/shared-ui/src/hooks/use-mobile.tsx:13, packages/shared-ui/src/components/ui/sidebar.tsx:115), a library judged `No` and used internally for UI.
+- The menu links at apps/shell/src/components/Layout.tsx:9-12 only navigate to shell routes; they do not become rows.

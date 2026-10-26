@@ -20,29 +20,29 @@ annotation:
 
 # 062 — lucasrfreitasbr/ey-multitenant-architecture
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** não é projeto de software (documentação de arquitetura de referência: "Multi-Tenant SaaS Reference Architecture")
+- **Repository type:** not a software project (reference architecture documentation: "Multi-Tenant SaaS Reference Architecture")
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | Só documentação: `README.md`, `azure-snowflake-architecture.md`, `docs/01…09-*.md` e 66 imagens em `images/`; mais `EY.code-workspace` e `.DS_Store` | ausente |
-| Documentação | `README.md:85` "Microfrontend + Atomic Design"; `:140`; `docs/05-frontend-bff.md:10,125-129`: seção "Microfrontend Architecture" com diagrama (`images/micro-frontend.png`) (proposta arquitetural) | fraca |
-| Tecnologia / Configuração / Código-fonte / Build/deploy | Inexistentes | ausente |
+| Structure | Documentation only: `README.md`, `azure-snowflake-architecture.md`, `docs/01…09-*.md` and 66 images in `images/`; plus `EY.code-workspace` and `.DS_Store` | absent |
+| Documentation | `README.md:85` "Microfrontend + Atomic Design"; `:140`; `docs/05-frontend-bff.md:10,125-129`: "Microfrontend Architecture" section with a diagram (`images/micro-frontend.png`) (architectural proposal) | weak |
+| Technology / Configuration / Source code / Build/deploy | Nonexistent | absent |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend; só Markdown e imagens |
-| Q2 | No | Não há unidades |
-| Q3 | No | Não há host, shell nem root config |
-| Q4 | No | Nenhum mecanismo de composição |
-| Q5 | No | Q1–Q4 convergem |
+| Q1 | No | No frontend units; only Markdown and images |
+| Q2 | No | No units |
+| Q3 | No | No host, shell or root config |
+| Q4 | No | No composition mechanism |
+| Q5 | No | Q1–Q4 converge |
 
-## Motivo
+## Rationale
 
-- É uma documentação de arquitetura de referência (AWS, DDD, Zero Trust, BFF), em que micro-frontends aparecem como parte do desenho proposto, sem implementação.
-- Corresponde a "repositories mentioning micro-frontends without implementing them"; na filtragem automática (seção 3.2 do protocolo), "purely documentation without an implementation".
+- This is reference architecture documentation (AWS, DDD, Zero Trust, BFF), where micro-frontends appear as part of the proposed design, without implementation.
+- Matches "repositories mentioning micro-frontends without implementing them"; in automatic filtering (protocol section 3.2), "purely documentation without an implementation".

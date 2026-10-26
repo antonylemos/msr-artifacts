@@ -20,39 +20,39 @@ annotation:
 
 # 034 — Bouabidi/automotive-market-dashboard
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** example/proof of concept (projeto de portfólio/estudo com documentação de entrevista: `INTERVIEW-ARCHITECTURE.md`, `INTERVIEW-MICRO-FRONTENDS.md`)
+- **Repository type:** example/proof of concept (portfolio/study project with interview documentation: `INTERVIEW-ARCHITECTURE.md`, `INTERVIEW-MICRO-FRONTENDS.md`)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `apps/frontend/` (uma app Angular 22) e `apps/backend/` (NestJS + Prisma); uma única unidade frontend | contrária |
-| Tecnologia | `apps/frontend/package.json`: nenhuma dependência de federação (Native Federation, MF ou single-spa) | ausente |
-| Configuração | `apps/frontend/angular.json:21`: builder `@angular/build:application` (esbuild); um único projeto | ausente |
-| Código-fonte | `apps/frontend/src/app/app.routes.ts:7-33`: `loadComponent`/`loadChildren` com `import()` local (lazy loading de features internas, incluindo um componente chamado `AppShell`); nenhuma ocorrência de `federation`, `loadRemote` ou `remoteEntry` em `apps/frontend/src` | contrária |
-| Documentação (decisão) | `docs/adr/ADR-003-micro-frontends.md:1,3-5,11-13`: "Defer Runtime Micro Frontends Until Independent Deployment Is Justified", status **Accepted**, "Keep the current application as a modular monolith"; `docs/architecture/WHY-NOT-MICRO-FRONTENDS-YET.md:1-9`: "one Angular application… share one Angular build"; `MICRO-FRONTEND-ARCHITECTURE.md:3-7`: "small, validated Angular 22 modular monolith… does not yet have… [what would] justify runtime federation" | contrária |
-| Documentação (futuro) | `MICRO-FRONTEND-ARCHITECTURE.md:24-46`: diagrama da fronteira de federação futura e plano de migração strangler (Shell + remotes Products/Dashboard/Analytics, Native Federation depois de validar a compatibilidade) (plano) | fraca |
-| Build/deploy | `apps/frontend/Dockerfile`, `docker-compose.yml` e `.github/workflows/ci.yml`: um único build e imagem do frontend | contrária |
+| Structure | `apps/frontend/` (one Angular 22 app) and `apps/backend/` (NestJS + Prisma); a single frontend unit | contrary |
+| Technology | `apps/frontend/package.json`: no federation dependency (Native Federation, MF or single-spa) | absent |
+| Configuration | `apps/frontend/angular.json:21`: builder `@angular/build:application` (esbuild); a single project | absent |
+| Source code | `apps/frontend/src/app/app.routes.ts:7-33`: `loadComponent`/`loadChildren` with local `import()` (lazy loading of internal features, including a component named `AppShell`); no occurrences of `federation`, `loadRemote` or `remoteEntry` in `apps/frontend/src` | contrary |
+| Documentation (decision) | `docs/adr/ADR-003-micro-frontends.md:1,3-5,11-13`: "Defer Runtime Micro Frontends Until Independent Deployment Is Justified", status **Accepted**, "Keep the current application as a modular monolith"; `docs/architecture/WHY-NOT-MICRO-FRONTENDS-YET.md:1-9`: "one Angular application… share one Angular build"; `MICRO-FRONTEND-ARCHITECTURE.md:3-7`: "small, validated Angular 22 modular monolith… does not yet have… [what would] justify runtime federation" | contrary |
+| Documentation (future) | `MICRO-FRONTEND-ARCHITECTURE.md:24-46`: diagram of the future federation boundary and strangler migration plan (Shell + Products/Dashboard/Analytics remotes, Native Federation after compatibility validation) (plan) | weak |
+| Build/deploy | `apps/frontend/Dockerfile`, `docker-compose.yml` and `.github/workflows/ci.yml`: a single frontend build and image | contrary |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend (`apps/frontend`) |
-| Q2 | No | As features (Products, Dashboard) compartilham build e deploy e são carregadas por `import()` local (`app.routes.ts:7-33`) |
-| Q3 | No | O `AppShell` é um componente de layout interno, não um host de unidades independentes |
-| Q4 | No | Nenhum mecanismo de composição; a documentação declara explicitamente que a federação não foi adotada (`ADR-003`) |
-| Q5 | No | Q1–Q4 convergem, e a própria documentação confirma |
+| Q1 | No | A single frontend unit (`apps/frontend`) |
+| Q2 | No | Features (Products, Dashboard) share build and deployment and are loaded through local `import()` (`app.routes.ts:7-33`) |
+| Q3 | No | `AppShell` is an internal layout component, not a host for independent units |
+| Q4 | No | No composition mechanism; documentation explicitly states that federation has not been adopted (`ADR-003`) |
+| Q5 | No | Q1–Q4 converge, and the documentation itself confirms it |
 
-## Motivo
+## Rationale
 
-- É um monolito modular Angular com lazy loading; as fronteiras de MFE estão só documentadas como alvo futuro.
-- A documentação registra formalmente a decisão de **não** adotar micro-frontends agora (ADR-003, "Accepted"; "WHY-NOT-MICRO-FRONTENDS-YET.md").
-- Corresponde a "repositories mentioning micro-frontends without implementing them" e a "conventional frontend monoliths".
+- This is an Angular modular monolith with lazy loading; MFE boundaries are only documented as a future target.
+- Documentation formally records the decision **not** to adopt micro-frontends now (ADR-003, "Accepted"; "WHY-NOT-MICRO-FRONTENDS-YET.md").
+- Matches "repositories mentioning micro-frontends without implementing them" and "conventional frontend monoliths".
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** vários documentos com "MICRO-FRONTEND" no nome (`MICRO-FRONTEND-ARCHITECTURE.md`, `INTERVIEW-MICRO-FRONTENDS.md`, `ADR-003-micro-frontends.md`) e um componente `AppShell`, mas a decisão documentada é contrária. Caso parecido com o repositório 012, porém com ADR explícito.
-- **RQ1 (evidência negativa):** um ADR "Accepted" que rejeita MFE é evidência forte de ausência, não só ausência de evidência.
+- **RQ1 (misleading signals):** several documents with "MICRO-FRONTEND" in their names (`MICRO-FRONTEND-ARCHITECTURE.md`, `INTERVIEW-MICRO-FRONTENDS.md`, `ADR-003-micro-frontends.md`) and an `AppShell` component, but the documented decision is contrary. Similar to repository 012, but with an explicit ADR.
+- **RQ1 (negative evidence):** an "Accepted" ADR rejecting MFE is strong evidence of absence, not merely absence of evidence.

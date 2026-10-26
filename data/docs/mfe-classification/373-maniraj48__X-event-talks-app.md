@@ -20,65 +20,65 @@ annotation:
 
 # 373 — maniraj48/X-event-talks-app
 
-## Contexto
+## Context
 
-Aplicação “BigQuery Release Pulse”. Um servidor Flask lê o feed Atom de release notes do BigQuery e expõe uma API (`README.md:1–3`, `:76–85`; `app.py:7–13`, `:111–150`). Uma página única (`templates/index.html`) com CSS e JavaScript puros lista as notas e oferece um compositor de posts para o X (`README.md:47–51`). “Frontend orchestration” no README descreve o papel de `static/js/app.js` (estado, cliente `fetch`, busca e compositor), não composição de frontends. O nome do repositório não é usado como evidência.
+“BigQuery Release Pulse” application. A Flask server reads the BigQuery release notes Atom feed and exposes an API (`README.md:1–3`, `:76–85`; `app.py:7–13`, `:111–150`). A single page (`templates/index.html`) with plain CSS and JavaScript lists notes and provides an X post composer (`README.md:47–51`). “Frontend orchestration” in the README describes the role of `static/js/app.js` (state, `fetch` client, search and composer), not frontend composition. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:374` registra rank 373, ID 1271056104, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:374` records rank 373, ID 1271056104, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:374` registra a estratégia `broader` e elegibilidade `unknown`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:31956` e `data/discovery/mfe-round-002/candidates.csv:31964`, ambos com `broader` e `unknown`. Na rodada 002, `recent-push` é `pass` e `recent-human-commit` é `unknown` (`activity_incomplete`).
+`data/samples/mfe-sample-001/sample.csv:374` records strategy `broader` and eligibility `unknown`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:31956` and `data/discovery/mfe-round-002/candidates.csv:31964`, both with `broader` and `unknown`. In round 002, `recent-push` is `pass` and `recent-human-commit` is `unknown` (`activity_incomplete`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna um hit por rodada, do endpoint `repositories` e com `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns one hit per round, from endpoint `repositories` and with an empty `path`:
 
-| Consulta (`q`) | Subconsulta | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Collection 001 / 002 (UTC) |
 |---|---|---|
 | `broader-frontend-orchestration`: `"frontend orchestration" in:name,description,readme` | `broader-frontend-orchestration#created:2026-Q2` | 2026-10-07T23:43:42.907Z / 2026-10-08T16:24:44.223Z |
 
-A consulta efetiva acrescenta `pushed:>=2025-04-01` e o intervalo de criação do trimestre.
+The effective query appends `pushed:>=2025-04-01` and the quarter’s creation interval.
 
-Metadados do hit (iguais nas duas rodadas): descrição nula, sem tópicos, linguagem CSS, sem licença, `fork: false`, tamanho 17, criação em 2026-06-16T09:41:54Z, push em 2026-06-16T09:49:22Z.
+Hit metadata (identical in both rounds): null description, no topics, language CSS, no license, `fork: false`, size 17, created at 2026-06-16T09:41:54Z, pushed at 2026-06-16T09:49:22Z.
 
-**Grafia:** `README.md:64` (“`app.js               # Frontend orchestration, fetch client, search and composer code`”), no diagrama da estrutura de diretórios. É a única ocorrência da frase.
+**Spelling:** `README.md:64` (“`app.js               # Frontend orchestration, fetch client, search and composer code`”), in the directory structure diagram. It is the only occurrence of the phrase.
 
-O README foi adicionado no próprio SHA (2026-06-16T15:19:12+05:30, isto é, 09:49:12Z), que coincide com o `pushed_at` e antecede as coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The README was added at the SHA itself (2026-06-16T15:19:12+05:30, that is, 09:49:12Z), which matches `pushed_at` and predates the October 2026 collections. The README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 7 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. São `.gitignore`, `README.md`, `app.py`, `requirements.txt`, `static/css/style.css`, `static/js/app.js` e `templates/index.html`. Não há `package.json` nem ferramenta de build. | contrária |
-| Código-fonte (backend) | `app.py:111–113`: `/` renderiza `index.html`; `:115–150`: rotas `/api/releases`, `/api/tweet` e `/api/tweets`; `:153`: servidor na porta 5000. `requirements.txt:1–3`: Flask, requests e beautifulsoup4. | contexto |
-| Código-fonte (frontend) | `templates/index.html:18`, `:172`: carrega `/static/css/style.css` e `/static/js/app.js`; os outros `<link>` são fontes e ícones externos (`:10–15`). `static/js/app.js:1–12`, `:44–50`: estado global e manipulação do DOM; `:123`, `:358`, `:394`: `fetch` para a API Flask. Uma única página com um script. | contrária |
-| Tecnologia / Configuração / Composição (busca) | Os `<script>`/`<link>` de `templates/index.html` e as chamadas `fetch`/`import` de `static/js/app.js` não mostram `iframe`, import dinâmico nem carregamento de outra aplicação. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 7 entries, all regular files `100644`; zero symlinks and zero gitlinks. They are `.gitignore`, `README.md`, `app.py`, `requirements.txt`, `static/css/style.css`, `static/js/app.js` and `templates/index.html`. There is no `package.json` or build tool. | contrary |
+| Source code (backend) | `app.py:111–113`: `/` renders `index.html`; `:115–150`: routes `/api/releases`, `/api/tweet` and `/api/tweets`; `:153`: server on port 5000. `requirements.txt:1–3`: Flask, requests and beautifulsoup4. | context |
+| Source code (frontend) | `templates/index.html:18`, `:172`: loads `/static/css/style.css` and `/static/js/app.js`; other `<link>` are external fonts and icons (`:10–15`). `static/js/app.js:1–12`, `:44–50`: global state and DOM manipulation; `:123`, `:358`, `:394`: `fetch` to the Flask API. A single page with one script. | contrary |
+| Technology / Configuration / Composition (search) | The `<script>`/`<link>` of `templates/index.html` and `fetch`/`import` calls of `static/js/app.js` show no `iframe`, dynamic import or loading of another application. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso. Há 2 commits (2 em todos os refs), sem merges, ambos de `maniraj48 <manirajkyatham@gmail.com>` (autor e committer):
-- `c5d0f7a` (2026-06-16T15:08:56+05:30, “Initial commit of BigQuery Release Pulse application”): adiciona `app.py`, `requirements.txt`, `static/` e `templates/`;
+Non-shallow clone. There are 2 commits (2 across all refs), no merges, both by `maniraj48 <manirajkyatham@gmail.com>` (author and committer):
+- `c5d0f7a` (2026-06-16T15:08:56+05:30, “Initial commit of BigQuery Release Pulse application”): adds `app.py`, `requirements.txt`, `static/` and `templates/`;
 - `702f6a3` (2026-06-16T15:19:12+05:30, “docs: add project README.md”), o SHA.
 
-`git rev-list --objects $SHA --missing=print` não lista objetos ausentes.
+`git rev-list --objects $SHA --missing=print` lists no missing objects.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única página servida pelo Flask (`app.py:111–113`; `templates/index.html:172`); nenhuma configuração de composição. |
-| Q2 | No | Não há duas unidades frontend. |
-| Q3 | No | Não há host que carregue unidades; o Flask só renderiza o template e serve a API. |
-| Q4 | No | Nenhum mecanismo de composição; a “orquestração” do README é a lógica de um único script (`README.md:64`). |
-| Q5 | No | Q1–Q4 convergem. |
+| Q1 | No | A single page served by Flask (`app.py:111–113`; `templates/index.html:172`); no composition configuration. |
+| Q2 | No | There are not two frontend units. |
+| Q3 | No | No host loading units; Flask only renders the template and serves the API. |
+| Q4 | No | No composition mechanism; README “orchestration” is the logic of a single script (`README.md:64`). |
+| Q5 | No | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “conventional frontend monoliths”: uma página com JavaScript puro sobre um backend Flask.
-- O hit vem de vocabulário de orquestração não relacionado a micro-frontends, como os falsos positivos da consulta `"frontend orchestration"` em 279, 312, 320, 336 e 350 (rascunhos).
-- `frontend_units: 1`, `single-unit`, `ui_technologies: []` (HTML, CSS e JavaScript sem framework), `build_tools: []`. `repo_type: example`: aplicação de demonstração com publicação simulada em memória (`app.py:9–10`, `:143–144`).
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. It matches “conventional frontend monoliths”: a page with plain JavaScript over a Flask backend.
+- The hit comes from orchestration vocabulary unrelated to micro-frontends, like false positives from query `"frontend orchestration"` in 279, 312, 320, 336 and 350 (drafts).
+- `frontend_units: 1`, `single-unit`, `ui_technologies: []` (HTML, CSS and JavaScript without a framework), `build_tools: []`. `repo_type: example`: demonstration application with simulated in-memory publication (`app.py:9–10`, `:143–144`).
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos) / Protocolo (busca):** a frase casada está num comentário do diagrama de diretórios do README (`README.md:64`). É o sexto falso positivo da consulta `"frontend orchestration"` na série.
-- **Protocolo (elegibilidade):** a elegibilidade fica `unknown` nas duas rodadas (`recent-human-commit` com `activity_incomplete`), e o candidato entrou na amostra assim.
+- **RQ1 (misleading signals) / Protocol (search):** the matched phrase is in a comment in the README directory diagram (`README.md:64`). It is the sixth false positive from query `"frontend orchestration"` in the series.
+- **Protocol (eligibility):** eligibility remains `unknown` in both rounds (`recent-human-commit` with `activity_incomplete`), and the candidate entered the sample that way.

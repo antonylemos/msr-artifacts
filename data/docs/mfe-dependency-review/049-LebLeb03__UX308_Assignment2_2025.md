@@ -15,6 +15,6 @@ annotation:
 
 # 049 — LebLeb03/UX308_Assignment2_2025
 
-## Dependências
+## Dependencies
 
-Nenhuma dependência das tecnologias no dependencies.csv.
+No dependency on the technologies in dependencies.csv.

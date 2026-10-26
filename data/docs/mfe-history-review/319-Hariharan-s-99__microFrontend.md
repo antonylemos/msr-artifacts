@@ -13,17 +13,17 @@ annotation:
 
 # 319 — Hariharan-s-99/microFrontend
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem 22 commits, de 2025-04-26 a 2025-05-11, sem merges. O primeiro commit é `6dc9cd1` (2025-04-26, "microforntend initial setup"), e o do snapshot é `9022737` (2025-05-11, "added basename for router @settings module federation remote").
+History up to snapshot has 22 commits, from 2025-04-26 to 2025-05-11, without merges. First commit is `6dc9cd1` (2025-04-26, "microforntend initial setup"), and snapshot is `9022737` (2025-05-11, "added basename for router @settings module federation remote").
 
-As revisões anteriores não deixaram ponto ambíguo que o histórico pudesse esclarecer: as três dependências de Module Federation estão configuradas (3.4.2), nenhuma unidade é `Undetermined` (3.4.3), não há construção desativada, comentada ou `Undetermined` (3.4.4), as duas relações estão ativas e não há relação `Undetermined` (3.4.5), o deploy das quatro aplicações é `não observado`, e não `Undetermined` (3.4.6), e não há afirmações de documentação (3.4.7). Por isso o histórico não foi consultado além deste contexto.
+Previous reviews left no ambiguous point history could clarify: three Module Federation dependencies are configured (3.4.2), no unit is `Undetermined` (3.4.3), no construct is deactivated, commented out or `Undetermined` (3.4.4), both relationships are active and none is `Undetermined` (3.4.5), deploy of four applications is `not observed`, rather than `Undetermined` (3.4.6), and no documentation claims exist (3.4.7). Thus history was not consulted beyond this context.
 
-## Pontos
+## Points
 
-Nenhum ponto ambíguo nas revisões anteriores.
+No ambiguous points in previous reviews.
 
-## Comandos
+## Commands
 
 ```
 docs/mfe-history-review/tools/hist.sh Hariharan-s-99__microFrontend rev-list --count 902273771afdb4f52006aeed0bcb3cd0e6c33cee
@@ -32,6 +32,6 @@ docs/mfe-history-review/tools/hist.sh Hariharan-s-99__microFrontend log --format
 docs/mfe-history-review/tools/hist.sh Hariharan-s-99__microFrontend log --format='%h %ad %s' --date=short 902273771afdb4f52006aeed0bcb3cd0e6c33cee
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 22 (2025-04-26 a 2025-05-11). Pontos: 0.
+Commits up to the snapshot: 22 (2025-04-26 to 2025-05-11). Points: 0.

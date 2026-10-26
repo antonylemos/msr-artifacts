@@ -20,60 +20,60 @@ annotation:
 
 # 354 — Kyrie112/ceph_cls_dev
 
-## Contexto
+## Context
 
-Cópia, com histórico completo, do sistema de armazenamento Ceph (C++, Python), sem fork declarado. No SHA, o HEAD do branch padrão `main` é um merge upstream de 2025-07-22. O único frontend é o Ceph Dashboard (`src/pybind/mgr/dashboard/frontend/`), uma aplicação Angular em Nx. Desde `a0dd52fe10` (2025-05-04, “mgr/dashboard: set up dashboard as a app shell”), ela está configurada como host Nx Module Federation com `remotes: []` e manifesto de runtime vazio. O titular do repositório só tem commits num branch separado (`origin/ndp_dev`), fora do snapshot. O nome do repositório não é usado como evidência.
+Copy, with complete history, of the Ceph storage system (C++, Python), without a declared fork. At the SHA, default branch `main` HEAD is an upstream merge from 2025-07-22. The only frontend is Ceph Dashboard (`src/pybind/mgr/dashboard/frontend/`), an Angular application in Nx. Since `a0dd52fe10` (2025-05-04, “mgr/dashboard: set up dashboard as a app shell”), it is configured as an Nx Module Federation host with `remotes: []` and an empty runtime manifest. Repository owner commits exist only on a separate branch (`origin/ndp_dev`), outside the snapshot. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:355` registra rank 354, ID 1001914825, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:355` records rank 354, ID 1001914825, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:355` registra a estratégia `technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:15142` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:15146` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:355` records strategy `technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:15142` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:15146` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna um único hit em cada rodada. Ele vem do endpoint `code`, consulta `technology-module-federation-package-code` (`"@module-federation" filename:package.json`), subconsulta `…#size:6000..9999`, `path` `src/pybind/mgr/dashboard/frontend/package.json`. As coletas são 2026-10-07T21:13:13.263Z (001) e 2026-10-08T15:44:19.145Z (002).
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns a single hit in each round. It comes from endpoint `code`, query `technology-module-federation-package-code` (`"@module-federation" filename:package.json`), subquery `…#size:6000..9999`, `path` `src/pybind/mgr/dashboard/frontend/package.json`. Collections are 2026-10-07T21:13:13.263Z (001) and 2026-10-08T15:44:19.145Z (002).
 
-O arquivo tem 6.090 bytes no SHA e declara `"@module-federation/enhanced": "^0.9.0"` e `"@nx/module-federation": "20.8.1"` (`package.json:105–106`). Os metadados do hit de código não trazem descrição, tópicos nem datas. A entrada é só por código.
+The file has 6.090 bytes at the SHA and declares `"@module-federation/enhanced": "^0.9.0"` and `"@nx/module-federation": "20.8.1"` (`package.json:105–106`). Code hit metadata has no description, topics or dates. Entry is through code only.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 13.605 entradas, 11.195 arquivos regulares `100644`, 682 executáveis `100755`, 1.701 symlinks `120000` e 27 gitlinks `160000` (submódulos do projeto Ceph, por exemplo `ceph-erasure-code-corpus`, `ceph-object-corpus` e `src/BLAKE3`). Os gitlinks são dependências do backend, não unidades frontend. O único frontend é `src/pybind/mgr/dashboard/frontend/`. | contexto |
-| Configuração MF | `src/pybind/mgr/dashboard/frontend/module-federation.config.ts:3–18`: `name: 'ceph-dashboard'`, `remotes: []`, com apenas comentários de exemplo. `webpack.config.ts:1–9` e `webpack.prod.config.ts:9–24`: `withModuleFederation(config)`, com remotos de produção só em comentário. `project.json:181`: `@nx/angular:module-federation-dev-server`. | contrária |
-| Runtime | `src/main.ts:1–10`: carrega `/assets/module-federation.manifest.json` e chama `setRemoteDefinitions` antes do `bootstrap`. `src/assets/module-federation.manifest.json`: `{}`, sem remotos definidos. | contrária |
-| Consumo | `git grep` por `loadRemote` e `remotes` em `src/` do dashboard: nenhum carregamento de módulo remoto. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 13.605 entries, 11.195 regular files `100644`, 682 executables `100755`, 1.701 symlinks `120000` and 27 gitlinks `160000` (Ceph project submodules, for example `ceph-erasure-code-corpus`, `ceph-object-corpus` and `src/BLAKE3`). Gitlinks are backend dependencies, not frontend units. The only frontend is `src/pybind/mgr/dashboard/frontend/`. | context |
+| MF configuration | `src/pybind/mgr/dashboard/frontend/module-federation.config.ts:3–18`: `name: 'ceph-dashboard'`, `remotes: []`, with only example comments. `webpack.config.ts:1–9` and `webpack.prod.config.ts:9–24`: `withModuleFederation(config)`, with production remotes only in a comment. `project.json:181`: `@nx/angular:module-federation-dev-server`. | contrary |
+| Runtime | `src/main.ts:1–10`: loads `/assets/module-federation.manifest.json` and calls `setRemoteDefinitions` before `bootstrap`. `src/assets/module-federation.manifest.json`: `{}`, without defined remotes. | contrary |
+| Consumption | `git grep` for `loadRemote` and `remotes` in dashboard `src/`: no remote module loading. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso:
-- **Histórico do SHA:** 155.018 commits, 38.172 merges, de 2001-04-29 (`7091d44931`) a 2025-07-22, todos upstream. Os maiores autores são Sage Weil e Kefu Chai.
-- **Refs:** 161.963 commits e 40.386 merges em todos os refs, com vários branches `dependabot-*`.
-- **Titular:** os 8 commits de `Kyrie112` estão no branch `origin/ndp_dev` (por exemplo, `a5dc1135c7`, 2025-11-03), fora do snapshot.
+Non-shallow clone:
+- **SHA history:** 155.018 commits, 38.172 merges, from 2001-04-29 (`7091d44931`) to 2025-07-22, all upstream. Largest authors are Sage Weil and Kefu Chai.
+- **Refs:** 161.963 commits and 40.386 merges across all refs, with several `dependabot-*` branches.
+- **Owner:** the 8 commits by `Kyrie112` are on branch `origin/ndp_dev` (for example, `a5dc1135c7`, 2025-11-03), outside the snapshot.
 
-Nenhum blob histórico foi lido e não houve objeto ausente.
+No historical blob was read and there was no missing object.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend (Ceph Dashboard); nenhuma unidade remota referenciada (`remotes: []`, manifesto `{}`). |
-| Q2 | No | Sem duas unidades, não há independência a avaliar. |
-| Q3 | No | O dashboard está preparado como shell, mas não carrega nem monta nenhuma unidade. |
-| Q4 | No | Federação configurada sem remotos nem consumo: “A declared dependency alone is No”. |
-| Q5 | No | Q1–Q4 são No: frontend único com federação preparada, mas não usada. |
+| Q1 | No | A single frontend unit (Ceph Dashboard); no referenced remote unit (`remotes: []`, manifest `{}`). |
+| Q2 | No | Without two units, there is no independence to assess. |
+| Q3 | No | The dashboard is prepared as a shell, but loads or mounts no unit. |
+| Q4 | No | Federation configured without remotes or consumption: “A declared dependency alone is No”. |
+| Q5 | No | Q1–Q4 are No: single frontend with prepared but unused federation. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “MFE-related dependencies that are unused or experimental”: o host Nx MF existe sem nenhum remoto.
-- Diferentemente de 097, aqui a configuração é executável. Ainda assim não conecta unidades, então Q4 é No, não Undetermined.
-- **Campos:**
+- `Non-MFE` under the rule “at least one question is No”. It matches “MFE-related dependencies that are unused or experimental”: the Nx MF host exists without any remote.
+- Unlike 097, configuration is executable here. Still, it connects no units, so Q4 is No, not Undetermined.
+- **Fields:**
   - `frontend_units: 1`, `unit_organization: single-unit`, `approaches: []`;
-  - `ui_technologies: [angular]`, `build_tools: [webpack]` (Nx com `withModuleFederation` sobre webpack);
-  - `repo_type: production` (software de produção Ceph).
-- Não há decisão aberta.
+  - `ui_technologies: [angular]`, `build_tools: [webpack]` (Nx with `withModuleFederation` over webpack);
+  - `repo_type: production` (Ceph production software).
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** o Ceph Dashboard adotou o padrão de app shell do Nx MF, com manifesto de runtime pronto para receber remotos. No snapshot, isso é preparação de arquitetura, não composição.
-- **Protocolo (amostra):** cópia integral de um projeto upstream, com o trabalho do titular num branch não padrão.
-- **Protocolo (busca):** entrada só por código, por dependência declarada. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ2:** Ceph Dashboard adopted the Nx MF app shell pattern, with a runtime manifest ready to receive remotes. In the snapshot, this is architectural preparation, not composition.
+- **Protocol (sample):** complete upstream project copy, with owner work on a non-default branch.
+- **Protocol (search):** entry through code only, through a declared dependency. Eligibility changes from `unknown` (001) to `pass` (002).

@@ -19,723 +19,727 @@ annotation:
 
 # 362 — lkovari/monorepo-nx-mf-dyn-modfed
 
-## Leitura do repositório
+## Repository overview
 
-O workspace reúne um host Angular e três remotes com entrada e build próprios (#47, #49, #51, #53). A cadeia de Native Federation começa na dependência #4, passa pelos executores e configurações #15–#26 e pelo manifesto #27, e chega às rotas que carregam os App expostos (#33–#35, #44). As três relações de federação estão ativas e têm destino no snapshot (#57–#59). Os imports e a preparação da federação são evidência tecnológica (#32, #36, #37); os bootstraps locais e a inicialização standalone dos remotes não compõem outra unidade (#28–#31, #38–#43).
+Workspace brings Angular host/three remotes with own entries/builds (#47, #49, #51, #53). Native Federation chain starts at dependency #4, passes through executors/configurations #15–#26 and manifest #27, reaches routes loading exposed App components (#33–#35, #44). Three federation relationships active with snapshot targets (#57–#59). Imports/federation preparation technological evidence (#32, #36, #37); local bootstraps/remote standalone initialization compose no other unit (#28–#31, #38–#43).
 
-A comunicação usa a dependência #2, o bus e a ponte do host e consumidores nos componentes expostos (#45), formando três relações events do host para os remotes (#60–#62). Os handlers de query/command respondem no processo do host; isso não demonstra publicação pelos App remotos. As bibliotecas e projetos e2e não são unidades frontend (#46, #48, #50, #52, #54–#56). Os builds são separados, mas a publicação reúne as quatro saídas num site Pages, sem versionamento independente (#63–#66).
+Communication uses dependency #2, host bus/bridge and exposed-component consumers (#45), forming three host-to-remote events relationships (#60–#62). Query/command handlers respond in host process; this demonstrates no remote App publication. Libraries/e2e projects not frontend units (#46, #48, #50, #52, #54–#56). Builds separate but publication aggregates four outputs in one Pages site without independent versioning (#63–#66).
 
-A documentação corrobora a composição por rotas e a coordenação pelo host (#70–#77), mas contém atribuição incorreta dos bootstraps no diagrama (#78), versão antiga do pacote (#88) e negação excessiva do emissor na rota remota (#89). O histórico explica a coexistência dessas divergências (#97, #99, #100). A filtragem interna do pacote tem corroboração parcial (#80, #98), e o transporte descrito pelo guia externo não foi corroborado (#91). O pacote Node sem uso (#3) e as ferramentas Nx não constituem outra abordagem de MFE. O uso de Jest permanece indeterminado (#9); as lacunas históricas (#93–#96) não mudam a cadeia arquitetural do snapshot.
+Documentation corroborates route composition/host coordination (#70–#77), but diagram assigns bootstraps incorrectly (#78), package version old (#88), remote-route sender denial excessive (#89). History explains divergence coexistence (#97, #99, #100). Internal package filtering partially corroborated (#80, #98), external guide’s described transport uncorroborated (#91). Unused Node package (#3)/Nx tools no other MFE approach. Jest usage remains undetermined (#9); historical gaps (#93–#96) do not change snapshot architectural chain.
 
-## Observações
+## Observations
 
 ### 1. nx-mf-df/libs/common-ui-lib/package.json:9
 
-**Observação:** O manifesto declara `@lkovari/microfrontend-platform-communication` na seção `peerDependencies`, versão `^0.3.2`.
+**Observation:** Manifest declares `@lkovari/microfrontend-platform-communication` in section `peerDependencies`, version `^0.3.2`.
 
-**Interpretação:** A declaração da biblioteca de mensageria acompanha o consumidor compartilhado usado pelos componentes remotos; isolada, não estabelece as ligações entre aplicações.
+**Interpretation:** Messaging library declaration accompanies shared consumer used by remote components; alone establishes no inter-application links.
 
 ### 2. nx-mf-df/package.json:89
 
-**Observação:** O manifesto declara `@lkovari/microfrontend-platform-communication` na seção `dependencies`, versão `^0.3.2`.
+**Observation:** Manifest declares `@lkovari/microfrontend-platform-communication` in section `dependencies`, version `^0.3.2`.
 
-**Interpretação:** A dependência fornece os providers de bus e bridge usados pelo host; a declaração sozinha é um sinal tecnológico.
+**Interpretation:** Dependency provides host-used bus/bridge providers; declaration alone technology signal.
 
 ### 3. nx-mf-df/package.json:91
 
-**Observação:** O manifesto declara `@softarc/native-federation-node` na seção `dependencies`, versão `^3.3.4`.
+**Observation:** Manifest declares `@softarc/native-federation-node` in section `dependencies`, version `^3.3.4`.
 
-**Interpretação:** A revisão registra Configurada No: o pacote Node não é importado nem invocado. Seu nome não demonstra uma segunda implementação da federação.
+**Interpretation:** Review records Configured No: Node package neither imported nor invoked. Name demonstrates no second federation implementation.
 
 ### 4. nx-mf-df/package.json:31
 
-**Observação:** O manifesto declara `@angular-architects/native-federation` na seção `devDependencies`, versão `^21.2.3`.
+**Observation:** Manifest declares `@angular-architects/native-federation` in section `devDependencies`, version `^21.2.3`.
 
-**Interpretação:** A revisão registra Configurada Yes: Native Federation é o mecanismo configurado e usado nos apps. A declaração isolada não demonstra a organização das unidades.
+**Interpretation:** Review records Configured Yes: Native Federation configured/used in apps. Isolated declaration demonstrates no unit organization.
 
 ### 5. nx-mf-df/package.json:40
 
-**Observação:** O manifesto declara `@nx/angular` na seção `devDependencies`, versão `^22.6.3`.
+**Observation:** Manifest declares `@nx/angular` in section `devDependencies`, version `^22.6.3`.
 
-**Interpretação:** A revisão confirma o executor de build da biblioteca Angular, não uma unidade frontend adicional.
+**Interpretation:** Review confirms Angular library build executor rather than extra frontend unit.
 
 ### 6. nx-mf-df/package.json:41
 
-**Observação:** O manifesto declara `@nx/devkit` na seção `devDependencies`, versão `22.6.3`.
+**Observation:** Manifest declares `@nx/devkit` in section `devDependencies`, version `22.6.3`.
 
-**Interpretação:** A revisão confirma uso nas configurações Playwright. É ferramenta de testes, sem mecanismo de composição de frontend nesta declaração.
+**Interpretation:** Review confirms Playwright configuration usage. Test tool without frontend composition mechanism in declaration.
 
 ### 7. nx-mf-df/package.json:42
 
-**Observação:** O manifesto declara `@nx/eslint` na seção `devDependencies`, versão `22.6.3`.
+**Observation:** Manifest declares `@nx/eslint` in section `devDependencies`, version `22.6.3`.
 
-**Interpretação:** A revisão confirma os targets e o plugin de lint; a dependência é infraestrutura do workspace.
+**Interpretation:** Review confirms lint targets/plugin; dependency workspace infrastructure.
 
 ### 8. nx-mf-df/package.json:43
 
-**Observação:** O manifesto declara `@nx/eslint-plugin` na seção `devDependencies`, versão `22.6.3`.
+**Observation:** Manifest declares `@nx/eslint-plugin` in section `devDependencies`, version `22.6.3`.
 
-**Interpretação:** A revisão confirma a configuração ESLint e a regra de fronteiras de módulos; isso não liga aplicações em runtime.
+**Interpretation:** Review confirms ESLint configuration/module-boundary rule without runtime application link.
 
 ### 9. nx-mf-df/package.json:44
 
-**Observação:** O manifesto declara `@nx/jest` na seção `devDependencies`, versão `22.6.3`.
+**Observation:** Manifest declares `@nx/jest` in section `devDependencies`, version `22.6.3`.
 
-**Interpretação:** A revisão mantém Configurada Undetermined: o plugin e os arquivos Jest podem ser configuração ainda utilizada ou remanescente, pois o target explícito usa Vitest. A declaração não resolve essa concorrência.
+**Interpretation:** Review retains Configured Undetermined: Jest plugin/files may remain used or leftover configuration, since explicit target uses Vitest. Declaration does not resolve competing readings.
 
 ### 10. nx-mf-df/package.json:45
 
-**Observação:** O manifesto declara `@nx/js` na seção `devDependencies`, versão `22.6.3`.
+**Observation:** Manifest declares `@nx/js` in section `devDependencies`, version `22.6.3`.
 
-**Interpretação:** A revisão confirma o build TypeScript da biblioteca de contratos, sem convertê-la em aplicação frontend.
+**Interpretation:** Review confirms contracts-library TypeScript build without making it frontend application.
 
 ### 11. nx-mf-df/package.json:46
 
-**Observação:** O manifesto declara `@nx/playwright` na seção `devDependencies`, versão `22.6.3`.
+**Observation:** Manifest declares `@nx/playwright` in section `devDependencies`, version `22.6.3`.
 
-**Interpretação:** A revisão confirma a inferência dos testes e2e pelo plugin; é contexto de verificação do workspace.
+**Interpretation:** Review confirms plugin-inferred e2e tests; workspace verification context.
 
 ### 12. nx-mf-df/package.json:47
 
-**Observação:** O manifesto declara `@nx/web` na seção `devDependencies`, versão `22.6.3`.
+**Observation:** Manifest declares `@nx/web` in section `devDependencies`, version `22.6.3`.
 
-**Interpretação:** A revisão confirma o servidor estático local de cada build; isso não demonstra deploy independente.
+**Interpretation:** Review confirms local static server per build, without demonstrating independent deployment.
 
 ### 13. nx-mf-df/package.json:48
 
-**Observação:** O manifesto declara `@nx/workspace` na seção `devDependencies`, versão `22.6.3`.
+**Observation:** Manifest declares `@nx/workspace` in section `devDependencies`, version `22.6.3`.
 
-**Interpretação:** A revisão registra Configurada No: a declaração de @nx/workspace não tem invocação direta encontrada e não demonstra composição.
+**Interpretation:** Review records Configured No: @nx/workspace declaration has no found direct invocation/demonstrates no composition.
 
 ### 14. nx-mf-df/package.json:71
 
-**Observação:** O manifesto declara `nx` na seção `devDependencies`, versão `22.6.3`.
+**Observation:** Manifest declares `nx` in section `devDependencies`, version `22.6.3`.
 
-**Interpretação:** A revisão confirma comandos Nx no build e na inicialização; Nx coordena o workspace, mas esta declaração não estabelece uma arquitetura de MFE.
+**Interpretation:** Review confirms Nx commands in build/startup; Nx coordinates workspace but declaration establishes no MFE architecture.
 
 ### 15. nx-mf-df/apps/main-host/federation.config.js:1-28
 
-**Observação:** `withNativeFederation` declara `name: main-host`, `shared: shareAll` com singleton, strictVersion e requiredVersion auto, uma lista skip e ignoreUnusedDeps.
+**Observation:** `withNativeFederation` declares `name: main-host`, `shared: shareAll` with singleton, strictVersion, requiredVersion auto, skip list/ignoreUnusedDeps.
 
-**Interpretação:** Configura Native Federation na unidade main-host e o compartilhamento de dependências, sem nomear outra unidade.
+**Interpretation:** Configures Native Federation in main-host/dependency sharing without naming another unit.
 
 ### 16. nx-mf-df/apps/main-host/project.json:9-22
 
-**Observação:** O target `build` usa `@angular-architects/native-federation:build` e aponta para `main-host:esbuild` nas configurações production/development.
+**Observation:** Target `build` uses `@angular-architects/native-federation:build`, points to `main-host:esbuild` in production/development configurations.
 
-**Interpretação:** Configura o executor de federação no target build de main-host, sem declarar outra aplicação.
+**Interpretation:** Configures federation executor in main-host build target without declaring another application.
 
 ### 17. nx-mf-df/apps/main-host/project.json:23-33
 
-**Observação:** O target `serve` usa `@angular-architects/native-federation:build` e aponta para `main-host:serve-original:development`, com dev true e execução contínua.
+**Observation:** Target `serve` uses `@angular-architects/native-federation:build`, points to `main-host:serve-original:development` with dev true/continuous execution.
 
-**Interpretação:** Configura o executor de federação no target serve de main-host, sem declarar outra aplicação.
+**Interpretation:** Configures federation executor in main-host serve target without declaring another application.
 
 ### 18. nx-mf-df/apps/mf_remote_a/federation.config.js:1-33
 
-**Observação:** `withNativeFederation` declara `name: mf_remote_a`, `shared: shareAll` com singleton, strictVersion e requiredVersion auto, uma lista skip e ignoreUnusedDeps. Expõe `./Component` como `./apps/mf_remote_a/src/app/app.ts`.
+**Observation:** `withNativeFederation` declares `name: mf_remote_a`, `shared: shareAll` with singleton, strictVersion, requiredVersion auto, skip list/ignoreUnusedDeps. Exposes `./Component` as `./apps/mf_remote_a/src/app/app.ts`.
 
-**Interpretação:** Configura Native Federation na unidade mf_remote_a, oferecendo seu componente raiz para consumidores, sem nomear um consumidor neste bloco.
+**Interpretation:** Configures Native Federation in mf_remote_a/dependency sharing, offering root component to consumers without naming consumer in block.
 
 ### 19. nx-mf-df/apps/mf_remote_a/project.json:9-22
 
-**Observação:** O target `build` usa `@angular-architects/native-federation:build` e aponta para `mf_remote_a:esbuild` nas configurações production/development.
+**Observation:** Target `build` uses `@angular-architects/native-federation:build`, points to `mf_remote_a:esbuild` in production/development configurations.
 
-**Interpretação:** Configura o executor de federação no target build de mf_remote_a, sem declarar outra aplicação.
+**Interpretation:** Configures federation executor in mf_remote_a build target without declaring another application.
 
 ### 20. nx-mf-df/apps/mf_remote_a/project.json:23-33
 
-**Observação:** O target `serve` usa `@angular-architects/native-federation:build` e aponta para `mf_remote_a:serve-original:development`, com dev true e execução contínua.
+**Observation:** Target `serve` uses `@angular-architects/native-federation:build`, points to `mf_remote_a:serve-original:development` with dev true/continuous execution.
 
-**Interpretação:** Configura o executor de federação no target serve de mf_remote_a, sem declarar outra aplicação.
+**Interpretation:** Configures federation executor in mf_remote_a serve target without declaring another application.
 
 ### 21. nx-mf-df/apps/mf_remote_b/federation.config.js:1-33
 
-**Observação:** `withNativeFederation` declara `name: mf_remote_b`, `shared: shareAll` com singleton, strictVersion e requiredVersion auto, uma lista skip e ignoreUnusedDeps. Expõe `./Component` como `./apps/mf_remote_b/src/app/app.ts`.
+**Observation:** `withNativeFederation` declares `name: mf_remote_b`, `shared: shareAll` with singleton, strictVersion, requiredVersion auto, skip list/ignoreUnusedDeps. Exposes `./Component` as `./apps/mf_remote_b/src/app/app.ts`.
 
-**Interpretação:** Configura Native Federation na unidade mf_remote_b, oferecendo seu componente raiz para consumidores, sem nomear um consumidor neste bloco.
+**Interpretation:** Configures Native Federation in mf_remote_b/dependency sharing, offering root component to consumers without naming consumer in block.
 
 ### 22. nx-mf-df/apps/mf_remote_b/project.json:9-22
 
-**Observação:** O target `build` usa `@angular-architects/native-federation:build` e aponta para `mf_remote_b:esbuild` nas configurações production/development.
+**Observation:** Target `build` uses `@angular-architects/native-federation:build`, points to `mf_remote_b:esbuild` in production/development configurations.
 
-**Interpretação:** Configura o executor de federação no target build de mf_remote_b, sem declarar outra aplicação.
+**Interpretation:** Configures federation executor in mf_remote_b build target without declaring another application.
 
 ### 23. nx-mf-df/apps/mf_remote_b/project.json:23-33
 
-**Observação:** O target `serve` usa `@angular-architects/native-federation:build` e aponta para `mf_remote_b:serve-original:development`, com dev true e execução contínua.
+**Observation:** Target `serve` uses `@angular-architects/native-federation:build`, points to `mf_remote_b:serve-original:development` with dev true/continuous execution.
 
-**Interpretação:** Configura o executor de federação no target serve de mf_remote_b, sem declarar outra aplicação.
+**Interpretation:** Configures federation executor in mf_remote_b serve target without declaring another application.
 
 ### 24. nx-mf-df/apps/mf_remote_c/federation.config.js:1-33
 
-**Observação:** `withNativeFederation` declara `name: mf_remote_c`, `shared: shareAll` com singleton, strictVersion e requiredVersion auto, uma lista skip e ignoreUnusedDeps. Expõe `./Component` como `./apps/mf_remote_c/src/app/app.ts`.
+**Observation:** `withNativeFederation` declares `name: mf_remote_c`, `shared: shareAll` with singleton, strictVersion, requiredVersion auto, skip list/ignoreUnusedDeps. Exposes `./Component` as `./apps/mf_remote_c/src/app/app.ts`.
 
-**Interpretação:** Configura Native Federation na unidade mf_remote_c, oferecendo seu componente raiz para consumidores, sem nomear um consumidor neste bloco.
+**Interpretation:** Configures Native Federation in mf_remote_c/dependency sharing, offering root component to consumers without naming consumer in block.
 
 ### 25. nx-mf-df/apps/mf_remote_c/project.json:9-22
 
-**Observação:** O target `build` usa `@angular-architects/native-federation:build` e aponta para `mf_remote_c:esbuild` nas configurações production/development.
+**Observation:** Target `build` uses `@angular-architects/native-federation:build`, points to `mf_remote_c:esbuild` in production/development configurations.
 
-**Interpretação:** Configura o executor de federação no target build de mf_remote_c, sem declarar outra aplicação.
+**Interpretation:** Configures federation executor in mf_remote_c build target without declaring another application.
 
 ### 26. nx-mf-df/apps/mf_remote_c/project.json:23-33
 
-**Observação:** O target `serve` usa `@angular-architects/native-federation:build` e aponta para `mf_remote_c:serve-original:development`, com dev true e execução contínua.
+**Observation:** Target `serve` uses `@angular-architects/native-federation:build`, points to `mf_remote_c:serve-original:development` with dev true/continuous execution.
 
-**Interpretação:** Configura o executor de federação no target serve de mf_remote_c, sem declarar outra aplicação.
+**Interpretation:** Configures federation executor in mf_remote_c serve target without declaring another application.
 
 ### 27. nx-mf-df/apps/main-host/public/federation.manifest.json:1-5
 
-**Observação:** O manifesto mapeia `mf_remote_a`, `mf_remote_b` e `mf_remote_c` para `http://localhost:4201/remoteEntry.json`, `:4202/remoteEntry.json` e `:4203/remoteEntry.json`, respectivamente.
+**Observation:** Manifest maps `mf_remote_a`, `mf_remote_b`, `mf_remote_c` to `http://localhost:4201/remoteEntry.json`, `:4202/remoteEntry.json`, `:4203/remoteEntry.json`, respectively.
 
-**Interpretação:** Declara os três destinos que o host resolve por Native Federation e seus endereços de desenvolvimento.
+**Interpretation:** Declares three Native Federation host targets/development addresses.
 
-**Nota:** Os project.json contribuem apenas pelos targets build e serve que declaram o executor de federação. Targets esbuild/serve-original/serve-static, aliases, plugins de testes e lint e registros de projetos não declaram elemento de composição. app.config.ts e app.routes.ts são código executado pela aplicação e permanecem na dimensão 3. gh-build.mjs é script de build que reescreve o manifesto de produção: os trechos de URLs marcados como apoio na composição não geram observação adicional de configuração.
+**Note:** project.json files contribute only build/serve targets declaring federation executor. esbuild/serve-original/serve-static targets, aliases, test/lint plugins and project registries declare no composition element. app.config.ts and app.routes.ts application-executed code remain in dimension 3. gh-build.mjs build script rewrites production manifest: URL excerpts marked supporting composition generate no extra configuration observation.
 
 ### 28. nx-mf-df/apps/main-host/src/main.ts:5; nx-mf-df/apps/main-host/src/bootstrap.ts:1-5
 
-**Observação:** A continuação chama `import('./bootstrap')`; o bootstrap invoca `bootstrapApplication(App, appConfig)`.
+**Observation:** Continuation calls `import('./bootstrap')`; bootstrap invokes `bootstrapApplication(App, appConfig)`.
 
-**Interpretação:** Carrega o bootstrap local de main-host. A revisão registra Composição No: esse import não carrega outra unidade.
+**Interpretation:** Loads main-host local bootstrap. Review records Composition No: import loads no other unit.
 
 ### 29. nx-mf-df/apps/mf_remote_a/src/main.ts:5; nx-mf-df/apps/mf_remote_a/src/bootstrap.ts:1-5
 
-**Observação:** A continuação chama `import('./bootstrap')`; o bootstrap invoca `bootstrapApplication(App, appConfig)`.
+**Observation:** Continuation calls `import('./bootstrap')`; bootstrap invokes `bootstrapApplication(App, appConfig)`.
 
-**Interpretação:** Carrega o bootstrap local de mf_remote_a. A revisão registra Composição No: esse import não carrega outra unidade.
+**Interpretation:** Loads mf_remote_a local bootstrap. Review records Composition No: import loads no other unit.
 
 ### 30. nx-mf-df/apps/mf_remote_b/src/main.ts:5; nx-mf-df/apps/mf_remote_b/src/bootstrap.ts:1-5
 
-**Observação:** A continuação chama `import('./bootstrap')`; o bootstrap invoca `bootstrapApplication(App, appConfig)`.
+**Observation:** Continuation calls `import('./bootstrap')`; bootstrap invokes `bootstrapApplication(App, appConfig)`.
 
-**Interpretação:** Carrega o bootstrap local de mf_remote_b. A revisão registra Composição No: esse import não carrega outra unidade.
+**Interpretation:** Loads mf_remote_b local bootstrap. Review records Composition No: import loads no other unit.
 
 ### 31. nx-mf-df/apps/mf_remote_c/src/main.ts:5; nx-mf-df/apps/mf_remote_c/src/bootstrap.ts:1-5
 
-**Observação:** A continuação chama `import('./bootstrap')`; o bootstrap invoca `bootstrapApplication(App, appConfig)`.
+**Observation:** Continuation calls `import('./bootstrap')`; bootstrap invokes `bootstrapApplication(App, appConfig)`.
 
-**Interpretação:** Carrega o bootstrap local de mf_remote_c. A revisão registra Composição No: esse import não carrega outra unidade.
+**Interpretation:** Loads mf_remote_c local bootstrap. Review records Composition No: import loads no other unit.
 
 ### 32. nx-mf-df/apps/main-host/src/app/app.routes.ts:2
 
-**Observação:** Importa `loadRemoteModule` de `@angular-architects/native-federation`.
+**Observation:** Imports `loadRemoteModule` from `@angular-architects/native-federation`.
 
-**Interpretação:** Disponibiliza o mecanismo usado pelas rotas; o import sozinho não nomeia uma unidade de destino.
+**Interpretation:** Provides route mechanism; import alone names no target unit.
 
 ### 33. nx-mf-df/apps/main-host/src/app/app.routes.ts:14
 
-**Observação:** A rota `mf_remote_a` usa `loadComponent` com `loadRemoteModule('mf_remote_a', './Component').then((m) => m.App)`.
+**Observation:** Route `mf_remote_a` uses `loadComponent` with `loadRemoteModule('mf_remote_a', './Component').then((m) => m.App)`.
 
-**Interpretação:** Liga o caminho de navegação do host ao componente remoto de mf_remote_a por carga federada.
+**Interpretation:** Links host navigation path to mf_remote_a remote component through federation loading.
 
 ### 34. nx-mf-df/apps/main-host/src/app/app.routes.ts:19
 
-**Observação:** A rota `mf_remote_b` usa `loadComponent` com `loadRemoteModule('mf_remote_b', './Component').then((m) => m.App)`.
+**Observation:** Route `mf_remote_b` uses `loadComponent` with `loadRemoteModule('mf_remote_b', './Component').then((m) => m.App)`.
 
-**Interpretação:** Liga o caminho de navegação do host ao componente remoto de mf_remote_b por carga federada.
+**Interpretation:** Links host navigation path to mf_remote_b remote component through federation loading.
 
 ### 35. nx-mf-df/apps/main-host/src/app/app.routes.ts:24
 
-**Observação:** A rota `mf_remote_c` usa `loadComponent` com `loadRemoteModule('mf_remote_c', './Component').then((m) => m.App)`.
+**Observation:** Route `mf_remote_c` uses `loadComponent` with `loadRemoteModule('mf_remote_c', './Component').then((m) => m.App)`.
 
-**Interpretação:** Liga o caminho de navegação do host ao componente remoto de mf_remote_c por carga federada.
+**Interpretation:** Links host navigation path to mf_remote_c remote component through federation loading.
 
 ### 36. nx-mf-df/apps/main-host/src/main.ts:1
 
-**Observação:** Importa `initFederation` de `@angular-architects/native-federation`.
+**Observation:** Imports `initFederation` from `@angular-architects/native-federation`.
 
-**Interpretação:** Disponibiliza o inicializador de federação no host; a declaração de import não nomeia destinos.
+**Interpretation:** Provides host federation initializer; import declaration names no targets.
 
 ### 37. nx-mf-df/apps/main-host/src/main.ts:3
 
-**Observação:** Chama `initFederation('federation.manifest.json')` antes do import do bootstrap local.
+**Observation:** Calls `initFederation('federation.manifest.json')` before local bootstrap import.
 
-**Interpretação:** Usa a resolução por manifesto para preparar a federação antes de iniciar o host. O nome do manifesto não nomeia sozinho as unidades de destino.
+**Interpretation:** Uses manifest resolution to prepare federation before host startup. Manifest name alone names no target units.
 
 ### 38. nx-mf-df/apps/mf_remote_a/src/main.ts:1
 
-**Observação:** Importa `initFederation` de `@angular-architects/native-federation`.
+**Observation:** Imports `initFederation` from `@angular-architects/native-federation`.
 
-**Interpretação:** Prepara o modo standalone de mf_remote_a; a revisão registra Composição No. Não resolve outra unidade e não é o main executado quando o host carrega só o componente exposto.
+**Interpretation:** Prepares mf_remote_a standalone mode; review records Composition No. Resolves no other unit/not main executed when host loads only exposed component.
 
 ### 39. nx-mf-df/apps/mf_remote_a/src/main.ts:3
 
-**Observação:** Chama `initFederation()` sem manifesto nem argumento de remotes, antes do bootstrap local.
+**Observation:** Calls `initFederation()` without manifest/remote argument before local bootstrap.
 
-**Interpretação:** Prepara o modo standalone de mf_remote_a; a revisão registra Composição No. Não resolve outra unidade e não é o main executado quando o host carrega só o componente exposto.
+**Interpretation:** Prepares mf_remote_a standalone mode; review records Composition No. Resolves no other unit/not main executed when host loads only exposed component.
 
 ### 40. nx-mf-df/apps/mf_remote_b/src/main.ts:1
 
-**Observação:** Importa `initFederation` de `@angular-architects/native-federation`.
+**Observation:** Imports `initFederation` from `@angular-architects/native-federation`.
 
-**Interpretação:** Prepara o modo standalone de mf_remote_b; a revisão registra Composição No. Não resolve outra unidade e não é o main executado quando o host carrega só o componente exposto.
+**Interpretation:** Prepares mf_remote_b standalone mode; review records Composition No. Resolves no other unit/not main executed when host loads only exposed component.
 
 ### 41. nx-mf-df/apps/mf_remote_b/src/main.ts:3
 
-**Observação:** Chama `initFederation()` sem manifesto nem argumento de remotes, antes do bootstrap local.
+**Observation:** Calls `initFederation()` without manifest/remote argument before local bootstrap.
 
-**Interpretação:** Prepara o modo standalone de mf_remote_b; a revisão registra Composição No. Não resolve outra unidade e não é o main executado quando o host carrega só o componente exposto.
+**Interpretation:** Prepares mf_remote_b standalone mode; review records Composition No. Resolves no other unit/not main executed when host loads only exposed component.
 
 ### 42. nx-mf-df/apps/mf_remote_c/src/main.ts:1
 
-**Observação:** Importa `initFederation` de `@angular-architects/native-federation`.
+**Observation:** Imports `initFederation` from `@angular-architects/native-federation`.
 
-**Interpretação:** Prepara o modo standalone de mf_remote_c; a revisão registra Composição No. Não resolve outra unidade e não é o main executado quando o host carrega só o componente exposto.
+**Interpretation:** Prepares mf_remote_c standalone mode; review records Composition No. Resolves no other unit/not main executed when host loads only exposed component.
 
 ### 43. nx-mf-df/apps/mf_remote_c/src/main.ts:3
 
-**Observação:** Chama `initFederation()` sem manifesto nem argumento de remotes, antes do bootstrap local.
+**Observation:** Calls `initFederation()` without manifest/remote argument before local bootstrap.
 
-**Interpretação:** Prepara o modo standalone de mf_remote_c; a revisão registra Composição No. Não resolve outra unidade e não é o main executado quando o host carrega só o componente exposto.
+**Interpretation:** Prepares mf_remote_c standalone mode; review records Composition No. Resolves no other unit/not main executed when host loads only exposed component.
 
 ### 44. nx-mf-df/apps/main-host/src/app/app.routes.ts:6-26; nx-mf-df/apps/main-host/src/app/app.config.ts:30; nx-mf-df/apps/main-host/src/app/shared/components/main/main.html:2
 
-**Observação:** A tabela appRoutes declara Home e três caminhos mf_remote_a/b/c, cada qual com carga de m.App por loadRemoteModule. provideRouter(appRoutes) registra a tabela; o layout inclui router-outlet.
+**Observation:** appRoutes table declares Home/three mf_remote_a/b/c paths, each loading m.App through loadRemoteModule. provideRouter(appRoutes) registers table/layout includes router-outlet.
 
-**Interpretação:** O roteamento organiza a composição do shell com os três componentes remotos.
+**Interpretation:** Routing organizes shell composition with three remote components.
 
 ### 45. nx-mf-df/apps/main-host/src/app/app.config.ts:31-53; nx-mf-df/apps/main-host/src/app/shared/components/header/header.html:19-20; nx-mf-df/apps/mf_remote_a/src/app/app.ts:25-28; nx-mf-df/apps/mf_remote_b/src/app/app.ts:25-28; nx-mf-df/apps/mf_remote_c/src/app/app.ts:25-28; nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/platform-welcome-last-message.service.ts:35-36; nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/platform-welcome-last-message.service.ts:62-75; nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/remote-platform-bus.service.ts:52-57; nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/demo-shell-h2r-query-remote-handler.service.ts:74-80; nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/demo-shell-h2r-command-remote-handler.service.ts:74-80
 
-**Observação:** O host chama provideBus e provideHostBridge para MF_REMOTE_A_ID/B_ID/C_ID, monta o compositor no header e registra bootstraps de listener e handlers de query/command. Cada App remoto provê seu ID e PlatformWelcomeLastMessageService; o serviço assina PLATFORM_MESSAGE_V1 pelo BUS_TOKEN ou pela ponte global. Os handlers de resposta executam no host na página composta.
+**Observation:** Host calls provideBus/provideHostBridge for MF_REMOTE_A_ID/B_ID/C_ID, mounts header composer/registers listener bootstraps/query-command handlers. Each remote App provides own ID/PlatformWelcomeLastMessageService; service subscribes to PLATFORM_MESSAGE_V1 through BUS_TOKEN/global bridge. Response handlers execute in host on composed page.
 
-**Interpretação:** Há comunicação do host para os consumidores nos três componentes federados pelo barramento compartilhado (events). As respostas dos handlers no host não demonstram publicação pelos componentes remotos nem comunicação bidirecional entre apps.
+**Interpretation:** Host communicates to consumers in three federated components through shared bus (events). Host-handler responses demonstrate neither remote-component publication nor bidirectional app communication.
 
 ### 46. nx-mf-df; nx-mf-df/package.json:1-29; nx-mf-df/nx.json:1-91
 
-**Observação:** A raiz contém o manifesto @nx-mf-df/source, scripts de coordenação Nx e configuração de workspace, sem entrada de aplicação ou build de UI próprios.
+**Observation:** Root contains @nx-mf-df/source manifest, Nx coordination scripts/workspace configuration without own application entry/UI build.
 
-**Interpretação:** Raiz de coordenação do workspace, sem entrada ou build de UI próprios.
+**Interpretation:** Workspace coordination root without own UI entry/build.
 
 ### 47. nx-mf-df/apps/main-host; nx-mf-df/apps/main-host/project.json:9-22; nx-mf-df/apps/main-host/project.json:58-65; nx-mf-df/apps/main-host/src/main.ts:3-5; nx-mf-df/apps/main-host/src/bootstrap.ts:5
 
-**Observação:** O diretório contém um projeto Nx application com entrada src/main.ts, bootstrapApplication e targets próprios build e esbuild; a saída é dist/apps/main-host.
+**Observation:** Directory contains Nx application project with src/main.ts entry, bootstrapApplication/own build and esbuild targets; output dist/apps/main-host.
 
-**Interpretação:** Shell Angular com entrada e target de build próprios.
+**Interpretation:** Shell Angular with own entry/build target.
 
 ### 48. nx-mf-df/apps/main-host-e2e; nx-mf-df/apps/main-host-e2e/project.json:2-8; nx-mf-df/apps/main-host-e2e/playwright.config.ts:17-31
 
-**Observação:** O diretório é um projeto Nx e2e com targets explícitos vazios e configuração Playwright, sem entrada de aplicação ou build de UI.
+**Observation:** Directory Nx e2e project with empty explicit targets/Playwright configuration, without application entry/UI build.
 
-**Interpretação:** Projeto de testes e2e do host, sem entrada nem build de UI.
+**Interpretation:** E2e test project for host without UI entry/build.
 
 ### 49. nx-mf-df/apps/mf_remote_a; nx-mf-df/apps/mf_remote_a/project.json:9-22; nx-mf-df/apps/mf_remote_a/project.json:58-65; nx-mf-df/apps/mf_remote_a/src/main.ts:3-5; nx-mf-df/apps/mf_remote_a/src/bootstrap.ts:5
 
-**Observação:** O diretório contém um projeto Nx application com entrada src/main.ts, bootstrapApplication e targets próprios build e esbuild; a saída é dist/apps/mf_remote_a.
+**Observation:** Directory contains Nx application project with src/main.ts entry, bootstrapApplication/own build and esbuild targets; output dist/apps/mf_remote_a.
 
-**Interpretação:** Remote Angular com entrada e target de build próprios.
+**Interpretation:** Remote Angular with own entry/build target.
 
 ### 50. nx-mf-df/apps/mf_remote_a-e2e; nx-mf-df/apps/mf_remote_a-e2e/project.json:2-8; nx-mf-df/apps/mf_remote_a-e2e/playwright.config.ts:17-31
 
-**Observação:** O diretório é um projeto Nx e2e com targets explícitos vazios e configuração Playwright, sem entrada de aplicação ou build de UI.
+**Observation:** Directory Nx e2e project with empty explicit targets/Playwright configuration, without application entry/UI build.
 
-**Interpretação:** Projeto de testes e2e de `mf_remote_a`, sem entrada nem build de UI.
+**Interpretation:** E2e test project for `mf_remote_a` without UI entry/build.
 
 ### 51. nx-mf-df/apps/mf_remote_b; nx-mf-df/apps/mf_remote_b/project.json:9-22; nx-mf-df/apps/mf_remote_b/project.json:58-65; nx-mf-df/apps/mf_remote_b/src/main.ts:3-5; nx-mf-df/apps/mf_remote_b/src/bootstrap.ts:5
 
-**Observação:** O diretório contém um projeto Nx application com entrada src/main.ts, bootstrapApplication e targets próprios build e esbuild; a saída é dist/apps/mf_remote_b.
+**Observation:** Directory contains Nx application project with src/main.ts entry, bootstrapApplication/own build and esbuild targets; output dist/apps/mf_remote_b.
 
-**Interpretação:** Remote Angular com entrada e target de build próprios.
+**Interpretation:** Remote Angular with own entry/build target.
 
 ### 52. nx-mf-df/apps/mf_remote_b-e2e; nx-mf-df/apps/mf_remote_b-e2e/project.json:2-8; nx-mf-df/apps/mf_remote_b-e2e/playwright.config.ts:17-31
 
-**Observação:** O diretório é um projeto Nx e2e com targets explícitos vazios e configuração Playwright, sem entrada de aplicação ou build de UI.
+**Observation:** Directory Nx e2e project with empty explicit targets/Playwright configuration, without application entry/UI build.
 
-**Interpretação:** Projeto de testes e2e de `mf_remote_b`, sem entrada nem build de UI.
+**Interpretation:** E2e test project for `mf_remote_b` without UI entry/build.
 
 ### 53. nx-mf-df/apps/mf_remote_c; nx-mf-df/apps/mf_remote_c/project.json:9-22; nx-mf-df/apps/mf_remote_c/project.json:58-65; nx-mf-df/apps/mf_remote_c/src/main.ts:3-5; nx-mf-df/apps/mf_remote_c/src/bootstrap.ts:5
 
-**Observação:** O diretório contém um projeto Nx application com entrada src/main.ts, bootstrapApplication e targets próprios build e esbuild; a saída é dist/apps/mf_remote_c.
+**Observation:** Directory contains Nx application project with src/main.ts entry, bootstrapApplication/own build and esbuild targets; output dist/apps/mf_remote_c.
 
-**Interpretação:** Remote Angular com entrada e target de build próprios.
+**Interpretation:** Remote Angular with own entry/build target.
 
 ### 54. nx-mf-df/apps/mf_remote_c-e2e; nx-mf-df/apps/mf_remote_c-e2e/project.json:2-8; nx-mf-df/apps/mf_remote_c-e2e/playwright.config.ts:17-31
 
-**Observação:** O diretório é um projeto Nx e2e com targets explícitos vazios e configuração Playwright, sem entrada de aplicação ou build de UI.
+**Observation:** Directory Nx e2e project with empty explicit targets/Playwright configuration, without application entry/UI build.
 
-**Interpretação:** Projeto de testes e2e de `mf_remote_c`, sem entrada nem build de UI.
+**Interpretation:** E2e test project for `mf_remote_c` without UI entry/build.
 
 ### 55. nx-mf-df/libs/common-ui-lib; nx-mf-df/libs/common-ui-lib/package.json:1-16; nx-mf-df/libs/common-ui-lib/project.json:2-24; nx-mf-df/libs/common-ui-lib/ng-package.json:3-6
 
-**Observação:** O projeto Nx é library, com manifesto próprio e build ng-packagr-lite e entryFile src/index.ts.
+**Observation:** Nx project library with own manifest/ng-packagr-lite build, entryFile src/index.ts.
 
-**Interpretação:** Biblioteca compartilhada de UI e mensageria, sem entrada de aplicação.
+**Interpretation:** Shared UI/messaging library without application entry.
 
 ### 56. nx-mf-df/libs/contracts-platform-messaging; nx-mf-df/libs/contracts-platform-messaging/package.json:1-11; nx-mf-df/libs/contracts-platform-messaging/project.json:2-16
 
-**Observação:** O projeto Nx é library, com manifesto próprio e build @nx/js:tsc e entry main ./src/index.js no manifesto.
+**Observation:** Nx project library with own manifest/@nx/js:tsc build, manifest main entry ./src/index.js.
 
-**Interpretação:** Biblioteca de contratos de mensageria, sem entrada de aplicação.
+**Interpretation:** Messaging contracts library without application entry.
 
 ### 57. nx-mf-df/apps/main-host/src/app/app.routes.ts:14; nx-mf-df/apps/main-host/src/main.ts:3; nx-mf-df/apps/main-host/src/app/app.config.ts:30; nx-mf-df/apps/main-host/public/federation.manifest.json:2; nx-mf-df/apps/mf_remote_a/federation.config.js:4-10; nx-mf-df/apps/mf_remote_a/src/app/app.ts:30
 
-**Observação:** O host chama loadRemoteModule para mf_remote_a/./Component. O manifesto resolve esse nome para remoteEntry.json, e a configuração do destino declara o mesmo name e expõe ./Component como App. A inicialização lê o manifesto e o roteador registra a rota.
+**Observation:** Host calls loadRemoteModule for mf_remote_a/./Component. Manifest resolves name to remoteEntry.json; target configuration declares matching name/exposes ./Component as App. Initialization reads manifest/router registers route.
 
-**Interpretação:** Relação host → remote ativa por Native Federation entre main-host e mf_remote_a, ambos no snapshot.
+**Interpretation:** Active host → remote Native Federation relationship between main-host/mf_remote_a, both in snapshot.
 
 ### 58. nx-mf-df/apps/main-host/src/app/app.routes.ts:19; nx-mf-df/apps/main-host/src/main.ts:3; nx-mf-df/apps/main-host/src/app/app.config.ts:30; nx-mf-df/apps/main-host/public/federation.manifest.json:3; nx-mf-df/apps/mf_remote_b/federation.config.js:4-10; nx-mf-df/apps/mf_remote_b/src/app/app.ts:30
 
-**Observação:** O host chama loadRemoteModule para mf_remote_b/./Component. O manifesto resolve esse nome para remoteEntry.json, e a configuração do destino declara o mesmo name e expõe ./Component como App. A inicialização lê o manifesto e o roteador registra a rota.
+**Observation:** Host calls loadRemoteModule for mf_remote_b/./Component. Manifest resolves name to remoteEntry.json; target configuration declares matching name/exposes ./Component as App. Initialization reads manifest/router registers route.
 
-**Interpretação:** Relação host → remote ativa por Native Federation entre main-host e mf_remote_b, ambos no snapshot.
+**Interpretation:** Active host → remote Native Federation relationship between main-host/mf_remote_b, both in snapshot.
 
 ### 59. nx-mf-df/apps/main-host/src/app/app.routes.ts:24; nx-mf-df/apps/main-host/src/main.ts:3; nx-mf-df/apps/main-host/src/app/app.config.ts:30; nx-mf-df/apps/main-host/public/federation.manifest.json:4; nx-mf-df/apps/mf_remote_c/federation.config.js:4-10; nx-mf-df/apps/mf_remote_c/src/app/app.ts:30
 
-**Observação:** O host chama loadRemoteModule para mf_remote_c/./Component. O manifesto resolve esse nome para remoteEntry.json, e a configuração do destino declara o mesmo name e expõe ./Component como App. A inicialização lê o manifesto e o roteador registra a rota.
+**Observation:** Host calls loadRemoteModule for mf_remote_c/./Component. Manifest resolves name to remoteEntry.json; target configuration declares matching name/exposes ./Component as App. Initialization reads manifest/router registers route.
 
-**Interpretação:** Relação host → remote ativa por Native Federation entre main-host e mf_remote_c, ambos no snapshot.
+**Interpretation:** Active host → remote Native Federation relationship between main-host/mf_remote_c, both in snapshot.
 
 ### 60. nx-mf-df/apps/main-host/src/app/app.config.ts:31-47; nx-mf-df/apps/main-host/src/app/shared/components/header/header.html:19-20; nx-mf-df/libs/contracts-platform-messaging/src/lib/participant-ids.ts:3; nx-mf-df/apps/mf_remote_a/src/app/app.ts:25-28; nx-mf-df/apps/mf_remote_a/src/app/app.html:3-5; nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/platform-welcome-last-message.service.ts:35-36; nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/platform-welcome-last-message.service.ts:62-75; nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/remote-platform-bus.service.ts:52-57
 
-**Observação:** O host cria o bus e a ponte com o ID mf_remote_a, contém o compositor de mensagens e o componente exposto de mf_remote_a provê PlatformWelcomeLastMessageService, que assina o barramento pelo token herdado ou pela ponte e exibe mensagem/histórico.
+**Observation:** Host creates bus/bridge with mf_remote_a ID, contains message composer; exposed mf_remote_a component provides PlatformWelcomeLastMessageService subscribing through inherited token/bridge and displaying message/history.
 
-**Interpretação:** Relação communication ativa, events, de main-host para mf_remote_a. Na página composta o componente remoto é consumidor; os handlers de resposta da demo rodam no host.
+**Interpretation:** Active communication relationship, events, main-host to mf_remote_a. In composed page remote component consumer; demo response handlers run in host.
 
 ### 61. nx-mf-df/apps/main-host/src/app/app.config.ts:31-47; nx-mf-df/apps/main-host/src/app/shared/components/header/header.html:19-20; nx-mf-df/libs/contracts-platform-messaging/src/lib/participant-ids.ts:5; nx-mf-df/apps/mf_remote_b/src/app/app.ts:25-28; nx-mf-df/apps/mf_remote_b/src/app/app.html:3-5; nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/platform-welcome-last-message.service.ts:35-36; nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/platform-welcome-last-message.service.ts:62-75; nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/remote-platform-bus.service.ts:52-57
 
-**Observação:** O host cria o bus e a ponte com o ID mf_remote_b, contém o compositor de mensagens e o componente exposto de mf_remote_b provê PlatformWelcomeLastMessageService, que assina o barramento pelo token herdado ou pela ponte e exibe mensagem/histórico.
+**Observation:** Host creates bus/bridge with mf_remote_b ID, contains message composer; exposed mf_remote_b component provides PlatformWelcomeLastMessageService subscribing through inherited token/bridge and displaying message/history.
 
-**Interpretação:** Relação communication ativa, events, de main-host para mf_remote_b. Na página composta o componente remoto é consumidor; os handlers de resposta da demo rodam no host.
+**Interpretation:** Active communication relationship, events, main-host to mf_remote_b. In composed page remote component consumer; demo response handlers run in host.
 
 ### 62. nx-mf-df/apps/main-host/src/app/app.config.ts:31-47; nx-mf-df/apps/main-host/src/app/shared/components/header/header.html:19-20; nx-mf-df/libs/contracts-platform-messaging/src/lib/participant-ids.ts:7; nx-mf-df/apps/mf_remote_c/src/app/app.ts:25-28; nx-mf-df/apps/mf_remote_c/src/app/app.html:3-5; nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/platform-welcome-last-message.service.ts:35-36; nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/platform-welcome-last-message.service.ts:62-75; nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/remote-platform-bus.service.ts:52-57
 
-**Observação:** O host cria o bus e a ponte com o ID mf_remote_c, contém o compositor de mensagens e o componente exposto de mf_remote_c provê PlatformWelcomeLastMessageService, que assina o barramento pelo token herdado ou pela ponte e exibe mensagem/histórico.
+**Observation:** Host creates bus/bridge with mf_remote_c ID, contains message composer; exposed mf_remote_c component provides PlatformWelcomeLastMessageService subscribing through inherited token/bridge and displaying message/history.
 
-**Interpretação:** Relação communication ativa, events, de main-host para mf_remote_c. Na página composta o componente remoto é consumidor; os handlers de resposta da demo rodam no host.
+**Interpretation:** Active communication relationship, events, main-host to mf_remote_c. In composed page remote component consumer; demo response handlers run in host.
 
 ### 63. nx-mf-df/apps/main-host/project.json:9-22; nx-mf-df/apps/main-host/project.json:58-65; nx-mf-df/scripts/gh-build.mjs:51; nx-mf-df/scripts/gh-stage.mjs:13-18; .github/workflows/deploy-github-pages.yml:37-58; nx-mf-df/scripts/gh-deploy.mjs:33-46; nx-mf-df/package.json:3-29
 
-**Observação:** O target de main-host gera dist/apps/main-host; gh-build invoca esse build com baseHref próprio. gh-stage copia a saída para a raiz de gh-pages-dist. O workflow publica gh-pages-dist como um artefato Pages; o script manual publica a mesma árvore. Não há versão própria da aplicação.
+**Observation:** Target of main-host generates dist/apps/main-host; gh-build invokes build with own baseHref. gh-stage copies output to gh-pages-dist root. Workflow publishes gh-pages-dist as Pages artifact/manual script publishes same tree. No own application version.
 
-**Interpretação:** main-host tem build separado, deploy conjunto com as demais aplicações e Versionamento No, conforme a revisão. O limite do artefato de build não implica deploy independente.
+**Interpretation:** main-host has separate build/joint deployment with other applications, Versioning No per review. Build-artifact boundary implies no independent deployment.
 
 ### 64. nx-mf-df/apps/mf_remote_a/project.json:9-22; nx-mf-df/apps/mf_remote_a/project.json:58-65; nx-mf-df/scripts/gh-build.mjs:53-54; nx-mf-df/scripts/gh-stage.mjs:19-25; .github/workflows/deploy-github-pages.yml:37-58; nx-mf-df/scripts/gh-deploy.mjs:33-46; nx-mf-df/package.json:3-29
 
-**Observação:** O target de mf_remote_a gera dist/apps/mf_remote_a; gh-build invoca esse build com baseHref próprio. gh-stage copia a saída para gh-pages-dist/mf_remote_a. O workflow publica gh-pages-dist como um artefato Pages; o script manual publica a mesma árvore. Não há versão própria da aplicação.
+**Observation:** Target of mf_remote_a generates dist/apps/mf_remote_a; gh-build invokes build with own baseHref. gh-stage copies output to gh-pages-dist/mf_remote_a. Workflow publishes gh-pages-dist as Pages artifact/manual script publishes same tree. No own application version.
 
-**Interpretação:** mf_remote_a tem build separado, deploy conjunto com as demais aplicações e Versionamento No, conforme a revisão. O limite do artefato de build não implica deploy independente.
+**Interpretation:** mf_remote_a has separate build/joint deployment with other applications, Versioning No per review. Build-artifact boundary implies no independent deployment.
 
 ### 65. nx-mf-df/apps/mf_remote_b/project.json:9-22; nx-mf-df/apps/mf_remote_b/project.json:58-65; nx-mf-df/scripts/gh-build.mjs:53-54; nx-mf-df/scripts/gh-stage.mjs:19-25; .github/workflows/deploy-github-pages.yml:37-58; nx-mf-df/scripts/gh-deploy.mjs:33-46; nx-mf-df/package.json:3-29
 
-**Observação:** O target de mf_remote_b gera dist/apps/mf_remote_b; gh-build invoca esse build com baseHref próprio. gh-stage copia a saída para gh-pages-dist/mf_remote_b. O workflow publica gh-pages-dist como um artefato Pages; o script manual publica a mesma árvore. Não há versão própria da aplicação.
+**Observation:** Target of mf_remote_b generates dist/apps/mf_remote_b; gh-build invokes build with own baseHref. gh-stage copies output to gh-pages-dist/mf_remote_b. Workflow publishes gh-pages-dist as Pages artifact/manual script publishes same tree. No own application version.
 
-**Interpretação:** mf_remote_b tem build separado, deploy conjunto com as demais aplicações e Versionamento No, conforme a revisão. O limite do artefato de build não implica deploy independente.
+**Interpretation:** mf_remote_b has separate build/joint deployment with other applications, Versioning No per review. Build-artifact boundary implies no independent deployment.
 
 ### 66. nx-mf-df/apps/mf_remote_c/project.json:9-22; nx-mf-df/apps/mf_remote_c/project.json:58-65; nx-mf-df/scripts/gh-build.mjs:53-54; nx-mf-df/scripts/gh-stage.mjs:19-25; .github/workflows/deploy-github-pages.yml:37-58; nx-mf-df/scripts/gh-deploy.mjs:33-46; nx-mf-df/package.json:3-29
 
-**Observação:** O target de mf_remote_c gera dist/apps/mf_remote_c; gh-build invoca esse build com baseHref próprio. gh-stage copia a saída para gh-pages-dist/mf_remote_c. O workflow publica gh-pages-dist como um artefato Pages; o script manual publica a mesma árvore. Não há versão própria da aplicação.
+**Observation:** Target of mf_remote_c generates dist/apps/mf_remote_c; gh-build invokes build with own baseHref. gh-stage copies output to gh-pages-dist/mf_remote_c. Workflow publishes gh-pages-dist as Pages artifact/manual script publishes same tree. No own application version.
 
-**Interpretação:** mf_remote_c tem build separado, deploy conjunto com as demais aplicações e Versionamento No, conforme a revisão. O limite do artefato de build não implica deploy independente.
+**Interpretation:** mf_remote_c has separate build/joint deployment with other applications, Versioning No per review. Build-artifact boundary implies no independent deployment.
 
 ### 67. CHANGELOG-2026-05-24.md:12
 
-**Observação:** O documento afirma: “Native Federation fails without the patch”.
+**Observation:** Document states: “Native Federation fails without the patch”.
 
-**Interpretação:** Há patch 0.3.2 registrado e alteração de exports .mjs para .js; a necessidade técnica alegada sem patch não está demonstrada. Corroboração parcial.
+**Interpretation:** Patch 0.3.2 recorded/exports changed from .mjs to .js; alleged technical necessity without patch undemonstrated. Partial corroboration.
 
 ### 68. CHANGELOG-2026-05-31.md:16
 
-**Observação:** O documento afirma: “a shared compile-time constant is used”.
+**Observation:** Document states: “a shared compile-time constant is used”.
 
-**Interpretação:** O token comum é fornecido pelo host e consumido pelo adaptador dos remotes; é contrato compartilhado de acesso à ponte, sem prova de isolamento forte.
+**Interpretation:** Common token provided by host/consumed by remote adapter; shared bridge-access contract without strong-isolation proof.
 
 ### 69. CHANGELOG-2026-05-31.md:37
 
-**Observação:** O documento afirma: “Wired into all four app configs”.
+**Observation:** Document states: “Wired into all four app configs”.
 
-**Interpretação:** Os quatro configs têm os bootstraps citados, mas os configs standalone dos remotes não executam quando apenas seus componentes são carregados no host.
+**Interpretation:** Four configs have cited bootstraps, but remote standalone configs do not execute when only components loaded in host.
 
 ### 70. README.md:3
 
-**Observação:** O documento afirma: “Angular 21 + Nx monorepo proof-of-concept for native module federation with host-mediated cross-microfrontend messaging”.
+**Observation:** Document states: “Angular 21 + Nx monorepo proof-of-concept for native module federation with host-mediated cross-microfrontend messaging”.
 
-**Interpretação:** A organização declarada corresponde às quatro unidades Angular, federação e mensageria mediada pelo host; native module federation aqui designa Native Federation.
+**Interpretation:** Declared organization matches four Angular units, federation/host-mediated messaging; native module federation here means Native Federation.
 
 ### 71. README.md:13
 
-**Observação:** O documento afirma: “Shell: layout, routing, owns the platform bus and window.__MFE_BRIDGE__”.
+**Observation:** Document states: “Shell: layout, routing, owns the platform bus and window.__MFE_BRIDGE__”.
 
-**Interpretação:** O papel do shell é confirmado por layout, roteamento, criação do bus e da bridge.
+**Interpretation:** Shell role confirmed by layout, routing/bus-bridge creation.
 
 ### 72. README.md:14
 
-**Observação:** O documento afirma: “Federated remotes loaded into the shell by route”.
+**Observation:** Document states: “Federated remotes loaded into the shell by route”.
 
-**Interpretação:** A afirmação é confirmada pelas três relações de carga federada por rota.
+**Interpretation:** Confirmed by three route-based federation-loading relationships.
 
 ### 73. README.md:15
 
-**Observação:** O documento afirma: “Versioned Zod contracts, participant IDs, bus validators, topic registry”.
+**Observation:** Document states: “Versioned Zod contracts, participant IDs, bus validators, topic registry”.
 
-**Interpretação:** A biblioteca define contratos/IDs/validadores de mensagens, consumidos pelo host e serviços compartilhados. Isso não demonstra releases independentes de aplicações.
+**Interpretation:** Library defines message contracts/IDs/validators consumed by host/shared services. Demonstrates no independent application releases.
 
 ### 74. README.md:16
 
-**Observação:** O documento afirma: “Shared UI, PrimeNG setup, platform messaging adapters and demo UI”.
+**Observation:** Document states: “Shared UI, PrimeNG setup, platform messaging adapters and demo UI”.
 
-**Interpretação:** A biblioteca reúne UI e adaptadores importados pelos apps, sem constituir outra unidade frontend.
+**Interpretation:** Library gathers UI/adapters imported by apps without another frontend unit.
 
 ### 75. README.md:17
 
-**Observação:** O documento afirma: “npm package: in-process bus, host bridge, Angular providers”.
+**Observation:** Document states: “npm package: in-process bus, host bridge, Angular providers”.
 
-**Interpretação:** O pacote declarado fornece os providers e o acesso ao bus usados na integração.
+**Interpretation:** Declared package provides providers/bus access used in integration.
 
 ### 76. README.md:19
 
-**Observação:** O documento afirma: “They expose only their root component into the host; they do not bootstrap a separate Angular app inside the federated shell page”.
+**Observation:** Document states: “They expose only their root component into the host; they do not bootstrap a separate Angular app inside the federated shell page”.
 
-**Interpretação:** O host monta o App exposto, sem executar main.ts e bootstrap standalone do remote nessa composição.
+**Interpretation:** Host mounts exposed App without executing remote main.ts/standalone bootstrap in composition.
 
 ### 77. README.md:25
 
-**Observação:** O documento afirma: “One physical bus per browser tab. The host creates it; remotes attach through the global bridge handle”.
+**Observation:** Document states: “One physical bus per browser tab. The host creates it; remotes attach through the global bridge handle”.
 
-**Interpretação:** O host cria o bus usado pelos componentes remotos por token herdado ou ponte global; não são demonstrados buses isolados comunicantes.
+**Interpretation:** Host creates bus used by remote components through inherited token/global bridge; no isolated communicating buses demonstrated.
 
 ### 78. README.md:66-81
 
-**Observação:** O documento afirma: “mf_remote_a / b / c (federated components) → providePlatformMessageListenerBootstrap / provideDemoShellH2rQueryRemoteHandlerBootstrap”.
+**Observation:** Document states: “mf_remote_a / b / c (federated components) → providePlatformMessageListenerBootstrap / provideDemoShellH2rQueryRemoteHandlerBootstrap”.
 
-**Interpretação:** O diagrama contradiz os providers dos App expostos e do host: os bootstraps de listener e query estão na execução do host, não nos componentes federados.
+**Interpretation:** Diagram contradicts exposed App/host providers: listener/query bootstraps run in host rather than federated components.
 
 ### 79. README.md:86-95
 
-**Observação:** O documento afirma: “These strings are agreed explicitly in code (not inferred from federation build names)”.
+**Observation:** Document states: “These strings are agreed explicitly in code (not inferred from federation build names)”.
 
-**Interpretação:** Os IDs são constantes explícitas usadas pelos providers e pelas assinaturas; não são inferidos automaticamente dos nomes de build.
+**Interpretation:** IDs explicit provider/subscription constants rather than automatically inferred from build names.
 
 ### 80. README.md:95
 
-**Observação:** O documento afirma: “Routing uses optional target on messages plus each subscription’s subscriberId”.
+**Observation:** Document states: “Routing uses optional target on messages plus each subscription’s subscriberId”.
 
-**Interpretação:** IDs de assinantes e contratos corroboram parcialmente a alegação. A filtragem de entrega por target é interna ao pacote externo, sem fonte adquirido para confirmação.
+**Interpretation:** Subscriber IDs/contracts partially corroborate claim. Target-delivery filtering internal to external package without acquired source for confirmation.
 
 ### 81. README.md:116
 
-**Observação:** O documento afirma: “Remotes: listen-only UI (...) replay buffer in sessionStorage for subscribers that mount after send”.
+**Observation:** Document states: “Remotes: listen-only UI (...) replay buffer in sessionStorage for subscribers that mount after send”.
 
-**Interpretação:** Os componentes remotos exibem mensagens/histórico e usam replay. A ausência de emissor nesses componentes não elimina o compositor do cabeçalho do host.
+**Interpretation:** Remote components show messages/history/use replay. No sender in components does not eliminate host-header composer.
 
 ### 82. README.md:142
 
-**Observação:** O documento afirma: “the “remote” handler runs in the host process (subscribes as mf_remote_a, mf_remote_b, and mf_remote_c)”.
+**Observation:** Document states: “the “remote” handler runs in the host process (subscribes as mf_remote_a, mf_remote_b, and mf_remote_c)”.
 
-**Interpretação:** A demo registra no host os handlers que assinam pelos três IDs. O round-trip lógico não comprova resposta executada dentro de cada App remoto.
+**Interpretation:** Demo registers host handlers subscribing under three IDs. Logical round trip proves no response executed in each remote App.
 
 ### 83. README.md:196
 
-**Observação:** O documento afirma: “remotes first, then host”.
+**Observation:** Document states: “remotes first, then host”.
 
-**Interpretação:** O orquestrador inicia processos Nx dos remotes, espera portas ou timeout e inicia o host. Isso descreve desenvolvimento, sem provar mensageria standalone sem shell.
+**Interpretation:** Orchestrator starts remote Nx processes, waits for ports/timeout, starts host. Development description without proving standalone shell-free messaging.
 
 ### 84. README.md:205
 
-**Observação:** O documento afirma: “Production build + GitHub Pages asset prep”.
+**Observation:** Document states: “Production build + GitHub Pages asset prep”.
 
-**Interpretação:** O script produz builds separados, atualiza o manifesto e reúne as saídas numa árvore de publicação, sem demonstrar deploy separado por app.
+**Interpretation:** Script produces separate builds/updates manifest/aggregates outputs into publication tree without per-app separate deployment.
 
 ### 85. README.md:207
 
-**Observação:** O documento afirma: “Push to gh-pages branch”.
+**Observation:** Document states: “Push to gh-pages branch”.
 
-**Interpretação:** O caminho manual publica a árvore conjunta em gh-pages; o workflow publica um site Pages. Os artefatos não demonstram sucesso de execução em produção.
+**Interpretation:** Manual path publishes joint gh-pages tree/workflow publishes Pages site. Artifacts prove no production execution success.
 
 ### 86. README.md:248
 
-**Observação:** O documento afirma: “Apps expose build, serve, lint, test (and federation-related esbuild / serve-original)”.
+**Observation:** Document states: “Apps expose build, serve, lint, test (and federation-related esbuild / serve-original)”.
 
-**Interpretação:** Os projetos e scripts oferecem targets por aplicação; a afirmação sobre bibliotecas limita-se aos targets configurados.
+**Interpretation:** Projects/scripts offer per-application targets; library claim restricted to configured targets.
 
 ### 87. README.md:281
 
-**Observação:** O documento afirma: “Build and lint targets use Nx caching”.
+**Observation:** Document states: “Build and lint targets use Nx caching”.
 
-**Interpretação:** O arquivo Nx configura cache e entradas; a afirmação descreve configuração, não medição de desempenho.
+**Interpretation:** Nx file configures cache/inputs; configuration description rather than performance measurement.
 
 ### 88. README.md:287
 
-**Observação:** O documento afirma: “is pinned at ^0.2.1 in nx-mf-df/package.json”.
+**Observation:** Document states: “is pinned at ^0.2.1 in nx-mf-df/package.json”.
 
-**Interpretação:** O manifesto atual declara ^0.3.2 e o patch é 0.3.2. A versão ^0.2.1 da afirmação é contradita pelo snapshot.
+**Interpretation:** Current manifest declares ^0.3.2/patch 0.3.2. Claim’s ^0.2.1 version contradicted by snapshot.
 
 ### 89. nx-mf-comm-info.md:204
 
-**Observação:** O documento afirma: “Listen-only (nincs küldő UI remote route-on) (Somente escuta; não há UI de envio na rota remota)”.
+**Observation:** Document states: “Listen-only (nincs küldő UI remote route-on) (Somente escuta; não há UI de envio na rota remota)”.
 
-**Interpretação:** A alegação amplia a ausência de emissor no componente remoto à rota inteira. O header do host mantém o compositor nessas rotas, contradizendo essa ampliação.
+English translation: Listen only; no sending UI on remote route.
+
+**Interpretation:** Claim extends no-sender remote component to entire route. Host header retains composer on routes, contradicting extension.
 
 ### 90. nx-mf-comm-info.md:241-250
 
-**Observação:** O documento afirma: “önálló dev szerver (...) nincs shell bridge (servidor de desenvolvimento autônomo; não há ponte do shell)”.
+**Observation:** Document states: “önálló dev szerver (...) nincs shell bridge (servidor de desenvolvimento autônomo; não há ponte do shell)”.
 
-**Interpretação:** O remote tem entrada/bootstrap próprios, mas seu config standalone não cria bus/bridge; o adaptador devolve ausência de bus enquanto não existir ponte.
+English translation: Standalone development server; no shell bridge.
+
+**Interpretation:** Remote has own entry/bootstrap but standalone config creates no bus/bridge; adapter returns absent bus until bridge exists.
 
 ### 91. platform-communication-details.md:63-65
 
-**Observação:** O documento afirma: “backed by a browser EventTarget (...) no postMessage, no WebSocket, and no cross-origin transport”.
+**Observation:** Document states: “backed by a browser EventTarget (...) no postMessage, no WebSocket, and no cross-origin transport”.
 
-**Interpretação:** É descrição do interior do pacote externo. Os adaptadores e imports adquiridos não confirmam EventTarget, CustomEvent nem exclusão de outros transportes no pacote; sem corroboração.
+**Interpretation:** External-package internals description. Acquired adapters/imports confirm neither EventTarget, CustomEvent nor exclusion of other package transports; uncorroborated.
 
 ### 92. platform-communication-details.md:251
 
-**Observação:** O documento afirma: “read handle.appId (...) and handle.remotes”.
+**Observation:** Document states: “read handle.appId (...) and handle.remotes”.
 
-**Interpretação:** O adaptador lê appId e remotes do handle criado pelo host. A lista é fornecida pelo host e não comprova descoberta dinâmica de unidades.
+**Interpretation:** Adapter reads appId/remotes from host-created handle. Host supplies list without proving dynamic unit discovery.
 
 ### 93. a04c0bb 2026-03-31 (nx-mf-df/package.json)
 
-**Observação:** O log registra o manifesto em a04c0bb (2026-03-31), cuja mensagem anuncia instalação do plugin e configuração de host/remotes. O conteúdo inicial do manifesto consultado não está disponível; o snapshot só declara o pacote Node.
+**Observation:** Log records manifest at a04c0bb (2026-03-31), message announcing plugin installation/host-remote configuration. Consulted initial manifest content unavailable; snapshot only declares Node package.
 
-**Interpretação:** Inconclusivo quanto a uso anterior, instalação auxiliar ou declaração nunca usada. A dúvida é histórica; não muda o snapshot com Native Federation ativo por outro pacote.
+**Interpretation:** Earlier usage, auxiliary installation or never-used declaration inconclusive. Historical uncertainty does not change active snapshot Native Federation through other package.
 
 ### 94. 82423e0 2026-05-17 (nx-mf-df/libs/contracts-platform-messaging/jest.config.cts); 89e1eb6 2026-06-01 (nx-mf-df/libs/contracts-platform-messaging/vitest.config.ts); 16f0962 2026-06-07 (nx-mf-df/libs/contracts-platform-messaging/project.json)
 
-**Observação:** 82423e0 (2026-05-17) adiciona Jest e projeto da lib de contratos; 89e1eb6 (2026-06-01) adiciona Vitest; 16f0962 (2026-06-07) altera projeto e Vitest. A configuração Jest histórica lida aponta ao preset da raiz, mas os project.json antigos consultados não estão disponíveis. O snapshot usa vitest run e preserva arquivos Jest.
+**Observation:** 82423e0 (2026-05-17) adds Jest/contracts-lib project; 89e1eb6 (2026-06-01) adds Vitest; 16f0962 (2026-06-07) changes project/Vitest. Read historical Jest configuration points to root preset but consulted old project.json files unavailable. Snapshot uses vitest run/retains Jest files.
 
-**Interpretação:** Inconclusivo quanto a execução ou abandono de Jest. A sequência data a coexistência, sem resolver o uso indeterminado nem alterar os limites das quatro unidades e sua federação.
+**Interpretation:** Jest execution/abandonment inconclusive. Sequence dates coexistence without resolving undetermined usage/changing four-unit boundaries/federation.
 
 ### 95. a04c0bb 2026-03-31 (nx-mf-df/package.json)
 
-**Observação:** O manifesto aparece em a04c0bb (2026-03-31) e muda depois; sua versão inicial não está disponível na consulta registrada. No snapshot, @nx/workspace só está declarado.
+**Observation:** Manifest appears in a04c0bb (2026-03-31), changes afterward; initial version unavailable in recorded query. Snapshot only declares @nx/workspace.
 
-**Interpretação:** Inconclusivo quanto a uso direto anterior ou declaração nunca conectada; a dúvida sobre o passado do pacote não muda a composição observada.
+**Interpretation:** Earlier direct usage/never-connected declaration inconclusive; past package uncertainty does not change observed composition.
 
 ### 96. 81a1110 2026-05-10 (nx-mf-df/patches); 147d615 2026-05-24 (README.md; nx-mf-df/patches); 89e1eb6 2026-06-01 (nx-mf-df/patches); 16f0962 2026-06-07 (nx-mf-df/patches)
 
-**Observação:** O log registra patches 0.1.4 em 81a1110 (2026-05-10), 0.2.1 em 147d615 (2026-05-24), 0.3.0 em 89e1eb6 (2026-06-01) e 0.3.2 em 16f0962 (2026-06-07). O README lido em 147d615 explica exports .mjs para .js; não há comparação de builds com/sem patch.
+**Observation:** Log records patches 0.1.4 in 81a1110 (2026-05-10), 0.2.1 in 147d615 (2026-05-24), 0.3.0 in 89e1eb6 (2026-06-01), 0.3.2 in 16f0962 (2026-06-07). README read in 147d615 explains exports from .mjs to .js; no with/without-patch build comparison.
 
-**Interpretação:** Inconclusivo quanto à necessidade técnica do patch. O histórico confirma patches versionados, mas não o erro alegado sem eles; a cadeia de composição do snapshot permanece configurada.
+**Interpretation:** Patch technical necessity inconclusive. History confirms versioned patches rather than alleged no-patch error; snapshot composition chain configured.
 
 ### 97. 147d615 2026-05-24 (README.md)
 
-**Observação:** O README de 147d615 (2026-05-24) já contém o diagrama que atribui bootstraps aos componentes federados e a prosa que situa o handler no host. O log não registra alteração posterior do README.
+**Observation:** README at 147d615 (2026-05-24) already contains diagram assigning bootstraps to federated components/prose locating handler in host. Log records no later README change.
 
-**Interpretação:** Esclarecido: a divergência documental já coexistia na mesma versão. Não há fundamento para atribuir diagrama e prosa a estágios distintos; o código vigente mantém os handlers no host.
+**Interpretation:** Clarified: documentary divergence coexisted in same version. No basis for assigning diagram/prose to distinct stages; current code retains host handlers.
 
 ### 98. docs/mfe-history-review/362-lkovari__monorepo-nx-mf-dyn-modfed.md:31; README.md:95; nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/platform-welcome-last-message.service.ts:66-75
 
-**Observação:** A revisão final registra que o snapshot tem assinaturas, IDs e contratos, mas não o fonte do pacote externo responsável pela entrega. Não houve consulta histórica específica para esse ponto.
+**Observation:** Final review records snapshot subscriptions, IDs/contracts but not delivery-responsible external-package source. No specific historical query for point.
 
-**Interpretação:** Resolvido pelo snapshot quanto à origem da lacuna, preservando a corroboração parcial. Não há confirmação da filtragem interna nem indício de configuração local abandonada.
+**Interpretation:** Resolved by snapshot regarding gap origin, retaining partial corroboration. No confirmed internal filtering/indication of abandoned local configuration.
 
 ### 99. 147d615 2026-05-24 (README.md; nx-mf-df/package.json; nx-mf-comm-info.md); 89e1eb6 2026-06-01 (nx-mf-df/pnpm-workspace.yaml); 16f0962 2026-06-07 (nx-mf-df/package.json; nx-mf-df/pnpm-workspace.yaml)
 
-**Observação:** O README de 147d615 (2026-05-24) já afirma ^0.2.1 e não muda depois; caminhos de patches mudam em 89e1eb6 (2026-06-01) e 16f0962 (2026-06-07) para 0.3.0 e 0.3.2. O manifesto de maio consultado não está disponível; o atual declara ^0.3.2.
+**Observation:** README at 147d615 (2026-05-24) already claims ^0.2.1/unchanged; patch paths change in 89e1eb6 (2026-06-01) and 16f0962 (2026-06-07) to 0.3.0/0.3.2. Consulted May manifest unavailable; current declares ^0.3.2.
 
-**Interpretação:** Esclarecido: a referência documental ficou sem atualização enquanto os artefatos de dependência evoluíram. Não se afirma que o manifesto de maio declarasse efetivamente 0.2.1.
+**Interpretation:** Clarified: documentary reference unupdated while dependency artifacts evolved. Does not claim May manifest actually declared 0.2.1.
 
 ### 100. 82423e0 2026-05-17 (nx-mf-df/apps/main-host/src/app/shared/components/header/header.html); 147d615 2026-05-24 (nx-mf-comm-info.md)
 
-**Observação:** O header lido em 82423e0 (2026-05-17) contém links das três rotas e lib-platform-messaging-trigger, sem condição de rota, e não muda depois. nx-mf-comm-info.md entra em 147d615 (2026-05-24), sem mudanças posteriores, e nega UI de envio na rota remota.
+**Observation:** Header read at 82423e0 (2026-05-17) contains three route links/lib-platform-messaging-trigger without route condition/unchanged. nx-mf-comm-info.md enters in 147d615 (2026-05-24), unchanged afterward, denies sending UI on remote route.
 
-**Interpretação:** Esclarecido: o compositor já estava no cabeçalho quando o documento foi adicionado. A contradição vem da coexistência dos artefatos, sem inferir remoção posterior ou intenção.
+**Interpretation:** Clarified: composer already in header when document added. Contradiction from artifact coexistence without inferred later removal/intent.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.2 (nx-mf-df/libs/common-ui-lib/package.json:9) | 1 tecnologia | manifesto | events | tecnológica | fraca | declara nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/platform-welcome-last-message.service.ts:10; declara nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/message-sender.service.ts:4 |
-| 2 | 3.4.2 (nx-mf-df/package.json:89) | 1 tecnologia | manifesto | events | tecnológica | fraca | declara #45 |
-| 3 | 3.4.2 (nx-mf-df/package.json:91) | 1 tecnologia | manifesto | native-federation | tecnológica | fraca | — |
-| 4 | 3.4.2 (nx-mf-df/package.json:31) | 1 tecnologia | manifesto | native-federation | tecnológica | fraca | declara #15; declara #16; declara #17; declara #18; declara #19; declara #20; declara #21; declara #22; declara #23; declara #24; declara #25; declara #26; declara #27; declara #32; declara #36 |
-| 5 | 3.4.2 (nx-mf-df/package.json:40) | 1 tecnologia | manifesto | — | contexto | fraca | — |
-| 6 | 3.4.2 (nx-mf-df/package.json:41) | 1 tecnologia | manifesto | — | contexto | fraca | — |
-| 7 | 3.4.2 (nx-mf-df/package.json:42) | 1 tecnologia | manifesto | — | contexto | fraca | — |
-| 8 | 3.4.2 (nx-mf-df/package.json:43) | 1 tecnologia | manifesto | — | contexto | fraca | — |
-| 9 | 3.4.2 (nx-mf-df/package.json:44) | 1 tecnologia | manifesto | — | contexto | ambígua | — |
-| 10 | 3.4.2 (nx-mf-df/package.json:45) | 1 tecnologia | manifesto | — | contexto | fraca | — |
-| 11 | 3.4.2 (nx-mf-df/package.json:46) | 1 tecnologia | manifesto | — | contexto | fraca | — |
-| 12 | 3.4.2 (nx-mf-df/package.json:47) | 1 tecnologia | manifesto | — | contexto | fraca | — |
-| 13 | 3.4.2 (nx-mf-df/package.json:48) | 1 tecnologia | manifesto | — | contexto | fraca | — |
-| 14 | 3.4.2 (nx-mf-df/package.json:71) | 1 tecnologia | manifesto | — | contexto | fraca | — |
-| 15 | 3.4.2 (nx-mf-df/package.json:91) (Evidência); 3.4.2 (nx-mf-df/package.json:31) (Evidência); 3.4.3 (nx-mf-df/apps/main-host) (Marcadores, Build) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #47 |
-| 16 | 3.4.2 (nx-mf-df/package.json:31) (Evidência); 3.4.3 (nx-mf-df/apps/main-host) (Marcadores, Build); 3.4.6 #1 (Artefatos); 3.4.7 #20 (Evidência) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #47 |
-| 17 | 3.4.2 (nx-mf-df/package.json:31) (Evidência); 3.4.3 (nx-mf-df/apps/main-host) (Marcadores); 3.4.7 #20 (Evidência) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #47 |
-| 18 | 3.4.2 (nx-mf-df/package.json:31) (Evidência); 3.4.3 (nx-mf-df/apps/mf_remote_a) (Marcadores, Build); 3.4.4 (nx-mf-df/apps/main-host/src/app/app.routes.ts:14) (Observação); 3.4.4 (nx-mf-df/apps/mf_remote_a/src/main.ts:3) (Observação); 3.4.4 (nx-mf-df/apps/main-host/src/app/app.config.ts:31) (Observação); 3.4.5 #1 (Configuração); 3.4.7 #10 (Evidência) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #49; configura #57 |
-| 19 | 3.4.2 (nx-mf-df/package.json:31) (Evidência); 3.4.3 (nx-mf-df/apps/mf_remote_a) (Marcadores, Build); 3.4.6 #2 (Artefatos); 3.4.7 #20 (Evidência) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #49 |
-| 20 | 3.4.2 (nx-mf-df/package.json:31) (Evidência); 3.4.3 (nx-mf-df/apps/mf_remote_a) (Marcadores); 3.4.7 #20 (Evidência) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #49 |
-| 21 | 3.4.2 (nx-mf-df/package.json:31) (Evidência); 3.4.3 (nx-mf-df/apps/mf_remote_b) (Marcadores, Build); 3.4.4 (nx-mf-df/apps/main-host/src/app/app.routes.ts:19) (Observação); 3.4.4 (nx-mf-df/apps/mf_remote_b/src/main.ts:3) (Observação); 3.4.5 #2 (Configuração) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #51; configura #58 |
-| 22 | 3.4.2 (nx-mf-df/package.json:31) (Evidência); 3.4.3 (nx-mf-df/apps/mf_remote_b) (Marcadores, Build); 3.4.6 #3 (Artefatos) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #51 |
-| 23 | 3.4.2 (nx-mf-df/package.json:31) (Evidência); 3.4.3 (nx-mf-df/apps/mf_remote_b) (Marcadores) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #51 |
-| 24 | 3.4.2 (nx-mf-df/package.json:31) (Evidência); 3.4.3 (nx-mf-df/apps/mf_remote_c) (Marcadores, Build); 3.4.4 (nx-mf-df/apps/main-host/src/app/app.routes.ts:24) (Observação); 3.4.4 (nx-mf-df/apps/mf_remote_c/src/main.ts:3) (Observação); 3.4.5 #3 (Configuração) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #53; configura #59 |
-| 25 | 3.4.2 (nx-mf-df/package.json:31) (Evidência); 3.4.3 (nx-mf-df/apps/mf_remote_c) (Marcadores, Build); 3.4.6 #4 (Artefatos) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #53 |
-| 26 | 3.4.2 (nx-mf-df/package.json:31) (Evidência); 3.4.3 (nx-mf-df/apps/mf_remote_c) (Marcadores) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #53 |
-| 27 | 3.4.4 (nx-mf-df/apps/main-host/src/main.ts:3) (Observação); 3.4.5 #1 (Configuração); 3.4.5 #2 (Configuração); 3.4.5 #3 (Configuração) | 2 configuração | configuração | native-federation | arquitetural | forte | configura #37; configura #57; configura #58; configura #59 |
-| 28 | 3.4.4 (nx-mf-df/apps/main-host/src/main.ts:5) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 29 | 3.4.4 (nx-mf-df/apps/mf_remote_a/src/main.ts:5) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 30 | 3.4.4 (nx-mf-df/apps/mf_remote_b/src/main.ts:5) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 31 | 3.4.4 (nx-mf-df/apps/mf_remote_c/src/main.ts:5) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 32 | 3.4.4 (nx-mf-df/apps/main-host/src/app/app.routes.ts:2) | 3 código | código-fonte | native-federation | tecnológica | moderada | implementa #57; implementa #58; implementa #59 |
-| 33 | 3.4.4 (nx-mf-df/apps/main-host/src/app/app.routes.ts:14) | 3 código | código-fonte | native-federation | arquitetural | forte | implementa #57 |
-| 34 | 3.4.4 (nx-mf-df/apps/main-host/src/app/app.routes.ts:19) | 3 código | código-fonte | native-federation | arquitetural | forte | implementa #58 |
-| 35 | 3.4.4 (nx-mf-df/apps/main-host/src/app/app.routes.ts:24) | 3 código | código-fonte | native-federation | arquitetural | forte | implementa #59 |
-| 36 | 3.4.4 (nx-mf-df/apps/main-host/src/main.ts:1) | 3 código | código-fonte | native-federation | tecnológica | moderada | implementa #57; implementa #58; implementa #59 |
-| 37 | 3.4.4 (nx-mf-df/apps/main-host/src/main.ts:3) | 3 código | código-fonte | native-federation | tecnológica | moderada | implementa #57; implementa #58; implementa #59 |
-| 38 | 3.4.4 (nx-mf-df/apps/mf_remote_a/src/main.ts:1) | 3 código | código-fonte | native-federation | tecnológica | fraca | — |
-| 39 | 3.4.4 (nx-mf-df/apps/mf_remote_a/src/main.ts:3) | 3 código | código-fonte | native-federation | tecnológica | fraca | — |
-| 40 | 3.4.4 (nx-mf-df/apps/mf_remote_b/src/main.ts:1) | 3 código | código-fonte | native-federation | tecnológica | fraca | — |
-| 41 | 3.4.4 (nx-mf-df/apps/mf_remote_b/src/main.ts:3) | 3 código | código-fonte | native-federation | tecnológica | fraca | — |
-| 42 | 3.4.4 (nx-mf-df/apps/mf_remote_c/src/main.ts:1) | 3 código | código-fonte | native-federation | tecnológica | fraca | — |
-| 43 | 3.4.4 (nx-mf-df/apps/mf_remote_c/src/main.ts:3) | 3 código | código-fonte | native-federation | tecnológica | fraca | — |
-| 44 | 3.4.4 (nx-mf-df/apps/main-host/src/app/app.routes.ts:6) | 3 código | código-fonte | native-federation | arquitetural | forte | implementa #57; implementa #58; implementa #59 |
-| 45 | 3.4.4 (nx-mf-df/apps/main-host/src/app/app.config.ts:31) | 3 código | código-fonte | events | arquitetural | forte | implementa #60; implementa #61; implementa #62 |
-| 46 | 3.4.3 (nx-mf-df) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 47 | 3.4.3 (nx-mf-df/apps/main-host) | 4 estrutura | diretório | native-federation | arquitetural | moderada | — |
-| 48 | 3.4.3 (nx-mf-df/apps/main-host-e2e) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 49 | 3.4.3 (nx-mf-df/apps/mf_remote_a) | 4 estrutura | diretório | native-federation | arquitetural | moderada | — |
-| 50 | 3.4.3 (nx-mf-df/apps/mf_remote_a-e2e) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 51 | 3.4.3 (nx-mf-df/apps/mf_remote_b) | 4 estrutura | diretório | native-federation | arquitetural | moderada | — |
-| 52 | 3.4.3 (nx-mf-df/apps/mf_remote_b-e2e) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 53 | 3.4.3 (nx-mf-df/apps/mf_remote_c) | 4 estrutura | diretório | native-federation | arquitetural | moderada | — |
-| 54 | 3.4.3 (nx-mf-df/apps/mf_remote_c-e2e) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 55 | 3.4.3 (nx-mf-df/libs/common-ui-lib) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 56 | 3.4.3 (nx-mf-df/libs/contracts-platform-messaging) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 57 | 3.4.5 #1 | 5 composição | código-fonte | native-federation | arquitetural | forte | liga #47; liga #49 |
-| 58 | 3.4.5 #2 | 5 composição | código-fonte | native-federation | arquitetural | forte | liga #47; liga #51 |
-| 59 | 3.4.5 #3 | 5 composição | código-fonte | native-federation | arquitetural | forte | liga #47; liga #53 |
-| 60 | 3.4.5 #4 | 5 composição | código-fonte | events | arquitetural | forte | liga #47; liga #49 |
-| 61 | 3.4.5 #5 | 5 composição | código-fonte | events | arquitetural | forte | liga #47; liga #51 |
-| 62 | 3.4.5 #6 | 5 composição | código-fonte | events | arquitetural | forte | liga #47; liga #53 |
-| 63 | 3.4.6 #1 | 6 build-deploy | configuração | native-federation | arquitetural | moderada | publica #47 |
-| 64 | 3.4.6 #2 | 6 build-deploy | configuração | native-federation | arquitetural | moderada | publica #49 |
-| 65 | 3.4.6 #3 | 6 build-deploy | configuração | native-federation | arquitetural | moderada | publica #51 |
-| 66 | 3.4.6 #4 | 6 build-deploy | configuração | native-federation | arquitetural | moderada | publica #53 |
-| 67 | 3.4.7 #1 | 7 documentação | documentação | native-federation | tecnológica | fraca | corrobora em parte nx-mf-df/pnpm-workspace.yaml:3-4; corrobora em parte nx-mf-df/patches/@lkovari__microfrontend-platform-communication@0.3.2.patch:9-40 |
-| 68 | 3.4.7 #2 | 7 documentação | documentação | events | arquitetural | fraca | corrobora #45 |
-| 69 | 3.4.7 #3 | 7 documentação | documentação | events | arquitetural | fraca | corrobora nx-mf-df/apps/main-host/src/app/app.config.ts:52-53; corrobora nx-mf-df/apps/mf_remote_a/src/app/app.config.ts:28-29 |
-| 70 | 3.4.7 #4 | 7 documentação | documentação | native-federation | arquitetural | fraca | corrobora #47; corrobora #49; corrobora #51; corrobora #53; corrobora #57; corrobora #45 |
-| 71 | 3.4.7 #5 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #44; corrobora #45 |
-| 72 | 3.4.7 #6 | 7 documentação | documentação | native-federation | arquitetural | fraca | corrobora #57; corrobora #58; corrobora #59 |
-| 73 | 3.4.7 #7 | 7 documentação | documentação | — | contexto | fraca | corrobora nx-mf-df/libs/contracts-platform-messaging/src/lib/platform-messaging-bus-config.ts:30-95 |
-| 74 | 3.4.7 #8 | 7 documentação | documentação | — | contexto | fraca | corrobora nx-mf-df/apps/mf_remote_a/src/app/app.ts:4-20; corrobora nx-mf-df/apps/main-host/src/app/app.config.ts:9-22 |
-| 75 | 3.4.7 #9 | 7 documentação | documentação | events | tecnológica | fraca | corrobora #2; corrobora #45 |
-| 76 | 3.4.7 #10 | 7 documentação | documentação | native-federation | arquitetural | fraca | corrobora #57; corrobora #58; corrobora #59 |
-| 77 | 3.4.7 #11 | 7 documentação | documentação | events | arquitetural | fraca | corrobora #45 |
-| 78 | 3.4.7 #12 | 7 documentação | documentação | events | arquitetural | fraca | contradiz #45 |
-| 79 | 3.4.7 #13 | 7 documentação | documentação | events | arquitetural | fraca | corrobora nx-mf-df/libs/contracts-platform-messaging/src/lib/participant-ids.ts:1-32; corrobora #45 |
-| 80 | 3.4.7 #14 | 7 documentação | documentação | events | arquitetural | fraca | corrobora em parte nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/platform-welcome-last-message.service.ts:66-75; corrobora em parte nx-mf-df/libs/contracts-platform-messaging/src/lib/platform-messaging-bus-config.ts:47-87 |
-| 81 | 3.4.7 #15 | 7 documentação | documentação | events | arquitetural | fraca | corrobora nx-mf-df/apps/mf_remote_a/src/app/app.html:1-5; corrobora nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/message-sender.service.ts:26-29; corrobora nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/platform-welcome-last-message.service.ts:87-95 |
-| 82 | 3.4.7 #16 | 7 documentação | documentação | events | arquitetural | fraca | corrobora #45 |
-| 83 | 3.4.7 #17 | 7 documentação | documentação | — | arquitetural | fraca | corrobora nx-mf-df/scripts/start-all.mjs:9-17; corrobora nx-mf-df/scripts/start-all.mjs:113-121 |
-| 84 | 3.4.7 #18 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #63; corrobora #64; corrobora #65; corrobora #66 |
-| 85 | 3.4.7 #19 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #63; corrobora #64; corrobora #65; corrobora #66 |
-| 86 | 3.4.7 #20 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #63; corrobora #64; corrobora #65; corrobora #66 |
-| 87 | 3.4.7 #21 | 7 documentação | documentação | — | contexto | fraca | corrobora nx-mf-df/nx.json:19-33; corrobora nx-mf-df/nx.json:41-54 |
-| 88 | 3.4.7 #22 | 7 documentação | documentação | — | tecnológica | fraca | contradiz #2; contradiz nx-mf-df/pnpm-workspace.yaml:3-4 |
-| 89 | 3.4.7 #23 | 7 documentação | documentação | events | arquitetural | fraca | contradiz nx-mf-df/apps/main-host/src/app/shared/components/header/header.html:14-20; contradiz #60; contradiz #61; contradiz #62 |
-| 90 | 3.4.7 #24 | 7 documentação | documentação | events | arquitetural | fraca | corrobora nx-mf-df/apps/mf_remote_a/src/app/app.config.ts:19-30; corrobora nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/remote-platform-bus.service.ts:44-56 |
-| 91 | 3.4.7 #25 | 7 documentação | documentação | events | tecnológica | fraca | — |
-| 92 | 3.4.7 #26 | 7 documentação | documentação | events | arquitetural | fraca | corrobora nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/remote-platform-bus.service.ts:59-72; corrobora #45 |
-| 93 | 3.4.8 #1 | 8 histórico | histórico | native-federation | tecnológica | fraca | explica #3 |
-| 94 | 3.4.8 #2 | 8 histórico | histórico | — | contexto | fraca | explica #9 |
-| 95 | 3.4.8 #3 | 8 histórico | histórico | — | contexto | fraca | explica #13 |
-| 96 | 3.4.8 #4 | 8 histórico | histórico | native-federation | tecnológica | fraca | explica #67 |
-| 97 | 3.4.8 #5 | 8 histórico | histórico | events | arquitetural | fraca | explica #78; explica #45 |
-| 98 | 3.4.8 #6 | 8 histórico | histórico | events | arquitetural | fraca | explica #80 |
-| 99 | 3.4.8 #7 | 8 histórico | histórico | — | tecnológica | fraca | explica #88; explica #2 |
-| 100 | 3.4.8 #8 | 8 histórico | histórico | events | arquitetural | fraca | explica #89 |
+| 1 | 3.4.2 (nx-mf-df/libs/common-ui-lib/package.json:9) | 1 technology | manifest | events | technological | weak | declares nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/platform-welcome-last-message.service.ts:10; declares nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/message-sender.service.ts:4 |
+| 2 | 3.4.2 (nx-mf-df/package.json:89) | 1 technology | manifest | events | technological | weak | declares #45 |
+| 3 | 3.4.2 (nx-mf-df/package.json:91) | 1 technology | manifest | native-federation | technological | weak | — |
+| 4 | 3.4.2 (nx-mf-df/package.json:31) | 1 technology | manifest | native-federation | technological | weak | declares #15; declares #16; declares #17; declares #18; declares #19; declares #20; declares #21; declares #22; declares #23; declares #24; declares #25; declares #26; declares #27; declares #32; declares #36 |
+| 5 | 3.4.2 (nx-mf-df/package.json:40) | 1 technology | manifest | — | context | weak | — |
+| 6 | 3.4.2 (nx-mf-df/package.json:41) | 1 technology | manifest | — | context | weak | — |
+| 7 | 3.4.2 (nx-mf-df/package.json:42) | 1 technology | manifest | — | context | weak | — |
+| 8 | 3.4.2 (nx-mf-df/package.json:43) | 1 technology | manifest | — | context | weak | — |
+| 9 | 3.4.2 (nx-mf-df/package.json:44) | 1 technology | manifest | — | context | ambiguous | — |
+| 10 | 3.4.2 (nx-mf-df/package.json:45) | 1 technology | manifest | — | context | weak | — |
+| 11 | 3.4.2 (nx-mf-df/package.json:46) | 1 technology | manifest | — | context | weak | — |
+| 12 | 3.4.2 (nx-mf-df/package.json:47) | 1 technology | manifest | — | context | weak | — |
+| 13 | 3.4.2 (nx-mf-df/package.json:48) | 1 technology | manifest | — | context | weak | — |
+| 14 | 3.4.2 (nx-mf-df/package.json:71) | 1 technology | manifest | — | context | weak | — |
+| 15 | 3.4.2 (nx-mf-df/package.json:91) (Evidence); 3.4.2 (nx-mf-df/package.json:31) (Evidence); 3.4.3 (nx-mf-df/apps/main-host) (Markers, Build) | 2 configuration | configuration | native-federation | technological | moderate | configures #47 |
+| 16 | 3.4.2 (nx-mf-df/package.json:31) (Evidence); 3.4.3 (nx-mf-df/apps/main-host) (Markers, Build); 3.4.6 #1 (Artifacts); 3.4.7 #20 (Evidence) | 2 configuration | configuration | native-federation | technological | moderate | configures #47 |
+| 17 | 3.4.2 (nx-mf-df/package.json:31) (Evidence); 3.4.3 (nx-mf-df/apps/main-host) (Markers); 3.4.7 #20 (Evidence) | 2 configuration | configuration | native-federation | technological | moderate | configures #47 |
+| 18 | 3.4.2 (nx-mf-df/package.json:31) (Evidence); 3.4.3 (nx-mf-df/apps/mf_remote_a) (Markers, Build); 3.4.4 (nx-mf-df/apps/main-host/src/app/app.routes.ts:14) (Observation); 3.4.4 (nx-mf-df/apps/mf_remote_a/src/main.ts:3) (Observation); 3.4.4 (nx-mf-df/apps/main-host/src/app/app.config.ts:31) (Observation); 3.4.5 #1 (Configuration); 3.4.7 #10 (Evidence) | 2 configuration | configuration | native-federation | technological | moderate | configures #49; configures #57 |
+| 19 | 3.4.2 (nx-mf-df/package.json:31) (Evidence); 3.4.3 (nx-mf-df/apps/mf_remote_a) (Markers, Build); 3.4.6 #2 (Artifacts); 3.4.7 #20 (Evidence) | 2 configuration | configuration | native-federation | technological | moderate | configures #49 |
+| 20 | 3.4.2 (nx-mf-df/package.json:31) (Evidence); 3.4.3 (nx-mf-df/apps/mf_remote_a) (Markers); 3.4.7 #20 (Evidence) | 2 configuration | configuration | native-federation | technological | moderate | configures #49 |
+| 21 | 3.4.2 (nx-mf-df/package.json:31) (Evidence); 3.4.3 (nx-mf-df/apps/mf_remote_b) (Markers, Build); 3.4.4 (nx-mf-df/apps/main-host/src/app/app.routes.ts:19) (Observation); 3.4.4 (nx-mf-df/apps/mf_remote_b/src/main.ts:3) (Observation); 3.4.5 #2 (Configuration) | 2 configuration | configuration | native-federation | technological | moderate | configures #51; configures #58 |
+| 22 | 3.4.2 (nx-mf-df/package.json:31) (Evidence); 3.4.3 (nx-mf-df/apps/mf_remote_b) (Markers, Build); 3.4.6 #3 (Artifacts) | 2 configuration | configuration | native-federation | technological | moderate | configures #51 |
+| 23 | 3.4.2 (nx-mf-df/package.json:31) (Evidence); 3.4.3 (nx-mf-df/apps/mf_remote_b) (Markers) | 2 configuration | configuration | native-federation | technological | moderate | configures #51 |
+| 24 | 3.4.2 (nx-mf-df/package.json:31) (Evidence); 3.4.3 (nx-mf-df/apps/mf_remote_c) (Markers, Build); 3.4.4 (nx-mf-df/apps/main-host/src/app/app.routes.ts:24) (Observation); 3.4.4 (nx-mf-df/apps/mf_remote_c/src/main.ts:3) (Observation); 3.4.5 #3 (Configuration) | 2 configuration | configuration | native-federation | technological | moderate | configures #53; configures #59 |
+| 25 | 3.4.2 (nx-mf-df/package.json:31) (Evidence); 3.4.3 (nx-mf-df/apps/mf_remote_c) (Markers, Build); 3.4.6 #4 (Artifacts) | 2 configuration | configuration | native-federation | technological | moderate | configures #53 |
+| 26 | 3.4.2 (nx-mf-df/package.json:31) (Evidence); 3.4.3 (nx-mf-df/apps/mf_remote_c) (Markers) | 2 configuration | configuration | native-federation | technological | moderate | configures #53 |
+| 27 | 3.4.4 (nx-mf-df/apps/main-host/src/main.ts:3) (Observation); 3.4.5 #1 (Configuration); 3.4.5 #2 (Configuration); 3.4.5 #3 (Configuration) | 2 configuration | configuration | native-federation | architectural | strong | configures #37; configures #57; configures #58; configures #59 |
+| 28 | 3.4.4 (nx-mf-df/apps/main-host/src/main.ts:5) | 3 code | source code | — | technological | weak | — |
+| 29 | 3.4.4 (nx-mf-df/apps/mf_remote_a/src/main.ts:5) | 3 code | source code | — | technological | weak | — |
+| 30 | 3.4.4 (nx-mf-df/apps/mf_remote_b/src/main.ts:5) | 3 code | source code | — | technological | weak | — |
+| 31 | 3.4.4 (nx-mf-df/apps/mf_remote_c/src/main.ts:5) | 3 code | source code | — | technological | weak | — |
+| 32 | 3.4.4 (nx-mf-df/apps/main-host/src/app/app.routes.ts:2) | 3 code | source code | native-federation | technological | moderate | implements #57; implements #58; implements #59 |
+| 33 | 3.4.4 (nx-mf-df/apps/main-host/src/app/app.routes.ts:14) | 3 code | source code | native-federation | architectural | strong | implements #57 |
+| 34 | 3.4.4 (nx-mf-df/apps/main-host/src/app/app.routes.ts:19) | 3 code | source code | native-federation | architectural | strong | implements #58 |
+| 35 | 3.4.4 (nx-mf-df/apps/main-host/src/app/app.routes.ts:24) | 3 code | source code | native-federation | architectural | strong | implements #59 |
+| 36 | 3.4.4 (nx-mf-df/apps/main-host/src/main.ts:1) | 3 code | source code | native-federation | technological | moderate | implements #57; implements #58; implements #59 |
+| 37 | 3.4.4 (nx-mf-df/apps/main-host/src/main.ts:3) | 3 code | source code | native-federation | technological | moderate | implements #57; implements #58; implements #59 |
+| 38 | 3.4.4 (nx-mf-df/apps/mf_remote_a/src/main.ts:1) | 3 code | source code | native-federation | technological | weak | — |
+| 39 | 3.4.4 (nx-mf-df/apps/mf_remote_a/src/main.ts:3) | 3 code | source code | native-federation | technological | weak | — |
+| 40 | 3.4.4 (nx-mf-df/apps/mf_remote_b/src/main.ts:1) | 3 code | source code | native-federation | technological | weak | — |
+| 41 | 3.4.4 (nx-mf-df/apps/mf_remote_b/src/main.ts:3) | 3 code | source code | native-federation | technological | weak | — |
+| 42 | 3.4.4 (nx-mf-df/apps/mf_remote_c/src/main.ts:1) | 3 code | source code | native-federation | technological | weak | — |
+| 43 | 3.4.4 (nx-mf-df/apps/mf_remote_c/src/main.ts:3) | 3 code | source code | native-federation | technological | weak | — |
+| 44 | 3.4.4 (nx-mf-df/apps/main-host/src/app/app.routes.ts:6) | 3 code | source code | native-federation | architectural | strong | implements #57; implements #58; implements #59 |
+| 45 | 3.4.4 (nx-mf-df/apps/main-host/src/app/app.config.ts:31) | 3 code | source code | events | architectural | strong | implements #60; implements #61; implements #62 |
+| 46 | 3.4.3 (nx-mf-df) | 4 structure | directory | — | context | weak | — |
+| 47 | 3.4.3 (nx-mf-df/apps/main-host) | 4 structure | directory | native-federation | architectural | moderate | — |
+| 48 | 3.4.3 (nx-mf-df/apps/main-host-e2e) | 4 structure | directory | — | context | weak | — |
+| 49 | 3.4.3 (nx-mf-df/apps/mf_remote_a) | 4 structure | directory | native-federation | architectural | moderate | — |
+| 50 | 3.4.3 (nx-mf-df/apps/mf_remote_a-e2e) | 4 structure | directory | — | context | weak | — |
+| 51 | 3.4.3 (nx-mf-df/apps/mf_remote_b) | 4 structure | directory | native-federation | architectural | moderate | — |
+| 52 | 3.4.3 (nx-mf-df/apps/mf_remote_b-e2e) | 4 structure | directory | — | context | weak | — |
+| 53 | 3.4.3 (nx-mf-df/apps/mf_remote_c) | 4 structure | directory | native-federation | architectural | moderate | — |
+| 54 | 3.4.3 (nx-mf-df/apps/mf_remote_c-e2e) | 4 structure | directory | — | context | weak | — |
+| 55 | 3.4.3 (nx-mf-df/libs/common-ui-lib) | 4 structure | directory | — | context | weak | — |
+| 56 | 3.4.3 (nx-mf-df/libs/contracts-platform-messaging) | 4 structure | directory | — | context | weak | — |
+| 57 | 3.4.5 #1 | 5 composition | source code | native-federation | architectural | strong | links #47; links #49 |
+| 58 | 3.4.5 #2 | 5 composition | source code | native-federation | architectural | strong | links #47; links #51 |
+| 59 | 3.4.5 #3 | 5 composition | source code | native-federation | architectural | strong | links #47; links #53 |
+| 60 | 3.4.5 #4 | 5 composition | source code | events | architectural | strong | links #47; links #49 |
+| 61 | 3.4.5 #5 | 5 composition | source code | events | architectural | strong | links #47; links #51 |
+| 62 | 3.4.5 #6 | 5 composition | source code | events | architectural | strong | links #47; links #53 |
+| 63 | 3.4.6 #1 | 6 build-deploy | configuration | native-federation | architectural | moderate | publishes #47 |
+| 64 | 3.4.6 #2 | 6 build-deploy | configuration | native-federation | architectural | moderate | publishes #49 |
+| 65 | 3.4.6 #3 | 6 build-deploy | configuration | native-federation | architectural | moderate | publishes #51 |
+| 66 | 3.4.6 #4 | 6 build-deploy | configuration | native-federation | architectural | moderate | publishes #53 |
+| 67 | 3.4.7 #1 | 7 documentation | documentation | native-federation | technological | weak | partially corroborates nx-mf-df/pnpm-workspace.yaml:3-4; partially corroborates nx-mf-df/patches/@lkovari__microfrontend-platform-communication@0.3.2.patch:9-40 |
+| 68 | 3.4.7 #2 | 7 documentation | documentation | events | architectural | weak | corroborates #45 |
+| 69 | 3.4.7 #3 | 7 documentation | documentation | events | architectural | weak | corroborates nx-mf-df/apps/main-host/src/app/app.config.ts:52-53; corroborates nx-mf-df/apps/mf_remote_a/src/app/app.config.ts:28-29 |
+| 70 | 3.4.7 #4 | 7 documentation | documentation | native-federation | architectural | weak | corroborates #47; corroborates #49; corroborates #51; corroborates #53; corroborates #57; corroborates #45 |
+| 71 | 3.4.7 #5 | 7 documentation | documentation | — | architectural | weak | corroborates #44; corroborates #45 |
+| 72 | 3.4.7 #6 | 7 documentation | documentation | native-federation | architectural | weak | corroborates #57; corroborates #58; corroborates #59 |
+| 73 | 3.4.7 #7 | 7 documentation | documentation | — | context | weak | corroborates nx-mf-df/libs/contracts-platform-messaging/src/lib/platform-messaging-bus-config.ts:30-95 |
+| 74 | 3.4.7 #8 | 7 documentation | documentation | — | context | weak | corroborates nx-mf-df/apps/mf_remote_a/src/app/app.ts:4-20; corroborates nx-mf-df/apps/main-host/src/app/app.config.ts:9-22 |
+| 75 | 3.4.7 #9 | 7 documentation | documentation | events | technological | weak | corroborates #2; corroborates #45 |
+| 76 | 3.4.7 #10 | 7 documentation | documentation | native-federation | architectural | weak | corroborates #57; corroborates #58; corroborates #59 |
+| 77 | 3.4.7 #11 | 7 documentation | documentation | events | architectural | weak | corroborates #45 |
+| 78 | 3.4.7 #12 | 7 documentation | documentation | events | architectural | weak | contradicts #45 |
+| 79 | 3.4.7 #13 | 7 documentation | documentation | events | architectural | weak | corroborates nx-mf-df/libs/contracts-platform-messaging/src/lib/participant-ids.ts:1-32; corroborates #45 |
+| 80 | 3.4.7 #14 | 7 documentation | documentation | events | architectural | weak | partially corroborates nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/platform-welcome-last-message.service.ts:66-75; partially corroborates nx-mf-df/libs/contracts-platform-messaging/src/lib/platform-messaging-bus-config.ts:47-87 |
+| 81 | 3.4.7 #15 | 7 documentation | documentation | events | architectural | weak | corroborates nx-mf-df/apps/mf_remote_a/src/app/app.html:1-5; corroborates nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/message-sender.service.ts:26-29; corroborates nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/platform-welcome-last-message.service.ts:87-95 |
+| 82 | 3.4.7 #16 | 7 documentation | documentation | events | architectural | weak | corroborates #45 |
+| 83 | 3.4.7 #17 | 7 documentation | documentation | — | architectural | weak | corroborates nx-mf-df/scripts/start-all.mjs:9-17; corroborates nx-mf-df/scripts/start-all.mjs:113-121 |
+| 84 | 3.4.7 #18 | 7 documentation | documentation | — | architectural | weak | corroborates #63; corroborates #64; corroborates #65; corroborates #66 |
+| 85 | 3.4.7 #19 | 7 documentation | documentation | — | architectural | weak | corroborates #63; corroborates #64; corroborates #65; corroborates #66 |
+| 86 | 3.4.7 #20 | 7 documentation | documentation | — | architectural | weak | corroborates #63; corroborates #64; corroborates #65; corroborates #66 |
+| 87 | 3.4.7 #21 | 7 documentation | documentation | — | context | weak | corroborates nx-mf-df/nx.json:19-33; corroborates nx-mf-df/nx.json:41-54 |
+| 88 | 3.4.7 #22 | 7 documentation | documentation | — | technological | weak | contradicts #2; contradicts nx-mf-df/pnpm-workspace.yaml:3-4 |
+| 89 | 3.4.7 #23 | 7 documentation | documentation | events | architectural | weak | contradicts nx-mf-df/apps/main-host/src/app/shared/components/header/header.html:14-20; contradicts #60; contradicts #61; contradicts #62 |
+| 90 | 3.4.7 #24 | 7 documentation | documentation | events | architectural | weak | corroborates nx-mf-df/apps/mf_remote_a/src/app/app.config.ts:19-30; corroborates nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/remote-platform-bus.service.ts:44-56 |
+| 91 | 3.4.7 #25 | 7 documentation | documentation | events | technological | weak | — |
+| 92 | 3.4.7 #26 | 7 documentation | documentation | events | architectural | weak | corroborates nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/remote-platform-bus.service.ts:59-72; corroborates #45 |
+| 93 | 3.4.8 #1 | 8 history | history | native-federation | technological | weak | explains #3 |
+| 94 | 3.4.8 #2 | 8 history | history | — | context | weak | explains #9 |
+| 95 | 3.4.8 #3 | 8 history | history | — | context | weak | explains #13 |
+| 96 | 3.4.8 #4 | 8 history | history | native-federation | technological | weak | explains #67 |
+| 97 | 3.4.8 #5 | 8 history | history | events | architectural | weak | explains #78; explains #45 |
+| 98 | 3.4.8 #6 | 8 history | history | events | architectural | weak | explains #80 |
+| 99 | 3.4.8 #7 | 8 history | history | — | technological | weak | explains #88; explains #2 |
+| 100 | 3.4.8 #8 | 8 history | history | events | architectural | weak | explains #89 |
 
-## Resumo
+## Summary
 
-Observações: 100. Dimensões (tecnologia: 14, configuração: 13, código: 18, estrutura: 11, composição: 6, build-deploy: 4, documentação: 26, histórico: 8). Força (forte: 12, moderada: 23, fraca: 64, ambígua: 1). Evidência (tecnológica: 36, arquitetural: 42, contexto: 22).
+Observations: 100. Dimensions (technology: 14, configuration: 13, code: 18, structure: 11, composition: 6, build-deploy: 4, documentation: 26, history: 8). Strength (strong: 12, moderate: 23, weak: 64, ambiguous: 1). Evidence (technological: 36, architectural: 42, context: 22).

@@ -19,438 +19,438 @@ annotation:
 
 # 332 — karthik5656/Catalog.App
 
-## Leitura do repositório
+## Repository overview
 
-O snapshot mostra três unidades React com entrada e build Vite próprios: o shell ui-catalog, o consumer e o merchant (#12–#14). As dependências de federação (#1–#3) levam às configurações dos remotos (#4, #5) e do host (#6, #7). O registro alimenta o gerador de importações lazy (#8), e as rotas do shell montam os componentes remotos (#9, #10). Essa cadeia sustenta duas relações host → remote, ambas ativas e com destino no snapshot (#15, #16), conforme as revisões finais. O arquivo gerado não está versionado, mas o gerador e sua entrada estão presentes; isso não introduz dúvida residual sobre a cadeia registrada.
+Snapshot shows three React units with own entries/Vite builds: ui-catalog shell, consumer and merchant (#12–#14). Federation dependencies (#1–#3) lead to remote configurations (#4, #5) and host (#6, #7). Registry feeds lazy-import generator (#8), shell routes mount remote components (#9, #10). Chain supports two host → remote relationships, both active with snapshot targets (#15, #16), per final reviews. Generated file unversioned, but generator/input present; no residual uncertainty about recorded chain.
 
-Os dois remotos declaram name consumerApp, embora o shell use merchantApp para a porta 3001. A 3.4.5 resolveu os destinos pela correspondência de nome/arquivo junto com a porta, por decisão do pesquisador (#15, #16). A divergência de nome continua descrita em #5 e #25; seu efeito em execução não foi verificado. A raiz src/frontend não é unidade nem workspace (#11), e a afirmação documental de workspace é contradita (#21).
+Both remotes declare name consumerApp although shell uses merchantApp for port 3001. Section 3.4.5 resolved targets by name/file together with port per researcher decision (#15, #16). Name divergence remains described in #5 and #25; runtime effect unverified. Root src/frontend neither unit nor workspace (#11); documentary workspace claim contradicted (#21).
 
-Cada aplicação tem build e imagem publicados separadamente (#17–#19), sem versionamento independente. Essa separação não demonstra execução conjunta: o shell embute URLs localhost nas portas de desenvolvimento, as imagens servem na porta 80 e o base do shell difere da raiz servida pelo nginx. O snapshot não fornece Compose ou proxy que componha essas imagens. A promessa de execução conjunta por Compose fica sem corroboração (#39).
+Each application has separately published build/image (#17–#19), without independent versioning. Separation does not demonstrate joint execution: shell embeds localhost development-port URLs, images serve port 80, shell base differs from nginx-served root. No snapshot Compose/proxy composing images. Promised joint Compose execution uncorroborated (#39).
 
-As afirmações documentais são evidências fracas. Agents.md confirma boa parte da organização presente (#20, #22, #23, #26, #27), mas também anuncia autenticação ausente, nome divergente e singletons não demonstrados (#24, #25, #28). Os planos descrevem quatro MFEs React 18 e diretórios diferentes, enquanto o snapshot tem três apps React 19 (#29, #36). Event bus, guards e funcionalidades de backend anunciadas não estão implementados (#31–#34, #37, #41). As relações com APIs são contexto, sem constituir composição entre frontends. O widget Assistant não tem implementação sobre a qual avaliar isolamento ou execução standalone (#35, #38).
+Documentary claims weak. Agents.md confirms much current organization (#20, #22, #23, #26, #27), but announces absent authentication, divergent name/undemonstrated singletons (#24, #25, #28). Plans describe four React 18 MFEs/different directories; snapshot three React 19 apps (#29, #36). Announced event bus, guards/backend functions unimplemented (#31–#34, #37, #41). API relationships context, not frontend composition. Assistant widget has no implementation for assessing isolation/standalone execution (#35, #38).
 
-O histórico explica a anterioridade dos planos, a ausência de workspace/Compose removidos e a coexistência da menção Next.js com Vite (#43, #47, #56, #59). Os demais pontos inconclusivos limitam o que se pode afirmar do passado ou da intenção; não tornam ambígua a organização do snapshot (#44–#46, #48–#55, #57, #58). A ausência de blobs históricos já registrada na 3.4.8 impede concluir abandono ou implementação anterior dessas funções.
+History explains plans’ precedence, absence of removed workspace/Compose, coexistence of Next.js mention with Vite (#43, #47, #56, #59). Other inconclusive points limit past/intent claims without making snapshot organization ambiguous (#44–#46, #48–#55, #57, #58). Missing historical blobs already recorded in 3.4.8 prevent concluding abandonment/prior implementation of functions.
 
-## Observações
+## Observations
 
 ### 1. src/frontend/apps/ui-catalog-consumer/package.json:13
 
-**Observação:** O manifesto declara `@originjs/vite-plugin-federation` em dependencies, versão `^1.4.1`.
+**Observation:** Manifest declares `@originjs/vite-plugin-federation` in dependencies, version `^1.4.1`.
 
-**Interpretação:** A declaração é um sinal tecnológico isolado de Module Federation; a 3.4.2 registra Configurada Yes e a configuração tem observação própria.
+**Interpretation:** Isolated Module Federation technology signal; 3.4.2 records Configured Yes, configuration has own observation.
 
 ### 2. src/frontend/apps/ui-catalog-merchant/package.json:13
 
-**Observação:** O manifesto declara `@originjs/vite-plugin-federation` em dependencies, versão `^1.4.1`.
+**Observation:** Manifest declares `@originjs/vite-plugin-federation` in dependencies, version `^1.4.1`.
 
-**Interpretação:** A declaração é um sinal tecnológico isolado de Module Federation; a 3.4.2 registra Configurada Yes e a configuração tem observação própria.
+**Interpretation:** Isolated Module Federation technology signal; 3.4.2 records Configured Yes, configuration has own observation.
 
 ### 3. src/frontend/apps/ui-catalog/package.json:13
 
-**Observação:** O manifesto declara `@originjs/vite-plugin-federation` em dependencies, versão `^1.4.1`.
+**Observation:** Manifest declares `@originjs/vite-plugin-federation` in dependencies, version `^1.4.1`.
 
-**Interpretação:** A declaração é um sinal tecnológico isolado de Module Federation; a 3.4.2 registra Configurada Yes e a configuração tem observação própria.
+**Interpretation:** Isolated Module Federation technology signal; 3.4.2 records Configured Yes, configuration has own observation.
 
 ### 4. src/frontend/apps/ui-catalog-consumer/vite.config.ts:7-53
 
-**Observação:** A configuração Vite invoca `federation` com `name: "consumerApp"`, `filename: "remoteEntry.js"`, `exposes: { "./App": "./src/App" }` e `shared: ["react", "react-dom", "react-router-dom"]`.
+**Observation:** Vite configuration invokes `federation` with `name: "consumerApp"`, `filename: "remoteEntry.js"`, `exposes: { "./App": "./src/App" }` and `shared: ["react", "react-dom", "react-router-dom"]`.
 
-**Interpretação:** Configura o mecanismo de exposição e compartilhamento nesta unidade, sem nomear um consumidor. O nome é o mesmo também declarado pelo merchant.
+**Interpretation:** Configures unit exposure/sharing without naming consumer. Same name also declared by merchant.
 
 ### 5. src/frontend/apps/ui-catalog-merchant/vite.config.ts:7-53
 
-**Observação:** A configuração Vite invoca `federation` com `name: "consumerApp"`, `filename: "remoteEntry.js"`, `exposes: { "./App": "./src/App" }` e `shared: ["react", "react-dom", "react-router-dom"]`.
+**Observation:** Vite configuration invokes `federation` with `name: "consumerApp"`, `filename: "remoteEntry.js"`, `exposes: { "./App": "./src/App" }` and `shared: ["react", "react-dom", "react-router-dom"]`.
 
-**Interpretação:** Configura o mecanismo de exposição e compartilhamento nesta unidade, sem nomear um consumidor. O nome declarado pelo merchant difere do scope merchantApp usado pelo shell.
+**Interpretation:** Configures unit exposure/sharing without naming consumer. Merchant declared name differs from shell scope merchantApp.
 
 ### 6. src/frontend/apps/ui-catalog/vite.config.ts:10-17; src/frontend/apps/ui-catalog/vite.config.ts:74-110; src/frontend/apps/ui-catalog/remotes.json:2-15
 
-**Observação:** A configuração do shell constrói o mapa `federationRemotes` com scope e URL de cada entrada de remotes.json e o passa a `federation({ name: "app", remotes: federationRemotes, shared: [...] })`. As entradas nomeiam merchantApp e consumerApp.
+**Observation:** Shell configuration builds `federationRemotes` map from each remotes.json entry’s scope/URL, passes to `federation({ name: "app", remotes: federationRemotes, shared: [...] })`. Entries name merchantApp/consumerApp.
 
-**Interpretação:** A configuração do host liga explicitamente outras unidades pelo mecanismo de federação. O bloco da unidade inclui o plugin que gera as importações; sua construção é descrita em #8.
+**Interpretation:** Host configuration explicitly links other units through federation. Unit block includes import-generating plugin, construct described in #8.
 
 ### 7. src/frontend/apps/ui-catalog/remotes.json:1-16
 
-**Observação:** O registro do shell declara merchantApp em `http://localhost:3001/assets/remoteEntry.js`, módulo `./App`, rota merchant, e consumerApp em `http://localhost:3002/assets/remoteEntry.js`, módulo `./App`, rota consumer.
+**Observation:** Shell registry declares merchantApp at `http://localhost:3001/assets/remoteEntry.js`, module `./App`, route merchant, and consumerApp at `http://localhost:3002/assets/remoteEntry.js`, module `./App`, route consumer.
 
-**Interpretação:** O registro nomeia dois destinos de composição do host e parametriza tanto a resolução dos módulos quanto as rotas. É um único bloco de configuração da unidade shell.
+**Interpretation:** Registry names two host composition targets/parameterizes module resolution and routes. One shell-unit configuration block.
 
 ### 8. src/frontend/apps/ui-catalog/vite.config.ts:26-59; src/frontend/apps/ui-catalog/vite.config.ts:84; src/frontend/apps/ui-catalog/remotes.json:2-15; src/frontend/apps/ui-catalog/.gitignore:15-16; src/frontend/apps/ui-catalog/src/App.tsx:3
 
-**Observação:** O plugin remoteAppsPlugin gera, para cada entrada, `React.lazy(() => import("${app.scope}/${modulePath}"))` em src/remoteApps.generated.tsx. O buildStart chama generate; o plugin está registrado e App importa remoteApps. O arquivo gerado é ignorado pelo Git.
+**Observation:** Plugin remoteAppsPlugin generates `React.lazy(() => import("${app.scope}/${modulePath}"))` for each entry in src/remoteApps.generated.tsx. buildStart calls generate; plugin registered/App imports remoteApps. Generated file Git-ignored.
 
-**Interpretação:** Implementa a carga dinâmica dos módulos remotos definidos pelo registro. O template recebe o destino por parâmetro; o snapshot contém o gerador e a entrada, sem o arquivo gerado.
+**Interpretation:** Implements dynamic registry-defined remote module loading. Template receives target as parameter; snapshot contains generator/input without generated file.
 
 ### 9. src/frontend/apps/ui-catalog/remotes.json:2-15; src/frontend/apps/ui-catalog/vite.config.ts:10-17; src/frontend/apps/ui-catalog/vite.config.ts:85-89
 
-**Observação:** A construção host-relationship registra merchantApp e consumerApp, respectivas URLs, módulo ./App e rotas; a configuração do shell lê esse registro para montar remotes e gerar as entradas de rota.
+**Observation:** Host-relationship construct records merchantApp/consumerApp, respective URLs, module ./App/routes; shell configuration reads registry to build remotes/generate route entries.
 
-**Interpretação:** A linha da 3.4.4 nomeia os destinos de composição. Seu artefato é também a configuração de #7: esta observação preserva a linha de código-fonte da revisão, sem acrescentar construção.
+**Interpretation:** Line in 3.4.4 names composition targets. Artifact also configuration in #7: preserves source-code review row without adding construct.
 
 ### 10. src/frontend/apps/ui-catalog/src/App.tsx:3-28; src/frontend/apps/ui-catalog/remotes.json:2-15; src/frontend/apps/ui-catalog/src/main.tsx:7-10; src/frontend/apps/ui-catalog/index.html:11; src/frontend/apps/ui-catalog/src/components/ShellLayout.tsx:27-31
 
-**Observação:** App percorre remoteApps e monta `<Component />` em Suspense na rota `${route}/*`, sob ShellLayout. O registro fornece merchant e consumer, e o menu usa as mesmas entradas.
+**Observation:** App iterates remoteApps/mounts `<Component />` in Suspense at `${route}/*` under ShellLayout. Registry supplies merchant/consumer; menu uses same entries.
 
-**Interpretação:** As rotas ligam os caminhos merchant/* e consumer/* aos componentes remotos. A construção de runtime-composition é Yes na 3.4.4.
+**Interpretation:** Routes link merchant/* and consumer/* paths to remote components. Runtime-composition construct Yes in 3.4.4.
 
 ### 11. src/frontend; src/frontend/package.json:1-21
 
-**Observação:** O diretório src/frontend tem manifesto com script test de placeholder e packageManager, sem entrada nem build próprios.
+**Observation:** Directory src/frontend has manifest with placeholder test script/packageManager, no own entry/build.
 
-**Interpretação:** É raiz de coordenação, marcada Unidade frontend No. Não demonstra uma quarta aplicação nem declaração de workspace.
+**Interpretation:** Coordination root, Frontend unit No. Neither fourth application nor workspace declaration demonstrated.
 
 ### 12. src/frontend/apps/ui-catalog; src/frontend/apps/ui-catalog/package.json:1-33; src/frontend/apps/ui-catalog/index.html:11; src/frontend/apps/ui-catalog/src/main.tsx:7; src/frontend/apps/ui-catalog/vite.config.ts:74-110
 
-**Observação:** O diretório contém manifesto próprio, entrada HTML que aponta para src/main.tsx, montagem React com createRoot e build Vite próprio.
+**Observation:** Directory contains own manifest, HTML entry pointing to src/main.tsx, React mounting with createRoot/own Vite build.
 
-**Interpretação:** Confirma o limite de uma unidade frontend (shell), com Unidade frontend Yes na 3.4.3; o limite sozinho não estabelece a composição completa.
+**Interpretation:** Confirms frontend unit boundary (shell), Frontend unit Yes in 3.4.3; boundary alone does not establish full composition.
 
 ### 13. src/frontend/apps/ui-catalog-consumer; src/frontend/apps/ui-catalog-consumer/package.json:1-33; src/frontend/apps/ui-catalog-consumer/index.html:11; src/frontend/apps/ui-catalog-consumer/src/main.tsx:7; src/frontend/apps/ui-catalog-consumer/vite.config.ts:7-53
 
-**Observação:** O diretório contém manifesto próprio, entrada HTML que aponta para src/main.tsx, montagem React com createRoot e build Vite próprio.
+**Observation:** Directory contains own manifest, HTML entry pointing to src/main.tsx, React mounting with createRoot/own Vite build.
 
-**Interpretação:** Confirma o limite de uma unidade frontend (remoto consumer), com Unidade frontend Yes na 3.4.3; o limite sozinho não estabelece a composição completa.
+**Interpretation:** Confirms frontend unit boundary (consumer remote), Frontend unit Yes in 3.4.3; boundary alone does not establish full composition.
 
 ### 14. src/frontend/apps/ui-catalog-merchant; src/frontend/apps/ui-catalog-merchant/package.json:1-33; src/frontend/apps/ui-catalog-merchant/index.html:11; src/frontend/apps/ui-catalog-merchant/src/main.tsx:7; src/frontend/apps/ui-catalog-merchant/vite.config.ts:7-53
 
-**Observação:** O diretório contém manifesto próprio, entrada HTML que aponta para src/main.tsx, montagem React com createRoot e build Vite próprio.
+**Observation:** Directory contains own manifest, HTML entry pointing to src/main.tsx, React mounting with createRoot/own Vite build.
 
-**Interpretação:** Confirma o limite de uma unidade frontend (remoto merchant), com Unidade frontend Yes na 3.4.3; o limite sozinho não estabelece a composição completa.
+**Interpretation:** Confirms frontend unit boundary (merchant remote), Frontend unit Yes in 3.4.3; boundary alone does not establish full composition.
 
 ### 15. src/frontend/apps/ui-catalog/remotes.json:9-15; src/frontend/apps/ui-catalog/vite.config.ts:14-17; src/frontend/apps/ui-catalog/vite.config.ts:37; src/frontend/apps/ui-catalog/vite.config.ts:85-89; src/frontend/apps/ui-catalog/src/App.tsx:14-28; src/frontend/apps/ui-catalog-consumer/vite.config.ts:9; src/frontend/apps/ui-catalog-consumer/vite.config.ts:16-23; src/frontend/apps/ui-catalog-merchant/vite.config.ts:16-23
 
-**Observação:** O shell declara consumerApp na URL da porta 3002, módulo ./App e rota consumer. A configuração gera o import federado e App o monta na rota. O destino expõe ./App em remoteEntry.js e declara name consumerApp.
+**Observation:** Shell declares consumerApp at port 3002 URL, module ./App/route consumer. Configuration generates federated import/App mounts it in route. Target exposes ./App in remoteEntry.js, declares name consumerApp.
 
-**Interpretação:** Relação host → remote, No snapshot Yes e Ativa Yes na 3.4.5. A correspondência do destino usa o nome/arquivo declarado junto com a porta, conforme decisão registrada do pesquisador; o nome sozinho é compartilhado pelos dois remotos.
+**Interpretation:** Host → remote relationship, In snapshot Yes/Active Yes in 3.4.5. Target matched using declared name/file with port per recorded researcher decision; name alone shared by both remotes.
 
 ### 16. src/frontend/apps/ui-catalog/remotes.json:2-8; src/frontend/apps/ui-catalog/vite.config.ts:14-17; src/frontend/apps/ui-catalog/vite.config.ts:37; src/frontend/apps/ui-catalog/vite.config.ts:85-89; src/frontend/apps/ui-catalog/src/App.tsx:14-28; src/frontend/apps/ui-catalog-merchant/vite.config.ts:9; src/frontend/apps/ui-catalog-merchant/vite.config.ts:16-23
 
-**Observação:** O shell declara merchantApp na URL da porta 3001, módulo ./App e rota merchant. A configuração gera o import federado e App o monta na rota. O destino expõe ./App em remoteEntry.js e declara name consumerApp.
+**Observation:** Shell declares merchantApp at port 3001 URL, module ./App/route merchant. Configuration generates federated import/App mounts it in route. Target exposes ./App in remoteEntry.js, declares name consumerApp.
 
-**Interpretação:** Relação host → remote, No snapshot Yes e Ativa Yes na 3.4.5. A correspondência do destino usa o nome/arquivo declarado junto com a porta, conforme decisão registrada do pesquisador; o scope merchantApp difere do name consumerApp, sem alterar o julgamento final da relação. O efeito em execução não foi verificado.
+**Interpretation:** Host → remote relationship, In snapshot Yes/Active Yes in 3.4.5. Target matched using declared name/file with port per recorded researcher decision; scope merchantApp differs from name consumerApp without changing final relationship judgment. Runtime effect unverified.
 
 ### 17. src/frontend/apps/ui-catalog/package.json:8; src/frontend/apps/ui-catalog/vite.config.ts:74-110; src/frontend/apps/ui-catalog/Dockerfile:1-23; .github/workflows/ci-pipeline.yml:238-247; src/frontend/apps/ui-catalog/remotes.json:4-11
 
-**Observação:** A aplicação tem script e configuração Vite próprios. Seu Dockerfile instala dependências e executa pnpm run build; a imagem nginx copia somente seu dist e serve na porta 80. Um passo condicionado do CI constrói e publica a imagem própria no GHCR.
+**Observation:** Application has own Vite script/configuration. Dockerfile installs dependencies/executes pnpm run build; nginx image copies only own dist/serves port 80. Conditional CI step builds/publishes own GHCR image.
 
-**Interpretação:** Build separado e Deploy separado, Versionamento No, conforme 3.4.6. A publicação individual confirma o limite da aplicação; não demonstra a execução conjunta. O shell fixa base /ui-catalog/ e URLs localhost:3001/3002 no build, enquanto nginx serve na raiz; não há proxy que componha as imagens.
+**Interpretation:** Separate Build/Deployment, Versioning No per 3.4.6. Individual publication confirms boundary without joint execution. Shell fixes base /ui-catalog/ and localhost:3001/3002 URLs at build while nginx serves root; no proxy composing images.
 
 ### 18. src/frontend/apps/ui-catalog-consumer/package.json:8; src/frontend/apps/ui-catalog-consumer/vite.config.ts:7-53; src/frontend/apps/ui-catalog-consumer/Dockerfile:1-23; .github/workflows/ci-pipeline.yml:250-259; src/frontend/apps/ui-catalog/remotes.json:4-11
 
-**Observação:** A aplicação tem script e configuração Vite próprios. Seu Dockerfile instala dependências e executa pnpm run build; a imagem nginx copia somente seu dist e serve na porta 80. Um passo condicionado do CI constrói e publica a imagem própria no GHCR.
+**Observation:** Application has own Vite script/configuration. Dockerfile installs dependencies/executes pnpm run build; nginx image copies only own dist/serves port 80. Conditional CI step builds/publishes own GHCR image.
 
-**Interpretação:** Build separado e Deploy separado, Versionamento No, conforme 3.4.6. A publicação individual confirma o limite da aplicação; não demonstra a execução conjunta. A URL de consumo no shell usa a porta Vite 3002, diferente da porta 80 da imagem, sem configuração de orquestração no snapshot.
+**Interpretation:** Separate Build/Deployment, Versioning No per 3.4.6. Individual publication confirms boundary without joint execution. Shell consumption URL uses Vite port 3002, unlike image port 80, without snapshot orchestration.
 
 ### 19. src/frontend/apps/ui-catalog-merchant/package.json:8; src/frontend/apps/ui-catalog-merchant/vite.config.ts:7-53; src/frontend/apps/ui-catalog-merchant/Dockerfile:1-23; .github/workflows/ci-pipeline.yml:262-271; src/frontend/apps/ui-catalog/remotes.json:4-11
 
-**Observação:** A aplicação tem script e configuração Vite próprios. Seu Dockerfile instala dependências e executa pnpm run build; a imagem nginx copia somente seu dist e serve na porta 80. Um passo condicionado do CI constrói e publica a imagem própria no GHCR.
+**Observation:** Application has own Vite script/configuration. Dockerfile installs dependencies/executes pnpm run build; nginx image copies only own dist/serves port 80. Conditional CI step builds/publishes own GHCR image.
 
-**Interpretação:** Build separado e Deploy separado, Versionamento No, conforme 3.4.6. A publicação individual confirma o limite da aplicação; não demonstra a execução conjunta. A URL de consumo no shell usa a porta Vite 3001, diferente da porta 80 da imagem, sem configuração de orquestração no snapshot.
+**Interpretation:** Separate Build/Deployment, Versioning No per 3.4.6. Individual publication confirms boundary without joint execution. Shell consumption URL uses Vite port 3001, unlike image port 80, without snapshot orchestration.
 
 ### 20. Agents.md:15
 
-**Observação:** O documento afirma: "React 19 Micro Frontends (MFEs) using Vite and Module Federation.".
+**Observation:** Document states: "React 19 Micro Frontends (MFEs) using Vite and Module Federation.".
 
-**Interpretação:** A afirmação situa o conjunto de MFEs React 19 com Vite e Module Federation e é corroborada pelas unidades e relações do snapshot.
+**Interpretation:** Claim situates React 19 MFEs with Vite/Module Federation, corroborated by snapshot units/relationships.
 
 ### 21. Agents.md:90-91
 
-**Observação:** O documento afirma: "React 19 Micro Frontends Workspace" / "Root frontend workspace config (pnpm)".
+**Observation:** Document states: "React 19 Micro Frontends Workspace" / "Root frontend workspace config (pnpm)".
 
-**Interpretação:** A afirmação é contradita: src/frontend não declara workspace; o gerenciador pnpm não estabelece um workspace.
+**Interpretation:** Contradicted: src/frontend declares no workspace; pnpm manager does not establish one.
 
 ### 22. Agents.md:93-95
 
-**Observação:** O documento afirma: "ui-catalog/ # Host Shell MFE" / "ui-catalog-merchant/ # Merchant / Vendor Catalog MFE" / "ui-catalog-consumer/ # Customer / Shopper Catalog MFE".
+**Observation:** Document states: "ui-catalog/ # Host Shell MFE" / "ui-catalog-merchant/ # Merchant / Vendor Catalog MFE" / "ui-catalog-consumer/ # Customer / Shopper Catalog MFE".
 
-**Interpretação:** A afirmação é corroborada: os três diretórios correspondem às unidades e aos papéis host/remotes.
+**Interpretation:** Corroborated: three directories match units/host-remote roles.
 
 ### 23. Agents.md:151
 
-**Observação:** O documento afirma: "Global layout, top navigation, […] dynamic remote MFE router".
+**Observation:** Document states: "Global layout, top navigation, […] dynamic remote MFE router".
 
-**Interpretação:** A afirmação é corroborada pelo layout e pelas rotas que montam os dois remotos.
+**Interpretation:** Corroborated by layout/routes mounting two remotes.
 
 ### 24. Agents.md:151
 
-**Observação:** O documento afirma: "Auth provider context".
+**Observation:** Document states: "Auth provider context".
 
-**Interpretação:** A afirmação de comunicação por contexto de autenticação é contradita: o shell só monta BrowserRouter, App, rotas e Suspense.
+**Interpretation:** Authentication-context communication claim contradicted: shell only mounts BrowserRouter, App, routes/Suspense.
 
 ### 25. Agents.md:152
 
-**Observação:** O documento afirma: "Remote (`merchantApp`)".
+**Observation:** Document states: "Remote (`merchantApp`)".
 
-**Interpretação:** O nome atribuído ao merchant é contradito pelo name consumerApp de sua configuração, embora a relação do shell esteja resolvida pela porta.
+**Interpretation:** Merchant attributed name contradicted by configuration name consumerApp although shell relationship resolved through port.
 
 ### 26. Agents.md:153
 
-**Observação:** O documento afirma: "Remote (`consumerApp`)".
+**Observation:** Document states: "Remote (`consumerApp`)".
 
-**Interpretação:** O nome do consumer é corroborado pelo name da unidade e pelo scope no shell.
+**Interpretation:** Consumer name corroborated by unit name/shell scope.
 
 ### 27. Agents.md:158-159
 
-**Observação:** O documento afirma: "Remote App Configuration: Defined in remotes.json and resolved dynamically in `remoteApps.generated.tsx`.".
+**Observation:** Document states: "Remote App Configuration: Defined in remotes.json and resolved dynamically in `remoteApps.generated.tsx`.".
 
-**Interpretação:** A afirmação é corroborada pelo gerador ativo e pela leitura do registro; os endereços são fixados no build, não resolvidos por descoberta em produção.
+**Interpretation:** Corroborated by active generator/registry reading; addresses fixed at build, not discovered in production.
 
 ### 28. Agents.md:160
 
-**Observação:** O documento afirma: "Shell and remotes share singletons for `react`, `react-dom`, and `react-router-dom`.".
+**Observation:** Document states: "Shell and remotes share singletons for `react`, `react-dom`, and `react-router-dom`.".
 
-**Interpretação:** A afirmação tem corroboração parcial: shared lista as três bibliotecas, mas não declara singleton nem demonstra instância única em runtime.
+**Interpretation:** Partial corroboration: shared lists three libraries but declares no singleton/demonstrates no single runtime instance.
 
 ### 29. documents/component_boundaries.md:16
 
-**Observação:** O documento afirma: "React 18 Micro Frontends (Shell, Catalog, Copilot, Assistant)".
+**Observation:** Document states: "React 18 Micro Frontends (Shell, Catalog, Copilot, Assistant)".
 
-**Interpretação:** O desenho de quatro MFEs React 18 é contradito pelo conjunto de três unidades React 19 do snapshot.
+**Interpretation:** Four React 18 MFE design contradicted by snapshot’s three React 19 units.
 
 ### 30. documents/component_boundaries.md:35
 
-**Observação:** O documento afirma: "Route: /vendor/products" / "Route: /vendor/copilot/:id" (rotas em que o shell monta os MFEs).
+**Observation:** Document states: "Route: /vendor/products" / "Route: /vendor/copilot/:id" (routes where shell mounts MFEs).
 
-**Interpretação:** As rotas anunciadas são contraditas: o shell monta merchant/* e consumer/*, sob /ui-catalog.
+**Interpretation:** Announced routes contradicted: shell mounts merchant/* and consumer/* under /ui-catalog.
 
 ### 31. documents/component_boundaries.md:46
 
-**Observação:** O documento afirma: "Exposes a React Context/Event Bus for cross-MFE communication (e.g., `onAuthTokenChange`, `onToastMessage`).".
+**Observation:** Document states: "Exposes a React Context/Event Bus for cross-MFE communication (e.g., `onAuthTokenChange`, `onToastMessage`).".
 
-**Interpretação:** A afirmação de comunicação entre MFEs é contradita: o shell não expõe contexto ou event bus no snapshot.
+**Interpretation:** Inter-MFE communication contradicted: shell exposes no context/event bus in snapshot.
 
 ### 32. documents/component_boundaries.md:51
 
-**Observação:** O documento afirma: "**APIs Consumed**: `CatalogService` via Gateway (`GET/POST/PUT /api/catalog/products`)".
+**Observation:** Document states: "**APIs Consumed**: `CatalogService` via Gateway (`GET/POST/PUT /api/catalog/products`)".
 
-**Interpretação:** A relação com sistema de backend é contexto e é contradita: a página de produtos é estática e o gateway só tem o template WeatherForecast.
+**Interpretation:** Backend-system relationship is context, contradicted: products page static/gateway only WeatherForecast template.
 
 ### 33. documents/component_boundaries.md:59-61
 
-**Observação:** O documento afirma: "**APIs Consumed**: […] `CatalogService` (`GET /api/catalog/products/:id/enrichment`) […] (`POST /api/catalog/products/:id/approve-enrichment`)" (Copilot MFE).
+**Observation:** Document states: "**APIs Consumed**: […] `CatalogService` (`GET /api/catalog/products/:id/enrichment`) […] (`POST /api/catalog/products/:id/approve-enrichment`)" (Copilot MFE).
 
-**Interpretação:** A relação com backend é contexto e é contradita: não há unidade Copilot nem os endpoints de enriquecimento e aprovação anunciados.
+**Interpretation:** Backend relationship is context, contradicted: no Copilot unit or announced enrichment/approval endpoints.
 
 ### 34. documents/component_boundaries.md:69
 
-**Observação:** O documento afirma: "**APIs Consumed**: `CatalogAssistantService` (`POST /api/assistant/ask` - Server-Sent Events / streaming HTTP)." (Catalog Assistant MFE).
+**Observation:** Document states: "**APIs Consumed**: `CatalogAssistantService` (`POST /api/assistant/ask` - Server-Sent Events / streaming HTTP)." (Catalog Assistant MFE).
 
-**Interpretação:** A relação com backend é contexto e é contradita: não há unidade Assistant, streaming ou endpoint anunciado; o consumer é placeholder.
+**Interpretation:** Backend relationship is context, contradicted: no Assistant unit, streaming or announced endpoint; consumer placeholder.
 
 ### 35. documents/component_boundaries.md:71
 
-**Observação:** O documento afirma: "Isolated, lightweight widget with zero dependency on Vendor MFEs.".
+**Observation:** Document states: "Isolated, lightweight widget with zero dependency on Vendor MFEs.".
 
-**Interpretação:** A independência de uma unidade Assistant fica sem corroboração: não há widget correspondente sobre o qual avaliar isolamento.
+**Interpretation:** Assistant unit independence uncorroborated: no matching widget to assess isolation.
 
 ### 36. documents/component_plans/06_shell_mfe.md:10
 
-**Observação:** O documento afirma: "Catalog.AI.App/src/frontend/shell/" (os MFEs ficam em `src/frontend/shell/`, `catalog-mfe/`, `copilot-mfe/` e `catalog-assistant-mfe/`).
+**Observation:** Document states: "Catalog.AI.App/src/frontend/shell/" (MFEs reside in `src/frontend/shell/`, `catalog-mfe/`, `copilot-mfe/` and `catalog-assistant-mfe/`).
 
-**Interpretação:** Os limites documentados são contraditos pelos três diretórios reais em src/frontend/apps/, sem unidades Copilot ou Assistant.
+**Interpretation:** Documented boundaries contradicted by three actual src/frontend/apps/ directories without Copilot/Assistant units.
 
 ### 37. documents/component_plans/06_shell_mfe.md:18
 
-**Observação:** O documento afirma: "ProtectedRoute.tsx # Auth & Role-based route guard".
+**Observation:** Document states: "ProtectedRoute.tsx # Auth & Role-based route guard".
 
-**Interpretação:** A afirmação é contradita: as rotas atuais montam remotos com Suspense, sem guard de autenticação ou papel.
+**Interpretation:** Contradicted: current routes mount remotes with Suspense without authentication/role guard.
 
 ### 38. documents/component_plans/09_catalog_assistant_mfe.md:55
 
-**Observação:** O documento afirma: "Standalone widget testing on port `3003`.".
+**Observation:** Document states: "Standalone widget testing on port `3003`.".
 
-**Interpretação:** A execução standalone do Assistant fica sem corroboração: um script Vite do consumer não demonstra execução de um widget ausente.
+**Interpretation:** Assistant standalone execution uncorroborated: consumer Vite script does not demonstrate absent widget execution.
 
 ### 39. documents/implementation_plan.md:10
 
-**Observação:** O documento afirma: "The entire architecture is designed to run locally using Docker Compose".
+**Observation:** Document states: "The entire architecture is designed to run locally using Docker Compose".
 
-**Interpretação:** A execução conjunta por Compose fica sem corroboração: as imagens individuais não demonstram essa orquestração e a ausência do arquivo não prova inviabilidade.
+**Interpretation:** Joint Compose execution uncorroborated: individual images do not demonstrate orchestration; missing file does not prove infeasibility.
 
 ### 40. documents/implementation_plan.md:57
 
-**Observação:** O documento afirma: "React 18 + TypeScript + Vite + Module Federation / Single-SPA.".
+**Observation:** Document states: "React 18 + TypeScript + Vite + Module Federation / Single-SPA.".
 
-**Interpretação:** A afirmação tecnológica é contradita conforme a 3.4.7: Module Federation se confirma, mas Single-SPA não está declarado; a frase não é dividida.
+**Interpretation:** Technology claim contradicted per 3.4.7: Module Federation confirmed but Single-SPA undeclared; sentence not split.
 
 ### 41. documents/sequence_diagrams.md:48
 
-**Observação:** O documento afirma: "CatSvc-->>CopilotMFE: Push update via SignalR / Polling" (o serviço de catálogo avisa o MFE por SignalR ou polling).
+**Observation:** Document states: "CatSvc-->>CopilotMFE: Push update via SignalR / Polling" (catalog service notifies MFE through SignalR or polling).
 
-**Interpretação:** A relação de atualização entre backend e Copilot é contexto e é contradita: não há SignalR/polling nem implementação correspondente.
+**Interpretation:** Backend–Copilot update relationship is context, contradicted: no SignalR/polling or corresponding implementation.
 
 ### 42. documents/typed_api_client_generation_plan.md:65
 
-**Observação:** O documento afirma: "TypeScript clients for the Next.js frontend".
+**Observation:** Document states: "TypeScript clients for the Next.js frontend".
 
-**Interpretação:** A referência tecnológica a Next.js é contradita pelos manifestos e builds Vite dos três apps.
+**Interpretation:** Next.js technology reference contradicted by three apps’ Vite manifests/builds.
 
 ### 43. 284d0ce 2026-08-31 (src/frontend/package.json, Agents.md); 1982e0f 2026-09-01 (src/frontend/package.json, Agents.md)
 
-**Observação:** O manifesto src/frontend/package.json entra em 284d0ce e não muda depois; Agents.md entra em 1982e0f. A listagem não registra declaração de workspace criada ou removida.
+**Observation:** Manifest src/frontend/package.json enters in 284d0ce, unchanged afterward; Agents.md enters in 1982e0f. Listing records no created/removed workspace declaration.
 
-**Interpretação:** Esclarecido: os caminhos versionados não mostram workspace anterior removido. Isso explica a divergência documental, sem provar intenção.
+**Interpretation:** Clarified: versioned paths show no removed earlier workspace. Explains documentary divergence without proving intent.
 
 ### 44. 76edc2f 2026-08-29 (documents/component_plans/06_shell_mfe.md, Agents.md); 1982e0f 2026-09-01 (documents/component_plans/06_shell_mfe.md, Agents.md)
 
-**Observação:** O plano do shell lido em 76edc2f já descreve AuthProvider e AuthContext.tsx; Agents.md repete a função em 1982e0f. Fontes históricas não foram recuperadas integralmente.
+**Observation:** Shell plan read in 76edc2f already describes AuthProvider and AuthContext.tsx; Agents.md repeats role in 1982e0f. Historical sources not fully recovered.
 
-**Interpretação:** Inconclusivo quanto ao passado: não distingue contexto só planejado de implementação posteriormente substituída. A ausência atual permanece definida.
+**Interpretation:** Past inconclusive: cannot distinguish planned-only context from subsequently replaced implementation. Current absence remains defined.
 
 ### 45. 22d7583 2026-08-31 (src/frontend/apps/ui-catalog-merchant/vite.config.ts, Agents.md); ab5770d 2026-09-01 (src/frontend/apps/ui-catalog-merchant/vite.config.ts, Agents.md); 1982e0f 2026-09-01 (src/frontend/apps/ui-catalog-merchant/vite.config.ts, Agents.md)
 
-**Observação:** A configuração TS do merchant é criada em 22d7583 e alterada em ab5770d. A leitura da primeira versão falha por objeto ausente; 1982e0f só adiciona Agents.md.
+**Observation:** Merchant TS configuration created in 22d7583/changed in ab5770d. First-version read fails from missing object; 1982e0f only adds Agents.md.
 
-**Interpretação:** Inconclusivo quanto à origem do nome: não permite decidir entre consumerApp desde a criação e renomeação posterior. Não reabre os destinos Yes da 3.4.5.
+**Interpretation:** Name origin inconclusive: cannot decide consumerApp since creation versus later renaming. Does not reopen 3.4.5 Yes targets.
 
 ### 46. 22d7583 2026-08-31 (src/frontend/apps/ui-catalog/vite.config.ts, src/frontend/apps/ui-catalog-merchant/vite.config.ts, src/frontend/apps/ui-catalog-consumer/vite.config.ts, Agents.md); ab5770d 2026-09-01 (src/frontend/apps/ui-catalog/vite.config.ts, src/frontend/apps/ui-catalog-merchant/vite.config.ts, src/frontend/apps/ui-catalog-consumer/vite.config.ts, Agents.md); 1982e0f 2026-09-01 (src/frontend/apps/ui-catalog/vite.config.ts, src/frontend/apps/ui-catalog-merchant/vite.config.ts, src/frontend/apps/ui-catalog-consumer/vite.config.ts, Agents.md)
 
-**Observação:** A configuração TS do shell não muda depois de 22d7583; a do merchant muda em ab5770d, quando entra o consumer. A configuração antiga do merchant não pôde ser lida.
+**Observation:** Shell TS configuration unchanged after 22d7583; merchant changes in ab5770d when consumer enters. Old merchant configuration unreadable.
 
-**Interpretação:** Inconclusivo quanto ao passado: não prova configuração antiga de singleton ou sua intenção. No snapshot só a lista shared está demonstrada.
+**Interpretation:** Past inconclusive: proves neither earlier singleton configuration nor intent. Only shared list demonstrated in snapshot.
 
 ### 47. f843c7d 2026-08-29 (documents/component_boundaries.md, documents/component_plans/06_shell_mfe.md, src/frontend/apps/ui-catalog/package.json, src/frontend/apps/ui-catalog-consumer/vite.config.ts); 76edc2f 2026-08-29 (documents/component_boundaries.md, documents/component_plans/06_shell_mfe.md, src/frontend/apps/ui-catalog/package.json, src/frontend/apps/ui-catalog-consumer/vite.config.ts); 284d0ce 2026-08-31 (documents/component_boundaries.md, documents/component_plans/06_shell_mfe.md, src/frontend/apps/ui-catalog/package.json, src/frontend/apps/ui-catalog-consumer/vite.config.ts); ab5770d 2026-09-01 (documents/component_boundaries.md, documents/component_plans/06_shell_mfe.md, src/frontend/apps/ui-catalog/package.json, src/frontend/apps/ui-catalog-consumer/vite.config.ts)
 
-**Observação:** Os planos estão no primeiro commit, f843c7d. O plano lido em 76edc2f já descreve shell/ e React 18. O código entra em apps/ui-catalog e apps/ui-catalog-merchant em 284d0ce; consumer entra em ab5770d. A listagem não cria nem remove apps Copilot/Assistant.
+**Observation:** Plans in first commit f843c7d. Plan read in 76edc2f already describes shell/React 18. Code enters apps/ui-catalog and apps/ui-catalog-merchant in 284d0ce; consumer enters ab5770d. Listing creates/removes no Copilot/Assistant apps.
 
-**Interpretação:** Esclarecido: o plano precede os diretórios implementados, sem extração observável de quatro apps para três. Não comprova migração de React 18 para 19.
+**Interpretation:** Clarified: plan precedes implemented directories without observable extraction from four apps to three. Proves no React 18 to 19 migration.
 
 ### 48. 76edc2f 2026-08-29 (documents/component_plans/06_shell_mfe.md, src/frontend/apps/ui-catalog-merchant/src/App.jsx, src/frontend/apps/ui-catalog/remotes.json); 284d0ce 2026-08-31 (documents/component_plans/06_shell_mfe.md, src/frontend/apps/ui-catalog-merchant/src/App.jsx, src/frontend/apps/ui-catalog/remotes.json); ab5770d 2026-09-01 (documents/component_plans/06_shell_mfe.md, src/frontend/apps/ui-catalog-merchant/src/App.jsx, src/frontend/apps/ui-catalog/remotes.json)
 
-**Observação:** O plano de 76edc2f contém /vendor/products/*; o App.jsx inicial do merchant em 284d0ce já tem products e orders. remotes.json muda em ab5770d, mas a configuração JS antiga do shell não pôde ser lida.
+**Observation:** Plan in 76edc2f contains /vendor/products/*; initial merchant App.jsx in 284d0ce already has products/orders. remotes.json changes in ab5770d, but old shell JS configuration unreadable.
 
-**Interpretação:** Inconclusivo quanto às rotas passadas do host: não demonstra remoção de rotas vendor. As rotas merchant e consumer do snapshot estão definidas.
+**Interpretation:** Past host routes inconclusive: no demonstrated removal of vendor routes. Snapshot merchant/consumer routes defined.
 
 ### 49. f843c7d 2026-08-29 (documents/component_boundaries.md); 76edc2f 2026-08-29 (documents/component_boundaries.md)
 
-**Observação:** component_boundaries.md entra em f843c7d e muda em 76edc2f. A primeira versão não pôde ser lida e a listagem não registra arquivo explicitamente nomeado como event bus.
+**Observation:** component_boundaries.md enters in f843c7d/changes in 76edc2f. First version unreadable/listing records no file explicitly named event bus.
 
-**Interpretação:** Inconclusivo quanto a abandono ou conexão passada de um event bus embutido nas fontes substituídas; a ausência atual permanece definida.
+**Interpretation:** Abandonment/past connection of event bus embedded in replaced sources inconclusive; current absence defined.
 
 ### 50. 284d0ce 2026-08-31 (src/frontend/apps/ui-catalog-merchant/src/App.jsx, src/frontend/apps/ui-catalog-merchant/src/App.tsx); 22d7583 2026-08-31 (src/frontend/apps/ui-catalog-merchant/src/App.jsx, src/frontend/apps/ui-catalog-merchant/src/App.tsx)
 
-**Observação:** O App.jsx do merchant em 284d0ce monta três páginas sem chamadas a serviço nesse arquivo. Em 22d7583 JSX é removido e TSX adicionado; o conteúdo histórico das páginas não foi examinado integralmente.
+**Observation:** Merchant App.jsx in 284d0ce mounts three pages without service calls in file. In 22d7583 JSX removed/TSX added; historical page contents not fully examined.
 
-**Interpretação:** Inconclusivo quanto a chamadas HTTP passadas nas páginas; a relação de API ausente no snapshot não muda.
+**Interpretation:** Past page HTTP calls inconclusive; absent snapshot API relationship unchanged.
 
 ### 51. f843c7d 2026-08-29 (documents/component_boundaries.md, src/frontend/apps/ui-catalog-merchant/src/App.jsx); 284d0ce 2026-08-31 (documents/component_boundaries.md, src/frontend/apps/ui-catalog-merchant/src/App.jsx)
 
-**Observação:** Os planos estão em f843c7d, e a listagem não cria nem remove aplicação Copilot. O App.jsx inicial do merchant monta três páginas sem rota Copilot explícita.
+**Observation:** Plans in f843c7d/listing creates/removes no Copilot application. Initial merchant App.jsx mounts three pages without explicit Copilot route.
 
-**Interpretação:** Inconclusivo quanto a enriquecimento passado dentro de páginas; a ausência de unidade Copilot e endpoints no snapshot não muda.
+**Interpretation:** Past enrichment inside pages inconclusive; absent snapshot Copilot unit/endpoints unchanged.
 
 ### 52. f843c7d 2026-08-29 (documents/component_boundaries.md, src/frontend/apps/ui-catalog-consumer/src/pages/HomePage.tsx); ab5770d 2026-09-01 (documents/component_boundaries.md, src/frontend/apps/ui-catalog-consumer/src/pages/HomePage.tsx)
 
-**Observação:** O consumer entra em ab5770d e permanece sem alterações até o snapshot, com placeholder. O conteúdo histórico completo dos outros frontends não foi recuperado.
+**Observation:** Consumer enters in ab5770d, unchanged through snapshot with placeholder. Complete historical contents of other frontends not recovered.
 
-**Interpretação:** Inconclusivo quanto a streaming passado em outros frontends; o consumer atual não decorre de uma remoção posterior dentro dessa unidade.
+**Interpretation:** Past streaming in other frontends inconclusive; current consumer does not result from later removal inside unit.
 
 ### 53. f843c7d 2026-08-29 (documents/component_boundaries.md, src/frontend/apps/ui-catalog-consumer/src/pages/HomePage.tsx); ab5770d 2026-09-01 (documents/component_boundaries.md, src/frontend/apps/ui-catalog-consumer/src/pages/HomePage.tsx)
 
-**Observação:** A listagem não cria nem remove aplicação Assistant; o consumer entra em ab5770d e permanece sem o widget.
+**Observation:** Listing creates/removes no Assistant application; consumer enters in ab5770d, remains without widget.
 
-**Interpretação:** Inconclusivo quanto à independência histórica de um widget não recuperado. A ausência da unidade no snapshot permanece definida.
+**Interpretation:** Historical independence of unrecovered widget inconclusive. Snapshot unit absence defined.
 
 ### 54. 76edc2f 2026-08-29 (documents/component_plans/06_shell_mfe.md, src/frontend/apps/ui-catalog/src/App.tsx); 22d7583 2026-08-31 (documents/component_plans/06_shell_mfe.md, src/frontend/apps/ui-catalog/src/App.tsx)
 
-**Observação:** ProtectedRoute.tsx já é anunciado no plano lido de 76edc2f. A listagem não adiciona nem remove arquivo desse nome; fontes anteriores do shell não foram integralmente lidas.
+**Observation:** ProtectedRoute.tsx already announced in plan read in 76edc2f. Listing neither adds/removes file with this name; earlier shell sources not fully read.
 
-**Interpretação:** Inconclusivo quanto a guards embutidos nas fontes antigas. O histórico não comprova abandono e não altera as rotas atuais sem guards.
+**Interpretation:** Guards embedded in old sources inconclusive. History proves no abandonment/does not alter current unguarded routes.
 
 ### 55. f843c7d 2026-08-29 (documents/component_plans/09_catalog_assistant_mfe.md, src/frontend/apps/ui-catalog-consumer/src/pages/HomePage.tsx); ab5770d 2026-09-01 (documents/component_plans/09_catalog_assistant_mfe.md, src/frontend/apps/ui-catalog-consumer/src/pages/HomePage.tsx)
 
-**Observação:** Não há aplicação Assistant na listagem histórica. O consumer surge em ab5770d e permanece como no snapshot, sem widget recuperado para avaliar execução isolada.
+**Observation:** No Assistant application in historical listing. Consumer appears in ab5770d/remains as snapshot without recovered widget for assessing isolated execution.
 
-**Interpretação:** Inconclusivo quanto à execução standalone histórica do widget ausente; é uma pergunta distinta da independência em relação aos MFEs vendor.
+**Interpretation:** Historical standalone execution of absent widget inconclusive; distinct question from independence relative to vendor MFEs.
 
 ### 56. f843c7d 2026-08-29 (documents/implementation_plan.md, docker/init-scripts/01-init-databases.sql, src/frontend/apps/ui-catalog/Dockerfile); 804ea7a 2026-08-30 (documents/implementation_plan.md, docker/init-scripts/01-init-databases.sql, src/frontend/apps/ui-catalog/Dockerfile); ab5770d 2026-09-01 (documents/implementation_plan.md, docker/init-scripts/01-init-databases.sql, src/frontend/apps/ui-catalog/Dockerfile)
 
-**Observação:** A listagem completa com --no-renames não registra arquivo Compose nos dez commits. docker/ recebe apenas SQL em 804ea7a; os Dockerfiles entram em ab5770d.
+**Observation:** Complete --no-renames listing records no Compose file across ten commits. docker/ receives only SQL in 804ea7a; Dockerfiles enter in ab5770d.
 
-**Interpretação:** Esclarecido: não há Compose removido no histórico versionado consultado. Não demonstra ausência de execução externa nem intenção futura.
+**Interpretation:** Clarified: no removed Compose in consulted versioned history. Does not demonstrate absent external execution/future intent.
 
 ### 57. f843c7d 2026-08-29 (documents/implementation_plan.md, src/frontend/apps/ui-catalog/package.json); 804ea7a 2026-08-30 (documents/implementation_plan.md, src/frontend/apps/ui-catalog/package.json); ab5770d 2026-09-01 (documents/implementation_plan.md, src/frontend/apps/ui-catalog/package.json)
 
-**Observação:** O plano de implementação existe desde f843c7d e muda em 76edc2f e 804ea7a, antes dos manifestos frontend posteriores. O package.json inicial do shell não pôde ser lido.
+**Observation:** Implementation plan exists since f843c7d/changes in 76edc2f and 804ea7a before later frontend manifests. Initial shell package.json unreadable.
 
-**Interpretação:** Inconclusivo quanto a Single-SPA como alternativa planejada ou configuração anterior. O snapshot só demonstra Module Federation.
+**Interpretation:** Single-SPA as planned alternative/earlier configuration inconclusive. Snapshot demonstrates only Module Federation.
 
 ### 58. f843c7d 2026-08-29 (documents/sequence_diagrams.md, src/frontend/apps/ui-catalog-merchant/src/App.jsx); 284d0ce 2026-08-31 (documents/sequence_diagrams.md, src/frontend/apps/ui-catalog-merchant/src/App.jsx)
 
-**Observação:** sequence_diagrams.md entra em f843c7d e não muda. O App.jsx inicial do merchant não mostra SignalR/polling, mas não permite examinar as páginas históricas.
+**Observation:** sequence_diagrams.md enters in f843c7d/unchanged. Initial merchant App.jsx shows no SignalR/polling but does not allow examining historical pages.
 
-**Interpretação:** Inconclusivo quanto a uso ou abandono histórico de SignalR/polling. A anterioridade do diagrama não demonstra implementação e não altera a ausência atual.
+**Interpretation:** Past usage/abandonment of SignalR/polling inconclusive. Diagram precedence demonstrates no implementation/does not alter current absence.
 
 ### 59. ab5770d 2026-09-01 (documents/typed_api_client_generation_plan.md, src/frontend/apps/ui-catalog-consumer/vite.config.ts)
 
-**Observação:** O plano de clientes Next.js entra em ab5770d junto com o consumer Vite; as outras duas configurações Vite já existiam. Depois, 1982e0f só adiciona Agents.md.
+**Observation:** Next.js client plan enters in ab5770d with Vite consumer; other two Vite configurations already existed. Afterward 1982e0f only adds Agents.md.
 
-**Interpretação:** Esclarecido: a referência a Next.js já nasce junto do conjunto Vite, sem estágio Next.js anterior visível. A origem e a intenção do texto não são demonstradas.
+**Interpretation:** Clarified: Next.js reference originates alongside Vite group without visible earlier Next.js stage. Text origin/intent undemonstrated.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.2 (src/frontend/apps/ui-catalog-consumer/package.json:13) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #4 |
-| 2 | 3.4.2 (src/frontend/apps/ui-catalog-merchant/package.json:13) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #5 |
-| 3 | 3.4.2 (src/frontend/apps/ui-catalog/package.json:13) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #6 |
-| 4 | 3.4.2 (src/frontend/apps/ui-catalog-consumer/package.json:13, Evidência); 3.4.3 (src/frontend/apps/ui-catalog-consumer, Marcadores e Build); 3.4.4 (src/frontend/apps/ui-catalog/vite.config.ts:37, Observação); 3.4.5 #1 (Configuração); 3.4.6 #2 (Artefatos); 3.4.7 #7, #9 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #13; configura #15 |
-| 5 | 3.4.2 (src/frontend/apps/ui-catalog-merchant/package.json:13, Evidência); 3.4.3 (src/frontend/apps/ui-catalog-merchant, Marcadores e Build); 3.4.4 (src/frontend/apps/ui-catalog/vite.config.ts:37, Observação); 3.4.5 #1, #2 (Configuração); 3.4.6 #3 (Artefatos); 3.4.7 #6, #9 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #14; configura #16 |
-| 6 | 3.4.2 (src/frontend/apps/ui-catalog/package.json:13, Evidência); 3.4.3 (src/frontend/apps/ui-catalog, Marcadores e Build); 3.4.4 (src/frontend/apps/ui-catalog/vite.config.ts:37 e src/frontend/apps/ui-catalog/remotes.json:3, Observação); 3.4.5 #1, #2 (Configuração); 3.4.6 #1 (Artefatos); 3.4.7 #8, #9 (Evidência) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #8; configura #12; configura #15; configura #16 |
-| 7 | 3.4.4 (src/frontend/apps/ui-catalog/remotes.json:3, Arquivo:linha e Observação); 3.4.5 #1, #2 (Configuração); 3.4.6 #2, #3 (Onde é servida); 3.4.7 #6, #7, #8, #11 (Evidência) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #8; configura #9; configura #10; configura #15; configura #16 |
-| 8 | 3.4.4 (src/frontend/apps/ui-catalog/vite.config.ts:37) | 3 código | configuração | module-federation | arquitetural | moderada | implementa #15; implementa #16 |
-| 9 | 3.4.4 (src/frontend/apps/ui-catalog/remotes.json:3) | 3 código | configuração | module-federation | arquitetural | forte | implementa #15; implementa #16 |
-| 10 | 3.4.4 (src/frontend/apps/ui-catalog/src/App.tsx:26) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #15; implementa #16 |
-| 11 | 3.4.3 (src/frontend) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 12 | 3.4.3 (src/frontend/apps/ui-catalog) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 13 | 3.4.3 (src/frontend/apps/ui-catalog-consumer) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 14 | 3.4.3 (src/frontend/apps/ui-catalog-merchant) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 15 | 3.4.5 #1 | 5 composição | configuração | module-federation | arquitetural | forte | liga #12; liga #13 |
-| 16 | 3.4.5 #2 | 5 composição | configuração | module-federation | arquitetural | forte | liga #12; liga #14 |
-| 17 | 3.4.6 #1 | 6 build-deploy | deploy | — | arquitetural | moderada | publica #12 |
-| 18 | 3.4.6 #2 | 6 build-deploy | deploy | — | arquitetural | moderada | publica #13 |
-| 19 | 3.4.6 #3 | 6 build-deploy | deploy | — | arquitetural | moderada | publica #14 |
-| 20 | 3.4.7 #1 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #12; corrobora #13; corrobora #14; corrobora #15; corrobora #16 |
-| 21 | 3.4.7 #2 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #11 |
-| 22 | 3.4.7 #3 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #12; corrobora #13; corrobora #14; corrobora #15; corrobora #16 |
-| 23 | 3.4.7 #4 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #10; corrobora #15; corrobora #16 |
-| 24 | 3.4.7 #5 | 7 documentação | documentação | — | arquitetural | fraca | contradiz src/frontend/apps/ui-catalog/src/main.tsx:7-13; contradiz src/frontend/apps/ui-catalog/src/App.tsx:9-34 |
-| 25 | 3.4.7 #6 | 7 documentação | documentação | module-federation | arquitetural | fraca | contradiz #5 |
-| 26 | 3.4.7 #7 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #4; corrobora #7; corrobora #15 |
-| 27 | 3.4.7 #8 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #6; corrobora #7; corrobora #8 |
-| 28 | 3.4.7 #9 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora em parte #4; corrobora em parte #5; corrobora em parte #6 |
-| 29 | 3.4.7 #10 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #12; contradiz #13; contradiz #14; contradiz src/frontend/apps/ui-catalog/package.json:16 |
-| 30 | 3.4.7 #11 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #7; contradiz #10 |
-| 31 | 3.4.7 #12 | 7 documentação | documentação | — | arquitetural | fraca | contradiz src/frontend/apps/ui-catalog/src/App.tsx:9-34; contradiz src/frontend/apps/ui-catalog/src/main.tsx:7-13 |
-| 32 | 3.4.7 #13 | 7 documentação | documentação | — | contexto | fraca | contradiz src/frontend/apps/ui-catalog-merchant/src/pages/MerchantProducts.tsx:3-13; contradiz src/backend/Catalog.Gateway/Catalog.Gateway.API/Controllers/WeatherForecastController.cs:5-15 |
-| 33 | 3.4.7 #14 | 7 documentação | documentação | — | contexto | fraca | contradiz src/frontend/apps/ui-catalog-merchant/src/App.tsx:7-15; contradiz src/backend/Catalog.Gateway/Catalog.Gateway.API/Controllers/WeatherForecastController.cs:5-15 |
-| 34 | 3.4.7 #15 | 7 documentação | documentação | — | contexto | fraca | contradiz src/frontend/apps/ui-catalog-consumer/src/pages/HomePage.tsx:1-3; contradiz src/backend/Catalog.Gateway/Catalog.Gateway.API/Controllers/WeatherForecastController.cs:5-15 |
-| 35 | 3.4.7 #16 | 7 documentação | documentação | — | arquitetural | fraca | — |
-| 36 | 3.4.7 #17 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #12; contradiz #13; contradiz #14 |
-| 37 | 3.4.7 #18 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #10 |
-| 38 | 3.4.7 #19 | 7 documentação | documentação | — | arquitetural | fraca | — |
-| 39 | 3.4.7 #20 | 7 documentação | documentação | — | arquitetural | fraca | — |
-| 40 | 3.4.7 #21 | 7 documentação | documentação | module-federation, single-spa | tecnológica | fraca | contradiz #1; contradiz #2; contradiz #3; contradiz src/frontend/apps/ui-catalog/package.json:12-31 |
-| 41 | 3.4.7 #22 | 7 documentação | documentação | — | contexto | fraca | contradiz src/frontend/apps/ui-catalog-merchant/src/App.tsx:7-15; contradiz src/backend/Catalog.App/Catalog.App.Api/Startup.cs:14-44 |
-| 42 | 3.4.7 #23 | 7 documentação | documentação | — | tecnológica | fraca | contradiz src/frontend/apps/ui-catalog/package.json:12-31; contradiz src/frontend/apps/ui-catalog-consumer/package.json:12-31; contradiz src/frontend/apps/ui-catalog-merchant/package.json:12-31 |
-| 43 | 3.4.8 #1 | 8 histórico | histórico | — | arquitetural | fraca | explica #21 |
-| 44 | 3.4.8 #2 | 8 histórico | histórico | — | arquitetural | fraca | explica #24 |
-| 45 | 3.4.8 #3 | 8 histórico | histórico | — | arquitetural | fraca | explica #25; explica #5; explica #16 |
-| 46 | 3.4.8 #4 | 8 histórico | histórico | — | tecnológica | fraca | explica #28; explica #4; explica #5; explica #6 |
-| 47 | 3.4.8 #5 | 8 histórico | histórico | — | arquitetural | fraca | explica #29; explica #36; explica #12; explica #13; explica #14 |
-| 48 | 3.4.8 #6 | 8 histórico | histórico | — | arquitetural | fraca | explica #30; explica #7; explica #10 |
-| 49 | 3.4.8 #7 | 8 histórico | histórico | — | arquitetural | fraca | explica #31 |
-| 50 | 3.4.8 #8 | 8 histórico | histórico | — | contexto | fraca | explica #32 |
-| 51 | 3.4.8 #9 | 8 histórico | histórico | — | contexto | fraca | explica #33 |
-| 52 | 3.4.8 #10 | 8 histórico | histórico | — | contexto | fraca | explica #34 |
-| 53 | 3.4.8 #11 | 8 histórico | histórico | — | arquitetural | fraca | explica #35 |
-| 54 | 3.4.8 #12 | 8 histórico | histórico | — | arquitetural | fraca | explica #37 |
-| 55 | 3.4.8 #13 | 8 histórico | histórico | — | arquitetural | fraca | explica #38 |
-| 56 | 3.4.8 #14 | 8 histórico | histórico | — | arquitetural | fraca | explica #39; explica #17; explica #18; explica #19 |
-| 57 | 3.4.8 #15 | 8 histórico | histórico | — | tecnológica | fraca | explica #40 |
-| 58 | 3.4.8 #16 | 8 histórico | histórico | — | contexto | fraca | explica #41 |
-| 59 | 3.4.8 #17 | 8 histórico | histórico | — | tecnológica | fraca | explica #42 |
+| 1 | 3.4.2 (src/frontend/apps/ui-catalog-consumer/package.json:13) | 1 technology | manifest | module-federation | technological | weak | declares #4 |
+| 2 | 3.4.2 (src/frontend/apps/ui-catalog-merchant/package.json:13) | 1 technology | manifest | module-federation | technological | weak | declares #5 |
+| 3 | 3.4.2 (src/frontend/apps/ui-catalog/package.json:13) | 1 technology | manifest | module-federation | technological | weak | declares #6 |
+| 4 | 3.4.2 (src/frontend/apps/ui-catalog-consumer/package.json:13, Evidence); 3.4.3 (src/frontend/apps/ui-catalog-consumer, Markers and Build); 3.4.4 (src/frontend/apps/ui-catalog/vite.config.ts:37, Observation); 3.4.5 #1 (Configuration); 3.4.6 #2 (Artifacts); 3.4.7 #7, #9 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #13; configures #15 |
+| 5 | 3.4.2 (src/frontend/apps/ui-catalog-merchant/package.json:13, Evidence); 3.4.3 (src/frontend/apps/ui-catalog-merchant, Markers and Build); 3.4.4 (src/frontend/apps/ui-catalog/vite.config.ts:37, Observation); 3.4.5 #1, #2 (Configuration); 3.4.6 #3 (Artifacts); 3.4.7 #6, #9 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #14; configures #16 |
+| 6 | 3.4.2 (src/frontend/apps/ui-catalog/package.json:13, Evidence); 3.4.3 (src/frontend/apps/ui-catalog, Markers and Build); 3.4.4 (src/frontend/apps/ui-catalog/vite.config.ts:37 and src/frontend/apps/ui-catalog/remotes.json:3, Observation); 3.4.5 #1, #2 (Configuration); 3.4.6 #1 (Artifacts); 3.4.7 #8, #9 (Evidence) | 2 configuration | configuration | module-federation | architectural | strong | configures #8; configures #12; configures #15; configures #16 |
+| 7 | 3.4.4 (src/frontend/apps/ui-catalog/remotes.json:3, File:line and Observation); 3.4.5 #1, #2 (Configuration); 3.4.6 #2, #3 (Where served); 3.4.7 #6, #7, #8, #11 (Evidence) | 2 configuration | configuration | module-federation | architectural | strong | configures #8; configures #9; configures #10; configures #15; configures #16 |
+| 8 | 3.4.4 (src/frontend/apps/ui-catalog/vite.config.ts:37) | 3 code | configuration | module-federation | architectural | moderate | implements #15; implements #16 |
+| 9 | 3.4.4 (src/frontend/apps/ui-catalog/remotes.json:3) | 3 code | configuration | module-federation | architectural | strong | implements #15; implements #16 |
+| 10 | 3.4.4 (src/frontend/apps/ui-catalog/src/App.tsx:26) | 3 code | source code | module-federation | architectural | strong | implements #15; implements #16 |
+| 11 | 3.4.3 (src/frontend) | 4 structure | directory | — | context | weak | — |
+| 12 | 3.4.3 (src/frontend/apps/ui-catalog) | 4 structure | directory | — | architectural | moderate | — |
+| 13 | 3.4.3 (src/frontend/apps/ui-catalog-consumer) | 4 structure | directory | — | architectural | moderate | — |
+| 14 | 3.4.3 (src/frontend/apps/ui-catalog-merchant) | 4 structure | directory | — | architectural | moderate | — |
+| 15 | 3.4.5 #1 | 5 composition | configuration | module-federation | architectural | strong | links #12; links #13 |
+| 16 | 3.4.5 #2 | 5 composition | configuration | module-federation | architectural | strong | links #12; links #14 |
+| 17 | 3.4.6 #1 | 6 build-deploy | deploy | — | architectural | moderate | publishes #12 |
+| 18 | 3.4.6 #2 | 6 build-deploy | deploy | — | architectural | moderate | publishes #13 |
+| 19 | 3.4.6 #3 | 6 build-deploy | deploy | — | architectural | moderate | publishes #14 |
+| 20 | 3.4.7 #1 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #12; corroborates #13; corroborates #14; corroborates #15; corroborates #16 |
+| 21 | 3.4.7 #2 | 7 documentation | documentation | — | architectural | weak | contradicts #11 |
+| 22 | 3.4.7 #3 | 7 documentation | documentation | — | architectural | weak | corroborates #12; corroborates #13; corroborates #14; corroborates #15; corroborates #16 |
+| 23 | 3.4.7 #4 | 7 documentation | documentation | — | architectural | weak | corroborates #10; corroborates #15; corroborates #16 |
+| 24 | 3.4.7 #5 | 7 documentation | documentation | — | architectural | weak | contradicts src/frontend/apps/ui-catalog/src/main.tsx:7-13; contradicts src/frontend/apps/ui-catalog/src/App.tsx:9-34 |
+| 25 | 3.4.7 #6 | 7 documentation | documentation | module-federation | architectural | weak | contradicts #5 |
+| 26 | 3.4.7 #7 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #4; corroborates #7; corroborates #15 |
+| 27 | 3.4.7 #8 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #6; corroborates #7; corroborates #8 |
+| 28 | 3.4.7 #9 | 7 documentation | documentation | module-federation | architectural | weak | partially corroborates #4; partially corroborates #5; partially corroborates #6 |
+| 29 | 3.4.7 #10 | 7 documentation | documentation | — | architectural | weak | contradicts #12; contradicts #13; contradicts #14; contradicts src/frontend/apps/ui-catalog/package.json:16 |
+| 30 | 3.4.7 #11 | 7 documentation | documentation | — | architectural | weak | contradicts #7; contradicts #10 |
+| 31 | 3.4.7 #12 | 7 documentation | documentation | — | architectural | weak | contradicts src/frontend/apps/ui-catalog/src/App.tsx:9-34; contradicts src/frontend/apps/ui-catalog/src/main.tsx:7-13 |
+| 32 | 3.4.7 #13 | 7 documentation | documentation | — | context | weak | contradicts src/frontend/apps/ui-catalog-merchant/src/pages/MerchantProducts.tsx:3-13; contradicts src/backend/Catalog.Gateway/Catalog.Gateway.API/Controllers/WeatherForecastController.cs:5-15 |
+| 33 | 3.4.7 #14 | 7 documentation | documentation | — | context | weak | contradicts src/frontend/apps/ui-catalog-merchant/src/App.tsx:7-15; contradicts src/backend/Catalog.Gateway/Catalog.Gateway.API/Controllers/WeatherForecastController.cs:5-15 |
+| 34 | 3.4.7 #15 | 7 documentation | documentation | — | context | weak | contradicts src/frontend/apps/ui-catalog-consumer/src/pages/HomePage.tsx:1-3; contradicts src/backend/Catalog.Gateway/Catalog.Gateway.API/Controllers/WeatherForecastController.cs:5-15 |
+| 35 | 3.4.7 #16 | 7 documentation | documentation | — | architectural | weak | — |
+| 36 | 3.4.7 #17 | 7 documentation | documentation | — | architectural | weak | contradicts #12; contradicts #13; contradicts #14 |
+| 37 | 3.4.7 #18 | 7 documentation | documentation | — | architectural | weak | contradicts #10 |
+| 38 | 3.4.7 #19 | 7 documentation | documentation | — | architectural | weak | — |
+| 39 | 3.4.7 #20 | 7 documentation | documentation | — | architectural | weak | — |
+| 40 | 3.4.7 #21 | 7 documentation | documentation | module-federation, single-spa | technological | weak | contradicts #1; contradicts #2; contradicts #3; contradicts src/frontend/apps/ui-catalog/package.json:12-31 |
+| 41 | 3.4.7 #22 | 7 documentation | documentation | — | context | weak | contradicts src/frontend/apps/ui-catalog-merchant/src/App.tsx:7-15; contradicts src/backend/Catalog.App/Catalog.App.Api/Startup.cs:14-44 |
+| 42 | 3.4.7 #23 | 7 documentation | documentation | — | technological | weak | contradicts src/frontend/apps/ui-catalog/package.json:12-31; contradicts src/frontend/apps/ui-catalog-consumer/package.json:12-31; contradicts src/frontend/apps/ui-catalog-merchant/package.json:12-31 |
+| 43 | 3.4.8 #1 | 8 history | history | — | architectural | weak | explains #21 |
+| 44 | 3.4.8 #2 | 8 history | history | — | architectural | weak | explains #24 |
+| 45 | 3.4.8 #3 | 8 history | history | — | architectural | weak | explains #25; explains #5; explains #16 |
+| 46 | 3.4.8 #4 | 8 history | history | — | technological | weak | explains #28; explains #4; explains #5; explains #6 |
+| 47 | 3.4.8 #5 | 8 history | history | — | architectural | weak | explains #29; explains #36; explains #12; explains #13; explains #14 |
+| 48 | 3.4.8 #6 | 8 history | history | — | architectural | weak | explains #30; explains #7; explains #10 |
+| 49 | 3.4.8 #7 | 8 history | history | — | architectural | weak | explains #31 |
+| 50 | 3.4.8 #8 | 8 history | history | — | context | weak | explains #32 |
+| 51 | 3.4.8 #9 | 8 history | history | — | context | weak | explains #33 |
+| 52 | 3.4.8 #10 | 8 history | history | — | context | weak | explains #34 |
+| 53 | 3.4.8 #11 | 8 history | history | — | architectural | weak | explains #35 |
+| 54 | 3.4.8 #12 | 8 history | history | — | architectural | weak | explains #37 |
+| 55 | 3.4.8 #13 | 8 history | history | — | architectural | weak | explains #38 |
+| 56 | 3.4.8 #14 | 8 history | history | — | architectural | weak | explains #39; explains #17; explains #18; explains #19 |
+| 57 | 3.4.8 #15 | 8 history | history | — | technological | weak | explains #40 |
+| 58 | 3.4.8 #16 | 8 history | history | — | context | weak | explains #41 |
+| 59 | 3.4.8 #17 | 8 history | history | — | technological | weak | explains #42 |
 
-## Resumo
+## Summary
 
-Observações: 59. Dimensões (tecnologia: 3, configuração: 4, código: 3, estrutura: 4, composição: 2, build-deploy: 3, documentação: 23, histórico: 17). Força (forte: 6, moderada: 9, fraca: 44, ambígua: 0). Evidência (tecnológica: 10, arquitetural: 40, contexto: 9).
+Observations: 59. Dimensions (technology: 3, configuration: 4, code: 3, structure: 4, composition: 2, build-deploy: 3, documentation: 23, history: 17). Strength (strong: 6, moderate: 9, weak: 44, ambiguous: 0). Evidence (technological: 10, architectural: 40, context: 9).

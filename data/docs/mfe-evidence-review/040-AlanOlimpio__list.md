@@ -19,118 +19,119 @@ annotation:
 
 # 040 — AlanOlimpio/list
 
-## Leitura do repositório
+## Repository overview
 
-O snapshot tem uma única aplicação, que é ao mesmo tempo remote e consumidora num sistema distribuído em vários repositórios. Ela usa o Module Federation nativo do webpack 5, sem dependência própria a observar.
+Snapshot has one application, simultaneously remote/consumer in multi-repository distributed system. Uses webpack 5 native Module Federation without own dependency to observe.
 
-Uma só configuração concentra os dois papéis (#1):
-- **Remote:** expõe as próprias rotas.
-- **Consumidora:** declara o remote `RegisterApp` num domínio Vercel.
+One configuration concentrates both roles (#1):
+- **Remote:** exposes own routes.
+- **Consumer:** declares remote `RegisterApp` at Vercel domain.
 
-O código importa o modal do remote pelo nome (#2) e o liga a uma rota (#4, #5). Isso resulta na única relação, ativa, com destino fora do snapshot (#8).
+Code imports remote modal by name (#2), linking to route (#4, #5). Produces sole active external-target relationship (#8).
 
-O papel de remote não tem consumidor no snapshot e não vira relação, mas a documentação o confirma como propósito da aplicação (#13).
+Remote role has no snapshot consumer/relationship but documentation confirms application purpose (#13).
 
-A estrutura, sozinha, mostra uma única unidade (#6). O deploy é separado e configurado no próprio repositório (#9). O conjunto só se revela como MFE pela configuração e pelo código.
+Structure alone shows one unit (#6). Deployment separate/configured in repository itself (#9). Collective MFE organization revealed only through configuration/code.
 
-## Observações
+## Observations
 
 ### 1. webpack.config.js:1-74
 
-**Observação:** `ModuleFederationPlugin` declara `name: 'ListApp'` e `filename: 'remoteEntry.js'`, expõe `./ListRoutes` (`./src/components/ListRoutes`) e declara o remote `RegisterApp@https://register-navy-ten.vercel.app/remoteEntry.js`. Compartilha `react` e `react-dom` como singletons `eager`, e `react-router-dom` como singleton. A saída usa `publicPath: 'auto'`.
+**Observation:** `ModuleFederationPlugin` declares `name: 'ListApp'` and `filename: 'remoteEntry.js'`, exposing `./ListRoutes` (`./src/components/ListRoutes`), declaring remote `RegisterApp@https://register-navy-ten.vercel.app/remoteEntry.js`. Shares `react` and `react-dom` as `eager` singletons, `react-router-dom` singleton. Output uses `publicPath: 'auto'`.
 
-**Interpretação:** A configuração declara a aplicação como remote e como consumidora de um remote externo publicado.
+**Interpretation:** Configuration declares application as remote/consumer of published external remote.
 
 ### 2. src/components/ListRoutes/ListRoutes.js:5
 
-**Observação:** `const ModalRegister = React.lazy(() => import('RegisterApp/ModalRegister'))`.
+**Observation:** `const ModalRegister = React.lazy(() => import('RegisterApp/ModalRegister'))`.
 
-**Interpretação:** A aplicação importa sob demanda o componente exposto pelo remote, pelo nome dele.
+**Interpretation:** Application imports remote-exposed component on demand by name.
 
 ### 3. src/index.js:1
 
-**Observação:** `import('./bootstrap')`.
+**Observation:** `import('./bootstrap')`.
 
-**Interpretação:** É um bootstrap assíncrono interno à unidade.
+**Interpretation:** Asynchronous bootstrap internal to unit.
 
 ### 4. src/components/ListRoutes/ListRoutes.js:9-13
 
-**Observação:** `Routes` declara a rota `/` com o layout `List` e, dentro dela, a rota `register` com `ModalRegister`.
+**Observation:** `Routes` declares `/` route with layout `List`, nested `register` route with `ModalRegister`.
 
-**Interpretação:** O roteamento declara onde o componente remoto aparece.
+**Interpretation:** Routing declares remote component placement.
 
 ### 5. src/components/ListRoutes/ListRoutes.js:11; src/components/ListRoutes/ListRoutes.js:5; src/components/List/List.js:82-84
 
-**Observação:** O `element` da rota `register` renderiza `ModalRegister`, encaixado no `Outlet` do layout `List`.
+**Observation:** The `element` of route `register` renders `ModalRegister`, nested in `Outlet` of layout `List`.
 
-**Interpretação:** A rota liga o caminho `register` ao componente remoto, renderizado dentro do próprio layout.
+**Interpretation:** Route links path `register` to remote component rendered within own layout.
 
 ### 6. .; package.json:1-11; webpack.config.js:4-11; src/index.js:1; src/bootstrap.js:7-15; vercel.json:5-11
 
-**Observação:** É uma aplicação React na raiz, com manifesto, entrada, build webpack e configuração de hospedagem próprios.
+**Observation:** Root React application with own manifest, entry, webpack build and hosting configuration.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with own boundary.
 
 ### 7. public; public/index.html
 
-**Observação:** É a pasta do template HTML da aplicação da raiz.
+**Observation:** Root application HTML template folder.
 
-**Interpretação:** É parte da aplicação da raiz, e não outra unidade.
+**Interpretation:** Part of root application rather than another unit.
 
 ### 8. src/components/ListRoutes/ListRoutes.js:5-12; webpack.config.js:52-55
 
-**Observação:** A aplicação importa `RegisterApp/ModalRegister` e o renderiza na rota `/register`. O remote é identificado pelo nome e pela URL na Vercel, e não está no snapshot.
+**Observation:** Application imports `RegisterApp/ModalRegister`, rendering at `/register`. Remote identified by name/Vercel URL, absent from snapshot.
 
-**Interpretação:** É uma relação host → remote ativa com destino externo.
+**Interpretation:** Active host → remote relationship with external target.
 
 ### 9. webpack.config.js:4-11; package.json:9; vercel.json:2-11
 
-**Observação:** Tem `webpack --mode production` com saída em `dist`. O `vercel.json` usa `@vercel/static-build`, publica `dist` e reescreve as rotas para `/`.
+**Observation:** `webpack --mode production` outputs to `dist`. `vercel.json` uses `@vercel/static-build`, publishes `dist`, rewriting routes to `/`.
 
-**Interpretação:** Há fronteiras de build e de deploy próprias, sem versionamento independente.
+**Interpretation:** Own build/deployment boundaries without independent versioning.
 
 ### 10. README.md:11
 
-**Observação:** "Esse aplicativo é uma SPA."
+**Observation:** "Esse aplicativo é uma SPA." English translation: "This application is a SPA."
 
-**Interpretação:** Descreve a aplicação como SPA. A afirmação é corroborada.
+**Interpretation:** Describes application as SPA. Claim corroborated.
 
 ### 11. README.md:15
 
-**Observação:** "aplicação webpack module federation".
+**Observation:** "aplicação webpack module federation". English translation: "webpack module federation application".
 
-**Interpretação:** Afirma o uso de Module Federation. A afirmação é corroborada.
+**Interpretation:** Claims Module Federation use. Claim corroborated.
 
 ### 12. README.md:31
 
-**Observação:** "Micro front end `list`".
+**Observation:** "Micro front end `list`".
 
-**Interpretação:** Apresenta a aplicação como um micro-frontend. A afirmação é corroborada.
+**Interpretation:** Presents application as micro-frontend. Claim corroborated.
 
 ### 13. package.json:4
 
-**Observação:** "Criando o app List para ser usado no Module Federation".
+**Observation:** "Criando o app List para ser usado no Module Federation". English translation: "Creating List app for Module Federation use".
 
-**Interpretação:** Afirma que a aplicação foi feita para ser consumida por federação. A afirmação é corroborada.
+**Interpretation:** Claims application made for federated consumption. Claim corroborated.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.3 (., Marcadores, Entrada e Build); 3.4.5 #1 (Configuração); 3.4.6 #1 (Artefatos); 3.4.7 #2, #3, #4 (Evidência) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #6; configura #8 |
-| 2 | 3.4.4 (src/components/ListRoutes/ListRoutes.js:5) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #8 |
-| 3 | 3.4.4 (src/index.js:1) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 4 | 3.4.4 (src/components/ListRoutes/ListRoutes.js:9) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #8 |
-| 5 | 3.4.4 (src/components/ListRoutes/ListRoutes.js:11) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #8 |
-| 6 | 3.4.3 (.) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 7 | 3.4.3 (public) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 8 | 3.4.5 #1 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #6 |
-| 9 | 3.4.6 #1 | 6 build-deploy | deploy | — | arquitetural | moderada | publica #6 |
-| 10 | 3.4.7 #1 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #6; corrobora vercel.json:2-4 |
-| 11 | 3.4.7 #2 | 7 documentação | documentação | module-federation | tecnológica | fraca | corrobora #1; corrobora #8 |
-| 12 | 3.4.7 #3 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #1; corrobora #8 |
-| 13 | 3.4.7 #4 | 7 documentação | comentário | module-federation | arquitetural | fraca | corrobora #1 |
+| 1 | 3.4.3 (., Markers, Entry and Build); 3.4.5 #1 (Configuration); 3.4.6 #1 (Artifacts); 3.4.7 #2, #3, #4 (Evidence) | 2 configuration | configuration | module-federation | architectural | strong | configures #6; configures #8 |
+| 2 | 3.4.4 (src/components/ListRoutes/ListRoutes.js:5) | 3 code | source code | module-federation | architectural | strong | implements #8 |
+| 3 | 3.4.4 (src/index.js:1) | 3 code | source code | — | technological | weak | — |
+| 4 | 3.4.4 (src/components/ListRoutes/ListRoutes.js:9) | 3 code | source code | module-federation | architectural | strong | implements #8 |
+| 5 | 3.4.4 (src/components/ListRoutes/ListRoutes.js:11) | 3 code | source code | module-federation | architectural | strong | implements #8 |
+| 6 | 3.4.3 (.) | 4 structure | directory | — | architectural | moderate | — |
+| 7 | 3.4.3 (public) | 4 structure | directory | — | context | weak | — |
+| 8 | 3.4.5 #1 | 5 composition | source code | module-federation | architectural | strong | links #6 |
+| 9 | 3.4.6 #1 | 6 build-deploy | deploy | — | architectural | moderate | publishes #6 |
+| 10 | 3.4.7 #1 | 7 documentation | documentation | — | architectural | weak | corroborates #6; corroborates vercel.json:2-4 |
+| 11 | 3.4.7 #2 | 7 documentation | documentation | module-federation | technological | weak | corroborates #1; corroborates #8 |
+| 12 | 3.4.7 #3 | 7 documentation | documentation | — | architectural | weak | corroborates #1; corroborates #8 |
+| 13 | 3.4.7 #4 | 7 documentation | comment | module-federation | architectural | weak | corroborates #1 |
 
-## Resumo
+## Summary
 
-Observações: 13. Dimensões (tecnologia: 0, configuração: 1, código: 4, estrutura: 2, composição: 1, build-deploy: 1, documentação: 4, histórico: 0). Força (forte: 5, moderada: 2, fraca: 6, ambígua: 0). Evidência (tecnológica: 2, arquitetural: 10, contexto: 1).
+Observations: 13. Dimensions (technology: 0, configuration: 1, code: 4, structure: 2, composition: 1, build-deploy: 1, documentation: 4, history: 0). Strength (strong: 5, moderate: 2, weak: 6, ambiguous: 0). Evidence (technological: 2, architectural: 10, context: 1).
+

@@ -20,73 +20,73 @@ annotation:
 
 # 263 — seygorin/chat-gpt-clone
 
-## Contexto
+## Context
 
-Clone do ChatGPT em Angular 20, com chat via Gemini, autenticação e persistência no Firebase (`README.md:1–3`, `:21–31`). É uma única aplicação Angular, organizada por features. Module Federation e micro-frontends só aparecem como item futuro numa lista de otimizações do README (`README.md:428`). O nome do repositório não é usado como evidência.
+ChatGPT clone in Angular 20, with Gemini chat, authentication and persistence in Firebase (`README.md:1–3`, `:21–31`). It is a single Angular application, organized by features. Module Federation and micro-frontends appear only as a future item in a README optimization list (`README.md:428`). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:264` registra rank 263, ID 1053862045, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:264` records rank 263, ID 1053862045, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:264` registra as estratégias `terminology;technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:18623` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:18629` (`pass`), ambos com `terminology;technology`.
+`data/samples/mfe-sample-001/sample.csv:264` records strategies `terminology;technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:18623` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:18629` (`pass`), both with `terminology;technology`.
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos três hits em cada rodada, do endpoint `repositories` e com `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same three hits in each round, from endpoint `repositories` and with an empty `path`:
 
-| Consulta (`q`) | Subconsulta | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Collection 001 / 002 (UTC) |
 |---|---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | `…#created:2025-09` | 2026-10-07T22:26:15.828Z / 2026-10-08T15:56:00.250Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | `…#created:2025-09` | 2026-10-07T22:57:04.160Z / 2026-10-08T16:06:48.173Z |
 | `technology-module-federation-repositories`: `"module federation" in:name,description,readme` | `…#created:2025-09` | 2026-10-07T23:20:17.641Z / 2026-10-08T16:15:54.936Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2025-09-01..2025-09-30`.
+The effective queries append `pushed:>=2025-04-01 created:2025-09-01..2025-09-30`.
 
-Metadados do hit (iguais nas duas rodadas): descrição sobre o clone do ChatGPT em Angular 20, sem os termos buscados; tópicos `angular`, `firebase`, `rxjs`, `signals`, `typecript`; linguagem HTML; licença MIT; `fork: false`; tamanho 751; homepage na Netlify; criação em 2025-09-10T03:28:24Z; push em 2025-10-07T18:05:42Z.
+Hit metadata (identical in both rounds): description of the ChatGPT clone in Angular 20, without the searched terms; topics `angular`, `firebase`, `rxjs`, `signals`, `typecript`; language HTML; MIT license; `fork: false`; size 751; homepage on Netlify; created at 2025-09-10T03:28:24Z; pushed at 2025-10-07T18:05:42Z.
 
-O acerto vem do README. A única linha com os termos é `README.md:428`, “Module federation for micro-frontends (future)”:
-- casa literalmente “module federation” e, com o hífen como separador, “micro frontends”;
-- a forma singular “micro frontend” não aparece literalmente; esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+The match comes from the README. The only line with the terms is `README.md:428`, “Module federation for micro-frontends (future)”:
+- literally matches “module federation” and, with the hyphen as separator, “micro frontends”;
+- the singular form “micro frontend” does not appear literally; this hit depends on GitHub search text processing, which is not recorded.
 
-A última alteração do README é `64bc0db` (2025-09-28T19:28:47+05:00). O SHA, merge do PR #1 (2025-10-07T23:05:34+05:00, isto é, 18:05:34Z), coincide com o `pushed_at`. Ambos antecedem as coletas de outubro de 2026, e o README do SHA não é posterior às buscas.
+The last README change is `64bc0db` (2025-09-28T19:28:47+05:00). The SHA, merge of PR #1 (2025-10-07T23:05:34+05:00, that is, 18:05:34Z), coincides with `pushed_at`. Both predate the October 2026 collections, and the README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 106 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Um único projeto Angular: `package.json`, `angular.json` com um projeto `chat-gpt-clone` (`angular.json:12–13`), `src/` com `core`, `features` (auth, chat, main, settings, sidebar) e `shared`, mais testes, e2e e `netlify.toml`. | contrária |
-| Configuração / Build | `angular.json:21–23`: builder `@angular/build:application` com entrada `src/main.ts`. `package.json:4–9`, `:31–45`: scripts `ng serve/build` e dependências Angular, Firebase e Gemini; nenhum pacote de federação. | contrária |
-| Código-fonte | `src/main.ts:1–5`: `bootstrapApplication(AppComponent, appConfig)`. `src/app/app.routes.ts:6–53`: todas as rotas usam `loadComponent` com `import('./features/…')` ou `import('./shared/…')` do mesmo projeto (lazy loading interno). | contrária |
-| Código-fonte (fronteiras) | Busca ativa de imports com `../../` ou mais em `src`: só travessias entre pastas da mesma aplicação, por exemplo `src/app/features/auth/components/login.component.ts:4–5` (para `shared/`) e `src/app/core/services/gemini.service.ts:7` (para `environments/`). Isso confirma uma única unidade com módulos internos, não unidades independentes. | contrária |
-| Documentação | `README.md:428`: “Module federation for micro-frontends (future)”, item de roadmap numa lista de otimização de bundle. `README.md:21–31`: stack de uma única app Angular. | fraca |
-| Tecnologia / Configuração / Composição (busca) | `git grep -i` no SHA, exceto lockfile, README e `playwright-report`, por `micro.?front`, `federation`, `single.?spa`, `remoteEntry`, `import.?map`, `customElements`, `<iframe`, `qiankun`, `wujie`, `registerApplication` e `loadRemote`: nenhuma ocorrência. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 106 entries, all regular files `100644`; zero symlinks and zero gitlinks. A single Angular project: `package.json`, `angular.json` with one project `chat-gpt-clone` (`angular.json:12–13`), `src/` with `core`, `features` (auth, chat, main, settings, sidebar) and `shared`, plus tests, e2e and `netlify.toml`. | contrary |
+| Configuration / Build | `angular.json:21–23`: builder `@angular/build:application` with entry point `src/main.ts`. `package.json:4–9`, `:31–45`: `ng serve/build` scripts and Angular, Firebase and Gemini dependencies; no federation package. | contrary |
+| Source code | `src/main.ts:1–5`: `bootstrapApplication(AppComponent, appConfig)`. `src/app/app.routes.ts:6–53`: all routes use `loadComponent` with `import('./features/…')` or `import('./shared/…')` from the same project (internal lazy loading). | contrary |
+| Source code (boundaries) | Active import search for `../../` or more in `src`: only traversals between folders of the same application, for example `src/app/features/auth/components/login.component.ts:4–5` (to `shared/`) and `src/app/core/services/gemini.service.ts:7` (to `environments/`). This confirms a single unit with internal modules, not independent units. | contrary |
+| Documentation | `README.md:428`: “Module federation for micro-frontends (future)”, roadmap item in a bundle optimization list. `README.md:21–31`: stack of a single Angular app. | weak |
+| Technology / Configuration / Composition (search) | `git grep -i` at the SHA, except lockfile, README and `playwright-report`, for `micro.?front`, `federation`, `single.?spa`, `remoteEntry`, `import.?map`, `customElements`, `<iframe`, `qiankun`, `wujie`, `registerApplication` and `loadRemote`: no occurrences. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso e parcial (`blob:none`). São 24 commits (24 em todos os refs), um deles merge (o SHA, PR #1 de `develop`). Todos são do mesmo titular, com três identidades:
-- `Sergey <seygorin@gmail.com>` na maior parte do desenvolvimento;
-- `Sergey Gorin <s.gorin@mediana.kz>` nos três primeiros commits de código (2025-09-10 e 2025-09-11);
-- `Sergey Gorin <69956633+seygorin@users.noreply.github.com>`, com committer `GitHub`, no commit-raiz e no merge.
+Non-shallow and partial clone (`blob:none`). There are 24 commits (24 across all refs), one a merge (the SHA, PR #1 from `develop`). All belong to the same owner, with three identities:
+- `Sergey <seygorin@gmail.com>` for most development;
+- `Sergey Gorin <s.gorin@mediana.kz>` in the first three code commits (2025-09-10 and 2025-09-11);
+- `Sergey Gorin <69956633+seygorin@users.noreply.github.com>`, with committer `GitHub`, in the root commit and merge.
 
-O desenvolvimento é incremental, de 2025-09-10 (“init: start blank project”) a 2025-09-28. `git rev-list --objects $SHA --missing=print` lista 155 objetos ausentes, nenhum na árvore do SHA. Nenhum blob histórico foi lido.
+Development is incremental, from 2025-09-10 (“init: start blank project”) to 2025-09-28. `git rev-list --objects $SHA --missing=print` lists 155 missing objects, none in the SHA tree. No historical blob was read.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend: um projeto Angular com um entry e um build (`angular.json:12–23`; `src/main.ts:1–5`). Nenhuma configuração de composição (busca registrada). |
-| Q2 | No | Não há duas unidades; as features são importadas pela mesma aplicação, inclusive por caminhos relativos entre pastas (`login.component.ts:4–5`). |
-| Q3 | No | Não há host que carregue unidades; o roteamento faz lazy loading de componentes internos (`app.routes.ts:6–53`). |
-| Q4 | No | Nenhum mecanismo de composição; Module Federation é intenção futura (`README.md:428`). |
-| Q5 | No | Q1–Q4 convergem. |
+| Q1 | No | A single frontend unit: one Angular project with one entry point and one build (`angular.json:12–23`; `src/main.ts:1–5`). No composition configuration (recorded search). |
+| Q2 | No | There are not two units; features are imported by the same application, including through relative paths between folders (`login.component.ts:4–5`). |
+| Q3 | No | There is no host loading units; routing lazily loads internal components (`app.routes.ts:6–53`). |
+| Q4 | No | No composition mechanism; Module Federation is a future intention (`README.md:428`). |
+| Q5 | No | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”.
-- Corresponde a “conventional frontend monoliths” e a “repositories mentioning micro-frontends without implementing them”: a menção é só um item de roadmap.
-- `frontend_units: 1`, `single-unit`, `ui_technologies: [angular]`. `build_tools: []`: o builder do Angular CLI encapsula o bundler, e não há configuração explícita de bundler. `README.md:30` cita “Angular CLI with Vite”, mas não se registra uma ferramenta só pela documentação.
-- `repo_type: example`: projeto de portfólio/estudo (“to do some stuff” no primeiro commit de código), publicado na Netlify.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”.
+- It matches “conventional frontend monoliths” and “repositories mentioning micro-frontends without implementing them”: the mention is only a roadmap item.
+- `frontend_units: 1`, `single-unit`, `ui_technologies: [angular]`. `build_tools: []`: the Angular CLI builder encapsulates the bundler, and there is no explicit bundler configuration. `README.md:30` cites “Angular CLI with Vite”, but a tool is not recorded based only on documentation.
+- `repo_type: example`: portfolio/study project (“to do some stuff” in the first code commit), published on Netlify.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** uma única linha de roadmap (“Module federation for micro-frontends (future)”, `README.md:428`) num README extenso (452 linhas) basta para três hits terminológicos e de tecnologia.
-- **Protocolo (busca):** o hit singular não tem grafia literal. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ1 (misleading signals):** a single roadmap line (“Module federation for micro-frontends (future)”, `README.md:428`) in an extensive README (452 lines) suffices for three terminology and technology hits.
+- **Protocol (search):** the singular hit has no literal spelling. Eligibility changes from `unknown` (001) to `pass` (002).

@@ -20,37 +20,37 @@ annotation:
 
 # 024 — FaduxD/brain-agro
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** example/proof of concept (teste técnico "Brain Agriculture", `README.md:3`)
+- **Repository type:** example/proof of concept ("Brain Agriculture" technical test, `README.md:3`)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `client/` (SPA React + Vite) e `server/` (NestJS + Prisma); uma única unidade frontend | contrária |
-| Tecnologia | Nenhuma dependência de MFE em `client/package.json` | ausente |
-| Configuração | `client/vite.config.ts:5-23`: só `@vitejs/plugin-react`, proxy `/api` e alias de ícones; sem federação | ausente |
-| Código-fonte | `client/src/main.tsx:15-22`: um único `createRoot` com `Router` (`client/src/router.tsx`); páginas `home`, `dashboard` e `management` importadas internamente | contrária |
-| Código-fonte | Nenhuma ocorrência de `federation`, `single-spa`, `customElements` ou `remoteEntry` | ausente |
-| Documentação | `README.md:70`: "Estruture o projeto como um microfrontend (opcional);" no enunciado do teste técnico (requisito opcional, não implementado) | fraca |
+| Structure | `client/` (React + Vite SPA) and `server/` (NestJS + Prisma); a single frontend unit | contrary |
+| Technology | No MFE dependency in `client/package.json` | absent |
+| Configuration | `client/vite.config.ts:5-23`: only `@vitejs/plugin-react`, `/api` proxy and icon alias; no federation | absent |
+| Source code | `client/src/main.tsx:15-22`: a single `createRoot` with `Router` (`client/src/router.tsx`); `home`, `dashboard` and `management` pages imported internally | contrary |
+| Source code | No occurrences of `federation`, `single-spa`, `customElements` or `remoteEntry` | absent |
+| Documentation | `README.md:70`: "Estruture o projeto como um microfrontend (opcional);" [English translation: "Structure the project as a microfrontend (optional);"] in the technical test instructions (optional requirement, not implemented) | weak |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend (`client/src/main.tsx:15`) |
-| Q2 | No | Não há unidades a comparar |
-| Q3 | No | Não há host, shell nem root config |
-| Q4 | No | Nenhum mecanismo de composição |
-| Q5 | No | Q1–Q4 convergem |
+| Q1 | No | A single frontend unit (`client/src/main.tsx:15`) |
+| Q2 | No | No units to compare |
+| Q3 | No | No host, shell or root config |
+| Q4 | No | No composition mechanism |
+| Q5 | No | Q1–Q4 converge |
 
-## Motivo
+## Rationale
 
-- O frontend é uma SPA React monolítica com backend NestJS.
-- "microfrontend" aparece só no enunciado do teste técnico como requisito opcional (`README.md:70`), que o candidato não implementou.
-- Corresponde a "conventional frontend monoliths" e a "repositories mentioning micro-frontends without implementing them".
+- The frontend is a monolithic React SPA with a NestJS backend.
+- "microfrontend" appears only in the technical test instructions as an optional requirement (`README.md:70`), which the candidate did not implement.
+- Matches "conventional frontend monoliths" and "repositories mentioning micro-frontends without implementing them".
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** o termo vem do enunciado copiado no README (texto de terceiros), não de uma decisão do autor. Enunciados de testes técnicos podem aparecer com frequência na amostra.
+- **RQ1 (misleading signals):** the term comes from the test instructions copied into the README (third-party text), not an author's decision. Technical test instructions may appear frequently in the sample.

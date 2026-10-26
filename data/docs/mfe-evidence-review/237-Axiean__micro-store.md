@@ -19,166 +19,167 @@ annotation:
 
 # 237 — Axiean/micro-store
 
-## Leitura do repositório
+## Repository overview
 
-Exemplo feito para uma avaliação técnica de frontend: uma loja com duas aplicações Next.js, `store-app` (vitrine) e `cart-app` (carrinho), unidas por Next.js Multi-Zones. A composição usa só recursos do próprio Next.js e não depende de nenhuma tecnologia do catálogo de dependências. Por isso não há observação de dependência.
+Example created for frontend technical assessment: store with two Next.js applications, `store-app` (storefront) and `cart-app` (cart), joined through Next.js Multi-Zones. Composition uses only native Next.js features without dependency-catalog technology. Thus no dependency observation.
 
-A cadeia que sustenta a arquitetura é de roteamento no servidor, não de montagem na página:
-- **Estrutura:** as duas apps têm manifesto, entrada e build próprios (#4, #5).
-- **Configuração:** o `rewrites()` do `store-app` encaminha `/cart/:path*` para `http://cart-app:3000/cart/:path*` (#1). O endereço está fixo no arquivo, sem variável de ambiente.
-- **Código:** a linha do `rewrites()` registrada na 3.4.4 (#2), dentro do bloco de #1.
-- **Relação:** isso resulta na relação ativa `store-app → cart-app` (#6). O hostname `cart-app` é o serviço do compose construído de `./cart-app`, e o `cart-app` responde sob `basePath: "/cart"` com a página inteira.
+Architecture chain uses server routing rather than page mounting:
+- **Structure:** both apps have own manifests, entries/builds (#4, #5).
+- **Configuration:** `rewrites()` in `store-app` forwards `/cart/:path*` to `http://cart-app:3000/cart/:path*` (#1). Address fixed in file without environment variable.
+- **Code:** `rewrites()` line recorded in 3.4.4 (#2), inside #1 block.
+- **Relationship:** yields active `store-app → cart-app` relationship (#6). Hostname `cart-app` is compose service built from `./cart-app`; `cart-app` responds under `basePath: "/cart"` with entire page.
 
-A segunda ligação é o estado do carrinho: as duas zonas persistem o mesmo store zustand na chave `cart-storage` do `localStorage` (#3). O `store-app` grava e o `cart-app` lê (#7). Só funciona porque o rewrite de #1 põe as duas zonas na mesma origem. O store é uma cópia em cada zona, não código comum.
+Second link is cart state: both zones persist same zustand store under key `cart-storage` in `localStorage` (#3). `store-app` writes and `cart-app` reads (#7). Works only because #1 rewrite puts both zones under same origin. Store copied into each zone rather than common code.
 
-Build e deploy são separados por app (#8, #9): `next build` com saída `standalone`, Dockerfile, imagem e serviço no compose próprios. Não há CI, registro de imagens nem versionamento, e o compose é uma stack local.
+Build/deployment separate per app (#8, #9): `next build` with `standalone` output, own Dockerfile, image and compose service. No CI, image registry or versioning; compose local stack.
 
-A documentação confirma tudo o que afirma: arquitetura de micro-frontends, duas apps independentes, Multi-Zones por rewrites, entrada pelo `store-app`, carrinho compartilhado por `localStorage` e build e contêiner próprios (#10 a #18). A conteinerização (#17) só fala da infraestrutura.
+Documentation confirms all its claims: microfrontend architecture, two independent apps, Multi-Zones through rewrites, entry through `store-app`, shared cart through `localStorage`, own builds/containers (#10 to #18). Containerization (#17) addresses only infrastructure.
 
-Sinais que enganam ou ficam de fora:
-- O `basePath` do `cart-app` e os serviços do compose resolvem o destino do rewrite, mas são caminho e publicação, por isso estão nas observações de build e deploy, e não em configuração (ver Nota de #1).
-- O `cart-app` também é publicado direto na porta 3001, em outra origem, onde não lê o carrinho gravado pelo `store-app` (#6, #7, #14).
-- A navegação da loja para o carrinho é um link de página inteira (`<a href="/cart">`), não uma construção de composição.
+Misleading/excluded signals:
+- `basePath` of `cart-app` and compose services resolve rewrite target but concern path/publication, therefore in build/deployment observations rather than configuration (see #1 Note).
+- `cart-app` also directly published at port 3001 under another origin, where it cannot read cart written by `store-app` (#6, #7, #14).
+- Store-to-cart navigation is full-page link (`<a href="/cart">`), not composition construct.
 
-Nada fica ambíguo no snapshot, e o histórico não teve ponto a esclarecer.
+Nothing ambiguous in snapshot; history had no point to clarify.
 
-## Observações
+## Observations
 
 ### 1. store-app/next.config.ts:6-43
 
-**Observação:** `output: "standalone"` (10), `images.remotePatterns` para `images.unsplash.com` e `fakestoreapi.com` (12-25) e `async rewrites()` (32-42), que devolve uma regra: `source: "/cart/:path*"` para `destination: "http://cart-app:3000/cart/:path*"` (36-39). O comentário do bloco diz "Configures the core of the Multi-Zone micro-frontend architecture" (27-28).
+**Observation:** `output: "standalone"` (10), `images.remotePatterns` for `images.unsplash.com` and `fakestoreapi.com` (12-25) and `async rewrites()` (32-42), returning one rule: `source: "/cart/:path*"` to `destination: "http://cart-app:3000/cart/:path*"` (36-39). Block comment says "Configures the core of the Multi-Zone micro-frontend architecture" (27-28).
 
-**Interpretação:** A configuração do host declara outra aplicação, o `cart-app`, como destino de um caminho sob a sua origem, com o endereço pelo qual a resolve.
+**Interpretation:** Host configuration declares another application, `cart-app`, as path target under own origin, with resolution address.
 
-**Nota:** `cart-app/next.config.ts:3-15`, citado nas mesmas tabelas, só declara `basePath: "/cart"`, `images` e `output: "standalone"`. O `basePath` é o caminho em que a zona é publicada, ou seja, deploy (dimensão 6), e está na observação #8. Os serviços de `docker-compose.yml:8-15, 20-28` declaram contexto de build, nome de contêiner e portas, também deploy (#8, #9); o endereço do destino está no rewrite, e o compose só dá o nome do serviço. Nenhum desses blocos virou observação de configuração.
+**Note:** `cart-app/next.config.ts:3-15`, cited in same tables, only declares `basePath: "/cart"`, `images` and `output: "standalone"`. `basePath` is zone publication path, thus deployment (dimension 6), in observation #8. Services in `docker-compose.yml:8-15, 20-28` declare build context, container name and ports, also deployment (#8, #9); target address in rewrite, compose only provides service name. None of these blocks became configuration observation.
 
 ### 2. store-app/next.config.ts:32
 
-**Observação:** `async rewrites()` liga `/cart/:path*` a `http://cart-app:3000/cart/:path*` (36-39). A configuração é exportada como `nextConfig` (45).
+**Observation:** `async rewrites()` links `/cart/:path*` to `http://cart-app:3000/cart/:path*` (36-39). Configuration exported as `nextConfig` (45).
 
-**Interpretação:** O roteamento do host declara que o caminho `/cart` vai para a zona do carrinho.
+**Interpretation:** Host routing declares path `/cart` goes to cart zone.
 
-**Nota:** É a linha manual da 3.4.4, que fica dentro do bloco de configuração de #1. Ela vira observação própria porque toda linha da 3.4.4 vira uma (passo 2). A força segue a orientação de uma rota que liga um caminho a outra unidade numa tabela de rotas.
+**Note:** Manual 3.4.4 row inside configuration block #1. Becomes own observation because every 3.4.4 row becomes one (step 2). Strength follows guidance for route linking path to another unit in route table.
 
 ### 3. store-app/src/store/cartStore.ts:83-84; store-app/src/store/cartStore.ts:26; store-app/src/store/cartStore.ts:38-55; store-app/src/components/ProductCart.tsx:17
 
-**Observação:** O store zustand `useCartStore` é persistido com `persist` na chave `cart-storage` (`name: "cart-storage"`, 83), com `createJSONStorage(() => safeLocalStorage)` (84), que grava por `localStorage.setItem` (26). `addToCart` (38-55) grava o carrinho e é chamado pelo `ProductCard`.
+**Observation:** Zustand store `useCartStore` persisted with `persist` under key `cart-storage` (`name: "cart-storage"`, 83), with `createJSONStorage(() => safeLocalStorage)` (84), writing through `localStorage.setItem` (26). `addToCart` (38-55) writes cart, called by `ProductCard`.
 
-**Interpretação:** O `store-app` grava o carrinho no `localStorage` sob uma chave fixa, o mecanismo de estado compartilhado. A leitura pelo `cart-app` está na relação #7.
+**Interpretation:** `store-app` writes cart to `localStorage` under fixed key, shared-state mechanism. Reading by `cart-app` in relationship #7.
 
 ### 4. cart-app; cart-app/package.json:7; cart-app/src/app/layout.tsx:20; cart-app/src/app/page.tsx:3; cart-app/next.config.ts:3-15
 
-**Observação:** Tem manifesto, layout raiz do App Router (`RootLayout`), página `Home` e build `next build` próprios, com `basePath: "/cart"` e saída `standalone`.
+**Observation:** Has own manifest, App Router root layout (`RootLayout`), page `Home` and `next build` build, with `basePath: "/cart"` and `standalone` output.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with own boundary.
 
 ### 5. store-app; store-app/package.json:7; store-app/src/app/layout.tsx:10; store-app/src/app/page.tsx; store-app/next.config.ts:6-43
 
-**Observação:** Tem manifesto, layout raiz do App Router (`RootLayout`), rota `/` e build `next build` próprios, com saída `standalone` e `rewrites()` para `/cart`.
+**Observation:** Has own manifest, App Router root layout (`RootLayout`), route `/` and `next build` build, with `standalone` output and `rewrites()` for `/cart`.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with own boundary.
 
 ### 6. store-app/next.config.ts:32, 36-39; docker-compose.yml:20-24; cart-app/next.config.ts:4; cart-app/src/app/page.tsx:10
 
-**Observação:** O `store-app` repassa `/cart/:path*` para `http://cart-app:3000/cart/:path*`. O hostname `cart-app` é o serviço do compose construído de `./cart-app`, com o contêiner na porta 3000. O prefixo `/cart` é o `basePath` do `cart-app`, cuja página `Home` monta o carrinho.
+**Observation:** `store-app` forwards `/cart/:path*` to `http://cart-app:3000/cart/:path*`. Hostname `cart-app` is compose service built from `./cart-app`, container at port 3000. Prefix `/cart` is `basePath` of `cart-app`, whose page `Home` mounts cart.
 
-**Interpretação:** É uma relação ativa em que o `store-app` encaminha um caminho para a zona do carrinho, que responde com a página inteira.
+**Interpretation:** Active relationship in which `store-app` forwards path to cart zone responding with entire page.
 
 ### 7. store-app/src/store/cartStore.ts:83-84; store-app/src/components/ProductCart.tsx:17; cart-app/src/store/cartStore.ts:83-84; cart-app/src/components/CartDisplay.tsx:15; store-app/next.config.ts:36-39
 
-**Observação:** O `store-app` grava o carrinho na chave `cart-storage` ao adicionar produtos. O `cart-app` declara o mesmo store na mesma chave e lê os itens em `CartDisplay` (`const { items, removeItem, updateQuantity } = useCartStore();`).
+**Observation:** `store-app` writes cart under key `cart-storage` when adding products. `cart-app` declares same store under same key, reading items in `CartDisplay` (`const { items, removeItem, updateQuantity } = useCartStore();`).
 
-**Interpretação:** É uma relação ativa de estado compartilhado por `localStorage` entre o `store-app` e o `cart-app`, possível porque o rewrite põe o `cart-app` sob a origem do `store-app`. Acessado direto pela porta 3001, o `cart-app` fica em outra origem e não vê o mesmo estado.
+**Interpretation:** Active shared-state relationship through `localStorage` between `store-app` and `cart-app`, possible because rewrite puts `cart-app` under `store-app` origin. Direct access at port 3001 puts `cart-app` under another origin without same state.
 
 ### 8. cart-app/package.json:7; cart-app/next.config.ts:4, 14; cart-app/Dockerfile:22, 25-33; docker-compose.yml:20-28
 
-**Observação:** `next build` gera um servidor `standalone` sob `basePath: "/cart"`. O Dockerfile roda o build e gera uma imagem só dele, que sobe com `node server.js` na porta 3000. O compose a sobe como serviço `cart-app`, construído de `./cart-app`, publicado na porta 3001 do host. `version: "0.1.0"` não é usado em publicação, e a app é `private`.
+**Observation:** `next build` generates `standalone` server under `basePath: "/cart"`. Dockerfile runs build, generating own image starting with `node server.js` at port 3000. Compose starts it as service `cart-app`, built from `./cart-app`, published at host port 3001. `version: "0.1.0"` unused for publication; app `private`.
 
-**Interpretação:** Há fronteiras de build e de deploy próprias, sem versionamento independente.
+**Interpretation:** Own build/deployment boundaries without independent versioning.
 
 ### 9. store-app/package.json:7; store-app/next.config.ts:10, 32-41; store-app/Dockerfile:22, 25-33; docker-compose.yml:8-15
 
-**Observação:** `next build` gera um servidor `standalone` com o `rewrites()`. O Dockerfile roda o build e gera uma imagem só dele, servida na porta 3000. O compose a sobe como serviço `store-app`, construído de `./store-app`, sem `depends_on`. `version: "0.1.0"` sem uso e app `private`.
+**Observation:** `next build` generates `standalone` server with `rewrites()`. Dockerfile runs build, generating own image served at port 3000. Compose starts it as service `store-app`, built from `./store-app`, without `depends_on`. `version: "0.1.0"` unused; app `private`.
 
-**Interpretação:** Há fronteiras de build e de deploy próprias, sem versionamento independente. O artefato do `store-app` não contém código do `cart-app`, mas leva o endereço fixo do serviço dele.
+**Interpretation:** Own build/deployment boundaries without independent versioning. Artifact of `store-app` contains no `cart-app` code but carries fixed service address.
 
 ### 10. README.md:3
 
-**Observação:** "This project is a demonstration of a micro-frontend architecture for a simple e-commerce application".
+**Observation:** "This project is a demonstration of a micro-frontend architecture for a simple e-commerce application".
 
-**Interpretação:** Afirma uma arquitetura de micro-frontends, o que as duas unidades e as duas relações entre elas confirmam.
+**Interpretation:** Claims microfrontend architecture, confirmed by two units and two inter-unit relationships.
 
 ### 11. README.md:3
 
-**Observação:** "It consists of two independent Next.js applications: a **Store** for Browse products and a **Cart** for managing the shopping cart, containerized with Docker".
+**Observation:** "It consists of two independent Next.js applications: a **Store** for Browse products and a **Cart** for managing the shopping cart, containerized with Docker".
 
-**Interpretação:** Afirma duas apps independentes, cada uma em contêiner, o que a estrutura e o build e deploy por app confirmam.
+**Interpretation:** Claims two independent containerized apps, confirmed by structure and per-app build/deployment.
 
 ### 12. README.md:7
 
-**Observação:** "The application employs a **Multi-Zone** architecture".
+**Observation:** "The application employs a **Multi-Zone** architecture".
 
-**Interpretação:** Nomeia o padrão de composição do Next.js, o que a configuração do rewrite e a relação de rota confirmam.
+**Interpretation:** Names Next.js composition pattern, confirmed by rewrite configuration and route relationship.
 
 ### 13. README.md:9
 
-**Observação:** "**Store App (Zone 1)**: The main application that runs on port `3000`. ... acts as the primary entry point for users."
+**Observation:** "**Store App (Zone 1)**: The main application that runs on port `3000`. ... acts as the primary entry point for users."
 
-**Interpretação:** Afirma o `store-app` como entrada, o que o deploy na porta 3000 e o encaminhamento de `/cart` confirmam.
+**Interpretation:** Claims `store-app` as entry, confirmed by port 3000 deployment and `/cart` forwarding.
 
 ### 14. README.md:10
 
-**Observação:** "**Cart App (Zone 2)**: An independent application that runs on port `3001`."
+**Observation:** "**Cart App (Zone 2)**: An independent application that runs on port `3001`."
 
-**Interpretação:** Afirma o `cart-app` como app independente, o que a estrutura e o build e deploy próprios confirmam. A porta 3001 é a do script `dev` e a do host no compose.
+**Interpretation:** Claims `cart-app` as independent app, confirmed by structure and own build/deployment. Port 3001 belongs to `dev` script and compose host.
 
 ### 15. README.md:12
 
-**Observação:** "These two \"zones\" are seamlessly combined under a single domain using **Next.js Rewrites**. The Store App is configured to proxy all requests for the `/cart` path to the Cart App".
+**Observation:** "These two \"zones\" are seamlessly combined under a single domain using **Next.js Rewrites**. The Store App is configured to proxy all requests for the `/cart` path to the Cart App".
 
-**Interpretação:** Afirma que o host encaminha um caminho para a outra zona sob o mesmo domínio, o que a linha do `rewrites()` e a relação de rota confirmam.
+**Interpretation:** Claims host forwards path to other zone under same domain, confirmed by `rewrites()` line and route relationship.
 
 ### 16. README.md:19
 
-**Observação:** "`localStorage` is used to persist and share the cart state between the two independent applications."
+**Observation:** "`localStorage` is used to persist and share the cart state between the two independent applications."
 
-**Interpretação:** Afirma estado compartilhado por `localStorage` entre as zonas, o que a gravação no `store-app` e a relação de estado confirmam. O que se compartilha é o estado; o código do store é uma cópia em cada zona.
+**Interpretation:** Claims shared state through `localStorage` between zones, confirmed by writing in `store-app` and state relationship. State shared; store code copied into each zone.
 
 ### 17. README.md:20
 
-**Observação:** "**Containerization**: Docker & Docker Compose for creating a reproducible production environment."
+**Observation:** "**Containerization**: Docker & Docker Compose for creating a reproducible production environment."
 
-**Interpretação:** Fala da infraestrutura de contêineres, sem situar as unidades. O compose e os Dockerfiles das duas apps confirmam a afirmação, e o "production environment" é o que o compose monta, sem hospedagem no snapshot.
+**Interpretation:** Addresses container infrastructure without locating units. Compose and both app Dockerfiles confirm claim; "production environment" is what compose assembles without snapshot hosting.
 
 ### 18. docker-compose.yml:19
 
-**Observação:** Comentário do serviço `cart-app`: "It has its own build process and runs in a separate container."
+**Observation:** Service comment for `cart-app`: "It has its own build process and runs in a separate container."
 
-**Interpretação:** Afirma build e contêiner próprios do `cart-app`, o que o build e deploy dele confirmam.
+**Interpretation:** Claims own build/container for `cart-app`, confirmed by its build/deployment.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.3 (store-app, Marcadores); 3.4.3 (store-app, Build); 3.4.4 (store-app/next.config.ts:32, Observação); 3.4.4 (store-app/src/store/cartStore.ts:83, Observação); 3.4.5 #1 (Configuração, Código); 3.4.6 #1 (Onde é servida); 3.4.6 #2 (Artefatos); 3.4.7 #3, #6 (Evidência) | 2 configuração | configuração | other | arquitetural | forte | configura #5; configura #6 |
-| 2 | 3.4.4 (store-app/next.config.ts:32) | 3 código | configuração | other | arquitetural | forte | implementa #6 |
-| 3 | 3.4.4 (store-app/src/store/cartStore.ts:83) | 3 código | código-fonte | other | tecnológica | moderada | implementa #7 |
-| 4 | 3.4.3 (cart-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 5 | 3.4.3 (store-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 6 | 3.4.5 #1 | 5 composição | configuração | other | arquitetural | forte | liga #5; liga #4 |
-| 7 | 3.4.5 #2 | 5 composição | código-fonte | other | arquitetural | forte | liga #5; liga #4 |
-| 8 | 3.4.6 #1 | 6 build-deploy | deploy | — | arquitetural | moderada | publica #4 |
-| 9 | 3.4.6 #2 | 6 build-deploy | deploy | — | arquitetural | moderada | publica #5 |
-| 10 | 3.4.7 #1 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #4; corrobora #5; corrobora #6; corrobora #7 |
-| 11 | 3.4.7 #2 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #4; corrobora #5; corrobora #8; corrobora #9 |
-| 12 | 3.4.7 #3 | 7 documentação | documentação | other | tecnológica | fraca | corrobora #1; corrobora #6 |
-| 13 | 3.4.7 #4 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #9; corrobora #6 |
-| 14 | 3.4.7 #5 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #4; corrobora #8 |
-| 15 | 3.4.7 #6 | 7 documentação | documentação | other | arquitetural | fraca | corrobora #2; corrobora #6 |
-| 16 | 3.4.7 #7 | 7 documentação | documentação | other | arquitetural | fraca | corrobora #3; corrobora #7 |
-| 17 | 3.4.7 #8 | 7 documentação | documentação | — | contexto | fraca | corrobora #8; corrobora #9 |
-| 18 | 3.4.7 #9 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #8 |
+| 1 | 3.4.3 (store-app, Markers); 3.4.3 (store-app, Build); 3.4.4 (store-app/next.config.ts:32, Observation); 3.4.4 (store-app/src/store/cartStore.ts:83, Observation); 3.4.5 #1 (Configuration, Code); 3.4.6 #1 (Where served); 3.4.6 #2 (Artifacts); 3.4.7 #3, #6 (Evidence) | 2 configuration | configuration | other | architectural | strong | configures #5; configures #6 |
+| 2 | 3.4.4 (store-app/next.config.ts:32) | 3 code | configuration | other | architectural | strong | implements #6 |
+| 3 | 3.4.4 (store-app/src/store/cartStore.ts:83) | 3 code | source code | other | technological | moderate | implements #7 |
+| 4 | 3.4.3 (cart-app) | 4 structure | directory | — | architectural | moderate | — |
+| 5 | 3.4.3 (store-app) | 4 structure | directory | — | architectural | moderate | — |
+| 6 | 3.4.5 #1 | 5 composition | configuration | other | architectural | strong | links #5; links #4 |
+| 7 | 3.4.5 #2 | 5 composition | source code | other | architectural | strong | links #5; links #4 |
+| 8 | 3.4.6 #1 | 6 build-deploy | deploy | — | architectural | moderate | publishes #4 |
+| 9 | 3.4.6 #2 | 6 build-deploy | deploy | — | architectural | moderate | publishes #5 |
+| 10 | 3.4.7 #1 | 7 documentation | documentation | — | architectural | weak | corroborates #4; corroborates #5; corroborates #6; corroborates #7 |
+| 11 | 3.4.7 #2 | 7 documentation | documentation | — | architectural | weak | corroborates #4; corroborates #5; corroborates #8; corroborates #9 |
+| 12 | 3.4.7 #3 | 7 documentation | documentation | other | technological | weak | corroborates #1; corroborates #6 |
+| 13 | 3.4.7 #4 | 7 documentation | documentation | — | architectural | weak | corroborates #9; corroborates #6 |
+| 14 | 3.4.7 #5 | 7 documentation | documentation | — | architectural | weak | corroborates #4; corroborates #8 |
+| 15 | 3.4.7 #6 | 7 documentation | documentation | other | architectural | weak | corroborates #2; corroborates #6 |
+| 16 | 3.4.7 #7 | 7 documentation | documentation | other | architectural | weak | corroborates #3; corroborates #7 |
+| 17 | 3.4.7 #8 | 7 documentation | documentation | — | context | weak | corroborates #8; corroborates #9 |
+| 18 | 3.4.7 #9 | 7 documentation | comment | — | architectural | weak | corroborates #8 |
 
-## Resumo
+## Summary
 
-Observações: 18. Dimensões (tecnologia: 0, configuração: 1, código: 2, estrutura: 2, composição: 2, build-deploy: 2, documentação: 9, histórico: 0). Força (forte: 4, moderada: 5, fraca: 9, ambígua: 0). Evidência (tecnológica: 2, arquitetural: 15, contexto: 1).
+Observations: 18. Dimensions (technology: 0, configuration: 1, code: 2, structure: 2, composition: 2, build-deploy: 2, documentation: 9, history: 0). Strength (strong: 4, moderate: 5, weak: 9, ambiguous: 0). Evidence (technological: 2, architectural: 15, context: 1).
+

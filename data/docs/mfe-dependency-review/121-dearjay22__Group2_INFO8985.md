@@ -15,6 +15,6 @@ annotation:
 
 # 121 — dearjay22/Group2_INFO8985
 
-## Dependências
+## Dependencies
 
-Nenhuma dependência das tecnologias no dependencies.csv.
+No dependency on the technologies in dependencies.csv.

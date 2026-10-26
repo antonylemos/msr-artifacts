@@ -16,35 +16,35 @@ annotation:
 
 # 033 — abhikukreti/music-library-project
 
-## Leitura do repositório
+## Repository overview
 
-Duas aplicações Vite independentes, `main-app` (host) e `music-library` (remote), sem workspace na raiz. Cada uma tem manifesto, lockfile, `vite.config.js` e `vite build` próprios (main-app/package.json:8; music-library/package.json:8). O remote gera `remoteEntry.js` no build (music-library/vite.config.js:8-13). Por isso o README manda rodá-lo com `build` + `preview` mesmo em desenvolvimento, já que o servidor de desenvolvimento não serve a entrada federada (README.md:17-22).
+Two independent Vite applications, `main-app` (host) and `music-library` (remote), without a root workspace. Each has its own manifest, lockfile, `vite.config.js` and `vite build` (main-app/package.json:8; music-library/package.json:8). Remote generates `remoteEntry.js` during build (music-library/vite.config.js:8-13). README therefore instructs running it with `build` + `preview` even in development, since the development server does not serve the federated entry (README.md:17-22).
 
-O deploy está descrito no README, e não em artefatos de configuração. Cada aplicação foi publicada como um site Netlify separado, configurado no painel da Netlify com pasta-base, comando de build e pasta de publicação próprios (README.md:30-34). Os dois endereços publicados aparecem no README (README.md:5-7). O README também registra a ordem: publicar o remote, copiar a URL do `remoteEntry.js` para o `vite.config.js` do host e só então publicar o host (README.md:32-34).
+Deployment is described in README rather than configuration artifacts. Each application was published as a separate Netlify site, configured in the Netlify panel with its own base folder, build command and publication folder (README.md:30-34). Both published addresses appear in README (README.md:5-7). README also records the order: publish remote, copy the `remoteEntry.js` URL to host’s `vite.config.js`, and only then publish host (README.md:32-34).
 
-Dois artefatos do snapshot sustentam esse relato:
-- A URL Netlify do remote está fixada na configuração do host (main-app/vite.config.js:10-12).
-- O remote traz um arquivo `_headers` da Netlify que libera CORS para `/assets/*`, onde fica o `remoteEntry.js`, "since remote loads from a different domain" (music-library/public/_headers:1-2; README.md:35).
+Two snapshot artifacts support this account:
+- The remote Netlify URL is fixed in host configuration (main-app/vite.config.js:10-12).
+- Remote provides a Netlify `_headers` file enabling CORS for `/assets/*`, containing `remoteEntry.js`, "since remote loads from a different domain" (music-library/public/_headers:1-2; README.md:35).
 
-Não há `netlify.toml`, CI nem Dockerfile.
+There is no `netlify.toml`, CI or Dockerfile.
 
-## Aplicações
+## Applications
 
-| # | Aplicação | Build | Deploy | Onde é servida | Versionamento | Artefatos |
+| # | Application | Build | Deploy | Where served | Versioning | Artifacts |
 |---|---|---|---|---|---|---|
-| 1 | main-app | separado | não observado | `https://fluffy-pika-9e723b.netlify.app`, segundo o README (README.md:6); `http://localhost:5000` em desenvolvimento (main-app/vite.config.js:21) | No | main-app/vite.config.js:5-22 (configuração própria); main-app/package.json:8 (`vite build`) |
-| 2 | music-library | separado | separado | `https://astonishing-seahorse-d2decf.netlify.app` (main-app/vite.config.js:11; README.md:7); `http://localhost:5001` em desenvolvimento e preview (music-library/vite.config.js:22-23) | No | music-library/vite.config.js:5-24 (configuração própria, gera `remoteEntry.js`); music-library/package.json:8 (`vite build`); music-library/public/_headers:1-2 (cabeçalhos da hospedagem própria); main-app/vite.config.js:11 (domínio próprio do remote) |
+| 1 | main-app | separate | not observed | `https://fluffy-pika-9e723b.netlify.app`, according to README (README.md:6); `http://localhost:5000` in development (main-app/vite.config.js:21) | No | main-app/vite.config.js:5-22 (own configuration); main-app/package.json:8 (`vite build`) |
+| 2 | music-library | separate | separate | `https://astonishing-seahorse-d2decf.netlify.app` (main-app/vite.config.js:11; README.md:7); `http://localhost:5001` in development and preview (music-library/vite.config.js:22-23) | No | music-library/vite.config.js:5-24 (own configuration, generates `remoteEntry.js`); music-library/package.json:8 (`vite build`); music-library/public/_headers:1-2 (own hosting headers); main-app/vite.config.js:11 (remote’s own domain) |
 
-## Observações
+## Observations
 
-**1. main-app.** O build é separado. O deploy separado só é afirmado pelo README (README.md:6, 31-34): nenhum artefato do snapshot configura a hospedagem do host, então o valor é `não observado` (ver a Decisão registrada). A versão `0.0.0` não é usada.
+**1. main-app.** Build is separate. Separate deployment is asserted only by README (README.md:6, 31-34): no snapshot artifact configures host hosting, so the value is `not observed` (see the Recorded decision). Version `0.0.0` is unused.
 
-**2. music-library.** Build separado. O deploy é separado porque dois artefatos de configuração o sustentam: o host carrega o remote de um domínio próprio (main-app/vite.config.js:11), e o remote tem um `_headers` da hospedagem que existe justamente porque é servido em outra origem (music-library/public/_headers:1-2). A configuração do site (pasta-base e pasta de publicação) fica na Netlify, fora do repositório (README.md:32). Como a URL do remote está fixada no build do host, republicar o remote em outro endereço exige rebuild do host (README.md:33). Sem versionamento.
+**2. music-library.** Separate build. Deployment is separate because two configuration artifacts support it: host loads remote from its own domain (main-app/vite.config.js:11), and remote has a hosting `_headers` that exists precisely because it is served from another origin (music-library/public/_headers:1-2). Site configuration (base folder and publication folder) is in Netlify, outside the repository (README.md:32). Since remote URL is fixed in host build, republishing remote at another address requires rebuilding host (README.md:33). No versioning.
 
-## Resumo
+## Summary
 
-Aplicações: 2. Build (separado: 2). Deploy (separado: 1, não observado: 1). Versionamento independente: 0.
+Applications: 2. Build (separate: 2). Deploy (separate: 1, not observed: 1). Independent versioning: 0.
 
-## Decisão registrada
+## Recorded decision
 
-O deploy do `main-app` como site Netlify próprio só é afirmado pelo README (README.md:6, 31-34). Decisão do pesquisador (2026-10-21): `não observado`. Documentação não é artefato de deploy; a afirmação fica registrada no texto e entra na revisão de documentação (seção 3.4.7 do protocolo).
+Deployment of `main-app` as its own Netlify site is asserted only by README (README.md:6, 31-34). Researcher decision (2026-10-21): `not observed`. Documentation is not a deployment artifact; the claim remains recorded in text and enters the documentation review (protocol section 3.4.7).

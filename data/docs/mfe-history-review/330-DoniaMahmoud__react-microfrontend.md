@@ -13,17 +13,17 @@ annotation:
 
 # 330 — DoniaMahmoud/react-microfrontend
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem 3 commits, todos de 2026-02-01, sem merge. O primeiro é `9c0bdef` (2026-02-01, "Add basic configs of microfrontend apps and host"), que cria os `package.json`, `webpack.config.js`, `public/index.html` e `src/index.js` das três aplicações e o `container/src/bootstrap.js`. O segundo é `6b01d5d` (2026-02-01, "Use faker library as shared dependency between remote apps"), que cria `cart/src/bootstrap.js` e `products/src/bootstrap.js` e altera as entradas e as configurações webpack. O do snapshot é `adc0ef9` (2026-02-01, "Refactor remote apps to be used in isolation"), que altera os bootstraps, as configurações dos remotes e o `container/public/index.html`.
+History up to snapshot has 3 commits, all from 2026-02-01, without merge. First is `9c0bdef` (2026-02-01, "Add basic configs of microfrontend apps and host"), creating `package.json`, `webpack.config.js`, `public/index.html` and `src/index.js` of three applications and `container/src/bootstrap.js`. Second is `6b01d5d` (2026-02-01, "Use faker library as shared dependency between remote apps"), creating `cart/src/bootstrap.js` and `products/src/bootstrap.js` and changing entries and webpack configurations. Snapshot is `adc0ef9` (2026-02-01, "Refactor remote apps to be used in isolation"), changing bootstraps, remote configurations and `container/public/index.html`.
 
-As revisões anteriores não deixaram ponto ambíguo que o histórico pudesse esclarecer: não há dependência declarada sem uso, unidade ou relação `Undetermined`, construção desativada, deploy `Undetermined` nem afirmação de documentação `contradita` ou `parcial`. A configuração alternativa de `singleton: true` comentada em cart/webpack.config.js:17-22 e products/webpack.config.js:17-22, citada no texto da 3.4.7, não é construção de composição nem afirmação da tabela. Por isso o histórico não foi consultado além deste contexto.
+Previous reviews left no ambiguous point history could clarify: no declared unused dependency, `Undetermined` unit or relationship, deactivated construct, `Undetermined` deploy or `contradicted` or `partial` documentation claim. Alternative `singleton: true` configuration commented out at cart/webpack.config.js:17-22 and products/webpack.config.js:17-22, cited in 3.4.7 text, is neither composition construct nor table claim. Thus history was not consulted beyond this context.
 
-## Pontos
+## Points
 
-Nenhum ponto ambíguo nas revisões anteriores.
+No ambiguous points in previous reviews.
 
-## Comandos
+## Commands
 
 ```
 docs/mfe-history-review/tools/hist.sh DoniaMahmoud__react-microfrontend rev-list --count adc0ef9de42ce63b3082f8297d0146b59ac0d612
@@ -31,6 +31,6 @@ docs/mfe-history-review/tools/hist.sh DoniaMahmoud__react-microfrontend rev-list
 docs/mfe-history-review/tools/hist.sh DoniaMahmoud__react-microfrontend log --format='%h %ad %s' --date=short --name-status adc0ef9de42ce63b3082f8297d0146b59ac0d612
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 3 (2026-02-01 a 2026-02-01). Pontos: 0.
+Commits up to the snapshot: 3 (2026-02-01 to 2026-02-01). Points: 0.

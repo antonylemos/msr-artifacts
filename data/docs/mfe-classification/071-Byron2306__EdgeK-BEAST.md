@@ -20,35 +20,35 @@ annotation:
 
 # 071 — Byron2306/EdgeK-BEAST
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** production-oriented / pesquisa (camada de governança para agentes de código via MCP + IDE desktop; 32.864 arquivos)
+- **Repository type:** production-oriented / research (governance layer for coding agents through MCP + desktop IDE; 32,864 files)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Documentação | `README.md:5-12`: "BEAST - Auditable, Governed AI Editing via MCP and Gateway… governance layer for coding agents and editor clients"; nenhuma menção a micro-frontends | contexto |
-| Estrutura | `app/` (kernel Python), `desktop-ide/` (IDE desktop: `main/`, `renderer/`, `extensions/`, mais `.bundle-build/` e `.beast-python-tools/` versionados), `benchmarks/`, `evidence/`, `seeds/`, dezenas de relatórios de fases | contrária |
-| Tecnologia (MF de terceiros) | `desktop-ide/.beast-python-tools/jupyterlab/staging/webpack.config.js`, `…/labextensions/@jupyter-notebook/lab-extension/static/remoteEntry.*.js`, `…/galata-extension/static/remoteEntry.*.js`: JupyterLab vendorizado num ambiente Python embutido, que usa Module Federation como sistema de extensões (tecnologia de terceiros vendorizada) | contexto |
-| Código-fonte (falso positivo) | `app/kernel/compute/forge_kv_hf_official.py:17`: `"RemoteEntryNotFoundError"` (exceção da biblioteca Hugging Face Hub) | contexto |
-| Código-fonte (autoral, frontend) | `desktop-ide/renderer/` e `desktop-ide/main/`: IDE desktop (Electron); nenhuma configuração de federação, `remotes`/`exposes` ou composição de unidades | ausente |
+| Documentation | `README.md:5-12`: "BEAST - Auditable, Governed AI Editing via MCP and Gateway… governance layer for coding agents and editor clients"; no mention of micro-frontends | context |
+| Structure | `app/` (Python kernel), `desktop-ide/` (desktop IDE: `main/`, `renderer/`, `extensions/`, plus tracked `.bundle-build/` and `.beast-python-tools/`), `benchmarks/`, `evidence/`, `seeds/`, dozens of phase reports | contrary |
+| Technology (third-party MF) | `desktop-ide/.beast-python-tools/jupyterlab/staging/webpack.config.js`, `…/labextensions/@jupyter-notebook/lab-extension/static/remoteEntry.*.js`, `…/galata-extension/static/remoteEntry.*.js`: JupyterLab vendored in an embedded Python environment, using Module Federation as its extension system (vendored third-party technology) | context |
+| Source code (false positive) | `app/kernel/compute/forge_kv_hf_official.py:17`: `"RemoteEntryNotFoundError"` (Hugging Face Hub library exception) | context |
+| Source code (project-authored, frontend) | `desktop-ide/renderer/` and `desktop-ide/main/`: desktop IDE (Electron); no federation configuration, `remotes`/`exposes` or unit composition | absent |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend autoral composta; a IDE desktop é uma aplicação única |
-| Q2 | No | Não há unidades a comparar |
-| Q3 | No | Não há host, shell nem root config compondo unidades |
-| Q4 | No | Os `remoteEntry.js` são build de extensões do JupyterLab vendorizado (dependência de terceiros), não composição configurada pelo autor |
-| Q5 | No | Q1–Q4 convergem |
+| Q1 | No | No composed project-authored frontend units; the desktop IDE is a single application |
+| Q2 | No | No units to compare |
+| Q3 | No | No host, shell or root config composing units |
+| Q4 | No | The `remoteEntry.js` files are extension builds from vendored JupyterLab (third-party dependency), not composition configured by the author |
+| Q5 | No | Q1–Q4 converge |
 
-## Motivo
+## Rationale
 
-- O repositório não implementa micro-frontends. Os sinais de Module Federation vêm de uma cópia do JupyterLab (com seu sistema de extensões baseado em MF) empacotada no ambiente Python da IDE, e de um nome de exceção do Hugging Face.
-- Por analogia com a regra de plugins de plataforma (010, 022, 035, 037): MF como mecanismo de extensão de uma plataforma de terceiros (JupyterLab), aqui nem sequer usado pelo autor, só vendorizado.
+- The repository does not implement micro-frontends. Module Federation signals come from a JupyterLab copy (with its MF-based extension system) packaged in the IDE's Python environment, and from a Hugging Face exception name.
+- By analogy with the platform plugin rule (010, 022, 035, 037): MF as a third-party platform extension mechanism (JupyterLab), here not even used by the author, only vendored.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** dependências vendorizadas (ambientes Python, `site-packages`, bundles de build versionados) introduzem `remoteEntry.js` e `webpack.config.js` com MF no repositório; buscas de conteúdo devem excluir diretórios de dependências e builds.
+- **RQ1 (misleading signals):** vendored dependencies (Python environments, `site-packages`, tracked build bundles) introduce `remoteEntry.js` and `webpack.config.js` with MF into the repository; content searches should exclude dependency and build directories.

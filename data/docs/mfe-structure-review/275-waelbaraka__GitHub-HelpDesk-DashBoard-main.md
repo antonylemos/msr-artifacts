@@ -17,22 +17,22 @@ annotation:
 
 ## Workspace
 
-Nenhuma declaração de workspace.
+No workspace declaration.
 
-## Unidades
+## Units
 
-| Diretório | Marcadores | Manifesto | Entrada | Build | Workspace | Deploy | Unidade frontend | Motivo |
+| Directory | Markers | Manifest | Entry | Build | Workspace | Deploy | Frontend unit | Rationale |
 |---|---|---|---|---|---|---|---|---|
-| Backend | Backend/package.json | Backend/package.json | — | — | — | — | No | Servidor Express/Prisma (`main: index.js` em Backend/package.json:6; `express` em Backend/index.js:7), não é frontend |
-| Frontend | Frontend/index.html;Frontend/package.json;Frontend/vite.config.js | Frontend/package.json | Frontend/index.html:11 (`<script type="module" src="/src/main.jsx">`; `createRoot` em Frontend/src/main.jsx:26) | Frontend/vite.config.js:7-61 (`defineConfig` com `react()` e `federation`); Frontend/package.json:8 (`vite build`) | — | — | Yes | Host React + Vite com entrada e build próprios |
-| whatsapp-module-frontend | whatsapp-module-frontend/index.html;whatsapp-module-frontend/package.json;whatsapp-module-frontend/vite.config.js | whatsapp-module-frontend/package.json | whatsapp-module-frontend/index.html:11 (`<script type="module" src="/src/main.jsx">`; `ReactDOM.createRoot` em whatsapp-module-frontend/src/main.jsx:6) | whatsapp-module-frontend/vite.config.js:7-61 (`defineConfig` com `react()` e `federation`); whatsapp-module-frontend/package.json:8 (`vite build --watch` com `vite preview --port 5001`) | — | — | Yes | Remoto React + Vite com entrada e build próprios |
+| Backend | Backend/package.json | Backend/package.json | — | — | — | — | No | Express/Prisma server (`main: index.js` in Backend/package.json:6; `express` in Backend/index.js:7), not frontend |
+| Frontend | Frontend/index.html;Frontend/package.json;Frontend/vite.config.js | Frontend/package.json | Frontend/index.html:11 (`<script type="module" src="/src/main.jsx">`; `createRoot` in Frontend/src/main.jsx:26) | Frontend/vite.config.js:7-61 (`defineConfig` with `react()` and `federation`); Frontend/package.json:8 (`vite build`) | — | — | Yes | React + Vite host with its own entry and build |
+| whatsapp-module-frontend | whatsapp-module-frontend/index.html;whatsapp-module-frontend/package.json;whatsapp-module-frontend/vite.config.js | whatsapp-module-frontend/package.json | whatsapp-module-frontend/index.html:11 (`<script type="module" src="/src/main.jsx">`; `ReactDOM.createRoot` in whatsapp-module-frontend/src/main.jsx:6) | whatsapp-module-frontend/vite.config.js:7-61 (`defineConfig` with `react()` and `federation`); whatsapp-module-frontend/package.json:8 (`vite build --watch` with `vite preview --port 5001`) | — | — | Yes | React + Vite remote with its own entry and build |
 
-## Resumo
+## Summary
 
-Aplicações frontend no snapshot: 2 (Frontend, whatsapp-module-frontend).
+Frontend applications in the snapshot: 2 (Frontend, whatsapp-module-frontend).
 
-## Notas
+## Notes
 
-- N = 2 coincide com `frontend_units: 2` da classificação (host `Frontend/` e remoto `whatsapp-module-frontend/`).
-- A única ocorrência `ops-*`/`ci-*` do `matches.csv` é `ops-cors` em whatsapp-module-frontend/vite.config.js:55 (`cors: true` do servidor de desenvolvimento), que não é artefato de deploy. Não há Dockerfile, workflow de CI nem configuração de hospedagem no snapshot.
-- O script `build` do remoto (whatsapp-module-frontend/package.json:8) roda `vite build --watch` junto com `vite preview`; continua sendo um build Vite próprio do diretório.
+- N = 2 matches the classification’s `frontend_units: 2` (host `Frontend/` and remote `whatsapp-module-frontend/`).
+- The only `ops-*`/`ci-*` occurrence in `matches.csv` is `ops-cors` in whatsapp-module-frontend/vite.config.js:55 (`cors: true` for the development server), which is not a deployment artifact. There is no Dockerfile, CI workflow or hosting configuration in the snapshot.
+- The remote’s `build` script (whatsapp-module-frontend/package.json:8) runs `vite build --watch` together with `vite preview`; it remains the directory’s own Vite build.

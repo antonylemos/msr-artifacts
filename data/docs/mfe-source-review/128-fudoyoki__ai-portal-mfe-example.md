@@ -15,24 +15,24 @@ annotation:
 
 # 128 — fudoyoki/ai-portal-mfe-example
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-remote-import | apps/shell/src/App.tsx:7 | apps/shell | dynamic-loading | Yes | `React.lazy` carrega em runtime o módulo `mfeDashboard/DashboardApp`, exposto por apps/mfe-dashboard (apps/mfe-dashboard/vite.config.ts:12-17); o remote `mfeDashboard` aponta para o `remoteEntry.js` da porta 3001 ou do CDN (apps/shell/vite.config.ts:17-23 e 30-31). Ativo: o componente é renderizado na rota `/dashboard/*` (apps/shell/src/App.tsx:167-176), `App` é montado em apps/shell/src/main.tsx:8-16. |
+| src-remote-import | apps/shell/src/App.tsx:7 | apps/shell | dynamic-loading | Yes | `React.lazy` loads at runtime module `mfeDashboard/DashboardApp`, exposed by apps/mfe-dashboard (apps/mfe-dashboard/vite.config.ts:12-17); remote `mfeDashboard` points to the `remoteEntry.js` on port 3001 or the CDN (apps/shell/vite.config.ts:17-23 and 30-31). Active: the component is rendered in the `/dashboard/*` route (apps/shell/src/App.tsx:167-176), and `App` is mounted at apps/shell/src/main.tsx:8-16. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | apps/shell/src/App.tsx:165 | apps/shell | host-relationship | Yes | A tabela de rotas do shell declara `/dashboard/*` para o remote `DashboardApp` (apps/shell/src/App.tsx:165-179); `/chat/*` e `/tools/*` só renderizam o placeholder local `ComingSoon` (apps/shell/src/App.tsx:177-178). `AppRoutes` é usado por `App` em apps/shell/src/App.tsx:184-189. |
-| manual | apps/shell/src/App.tsx:172 | apps/shell | runtime-composition | Yes | Renderiza o componente remoto `DashboardApp` de apps/mfe-dashboard dentro de `MfeErrorBoundary` e `Suspense` (apps/shell/src/App.tsx:170-174), passando `user` do `AuthContext` do shell e `basePath="/dashboard"`; o componente vem do `React.lazy` em apps/shell/src/App.tsx:7. |
+| manual | apps/shell/src/App.tsx:165 | apps/shell | host-relationship | Yes | The shell route table declares `/dashboard/*` for remote `DashboardApp` (apps/shell/src/App.tsx:165-179); `/chat/*` and `/tools/*` only render local placeholder `ComingSoon` (apps/shell/src/App.tsx:177-178). `AppRoutes` is used by `App` at apps/shell/src/App.tsx:184-189. |
+| manual | apps/shell/src/App.tsx:172 | apps/shell | runtime-composition | Yes | Renders remote component `DashboardApp` from apps/mfe-dashboard inside `MfeErrorBoundary` and `Suspense` (apps/shell/src/App.tsx:170-174), passing `user` from the shell’s `AuthContext` and `basePath="/dashboard"`; the component comes from `React.lazy` at apps/shell/src/App.tsx:7. |
 
-## Resumo
+## Summary
 
-Construções com composição: 3 (dynamic-loading: 1, host-relationship: 1, runtime-composition: 1).
+Constructs participating in composition: 3 (dynamic-loading: 1, host-relationship: 1, runtime-composition: 1).
 
-## Notas
+## Notes
 
-- A busca do passo 4 achou, além da linha minerada, só `import('tailwindcss')` em comentários de tipo JSDoc (apps/shell/tailwind.config.js:1, apps/mfe-dashboard/tailwind.config.js:1), que não são construções de composição.
-- Os remotes `mfeChat`, `mfeTools` e `mfeAdmin` estão só comentados em apps/shell/vite.config.ts:32-35, sem código no snapshot.
+- Besides the mined row, the step 4 search found only `import('tailwindcss')` in JSDoc type comments (apps/shell/tailwind.config.js:1, apps/mfe-dashboard/tailwind.config.js:1), which are not composition constructs.
+- The `mfeChat`, `mfeTools` and `mfeAdmin` remotes are only commented out at apps/shell/vite.config.ts:32-35, without code in the snapshot.

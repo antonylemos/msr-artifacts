@@ -17,20 +17,20 @@ annotation:
 
 ## Workspace
 
-Nenhuma declaração de workspace.
+No workspace declaration.
 
-## Unidades
+## Units
 
-| Diretório | Marcadores | Manifesto | Entrada | Build | Workspace | Deploy | Unidade frontend | Motivo |
+| Directory | Markers | Manifest | Entry | Build | Workspace | Deploy | Frontend unit | Rationale |
 |---|---|---|---|---|---|---|---|---|
-| . | package.json;webpack.config.js | package.json:1-11 (manifesto da aplicação) | webpack.config.js:5 (entry src/index.js); src/index.js:1 (carrega bootstrap); src/bootstrap.js:7-15 (monta React) | webpack.config.js:4-11 (configuração e saída próprias); package.json:9 (`webpack --mode production`) | — | vercel.json:5-11 (build estático com saída dist) | Yes | Aplicação React da raiz com entrada, build webpack e configuração de hospedagem próprios. |
-| public | public/index.html | — | — | — | — | — | No | Diretório de template HTML da aplicação da raiz, referenciado em webpack.config.js:41-43. |
+| . | package.json;webpack.config.js | package.json:1-11 (application manifest) | webpack.config.js:5 (entry src/index.js); src/index.js:1 (loads bootstrap); src/bootstrap.js:7-15 (mounts React) | webpack.config.js:4-11 (own configuration and output); package.json:9 (`webpack --mode production`) | — | vercel.json:5-11 (static build with dist output) | Yes | Root React application with its own entry, webpack build and hosting configuration. |
+| public | public/index.html | — | — | — | — | — | No | HTML template directory for the root application, referenced in webpack.config.js:41-43. |
 
-## Resumo
+## Summary
 
-Aplicações frontend no snapshot: 1 (.).
+Frontend applications in the snapshot: 1 (.).
 
-## Notas
+## Notes
 
-- A classificação registra frontend_units: 2: ListApp e RegisterApp. Só ListApp está no snapshot; RegisterApp é externo (webpack.config.js:52-54) e não vira linha na tabela. Por isso há uma unidade frontend local.
-- package.json:5 declara main como index.js, mas a entrada usada pelo build está explicitamente em webpack.config.js:5: src/index.js.
+- The classification records frontend_units: 2: ListApp and RegisterApp. Only ListApp is in the snapshot; RegisterApp is external (webpack.config.js:52-54) and does not become a table row. Therefore there is one local frontend unit.
+- package.json:5 declares main as index.js, but the entry used by the build is explicitly in webpack.config.js:5: src/index.js.

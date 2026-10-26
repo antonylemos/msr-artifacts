@@ -20,64 +20,64 @@ annotation:
 
 # 239 — rendongping/jgs
 
-## Contexto
+## Context
 
-“前端架构师知识图谱与学习资料库” (base de conhecimento e material de estudo para arquiteto frontend, `README.md:1–8`). O repositório organiza documentos de estudo, cadernos de exercícios e bancos de questões de entrevista em quatro níveis (`level-01-foundation` a `level-04-leadership`), mais `interview-bank/`, `quizzes/` e `templates/`. Esse conteúdo é publicado por um único site estático VitePress (`website/`). Um dos capítulos de arquitetura é `A02-micro-frontend/` (“微前端”, `README.md:156`), com texto sobre qiankun, single-spa e Module Federation. Não há configuração de composição de frontends. O nome do repositório não é usado como evidência.
+“前端架构师知识图谱与学习资料库” (English translation: “Frontend architect knowledge graph and learning resources repository”, `README.md:1–8`). The repository organizes study documents, exercise workbooks and interview question banks into four levels (`level-01-foundation` to `level-04-leadership`), plus `interview-bank/`, `quizzes/` and `templates/`. This content is published through a single VitePress static site (`website/`). One architecture chapter is `A02-micro-frontend/` (“微前端”; English translation: “micro-frontends”, `README.md:156`), with text about qiankun, single-spa and Module Federation. There is no frontend composition configuration. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:240` registra rank 239, ID 1273847803, status `cloned`, branch `master` e o commit do front matter, que é o HEAD do clone e de `origin/master`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:240` records rank 239, ID 1273847803, status `cloned`, branch `master` and the front matter commit, which is the HEAD of the clone and of `origin/master`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:240` registra a estratégia `terminology` e elegibilidade `unknown`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:32118` e `data/discovery/mfe-round-002/candidates.csv:32126`, ambos com `unknown`.
+`data/samples/mfe-sample-001/sample.csv:240` records strategy `terminology` and eligibility `unknown`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:32118` and `data/discovery/mfe-round-002/candidates.csv:32126`, both with `unknown`.
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2026-06` e `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2026-06` and an empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | 2026-10-07T22:38:23.431Z / 2026-10-08T16:00:38.564Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | 2026-10-07T23:08:11.673Z / 2026-10-08T16:09:47.363Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2026-06-01..2026-06-30`.
+The effective queries append `pushed:>=2025-04-01 created:2026-06-01..2026-06-30`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem Python, `fork: false`, tamanho 13.122;
-- criação em 2026-06-18T23:50:30Z, push em 2026-08-07T09:58:53Z.
+Hit metadata:
+- null description, no topics, language Python, `fork: false`, size 13.122;
+- created at 2026-06-18T23:50:30Z, pushed at 2026-08-07T09:58:53Z.
 
-O acerto vem de `README.md:156`, `├── A02-micro-frontend/    # 微前端`, nome de pasta no índice. A busca de frase trata o hífen como separador. O plural “micro frontends” não aparece literalmente no README; esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+The match comes from `README.md:156`, `├── A02-micro-frontend/    # 微前端` (English translation of the comment: “micro-frontends”), a folder name in the index. Phrase search treats the hyphen as a separator. The plural “micro frontends” does not appear literally in the README; this hit depends on GitHub search text processing, which is not recorded.
 
-A última alteração do README é `da9def8` (2026-06-25), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The last README change is `da9def8` (2026-06-25), before the October 2026 collections. The README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 714 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Predominam Markdown e JSON de conteúdo (níveis, `interview-bank/`, `quizzes/`, `website/`). Também estão versionados `tmp-pinyin/node_modules/` (35 entradas), `__pycache__/` e scripts temporários (`temp_w1.py` a `temp_w3.py`). | contexto |
-| Configuração / Build | `website/package.json:6–17`: um único site VitePress (`vitepress dev/build`, Vue 3, ECharts). `.github/workflows/deploy.yml:18–51`: build de `website/` e publicação de `website/.vitepress/dist` no GitHub Pages. Os únicos `package.json` são `website/` e `tmp-pinyin/`. Não há `ModuleFederationPlugin`, `registerApplication`, `registerMicroApps` nem `remoteEntry` em arquivos de código. | contrária |
-| Conteúdo | `level-03-architecture/A02-micro-frontend/` (`01-学习文档.md`, `02-练习册.md`, `03-面试题.md`) e `website/architecture/micro-frontend*.md`: material de estudo e questões sobre micro-frontends. As menções a qiankun/single-spa/Module Federation em JSON (por exemplo, `interview-bank/data/quality-audit.json:28226`, `28574`) são títulos de questões. | fraca |
-| Código-fonte | Os componentes Vue do tema (`website/.vitepress/theme/components/*.vue`) implementam o próprio site de estudo (quizzes, painel, assistente); as ocorrências de “micro-frontend” neles são rótulos de conteúdo. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 714 entries, all regular files `100644`; zero symlinks and zero gitlinks. Markdown and JSON content predominate (levels, `interview-bank/`, `quizzes/`, `website/`). Also versioned are `tmp-pinyin/node_modules/` (35 entries), `__pycache__/` and temporary scripts (`temp_w1.py` to `temp_w3.py`). | context |
+| Configuration / Build | `website/package.json:6–17`: a single VitePress site (`vitepress dev/build`, Vue 3, ECharts). `.github/workflows/deploy.yml:18–51`: build of `website/` and publication of `website/.vitepress/dist` to GitHub Pages. The only `package.json` are in `website/` and `tmp-pinyin/`. There is no `ModuleFederationPlugin`, `registerApplication`, `registerMicroApps` or `remoteEntry` in code files. | contrary |
+| Content | `level-03-architecture/A02-micro-frontend/` (`01-学习文档.md`, `02-练习册.md`, `03-面试题.md`) and `website/architecture/micro-frontend*.md`: study material and questions about micro-frontends. Mentions of qiankun/single-spa/Module Federation in JSON (for example, `interview-bank/data/quality-audit.json:28226`, `28574`) are question titles. | weak |
+| Source code | The theme’s Vue components (`website/.vitepress/theme/components/*.vue`) implement the study site itself (quizzes, dashboard, assistant); “micro-frontend” occurrences in them are content labels. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 21 commits, 1 merge. São 18 de pingi `<754830524@qq.com>` e 3 de `GitHub Actions <actions@github.com>` (gatilho de deploy e inserções de questões). Vão de 2026-06-18 (`aa206e9`, “ADD-前端架构师进阶规划初始化”) a 2026-08-07 (SHA `d9e8b7e`, ajuste de `base` do site para domínio próprio). O branch padrão é `master`. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 21 commits, 1 merge. There are 18 by pingi `<754830524@qq.com>` and 3 by `GitHub Actions <actions@github.com>` (deployment trigger and question insertions). They range from 2026-06-18 (`aa206e9`, “ADD-前端架构师进阶规划初始化”; English translation: “ADD-initialize frontend architect advancement plan”) to 2026-08-07 (SHA `d9e8b7e`, adjustment of the site `base` for a custom domain). The default branch is `master`. No historical blob was read and there was no missing object.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única aplicação frontend (o site VitePress); nenhuma configuração referencia outra unidade. |
-| Q2 | No | Não há segunda unidade cuja independência possa ser avaliada. |
-| Q3 | No | Não há host compondo unidades. |
-| Q4 | No | Nenhum mecanismo de composição; Module Federation, qiankun e single-spa aparecem só como conteúdo de estudo. |
-| Q5 | No | Q1–Q4 são No: base de conhecimento cujo capítulo sobre micro-frontends é material didático. |
+| Q1 | No | A single frontend application (the VitePress site); no configuration references another unit. |
+| Q2 | No | There is no second unit whose independence could be assessed. |
+| Q3 | No | There is no host composing units. |
+| Q4 | No | No composition mechanism; Module Federation, qiankun and single-spa appear only as study content. |
+| Q5 | No | Q1–Q4 are No: knowledge base whose micro-frontends chapter is teaching material. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “repositories mentioning micro-frontends without implementing them”.
-- É conteúdo didático e de entrevista, como 023 e o rascunho 194 (exercícios e notas sobre micro-frontends dentro de um site de estudo).
-- `frontend_units: 1`, `unit_organization: single-unit`, `ui_technologies: [vue]`, `build_tools: []` (VitePress encapsula o build), `repo_type: other`, como em 194.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. It matches “repositories mentioning micro-frontends without implementing them”.
+- This is teaching and interview content, as in 023 and draft 194 (exercises and notes about micro-frontends within a study site).
+- `frontend_units: 1`, `unit_organization: single-unit`, `ui_technologies: [vue]`, `build_tools: []` (VitePress encapsulates the build), `repo_type: other`, as in 194.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** nome de pasta `A02-micro-frontend/` no índice do README de um repositório de estudo.
-- **Protocolo (busca):** o hit plural não tem grafia literal. Elegibilidade `unknown` nas duas rodadas; o repositório entrou na amostra com `unknown`. A linguagem principal “Python” se deve a scripts auxiliares.
+- **RQ1 (misleading signals):** folder name `A02-micro-frontend/` in the README index of a study repository.
+- **Protocol (search):** the plural hit has no literal spelling. Eligibility `unknown` in both rounds; the repository entered the sample with `unknown`. The main language “Python” is due to helper scripts.

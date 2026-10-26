@@ -15,32 +15,32 @@ annotation:
 
 # 355 — UserTharushi/companion-disease-risk-ai
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-remote-import | apps/shell/src/App.tsx:18 | apps/shell | dynamic-loading | Yes | `lazy(() => import("mfePetProfile/App"))` carrega o `./App` exposto por apps/mfe-pet-profile (remote `mfePetProfile` em apps/shell/vite.config.ts:13; `name`/`exposes` em apps/mfe-pet-profile/vite.config.ts:9-12). Renderizado na rota `pets/*` (apps/shell/src/App.tsx:48); App montado por apps/shell/src/main.tsx:6-10. |
-| src-remote-import | apps/shell/src/App.tsx:19 | apps/shell | dynamic-loading | Yes | `lazy(() => import("mfeSymptom/App"))` carrega o `./App` de apps/mfe-symptom-checker (remote em apps/shell/vite.config.ts:14; apps/mfe-symptom-checker/vite.config.ts:9-12). Renderizado na rota `symptom/*` (apps/shell/src/App.tsx:49). |
-| src-remote-import | apps/shell/src/App.tsx:20 | apps/shell | dynamic-loading | Yes | `lazy(() => import("mfeRiskResults/App"))` carrega o `./App` de apps/mfe-risk-results (remote em apps/shell/vite.config.ts:15; apps/mfe-risk-results/vite.config.ts:9-12). Renderizado na rota `risk-results/*` (apps/shell/src/App.tsx:50). |
-| src-remote-import | apps/shell/src/App.tsx:21 | apps/shell | dynamic-loading | Yes | `lazy(() => import("mfeVetDiscover/App"))` carrega o `./App` de apps/mfe-vet-discovery (remote em apps/shell/vite.config.ts:16; apps/mfe-vet-discovery/vite.config.ts:9-12). Renderizado na rota `vet-discovery/*` (apps/shell/src/App.tsx:51). |
-| src-remote-import | apps/shell/src/App.tsx:22 | apps/shell | dynamic-loading | Yes | `lazy(() => import("mfeVaccination/App"))` carrega o `./App` de apps/mfe-vaccination (remote em apps/shell/vite.config.ts:17; apps/mfe-vaccination/vite.config.ts:9-12). Renderizado na rota `vaccination/*` (apps/shell/src/App.tsx:52). |
-| src-remote-import | apps/shell/src/App.tsx:23 | apps/shell | dynamic-loading | Yes | `lazy(() => import("mfeAdmin/App"))` carrega o `./App` de apps/mfe-admin (remote em apps/shell/vite.config.ts:18; apps/mfe-admin/vite.config.ts:9-12). Renderizado na rota `admin/*` (apps/shell/src/App.tsx:53). |
-| src-dynamic-script | apps/mfe-auth/dev-dist/sw.js:28 | apps/mfe-auth | none | No | Arquivo gerado pelo vite-plugin-pwa em modo dev (`devOptions`, apps/mfe-auth/vite.config.ts:49): o `singleRequire` do carregador do service worker injeta os chunks do próprio Workbox (apps/mfe-auth/dev-dist/sw.js:22-37), não o bundle de outra unidade. |
-| src-cross-unit-communication | apps/mfe-auth/dev-dist/workbox-af90992f.js:777 | apps/mfe-auth | none | No | Código gerado da biblioteca Workbox: responde pelo `MessageChannel` à página que pediu cache de URLs (apps/mfe-auth/dev-dist/workbox-af90992f.js:775-778); comunicação entre service worker e página da mesma unidade, não entre unidades. |
+| src-remote-import | apps/shell/src/App.tsx:18 | apps/shell | dynamic-loading | Yes | `lazy(() => import("mfePetProfile/App"))` loads the `./App` exposed by apps/mfe-pet-profile (remote `mfePetProfile` at apps/shell/vite.config.ts:13; `name`/`exposes` at apps/mfe-pet-profile/vite.config.ts:9-12). Rendered in route `pets/*` (apps/shell/src/App.tsx:48); App mounted by apps/shell/src/main.tsx:6-10. |
+| src-remote-import | apps/shell/src/App.tsx:19 | apps/shell | dynamic-loading | Yes | `lazy(() => import("mfeSymptom/App"))` loads the `./App` from apps/mfe-symptom-checker (remote at apps/shell/vite.config.ts:14; apps/mfe-symptom-checker/vite.config.ts:9-12). Rendered in route `symptom/*` (apps/shell/src/App.tsx:49). |
+| src-remote-import | apps/shell/src/App.tsx:20 | apps/shell | dynamic-loading | Yes | `lazy(() => import("mfeRiskResults/App"))` loads the `./App` from apps/mfe-risk-results (remote at apps/shell/vite.config.ts:15; apps/mfe-risk-results/vite.config.ts:9-12). Rendered in route `risk-results/*` (apps/shell/src/App.tsx:50). |
+| src-remote-import | apps/shell/src/App.tsx:21 | apps/shell | dynamic-loading | Yes | `lazy(() => import("mfeVetDiscover/App"))` loads the `./App` from apps/mfe-vet-discovery (remote at apps/shell/vite.config.ts:16; apps/mfe-vet-discovery/vite.config.ts:9-12). Rendered in route `vet-discovery/*` (apps/shell/src/App.tsx:51). |
+| src-remote-import | apps/shell/src/App.tsx:22 | apps/shell | dynamic-loading | Yes | `lazy(() => import("mfeVaccination/App"))` loads the `./App` from apps/mfe-vaccination (remote at apps/shell/vite.config.ts:17; apps/mfe-vaccination/vite.config.ts:9-12). Rendered in route `vaccination/*` (apps/shell/src/App.tsx:52). |
+| src-remote-import | apps/shell/src/App.tsx:23 | apps/shell | dynamic-loading | Yes | `lazy(() => import("mfeAdmin/App"))` loads the `./App` from apps/mfe-admin (remote at apps/shell/vite.config.ts:18; apps/mfe-admin/vite.config.ts:9-12). Rendered in route `admin/*` (apps/shell/src/App.tsx:53). |
+| src-dynamic-script | apps/mfe-auth/dev-dist/sw.js:28 | apps/mfe-auth | none | No | File generated by vite-plugin-pwa in dev mode (`devOptions`, apps/mfe-auth/vite.config.ts:49): the service worker loader’s `singleRequire` injects Workbox’s own chunks (apps/mfe-auth/dev-dist/sw.js:22-37), rather than another unit’s bundle. |
+| src-cross-unit-communication | apps/mfe-auth/dev-dist/workbox-af90992f.js:777 | apps/mfe-auth | none | No | Generated Workbox library code: responds through `MessageChannel` to the page requesting URL caching (apps/mfe-auth/dev-dist/workbox-af90992f.js:775-778); communication between service worker and page of the same unit rather than inter-unit communication. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | apps/shell/src/App.tsx:42 | apps/shell | host-relationship | Yes | `Routes` declara onde PetProfileApp, SymptomApp, RiskResultsApp, VetDiscoverApp, VaccinationApp e AdminApp (os remotes carregados em apps/shell/src/App.tsx:18-23) entram na UI, sob o `ShellLayout` (apps/shell/src/App.tsx:42-55); a rota `/auth/*` vai para `AuthRedirect` (apps/shell/src/App.tsx:44), que redireciona para `http://localhost:3001` (apps/shell/src/App.tsx:12) em vez de federar mfe-auth. App montado por apps/shell/src/main.tsx:6-10. |
+| manual | apps/shell/src/App.tsx:42 | apps/shell | host-relationship | Yes | `Routes` declares where PetProfileApp, SymptomApp, RiskResultsApp, VetDiscoverApp, VaccinationApp and AdminApp (remotes loaded at apps/shell/src/App.tsx:18-23) enter the UI, under `ShellLayout` (apps/shell/src/App.tsx:42-55); route `/auth/*` goes to `AuthRedirect` (apps/shell/src/App.tsx:44), redirecting to `http://localhost:3001` (apps/shell/src/App.tsx:12) instead of federating mfe-auth. App mounted by apps/shell/src/main.tsx:6-10. |
 
-## Resumo
+## Summary
 
-Construções com composição: 7 (dynamic-loading: 6, host-relationship: 1).
+Constructs participating in composition: 7 (dynamic-loading: 6, host-relationship: 1).
 
-## Notas
+## Notes
 
-- As duas linhas de `apps/mfe-auth/dev-dist/` são falsos positivos em código gerado do PWA (Workbox).
-- O shell declara o remote `mfeAuth` (apps/shell/vite.config.ts:12) e o módulo `mfeAuth/App` (apps/shell/src/federation.d.ts:1), mas não o importa em nenhum ponto do código; mfe-auth é alcançado por redirecionamento de página (`window.location.replace`, apps/shell/src/App.tsx:12 e apps/shell/src/layouts/ShellLayout.tsx:24), não por composição no código-fonte.
-- O shell lê o token em `localStorage` com a chave `companion_ai_access_token` (apps/shell/src/layouts/ShellLayout.tsx:5-8), a mesma que mfe-auth grava (apps/mfe-auth/src/lib/session.ts:1, :95-96). Não virou linha: não é um dos mecanismos listados no passo 4 (não há evento `storage`) e, com shell e mfe-auth em portas diferentes (`vite --port 3000`, apps/shell/package.json:7; `vite --port 3001`, apps/mfe-auth/package.json:7), as origens não compartilham o mesmo `localStorage`.
-- Nenhum padrão `src-*` nem busca manual achou custom elements, iframes, `postMessage`, `CustomEvent` ou `BroadcastChannel` no código de `apps/*/src`; os `import()` de apps/mfe-auth/src (ex.: apps/mfe-auth/src/lib/auth-api.ts:100) são de arquivos locais.
+- The two `apps/mfe-auth/dev-dist/` rows are false positives in generated PWA code (Workbox).
+- Shell declares remote `mfeAuth` (apps/shell/vite.config.ts:12) and module `mfeAuth/App` (apps/shell/src/federation.d.ts:1), but never imports it in code; mfe-auth is reached through a page redirect (`window.location.replace`, apps/shell/src/App.tsx:12 and apps/shell/src/layouts/ShellLayout.tsx:24) rather than composition in source code.
+- Shell reads the token from `localStorage` under key `companion_ai_access_token` (apps/shell/src/layouts/ShellLayout.tsx:5-8), the same key written by mfe-auth (apps/mfe-auth/src/lib/session.ts:1, :95-96). It did not become a row: it is not among the mechanisms listed in step 4 (there is no `storage` event) and, with shell and mfe-auth on different ports (`vite --port 3000`, apps/shell/package.json:7; `vite --port 3001`, apps/mfe-auth/package.json:7), the origins do not share the same `localStorage`.
+- No `src-*` pattern or manual search found custom elements, iframes, `postMessage`, `CustomEvent` or `BroadcastChannel` in `apps/*/src` code; the `import()` calls in apps/mfe-auth/src (for example: apps/mfe-auth/src/lib/auth-api.ts:100) are local files.

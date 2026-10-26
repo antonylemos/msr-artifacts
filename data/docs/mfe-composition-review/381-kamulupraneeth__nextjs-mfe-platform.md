@@ -20,73 +20,31 @@ annotation:
 
 # 381 — kamulupraneeth/nextjs-mfe-platform
 
-## Leitura do repositório
+## Repository overview
 
-Plataforma de demonstração com três aplicações Next.js independentes unidas por Next.js
-Multi-Zones, sem workspace nem pacote compartilhado. Cada app tem `package.json` e porta próprios:
-`host-shell` (3000), com a página inicial e a navegação global; `analytics-dashboard` (3001), um
-painel de telemetria; e `workspace-document` (3002), um editor de documentos
-(host-shell/package.json:6, analytics-dashboard/package.json:6, workspace-document/package.json:6).
+A demonstration platform with three independent Next.js applications joined by Next.js Multi-Zones, without workspace or shared package. Each app has its own `package.json` and port: `host-shell` (3000), with homepage and global navigation; `analytics-dashboard` (3001), a telemetry dashboard; and `workspace-document` (3002), a document editor (host-shell/package.json:6, analytics-dashboard/package.json:6, workspace-document/package.json:6).
 
-A composição é por rota no servidor, não por montagem na página. O `host-shell` declara em
-`rewrites()`, na fase `beforeFiles`, que `/analytics`, `/analytics/api/metrics`, `/analytics/:path`
-e os assets `/analytics-assets/_next/:path*` vão para `ANALYTICS_URL`, e que `/workspace`,
-`/workspace/:path*` e `/workspace-assets/_next/:path*` vão para `WORKSPACE_URL`
-(host-shell/next.config.ts:10-46). As duas URLs valem `PRODUCTION_ANALYTICS_URL` e
-`PRODUCTION_WORKSPACE_URL` ou, por padrão, `http://localhost:3001` e `http://localhost:3002`
-(host-shell/next.config.ts:3-6). Cada zona responde no caminho declarado pelo seu `basePath` e
-serve os chunks sob um `assetPrefix` próprio (analytics-dashboard/next.config.ts:5-6;
-workspace-document/next.config.ts:5, 7), para coexistir sob a origem do shell. Cada zona renderiza
-a página inteira com layout próprio. Como em 013, 237 e 273, nenhum dos tipos `host → remote`,
-`root-config → application`, `application → custom-element` ou `page → embedded-frontend`
-descreve essa forma de entrada, por isso as duas relações estão como `other`.
+Composition occurs through server routes rather than page mounting. `host-shell` declares in `rewrites()`, in phase `beforeFiles`, that `/analytics`, `/analytics/api/metrics`, `/analytics/:path` and assets `/analytics-assets/_next/:path*` go to `ANALYTICS_URL`, and `/workspace`, `/workspace/:path*` and `/workspace-assets/_next/:path*` go to `WORKSPACE_URL` (host-shell/next.config.ts:10-46). Both URLs are `PRODUCTION_ANALYTICS_URL` and `PRODUCTION_WORKSPACE_URL` or default to `http://localhost:3001` and `http://localhost:3002` (host-shell/next.config.ts:3-6). Each zone responds at the path declared by its `basePath` and serves chunks under its own `assetPrefix` (analytics-dashboard/next.config.ts:5-6; workspace-document/next.config.ts:5, 7), to coexist under shell's origin. Each zone renders the entire page with its own layout. As in 013, 237 and 273, none of types `host → remote`, `root-config → application`, `application → custom-element` or `page → embedded-frontend` describes this entry form, hence both relationships are `other`.
 
-Particularidades do roteamento: o shell repassa também uma rota de API da zona,
-`/analytics/api/metrics` (host-shell/next.config.ts:19-23), que é o stream SSE que a página do
-painel abre com `new EventSource("/analytics/api/metrics")` (analytics-dashboard/src/app/page.tsx:68),
-servido por analytics-dashboard/src/app/api/metrics/route.ts. É a zona falando com o próprio
-backend através da origem do shell, não comunicação entre unidades. O padrão `/analytics/:path`
-(host-shell/next.config.ts:26) cobre um só segmento, sem o `*` que `/workspace/:path*` tem
-(host-shell/next.config.ts:40).
+Routing particularities: shell also forwards a zone API route, `/analytics/api/metrics` (host-shell/next.config.ts:19-23), the SSE stream opened by the dashboard page with `new EventSource("/analytics/api/metrics")` (analytics-dashboard/src/app/page.tsx:68), served by analytics-dashboard/src/app/api/metrics/route.ts. This is the zone communicating with its own backend through shell's origin, rather than inter-unit communication. Pattern `/analytics/:path` (host-shell/next.config.ts:26) covers one segment, without the `*` present in `/workspace/:path*` (host-shell/next.config.ts:40).
 
-O que não virou relação: a navegação entre zonas é por link de página inteira, com `<a href>`
-para `/analytics` e `/workspace` na barra global (host-shell/src/components/GlobalNavbar.tsx:12-13,
-41-43; o comentário em :38 diz que `Link` foi trocado por `<a>`) e com `<Link href={app.path}>` nos
-cartões da página inicial (host-shell/src/app/page.tsx:11, 19, 74-75); link não é tipo de relação.
-Os `postMessage` do analytics-dashboard são entre a página e um Web Worker de filtragem da própria
-unidade (analytics-dashboard/src/app/page.tsx:30, 41, 97), e o `indexedDB` do workspace-document
-guarda o rascunho da própria unidade (workspace-document/src/utils/indexedDB.ts:11). Não há estado
-compartilhado nem troca de mensagens entre as zonas.
+What did not become a relationship: navigation between zones uses full-page links, with `<a href>` to `/analytics` and `/workspace` in the global bar (host-shell/src/components/GlobalNavbar.tsx:12-13, 41-43; the comment at :38 says `Link` was replaced by `<a>`) and `<Link href={app.path}>` in homepage cards (host-shell/src/app/page.tsx:11, 19, 74-75); links are not a relationship type. `postMessage` in analytics-dashboard occurs between the page and the unit's own filtering Web Worker (analytics-dashboard/src/app/page.tsx:30, 41, 97), and workspace-document's `indexedDB` holds the unit's own draft (workspace-document/src/utils/indexedDB.ts:11). There is no shared state or message exchange between zones.
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | host-shell | analytics-dashboard | other | origem → destino | other | Yes | Yes | host-shell/next.config.ts:3-4, 14-33 (`ANALYTICS_URL`, padrão `http://localhost:3001`; `/analytics`, `/analytics/api/metrics`, `/analytics/:path`, `/analytics-assets/_next/:path*`); analytics-dashboard/next.config.ts:5-6 (`basePath: "/analytics"`, `assetPrefix: "/analytics-assets"`); analytics-dashboard/package.json:6 (porta 3001) | host-shell/next.config.ts:10 |
-| 2 | host-shell | workspace-document | other | origem → destino | other | Yes | Yes | host-shell/next.config.ts:5-6, 35-46 (`WORKSPACE_URL`, padrão `http://localhost:3002`; `/workspace`, `/workspace/:path*`, `/workspace-assets/_next/:path*`); workspace-document/next.config.ts:5, 7 (`basePath: "/workspace"`, `assetPrefix: "/workspace-assets"`); workspace-document/package.json:6 (porta 3002) | host-shell/next.config.ts:10 |
+| 1 | host-shell | analytics-dashboard | other | source → target | other | Yes | Yes | host-shell/next.config.ts:3-4, 14-33 (`ANALYTICS_URL`, default `http://localhost:3001`; `/analytics`, `/analytics/api/metrics`, `/analytics/:path`, `/analytics-assets/_next/:path*`); analytics-dashboard/next.config.ts:5-6 (`basePath: "/analytics"`, `assetPrefix: "/analytics-assets"`); analytics-dashboard/package.json:6 (port 3001) | host-shell/next.config.ts:10 |
+| 2 | host-shell | workspace-document | other | source → target | other | Yes | Yes | host-shell/next.config.ts:5-6, 35-46 (`WORKSPACE_URL`, default `http://localhost:3002`; `/workspace`, `/workspace/:path*`, `/workspace-assets/_next/:path*`); workspace-document/next.config.ts:5, 7 (`basePath: "/workspace"`, `assetPrefix: "/workspace-assets"`); workspace-document/package.json:6 (port 3002) | host-shell/next.config.ts:10 |
 
-## Observações
+## Observations
 
-**1. host-shell → analytics-dashboard.** O shell repassa `/analytics`, `/analytics/api/metrics`,
-`/analytics/:path` e `/analytics-assets/_next/:path*` para `ANALYTICS_URL`
-(host-shell/next.config.ts:14-33). O destino foi resolvido pelo caminho: `/analytics` é o
-`basePath` e `/analytics-assets` é o `assetPrefix` de `analytics-dashboard`
-(analytics-dashboard/next.config.ts:5-6), e a rota `/api/metrics` existe na zona
-(analytics-dashboard/src/app/api/metrics/route.ts). O padrão `http://localhost:3001`
-(host-shell/next.config.ts:4) e a porta do script `dev` (analytics-dashboard/package.json:6) só
-corroboram. Tipo e mecanismo são `other`: o shell não carrega módulos da zona nem a registra num
-orquestrador; encaminha a requisição para outra aplicação, que responde com a página inteira
-(Next.js Multi-Zones por `rewrites`). A direção é a do encaminhamento. Ativa `Yes` pela linha
-manual `host-relationship` da revisão de código-fonte (host-shell/next.config.ts:10).
+**1. host-shell → analytics-dashboard.** Shell forwards `/analytics`, `/analytics/api/metrics`, `/analytics/:path` and `/analytics-assets/_next/:path*` to `ANALYTICS_URL` (host-shell/next.config.ts:14-33). The target was resolved through path: `/analytics` is the `basePath` and `/analytics-assets` the `assetPrefix` of `analytics-dashboard` (analytics-dashboard/next.config.ts:5-6), and route `/api/metrics` exists in the zone (analytics-dashboard/src/app/api/metrics/route.ts). Default `http://localhost:3001` (host-shell/next.config.ts:4) and the `dev` script's port (analytics-dashboard/package.json:6) only corroborate. Type and mechanism are `other`: shell neither loads zone modules nor registers it in an orchestrator; it forwards the request to another application, responding with the entire page (Next.js Multi-Zones through `rewrites`). Direction follows forwarding. Active `Yes` through the manual `host-relationship` source code review line (host-shell/next.config.ts:10).
 
-**2. host-shell → workspace-document.** Mesmo padrão com `/workspace`, `/workspace/:path*` e
-`/workspace-assets/_next/:path*` para `WORKSPACE_URL` (host-shell/next.config.ts:35-46). `/workspace`
-é o `basePath` e `/workspace-assets` é o `assetPrefix` de `workspace-document`
-(workspace-document/next.config.ts:5, 7); o padrão `http://localhost:3002`
-(host-shell/next.config.ts:6) e a porta 3002 (workspace-document/package.json:6) corroboram. A
-mesma linha de código sustenta as relações 1 e 2.
+**2. host-shell → workspace-document.** Same pattern with `/workspace`, `/workspace/:path*` and `/workspace-assets/_next/:path*` to `WORKSPACE_URL` (host-shell/next.config.ts:35-46). `/workspace` is the `basePath` and `/workspace-assets` the `assetPrefix` of `workspace-document` (workspace-document/next.config.ts:5, 7); default `http://localhost:3002` (host-shell/next.config.ts:6) and port 3002 (workspace-document/package.json:6) corroborate. The same code line supports relationships 1 and 2.
 
-## Resumo
+## Summary
 
-Relações: 2 (other: 2). Ativas: 2. Destino fora do snapshot: 0.
-Unidades sem relação: nenhuma.
+Relationships: 2 (other: 2). Active: 2. Target outside the snapshot: 0.
+Units without a relationship: none.
+

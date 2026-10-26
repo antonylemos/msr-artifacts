@@ -20,47 +20,47 @@ annotation:
 
 # 031 — Scouterna/j26-tags
 
-## Contexto
+## Context
 
-- **Abordagem de implementação:** composição por iframe num shell externo (`j26-app`), com registro de navegação por endpoint HTTP e comunicação por `postMessage`
-- **Tipo de repositório:** production-oriented application (registro de tags RFID do evento Jamboree26, imagem Docker publicada por CI)
-- **Classificação:** MFE-unit (depende da decisão em aberto sobre composição por iframe)
+- **Implementation approach:** iframe composition in an external shell (`j26-app`), with navigation registration through an HTTP endpoint and communication through `postMessage`
+- **Repository type:** production-oriented application (RFID tag registration for the Jamboree26 event, Docker image published by CI)
+- **Classification:** MFE-unit (depends on the unresolved decision about iframe composition)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Documentação | `README.md:7-8` "Runs as a micro-frontend in an iframe inside the **j26-app** shell, mounted at `/_services/tags`."; `CLAUDE.md:13` repete | moderada |
-| Estrutura | Uma única app TanStack Start (frontend + rotas de servidor + Prisma) | contrária |
-| Configuração | `vite.config.ts:8-17`: `BASE = "/_services/tags"` aplicado em `base`, `nitro({ baseURL })` e `tanstackStart({ router: { basepath } })`; `src/router.tsx:7` `basepath: "/_services/tags"`. A app é montada sob um prefixo do shell. | moderada |
-| Código-fonte (registro no shell) | `src/routes/api/app-config.ts:7-11`: "Shell navigation registration. j26-app fetches this and only renders the nav item when it returns 200"; `:24-45`: devolve itens de navegação (`/_services/tags`, `/_services/tags/admin`) por permissão (contrato com o host) | forte |
-| Código-fonte (comunicação) | `src/lib/use-app-bar-title.ts:3-13`: `window.parent.postMessage({ type: "j26:appBar", title }, origin)`, o protocolo de mensagens com o shell que a embute (contrato com o host) | forte |
-| Composição | O shell `j26-app` (que faz fetch de `/api/app-config` e embute a app em iframe) não está no repositório | ausente |
-| Build/deploy | `Dockerfile`, `.github/workflows/build-image.yml:41-53`: imagem própria publicada no registry; deploy independente | moderada |
-| Documentação (ecossistema multi-repositório) | Autenticação Keycloak compartilhada no ecossistema J26 (`README.md:182-183`, repositório `j26-keycloak`) | moderada |
+| Documentation | `README.md:7-8` "Runs as a micro-frontend in an iframe inside the **j26-app** shell, mounted at `/_services/tags`."; repeated in `CLAUDE.md:13` | moderate |
+| Structure | A single TanStack Start app (frontend + server routes + Prisma) | contrary |
+| Configuration | `vite.config.ts:8-17`: `BASE = "/_services/tags"` applied in `base`, `nitro({ baseURL })` and `tanstackStart({ router: { basepath } })`; `src/router.tsx:7` `basepath: "/_services/tags"`. The app is mounted under a shell prefix. | moderate |
+| Source code (shell registration) | `src/routes/api/app-config.ts:7-11`: "Shell navigation registration. j26-app fetches this and only renders the nav item when it returns 200"; `:24-45`: returns navigation items (`/_services/tags`, `/_services/tags/admin`) by permission (contract with the host) | strong |
+| Source code (communication) | `src/lib/use-app-bar-title.ts:3-13`: `window.parent.postMessage({ type: "j26:appBar", title }, origin)`, the messaging protocol with the shell embedding it (contract with the host) | strong |
+| Composition | Shell `j26-app` (which fetches `/api/app-config` and embeds the app in an iframe) is not in the repository | absent |
+| Build/deploy | `Dockerfile`, `.github/workflows/build-image.yml:41-53`: its own image published to the registry; independent deployment | moderate |
+| Documentation (multi-repository ecosystem) | Keycloak authentication shared in the J26 ecosystem (`README.md:182-183`, repository `j26-keycloak`) | moderate |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend; nenhuma configuração de composição no repositório referencia outras unidades |
-| Q2 | Yes (para a unidade) | Build, imagem Docker e deploy próprios (`build-image.yml`) |
-| Q3 | Undetermined | O shell `j26-app` que embute a app não está no repositório |
-| Q4 | Undetermined | O lado da unidade está implementado (`app-config`, `postMessage`, basepath); o mecanismo do host não é observável, e é iframe (decisão em aberto) |
-| Q5 | No | A evidência mostra uma unidade preparada para composição, não uma instância de MFE no repositório |
+| Q1 | No | A single frontend unit; no composition configuration in the repository references other units |
+| Q2 | Yes (for this unit) | Its own build, Docker image and deployment (`build-image.yml`) |
+| Q3 | Undetermined | Shell `j26-app`, which embeds the app, is not in the repository |
+| Q4 | Undetermined | The unit side is implemented (`app-config`, `postMessage`, basepath); the host mechanism is not observable, and it is iframe (unresolved decision) |
+| Q5 | No | The evidence shows a unit prepared for composition, not an MFE instance in the repository |
 
-## Motivo
+## Rationale
 
-- Q1 é No; aplica-se a exceção MFE-unit: "a single frontend unit explicitly prepared to be composed by an external host… but the composing host is not observable".
-- A preparação é explícita e implementada: basepath sob o prefixo do shell, endpoint de registro de navegação consumido pelo shell e protocolo `postMessage` para a barra de título.
-- Corresponde ao caso "repositories containing only a remote unit, without the composing host", aqui com iframe em vez de MF ou single-spa.
+- Q1 is No; the MFE-unit exception applies: "a single frontend unit explicitly prepared to be composed by an external host… but the composing host is not observable".
+- Preparation is explicit and implemented: basepath under the shell prefix, navigation registration endpoint consumed by the shell and `postMessage` protocol for the title bar.
+- Matches "repositories containing only a remote unit, without the composing host", here with iframe instead of MF or single-spa.
 
-## Notas para análise
+## Analysis notes
 
-- **Protocolo (ecossistema multi-repositório):** a arquitetura completa (shell `j26-app` + serviços como este) está distribuída em vários repositórios da organização Scouterna; um caso de MFE multi-repositório em produção.
-- **RQ2:** abordagem por iframe com contrato HTTP + `postMessage`, sem nenhuma dependência de MFE.
+- **Protocol (multi-repository ecosystem):** the full architecture (shell `j26-app` + services such as this one) is distributed across several repositories in the Scouterna organization; a production multi-repository MFE case.
+- **RQ2:** iframe approach with an HTTP + `postMessage` contract, without any MFE dependency.
 
-## Ponto para revisão conjunta
+## Point for joint review
 
-- **Decisão em aberto "link-only or iframe composition":** se iframe não contar como mecanismo de composição, este repositório passa a Non-MFE.
-- Argumento para contar: aqui não é um iframe solto, mas um contrato bidirecional com o shell (registro dinâmico de navegação por permissão + mensagens tipadas `j26:appBar`). Sugestão de regra: "iframe conta quando há contrato explícito de integração com o host (registro, mensagens, roteamento); iframe isolado não conta".
+- **Unresolved decision "link-only or iframe composition":** if iframe does not count as a composition mechanism, this repository becomes Non-MFE.
+- Argument for counting it: this is not an isolated iframe, but a bidirectional contract with the shell (dynamic permission-based navigation registration + typed `j26:appBar` messages). Suggested rule: "iframe counts when there is an explicit integration contract with the host (registration, messages, routing); an isolated iframe does not count".

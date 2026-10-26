@@ -16,63 +16,63 @@ annotation:
 
 # 046 — pgarr/microfrontend-template
 
-## Leitura do repositório
+## Repository overview
 
-O repositório não tem nenhum arquivo `.md`, e os `package.json` não têm `description`. A documentação são os comentários do padrão de curso que o template segue:
-- **`bootstrap.js` de cada remote:** cada um monta a si mesmo quando roda isolado em desenvolvimento e exporta `mount` para o container.
-- **Wrappers do container:** os de auth e marketing montam o remote uma vez e sincronizam a navegação do container para o remote.
+The repository has no `.md` file, and `package.json` files have no `description`. Documentation consists of comments from the course pattern followed by the template:
+- **Each remote's `bootstrap.js`:** each mounts itself when running independently in development and exports `mount` for container.
+- **Container wrappers:** auth and marketing wrappers mount remote once and synchronize container-to-remote navigation.
 
-Os comentários são iguais nos três remotes, mas cada um fala da sua própria unidade e foi conferido nela. É a mesma arquitetura do repositório 017, que não tem esses comentários.
+Comments are identical across all three remotes, but each refers to its own unit and was checked there. This is the same architecture as repository 017, lacking those comments.
 
-Também foram lidos os artefatos que as revisões anteriores citam:
-- os quatro workflows de deploy;
-- as configurações webpack;
-- os `package.json` e `index.js`;
-- `container/src/App.js`, o `DashboardApp.js` e os componentes de login do auth.
+Artifacts cited by previous reviews were also read:
+- all four deployment workflows;
+- webpack configurations;
+- `package.json` and `index.js` files;
+- `container/src/App.js`, `DashboardApp.js` and auth login components.
 
-Nenhum tem comentário sobre a arquitetura. Ficou fora da tabela o comentário "Listen to history changes and update location state", de `auth/src/App.js:12` e `marketing/src/App.js:12`, um detalhe interno de cada remote.
+None has an architecture comment. Comment "Listen to history changes and update location state", in `auth/src/App.js:12` and `marketing/src/App.js:12`, remained outside the table as an internal detail of each remote.
 
-Tudo o que os comentários afirmam confere com as revisões anteriores.
+All comment claims match previous reviews.
 
-Nenhuma ocorrência `doc-*` na mineração.
+No `doc-*` occurrences in mining.
 
-## Afirmações
+## Claims
 
-| # | Documento | Afirmação | Tema | Corroboração | Evidência |
+| # | Document | Claim | Theme | Corroboration | Evidence |
 |---|---|---|---|---|---|
-| 1 | auth/src/bootstrap.js:34-35 | "If we are in development and in isolation, call mount immediately" (o auth monta a si mesmo quando isolado) | independência | corroborada | 3.4.3 (auth `Yes`); auth/src/bootstrap.js:36-42; auth/public/index.html:5 |
-| 2 | auth/src/bootstrap.js:44-45 | "We are running through container and we should export the mount function" (o auth é montado pelo container) | composição | corroborada | 3.4.5 #1; container/src/components/AuthApp.js:1, 13 |
-| 3 | container/src/components/AuthApp.js:11 | "Mount the microfrontend once" (o container monta o auth uma única vez) | composição | corroborada | container/src/components/AuthApp.js:12-22 |
-| 4 | container/src/components/AuthApp.js:24 | "Sync navigation from container to child" (a navegação do container é repassada ao auth) | composição | corroborada | container/src/components/AuthApp.js:21, 25-29 |
-| 5 | container/src/components/MarketingApp.js:11 | "Mount the microfrontend once" (o container monta o marketing uma única vez) | composição | corroborada | container/src/components/MarketingApp.js:12-21 |
-| 6 | container/src/components/MarketingApp.js:23 | "Sync navigation from container to child" (a navegação do container é repassada ao marketing) | composição | corroborada | container/src/components/MarketingApp.js:24-28 |
-| 7 | dashboard/src/bootstrap.js:10-11 | "If we are in development and in isolation, call mount immediately" (o dashboard monta a si mesmo quando isolado) | independência | corroborada | 3.4.3 (dashboard `Yes`); dashboard/src/bootstrap.js:12-18; dashboard/public/index.html:5 |
-| 8 | dashboard/src/bootstrap.js:20-21 | "We are running through container and we should export the mount function" (o dashboard é montado pelo container) | composição | corroborada | 3.4.5 #2; container/src/components/DashboardApp.js:1, 8 |
-| 9 | marketing/src/bootstrap.js:34-35 | "If we are in development and in isolation, call mount immediately" (o marketing monta a si mesmo quando isolado) | independência | corroborada | 3.4.3 (marketing `Yes`); marketing/src/bootstrap.js:36-42; marketing/public/index.html:5 |
-| 10 | marketing/src/bootstrap.js:44-45 | "We are running through container and we should export the mount function" (o marketing é montado pelo container) | composição | corroborada | 3.4.5 #3; container/src/components/MarketingApp.js:1, 13 |
+| 1 | auth/src/bootstrap.js:34-35 | "If we are in development and in isolation, call mount immediately" (auth mounts itself when isolated) | independence | corroborated | 3.4.3 (auth `Yes`); auth/src/bootstrap.js:36-42; auth/public/index.html:5 |
+| 2 | auth/src/bootstrap.js:44-45 | "We are running through container and we should export the mount function" (auth is mounted by container) | composition | corroborated | 3.4.5 #1; container/src/components/AuthApp.js:1, 13 |
+| 3 | container/src/components/AuthApp.js:11 | "Mount the microfrontend once" (container mounts auth only once) | composition | corroborated | container/src/components/AuthApp.js:12-22 |
+| 4 | container/src/components/AuthApp.js:24 | "Sync navigation from container to child" (container navigation is forwarded to auth) | composition | corroborated | container/src/components/AuthApp.js:21, 25-29 |
+| 5 | container/src/components/MarketingApp.js:11 | "Mount the microfrontend once" (container mounts marketing only once) | composition | corroborated | container/src/components/MarketingApp.js:12-21 |
+| 6 | container/src/components/MarketingApp.js:23 | "Sync navigation from container to child" (container navigation is forwarded to marketing) | composition | corroborated | container/src/components/MarketingApp.js:24-28 |
+| 7 | dashboard/src/bootstrap.js:10-11 | "If we are in development and in isolation, call mount immediately" (dashboard mounts itself when isolated) | independence | corroborated | 3.4.3 (dashboard `Yes`); dashboard/src/bootstrap.js:12-18; dashboard/public/index.html:5 |
+| 8 | dashboard/src/bootstrap.js:20-21 | "We are running through container and we should export the mount function" (dashboard is mounted by container) | composition | corroborated | 3.4.5 #2; container/src/components/DashboardApp.js:1, 8 |
+| 9 | marketing/src/bootstrap.js:34-35 | "If we are in development and in isolation, call mount immediately" (marketing mounts itself when isolated) | independence | corroborated | 3.4.3 (marketing `Yes`); marketing/src/bootstrap.js:36-42; marketing/public/index.html:5 |
+| 10 | marketing/src/bootstrap.js:44-45 | "We are running through container and we should export the mount function" (marketing is mounted by container) | composition | corroborated | 3.4.5 #3; container/src/components/MarketingApp.js:1, 13 |
 
-## Observações
+## Observations
 
-**1. auth/src/bootstrap.js:34-35.** Em desenvolvimento, o auth procura `#_auth-dev-root`, que existe no seu `index.html`, e se monta com histórico do navegador. Quando montado pelo container, usa histórico em memória (ver a revisão de composição).
+**1. auth/src/bootstrap.js:34-35.** In development, auth looks for `#_auth-dev-root`, present in its `index.html`, and mounts itself with browser history. When mounted by container, it uses memory history (see the composition review).
 
-**2. auth/src/bootstrap.js:44-45.** O auth expõe `./AuthApp`, e o container importa `mount` de `auth/AuthApp` e o chama no seu wrapper.
+**2. auth/src/bootstrap.js:44-45.** Auth exposes `./AuthApp`, and container imports `mount` from `auth/AuthApp` and calls it in its wrapper.
 
-**3. container/src/components/AuthApp.js:11.** A montagem fica num `useEffect` com dependências vazias, executado uma vez por montagem do wrapper. O wrapper passa ao auth o caminho inicial e os callbacks `onNavigate` e `onSignIn`.
+**3. container/src/components/AuthApp.js:11.** Mounting is in a `useEffect` with empty dependencies, executed once per wrapper mount. The wrapper passes auth the initial path and callbacks `onNavigate` and `onSignIn`.
 
-**4. container/src/components/AuthApp.js:24.** O wrapper guarda o `onParentNavigate` devolvido pelo `mount` e o chama sempre que a localização do container muda. A sincronização no outro sentido é feita pelo `onNavigate` (container/src/components/AuthApp.js:15-17).
+**4. container/src/components/AuthApp.js:24.** The wrapper retains `onParentNavigate` returned by `mount` and calls it whenever container location changes. Synchronization in the other direction uses `onNavigate` (container/src/components/AuthApp.js:15-17).
 
-**5. container/src/components/MarketingApp.js:11.** Mesmo padrão do auth, uma vez por montagem do wrapper, sem o callback de login.
+**5. container/src/components/MarketingApp.js:11.** Same auth pattern, once per wrapper mount, without the login callback.
 
-**6. container/src/components/MarketingApp.js:23.** Mesmo padrão do auth.
+**6. container/src/components/MarketingApp.js:23.** Same auth pattern.
 
-**7. dashboard/src/bootstrap.js:10-11.** O dashboard, em Vue, procura `#_dashboard-dev-root` e se monta. Diferente de auth e marketing, não recebe histórico nem opções. O wrapper do container também não tem os comentários de montagem e de sincronização, porque não há navegação a sincronizar (container/src/components/DashboardApp.js:1-11).
+**7. dashboard/src/bootstrap.js:10-11.** Dashboard, in Vue, looks for `#_dashboard-dev-root` and mounts itself. Unlike auth and marketing, it receives neither history nor options. Container wrapper also lacks mounting and synchronization comments, because no navigation needs synchronization (container/src/components/DashboardApp.js:1-11).
 
-**8. dashboard/src/bootstrap.js:20-21.** O dashboard expõe `./DashboardApp`, e o container chama `mount(ref.current)` uma vez.
+**8. dashboard/src/bootstrap.js:20-21.** Dashboard exposes `./DashboardApp`, and container calls `mount(ref.current)` once.
 
-**9. marketing/src/bootstrap.js:34-35.** Mesmo padrão do auth, com `#_marketing-dev-root`.
+**9. marketing/src/bootstrap.js:34-35.** Same auth pattern, with `#_marketing-dev-root`.
 
-**10. marketing/src/bootstrap.js:44-45.** O marketing expõe `./MarketingApp`, e o container importa e chama o seu `mount`.
+**10. marketing/src/bootstrap.js:44-45.** Marketing exposes `./MarketingApp`, and container imports and calls its `mount`.
 
-## Resumo
+## Summary
 
-Afirmações: 10 (corroborada: 10, parcial: 0, contradita: 0, sem corroboração: 0). Temas: (composição: 7, independência: 3).
+Claims: 10 (corroborated: 10, partial: 0, contradicted: 0, uncorroborated: 0). Themes: (composition: 7, independence: 3).

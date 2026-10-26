@@ -20,65 +20,65 @@ annotation:
 
 # 255 — sarikaksstrcs/sarikaksstrcs
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** não é projeto de software (README de perfil do GitHub).
+- **Repository type:** not a software project (GitHub profile README).
 
-O snapshot tem só o README de apresentação profissional e uma imagem PNG não referenciada (`git grep` por `github-header-image` no SHA: nenhuma ocorrência). “Micro-frontend Architecture” aparece como item de trabalho atual (`README.md:10`). O nome do repositório não é usado como evidência.
+The snapshot has only the professional introduction README and an unreferenced PNG image (`git grep` for `github-header-image` at the SHA: no occurrences). “Micro-frontend Architecture” appears as a current work item (`README.md:10`). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:256` registra rank 255, ID 949458712, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:256` records rank 255, ID 949458712, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:256` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:12206` (`terminology`, `unknown`) e `data/discovery/mfe-round-002/candidates.csv:12211` (`terminology`, `pass`).
+`data/samples/mfe-sample-001/sample.csv:256` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:12206` (`terminology`, `unknown`) and `data/discovery/mfe-round-002/candidates.csv:12211` (`terminology`, `pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories` e com `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories` and with an empty `path`:
 
-| Consulta (`q`) | Subconsulta | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Collection 001 / 002 (UTC) |
 |---|---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | `terminology-micro-frontend-repositories#created:2025-03` | 2026-10-07T22:20:29.475Z / 2026-10-08T15:53:47.128Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | `terminology-micro-frontends-repositories#created:2025-03` | 2026-10-07T22:51:48.548Z / 2026-10-08T16:05:20.830Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2025-03-01..2025-03-31`.
+The effective queries append `pushed:>=2025-04-01 created:2025-03-01..2025-03-31`.
 
-Metadados do hit (iguais nas duas rodadas): descrição nula, sem tópicos, linguagem nula, `fork: false`, tamanho 109, criação em 2025-03-16T14:10:42Z, push em 2026-01-18T16:23:42Z.
+Hit metadata (identical in both rounds): null description, no topics, null language, `fork: false`, size 109, created at 2025-03-16T14:10:42Z, pushed at 2026-01-18T16:23:42Z.
 
-Sem descrição, o acerto vem do README. A única grafia correspondente é “Micro-frontend” (`README.md:10`, “Currently working on Web, Mobile Apps and Micro-frontend Architecture”); a busca de frase trata o hífen como separador e casa literalmente “micro frontend”. A forma plural “micro frontends” não aparece literalmente; esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+Without a description, the match comes from the README. The only matching spelling is “Micro-frontend” (`README.md:10`, “Currently working on Web, Mobile Apps and Micro-frontend Architecture”); phrase search treats the hyphen as a separator and literally matches “micro frontend”. The plural form “micro frontends” does not appear literally; this hit depends on GitHub search text processing, which is not recorded.
 
-O SHA (2026-01-18T21:53:41+05:30, isto é, 16:23:41Z) é a última alteração do README, coincide com o `pushed_at` registrado e antecede as coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The SHA (2026-01-18T21:53:41+05:30, that is, 16:23:41Z) is the last README change, coincides with the recorded `pushed_at` and predates the October 2026 collections. The README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 2 entradas, `README.md` e `github-header-image.png`, ambas arquivos regulares `100644`; zero symlinks e zero gitlinks. Não há código, manifesto nem build. | ausente |
-| Documentação | `README.md:1–5`: apresentação pessoal; `README.md:10`: “Micro-frontend Architecture” como trabalho atual; `README.md:23–36`: experiência profissional; `README.md:60–66`: badges de tecnologias de frontend como competências. | fraca |
-| Tecnologia / Configuração / Código-fonte / Composição / Build/deploy | Inexistentes: só o README e uma imagem; nenhuma configuração de federação, single-spa, import map, iframe ou Web Components. Imports relativos entre unidades não se aplicam (não há código). | ausente |
+| Structure | `git ls-tree -r` at the SHA: 2 entries, `README.md` and `github-header-image.png`, both regular files `100644`; zero symlinks and zero gitlinks. There is no code, manifest or build. | absent |
+| Documentation | `README.md:1–5`: personal introduction; `README.md:10`: “Micro-frontend Architecture” as current work; `README.md:23–36`: professional experience; `README.md:60–66`: frontend technology badges as skills. | weak |
+| Technology / Configuration / Source code / Composition / Build/deploy | Nonexistent: only the README and an image; no federation, single-spa, import map, iframe or Web Components configuration. Relative imports between units do not apply (there is no code). | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso e parcial (`blob:none`). São 17 commits (17 em todos os refs), nenhum merge, todos com autor `K S Sarika <sarika.ks.official@gmail.com>` e committer `GitHub` (edição e upload pela interface web). A raiz é `6548c7d` (2025-03-16T19:40:43+05:30, “Initial commit”). Pelo `git log --no-renames --name-status`, 16 commits só adicionam ou modificam `README.md`, e `8fe501e` (“Add files via upload”) adiciona a imagem; `6802369` (2026-01-18, “Remove header image from README”) removeu sua referência.
+Non-shallow and partial clone (`blob:none`). There are 17 commits (17 across all refs), no merges, all with author `K S Sarika <sarika.ks.official@gmail.com>` and committer `GitHub` (editing and upload through the web interface). The root is `6548c7d` (2025-03-16T19:40:43+05:30, “Initial commit”). According to `git log --no-renames --name-status`, 16 commits only add or modify `README.md`, and `8fe501e` (“Add files via upload”) adds the image; `6802369` (2026-01-18, “Remove header image from README”) removed its reference.
 
-`git rev-list --objects $SHA --missing=print` lista 15 objetos ausentes, nenhum na árvore do SHA (versões anteriores do README). Nenhum blob histórico foi lido, então não foi possível datar a introdução de “Micro-frontend”.
+`git rev-list --objects $SHA --missing=print` lists 15 missing objects, none in the SHA tree (earlier README versions). No historical blob was read, so it was not possible to date the introduction of “Micro-frontend”.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend: só `README.md` e uma imagem (inventário). |
-| Q2 | No | Não há unidades. |
-| Q3 | No | Não há host, shell nem root config. |
-| Q4 | No | Nenhum mecanismo de composição; “Micro-frontend Architecture” é item de apresentação profissional (`README.md:10`). |
-| Q5 | No | Q1–Q4 convergem. |
+| Q1 | No | No frontend unit: only `README.md` and an image (inventory). |
+| Q2 | No | There are no units. |
+| Q3 | No | There is no host, shell or root config. |
+| Q4 | No | No composition mechanism; “Micro-frontend Architecture” is a professional introduction item (`README.md:10`). |
+| Q5 | No | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “repositories mentioning micro-frontends without implementing them”.
-- Mesmo padrão dos perfis 011/064/068/073/077/101/111: README de perfil do GitHub com micro-frontends como competência ou atividade profissional; `frontend_units: 0`, `unit_organization: none`.
-- `repo_type: other`; arrays de tecnologia vazios (as tecnologias do README são competências declaradas).
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. It matches “repositories mentioning micro-frontends without implementing them”.
+- Same pattern as profiles 011/064/068/073/077/101/111: GitHub profile README with micro-frontends as a skill or professional activity; `frontend_units: 0`, `unit_organization: none`.
+- `repo_type: other`; empty technology arrays (README technologies are declared skills).
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **Protocolo (busca):** o hit plural “micro frontends” não tem grafia literal no README. A elegibilidade muda de `unknown` (001) para `pass` (002). O padrão `owner == name` reforça a sugestão de filtro automático registrada em 011.
-- **Protocolo (clone parcial):** as versões anteriores do README não estão no clone; a análise se apoia no SHA e nos metadados dos commits.
+- **Protocol (search):** the plural hit “micro frontends” has no literal spelling in the README. Eligibility changes from `unknown` (001) to `pass` (002). Pattern `owner == name` reinforces the automatic filter suggestion recorded in 011.
+- **Protocol (partial clone):** earlier README versions are not in the clone; analysis relies on the SHA and commit metadata.

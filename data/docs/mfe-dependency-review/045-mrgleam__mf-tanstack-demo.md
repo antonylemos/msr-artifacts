@@ -15,9 +15,9 @@ annotation:
 
 # 045 — mrgleam/mf-tanstack-demo
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| shell/package.json:16 | devDependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | shell/vite.config.ts:2-14 (configuração padrão do Vite importa `federation` e o invoca em plugins com remotes e shared); shell/package.json:5-8 (build executa `vite build` sem configuração alternativa) |
-| shop/package.json:17 | devDependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | shop/vite.config.ts:2-15 (configuração padrão do Vite importa `federation` e o invoca em plugins com exposes e shared); shop/package.json:5-8 (build executa `vite build` sem configuração alternativa) |
+| shell/package.json:16 | devDependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | shell/vite.config.ts:2-14 (the default Vite configuration imports `federation` and invokes it in plugins with remotes and shared); shell/package.json:5-8 (the build runs `vite build` with no alternative configuration) |
+| shop/package.json:17 | devDependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | shop/vite.config.ts:2-15 (the default Vite configuration imports `federation` and invokes it in plugins with exposes and shared); shop/package.json:5-8 (the build runs `vite build` with no alternative configuration) |

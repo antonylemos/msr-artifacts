@@ -20,48 +20,48 @@ annotation:
 
 # 054 — sora-ot/annotation-platform
 
-## Contexto
+## Context
 
-- **Abordagem de implementação:** portal Vue (`baseApp`) que integra ferramentas de anotação de terceiros (Xtreme1 e Label Studio) por **iframe** com handoff de autenticação; qiankun configurado, mas desativado e sem sub-app compatível
-- **Tipo de repositório:** production-oriented / proof of concept (plataforma de anotação 2D/3D que agrega ferramentas open-source vendorizadas; 8.068 arquivos em um único commit)
-- **Classificação:** Uncertain (depende da decisão sobre iframe; com a regra sugerida no 031, passa a MFE-implemented)
-- **Commit avaliado:** `51ee5b4` (único commit, "first_commit")
+- **Implementation approach:** Vue portal (`baseApp`) integrating third-party annotation tools (Xtreme1 and Label Studio) through **iframe** with authentication handoff; qiankun configured but disabled and without a compatible sub-app
+- **Repository type:** production-oriented / proof of concept (2D/3D annotation platform aggregating vendored open-source tools; 8,068 files in a single commit)
+- **Classification:** Uncertain (depends on the iframe decision; under the rule suggested in 031, becomes MFE-implemented)
+- **Assessed commit:** `51ee5b4` (only commit, "first_commit")
 
-O repositório agrega: `baseApp/` (portal Vue 3 + Vite, autoral), `baseApp-backend/`, cópias vendorizadas de `xtreme1-main/` (Xtreme1, ferramenta de anotação 3D) e `ls-test/` (Label Studio), além de projetos Python de ML (`OpenPCDet/`, `3d-detection/`, `label-studio-ml-backend/`, `sam2/`, `yolo_test/`).
+The repository brings together: `baseApp/` (project-authored Vue 3 + Vite portal), `baseApp-backend/`, vendored copies of `xtreme1-main/` (Xtreme1, 3D annotation tool) and `ls-test/` (Label Studio), plus Python ML projects (`OpenPCDet/`, `3d-detection/`, `label-studio-ml-backend/`, `sam2/`, `yolo_test/`).
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Tecnologia | `baseApp/package.json:16`: `qiankun` ^2.10.16 | fraca |
-| Configuração (qiankun) | `baseApp/src/main.ts:8-56`: `registerMicroApps([{ name: 'xtreme1', entry: '//localhost:3100', container: '#subapp-container', activeRule: '/xtreme' }])` + `start()`, **só se** `VITE_ENABLE_QIANKUN === 'true'` (`:8-9`); nenhum `.env` versionado ativa a flag; o container `#subapp-container` não existe em nenhum template; `xtreme1-main/` não tem lifecycles qiankun nem `__POWERED_BY_QIANKUN__` (configuração inativa) | ambígua |
-| Composição (iframe) | `baseApp/src/components/XtremeHostPanel.vue:15-18` e `baseApp/src/views/XtremeStandalone.vue:3,19`: `<iframe :src="xtremeFrameUrl">`, URL calculada a partir da rota (`xtremePath` e query repassados, `XtremeHostPanel.vue:34-50`); `baseApp/src/router/index.ts:61-75`: rotas `/xtreme`, `/xtreme1-main` e `/labelstudio` | moderada |
-| Código-fonte (contrato com as unidades) | `baseApp/src/utils/xtremeAuth.ts:1-3,80-100`: grava/limpa o token do Xtreme1 em cookie (`baseapp_xtreme_token`, chaves legadas), handoff de autenticação; `baseApp/src/utils/labelStudioUrl.ts:62-115`: monta URLs do Label Studio via proxy (`VITE_LABEL_STUDIO_BASE_PATH`) a partir de "jumps" de tarefas (contrato de integração) | moderada |
-| Estrutura | Três frontends: `baseApp/` (autoral), `xtreme1-main/` (frontend próprio) e `ls-test/web/` (Label Studio, monorepo com `libs/editor`, `libs/datamanager` etc.); cada um com build próprio; nenhum import de código-fonte entre eles (unidades independentes) | forte |
-| Build/deploy | `baseApp/docker-compose.yml:1-3`: nginx; Xtreme1 e Label Studio rodam como serviços próprios (porta 3100, proxy do Label Studio) | moderada |
-| Documentação | `baseApp/README.md`: boilerplate do Vue/Vite; nenhuma descrição da arquitetura | ausente |
+| Technology | `baseApp/package.json:16`: `qiankun` ^2.10.16 | weak |
+| Configuration (qiankun) | `baseApp/src/main.ts:8-56`: `registerMicroApps([{ name: 'xtreme1', entry: '//localhost:3100', container: '#subapp-container', activeRule: '/xtreme' }])` + `start()`, **only if** `VITE_ENABLE_QIANKUN === 'true'` (`:8-9`); no tracked `.env` enables the flag; container `#subapp-container` does not exist in any template; `xtreme1-main/` has neither qiankun lifecycles nor `__POWERED_BY_QIANKUN__` (inactive configuration) | ambiguous |
+| Composition (iframe) | `baseApp/src/components/XtremeHostPanel.vue:15-18` and `baseApp/src/views/XtremeStandalone.vue:3,19`: `<iframe :src="xtremeFrameUrl">`, URL computed from the route (`xtremePath` and query forwarded, `XtremeHostPanel.vue:34-50`); `baseApp/src/router/index.ts:61-75`: routes `/xtreme`, `/xtreme1-main` and `/labelstudio` | moderate |
+| Source code (contract with units) | `baseApp/src/utils/xtremeAuth.ts:1-3,80-100`: writes/clears the Xtreme1 token in a cookie (`baseapp_xtreme_token`, legacy keys), authentication handoff; `baseApp/src/utils/labelStudioUrl.ts:62-115`: builds Label Studio URLs through a proxy (`VITE_LABEL_STUDIO_BASE_PATH`) from task "jumps" (integration contract) | moderate |
+| Structure | Three frontends: `baseApp/` (project-authored), `xtreme1-main/` (its own frontend) and `ls-test/web/` (Label Studio, monorepo with `libs/editor`, `libs/datamanager`, etc.); each with its own build; no source code imports between them (independent units) | strong |
+| Build/deploy | `baseApp/docker-compose.yml:1-3`: nginx; Xtreme1 and Label Studio run as their own services (port 3100, Label Studio proxy) | moderate |
+| Documentation | `baseApp/README.md`: Vue/Vite boilerplate; no architecture description | absent |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | `baseApp` (portal) + Xtreme1 e Label Studio (frontends próprios, no repositório e servidos separadamente) |
-| Q2 | Yes | Builds e serviços separados; sem import de código-fonte entre o portal e as ferramentas |
-| Q3 | Yes | O portal roteia `/xtreme` e `/labelstudio` para views que embutem as ferramentas (`router/index.ts:61-75`) |
-| Q4 | **Undetermined** | O mecanismo efetivo é iframe com contrato (token em cookie, rota/query repassadas): decisão em aberto. O qiankun está configurado mas inativo (flag desligada, container inexistente, sub-app sem lifecycles), o que pelo critério operacional é "configuration whose actual use is unclear" ou "unused or experimental" |
-| Q5 | Undetermined | Depende da decisão sobre iframe |
+| Q1 | Yes | `baseApp` (portal) + Xtreme1 and Label Studio (their own frontends, in the repository and served separately) |
+| Q2 | Yes | Separate builds and services; no source code imports between portal and tools |
+| Q3 | Yes | The portal routes `/xtreme` and `/labelstudio` to views embedding the tools (`router/index.ts:61-75`) |
+| Q4 | **Undetermined** | The effective mechanism is iframe with a contract (token in a cookie, forwarded route/query): unresolved decision. qiankun is configured but inactive (flag off, nonexistent container, sub-app without lifecycles), which under the operational criterion is "configuration whose actual use is unclear" or "unused or experimental" |
+| Q5 | Undetermined | Depends on the iframe decision |
 
-## Motivo
+## Rationale
 
-- Nenhuma resposta é No e Q4 é Undetermined, o que leva a **Uncertain**.
-- Com a regra sugerida no repositório 031 ("iframe conta quando há contrato explícito com o host"), Q4 passaria a Yes: há handoff de autenticação (`xtremeAuth.ts`), repasse de rota/query para a ferramenta embutida e proxy configurado para o Label Studio. Nesse caso, **MFE-implemented**.
-- O qiankun é evidência de tecnologia sem uso efetivo: provavelmente uma tentativa de integração abandonada em favor do iframe (Xtreme1 não foi adaptado como sub-app).
+- No answer is No and Q4 is Undetermined, leading to **Uncertain**.
+- Under the rule suggested in repository 031 ("iframe counts when there is an explicit host contract"), Q4 would become Yes: there is authentication handoff (`xtremeAuth.ts`), route/query forwarding to the embedded tool and a proxy configured for Label Studio. In that case, **MFE-implemented**.
+- qiankun is technology evidence without effective use: probably an integration attempt abandoned in favor of iframe (Xtreme1 was not adapted as a sub-app).
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** dependência de qiankun + `registerMicroApps` no código, mas inativos; a composição real é iframe. Uma análise só por dependências classificaria errado.
-- **Protocolo (corpus):** se incluído, restringir a mineração a `baseApp/` e aos pontos de integração; o restante (8 mil arquivos de ML e ferramentas vendorizadas) é ruído.
+- **RQ1 (misleading signals):** qiankun dependency + `registerMicroApps` in code, but inactive; real composition is iframe. A dependency-only analysis would misclassify it.
+- **Protocol (corpus):** if included, restrict mining to `baseApp/` and integration points; the rest (8 thousand ML and vendored-tool files) is noise.
 
-## Decisão registrada
+## Recorded decision
 
-Manter **Uncertain**. Embora o portal integre Xtreme1 e Label Studio por iframe com handoff de autenticação, a integração Qiankun está desativada e a decisão do protocolo sobre iframe como mecanismo de composição MFE não foi resolvida para este caso. As ferramentas integradas também são produtos de terceiros vendorizados, o que preserva a ambiguidade entre composição MFE e integração de aplicações.
+Retain **Uncertain**. Although the portal integrates Xtreme1 and Label Studio through iframe with authentication handoff, Qiankun integration is disabled and the protocol decision about iframe as an MFE composition mechanism has not been resolved for this case. Integrated tools are also vendored third-party products, preserving ambiguity between MFE composition and application integration.

@@ -19,301 +19,302 @@ annotation:
 
 # 232 — riponcc/Group4COMP308Project
 
-## Leitura do repositório
+## Repository overview
 
-As três aplicações React/Vite têm entrada e build próprios (#15–#17). As declarações do plugin de federação (#1–#3) se concretizam nas configurações: a issue-app e a user-app expõem `./App` (#4, #6), e o shell declara os dois remotes (#5). Os imports nomeiam esses destinos (#7, #8); o host os monta dentro de Suspense conforme o login (#13, #14). As relações host → remote (#22, #23) fecham a cadeia entre unidades relativamente independentes e composição em runtime. A comunicação por eventos em window (#9–#12, #24, #25) conduz a troca: a user-app informa login e logout, e a issue-app informa logout ao shell.
+Three React/Vite applications have own entries/builds (#15–#17). Federation plugin declarations (#1–#3) realized in configurations: issue-app and user-app expose `./App` (#4, #6), while shell declares both remotes (#5). Imports name targets (#7, #8); host mounts them inside Suspense according to login (#13, #14). Host → remote relationships (#22, #23) complete chain between relatively independent units and runtime composition. Window event communication (#9–#12, #24, #25) drives switching: user-app reports login/logout, issue-app reports logout to shell.
 
-Os builds são separados, mas a 3.4.6 não observa deploy nem versionamento independente (#26–#28). Os scripts chamados deploy apenas encadeiam build e preview local. Os diretórios de backend (#18–#21) explicam a arquitetura de microsserviços ao lado do frontend, sem contar como unidades frontend. As afirmações documentais confirmam a tecnologia, os papéis e os fluxos (#29–#33, #35–#38), mas permanecem evidências fracas por serem declarações semânticas. A afirmação de que o shell consulta um Gateway é contradita: o endereço ativo é o auth-service (#34).
+Builds separate, but 3.4.6 observes neither deployment nor independent versioning (#26–#28). Scripts named deploy only chain build/local preview. Backend directories (#18–#21) explain microservice architecture alongside frontend without counting as frontend units. Documentary claims confirm technology, roles and flows (#29–#33, #35–#38), remaining weak evidence as semantic declarations. Claim that shell queries Gateway contradicted: active address auth-service (#34).
 
-Os dois pontos históricos estão esclarecidos (#39, #40): o bloco antigo comentado do shell não é configuração alternativa em uso, e não foi versionado gateway até o snapshot. A indisponibilidade de versões iniciais limita conclusões sobre o passado, sem deixar ambígua a composição atual. A extração usa somente as revisões finais e a conferência de seus trechos no snapshot. Foram selecionados os três blocos ativos de federação; portas locais, scripts e configuração de backend não declaram elementos de composição adicionais. O bloco comentado permanece no ponto histórico #39.
+Two historical points clarified (#39, #40): old commented shell block not alternative configuration in use; no gateway versioned through snapshot. Unavailable initial versions limit past conclusions without leaving current composition ambiguous. Extraction uses only final reviews and checking their snapshot excerpts. Three active federation blocks selected; local ports, scripts and backend configuration declare no additional composition elements. Commented block remains in historical point #39.
 
-## Observações
+## Observations
 
 ### 1. client/issue-app/package.json:15
 
-**Observação:** O manifesto declara `@originjs/vite-plugin-federation` em `dependencies`, na versão `^1.3.5`.
+**Observation:** Manifest declares `@originjs/vite-plugin-federation` in `dependencies`, version `^1.3.5`.
 
-**Interpretação:** É uma declaração da tecnologia module-federation; a 3.4.2 registra Configurada `Yes`, mas a declaração isolada não estabelece a organização das unidades.
+**Interpretation:** Module-federation technology declaration; 3.4.2 records Configured `Yes`, but declaration alone establishes no unit organization.
 
 ### 2. client/shell-app/package.json:14
 
-**Observação:** O manifesto declara `@originjs/vite-plugin-federation` em `dependencies`, na versão `^1.3.5`.
+**Observation:** Manifest declares `@originjs/vite-plugin-federation` in `dependencies`, version `^1.3.5`.
 
-**Interpretação:** É uma declaração da tecnologia module-federation; a 3.4.2 registra Configurada `Yes`, mas a declaração isolada não estabelece a organização das unidades.
+**Interpretation:** Module-federation technology declaration; 3.4.2 records Configured `Yes`, but declaration alone establishes no unit organization.
 
 ### 3. client/user-app/package.json:15
 
-**Observação:** O manifesto declara `@originjs/vite-plugin-federation` em `dependencies`, na versão `^1.4.1`.
+**Observation:** Manifest declares `@originjs/vite-plugin-federation` in `dependencies`, version `^1.4.1`.
 
-**Interpretação:** É uma declaração da tecnologia module-federation; a 3.4.2 registra Configurada `Yes`, mas a declaração isolada não estabelece a organização das unidades.
+**Interpretation:** Module-federation technology declaration; 3.4.2 records Configured `Yes`, but declaration alone establishes no unit organization.
 
 ### 4. client/issue-app/vite.config.js:14-26
 
-**Observação:** O plugin `federation` recebe `name: issueApp`, `filename: remoteEntry.js`, expõe `./App` como `./src/App` e compartilha `react`, `react-dom`, `@apollo/client` e `graphql`.
+**Observation:** Plugin `federation` receives `name: issueApp`, `filename: remoteEntry.js`, exposes `./App` as `./src/App`, sharing `react`, `react-dom`, `@apollo/client` and `graphql`.
 
-**Interpretação:** Configura a exposição e o compartilhamento de dependências da issue-app; o bloco não nomeia um consumidor.
+**Interpretation:** Configures issue-app exposure/dependency sharing; block names no consumer.
 
 ### 5. client/shell-app/vite.config.js:36-50
 
-**Observação:** O plugin nomeia `shellApp`, declara `userApp` em `http://localhost:3001/assets/remoteEntry.js` e `issueApp` em `http://localhost:3002/assets/remoteEntry.js`, e compartilha React, ReactDOM, Apollo Client e GraphQL como singletons.
+**Observation:** Plugin names `shellApp`, declares `userApp` at `http://localhost:3001/assets/remoteEntry.js` and `issueApp` at `http://localhost:3002/assets/remoteEntry.js`, sharing React, ReactDOM, Apollo Client and GraphQL as singletons.
 
-**Interpretação:** O host declara dois destinos de federação distintos, ligando o shell às outras unidades por seus remotes.
+**Interpretation:** Host declares two distinct federation targets, linking shell to other units through remotes.
 
 ### 6. client/user-app/vite.config.js:10-17
 
-**Observação:** O plugin nomeia `userApp`, gera `remoteEntry.js`, expõe `./App` como `./src/App` e compartilha `react`, `react-dom`, `@apollo/client` e `graphql`.
+**Observation:** Plugin names `userApp`, generates `remoteEntry.js`, exposes `./App` as `./src/App`, sharing `react`, `react-dom`, `@apollo/client` and `graphql`.
 
-**Interpretação:** Configura a exposição da user-app como remote; o consumidor não é nomeado neste bloco.
+**Interpretation:** Configures user-app exposure as remote; consumer unnamed in block.
 
 ### 7. client/shell-app/src/App.jsx:10
 
-**Observação:** O shell define `UserApp` com `lazy(() => import("userApp/App"))`.
+**Observation:** Shell defines `UserApp` with `lazy(() => import("userApp/App"))`.
 
-**Interpretação:** O import nomeia o remote userApp e seu módulo App, realizando o carregamento da unidade de autenticação por federação.
+**Interpretation:** Import names remote userApp and its App module, loading authentication unit through federation.
 
 ### 8. client/shell-app/src/App.jsx:11
 
-**Observação:** O shell define `IssueApp` com `lazy(() => import("issueApp/App"))`.
+**Observation:** Shell defines `IssueApp` with `lazy(() => import("issueApp/App"))`.
 
-**Interpretação:** O import nomeia o remote issueApp e seu módulo App, realizando o carregamento da unidade de ocorrências por federação.
+**Interpretation:** Import names remote issueApp and its App module, loading issue management unit through federation.
 
 ### 9. client/issue-app/src/components/Header.jsx:32-39
 
-**Observação:** O handler de logout do cabeçalho executa a mutação, limpa token e usuário e dispara `window.dispatchEvent(new CustomEvent("logout"))`.
+**Observation:** Header logout handler executes mutation, clears token/user and dispatches `window.dispatchEvent(new CustomEvent("logout"))`.
 
-**Interpretação:** Implementa a emissão de logout pela issue-app; a chamada só emite um evento global e não nomeia a unidade consumidora.
+**Interpretation:** Implements issue-app logout emission; call only emits global event without naming consuming unit.
 
 ### 10. client/shell-app/src/App.jsx:31-43; client/shell-app/src/App.jsx:51-52
 
-**Observação:** O shell registra os listeners `loginSuccess` e `logout`, cujos handlers alteram isLoggedIn e refazem CurrentUser; remove os listeners na limpeza do efeito.
+**Observation:** Shell registers listeners `loginSuccess` and `logout`, whose handlers change isLoggedIn and refetch CurrentUser; removes listeners during effect cleanup.
 
-**Interpretação:** Implementa a recepção dos eventos que dirigem a alternância dos remotos. O listener não nomeia a unidade emissora.
+**Interpretation:** Implements reception of events driving remote switching. Listener names no emitting unit.
 
 ### 11. client/user-app/src/UserComponent.jsx:50-58
 
-**Observação:** Ao concluir o login, a user-app grava token e usuário no localStorage e emite `loginSuccess` em window com `detail: { isLoggedIn: true }`.
+**Observation:** After login user-app stores token/user in localStorage, emitting `loginSuccess` on window with `detail: { isLoggedIn: true }`.
 
-**Interpretação:** Implementa a notificação do login pela user-app, sem identificar o consumidor na chamada de emissão.
+**Interpretation:** Implements user-app login notification without identifying consumer in emission call.
 
 ### 12. client/user-app/src/UserComponent.jsx:70-76
 
-**Observação:** Ao concluir a mutação de logout, a user-app remove token e usuário e emite `logout` em window com `detail: { isLoggedIn: false }`.
+**Observation:** After logout mutation user-app removes token/user, emitting `logout` on window with `detail: { isLoggedIn: false }`.
 
-**Interpretação:** Implementa a emissão de logout pela user-app, sem nomear a unidade receptora.
+**Interpretation:** Implements user-app logout emission without naming receiving unit.
 
 ### 13. client/shell-app/src/App.jsx:61-69
 
-**Observação:** Dentro de Suspense, o shell renderiza `<UserApp />` quando isLoggedIn é falso.
+**Observation:** Inside Suspense, shell renders `<UserApp />` when isLoggedIn false.
 
-**Interpretação:** É o ponto de montagem do componente remoto de autenticação, condicionado ao estado do shell; a renderização isolada usa o componente já carregado.
+**Interpretation:** Remote authentication component mounting point, conditional on shell state; rendering alone uses already loaded component.
 
 ### 14. client/shell-app/src/App.jsx:61-69
 
-**Observação:** Dentro de Suspense, o shell renderiza `<IssueApp currentUser={data?.currentUser} />` quando isLoggedIn é verdadeiro.
+**Observation:** Inside Suspense, shell renders `<IssueApp currentUser={data?.currentUser} />` when isLoggedIn true.
 
-**Interpretação:** É o ponto de montagem do componente remoto de ocorrências após login. A linha registra a passagem da prop, sem demonstrar que o remoto a consome.
+**Interpretation:** Remote issue-management component mounting point after login. Line records prop passing without demonstrating remote consumes it.
 
 ### 15. client/issue-app/; client/issue-app/package.json:1-12; client/issue-app/index.html:10-11; client/issue-app/src/main.jsx:6-10; client/issue-app/vite.config.js:6-35
 
-**Observação:** O diretório tem manifesto próprio, entrada HTML em `/src/main.jsx`, montagem React e configuração Vite; o script `build` chama `vite build`.
+**Observation:** Directory has own manifest, HTML entry at `/src/main.jsx`, React mounting and Vite configuration; script `build` calls `vite build`.
 
-**Interpretação:** Confirma o limite de uma unidade frontend com entrada e build próprios, como Unidade frontend `Yes` na 3.4.3; não estabelece sozinho sua ligação com as demais.
+**Interpretation:** Confirms frontend unit boundary with own entry/build, as Frontend unit `Yes` in 3.4.3; alone establishes no link to others.
 
 ### 16. client/shell-app/; client/shell-app/package.json:1-12; client/shell-app/index.html:10-11; client/shell-app/src/main.jsx:27-33; client/shell-app/vite.config.js:32-56
 
-**Observação:** O diretório tem manifesto próprio, entrada HTML em `/src/main.jsx`, montagem React e configuração Vite; o script `build` chama `vite build`.
+**Observation:** Directory has own manifest, HTML entry at `/src/main.jsx`, React mounting and Vite configuration; script `build` calls `vite build`.
 
-**Interpretação:** Confirma o limite de uma unidade frontend com entrada e build próprios, como Unidade frontend `Yes` na 3.4.3; não estabelece sozinho sua ligação com as demais.
+**Interpretation:** Confirms frontend unit boundary with own entry/build, as Frontend unit `Yes` in 3.4.3; alone establishes no link to others.
 
 ### 17. client/user-app/; client/user-app/package.json:1-12; client/user-app/index.html:10-11; client/user-app/src/main.jsx:6-10; client/user-app/vite.config.js:7-26
 
-**Observação:** O diretório tem manifesto próprio, entrada HTML em `/src/main.jsx`, montagem React e configuração Vite; o script `build` chama `vite build`.
+**Observation:** Directory has own manifest, HTML entry at `/src/main.jsx`, React mounting and Vite configuration; script `build` calls `vite build`.
 
-**Interpretação:** Confirma o limite de uma unidade frontend com entrada e build próprios, como Unidade frontend `Yes` na 3.4.3; não estabelece sozinho sua ligação com as demais.
+**Interpretation:** Confirms frontend unit boundary with own entry/build, as Frontend unit `Yes` in 3.4.3; alone establishes no link to others.
 
 ### 18. server/; server/package.json:1-13
 
-**Observação:** O diretório server contém um manifesto sem dependências, que declara main como index.js; a revisão registra que essa entrada está ausente e não há build.
+**Observation:** Server directory contains dependency-free manifest declaring main as index.js; review records absent entry and no build.
 
-**Interpretação:** É um diretório de backend sem entrada de UI ou build frontend; Unidade frontend `No` na 3.4.3.
+**Interpretation:** Backend directory without UI entry/frontend build; Frontend unit `No` in 3.4.3.
 
 ### 19. server/microservices/analytics-ai-service/; server/microservices/analytics-ai-service/package.json:1-8; server/microservices/analytics-ai-service/analytics-ai-microservice.js:40
 
-**Observação:** O pacote Node tem script start que executa `analytics-ai-microservice.js` e entrada de servidor com `app.listen`.
+**Observation:** Node package has start script executing `analytics-ai-microservice.js` and server entry with `app.listen`.
 
-**Interpretação:** É um serviço backend sem UI, marcado Unidade frontend `No`; a separação de microsserviços não constitui separação de unidades frontend.
+**Interpretation:** Backend service without UI, marked Frontend unit `No`; microservice separation does not constitute frontend unit separation.
 
 ### 20. server/microservices/auth-service/; server/microservices/auth-service/package.json:1-8; server/microservices/auth-service/auth-microservice.js:244
 
-**Observação:** O pacote Node tem script start que executa `auth-microservice.js` e entrada de servidor com `app.listen`.
+**Observation:** Node package has start script executing `auth-microservice.js` and server entry with `app.listen`.
 
-**Interpretação:** É um serviço backend sem UI, marcado Unidade frontend `No`; a separação de microsserviços não constitui separação de unidades frontend.
+**Interpretation:** Backend service without UI, marked Frontend unit `No`; microservice separation does not constitute frontend unit separation.
 
 ### 21. server/microservices/issue-management-service/; server/microservices/issue-management-service/package.json:1-8; server/microservices/issue-management-service/issue-microservice.js:147
 
-**Observação:** O pacote Node tem script start que executa `issue-microservice.js` e entrada de servidor com `httpServer.listen`.
+**Observation:** Node package has start script executing `issue-microservice.js` and server entry with `httpServer.listen`.
 
-**Interpretação:** É um serviço backend sem UI, marcado Unidade frontend `No`; a separação de microsserviços não constitui separação de unidades frontend.
+**Interpretation:** Backend service without UI, marked Frontend unit `No`; microservice separation does not constitute frontend unit separation.
 
 ### 22. client/shell-app/src/App.jsx:10; client/shell-app/src/App.jsx:61-64; client/shell-app/vite.config.js:39-40; client/user-app/vite.config.js:11-15
 
-**Observação:** O shell importa userApp/App e o renderiza sem login; sua configuração resolve userApp para remoteEntry.js, e a user-app expõe ./App.
+**Observation:** Shell imports userApp/App, rendering it without login; configuration resolves userApp to remoteEntry.js, and user-app exposes ./App.
 
-**Interpretação:** Liga explicitamente o shell à user-app por Module Federation; a relação é No snapshot `Yes` e Ativa `Yes`.
+**Interpretation:** Explicitly links shell to user-app through Module Federation; relationship In snapshot `Yes` and Active `Yes`.
 
 ### 23. client/shell-app/src/App.jsx:11; client/shell-app/src/App.jsx:66-67; client/shell-app/vite.config.js:39-41; client/issue-app/vite.config.js:15-19
 
-**Observação:** O shell importa issueApp/App e o renderiza depois do login; sua configuração resolve issueApp para remoteEntry.js, e a issue-app expõe ./App.
+**Observation:** Shell imports issueApp/App, rendering it after login; configuration resolves issueApp to remoteEntry.js, and issue-app exposes ./App.
 
-**Interpretação:** Liga explicitamente o shell à issue-app por Module Federation; a relação é No snapshot `Yes` e Ativa `Yes`.
+**Interpretation:** Explicitly links shell to issue-app through Module Federation; relationship In snapshot `Yes` and Active `Yes`.
 
 ### 24. client/issue-app/src/components/Header.jsx:32-39; client/shell-app/src/App.jsx:37-43
 
-**Observação:** A issue-app emite logout pelo cabeçalho; o shell escuta logout em window, marca isLoggedIn como falso e refaz CurrentUser.
+**Observation:** Issue-app emits logout through header; shell listens for logout on window, sets isLoggedIn false and refetches CurrentUser.
 
-**Interpretação:** Estabelece a comunicação issue-app → shell por eventos, que faz o host voltar à tela de autenticação. A relação é No snapshot `Yes` e Ativa `Yes`.
+**Interpretation:** Establishes issue-app → shell event communication returning host to authentication screen. Relationship In snapshot `Yes` and Active `Yes`.
 
 ### 25. client/user-app/src/UserComponent.jsx:50-58; client/user-app/src/UserComponent.jsx:70-76; client/shell-app/src/App.jsx:31-43
 
-**Observação:** A user-app emite loginSuccess e logout em window; o shell escuta os dois, altera isLoggedIn e refaz CurrentUser. O handler de login não usa detail.
+**Observation:** User-app emits loginSuccess/logout on window; shell listens for both, changes isLoggedIn and refetches CurrentUser. Login handler does not use detail.
 
-**Interpretação:** Estabelece comunicação user-app → shell por eventos, dirigindo a alternância dos remotos. A relação é No snapshot `Yes` e Ativa `Yes`, sem envio inverso.
+**Interpretation:** Establishes user-app → shell event communication driving remote switching. Relationship In snapshot `Yes` and Active `Yes`, without reverse sending.
 
 ### 26. client/issue-app/package.json:7-10; client/issue-app/vite.config.js:14-34; client/issue-app/package.json:11
 
-**Observação:** O script build executa `vite build` com configuração própria. O script deploy encadeia build e preview local.
+**Observation:** Build script executes `vite build` with own configuration. Deploy script chains build/local preview.
 
-**Interpretação:** A 3.4.6 registra Build `separado`, Deploy `não observado` e Versionamento `No`: sustenta autonomia de build da unidade, sem demonstrar publicação ou versionamento independente.
+**Interpretation:** Section 3.4.6 records Build `separate`, Deploy `not observed` and Versioning `No`: supports unit build autonomy without demonstrating publication or independent versioning.
 
 ### 27. client/shell-app/package.json:7-10; client/shell-app/vite.config.js:32-56
 
-**Observação:** O script build executa `vite build` com configuração própria. Há dev e preview locais, e nenhum script deploy.
+**Observation:** Build script executes `vite build` with own configuration. Local dev/preview, no deploy script.
 
-**Interpretação:** A 3.4.6 registra Build `separado`, Deploy `não observado` e Versionamento `No`: sustenta autonomia de build da unidade, sem demonstrar publicação ou versionamento independente.
+**Interpretation:** Section 3.4.6 records Build `separate`, Deploy `not observed` and Versioning `No`: supports unit build autonomy without demonstrating publication or independent versioning.
 
 ### 28. client/user-app/package.json:7-10; client/user-app/vite.config.js:7-26; client/user-app/package.json:11
 
-**Observação:** O script build executa `vite build` com configuração própria. O script deploy encadeia build e preview local.
+**Observation:** Build script executes `vite build` with own configuration. Deploy script chains build/local preview.
 
-**Interpretação:** A 3.4.6 registra Build `separado`, Deploy `não observado` e Versionamento `No`: sustenta autonomia de build da unidade, sem demonstrar publicação ou versionamento independente.
+**Interpretation:** Section 3.4.6 records Build `separate`, Deploy `not observed` and Versioning `No`: supports unit build autonomy without demonstrating publication or independent versioning.
 
 ### 29. README.md:3
 
-**Observação:** O README afirma que a aplicação é construída com arquitetura de microsserviços e React Module Federation.
+**Observation:** README claims application built with microservice architecture and React Module Federation.
 
-**Interpretação:** Nomeia a tecnologia de federação, sem descrever os limites das unidades nessa frase; a 3.4.7 registra a afirmação como corroborada.
+**Interpretation:** Names federation technology without describing unit boundaries in sentence; 3.4.7 records claim corroborated.
 
 ### 30. README.md:24-27
 
-**Observação:** O README lista Shell App como host de Module Federation, User App como módulo de autenticação e Issue App como módulo de gestão de ocorrências.
+**Observation:** README lists Shell App as Module Federation host, User App as authentication module and Issue App as issue-management module.
 
-**Interpretação:** Descreve a organização de três unidades e seus papéis; a 3.4.7 registra a afirmação como corroborada.
+**Interpretation:** Describes organization of three units/roles; 3.4.7 records claim corroborated.
 
 ### 31. README.md:41
 
-**Observação:** O README lista Vite com Module Federation na pilha frontend.
+**Observation:** README lists Vite with Module Federation in frontend stack.
 
-**Interpretação:** É uma afirmação tecnológica, corroborada na 3.4.7 pelos manifestos e pelas chamadas do plugin.
+**Interpretation:** Technology claim corroborated in 3.4.7 by manifests and plugin calls.
 
 ### 32. client/issue-app/vite.config.js:15
 
-**Observação:** O comentário junto a name chama issueApp de nome único do Issue Microfrontend.
+**Observation:** Comment beside name calls issueApp unique Issue Microfrontend name.
 
-**Interpretação:** Atribui identidade à unidade issue-app; a 3.4.7 registra corroboração nos nomes distintos e na ligação com o host.
+**Interpretation:** Assigns identity to issue-app unit; 3.4.7 records corroboration through distinct names and host link.
 
 ### 33. client/issue-app/vite.config.js:18
 
-**Observação:** O comentário junto a ./App diz que expõe o ponto de entrada principal do microfrontend.
+**Observation:** Comment beside ./App says exposes main microfrontend entry point.
 
-**Interpretação:** Descreve a interface exposta da unidade; a 3.4.7 registra corroboração na configuração de exposição e no consumo pelo shell.
+**Interpretation:** Describes exposed unit interface; 3.4.7 records corroboration in exposure configuration and shell consumption.
 
 ### 34. client/shell-app/src/App.jsx:13
 
-**Observação:** O comentário diz que o shell verifica o usuário logado em um Gateway.
+**Observation:** Comment says shell checks logged-in user in Gateway.
 
-**Interpretação:** É uma afirmação sobre backend, contradita na 3.4.7: o Apollo Client aponta para a porta 4001 do auth-service; o snapshot não tem gateway.
+**Interpretation:** Backend claim contradicted in 3.4.7: Apollo Client points to auth-service port 4001; no gateway in snapshot.
 
 ### 35. client/shell-app/src/App.jsx:30
 
-**Observação:** O comentário identifica o handler como tratamento de login vindo de UserApp.
+**Observation:** Comment identifies handler as handling login from UserApp.
 
-**Interpretação:** Descreve a origem da comunicação de login; a 3.4.7 registra corroboração no emissor, no listener e na relação entre as unidades.
+**Interpretation:** Describes login communication origin; 3.4.7 records corroboration in emitter, listener and inter-unit relationship.
 
 ### 36. client/shell-app/src/App.jsx:36
 
-**Observação:** O comentário identifica o handler como tratamento de logout de outras aplicações.
+**Observation:** Comment identifies handler as handling logout from other applications.
 
-**Interpretação:** Descreve a comunicação das unidades para o host; a 3.4.7 registra corroboração nos emissores da user-app e da issue-app e na escuta do shell.
+**Interpretation:** Describes unit-to-host communication; 3.4.7 records corroboration in user-app/issue-app emitters and shell listener.
 
 ### 37. client/shell-app/src/App.jsx:63
 
-**Observação:** O comentário diz que, sem login, será exibida a aplicação de login do usuário.
+**Observation:** Comment says user login application displayed without login.
 
-**Interpretação:** Descreve a condição de composição da user-app; a 3.4.7 registra corroboração na montagem e na relação host → remote.
+**Interpretation:** Describes user-app composition condition; 3.4.7 records corroboration in mounting and host → remote relationship.
 
 ### 38. client/shell-app/src/App.jsx:66
 
-**Observação:** O comentário diz que, após login, será exibida a aplicação de gestão de ocorrências.
+**Observation:** Comment says issue-management application displayed after login.
 
-**Interpretação:** Descreve a condição de composição da issue-app; a 3.4.7 registra corroboração na montagem e na relação host → remote.
+**Interpretation:** Describes issue-app composition condition; 3.4.7 records corroboration in mounting and host → remote relationship.
 
 ### 39. 94eaf5d 2025-11-29 (client/shell-app/vite.config.js); 8c2b4f9 2025-12-07 (client/shell-app/vite.config.js)
 
-**Observação:** A 3.4.8 registra que o arquivo do shell foi criado em 94eaf5d, cuja versão não está disponível. A versão legível de 8c2b4f9, que introduz a issue-app, já contém o bloco comentado com só userApp e o ativo com os dois remotes; o arquivo não muda depois até o snapshot.
+**Observation:** Section 3.4.8 records shell file created in 94eaf5d, version unavailable. Readable 8c2b4f9 version introducing issue-app already contains commented block with only userApp and active block with two remotes; file unchanged afterward through snapshot.
 
-**Interpretação:** O ponto foi esclarecido: o bloco comentado representa outro estágio, não uma configuração alternativa em uso. A primeira versão indisponível impede afirmar identidade literal com o bloco comentado; isso não torna ambígua a configuração ativa do snapshot.
+**Interpretation:** Point clarified: commented block represents different stage, not alternative configuration in use. Unavailable first version prevents claiming literal identity with commented block; does not make snapshot active configuration ambiguous.
 
 ### 40. 934af61 2025-11-26 (server/package.json; server/microservices/auth-service/auth-microservice.js); 94eaf5d 2025-11-29 (client/shell-app/src/App.jsx; client/shell-app/src/main.jsx); 8c2b4f9 2025-12-07 (client/shell-app/src/App.jsx; client/shell-app/src/main.jsx; server/microservices/auth-service/auth-microservice.js); 0df228d 2025-12-10 (client/user-app/src/App.jsx)
 
-**Observação:** A 3.4.8 registra que nenhum dos oito commits até o snapshot cria gateway ou server/index.js. Na primeira versão legível do shell, 8c2b4f9, os comentários Gateway já acompanham o endereço em 4001; os sinais de 4000 também antecedem o snapshot. As versões iniciais de código citadas na revisão não estão disponíveis.
+**Observation:** Section 3.4.8 records none of eight commits through snapshot creates gateway or server/index.js. In first readable shell version, 8c2b4f9, Gateway comments already accompany address at 4001; 4000 signals also predate snapshot. Initial code versions cited in review unavailable.
 
-**Interpretação:** O ponto foi esclarecido: o rótulo Gateway não é resto de um gateway versionado neste repositório. Não se sabe se o serviço em 4000 foi planejado, externo ou abandonado; essa lacuna do passado não altera o endpoint ativo do snapshot.
+**Interpretation:** Point clarified: Gateway label not remnant of gateway versioned in repository. Unknown whether service at 4000 planned, external or abandoned; past gap does not alter active snapshot endpoint.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.2 (client/issue-app/package.json:15) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #4 |
-| 2 | 3.4.2 (client/shell-app/package.json:14) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #5 |
-| 3 | 3.4.2 (client/user-app/package.json:15) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #6 |
-| 4 | 3.4.2 (Evidência, client/issue-app/package.json:15); 3.4.3 (client/issue-app, Marcadores e Build); 3.4.4 (client/shell-app/src/App.jsx:11, Observação); 3.4.5 #2 (Configuração); 3.4.6 #1 (Artefatos); 3.4.7 #3 (Evidência), #4, #5 (Documento e Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #15; configura #23 |
-| 5 | 3.4.2 (Evidência, client/shell-app/package.json:14); 3.4.3 (client/shell-app, Marcadores e Build); 3.4.4 (client/shell-app/src/App.jsx:10, :11, Observação); 3.4.5 #1, #2 (Configuração); 3.4.6 #2 (Artefatos); 3.4.7 #2, #3, #4 (Evidência) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #16; configura #22; configura #23 |
-| 6 | 3.4.2 (Evidência, client/user-app/package.json:15); 3.4.3 (client/user-app, Marcadores e Build); 3.4.4 (client/shell-app/src/App.jsx:10, Observação); 3.4.5 #1 (Configuração); 3.4.6 #3 (Artefatos); 3.4.7 #3, #4 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #17; configura #22 |
-| 7 | 3.4.4 (client/shell-app/src/App.jsx:10) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #22 |
-| 8 | 3.4.4 (client/shell-app/src/App.jsx:11) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #23 |
-| 9 | 3.4.4 (client/issue-app/src/components/Header.jsx:39) | 3 código | código-fonte | events | arquitetural | moderada | implementa #24 |
-| 10 | 3.4.4 (client/shell-app/src/App.jsx:42) | 3 código | código-fonte | events | arquitetural | moderada | implementa #25 |
-| 11 | 3.4.4 (client/user-app/src/UserComponent.jsx:56) | 3 código | código-fonte | events | arquitetural | moderada | implementa #25 |
-| 12 | 3.4.4 (client/user-app/src/UserComponent.jsx:74) | 3 código | código-fonte | events | arquitetural | moderada | implementa #25 |
-| 13 | 3.4.4 (manual client/shell-app/src/App.jsx:64) | 3 código | código-fonte | module-federation | arquitetural | moderada | implementa #22 |
-| 14 | 3.4.4 (manual client/shell-app/src/App.jsx:67) | 3 código | código-fonte | module-federation | arquitetural | moderada | implementa #23 |
-| 15 | 3.4.3 (client/issue-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 16 | 3.4.3 (client/shell-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 17 | 3.4.3 (client/user-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 18 | 3.4.3 (server) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 19 | 3.4.3 (server/microservices/analytics-ai-service) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 20 | 3.4.3 (server/microservices/auth-service) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 21 | 3.4.3 (server/microservices/issue-management-service) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 22 | 3.4.5 #1 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #16; liga #17 |
-| 23 | 3.4.5 #2 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #16; liga #15 |
-| 24 | 3.4.5 #3 | 5 composição | código-fonte | events | arquitetural | forte | liga #15; liga #16 |
-| 25 | 3.4.5 #4 | 5 composição | código-fonte | events | arquitetural | forte | liga #17; liga #16 |
-| 26 | 3.4.6 #1 | 6 build-deploy | manifesto | module-federation | arquitetural | moderada | publica #15 |
-| 27 | 3.4.6 #2 | 6 build-deploy | manifesto | module-federation | arquitetural | moderada | publica #16 |
-| 28 | 3.4.6 #3 | 6 build-deploy | manifesto | module-federation | arquitetural | moderada | publica #17 |
-| 29 | 3.4.7 #1 | 7 documentação | documentação | module-federation | tecnológica | fraca | corrobora #1; corrobora #2; corrobora #3; corrobora #22; corrobora #23; corrobora #19; corrobora #20; corrobora #21 |
-| 30 | 3.4.7 #2 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #15; corrobora #16; corrobora #17; corrobora #22; corrobora #23; corrobora #5 |
-| 31 | 3.4.7 #3 | 7 documentação | documentação | module-federation | tecnológica | fraca | corrobora #1; corrobora #2; corrobora #3; corrobora #4; corrobora #5; corrobora #6 |
-| 32 | 3.4.7 #4 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #23; corrobora #4; corrobora #5; corrobora #6 |
-| 33 | 3.4.7 #5 | 7 documentação | comentário | module-federation | arquitetural | fraca | corrobora #23; corrobora #4; corrobora #8 |
-| 34 | 3.4.7 #6 | 7 documentação | comentário | — | contexto | fraca | contradiz client/shell-app/src/main.jsx:13-15; contradiz server/microservices/auth-service/config/config.js:9; contradiz #18; contradiz #19; contradiz #20; contradiz #21 |
-| 35 | 3.4.7 #7 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #10; corrobora #11; corrobora #25 |
-| 36 | 3.4.7 #8 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #9; corrobora #12; corrobora #24; corrobora #25; corrobora #10 |
-| 37 | 3.4.7 #9 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #13; corrobora #22 |
-| 38 | 3.4.7 #10 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #14; corrobora #23 |
-| 39 | 3.4.8 #1 | 8 histórico | histórico | module-federation | arquitetural | fraca | explica #5; explica #27 |
-| 40 | 3.4.8 #2 | 8 histórico | histórico | — | contexto | fraca | explica #34 |
+| 1 | 3.4.2 (client/issue-app/package.json:15) | 1 technology | manifest | module-federation | technological | weak | declares #4 |
+| 2 | 3.4.2 (client/shell-app/package.json:14) | 1 technology | manifest | module-federation | technological | weak | declares #5 |
+| 3 | 3.4.2 (client/user-app/package.json:15) | 1 technology | manifest | module-federation | technological | weak | declares #6 |
+| 4 | 3.4.2 (Evidence, client/issue-app/package.json:15); 3.4.3 (client/issue-app, Markers and Build); 3.4.4 (client/shell-app/src/App.jsx:11, Observation); 3.4.5 #2 (Configuration); 3.4.6 #1 (Artifacts); 3.4.7 #3 (Evidence), #4, #5 (Document and Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #15; configures #23 |
+| 5 | 3.4.2 (Evidence, client/shell-app/package.json:14); 3.4.3 (client/shell-app, Markers and Build); 3.4.4 (client/shell-app/src/App.jsx:10, :11, Observation); 3.4.5 #1, #2 (Configuration); 3.4.6 #2 (Artifacts); 3.4.7 #2, #3, #4 (Evidence) | 2 configuration | configuration | module-federation | architectural | strong | configures #16; configures #22; configures #23 |
+| 6 | 3.4.2 (Evidence, client/user-app/package.json:15); 3.4.3 (client/user-app, Markers and Build); 3.4.4 (client/shell-app/src/App.jsx:10, Observation); 3.4.5 #1 (Configuration); 3.4.6 #3 (Artifacts); 3.4.7 #3, #4 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #17; configures #22 |
+| 7 | 3.4.4 (client/shell-app/src/App.jsx:10) | 3 code | source code | module-federation | architectural | strong | implements #22 |
+| 8 | 3.4.4 (client/shell-app/src/App.jsx:11) | 3 code | source code | module-federation | architectural | strong | implements #23 |
+| 9 | 3.4.4 (client/issue-app/src/components/Header.jsx:39) | 3 code | source code | events | architectural | moderate | implements #24 |
+| 10 | 3.4.4 (client/shell-app/src/App.jsx:42) | 3 code | source code | events | architectural | moderate | implements #25 |
+| 11 | 3.4.4 (client/user-app/src/UserComponent.jsx:56) | 3 code | source code | events | architectural | moderate | implements #25 |
+| 12 | 3.4.4 (client/user-app/src/UserComponent.jsx:74) | 3 code | source code | events | architectural | moderate | implements #25 |
+| 13 | 3.4.4 (manual client/shell-app/src/App.jsx:64) | 3 code | source code | module-federation | architectural | moderate | implements #22 |
+| 14 | 3.4.4 (manual client/shell-app/src/App.jsx:67) | 3 code | source code | module-federation | architectural | moderate | implements #23 |
+| 15 | 3.4.3 (client/issue-app) | 4 structure | directory | — | architectural | moderate | — |
+| 16 | 3.4.3 (client/shell-app) | 4 structure | directory | — | architectural | moderate | — |
+| 17 | 3.4.3 (client/user-app) | 4 structure | directory | — | architectural | moderate | — |
+| 18 | 3.4.3 (server) | 4 structure | directory | — | context | weak | — |
+| 19 | 3.4.3 (server/microservices/analytics-ai-service) | 4 structure | directory | — | context | weak | — |
+| 20 | 3.4.3 (server/microservices/auth-service) | 4 structure | directory | — | context | weak | — |
+| 21 | 3.4.3 (server/microservices/issue-management-service) | 4 structure | directory | — | context | weak | — |
+| 22 | 3.4.5 #1 | 5 composition | source code | module-federation | architectural | strong | links #16; links #17 |
+| 23 | 3.4.5 #2 | 5 composition | source code | module-federation | architectural | strong | links #16; links #15 |
+| 24 | 3.4.5 #3 | 5 composition | source code | events | architectural | strong | links #15; links #16 |
+| 25 | 3.4.5 #4 | 5 composition | source code | events | architectural | strong | links #17; links #16 |
+| 26 | 3.4.6 #1 | 6 build-deploy | manifest | module-federation | architectural | moderate | publishes #15 |
+| 27 | 3.4.6 #2 | 6 build-deploy | manifest | module-federation | architectural | moderate | publishes #16 |
+| 28 | 3.4.6 #3 | 6 build-deploy | manifest | module-federation | architectural | moderate | publishes #17 |
+| 29 | 3.4.7 #1 | 7 documentation | documentation | module-federation | technological | weak | corroborates #1; corroborates #2; corroborates #3; corroborates #22; corroborates #23; corroborates #19; corroborates #20; corroborates #21 |
+| 30 | 3.4.7 #2 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #15; corroborates #16; corroborates #17; corroborates #22; corroborates #23; corroborates #5 |
+| 31 | 3.4.7 #3 | 7 documentation | documentation | module-federation | technological | weak | corroborates #1; corroborates #2; corroborates #3; corroborates #4; corroborates #5; corroborates #6 |
+| 32 | 3.4.7 #4 | 7 documentation | comment | — | architectural | weak | corroborates #23; corroborates #4; corroborates #5; corroborates #6 |
+| 33 | 3.4.7 #5 | 7 documentation | comment | module-federation | architectural | weak | corroborates #23; corroborates #4; corroborates #8 |
+| 34 | 3.4.7 #6 | 7 documentation | comment | — | context | weak | contradicts client/shell-app/src/main.jsx:13-15; contradicts server/microservices/auth-service/config/config.js:9; contradicts #18; contradicts #19; contradicts #20; contradicts #21 |
+| 35 | 3.4.7 #7 | 7 documentation | comment | — | architectural | weak | corroborates #10; corroborates #11; corroborates #25 |
+| 36 | 3.4.7 #8 | 7 documentation | comment | — | architectural | weak | corroborates #9; corroborates #12; corroborates #24; corroborates #25; corroborates #10 |
+| 37 | 3.4.7 #9 | 7 documentation | comment | — | architectural | weak | corroborates #13; corroborates #22 |
+| 38 | 3.4.7 #10 | 7 documentation | comment | — | architectural | weak | corroborates #14; corroborates #23 |
+| 39 | 3.4.8 #1 | 8 history | history | module-federation | architectural | weak | explains #5; explains #27 |
+| 40 | 3.4.8 #2 | 8 history | history | — | context | weak | explains #34 |
 
-## Resumo
+## Summary
 
-Observações: 40. Dimensões (tecnologia: 3, configuração: 3, código: 8, estrutura: 7, composição: 4, build-deploy: 3, documentação: 10, histórico: 2). Força (forte: 7, moderada: 14, fraca: 19, ambígua: 0). Evidência (tecnológica: 7, arquitetural: 27, contexto: 6).
+Observations: 40. Dimensions (technology: 3, configuration: 3, code: 8, structure: 7, composition: 4, build-deploy: 3, documentation: 10, history: 2). Strength (strong: 7, moderate: 14, weak: 19, ambiguous: 0). Evidence (technological: 7, architectural: 27, context: 6).
+

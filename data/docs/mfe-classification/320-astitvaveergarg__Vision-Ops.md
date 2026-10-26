@@ -20,75 +20,75 @@ annotation:
 
 # 320 — astitvaveergarg/Vision-Ops
 
-## Contexto
+## Context
 
-Plataforma de inferência de ML (“VisionOps”: detecção de objetos com YOLOv8) com foco em DevOps/MLOps (descrição do repositório). O repositório tem:
-- uma API FastAPI (`api/`);
-- um único frontend estático (`frontend/index.html` + `frontend/app.js`, servido por nginx com proxy para a API);
-- Helm charts, Terraform para três nuvens, Kubernetes/ArgoCD e workflows.
+ML inference platform (“VisionOps”: object detection with YOLOv8) focused on DevOps/MLOps (repository description). The repository has:
+- a FastAPI API (`api/`);
+- a single static frontend (`frontend/index.html` + `frontend/app.js`, served by nginx with an API proxy);
+- Helm charts, Terraform for three clouds, Kubernetes/ArgoCD and workflows.
 
-O termo da busca resulta da justaposição de “…15MB frontend) |” e “| **Orchestration** |” em linhas consecutivas da tabela de stack do README. O nome do repositório não é usado como evidência.
+The search term results from juxtaposing “…15MB frontend) |” and “| **Orchestration** |” on consecutive lines in the README stack table. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:321` registra rank 320, ID 1156567216, status `cloned`, branch `master` (a padrão) e o commit do front matter, que é o HEAD do clone e de `origin/master`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:321` records rank 320, ID 1156567216, status `cloned`, branch `master` (default) and the front matter commit, which is the HEAD of the clone and of `origin/master`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:321` registra a estratégia `broader` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:24828` (`broader`, `unknown`) e `data/discovery/mfe-round-002/candidates.csv:24835` (`broader`, `pass`).
+`data/samples/mfe-sample-001/sample.csv:321` records strategy `broader` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:24828` (`broader`, `unknown`) and `data/discovery/mfe-round-002/candidates.csv:24835` (`broader`, `pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna um hit por rodada, do endpoint `repositories` e com `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns one hit per round, from endpoint `repositories` and with an empty `path`:
 
-| Consulta (`q`) | Subconsulta | Consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Effective query | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `broader-frontend-orchestration`: `"frontend orchestration" in:name,description,readme` | `broader-frontend-orchestration#created:2026-Q1` | `"frontend orchestration" in:name,description,readme pushed:>=2025-04-01 created:2026-01-01..2026-03-31` | 2026-10-07T23:42:39.094Z / 2026-10-08T16:24:27.627Z |
 
-Metadados do hit (iguais nas duas rodadas): descrição sobre a plataforma de inferência de ML, sem os termos buscados; tópicos `kubernetes`, `mlops`, `observability`, `scalable`; linguagem HCL; `fork: false`; tamanho 2387; criação em 2026-02-12T19:50:13Z; push em 2026-07-20T18:32:04Z.
+Hit metadata (identical in both rounds): description about the ML inference platform, without searched terms; topics `kubernetes`, `mlops`, `observability`, `scalable`; language HCL; `fork: false`; size 2387; created at 2026-02-12T19:50:13Z; pushed at 2026-07-20T18:32:04Z.
 
-**Grafia:** o README do SHA não contém a frase “frontend orchestration”.
-- A sequência compatível é o fim de `README.md:63` (“| **Containerization** | Docker multi-stage builds | Optimised images (4.5GB backend, 15MB frontend) |”) seguido de `README.md:64` (“| **Orchestration** | Kubernetes, Helm 3, Helmfile | …”): os tokens “frontend” e “Orchestration” ficam adjacentes depois de pontuação e marcação de tabela.
-- `README.md:20` (“split frontend/backend Helm charts and Helmfile orchestration”) contém os dois termos, mas não adjacentes.
+**Spelling:** the README at the SHA does not contain phrase “frontend orchestration”.
+- The compatible sequence is the end of `README.md:63` (“| **Containerization** | Docker multi-stage builds | Optimised images (4.5GB backend, 15MB frontend) |”) followed by `README.md:64` (“| **Orchestration** | Kubernetes, Helm 3, Helmfile | …”): tokens “frontend” and “Orchestration” become adjacent after punctuation and table markup.
+- `README.md:20` (“split frontend/backend Helm charts and Helmfile orchestration”) contains both terms, but not adjacently.
 
-Não se afirma qual trecho a API casou, porque ela não informa linha.
+No assertion is made about which passage the API matched, because it does not report a line.
 
-A última alteração do README é `513947c` (2026-07-20T23:35:40+05:30), e o SHA (2026-07-21T00:02:03+05:30, isto é, 2026-07-20T18:32:03Z) coincide com o `pushed_at`. Ambos antecedem as coletas de outubro de 2026, e o README do SHA não é posterior às buscas.
+The last README change is `513947c` (2026-07-20T23:35:40+05:30), and the SHA (2026-07-21T00:02:03+05:30, that is, 2026-07-20T18:32:03Z) matches `pushed_at`. Both predate the October 2026 collections, and the README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 125 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Pastas `api/` (FastAPI), `frontend/` (6 arquivos), `charts/` (api, frontend, infrastructure, monitoring), `terraform/` (gcp, aws, azure), `k8s/`, `environments/`, `docker/`, `docs/` e workflows. Não há `package.json`. | contexto |
-| Código-fonte (frontend) | `frontend/index.html:7–8`: Tailwind e Font Awesome por CDN; `:292`: `<script src="app.js">`. `frontend/app.js:2`: `API_BASE_URL`; `:115`, `:181`, `:322`, `:354`: `fetch` para `/models`, `/detect`, `/stats`, `/health`. Uma única página que consome a API. | contrária |
-| Build/deploy (frontend) | `frontend/Dockerfile:1–19`: imagem nginx com `index.html` e `app.js`. `frontend/nginx.conf:10–12`, `:15–30`: serve os estáticos e faz proxy de `/api/` para `vision-api:8000`. `charts/frontend/` (Chart, deployment, service, ingress): uma release Helm para o frontend. `frontend/server.py:1–15`: servidor alternativo FastAPI para servir o frontend em desenvolvimento. | contrária |
-| Documentação | `README.md:20`, `:49–52`, `:79`: separação frontend/backend em charts distintos e proxy nginx; `README.md:62`: frontend “Nginx Alpine, HTML5, Tailwind CSS, Vanilla JS”; `README.md:64`: “Orchestration: Kubernetes, Helm 3, Helmfile”, orquestração de contêineres. | contexto |
-| Tecnologia / Configuração / Composição (busca) | `git grep -i` no SHA por `micro.?front`, `federation`, `single.?spa`, `remoteEntry`, `import.?map`, `customElements` e `iframe`: nenhuma ocorrência. | ausente |
-| Código-fonte (fronteiras) | O frontend não tem imports (só `app.js` carregado por `<script>`); não há outra unidade frontend para cruzar. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 125 entries, all regular files `100644`; zero symlinks and zero gitlinks. Folders `api/` (FastAPI), `frontend/` (6 files), `charts/` (api, frontend, infrastructure, monitoring), `terraform/` (gcp, aws, azure), `k8s/`, `environments/`, `docker/`, `docs/` and workflows. There is no `package.json`. | context |
+| Source code (frontend) | `frontend/index.html:7–8`: Tailwind and Font Awesome through CDN; `:292`: `<script src="app.js">`. `frontend/app.js:2`: `API_BASE_URL`; `:115`, `:181`, `:322`, `:354`: `fetch` to `/models`, `/detect`, `/stats`, `/health`. A single page consuming the API. | contrary |
+| Build/deploy (frontend) | `frontend/Dockerfile:1–19`: nginx image with `index.html` and `app.js`. `frontend/nginx.conf:10–12`, `:15–30`: serves static files and proxies `/api/` to `vision-api:8000`. `charts/frontend/` (Chart, deployment, service, ingress): one Helm release for the frontend. `frontend/server.py:1–15`: alternative FastAPI server to serve the frontend during development. | contrary |
+| Documentation | `README.md:20`, `:49–52`, `:79`: frontend/backend separation into distinct charts and nginx proxy; `README.md:62`: frontend “Nginx Alpine, HTML5, Tailwind CSS, Vanilla JS”; `README.md:64`: “Orchestration: Kubernetes, Helm 3, Helmfile”, container orchestration. | context |
+| Technology / Configuration / Composition (search) | `git grep -i` at the SHA for `micro.?front`, `federation`, `single.?spa`, `remoteEntry`, `import.?map`, `customElements` and `iframe`: no occurrence. | absent |
+| Source code (boundaries) | The frontend has no imports (only `app.js` loaded through `<script>`); there is no other frontend unit to cross into. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso e parcial (`blob:none`). São 30 commits alcançáveis a partir do SHA (32 em todos os refs), 10 merges:
-- 20 de `astitvaveergarg <av4764@srmist.edu.in>`;
-- 10 de `Astitva Veer Garg <91984568+astitvaveergarg@users.noreply.github.com>`, com committer `GitHub` (merges de PR).
+Non-shallow, partial clone (`blob:none`). There are 30 commits reachable from the SHA (32 across all refs), 10 merges:
+- 20 by `astitvaveergarg <av4764@srmist.edu.in>`;
+- 10 by `Astitva Veer Garg <91984568+astitvaveergarg@users.noreply.github.com>`, with committer `GitHub` (PR merges).
 
-Os registros vão de 2026-02-13 (`f5fda02`, “First Commit V1.0.0”) ao SHA (2026-07-21, merge do PR #9). Os branches `feature/…` e `fix/…` não foram considerados. `git rev-list --objects $SHA --missing=print` lista 105 objetos ausentes, nenhum na árvore do SHA. Nenhum blob histórico foi lido.
+Records run from 2026-02-13 (`f5fda02`, “First Commit V1.0.0”) to the SHA (2026-07-21, PR #9 merge). Branches `feature/…` and `fix/…` were not considered. `git rev-list --objects $SHA --missing=print` lists 105 missing objects, none in the SHA tree. No historical blob was read.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend (`frontend/index.html`, `frontend/app.js`); a outra peça é uma API FastAPI. Nenhuma configuração de composição frontend. |
-| Q2 | No | Não há duas unidades frontend a avaliar. |
-| Q3 | No | Não há host que carregue unidades; o nginx só serve os estáticos e faz proxy da API (`frontend/nginx.conf:10–30`). |
-| Q4 | No | Nenhum mecanismo de composição frontend; “orchestration” é Kubernetes/Helm (`README.md:64`). |
-| Q5 | No | Q1–Q4 convergem. |
+| Q1 | No | A single frontend unit (`frontend/index.html`, `frontend/app.js`); the other piece is a FastAPI API. No frontend composition configuration. |
+| Q2 | No | There are not two frontend units to assess. |
+| Q3 | No | No host loading units; nginx only serves static files and proxies the API (`frontend/nginx.conf:10–30`). |
+| Q4 | No | No frontend composition mechanism; “orchestration” is Kubernetes/Helm (`README.md:64`). |
+| Q5 | No | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “conventional frontend monoliths”: um front estático com backend separado.
-- A separação frontend/backend em releases Helm não é composição de unidades frontend.
-- Nem é caso de menção a micro-frontends: o hit resulta de tokens adjacentes de linhas distintas da tabela de stack, como os falsos positivos lexicais de 279 e 312 (rascunhos).
-- `frontend_units: 1`, `single-unit`. `ui_technologies: []`: HTML e JavaScript vanilla com Tailwind por CDN, sem framework de UI. `build_tools: []`: sem bundler. `repo_type: production`: domínio próprio (`README.md:173`), Terraform multicloud e GitOps.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. It matches “conventional frontend monoliths”: a static frontend with separate backend.
+- Frontend/backend separation into Helm releases is not frontend unit composition.
+- It is not even a micro-frontends mention case: the hit results from adjacent tokens in distinct stack table rows, like lexical false positives 279 and 312 (drafts).
+- `frontend_units: 1`, `single-unit`. `ui_technologies: []`: HTML and vanilla JavaScript with Tailwind through CDN, without a UI framework. `build_tools: []`: no bundler. `repo_type: production`: own domain (`README.md:173`), multicloud Terraform and GitOps.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos) / Protocolo (busca):** a consulta `"frontend orchestration"` casa a justaposição “frontend) | | **Orchestration**” em uma tabela Markdown (`README.md:63–64`). É o terceiro caso da série com esse padrão (279, 312). As consultas amplas de frase parecem ignorar pontuação e quebras de linha, o que gera ruído em READMEs de infraestrutura.
-- **Protocolo:** a elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ1 (misleading signals) / Protocol (search):** query `"frontend orchestration"` matches juxtaposition “frontend) | | **Orchestration**” in a Markdown table (`README.md:63–64`). It is the third case in the series with this pattern (279, 312). Broad phrase queries appear to ignore punctuation and line breaks, generating noise in infrastructure READMEs.
+- **Protocol:** eligibility changes from `unknown` (001) to `pass` (002).

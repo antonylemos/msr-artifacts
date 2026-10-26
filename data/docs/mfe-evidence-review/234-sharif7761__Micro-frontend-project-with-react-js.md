@@ -19,448 +19,449 @@ annotation:
 
 # 234 — sharif7761/Micro-frontend-project-with-react-js
 
-## Leitura do repositório
+## Repository overview
 
-Três aplicações React com build Rsbuild próprio formam um shell, uma unidade funcional de usuários e uma biblioteca de componentes com App de demonstração (#16–#18). As declarações do plugin (#1–#3) levam às configurações de Module Federation: common_simple expõe Button/Card (#4), core_simple resolve os dois provedores (#5) e users_simple expõe UserList e também resolve common_simple (#6). O shell carrega e monta UserList em `/users` (#7, #12), usa Card na Home (#10, #11), e users_simple renderiza Button/Card (#13, #14). Essas construções implementam as três relações ativas entre unidades presentes no snapshot (#19–#21).
+Three React applications with own Rsbuild builds form shell, functional user unit and component library with demo App (#16–#18). Plugin declarations (#1–#3) lead to Module Federation configurations: common_simple exposes Button/Card (#4), core_simple resolves both providers (#5), users_simple exposes UserList and also resolves common_simple (#6). Shell loads/mounts UserList at `/users` (#7, #12), uses Card in Home (#10, #11), and users_simple renders Button/Card (#13, #14). Constructs implement three active relationships between snapshot units (#19–#21).
 
-Os bootstraps assíncronos locais (#8, #9) não compõem outras unidades. A raiz só coordena scripts (#15). Os três builds são separados, mas deploy não foi observado e não há versionamento independente demonstrado (#22–#24); portas e URLs localhost não provam publicação. A documentação corrobora os papéis e a cadeia de composição, mas generaliza lazy loading (#35), atribui singleton aos componentes (#42), anuncia vários destinos MFE roteados (#54) e uso direto de Button pelo shell (#55), em desacordo com o snapshot. O import de Button pelo shell existe (#30), mas não sua renderização direta; o componente chega ao shell também pelo App de usuários (#48).
+Local asynchronous bootstraps (#8, #9) compose no other units. Root only coordinates scripts (#15). Three builds separate, but deployment not observed and no independent versioning demonstrated (#22–#24); localhost ports/URLs do not prove publication. Documentation corroborates roles and composition chain but generalizes lazy loading (#35), attributes singleton to components (#42), announces multiple routed MFE targets (#54) and direct shell Button usage (#55), contrary to snapshot. Shell Button import exists (#30), without direct rendering; component also reaches shell through user App (#48).
 
-As promessas de deploy, paralelismo, versões distintas e hot reload ficam sem corroboração (#39, #44, #46, #53); desempenho e árvore de saída têm apoio parcial (#50, #52). O único commit adicionou documentação e implementação juntas. Os seis pontos históricos são inconclusivos sobre a origem dessas divergências, sem deixar alternativas arquiteturais em aberto no snapshot (#56–#61). A extração preserva os julgamentos finais da 3.4 e não acrescenta mineração.
+Deployment, parallelism, distinct versions and hot reload promises uncorroborated (#39, #44, #46, #53); performance/output tree partially supported (#50, #52). Single commit added documentation/implementation together. Six historical points inconclusive about discrepancy origins without leaving snapshot architectural alternatives open (#56–#61). Extraction preserves final 3.4 judgments, adding no mining.
 
-## Observações
+## Observations
 
 ### 1. common_simple/package.json:16
 
-**Observação:** `@module-federation/rsbuild-plugin` está em `devDependencies`, versão `^0.8.12`.
+**Observation:** `@module-federation/rsbuild-plugin` in `devDependencies`, version `^0.8.12`.
 
-**Interpretação:** A declaração sinaliza a tecnologia de federação no build de common_simple; isoladamente não mostra ligação entre unidades.
+**Interpretation:** Declaration signals federation technology in common_simple build; alone shows no inter-unit link.
 
 ### 2. core_simple/package.json:17
 
-**Observação:** `@module-federation/rsbuild-plugin` está em `devDependencies`, versão `^0.8.12`.
+**Observation:** `@module-federation/rsbuild-plugin` in `devDependencies`, version `^0.8.12`.
 
-**Interpretação:** A declaração sinaliza a tecnologia de federação no build de core_simple; isoladamente não mostra ligação entre unidades.
+**Interpretation:** Declaration signals federation technology in core_simple build; alone shows no inter-unit link.
 
 ### 3. users_simple/package.json:17
 
-**Observação:** `@module-federation/rsbuild-plugin` está em `devDependencies`, versão `^0.8.12`.
+**Observation:** `@module-federation/rsbuild-plugin` in `devDependencies`, version `^0.8.12`.
 
-**Interpretação:** A declaração sinaliza a tecnologia de federação no build de users_simple; isoladamente não mostra ligação entre unidades.
+**Interpretation:** Declaration signals federation technology in users_simple build; alone shows no inter-unit link.
 
 ### 4. common_simple/rsbuild.config.ts:8-26
 
-**Observação:** `pluginModuleFederation` declara `name: common_simple`, `filename: remoteEntry.js`, expõe `./Button` e `./Card` a partir dos componentes locais e compartilha React/ReactDOM como singleton e eager.
+**Observation:** `pluginModuleFederation` declares `name: common_simple`, `filename: remoteEntry.js`, exposes `./Button` and `./Card` from local components, sharing React/ReactDOM as singleton and eager.
 
-**Interpretação:** Configura um provedor de componentes federados; o bloco não nomeia consumidores.
+**Interpretation:** Configures federated component provider; block names no consumers.
 
 ### 5. core_simple/rsbuild.config.ts:8-29
 
-**Observação:** O plugin declara `core_simple`, `remoteEntry.js`, os remotes `common_simple@http://localhost:3001/remoteEntry.js` e `users_simple@http://localhost:3002/remoteEntry.js`, React/ReactDOM singleton e eager e react-router-dom singleton.
+**Observation:** Plugin declares `core_simple`, `remoteEntry.js`, remotes `common_simple@http://localhost:3001/remoteEntry.js` and `users_simple@http://localhost:3002/remoteEntry.js`, React/ReactDOM singleton and eager, react-router-dom singleton.
 
-**Interpretação:** O shell nomeia e resolve duas unidades distintas por Module Federation.
+**Interpretation:** Shell names/resolves two distinct units through Module Federation.
 
 ### 6. users_simple/rsbuild.config.ts:8-31
 
-**Observação:** O plugin declara `users_simple`, `remoteEntry.js`, expõe `./UserList` como `./src/App.tsx`, resolve `common_simple@http://localhost:3001/remoteEntry.js` e compartilha React/ReactDOM singleton e eager e react-router-dom singleton.
+**Observation:** Plugin declares `users_simple`, `remoteEntry.js`, exposes `./UserList` as `./src/App.tsx`, resolves `common_simple@http://localhost:3001/remoteEntry.js`, sharing React/ReactDOM singleton and eager, react-router-dom singleton.
 
-**Interpretação:** A unidade funcional é provedora para o shell e consumidora da biblioteca federada; o bloco liga users_simple a common_simple.
+**Interpretation:** Functional unit provides to shell and consumes federated library; block links users_simple to common_simple.
 
 ### 7. core_simple/src/App.tsx:9; core_simple/src/App.tsx:56-61; core_simple/rsbuild.config.ts:13; users_simple/rsbuild.config.ts:11-13
 
-**Observação:** `lazy(() => import('users_simple/UserList'))` carrega UserList, montado na rota `/users` sob Suspense.
+**Observation:** `lazy(() => import('users_simple/UserList'))` loads UserList, mounted at route `/users` under Suspense.
 
-**Interpretação:** O import nomeia a unidade remota de destino e participa da composição funcional do shell.
+**Interpretation:** Import names target remote unit, participating in shell functional composition.
 
 ### 8. core_simple/src/index.tsx:1; core_simple/src/bootstrap.tsx:1-10
 
-**Observação:** `import('./bootstrap')` carrega o bootstrap local que monta o App React.
+**Observation:** `import('./bootstrap')` loads local bootstrap mounting React App.
 
-**Interpretação:** É carga assíncrona interna à aplicação, sem compor outra unidade.
+**Interpretation:** Asynchronous loading internal to application, composing no other unit.
 
 ### 9. users_simple/src/index.tsx:1; users_simple/src/bootstrap.tsx:1-10
 
-**Observação:** `import('./bootstrap')` carrega o bootstrap local que monta o App React.
+**Observation:** `import('./bootstrap')` loads local bootstrap mounting React App.
 
-**Interpretação:** É carga assíncrona interna à aplicação, sem compor outra unidade.
+**Interpretation:** Asynchronous loading internal to application, composing no other unit.
 
 ### 10. core_simple/src/App.tsx:15-23; core_simple/src/App.tsx:6; core_simple/rsbuild.config.ts:12; common_simple/rsbuild.config.ts:13
 
-**Observação:** A Home renderiza Card em :15-23, importado estaticamente de `common_simple/Card`.
+**Observation:** Home renders Card at :15-23, statically imported from `common_simple/Card`.
 
-**Interpretação:** A montagem usa um componente federado; o ponto de renderização não nomeia sozinho a unidade de origem.
+**Interpretation:** Mounting uses federated component; rendering point alone names no originating unit.
 
 ### 11. core_simple/src/App.tsx:24-26; core_simple/src/App.tsx:6; core_simple/rsbuild.config.ts:12; common_simple/rsbuild.config.ts:13
 
-**Observação:** A Home renderiza Card em :24-26, importado estaticamente de `common_simple/Card`.
+**Observation:** Home renders Card at :24-26, statically imported from `common_simple/Card`.
 
-**Interpretação:** A montagem usa um componente federado; o ponto de renderização não nomeia sozinho a unidade de origem.
+**Interpretation:** Mounting uses federated component; rendering point alone names no originating unit.
 
 ### 12. core_simple/src/App.tsx:46-61; core_simple/src/App.tsx:9; core_simple/rsbuild.config.ts:13; users_simple/rsbuild.config.ts:11-13
 
-**Observação:** Routes associa `/` à Home local e `/users` ao UserList remoto, dentro de BrowserRouter e Suspense.
+**Observation:** Routes associates `/` with local Home and `/users` with remote UserList, inside BrowserRouter and Suspense.
 
-**Interpretação:** O roteamento define onde a unidade funcional remota é composta pelo shell.
+**Interpretation:** Routing defines where shell composes remote functional unit.
 
 ### 13. users_simple/src/App.tsx:40-42; users_simple/src/App.tsx:3; users_simple/rsbuild.config.ts:15; common_simple/rsbuild.config.ts:12
 
-**Observação:** users_simple renderiza Button, importado estaticamente de `common_simple/Button` para atualizar a lista.
+**Observation:** users_simple renders Button, statically imported from `common_simple/Button` to update list.
 
-**Interpretação:** A renderização consome um componente federado; a chamada JSX isolada não nomeia a unidade provedora.
+**Interpretation:** Rendering consumes federated component; JSX call alone names no provider unit.
 
 ### 14. users_simple/src/App.tsx:49-53; users_simple/src/App.tsx:5; users_simple/rsbuild.config.ts:15; common_simple/rsbuild.config.ts:13
 
-**Observação:** users_simple renderiza Card, importado estaticamente de `common_simple/Card` para cada usuário.
+**Observation:** users_simple renders Card, statically imported from `common_simple/Card` for each user.
 
-**Interpretação:** A renderização consome um componente federado; a chamada JSX isolada não nomeia a unidade provedora.
+**Interpretation:** Rendering consumes federated component; JSX call alone names no provider unit.
 
 ### 15. .; package.json:1-22
 
-**Observação:** O manifesto da raiz contém scripts que entram nos três subdiretórios; não há entrada nem build próprios.
+**Observation:** Root manifest contains scripts entering three subdirectories; no own entry/build.
 
-**Interpretação:** A raiz coordena comandos e não constitui uma quarta unidade frontend.
+**Interpretation:** Root coordinates commands without constituting fourth frontend unit.
 
 ### 16. common_simple/; common_simple/package.json:1-23; common_simple/src/index.tsx:1-10; common_simple/rsbuild.config.ts:5-31
 
-**Observação:** common_simple tem manifesto, entrada que monta React, configuração Rsbuild e script `rsbuild build` próprios.
+**Observation:** common_simple has own manifest, React-mounting entry, Rsbuild configuration and `rsbuild build` script.
 
-**Interpretação:** Confirma uma fronteira de aplicação frontend; o App demonstra os componentes que a unidade também expõe por federação.
+**Interpretation:** Confirms frontend application boundary. Own App demonstrates components unit also exposes through federation.
 
 ### 17. core_simple/; core_simple/package.json:1-24; core_simple/src/index.tsx:1; core_simple/src/bootstrap.tsx:5-10; core_simple/rsbuild.config.ts:5-34
 
-**Observação:** core_simple tem manifesto, entrada que monta React, configuração Rsbuild e script `rsbuild build` próprios.
+**Observation:** core_simple has own manifest, React-mounting entry, Rsbuild configuration and `rsbuild build` script.
 
-**Interpretação:** Confirma uma fronteira de aplicação frontend.
+**Interpretation:** Confirms frontend application boundary.
 
 ### 18. users_simple/; users_simple/package.json:1-24; users_simple/src/index.tsx:1; users_simple/src/bootstrap.tsx:5-10; users_simple/rsbuild.config.ts:5-36
 
-**Observação:** users_simple tem manifesto, entrada que monta React, configuração Rsbuild e script `rsbuild build` próprios.
+**Observation:** users_simple has own manifest, React-mounting entry, Rsbuild configuration and `rsbuild build` script.
 
-**Interpretação:** Confirma uma fronteira de aplicação frontend.
+**Interpretation:** Confirms frontend application boundary.
 
 ### 19. core_simple/src/App.tsx:9; core_simple/src/App.tsx:57-60; core_simple/rsbuild.config.ts:13; users_simple/rsbuild.config.ts:9-13
 
-**Observação:** core_simple resolve users_simple por remoteEntry.js e monta seu App exposto como UserList na rota `/users`.
+**Observation:** core_simple resolves users_simple through remoteEntry.js, mounting App exposed as UserList at route `/users`.
 
-**Interpretação:** A relação host → remote está ativa no snapshot e integra uma unidade funcional ao shell.
+**Interpretation:** Host → remote relationship active in snapshot, integrating functional unit into shell.
 
 ### 20. core_simple/src/App.tsx:6; core_simple/src/App.tsx:15-26; core_simple/rsbuild.config.ts:12; common_simple/rsbuild.config.ts:9-14
 
-**Observação:** core_simple resolve common_simple por remoteEntry.js e renderiza duas instâncias de seu Card na Home.
+**Observation:** core_simple resolves common_simple through remoteEntry.js, rendering two Card instances in Home.
 
-**Interpretação:** A relação host → remote está ativa por compartilhamento de componentes; o import não utilizado de Button não acrescenta relação.
+**Interpretation:** Host → remote relationship active through component sharing; unused Button import adds no relationship.
 
 ### 21. users_simple/src/App.tsx:3-5; users_simple/src/App.tsx:40-53; users_simple/rsbuild.config.ts:14-16; common_simple/rsbuild.config.ts:9-14
 
-**Observação:** users_simple resolve common_simple por remoteEntry.js e renderiza Button e Card.
+**Observation:** users_simple resolves common_simple through remoteEntry.js, rendering Button and Card.
 
-**Interpretação:** A relação host → remote está ativa tanto na aplicação autônoma de usuários quanto quando seu App é composto no shell.
+**Interpretation:** Host → remote relationship active both in standalone user application and when App composed in shell.
 
 ### 22. common_simple/package.json:2-10; common_simple/rsbuild.config.ts:5-26; package.json:11; package.json:12
 
-**Observação:** common_simple executa `rsbuild build` com configuração local; o build agregado delega a esse projeto. O manifesto declara versão 1.0.0 e private. A 3.4.6 registra build separado, deploy não observado e versionamento independente No.
+**Observation:** common_simple executes `rsbuild build` with local configuration; aggregate build delegates to project. Manifest declares version 1.0.0 and private. Section 3.4.6 records separate build, deployment not observed and independent versioning No.
 
-**Interpretação:** Há um alvo de build por aplicação, sem evidência de publicação ou deploy independente; endereços localhost são de execução local.
+**Interpretation:** Build target per application without evidence of publication/independent deployment; localhost addresses for local execution.
 
 ### 23. core_simple/package.json:2-10; core_simple/rsbuild.config.ts:5-29; package.json:11; package.json:14
 
-**Observação:** core_simple executa `rsbuild build` com configuração local; o build agregado delega a esse projeto. O manifesto declara versão 1.0.0 e private. A 3.4.6 registra build separado, deploy não observado e versionamento independente No.
+**Observation:** core_simple executes `rsbuild build` with local configuration; aggregate build delegates to project. Manifest declares version 1.0.0 and private. Section 3.4.6 records separate build, deployment not observed and independent versioning No.
 
-**Interpretação:** Há um alvo de build por aplicação, sem evidência de publicação ou deploy independente; endereços localhost são de execução local.
+**Interpretation:** Build target per application without evidence of publication/independent deployment; localhost addresses for local execution.
 
 ### 24. users_simple/package.json:2-10; users_simple/rsbuild.config.ts:5-31; package.json:11; package.json:13
 
-**Observação:** users_simple executa `rsbuild build` com configuração local; o build agregado delega a esse projeto. O manifesto declara versão 1.0.0 e private. A 3.4.6 registra build separado, deploy não observado e versionamento independente No.
+**Observation:** users_simple executes `rsbuild build` with local configuration; aggregate build delegates to project. Manifest declares version 1.0.0 and private. Section 3.4.6 records separate build, deployment not observed and independent versioning No.
 
-**Interpretação:** Há um alvo de build por aplicação, sem evidência de publicação ou deploy independente; endereços localhost são de execução local.
+**Interpretation:** Build target per application without evidence of publication/independent deployment; localhost addresses for local execution.
 
 ### 25. ARCHITECTURE.md:13-19
 
-**Observação:** O diagrama apresenta core_simple como shell com React Router, navegação e Module Federation Host.
+**Observation:** Diagram presents core_simple as shell with React Router, navigation and Module Federation Host.
 
-**Interpretação:** Descreve o papel de composição do shell, corroborado pela configuração e pelas relações.
+**Interpretation:** Describes shell composition role, corroborated by configuration and relationships.
 
 ### 26. ARCHITECTURE.md:18
 
-**Observação:** O diagrama atribui ao shell carregamento lazy de micro frontends.
+**Observation:** Diagram attributes lazy microfrontend loading to shell.
 
-**Interpretação:** A afirmação é corroborada especificamente pela carga de UserList em /users.
+**Interpretation:** Claim specifically corroborated by UserList loading at /users.
 
 ### 27. ARCHITECTURE.md:27-35
 
-**Observação:** O diagrama atribui a common_simple as exposições Button e Card.
+**Observation:** Diagram attributes Button/Card exposures to common_simple.
 
-**Interpretação:** Descreve o papel de biblioteca federada, corroborado pelas exposições e consumidores.
+**Interpretation:** Describes federated library role, corroborated by exposures/consumers.
 
 ### 28. ARCHITECTURE.md:27-34
 
-**Observação:** O diagrama apresenta users_simple com lista de usuários, integração de API e exposição UserList.
+**Observation:** Diagram presents users_simple with user list, API integration and UserList exposure.
 
-**Interpretação:** Descreve a unidade funcional remota, corroborada pelo App exposto e pela relação com o shell.
+**Interpretation:** Describes remote functional unit, corroborated by exposed App and shell relationship.
 
 ### 29. ARCHITECTURE.md:36-38
 
-**Observação:** O diagrama atribui a users_simple o consumo de common/Button e common/Card.
+**Observation:** Diagram attributes common/Button and common/Card consumption to users_simple.
 
-**Interpretação:** O consumo de componentes da biblioteca é corroborado pelos imports e renderizações efetivos.
+**Interpretation:** Library component consumption corroborated by actual imports/rendering.
 
 ### 30. ARCHITECTURE.md:141
 
-**Observação:** O grafo associa core_simple a common_simple/Button.
+**Observation:** Graph associates core_simple with common_simple/Button.
 
-**Interpretação:** Corrobora uma dependência importada, sem afirmar sua renderização direta; o import está presente e não é usado no JSX.
+**Interpretation:** Corroborates imported dependency without claiming direct rendering; import present but unused in JSX.
 
 ### 31. ARCHITECTURE.md:142
 
-**Observação:** O grafo associa core_simple a common_simple/Card.
+**Observation:** Graph associates core_simple with common_simple/Card.
 
-**Interpretação:** O uso efetivo de Card pelo shell corrobora essa ligação.
+**Interpretation:** Actual shell Card usage corroborates link.
 
 ### 32. ARCHITECTURE.md:151-153
 
-**Observação:** O texto lista Rsbuild, @module-federation/rsbuild-plugin com suporte a Module Federation v2 e @rsbuild/plugin-react.
+**Observation:** Text lists Rsbuild, @module-federation/rsbuild-plugin with Module Federation v2 support and @rsbuild/plugin-react.
 
-**Interpretação:** Nomeia a tecnologia escolhida, corroborada pelos manifestos e configuração; não demonstra todas as capacidades do plugin.
+**Interpretation:** Names chosen technology, corroborated by manifests/configuration; does not demonstrate all plugin capabilities.
 
 ### 33. ARCHITECTURE.md:166
 
-**Observação:** O texto diz que cada micro frontend expõe módulos via Module Federation.
+**Observation:** Text says each microfrontend exposes modules through Module Federation.
 
-**Interpretação:** Na seção de remotes, descreve os provedores common_simple e users_simple; o host não possui exposes.
+**Interpretation:** In remotes section describes common_simple/users_simple providers; host has no exposes.
 
 ### 34. ARCHITECTURE.md:167-168
 
-**Observação:** O texto diz que os módulos são expostos em runtime por remoteEntry.js e podem ser consumidos por outros apps.
+**Observation:** Text says modules exposed at runtime through remoteEntry.js can be consumed by other apps.
 
-**Interpretação:** A descrição corresponde aos provedores e às três relações configuradas.
+**Interpretation:** Description matches providers and three configured relationships.
 
 ### 35. ARCHITECTURE.md:169
 
-**Observação:** O texto generaliza que os módulos são carregados sob demanda.
+**Observation:** Text generalizes modules loaded on demand.
 
-**Interpretação:** A 3.4.7 registra a afirmação como contradita: UserList é lazy, mas os componentes comuns têm imports estáticos.
+**Interpretation:** Section 3.4.7 records claim contradicted: UserList lazy, common components statically imported.
 
 ### 36. ARCHITECTURE.md:172-175
 
-**Observação:** O texto apresenta React e ReactDOM como singletons compartilhados, carregados uma vez entre os micro frontends.
+**Observation:** Text presents React/ReactDOM as shared singletons loaded once across microfrontends.
 
-**Interpretação:** A política de compartilhamento é corroborada pela configuração; não há medição de downloads ou prevenção universal de conflitos.
+**Interpretation:** Sharing policy corroborated by configuration; no download measurement or universal conflict prevention.
 
 ### 37. ARCHITECTURE.md:184-185
 
-**Observação:** O texto diz que cada micro frontend pode executar independentemente.
+**Observation:** Text says each microfrontend can run independently.
 
-**Interpretação:** As entradas próprias corroboram a execução por unidade, preservadas as dependências remotas necessárias à composição completa.
+**Interpretation:** Own entries corroborate per-unit execution, preserving remote dependencies needed for full composition.
 
 ### 38. ARCHITECTURE.md:186
 
-**Observação:** O texto diz que cada micro frontend tem servidor de desenvolvimento próprio.
+**Observation:** Text says each microfrontend has own development server.
 
-**Interpretação:** Os scripts e servidores separados corroboram a afirmação, sem demonstrar deploy.
+**Interpretation:** Separate scripts/servers corroborate claim without demonstrating deployment.
 
 ### 39. ARCHITECTURE.md:187
 
-**Observação:** O texto afirma que os micro frontends podem ser implantados separadamente.
+**Observation:** Text claims microfrontends can be deployed separately.
 
-**Interpretação:** A promessa de deploy separado fica sem corroboração na 3.4.7; builds próprios não a comprovam.
+**Interpretation:** Separate deployment promise uncorroborated in 3.4.7; own builds do not establish it.
 
 ### 40. ARCHITECTURE.md:194
 
-**Observação:** A árvore documental descreve o package.json da raiz como scripts de conveniência.
+**Observation:** Documentary tree describes root package.json as convenience scripts.
 
-**Interpretação:** A raiz delega comandos e não adiciona uma aplicação ou um build frontend unificado.
+**Interpretation:** Root delegates commands without adding application or unified frontend build.
 
 ### 41. ARCHITECTURE.md:201
 
-**Observação:** A árvore documental identifica App.tsx de common_simple como aplicação de demonstração.
+**Observation:** Documentary tree identifies common_simple App.tsx as demo application.
 
-**Interpretação:** O App próprio corrobora a fronteira de aplicação da biblioteca federada.
+**Interpretation:** Own App corroborates federated library application boundary.
 
 ### 42. ARCHITECTURE.md:250
 
-**Observação:** O texto diz que Rsbuild verifica se os componentes comuns já foram carregados, atribuindo-lhes singleton.
+**Observation:** Text says Rsbuild checks whether common components already loaded, attributing singleton to them.
 
-**Interpretação:** A 3.4.7 registra contradição: Button/Card são exposes; singleton está nas dependências compartilhadas, sem declaração equivalente para os componentes.
+**Interpretation:** Section 3.4.7 records contradiction: Button/Card are exposes; singleton belongs to shared dependencies without equivalent component declaration.
 
 ### 43. ARCHITECTURE.md:255
 
-**Observação:** O texto descreve cada micro frontend como bundle separado.
+**Observation:** Text describes each microfrontend as separate bundle.
 
-**Interpretação:** Corrobora a separação dos alvos de build, sem significar exatamente um arquivo JavaScript por aplicação.
+**Interpretation:** Corroborates build target separation without meaning exactly one JavaScript file per application.
 
 ### 44. ARCHITECTURE.md:258
 
-**Observação:** O texto anuncia carregamento de múltiplos remotes em paralelo.
+**Observation:** Text announces multiple remotes loaded in parallel.
 
-**Interpretação:** A 3.4.7 mantém a capacidade sem corroboração: referências a remotes não demonstram coordenação ou execução paralela.
+**Interpretation:** Section 3.4.7 retains capability as uncorroborated: remote references demonstrate neither coordination nor parallel execution.
 
 ### 45. ARCHITECTURE.md:262
 
-**Observação:** O texto afirma que equipes podem trabalhar em micro frontends separados.
+**Observation:** Text claims teams can work on separate microfrontends.
 
-**Interpretação:** As fronteiras e ferramentas locais corroboram a possibilidade estrutural, sem demonstrar equipes distintas.
+**Interpretation:** Boundaries/local tools corroborate structural possibility without demonstrating distinct teams.
 
 ### 46. ARCHITECTURE.md:264
 
-**Observação:** O texto afirma que cada app pode usar versões diferentes, com cuidado.
+**Observation:** Text claims each app can use different versions with care.
 
-**Interpretação:** A capacidade fica sem corroboração: os projetos usam a mesma versão declarada de React/ReactDOM e singletons; não há exemplo de versões diferentes coexistindo.
+**Interpretation:** Capability uncorroborated: projects use same declared React/ReactDOM version and singletons; no example of differing versions coexisting.
 
 ### 47. ARCHITECTURE.md:274
 
-**Observação:** O texto alerta que falhas em um MFE podem afetar outros.
+**Observation:** Text warns MFE failures can affect others.
 
-**Interpretação:** As dependências federadas e a ausência de fronteira de erro para sua carga corroboram o acoplamento entre consumidores e provedores.
+**Interpretation:** Federated dependencies and absence of loading error boundary corroborate consumer/provider coupling.
 
 ### 48. QUICK_START.md:109
 
-**Observação:** O experimento de alteração de Button prevê mudanças visíveis em users_simple e core_simple.
+**Observation:** Button change experiment predicts visible changes in users_simple and core_simple.
 
-**Interpretação:** O uso de Button por users_simple e a composição de UserList no shell corroboram a visibilidade encadeada; não comprovam hot reload entre servidores.
+**Interpretation:** Button usage by users_simple and shell UserList composition corroborate chained visibility; do not establish hot reload across servers.
 
 ### 49. README.md:3
 
-**Observação:** O README apresenta o projeto como arquitetura mínima de micro frontends para entender Module Federation.
+**Observation:** README presents project as minimal microfrontend architecture for understanding Module Federation.
 
-**Interpretação:** A caracterização é corroborada pelas três fronteiras de aplicação e pelas relações de composição.
+**Interpretation:** Characterization corroborated by three application boundaries and composition relationships.
 
 ### 50. README.md:153
 
-**Observação:** O README afirma que componentes de common_simple são carregados antecipadamente para melhorar o desempenho.
+**Observation:** README claims common_simple components loaded eagerly to improve performance.
 
-**Interpretação:** A corroboração é parcial: imports estáticos sustentam a antecipação após o bootstrap assíncrono, sem medição de desempenho.
+**Interpretation:** Partial corroboration: static imports support eager loading after asynchronous bootstrap without performance measurement.
 
 ### 51. README.md:161
 
-**Observação:** O README pede que os outros apps estejam em execução antes do shell.
+**Observation:** README requires other apps running before shell.
 
-**Interpretação:** As referências locais e imports corroboram a dependência operacional dos provedores; não demonstram orquestração automática de inicialização.
+**Interpretation:** Local references/imports corroborate operational provider dependency without demonstrating automatic startup orchestration.
 
 ### 52. STRUCTURE.md:142-154
 
-**Observação:** A árvore prevista após build:all inclui dist, index.html, remoteEntry.js, JavaScript assíncrono e CSS condicional para cada app.
+**Observation:** Expected tree after build:all includes dist, index.html, remoteEntry.js, asynchronous JavaScript and conditional CSS per app.
 
-**Interpretação:** A corroboração é parcial: há três builds e nomes de remoteEntry configurados, sem saídas versionadas que confirmem a árvore exata, sobretudo no shell sem exposes.
+**Interpretation:** Partial corroboration: three builds and configured remoteEntry names without versioned outputs confirming exact tree, particularly shell without exposes.
 
 ### 53. common_simple/README.md:55
 
-**Observação:** O README de common_simple promete hot reload em todos os apps consumidores.
+**Observation:** Common_simple README promises hot reload in all consuming apps.
 
-**Interpretação:** A 3.4.7 mantém a promessa sem corroboração; os scripts dev não demonstram atualização propagada entre servidores.
+**Interpretation:** Section 3.4.7 retains promise as uncorroborated; dev scripts do not demonstrate propagated updates across servers.
 
 ### 54. core_simple/README.md:9
 
-**Observação:** O README do shell anuncia roteamento entre diferentes micro frontends.
+**Observation:** Shell README announces routing between different microfrontends.
 
-**Interpretação:** A 3.4.7 registra contradição: somente users_simple é destino funcional remoto por rota; a Home é local e common_simple fornece componentes.
+**Interpretation:** Section 3.4.7 records contradiction: only users_simple functional remote route target; Home local and common_simple provides components.
 
 ### 55. core_simple/README.md:17
 
-**Observação:** O README do shell afirma uso dos componentes Button e Card de common_simple.
+**Observation:** Shell README claims usage of common_simple Button/Card components.
 
-**Interpretação:** A 3.4.7 registra contradição quanto ao uso visual direto de Button: o shell só renderiza Card; o Button da rota pertence a users_simple.
+**Interpretation:** Section 3.4.7 records contradiction regarding direct visual Button usage: shell renders only Card; route Button belongs to users_simple.
 
 ### 56. cb2083fd77ddcb4d6493af653e0ce523ba0be010 2026-02-15 (core_simple/src/App.tsx); cb2083fd77ddcb4d6493af653e0ce523ba0be010 2026-02-15 (core_simple/README.md)
 
-**Observação:** O único commit adiciona o import de Button pelo shell e o documento que anuncia seu uso, sem renderização direta no App. A 3.4.8 registra resultado inconclusivo.
+**Observation:** Single commit adds shell Button import and document announcing usage, without direct App rendering. Section 3.4.8 records inconclusive result.
 
-**Interpretação:** Não há versão anterior que distinga remoção, intenção futura ou import desde sempre não utilizado. A dúvida é sobre a origem da divergência; o uso no snapshot está delimitado.
+**Interpretation:** No earlier version distinguishing removal, future intent or always-unused import. Uncertainty concerns discrepancy origin; snapshot usage delimited.
 
 ### 57. cb2083fd77ddcb4d6493af653e0ce523ba0be010 2026-02-15 (ARCHITECTURE.md); cb2083fd77ddcb4d6493af653e0ce523ba0be010 2026-02-15 (core_simple/src/App.tsx); cb2083fd77ddcb4d6493af653e0ce523ba0be010 2026-02-15 (users_simple/src/App.tsx)
 
-**Observação:** O único commit adiciona a generalização de carregamento sob demanda junto com UserList lazy e componentes comuns importados estaticamente. A 3.4.8 registra resultado inconclusivo.
+**Observation:** Single commit adds on-demand loading generalization alongside lazy UserList and statically imported common components. Section 3.4.8 records inconclusive result.
 
-**Interpretação:** A origem da generalização permanece inconclusiva; o snapshot distingue as estratégias de carga sem dúvida sobre a composição atual.
+**Interpretation:** Generalization origin remains inconclusive; snapshot distinguishes loading strategies without uncertainty about current composition.
 
 ### 58. cb2083fd77ddcb4d6493af653e0ce523ba0be010 2026-02-15 (ARCHITECTURE.md); cb2083fd77ddcb4d6493af653e0ce523ba0be010 2026-02-15 (common_simple/rsbuild.config.ts); cb2083fd77ddcb4d6493af653e0ce523ba0be010 2026-02-15 (core_simple/rsbuild.config.ts); cb2083fd77ddcb4d6493af653e0ce523ba0be010 2026-02-15 (users_simple/rsbuild.config.ts)
 
-**Observação:** O único commit adiciona a alegação singleton dos componentes e as configurações que os expõem, reservando singleton às dependências shared. A 3.4.8 registra resultado inconclusivo.
+**Observation:** Single commit adds component singleton claim and exposing configurations, reserving singleton for shared dependencies. Section 3.4.8 records inconclusive result.
 
-**Interpretação:** O histórico não explica a origem da divergência nem mostra configuração anterior; o papel dos componentes no snapshot está claro.
+**Interpretation:** History explains no discrepancy origin or earlier configuration; snapshot component role clear.
 
 ### 59. cb2083fd77ddcb4d6493af653e0ce523ba0be010 2026-02-15 (README.md); cb2083fd77ddcb4d6493af653e0ce523ba0be010 2026-02-15 (core_simple/src/index.tsx); cb2083fd77ddcb4d6493af653e0ce523ba0be010 2026-02-15 (users_simple/src/index.tsx); cb2083fd77ddcb4d6493af653e0ce523ba0be010 2026-02-15 (core_simple/src/App.tsx); cb2083fd77ddcb4d6493af653e0ce523ba0be010 2026-02-15 (users_simple/src/App.tsx)
 
-**Observação:** O único commit contém a promessa de desempenho com carga antecipada e os imports estáticos após bootstrap assíncrono, sem comparação ou medição. A 3.4.8 registra resultado inconclusivo.
+**Observation:** Single commit contains eager-loading performance promise and static imports after asynchronous bootstrap without comparison/measurement. Section 3.4.8 records inconclusive result.
 
-**Interpretação:** Não há base histórica para explicar a parcela não corroborada como resultado anterior; a dúvida não muda a leitura da composição no snapshot.
+**Interpretation:** No historical basis for explaining uncorroborated portion as earlier result; uncertainty does not change snapshot composition reading.
 
 ### 60. cb2083fd77ddcb4d6493af653e0ce523ba0be010 2026-02-15 (STRUCTURE.md); cb2083fd77ddcb4d6493af653e0ce523ba0be010 2026-02-15 (package.json); cb2083fd77ddcb4d6493af653e0ce523ba0be010 2026-02-15 (common_simple/rsbuild.config.ts); cb2083fd77ddcb4d6493af653e0ce523ba0be010 2026-02-15 (core_simple/rsbuild.config.ts); cb2083fd77ddcb4d6493af653e0ce523ba0be010 2026-02-15 (users_simple/rsbuild.config.ts); cb2083fd77ddcb4d6493af653e0ce523ba0be010 2026-02-15 (.gitignore)
 
-**Observação:** O único commit adiciona a árvore de build anunciada, as configurações e as regras que ignoram dist/build/.rsbuild, sem versionar saídas. A 3.4.8 registra resultado inconclusivo.
+**Observation:** Single commit adds announced build tree, configurations and rules ignoring dist/build/.rsbuild, without versioning outputs. Section 3.4.8 records inconclusive result.
 
-**Interpretação:** A exclusão do versionamento é compatível com a ausência das saídas, mas não confirma execução nem a árvore exata; a dúvida histórica não desfaz os builds separados configurados.
+**Interpretation:** Version-control exclusion consistent with absent outputs but confirms neither execution nor exact tree; historical uncertainty does not undo configured separate builds.
 
 ### 61. cb2083fd77ddcb4d6493af653e0ce523ba0be010 2026-02-15 (core_simple/README.md); cb2083fd77ddcb4d6493af653e0ce523ba0be010 2026-02-15 (core_simple/src/App.tsx); cb2083fd77ddcb4d6493af653e0ce523ba0be010 2026-02-15 (common_simple/rsbuild.config.ts); cb2083fd77ddcb4d6493af653e0ce523ba0be010 2026-02-15 (users_simple/rsbuild.config.ts)
 
-**Observação:** O único commit contém a promessa de roteamento entre diferentes MFEs e o App com Home local e apenas UserList remoto por rota. A 3.4.8 registra resultado inconclusivo.
+**Observation:** Single commit contains promise of routing between different MFEs and App with local Home and only remote UserList through route. Section 3.4.8 records inconclusive result.
 
-**Interpretação:** O histórico não mostra uma rota removida nem esclarece a origem do plural; a composição atual tem um destino funcional remoto roteado.
+**Interpretation:** History shows no removed route or origin of plural; current composition has one routed functional remote target.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.2 (common_simple/package.json:16) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #4 |
-| 2 | 3.4.2 (core_simple/package.json:17) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #5 |
-| 3 | 3.4.2 (users_simple/package.json:17) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #6 |
-| 4 | 3.4.2 (common_simple/package.json:16, Evidência); 3.4.3 (common_simple, Marcadores/Build); 3.4.4 (fora da mineração #1, #4, #5, Observação); 3.4.5 #2, #3 (Configuração); 3.4.6 #1 (Artefatos); 3.4.7 #3, #8, #9, #10, #12, #18, #28, #30 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #16; configura #20; configura #21 |
-| 5 | 3.4.2 (core_simple/package.json:17, Evidência); 3.4.3 (core_simple, Marcadores/Build); 3.4.4 (mineração #1; fora da mineração #1, Observação); 3.4.5 #1, #2 (Configuração); 3.4.6 #1, #3 (Onde é servida), #2 (Artefatos); 3.4.7 #1, #6, #9, #10, #12, #18, #21, #27, #28 (Evidência) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #17; configura #19; configura #20 |
-| 6 | 3.4.2 (users_simple/package.json:17, Evidência); 3.4.3 (users_simple, Marcadores/Build); 3.4.4 (mineração #1; fora da mineração #4, #5, Observação); 3.4.5 #1, #3 (Configuração); 3.4.6 #1 (Onde é servida), #3 (Artefatos); 3.4.7 #4, #9, #10, #12, #18, #21, #24, #27, #28, #30 (Evidência) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #18; configura #19; configura #21 |
-| 7 | 3.4.4 (mineração #1, core_simple/src/App.tsx:9) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #19 |
-| 8 | 3.4.4 (mineração #2, core_simple/src/index.tsx:1) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 9 | 3.4.4 (mineração #3, users_simple/src/index.tsx:1) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 10 | 3.4.4 (fora da mineração #1, core_simple/src/App.tsx:15) | 3 código | código-fonte | module-federation | arquitetural | moderada | implementa #20 |
-| 11 | 3.4.4 (fora da mineração #2, core_simple/src/App.tsx:24) | 3 código | código-fonte | module-federation | arquitetural | moderada | implementa #20 |
-| 12 | 3.4.4 (fora da mineração #3, core_simple/src/App.tsx:57) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #19 |
-| 13 | 3.4.4 (fora da mineração #4, users_simple/src/App.tsx:40) | 3 código | código-fonte | module-federation | arquitetural | moderada | implementa #21 |
-| 14 | 3.4.4 (fora da mineração #5, users_simple/src/App.tsx:49) | 3 código | código-fonte | module-federation | arquitetural | moderada | implementa #21 |
-| 15 | 3.4.3 (.) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 16 | 3.4.3 (common_simple) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 17 | 3.4.3 (core_simple) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 18 | 3.4.3 (users_simple) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 19 | 3.4.5 #1 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #17; liga #18 |
-| 20 | 3.4.5 #2 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #17; liga #16 |
-| 21 | 3.4.5 #3 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #18; liga #16 |
-| 22 | 3.4.6 #1 | 6 build-deploy | configuração | module-federation | arquitetural | moderada | publica #16 |
-| 23 | 3.4.6 #2 | 6 build-deploy | configuração | module-federation | arquitetural | moderada | publica #17 |
-| 24 | 3.4.6 #3 | 6 build-deploy | configuração | module-federation | arquitetural | moderada | publica #18 |
-| 25 | 3.4.7 #1 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #17; corrobora #19; corrobora #20 |
-| 26 | 3.4.7 #2 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #7; corrobora #12; corrobora #19 |
-| 27 | 3.4.7 #3 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #4; corrobora #20; corrobora #21 |
-| 28 | 3.4.7 #4 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #6; corrobora #18; corrobora #19 |
-| 29 | 3.4.7 #5 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #13; corrobora #14; corrobora #21 |
-| 30 | 3.4.7 #6 | 7 documentação | documentação | — | arquitetural | fraca | corrobora core_simple/src/App.tsx:3-4; corrobora #5 |
-| 31 | 3.4.7 #7 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #10; corrobora #11; corrobora #20 |
-| 32 | 3.4.7 #8 | 7 documentação | documentação | module-federation | tecnológica | fraca | corrobora #1; corrobora #2; corrobora #3; corrobora #4 |
-| 33 | 3.4.7 #9 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #4; corrobora #6 |
-| 34 | 3.4.7 #10 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #19; corrobora #20; corrobora #21 |
-| 35 | 3.4.7 #11 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #10; contradiz #11; contradiz #13; contradiz #14 |
-| 36 | 3.4.7 #12 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #4; corrobora #5; corrobora #6 |
-| 37 | 3.4.7 #13 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #16; corrobora #17; corrobora #18 |
-| 38 | 3.4.7 #14 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #22; corrobora #23; corrobora #24 |
-| 39 | 3.4.7 #15 | 7 documentação | documentação | — | arquitetural | fraca | — |
-| 40 | 3.4.7 #16 | 7 documentação | documentação | — | contexto | fraca | corrobora #15; corrobora package.json:7-14 |
-| 41 | 3.4.7 #17 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #16; corrobora common_simple/src/App.tsx:5-23 |
-| 42 | 3.4.7 #18 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #4; contradiz #5; contradiz #6 |
-| 43 | 3.4.7 #19 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #22; corrobora #23; corrobora #24 |
-| 44 | 3.4.7 #20 | 7 documentação | documentação | — | arquitetural | fraca | — |
-| 45 | 3.4.7 #21 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #16; corrobora #17; corrobora #18 |
-| 46 | 3.4.7 #22 | 7 documentação | documentação | — | arquitetural | fraca | — |
-| 47 | 3.4.7 #23 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #19; corrobora #20; corrobora #21; corrobora core_simple/src/App.tsx:46-64; corrobora users_simple/src/App.tsx:35-56 |
-| 48 | 3.4.7 #24 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #13; corrobora #6; corrobora #19 |
-| 49 | 3.4.7 #25 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #16; corrobora #17; corrobora #18; corrobora #19; corrobora #20; corrobora #21 |
-| 50 | 3.4.7 #26 | 7 documentação | documentação | — | arquitetural | fraca | corrobora em parte #10; corrobora em parte #13; corrobora em parte #14; corrobora em parte #8; corrobora em parte #9 |
-| 51 | 3.4.7 #27 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #5; corrobora #6; corrobora #19; corrobora #20; corrobora #21 |
-| 52 | 3.4.7 #28 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora em parte #22; corrobora em parte #23; corrobora em parte #24; corrobora em parte #4; corrobora em parte #5; corrobora em parte #6 |
-| 53 | 3.4.7 #29 | 7 documentação | documentação | — | arquitetural | fraca | — |
-| 54 | 3.4.7 #30 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #12; contradiz #4; contradiz #6 |
-| 55 | 3.4.7 #31 | 7 documentação | documentação | — | arquitetural | fraca | contradiz core_simple/src/App.tsx:1-68; contradiz #10; contradiz #11 |
-| 56 | 3.4.8 #1 | 8 histórico | histórico | — | arquitetural | fraca | explica #55 |
-| 57 | 3.4.8 #2 | 8 histórico | histórico | — | arquitetural | fraca | explica #35 |
-| 58 | 3.4.8 #3 | 8 histórico | histórico | — | arquitetural | fraca | explica #42; explica #4; explica #5; explica #6 |
-| 59 | 3.4.8 #4 | 8 histórico | histórico | — | arquitetural | fraca | explica #50 |
-| 60 | 3.4.8 #5 | 8 histórico | histórico | — | arquitetural | fraca | explica #52; explica #22; explica #23; explica #24 |
-| 61 | 3.4.8 #6 | 8 histórico | histórico | — | arquitetural | fraca | explica #54; explica #12 |
+| 1 | 3.4.2 (common_simple/package.json:16) | 1 technology | manifest | module-federation | technological | weak | declares #4 |
+| 2 | 3.4.2 (core_simple/package.json:17) | 1 technology | manifest | module-federation | technological | weak | declares #5 |
+| 3 | 3.4.2 (users_simple/package.json:17) | 1 technology | manifest | module-federation | technological | weak | declares #6 |
+| 4 | 3.4.2 (common_simple/package.json:16, Evidence); 3.4.3 (common_simple, Markers/Build); 3.4.4 (outside mining #1, #4, #5, Observation); 3.4.5 #2, #3 (Configuration); 3.4.6 #1 (Artifacts); 3.4.7 #3, #8, #9, #10, #12, #18, #28, #30 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #16; configures #20; configures #21 |
+| 5 | 3.4.2 (core_simple/package.json:17, Evidence); 3.4.3 (core_simple, Markers/Build); 3.4.4 (mining #1; outside mining #1, Observation); 3.4.5 #1, #2 (Configuration); 3.4.6 #1, #3 (Where served), #2 (Artifacts); 3.4.7 #1, #6, #9, #10, #12, #18, #21, #27, #28 (Evidence) | 2 configuration | configuration | module-federation | architectural | strong | configures #17; configures #19; configures #20 |
+| 6 | 3.4.2 (users_simple/package.json:17, Evidence); 3.4.3 (users_simple, Markers/Build); 3.4.4 (mining #1; outside mining #4, #5, Observation); 3.4.5 #1, #3 (Configuration); 3.4.6 #1 (Where served), #3 (Artifacts); 3.4.7 #4, #9, #10, #12, #18, #21, #24, #27, #28, #30 (Evidence) | 2 configuration | configuration | module-federation | architectural | strong | configures #18; configures #19; configures #21 |
+| 7 | 3.4.4 (mining #1, core_simple/src/App.tsx:9) | 3 code | source code | module-federation | architectural | strong | implements #19 |
+| 8 | 3.4.4 (mining #2, core_simple/src/index.tsx:1) | 3 code | source code | — | technological | weak | — |
+| 9 | 3.4.4 (mining #3, users_simple/src/index.tsx:1) | 3 code | source code | — | technological | weak | — |
+| 10 | 3.4.4 (outside mining #1, core_simple/src/App.tsx:15) | 3 code | source code | module-federation | architectural | moderate | implements #20 |
+| 11 | 3.4.4 (outside mining #2, core_simple/src/App.tsx:24) | 3 code | source code | module-federation | architectural | moderate | implements #20 |
+| 12 | 3.4.4 (outside mining #3, core_simple/src/App.tsx:57) | 3 code | source code | module-federation | architectural | strong | implements #19 |
+| 13 | 3.4.4 (outside mining #4, users_simple/src/App.tsx:40) | 3 code | source code | module-federation | architectural | moderate | implements #21 |
+| 14 | 3.4.4 (outside mining #5, users_simple/src/App.tsx:49) | 3 code | source code | module-federation | architectural | moderate | implements #21 |
+| 15 | 3.4.3 (.) | 4 structure | directory | — | context | weak | — |
+| 16 | 3.4.3 (common_simple) | 4 structure | directory | — | architectural | moderate | — |
+| 17 | 3.4.3 (core_simple) | 4 structure | directory | — | architectural | moderate | — |
+| 18 | 3.4.3 (users_simple) | 4 structure | directory | — | architectural | moderate | — |
+| 19 | 3.4.5 #1 | 5 composition | source code | module-federation | architectural | strong | links #17; links #18 |
+| 20 | 3.4.5 #2 | 5 composition | source code | module-federation | architectural | strong | links #17; links #16 |
+| 21 | 3.4.5 #3 | 5 composition | source code | module-federation | architectural | strong | links #18; links #16 |
+| 22 | 3.4.6 #1 | 6 build-deploy | configuration | module-federation | architectural | moderate | publishes #16 |
+| 23 | 3.4.6 #2 | 6 build-deploy | configuration | module-federation | architectural | moderate | publishes #17 |
+| 24 | 3.4.6 #3 | 6 build-deploy | configuration | module-federation | architectural | moderate | publishes #18 |
+| 25 | 3.4.7 #1 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #17; corroborates #19; corroborates #20 |
+| 26 | 3.4.7 #2 | 7 documentation | documentation | — | architectural | weak | corroborates #7; corroborates #12; corroborates #19 |
+| 27 | 3.4.7 #3 | 7 documentation | documentation | — | architectural | weak | corroborates #4; corroborates #20; corroborates #21 |
+| 28 | 3.4.7 #4 | 7 documentation | documentation | — | architectural | weak | corroborates #6; corroborates #18; corroborates #19 |
+| 29 | 3.4.7 #5 | 7 documentation | documentation | — | architectural | weak | corroborates #13; corroborates #14; corroborates #21 |
+| 30 | 3.4.7 #6 | 7 documentation | documentation | — | architectural | weak | corroborates core_simple/src/App.tsx:3-4; corroborates #5 |
+| 31 | 3.4.7 #7 | 7 documentation | documentation | — | architectural | weak | corroborates #10; corroborates #11; corroborates #20 |
+| 32 | 3.4.7 #8 | 7 documentation | documentation | module-federation | technological | weak | corroborates #1; corroborates #2; corroborates #3; corroborates #4 |
+| 33 | 3.4.7 #9 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #4; corroborates #6 |
+| 34 | 3.4.7 #10 | 7 documentation | documentation | — | architectural | weak | corroborates #19; corroborates #20; corroborates #21 |
+| 35 | 3.4.7 #11 | 7 documentation | documentation | — | architectural | weak | contradicts #10; contradicts #11; contradicts #13; contradicts #14 |
+| 36 | 3.4.7 #12 | 7 documentation | documentation | — | architectural | weak | corroborates #4; corroborates #5; corroborates #6 |
+| 37 | 3.4.7 #13 | 7 documentation | documentation | — | architectural | weak | corroborates #16; corroborates #17; corroborates #18 |
+| 38 | 3.4.7 #14 | 7 documentation | documentation | — | architectural | weak | corroborates #22; corroborates #23; corroborates #24 |
+| 39 | 3.4.7 #15 | 7 documentation | documentation | — | architectural | weak | — |
+| 40 | 3.4.7 #16 | 7 documentation | documentation | — | context | weak | corroborates #15; corroborates package.json:7-14 |
+| 41 | 3.4.7 #17 | 7 documentation | documentation | — | architectural | weak | corroborates #16; corroborates common_simple/src/App.tsx:5-23 |
+| 42 | 3.4.7 #18 | 7 documentation | documentation | — | architectural | weak | contradicts #4; contradicts #5; contradicts #6 |
+| 43 | 3.4.7 #19 | 7 documentation | documentation | — | architectural | weak | corroborates #22; corroborates #23; corroborates #24 |
+| 44 | 3.4.7 #20 | 7 documentation | documentation | — | architectural | weak | — |
+| 45 | 3.4.7 #21 | 7 documentation | documentation | — | architectural | weak | corroborates #16; corroborates #17; corroborates #18 |
+| 46 | 3.4.7 #22 | 7 documentation | documentation | — | architectural | weak | — |
+| 47 | 3.4.7 #23 | 7 documentation | documentation | — | architectural | weak | corroborates #19; corroborates #20; corroborates #21; corroborates core_simple/src/App.tsx:46-64; corroborates users_simple/src/App.tsx:35-56 |
+| 48 | 3.4.7 #24 | 7 documentation | documentation | — | architectural | weak | corroborates #13; corroborates #6; corroborates #19 |
+| 49 | 3.4.7 #25 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #16; corroborates #17; corroborates #18; corroborates #19; corroborates #20; corroborates #21 |
+| 50 | 3.4.7 #26 | 7 documentation | documentation | — | architectural | weak | partially corroborates #10; partially corroborates #13; partially corroborates #14; partially corroborates #8; partially corroborates #9 |
+| 51 | 3.4.7 #27 | 7 documentation | documentation | — | architectural | weak | corroborates #5; corroborates #6; corroborates #19; corroborates #20; corroborates #21 |
+| 52 | 3.4.7 #28 | 7 documentation | documentation | module-federation | architectural | weak | partially corroborates #22; partially corroborates #23; partially corroborates #24; partially corroborates #4; partially corroborates #5; partially corroborates #6 |
+| 53 | 3.4.7 #29 | 7 documentation | documentation | — | architectural | weak | — |
+| 54 | 3.4.7 #30 | 7 documentation | documentation | — | architectural | weak | contradicts #12; contradicts #4; contradicts #6 |
+| 55 | 3.4.7 #31 | 7 documentation | documentation | — | architectural | weak | contradicts core_simple/src/App.tsx:1-68; contradicts #10; contradicts #11 |
+| 56 | 3.4.8 #1 | 8 history | history | — | architectural | weak | explains #55 |
+| 57 | 3.4.8 #2 | 8 history | history | — | architectural | weak | explains #35 |
+| 58 | 3.4.8 #3 | 8 history | history | — | architectural | weak | explains #42; explains #4; explains #5; explains #6 |
+| 59 | 3.4.8 #4 | 8 history | history | — | architectural | weak | explains #50 |
+| 60 | 3.4.8 #5 | 8 history | history | — | architectural | weak | explains #52; explains #22; explains #23; explains #24 |
+| 61 | 3.4.8 #6 | 8 history | history | — | architectural | weak | explains #54; explains #12 |
 
-## Resumo
+## Summary
 
-Observações: 61. Dimensões (tecnologia: 3, configuração: 3, código: 8, estrutura: 4, composição: 3, build-deploy: 3, documentação: 31, histórico: 6). Força (forte: 7, moderada: 11, fraca: 43, ambígua: 0). Evidência (tecnológica: 7, arquitetural: 52, contexto: 2).
+Observations: 61. Dimensions (technology: 3, configuration: 3, code: 8, structure: 4, composition: 3, build-deploy: 3, documentation: 31, history: 6). Strength (strong: 7, moderate: 11, weak: 43, ambiguous: 0). Evidence (technological: 7, architectural: 52, context: 2).
+

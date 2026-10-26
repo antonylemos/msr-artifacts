@@ -19,335 +19,336 @@ annotation:
 
 # 273 — kod88vn/poc_next_mfa
 
-## Leitura do repositório
+## Repository overview
 
-Prova de conceito de Next.js 16 Multi-Zones num monorepo npm workspaces + Turborepo, com três aplicações Next.js: `apps/shell` (host, porta 3000), `apps/shop` (sob `basePath: '/shop'`, porta 3001) e `apps/duda` (sob `basePath: '/duda'`, porta 3002), mais a biblioteca `packages/ui` (`@repo/ui`). A composição usa só recursos do próprio Next.js. A única dependência da revisão de dependências é o `turbo`, ferramenta de monorepo cujo uso fica indeterminado (#1).
+Next.js 16 Multi-Zones proof of concept in npm workspaces + Turborepo monorepo, with three Next.js applications: `apps/shell` (host, port 3000), `apps/shop` (under `basePath: '/shop'`, port 3001) and `apps/duda` (under `basePath: '/duda'`, port 3002), plus library `packages/ui` (`@repo/ui`). Composition uses only native Next.js features. Only dependency in dependency review is `turbo`, monorepo tool whose usage remains undetermined (#1).
 
-A cadeia que sustenta a arquitetura é de roteamento no servidor, não de montagem na página:
-- **Estrutura:** as três apps têm manifesto, entrada e build próprios (#7, #8, #9).
-- **Configuração:** o `rewrites()` do shell encaminha `/duda` para `http://localhost:3002/duda` e `/shop` e `/shop/:path*` para `http://localhost:3001/shop...` (#2).
-- **Código:** a linha do `rewrites()` registrada na 3.4.4 (#4), dentro do bloco de #2.
-- **Relações:** isso resulta nas duas relações ativas shell → zona (#11, #12). Cada zona responde com a página inteira e o próprio layout.
+Architecture chain uses server routing rather than page mounting:
+- **Structure:** three apps have own manifests, entries/builds (#7, #8, #9).
+- **Configuration:** shell `rewrites()` forwards `/duda` to `http://localhost:3002/duda` and `/shop` and `/shop/:path*` to `http://localhost:3001/shop...` (#2).
+- **Code:** `rewrites()` line recorded in 3.4.4 (#4), within #2 block.
+- **Relationships:** yields two active shell → zone relationships (#11, #12). Each zone responds with entire page and own layout.
 
-A segunda ligação é o contador do carrinho: a Server Action do shop grava o cookie `mfe_cart_count` com `path: '/'` (#5), e os layouts do shell e da duda o leem e o passam ao `Header` (#13, #14).
+Second link is cart counter: shop Server Action writes cookie `mfe_cart_count` with `path: '/'` (#5); shell/duda layouts read it, passing to `Header` (#13, #14).
 
-Build é separado por app (`next build` em cada uma, disparado pelo `turbo build` da raiz), mas não há artefato de deploy: as apps só sobem por `next dev`/`next start` em portas fixas de `localhost` (#15 a #17).
+Build separate per app (`next build` in each, triggered by root `turbo build`), but no deployment artifact: apps only start through `next dev`/`next start` at fixed `localhost` ports (#15 to #17).
 
-Sinais que enganam ou ficam de fora:
-- A raiz do workspace e a biblioteca `packages/ui` não são unidades frontend (#6, #10). O `Header` comum vem dessa biblioteca, compilada dentro de cada app; é código compartilhado, não uma unidade montada em outra.
-- A única construção da mineração, um `src-iframe`, é uma expressão regular que remove iframes do HTML externo que a zona duda injeta (#3). Esse HTML vem de um site do construtor Duda, fora do repositório.
-- Os `basePath`, os cabeçalhos CORS e as portas das zonas não viraram observação de configuração (ver Nota de #2).
-- A navegação entre zonas é por link de página inteira, não uma construção de composição.
+Misleading/excluded signals:
+- Workspace root and library `packages/ui` not frontend units (#6, #10). Common `Header` from library compiled inside each app; shared code rather than unit mounted in another.
+- Only mined construct, `src-iframe`, regular expression removing iframes from external HTML injected by duda zone (#3). HTML comes from Duda builder site outside repository.
+- Zone `basePath`, CORS headers and ports did not become configuration observations (see #2 Note).
+- Cross-zone navigation through full-page link rather than composition construct.
 
-A documentação confirma a forma geral: Multi-Zones, host e zonas, rewrite, cookie compartilhado, biblioteca comum e apps que sobem sozinhas (#18, #20 a #25, #27, #28, #32 a #35). O README foi escrito antes da zona duda e fala em duas zonas; o `apps/duda/ARCHITECTURE.md` completa a terceira. "Independent deployability" se confirma só em parte, porque não há artefato de deploy (#19). Quatro afirmações são desmentidas pelo snapshot: o `Button` que nenhuma app importa (#26), a regra de só usar `<a>` entre zonas, que a página `not-found` do shell não segue (#30), o build de `packages/ui` antes das apps, que não tem script `build` (#31), e o layout do shell como moldura do shop, que responde com o próprio layout (#36). O histórico esclarece que o README é anterior à `not-found` e que `packages/ui` nunca teve build (#40, #41); não diz se o `Button` já foi usado nem de quando é o comentário do layout do shop (#39, #42), dúvidas que são só sobre o passado.
+Documentation confirms general form: Multi-Zones, host/zones, rewrite, shared cookie, common library and apps starting alone (#18, #20 to #25, #27, #28, #32 to #35). README written before duda zone describes two zones; `apps/duda/ARCHITECTURE.md` adds third. "Independent deployability" only partially confirmed because no deployment artifact (#19). Four claims contradicted by snapshot: `Button` imported by no app (#26), only-`<a>` cross-zone rule not followed by shell `not-found` page (#30), building `packages/ui` before apps despite absent `build` script (#31), shell layout as shop frame although shop responds with own layout (#36). History clarifies README predates `not-found` and `packages/ui` never had build (#40, #41); does not establish whether `Button` previously used or shop layout comment date (#39, #42), uncertainties only about past.
 
-A única observação ambígua é o `turbo` (#1); a arquitetura do snapshot não fica ambígua.
+Only ambiguous observation is `turbo` (#1); snapshot architecture not ambiguous.
 
-## Observações
+## Observations
 
 ### 1. package.json:18; turbo.json:5-26
 
-**Observação:** `turbo` (`^2.3.3`) está declarada em `devDependencies`. `turbo.json` define as tasks `build`, `dev`, `lint`, `type-check` e `clean`. A única invocação de `turbo` está nos scripts do `package.json` da raiz (package.json:9-11, 13-14), sem workflow de CI, Dockerfile ou script de automação que o chame.
+**Observation:** `turbo` (`^2.3.3`) declared in `devDependencies`. `turbo.json` defines tasks `build`, `dev`, `lint`, `type-check` and `clean`. Only `turbo` invocation in root `package.json` scripts (package.json:9-11, 13-14), without CI workflow, Dockerfile or invoking automation script.
 
-**Interpretação:** É a ferramenta de monorepo, não uma tecnologia de MFE. Pela regra da revisão de dependências, o uso fica indeterminado: o Turborepo pode ser a orquestração efetiva do build ou só um atalho de scripts.
+**Interpretation:** Monorepo tool rather than MFE technology. Under dependency review rule usage undetermined: Turborepo may be actual build orchestration or merely script shortcut.
 
 ### 2. apps/shell/next.config.js:5-44
 
-**Observação:** `reactStrictMode: true` (6), `transpilePackages: ['@repo/ui']` (9) e `async rewrites()` (25-43), que devolve três regras: `/duda` para `http://localhost:3002/duda` (29-30), `/shop` para `http://localhost:3001/shop` (34-35) e `/shop/:path*` para `http://localhost:3001/shop/:path*` (39-40). O comentário do bloco diz "MULTI-ZONE ROUTING — the core MFE \"string\"" (12). Os endereços estão fixos no arquivo, sem variável de ambiente.
+**Observation:** `reactStrictMode: true` (6), `transpilePackages: ['@repo/ui']` (9) and `async rewrites()` (25-43), returning three rules: `/duda` to `http://localhost:3002/duda` (29-30), `/shop` to `http://localhost:3001/shop` (34-35) and `/shop/:path*` to `http://localhost:3001/shop/:path*` (39-40). Block comment says "MULTI-ZONE ROUTING — the core MFE \"string\"" (12). Addresses fixed in file without environment variable.
 
-**Interpretação:** A configuração do host declara as duas zonas, duda e shop, como destinos de caminhos sob a sua origem, com os endereços pelos quais as resolve.
+**Interpretation:** Host configuration declares two zones, duda/shop, as path targets under own origin with resolution addresses.
 
-**Nota:** Os `next.config.js` das zonas, citados nas mesmas tabelas, só declaram `basePath`, `reactStrictMode`, `transpilePackages` e um cabeçalho CORS para `http://localhost:3000` (apps/shop/next.config.js:5-42; apps/duda/next.config.js:5-23). O `basePath` é o caminho em que a zona é publicada, ou seja, deploy (dimensão 6), e está nas observações #15 e #17; o CORS e o `transpilePackages` não declaram elemento da composição. Os `package.json` das apps só têm scripts com as portas, o `package.json` da raiz declara o workspace (estrutura, #6) e o `turbo.json` declara tasks de build. Nenhum desses blocos virou observação de configuração.
+**Note:** Zone `next.config.js` files, cited in same tables, only declare `basePath`, `reactStrictMode`, `transpilePackages` and CORS header for `http://localhost:3000` (apps/shop/next.config.js:5-42; apps/duda/next.config.js:5-23). `basePath` is zone publication path, thus deployment (dimension 6), in observations #15 and #17; CORS and `transpilePackages` declare no composition element. App `package.json` files only contain port scripts, root `package.json` declares workspace (structure, #6), `turbo.json` build tasks. None of these blocks became configuration observation.
 
 ### 3. apps/duda/lib/duda-landing.ts:387
 
-**Observação:** `sanitized = sanitized.replace(/<iframe[\s\S]*?<\/iframe>/gi, '');`, em `sanitizeLandingHtml` (363), ao lado das remoções de `<script>` e `<noscript>` (385-386), aplicada ao HTML do site externo do Duda.
+**Observation:** `sanitized = sanitized.replace(/<iframe[\s\S]*?<\/iframe>/gi, '');`, in `sanitizeLandingHtml` (363), alongside `<script>` and `<noscript>` removal (385-386), applied to external Duda site HTML.
 
-**Interpretação:** É sanitização do conteúdo externo que a zona duda injeta, não um embutimento de unidade; nenhum mecanismo de MFE.
+**Interpretation:** Sanitization of external content injected by duda zone rather than unit embedding; no MFE mechanism.
 
 ### 4. apps/shell/next.config.js:25
 
-**Observação:** `async rewrites()` liga `/duda` a `http://localhost:3002/duda` e `/shop` e `/shop/:path*` a `http://localhost:3001/shop` e `http://localhost:3001/shop/:path*` (26-42). A configuração é exportada em `module.exports = nextConfig` (46).
+**Observation:** `async rewrites()` links `/duda` to `http://localhost:3002/duda` and `/shop` and `/shop/:path*` to `http://localhost:3001/shop` and `http://localhost:3001/shop/:path*` (26-42). Configuration exported in `module.exports = nextConfig` (46).
 
-**Interpretação:** O roteamento do host declara para qual zona vai cada caminho.
+**Interpretation:** Host routing declares target zone of each path.
 
-**Nota:** É a linha manual da 3.4.4, que fica dentro do bloco de configuração de #2. Ela vira observação própria porque toda linha da 3.4.4 vira uma (passo 2). A força segue a orientação de uma rota que liga um caminho a outra unidade numa tabela de rotas.
+**Note:** Manual 3.4.4 row inside configuration block #2. Becomes own observation because every 3.4.4 row becomes one (step 2). Strength follows guidance for route linking path to another unit in route table.
 
 ### 5. apps/shop/app/actions.ts:26-31; apps/shop/app/page.tsx:124; apps/shop/app/[id]/page.tsx:141
 
-**Observação:** A Server Action `addToCart` grava o cookie `mfe_cart_count` com `path: '/'`, `sameSite: 'lax'` e validade de uma semana. É disparada pelos formulários `<form action={addToCart}>` da listagem e do detalhe do produto.
+**Observation:** Server Action `addToCart` writes cookie `mfe_cart_count` with `path: '/'`, `sameSite: 'lax'` and one-week validity. Triggered by `<form action={addToCart}>` forms in product list/detail.
 
-**Interpretação:** O shop grava a contagem do carrinho num cookie válido para toda a origem, o mecanismo de estado compartilhado. A leitura pelas outras zonas está nas relações #13 e #14.
+**Interpretation:** Shop writes cart count to origin-wide cookie, shared-state mechanism. Other-zone reading in relationships #13 and #14.
 
 ### 6. .; package.json:1-27; package.json:9
 
-**Observação:** A raiz tem só o `package.json`, com `workspaces` (`apps/*`, `packages/*`), `devDependencies` `tsx` e `turbo` e um `build` que é `turbo build`. Não tem entrada nem configuração de build próprias.
+**Observation:** Root only has `package.json`, with `workspaces` (`apps/*`, `packages/*`), `devDependencies` `tsx` and `turbo` and `build` equal to `turbo build`. No own entry/build configuration.
 
-**Interpretação:** É raiz de coordenação do workspace, não uma unidade frontend.
+**Interpretation:** Workspace coordination root rather than frontend unit.
 
 ### 7. apps/duda; apps/duda/package.json:6; apps/duda/app/layout.tsx:15; apps/duda/app/page.tsx:9; apps/duda/next.config.js:5-23
 
-**Observação:** Tem manifesto, layout raiz do App Router (`DudaLayout`), página `DudaPage` e build `next build` próprios, com `basePath: '/duda'` e `transpilePackages`.
+**Observation:** Has own manifest, App Router root layout (`DudaLayout`), page `DudaPage` and `next build` build, with `basePath: '/duda'` and `transpilePackages`.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with own boundary.
 
 ### 8. apps/shell; apps/shell/package.json:6; apps/shell/app/layout.tsx:22; apps/shell/app/page.tsx:46; apps/shell/next.config.js:5-44
 
-**Observação:** Tem manifesto, layout raiz do App Router (`RootLayout`), página `HomePage` na rota `/` e build `next build` próprios, com `rewrites()` para `/shop` e `/duda`.
+**Observation:** Has own manifest, App Router root layout (`RootLayout`), page `HomePage` at route `/` and `next build` build, with `rewrites()` for `/shop` and `/duda`.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with own boundary.
 
 ### 9. apps/shop; apps/shop/package.json:6; apps/shop/app/layout.tsx:25; apps/shop/app/page.tsx:65; apps/shop/next.config.js:5-42
 
-**Observação:** Tem manifesto, layout raiz do App Router (`ShopLayout`), página `ShopPage` e build `next build` próprios, com `basePath: '/shop'` e `transpilePackages`.
+**Observation:** Has own manifest, App Router root layout (`ShopLayout`), page `ShopPage` and `next build` build, with `basePath: '/shop'` and `transpilePackages`.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with own boundary.
 
 ### 10. packages/ui; packages/ui/package.json:5-11; packages/ui/package.json:13-16
 
-**Observação:** `main`, `types` e `exports` apontam para `./src/index.ts`. Os scripts são só `lint` e `type-check`, sem `build`; as apps compilam o pacote por `transpilePackages`.
+**Observation:** `main`, `types` and `exports` point to `./src/index.ts`. Only scripts `lint` and `type-check`, without `build`; apps compile package through `transpilePackages`.
 
-**Interpretação:** É a biblioteca compartilhada `@repo/ui`, sem entrada de aplicação, não uma unidade frontend.
+**Interpretation:** Shared library `@repo/ui` without application entry, not frontend unit.
 
 ### 11. apps/shell/next.config.js:25, 28-31; apps/duda/next.config.js:6; apps/duda/app/page.tsx:9
 
-**Observação:** O shell repassa `/duda` para `http://localhost:3002/duda`. O prefixo `/duda` é o `basePath` de `apps/duda`, cuja página `DudaPage` responde nessa rota. O rewrite cobre só `/duda`, sem `/duda/:path*`; a zona tem uma única página.
+**Observation:** Shell forwards `/duda` to `http://localhost:3002/duda`. Prefix `/duda` is `basePath` of `apps/duda`, whose page `DudaPage` responds at route. Rewrite covers only `/duda`, without `/duda/:path*`; zone has single page.
 
-**Interpretação:** É uma relação ativa em que o shell encaminha um caminho para a zona duda, que responde com a página inteira.
+**Interpretation:** Active relationship in which shell forwards path to duda zone, responding with entire page.
 
 ### 12. apps/shell/next.config.js:25, 32-41; apps/shop/next.config.js:19; apps/shop/app/page.tsx:65
 
-**Observação:** O shell repassa `/shop` e `/shop/:path*` para `http://localhost:3001/shop` e `http://localhost:3001/shop/:path*`. O prefixo `/shop` é o `basePath` de `apps/shop`, e o comentário da zona diz que o rewrite do shell encaminha `localhost:3000/shop/*` para ela (apps/shop/next.config.js:13-14).
+**Observation:** Shell forwards `/shop` and `/shop/:path*` to `http://localhost:3001/shop` and `http://localhost:3001/shop/:path*`. Prefix `/shop` is `basePath` of `apps/shop`; zone comment says shell rewrite forwards `localhost:3000/shop/*` to it (apps/shop/next.config.js:13-14).
 
-**Interpretação:** É uma relação ativa em que o shell encaminha um caminho e suas subrotas para a zona shop, que responde com a página inteira.
+**Interpretation:** Active relationship in which shell forwards path/subroutes to shop zone, responding with entire page.
 
 ### 13. apps/shop/app/actions.ts:26-31; apps/shop/app/page.tsx:124; apps/shop/app/[id]/page.tsx:141; apps/duda/app/layout.tsx:24-27, 82
 
-**Observação:** O shop grava o cookie `mfe_cart_count` com `path: '/'` ao adicionar produtos. O layout da duda lê o cookie e passa a contagem como `cartCount` ao `Header` (`<Header cartCount={cartCount} currentZone="duda" />`).
+**Observation:** Shop writes cookie `mfe_cart_count` with `path: '/'` when adding products. Duda layout reads cookie, passing count as `cartCount` to `Header` (`<Header cartCount={cartCount} currentZone="duda" />`).
 
-**Interpretação:** É uma relação ativa de estado compartilhado por cookie entre o shop e a duda.
+**Interpretation:** Active cookie-shared-state relationship between shop/duda.
 
 ### 14. apps/shop/app/actions.ts:26-31; apps/shop/app/page.tsx:124; apps/shop/app/[id]/page.tsx:141; apps/shell/app/layout.tsx:29-32, 58
 
-**Observação:** O cookie `mfe_cart_count` gravado pelo shop é lido no layout do shell e passado como `cartCount` ao `Header`.
+**Observation:** Cookie `mfe_cart_count` written by shop read in shell layout, passed as `cartCount` to `Header`.
 
-**Interpretação:** É uma relação ativa de estado compartilhado por cookie entre o shop e o shell.
+**Interpretation:** Active cookie-shared-state relationship between shop/shell.
 
 ### 15. apps/duda/package.json:6; apps/duda/next.config.js:5-23; package.json:9; turbo.json:6-10; apps/duda/package.json:7, 9
 
-**Observação:** `next build` gera o `.next` só da duda, sob `basePath: '/duda'`; o `turbo build` da raiz dispara esse build, e a task `build` guarda `.next/**` como saída. O código de `@repo/ui` entra no artefato por `transpilePackages`. Não há Dockerfile, compose, workflow nem configuração de hospedagem: a app só sobe por `next dev`/`next start` na porta 3002. `version: "0.0.1"` não é usado em publicação, e a app é `private`.
+**Observation:** `next build` generates duda-only `.next` under `basePath: '/duda'`; root `turbo build` triggers build, task `build` stores `.next/**` as output. Code of `@repo/ui` enters artifact through `transpilePackages`. No Dockerfile, compose, workflow or hosting configuration: app only starts through `next dev`/`next start` at port 3002. `version: "0.0.1"` unused for publication; app `private`.
 
-**Interpretação:** Há fronteira de build própria, sem deploy observado nem versionamento independente.
+**Interpretation:** Own build boundary without observed deployment or independent versioning.
 
 ### 16. apps/shell/package.json:6; apps/shell/next.config.js:5-44; package.json:9; turbo.json:6-10; apps/shell/package.json:7, 9
 
-**Observação:** `next build` gera o `.next` só do shell, com o `rewrites()` para endereços fixos de `localhost`. Sem artefato de deploy; sobe por `next dev`/`next start` na porta 3000. `version: "0.0.1"` sem uso e app `private`.
+**Observation:** `next build` generates shell-only `.next` with `rewrites()` to fixed `localhost` addresses. No deployment artifact; starts through `next dev`/`next start` at port 3000. `version: "0.0.1"` unused; app `private`.
 
-**Interpretação:** Há fronteira de build própria, sem deploy observado nem versionamento independente. O artefato do shell não contém código das zonas, mas o roteamento que ele leva só funciona com as zonas nas portas locais dos scripts.
+**Interpretation:** Own build boundary without observed deployment or independent versioning. Shell artifact contains no zone code, but included routing only works with zones at scripts’ local ports.
 
 ### 17. apps/shop/package.json:6; apps/shop/next.config.js:5-42; package.json:9; turbo.json:6-10; apps/shop/package.json:7, 9
 
-**Observação:** `next build` gera o `.next` só do shop, sob `basePath: '/shop'`. Sem artefato de deploy; sobe na porta 3001. O CORS fixo em `http://localhost:3000` vem com o comentário "In a production deployment, replace with the actual shell origin" (apps/shop/next.config.js:26-27). `version: "0.0.1"` sem uso e app `private`.
+**Observation:** `next build` generates shop-only `.next` under `basePath: '/shop'`. No deployment artifact; starts at port 3001. Fixed CORS at `http://localhost:3000` accompanied by comment "In a production deployment, replace with the actual shell origin" (apps/shop/next.config.js:26-27). `version: "0.0.1"` unused; app `private`.
 
-**Interpretação:** Há fronteira de build própria, sem deploy observado nem versionamento independente; a configuração é de execução local.
+**Interpretation:** Own build boundary without observed deployment or independent versioning; configuration for local execution.
 
 ### 18. README.md:1, 3
 
-**Observação:** "A production-style Microfrontend architecture using **Next.js 16 Multi-Zones** and **Turborepo**".
+**Observation:** "A production-style Microfrontend architecture using **Next.js 16 Multi-Zones** and **Turborepo**".
 
-**Interpretação:** Afirma uma arquitetura de micro-frontends com Multi-Zones e Turborepo, o que as três unidades, as relações de rota e o `turbo build` da raiz confirmam. "Production-style" não tem artefato de deploy que o sustente.
+**Interpretation:** Claims microfrontend architecture with Multi-Zones/Turborepo, confirmed by three units, route relationships and root `turbo build`. "Production-style" unsupported by deployment artifact.
 
 ### 19. README.md:3
 
-**Observação:** "demonstrating independent deployability".
+**Observation:** "demonstrating independent deployability".
 
-**Interpretação:** Afirma deploy independente das zonas. Cada app tem build próprio e sobe sozinha, mas nenhum artefato faz deploy, e os destinos do rewrite são endereços fixos de `localhost`. A afirmação se confirma em parte.
+**Interpretation:** Claims independent zone deployment. Each app has own build/starts alone but no artifact deploys; rewrite targets fixed `localhost` addresses. Claim partially confirmed.
 
 ### 20. README.md:3
 
-**Observação:** "a shared design system".
+**Observation:** "a shared design system".
 
-**Interpretação:** Afirma uma biblioteca de UI comum às zonas. As três apps importam o `Header` de `@repo/ui` e compilam o pacote por `transpilePackages`, o que confirma a afirmação.
+**Interpretation:** Claims UI library common to zones. Three apps import `Header` from `@repo/ui`, compiling through `transpilePackages`, confirming claim.
 
 ### 21. README.md:3
 
-**Observação:** "cross-zone state".
+**Observation:** "cross-zone state".
 
-**Interpretação:** Afirma estado compartilhado entre as zonas, sem nomear o mecanismo. O cookie gravado pelo shop e lido pelo shell e pela duda confirma a afirmação.
+**Interpretation:** Claims shared inter-zone state without naming mechanism. Cookie written by shop/read by shell/duda confirms claim.
 
 ### 22. README.md:10, 18
 
-**Observação:** "localhost:3000/ ← Shell zone (homepage + global navigation)" / "`apps/shell` | 3000 | Host — homepage, global nav, rewrite proxy".
+**Observation:** "localhost:3000/ ← Shell zone (homepage + global navigation)" / "`apps/shell` | 3000 | Host — homepage, global nav, rewrite proxy".
 
-**Interpretação:** Afirma o shell como host, com a página inicial e o proxy por rewrite, o que a unidade do shell e a linha do `rewrites()` confirmam.
+**Interpretation:** Claims shell host with home page/rewrite proxy, confirmed by shell unit and `rewrites()` line.
 
 ### 23. README.md:11
 
-**Observação:** "localhost:3000/shop/* ← Shell rewrites → Shop zone (localhost:3001/shop/*)".
+**Observation:** "localhost:3000/shop/* ← Shell rewrites → Shop zone (localhost:3001/shop/*)".
 
-**Interpretação:** Afirma que o host encaminha `/shop/*` para a zona shop, o que a linha do `rewrites()` e a relação de rota confirmam.
+**Interpretation:** Claims host forwards `/shop/*` to shop zone, confirmed by `rewrites()` line/route relationship.
 
 ### 24. README.md:13
 
-**Observação:** "Cookie: mfe_cart_count ← Shared by both zones (port-agnostic on localhost)".
+**Observation:** "Cookie: mfe_cart_count ← Shared by both zones (port-agnostic on localhost)".
 
-**Interpretação:** Afirma estado compartilhado por cookie, o que a gravação no shop e as relações de cookie confirmam. "Both zones" vale para as duas que o README nomeia; a duda também lê o cookie.
+**Interpretation:** Claims cookie-shared state confirmed by shop writing/cookie relationships. "Both zones" applies to README’s two named zones; duda also reads cookie.
 
 ### 25. README.md:19
 
-**Observação:** "`apps/shop` | 3001 | Remote — product listing & PDP (`basePath: /shop`)".
+**Observation:** "`apps/shop` | 3001 | Remote — product listing & PDP (`basePath: /shop`)".
 
-**Interpretação:** Afirma o shop como zona alcançada pelo host sob `/shop`, o que a unidade do shop e a relação de rota confirmam. O rótulo "Remote" é do README: a ligação é encaminhamento de rota, não carregamento de módulo.
+**Interpretation:** Claims shop zone reached by host under `/shop`, confirmed by shop unit/route relationship. "Remote" README label: link forwards route rather than loading module.
 
 ### 26. README.md:20
 
-**Observação:** "`packages/ui` | — | Shared design system — `Header`, `Button`" (parte `Button`).
+**Observation:** "`packages/ui` | — | Shared design system — `Header`, `Button`" (`Button` portion).
 
-**Interpretação:** Afirma que o `Button` é compartilhado. `packages/ui/src/index.ts:1` o exporta, mas os imports de `@repo/ui` nas três apps trazem só `Header`, `getDudaBrandTheme` e `normalizeHeaderTheme`, o que contradiz a afirmação.
+**Interpretation:** Claims `Button` shared. `packages/ui/src/index.ts:1` exports it but `@repo/ui` imports in three apps only include `Header`, `getDudaBrandTheme` and `normalizeHeaderTheme`, contradicting claim.
 
 ### 27. README.md:35
 
-**Observação:** "Turborepo starts shell (:3000) + shop (:3001) in parallel".
+**Observation:** "Turborepo starts shell (:3000) + shop (:3001) in parallel".
 
-**Interpretação:** Afirma que cada zona sobe no próprio servidor, em paralelo, pelo Turborepo. O `turbo dev` da raiz e a task `dev` persistente rodam o `dev` de cada app na sua porta, o que confirma a afirmação; o mesmo comando também sobe a duda, que o README não cita.
+**Interpretation:** Claims zones start in own servers in parallel through Turborepo. Root `turbo dev` and persistent task `dev` run each app `dev` at own port, confirming claim; same command also starts duda, unmentioned in README.
 
 ### 28. README.md:41-48
 
-**Observação:** "Run a single zone" / "Shell only" / "Shop only (direct, no shell proxy)".
+**Observation:** "Run a single zone" / "Shell only" / "Shop only (direct, no shell proxy)".
 
-**Interpretação:** Afirma que cada zona roda sozinha, o que as unidades com manifesto, entrada e build próprios confirmam.
+**Interpretation:** Claims each zone runs alone, confirmed by units with own manifests, entries/builds.
 
 ### 29. README.md:57
 
-**Observação:** "`turbo.json` | Pipeline tasks with Turborepo caching".
+**Observation:** "`turbo.json` | Pipeline tasks with Turborepo caching".
 
-**Interpretação:** Fala da ferramenta de monorepo, sem situar as unidades. As tasks do `turbo.json` e o `turbo build` da raiz confirmam a afirmação.
+**Interpretation:** Addresses monorepo tool without locating units. Tasks in `turbo.json` and root `turbo build` confirm claim.
 
 ### 30. README.md:71
 
-**Observação:** "Cross-zone links use plain `<a>` tags (not `<Link>`) to force a full navigation and load the correct zone's JS bundle."
+**Observation:** "Cross-zone links use plain `<a>` tags (not `<Link>`) to force a full navigation and load the correct zone's JS bundle."
 
-**Interpretação:** Afirma navegação entre zonas só por página inteira. O `Header` e a página inicial do shell usam `<a>`, mas a página `not-found` do shell usa `Link` de `next/link` para `/shop` e `/duda` (apps/shell/app/not-found/page.tsx:1, 50-55), o que contradiz a afirmação geral.
+**Interpretation:** Claims cross-zone navigation exclusively full-page. `Header` and shell home use `<a>`, but shell `not-found` page uses `Link` from `next/link` for `/shop` and `/duda` (apps/shell/app/not-found/page.tsx:1, 50-55), contradicting general claim.
 
 ### 31. README.md:84
 
-**Observação:** "The `turbo.json` pipeline ensures `packages/ui` is always built before the apps, and apps build in parallel after that."
+**Observation:** "The `turbo.json` pipeline ensures `packages/ui` is always built before the apps, and apps build in parallel after that."
 
-**Interpretação:** Afirma um build próprio de `packages/ui` antes das apps. O pacote não tem script `build`, então o `^build` não roda nada nele, e cada app o compila por `transpilePackages`, o que contradiz a afirmação.
+**Interpretation:** Claims own `packages/ui` build before apps. Package lacks script `build`, so `^build` runs nothing there; each app compiles it through `transpilePackages`, contradicting claim.
 
 ### 32. apps/duda/ARCHITECTURE.md:3, 7
 
-**Observação:** "the current Duda zone architecture" / "Zone app: `apps/duda`".
+**Observation:** "the current Duda zone architecture" / "Zone app: `apps/duda`".
 
-**Interpretação:** Afirma a duda como zona própria, o que a unidade de `apps/duda` confirma.
+**Interpretation:** Claims duda own zone, confirmed by unit `apps/duda`.
 
 ### 33. apps/duda/ARCHITECTURE.md:9
 
-**Observação:** "Host shell route: `/duda` via shell rewrite to the Duda zone".
+**Observation:** "Host shell route: `/duda` via shell rewrite to the Duda zone".
 
-**Interpretação:** Afirma que o host encaminha `/duda` para a zona duda, o que a linha do `rewrites()` e a relação de rota confirmam.
+**Interpretation:** Claims host forwards `/duda` to duda zone, confirmed by `rewrites()` line/route relationship.
 
 ### 34. apps/duda/ARCHITECTURE.md:10
 
-**Observação:** "All three zones (shell, shop, duda) share a single brand theme pipeline".
+**Observation:** "All three zones (shell, shop, duda) share a single brand theme pipeline".
 
-**Interpretação:** Afirma código de tema comum às três zonas. Os layouts das três chamam `getDudaBrandTheme`, exportada por `@repo/ui`, o que confirma a afirmação.
+**Interpretation:** Claims common theme code for three zones. All layouts call `getDudaBrandTheme`, exported by `@repo/ui`, confirming claim.
 
 ### 35. apps/shell/next.config.js:8
 
-**Observação:** Comentário: "Compile the shared UI package from source (no separate build step needed)."
+**Observation:** Comment: "Compile the shared UI package from source (no separate build step needed)."
 
-**Interpretação:** Afirma que a biblioteca comum não tem build próprio e é compilada dentro das apps, o que a biblioteca `packages/ui` confirma.
+**Interpretation:** Claims common library has no own build, compiled inside apps, confirmed by library `packages/ui`.
 
 ### 36. apps/shop/app/layout.tsx:5-7
 
-**Observação:** Comentário: "When accessed via the shell's rewrite (localhost:3000/shop) the browser loads the shell's layout for the outer chrome".
+**Observation:** Comment: "When accessed via the shell's rewrite (localhost:3000/shop) the browser loads the shell's layout for the outer chrome".
 
-**Interpretação:** Afirma que, pelo rewrite, o shop é exibido dentro do layout do shell. O rewrite repassa a requisição inteira, e o shop responde com o próprio `<html>`, `<body>` e `Header` (apps/shop/app/layout.tsx:49-63), o que contradiz a afirmação.
+**Interpretation:** Claims rewrite displays shop inside shell layout. Rewrite forwards entire request; shop responds with own `<html>`, `<body>` and `Header` (apps/shop/app/layout.tsx:49-63), contradicting claim.
 
 ### 37. 18d620e 2026-04-12 (package.json, turbo.json); 3e95170 2026-04-24 (package.json, turbo.json, load-root-env.js, test-duda-themes.js)
 
-**Observação:** `package.json` e `turbo.json` aparecem em 18d620e e são alterados uma vez, em 3e95170. Nenhum commit cria ou remove workflow de CI, Dockerfile ou script que chame `turbo`; os scripts soltos entram em 3e95170 e continuam no snapshot.
+**Observation:** `package.json` and `turbo.json` appear in 18d620e, changed once in 3e95170. No commit creates/removes CI workflow, Dockerfile or script calling `turbo`; standalone scripts enter in 3e95170, remain in snapshot.
 
-**Interpretação:** Nunca houve uma automação que invocasse `turbo` e tenha sido apagada. O ponto está esclarecido, e a dependência continua indeterminada.
+**Interpretation:** Never an automation invoking `turbo` subsequently deleted. Point clarified; dependency remains undetermined.
 
 ### 38. 18d620e 2026-04-12; e001413 2026-04-12 (apps/shell/tsconfig.json, apps/shop/tsconfig.json, yarn.lock); 3e95170 2026-04-24
 
-**Observação:** e001413 tem a mensagem "ready for deploy", mas só altera os `tsconfig.json` do shell e do shop e cria `yarn.lock`. Nenhum dos cinco commits cria ou remove Dockerfile, compose, workflow, manifesto de hospedagem ou configuração de proxy.
+**Observation:** e001413 message "ready for deploy", but only changes shell/shop `tsconfig.json`, creating `yarn.lock`. None of five commits creates/removes Dockerfile, compose, workflow, hosting manifest or proxy configuration.
 
-**Interpretação:** A falta de artefato de deploy não é abandono: em nenhuma versão até o snapshot houve um. O ponto está esclarecido.
+**Interpretation:** Missing deployment artifact not abandonment: none in any version through snapshot. Point clarified.
 
 ### 39. 18d620e 2026-04-12 (packages/ui/src/Button.tsx, packages/ui/src/index.ts, README.md); 3e95170 2026-04-24 (packages/ui/src/Button.tsx, packages/ui/src/index.ts)
 
-**Observação:** `Button.tsx` e `index.ts` aparecem em 18d620e, com as apps shell e shop, e são alterados em 3e95170. O README que cita o `Button` é o mesmo desde 18d620e. O conteúdo das versões antigas não está no clone.
+**Observation:** `Button.tsx` and `index.ts` appear in 18d620e with shell/shop apps, changed in 3e95170. README citing `Button` same since 18d620e. Old version contents absent from clone.
 
-**Interpretação:** O histórico não diz se o `Button` foi usado e deixou de ser, ou se nunca foi. O ponto fica inconclusivo, mas a dúvida é só sobre o passado: no snapshot nenhuma app o importa.
+**Interpretation:** History does not establish whether `Button` previously used then stopped or never used. Point inconclusive only about past: no snapshot app imports it.
 
 ### 40. 18d620e 2026-04-12 (README.md); 3e95170 2026-04-24 (apps/shell/app/not-found/page.tsx)
 
-**Observação:** A frase sobre links só com `<a>` está no README desde 18d620e, com o mesmo objeto no snapshot. A página `not-found` do shell, que usa `Link` para `/shop` e `/duda`, é criada em 3e95170, com a zona duda.
+**Observation:** Only-`<a>` link sentence in README since 18d620e with same snapshot object. Shell `not-found` page using `Link` for `/shop` and `/duda` created in 3e95170 with duda zone.
 
-**Interpretação:** A afirmação e a página são de estágios diferentes: o README não foi atualizado quando a página entrou. O ponto está esclarecido.
+**Interpretation:** Claim/page from different stages: README not updated on page addition. Point clarified.
 
 ### 41. 18d620e 2026-04-12 (packages/ui/package.json, README.md, turbo.json); 3e95170 2026-04-24 (turbo.json)
 
-**Observação:** `packages/ui/package.json` é criado em 18d620e e nunca alterado (mesmo objeto no snapshot), e a frase de README.md:84 também é a mesma desde 18d620e. O `turbo.json` muda em 3e95170.
+**Observation:** `packages/ui/package.json` created in 18d620e, never changed (same snapshot object); README.md:84 sentence also unchanged since 18d620e. `turbo.json` changes in 3e95170.
 
-**Interpretação:** O pacote nunca teve script `build`; a contradição existe desde que a frase foi escrita, e não é resto de um estágio anterior. O ponto está esclarecido.
+**Interpretation:** Package never had script `build`; contradiction since sentence written rather than earlier-stage remnant. Point clarified.
 
 ### 42. 18d620e 2026-04-12 (apps/shop/app/layout.tsx); 3e95170 2026-04-24 (apps/shop/app/layout.tsx, apps/shell/next.config.js)
 
-**Observação:** `apps/shop/app/layout.tsx` aparece em 18d620e e é alterado em 3e95170, o mesmo commit que altera o `next.config.js` do shell. O conteúdo das versões antigas dos dois não está no clone.
+**Observation:** `apps/shop/app/layout.tsx` appears in 18d620e, changed in 3e95170, same commit changing shell `next.config.js`. Old contents of both absent from clone.
 
-**Interpretação:** O histórico não diz se o comentário já existia na primeira versão nem se descrevia uma configuração anterior. O ponto fica inconclusivo, mas a dúvida é só sobre o passado: no snapshot o shop responde com o próprio layout.
+**Interpretation:** History does not establish whether comment in first version or describing earlier configuration. Point inconclusive only about past: snapshot shop responds with own layout.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.2 (package.json:18) | 1 tecnologia | manifesto | — | contexto | ambígua | declara turbo.json:5-26 |
-| 2 | 3.4.3 (apps/shell, Marcadores); 3.4.3 (apps/shell, Build); 3.4.4 (apps/shell/next.config.js:25, Observação); 3.4.5 #1, #2 (Configuração, Código); 3.4.6 #1, #3 (Onde é servida); 3.4.6 #2 (Artefatos); 3.4.7 #2, #3, #6, #14, #16, #18 (Evidência) | 2 configuração | configuração | other | arquitetural | forte | configura #8; configura #11; configura #12 |
-| 3 | 3.4.4 (apps/duda/lib/duda-landing.ts:387) | 3 código | código-fonte | — | contexto | fraca | — |
-| 4 | 3.4.4 (apps/shell/next.config.js:25) | 3 código | configuração | other | arquitetural | forte | implementa #11; implementa #12 |
-| 5 | 3.4.4 (apps/shop/app/actions.ts:26) | 3 código | código-fonte | other | tecnológica | moderada | implementa #13; implementa #14 |
-| 6 | 3.4.3 (.) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 7 | 3.4.3 (apps/duda) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 8 | 3.4.3 (apps/shell) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 9 | 3.4.3 (apps/shop) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 10 | 3.4.3 (packages/ui) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 11 | 3.4.5 #1 | 5 composição | configuração | other | arquitetural | forte | liga #8; liga #7 |
-| 12 | 3.4.5 #2 | 5 composição | configuração | other | arquitetural | forte | liga #8; liga #9 |
-| 13 | 3.4.5 #3 | 5 composição | código-fonte | other | arquitetural | forte | liga #9; liga #7 |
-| 14 | 3.4.5 #4 | 5 composição | código-fonte | other | arquitetural | forte | liga #9; liga #8 |
-| 15 | 3.4.6 #1 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #7 |
-| 16 | 3.4.6 #2 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #8 |
-| 17 | 3.4.6 #3 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #9 |
-| 18 | 3.4.7 #1 | 7 documentação | documentação | other | arquitetural | fraca | corrobora #7; corrobora #8; corrobora #9; corrobora #11; corrobora #12; corrobora #15; corrobora #16; corrobora #17 |
-| 19 | 3.4.7 #2 | 7 documentação | documentação | — | arquitetural | fraca | corrobora em parte #15; corrobora em parte #16; corrobora em parte #17 |
-| 20 | 3.4.7 #3 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #10; corrobora apps/shell/app/layout.tsx:10; corrobora apps/shop/app/layout.tsx:14; corrobora apps/duda/app/layout.tsx:3 |
-| 21 | 3.4.7 #4 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #5; corrobora #13; corrobora #14 |
-| 22 | 3.4.7 #5 | 7 documentação | documentação | other | arquitetural | fraca | corrobora #8; corrobora #4 |
-| 23 | 3.4.7 #6 | 7 documentação | documentação | other | arquitetural | fraca | corrobora #4; corrobora #12 |
-| 24 | 3.4.7 #7 | 7 documentação | documentação | other | arquitetural | fraca | corrobora #5; corrobora #13; corrobora #14 |
-| 25 | 3.4.7 #8 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #9; corrobora #12 |
-| 26 | 3.4.7 #9 | 7 documentação | documentação | — | arquitetural | fraca | contradiz apps/shell/app/layout.tsx:10; contradiz apps/shop/app/layout.tsx:14; contradiz apps/duda/app/layout.tsx:3 |
-| 27 | 3.4.7 #10 | 7 documentação | documentação | — | arquitetural | fraca | corrobora package.json:10; corrobora turbo.json:11-14; corrobora apps/shell/package.json:7; corrobora apps/shop/package.json:7 |
-| 28 | 3.4.7 #11 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #8; corrobora #9 |
-| 29 | 3.4.7 #12 | 7 documentação | documentação | — | contexto | fraca | corrobora turbo.json:5-26; corrobora package.json:9 |
-| 30 | 3.4.7 #13 | 7 documentação | documentação | — | arquitetural | fraca | contradiz apps/shell/app/not-found/page.tsx:50-55 |
-| 31 | 3.4.7 #14 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #10 |
-| 32 | 3.4.7 #15 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #7 |
-| 33 | 3.4.7 #16 | 7 documentação | documentação | other | arquitetural | fraca | corrobora #4; corrobora #11 |
-| 34 | 3.4.7 #17 | 7 documentação | documentação | — | arquitetural | fraca | corrobora apps/shell/app/layout.tsx:28; corrobora apps/shop/app/layout.tsx:31; corrobora apps/duda/app/layout.tsx:23 |
-| 35 | 3.4.7 #18 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #10 |
-| 36 | 3.4.7 #19 | 7 documentação | comentário | other | arquitetural | fraca | contradiz apps/shop/app/layout.tsx:49-63; contradiz #12 |
-| 37 | 3.4.8 #1 | 8 histórico | histórico | — | contexto | fraca | explica #1 |
-| 38 | 3.4.8 #2 | 8 histórico | histórico | — | arquitetural | fraca | explica #19; explica #15; explica #16; explica #17 |
-| 39 | 3.4.8 #3 | 8 histórico | histórico | — | arquitetural | fraca | explica #26 |
-| 40 | 3.4.8 #4 | 8 histórico | histórico | — | arquitetural | fraca | explica #30 |
-| 41 | 3.4.8 #5 | 8 histórico | histórico | — | arquitetural | fraca | explica #31 |
-| 42 | 3.4.8 #6 | 8 histórico | histórico | — | arquitetural | fraca | explica #36 |
+| 1 | 3.4.2 (package.json:18) | 1 technology | manifest | — | context | ambiguous | declares turbo.json:5-26 |
+| 2 | 3.4.3 (apps/shell, Markers); 3.4.3 (apps/shell, Build); 3.4.4 (apps/shell/next.config.js:25, Observation); 3.4.5 #1, #2 (Configuration, Code); 3.4.6 #1, #3 (Where served); 3.4.6 #2 (Artifacts); 3.4.7 #2, #3, #6, #14, #16, #18 (Evidence) | 2 configuration | configuration | other | architectural | strong | configures #8; configures #11; configures #12 |
+| 3 | 3.4.4 (apps/duda/lib/duda-landing.ts:387) | 3 code | source code | — | context | weak | — |
+| 4 | 3.4.4 (apps/shell/next.config.js:25) | 3 code | configuration | other | architectural | strong | implements #11; implements #12 |
+| 5 | 3.4.4 (apps/shop/app/actions.ts:26) | 3 code | source code | other | technological | moderate | implements #13; implements #14 |
+| 6 | 3.4.3 (.) | 4 structure | directory | — | context | weak | — |
+| 7 | 3.4.3 (apps/duda) | 4 structure | directory | — | architectural | moderate | — |
+| 8 | 3.4.3 (apps/shell) | 4 structure | directory | — | architectural | moderate | — |
+| 9 | 3.4.3 (apps/shop) | 4 structure | directory | — | architectural | moderate | — |
+| 10 | 3.4.3 (packages/ui) | 4 structure | directory | — | context | weak | — |
+| 11 | 3.4.5 #1 | 5 composition | configuration | other | architectural | strong | links #8; links #7 |
+| 12 | 3.4.5 #2 | 5 composition | configuration | other | architectural | strong | links #8; links #9 |
+| 13 | 3.4.5 #3 | 5 composition | source code | other | architectural | strong | links #9; links #7 |
+| 14 | 3.4.5 #4 | 5 composition | source code | other | architectural | strong | links #9; links #8 |
+| 15 | 3.4.6 #1 | 6 build-deploy | manifest | — | architectural | moderate | publishes #7 |
+| 16 | 3.4.6 #2 | 6 build-deploy | manifest | — | architectural | moderate | publishes #8 |
+| 17 | 3.4.6 #3 | 6 build-deploy | manifest | — | architectural | moderate | publishes #9 |
+| 18 | 3.4.7 #1 | 7 documentation | documentation | other | architectural | weak | corroborates #7; corroborates #8; corroborates #9; corroborates #11; corroborates #12; corroborates #15; corroborates #16; corroborates #17 |
+| 19 | 3.4.7 #2 | 7 documentation | documentation | — | architectural | weak | partially corroborates #15; partially corroborates #16; partially corroborates #17 |
+| 20 | 3.4.7 #3 | 7 documentation | documentation | — | architectural | weak | corroborates #10; corroborates apps/shell/app/layout.tsx:10; corroborates apps/shop/app/layout.tsx:14; corroborates apps/duda/app/layout.tsx:3 |
+| 21 | 3.4.7 #4 | 7 documentation | documentation | — | architectural | weak | corroborates #5; corroborates #13; corroborates #14 |
+| 22 | 3.4.7 #5 | 7 documentation | documentation | other | architectural | weak | corroborates #8; corroborates #4 |
+| 23 | 3.4.7 #6 | 7 documentation | documentation | other | architectural | weak | corroborates #4; corroborates #12 |
+| 24 | 3.4.7 #7 | 7 documentation | documentation | other | architectural | weak | corroborates #5; corroborates #13; corroborates #14 |
+| 25 | 3.4.7 #8 | 7 documentation | documentation | — | architectural | weak | corroborates #9; corroborates #12 |
+| 26 | 3.4.7 #9 | 7 documentation | documentation | — | architectural | weak | contradicts apps/shell/app/layout.tsx:10; contradicts apps/shop/app/layout.tsx:14; contradicts apps/duda/app/layout.tsx:3 |
+| 27 | 3.4.7 #10 | 7 documentation | documentation | — | architectural | weak | corroborates package.json:10; corroborates turbo.json:11-14; corroborates apps/shell/package.json:7; corroborates apps/shop/package.json:7 |
+| 28 | 3.4.7 #11 | 7 documentation | documentation | — | architectural | weak | corroborates #8; corroborates #9 |
+| 29 | 3.4.7 #12 | 7 documentation | documentation | — | context | weak | corroborates turbo.json:5-26; corroborates package.json:9 |
+| 30 | 3.4.7 #13 | 7 documentation | documentation | — | architectural | weak | contradicts apps/shell/app/not-found/page.tsx:50-55 |
+| 31 | 3.4.7 #14 | 7 documentation | documentation | — | architectural | weak | contradicts #10 |
+| 32 | 3.4.7 #15 | 7 documentation | documentation | — | architectural | weak | corroborates #7 |
+| 33 | 3.4.7 #16 | 7 documentation | documentation | other | architectural | weak | corroborates #4; corroborates #11 |
+| 34 | 3.4.7 #17 | 7 documentation | documentation | — | architectural | weak | corroborates apps/shell/app/layout.tsx:28; corroborates apps/shop/app/layout.tsx:31; corroborates apps/duda/app/layout.tsx:23 |
+| 35 | 3.4.7 #18 | 7 documentation | comment | — | architectural | weak | corroborates #10 |
+| 36 | 3.4.7 #19 | 7 documentation | comment | other | architectural | weak | contradicts apps/shop/app/layout.tsx:49-63; contradicts #12 |
+| 37 | 3.4.8 #1 | 8 history | history | — | context | weak | explains #1 |
+| 38 | 3.4.8 #2 | 8 history | history | — | architectural | weak | explains #19; explains #15; explains #16; explains #17 |
+| 39 | 3.4.8 #3 | 8 history | history | — | architectural | weak | explains #26 |
+| 40 | 3.4.8 #4 | 8 history | history | — | architectural | weak | explains #30 |
+| 41 | 3.4.8 #5 | 8 history | history | — | architectural | weak | explains #31 |
+| 42 | 3.4.8 #6 | 8 history | history | — | architectural | weak | explains #36 |
 
-## Resumo
+## Summary
 
-Observações: 42. Dimensões (tecnologia: 1, configuração: 1, código: 3, estrutura: 5, composição: 4, build-deploy: 3, documentação: 19, histórico: 6). Força (forte: 6, moderada: 7, fraca: 28, ambígua: 1). Evidência (tecnológica: 1, arquitetural: 35, contexto: 6).
+Observations: 42. Dimensions (technology: 1, configuration: 1, code: 3, structure: 5, composition: 4, build-deploy: 3, documentation: 19, history: 6). Strength (strong: 6, moderate: 7, weak: 28, ambiguous: 1). Evidence (technological: 1, architectural: 35, context: 6).
+

@@ -20,78 +20,78 @@ annotation:
 
 # 203 — agsosa/react-next-umd-remote-modules-poc
 
-## Contexto
+## Context
 
-“UMD-based Microfrontends PoC” (`README.md:1–17`): duas aplicações Next.js 15 / React 19, `shell` e `mf-1`. O `mf-1` roda como app próprio (porta 3001) e, além disso, compila com Vite três componentes (`Header`, `Fulfilment`, `FulfilmentDetails`) num bundle UMD servido em `/remote-modules/bundle.js`. O `shell` carrega esse bundle em runtime por `<script>` e renderiza os componentes a partir de `window.MF1_RemoteModules`. O README declara que a solução “not Module Federation” (`README.md:12`) e a apresenta como “remote component sharing” (`README.md:3`, `138`). Há deploy na Vercel indicado no README (`README.md:7–8`) e nos metadados (homepage). O nome do repositório não é usado como evidência.
+“UMD-based Microfrontends PoC” (`README.md:1–17`): two Next.js 15 / React 19 applications, `shell` and `mf-1`. `mf-1` runs as own app (port 3001) and additionally compiles three components (`Header`, `Fulfilment`, `FulfilmentDetails`) through Vite into a UMD bundle served at `/remote-modules/bundle.js`. `shell` loads this bundle at runtime through `<script>` and renders components from `window.MF1_RemoteModules`. README states solution is “not Module Federation” (`README.md:12`) and presents it as “remote component sharing” (`README.md:3`, `138`). Vercel deployment is indicated in README (`README.md:7–8`) and metadata (homepage). Repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:204` registra rank 203, ID 1027727587, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:204` records rank 203, ID 1027727587, status `cloned`, branch `main` and front-matter commit, which is clone HEAD and `origin/main`. Every clone Git command used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:204` registra as estratégias `terminology;technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:16998` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:17002` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:204` records strategies `terminology;technology` and eligibility `pass`. Sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). ID appears in `data/discovery/mfe-round-001/candidates.csv:16998` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:17002` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos três hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2025-07` e `path` vazio:
+`sqlite3 -readonly` query of tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns same three hits in each round, at endpoint `repositories`, with subquery `…#created:2025-07` and empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | 2026-10-07T18:41:46.312Z / 2026-10-08T15:38:37.705Z |
 | `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | 2026-10-07T22:08:19.765Z / 2026-10-08T15:47:35.096Z |
 | `technology-module-federation-repositories`: `"module federation" in:name,description,readme` | 2026-10-07T23:18:44.074Z / 2026-10-08T16:15:15.681Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2025-07-01..2025-07-31`.
+Effective queries append `pushed:>=2025-04-01 created:2025-07-01..2025-07-31`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem TypeScript, `fork: false`, tamanho 258;
-- criação em 2025-07-28T12:50:25Z, push em 2025-07-29T00:02:39Z;
+Hit metadata:
+- null description, no topics, TypeScript language, `fork: false`, size 258;
+- creation at 2025-07-28T12:50:25Z, push at 2025-07-29T00:02:39Z;
 - homepage `react-next-umd-remote-modules-poc-s.vercel.app`.
 
-Grafias no README:
-- “microfrontend”: `README.md:125` (“Each microfrontend can be developed independently”), também em `132` e `138`;
-- “microfrontends”: `README.md:3` (“implementation of microfrontends using UMD”); “Microfrontends” em `1` e `12`;
-- “Module Federation”: `README.md:3` (“similar to Module Federation”), `12` (“not Module Federation”) e `138`.
+README spellings:
+- “microfrontend”: `README.md:125` (“Each microfrontend can be developed independently”), also in `132` and `138`;
+- “microfrontends”: `README.md:3` (“implementation of microfrontends using UMD”); “Microfrontends” in `1` and `12`;
+- “Module Federation”: `README.md:3` (“similar to Module Federation”), `12` (“not Module Federation”) and `138`.
 
-O hit de `"module federation"` vem de menções que contrastam a solução com Module Federation; não há Module Federation no código.
+Hit for `"module federation"` comes from mentions contrasting solution with Module Federation; code contains no Module Federation.
 
-A última alteração do README é `ed8c864` (2025-07-28), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+Last README change is `ed8c864` (2025-07-28), before October 2026 collections. README at the SHA is not later than searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 50 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Há dois projetos com `package.json`, `package-lock.json`, `next.config` e `src/` próprios (`shell/`, `mf-1/`), sem workspace na raiz. `mf-1/public/remote-modules/bundle.js` (123 KB) é o bundle UMD gerado, versionado. `shell/src/data/orders.ts` e `mf-1/src/data/orders.ts` são o mesmo blob (`64c31a3`), uma cópia e não um import. | contexto |
-| Configuração (produtor) | `mf-1/vite.mf.ts:27–47`: entrada `src/RemoteModules/RemoteModules.ts`, `format: "umd"`, `name: "MF1_RemoteModules"`, `entryFileNames: "bundle.js"`, `outDir: "public/remote-modules"`, `react`/`react-dom` externos como globais. `mf-1/package.json:6–12`: `build` = `build:vite && next build`; `dev` roda Next e Vite em watch. `mf-1/src/RemoteModules/RemoteModules.ts:1–10` exporta os três componentes envoltos em `withProviders`. `mf-1/next.config.ts:9–23`: `Cache-Control` para `/remote-modules/:path*` em produção. | forte |
-| Configuração (consumidor) | `shell/next.config.js:7–9`: `publicRuntimeConfig.MF1_BASE_URL` = `process.env.MF1_BASE_URL \|\| 'http://localhost:3001'`. | forte |
-| Código-fonte (composição) | `shell/src/hooks/useRemoteModule.ts:35–37`, `79–99`: publica `React`/`ReactDOM` em `window`, injeta `<script src=url>` e lê `window[moduleName][componentName]`. `shell/src/components/RemoteHeader.tsx:14–22`, `37` e `RemoteFulfilment.tsx:29–33`, `64–69` carregam `MF1_BASE_URL + "/remote-modules/bundle.js"` e renderizam o componente com props e callbacks. São usados em `shell/src/pages/fulfilment.tsx:29–33`, `index.tsx:178` e `orders/[id].tsx:273`, `289`, `410`. `shell/src/types/mf1-remote-components.d.ts:3–29` define o contrato. | forte |
-| Código-fonte (fronteiras) | Busca por `../..`, `mf-1/` e `shell/` em `shell/src`, `mf-1/src` e nas configurações: só imports internos de `shell/src/pages/orders/[id].tsx:4–6` (`../../data`, `../../components`). Nenhum import cruza de `shell/` para `mf-1/` ou o contrário. O `mf-1` usa os mesmos componentes localmente (`mf-1/src/pages/fulfilment.tsx:3–4`; `index.tsx:3–4`). | contexto |
-| Natureza do que é exposto | `Header` é um cabeçalho comum (2,8 KB). `Fulfilment` (`mf-1/src/RemoteModules/Fulfilment.tsx:155–363`) é uma tela de processamento de pedidos com estado próprio (`useState(mockOrders)`, `:157`). `FulfilmentDetails` é o detalhe de pedido. O README descreve o objetivo como compartilhamento de componentes (`README.md:3`, `126`, `138`). | ambígua |
+| Structure | `git ls-tree -r` at the SHA: 50 entries, all regular files `100644`; zero symlinks and zero gitlinks. Two projects with own `package.json`, `package-lock.json`, `next.config` and `src/` (`shell/`, `mf-1/`), without root workspace. `mf-1/public/remote-modules/bundle.js` (123 KB) is versioned generated UMD bundle. `shell/src/data/orders.ts` and `mf-1/src/data/orders.ts` are same blob (`64c31a3`), a copy rather than import. | context |
+| Configuration (producer) | `mf-1/vite.mf.ts:27–47`: entry `src/RemoteModules/RemoteModules.ts`, `format: "umd"`, `name: "MF1_RemoteModules"`, `entryFileNames: "bundle.js"`, `outDir: "public/remote-modules"`, `react`/`react-dom` external as globals. `mf-1/package.json:6–12`: `build` = `build:vite && next build`; `dev` runs Next and Vite in watch. `mf-1/src/RemoteModules/RemoteModules.ts:1–10` exports three components wrapped in `withProviders`. `mf-1/next.config.ts:9–23`: `Cache-Control` for `/remote-modules/:path*` in production. | strong |
+| Configuration (consumer) | `shell/next.config.js:7–9`: `publicRuntimeConfig.MF1_BASE_URL` = `process.env.MF1_BASE_URL \|\| 'http://localhost:3001'`. | strong |
+| Source code (composition) | `shell/src/hooks/useRemoteModule.ts:35–37`, `79–99`: publishes `React`/`ReactDOM` in `window`, injects `<script src=url>` and reads `window[moduleName][componentName]`. `shell/src/components/RemoteHeader.tsx:14–22`, `37` and `RemoteFulfilment.tsx:29–33`, `64–69` load `MF1_BASE_URL + "/remote-modules/bundle.js"` and render component with props and callbacks. Used in `shell/src/pages/fulfilment.tsx:29–33`, `index.tsx:178` and `orders/[id].tsx:273`, `289`, `410`. `shell/src/types/mf1-remote-components.d.ts:3–29` defines contract. | strong |
+| Source code (boundaries) | Search for `../..`, `mf-1/` and `shell/` in `shell/src`, `mf-1/src` and configurations: only internal imports in `shell/src/pages/orders/[id].tsx:4–6` (`../../data`, `../../components`). No import crosses from `shell/` to `mf-1/` or vice versa. `mf-1` uses same components locally (`mf-1/src/pages/fulfilment.tsx:3–4`; `index.tsx:3–4`). | context |
+| Nature of exposures | `Header` is common header (2,8 KB). `Fulfilment` (`mf-1/src/RemoteModules/Fulfilment.tsx:155–363`) is order-processing screen with own state (`useState(mockOrders)`, `:157`). `FulfilmentDetails` is order detail. README describes goal as component sharing (`README.md:3`, `126`, `138`). | ambiguous |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 17 commits lineares, nenhum merge, todos de Alejandro Sosa `<aleej.gs@gmail.com>` em 2025-07-28. A raiz é `6d2fa15` (“Initial commit”), seguida de `b50998d` (“Init”), vários “wip” e ajustes: `77ded93` (“Add env var for remote urls”), `500c3c4` (“Add cache control to mf1 production builds”), `03aa81d` (“Create README.md”) e `ed8c864` (“Add styled components theme, update readme, cleanup”). O SHA `130ddb6` (“Delete settings.local.json”) só remove `.claude/settings.local.json`; esse blob não foi lido. Comentários em espanhol (`mf-1/vite.mf.ts:8–9`, `35`, `39`) mencionam coordenação entre equipes e pods Kubernetes, sem artefato de deploy correspondente no repositório.
+Non-shallow clone; 17 linear commits, no merge, all by Alejandro Sosa `<aleej.gs@gmail.com>` on 2025-07-28. Root is `6d2fa15` (“Initial commit”), followed by `b50998d` (“Init”), several “wip” and adjustments: `77ded93` (“Add env var for remote urls”), `500c3c4` (“Add cache control to mf1 production builds”), `03aa81d` (“Create README.md”) and `ed8c864` (“Add styled components theme, update readme, cleanup”). SHA `130ddb6` (“Delete settings.local.json”) only removes `.claude/settings.local.json`; that blob was not read. Spanish comments (`mf-1/vite.mf.ts:8–9`, `35`, `39`) mention coordination between teams and Kubernetes pods, without corresponding deployment artifact in repository.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | Duas unidades no repositório (`shell/`, `mf-1/`); a URL do bundle de `mf-1` é configurada no shell (`shell/next.config.js:7–9`). |
-| Q2 | Yes | Cada unidade tem entrada, `package.json` e build próprios (`mf-1/package.json:6–12`; `shell/package.json:5–9`). Não há import de código-fonte entre elas; a ligação é pelo bundle servido. |
-| Q3 | Yes | O shell renderiza os componentes remotos em suas páginas (`shell/src/pages/fulfilment.tsx:29–33`; `orders/[id].tsx:410`). |
-| Q4 | Yes | Mecanismo de carga por `<script>` em runtime configurado nos dois lados (`mf-1/vite.mf.ts:27–47`; `shell/src/hooks/useRemoteModule.ts:79–99`) e consumido. Não é link nem iframe. |
-| Q5 | Yes | Além do cabeçalho reutilizável, o bundle remoto fornece telas de fulfillment e de detalhe de pedido, com estado próprio, renderizadas como conteúdo das páginas do shell. Isso constitui composição de unidades frontend, não apenas compartilhamento de código. |
+| Q1 | Yes | Two repository units (`shell/`, `mf-1/`); bundle URL of `mf-1` is configured in shell (`shell/next.config.js:7–9`). |
+| Q2 | Yes | Each unit has own entry, `package.json` and build (`mf-1/package.json:6–12`; `shell/package.json:5–9`). No source-code import connects them; connection uses served bundle. |
+| Q3 | Yes | Shell renders remote components in its pages (`shell/src/pages/fulfilment.tsx:29–33`; `orders/[id].tsx:410`). |
+| Q4 | Yes | Runtime `<script>` loading mechanism configured on both sides (`mf-1/vite.mf.ts:27–47`; `shell/src/hooks/useRemoteModule.ts:79–99`) and consumed. Neither link nor iframe. |
+| Q5 | Yes | Beyond reusable header, remote bundle supplies fulfillment and order-detail screens, with own state, rendered as shell-page content. This constitutes frontend-unit composition, not merely code sharing. |
 
-## Motivo
+## Rationale
 
-- Classificado como `MFE-implemented`: o shell carrega e compõe em runtime uma unidade externa que fornece telas de domínio completas, além de um componente de cabeçalho.
-- **Mecanismo:** é o de 002 (`runtime-script`, final `MFE-implemented`): bundle gerado por Vite, carregado por `<script>` e lido de um global. Lá, porém, o remoto expunha `mount`/`unmount` de um widget próprio. Aqui são componentes React que dependem do React do host (`external`, `README.md:39–43`), recebem `router` e callbacks do shell (`RemoteHeader.tsx:37`) e também são usados localmente pelo `mf-1`.
-- **Composição ou compartilhamento:** `Fulfilment` e `FulfilmentDetails` são telas de domínio com estado próprio e ocupam o conteúdo de rotas do shell, o que se aproxima de composição. `Header` é um componente de layout reutilizado, o que se aproxima de compartilhamento. Em 089/100 essa mesma fronteira deixou Q5 Undetermined.
-- **Campos:** `approaches: [runtime-script]` (slug do template, primeiro caso 002), `ui_technologies: [react, next]`, `build_tools: [vite]` (o bundle remoto é feito pelo Vite; o Next segue a convenção de 199), `frontend_units: 2`, `unit_organization: monorepo` (dois projetos num repositório, sem workspace), `repo_type: example` (PoC declarada, `README.md:1`; `mf-1/next.config.ts:25`).
+- Classified as `MFE-implemented`: shell loads and composes at runtime an external unit supplying complete domain screens plus header component.
+- **Mechanism:** same as 002 (`runtime-script`, final `MFE-implemented`): Vite-generated bundle, loaded through `<script>` and read from global. There, however, remote exposed `mount`/`unmount` of own widget. Here React components depend on host React (`external`, `README.md:39–43`), receive `router` and shell callbacks (`RemoteHeader.tsx:37`) and are also used locally by `mf-1`.
+- **Composition or sharing:** `Fulfilment` and `FulfilmentDetails` are domain screens with own state occupying shell-route content, closer to composition. `Header` is a reused layout component, closer to sharing. In 089/100 same boundary left Q5 Undetermined.
+- **Fields:** `approaches: [runtime-script]` (template slug, first case 002), `ui_technologies: [react, next]`, `build_tools: [vite]` (remote bundle made by Vite; Next follows 199 convention), `frontend_units: 2`, `unit_organization: monorepo` (two projects in one repository, without workspace), `repo_type: example` (declared PoC, `README.md:1`; `mf-1/next.config.ts:25`).
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** UMD gerado por Vite a partir de uma aplicação Next.js, servido pelo `public/` dela e carregado no host com React exposto em `window`. O roteador é passado por props porque `useRouter` não funciona no remoto (`README.md:102–110`).
-- **RQ1 (sinais enganosos):** o hit de `"module federation"` vem de frases que negam o uso de Module Federation (`README.md:3`, `12`, `138`).
-- **Protocolo (busca):** a elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ2:** Vite-generated UMD from Next.js application, served through its `public/` and loaded in host with React exposed in `window`. Router is passed through props because `useRouter` does not work in remote (`README.md:102–110`).
+- **RQ1 (misleading signals):** hit for `"module federation"` comes from phrases denying Module Federation use (`README.md:3`, `12`, `138`).
+- **Protocol (search):** eligibility changes from `unknown` (001) to `pass` (002).
 
-## Decisão registrada
+## Recorded decision
 
-Promovido para `MFE-implemented`. `mf-1` produz um bundle UMD que o `shell` carrega em runtime e usa para compor telas completas de fulfillment e detalhe de pedidos. Embora também exponha um cabeçalho reutilizável, as telas remotas com estado próprio demonstram composição de unidades frontend.
+Promoted to `MFE-implemented`. `mf-1` produces a UMD bundle loaded by `shell` at runtime and used to compose complete fulfillment and order-detail screens. Although it also exposes a reusable header, remote screens with own state demonstrate frontend-unit composition.

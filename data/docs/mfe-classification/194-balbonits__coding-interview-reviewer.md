@@ -20,65 +20,65 @@ annotation:
 
 # 194 — balbonits/coding-interview-reviewer
 
-## Contexto
+## Context
 
-“Coding Interview Reviewer” (`README.md:1–5`): aplicação Next.js pessoal de preparação para entrevistas de front-end, com exercícios de código ao vivo (Sandpack), notas, cursos em MDX, entrevistador simulado por IA e feed de notícias. Foi construída com assistente de código, como o próprio README declara. Micro-frontends aparecem como conteúdo de estudo: um exercício “MFE Registry” (`content/exercises/mfe-registry/`), um curso e uma nota sobre microsserviços e micro-frontends. Não há composição de frontends. O nome do repositório não é usado como evidência.
+“Coding Interview Reviewer” (`README.md:1–5`): personal Next.js front-end interview preparation application, with live coding exercises (Sandpack), notes, MDX courses, AI mock interviewer and news feed. Built with a coding assistant, as README itself declares. Micro-frontends appear as study content: an “MFE Registry” exercise (`content/exercises/mfe-registry/`), a course and a note about microservices and micro-frontends. No frontend composition. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:195` registra rank 194, ID 1221149467, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:195` records rank 194, ID 1221149467, status `cloned`, branch `main` and the front matter commit, which is HEAD of the clone and `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:195` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:29042` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:29048` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:195` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:29042` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:29048` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2026-04` e `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2026-04` and empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | 2026-10-07T21:13:13.798Z / 2026-10-08T15:42:26.675Z |
 | `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | 2026-10-07T22:12:37.047Z / 2026-10-08T15:49:43.133Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2026-04-01..2026-04-30`.
+Effective queries append `pushed:>=2025-04-01 created:2026-04-01..2026-04-30`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem TypeScript, `fork: false`, tamanho 1.162;
-- criação em 2026-04-25T20:21:07Z, push em 2026-05-05T06:02:31Z.
+Hit metadata:
+- null description, no topics, language TypeScript, `fork: false`, size 1,162;
+- created at 2026-04-25T20:21:07Z, pushed at 2026-05-05T06:02:31Z.
 
-O acerto vem de `README.md:61`, “| MFE Registry | Microfrontends — prefix router | vanilla-ts |”, linha da tabela de exercícios e única ocorrência. A forma singular “microfrontend” não aparece no README; esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+The hit comes from `README.md:61`, “| MFE Registry | Microfrontends — prefix router | vanilla-ts |”, an exercise table row and the only occurrence. The singular form “microfrontend” does not appear in README; that hit depends on GitHub search text processing, which is not recorded.
 
-A última alteração do README é `1028925` (2026-04-26), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The README's last change is `1028925` (2026-04-26), before October 2026 collection. The SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 294 entradas, 292 arquivos regulares `100644` e 2 executáveis `100755` (`scripts/dev.sh`, `scripts/restart-dev.sh`); zero symlinks e zero gitlinks. Há um único projeto Next.js (`app/`, `components/`, `lib/`, `next.config.ts`), conteúdo em `content/` (140 arquivos de exercícios, 26 de notas, 15 de cursos), testes Playwright e uma configuração SearXNG. | contrária |
-| Configuração / Build | `next.config.ts:3–5`: só `reactCompiler: true`. `package.json:5–40`: Next 16.2.4, React 19, Sandpack e MDX, sem dependência de federação, single-spa ou import maps. | contrária |
-| Conteúdo (sinal da busca) | `content/exercises/mfe-registry/meta.json:1–8`: exercício “Micro-Frontend App Shell Registry” (template `vanilla-ts`). `content/exercises/mfe-registry/problem.mdx:1–25`: enunciado de uma classe `MfeRegistry` (registro e resolução de rotas), com `starter.ts`, `solution.ts` e `tests.ts`. Também há `content/courses/microservices-microfrontends.mdx` e `content/notes/microservices-microfrontend.mdx`. É material de estudo executado no sandbox da aplicação. | fraca |
-| Busca | `git grep -il` no SHA (exceto `package-lock.json`) por `micro.?front`, `federation`, `remoteEntry` e `single-spa`: só README e arquivos em `content/`. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 294 entries, 292 regular `100644` files and 2 executables `100755` (`scripts/dev.sh`, `scripts/restart-dev.sh`); zero symlinks and zero gitlinks. A single Next.js project (`app/`, `components/`, `lib/`, `next.config.ts`), content in `content/` (140 exercise files, 26 note files, 15 course files), Playwright tests and a SearXNG configuration. | contrary |
+| Configuration / Build | `next.config.ts:3–5`: only `reactCompiler: true`. `package.json:5–40`: Next 16.2.4, React 19, Sandpack and MDX, without federation, single-spa or import map dependencies. | contrary |
+| Content (search signal) | `content/exercises/mfe-registry/meta.json:1–8`: exercise “Micro-Frontend App Shell Registry” (template `vanilla-ts`). `content/exercises/mfe-registry/problem.mdx:1–25`: problem statement for class `MfeRegistry` (route registration and resolution), with `starter.ts`, `solution.ts` and `tests.ts`. Also `content/courses/microservices-microfrontends.mdx` and `content/notes/microservices-microfrontend.mdx`. Study material executed in the application sandbox. | weak |
+| Search | `git grep -il` at the SHA (except `package-lock.json`) for `micro.?front`, `federation`, `remoteEntry` and `single-spa`: only README and files in `content/`. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 46 commits, 1 merge, todos de John Dilig `<balbonits@users.noreply.github.com>`, de 2026-04-25 (`61aadda`, “Initial commit: Day 1 + Day 2…”) a 2026-05-04 (SHA, “Code sandboxes (JS+Java) + typography + Compiler + notes + E2E”). `AGENTS.md` e `CLAUDE.md` e a declaração do README (`README.md:5`) indicam geração assistida por IA; os metadados não separam autoria intelectual. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 46 commits, 1 merge, all by John Dilig `<balbonits@users.noreply.github.com>`, from 2026-04-25 (`61aadda`, “Initial commit: Day 1 + Day 2…”) to 2026-05-04 (SHA, “Code sandboxes (JS+Java) + typography + Compiler + notes + E2E”). `AGENTS.md`, `CLAUDE.md` and README statement (`README.md:5`) indicate AI-assisted generation; metadata does not distinguish intellectual authorship. No historical blob was read and no object was missing.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única aplicação frontend; o “MFE Registry” é um exercício de conteúdo, não unidade nem configuração de composição. |
-| Q2 | No | Não há segunda unidade cuja independência possa ser avaliada. |
-| Q3 | No | Não há host compondo unidades. |
-| Q4 | No | Nenhum mecanismo de composição configurado (`next.config.ts:3–5`; busca registrada). |
-| Q5 | No | Q1–Q4 são No: aplicação de estudo cujo conteúdo inclui exercícios e notas sobre micro-frontends. |
+| Q1 | No | A single frontend application; “MFE Registry” is a content exercise, rather than a unit or composition configuration. |
+| Q2 | No | There is no second unit whose independence could be assessed. |
+| Q3 | No | No host composes units. |
+| Q4 | No | No configured composition mechanism (`next.config.ts:3–5`; recorded search). |
+| Q5 | No | Q1–Q4 are No: study application whose content includes micro-frontend exercises and notes. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “repositories mentioning micro-frontends without implementing them”.
-- O sinal é conteúdo e exercício, como em 023 e 094: um exercício de “app shell registry” resolvido em TypeScript puro dentro do sandbox não é composição de unidades frontend. Há uma aplicação real, por isso `frontend_units: 1` e `single-unit`.
-- `ui_technologies: [react, next]`, `build_tools: []` (Next encapsula o bundler). `repo_type: other`: ferramenta pessoal de estudo.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. Matches “repositories mentioning micro-frontends without implementing them”.
+- Signal is content and exercises, as in 023 and 094: an “app shell registry” exercise solved in plain TypeScript within the sandbox is not frontend unit composition. A real application exists, hence `frontend_units: 1` and `single-unit`.
+- `ui_technologies: [react, next]`, `build_tools: []` (Next encapsulates the bundler). `repo_type: other`: personal study tool.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** exercício nomeado “MFE Registry” e cursos sobre micro-frontends num app de estudo; o README casa as consultas terminológicas pela tabela de exercícios.
-- **Protocolo (busca):** o hit singular `microfrontend` não tem grafia literal no README. A elegibilidade muda de `unknown` (001) para `pass` (002).
-- **Contribuição da revisão independente (Lupa):** concordância com Non-MFE e `draft`: uma única aplicação Next.js, com conteúdo didático sobre microfrontends e um exercício `MfeRegistry` executado no sandbox de código da própria aplicação, sem unidade frontend remota nem configuração que componha aplicações. As lacunas apontadas são de evidência no registro, e não ambiguidade arquitetural.
+- **RQ1 (misleading signals):** exercise named “MFE Registry” and micro-frontend courses in a study app; README matches terminology queries through its exercise table.
+- **Protocol (search):** singular hit `microfrontend` has no literal spelling in README. Eligibility changes from `unknown` (001) to `pass` (002).
+- **Independent review contribution (Lupa):** agreement with Non-MFE and `draft`: one Next.js application, with microfrontend teaching content and an `MfeRegistry` exercise executed in the application's own code sandbox, without a remote frontend unit or configuration composing applications. Identified gaps concern evidence in the record, rather than architectural ambiguity.

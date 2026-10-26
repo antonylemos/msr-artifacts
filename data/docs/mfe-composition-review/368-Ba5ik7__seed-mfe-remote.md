@@ -20,25 +20,26 @@ annotation:
 
 # 368 — Ba5ik7/seed-mfe-remote
 
-## Leitura do repositório
+## Repository overview
 
-Workspace Angular com dois projetos: `seed-mfe-remote`, uma semente de remote Module Federation (`@angular-architects/module-federation`), e `demo`, um host de demonstração que a consome. O remote se chama `seedMfeRemote` e expõe um único componente, `./RemoteWidget` (projects/seed-mfe-remote/webpack.config.js:5, 7-8), cujo conteúdo é só o texto "Remote Widget LOADED!!!!" (projects/seed-mfe-remote/src/app/remote-widget/remote-widget.component.ts:6). Fora isso, o remote tem uma página própria mínima ("Remote App", projects/seed-mfe-remote/src/app/app.component.ts:6) e uma tabela de rotas vazia (projects/seed-mfe-remote/src/app/app.routes.ts:3).
+An Angular workspace with two projects: `seed-mfe-remote`, a Module Federation remote seed (`@angular-architects/module-federation`), and `demo`, a demonstration host consuming it. The remote is named `seedMfeRemote` and exposes a single component, `./RemoteWidget` (projects/seed-mfe-remote/webpack.config.js:5, 7-8), whose content is only text "Remote Widget LOADED!!!!" (projects/seed-mfe-remote/src/app/remote-widget/remote-widget.component.ts:6). Otherwise, the remote has a minimal page of its own ("Remote App", projects/seed-mfe-remote/src/app/app.component.ts:6) and an empty route table (projects/seed-mfe-remote/src/app/app.routes.ts:3).
 
-O `demo` carrega o mesmo módulo de duas formas: no `ngAfterViewInit` do componente raiz, monta o componente no `ng-container #mfeHost` (projects/demo/src/app/app.component.ts:12, 24-36), e na rota `remote` o devolve por `loadComponent` para o `<router-outlet>` (projects/demo/src/app/app.routes.ts:5-13; projects/demo/src/app/app.component.ts:15). As duas chamadas usam `loadRemoteModule` com `type: 'module'` e a URL fixa `http://localhost:4202/remoteEntry.js` (projects/demo/src/app/app.component.ts:27-29; projects/demo/src/app/app.routes.ts:9-11), que é a porta e o `publicHost` do dev-server do remote (angular.json:80-81). Por isso a entrada `seedMfeRemote` em `remotes` (projects/demo/webpack.config.js:5-7) fica declarada mas não é usada pelo código.
+`demo` loads the same module in two ways: in the root component's `ngAfterViewInit`, it mounts the component in `ng-container #mfeHost` (projects/demo/src/app/app.component.ts:12, 24-36), and at route `remote`, it returns it through `loadComponent` for `<router-outlet>` (projects/demo/src/app/app.routes.ts:5-13; projects/demo/src/app/app.component.ts:15). Both calls use `loadRemoteModule` with `type: 'module'` and fixed URL `http://localhost:4202/remoteEntry.js` (projects/demo/src/app/app.component.ts:27-29; projects/demo/src/app/app.routes.ts:9-11), the remote dev-server's port and `publicHost` (angular.json:80-81). Hence entry `seedMfeRemote` in `remotes` (projects/demo/webpack.config.js:5-7) is declared but unused by code.
 
-O seletor `app-remote-widget` (projects/seed-mfe-remote/src/app/remote-widget/remote-widget.component.ts:4) não aparece em nenhum template do demo; o componente entra só como módulo carregado. As configurações de produção só reaproveitam as de desenvolvimento (projects/demo/webpack.prod.config.js:1; projects/seed-mfe-remote/webpack.prod.config.js:1) e não há URL de remote além de `localhost`. O repositório é um template mínimo: o valor está na cadeia configurada de ponta a ponta, não no conteúdo.
+Selector `app-remote-widget` (projects/seed-mfe-remote/src/app/remote-widget/remote-widget.component.ts:4) appears in no demo template; the component enters only as a loaded module. Production configurations only reuse development configurations (projects/demo/webpack.prod.config.js:1; projects/seed-mfe-remote/webpack.prod.config.js:1), and there is no remote URL beyond `localhost`. The repository is a minimal template: its value lies in the chain configured end to end, rather than content.
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | projects/demo | projects/seed-mfe-remote | host → remote | origem → destino | module-federation | Yes | Yes | projects/demo/webpack.config.js:5-7 (remote `seedMfeRemote` em `http://localhost:4202/remoteEntry.js`); projects/seed-mfe-remote/webpack.config.js:5, 7-8 (`name: 'seedMfeRemote'`, expõe `./RemoteWidget`); angular.json:80-81 (dev-server do remote na porta 4202, `publicHost: http://localhost:4202`) | projects/demo/src/app/app.component.ts:1; projects/demo/src/app/app.component.ts:26; projects/demo/src/app/app.routes.ts:2; projects/demo/src/app/app.routes.ts:8; projects/demo/src/app/app.component.ts:36; projects/demo/src/app/app.routes.ts:4 |
+| 1 | projects/demo | projects/seed-mfe-remote | host → remote | source → target | module-federation | Yes | Yes | projects/demo/webpack.config.js:5-7 (remote `seedMfeRemote` at `http://localhost:4202/remoteEntry.js`); projects/seed-mfe-remote/webpack.config.js:5, 7-8 (`name: 'seedMfeRemote'`, exposes `./RemoteWidget`); angular.json:80-81 (remote dev-server on port 4202, `publicHost: http://localhost:4202`) | projects/demo/src/app/app.component.ts:1; projects/demo/src/app/app.component.ts:26; projects/demo/src/app/app.routes.ts:2; projects/demo/src/app/app.routes.ts:8; projects/demo/src/app/app.component.ts:36; projects/demo/src/app/app.routes.ts:4 |
 
-## Observações
+## Observations
 
-**1. projects/demo → projects/seed-mfe-remote.** O destino foi resolvido por duas correspondências explícitas: `exposedModule: './RemoteWidget'` nas chamadas do host (projects/demo/src/app/app.component.ts:29; projects/demo/src/app/app.routes.ts:11) casa com o `exposes` do remote (projects/seed-mfe-remote/webpack.config.js:7-8), e o nome `seedMfeRemote` declarado em `remotes` do host (projects/demo/webpack.config.js:6) casa com o `name` do remote (projects/seed-mfe-remote/webpack.config.js:5). A porta 4202 do dev-server (angular.json:80) confirma, mas não basta sozinha. A montagem por `createComponent` (projects/demo/src/app/app.component.ts:36) e a rota `remote` (projects/demo/src/app/app.routes.ts:4) carregam o mesmo módulo do mesmo destino e por isso ficam na mesma linha. Ativa `Yes` porque as seis construções da revisão de código-fonte são `Yes`. O código resolve o remote pela URL, não pelo nome declarado em `remotes`, que fica sem uso.
+**1. projects/demo → projects/seed-mfe-remote.** The target was resolved through two explicit matches: `exposedModule: './RemoteWidget'` in host calls (projects/demo/src/app/app.component.ts:29; projects/demo/src/app/app.routes.ts:11) matches the remote's `exposes` (projects/seed-mfe-remote/webpack.config.js:7-8), and name `seedMfeRemote` declared in host `remotes` (projects/demo/webpack.config.js:6) matches the remote's `name` (projects/seed-mfe-remote/webpack.config.js:5). Dev-server port 4202 (angular.json:80) confirms but is insufficient alone. Mounting through `createComponent` (projects/demo/src/app/app.component.ts:36) and route `remote` (projects/demo/src/app/app.routes.ts:4) load the same module from the same target, hence remain in one row. Active `Yes` because all six source code review constructs are `Yes`. Code resolves the remote by URL, rather than the name declared in `remotes`, which remains unused.
 
-## Resumo
+## Summary
 
-Relações: 1 (host → remote: 1). Ativas: 1. Destino fora do snapshot: 0.
-Unidades sem relação: nenhuma.
+Relationships: 1 (host → remote: 1). Active: 1. Target outside the snapshot: 0.
+Units without a relationship: none.
+

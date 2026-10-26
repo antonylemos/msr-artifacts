@@ -20,73 +20,73 @@ annotation:
 
 # 229 — ayushpandey241626/microfrontend-demo
 
-## Contexto
+## Context
 
-Workspace Angular 19 (Angular CLI, `angular.json`) com quatro projetos em `projects/`:
-- `host-app`, o shell (porta 4200);
-- `mfe1`, lista de contatos (porta 4201);
-- `mfe2`, administração de contatos (porta 4202);
-- `login-mfe-app`, login (porta 4203).
+Angular 19 workspace (Angular CLI, `angular.json`) with four projects in `projects/`:
+- `host-app`, the shell (port 4200);
+- `mfe1`, contact list (port 4201);
+- `mfe2`, contact administration (port 4202);
+- `login-mfe-app`, login (port 4203).
 
-A composição usa Module Federation via `@angular-architects/module-federation` e `ngx-build-plus` (`package.json:31`, `42`), com UI em PrimeNG. O shell carrega cada remoto por rota com `loadRemoteModule` (`projects/host-app/src/app/app.routes.ts:13–41`). O README é o padrão gerado pelo Angular CLI, com título “MicrofrontendDemo”. O nome do repositório não é usado como evidência.
+Composition uses Module Federation through `@angular-architects/module-federation` and `ngx-build-plus` (`package.json:31`, `42`), with UI in PrimeNG. The shell loads each remote by route with `loadRemoteModule` (`projects/host-app/src/app/app.routes.ts:13–41`). The README is the Angular CLI generated default, titled “MicrofrontendDemo”. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:230` registra rank 229, ID 994642993, status `cloned`, branch `master` e o commit do front matter, que é o HEAD do clone e de `origin/master`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:230` records rank 229, ID 994642993, status `cloned`, branch `master` and the front matter commit, which is the HEAD of the clone and of `origin/master`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:230` registra as estratégias `terminology;technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:14626` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:14632` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:230` records strategies `terminology;technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:14626` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:14632` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos três hits em cada rodada:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same three hits in each round:
 
-| Consulta (`q`) | Subconsulta | `path` | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | `path` | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | `…#created:2025-06` (`created:2025-06-01..2025-06-30`) | — | 2026-10-07T18:37:57.021Z / 2026-10-08T15:38:19.699Z |
 | `technology-angular-module-federation-package-code`: `"@angular-architects/module-federation" filename:package.json` | `…#size:1300..1449` | `package.json` | 2026-10-07T22:10:20.188Z / 2026-10-08T15:53:29.846Z |
 | `technology-module-federation-plugin-js-code`: `ModuleFederationPlugin remotes extension:js` | `…#size:900..999` | `projects/host-app/webpack.config.js` | 2026-10-07T22:25:19.514Z / 2026-10-08T16:07:25.274Z |
 
-O `package.json` (1.357 bytes) declara `@angular-architects/module-federation` (`:31`). `projects/host-app/webpack.config.js` (934 bytes) contém `ModuleFederationPlugin` com `remotes` (`:6`, `20–25`).
+The `package.json` (1.357 bytes) declares `@angular-architects/module-federation` (`:31`). `projects/host-app/webpack.config.js` (934 bytes) contains `ModuleFederationPlugin` with `remotes` (`:6`, `20–25`).
 
-Metadados do hit de repositório:
-- descrição nula, sem tópicos, linguagem TypeScript, `fork: false`, tamanho 259;
-- criação em 2025-06-02T08:58:47Z, push em 2025-06-10T09:29:18Z.
+Repository hit metadata:
+- null description, no topics, language TypeScript, `fork: false`, size 259;
+- created at 2025-06-02T08:58:47Z, pushed at 2025-06-10T09:29:18Z.
 
-Grafia: o README só tem “MicrofrontendDemo” (`README.md:1`), título gerado pelo Angular CLI a partir do nome do projeto. O hit terminológico `microfrontend` depende desse token composto ou do nome do repositório, conforme o processamento da busca do GitHub, que não está registrado. O README vem do commit-raiz `bfddd76` (2025-05-27) e não foi alterado depois, sendo anterior às coletas de outubro de 2026.
+Spelling: the README only has “MicrofrontendDemo” (`README.md:1`), a title generated by Angular CLI from the project name. The terminology hit `microfrontend` depends on this compound token or the repository name, according to GitHub search processing, which is not recorded. The README comes from root commit `bfddd76` (2025-05-27) and was not changed afterward, predating the October 2026 collections.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 104 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Há um workspace Angular com um `package.json`/lockfile na raiz e quatro projetos em `projects/` (`host-app`, `mfe1`, `mfe2`, `login-mfe-app`), cada um com `src/main.ts` → `bootstrap.ts`, `webpack.config.js` e `webpack.prod.config.js`. | contexto |
-| Configuração (host) | `projects/host-app/webpack.config.js:20–33`: `ModuleFederationPlugin` com `remotes` `mfe1@…:4201`, `mfe2@…:4202`, `loginMfeApp@…:4203` e `shareAll` singleton. | forte |
-| Configuração (remotos) | `projects/mfe1/webpack.config.js:6–21`: `withModuleFederationPlugin({ name: "mfe1", exposes: { "./ContactsModule": …/contact-list.routes.ts } })`. `projects/mfe2/webpack.config.js:6–21`: `./AdminModule`. `projects/login-mfe-app/webpack.config.js:6–21`: `./LoginModule`. | forte |
-| Build | `angular.json`: um projeto por unidade com builder `ngx-build-plus:browser` e `ngx-build-plus:dev-server`, nas portas 4200 (`:76`), 4201 (`:177`), 4202 (`:278`) e 4203 (`:383`). `package.json:10`: `run:all` com o `mf-dev-server` da biblioteca. | forte |
-| Código-fonte (composição) | `projects/host-app/src/app/app.routes.ts:13–41`: rotas `contacts`, `admin` e `login` com `loadRemoteModule({ type: 'module', exposedModule, remoteEntry: 'http://localhost:420x/remoteEntry.js' })`; as duas primeiras protegidas por `AuthGuard`. `projects/host-app/src/main.ts:1`: bootstrap assíncrono. | forte |
-| Código-fonte (fronteiras) | Imports relativos só dentro de cada projeto (por exemplo, `projects/mfe1/src/app/contact-list/contact-list.component.ts:2` → `../contact.service`). Não há `paths` no `tsconfig.json` nem imports entre projetos. Os remotos compartilham só dependências npm do workspace. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 104 entries, all regular files `100644`; zero symlinks and zero gitlinks. There is an Angular workspace with one `package.json`/lockfile at the root and four projects in `projects/` (`host-app`, `mfe1`, `mfe2`, `login-mfe-app`), each with `src/main.ts` → `bootstrap.ts`, `webpack.config.js` and `webpack.prod.config.js`. | context |
+| Configuration (host) | `projects/host-app/webpack.config.js:20–33`: `ModuleFederationPlugin` with `remotes` `mfe1@…:4201`, `mfe2@…:4202`, `loginMfeApp@…:4203` and singleton `shareAll`. | strong |
+| Configuration (remotes) | `projects/mfe1/webpack.config.js:6–21`: `withModuleFederationPlugin({ name: "mfe1", exposes: { "./ContactsModule": …/contact-list.routes.ts } })`. `projects/mfe2/webpack.config.js:6–21`: `./AdminModule`. `projects/login-mfe-app/webpack.config.js:6–21`: `./LoginModule`. | strong |
+| Build | `angular.json`: one project per unit with builders `ngx-build-plus:browser` and `ngx-build-plus:dev-server`, on ports 4200 (`:76`), 4201 (`:177`), 4202 (`:278`) and 4203 (`:383`). `package.json:10`: `run:all` with the library’s `mf-dev-server`. | strong |
+| Source code (composition) | `projects/host-app/src/app/app.routes.ts:13–41`: routes `contacts`, `admin` and `login` with `loadRemoteModule({ type: 'module', exposedModule, remoteEntry: 'http://localhost:420x/remoteEntry.js' })`; the first two protected by `AuthGuard`. `projects/host-app/src/main.ts:1`: asynchronous bootstrap. | strong |
+| Source code (boundaries) | Relative imports only within each project (for example, `projects/mfe1/src/app/contact-list/contact-list.component.ts:2` → `../contact.service`). There are no `paths` in `tsconfig.json` or imports between projects. The remotes share only workspace npm dependencies. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 22 commits lineares, nenhum merge, de Ayush Pandey, 21 com `<ayushpandey667@gmail.com>` e o commit-raiz `bfddd76` com `<aypandey@synoptek.com>`, de 2025-05-27 (`bfddd76`, “initial commit”) a 2025-06-10 (SHA `ec39a27`, refatoração dos componentes `Mfe1Component`/`Mfe2Component`). As mensagens descrevem a evolução de funcionalidades: login MF (`f269b80`), CRUD de contatos, guard de autenticação e testes. Nenhum blob histórico foi lido. O clone é parcial (`blob:none`) e `git rev-list --objects $SHA --missing=print` identifica 83 objetos históricos ausentes; metadados e nomes e status das alterações foram inspecionados com renames desativados, sem comparar todo o conteúdo antigo, e as evidências citadas do SHA atual foram lidas.
+Non-shallow clone; 22 linear commits, no merges, by Ayush Pandey, 21 with `<ayushpandey667@gmail.com>` and root commit `bfddd76` with `<aypandey@synoptek.com>`, from 2025-05-27 (`bfddd76`, “initial commit”) to 2025-06-10 (SHA `ec39a27`, refactoring of components `Mfe1Component`/`Mfe2Component`). Messages describe feature evolution: login MF (`f269b80`), contact CRUD, authentication guard and tests. No historical blob was read. The clone is partial (`blob:none`) and `git rev-list --objects $SHA --missing=print` identifies 83 missing historical objects; metadata and change names and statuses were inspected with renames disabled, without comparing all old content, and the cited evidence from the current SHA was read.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | Quatro unidades no workspace, três referenciadas pela configuração de composição do host (`projects/host-app/webpack.config.js:21–25`; `app.routes.ts:17–40`). |
-| Q2 | Yes | Cada projeto tem entrada, configuração de federação e alvos de build/serve próprios em `angular.json`, sem imports de código-fonte entre projetos. |
-| Q3 | Yes | O shell roteia `contacts`, `admin` e `login` para os remotos (`app.routes.ts:13–41`). |
-| Q4 | Yes | Module Federation configurado no host e nos remotos (`exposes` via `withModuleFederationPlugin`), consumido por `loadRemoteModule`. |
-| Q5 | Yes | Q1–Q4 são Yes: shell Angular com três remotos carregados por rota. |
+| Q1 | Yes | Four units in the workspace, three referenced by the host composition configuration (`projects/host-app/webpack.config.js:21–25`; `app.routes.ts:17–40`). |
+| Q2 | Yes | Each project has its own entry point, federation configuration and build/serve targets in `angular.json`, without source code imports between projects. |
+| Q3 | Yes | The shell routes `contacts`, `admin` and `login` to the remotes (`app.routes.ts:13–41`). |
+| Q4 | Yes | Module Federation configured in the host and remotes (`exposes` through `withModuleFederationPlugin`), consumed through `loadRemoteModule`. |
+| Q5 | Yes | Q1–Q4 are Yes: Angular shell with three remotes loaded by route. |
 
-## Motivo
+## Rationale
 
-- `MFE-implemented` pela regra Q1–Q5 Yes. Corresponde a “monorepos containing a host and its remotes”. A cadeia está completa no snapshot, como em 076/084/096/106/109.
-- Os remotos expõem módulos de rotas com telas próprias (lista, administração e login de contatos), não componentes compartilhados (089/100).
-- O build é independente por projeto, embora o workspace tenha um só `package.json`; essa forma é comum em workspaces Angular e não se confunde com um build único.
-- `approaches: [module-federation]`, `ui_technologies: [angular]`, `build_tools: [webpack]` (configurações `webpack.config.js` explícitas via `ngx-build-plus`), `frontend_units: 4`, `unit_organization: monorepo`, `repo_type: example` (demonstração com dados de contato fictícios, `projects/mfe1/src/app/contact-list/contact-data.ts`).
-- Não há decisão aberta.
+- `MFE-implemented` under the Q1–Q5 Yes rule. It matches “monorepos containing a host and its remotes”. The chain is complete in the snapshot, as in 076/084/096/106/109.
+- The remotes expose route modules with their own screens (contact list, administration and login), not shared components (089/100).
+- Build is independent per project, although the workspace has only one `package.json`; this form is common in Angular workspaces and should not be confused with a single build.
+- `approaches: [module-federation]`, `ui_technologies: [angular]`, `build_tools: [webpack]` (explicit `webpack.config.js` configurations through `ngx-build-plus`), `frontend_units: 4`, `unit_organization: monorepo`, `repo_type: example` (demonstration with fictitious contact data, `projects/mfe1/src/app/contact-list/contact-data.ts`).
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** `@angular-architects/module-federation` com remotos ESM (`type: 'module'`) carregados por URL em `loadRemoteModule`; o mapa estático de `remotes` do host convive com o carregamento dinâmico nas rotas.
-- **Protocolo (busca):** o hit terminológico não tem grafia literal separada (“MicrofrontendDemo”). A elegibilidade muda de `unknown` (001) para `pass` (002). O branch padrão é `master`.
-- **Contribuição da revisão independente (Lupa):** concordância integral com MFE-implemented, Q1–Q5 Yes, `module-federation`, Angular/webpack, quatro unidades e `monorepo`; sem decisão aberta (`draft`). A composição efetivamente consumida é a carga ESM por URL nas rotas, com módulos expostos que exportam arrays de rotas compatíveis (default export em `:4–6` dos três arquivos de rotas, `provideRouter` do host e `router-outlet:30`). Correções verificadas: o e-mail não é o mesmo em todos os commits (21 com `ayushpandey667@gmail.com` e o commit-raiz `bfddd76` com `aypandey@synoptek.com`; dois e-mails não provam duas pessoas); o clone tem 83 objetos históricos ausentes. Ressalva sobre o mapa estático paralelo: `projects/host-app/webpack.config.js:21–25` usa containers globais (`mfe1@…`, `mfe2@…`, `loginMfeApp@…`), e o nome `loginMfeApp` não coincide com `login-mfe-app` (`projects/login-mfe-app/webpack.config.js:7`); não há imports ativos desses aliases no host, e é resíduo de configuração que não quebra a cadeia realmente usada nas rotas. A classe não implica validar esse mapa nem afirmar sucesso de compilação ou deploy.
+- **RQ2:** `@angular-architects/module-federation` with ESM remotes (`type: 'module'`) loaded by URL in `loadRemoteModule`; the host’s static `remotes` map coexists with dynamic loading in routes.
+- **Protocol (search):** the terminology hit has no separate literal spelling (“MicrofrontendDemo”). Eligibility changes from `unknown` (001) to `pass` (002). The default branch is `master`.
+- **Independent review contribution (Lupa):** full agreement with MFE-implemented, Q1–Q5 Yes, `module-federation`, Angular/webpack, four units and `monorepo`; no open decision (`draft`). The composition actually consumed is ESM loading by URL in routes, with exposed modules exporting compatible route arrays (default export at `:4–6` in the three route files, the host’s `provideRouter` and `router-outlet:30`). Verified corrections: the email is not the same in all commits (21 with `ayushpandey667@gmail.com` and root commit `bfddd76` with `aypandey@synoptek.com`; two emails do not prove two people); the clone has 83 missing historical objects. Caveat about the parallel static map: `projects/host-app/webpack.config.js:21–25` uses global containers (`mfe1@…`, `mfe2@…`, `loginMfeApp@…`), and the name `loginMfeApp` does not match `login-mfe-app` (`projects/login-mfe-app/webpack.config.js:7`); there are no active imports of these aliases in the host, and this is a configuration remnant that does not break the chain actually used in routes. The class does not imply validating this map or claiming successful compilation or deployment.

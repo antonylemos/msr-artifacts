@@ -15,15 +15,16 @@ annotation:
 
 # 275 — waelbaraka/GitHub-HelpDesk-DashBoard-main
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| Frontend/package.json:53 | devDependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | Frontend/vite.config.js:4 (`import federation from '@originjs/vite-plugin-federation'`); Frontend/vite.config.js:11-35 (`federation({ name: 'platform_host', remotes: { remote_app: ... }, exposes, shared })` em `plugins`); Frontend/package.json:7-8 (`vite` e `vite build`, que leem o `vite.config.js` do diretório); Frontend/src/components/layouts/DashboardLayout.jsx:144 (`import('remote_app/WhatsAppChannelSettingsPage')`) e :385 (rota `/integrations/whatsapp`) |
-| whatsapp-module-frontend/package.json:28 | devDependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | whatsapp-module-frontend/vite.config.js:4 (`import federation from '@originjs/vite-plugin-federation'`); whatsapp-module-frontend/vite.config.js:11-50 (`federation({ name: 'remote_app', filename: 'remoteEntry.js', exposes: { './Button', './WhatsAppChannelSettingsPage' }, ... })` em `plugins`); whatsapp-module-frontend/package.json:7-8 (`vite --port 5001` e `vite build --watch`, que leem o `vite.config.js` do diretório) |
+| Frontend/package.json:53 | devDependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | Frontend/vite.config.js:4 (`import federation from '@originjs/vite-plugin-federation'`); Frontend/vite.config.js:11-35 (`federation({ name: 'platform_host', remotes: { remote_app: ... }, exposes, shared })` in `plugins`); Frontend/package.json:7-8 (`vite` and `vite build`, which read the `vite.config.js` in the directory); Frontend/src/components/layouts/DashboardLayout.jsx:144 (`import('remote_app/WhatsAppChannelSettingsPage')`) and :385 (route `/integrations/whatsapp`) |
+| whatsapp-module-frontend/package.json:28 | devDependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | whatsapp-module-frontend/vite.config.js:4 (`import federation from '@originjs/vite-plugin-federation'`); whatsapp-module-frontend/vite.config.js:11-50 (`federation({ name: 'remote_app', filename: 'remoteEntry.js', exposes: { './Button', './WhatsAppChannelSettingsPage' }, ... })` in `plugins`); whatsapp-module-frontend/package.json:7-8 (`vite --port 5001` and `vite build --watch`, which read the `vite.config.js` in the directory) |
 
-## Notas
+## Notes
 
-- Os dois pacotes não têm workspace comum; cada linha foi julgada pela configuração do próprio pacote (`same_package_matches`). As `other_package_matches` de cada linha são a configuração do outro frontend, que usa a sua própria declaração do pacote.
-- Fora das listas, o grep do nome do pacote em `.js/.jsx/.ts/.mjs/.cjs/.json` (sem lockfiles) só achou os dois `import` em `vite.config.js:4` e as duas declarações nos manifestos.
-- `Frontend/src/modules/moduleLoader.js` (placeholder citado pela classificação) não importa o pacote e não foi usado como evidência.
+- The two packages have no common workspace; each row was judged by its own package's configuration (`same_package_matches`). Each row's `other_package_matches` are the other frontend's configuration, which uses its own package declaration.
+- Outside the lists, grep for the package name in `.js/.jsx/.ts/.mjs/.cjs/.json` (excluding lockfiles) found only the two `import` statements in `vite.config.js:4` and the two manifest declarations.
+- `Frontend/src/modules/moduleLoader.js` (placeholder cited by the classification) does not import the package and was not used as evidence.
+

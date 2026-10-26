@@ -20,67 +20,67 @@ annotation:
 
 # 227 — leosvelperez/mf-webpack-5-111-repro
 
-## Contexto
+## Context
 
-Reprodução mínima de um defeito de build: “Production build of a module federation remote with `[contenthash]` in `output.filename` fails on webpack 5.111.0” (`README.md:1–20`). São seis arquivos:
-- um `webpack.config.js` com `ModuleFederationPlugin` de `@module-federation/enhanced`, que expõe `./Module`;
-- `src/mod.js`, que exporta a string `'mod'`;
-- `src/index.js`, que só faz `console.log('remote')`.
+Minimal reproduction of a build defect: “Production build of a module federation remote with `[contenthash]` in `output.filename` fails on webpack 5.111.0” (`README.md:1–20`). It consists of six files:
+- a `webpack.config.js` with `ModuleFederationPlugin` from `@module-federation/enhanced`, exposing `./Module`;
+- `src/mod.js`, exporting the string `'mod'`;
+- `src/index.js`, which only runs `console.log('remote')`.
 
-Não há interface, HTML nem consumidor. O nome do repositório não é usado como evidência.
+There is no interface, HTML or consumer. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:228` registra rank 227, ID 1369982810, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:228` records rank 227, ID 1369982810, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:228` registra a estratégia `technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:37291` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:37300` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:228` records strategy `technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:37291` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:37300` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna o mesmo hit em cada rodada, do endpoint `repositories` e com `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same hit in each round, from endpoint `repositories` and with an empty `path`:
 
-| Consulta (`q`) | Subconsulta / consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery / effective query | Collection 001 / 002 (UTC) |
 |---|---|---|
 | `technology-module-federation-repositories`: `"module federation" in:name,description,readme` | `technology-module-federation-repositories#created:2026-09` / `"module federation" in:name,description,readme pushed:>=2025-04-01 created:2026-09-01..2026-09-30` | 2026-10-07T23:31:04.154Z / 2026-10-08T16:19:36.684Z |
 
-Metadados do hit:
-- descrição “Module federation production build fails on webpack 5.111.0 with [contenthash] in output.filename”;
-- sem tópicos, linguagem JavaScript, `fork: false`, tamanho 1;
-- criação em 2026-09-14T13:45:16Z, push em 2026-09-14T13:45:21Z.
+Hit metadata:
+- description “Module federation production build fails on webpack 5.111.0 with [contenthash] in output.filename”;
+- no topics, language JavaScript, `fork: false`, size 1;
+- created at 2026-09-14T13:45:16Z, pushed at 2026-09-14T13:45:21Z.
 
-Grafia: “Module federation” em `README.md:1` (“# Module federation build failure on webpack 5.111.0”) e “module federation” em `:3`, além da descrição.
+Spelling: “Module federation” in `README.md:1` (“# Module federation build failure on webpack 5.111.0”) and “module federation” in `:3`, as well as the description.
 
-O README vem do único commit, o SHA `5d3a2ea` (2026-09-14), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The README comes from the only commit, SHA `5d3a2ea` (2026-09-14), before the October 2026 collections. The README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 6 entradas, todas arquivos regulares `100644` (`.gitignore`, `README.md`, `package.json`, `webpack.config.js`, `src/index.js`, `src/mod.js`); zero symlinks e zero gitlinks. Não há HTML, componentes nem framework de UI. | contrária |
-| Configuração | `webpack.config.js:1–13`: `ModuleFederationPlugin({ name: 'remote1', exposes: { './Module': './src/mod.js' } })`, `mode: 'production'` e `output.filename: '[name].[contenthash].js'`. `package.json:7–11`: `@module-federation/enhanced` 2.9.0 e `webpack` 5.111.0. | fraca |
-| Código-fonte | `src/mod.js:1`: `export default 'mod';`. `src/index.js:1`: `console.log('remote');`. O módulo exposto é uma string, não uma unidade frontend. | contrária |
-| Documentação | `README.md:3–20`: objetivo de reproduzir o erro “Path variable [contenthash] not implemented in this context” e comparar com 5.110.0. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 6 entries, all regular files `100644` (`.gitignore`, `README.md`, `package.json`, `webpack.config.js`, `src/index.js`, `src/mod.js`); zero symlinks and zero gitlinks. There is no HTML, components or UI framework. | contrary |
+| Configuration | `webpack.config.js:1–13`: `ModuleFederationPlugin({ name: 'remote1', exposes: { './Module': './src/mod.js' } })`, `mode: 'production'` and `output.filename: '[name].[contenthash].js'`. `package.json:7–11`: `@module-federation/enhanced` 2.9.0 and `webpack` 5.111.0. | weak |
+| Source code | `src/mod.js:1`: `export default 'mod';`. `src/index.js:1`: `console.log('remote');`. The exposed module is a string, not a frontend unit. | contrary |
+| Documentation | `README.md:3–20`: aims to reproduce the error “Path variable [contenthash] not implemented in this context” and compare against 5.110.0. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 1 commit, o SHA `5d3a2ea` (2026-09-14, “Reproduce the module federation build failure on webpack 5.111.0”), de Leosvel Perez Espinosa. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 1 commit, SHA `5d3a2ea` (2026-09-14, “Reproduce the module federation build failure on webpack 5.111.0”), by Leosvel Perez Espinosa. No historical blob was read and there was no missing object.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend; o “remoto” expõe uma string (`src/mod.js:1`) e não referencia outras unidades. |
-| Q2 | No | Sem unidades frontend, não há independência a avaliar. |
-| Q3 | No | Não há host, shell ou consumidor. |
-| Q4 | No | O plugin está configurado só para reproduzir uma falha de build, sem conectar unidades (`webpack.config.js:8–11`). |
-| Q5 | No | Q1–Q4 são No: reprodução de defeito de ferramenta de build. |
+| Q1 | No | No frontend unit; the “remote” exposes a string (`src/mod.js:1`) and does not reference other units. |
+| Q2 | No | Without frontend units, there is no independence to assess. |
+| Q3 | No | There is no host, shell or consumer. |
+| Q4 | No | The plugin is configured only to reproduce a build failure, without connecting units (`webpack.config.js:8–11`). |
+| Q5 | No | Q1–Q4 are No: reproduction of a build tool defect. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “MFE-related dependencies that are unused or experimental”: o Module Federation está configurado, mas só como caso mínimo para um relatório de defeito.
-- Não é MFE-unit: o `exposes` publica uma string, não uma unidade frontend preparada para composição, como no rascunho 213 (função `sum`).
-- `frontend_units: 0`, `unit_organization: none`, `approaches: []`, `ui_technologies: []`, `build_tools: []` (sem unidade frontend a que atribuir o bundler), `repo_type: other`.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. It matches “MFE-related dependencies that are unused or experimental”: Module Federation is configured, but only as a minimal case for a defect report.
+- It is not MFE-unit: `exposes` publishes a string, not a frontend unit prepared for composition, as in draft 213 (function `sum`).
+- `frontend_units: 0`, `unit_organization: none`, `approaches: []`, `ui_technologies: []`, `build_tools: []` (no frontend unit to which the bundler can be attributed), `repo_type: other`.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** repositórios de reprodução de bugs do ecossistema Module Federation casam a consulta de tecnologia sem conter unidades.
-- **Protocolo (busca):** a elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ1 (misleading signals):** bug reproduction repositories in the Module Federation ecosystem match the technology query without containing units.
+- **Protocol (search):** eligibility changes from `unknown` (001) to `pass` (002).

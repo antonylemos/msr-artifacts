@@ -19,231 +19,232 @@ annotation:
 
 # 299 — DATou-love/micro-frontEnd
 
-## Leitura do repositório
+## Repository overview
 
-A cadeia observável combina a dependência qiankun do host (#1), a saída UMD da sub-app (#2), o registro explícito de destinos (#8) e os lifecycles de montagem e desmontagem (#3–#6). As relações #12 e #13 ligam o host Vue 3/Vite a sub-vue2 e sub-react16. Há duas unidades presentes com entradas e builds próprios (#10, #11, #14, #15); sub-react16 só aparece como destino externo declarado, sem código ou disponibilidade verificáveis no snapshot. As revisões registram as duas relações como ativas. O possível problema de montagem sob strictStyleIsolation não muda esses valores e não foi verificado por execução (#6, #9, #12).
+Observable chain combines host qiankun dependency (#1), sub-app UMD output (#2), explicit target registration (#8) and mounting/unmounting lifecycles (#3–#6). Relationships #12 and #13 link Vue 3/Vite host to sub-vue2/sub-react16. Two present units with own entries/builds (#10, #11, #14, #15); sub-react16 only declared external target without snapshot-verifiable code/availability. Reviews record both relationships active. Possible strictStyleIsolation mounting issue does not change values, unverified by execution (#6, #9, #12).
 
-O registro e o start estão em código executado pela aplicação (#8, #9), não em arquivo de configuração. Na dimensão 2, há somente o bloco da ferramenta que configura a biblioteca da sub-app (#2). Portas de desenvolvimento, CORS, aliases e a base HTML não acrescentam observações de configuração da composição segundo o recorte da etapa. A base HTML permanece como suporte da relação #12 e da afirmação #21. Não há deploy observado para as duas aplicações (#14, #15).
+Registration/start application-executed code (#8, #9) rather than configuration file. Dimension 2 only tool block configuring sub-app library (#2). Development ports, CORS, aliases and HTML base add no composition configuration observations under step scope. HTML base remains relationship #12/claim #21 support. No observed deployment for two applications (#14, #15).
 
-As treze afirmações são comentários (#16–#28), com força fraca por si mesmos. Duas confundem o ponto de montagem e a definição da base do roteador (#22, #26); as implementações citadas as contradizem. O único commit não esclarece a origem desses comentários (#29, #30), mas essa incerteza histórica não torna ambígua a arquitetura registrada no snapshot.
+Thirteen claims comments (#16–#28), weak alone. Two confuse mounting point/router base definition (#22, #26); cited implementations contradict them. Single commit does not clarify comment origins (#29, #30), but historical uncertainty does not make recorded snapshot architecture ambiguous.
 
-## Observações
+## Observations
 
 ### 1. main-vue3/package.json:12
 
-**Observação:** O manifesto do host declara `qiankun: ^2.10.16`.
+**Observation:** Host manifest declares `qiankun: ^2.10.16`.
 
-**Interpretação:** A declaração é um sinal tecnológico isolado; o uso aparece nas observações de código.
+**Interpretation:** Declaration isolated technological signal; usage in code observations.
 
 ### 2. sub-vue2/vue.config.js:3-23
 
-**Observação:** A configuração da sub-app define saída com `library: 'subVue2'`, `libraryTarget: 'umd'` e `chunkLoadingGlobal: 'webpackJsonp_sub_vue2'`.
+**Observation:** Sub-app configuration defines output with `library: 'subVue2'`, `libraryTarget: 'umd'` and `chunkLoadingGlobal: 'webpackJsonp_sub_vue2'`.
 
-**Interpretação:** O bloco configura o formato de biblioteca da integração qiankun numa unidade, sem nomear outra aplicação.
+**Interpretation:** Block configures qiankun integration library format in unit without naming another application.
 
 ### 3. sub-vue2/src/main.js:32-34
 
-**Observação:** A entrada exporta a função assíncrona `bootstrap`, que escreve uma mensagem no console.
+**Observation:** Entry exports asynchronous function `bootstrap`, writing console message.
 
-**Interpretação:** A exportação oferece parte do contrato de lifecycle qiankun, sem ligar sozinha a sub-app a um host.
+**Interpretation:** Export offers qiankun lifecycle contract portion without independently linking sub-app to host.
 
 ### 4. sub-vue2/src/main.js:36-39; sub-vue2/src/main.js:10-17
 
-**Observação:** A função exportada `mount(props)` chama `render(props)`, que usa o contêiner recebido.
+**Observation:** Exported function `mount(props)` calls `render(props)`, using received container.
 
-**Interpretação:** O lifecycle implementa a montagem acionada pelo orquestrador, recebendo a unidade de execução por parâmetro.
+**Interpretation:** Lifecycle implements orchestrator-triggered mounting, receiving execution unit through parameter.
 
 ### 5. sub-vue2/src/main.js:41-46
 
-**Observação:** A função exportada `unmount` destrói a instância Vue, limpa seu elemento e atribui `null` à instância.
+**Observation:** Exported function `unmount` destroys Vue instance, clears element and assigns `null` to instance.
 
-**Interpretação:** Implementa a desativação da sub-app pelo contrato qiankun, sem nomear um consumidor.
+**Interpretation:** Implements sub-app deactivation through qiankun contract without naming consumer.
 
 ### 6. sub-vue2/src/main.js:10-17; sub-vue2/src/main.js:27-29; sub-vue2/src/main.js:36-39
 
-**Observação:** `render` monta a instância no `#app` encontrado dentro de `props.container`, ou no `#app` global sem contêiner. É chamada por `mount(props)` e fora do ambiente qiankun.
+**Observation:** `render` mounts instance in `#app` found inside `props.container`, or global `#app` without container. Called by `mount(props)` and outside qiankun environment.
 
-**Interpretação:** A montagem adapta a aplicação ao contêiner recebido e à execução isolada. O mecanismo não nomeia o host; o funcionamento sob isolamento estrito não foi executado.
+**Interpretation:** Mounting adapts application to supplied container/isolated execution. Mechanism names no host; strict-isolation operation not executed.
 
 ### 7. main-vue3/src/main.ts:3; main-vue3/src/main.ts:10-36; main-vue3/index.html:11
 
-**Observação:** A entrada do host importa `registerMicroApps` e `start` de `qiankun` e usa as duas funções.
+**Observation:** Host entry imports `registerMicroApps` and `start` from `qiankun`, using both functions.
 
-**Interpretação:** O import prepara o mecanismo de composição; as unidades são nomeadas pelo registro em observação própria.
+**Interpretation:** Import prepares composition mechanism; units named by registration in own observation.
 
 ### 8. main-vue3/src/main.ts:10-23; main-vue3/src/App.vue:11
 
-**Observação:** `registerMicroApps` registra `sub-vue2` com entrada `//localhost:8081` e regra `/sub-vue2`, e `sub-react16` com entrada `//localhost:3000` e regra `/sub-react16`; ambas usam `#subapp-viewport`.
+**Observation:** `registerMicroApps` registers `sub-vue2` with entry `//localhost:8081` and rule `/sub-vue2`, and `sub-react16` with entry `//localhost:3000` and rule `/sub-react16`; both use `#subapp-viewport`.
 
-**Interpretação:** O registro liga o host a duas unidades por endereços e regras explícitos de ativação. A segunda só existe como destino declarado no snapshot.
+**Interpretation:** Registration links host to two units through explicit addresses/activation rules. Second only declared snapshot target.
 
 ### 9. main-vue3/src/main.ts:26-36; main-vue3/index.html:11
 
-**Observação:** A entrada chama `start` com `sandbox.strictStyleIsolation: true`.
+**Observation:** Entry calls `start` with `sandbox.strictStyleIsolation: true`.
 
-**Interpretação:** A chamada inicia o mecanismo qiankun sem nomear destinos; a opção ativa não demonstra por si só o sucesso da montagem.
+**Interpretation:** Call starts qiankun mechanism without naming targets; enabled option alone demonstrates no successful mounting.
 
 ### 10. main-vue3/; main-vue3/package.json:1-24; main-vue3/index.html:10-11; main-vue3/src/main.ts:6-7; main-vue3/src/main.ts:38; main-vue3/vite.config.ts:6-17; main-vue3/package.json:8
 
-**Observação:** O diretório contém manifesto próprio, entrada HTML que carrega `src/main.ts`, criação e montagem Vue 3 e build `vue-tsc -b && vite build` com configuração Vite própria.
+**Observation:** Directory contains own manifest, HTML entry loading `src/main.ts`, Vue 3 creation/mounting and build `vue-tsc -b && vite build` with own Vite configuration.
 
-**Interpretação:** Esses artefatos delimitam uma unidade frontend com entrada e build próprios, sem comprovar sozinhos sua ligação a outras unidades.
+**Interpretation:** Artifacts delimit frontend unit with own entry/build without alone establishing other-unit link.
 
 ### 11. sub-vue2/; sub-vue2/package.json:1-44; sub-vue2/src/main.js:10-17; sub-vue2/src/main.js:27-29; sub-vue2/public/index.html:17; sub-vue2/vue.config.js:3-23; sub-vue2/package.json:7
 
-**Observação:** O diretório contém manifesto próprio, entrada Vue 2 com montagem fora do qiankun, template com `#app` e build `vue-cli-service build` com configuração própria.
+**Observation:** Directory contains own manifest, Vue 2 entry with mounting outside qiankun, template with `#app` and build `vue-cli-service build` with own configuration.
 
-**Interpretação:** Os artefatos delimitam outra unidade frontend, com entrada e build separados dos do host.
+**Interpretation:** Artifacts delimit another frontend unit with entry/build separate from host.
 
 ### 12. main-vue3/src/main.ts:3; main-vue3/src/main.ts:10-16; main-vue3/src/main.ts:26-36; main-vue3/src/App.vue:11; sub-vue2/vue.config.js:6; sub-vue2/vue.config.js:15-18; sub-vue2/public/index.html:8; sub-vue2/src/main.js:16; sub-vue2/src/main.js:32-46
 
-**Observação:** O host registra `sub-vue2` em `//localhost:8081`, no contêiner `#subapp-viewport`, ativada em `/sub-vue2`. A sub-app tem porta 8081, saída UMD, base HTML `/sub-vue2/` e lifecycles exportados. A revisão marca relação `root-config → application`, presente e ativa.
+**Observation:** Host registers `sub-vue2` at `//localhost:8081`, in container `#subapp-viewport`, activated at `/sub-vue2`. Sub-app has port 8081, UMD output, HTML base `/sub-vue2/` and exported lifecycles. Review marks relationship `root-config → application`, present and active.
 
-**Interpretação:** A correspondência de registro, endereço e contrato liga explicitamente duas unidades relativamente independentes. Ativa descreve o código registrado, sem demonstrar execução bem-sucedida sob isolamento estrito.
+**Interpretation:** Matching registration, address and contract explicitly links two relatively independent units. Active describes registered code without demonstrating successful strict-isolation execution.
 
 ### 13. main-vue3/src/main.ts:3; main-vue3/src/main.ts:17-22; main-vue3/src/main.ts:26-36; main-vue3/src/App.vue:7; main-vue3/src/App.vue:11
 
-**Observação:** O host registra `sub-react16` em `//localhost:3000`, no mesmo contêiner e com ativação `/sub-react16`. A revisão marca relação `root-config → application`, ativa e com destino fora do snapshot.
+**Observation:** Host registers `sub-react16` at `//localhost:3000`, in same container with activation `/sub-react16`. Review marks relationship `root-config → application`, active with target outside snapshot.
 
-**Interpretação:** A relação declara outra unidade por mecanismo explícito de composição; não permite avaliar sua implementação ou disponibilidade.
+**Interpretation:** Relationship declares another unit through explicit composition mechanism without evaluating implementation/availability.
 
 ### 14. main-vue3/package.json:8; main-vue3/vite.config.ts:6-17
 
-**Observação:** O host tem script `vue-tsc -b && vite build` e configuração Vite próprios. A revisão registra Build separado, Deploy não observado e Versionamento No.
+**Observation:** Host has own script `vue-tsc -b && vite build` and Vite configuration. Review records Build separate, Deploy not observed and Versioning No.
 
-**Interpretação:** O build confirma o limite de produção do artefato da unidade; não demonstra publicação nem versionamento independente.
+**Interpretation:** Build confirms unit artifact production boundary without demonstrating publication/independent versioning.
 
 ### 15. sub-vue2/package.json:7; sub-vue2/vue.config.js:12-20
 
-**Observação:** A sub-app tem script `vue-cli-service build` e saída UMD `subVue2`. A revisão registra Build separado, Deploy não observado e Versionamento No.
+**Observation:** Sub-app has script `vue-cli-service build` and UMD output `subVue2`. Review records Build separate, Deploy not observed and Versioning No.
 
-**Interpretação:** Há build próprio para a sub-app no contrato qiankun, sem evidência de publicação ou versionamento independente.
+**Interpretation:** Own sub-app build in qiankun contract without publication/independent versioning evidence.
 
 ### 16. main-vue3/src/App.vue:10
 
-**Observação:** O comentário afirma: “子应用挂载点” (ponto de montagem das sub-aplicações).
+**Observation:** Comment states: “子应用挂载点” (English translation: Sub-application mounting point.).
 
-**Interpretação:** Identifica o contêiner de composição do host; a revisão registra corroboração pelo elemento e pelos registros das sub-apps.
+**Interpretation:** Identifies host composition container; review records corroboration through element/sub-app registrations.
 
 ### 17. main-vue3/src/main.ts:9
 
-**Observação:** O comentário afirma: “定义子应用” (define as sub-aplicações).
+**Observation:** Comment states: “定义子应用” (English translation: Define sub-applications.).
 
-**Interpretação:** Descreve a organização do registro; é corroborada pelas duas relações, sem afirmar presença local de todos os destinos.
+**Interpretation:** Describes registration organization, corroborated by two relationships without claiming all targets locally present.
 
 ### 18. main-vue3/src/main.ts:25
 
-**Observação:** O comentário afirma: “启动 qiankun” (inicia o qiankun).
+**Observation:** Comment states: “启动 qiankun” (English translation: Start qiankun.).
 
-**Interpretação:** Nomeia o mecanismo; a chamada efetiva e a dependência corroboram a afirmação.
+**Interpretation:** Names mechanism; actual call/dependency corroborate claim.
 
 ### 19. main-vue3/src/main.ts:29
 
-**Observação:** O comentário afirma: “开启严格的沙箱模式（推荐）” (ativa o modo estrito de sandbox, recomendado).
+**Observation:** Comment states: “开启严格的沙箱模式（推荐）” (English translation: Enable strict sandbox mode (recommended).).
 
-**Interpretação:** A revisão corrobora apenas a ativação de `strictStyleIsolation`, sem comprovar isolamento funcional ou segurança.
+**Interpretation:** Review corroborates only `strictStyleIsolation` activation without establishing functional isolation/security.
 
 ### 20. main-vue3/vite.config.ts:9
 
-**Observação:** O comentário afirma: “主应用端口” (porta da aplicação principal).
+**Observation:** Comment states: “主应用端口” (English translation: Main application port.).
 
-**Interpretação:** Identifica main-vue3 como host, papel corroborado pela unidade e pela composição. A porta não demonstra deploy.
+**Interpretation:** Identifies main-vue3 host role corroborated by unit/composition. Port demonstrates no deployment.
 
 ### 21. sub-vue2/public/index.html:7
 
-**Observação:** O comentário afirma: “子应用静态资源前缀” (prefixo dos recursos estáticos da sub-aplicação).
+**Observation:** Comment states: “子应用静态资源前缀” (English translation: Sub-application static asset prefix.).
 
-**Interpretação:** A revisão corrobora a base de URLs relativas da unidade pelo elemento `base`, sem inferir publicação.
+**Interpretation:** Review corroborates unit relative-URL base through `base` element without inferring publication.
 
 ### 22. sub-vue2/public/index.html:15
 
-**Observação:** O comentário afirma: “子应用挂载点，必须与主应用配置一致” (ponto de montagem da sub-aplicação, deve coincidir com a configuração da aplicação principal).
+**Observation:** Comment states: “子应用挂载点，必须与主应用配置一致” (English translation: Sub-application mounting point must match main application configuration.).
 
-**Interpretação:** A revisão registra contradição: o elemento `subapp-viewport` da sub-app não é seu alvo de montagem, que é `#app`; o contêiner externo pertence ao host.
+**Interpretation:** Review records contradiction: sub-app `subapp-viewport` element not mounting target, which is `#app`; outer container belongs to host.
 
 ### 23. sub-vue2/src/main.js:9
 
-**Observação:** O comentário afirma: “渲染函数 - Updated for qiankun integration” (função de renderização — atualizada para integração com qiankun).
+**Observation:** Comment states: “渲染函数 - Updated for qiankun integration” (English translation: Rendering function updated for qiankun integration.).
 
-**Interpretação:** A revisão corrobora a adaptação de renderização ao contêiner recebido, sem atestar execução.
+**Interpretation:** Review corroborates rendering adaptation to supplied container without attesting execution.
 
 ### 24. sub-vue2/src/main.js:26
 
-**Observação:** O comentário afirma: “如果在 qiankun 环境下，不立即挂载” (no ambiente qiankun, não monta imediatamente).
+**Observation:** Comment states: “如果在 qiankun 环境下，不立即挂载” (English translation: Do not mount immediately in qiankun environment.).
 
-**Interpretação:** Descreve o mecanismo de adiar a montagem ao lifecycle; a guarda e a chamada em mount corroboram a afirmação.
+**Interpretation:** Describes deferring mounting to lifecycle; guard/mount call corroborate claim.
 
 ### 25. sub-vue2/src/main.js:31
 
-**Observação:** O comentário afirma: “qiankun 生命周期” (ciclo de vida qiankun).
+**Observation:** Comment states: “qiankun 生命周期” (English translation: Qiankun lifecycle.).
 
-**Interpretação:** A afirmação tecnológica é corroborada pelas exportações bootstrap, mount e unmount e pelo contrato da relação com o host.
+**Interpretation:** Technological claim corroborated by bootstrap/mount/unmount exports and host relationship contract.
 
 ### 26. sub-vue2/src/router/index.js:9
 
-**Observação:** O comentário afirma: “在 qiankun 环境下，路由base会在main.js中动态设置” (no ambiente qiankun, a base do roteador será definida dinamicamente em main.js).
+**Observation:** Comment states: “在 qiankun 环境下，路由base会在main.js中动态设置” (English translation: Router base will be set dynamically in main.js in qiankun environment.).
 
-**Interpretação:** A revisão registra contradição: a base é fixa em `/sub-vue2`; main.js altera o public path dos recursos, sem alterar a base do roteador.
+**Interpretation:** Review records contradiction: base fixed at `/sub-vue2`; main.js changes resource public path without changing router base.
 
 ### 27. sub-vue2/vue.config.js:11
 
-**Observação:** O comentário afirma: “微前端配置” (configuração de micro-frontend).
+**Observation:** Comment states: “微前端配置” (English translation: Microfrontend configuration.).
 
-**Interpretação:** Caracteriza o bloco concreto de saída usado pela sub-app; a revisão corrobora a afirmação pela configuração e pela relação com o host, sem nomear um mecanismo no comentário.
+**Interpretation:** Characterizes concrete sub-app output block; review corroborates through configuration/host relationship without mechanism named in comment.
 
 ### 28. sub-vue2/vue.config.js:14
 
-**Observação:** O comentário afirma: “微前端要求的库配置” (configuração de biblioteca exigida pelo micro-frontend).
+**Observation:** Comment states: “微前端要求的库配置” (English translation: Library configuration required by microfrontend.).
 
-**Interpretação:** A revisão corrobora o contrato de saída desta sub-app pelo bloco UMD e pelo build próprio; o comentário não estabelece uma exigência geral para micro-frontends.
+**Interpretation:** Review corroborates sub-app output contract through UMD block/own build; comment establishes no general microfrontend requirement.
 
 ### 29. 8e52e7d 2025-11-03 (sub-vue2/public/index.html; sub-vue2/src/main.js; main-vue3/src/App.vue)
 
-**Observação:** O único commit adiciona juntos o comentário de montagem, os elementos HTML e a implementação de renderização. A revisão não encontra versão anterior ou mudança do alvo de montagem e registra resultado inconclusivo.
+**Observation:** Only commit adds mounting comment, HTML elements and rendering implementation together. Review finds no earlier version/mounting-target change, recording inconclusive result.
 
-**Interpretação:** O passado não distingue tentativa anterior, cópia ou erro no comentário. A dúvida não muda a leitura arquitetural do snapshot: o alvo implementado é #app e a contradição documental permanece.
+**Interpretation:** Past does not distinguish earlier attempt, copy or comment error. Uncertainty leaves snapshot architectural reading unchanged: implemented target #app, documentary contradiction retained.
 
 ### 30. 8e52e7d 2025-11-03 (sub-vue2/src/router/index.js; sub-vue2/src/main.js; sub-vue2/vue.config.js)
 
-**Observação:** O único commit adiciona juntos o comentário sobre base dinâmica, a base literal /sub-vue2 e a atribuição de __webpack_public_path__. A revisão não encontra versão alternativa de main.js e registra resultado inconclusivo.
+**Observation:** Only commit adds dynamic-base comment, literal base /sub-vue2 and __webpack_public_path__ assignment together. Review finds no alternative main.js version, recording inconclusive result.
 
-**Interpretação:** O histórico não esclarece a origem do comentário; a dúvida é sobre o passado, com a base fixa e o ajuste de public path claros no snapshot.
+**Interpretation:** History does not clarify comment origin; uncertainty about past with fixed base/public-path adjustment clear in snapshot.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.2 (main-vue3/package.json:12) | 1 tecnologia | manifesto | qiankun | tecnológica | fraca | declara #7; declara #8; declara #9 |
-| 2 | 3.4.3 (sub-vue2, Build); 3.4.4 (sub-vue2/src/main.js:32, Observação); 3.4.5 #1 (Configuração); 3.4.6 #2 (Artefatos); 3.4.7 #12, #13 (Evidência) | 2 configuração | configuração | qiankun | tecnológica | moderada | configura #3; configura #4; configura #5; configura #11; configura #12; configura #15 |
-| 3 | 3.4.4 (src-mount-export, sub-vue2/src/main.js:32) | 3 código | código-fonte | qiankun | tecnológica | moderada | implementa #12 |
-| 4 | 3.4.4 (src-mount-export, sub-vue2/src/main.js:36) | 3 código | código-fonte | qiankun | tecnológica | moderada | implementa #12 |
-| 5 | 3.4.4 (src-mount-export, sub-vue2/src/main.js:41) | 3 código | código-fonte | qiankun | tecnológica | moderada | implementa #12 |
-| 6 | 3.4.4 (src-mount-call, sub-vue2/src/main.js:16) | 3 código | código-fonte | qiankun | tecnológica | moderada | implementa #12 |
-| 7 | 3.4.4 (src-lifecycles, main-vue3/src/main.ts:3) | 3 código | código-fonte | qiankun | tecnológica | moderada | implementa #12; implementa #13 |
-| 8 | 3.4.4 (src-lifecycles, main-vue3/src/main.ts:10) | 3 código | código-fonte | qiankun | arquitetural | forte | implementa #12; implementa #13 |
-| 9 | 3.4.4 (manual, main-vue3/src/main.ts:26) | 3 código | código-fonte | qiankun | tecnológica | moderada | implementa #12; implementa #13 |
-| 10 | 3.4.3 (main-vue3) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 11 | 3.4.3 (sub-vue2) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 12 | 3.4.5 #1 | 5 composição | código-fonte | qiankun | arquitetural | forte | liga #10; liga #11 |
-| 13 | 3.4.5 #2 | 5 composição | código-fonte | qiankun | arquitetural | forte | liga #10; liga main-vue3/src/main.ts:17-22 |
-| 14 | 3.4.6 #1 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #10 |
-| 15 | 3.4.6 #2 | 6 build-deploy | manifesto | qiankun | arquitetural | moderada | publica #11 |
-| 16 | 3.4.7 #1 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #12; corrobora #13 |
-| 17 | 3.4.7 #2 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #8; corrobora #12; corrobora #13 |
-| 18 | 3.4.7 #3 | 7 documentação | comentário | qiankun | tecnológica | fraca | corrobora #1; corrobora #7; corrobora #9 |
-| 19 | 3.4.7 #4 | 7 documentação | comentário | — | tecnológica | fraca | corrobora #9 |
-| 20 | 3.4.7 #5 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #10; corrobora #12 |
-| 21 | 3.4.7 #6 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #12 |
-| 22 | 3.4.7 #7 | 7 documentação | comentário | — | arquitetural | fraca | contradiz #6; contradiz sub-vue2/public/index.html:16-17; contradiz #8 |
-| 23 | 3.4.7 #8 | 7 documentação | comentário | qiankun | tecnológica | fraca | corrobora #4; corrobora #6 |
-| 24 | 3.4.7 #9 | 7 documentação | comentário | qiankun | tecnológica | fraca | corrobora #4; corrobora #6 |
-| 25 | 3.4.7 #10 | 7 documentação | comentário | qiankun | tecnológica | fraca | corrobora #3; corrobora #4; corrobora #5; corrobora #12 |
-| 26 | 3.4.7 #11 | 7 documentação | comentário | qiankun | tecnológica | fraca | contradiz sub-vue2/src/router/index.js:10-12; contradiz sub-vue2/src/main.js:1-46 |
-| 27 | 3.4.7 #12 | 7 documentação | comentário | — | tecnológica | fraca | corrobora #2; corrobora #12 |
-| 28 | 3.4.7 #13 | 7 documentação | comentário | — | tecnológica | fraca | corrobora #2; corrobora #12; corrobora #15 |
-| 29 | 3.4.8 #1 | 8 histórico | histórico | — | arquitetural | fraca | explica #22; explica #6 |
-| 30 | 3.4.8 #2 | 8 histórico | histórico | qiankun | tecnológica | fraca | explica #26; explica sub-vue2/src/router/index.js:10-12; explica sub-vue2/src/main.js:20-23 |
+| 1 | 3.4.2 (main-vue3/package.json:12) | 1 technology | manifest | qiankun | technological | weak | declares #7; declares #8; declares #9 |
+| 2 | 3.4.3 (sub-vue2, Build); 3.4.4 (sub-vue2/src/main.js:32, Observation); 3.4.5 #1 (Configuration); 3.4.6 #2 (Artifacts); 3.4.7 #12, #13 (Evidence) | 2 configuration | configuration | qiankun | technological | moderate | configures #3; configures #4; configures #5; configures #11; configures #12; configures #15 |
+| 3 | 3.4.4 (src-mount-export, sub-vue2/src/main.js:32) | 3 code | source code | qiankun | technological | moderate | implements #12 |
+| 4 | 3.4.4 (src-mount-export, sub-vue2/src/main.js:36) | 3 code | source code | qiankun | technological | moderate | implements #12 |
+| 5 | 3.4.4 (src-mount-export, sub-vue2/src/main.js:41) | 3 code | source code | qiankun | technological | moderate | implements #12 |
+| 6 | 3.4.4 (src-mount-call, sub-vue2/src/main.js:16) | 3 code | source code | qiankun | technological | moderate | implements #12 |
+| 7 | 3.4.4 (src-lifecycles, main-vue3/src/main.ts:3) | 3 code | source code | qiankun | technological | moderate | implements #12; implements #13 |
+| 8 | 3.4.4 (src-lifecycles, main-vue3/src/main.ts:10) | 3 code | source code | qiankun | architectural | strong | implements #12; implements #13 |
+| 9 | 3.4.4 (manual, main-vue3/src/main.ts:26) | 3 code | source code | qiankun | technological | moderate | implements #12; implements #13 |
+| 10 | 3.4.3 (main-vue3) | 4 structure | directory | — | architectural | moderate | — |
+| 11 | 3.4.3 (sub-vue2) | 4 structure | directory | — | architectural | moderate | — |
+| 12 | 3.4.5 #1 | 5 composition | source code | qiankun | architectural | strong | links #10; links #11 |
+| 13 | 3.4.5 #2 | 5 composition | source code | qiankun | architectural | strong | links #10; links main-vue3/src/main.ts:17-22 |
+| 14 | 3.4.6 #1 | 6 build-deploy | manifest | — | architectural | moderate | publishes #10 |
+| 15 | 3.4.6 #2 | 6 build-deploy | manifest | qiankun | architectural | moderate | publishes #11 |
+| 16 | 3.4.7 #1 | 7 documentation | comment | — | architectural | weak | corroborates #12; corroborates #13 |
+| 17 | 3.4.7 #2 | 7 documentation | comment | — | architectural | weak | corroborates #8; corroborates #12; corroborates #13 |
+| 18 | 3.4.7 #3 | 7 documentation | comment | qiankun | technological | weak | corroborates #1; corroborates #7; corroborates #9 |
+| 19 | 3.4.7 #4 | 7 documentation | comment | — | technological | weak | corroborates #9 |
+| 20 | 3.4.7 #5 | 7 documentation | comment | — | architectural | weak | corroborates #10; corroborates #12 |
+| 21 | 3.4.7 #6 | 7 documentation | comment | — | architectural | weak | corroborates #12 |
+| 22 | 3.4.7 #7 | 7 documentation | comment | — | architectural | weak | contradicts #6; contradicts sub-vue2/public/index.html:16-17; contradicts #8 |
+| 23 | 3.4.7 #8 | 7 documentation | comment | qiankun | technological | weak | corroborates #4; corroborates #6 |
+| 24 | 3.4.7 #9 | 7 documentation | comment | qiankun | technological | weak | corroborates #4; corroborates #6 |
+| 25 | 3.4.7 #10 | 7 documentation | comment | qiankun | technological | weak | corroborates #3; corroborates #4; corroborates #5; corroborates #12 |
+| 26 | 3.4.7 #11 | 7 documentation | comment | qiankun | technological | weak | contradicts sub-vue2/src/router/index.js:10-12; contradicts sub-vue2/src/main.js:1-46 |
+| 27 | 3.4.7 #12 | 7 documentation | comment | — | technological | weak | corroborates #2; corroborates #12 |
+| 28 | 3.4.7 #13 | 7 documentation | comment | — | technological | weak | corroborates #2; corroborates #12; corroborates #15 |
+| 29 | 3.4.8 #1 | 8 history | history | — | architectural | weak | explains #22; explains #6 |
+| 30 | 3.4.8 #2 | 8 history | history | qiankun | technological | weak | explains #26; explains sub-vue2/src/router/index.js:10-12; explains sub-vue2/src/main.js:20-23 |
 
-## Resumo
+## Summary
 
-Observações: 30. Dimensões (tecnologia: 1, configuração: 1, código: 7, estrutura: 2, composição: 2, build-deploy: 2, documentação: 13, histórico: 2). Força (forte: 3, moderada: 11, fraca: 16, ambígua: 0). Evidência (tecnológica: 17, arquitetural: 13, contexto: 0).
+Observations: 30. Dimensions (technology: 1, configuration: 1, code: 7, structure: 2, composition: 2, build-deploy: 2, documentation: 13, history: 2). Strength (strong: 3, moderate: 11, weak: 16, ambiguous: 0). Evidence (technological: 17, architectural: 13, context: 0).
+

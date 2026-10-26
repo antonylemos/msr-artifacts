@@ -15,14 +15,15 @@ annotation:
 
 # 232 — riponcc/Group4COMP308Project
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| client/issue-app/package.json:15 | dependencies | @originjs/vite-plugin-federation | ^1.3.5 | module-federation | Yes | client/issue-app/vite.config.js:4 (`import federation from '@originjs/vite-plugin-federation'`); client/issue-app/vite.config.js:14-26 (configuração padrão do Vite invoca `federation` com `name: 'issueApp'`, `exposes: { './App': './src/App' }` e shared); client/issue-app/package.json:7-10 (dev, build e preview executam `vite` sem configuração alternativa) |
-| client/shell-app/package.json:14 | dependencies | @originjs/vite-plugin-federation | ^1.3.5 | module-federation | Yes | client/shell-app/vite.config.js:30 (`import federation from '@originjs/vite-plugin-federation'`); client/shell-app/vite.config.js:36-50 (configuração padrão do Vite invoca `federation` com `name: 'shellApp'`, remotes `userApp` e `issueApp` e shared); client/shell-app/package.json:7-10 (dev, build e preview executam `vite` sem configuração alternativa) |
-| client/user-app/package.json:15 | dependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | client/user-app/vite.config.js:5 (`import federation from '@originjs/vite-plugin-federation'`); client/user-app/vite.config.js:10-17 (configuração padrão do Vite invoca `federation` com `name: 'userApp'`, `exposes: { './App': './src/App' }` e shared); client/user-app/package.json:7-10 (dev, build e preview executam `vite` sem configuração alternativa) |
+| client/issue-app/package.json:15 | dependencies | @originjs/vite-plugin-federation | ^1.3.5 | module-federation | Yes | client/issue-app/vite.config.js:4 (`import federation from '@originjs/vite-plugin-federation'`); client/issue-app/vite.config.js:14-26 (the default Vite configuration invokes `federation` with `name: 'issueApp'`, `exposes: { './App': './src/App' }` and shared); client/issue-app/package.json:7-10 (dev, build and preview run `vite` with no alternative configuration) |
+| client/shell-app/package.json:14 | dependencies | @originjs/vite-plugin-federation | ^1.3.5 | module-federation | Yes | client/shell-app/vite.config.js:30 (`import federation from '@originjs/vite-plugin-federation'`); client/shell-app/vite.config.js:36-50 (the default Vite configuration invokes `federation` with `name: 'shellApp'`, remotes `userApp` and `issueApp` and shared); client/shell-app/package.json:7-10 (dev, build and preview run `vite` with no alternative configuration) |
+| client/user-app/package.json:15 | dependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | client/user-app/vite.config.js:5 (`import federation from '@originjs/vite-plugin-federation'`); client/user-app/vite.config.js:10-17 (the default Vite configuration invokes `federation` with `name: 'userApp'`, `exposes: { './App': './src/App' }` and shared); client/user-app/package.json:7-10 (dev, build and preview run `vite` with no alternative configuration) |
 
-## Notas
+## Notes
 
-- `client/shell-app/vite.config.js:1-26` é uma versão anterior da configuração, toda comentada (só com `userApp` em remotes). Os matches da inspeção em `:9`, `:11` e `:15-19` caem nesse bloco; a configuração ativa é a de `:28-56`.
+- `client/shell-app/vite.config.js:1-26` is an earlier version of the configuration, entirely commented out (only `userApp` in remotes). The inspection matches at `:9`, `:11` and `:15-19` fall in that block; the active configuration is at `:28-56`.
+

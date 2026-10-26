@@ -20,78 +20,78 @@ annotation:
 
 # 207 — brunotrolo/Salesforce_Journey_Designer
 
-## Contexto
+## Context
 
-“Salesforce Journey Designer” (`README.md:1–38`): estúdio de desenho de jornadas para uma migração Salesforce → Salesforce. É um conjunto de agentes e skills do Claude Code (`.claude/agents/`, `.claude/skills/`, `.claude/rules/`, `.claude/hooks/`) com documentação de método Spec-Driven Development (`docs/sdd/`).
+“Salesforce Journey Designer” (`README.md:1–38`): journey-design studio for Salesforce → Salesforce migration. Set of Claude Code agents and skills (`.claude/agents/`, `.claude/skills/`, `.claude/rules/`, `.claude/hooks/`) with Spec-Driven Development method documentation (`docs/sdd/`).
 
-O README e os documentos descrevem uma arquitetura-alvo em que cada domínio de negócio seria “uma fronteira de micro-frontend independentemente implantável” (`README.md:56–59`; `docs/sdd/DOMAINS.md:1–3`). Nenhum domínio foi especificado nem construído no snapshot: `specs/` só tem `README.md`, e o status dos domínios é “rascunho” (`docs/sdd/DOMAINS.md:7`).
+README and documents describe target architecture where each business domain would be “uma fronteira de micro-frontend independentemente implantável” (English translation: “an independently deployable micro-frontend boundary”) (`README.md:56–59`; `docs/sdd/DOMAINS.md:1–3`). No domain was specified or built in snapshot: `specs/` has only `README.md`, and domain status is “rascunho” (English translation: “draft”) (`docs/sdd/DOMAINS.md:7`).
 
-O único projeto frontend executável é `.claude/skills/salesforce-ux/design-system-2-starter-kit/`, uma cópia vendorizada sem alteração do starter kit oficial da Salesforce (LWC + Vite + SLDS2), usado como ambiente de protótipo (`.claude/skills/salesforce-ux/README.md:3–9`). O nome do repositório não é usado como evidência.
+Sole executable frontend project is `.claude/skills/salesforce-ux/design-system-2-starter-kit/`, an unchanged vendored copy of official Salesforce starter kit (LWC + Vite + SLDS2), used as prototyping environment (`.claude/skills/salesforce-ux/README.md:3–9`). Repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:208` registra rank 207, ID 1377516451, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:208` records rank 207, ID 1377516451, status `cloned`, branch `main` and front-matter commit, which is clone HEAD and `origin/main`. Every clone Git command used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:208` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:37607` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:37639` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:208` records strategy `terminology` and eligibility `pass`. Sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). ID appears in `data/discovery/mfe-round-001/candidates.csv:37607` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:37639` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2026-09` e `path` vazio:
+`sqlite3 -readonly` query of tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns same two hits in each round, at endpoint `repositories`, with subquery `…#created:2026-09` and empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | 2026-10-07T22:43:47.840Z / 2026-10-08T16:02:30.405Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | 2026-10-07T23:13:00.432Z / 2026-10-08T16:10:54.650Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2026-09-01..2026-09-30`.
+Effective queries append `pushed:>=2025-04-01 created:2026-09-01..2026-09-30`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem JavaScript, `fork: false`, tamanho 1.084;
-- criação em 2026-09-19T18:56:48Z, push em 2026-10-04T01:58:33Z.
+Hit metadata:
+- null description, no topics, JavaScript language, `fork: false`, size 1.084;
+- creation at 2026-09-19T18:56:48Z, push at 2026-10-04T01:58:33Z.
 
-Grafias no README:
-- “micro-frontend”: `README.md:57` (“Cada domínio é uma fronteira de micro-frontend independentemente implantável”) e `README.md:181` (“fronteiras de micro-frontend”). A busca de frase trata o hífen como separador.
-- O plural “micro frontends” não aparece literalmente no README nem na descrição. “micro-frontends” só aparece fora do README (`specs/README.md:3`). O hit plural depende do processamento textual da busca do GitHub, que não está registrado.
+README spellings:
+- “micro-frontend”: `README.md:57` (“Cada domínio é uma fronteira de micro-frontend independentemente implantável”; English translation: “Each domain is an independently deployable micro-frontend boundary”) and `README.md:181` (“fronteiras de micro-frontend”; English translation: “micro-frontend boundaries”). Phrase search treats hyphen as separator.
+- Plural “micro frontends” appears literally in neither README nor description. “micro-frontends” appears only outside README (`specs/README.md:3`). Plural hit depends on unrecorded GitHub search text processing.
 
-A última alteração do README é `61185d0` (2026-09-24), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+Last README change is `61185d0` (2026-09-24), before October 2026 collections. README at the SHA is not later than searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 394 entradas, 393 arquivos regulares `100644` e 1 executável `100755` (`.claude/skills/salesforce/design-systems-slds-validate/scripts/analyze-quality.cjs`); zero symlinks e zero gitlinks. 378 entradas estão em `.claude/` (249 em `skills/salesforce`, 105 em `skills/salesforce-ux`). O restante: `README.md`, `AGENTS.md`, `CLAUDE.md`, `LICENSE`, `NOTICE.md`, `docs/` (4 arquivos), `specs/README.md`, `scripts/verify-skills.mjs`, `assets/banner.svg`, um `.bat` e um workflow de CI. | contrária |
-| Documentação (intenção) | `README.md:56–61` e `docs/sdd/DOMAINS.md:1–17`: sete domínios planejados como fronteiras de micro-frontend, a implementar como “LWR site/UI Bundle de Experience Cloud, um conjunto de OmniScripts+FlexCards, ou um pacote de LWCs” (`:3`), com status “rascunho” (`:7`). Agentes repetem a premissa (`.claude/agents/fsc-journey-ux-designer.md:34`; `fsc-sdd-orchestrator.md:12`). | fraca |
-| Código-fonte (implementação) | `specs/` contém só `README.md`; não há `spec.md`, `prototype/` ou artefato de domínio. Nenhuma unidade frontend própria. | contrária |
-| Código de terceiros | `.claude/skills/salesforce-ux/design-system-2-starter-kit/package.json:1–35`: starter kit da Salesforce UX (LWC, Vite). É uma única aplicação; os “apps” de `src/apps.config.js:1–30` são agrupamentos de rotas no mesmo build, com navegação própria. `.claude/skills/salesforce-ux/README.md:5`: “Vendorizado sem alteração de código”. | contrária |
-| Busca | `git grep -i` no SHA por `micro.?front`, `federation` e `single.?spa`: só textos de documentação e prompts de agentes (README, `docs/sdd/DOMAINS.md`, `specs/README.md`, `.claude/agents/*`, `.claude/skills/salesforce-ux/README.md:13`). Nenhuma configuração de composição. Os imports `../../../` do starter kit ficam dentro do próprio kit. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 394 entries, 393 regular files `100644` and 1 executable `100755` (`.claude/skills/salesforce/design-systems-slds-validate/scripts/analyze-quality.cjs`); zero symlinks and zero gitlinks. 378 entries are in `.claude/` (249 in `skills/salesforce`, 105 in `skills/salesforce-ux`). Remainder: `README.md`, `AGENTS.md`, `CLAUDE.md`, `LICENSE`, `NOTICE.md`, `docs/` (4 files), `specs/README.md`, `scripts/verify-skills.mjs`, `assets/banner.svg`, one `.bat` and CI workflow. | contrary |
+| Documentation (intent) | `README.md:56–61` and `docs/sdd/DOMAINS.md:1–17`: seven domains planned as micro-frontend boundaries, to implement as “LWR site/UI Bundle de Experience Cloud, um conjunto de OmniScripts+FlexCards, ou um pacote de LWCs” (English translation: “Experience Cloud LWR site/UI Bundle, a set of OmniScripts+FlexCards, or an LWC package”) (`:3`), with status “rascunho” (English translation: “draft”) (`:7`). Agents repeat premise (`.claude/agents/fsc-journey-ux-designer.md:34`; `fsc-sdd-orchestrator.md:12`). | weak |
+| Source code (implementation) | `specs/` contains only `README.md`; no `spec.md`, `prototype/` or domain artifact. No own frontend unit. | contrary |
+| Third-party code | `.claude/skills/salesforce-ux/design-system-2-starter-kit/package.json:1–35`: Salesforce UX starter kit (LWC, Vite). One application; “apps” in `src/apps.config.js:1–30` are route groupings in same build, with own navigation. `.claude/skills/salesforce-ux/README.md:5`: “Vendorizado sem alteração de código” (English translation: “Vendored without code changes”). | contrary |
+| Search | `git grep -i` at the SHA for `micro.?front`, `federation` and `single.?spa`: only documentation and agent-prompt texts (README, `docs/sdd/DOMAINS.md`, `specs/README.md`, `.claude/agents/*`, `.claude/skills/salesforce-ux/README.md:13`). No composition configuration. Starter-kit `../../../` imports stay within kit itself. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 6 commits, nenhum merge.
-- **Raiz:** `46238a9` (2026-09-19, “Início do histórico público”, 391 arquivos), com autor `Claude <noreply@anthropic.com>`. A mensagem declara squash do histórico anterior e traz trailers `Co-Authored-By: Claude Sonnet 5` e `Claude-Session`.
-- **Titular:** `9ccb5d0` (Bruno Teixeira, pela interface web), `eb13ac2` e `61185d0` (`brunotrolo`), de 2026-09-23 a 2026-09-24, com ajustes de README e CI.
-- **SHA:** `f2cec7e` e `91b8559` (2026-10-04), de novo com autor `Claude <noreply@anthropic.com>`, ajustam agentes, hooks e documentação.
+Non-shallow clone; 6 commits, no merge.
+- **Root:** `46238a9` (2026-09-19, “Início do histórico público”; English translation: “Beginning of public history”, 391 files), with author `Claude <noreply@anthropic.com>`. Message declares squashing previous history and carries trailers `Co-Authored-By: Claude Sonnet 5` and `Claude-Session`.
+- **Owner:** `9ccb5d0` (Bruno Teixeira, through web interface), `eb13ac2` and `61185d0` (`brunotrolo`), from 2026-09-23 to 2026-09-24, with README and CI adjustments.
+- **SHA:** `f2cec7e` and `91b8559` (2026-10-04), again with author `Claude <noreply@anthropic.com>`, adjust agents, hooks and documentation.
 
-O histórico anterior ao squash não está disponível. Nenhum blob histórico foi lido e não houve objeto ausente.
+Pre-squash history is unavailable. No historical blob was read and no object was missing.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend própria; os domínios são só planejados (`docs/sdd/DOMAINS.md:7`; `specs/` vazio). O starter kit vendorizado é uma aplicação única de terceiros. |
-| Q2 | No | Sem duas unidades, não há independência a avaliar. |
-| Q3 | No | Não há host, shell ou configuração raiz compondo unidades. |
-| Q4 | No | Nenhum mecanismo de composição configurado. A arquitetura de micro-frontends está só descrita (`README.md:56–59`). |
-| Q5 | No | Q1–Q4 são No: kit de agentes e documentação de método que menciona micro-frontends como arquitetura-alvo. |
+| Q1 | No | No own frontend unit; domains are only planned (`docs/sdd/DOMAINS.md:7`; empty `specs/`). Vendored starter kit is one third-party application. |
+| Q2 | No | Without two units, no independence requires evaluation. |
+| Q3 | No | No host, shell or root configuration composes units. |
+| Q4 | No | No composition mechanism is configured. Micro-frontends architecture is only described (`README.md:56–59`). |
+| Q5 | No | Q1–Q4 are No: agent kit and method documentation mentioning micro-frontends as target architecture. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “repositories mentioning micro-frontends without implementing them”.
-- O starter kit é código de terceiros vendorizado como ferramenta de protótipo, sem relação de composição. É o mesmo tratamento de 205 (código de terceiros fora do escopo do projeto), não o de 102/074/080 (plataforma hospedeira de unidades).
-- É conteúdo de método e prompts, como 023/094: o repositório descreve como projetar, mas não contém unidades compostas.
-- `frontend_units: 0` (o kit vendorizado não é unidade do projeto), `unit_organization: none`, `approaches: []`, `ui_technologies: []`, `build_tools: []`. `repo_type: other`: ferramenta de agentes para desenho de jornadas, não exemplo de MFE, template nem biblioteca.
-- Não há decisão aberta.
+- `Non-MFE` under rule “at least one question is No”. Matches “repositories mentioning micro-frontends without implementing them”.
+- Starter kit is third-party code vendored as prototyping tool, without composition relationship. Same treatment as 205 (third-party code outside project scope), not 102/074/080 (units’ hosting platform).
+- Method/prompt content, as 023/094: repository describes how to design, but contains no composed units.
+- `frontend_units: 0` (vendored kit is not project unit), `unit_organization: none`, `approaches: []`, `ui_technologies: []`, `build_tools: []`. `repo_type: other`: agent tool for journey design, neither MFE example, template nor library.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** “micro-frontend” usado como termo de arquitetura-alvo num kit de agentes de IA, com domínios ainda em rascunho.
-- **Protocolo (busca):** o hit plural `"micro frontends"` não tem grafia literal no README. A elegibilidade muda de `unknown` (001) para `pass` (002).
-- **Protocolo (autoria):** três dos seis commits têm autor `Claude <noreply@anthropic.com>`, incluindo o squash inicial e o SHA.
+- **RQ1 (misleading signals):** “micro-frontend” as target-architecture term in AI-agent kit, with domains still drafts.
+- **Protocol (search):** plural hit `"micro frontends"` has no literal README spelling. Eligibility changes from `unknown` (001) to `pass` (002).
+- **Protocol (authorship):** three of six commits have author `Claude <noreply@anthropic.com>`, including initial squash and SHA.

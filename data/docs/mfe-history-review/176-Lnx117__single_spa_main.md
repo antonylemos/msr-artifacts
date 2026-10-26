@@ -13,23 +13,23 @@ annotation:
 
 # 176 — Lnx117/single_spa_main
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem um único commit, `112c73b` (2026-03-14, "init commit"), que é o próprio snapshot, sem merges. Ele adiciona os seis arquivos do repositório (`.envtest`, `index.html`, `package-lock.json`, `package.json`, `src/main.ts`, `vite.config.ts`), que têm nele a sua primeira presença observável; não há commit que os introduza nem versão anterior. O histórico não traz informação além do snapshot: não mostra estágios anteriores, abandonos nem onde o código foi feito antes do primeiro commit. Os commits posteriores ao snapshot, em outros branches, não entram.
+History up to snapshot has a single commit, `112c73b` (2026-03-14, "init commit"), snapshot itself, without merges. It adds six repository files (`.envtest`, `index.html`, `package-lock.json`, `package.json`, `src/main.ts`, `vite.config.ts`), with their first observable presence there; there is no introduction commit or earlier version. History provides no information beyond snapshot: it shows no earlier stages, abandonment or where code was developed before first commit. Post-snapshot commits on other branches are excluded.
 
-Das revisões anteriores, só a 3.4.7 deixou ponto, retomando uma nota da 3.4.4. A 3.4.2 não tem dependência sem uso, a 3.4.3 não tem unidade `Undetermined`, a 3.4.4 não tem construção inativa, comentada ou `Undetermined`, a 3.4.5 não tem relação `Undetermined` e o deploy da 3.4.6 é `não observado`, e não `Undetermined`. Na 3.4.7, as afirmações 1 e 13 (`parcial`) não viram ponto: a parte não confirmada depende dos microfrontends `menu` e `base`, que estão em outros repositórios (o servidor Vite de cada um, o efeito da isolação de CSS), e não há estágio, intenção ou cópia a esclarecer neste histórico. A afirmação 3, `sem corroboração`, não está entre as que o passo 2 levanta e não virou ponto. O snapshot não resolve o ponto que resta: não há `.gitignore` nem outro arquivo que explique a ausência de `.env`/`.env.local`.
+Of previous reviews, only 3.4.7 left a point, revisiting a note from 3.4.4. 3.4.2 has no unused dependency, 3.4.3 has no `Undetermined` unit, 3.4.4 has no inactive, commented-out or `Undetermined` construct, 3.4.5 has no `Undetermined` relationship and deploy in 3.4.6 is `not observed`, rather than `Undetermined`. In 3.4.7, claims 1 and 13 (`partial`) do not become points: unconfirmed part depends on microfrontends `menu` and `base`, in other repositories (each Vite server, CSS isolation effect), and no stage, intention or copying can be clarified in this history. Claim 3, `uncorroborated`, is outside those raised by step 2 and did not become a point. Snapshot does not resolve remaining point: no `.gitignore` or other file explains absence of `.env`/`.env.local`.
 
-## Pontos
+## Points
 
-| # | Ponto | Origem | Pergunta | Commits | Resultado |
+| # | Point | Origin | Question | Commits | Result |
 |---|---|---|---|---|---|
-| 1 | O comentário de `src/main.ts` manda definir as URLs em `.env`/`.env.local`, mas o único arquivo versionado com elas é `.envtest`, que o Vite não carrega por padrão | 3.4.4 (Notas); 3.4.7 #7 | estágios em conflito | 112c73b 2026-03-14 init commit | inconclusivo |
+| 1 | Comment in `src/main.ts` instructs defining URLs in `.env`/`.env.local`, but only versioned file containing them is `.envtest`, which Vite does not load by default | 3.4.4 (Notes); 3.4.7 #7 | conflicting stages | 112c73b 2026-03-14 init commit | inconclusive |
 
-## Observações
+## Observations
 
-**1. `.env`/`.env.local` no comentário e `.envtest` no repositório.** O `src/main.ts`, com o comentário das linhas 5 e 6, e o `.envtest`, com os valores de `VITE_MENU` e `VITE_BASE`, chegam juntos no único commit e não têm outra versão até o snapshot. Nenhum `.env` ou `.env.local` aparece no histórico até o snapshot, nem como arquivo removido. O histórico não diz se o arquivo já se chamava `.env` antes do primeiro commit e foi renomeado para ser versionado, nem se `.envtest` é uma cópia de exemplo de um `.env` mantido fora do repositório. A ressalva da 3.4.4 e a corroboração `parcial` da 3.4.7 ficam como estavam.
+**1. `.env`/`.env.local` in comment and `.envtest` in repository.** The `src/main.ts`, with comment at lines 5 and 6, and `.envtest`, with values of `VITE_MENU` and `VITE_BASE`, arrive together in sole commit and have no other version up to snapshot. No `.env` or `.env.local` appears in history up to snapshot, even as a removed file. History does not say whether file was named `.env` before first commit and renamed for versioning, or whether `.envtest` is an example copy of an `.env` maintained outside repository. Caveat in 3.4.4 and `partial` corroboration in 3.4.7 remain unchanged.
 
-## Comandos
+## Commands
 
 ```
 docs/mfe-history-review/tools/hist.sh Lnx117__single_spa_main rev-list --count 112c73b7d0bc4739bcab53de03b404ce2fbde05a
@@ -38,9 +38,9 @@ docs/mfe-history-review/tools/hist.sh Lnx117__single_spa_main log --reverse --fo
 docs/mfe-history-review/tools/hist.sh Lnx117__single_spa_main log --format='%h %ad' --date=short --name-status 112c73b7d0bc4739bcab53de03b404ce2fbde05a
 docs/mfe-history-review/tools/hist.sh Lnx117__single_spa_main log --format='%h %ad' --date=short 112c73b7d0bc4739bcab53de03b404ce2fbde05a -- .envtest
 docs/mfe-history-review/tools/hist.sh Lnx117__single_spa_main log --format='%h %ad' --date=short 112c73b7d0bc4739bcab53de03b404ce2fbde05a -- src/main.ts
-docs/mfe-history-review/tools/hist.sh Lnx117__single_spa_main log --format='%h %ad' --date=short --full-history 112c73b7d0bc4739bcab53de03b404ce2fbde05a -- .env .env.local   # saída vazia
+docs/mfe-history-review/tools/hist.sh Lnx117__single_spa_main log --format='%h %ad' --date=short --full-history 112c73b7d0bc4739bcab53de03b404ce2fbde05a -- .env .env.local   # empty output
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 1 (2026-03-14 a 2026-03-14). Pontos: 1 (esclarecido: 0, inconclusivo: 1, resolvido pelo snapshot: 0).
+Commits up to the snapshot: 1 (2026-03-14 to 2026-03-14). Points: 1 (clarified: 0, inconclusive: 1, resolved by the snapshot: 0).

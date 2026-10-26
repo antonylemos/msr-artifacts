@@ -20,30 +20,30 @@ annotation:
 
 # 021 — yassinesos/yassinesos
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** não é projeto de software (repositório de perfil do GitHub, `<usuário>/<usuário>`)
-- **Classificação:** Non-MFE (classificado pelos pesquisadores no `catalog.csv`; arquivo registrado depois)
+- **Repository type:** not a software project (GitHub profile repository, `<user>/<user>`)
+- **Classification:** Non-MFE (classified by the researchers in `catalog.csv`; file recorded afterwards)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | Um único arquivo versionado: `README.md` | ausente |
-| Documentação | `README.md:3` "specializing in Angular, microfrontend architectures…"; `:5` "federation-based systems"; `:10-11` "Angular & Microfrontends", "Module Federation architectures"; `:20` contribuição ao plugin "Angular Architects – Module Federation" | fraca |
-| Tecnologia / Configuração / Código-fonte / Build/deploy | Inexistentes | ausente |
+| Structure | A single tracked file: `README.md` | absent |
+| Documentation | `README.md:3` "specializing in Angular, microfrontend architectures…"; `:5` "federation-based systems"; `:10-11` "Angular & Microfrontends", "Module Federation architectures"; `:20` contribution to the "Angular Architects – Module Federation" plugin | weak |
+| Technology / Configuration / Source code / Build/deploy | Nonexistent | absent |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend; só `README.md` |
-| Q2 | No | Não há unidades |
-| Q3 | No | Não há host, shell nem root config |
-| Q4 | No | Nenhum mecanismo de composição |
-| Q5 | No | Q1–Q4 convergem |
+| Q1 | No | No frontend units; only `README.md` |
+| Q2 | No | No units |
+| Q3 | No | No host, shell or root config |
+| Q4 | No | No composition mechanism |
+| Q5 | No | Q1–Q4 converge |
 
-## Motivo
+## Rationale
 
-- README de perfil do GitHub; os termos de MFE descrevem a especialização e contribuições do autor em outros projetos.
-- Corresponde a "repositories mentioning micro-frontends without implementing them"; na filtragem automática (seção 3.2 do protocolo), "clearly not software projects".
+- GitHub profile README; MFE terms describe the author's specialization and contributions to other projects.
+- Matches "repositories mentioning micro-frontends without implementing them"; in automatic filtering (protocol section 3.2), "clearly not software projects".

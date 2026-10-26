@@ -16,25 +16,25 @@ annotation:
 
 # 136 — swtbhsmn/micro-frontend-demo
 
-## Leitura do repositório
+## Repository overview
 
-Demonstração mínima de Module Federation com duas aplicações React, `app1` (host) e `app2` (remote), cada uma numa pasta com `package.json`, lockfile e configuração webpack próprios. Não há manifesto nem workspace na raiz. O único script de cada aplicação é `start`, que roda `webpack serve` em modo development numa porta fixa (app1/package.json:5-7; app2/package.json:5-7). As duas configurações também fixam `mode: "development"` e o servidor de desenvolvimento nas portas 3001 e 3002 (app1/webpack.config.js:7-11; app2/webpack.config.js:7-11). Não há script `build` nem configuração de produção.
+Minimal Module Federation demonstration with two React applications, `app1` (host) and `app2` (remote), each in a directory with its own `package.json`, lockfile and webpack configuration. No root manifest or workspace. Each application’s only script is `start`, running `webpack serve` in development mode on a fixed port (app1/package.json:5-7; app2/package.json:5-7). Both configurations also fix `mode: "development"` and development server on ports 3001 and 3002 (app1/webpack.config.js:7-11; app2/webpack.config.js:7-11). No `build` script or production configuration.
 
-Não há artefato de deploy no snapshot: nem Dockerfile, nem compose, nem CI, nem configuração de hospedagem, e o `matches.csv` não tem ocorrências `ops-*` ou `ci-*`. As duas ocorrências `cfg-public-path` são o `publicPath: "auto"` de cada configuração (app1/webpack.config.js:13; app2/webpack.config.js:13), que deixa o webpack resolver o caminho dos chunks pela origem do script; é configuração de build, não publicação. A execução descrita no README é toda local: um terminal por pasta, `npm install` e `npm start`, primeiro o app2 e depois o app1 (README.txt:7-14). O endereço do remote no host é fixo em `http://localhost:3002/remoteEntry.js` (app1/webpack.config.js:31), ou seja, a composição só funciona com os dois servidores de desenvolvimento no ar.
+No deployment artifact is present in the snapshot: no Dockerfile, compose, CI or hosting configuration, and `matches.csv` has no `ops-*` or `ci-*` occurrences. Both `cfg-public-path` occurrences are `publicPath: "auto"` in each configuration (app1/webpack.config.js:13; app2/webpack.config.js:13), allowing webpack to resolve chunk paths from script origin; this is build configuration, not publication. Execution described in README is entirely local: one terminal per directory, `npm install` and `npm start`, app2 first then app1 (README.txt:7-14). Remote address in host is fixed at `http://localhost:3002/remoteEntry.js` (app1/webpack.config.js:31), so composition only works with both development servers running.
 
-## Aplicações
+## Applications
 
-| # | Aplicação | Build | Deploy | Onde é servida | Versionamento | Artefatos |
+| # | Application | Build | Deploy | Where served | Versioning | Artifacts |
 |---|---|---|---|---|---|---|
-| 1 | app1 | separado | não observado | `http://localhost:3001` em desenvolvimento (app1/webpack.config.js:8-9) | No | app1/webpack.config.js:5-40 (configuração própria, modo desenvolvimento, host de Module Federation); app1/package.json:6 (`webpack serve`) |
-| 2 | app2 | separado | não observado | `http://localhost:3002` em desenvolvimento (app2/webpack.config.js:8-9); `remoteEntry.js` nessa origem, esperado pelo host (app1/webpack.config.js:31) | No | app2/webpack.config.js:5-41 (configuração própria, modo desenvolvimento, gera `remoteEntry.js`); app2/package.json:6 (`webpack serve`) |
+| 1 | app1 | separate | not observed | `http://localhost:3001` in development (app1/webpack.config.js:8-9) | No | app1/webpack.config.js:5-40 (own configuration, development mode, Module Federation host); app1/package.json:6 (`webpack serve`) |
+| 2 | app2 | separate | not observed | `http://localhost:3002` in development (app2/webpack.config.js:8-9); `remoteEntry.js` at this origin, expected by host (app1/webpack.config.js:31) | No | app2/webpack.config.js:5-41 (own configuration, development mode, generates `remoteEntry.js`); app2/package.json:6 (`webpack serve`) |
 
-## Observações
+## Observations
 
-**1. app1.** Build separado: configuração webpack e dependências só desta aplicação, mesmo que o único uso seja o servidor de desenvolvimento (app1/package.json:6). Ela consome o remote `app2` por URL de localhost (app1/webpack.config.js:30-31) e não empacota código do app2. Sem deploy observado. A versão `1.0.0` (app1/package.json:3) não é usada em publicação, e o pacote é `private` (app1/package.json:4).
+**1. app1.** Separate build: webpack configuration and dependencies belong only to this application, even if development server is the only use (app1/package.json:6). It consumes remote `app2` through localhost URL (app1/webpack.config.js:30-31) and does not package app2 code. No observed deploy. Version `1.0.0` (app1/package.json:3) is unused in publication, and package is `private` (app1/package.json:4).
 
-**2. app2.** Mesmo arranjo, na porta 3002, gerando o `remoteEntry.js` que expõe `./RemoteApp` (app2/webpack.config.js:29-32). Também roda sozinha, com página própria a partir do template (app2/webpack.config.js:36-38). Sem deploy observado. Versão `1.0.0` (app2/package.json:3) sem uso na publicação; pacote `private` (app2/package.json:4).
+**2. app2.** Same arrangement, on port 3002, generating `remoteEntry.js` exposing `./RemoteApp` (app2/webpack.config.js:29-32). Also runs alone, with its own page from template (app2/webpack.config.js:36-38). No observed deploy. Version `1.0.0` (app2/package.json:3) unused in publication; `private` package (app2/package.json:4).
 
-## Resumo
+## Summary
 
-Aplicações: 2. Build (separado: 2). Deploy (não observado: 2). Versionamento independente: 0.
+Applications: 2. Build (separate: 2). Deploy (not observed: 2). Independent versioning: 0.

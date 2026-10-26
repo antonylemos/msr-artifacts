@@ -20,82 +20,82 @@ annotation:
 
 # 301 — ojfbot/core-reader
 
-## Contexto
+## Context
 
-“Core Reader”, visualizador somente leitura da documentação do framework “Frame OS” (`README.md:1–5`). É um monorepo pnpm com três pacotes:
-- `packages/browser-app`: dashboard React/Carbon, configurado como remote de Module Federation (`README.md:11`, `:20`; `packages/browser-app/vite.config.ts:6–8`, `:23–37`);
-- `packages/api`: servidor Express que lê os arquivos do repositório `core`;
-- `packages/browser-automation`: serviço Node com Playwright para testes visuais.
+“Core Reader”, read-only “Frame OS” framework documentation viewer (`README.md:1–5`). A pnpm monorepo with three packages:
+- `packages/browser-app`: React/Carbon dashboard, configured as a Module Federation remote (`README.md:11`, `:20`; `packages/browser-app/vite.config.ts:6–8`, `:23–37`);
+- `packages/api`: Express server reading files from repository `core`;
+- `packages/browser-automation`: Node service with Playwright for visual tests.
 
-O host é o repositório `ojfbot/shell` (“Module Federation host”, `README.md:74`), externo. O nome do repositório não é usado como evidência.
+Host is external repository `ojfbot/shell` (“Module Federation host”, `README.md:74`). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:302` registra rank 301, ID 1170401686, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:302` records rank 301, ID 1170401686, status `cloned`, branch `main` and the front matter commit, which is HEAD of the clone and `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:302` registra a estratégia `technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:25666` (`technology`, `unknown`) e `data/discovery/mfe-round-002/candidates.csv:25673` (`technology`, `pass`).
+`data/samples/mfe-sample-001/sample.csv:302` records strategy `technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:25666` (`technology`, `unknown`) and `data/discovery/mfe-round-002/candidates.csv:25673` (`technology`, `pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns the same two hits in each round:
 
-| Consulta (`q`) | Endpoint | Subconsulta | `path` | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Endpoint | Subquery | `path` | Collection 001 / 002 (UTC) |
 |---|---|---|---|---|
 | `technology-vite-federation-package-code`: `"@originjs/vite-plugin-federation" filename:package.json` | code | `…#size:800..899` | `packages/browser-app/package.json` | 2026-10-07T22:05:03.417Z / 2026-10-08T15:48:05.846Z |
-| `technology-module-federation-repositories`: `"module federation" in:name,description,readme` | repositories | `…#created:2026-03` | vazio | 2026-10-07T23:23:54.590Z / 2026-10-08T16:17:20.346Z |
+| `technology-module-federation-repositories`: `"module federation" in:name,description,readme` | repositories | `…#created:2026-03` | empty | 2026-10-07T23:23:54.590Z / 2026-10-08T16:17:20.346Z |
 
-As consultas efetivas acrescentam a faixa `size:800..899` (código) e `pushed:>=2025-04-01 created:2026-03-01..2026-03-31` (repositórios).
+Effective queries append range `size:800..899` (code) and `pushed:>=2025-04-01 created:2026-03-01..2026-03-31` (repositories).
 
-Metadados do hit (iguais nas duas rodadas): descrição “Frame OS CoreReader — metadata dashboard for core repo commands, ADRs, and roadmap”, sem tópicos, linguagem TypeScript, licença MIT, `fork: false`, tamanho 388, criação em 2026-03-02T04:39:10Z, push em 2026-06-04T23:10:55Z.
+Hit metadata (same in both rounds): description “Frame OS CoreReader — metadata dashboard for core repo commands, ADRs, and roadmap”, no topics, language TypeScript, license MIT, `fork: false`, size 388, created at 2026-03-02T04:39:10Z, pushed at 2026-06-04T23:10:55Z.
 
-Correspondências no SHA:
-- **Código:** `packages/browser-app/package.json` tem 814 bytes, dentro da faixa, e declara `@originjs/vite-plugin-federation` (`:22`).
-- **README:** “Module Federation” em `README.md:11` (“Module Federation remote — renders inside the Frame OS shell”), `:20`, `:29`, `:59` e `:74`.
+SHA matches:
+- **Code:** `packages/browser-app/package.json` has 814 bytes, within the range, and declares `@originjs/vite-plugin-federation` (`:22`).
+- **README:** “Module Federation” at `README.md:11` (“Module Federation remote — renders inside the Frame OS shell”), `:20`, `:29`, `:59` and `:74`.
 
-A última alteração de `README.md`/`package.json` do browser-app é `9741fa4` (2026-05-06), e o SHA é de 2026-06-04. Ambos antecedem as coletas de outubro de 2026, e o README do SHA não é posterior às buscas.
+Last change to `README.md`/browser-app `package.json` is `9741fa4` (2026-05-06), and SHA dates from 2026-06-04. Both precede October 2026 collection, and the SHA's README does not postdate searches.
 
-O dono tem 18 candidatos nas rodadas, entre eles `ojfbot/shell` (`data/discovery/mfe-round-002/candidates.csv:25474`), `core`, `cv-builder`, `BlogEngine`, `TripPlanner` e `frame-ui-components` (por exemplo, `:21099`, `:22130`, `:26806`). Só `core-reader` está em `sample.csv` (`:302`); os demais não foram inspecionados.
+Owner has 18 candidates in rounds, including `ojfbot/shell` (`data/discovery/mfe-round-002/candidates.csv:25474`), `core`, `cv-builder`, `BlogEngine`, `TripPlanner` and `frame-ui-components` (for example, `:21099`, `:22130`, `:26806`). Only `core-reader` is in `sample.csv` (`:302`); others were not inspected.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 193 entradas, sendo 142 arquivos regulares `100644` e 51 symlinks `120000` (`.claude/commands`, 38 em `.claude/skills/`, 12 em `scripts/hooks/`), que apontam para fora do repositório, ao `core` vizinho (por exemplo, `.claude/skills/adr` → `../../../core/.claude/skills/adr`); zero gitlinks. Os symlinks são ferramentas de assistente de código, não unidades. Pacotes `packages/browser-app`, `packages/api`, `packages/browser-automation`; ADRs em `decisions/adr/`. | contexto |
-| Configuração (remote) | `packages/browser-app/vite.config.ts:23–37`: `federation({ name: 'core_reader', filename: 'remoteEntry.js', exposes: { './Dashboard': './src/components/Dashboard' }, shared: react, react-dom, @carbon/react, react-redux singletons })`, sem `remotes`; `:6–8`: “CoreReader is a Module Federation REMOTE. Shell dev: core_reader@http://localhost:3015/assets/remoteEntry.js; Shell prod: shell reads VITE_REMOTE_CORE_READER”; `:51–57`: porta 3015 com CORS para o shell. | forte |
-| Código-fonte (exposição) | `packages/browser-app/src/components/Dashboard.tsx:1–25`: componente exposto com `Provider` Redux próprio, abas (Skills, ADRs, Roadmap, OKRs, Docs, Changes, Events) e layout de `@ojfbot/frame-ui-components`. `packages/browser-app/src/main.tsx:9–15`: montagem isolada em `#root`. | moderada |
-| Build/deploy | `packages/browser-app/package.json:5–8`: `vite build` próprio. `vercel.json:1–34`: deploy na Vercel com `outputDirectory: packages/browser-app/dist`, e CORS de `/assets/*` liberado para `https://frame.jim.software` (`:17–22`), a origem do shell em produção. | moderada |
-| Composição | Nenhum host no repositório; o README aponta o host em `ojfbot/shell` (`README.md:74`) e registra “Module Federation remote registered in shell” (`README.md:59`). | ausente |
-| Código-fonte (fronteiras) | Busca ativa de imports relativos `../../` em `packages`: só travessias internas de cada pacote (por exemplo, `packages/browser-app/src/components/changes-tab/FileRow.tsx:2`, `:10`; `packages/browser-automation/src/test-runner/assertions/index.ts:1–2`). O browser-app consome a API por HTTP (`packages/browser-app/src/api/index.ts:2–7`) e a UI comum por pacote npm (`@ojfbot/frame-ui-components`, `packages/browser-app/package.json:11`). Não há outra unidade frontend no repositório. | contexto |
-| Tecnologia | `packages/api/package.json:1–21`: Express; `packages/browser-automation/package.json:1–25`: Playwright e Express. São backends e ferramentas de teste, não frontends. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 193 entries, comprising 142 regular `100644` files and 51 symlinks `120000` (`.claude/commands`, 38 in `.claude/skills/`, 12 in `scripts/hooks/`), pointing outside repository to neighboring `core` (for example, `.claude/skills/adr` → `../../../core/.claude/skills/adr`); zero gitlinks. Symlinks are coding assistant tools, rather than units. Packages `packages/browser-app`, `packages/api`, `packages/browser-automation`; ADRs in `decisions/adr/`. | context |
+| Configuration (remote) | `packages/browser-app/vite.config.ts:23–37`: `federation({ name: 'core_reader', filename: 'remoteEntry.js', exposes: { './Dashboard': './src/components/Dashboard' }, shared: react, react-dom, @carbon/react, react-redux singletons })`, without `remotes`; `:6–8`: “CoreReader is a Module Federation REMOTE. Shell dev: core_reader@http://localhost:3015/assets/remoteEntry.js; Shell prod: shell reads VITE_REMOTE_CORE_READER”; `:51–57`: port 3015 with CORS for shell. | strong |
+| Source code (exposure) | `packages/browser-app/src/components/Dashboard.tsx:1–25`: exposed component with its own Redux `Provider`, tabs (Skills, ADRs, Roadmap, OKRs, Docs, Changes, Events) and `@ojfbot/frame-ui-components` layout. `packages/browser-app/src/main.tsx:9–15`: standalone mounting in `#root`. | moderate |
+| Build/deploy | `packages/browser-app/package.json:5–8`: own `vite build`. `vercel.json:1–34`: Vercel deployment with `outputDirectory: packages/browser-app/dist`, and `/assets/*` CORS allowed for `https://frame.jim.software` (`:17–22`), production shell origin. | moderate |
+| Composition | No repository host; README points to host in `ojfbot/shell` (`README.md:74`) and records “Module Federation remote registered in shell” (`README.md:59`). | absent |
+| Source code (boundaries) | Active search for relative `../../` imports in `packages`: only internal traversals in each package (for example, `packages/browser-app/src/components/changes-tab/FileRow.tsx:2`, `:10`; `packages/browser-automation/src/test-runner/assertions/index.ts:1–2`). Browser-app consumes API through HTTP (`packages/browser-app/src/api/index.ts:2–7`) and common UI through npm package (`@ojfbot/frame-ui-components`, `packages/browser-app/package.json:11`). No other frontend unit in repository. | context |
+| Technology | `packages/api/package.json:1–21`: Express; `packages/browser-automation/package.json:1–25`: Playwright and Express. Backends and test tools, rather than frontends. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso e parcial (`blob:none`). São 55 commits alcançáveis a partir do SHA (93 em todos os refs), nenhum merge:
-- 45 de `ojfbot <151410806+ojfbot@users.noreply.github.com>` (5 com committer `GitHub`);
-- 9 de `ojfbot-clean[bot]`;
-- 1 com autor `Claude <noreply@anthropic.com>`.
+Non-shallow, partial clone (`blob:none`). 55 commits reachable from the SHA (93 across all refs), no merges:
+- 45 by `ojfbot <151410806+ojfbot@users.noreply.github.com>` (5 with committer `GitHub`);
+- 9 by `ojfbot-clean[bot]`;
+- 1 with author `Claude <noreply@anthropic.com>`.
 
-A raiz é `2f27b66` (2026-03-01, “feat: initial CoreReader Phase 1 implementation”) e o SHA é `4809739` (2026-06-04). Há 20 refs, incluindo branches remotos não considerados. `git rev-list --objects $SHA --missing=print` lista 111 objetos ausentes, nenhum na árvore do SHA. Nenhum blob histórico foi lido.
+Root is `2f27b66` (2026-03-01, “feat: initial CoreReader Phase 1 implementation”) and SHA is `4809739` (2026-06-04). 20 refs, including unconsidered remote branches. `git rev-list --objects $SHA --missing=print` lists 111 missing objects, none in SHA tree. No historical blob was read.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend (`packages/browser-app`). A configuração de federação só tem `exposes` e não referencia outras unidades (`vite.config.ts:23–28`). |
-| Q2 | Yes (para a unidade) | Entry, build Vite e deploy próprios (`packages/browser-app/package.json:5–8`; `vercel.json:2–3`). |
-| Q3 | Undetermined | O host (`ojfbot/shell`) não está no repositório. |
-| Q4 | Undetermined | O lado remote está configurado (`exposes: ./Dashboard`, `remoteEntry.js`); o consumidor não é observável. |
-| Q5 | No | Unidade preparada para composição por host externo não observável. |
+| Q1 | No | A single frontend unit (`packages/browser-app`). Federation configuration only has `exposes` and references no other units (`vite.config.ts:23–28`). |
+| Q2 | Yes (for the unit) | Its own entry, Vite build and deployment (`packages/browser-app/package.json:5–8`; `vercel.json:2–3`). |
+| Q3 | Undetermined | Host (`ojfbot/shell`) is not in repository. |
+| Q4 | Undetermined | Remote side is configured (`exposes: ./Dashboard`, `remoteEntry.js`); consumer is unobservable. |
+| Q5 | No | Unit prepared for composition by an unobservable external host. |
 
-## Motivo
+## Rationale
 
-- `MFE-unit` pela exceção “a single frontend unit explicitly prepared to be composed by an external host (e.g., Module Federation `exposes`…), but the composing host is not observable”.
-- Corresponde a “repositories containing only a remote unit, without the composing host”, como 001, 050 e 225 (rascunho).
-- O host é do mesmo ecossistema do titular (`ojfbot/shell`), não uma plataforma de terceiros (037).
-- A biblioteca compartilhada `@ojfbot/frame-ui-components` entra por npm (build time) e não é unidade composta.
-- `repo_type: production`: deploy na Vercel com origem do shell em domínio próprio (`vercel.json:16–20`). `ui_technologies: [react]`, `build_tools: [vite]`, `approaches: [module-federation]`. `frontend_units: 1`: API e automação de browser não são frontends.
-- Não há decisão aberta.
+- `MFE-unit` under exception “a single frontend unit explicitly prepared to be composed by an external host (e.g., Module Federation `exposes`…), but the composing host is not observable”.
+- Matches “repositories containing only a remote unit, without the composing host”, as in 001, 050 and 225 (draft).
+- Host belongs to owner's ecosystem (`ojfbot/shell`), rather than a third-party platform (037).
+- Shared library `@ojfbot/frame-ui-components` enters through npm (build time) and is not a composed unit.
+- `repo_type: production`: Vercel deployment with shell origin in its own domain (`vercel.json:16–20`). `ui_technologies: [react]`, `build_tools: [vite]`, `approaches: [module-federation]`. `frontend_units: 1`: API and browser automation are not frontends.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1:** os 51 symlinks para `../../../core/...` dependem de um checkout vizinho do repositório `core` e ficam quebrados num clone isolado; pertencem ao tooling de assistente (`.claude`) e a hooks.
-- **RQ2:** remote `@originjs/vite-plugin-federation` com `vite-plugin-css-injected-by-js` para levar o CSS no chunk exposto (`vite.config.ts:13–22`) e singleton de `@carbon/react`.
-- **Protocolo (famílias/multi-repo):** o ecossistema Frame OS tem ao menos 18 repositórios nas rodadas, incluindo o host `ojfbot/shell`. Uma análise de famílias poderia verificar Q3/Q4 no shell.
+- **RQ1:** 51 symlinks to `../../../core/...` depend on a neighboring `core` repository checkout and are broken in an isolated clone; belong to assistant tooling (`.claude`) and hooks.
+- **RQ2:** `@originjs/vite-plugin-federation` remote with `vite-plugin-css-injected-by-js` to carry CSS in exposed chunk (`vite.config.ts:13–22`) and `@carbon/react` singleton.
+- **Protocol (families/multi-repo):** Frame OS ecosystem has at least 18 repositories in rounds, including host `ojfbot/shell`. Family analysis could verify Q3/Q4 in shell.

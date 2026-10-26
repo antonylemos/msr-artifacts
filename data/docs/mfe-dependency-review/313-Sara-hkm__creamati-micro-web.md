@@ -15,6 +15,6 @@ annotation:
 
 # 313 — Sara-hkm/creamati-micro-web
 
-## Dependências
+## Dependencies
 
-Nenhuma dependência das tecnologias no dependencies.csv.
+No dependency on the technologies in dependencies.csv.

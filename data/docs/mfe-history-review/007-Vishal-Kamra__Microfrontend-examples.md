@@ -13,27 +13,27 @@ annotation:
 
 # 007 — Vishal-Kamra/Microfrontend-examples
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem um único commit, `eeb8488` (2025-11-17, "Initial Commit"), que é o próprio snapshot. Tudo o que o repositório contém chegou de uma vez. O histórico não tem nenhuma informação além do snapshot: não mostra estágios anteriores, abandonos nem a ordem em que os arquivos foram feitos.
+History up to snapshot has a single commit, `eeb8488` (2025-11-17, "Initial Commit"), snapshot itself. Everything repository contains arrived at once. History has no information beyond snapshot: shows no previous stages, abandonment or order of file creation.
 
-## Pontos
+## Points
 
-| # | Ponto | Origem | Pergunta | Commits | Resultado |
+| # | Point | Origin | Question | Commits | Result |
 |---|---|---|---|---|---|
-| 1 | `react-js/auth` e `react-js/dashboard` só têm `package.json` e lockfile | 3.4.3 (Notas) | ativo ou abandonado | eeb8488 2025-11-17 Initial Commit | inconclusivo |
-| 2 | Os `webpack.prod.js` do conjunto `react-js` estão vazios | 3.4.6 (Leitura) | ativo ou abandonado | eeb8488 2025-11-17 Initial Commit | inconclusivo |
-| 3 | O `bootstrap.js` do container é uma cópia do marketing e diz que a aplicação roda "through container" | 3.4.7 #2 | estágios em conflito | eeb8488 2025-11-17 Initial Commit | inconclusivo |
+| 1 | `react-js/auth` and `react-js/dashboard` contain only `package.json` and lockfile | 3.4.3 (Notes) | active or abandoned | eeb8488 2025-11-17 Initial Commit | inconclusive |
+| 2 | The `webpack.prod.js` files of set `react-js` are empty | 3.4.6 (Overview) | active or abandoned | eeb8488 2025-11-17 Initial Commit | inconclusive |
+| 3 | Container `bootstrap.js` copies marketing and says application runs "through container" | 3.4.7 #2 | conflicting stages | eeb8488 2025-11-17 Initial Commit | inconclusive |
 
-## Observações
+## Observations
 
-**1. `react-js/auth` e `react-js/dashboard` só têm `package.json` e lockfile.** As duas pastas chegam no único commit, e não há versão anterior nem posterior. Não dá para saber se são aplicações planejadas e não feitas ou restos de aplicações removidas antes do primeiro commit.
+**1. `react-js/auth` and `react-js/dashboard` contain only `package.json` and lockfile.** Both directories arrive in only commit, without earlier or later version. Whether planned but unimplemented applications or remnants of applications removed before first commit cannot be known.
 
-**2. Os `webpack.prod.js` do conjunto `react-js` estão vazios.** Os dois arquivos chegam vazios no único commit. O histórico não diz se tiveram conteúdo antes.
+**2. The `webpack.prod.js` files of set `react-js` are empty.** Both files arrive empty in only commit. History does not say whether they had content previously.
 
-**3. O `bootstrap.js` do container é uma cópia do marketing e diz que a aplicação roda "through container".** Os dois arquivos chegam juntos no único commit. Não há estágio anterior que explique a cópia.
+**3. Container `bootstrap.js` copies marketing and says application runs "through container".** Both files arrive together in only commit. No earlier stage explains copy.
 
-## Comandos
+## Commands
 
 ```
 docs/mfe-history-review/tools/hist.sh Vishal-Kamra__Microfrontend-examples rev-list --count eeb848822ba0bad3549c04a36f5c9dfb72ae7fe8
@@ -47,6 +47,6 @@ docs/mfe-history-review/tools/hist.sh Vishal-Kamra__Microfrontend-examples log -
 docs/mfe-history-review/tools/hist.sh Vishal-Kamra__Microfrontend-examples log --format='%h %ad' --date=short eeb848822ba0bad3549c04a36f5c9dfb72ae7fe8 -- react-js/marketing/src/bootstrap.js
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 1 (2025-11-17 a 2025-11-17). Pontos: 3 (esclarecido: 0, inconclusivo: 3, resolvido pelo snapshot: 0).
+Commits up to the snapshot: 1 (2025-11-17 to 2025-11-17). Points: 3 (clarified: 0, inconclusive: 3, resolved by the snapshot: 0).

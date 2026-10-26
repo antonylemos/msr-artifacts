@@ -19,356 +19,357 @@ annotation:
 
 # 128 — fudoyoki/ai-portal-mfe-example
 
-## Leitura do repositório
+## Repository overview
 
-Monorepo npm workspaces com duas aplicações React/Vite, o shell (host) e o dashboard (remote), um BFF NestJS e dois pacotes compartilhados. A cadeia de Module Federation está completa:
-- **Dependência:** `@originjs/vite-plugin-federation`, nas duas aplicações (#1, #2).
-- **Configuração:** o shell declara o remote `mfeDashboard`, com URL de desenvolvimento e de produção (#5), e o dashboard se publica com esse nome e expõe `./DashboardApp` (#4); os dois lados compartilham as mesmas bibliotecas como singleton.
-- **Código:** o shell importa `mfeDashboard/DashboardApp` com `React.lazy` (#6), liga a rota `/dashboard/*` ao componente remoto (#7) e o renderiza passando `user` e `basePath` (#8).
-- **Relação:** isso resulta na relação ativa shell → dashboard (#15), entre duas unidades com limite próprio (#11, #12), com build e deploy separados, uma imagem nginx por aplicação (#16, #17).
+npm workspaces monorepo with two React/Vite applications, shell (host) and dashboard (remote), a NestJS BFF and two shared packages. Complete Module Federation chain:
+- **Dependency:** `@originjs/vite-plugin-federation`, in both applications (#1, #2).
+- **Configuration:** shell declares remote `mfeDashboard`, with development and production URL (#5), and dashboard publishes itself under that name and exposes `./DashboardApp` (#4); both sides share same libraries as singletons.
+- **Code:** shell imports `mfeDashboard/DashboardApp` with `React.lazy` (#6), links route `/dashboard/*` to remote component (#7) and renders it passing `user` and `basePath` (#8).
+- **Relationship:** active shell → dashboard relationship results (#15), between two units with own boundaries (#11, #12), separate builds and deployments, one nginx image per application (#16, #17).
 
-Os sinais enganosos vêm do portal que a documentação desenha e o snapshot não tem. Os remotes Chat, Tools e Admin só existem como linhas comentadas na configuração do shell e como placeholders nas rotas (#5, #7); o README os apresenta como remotes (#20, #23), e o histórico mostra que nunca tiveram código (#42). O README liga as unidades ao BFF, e nenhuma delas o chama (#22, #43); o pacote de tipos se diz compartilhado com o BFF, que não o usa (#39, #47). O BFF (#10), a raiz de coordenação (#9) e os pacotes (#13, #14) são contexto, não unidades frontend.
+Misleading signals come from portal depicted by documentation but absent from snapshot. Chat, Tools and Admin remotes exist only as commented shell configuration lines and route placeholders (#5, #7); README presents them as remotes (#20, #23), and history shows they never had code (#42). README connects units to BFF, called by neither (#22, #43); types package calls itself shared with BFF, which does not use it (#39, #47). BFF (#10), coordination root (#9) and packages (#13, #14) are context rather than frontend units.
 
-Duas afirmações sobre publicação não se sustentam: o deploy em CDN do README usa um prefixo diferente do que o shell espera (#33), e os `sonar-project.properties` de cada app não existem (#35). O histórico não diz quando a seção de CDN entrou no README (#45) nem se a exigência de `build` + `preview` do remote é de outro estágio que o compose de desenvolvimento (#44); nos dois casos a dúvida é só sobre o passado. A única observação ambígua é o `turbo` (#3): declarado e configurado, mas invocado só pelos scripts do `package.json`, sem decidir se orquestra o build.
+Two publication claims are unsupported: README CDN deployment uses a different prefix from shell expectation (#33), and per-app `sonar-project.properties` files do not exist (#35). History does not say when CDN section entered README (#45) or whether remote `build` + `preview` requirement comes from another stage than development compose (#44); both uncertainties concern only past. Sole ambiguous observation is `turbo` (#3): declared and configured, but invoked only by `package.json` scripts, without deciding whether it orchestrates build.
 
-## Observações
+## Observations
 
 ### 1. apps/mfe-dashboard/package.json:21
 
-**Observação:** `@originjs/vite-plugin-federation` (`^1.3.6`) está declarada em `devDependencies`.
+**Observation:** `@originjs/vite-plugin-federation` (`^1.3.6`) is declared in `devDependencies`.
 
-**Interpretação:** A tecnologia de federação está presente no build do dashboard.
+**Interpretation:** Federation technology is present in dashboard build.
 
 ### 2. apps/shell/package.json:22
 
-**Observação:** `@originjs/vite-plugin-federation` (`^1.3.6`) está declarada em `devDependencies`.
+**Observation:** `@originjs/vite-plugin-federation` (`^1.3.6`) is declared in `devDependencies`.
 
-**Interpretação:** A tecnologia de federação está presente no build do shell.
+**Interpretation:** Federation technology is present in shell build.
 
 ### 3. package.json:18; turbo.json:3-25
 
-**Observação:** `turbo` (`^2.3.0`) está declarada em `devDependencies`. `turbo.json` define as tasks `build`, `dev`, `lint`, `test`, `test:coverage` e `clean`. A única invocação de `turbo` está nos scripts do `package.json` da raiz (package.json:10-15); os Dockerfiles copiam `turbo.json` e constroem com `npm run build --workspace=...`, e não há workflow de CI.
+**Observation:** `turbo` (`^2.3.0`) is declared in `devDependencies`. `turbo.json` defines tasks `build`, `dev`, `lint`, `test`, `test:coverage` and `clean`. Sole `turbo` invocation is in root `package.json` scripts (package.json:10-15); Dockerfiles copy `turbo.json` and build with `npm run build --workspace=...`, and no CI workflow exists.
 
-**Interpretação:** É a ferramenta de monorepo, não uma tecnologia de MFE. Pela regra da revisão de dependências, o uso fica indeterminado: o Turborepo pode ser a orquestração efetiva do build ou só um atalho de scripts.
+**Interpretation:** Monorepo tool rather than MFE technology. Dependency review rule leaves usage undetermined: Turborepo may be actual build orchestration or merely a script shortcut.
 
 ### 4. apps/mfe-dashboard/vite.config.ts:11-40
 
-**Observação:** `federation` declara `name: 'mfeDashboard'` e `filename: 'remoteEntry.js'`, expõe `./DashboardApp` (`./src/DashboardApp.tsx`) e compartilha como `singleton` `react`, `react-dom`, `react-router-dom`, `@ai-portal/ui-kit` e `@ai-portal/shared-types`.
+**Observation:** `federation` declares `name: 'mfeDashboard'` and `filename: 'remoteEntry.js'`, exposes `./DashboardApp` (`./src/DashboardApp.tsx`) and shares as `singleton` `react`, `react-dom`, `react-router-dom`, `@ai-portal/ui-kit` and `@ai-portal/shared-types`.
 
-**Interpretação:** O dashboard está configurado como remote e oferece seu componente principal a um host.
+**Interpretation:** Dashboard is configured as remote and offers main component to a host.
 
 ### 5. apps/shell/vite.config.ts:17-23; apps/shell/vite.config.ts:28-60
 
-**Observação:** `federation` declara `name: 'shell'` e o remote `mfeDashboard: getRemoteUrl('mfeDashboard')`. `getRemoteUrl` devolve `http://localhost:3001/assets/remoteEntry.js` em desenvolvimento e `${CDN_URL}/mfeDashboard/remoteEntry.js`, com `https://cdn.example.com` como padrão, em produção. As entradas `mfeChat`, `mfeTools` e `mfeAdmin` estão comentadas sob "Add more MFEs as they're created" (:32-35). O `shared` é o mesmo do dashboard.
+**Observation:** `federation` declares `name: 'shell'` and remote `mfeDashboard: getRemoteUrl('mfeDashboard')`. `getRemoteUrl` returns `http://localhost:3001/assets/remoteEntry.js` in development and `${CDN_URL}/mfeDashboard/remoteEntry.js`, defaulting to `https://cdn.example.com`, in production. Entries `mfeChat`, `mfeTools` and `mfeAdmin` are commented under "Add more MFEs as they're created" (:32-35). `shared` matches dashboard.
 
-**Interpretação:** A configuração do host declara o dashboard como remote e onde encontrá-lo em cada ambiente; os outros três remotes só estão previstos.
+**Interpretation:** Host configuration declares dashboard as remote and where to find it in each environment; other three remotes are only planned.
 
 ### 6. apps/shell/src/App.tsx:7
 
-**Observação:** `const DashboardApp = React.lazy(() => import('mfeDashboard/DashboardApp'))`.
+**Observation:** `const DashboardApp = React.lazy(() => import('mfeDashboard/DashboardApp'))`.
 
-**Interpretação:** O shell carrega em runtime o módulo exposto pelo remote, pelo nome dele.
+**Interpretation:** Shell loads module exposed by remote, by name at runtime.
 
 ### 7. apps/shell/src/App.tsx:165-179
 
-**Observação:** A tabela de rotas de `AppRoutes` liga `/dashboard/*` ao `DashboardApp` remoto; `/chat/*` e `/tools/*` renderizam o placeholder local `ComingSoon`. `AppRoutes` é usado por `App` (:184-189).
+**Observation:** `AppRoutes` route table links `/dashboard/*` to remote `DashboardApp`; `/chat/*` and `/tools/*` render local placeholder `ComingSoon`. `AppRoutes` is used by `App` (:184-189).
 
-**Interpretação:** O host encaixa o remote numa rota própria; as rotas dos outros remotes não carregam nenhuma unidade.
+**Interpretation:** Host places remote in its own route; other remote routes load no unit.
 
 ### 8. apps/shell/src/App.tsx:170-174
 
-**Observação:** `<DashboardApp user={user} basePath="/dashboard" />`, dentro de `MfeErrorBoundary` e `Suspense`, com `user` vindo do `AuthContext` do shell.
+**Observation:** `<DashboardApp user={user} basePath="/dashboard" />`, inside `MfeErrorBoundary` and `Suspense`, with `user` from shell `AuthContext`.
 
-**Interpretação:** O host renderiza o componente remoto e lhe passa props; o contrato entre as unidades é só de props.
+**Interpretation:** Host renders remote component and passes props; inter-unit contract consists only of props.
 
-**Nota:** A linha está no `element` da rota, mas a ligação do caminho ao componente remoto é a linha da rota (#7); esta só renderiza o componente, caso `moderada` da orientação.
+**Note:** Row is in route `element`, but path-to-remote-component link is route row (#7); this only renders component, the `moderate` guidance case.
 
 ### 9. .; package.json:1-25; docker-compose.yml:3-58
 
-**Observação:** A raiz tem o manifesto do workspace, que declara `apps/*` e `packages/*` e só delega `dev` e `build` a `turbo run`, e o `docker-compose.yml`, que orquestra os serviços dos subdiretórios. Não tem entrada nem build próprio.
+**Observation:** Root contains workspace manifest declaring `apps/*` and `packages/*`, only delegating `dev` and `build` to `turbo run`, and `docker-compose.yml`, orchestrating subdirectory services. No entry or build of its own.
 
-**Interpretação:** É a raiz de coordenação do workspace, não uma unidade frontend.
+**Interpretation:** Workspace coordination root rather than frontend unit.
 
 ### 10. apps/bff; apps/bff/package.json:1-32; apps/bff/nest-cli.json:1-8; apps/bff/Dockerfile:2-16
 
-**Observação:** Tem manifesto próprio com build `nest build`, configuração do Nest CLI, imagem Docker própria e serviço `bff` no compose.
+**Observation:** Own manifest with `nest build`, Nest CLI configuration, own Docker image and `bff` compose service.
 
-**Interpretação:** É um servidor NestJS (BFF), não uma unidade frontend.
+**Interpretation:** NestJS server (BFF) rather than frontend unit.
 
 ### 11. apps/mfe-dashboard; apps/mfe-dashboard/package.json:1-31; apps/mfe-dashboard/index.html:10-11; apps/mfe-dashboard/src/main.tsx:17-26; apps/mfe-dashboard/vite.config.ts:8-56
 
-**Observação:** É uma aplicação React com manifesto, entrada e build Vite próprios; o `main.tsx` monta o `DashboardApp` sozinho, em modo standalone. Tem imagem de deploy própria.
+**Observation:** React application with own manifest, entry and Vite build; `main.tsx` mounts `DashboardApp` standalone. Own deployment image.
 
-**Interpretação:** É uma unidade frontend com limite próprio, capaz de rodar sem o shell.
+**Interpretation:** Frontend unit with own boundary, able to run without shell.
 
 ### 12. apps/shell; apps/shell/package.json:1-32; apps/shell/index.html:10-11; apps/shell/src/main.tsx:8-16; apps/shell/vite.config.ts:25-76
 
-**Observação:** É uma aplicação React com manifesto, entrada e build Vite próprios. Tem imagem de deploy própria.
+**Observation:** React application with own manifest, entry and Vite build. Own deployment image.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with own boundary.
 
 ### 13. packages/shared-types; packages/shared-types/package.json:1-25
 
-**Observação:** Tem manifesto próprio e build de biblioteca (`tsup src/index.ts`, :17), sem entrada de aplicação nem deploy.
+**Observation:** Own manifest and library build (`tsup src/index.ts`, :17), without application entry or deployment.
 
-**Interpretação:** É um pacote compartilhado de tipos, não uma unidade frontend.
+**Interpretation:** Shared types package rather than frontend unit.
 
 ### 14. packages/ui-kit; packages/ui-kit/package.json:1-35
 
-**Observação:** Tem manifesto próprio e build de biblioteca (`tsup src/index.ts`, :18), sem entrada de aplicação nem deploy.
+**Observation:** Own manifest and library build (`tsup src/index.ts`, :18), without application entry or deployment.
 
-**Interpretação:** É uma biblioteca de componentes compartilhada, não uma unidade frontend.
+**Interpretation:** Shared component library rather than frontend unit.
 
 ### 15. apps/shell/src/App.tsx:7, 165, 172; apps/shell/vite.config.ts:17-23, 28-31; apps/mfe-dashboard/vite.config.ts:11-17
 
-**Observação:** O shell importa `mfeDashboard/DashboardApp` e o renderiza na rota `/dashboard/*`. O nome do remote, o `remoteEntry.js` e o módulo `./DashboardApp` correspondem à configuração do dashboard.
+**Observation:** Shell imports `mfeDashboard/DashboardApp` and renders it at route `/dashboard/*`. Remote name, `remoteEntry.js` and module `./DashboardApp` match dashboard configuration.
 
-**Interpretação:** É uma relação host → remote ativa, por Module Federation.
+**Interpretation:** An active host → remote relationship through Module Federation.
 
 ### 16. apps/mfe-dashboard/package.json:8; apps/mfe-dashboard/vite.config.ts:8-56; apps/mfe-dashboard/Dockerfile:2-33; apps/mfe-dashboard/nginx.conf:1-38; docker-compose.yml:19-27
 
-**Observação:** Tem `tsc && vite build` e configuração próprios, que geram o `remoteEntry.js`. O Dockerfile constrói os pacotes e o app e copia para a imagem nginx só `apps/mfe-dashboard/dist`; o serviço `mfe-dashboard` do compose a publica na porta 3001. O `nginx.conf` abre CORS e não põe `remoteEntry.js` em cache. O shell, em produção, espera o remote num CDN (apps/shell/vite.config.ts:22) que nenhum artefato publica. Versão `0.1.0` com `private: true`.
+**Observation:** Own `tsc && vite build` and configuration generating `remoteEntry.js`. Dockerfile builds packages and app and copies only `apps/mfe-dashboard/dist` into nginx image; compose service `mfe-dashboard` publishes it on port 3001. `nginx.conf` opens CORS and does not cache `remoteEntry.js`. Production shell expects remote on CDN (apps/shell/vite.config.ts:22), published by no artifact. Version `0.1.0` with `private: true`.
 
-**Interpretação:** O dashboard tem build e deploy separados, sem versionamento independente; o endereço de produção que o shell usa não é publicado no snapshot.
+**Interpretation:** Dashboard has separate build and deployment without independent versioning; production address used by shell is not published in snapshot.
 
 ### 17. apps/shell/package.json:8; apps/shell/vite.config.ts:25-76; apps/shell/Dockerfile:2-33; apps/shell/nginx.conf:1-34; docker-compose.yml:5-16
 
-**Observação:** Tem `tsc && vite build` e configuração próprios; o artefato só guarda a URL do remote. O Dockerfile copia para a imagem nginx só `apps/shell/dist`; o serviço `shell` a publica na porta 3000, com `depends_on` sobre `mfe-dashboard` e `bff`. Versão `0.1.0` com `private: true`.
+**Observation:** Own `tsc && vite build` and configuration; artifact only stores remote URL. Dockerfile copies only `apps/shell/dist` into nginx image; service `shell` publishes it on port 3000, with `depends_on` on `mfe-dashboard` and `bff`. Version `0.1.0` with `private: true`.
 
-**Interpretação:** O shell tem build e deploy separados, sem versionamento independente; trocar o endereço do remote exige reconstruí-lo.
+**Interpretation:** Shell has separate build and deployment without independent versioning; changing remote address requires rebuilding it.
 
 ### 18. README.md:3
 
-**Observação:** "A complete example of a micro-frontend architecture using **Vite + React + Module Federation**, with a **NestJS BFF**".
+**Observation:** "A complete example of a micro-frontend architecture using **Vite + React + Module Federation**, with a **NestJS BFF**".
 
-**Interpretação:** Apresenta o repositório como arquitetura de micro-frontends com Module Federation e um BFF. A afirmação é corroborada.
+**Interpretation:** Presents repository as micro-frontend architecture with Module Federation and BFF. Claim corroborated.
 
 ### 19. README.md:11-16
 
-**Observação:** "SHELL (Host) / Auth · Routing · Layout · State" […] "Dashboard MFE (remote)".
+**Observation:** "SHELL (Host) / Auth · Routing · Layout · State" […] "Dashboard MFE (remote)".
 
-**Interpretação:** Descreve o shell como host, com autenticação, roteamento, layout e estado, e o dashboard como remote. A afirmação é corroborada.
+**Interpretation:** Describes shell as host with authentication, routing, layout and state, and dashboard as remote. Claim corroborated.
 
 ### 20. README.md:14-16
 
-**Observação:** "Chat MFE (remote)" […] "Tools MFE (remote)".
+**Observation:** "Chat MFE (remote)" […] "Tools MFE (remote)".
 
-**Interpretação:** Afirma dois remotes além do dashboard. Eles só aparecem comentados na configuração e como placeholders nas rotas, e a afirmação é contradita.
+**Interpretation:** Claims two remotes beyond dashboard. They only appear commented in configuration and as route placeholders. Claim contradicted.
 
 ### 21. README.md:21-22
 
-**Observação:** "SHARED PACKAGES (via Federation) / @ai-portal/ui-kit · @ai-portal/shared-types".
+**Observation:** "SHARED PACKAGES (via Federation) / @ai-portal/ui-kit · @ai-portal/shared-types".
 
-**Interpretação:** Afirma que os pacotes internos são compartilhados pela federação. A afirmação é corroborada.
+**Interpretation:** Claims internal packages are shared through federation. Claim corroborated.
 
 ### 22. README.md:25-30
 
-**Observação:** "BROWSER" […] "▼" […] "BFF (NestJS) / /api/auth · /api/chat · ...".
+**Observation:** "BROWSER" […] "▼" […] "BFF (NestJS) / /api/auth · /api/chat · ...".
 
-**Interpretação:** Afirma que as unidades no navegador chamam o BFF. O BFF existe com essas rotas, mas nenhuma unidade frontend o chama, e a afirmação é contradita.
+**Interpretation:** Claims browser units call BFF. BFF exists with these routes, but no frontend unit calls it. Claim contradicted.
 
 ### 23. README.md:46
 
-**Observação:** "MFE Admin | 3004 | Admin panel".
+**Observation:** "MFE Admin | 3004 | Admin panel".
 
-**Interpretação:** Afirma um MFE Admin com porta própria. Ele não tem diretório, rota nem remote ativo, e a afirmação é contradita.
+**Interpretation:** Claims MFE Admin with own port. No directory, route or active remote exists. Claim contradicted.
 
 ### 24. README.md:61
 
-**Observação:** "Build Shared Packages (required first!)".
+**Observation:** "Build Shared Packages (required first!)".
 
-**Interpretação:** Afirma que o build das aplicações depende do build prévio dos pacotes. A afirmação é corroborada.
+**Interpretation:** Claims application builds depend on prior package builds. Claim corroborated.
 
 ### 25. README.md:70
 
-**Observação:** "MFEs must be built before running — Module Federation needs the `remoteEntry.js` file."
+**Observation:** "MFEs must be built before running — Module Federation needs the `remoteEntry.js` file."
 
-**Interpretação:** Afirma que o remote precisa ser construído para servir o `remoteEntry.js`. A configuração gera o arquivo e o shell o busca, mas que o plugin só o gere no build é comportamento da ferramenta; a afirmação é corroborada em parte.
+**Interpretation:** Claims remote must be built to serve `remoteEntry.js`. Configuration generates file and shell fetches it, but plugin only generating it in build is tool behavior; claim partially corroborated.
 
 ### 26. README.md:103
 
-**Observação:** "You should see the Dashboard MFE loaded inside the Shell".
+**Observation:** "You should see the Dashboard MFE loaded inside the Shell".
 
-**Interpretação:** Afirma que o dashboard é renderizado dentro do shell. A afirmação é corroborada.
+**Interpretation:** Claims dashboard renders inside shell. Claim corroborated.
 
 ### 27. README.md:115
 
-**Observação:** "The Shell (host) can run `npm run dev` because it *consumes* remotes, not *exposes* them."
+**Observation:** "The Shell (host) can run `npm run dev` because it *consumes* remotes, not *exposes* them."
 
-**Interpretação:** Distingue os papéis de consumidor e de provedor de módulos. A afirmação é corroborada.
+**Interpretation:** Distinguishes module consumer and provider roles. Claim corroborated.
 
 ### 28. README.md:142-143
 
-**Observação:** "turbo.json              # Turborepo config" / "package.json            # Workspace root".
+**Observation:** "turbo.json              # Turborepo config" / "package.json            # Workspace root".
 
-**Interpretação:** Descreve a raiz como workspace e o `turbo.json` como configuração do Turborepo. A afirmação é corroborada.
+**Interpretation:** Describes root as workspace and `turbo.json` as Turborepo configuration. Claim corroborated.
 
 ### 29. README.md:150
 
-**Observação:** "MFEs expose components that the Shell loads at runtime".
+**Observation:** "MFEs expose components that the Shell loads at runtime".
 
-**Interpretação:** Afirma a carga em runtime de componentes expostos pelo remote. A afirmação é corroborada.
+**Interpretation:** Claims runtime loading of components exposed by remote. Claim corroborated.
 
 ### 30. README.md:168
 
-**Observação:** "Packages listed in `shared` are **provided by the Shell** at runtime. MFEs don't bundle their own copies."
+**Observation:** "Packages listed in `shared` are **provided by the Shell** at runtime. MFEs don't bundle their own copies."
 
-**Interpretação:** Afirma que o host fornece as dependências compartilhadas. Os dois lados as declaram como singleton, mas o bundle gerado não está no snapshot e o dashboard também roda sozinho; a afirmação é corroborada em parte.
+**Interpretation:** Claims host provides shared dependencies. Both sides declare them as singletons, but generated bundle is absent from snapshot and dashboard also runs standalone; claim partially corroborated.
 
 ### 31. README.md:170
 
-**Observação:** "**Rule:** Shared packages must be installed on the Shell (host)."
+**Observation:** "**Rule:** Shared packages must be installed on the Shell (host)."
 
-**Interpretação:** Afirma que todo pacote compartilhado é dependência do host. A afirmação é corroborada.
+**Interpretation:** Claims every shared package is a host dependency. Claim corroborated.
 
 ### 32. README.md:183
 
-**Observação:** "Develop MFEs in standalone mode first".
+**Observation:** "Develop MFEs in standalone mode first".
 
-**Interpretação:** Afirma que o remote roda sem o shell. A afirmação é corroborada.
+**Interpretation:** Claims remote runs without shell. Claim corroborated.
 
 ### 33. README.md:187-196
 
-**Observação:** "Static Assets to CDN" […] "aws s3 sync apps/shell/dist/ s3://cdn/shell/" / "aws s3 sync apps/mfe-dashboard/dist/ s3://cdn/mfe-dashboard/".
+**Observation:** "Static Assets to CDN" […] "aws s3 sync apps/shell/dist/ s3://cdn/shell/" / "aws s3 sync apps/mfe-dashboard/dist/ s3://cdn/mfe-dashboard/".
 
-**Interpretação:** Descreve a publicação de cada aplicação num prefixo de CDN. O shell busca o remote em `/mfeDashboard/remoteEntry.js`, e não em `mfe-dashboard/assets/`, e a afirmação é contradita.
+**Interpretation:** Describes publishing each application under CDN prefix. Shell fetches remote at `/mfeDashboard/remoteEntry.js`, rather than `mfe-dashboard/assets/`. Claim contradicted.
 
 ### 34. README.md:201
 
-**Observação:** "Production: Set CDN_URL for remote URLs".
+**Observation:** "Production: Set CDN_URL for remote URLs".
 
-**Interpretação:** Afirma que a URL de produção do remote vem de `CDN_URL`. A afirmação é corroborada.
+**Interpretation:** Claims production remote URL comes from `CDN_URL`. Claim corroborated.
 
 ### 35. README.md:207
 
-**Observação:** "Each app has independent quality metrics. See `sonar-project.properties` in each app directory."
+**Observation:** "Each app has independent quality metrics. See `sonar-project.properties` in each app directory."
 
-**Interpretação:** Afirma métricas de qualidade independentes por aplicação. O arquivo não existe em nenhum diretório, e a afirmação é contradita.
+**Interpretation:** Claims independent quality metrics per application. File exists in no directory. Claim contradicted.
 
 ### 36. README.md:226-248
 
-**Observação:** "Production Build" […] "docker-compose up -d" […] "Services will be available at: - Shell: http://localhost:3000 - MFE Dashboard: http://localhost:3001".
+**Observation:** "Production Build" […] "docker-compose up -d" […] "Services will be available at: - Shell: http://localhost:3000 - MFE Dashboard: http://localhost:3001".
 
-**Interpretação:** Descreve um contêiner por aplicação, cada um no seu endereço. A afirmação é corroborada.
+**Interpretation:** Describes a container per application, each at own address. Claim corroborated.
 
 ### 37. README.md:279
 
-**Observação:** "**Module Federation:** @originjs/vite-plugin-federation".
+**Observation:** "**Module Federation:** @originjs/vite-plugin-federation".
 
-**Interpretação:** Nomeia o plugin de federação. A afirmação é corroborada.
+**Interpretation:** Names federation plugin. Claim corroborated.
 
 ### 38. apps/mfe-dashboard/nginx.conf:21
 
-**Observação:** "remoteEntry.js - never cache (Shell needs latest)".
+**Observation:** "remoteEntry.js - never cache (Shell needs latest)".
 
-**Interpretação:** Afirma que o servidor do remote entrega sempre o `remoteEntry.js` mais recente ao shell. A afirmação é corroborada.
+**Interpretation:** Claims remote server always delivers latest `remoteEntry.js` to shell. Claim corroborated.
 
 ### 39. packages/shared-types/src/index.ts:1
 
-**Observação:** "Shared Types across all MFEs and BFF".
+**Observation:** "Shared Types across all MFEs and BFF".
 
-**Interpretação:** Afirma que o pacote de tipos é comum às unidades frontend e ao BFF. O BFF não o declara nem importa, e a afirmação é contradita.
+**Interpretation:** Claims types package is common to frontend units and BFF. BFF neither declares nor imports it. Claim contradicted.
 
 ### 40. packages/shared-types/src/index.ts:47
 
-**Observação:** "MFE Props - passed from Shell to MFEs".
+**Observation:** "MFE Props - passed from Shell to MFEs".
 
-**Interpretação:** Afirma que a interface `MfeProps` é o contrato de props do shell com os remotes. A afirmação é corroborada.
+**Interpretation:** Claims interface `MfeProps` is props contract between shell and remotes. Claim corroborated.
 
 ### 41. 2a87116 2026-01-30 (package.json, turbo.json); 26c3601 2026-01-30 (Dockerfiles)
 
-**Observação:** O `package.json` e o `turbo.json` da raiz têm um único commit, e os Dockerfiles, criados depois, não mudam. Nenhum commit cria ou remove workflow de CI ou script, e nenhum remove arquivo.
+**Observation:** Root `package.json` and `turbo.json` have a single commit, and Dockerfiles, created later, never change. No commit creates or removes CI workflow or script, and none removes a file.
 
-**Interpretação:** Nunca houve uma automação que invocasse `turbo` e tenha sido apagada. O ponto está esclarecido, e a dependência continua indeterminada.
+**Interpretation:** No automation invoking `turbo` was ever deleted. Point clarified, dependency remains undetermined.
 
 ### 42. 2a87116 2026-01-30 (apps/shell/vite.config.ts, apps/shell/src/vite-env.d.ts); 26c3601 2026-01-30 (docker-compose.yml)
 
-**Observação:** A configuração do shell com os remotes Chat, Tools e Admin comentados e as declarações de tipo deles têm um único commit; o compose, com `mfe-chat` comentado, também. Nenhum commit cria diretório ou arquivo para esses remotes.
+**Observation:** Shell configuration with Chat, Tools and Admin remotes commented and their type declarations have a single commit; so does compose with `mfe-chat` commented. No commit creates directory or file for these remotes.
 
-**Interpretação:** São remotes previstos e nunca conectados, não remotes removidos. O ponto está esclarecido.
+**Interpretation:** Planned remotes never connected rather than removed remotes. Point clarified.
 
-### 43. 2a87116 2026-01-30 (apps/shell/src/context/AuthContext.tsx); d0748ce 2026-01-30 (apps/shell/src/App.tsx, apps/shell/src/main.tsx, versões anteriores ausentes); 912587f 2026-01-30 (apps/mfe-dashboard/src/DashboardApp.tsx, versão anterior ausente)
+### 43. 2a87116 2026-01-30 (apps/shell/src/context/AuthContext.tsx); d0748ce 2026-01-30 (apps/shell/src/App.tsx, apps/shell/src/main.tsx, previous versions absent); 912587f 2026-01-30 (apps/mfe-dashboard/src/DashboardApp.tsx, previous version absent)
 
-**Observação:** O `AuthContext`, com o usuário fictício e os comentários "In real app: … BFF", tem um único commit. Os outros arquivos frontend mudam em commits que anunciam mover o `AuthProvider` e remover imports.
+**Observation:** `AuthContext`, with fictitious user and comments "In real app: … BFF", has a single commit. Other frontend files change in commits announcing moving `AuthProvider` and removing imports.
 
-**Interpretação:** A ligação com o BFF é uma intenção desde a primeira presença, não uma chamada abandonada. O ponto está esclarecido, delimitado ao `AuthContext`.
+**Interpretation:** BFF connection has been intent since first presence rather than abandoned call. Point clarified, limited to `AuthContext`.
 
-### 44. 26c3601 2026-01-30 (docker-compose.dev.yml, README.md, versão ausente); f1fd5b0 2026-01-30 (README.md)
+### 44. 26c3601 2026-01-30 (docker-compose.dev.yml, README.md, version absent); f1fd5b0 2026-01-30 (README.md)
 
-**Observação:** O `docker-compose.dev.yml` é criado junto com uma alteração do README e não muda depois; o README muda de novo no snapshot. As versões anteriores do README não estão disponíveis.
+**Observation:** `docker-compose.dev.yml` is created alongside README change and never changes afterward; README changes again in snapshot. Earlier README versions unavailable.
 
-**Interpretação:** Não se sabe se a exigência de `build` + `preview` já estava no README quando o compose de desenvolvimento foi criado. A dúvida é só sobre o passado: no snapshot, as duas instruções divergem.
+**Interpretation:** Whether `build` + `preview` requirement was already in README when development compose was created is unknown. Uncertainty concerns only past: both instructions differ in snapshot.
 
-### 45. 2a87116 2026-01-30 (apps/shell/vite.config.ts, README.md, versão ausente); 26c3601 2026-01-30 (README.md, versão ausente); f1fd5b0 2026-01-30 (README.md)
+### 45. 2a87116 2026-01-30 (apps/shell/vite.config.ts, README.md, version absent); 26c3601 2026-01-30 (README.md, version absent); f1fd5b0 2026-01-30 (README.md)
 
-**Observação:** A configuração do shell, com `${CDN_URL}/mfeDashboard/remoteEntry.js`, tem um único commit. O README tem três, e nenhuma versão anterior está disponível.
+**Observation:** Shell configuration with `${CDN_URL}/mfeDashboard/remoteEntry.js` has a single commit. README has three, and no earlier version is available.
 
-**Interpretação:** Não se sabe quando a seção de deploy para CDN entrou nem se já divergia do shell. A dúvida é só sobre o passado: no snapshot, o prefixo diverge.
+**Interpretation:** When CDN deployment section entered or whether it already differed from shell is unknown. Uncertainty concerns only past: prefix differs in snapshot.
 
-### 46. 2a87116 2026-01-30, 26c3601 2026-01-30, f1fd5b0 2026-01-30 (README.md; sonar-project.properties, log vazio)
+### 46. 2a87116 2026-01-30, 26c3601 2026-01-30, f1fd5b0 2026-01-30 (README.md; sonar-project.properties, empty log)
 
-**Observação:** O `log` dos caminhos `sonar-project.properties` é vazio, e nenhum commit tem arquivo de Sonar ou remove arquivo.
+**Observation:** `log` of `sonar-project.properties` paths is empty, and no commit has a Sonar file or removes a file.
 
-**Interpretação:** O arquivo nunca existiu; a menção do README não é resto de configuração removida. O ponto está esclarecido.
+**Interpretation:** File never existed; README mention does not remain from removed configuration. Point clarified.
 
 ### 47. 2a87116 2026-01-30 (packages/shared-types/src/index.ts, apps/bff/package.json); 3ced632 2026-01-30 (apps/bff/src/chat/chat.service.ts)
 
-**Observação:** O pacote de tipos e o manifesto do BFF têm um único commit, e o manifesto nunca declarou `@ai-portal/shared-types`. O serviço de chat muda num commit que anuncia exportar as próprias interfaces do BFF.
+**Observation:** Types package and BFF manifest have a single commit, and manifest never declared `@ai-portal/shared-types`. Chat service changes in a commit announcing export of BFF own interfaces.
 
-**Interpretação:** O compartilhamento com o BFF é uma intenção do comentário desde a primeira presença, não um uso abandonado. O ponto está esclarecido.
+**Interpretation:** BFF sharing has been comment intent since first presence rather than abandoned usage. Point clarified.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.2 (apps/mfe-dashboard/package.json:21) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #4 |
-| 2 | 3.4.2 (apps/shell/package.json:22) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #5; declara #6 |
-| 3 | 3.4.2 (package.json:18) | 1 tecnologia | manifesto | — | contexto | ambígua | declara turbo.json:3-25 |
-| 4 | 3.4.2 (apps/mfe-dashboard/package.json:21, Evidência); 3.4.3 (apps/mfe-dashboard, Marcadores e Build); 3.4.4 (apps/shell/src/App.tsx:7, Observação); 3.4.5 #1 (Configuração); 3.4.6 #1 (Artefatos); 3.4.7 #4, #8, #10, #12, #13, #16 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #11; configura #15 |
-| 5 | 3.4.2 (apps/shell/package.json:22, Evidência); 3.4.3 (apps/shell, Marcadores e Build); 3.4.4 (apps/shell/src/App.tsx:7, Observação); 3.4.5 #1 (Configuração); 3.4.6 #1 (Onde é servida), #2 (Artefatos); 3.4.7 #3, #4, #6, #8, #10, #13, #14, #16, #17 (Evidência); 3.4.8 #2 (Origem) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #12; configura #15 |
-| 6 | 3.4.4 (apps/shell/src/App.tsx:7) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #15 |
-| 7 | 3.4.4 (apps/shell/src/App.tsx:165) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #15 |
-| 8 | 3.4.4 (apps/shell/src/App.tsx:172) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #15 |
-| 9 | 3.4.3 (.) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 10 | 3.4.3 (apps/bff) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 11 | 3.4.3 (apps/mfe-dashboard) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 12 | 3.4.3 (apps/shell) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 13 | 3.4.3 (packages/shared-types) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 14 | 3.4.3 (packages/ui-kit) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 15 | 3.4.5 #1 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #12; liga #11 |
-| 16 | 3.4.6 #1 | 6 build-deploy | deploy | — | arquitetural | moderada | publica #11 |
-| 17 | 3.4.6 #2 | 6 build-deploy | deploy | — | arquitetural | moderada | publica #12 |
-| 18 | 3.4.7 #1 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #11; corrobora #12; corrobora #10; corrobora #1; corrobora #2; corrobora #15 |
-| 19 | 3.4.7 #2 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #15; corrobora #7; corrobora apps/shell/src/App.tsx:57-118; corrobora apps/shell/src/context/AuthContext.tsx:14-49 |
-| 20 | 3.4.7 #3 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #5; contradiz #7; contradiz apps/shell/src/App.tsx:150-158 |
-| 21 | 3.4.7 #4 | 7 documentação | documentação | module-federation | tecnológica | fraca | corrobora #4; corrobora #5; corrobora apps/shell/src/App.tsx:3; corrobora apps/mfe-dashboard/src/DashboardApp.tsx:2-3; corrobora apps/shell/src/context/AuthContext.tsx:2 |
-| 22 | 3.4.7 #5 | 7 documentação | documentação | — | contexto | fraca | contradiz apps/shell/src/context/AuthContext.tsx:14-34 |
-| 23 | 3.4.7 #6 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #5; contradiz #7; contradiz apps/shell/src/App.tsx:61-66 |
-| 24 | 3.4.7 #7 | 7 documentação | documentação | — | arquitetural | fraca | corrobora apps/shell/package.json:14-15; corrobora apps/mfe-dashboard/package.json:14-15; corrobora turbo.json:4-6; corrobora #16; corrobora #17 |
-| 25 | 3.4.7 #8 | 7 documentação | documentação | module-federation | tecnológica | fraca | corrobora em parte #4; corrobora em parte #5; corrobora em parte apps/mfe-dashboard/package.json:8-9 |
-| 26 | 3.4.7 #9 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #8; corrobora #15 |
-| 27 | 3.4.7 #10 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #15; corrobora #5; corrobora #4 |
-| 28 | 3.4.7 #11 | 7 documentação | documentação | — | contexto | fraca | corrobora #9; corrobora turbo.json:3-25 |
-| 29 | 3.4.7 #12 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #6; corrobora #15; corrobora #4 |
-| 30 | 3.4.7 #13 | 7 documentação | documentação | module-federation | tecnológica | fraca | corrobora em parte #5; corrobora em parte #4; corrobora em parte apps/shell/package.json:14-18 |
-| 31 | 3.4.7 #14 | 7 documentação | documentação | module-federation | tecnológica | fraca | corrobora apps/shell/package.json:14-18; corrobora #5 |
-| 32 | 3.4.7 #15 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #11; corrobora apps/mfe-dashboard/src/main.tsx:7-26 |
-| 33 | 3.4.7 #16 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #5; contradiz #4 |
-| 34 | 3.4.7 #17 | 7 documentação | documentação | module-federation | tecnológica | fraca | corrobora #5; corrobora #15 |
-| 35 | 3.4.7 #18 | 7 documentação | documentação | — | arquitetural | fraca | contradiz apps/mfe-dashboard/package.json:6-12; contradiz apps/shell/package.json:6-12 |
-| 36 | 3.4.7 #19 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #16; corrobora #17 |
-| 37 | 3.4.7 #20 | 7 documentação | documentação | module-federation | tecnológica | fraca | corrobora #1; corrobora #2; corrobora #15 |
-| 38 | 3.4.7 #21 | 7 documentação | comentário | module-federation | arquitetural | fraca | corrobora #16 |
-| 39 | 3.4.7 #22 | 7 documentação | comentário | — | contexto | fraca | contradiz apps/bff/package.json:15-30; contradiz apps/bff/src/chat/chat.service.ts:3-16 |
-| 40 | 3.4.7 #23 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #8; corrobora packages/shared-types/src/index.ts:48-51 |
-| 41 | 3.4.8 #1 | 8 histórico | histórico | — | contexto | fraca | explica #3 |
-| 42 | 3.4.8 #2 | 8 histórico | histórico | module-federation | arquitetural | fraca | explica #5; explica #7; explica #20; explica #23 |
-| 43 | 3.4.8 #3 | 8 histórico | histórico | — | contexto | fraca | explica #22 |
-| 44 | 3.4.8 #4 | 8 histórico | histórico | module-federation | tecnológica | fraca | explica #25 |
-| 45 | 3.4.8 #5 | 8 histórico | histórico | module-federation | arquitetural | fraca | explica #33 |
-| 46 | 3.4.8 #6 | 8 histórico | histórico | — | arquitetural | fraca | explica #35 |
-| 47 | 3.4.8 #7 | 8 histórico | histórico | — | contexto | fraca | explica #39 |
+| 1 | 3.4.2 (apps/mfe-dashboard/package.json:21) | 1 technology | manifest | module-federation | technological | weak | declares #4 |
+| 2 | 3.4.2 (apps/shell/package.json:22) | 1 technology | manifest | module-federation | technological | weak | declares #5; declares #6 |
+| 3 | 3.4.2 (package.json:18) | 1 technology | manifest | — | context | ambiguous | declares turbo.json:3-25 |
+| 4 | 3.4.2 (apps/mfe-dashboard/package.json:21, Evidence); 3.4.3 (apps/mfe-dashboard, Markers and Build); 3.4.4 (apps/shell/src/App.tsx:7, Observation); 3.4.5 #1 (Configuration); 3.4.6 #1 (Artifacts); 3.4.7 #4, #8, #10, #12, #13, #16 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #11; configures #15 |
+| 5 | 3.4.2 (apps/shell/package.json:22, Evidence); 3.4.3 (apps/shell, Markers and Build); 3.4.4 (apps/shell/src/App.tsx:7, Observation); 3.4.5 #1 (Configuration); 3.4.6 #1 (Where served), #2 (Artifacts); 3.4.7 #3, #4, #6, #8, #10, #13, #14, #16, #17 (Evidence); 3.4.8 #2 (Origin) | 2 configuration | configuration | module-federation | architectural | strong | configures #12; configures #15 |
+| 6 | 3.4.4 (apps/shell/src/App.tsx:7) | 3 code | source code | module-federation | architectural | strong | implements #15 |
+| 7 | 3.4.4 (apps/shell/src/App.tsx:165) | 3 code | source code | module-federation | architectural | strong | implements #15 |
+| 8 | 3.4.4 (apps/shell/src/App.tsx:172) | 3 code | source code | module-federation | technological | moderate | implements #15 |
+| 9 | 3.4.3 (.) | 4 structure | directory | — | context | weak | — |
+| 10 | 3.4.3 (apps/bff) | 4 structure | directory | — | context | weak | — |
+| 11 | 3.4.3 (apps/mfe-dashboard) | 4 structure | directory | — | architectural | moderate | — |
+| 12 | 3.4.3 (apps/shell) | 4 structure | directory | — | architectural | moderate | — |
+| 13 | 3.4.3 (packages/shared-types) | 4 structure | directory | — | context | weak | — |
+| 14 | 3.4.3 (packages/ui-kit) | 4 structure | directory | — | context | weak | — |
+| 15 | 3.4.5 #1 | 5 composition | source code | module-federation | architectural | strong | links #12; links #11 |
+| 16 | 3.4.6 #1 | 6 build-deploy | deploy | — | architectural | moderate | publishes #11 |
+| 17 | 3.4.6 #2 | 6 build-deploy | deploy | — | architectural | moderate | publishes #12 |
+| 18 | 3.4.7 #1 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #11; corroborates #12; corroborates #10; corroborates #1; corroborates #2; corroborates #15 |
+| 19 | 3.4.7 #2 | 7 documentation | documentation | — | architectural | weak | corroborates #15; corroborates #7; corroborates apps/shell/src/App.tsx:57-118; corroborates apps/shell/src/context/AuthContext.tsx:14-49 |
+| 20 | 3.4.7 #3 | 7 documentation | documentation | — | architectural | weak | contradicts #5; contradicts #7; contradicts apps/shell/src/App.tsx:150-158 |
+| 21 | 3.4.7 #4 | 7 documentation | documentation | module-federation | technological | weak | corroborates #4; corroborates #5; corroborates apps/shell/src/App.tsx:3; corroborates apps/mfe-dashboard/src/DashboardApp.tsx:2-3; corroborates apps/shell/src/context/AuthContext.tsx:2 |
+| 22 | 3.4.7 #5 | 7 documentation | documentation | — | context | weak | contradicts apps/shell/src/context/AuthContext.tsx:14-34 |
+| 23 | 3.4.7 #6 | 7 documentation | documentation | — | architectural | weak | contradicts #5; contradicts #7; contradicts apps/shell/src/App.tsx:61-66 |
+| 24 | 3.4.7 #7 | 7 documentation | documentation | — | architectural | weak | corroborates apps/shell/package.json:14-15; corroborates apps/mfe-dashboard/package.json:14-15; corroborates turbo.json:4-6; corroborates #16; corroborates #17 |
+| 25 | 3.4.7 #8 | 7 documentation | documentation | module-federation | technological | weak | partially corroborates #4; partially corroborates #5; partially corroborates apps/mfe-dashboard/package.json:8-9 |
+| 26 | 3.4.7 #9 | 7 documentation | documentation | — | architectural | weak | corroborates #8; corroborates #15 |
+| 27 | 3.4.7 #10 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #15; corroborates #5; corroborates #4 |
+| 28 | 3.4.7 #11 | 7 documentation | documentation | — | context | weak | corroborates #9; corroborates turbo.json:3-25 |
+| 29 | 3.4.7 #12 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #6; corroborates #15; corroborates #4 |
+| 30 | 3.4.7 #13 | 7 documentation | documentation | module-federation | technological | weak | partially corroborates #5; partially corroborates #4; partially corroborates apps/shell/package.json:14-18 |
+| 31 | 3.4.7 #14 | 7 documentation | documentation | module-federation | technological | weak | corroborates apps/shell/package.json:14-18; corroborates #5 |
+| 32 | 3.4.7 #15 | 7 documentation | documentation | — | architectural | weak | corroborates #11; corroborates apps/mfe-dashboard/src/main.tsx:7-26 |
+| 33 | 3.4.7 #16 | 7 documentation | documentation | — | architectural | weak | contradicts #5; contradicts #4 |
+| 34 | 3.4.7 #17 | 7 documentation | documentation | module-federation | technological | weak | corroborates #5; corroborates #15 |
+| 35 | 3.4.7 #18 | 7 documentation | documentation | — | architectural | weak | contradicts apps/mfe-dashboard/package.json:6-12; contradicts apps/shell/package.json:6-12 |
+| 36 | 3.4.7 #19 | 7 documentation | documentation | — | architectural | weak | corroborates #16; corroborates #17 |
+| 37 | 3.4.7 #20 | 7 documentation | documentation | module-federation | technological | weak | corroborates #1; corroborates #2; corroborates #15 |
+| 38 | 3.4.7 #21 | 7 documentation | comment | module-federation | architectural | weak | corroborates #16 |
+| 39 | 3.4.7 #22 | 7 documentation | comment | — | context | weak | contradicts apps/bff/package.json:15-30; contradicts apps/bff/src/chat/chat.service.ts:3-16 |
+| 40 | 3.4.7 #23 | 7 documentation | comment | — | architectural | weak | corroborates #8; corroborates packages/shared-types/src/index.ts:48-51 |
+| 41 | 3.4.8 #1 | 8 history | history | — | context | weak | explains #3 |
+| 42 | 3.4.8 #2 | 8 history | history | module-federation | architectural | weak | explains #5; explains #7; explains #20; explains #23 |
+| 43 | 3.4.8 #3 | 8 history | history | — | context | weak | explains #22 |
+| 44 | 3.4.8 #4 | 8 history | history | module-federation | technological | weak | explains #25 |
+| 45 | 3.4.8 #5 | 8 history | history | module-federation | architectural | weak | explains #33 |
+| 46 | 3.4.8 #6 | 8 history | history | — | architectural | weak | explains #35 |
+| 47 | 3.4.8 #7 | 8 history | history | — | context | weak | explains #39 |
 
-## Resumo
+## Summary
 
-Observações: 47. Dimensões (tecnologia: 3, configuração: 2, código: 3, estrutura: 6, composição: 1, build-deploy: 2, documentação: 23, histórico: 7). Força (forte: 4, moderada: 6, fraca: 36, ambígua: 1). Evidência (tecnológica: 11, arquitetural: 25, contexto: 11).
+Observations: 47. Dimensions (technology: 3, configuration: 2, code: 3, structure: 6, composition: 1, build-deploy: 2, documentation: 23, history: 7). Strength (strong: 4, moderate: 6, weak: 36, ambiguous: 1). Evidence (technological: 11, architectural: 25, context: 11).
+

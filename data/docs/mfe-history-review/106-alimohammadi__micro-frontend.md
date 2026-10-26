@@ -13,26 +13,26 @@ annotation:
 
 # 106 — alimohammadi/micro-frontend
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem 13 commits, sem merges, de 2025-04-24 a 2025-05-08. O exemplo `ecomm` é feito primeiro: `de130a5` (2025-04-24, "first commit") já traz `ecomm/products`; `3817fd6` (2025-04-24, "Feature/ add new cart part") cria `ecomm/cart`; `a8c742c` (2025-04-26, "Improve/ handle isolation and global set configs code") cria `ecomm/products/src/mount.js` e `c784f55` (2025-04-26, "Improve/ add isolation to the cart part also") cria `ecomm/cart/src/mount.js`. O exemplo `packages` começa em `00dbb64` (2025-04-27, "Feature/ initilize second project setup and data"), segue com marketing e container no mesmo dia, e o snapshot é `7a05f74` (2025-05-08, "Feature/ add new header component").
+History up to snapshot has 13 commits, without merges, from 2025-04-24 to 2025-05-08. Example `ecomm` is developed first: `de130a5` (2025-04-24, "first commit") already includes `ecomm/products`; `3817fd6` (2025-04-24, "Feature/ add new cart part") creates `ecomm/cart`; `a8c742c` (2025-04-26, "Improve/ handle isolation and global set configs code") creates `ecomm/products/src/mount.js` and `c784f55` (2025-04-26, "Improve/ add isolation to the cart part also") creates `ecomm/cart/src/mount.js`. Example `packages` begins in `00dbb64` (2025-04-27, "Feature/ initilize second project setup and data"), continues with marketing and container on same day, and snapshot is `7a05f74` (2025-05-08, "Feature/ add new header component").
 
-O clone não tem o conteúdo da maior parte das versões antigas: as versões de `webpack.config.js` anteriores a `a8c742c` (products) e a `c784f55` (cart) não estão disponíveis localmente. As versões desses dois commits podem ser lidas porque são as mesmas do snapshot. Para os pontos abaixo bastam as listas de arquivos por commit e os identificadores dos objetos.
+Clone lacks contents of most old versions: `webpack.config.js` versions before `a8c742c` (products) and `c784f55` (cart) are unavailable locally. Versions at these two commits can be read because they match snapshot. File lists per commit and object identifiers suffice for points below.
 
-## Pontos
+## Points
 
-| # | Ponto | Origem | Pergunta | Commits | Resultado |
+| # | Point | Origin | Question | Commits | Result |
 |---|---|---|---|---|---|
-| 1 | `packages/auth` e `packages/dashboard` só têm `package.json` e lockfile | 3.4.3 (packages/auth; packages/dashboard; Notas) | ativo ou abandonado | 00dbb64 2025-04-27 Feature/ initilize second project setup and data | esclarecido |
-| 2 | Os comentários dos `mount.js` do `ecomm` dizem "development or production", mas o exemplo só tem servidor de desenvolvimento | 3.4.7 #2; 3.4.7 #5 | estágios em conflito | de130a5 2025-04-24 first commit; 3817fd6 2025-04-24 Feature/ add new cart part; a8c742c 2025-04-26 Improve/ handle isolation and global set configs code; c784f55 2025-04-26 Improve/ add isolation to the cart part also | esclarecido |
+| 1 | `packages/auth` and `packages/dashboard` contain only `package.json` and lockfile | 3.4.3 (packages/auth; packages/dashboard; Notes) | active or abandoned | 00dbb64 2025-04-27 Feature/ initilize second project setup and data | clarified |
+| 2 | Comments in `mount.js` files of `ecomm` say "development or production", but example has only development server | 3.4.7 #2; 3.4.7 #5 | conflicting stages | de130a5 2025-04-24 first commit; 3817fd6 2025-04-24 Feature/ add new cart part; a8c742c 2025-04-26 Improve/ handle isolation and global set configs code; c784f55 2025-04-26 Improve/ add isolation to the cart part also | clarified |
 
-## Observações
+## Observations
 
-**1. `packages/auth` e `packages/dashboard` só têm `package.json` e lockfile.** As duas pastas são criadas em `00dbb64`, que adiciona só os quatro arquivos (dois `package.json` e dois `package-lock.json`), e nenhum commit posterior até o snapshot as toca. Os objetos dos quatro arquivos em `00dbb64` são os mesmos do snapshot. O histórico mostra, portanto, que essas pastas nunca tiveram outro arquivo: não houve código removido. Ele não mostra se as aplicações eram planejadas para depois; a mensagem do commit só anuncia a preparação do segundo projeto.
+**1. `packages/auth` and `packages/dashboard` contain only `package.json` and lockfile.** Both directories are created in `00dbb64`, adding only four files (two `package.json` and two `package-lock.json`), and no subsequent commit up to snapshot touches them. Four file objects at `00dbb64` match snapshot. History therefore shows these directories never had another file: no code was removed. It does not show whether applications were planned for later; commit message only announces preparation of second project.
 
-**2. Os comentários dos `mount.js` do `ecomm` dizem "development or production", mas o exemplo só tem servidor de desenvolvimento.** Os `mount.js` são criados em `a8c742c` (products) e `c784f55` (cart) e não mudam depois. O `webpack.config.js` de cada um muda pela última vez nesses mesmos commits, e a versão de cada commit, lida no clone, já fixa `mode: "development"`. Os `package.json` de `ecomm/products` e `ecomm/cart`, com o único script `webpack serve`, não mudam desde a criação (`de130a5` e `3817fd6`; mesmos objetos no snapshot). Assim, comentário e configuração só de desenvolvimento estão juntos desde o commit que introduziu o comentário: no histórico desses arquivos não há estágio com build de produção a que a menção a "production" corresponda. As versões anteriores das configurações não estão disponíveis, mas são anteriores ao comentário. A mensagem de `c784f55` anuncia que a isolação foi estendida ao cart depois do products, o que é compatível com a cópia do `'dev-products'` registrada na 3.4.7; o histórico não compara os dois conteúdos.
+**2. Comments in `mount.js` files of `ecomm` say "development or production", but example has only development server.** The `mount.js` files are created in `a8c742c` (products) and `c784f55` (cart) and do not change afterward. Each `webpack.config.js` changes for last time in these same commits, and each commit version, read in clone, already fixes `mode: "development"`. The `package.json` files of `ecomm/products` and `ecomm/cart`, with sole script `webpack serve`, do not change since creation (`de130a5` and `3817fd6`; same objects in snapshot). Thus comment and development-only configuration coexist since commit introducing comment: history of these files has no stage with a production build corresponding to mention of "production". Earlier configuration versions are unavailable, but predate comment. Message of `c784f55` announces isolation extended to cart after products, consistent with copy of `'dev-products'` recorded in 3.4.7; history does not compare both contents.
 
-## Comandos
+## Commands
 
 ```
 docs/mfe-history-review/tools/hist.sh alimohammadi__micro-frontend rev-list --count 7a05f74105f816f60621d9ba9171b269aa8e5cab
@@ -40,13 +40,13 @@ docs/mfe-history-review/tools/hist.sh alimohammadi__micro-frontend rev-list --co
 docs/mfe-history-review/tools/hist.sh alimohammadi__micro-frontend log --reverse --format='%h %ad %s' --date=short 7a05f74105f816f60621d9ba9171b269aa8e5cab
 docs/mfe-history-review/tools/hist.sh alimohammadi__micro-frontend log --reverse --format='%h %ad %s' --date=short --name-status --no-renames 7a05f74105f816f60621d9ba9171b269aa8e5cab -- packages/auth packages/dashboard
 docs/mfe-history-review/tools/hist.sh alimohammadi__micro-frontend log --reverse --format='%h %ad %s' --date=short --name-status --no-renames 7a05f74105f816f60621d9ba9171b269aa8e5cab -- ecomm/cart ecomm/products
-docs/mfe-history-review/tools/hist.sh alimohammadi__micro-frontend show de130a5:ecomm/products/webpack.config.js   # falhou: objeto ausente (bad object)
-docs/mfe-history-review/tools/hist.sh alimohammadi__micro-frontend show ff27de2:ecomm/products/webpack.config.js   # falhou: objeto ausente (bad object)
-docs/mfe-history-review/tools/hist.sh alimohammadi__micro-frontend show 5e1f3bf:ecomm/products/webpack.config.js   # falhou: objeto ausente (bad object)
+docs/mfe-history-review/tools/hist.sh alimohammadi__micro-frontend show de130a5:ecomm/products/webpack.config.js   # failed: missing object (bad object)
+docs/mfe-history-review/tools/hist.sh alimohammadi__micro-frontend show ff27de2:ecomm/products/webpack.config.js   # failed: missing object (bad object)
+docs/mfe-history-review/tools/hist.sh alimohammadi__micro-frontend show 5e1f3bf:ecomm/products/webpack.config.js   # failed: missing object (bad object)
 docs/mfe-history-review/tools/hist.sh alimohammadi__micro-frontend show a8c742c:ecomm/products/webpack.config.js
-docs/mfe-history-review/tools/hist.sh alimohammadi__micro-frontend show 3817fd6:ecomm/cart/webpack.config.js   # falhou: objeto ausente (bad object)
-docs/mfe-history-review/tools/hist.sh alimohammadi__micro-frontend show 5e1f3bf:ecomm/cart/webpack.config.js   # falhou: objeto ausente (bad object)
-docs/mfe-history-review/tools/hist.sh alimohammadi__micro-frontend show a8c742c:ecomm/cart/webpack.config.js   # falhou: objeto ausente (bad object)
+docs/mfe-history-review/tools/hist.sh alimohammadi__micro-frontend show 3817fd6:ecomm/cart/webpack.config.js   # failed: missing object (bad object)
+docs/mfe-history-review/tools/hist.sh alimohammadi__micro-frontend show 5e1f3bf:ecomm/cart/webpack.config.js   # failed: missing object (bad object)
+docs/mfe-history-review/tools/hist.sh alimohammadi__micro-frontend show a8c742c:ecomm/cart/webpack.config.js   # failed: missing object (bad object)
 docs/mfe-history-review/tools/hist.sh alimohammadi__micro-frontend show c784f55:ecomm/cart/webpack.config.js
 docs/mfe-history-review/tools/hist.sh alimohammadi__micro-frontend log --format='%h %ad %s' --date=short 7a05f74105f816f60621d9ba9171b269aa8e5cab -- packages/auth
 docs/mfe-history-review/tools/hist.sh alimohammadi__micro-frontend log --format='%h %ad %s' --date=short 7a05f74105f816f60621d9ba9171b269aa8e5cab -- packages/dashboard
@@ -61,9 +61,9 @@ docs/mfe-history-review/tools/hist.sh alimohammadi__micro-frontend ls-tree -r 00
 docs/mfe-history-review/tools/hist.sh alimohammadi__micro-frontend ls-tree 7a05f74105f816f60621d9ba9171b269aa8e5cab -- ecomm/products/package.json ecomm/cart/package.json
 docs/mfe-history-review/tools/hist.sh alimohammadi__micro-frontend ls-tree de130a5 -- ecomm/products/package.json
 docs/mfe-history-review/tools/hist.sh alimohammadi__micro-frontend ls-tree 3817fd6 -- ecomm/cart/package.json
-docs/mfe-history-review/tools/hist.sh alimohammadi__micro-frontend show --format='%h %ad %s' --date=short --name-status a8c742c   # falhou: objeto ausente (could not fetch from promisor remote)
+docs/mfe-history-review/tools/hist.sh alimohammadi__micro-frontend show --format='%h %ad %s' --date=short --name-status a8c742c   # failed: missing object (could not fetch from promisor remote)
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 13 (2025-04-24 a 2025-05-08). Pontos: 2 (esclarecido: 2, inconclusivo: 0, resolvido pelo snapshot: 0).
+Commits up to the snapshot: 13 (2025-04-24 to 2025-05-08). Points: 2 (clarified: 2, inconclusive: 0, resolved by the snapshot: 0).

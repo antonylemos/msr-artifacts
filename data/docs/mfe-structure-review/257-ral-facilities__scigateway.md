@@ -17,20 +17,20 @@ annotation:
 
 ## Workspace
 
-Nenhuma declaração de workspace.
+No workspace declaration.
 
-## Unidades
+## Units
 
-| Diretório | Marcadores | Manifesto | Entrada | Build | Workspace | Deploy | Unidade frontend | Motivo |
+| Directory | Markers | Manifest | Entry | Build | Workspace | Deploy | Frontend unit | Rationale |
 |---|---|---|---|---|---|---|---|---|
-| . | index.html;package.json;vite.config.ts | package.json | index.html:32 (`<script type="module" src="/src/main.tsx">`, entrada do Vite); src/main.tsx:6-9 (`createRoot(...).render(<App .../>)`) | vite.config.ts:35-53 (`defineConfig`, com `plugins` e `build`) + package.json:57 (`"build": "tsc --project tsconfig.build.json && vite build"`) | — | Dockerfile:4, 23 e 31 (estágio `builder`, `RUN yarn build`, cópia de `dist/` para o httpd); .github/workflows/docker-release-build.yml:42-46 (`docker/build-push-action` com `context: .` e `file: ./Dockerfile`) | Yes | Aplicação Vite com entrada própria, build próprio e imagem Docker. |
+| . | index.html;package.json;vite.config.ts | package.json | index.html:32 (`<script type="module" src="/src/main.tsx">`, Vite entry); src/main.tsx:6-9 (`createRoot(...).render(<App .../>)`) | vite.config.ts:35-53 (`defineConfig`, with `plugins` and `build`) + package.json:57 (`"build": "tsc --project tsconfig.build.json && vite build"`) | — | Dockerfile:4, 23 and 31 (`builder` stage, `RUN yarn build`, copy of `dist/` to httpd); .github/workflows/docker-release-build.yml:42-46 (`docker/build-push-action` with `context: .` and `file: ./Dockerfile`) | Yes | Vite application with its own entry, its own build and Docker image. |
 
-## Resumo
+## Summary
 
-Aplicações frontend no snapshot: 1 (.).
+Frontend applications in the snapshot: 1 (.).
 
-## Notas
+## Notes
 
-- A classificação registra `frontend_units: 2`: o host (raiz) e o plugin `demo_plugin`, construído em outro repositório e referenciado por `public/settings.example.json:15-22` e `server/e2e-settings.json:7-14`. O plugin não está no snapshot como fonte e não vira linha; `server/e2e-plugin/main.js` é só o bundle compilado usado nos testes e2e.
-- `server/` e `micro-frontend-tools/` têm scripts Node (servidores de teste e de plugins) sem `package.json` próprio e não aparecem no `units.csv`; não são frontend.
-- `package.json` aparece como `workspace-config` no `artifacts.csv`, mas não declara `workspaces`, e não há ocorrências `ws-*` no `matches.csv`. O `yarn workspaces focus --production` do `Dockerfile:19` é um comando do Yarn, não uma declaração de workspace.
+- The classification records `frontend_units: 2`: the host (root) and the `demo_plugin` plugin, built in another repository and referenced by `public/settings.example.json:15-22` and `server/e2e-settings.json:7-14`. The plugin is not in the snapshot as source and does not become a row; `server/e2e-plugin/main.js` is only the compiled bundle used in e2e tests.
+- `server/` and `micro-frontend-tools/` have Node scripts (test and plugin servers) without their own `package.json` and do not appear in `units.csv`; they are not frontend.
+- `package.json` appears as `workspace-config` in `artifacts.csv`, but does not declare `workspaces`, and there are no `ws-*` occurrences in `matches.csv`. The `yarn workspaces focus --production` in `Dockerfile:19` is a Yarn command, not a workspace declaration.

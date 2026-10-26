@@ -15,26 +15,26 @@ annotation:
 
 # 040 — AlanOlimpio/list
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-remote-import | src/components/ListRoutes/ListRoutes.js:5 | . | dynamic-loading | Yes | React.lazy importa RegisterApp/ModalRegister em src/components/ListRoutes/ListRoutes.js:5; componente usado pela rota em src/components/ListRoutes/ListRoutes.js:11; ListRoutes é montado pela entrada em src/bootstrap.js:5-12. |
-| src-async-bootstrap | src/index.js:1 | . | dynamic-loading | No | src/index.js:1 importa o bootstrap local da própria unidade. |
+| src-remote-import | src/components/ListRoutes/ListRoutes.js:5 | . | dynamic-loading | Yes | React.lazy imports RegisterApp/ModalRegister at src/components/ListRoutes/ListRoutes.js:5; component used by the route at src/components/ListRoutes/ListRoutes.js:11; ListRoutes is mounted by the entry at src/bootstrap.js:5-12. |
+| src-async-bootstrap | src/index.js:1 | . | dynamic-loading | No | src/index.js:1 imports the unit’s own local bootstrap. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | src/components/ListRoutes/ListRoutes.js:9 | . | host-relationship | Yes | Routes declara o ponto /register para o componente remoto ModalRegister (src/components/ListRoutes/ListRoutes.js:9-12); roteador e ListRoutes são iniciados em src/bootstrap.js:9-13. |
-| manual | src/components/ListRoutes/ListRoutes.js:11 | . | runtime-composition | Yes | O element da rota renderiza ModalRegister, importado da unidade externa em src/components/ListRoutes/ListRoutes.js:5; o conteúdo é encaixado em Outlet no layout List em src/components/List/List.js:82-84. |
+| manual | src/components/ListRoutes/ListRoutes.js:9 | . | host-relationship | Yes | Routes declares the /register point for the remote ModalRegister component (src/components/ListRoutes/ListRoutes.js:9-12); router and ListRoutes are started at src/bootstrap.js:9-13. |
+| manual | src/components/ListRoutes/ListRoutes.js:11 | . | runtime-composition | Yes | The route’s element renders ModalRegister, imported from the external unit at src/components/ListRoutes/ListRoutes.js:5; the content is placed in Outlet in the List layout at src/components/List/List.js:82-84. |
 
-## Resumo
+## Summary
 
-Construções com composição: 3 (dynamic-loading: 1, host-relationship: 1, runtime-composition: 1).
+Constructs participating in composition: 3 (dynamic-loading: 1, host-relationship: 1, runtime-composition: 1).
 
-## Notas
+## Notes
 
-- A unidade externa RegisterApp tem URL em webpack.config.js:52-54 e não está no snapshot. A Unidade das linhas é ., correspondente à aplicação local, não ao remote externo.
-- webpack.config.js:49-50 expõe ListRoutes, mas não há consumidor desse módulo no snapshot. A exportação comum de ListRoutes não foi acrescentada como uma segunda relação de composição sem consumidor observável.
-- A cadeia ativa é src/index.js:1 → src/bootstrap.js:5-12 → src/components/ListRoutes/index.js:1-2 → src/components/ListRoutes/ListRoutes.js:5-11. Nenhum ponto de dúvida para a carga do ModalRegister.
+- The external RegisterApp unit has a URL at webpack.config.js:52-54 and is not in the snapshot. The Unit of the rows is ., corresponding to the local application rather than the external remote.
+- webpack.config.js:49-50 exposes ListRoutes, but there is no consumer of this module in the snapshot. The ordinary ListRoutes export was not added as a second composition relationship without an observable consumer.
+- The active chain is src/index.js:1 → src/bootstrap.js:5-12 → src/components/ListRoutes/index.js:1-2 → src/components/ListRoutes/ListRoutes.js:5-11. No point of doubt about loading ModalRegister.

@@ -15,28 +15,28 @@ annotation:
 
 # 273 — kod88vn/poc_next_mfa
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-iframe | apps/duda/lib/duda-landing.ts:387 | apps/duda | none | No | Expressão regular que **remove** blocos `<iframe>` do HTML da página externa do Duda (`sanitizeLandingHtml`, apps/duda/lib/duda-landing.ts:363, junto com `<script>` e `<noscript>` em :385-386); não embute nenhuma unidade, é sanitização de conteúdo |
+| src-iframe | apps/duda/lib/duda-landing.ts:387 | apps/duda | none | No | Regular expression that **removes** `<iframe>` blocks from the external Duda page HTML (`sanitizeLandingHtml`, apps/duda/lib/duda-landing.ts:363, together with `<script>` and `<noscript>` at :385-386); does not embed any unit, this is content sanitization |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | apps/shell/next.config.js:25 | apps/shell | host-relationship | Yes | `async rewrites()` declara quais aplicações o shell usa e sob quais caminhos: `/duda` para `http://localhost:3002/duda`, `/shop` para `http://localhost:3001/shop` e `/shop/:path*` para `http://localhost:3001/shop/:path*` (apps/shell/next.config.js:25-43); os destinos são as apps `apps/duda` e `apps/shop`, que sobem nessas portas (apps/duda/package.json:7,9; apps/shop/package.json:7,9) e respondem no caminho declarado por seu `basePath` (apps/duda/next.config.js:6, apps/shop/next.config.js:19). Config exportada em apps/shell/next.config.js:46 |
-| manual | apps/shop/app/actions.ts:26 | apps/shop | communication | Yes | A Server Action `addToCart` grava o cookie `mfe_cart_count` com `path: '/'` (apps/shop/app/actions.ts:26-31), compartilhando a contagem do carrinho com as outras zonas sob a mesma origem do shell; disparada pelos formulários `<form action={addToCart}>` em apps/shop/app/page.tsx:124 e apps/shop/app/[id]/page.tsx:141. O cookie é lido pelas demais unidades em apps/shell/app/layout.tsx:30 e apps/duda/app/layout.tsx:25 (além de apps/shop/app/layout.tsx:33) e passado como `cartCount` ao `Header` de `@repo/ui` (apps/shell/app/layout.tsx:58, apps/duda/app/layout.tsx:82) |
+| manual | apps/shell/next.config.js:25 | apps/shell | host-relationship | Yes | `async rewrites()` declares which applications shell uses and under which paths: `/duda` to `http://localhost:3002/duda`, `/shop` to `http://localhost:3001/shop` and `/shop/:path*` to `http://localhost:3001/shop/:path*` (apps/shell/next.config.js:25-43); the targets are apps `apps/duda` and `apps/shop`, started on those ports (apps/duda/package.json:7,9; apps/shop/package.json:7,9) and responding at the path declared by their `basePath` (apps/duda/next.config.js:6, apps/shop/next.config.js:19). Config exported at apps/shell/next.config.js:46 |
+| manual | apps/shop/app/actions.ts:26 | apps/shop | communication | Yes | The Server Action `addToCart` writes cookie `mfe_cart_count` with `path: '/'` (apps/shop/app/actions.ts:26-31), sharing cart count with the other zones under the same shell origin; triggered by the `<form action={addToCart}>` forms at apps/shop/app/page.tsx:124 and apps/shop/app/[id]/page.tsx:141. The cookie is read by the other units at apps/shell/app/layout.tsx:30 and apps/duda/app/layout.tsx:25 (also apps/shop/app/layout.tsx:33) and passed as `cartCount` to `Header` from `@repo/ui` (apps/shell/app/layout.tsx:58, apps/duda/app/layout.tsx:82) |
 
-## Resumo
+## Summary
 
-Construções com composição: 2 (host-relationship: 1, communication: 1).
+Constructs participating in composition: 2 (host-relationship: 1, communication: 1).
 
-## Notas
+## Notes
 
-- A única linha `src-*` do `matches.csv` é um falso positivo de `src-iframe`. A composição multi-zones aparece nas ocorrências `cfg-*`: `cfg-route-rewrites` em apps/shell/next.config.js:25 (rewrites `/duda` para `http://localhost:3002/duda`, `/shop` e `/shop/:path*` para `http://localhost:3001/shop...`, :26-42) e `cfg-zone-path` em apps/shop/next.config.js:19 (`basePath: '/shop'`) e apps/duda/next.config.js:6 (`basePath: '/duda'`).
-- A busca do passo 4 (`import(`, `React.lazy`, `loadRemote*`, `customElements`, `registerApplication`, `<iframe`, `postMessage`, `CustomEvent`, `BroadcastChannel`, `createElement('script'`) só achou a linha da mineração: não há carregamento, montagem nem embutimento de uma unidade dentro de outra no código-fonte.
-- A navegação entre zonas é por link de página inteira (`<a href="/shop">`, `<a href="/duda">` em apps/shell/app/page.tsx:68,74 e no `Header` compartilhado, packages/ui/src/Header.tsx:74,81). Link de navegação não é um dos tipos do passo 4, por isso não virou linha.
-- O `Header` vem da biblioteca `@repo/ui` (`packages/ui`, `No` na revisão estrutural), compilada em cada app por `transpilePackages`; é código compartilhado, não uma unidade montada em outra.
-- apps/duda busca no servidor o HTML de um site externo do construtor Duda (`DUDA_ORIGIN`, padrão `https://pocmfe.multiscreensite.com/`, apps/duda/lib/duda-landing.ts:4; `fetchText(DUDA_LANDING_URL)`, :488) e o injeta com `dangerouslySetInnerHTML` (apps/duda/app/page.tsx:13), depois de remover scripts e iframes. É conteúdo de um site de terceiros, não uma unidade frontend do sistema, por isso não virou linha.
-- Decisão do pesquisador (24/10/2026), válida para todos os repositórios: quando o `rewrites()` do host declara um app remoto sob um caminho (`cfg-route-rewrites` no `matches.csv`), aplica-se a opção B decidida em 013-nikJovanovic__ita-vaje; por isso apps/shell/next.config.js:25 entrou como linha manual `host-relationship` / `Yes`, mesmo sendo ocorrência `cfg-route-rewrites` no `matches.csv`.
+- The only `src-*` row in `matches.csv` is a `src-iframe` false positive. Multi-zone composition appears in `cfg-*` occurrences: `cfg-route-rewrites` at apps/shell/next.config.js:25 (rewrites `/duda` to `http://localhost:3002/duda`, `/shop` and `/shop/:path*` to `http://localhost:3001/shop...`, :26-42) and `cfg-zone-path` at apps/shop/next.config.js:19 (`basePath: '/shop'`) and apps/duda/next.config.js:6 (`basePath: '/duda'`).
+- The step 4 search (`import(`, `React.lazy`, `loadRemote*`, `customElements`, `registerApplication`, `<iframe`, `postMessage`, `CustomEvent`, `BroadcastChannel`, `createElement('script'`) found only the mining row: there is no loading, mounting or embedding of one unit within another in source code.
+- Navigation between zones uses full-page links (`<a href="/shop">`, `<a href="/duda">` at apps/shell/app/page.tsx:68,74 and in the shared `Header`, packages/ui/src/Header.tsx:74,81). Navigation links are not among the step 4 types, so they did not become rows.
+- `Header` comes from library `@repo/ui` (`packages/ui`, `No` in the structural review), compiled in each app through `transpilePackages`; shared code rather than a unit mounted in another.
+- apps/duda fetches on the server the HTML of an external Duda builder site (`DUDA_ORIGIN`, default `https://pocmfe.multiscreensite.com/`, apps/duda/lib/duda-landing.ts:4; `fetchText(DUDA_LANDING_URL)`, :488) and injects it through `dangerouslySetInnerHTML` (apps/duda/app/page.tsx:13), after removing scripts and iframes. This is third-party site content rather than a frontend unit of the system, so it did not become a row.
+- Researcher decision (24/10/2026), valid for all repositories: when the host’s `rewrites()` declares a remote app under a path (`cfg-route-rewrites` in `matches.csv`), option B decided in 013-nikJovanovic__ita-vaje applies; apps/shell/next.config.js:25 therefore entered as a manual `host-relationship` / `Yes` row despite being a `cfg-route-rewrites` occurrence in `matches.csv`.

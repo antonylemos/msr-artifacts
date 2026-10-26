@@ -20,63 +20,63 @@ annotation:
 
 # 334 — In731/NexSupport-Al-_Customer-Support-AI
 
-## Contexto
+## Context
 
-Plataforma B2B de atendimento com chatbots RAG (Gemini + MongoDB Vector Search), feita como uma única aplicação Next.js (`src/app/`), com rotas de API e páginas de dashboard, administração e geração de embed (`README.md:12–26`). Para os sites dos clientes há um widget de chat em JavaScript puro (`public/chatBot.js`), inserido por uma tag `<script>`; ele cria o próprio DOM e conversa com a API (`README.md:26`, `50`). O termo da busca aparece em “The React frontend orchestrates a Client-Side Queue” (`README.md:226`), sobre a fila de ingestão de PDFs. O nome do repositório não é usado como evidência.
+B2B support platform with RAG chatbots (Gemini + MongoDB Vector Search), built as a single Next.js application (`src/app/`), with API routes and dashboard, administration and embed-generation pages (`README.md:12–26`). For customer sites there is a plain JavaScript chat widget (`public/chatBot.js`), inserted through a `<script>` tag; it creates its own DOM and talks to the API (`README.md:26`, `50`). The search term appears in “The React frontend orchestrates a Client-Side Queue” (`README.md:226`), about the PDF ingestion queue. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:335` registra rank 334, ID 1316830018, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:335` records rank 334, ID 1316830018, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:335` registra a estratégia `broader` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:34453` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:34459` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:335` records strategy `broader` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:34453` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:34459` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna um único hit em cada rodada. Ele vem do endpoint `repositories`, consulta `broader-frontend-orchestration` (`"frontend orchestration" in:name,description,readme`), subconsulta `…#created:2026-Q3`, com `path` vazio. As coletas são 2026-10-07T23:45:40.806Z (001) e 2026-10-08T16:25:27.031Z (002). A consulta efetiva acrescenta `pushed:>=2025-04-01 created:2026-07-01..2026-09-30`.
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns a single hit in each round. It comes from endpoint `repositories`, query `broader-frontend-orchestration` (`"frontend orchestration" in:name,description,readme`), subquery `…#created:2026-Q3`, with an empty `path`. Collections are 2026-10-07T23:45:40.806Z (001) and 2026-10-08T16:25:27.031Z (002). The effective query appends `pushed:>=2025-04-01 created:2026-07-01..2026-09-30`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem TypeScript, `fork: false`, tamanho 2.007;
-- criação em 2026-07-30T04:34:19Z, push em 2026-09-04T19:35:09Z.
+Hit metadata:
+- null description, no topics, language TypeScript, `fork: false`, size 2.007;
+- created at 2026-07-30T04:34:19Z, pushed at 2026-09-04T19:35:09Z.
 
-A frase exata não aparece; o acerto vem de `README.md:226` (“The React frontend orchestrates a Client-Side Queue…”) e depende do processamento textual da busca do GitHub, que não está registrado. O README é do próprio SHA (2026-09-05), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The exact phrase does not appear; the match comes from `README.md:226` (“The React frontend orchestrates a Client-Side Queue…”) and depends on GitHub search text processing, which is not recorded. The README is from the SHA itself (2026-09-05), before the October 2026 collections. The README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 49 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Há uma aplicação Next.js (`next.config.ts`, `src/app/` com páginas e `api/`, `src/components/`, `src/lib/`, `src/model/`), `public/chatBot.js`, testes Vitest em `__tests__/` e um workflow de CI. | contrária |
-| Widget | `public/chatBot.js:7–8`: deriva a origem da API do `src` da própria tag `<script>`. `:46`, `73` e seguintes: cria botão e caixa de chat por `document.createElement`. `src/app/embed/page.tsx:1–18`: página autenticada que mostra o snippet de embed (`EmbedClient`). É um widget de produto SaaS inserido em sites de terceiros, sem host, mecanismo de composição ou outra unidade no repositório. | contexto |
-| Busca de mecanismos | `git grep` no README por `orchestrat`, `micro.?front`, `federation`, `iframe`, `widget` e `embed`: só a menção de `README.md:226` e descrições do widget e de embeddings. Não há configuração de federação, single-spa ou import maps. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 49 entries, all regular files `100644`; zero symlinks and zero gitlinks. One Next.js application (`next.config.ts`, `src/app/` with pages and `api/`, `src/components/`, `src/lib/`, `src/model/`), `public/chatBot.js`, Vitest tests in `__tests__/` and a CI workflow. | contrary |
+| Widget | `public/chatBot.js:7–8`: derives the API origin from the `src` of its own `<script>` tag. `:46`, `73` onward: creates button and chat box through `document.createElement`. `src/app/embed/page.tsx:1–18`: authenticated page showing the embed snippet (`EmbedClient`). This is a SaaS product widget inserted into third-party sites, without host, composition mechanism or another unit in the repository. | context |
+| Mechanism search | `git grep` in the README for `orchestrat`, `micro.?front`, `federation`, `iframe`, `widget` and `embed`: only the `README.md:226` mention and widget and embedding descriptions. No federation, single-spa or import map configuration. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso:
-- **Commits:** 59 em todos os refs, 3 merges, de autoria de “In731” (53) e “Mukesh Chaudhari” (6), um deles (`86d7d6a`, “Delete test-mongo.js”) feito na interface do GitHub.
-- **Período:** até 2026-09-05 (SHA `290f3a7`, “feat: README.md update with latest changes”).
-- **Repositório:** um merge cita `In731/Customer-Support-AI` como origem (`2fcbed7`).
+Non-shallow clone:
+- **Commits:** 59 across all refs, 3 merges, authored by “In731” (53) and “Mukesh Chaudhari” (6), one (`86d7d6a`, “Delete test-mongo.js”) made through the GitHub interface.
+- **Period:** through 2026-09-05 (SHA `290f3a7`, “feat: README.md update with latest changes”).
+- **Repository:** a merge cites `In731/Customer-Support-AI` as origin (`2fcbed7`).
 
-Só há o branch `main`. Nenhum blob histórico foi lido e não houve objeto ausente.
+Only branch `main` exists. No historical blob was read and there was no missing object.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única aplicação frontend (Next.js). O widget `chatBot.js` é parte do produto para sites externos, não uma segunda unidade composta por um host do repositório. |
-| Q2 | No | Sem duas unidades compostas, não há independência a avaliar. |
-| Q3 | No | Não há host, shell ou configuração raiz que componha unidades. |
-| Q4 | No | Nenhum mecanismo de composição; “orchestrates” descreve uma fila de ingestão (`README.md:226`). |
-| Q5 | No | Q1–Q4 são No: aplicação SaaS convencional com widget de embed. |
+| Q1 | No | A single frontend application (Next.js). Widget `chatBot.js` is part of the product for external sites, not a second unit composed by a repository host. |
+| Q2 | No | Without two composed units, there is no independence to assess. |
+| Q3 | No | There is no host, shell or root configuration composing units. |
+| Q4 | No | No composition mechanism; “orchestrates” describes an ingestion queue (`README.md:226`). |
+| Q5 | No | Q1–Q4 are No: conventional SaaS application with an embed widget. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “conventional frontend monoliths”.
-- Mesmo enquadramento de 217, 221, 277 e 281, que entraram pela consulta ampla `"frontend orchestration"` por uso não relacionado do termo.
-- Não é MFE-unit: o widget não é uma unidade preparada para composição por host MFE, como `exposes` ou lifecycles single-spa. É um script de produto para sites de clientes.
-- **Campos:**
+- `Non-MFE` under the rule “at least one question is No”. It matches “conventional frontend monoliths”.
+- Same categorization as 217, 221, 277 and 281, entering through broader query `"frontend orchestration"` through unrelated use of the term.
+- It is not MFE-unit: the widget is not a unit prepared for composition by an MFE host, such as `exposes` or single-spa lifecycles. It is a product script for customer sites.
+- **Fields:**
   - `frontend_units: 1`, `unit_organization: single-unit`, `approaches: []`;
-  - `ui_technologies: [react, next]`, `build_tools: []` (Next.js sem bundler explícito, como em 013 e 094);
+  - `ui_technologies: [react, next]`, `build_tools: []` (Next.js without explicit bundler, as in 013 and 094);
   - `repo_type: production`.
-- Não há decisão aberta.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** “orchestrates” referido a uma fila de ingestão casa a consulta ampla.
-- **Protocolo (busca):** a frase exata não tem grafia literal. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ1 (misleading signals):** “orchestrates” referring to an ingestion queue matches the broader query.
+- **Protocol (search):** the exact phrase has no literal spelling. Eligibility changes from `unknown` (001) to `pass` (002).

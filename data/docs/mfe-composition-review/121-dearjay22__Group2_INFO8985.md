@@ -20,27 +20,28 @@ annotation:
 
 # 121 — dearjay22/Group2_INFO8985
 
-## Leitura do repositório
+## Repository overview
 
-Projeto de disciplina que monta um e-commerce de demonstração com microsserviços Spring Boot, Eureka, Docker Compose e duas aplicações React criadas com CRA, pensado para rodar no GitHub Codespaces (README.md:1-2). As duas aplicações são `frontend/shell-app` e `frontend/products-mf`, cada uma com imagem Nginx própria e publicada pelo Compose nas portas 3000 e 3001 (docker-compose.yml:59-62, 66-69). Não há biblioteca de composição: o único mecanismo é um `<iframe>`.
+A course project assembling a demonstration e-commerce system with Spring Boot microservices, Eureka, Docker Compose and two React applications created with CRA, intended to run in GitHub Codespaces (README.md:1-2). The two applications are `frontend/shell-app` and `frontend/products-mf`, each with its own Nginx image and published by Compose on ports 3000 and 3001 (docker-compose.yml:59-62, 66-69). There is no composition library: the only mechanism is an `<iframe>`.
 
-O shell é uma página com navegação para `/` e `/products` (frontend/shell-app/src/App.js:26-28). Na rota `/products`, ele renderiza um iframe com título "Products Microfrontend" (frontend/shell-app/src/App.js:31-36). O `src` vem de `getApiUrl()`, que só monta uma URL quando o host é `*.app.github.dev`, trocando a porta da URL atual do Codespace por 3001 (frontend/shell-app/src/App.js:6-15). Fora do Codespaces a função não retorna nada e o `src` vira a string `"undefined"` (frontend/shell-app/src/App.js:17-18, 33). O comentário da linha 13 fala em API Gateway na porta 8080, mas a URL usa 3001.
+The shell is a page with navigation to `/` and `/products` (frontend/shell-app/src/App.js:26-28). On `/products`, it renders an iframe titled "Products Microfrontend" (frontend/shell-app/src/App.js:31-36). Its `src` comes from `getApiUrl()`, which only assembles a URL when the host is `*.app.github.dev`, replacing the current Codespace URL's port with 3001 (frontend/shell-app/src/App.js:6-15). Outside Codespaces the function returns nothing and `src` becomes the string `"undefined"` (frontend/shell-app/src/App.js:17-18, 33). The comment on line 13 mentions an API Gateway on port 8080, but the URL uses 3001.
 
-A URL do iframe só traz a porta. No snapshot, a porta 3001 é a que o Compose publica para o serviço construído de `./frontend/products-mf` (docker-compose.yml:66-69), e o título do iframe fala em Products; mas não há `base`/`publicPath`, `homepage` ou outro nome na URL que aponte para a unidade. Pela regra do Destino, porta sozinha não basta, e o destino fica registrado pela URL (ver relação 1). A classificação (3.4.2) usou o mesmo mapeamento de porta para Q4, com outro critério; isso não é divergência a corrigir aqui.
+The iframe URL contains only the port. In the snapshot, port 3001 is published by Compose for the service built from `./frontend/products-mf` (docker-compose.yml:66-69), and the iframe title mentions Products; however, there is no `base`/`publicPath`, `homepage` or other URL name pointing to the unit. Under the Target rule, a port alone is insufficient, and the target is recorded by URL (see relationship 1). The classification (3.4.2) used the same port mapping for Q4 under a different criterion; this is not a discrepancy to correct here.
 
-O `products-mf` não tem código de composição nem de comunicação: renderiza uma tabela com dados de `products.json` local (frontend/products-mf/src/App.js:2, 7-9), e o `ProductList.js` não é importado (revisão de código-fonte, Notas). Não há `postMessage` nem eventos entre as duas aplicações.
+`products-mf` has no composition or communication code: it renders a table with data from local `products.json` (frontend/products-mf/src/App.js:2, 7-9), and `ProductList.js` is not imported (source code review, Notes). There is no `postMessage` or event exchange between the two applications.
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | frontend/shell-app | https://${codespaceName}-3001.app.github.dev | page → embedded-frontend | origem → destino | iframe | Undetermined | Yes | docker-compose.yml:66-69 (serviço `products-mf`, `build: ./frontend/products-mf`, porta `3001:80`) | frontend/shell-app/src/App.js:32 |
+| 1 | frontend/shell-app | https://${codespaceName}-3001.app.github.dev | page → embedded-frontend | source → target | iframe | Undetermined | Yes | docker-compose.yml:66-69 (service `products-mf`, `build: ./frontend/products-mf`, port `3001:80`) | frontend/shell-app/src/App.js:32 |
 
-## Observações
+## Observations
 
-**1. frontend/shell-app → https://${codespaceName}-3001.app.github.dev.** O shell embute a URL num `<iframe>` na rota `/products` (frontend/shell-app/src/App.js:31-36); a URL é montada em frontend/shell-app/src/App.js:14 a partir do nome do Codespace extraído do host (frontend/shell-app/src/App.js:10-12). O único elemento da URL que aponta para uma unidade é a porta 3001, que o Compose publica para o serviço construído de `./frontend/products-mf` (docker-compose.yml:66-69). Como porta sozinha não basta, o destino fica escrito como aparece no artefato e No snapshot é `Undetermined`; se o mapeamento do Compose fosse aceito como correspondência, o destino seria `frontend/products-mf`, com No snapshot `Yes`. Ativa `Yes`: a linha da revisão de código-fonte é `Yes`, e o `App` é renderizado pela entrada do shell (frontend/shell-app/src/index.js:4-12). A relação só produz URL válida no Codespaces; fora dele o `src` fica `"undefined"` (frontend/shell-app/src/App.js:6-18, 33).
+**1. frontend/shell-app → https://${codespaceName}-3001.app.github.dev.** The shell embeds the URL in an `<iframe>` at `/products` (frontend/shell-app/src/App.js:31-36); the URL is assembled in frontend/shell-app/src/App.js:14 from the Codespace name extracted from the host (frontend/shell-app/src/App.js:10-12). The only URL element pointing to a unit is port 3001, which Compose publishes for the service built from `./frontend/products-mf` (docker-compose.yml:66-69). Because a port alone is insufficient, the target remains written as in the artifact and In snapshot is `Undetermined`; if the Compose mapping were accepted as a match, the target would be `frontend/products-mf`, with In snapshot `Yes`. Active `Yes`: the source code review line is `Yes`, and `App` is rendered by the shell entry point (frontend/shell-app/src/index.js:4-12). The relationship produces a valid URL only in Codespaces; outside it, `src` becomes `"undefined"` (frontend/shell-app/src/App.js:6-18, 33).
 
-## Resumo
+## Summary
 
-Relações: 1 (page → embedded-frontend: 1). Ativas: 1. Destino fora do snapshot: 0.
-Unidades sem relação: frontend/products-mf.
+Relationships: 1 (page → embedded-frontend: 1). Active: 1. Target outside the snapshot: 0.
+Units without a relationship: frontend/products-mf.
+

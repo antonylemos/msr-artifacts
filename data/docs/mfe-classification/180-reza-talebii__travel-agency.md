@@ -20,63 +20,63 @@ annotation:
 
 # 180 — reza-talebii/travel-agency
 
-## Contexto
+## Context
 
-Projeto full stack de agência de viagens: um frontend Next.js 13 (App Router) em `clients/main/` e uma API Node/Express em `server/` (`README.md:3–7`). O README lista “micro front” como recurso (`README.md:12`), e `@module-federation/nextjs-mf` está declarado no `package.json` do cliente (`clients/main/package.json:13`). Mas a configuração do Next não usa o plugin (`clients/main/next.config.js:1–8`) e só existe um cliente em `clients/`. O nome do repositório não é usado como evidência.
+Full stack travel agency project: a Next.js 13 frontend (App Router) in `clients/main/` and a Node/Express API in `server/` (`README.md:3–7`). The README lists “micro front” as a feature (`README.md:12`), and `@module-federation/nextjs-mf` is declared in the client's `package.json` (`clients/main/package.json:13`). But Next configuration does not use the plugin (`clients/main/next.config.js:1–8`) and only one client exists in `clients/`. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:181` registra rank 180, ID 609925864, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:181` records rank 180, ID 609925864, status `cloned`, branch `main` and the front matter commit, which is HEAD of the clone and `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:181` registra a estratégia `terminology` e elegibilidade `unknown`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:5632` (`pass`) e `data/discovery/mfe-round-002/candidates.csv:5637` (`unknown`).
+`data/samples/mfe-sample-001/sample.csv:181` records strategy `terminology` and eligibility `unknown`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:5632` (`pass`) and `data/discovery/mfe-round-002/candidates.csv:5637` (`unknown`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna um hit por rodada, do endpoint `repositories` e com `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns one hit per round, from endpoint `repositories` and with empty `path`:
 
-| Consulta (`q`) | Subconsulta | Consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Effective query | Collection 001 / 002 (UTC) |
 |---|---|---|---|
-| `terminology-topic-microfrontend`: `topic:microfrontend` | `terminology-topic-microfrontend` (sem partição) | `topic:microfrontend pushed:>=2025-04-01` | 2026-10-07T18:18:27.988Z / 2026-10-08T15:34:14.267Z |
+| `terminology-topic-microfrontend`: `topic:microfrontend` | `terminology-topic-microfrontend` (unpartitioned) | `topic:microfrontend pushed:>=2025-04-01` | 2026-10-07T18:18:27.988Z / 2026-10-08T15:34:14.267Z |
 
-Metadados do hit:
-- descrição “…ull stack airline agency project with next js, typescript, nodejs”;
-- tópicos `axios`, `figma`, `microfrontend`, `nextjs`, `nextjs13`, `nodejs`, `react`, `storybook`, `styled-components` e `typescript`;
-- linguagem TypeScript, `fork: false`, tamanho 16.631;
-- criação em 2023-03-05T16:42:49Z, push em 2026-06-08T16:22:57Z.
+Hit metadata:
+- description “…ull stack airline agency project with next js, typescript, nodejs”;
+- topics `axios`, `figma`, `microfrontend`, `nextjs`, `nextjs13`, `nodejs`, `react`, `storybook`, `styled-components` and `typescript`;
+- language TypeScript, `fork: false`, size 16,631;
+- created at 2023-03-05T16:42:49Z, pushed at 2026-06-08T16:22:57Z.
 
-O acerto vem do tópico `microfrontend` declarado no repositório, não do README. No README a grafia relacionada é só “micro front” (`README.md:12`). A última alteração do README é o próprio SHA, `92756e2` (2026-06-08), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The hit comes from the repository's declared topic `microfrontend`, rather than the README. The README's only related spelling is “micro front” (`README.md:12`). The README's last change is the SHA itself, `92756e2` (2026-06-08), before October 2026 collection. The SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 273 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Há `README.md`, `clients/main/` (único diretório em `clients/`, um app Next.js com `app/`, `components/`, `layout/`, `modules/`, `services/` etc.) e `server/` (Express com controllers, rotas e acesso a dados). | contrária |
-| Configuração | `clients/main/package.json:13`: `@module-federation/nextjs-mf` ^6.1.3 declarado. `clients/main/next.config.js:1–8`: só `experimental.appDir`, sem `NextFederationPlugin`. `git grep` no SHA (exceto lockfiles) por `NextFederationPlugin`, `nextjs-mf`, `remoteEntry`, `federation` e `micro.?front` só acha `package.json:13` e `README.md:12`. É dependência declarada e não usada. | contrária |
-| Código-fonte (fronteiras) | Os imports de `clients/main` ficam no próprio projeto; a busca por imports `../../../` não retorna nada. O design system vem de pacotes npm (`golobe-design-system`, `golobe-ui`, `clients/main/package.json:24–25`), sem unidade frontend referenciada por composição. | contexto |
-| Documentação | `README.md:10–16`: recursos planejados ou implementados (“micro front”, “next13 app dir”, biblioteca de design system, multilanguage, storybook) e link para um repositório de design system. O projeto se declara “being developed” (`README.md:7`). | fraca |
+| Structure | `git ls-tree -r` at the SHA: 273 entries, all regular `100644` files; zero symlinks and zero gitlinks. There are `README.md`, `clients/main/` (only directory in `clients/`, a Next.js app with `app/`, `components/`, `layout/`, `modules/`, `services/` etc.) and `server/` (Express with controllers, routes and data access). | contrary |
+| Configuration | `clients/main/package.json:13`: `@module-federation/nextjs-mf` ^6.1.3 declared. `clients/main/next.config.js:1–8`: only `experimental.appDir`, without `NextFederationPlugin`. `git grep` at the SHA (except lockfiles) for `NextFederationPlugin`, `nextjs-mf`, `remoteEntry`, `federation` and `micro.?front` finds only `package.json:13` and `README.md:12`. Declared, unused dependency. | contrary |
+| Source code (boundaries) | `clients/main` imports stay inside the project; searching for `../../../` imports returns nothing. Design system comes from npm packages (`golobe-design-system`, `golobe-ui`, `clients/main/package.json:24–25`), without a frontend unit referenced by composition. | context |
+| Documentation | `README.md:10–16`: planned or implemented features (“micro front”, “next13 app dir”, design system library, multilanguage, storybook) and a design system repository link. Project calls itself “being developed” (`README.md:7`). | weak |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso. Há 54 commits em todos os refs, com 4 merges, do mesmo titular: “reza_talebi” (43), “reza talebi” (3) e a identidade noreply (8). A raiz é `c94af4c` (2023-03-05). O desenvolvimento do código é de 2023. Os três últimos commits do branch padrão (`f84419d`, `10792a7` e o SHA `92756e2`, de 2026-05 e 2026-06) só alteram o README; neles foram acrescentadas linhas de configuração de proxy sem relação com o projeto (`README.md:37–53`), que não foram reproduzidas aqui. São esses commits que mantêm o `pushed_at` recente. Os branches `arbitazh`, `bank-account`, `design-stysm`, `implemet-signUp`, `landing` e `server` não foram considerados. O `git log -S` sobre `nextjs-mf` não completou por blob ausente no clone parcial (`e43d057d…`), que não foi buscado; o clone ficou inalterado.
+Non-shallow clone. There are 54 commits across all refs, with 4 merges, by the same owner: “reza_talebi” (43), “reza talebi” (3) and noreply identity (8). Root is `c94af4c` (2023-03-05). Code development dates from 2023. The default branch's last three commits (`f84419d`, `10792a7` and SHA `92756e2`, from 2026-05 and 2026-06) change only the README; they added proxy configuration lines unrelated to the project (`README.md:37–53`), not reproduced here. These commits keep `pushed_at` recent. Branches `arbitazh`, `bank-account`, `design-stysm`, `implemet-signUp`, `landing` and `server` were not considered. `git log -S` on `nextjs-mf` did not complete because of a missing blob in the partial clone (`e43d057d…`), which was not fetched; the clone remained unchanged.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend (`clients/main`); nenhuma configuração de composição referencia outras unidades. |
-| Q2 | No | Não há segunda unidade frontend cuja independência possa ser avaliada; `server/` é backend. |
-| Q3 | No | Não há host compondo unidades. |
-| Q4 | No | O plugin de federação só está declarado (`clients/main/package.json:13`) e não é configurado (`next.config.js:1–8`): “A declared dependency alone is No”. |
-| Q5 | No | Q1–Q4 são No: app Next.js com intenção declarada de micro-frontend não implementada. |
+| Q1 | No | A single frontend unit (`clients/main`); no composition configuration references other units. |
+| Q2 | No | There is no second frontend unit whose independence could be assessed; `server/` is backend. |
+| Q3 | No | No host composes units. |
+| Q4 | No | The federation plugin is only declared (`clients/main/package.json:13`) and unconfigured (`next.config.js:1–8`): “A declared dependency alone is No”. |
+| Q5 | No | Q1–Q4 are No: Next.js app with an unimplemented declared micro-frontend intention. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “MFE-related dependencies that are unused or experimental” e a “repositories mentioning micro-frontends without implementing them”.
-- Há uma aplicação real, por isso `frontend_units: 1` e `single-unit`. `ui_technologies: [react, next]`, `build_tools: []` (Next encapsula o bundler). `repo_type: other`: projeto full stack em desenvolvimento (o README não o identifica como tutorial, exemplo ou prova de conceito, e a descrição anterior de "projeto pessoal de portfólio" não é sustentada pelas fontes citadas).
-- Não é host incompleto, como em 097/103/104: não há nenhuma configuração de `remotes` nem consumo de módulo remoto a avaliar.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. Matches “MFE-related dependencies that are unused or experimental” and “repositories mentioning micro-frontends without implementing them”.
+- A real application exists, hence `frontend_units: 1` and `single-unit`. `ui_technologies: [react, next]`, `build_tools: []` (Next encapsulates the bundler). `repo_type: other`: full stack project under development (README does not identify it as a tutorial, example or proof of concept, and the earlier “personal portfolio project” description is unsupported by cited sources).
+- Not an incomplete host, as in 097/103/104: no `remotes` configuration or remote module consumption exists to assess.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** tópico `microfrontend` e dependência `@module-federation/nextjs-mf` declarada sem uso. A entrada se dá pela consulta de tópico, não por conteúdo.
-- **Protocolo (elegibilidade):** a elegibilidade vai de `pass` (001) a `unknown` (002), ao contrário do padrão mais comum, e a razão está nos dados: na rodada 002 a regra `recent-push` passa e `recent-human-commit` fica `unknown` por `activity_incomplete` (cobertura de `commit_history` pendente), isto é, coleta incompleta, e não incerteza arquitetural. O `pushed_at` recente se deve a edições de README sem relação com o projeto.
-- **Protocolo (conteúdo):** o README do SHA contém strings de configuração de proxy acrescentadas em 2026, e os commits mostram que o README foi alterado, mas não demonstram quem inseriu o conteúdo nem por quê; a hipótese de uso indevido da conta é especulativa e não se afirma. Os trechos não foram copiados.
-- **Contribuição da revisão independente (Lupa):** concordância com Non-MFE e Q1–Q5 No (uma aplicação Next.js em `clients/main` e um backend Express em `server`, sem segunda unidade, host ou mecanismo de composição; a dependência e o README de Module Federation são sinais de busca, não evidência de integração) e com `draft`. Divergências adotadas: `repo_type` passou de `example` para `other`, pela falta de evidência de exemplo; a razão do `unknown` na rodada 002 (`activity_incomplete`, verificada em `candidates.csv:5637`) foi registrada; e a hipótese de uso indevido da conta, a partir dos textos de proxy em `README.md:37–53`, foi qualificada como especulativa. A autoria completa por diretório fica limitada pelo clone parcial.
+- **RQ1 (misleading signals):** topic `microfrontend` and declared, unused `@module-federation/nextjs-mf` dependency. Entry is through topic query, rather than content.
+- **Protocol (eligibility):** eligibility goes from `pass` (001) to `unknown` (002), unlike the more common pattern, and the reason is in data: in round 002 rule `recent-push` passes and `recent-human-commit` is `unknown` due to `activity_incomplete` (pending `commit_history` coverage), i.e., incomplete collection, rather than architectural uncertainty. Recent `pushed_at` comes from README edits unrelated to the project.
+- **Protocol (content):** the SHA's README contains proxy configuration strings added in 2026, and commits show the README was changed, but do not demonstrate who inserted content or why; account misuse is a speculative hypothesis and is not asserted. Passages were not copied.
+- **Independent review contribution (Lupa):** agreement with Non-MFE and Q1–Q5 No (one Next.js application in `clients/main` and an Express backend in `server`, without a second unit, host or composition mechanism; Module Federation dependency and README are search signals, rather than integration evidence) and with `draft`. Adopted disagreements: `repo_type` changed from `example` to `other`, due to missing example evidence; the reason for round 002 `unknown` (`activity_incomplete`, verified in `candidates.csv:5637`) was recorded; and the account misuse hypothesis, from proxy text at `README.md:37–53`, was qualified as speculative. Complete per-directory authorship remains limited by the partial clone.

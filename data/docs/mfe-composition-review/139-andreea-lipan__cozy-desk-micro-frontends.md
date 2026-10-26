@@ -20,26 +20,27 @@ annotation:
 
 # 139 — andreea-lipan/cozy-desk-micro-frontends
 
-## Leitura do repositório
+## Repository overview
 
-Tutorial de micro frontends em Angular com **Native Federation** (`@angular-architects/native-federation`, build com esbuild). São três projetos Angular irmãos na raiz, sem workspace: o host `test-base` e os remotes `tea-tracker` e `sticky-notes`. O host inicializa a federação com `federation.manifest.json` antes do bootstrap (test-base/src/main.ts:3-5). Esse manifesto fica em `public/`, copiado como asset (test-base/angular.json:48-53), e associa cada nome de remote a um `remoteEntry.json` em `localhost` (test-base/public/federation.manifest.json:2-3). O host declara uma rota por remote, com `loadComponent` sobre `loadRemoteModule('<remote>', './App')` (test-base/src/app/app.routes.ts:12-19), registradas por `provideRouter` (test-base/src/app/app.config.ts:9). O menu lateral liga as rotas (test-base/src/app/app.html:12, 17), e o componente remoto aparece no `<router-outlet>` (test-base/src/app/app.html:26).
+An Angular micro frontends tutorial with **Native Federation** (`@angular-architects/native-federation`, esbuild build). There are three sibling Angular projects at the root, without a workspace: host `test-base` and remotes `tea-tracker` and `sticky-notes`. The host initializes federation with `federation.manifest.json` before bootstrap (test-base/src/main.ts:3-5). This manifest resides in `public/`, copied as an asset (test-base/angular.json:48-53), and maps each remote name to a `remoteEntry.json` on `localhost` (test-base/public/federation.manifest.json:2-3). The host declares one route per remote, using `loadComponent` over `loadRemoteModule('<remote>', './App')` (test-base/src/app/app.routes.ts:12-19), registered by `provideRouter` (test-base/src/app/app.config.ts:9). The sidebar menu links the routes (test-base/src/app/app.html:12, 17), and the remote component appears in `<router-outlet>` (test-base/src/app/app.html:26).
 
-Cada remote expõe só `./App`, o componente raiz da própria aplicação (tea-tracker/federation.config.js:4-8; sticky-notes/federation.config.js:4-8). Esse componente renderiza a feature, `<app-tea-tracker/>` ou `<app-sticky-notes/>` (tea-tracker/src/app/app.html:1; sticky-notes/src/app/app.html:1). O host não expõe nada (test-base/federation.config.js:3-8). Os `initFederation()` sem argumento dos remotes (tea-tracker/src/main.ts:3; sticky-notes/src/main.ts:3) servem à execução isolada de cada um e não resolvem outra unidade. Não há comunicação entre as unidades, nem iframe, custom element ou orquestrador. Também não há deploy: as URLs do manifesto são as portas de desenvolvimento. Os remotes não se conhecem; toda relação parte do host.
+Each remote exposes only `./App`, its own application's root component (tea-tracker/federation.config.js:4-8; sticky-notes/federation.config.js:4-8). That component renders the feature, `<app-tea-tracker/>` or `<app-sticky-notes/>` (tea-tracker/src/app/app.html:1; sticky-notes/src/app/app.html:1). The host exposes nothing (test-base/federation.config.js:3-8). The remotes' argument-free `initFederation()` calls (tea-tracker/src/main.ts:3; sticky-notes/src/main.ts:3) serve each one's isolated execution and resolve no other unit. There is no inter-unit communication, iframe, custom element or orchestrator. There is also no deployment: manifest URLs are development ports. The remotes do not know each other; every relationship originates from the host.
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | test-base | sticky-notes | host → remote | origem → destino | native-federation | Yes | Yes | test-base/public/federation.manifest.json:3 (`sticky-notes` → `http://localhost:4333/remoteEntry.json`); sticky-notes/federation.config.js:4-8 (`name: 'sticky-notes'`, expõe `./App`); sticky-notes/angular.json:97 (porta 4333) | test-base/src/app/app.routes.ts:3; test-base/src/app/app.routes.ts:18; test-base/src/main.ts:1; test-base/src/main.ts:3; test-base/src/app/app.routes.ts:5 |
-| 2 | test-base | tea-tracker | host → remote | origem → destino | native-federation | Yes | Yes | test-base/public/federation.manifest.json:2 (`tea-tracker` → `http://localhost:4222/remoteEntry.json`); tea-tracker/federation.config.js:4-8 (`name: 'tea-tracker'`, expõe `./App`); tea-tracker/angular.json:97 (porta 4222) | test-base/src/app/app.routes.ts:3; test-base/src/app/app.routes.ts:14; test-base/src/main.ts:1; test-base/src/main.ts:3; test-base/src/app/app.routes.ts:5 |
+| 1 | test-base | sticky-notes | host → remote | source → target | native-federation | Yes | Yes | test-base/public/federation.manifest.json:3 (`sticky-notes` → `http://localhost:4333/remoteEntry.json`); sticky-notes/federation.config.js:4-8 (`name: 'sticky-notes'`, exposes `./App`); sticky-notes/angular.json:97 (port 4333) | test-base/src/app/app.routes.ts:3; test-base/src/app/app.routes.ts:18; test-base/src/main.ts:1; test-base/src/main.ts:3; test-base/src/app/app.routes.ts:5 |
+| 2 | test-base | tea-tracker | host → remote | source → target | native-federation | Yes | Yes | test-base/public/federation.manifest.json:2 (`tea-tracker` → `http://localhost:4222/remoteEntry.json`); tea-tracker/federation.config.js:4-8 (`name: 'tea-tracker'`, exposes `./App`); tea-tracker/angular.json:97 (port 4222) | test-base/src/app/app.routes.ts:3; test-base/src/app/app.routes.ts:14; test-base/src/main.ts:1; test-base/src/main.ts:3; test-base/src/app/app.routes.ts:5 |
 
-## Observações
+## Observations
 
-**1. test-base → sticky-notes.** A rota `sticky-notes` carrega `./App` do remote `sticky-notes` e usa o export `App` (test-base/src/app/app.routes.ts:16-18). O nome e o módulo correspondem a sticky-notes/federation.config.js:4-8, e o export a sticky-notes/src/app/app.ts:11. A URL do manifesto usa a porta 4333 (test-base/public/federation.manifest.json:3), a mesma do `serve-original` do projeto (sticky-notes/angular.json:97). A porta só corrobora: o destino se resolve pelo `name`. As linhas do import de `loadRemoteModule`, do `initFederation` com manifesto e da declaração das rotas valem para as duas relações.
+**1. test-base → sticky-notes.** The `sticky-notes` route loads `./App` from remote `sticky-notes` and uses export `App` (test-base/src/app/app.routes.ts:16-18). The name and module match sticky-notes/federation.config.js:4-8, and the export matches sticky-notes/src/app/app.ts:11. The manifest URL uses port 4333 (test-base/public/federation.manifest.json:3), the same as the project's `serve-original` (sticky-notes/angular.json:97). The port only corroborates: the target is resolved through `name`. The `loadRemoteModule` import, `initFederation` with manifest and route declaration lines apply to both relationships.
 
-**2. test-base → tea-tracker.** Mesmo fluxo, na rota `tea-tracker` (test-base/src/app/app.routes.ts:12-14). O nome e o módulo correspondem a tea-tracker/federation.config.js:4-8, e o export a tea-tracker/src/app/app.ts:11. A porta 4222 do manifesto (test-base/public/federation.manifest.json:2) coincide com tea-tracker/angular.json:97.
+**2. test-base → tea-tracker.** The same flow, at route `tea-tracker` (test-base/src/app/app.routes.ts:12-14). The name and module match tea-tracker/federation.config.js:4-8, and the export matches tea-tracker/src/app/app.ts:11. The manifest's port 4222 (test-base/public/federation.manifest.json:2) matches tea-tracker/angular.json:97.
 
-## Resumo
+## Summary
 
-Relações: 2 (host → remote: 2). Ativas: 2. Destino fora do snapshot: 0.
-Unidades sem relação: nenhuma.
+Relationships: 2 (host → remote: 2). Active: 2. Target outside the snapshot: 0.
+Units without a relationship: none.
+

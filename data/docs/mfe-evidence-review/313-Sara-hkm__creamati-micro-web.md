@@ -19,340 +19,341 @@ annotation:
 
 # 313 — Sara-hkm/creamati-micro-web
 
-## Leitura do repositório
+## Repository overview
 
-A cadeia arquitetural parte do código, sem dependência de tecnologia selecionada na 3.4.2: o container monta um iframe e seleciona uma das quatro URLs pela aba ativa (#1). As cinco aplicações têm entrada e build próprios (#3–#7), e o mesmo iframe sustenta quatro relações ativas do container com analytics, data-grid, settings e user-management (#8–#11). Os builds e as publicações são separados por aplicação, ainda que usem o mesmo site e branch do GitHub Pages (#12–#16). A raiz só coordena comandos (#2).
+Architectural chain starts in code without selected technology dependency in 3.4.2: container mounts iframe, selecting one of four URLs through active tab (#1). Five applications have own entries/builds (#3–#7); same iframe supports four active container relationships with analytics, data-grid, settings and user-management (#8–#11). Builds/publications separate per application despite same GitHub Pages site/branch (#12–#16). Root only coordinates commands (#2).
 
-A correspondência entre os segmentos de URL e os destinos de publicação resolve os quatro destinos nas unidades do snapshot, conforme as revisões finais. As URLs do código apontam para o Pages de `olivium-dev`, enquanto os workflows publicam no Pages deste repositório (#1, #8–#16); não há verificação de disponibilidade nem identidade dos conteúdos publicados. A 3.5 preserva essa resolução e seus limites.
+URL segment/publication target match resolves four targets to snapshot units per final reviews. Code URLs point to `olivium-dev` Pages while workflows publish to this repository Pages (#1, #8–#16); no availability or published-content identity verification. Section 3.5 preserves resolution/limits.
 
-Não há observações de configuração: os blocos dos workflows citados nas tabelas só constroem/publicam aplicações, e os manifestos só definem scripts e dependências convencionais do CRA. As URLs que compõem as unidades estão no código executado pelo container (#1), não em configuração de runtime.
+No configuration observations: workflow blocks cited in tables only build/publish applications; manifests only conventional CRA scripts/dependencies. Unit-composing URLs in container-executed code (#1) rather than runtime configuration.
 
-A documentação confirma o shell, a navegação e os limites de execução/publicação (#18–#25, #31), mas também contém sinais enganosos: Vercel (#17), outras unidades (#27, #28, #32), Module Federation e MUI (#29, #42), módulos e dependências compartilhados, autenticação e lazy loading (#30, #33–#36, #40, #41). As garantias de ausência de impacto são apenas parciais (#37); aplicações em execução, rollback e escalabilidade não têm corroboração (#26, #38, #39). Essas afirmações continuam fracas como evidência semântica, inclusive as corroboradas.
+Documentation confirms shell, navigation and execution/publication boundaries (#18–#25, #31), but misleading signals include Vercel (#17), other units (#27, #28, #32), Module Federation/MUI (#29, #42), shared modules/dependencies, authentication/lazy loading (#30, #33–#36, #40, #41). No-impact guarantees only partial (#37); running applications, rollback and scalability uncorroborated (#26, #38, #39). Claims remain weak semantic evidence including corroborated claims.
 
-O histórico explica a documentação de deploy desatualizada (#43) e a divergência entre unidades propostas e presentes (#44). Não decide se houve federação nos submódulos anteriores ou se era intenção (#45); essa incerteza é sobre o passado e não altera a leitura do snapshot como composição por iframe.
+History explains outdated deployment documentation (#43) and proposed/present unit divergence (#44). Does not decide whether earlier submodule federation existed or merely intent (#45); past uncertainty does not alter snapshot iframe-composition reading.
 
-## Observações
+## Observations
 
 ### 1. frontend/container/src/App.tsx:239-252; frontend/container/src/App.tsx:8-18; frontend/container/src/App.tsx:93; frontend/container/src/App.tsx:138; frontend/container/src/App.tsx:218; frontend/container/src/index.tsx:4-14; .github/workflows/deploy-all.yml:86-89; .github/workflows/deploy-all.yml:115-116
 
-**Observação:** O `App` montado pela entrada mantém a aba ativa e, fora de `home`, renderiza um `iframe`. Seu `src` seleciona URLs de `olivium-dev.github.io/golden-sample-react-micro-web/` terminadas em `user-management/`, `data-grid/`, `analytics/` ou `settings/`. Esses segmentos coincidem com os destinos de publicação das quatro aplicações na matriz do workflow.
+**Observation:** `App` mounted by entry maintains active tab and outside `home` renders `iframe`. Its `src` selects `olivium-dev.github.io/golden-sample-react-micro-web/` URLs ending in `user-management/`, `data-grid/`, `analytics/` or `settings/`. Segments match four application publication targets in workflow matrix.
 
-**Interpretação:** O container compõe quatro aplicações por documentos remotos em runtime, com navegação central. A resolução das unidades segue a correspondência de caminhos registrada na 3.4; a origem das URLs é de outra conta, sem comprovação de disponibilidade dos sites.
+**Interpretation:** Container composes four applications through remote documents at runtime with central navigation. Unit resolution follows path match recorded in 3.4; URL origin another account without site availability proof.
 
 ### 2. .; package.json:8-15; package.json:29
 
-**Observação:** O manifesto da raiz encadeia comandos em cinco diretórios `frontend/*` e declara `concurrently`; não há entrada nem build próprios da raiz.
+**Observation:** Root manifest chains commands in five `frontend/*` directories, declaring `concurrently`; no own root entry/build.
 
-**Interpretação:** A raiz coordena aplicações e não constitui uma sexta unidade frontend.
+**Interpretation:** Root coordinates applications without constituting sixth frontend unit.
 
 ### 3. frontend/analytics-app; frontend/analytics-app/src/index.tsx:7-14; frontend/analytics-app/public/index.html:31; frontend/analytics-app/package.json:22
 
-**Observação:** `frontend/analytics-app` possui manifesto próprio, entrada que monta `<App />` numa raiz React, template HTML com `div#root` e script `build` com `react-scripts build`.
+**Observation:** `frontend/analytics-app` has own manifest, entry mounting `<App />` in React root, HTML template with `div#root` and script `build` with `react-scripts build`.
 
-**Interpretação:** A entrada e o build próprios confirmam o limite de uma aplicação frontend CRA; isoladamente, não estabelecem sua composição com outras unidades.
+**Interpretation:** Own entry/build confirm CRA frontend application boundary; alone establish no other-unit composition.
 
 ### 4. frontend/container; frontend/container/src/index.tsx:7-14; frontend/container/public/index.html:31; frontend/container/package.json:22
 
-**Observação:** `frontend/container` possui manifesto próprio, entrada que monta `<App />` numa raiz React, template HTML com `div#root` e script `build` com `react-scripts build`.
+**Observation:** `frontend/container` has own manifest, entry mounting `<App />` in React root, HTML template with `div#root` and script `build` with `react-scripts build`.
 
-**Interpretação:** A entrada e o build próprios confirmam o limite de uma aplicação frontend CRA; isoladamente, não estabelecem sua composição com outras unidades.
+**Interpretation:** Own entry/build confirm CRA frontend application boundary; alone establish no other-unit composition.
 
 ### 5. frontend/data-grid-app; frontend/data-grid-app/src/index.tsx:7-14; frontend/data-grid-app/public/index.html:31; frontend/data-grid-app/package.json:22
 
-**Observação:** `frontend/data-grid-app` possui manifesto próprio, entrada que monta `<App />` numa raiz React, template HTML com `div#root` e script `build` com `react-scripts build`.
+**Observation:** `frontend/data-grid-app` has own manifest, entry mounting `<App />` in React root, HTML template with `div#root` and script `build` with `react-scripts build`.
 
-**Interpretação:** A entrada e o build próprios confirmam o limite de uma aplicação frontend CRA; isoladamente, não estabelecem sua composição com outras unidades.
+**Interpretation:** Own entry/build confirm CRA frontend application boundary; alone establish no other-unit composition.
 
 ### 6. frontend/settings-app; frontend/settings-app/src/index.tsx:7-14; frontend/settings-app/public/index.html:31; frontend/settings-app/package.json:22
 
-**Observação:** `frontend/settings-app` possui manifesto próprio, entrada que monta `<App />` numa raiz React, template HTML com `div#root` e script `build` com `react-scripts build`.
+**Observation:** `frontend/settings-app` has own manifest, entry mounting `<App />` in React root, HTML template with `div#root` and script `build` with `react-scripts build`.
 
-**Interpretação:** A entrada e o build próprios confirmam o limite de uma aplicação frontend CRA; isoladamente, não estabelecem sua composição com outras unidades.
+**Interpretation:** Own entry/build confirm CRA frontend application boundary; alone establish no other-unit composition.
 
 ### 7. frontend/user-management-app; frontend/user-management-app/src/index.tsx:7-14; frontend/user-management-app/public/index.html:31; frontend/user-management-app/package.json:22
 
-**Observação:** `frontend/user-management-app` possui manifesto próprio, entrada que monta `<App />` numa raiz React, template HTML com `div#root` e script `build` com `react-scripts build`.
+**Observation:** `frontend/user-management-app` has own manifest, entry mounting `<App />` in React root, HTML template with `div#root` and script `build` with `react-scripts build`.
 
-**Interpretação:** A entrada e o build próprios confirmam o limite de uma aplicação frontend CRA; isoladamente, não estabelecem sua composição com outras unidades.
+**Interpretation:** Own entry/build confirm CRA frontend application boundary; alone establish no other-unit composition.
 
 ### 8. frontend/container/src/App.tsx:239; frontend/container/src/App.tsx:243; .github/workflows/deploy-all.yml:88; .github/workflows/deploy-all.yml:115-116; .github/workflows/deploy-analytics.yml:42-43
 
-**Observação:** O `iframe` do container escolhe a URL `https://olivium-dev.github.io/golden-sample-react-micro-web/analytics/`. O workflow individual publica `frontend/analytics-app/build` em `analytics`, e a matriz geral associa `analytics-app` ao mesmo destino. A 3.4.5 registra No snapshot `Yes` e Ativa `Yes`.
+**Observation:** Container `iframe` chooses URL `https://olivium-dev.github.io/golden-sample-react-micro-web/analytics/`. Individual workflow publishes `frontend/analytics-app/build` at `analytics`; general matrix associates `analytics-app` with same target. Section 3.4.5 records In snapshot `Yes` and Active `Yes`.
 
-**Interpretação:** A relação ativa liga `frontend/container` a `frontend/analytics-app` por iframe. A unidade é resolvida pelo caminho de publicação, conforme a 3.4.5, embora a URL aponte para a conta externa `olivium-dev`.
+**Interpretation:** Active relationship links `frontend/container` to `frontend/analytics-app` through iframe. Unit resolved through publication path per 3.4.5 although URL points to external account `olivium-dev`.
 
 ### 9. frontend/container/src/App.tsx:239; frontend/container/src/App.tsx:242; .github/workflows/deploy-all.yml:87; .github/workflows/deploy-all.yml:115-116; .github/workflows/deploy-data-grid.yml:42-43
 
-**Observação:** O `iframe` do container escolhe a URL `https://olivium-dev.github.io/golden-sample-react-micro-web/data-grid/`. O workflow individual publica `frontend/data-grid-app/build` em `data-grid`, e a matriz geral associa `data-grid-app` ao mesmo destino. A 3.4.5 registra No snapshot `Yes` e Ativa `Yes`.
+**Observation:** Container `iframe` chooses URL `https://olivium-dev.github.io/golden-sample-react-micro-web/data-grid/`. Individual workflow publishes `frontend/data-grid-app/build` at `data-grid`; general matrix associates `data-grid-app` with same target. Section 3.4.5 records In snapshot `Yes` and Active `Yes`.
 
-**Interpretação:** A relação ativa liga `frontend/container` a `frontend/data-grid-app` por iframe. A unidade é resolvida pelo caminho de publicação, conforme a 3.4.5, embora a URL aponte para a conta externa `olivium-dev`.
+**Interpretation:** Active relationship links `frontend/container` to `frontend/data-grid-app` through iframe. Unit resolved through publication path per 3.4.5 although URL points to external account `olivium-dev`.
 
 ### 10. frontend/container/src/App.tsx:239; frontend/container/src/App.tsx:244; .github/workflows/deploy-all.yml:89; .github/workflows/deploy-all.yml:115-116; .github/workflows/deploy-settings.yml:42-43
 
-**Observação:** O `iframe` do container escolhe a URL `https://olivium-dev.github.io/golden-sample-react-micro-web/settings/`. O workflow individual publica `frontend/settings-app/build` em `settings`, e a matriz geral associa `settings-app` ao mesmo destino. A 3.4.5 registra No snapshot `Yes` e Ativa `Yes`.
+**Observation:** Container `iframe` chooses URL `https://olivium-dev.github.io/golden-sample-react-micro-web/settings/`. Individual workflow publishes `frontend/settings-app/build` at `settings`; general matrix associates `settings-app` with same target. Section 3.4.5 records In snapshot `Yes` and Active `Yes`.
 
-**Interpretação:** A relação ativa liga `frontend/container` a `frontend/settings-app` por iframe. A unidade é resolvida pelo caminho de publicação, conforme a 3.4.5, embora a URL aponte para a conta externa `olivium-dev`.
+**Interpretation:** Active relationship links `frontend/container` to `frontend/settings-app` through iframe. Unit resolved through publication path per 3.4.5 although URL points to external account `olivium-dev`.
 
 ### 11. frontend/container/src/App.tsx:239; frontend/container/src/App.tsx:241; .github/workflows/deploy-all.yml:86; .github/workflows/deploy-all.yml:115-116; .github/workflows/deploy-user-management.yml:42-43
 
-**Observação:** O `iframe` do container escolhe a URL `https://olivium-dev.github.io/golden-sample-react-micro-web/user-management/`. O workflow individual publica `frontend/user-management-app/build` em `user-management`, e a matriz geral associa `user-management-app` ao mesmo destino. A 3.4.5 registra No snapshot `Yes` e Ativa `Yes`.
+**Observation:** Container `iframe` chooses URL `https://olivium-dev.github.io/golden-sample-react-micro-web/user-management/`. Individual workflow publishes `frontend/user-management-app/build` at `user-management`; general matrix associates `user-management-app` with same target. Section 3.4.5 records In snapshot `Yes` and Active `Yes`.
 
-**Interpretação:** A relação ativa liga `frontend/container` a `frontend/user-management-app` por iframe. A unidade é resolvida pelo caminho de publicação, conforme a 3.4.5, embora a URL aponte para a conta externa `olivium-dev`.
+**Interpretation:** Active relationship links `frontend/container` to `frontend/user-management-app` through iframe. Unit resolved through publication path per 3.4.5 although URL points to external account `olivium-dev`.
 
 ### 12. frontend/analytics-app/package.json:22; .github/workflows/deploy-analytics.yml:3-12; .github/workflows/deploy-analytics.yml:28-43; .github/workflows/deploy-all.yml:80-116
 
-**Observação:** O script de `frontend/analytics-app` usa `react-scripts build`. Seu workflow instala e constrói apenas essa aplicação e publica `frontend/analytics-app/build` em `analytics/` no GitHub Pages com `peaceiris/actions-gh-pages@v3`. O workflow geral tem uma publicação equivalente por aplicação, condicionada a `build-and-test`.
+**Observation:** Script of `frontend/analytics-app` uses `react-scripts build`. Workflow installs/builds only application, publishing `frontend/analytics-app/build` at `analytics/` in GitHub Pages with `peaceiris/actions-gh-pages@v3`. General workflow has equivalent per-application publication conditional on `build-and-test`.
 
-**Interpretação:** Build e deploy são separados por aplicação, ainda que as publicações compartilhem site e branch do Pages. A 3.4.6 registra Versionamento `No`; não há versão usada na publicação. Esses limites sustentam autonomia de entrega, sem garantir ausência de impacto entre aplicações.
+**Interpretation:** Build/deployment separate per application despite publications sharing Pages site/branch. Section 3.4.6 records Versioning `No`; no version used for publication. Boundaries support delivery autonomy without guaranteeing no inter-application impact.
 
 ### 13. frontend/container/package.json:22; .github/workflows/deploy-container.yml:3-12; .github/workflows/deploy-container.yml:28-44; .github/workflows/deploy-all.yml:49-78
 
-**Observação:** O script de `frontend/container` usa `react-scripts build`. Seu workflow instala e constrói apenas essa aplicação e publica `frontend/container/build` em `container/` no GitHub Pages com `peaceiris/actions-gh-pages@v3`. O workflow geral tem uma publicação equivalente por aplicação, condicionada a `build-and-test`. O workflow individual também declara `cname: micro-frontend-container.github.io`.
+**Observation:** Script of `frontend/container` uses `react-scripts build`. Workflow installs/builds only application, publishing `frontend/container/build` at `container/` in GitHub Pages with `peaceiris/actions-gh-pages@v3`. General workflow has equivalent per-application publication conditional on `build-and-test`. Individual workflow also declares `cname: micro-frontend-container.github.io`.
 
-**Interpretação:** Build e deploy são separados por aplicação, ainda que as publicações compartilhem site e branch do Pages. A 3.4.6 registra Versionamento `No`; não há versão usada na publicação. Esses limites sustentam autonomia de entrega, sem garantir ausência de impacto entre aplicações.
+**Interpretation:** Build/deployment separate per application despite publications sharing Pages site/branch. Section 3.4.6 records Versioning `No`; no version used for publication. Boundaries support delivery autonomy without guaranteeing no inter-application impact.
 
 ### 14. frontend/data-grid-app/package.json:22; .github/workflows/deploy-data-grid.yml:3-12; .github/workflows/deploy-data-grid.yml:28-43; .github/workflows/deploy-all.yml:80-116
 
-**Observação:** O script de `frontend/data-grid-app` usa `react-scripts build`. Seu workflow instala e constrói apenas essa aplicação e publica `frontend/data-grid-app/build` em `data-grid/` no GitHub Pages com `peaceiris/actions-gh-pages@v3`. O workflow geral tem uma publicação equivalente por aplicação, condicionada a `build-and-test`.
+**Observation:** Script of `frontend/data-grid-app` uses `react-scripts build`. Workflow installs/builds only application, publishing `frontend/data-grid-app/build` at `data-grid/` in GitHub Pages with `peaceiris/actions-gh-pages@v3`. General workflow has equivalent per-application publication conditional on `build-and-test`.
 
-**Interpretação:** Build e deploy são separados por aplicação, ainda que as publicações compartilhem site e branch do Pages. A 3.4.6 registra Versionamento `No`; não há versão usada na publicação. Esses limites sustentam autonomia de entrega, sem garantir ausência de impacto entre aplicações.
+**Interpretation:** Build/deployment separate per application despite publications sharing Pages site/branch. Section 3.4.6 records Versioning `No`; no version used for publication. Boundaries support delivery autonomy without guaranteeing no inter-application impact.
 
 ### 15. frontend/settings-app/package.json:22; .github/workflows/deploy-settings.yml:3-12; .github/workflows/deploy-settings.yml:28-43; .github/workflows/deploy-all.yml:80-116
 
-**Observação:** O script de `frontend/settings-app` usa `react-scripts build`. Seu workflow instala e constrói apenas essa aplicação e publica `frontend/settings-app/build` em `settings/` no GitHub Pages com `peaceiris/actions-gh-pages@v3`. O workflow geral tem uma publicação equivalente por aplicação, condicionada a `build-and-test`.
+**Observation:** Script of `frontend/settings-app` uses `react-scripts build`. Workflow installs/builds only application, publishing `frontend/settings-app/build` at `settings/` in GitHub Pages with `peaceiris/actions-gh-pages@v3`. General workflow has equivalent per-application publication conditional on `build-and-test`.
 
-**Interpretação:** Build e deploy são separados por aplicação, ainda que as publicações compartilhem site e branch do Pages. A 3.4.6 registra Versionamento `No`; não há versão usada na publicação. Esses limites sustentam autonomia de entrega, sem garantir ausência de impacto entre aplicações.
+**Interpretation:** Build/deployment separate per application despite publications sharing Pages site/branch. Section 3.4.6 records Versioning `No`; no version used for publication. Boundaries support delivery autonomy without guaranteeing no inter-application impact.
 
 ### 16. frontend/user-management-app/package.json:22; .github/workflows/deploy-user-management.yml:3-12; .github/workflows/deploy-user-management.yml:28-43; .github/workflows/deploy-all.yml:80-116
 
-**Observação:** O script de `frontend/user-management-app` usa `react-scripts build`. Seu workflow instala e constrói apenas essa aplicação e publica `frontend/user-management-app/build` em `user-management/` no GitHub Pages com `peaceiris/actions-gh-pages@v3`. O workflow geral tem uma publicação equivalente por aplicação, condicionada a `build-and-test`.
+**Observation:** Script of `frontend/user-management-app` uses `react-scripts build`. Workflow installs/builds only application, publishing `frontend/user-management-app/build` at `user-management/` in GitHub Pages with `peaceiris/actions-gh-pages@v3`. General workflow has equivalent per-application publication conditional on `build-and-test`.
 
-**Interpretação:** Build e deploy são separados por aplicação, ainda que as publicações compartilhem site e branch do Pages. A 3.4.6 registra Versionamento `No`; não há versão usada na publicação. Esses limites sustentam autonomia de entrega, sem garantir ausência de impacto entre aplicações.
+**Interpretation:** Build/deployment separate per application despite publications sharing Pages site/branch. Section 3.4.6 records Versioning `No`; no version used for publication. Boundaries support delivery autonomy without guaranteeing no inter-application impact.
 
 ### 17. DEPLOYMENT.md:3
 
-**Observação:** O guia afirma que os workflows implantam todos os micro-frontends automaticamente no Vercel.
+**Observation:** Guide claims workflows automatically deploy all microfrontends to Vercel.
 
-**Interpretação:** A afirmação é contradita pelas publicações no GitHub Pages; o destino documentado não é o configurado.
+**Interpretation:** Claim contradicted by GitHub Pages publications; documented target differs from configured target.
 
 ### 18. DEPLOYMENT.md:11-15
 
-**Observação:** O guia enumera Container App como shell e User Management, Data Grid, Analytics e Settings como aplicações.
+**Observation:** Guide enumerates Container App shell plus User Management, Data Grid, Analytics and Settings applications.
 
-**Interpretação:** A enumeração é corroborada pelos cinco limites frontend e pelo conjunto integrado pelo container.
+**Interpretation:** Enumeration corroborated by five frontend boundaries/container-integrated group.
 
 ### 19. DEPLOYMENT.md:48
 
-**Observação:** A instrução pede atualizar as URLs de iframe em `frontend/container/src/App.tsx` após o deploy.
+**Observation:** Instruction requests iframe URL updates in `frontend/container/src/App.tsx` after deployment.
 
-**Interpretação:** A instrução é corroborada pelas quatro relações por iframe e identifica onde a integração depende dos endereços publicados.
+**Interpretation:** Instruction corroborated by four iframe relationships, identifying integration dependence on published addresses.
 
 ### 20. DEPLOYMENT.md:63-65
 
-**Observação:** O guia descreve gatilho por push com mudanças no diretório de uma aplicação e build/deploy apenas do micro-frontend alterado.
+**Observation:** Guide describes push trigger for changes in application directory, building/deploying only changed microfrontend.
 
-**Interpretação:** A afirmação é corroborada pelos workflows individuais, sem excluir o workflow geral que pode rodar no mesmo push.
+**Interpretation:** Claim corroborated by individual workflows without excluding general workflow possibly running on same push.
 
 ### 21. DEPLOYMENT.md:68-70
 
-**Observação:** O guia descreve um workflow geral acionado por push na main ou manualmente que constrói, testa e publica todos os micro-frontends.
+**Observation:** Guide describes general workflow triggered by main push/manually, building/testing/publishing all microfrontends.
 
-**Interpretação:** A descrição é corroborada pelo workflow geral; cada publicação depende do job de build e teste das cinco aplicações.
+**Interpretation:** Description corroborated by general workflow; each publication depends on five-application build/test job.
 
 ### 22. README.md:7
 
-**Observação:** O README descreve o container como shell principal com cabeçalho, rodapé e menu lateral.
+**Observation:** README describes container as main shell with header, footer and sidebar.
 
-**Interpretação:** O papel de shell é corroborado pelas áreas visuais do container; a frase não demonstra sozinha a ligação com outras unidades.
+**Interpretation:** Shell role corroborated by container visual areas; phrase alone demonstrates no other-unit link.
 
 ### 23. README.md:8; README.md:18
 
-**Observação:** O README apresenta quatro micro-frontends independentes e diz que cada um executa na própria porta.
+**Observation:** README presents four independent microfrontends, saying each runs at own port.
 
-**Interpretação:** A configuração de execução individual é corroborada pelas quatro aplicações, seus scripts e portas, sem demonstrar servidores em execução.
+**Interpretation:** Individual execution configuration corroborated by four applications/scripts/ports without demonstrating running servers.
 
 ### 24. README.md:20
 
-**Observação:** O README afirma separação de responsabilidades entre as aplicações.
+**Observation:** README claims separation of responsibilities between applications.
 
-**Interpretação:** Os limites das aplicações e a integração por URL corroboram a separação, sem atribuir uma garantia adicional de qualidade à palavra “clean”.
+**Interpretation:** Application boundaries/URL integration corroborate separation without attributing additional quality guarantee to word “clean”.
 
 ### 25. README.md:21
 
-**Observação:** O README afirma que a navegação é centralizada no container.
+**Observation:** README claims navigation centralized in container.
 
-**Interpretação:** A afirmação é corroborada pelo estado da aba, pelos handlers do menu e pela escolha da URL no container.
+**Interpretation:** Claim corroborated by tab state, menu handlers and container URL selection.
 
 ### 26. STATUS.md:5-10
 
-**Observação:** O status anuncia todas as cinco aplicações em execução e lista endereços localhost nas portas 3000 a 3004.
+**Observation:** Status announces all five applications running, listing localhost addresses at ports 3000 to 3004.
 
-**Interpretação:** A 3.4.7 registra sem corroboração: scripts e portas não comprovam que os processos estavam ativos. A disponibilidade operacional permanece apenas declarada.
+**Interpretation:** Section 3.4.7 records uncorroborated: scripts/ports do not prove processes active. Operational availability merely declared.
 
 ### 27. implementation-plan-mui-microservices.md:28-46
 
-**Observação:** A árvore proposta inclui container, user-management, data-grid, analytics e settings em frontend, além de shared-ui-lib, backend e docker.
+**Observation:** Proposed tree includes container, user-management, data-grid, analytics and settings in frontend plus shared-ui-lib, backend and docker.
 
-**Interpretação:** A corroboração é parcial: as cinco aplicações existem, mas os demais componentes propostos não são implementação presente no snapshot.
+**Interpretation:** Partial corroboration: five applications exist, other proposed components not present implementation in snapshot.
 
 ### 28. implementation-plan.md:17-21
 
-**Observação:** O plano descreve container, auth-app, dashboard-app, profile-app e ui-lib opcional.
+**Observation:** Plan describes container, auth-app, dashboard-app, profile-app and optional ui-lib.
 
-**Interpretação:** A divisão de unidades é contradita pela estrutura atual, que contém outros quatro aplicativos além do container. A árvore é proposta, não execução confirmada.
+**Interpretation:** Unit division contradicted by current structure containing other four applications beyond container. Tree proposed rather than confirmed execution.
 
 ### 29. micro-web-golden-sample.md:3
 
-**Observação:** O guia apresenta o golden sample com React e Webpack Module Federation.
+**Observation:** Guide presents golden sample with React/Webpack Module Federation.
 
-**Interpretação:** A atribuição de Module Federation é contradita pela composição efetiva por iframe; a presença de React não confirma federação.
+**Interpretation:** Module Federation attribution contradicted by actual iframe composition; React presence does not confirm federation.
 
 ### 30. micro-web-golden-sample.md:26
 
-**Observação:** O guia inclui estado compartilhado entre as funções do shell global.
+**Observation:** Guide includes shared state among global shell functions.
 
-**Interpretação:** A propriedade é contradita: os estados do container controlam aba e menu; os frames recebem URL, estilo e título, sem compartilhamento de estado entre aplicações.
+**Interpretation:** Property contradicted: container state controls tab/menu; frames receive URL, style/title without inter-application state sharing.
 
 ### 31. micro-web-golden-sample.md:27
 
-**Observação:** O guia diz que o container carrega e integra aplicações remotas dinamicamente.
+**Observation:** Guide says container dynamically loads/integrates remote applications.
 
-**Interpretação:** No sentido de carregar páginas remotas em runtime, a afirmação é corroborada pelas relações de iframe, sem implicar módulos federados.
+**Interpretation:** As runtime remote-page loading, claim corroborated by iframe relationships without implying federated modules.
 
 ### 32. micro-web-golden-sample.md:30
 
-**Observação:** O guia apresenta os remotes como projetos React autônomos e exemplifica auth-app, dashboard-app e profile-app.
+**Observation:** Guide presents remotes as autonomous React projects, exemplifying auth-app, dashboard-app and profile-app.
 
-**Interpretação:** A afirmação é contradita pela identificação de unidades ausentes, embora as aplicações que existem tenham limites próprios.
+**Interpretation:** Claim contradicted by absent unit identities although existing applications have own boundaries.
 
 ### 33. micro-web-golden-sample.md:31
 
-**Observação:** O guia diz que cada remote expõe páginas ou componentes específicos.
+**Observation:** Guide says each remote exposes specific pages/components.
 
-**Interpretação:** A exposição descrita é contradita: as aplicações montam suas próprias páginas, e o container incorpora documentos por URL, sem consumir uma interface de componentes expostos.
+**Interpretation:** Described exposure contradicted: applications mount own pages; container embeds URL documents without consuming exposed component interface.
 
 ### 34. micro-web-golden-sample.md:34
 
-**Observação:** O guia afirma compartilhamento de React e ReactDOM para minimizar duplicação dos bundles.
+**Observation:** Guide claims React/ReactDOM sharing to minimize bundle duplication.
 
-**Interpretação:** A afirmação é contradita pelos builds CRA separados; dependências iguais não estabelecem um runtime compartilhado entre frames.
+**Interpretation:** Claim contradicted by separate CRA builds; same dependencies establish no shared inter-frame runtime.
 
 ### 35. micro-web-golden-sample.md:95
 
-**Observação:** O guia descreve o container como orquestrador que obtém módulos remotos dinamicamente.
+**Observation:** Guide describes container orchestrator dynamically retrieving remote modules.
 
-**Interpretação:** A atribuição de carregamento de módulos é contradita pelo carregamento de documentos em iframe; o import dinâmico local de web-vitals não integra unidades.
+**Interpretation:** Module-loading attribution contradicted by iframe document loading; local web-vitals dynamic import does not integrate units.
 
 ### 36. micro-web-golden-sample.md:180-184
 
-**Observação:** O guia diz que o container busca em produção as URLs CDN de auth, dashboard e profile terminadas em remoteEntry.js.
+**Observation:** Guide says production container fetches auth/dashboard/profile CDN URLs ending remoteEntry.js.
 
-**Interpretação:** A afirmação é contradita pelas URLs de documentos no Pages de olivium-dev e pelos outros nomes de aplicações; não foi verificada disponibilidade de endereços.
+**Interpretation:** Claim contradicted by document URLs in olivium-dev Pages and different application names; address availability unverified.
 
 ### 37. micro-web-golden-sample.md:187
 
-**Observação:** O guia afirma que equipes fazem deploy sem impactar outras.
+**Observation:** Guide claims teams deploy without affecting others.
 
-**Interpretação:** A corroboração é parcial: há publicação por aplicação, mas site e branch são comuns e o workflow geral depende do build/teste das cinco; os artefatos não garantem ausência de impacto.
+**Interpretation:** Partial corroboration: per-application publication but common site/branch and general workflow depends on five-application build/test; artifacts guarantee no absence of impact.
 
 ### 38. micro-web-golden-sample.md:188
 
-**Observação:** O guia afirma independência de versionamento e rollback.
+**Observation:** Guide claims independent versioning/rollback.
 
-**Interpretação:** Sem corroboração na 3.4.7: não há mecanismo de versão ou reversão independente demonstrado, e Versionamento é No para as cinco aplicações.
+**Interpretation:** Uncorroborated in 3.4.7: no demonstrated independent version/reversion mechanism; Versioning No for five applications.
 
 ### 39. micro-web-golden-sample.md:189
 
-**Observação:** O guia anuncia escalabilidade horizontal por aplicação.
+**Observation:** Guide announces per-application horizontal scalability.
 
-**Interpretação:** Sem corroboração: a publicação estática no Pages não demonstra política nem medida de escalabilidade por unidade.
+**Interpretation:** Uncorroborated: static Pages publication demonstrates neither per-unit scalability policy nor measurement.
 
 ### 40. micro-web-golden-sample.md:199
 
-**Observação:** Após recomendar autenticação global no container, o guia afirma que os remotes consomem tokens por contexto ou chamadas de API.
+**Observation:** After recommending global container authentication, guide claims remotes consume tokens through context/API calls.
 
-**Interpretação:** A afirmação de consumo é contradita: o container não transmite tokens e user-management é uma página estática, sem comunicação de autenticação entre unidades.
+**Interpretation:** Consumption claim contradicted: container transmits no tokens, user-management static page without inter-unit authentication communication.
 
 ### 41. micro-web-golden-sample.md:225
 
-**Observação:** A lista de entregáveis concluídos anuncia container com routing e lazy loading.
+**Observation:** Completed deliverables list announces container with routing/lazy loading.
 
-**Interpretação:** A afirmação é contradita no sentido de roteador e módulos/rotas carregados sob demanda descritos pelo guia: o código troca estado e URL de iframe, sem esse mecanismo.
+**Interpretation:** Claim contradicted in guide’s sense of router/on-demand module/route loading: code switches state/iframe URL without mechanism.
 
 ### 42. package.json:4
 
-**Observação:** O campo description anuncia arquitetura de micro-frontends com React, Webpack Module Federation e Material-UI.
+**Observation:** Description field announces microfrontend architecture with React, Webpack Module Federation and Material-UI.
 
-**Interpretação:** A afirmação é contradita: as aplicações CRA compõem por iframe e não incluem MUI. O campo descritivo é sinal enganoso para identificar a tecnologia da composição.
+**Interpretation:** Claim contradicted: CRA applications compose through iframe without MUI. Description misleading composition technology signal.
 
 ### 43. 81f06d6 2025-09-21 (DEPLOYMENT.md, .github/workflows/); c6d475b 2025-09-21 (.github/workflows/); 5148e21 2025-09-21 (.github/workflows/); 1f789f7 2025-09-21 (.github/workflows/)
 
-**Observação:** A 3.4.8 registra DEPLOYMENT.md criado com os workflows em 81f06d6 e sem alteração posterior. A mensagem de c6d475b anuncia substituição de Vercel por Pages; 5148e21 e 1f789f7 também alteram workflows. Os blobs antigos dos workflows não estavam disponíveis localmente.
+**Observation:** Section 3.4.8 records DEPLOYMENT.md created with workflows in 81f06d6, unchanged afterward. Message of c6d475b announces replacing Vercel with Pages; 5148e21/1f789f7 also change workflows. Old workflow blobs locally unavailable.
 
-**Interpretação:** O ponto é esclarecido por estágios diferentes: a documentação permaneceu enquanto os workflows mudaram. A troca é anunciada pelas mensagens, não confirmada por leitura das versões antigas.
+**Interpretation:** Point clarified through different stages: documentation retained while workflows changed. Replacement announced through messages rather than confirmed by old-version reading.
 
 ### 44. 4f941bb 2025-09-21 (implementation-plan.md, implementation-plan-mui-microservices.md, micro-web-golden-sample.md, frontend/); 541f8ed 2025-09-22 (frontend/)
 
-**Observação:** A 3.4.8 registra os planos e o guia com conteúdo invariável desde 4f941bb. A árvore tem os cinco nomes atuais desde esse commit, inicialmente como gitlinks sem conteúdo local; 541f8ed substitui os gitlinks pelos arquivos. Nenhum commit da árvore contém auth-app, dashboard-app, profile-app, biblioteca compartilhada, backend ou docker.
+**Observation:** Section 3.4.8 records plans/guide with unchanged content since 4f941bb. Tree has five current names since commit, initially gitlinks without local content; 541f8ed replaces gitlinks with files. No tree commit contains auth-app, dashboard-app, profile-app, shared library, backend or docker.
 
-**Interpretação:** O ponto é esclarecido no alcance do histórico local: a divisão proposta pelos documentos não aparece na árvore, e os nomes atuais antecedem a recriação. O conteúdo dos antigos submódulos e o período anterior ao primeiro commit não são conhecidos.
+**Interpretation:** Point clarified within local history: document-proposed division absent from tree, current names predate recreation. Old submodule contents/period before first commit unknown.
 
 ### 45. 4f941bb 2025-09-21 (micro-web-golden-sample.md, package.json, .cursor/templates/, frontend/); 541f8ed 2025-09-22 (frontend/container/src/App.tsx, frontend/)
 
-**Observação:** A 3.4.8 registra guia, descrição da raiz e templates presentes desde 4f941bb e sem mudanças posteriores. O iframe entra em 541f8ed, cuja mensagem anuncia incorporação via URLs do Pages. O conteúdo das cinco aplicações antes da recriação não está disponível: eram submódulos externos ausentes do clone.
+**Observation:** Section 3.4.8 records guide, root description and templates present since 4f941bb, unchanged afterward. Iframe enters in 541f8ed, whose message announces Pages-URL embedding. Five application contents before recreation unavailable: external submodules absent from clone.
 
-**Interpretação:** O resultado histórico é inconclusivo entre uma federação anterior nos submódulos e uma intenção nunca implementada. A dúvida se restringe ao passado; no snapshot a composição por iframe está determinada, por isso a força é fraca.
+**Interpretation:** Historical result inconclusive between earlier submodule federation and never-implemented intent. Uncertainty restricted to past; snapshot iframe composition determined, hence weak strength.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.4 (frontend/container/src/App.tsx:239) | 3 código | código-fonte | iframe | arquitetural | forte | implementa #8; implementa #9; implementa #10; implementa #11 |
-| 2 | 3.4.3 (.) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 3 | 3.4.3 (frontend/analytics-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 4 | 3.4.3 (frontend/container) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 5 | 3.4.3 (frontend/data-grid-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 6 | 3.4.3 (frontend/settings-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 7 | 3.4.3 (frontend/user-management-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 8 | 3.4.5 #1 | 5 composição | código-fonte | iframe | arquitetural | forte | liga #4; liga #3 |
-| 9 | 3.4.5 #2 | 5 composição | código-fonte | iframe | arquitetural | forte | liga #4; liga #5 |
-| 10 | 3.4.5 #3 | 5 composição | código-fonte | iframe | arquitetural | forte | liga #4; liga #6 |
-| 11 | 3.4.5 #4 | 5 composição | código-fonte | iframe | arquitetural | forte | liga #4; liga #7 |
-| 12 | 3.4.6 #1 | 6 build-deploy | CI | — | arquitetural | moderada | publica #3 |
-| 13 | 3.4.6 #2 | 6 build-deploy | CI | — | arquitetural | moderada | publica #4 |
-| 14 | 3.4.6 #3 | 6 build-deploy | CI | — | arquitetural | moderada | publica #5 |
-| 15 | 3.4.6 #4 | 6 build-deploy | CI | — | arquitetural | moderada | publica #6 |
-| 16 | 3.4.6 #5 | 6 build-deploy | CI | — | arquitetural | moderada | publica #7 |
-| 17 | 3.4.7 #1 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #12; contradiz #13; contradiz #14; contradiz #15; contradiz #16 |
-| 18 | 3.4.7 #2 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #3; corrobora #4; corrobora #5; corrobora #6; corrobora #7 |
-| 19 | 3.4.7 #3 | 7 documentação | documentação | iframe | arquitetural | fraca | corrobora #8; corrobora #9; corrobora #10; corrobora #11 |
-| 20 | 3.4.7 #4 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #12; corrobora #13; corrobora #14; corrobora #15; corrobora #16 |
-| 21 | 3.4.7 #5 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #12; corrobora #13; corrobora #14; corrobora #15; corrobora #16 |
-| 22 | 3.4.7 #6 | 7 documentação | documentação | — | arquitetural | fraca | corrobora frontend/container/src/App.tsx:29-30; corrobora frontend/container/src/App.tsx:80-81; corrobora frontend/container/src/App.tsx:131-132; corrobora frontend/container/src/App.tsx:259-260 |
-| 23 | 3.4.7 #7 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #3; corrobora #5; corrobora #6; corrobora #7; corrobora package.json:8-12; corrobora frontend/analytics-app/.env:1 |
-| 24 | 3.4.7 #8 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #1; corrobora #3; corrobora #4; corrobora #5; corrobora #6; corrobora #7 |
-| 25 | 3.4.7 #9 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #1 |
-| 26 | 3.4.7 #10 | 7 documentação | documentação | — | arquitetural | fraca | — |
-| 27 | 3.4.7 #11 | 7 documentação | documentação | — | arquitetural | fraca | corrobora em parte #3; corrobora em parte #4; corrobora em parte #5; corrobora em parte #6; corrobora em parte #7 |
-| 28 | 3.4.7 #12 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #3; contradiz #4; contradiz #5; contradiz #6; contradiz #7 |
-| 29 | 3.4.7 #13 | 7 documentação | documentação | module-federation | tecnológica | fraca | contradiz #1; contradiz #8; contradiz #9; contradiz #10; contradiz #11 |
-| 30 | 3.4.7 #14 | 7 documentação | documentação | — | arquitetural | fraca | contradiz frontend/container/src/App.tsx:5-10; contradiz #1 |
-| 31 | 3.4.7 #15 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #8; corrobora #9; corrobora #10; corrobora #11 |
-| 32 | 3.4.7 #16 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #3; contradiz #5; contradiz #6; contradiz #7 |
-| 33 | 3.4.7 #17 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #1; contradiz frontend/analytics-app/src/App.tsx:4-36; contradiz frontend/analytics-app/src/index.tsx:4-14 |
-| 34 | 3.4.7 #18 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #12; contradiz #13; contradiz #14; contradiz #15; contradiz #16; contradiz frontend/container/package.json:14-22; contradiz frontend/analytics-app/package.json:14-22 |
-| 35 | 3.4.7 #19 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #1; contradiz frontend/container/src/reportWebVitals.ts:3-11 |
-| 36 | 3.4.7 #20 | 7 documentação | documentação | module-federation | arquitetural | fraca | contradiz #1; contradiz #8; contradiz #9; contradiz #10; contradiz #11 |
-| 37 | 3.4.7 #21 | 7 documentação | documentação | — | arquitetural | fraca | corrobora em parte #12; corrobora em parte #13; corrobora em parte #14; corrobora em parte #15; corrobora em parte #16 |
-| 38 | 3.4.7 #22 | 7 documentação | documentação | — | arquitetural | fraca | — |
-| 39 | 3.4.7 #23 | 7 documentação | documentação | — | arquitetural | fraca | — |
-| 40 | 3.4.7 #24 | 7 documentação | documentação | — | arquitetural | fraca | contradiz frontend/container/src/App.tsx:5-10; contradiz #1; contradiz frontend/user-management-app/src/App.tsx:4-36 |
-| 41 | 3.4.7 #25 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #1 |
-| 42 | 3.4.7 #26 | 7 documentação | comentário | module-federation | tecnológica | fraca | contradiz #1; contradiz frontend/container/package.json:5-18; contradiz frontend/analytics-app/package.json:5-18; contradiz frontend/container/src/App.tsx:1-2 |
-| 43 | 3.4.8 #1 | 8 histórico | histórico | — | arquitetural | fraca | explica #17 |
-| 44 | 3.4.8 #2 | 8 histórico | histórico | — | arquitetural | fraca | explica #27; explica #28; explica #32 |
-| 45 | 3.4.8 #3 | 8 histórico | histórico | — | arquitetural | fraca | explica #29; explica #30; explica #33; explica #34; explica #35; explica #36; explica #37; explica #40; explica #41; explica #42 |
+| 1 | 3.4.4 (frontend/container/src/App.tsx:239) | 3 code | source code | iframe | architectural | strong | implements #8; implements #9; implements #10; implements #11 |
+| 2 | 3.4.3 (.) | 4 structure | directory | — | context | weak | — |
+| 3 | 3.4.3 (frontend/analytics-app) | 4 structure | directory | — | architectural | moderate | — |
+| 4 | 3.4.3 (frontend/container) | 4 structure | directory | — | architectural | moderate | — |
+| 5 | 3.4.3 (frontend/data-grid-app) | 4 structure | directory | — | architectural | moderate | — |
+| 6 | 3.4.3 (frontend/settings-app) | 4 structure | directory | — | architectural | moderate | — |
+| 7 | 3.4.3 (frontend/user-management-app) | 4 structure | directory | — | architectural | moderate | — |
+| 8 | 3.4.5 #1 | 5 composition | source code | iframe | architectural | strong | links #4; links #3 |
+| 9 | 3.4.5 #2 | 5 composition | source code | iframe | architectural | strong | links #4; links #5 |
+| 10 | 3.4.5 #3 | 5 composition | source code | iframe | architectural | strong | links #4; links #6 |
+| 11 | 3.4.5 #4 | 5 composition | source code | iframe | architectural | strong | links #4; links #7 |
+| 12 | 3.4.6 #1 | 6 build-deploy | CI | — | architectural | moderate | publishes #3 |
+| 13 | 3.4.6 #2 | 6 build-deploy | CI | — | architectural | moderate | publishes #4 |
+| 14 | 3.4.6 #3 | 6 build-deploy | CI | — | architectural | moderate | publishes #5 |
+| 15 | 3.4.6 #4 | 6 build-deploy | CI | — | architectural | moderate | publishes #6 |
+| 16 | 3.4.6 #5 | 6 build-deploy | CI | — | architectural | moderate | publishes #7 |
+| 17 | 3.4.7 #1 | 7 documentation | documentation | — | architectural | weak | contradicts #12; contradicts #13; contradicts #14; contradicts #15; contradicts #16 |
+| 18 | 3.4.7 #2 | 7 documentation | documentation | — | architectural | weak | corroborates #3; corroborates #4; corroborates #5; corroborates #6; corroborates #7 |
+| 19 | 3.4.7 #3 | 7 documentation | documentation | iframe | architectural | weak | corroborates #8; corroborates #9; corroborates #10; corroborates #11 |
+| 20 | 3.4.7 #4 | 7 documentation | documentation | — | architectural | weak | corroborates #12; corroborates #13; corroborates #14; corroborates #15; corroborates #16 |
+| 21 | 3.4.7 #5 | 7 documentation | documentation | — | architectural | weak | corroborates #12; corroborates #13; corroborates #14; corroborates #15; corroborates #16 |
+| 22 | 3.4.7 #6 | 7 documentation | documentation | — | architectural | weak | corroborates frontend/container/src/App.tsx:29-30; corroborates frontend/container/src/App.tsx:80-81; corroborates frontend/container/src/App.tsx:131-132; corroborates frontend/container/src/App.tsx:259-260 |
+| 23 | 3.4.7 #7 | 7 documentation | documentation | — | architectural | weak | corroborates #3; corroborates #5; corroborates #6; corroborates #7; corroborates package.json:8-12; corroborates frontend/analytics-app/.env:1 |
+| 24 | 3.4.7 #8 | 7 documentation | documentation | — | architectural | weak | corroborates #1; corroborates #3; corroborates #4; corroborates #5; corroborates #6; corroborates #7 |
+| 25 | 3.4.7 #9 | 7 documentation | documentation | — | architectural | weak | corroborates #1 |
+| 26 | 3.4.7 #10 | 7 documentation | documentation | — | architectural | weak | — |
+| 27 | 3.4.7 #11 | 7 documentation | documentation | — | architectural | weak | partially corroborates #3; partially corroborates #4; partially corroborates #5; partially corroborates #6; partially corroborates #7 |
+| 28 | 3.4.7 #12 | 7 documentation | documentation | — | architectural | weak | contradicts #3; contradicts #4; contradicts #5; contradicts #6; contradicts #7 |
+| 29 | 3.4.7 #13 | 7 documentation | documentation | module-federation | technological | weak | contradicts #1; contradicts #8; contradicts #9; contradicts #10; contradicts #11 |
+| 30 | 3.4.7 #14 | 7 documentation | documentation | — | architectural | weak | contradicts frontend/container/src/App.tsx:5-10; contradicts #1 |
+| 31 | 3.4.7 #15 | 7 documentation | documentation | — | architectural | weak | corroborates #8; corroborates #9; corroborates #10; corroborates #11 |
+| 32 | 3.4.7 #16 | 7 documentation | documentation | — | architectural | weak | contradicts #3; contradicts #5; contradicts #6; contradicts #7 |
+| 33 | 3.4.7 #17 | 7 documentation | documentation | — | architectural | weak | contradicts #1; contradicts frontend/analytics-app/src/App.tsx:4-36; contradicts frontend/analytics-app/src/index.tsx:4-14 |
+| 34 | 3.4.7 #18 | 7 documentation | documentation | — | architectural | weak | contradicts #12; contradicts #13; contradicts #14; contradicts #15; contradicts #16; contradicts frontend/container/package.json:14-22; contradicts frontend/analytics-app/package.json:14-22 |
+| 35 | 3.4.7 #19 | 7 documentation | documentation | — | architectural | weak | contradicts #1; contradicts frontend/container/src/reportWebVitals.ts:3-11 |
+| 36 | 3.4.7 #20 | 7 documentation | documentation | module-federation | architectural | weak | contradicts #1; contradicts #8; contradicts #9; contradicts #10; contradicts #11 |
+| 37 | 3.4.7 #21 | 7 documentation | documentation | — | architectural | weak | partially corroborates #12; partially corroborates #13; partially corroborates #14; partially corroborates #15; partially corroborates #16 |
+| 38 | 3.4.7 #22 | 7 documentation | documentation | — | architectural | weak | — |
+| 39 | 3.4.7 #23 | 7 documentation | documentation | — | architectural | weak | — |
+| 40 | 3.4.7 #24 | 7 documentation | documentation | — | architectural | weak | contradicts frontend/container/src/App.tsx:5-10; contradicts #1; contradicts frontend/user-management-app/src/App.tsx:4-36 |
+| 41 | 3.4.7 #25 | 7 documentation | documentation | — | architectural | weak | contradicts #1 |
+| 42 | 3.4.7 #26 | 7 documentation | comment | module-federation | technological | weak | contradicts #1; contradicts frontend/container/package.json:5-18; contradicts frontend/analytics-app/package.json:5-18; contradicts frontend/container/src/App.tsx:1-2 |
+| 43 | 3.4.8 #1 | 8 history | history | — | architectural | weak | explains #17 |
+| 44 | 3.4.8 #2 | 8 history | history | — | architectural | weak | explains #27; explains #28; explains #32 |
+| 45 | 3.4.8 #3 | 8 history | history | — | architectural | weak | explains #29; explains #30; explains #33; explains #34; explains #35; explains #36; explains #37; explains #40; explains #41; explains #42 |
 
-## Resumo
+## Summary
 
-Observações: 45. Dimensões (tecnologia: 0, configuração: 0, código: 1, estrutura: 6, composição: 4, build-deploy: 5, documentação: 26, histórico: 3). Força (forte: 5, moderada: 10, fraca: 30, ambígua: 0). Evidência (tecnológica: 2, arquitetural: 42, contexto: 1).
+Observations: 45. Dimensions (technology: 0, configuration: 0, code: 1, structure: 6, composition: 4, build-deploy: 5, documentation: 26, history: 3). Strength (strong: 5, moderate: 10, weak: 30, ambiguous: 0). Evidence (technological: 2, architectural: 42, context: 1).
+

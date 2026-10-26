@@ -20,64 +20,64 @@ annotation:
 
 # 243 — ranneechan-iso/ranneechan-iso
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** não é projeto de software (README de perfil do GitHub; descrição do repositório “My GitHub Profile”).
+- **Repository type:** not a software project (GitHub profile README; repository description “My GitHub Profile”).
 
-O snapshot contém só `README.md`, com apresentação pessoal, badges, GIFs e um objeto JavaScript ilustrativo que lista competências (`README.md:12–37`). “Micro-frontends” aparece só nessa lista, em `architecture` (`README.md:24–28`). O nome do repositório não é usado como evidência.
+The snapshot contains only `README.md`, with personal introduction, badges, GIFs and an illustrative JavaScript object listing skills (`README.md:12–37`). “Micro-frontends” appears only in this list, in `architecture` (`README.md:24–28`). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:244` registra rank 243, ID 1126172096, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:244` records rank 243, ID 1126172096, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:244` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:22723` (`terminology`, `unknown`) e `data/discovery/mfe-round-002/candidates.csv:22729` (`terminology`, `pass`).
+`data/samples/mfe-sample-001/sample.csv:244` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:22723` (`terminology`, `unknown`) and `data/discovery/mfe-round-002/candidates.csv:22729` (`terminology`, `pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with an empty `path`:
 
-| Consulta (`q`) | Subconsulta | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Collection 001 / 002 (UTC) |
 |---|---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | `terminology-micro-frontend-repositories#created:2026-01` | 2026-10-07T22:30:19.747Z / 2026-10-08T15:57:32.444Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | `terminology-micro-frontends-repositories#created:2026-01` | 2026-10-07T22:59:35.430Z / 2026-10-08T16:07:45.338Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2026-01-01..2026-01-31`.
+The effective queries append `pushed:>=2025-04-01 created:2026-01-01..2026-01-31`.
 
-Metadados do hit (iguais nas duas rodadas): descrição “My GitHub Profile”, sem tópicos, linguagem nula, `fork: false`, tamanho 14, criação em 2026-01-01T09:48:37Z, push em 2026-01-01T19:04:01Z.
+Hit metadata (identical in both rounds): description “My GitHub Profile”, no topics, null language, `fork: false`, size 14, created at 2026-01-01T09:48:37Z, pushed at 2026-01-01T19:04:01Z.
 
-A descrição não contém os termos; o acerto vem do README. A única grafia correspondente é “Micro-frontends” (`README.md:25`). A busca de frase trata o hífen como separador, o que casa literalmente “micro frontends”. A forma singular “micro frontend” não aparece literalmente; esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+The description does not contain the terms; the match comes from the README. The only matching spelling is “Micro-frontends” (`README.md:25`). Phrase search treats the hyphen as a separator, literally matching “micro frontends”. The singular form “micro frontend” does not appear literally; this hit depends on GitHub search text processing, which is not recorded.
 
-O SHA (2026-01-02T02:04:00+07:00, isto é, 2026-01-01T19:04:00Z) coincide com o `pushed_at` registrado e antecede as coletas de outubro de 2026. O README do SHA não é posterior às buscas e é a versão indexada.
+The SHA (2026-01-02T02:04:00+07:00, that is, 2026-01-01T19:04:00Z) coincides with the recorded `pushed_at` and predates the October 2026 collections. The README at the SHA does not postdate the searches and is the indexed version.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 1 entrada, `README.md`, arquivo regular `100644`; zero symlinks e zero gitlinks. Não há manifesto, código, build nem assets. | ausente |
-| Documentação | `README.md:12–37`: bloco de código Markdown (`javascript`) com objeto de perfil; `README.md:15` “Front-end Engineer”; `README.md:19` stack frontend (React, Next.js etc.); `README.md:24–28` `architecture: ["Micro-frontends", …]` como competência listada. O bloco é conteúdo de apresentação, não código executável versionado. | fraca |
-| Tecnologia / Configuração / Código-fonte / Composição / Build/deploy | Inexistentes: o único arquivo é o README; nenhuma configuração de federação, single-spa, import map, iframe ou Web Components. Imports relativos entre unidades não se aplicam (não há código). | ausente |
+| Structure | `git ls-tree -r` at the SHA: 1 entry, `README.md`, regular file `100644`; zero symlinks and zero gitlinks. There is no manifest, code, build or assets. | absent |
+| Documentation | `README.md:12–37`: Markdown code block (`javascript`) with profile object; `README.md:15` “Front-end Engineer”; `README.md:19` frontend stack (React, Next.js etc.); `README.md:24–28` `architecture: ["Micro-frontends", …]` as a listed skill. The block is introduction content, not versioned executable code. | weak |
+| Technology / Configuration / Source code / Composition / Build/deploy | Nonexistent: the only file is the README; no federation, single-spa, import map, iframe or Web Components configuration. Relative imports between units do not apply (there is no code). | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso, parcial (`blob:none`); 8 commits alcançáveis (8 em todos os refs), nenhum merge, todos com autor `NywnChan <habibrouf690@gmail.com>` e committer `GitHub` (edição pela interface web), de 2026-01-01T16:48:37+07:00 (`a47d029`, “Initial commit”) ao SHA `cb14d45` (“Add footer section to README”). Pelo `git log --no-renames --name-status`, todos os commits só adicionam ou modificam `README.md`. `git rev-list --objects $SHA --missing=print` identifica 7 objetos ausentes: os blobs de `README.md` dos 7 commits anteriores ao SHA. Por isso não foi possível ler versões históricas nem datar a introdução de “Micro-frontends”; o blob do SHA está presente. Os metadados não indicam conteúdo além do README em nenhum momento do histórico.
+Non-shallow, partial clone (`blob:none`); 8 reachable commits (8 across all refs), no merges, all with author `NywnChan <habibrouf690@gmail.com>` and committer `GitHub` (editing through the web interface), from 2026-01-01T16:48:37+07:00 (`a47d029`, “Initial commit”) to SHA `cb14d45` (“Add footer section to README”). According to `git log --no-renames --name-status`, all commits only add or modify `README.md`. `git rev-list --objects $SHA --missing=print` identifies 7 missing objects: the `README.md` blobs from the 7 commits before the SHA. Therefore it was not possible to read historical versions or date the introduction of “Micro-frontends”; the SHA blob is present. Metadata indicates no content beyond the README at any point in history.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend; o repositório só tem `README.md` (inventário). |
-| Q2 | No | Não há unidades com entrada ou build próprios. |
-| Q3 | No | Não há host, shell nem root config. |
-| Q4 | No | Nenhum mecanismo de composição configurado; “Micro-frontends” é item de lista de competências (`README.md:25`). |
-| Q5 | No | Q1–Q4 convergem. |
+| Q1 | No | No frontend unit; the repository has only `README.md` (inventory). |
+| Q2 | No | There are no units with their own entry point or build. |
+| Q3 | No | There is no host, shell or root config. |
+| Q4 | No | No composition mechanism configured; “Micro-frontends” is a skills list item (`README.md:25`). |
+| Q5 | No | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “repositories mentioning micro-frontends without implementing them”.
-- Mesmo padrão dos perfis 011/064/068/073/077/101/111: README de perfil do GitHub em que micro-frontends aparecem como competência profissional, com `frontend_units: 0` e `unit_organization: none`.
-- `repo_type: other` (perfil, não projeto de software). `ui_technologies` e `build_tools` vazios: React, Next.js etc. são só competências declaradas.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. It matches “repositories mentioning micro-frontends without implementing them”.
+- Same pattern as profiles 011/064/068/073/077/101/111: GitHub profile README in which micro-frontends appear as a professional skill, with `frontend_units: 0` and `unit_organization: none`.
+- `repo_type: other` (profile, not a software project). Empty `ui_technologies` and `build_tools`: React, Next.js etc. are only declared skills.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** competência “Micro-frontends” dentro de um objeto JavaScript ilustrativo em bloco de código Markdown; buscas de código não o captam, mas a busca por README sim.
-- **Protocolo (busca):** o hit singular “micro frontend” não tem grafia literal no README. A elegibilidade muda de `unknown` (001) para `pass` (002). O padrão `owner == name` reforça a sugestão de filtro automático registrada em 011.
-- **Protocolo (clone parcial):** os blobs históricos do README não estão no clone; a análise se apoia no SHA e nos metadados dos commits.
+- **RQ1 (misleading signals):** “Micro-frontends” skill inside an illustrative JavaScript object in a Markdown code block; code searches do not capture it, but README search does.
+- **Protocol (search):** the singular hit “micro frontend” has no literal spelling in the README. Eligibility changes from `unknown` (001) to `pass` (002). Pattern `owner == name` reinforces the automatic filter suggestion recorded in 011.
+- **Protocol (partial clone):** historical README blobs are not in the clone; analysis relies on the SHA and commit metadata.

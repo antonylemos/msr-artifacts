@@ -15,26 +15,26 @@ annotation:
 
 # 172 — Jyotisaini1234/moduleFederation
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-remote-import | mfe1/src/App.tsx:4 | mfe1 | dynamic-loading | Yes | `React.lazy(() => import("app2/App").catch(...))` carrega em runtime o módulo `./App` exposto pela unidade mfe2 (mfe1/src/App.tsx:3-12); o remote `app2` aponta para `app2@http://localhost:3002/remoteEntry.js` em mfe1/webpack.config.ts:76-77, e mfe2 expõe `'./App': './src/App.tsx'` com `name: 'app2'` em mfe2/webpack.config.ts:38-40. Ativo: mfe1/src/index.tsx:3 → mfe1/src/bootstrap.tsx:8,15,18 → `App`. |
-| src-remote-import | mfe1/src/App.tsx:39 | mfe1 | dynamic-loading | No | Linha comentada: toda a versão alternativa do componente está comentada com `//` em mfe1/src/App.tsx:35-53. |
-| src-async-bootstrap | mfe1/src/index.tsx:3 | mfe1 | dynamic-loading | No | `import("./bootstrap")` de arquivo local da própria unidade (fronteira assíncrona do Module Federation); interno a mfe1. |
-| src-async-bootstrap | mfe2/src/index.tsx:1 | mfe2 | dynamic-loading | No | `import("./bootstrap")` de arquivo local da própria unidade (fronteira assíncrona do Module Federation); interno a mfe2. |
+| src-remote-import | mfe1/src/App.tsx:4 | mfe1 | dynamic-loading | Yes | `React.lazy(() => import("app2/App").catch(...))` loads at runtime module `./App` exposed by unit mfe2 (mfe1/src/App.tsx:3-12); remote `app2` points to `app2@http://localhost:3002/remoteEntry.js` at mfe1/webpack.config.ts:76-77, and mfe2 exposes `'./App': './src/App.tsx'` with `name: 'app2'` at mfe2/webpack.config.ts:38-40. Active: mfe1/src/index.tsx:3 → mfe1/src/bootstrap.tsx:8,15,18 → `App`. |
+| src-remote-import | mfe1/src/App.tsx:39 | mfe1 | dynamic-loading | No | Commented line: the entire alternative component version is commented out with `//` at mfe1/src/App.tsx:35-53. |
+| src-async-bootstrap | mfe1/src/index.tsx:3 | mfe1 | dynamic-loading | No | `import("./bootstrap")` of a local file of the unit itself (Module Federation’s asynchronous boundary); internal to mfe1. |
+| src-async-bootstrap | mfe2/src/index.tsx:1 | mfe2 | dynamic-loading | No | `import("./bootstrap")` of a local file of the unit itself (Module Federation’s asynchronous boundary); internal to mfe2. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | mfe1/src/App.tsx:26 | mfe1 | runtime-composition | Yes | Renderiza `<RemoteApp2 />`, componente da unidade mfe2, dentro de `Suspense` (mfe1/src/App.tsx:25-27); o componente vem do `React.lazy` em mfe1/src/App.tsx:3-12, e `App` é renderizado em mfe1/src/bootstrap.tsx:15,18. |
+| manual | mfe1/src/App.tsx:26 | mfe1 | runtime-composition | Yes | Renders `<RemoteApp2 />`, a component of unit mfe2, inside `Suspense` (mfe1/src/App.tsx:25-27); the component comes from `React.lazy` at mfe1/src/App.tsx:3-12, and `App` is rendered at mfe1/src/bootstrap.tsx:15,18. |
 
-## Resumo
+## Summary
 
-Construções com composição: 2 (dynamic-loading: 1, runtime-composition: 1).
+Constructs participating in composition: 2 (dynamic-loading: 1, runtime-composition: 1).
 
-## Notas
+## Notes
 
-- `window.app2Url = "http://localhost:3002"` (mfe1/src/index.tsx:1, repetido no HTML do SSR em mfe1/src/server/server.ts:81) só tem o tipo declarado em mfe1/src/types/global.d.ts:17 e não é lido em nenhum arquivo do snapshot; o endereço do remote vem fixo da configuração do webpack (mfe1/webpack.config.ts:77). Não vira linha.
-- `mfe1/src/server/server.ts` renderiza o mesmo `App` no servidor (mfe1/src/server/server.ts:7,54) e injeta os bundles de `dist` com `<script src="/static/...">` (mfe1/src/server/server.ts:84); são bundles da própria mfe1, não de outra unidade, e nenhum script do mfe1/package.json executa esse servidor (mfe1/package.json:8-9). Não vira linha.
+- `window.app2Url = "http://localhost:3002"` (mfe1/src/index.tsx:1, repeated in SSR HTML at mfe1/src/server/server.ts:81) only has its type declared at mfe1/src/types/global.d.ts:17 and is not read in any snapshot file; the remote address is fixed in webpack configuration (mfe1/webpack.config.ts:77). It does not become a row.
+- `mfe1/src/server/server.ts` renders the same `App` on the server (mfe1/src/server/server.ts:7,54) and injects `dist` bundles through `<script src="/static/...">` (mfe1/src/server/server.ts:84); these bundles belong to mfe1 itself rather than another unit, and no mfe1/package.json script runs this server (mfe1/package.json:8-9). It does not become a row.

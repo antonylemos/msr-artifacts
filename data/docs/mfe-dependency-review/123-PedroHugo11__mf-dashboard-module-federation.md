@@ -15,15 +15,16 @@ annotation:
 
 # 123 — PedroHugo11/mf-dashboard-module-federation
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| mfe-counter/package.json:13 | dependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | mfe-counter/vite.config.ts:3 (`import federation from "@originjs/vite-plugin-federation"`); mfe-counter/vite.config.ts:12-21 (configuração padrão do Vite invoca `federation` em plugins com `name: "counter"`, `filename: "remoteEntry.js"`, `exposes` e `shared`); mfe-counter/package.json:6-10 (`dev`, `build` e `preview` executam `vite` sem configuração alternativa) |
-| mfe-weather/package.json:13 | dependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | mfe-weather/vite.config.ts:3 (`import federation from "@originjs/vite-plugin-federation"`); mfe-weather/vite.config.ts:12-21 (configuração padrão do Vite invoca `federation` em plugins com `name: "weather"`, `filename: "remoteEntry.js"`, `exposes` e `shared`); mfe-weather/package.json:6-10 (`dev`, `build` e `preview` executam `vite` sem configuração alternativa) |
-| shell/package.json:13 | dependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | shell/vite.config.ts:3 (`import federation from "@originjs/vite-plugin-federation"`); shell/vite.config.ts:12-20 (configuração padrão do Vite invoca `federation` em plugins com `remotes` weather/counter e `shared`); shell/package.json:6-10 (`dev`, `build` e `preview` executam `vite` sem configuração alternativa); shell/src/App.tsx:3-4 (`import("weather/Widget")` e `import("counter/Widget")`) |
+| mfe-counter/package.json:13 | dependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | mfe-counter/vite.config.ts:3 (`import federation from "@originjs/vite-plugin-federation"`); mfe-counter/vite.config.ts:12-21 (the default Vite configuration invokes `federation` in plugins with `name: "counter"`, `filename: "remoteEntry.js"`, `exposes` and `shared`); mfe-counter/package.json:6-10 (`dev`, `build` and `preview` run `vite` with no alternative configuration) |
+| mfe-weather/package.json:13 | dependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | mfe-weather/vite.config.ts:3 (`import federation from "@originjs/vite-plugin-federation"`); mfe-weather/vite.config.ts:12-21 (the default Vite configuration invokes `federation` in plugins with `name: "weather"`, `filename: "remoteEntry.js"`, `exposes` and `shared`); mfe-weather/package.json:6-10 (`dev`, `build` and `preview` run `vite` with no alternative configuration) |
+| shell/package.json:13 | dependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | shell/vite.config.ts:3 (`import federation from "@originjs/vite-plugin-federation"`); shell/vite.config.ts:12-20 (the default Vite configuration invokes `federation` in plugins with `remotes` weather/counter and `shared`); shell/package.json:6-10 (`dev`, `build` and `preview` run `vite` with no alternative configuration); shell/src/App.tsx:3-4 (`import("weather/Widget")` and `import("counter/Widget")`) |
 
-## Notas
+## Notes
 
-- Cada pacote tem o próprio `vite.config.ts` usando o plugin; as ocorrências em `other_package_matches` são dos outros dois pacotes e não foram usadas como evidência da linha.
-- O `grep` por `vite-plugin-federation` fora de lockfiles só encontrou os três manifestos e os três `vite.config.ts:3`.
+- Each package has its own `vite.config.ts` using the plugin; the `other_package_matches` occurrences belong to the other two packages and were not used as evidence for the row.
+- The `grep` for `vite-plugin-federation` outside lockfiles found only the three manifests and three `vite.config.ts:3` files.
+

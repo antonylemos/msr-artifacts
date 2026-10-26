@@ -15,14 +15,15 @@ annotation:
 
 # 316 — Tutul33/mf-workspace
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| package.json:30 | dependencies | @softarc/native-federation-node | ^3.3.4 | native-federation | No | sem import ou invocação de `@softarc/native-federation-node` nos arquivos de código e build do snapshot (busca literal, excluindo package-lock.json); apenas declaração em package.json:30; projects/host-app/src/main.ts:1 e projects/host-app/src/app/app.routes.ts:2 importam outro pacote (`@angular-architects/native-federation`) |
-| package.json:36 | devDependencies | @angular-architects/native-federation | ^20.1.7 | native-federation | Yes | angular.json:17-29, angular.json:130-142 e angular.json:243-255 (target `build` dos três projetos invoca o builder `@angular-architects/native-federation:build`); angular.json:62, angular.json:175 e angular.json:288 (entradas `browser` dos projetos); projects/customer-app/federation.config.js:1-10 e projects/orders-app/federation.config.js:1-10 (`withNativeFederation` com `exposes`); projects/host-app/src/main.ts:1-8 (importa e invoca `initFederation` antes do bootstrap); projects/host-app/src/app/app.routes.ts:2-19 (importa e invoca `loadRemoteModule`); projects/host-app/src/app/app.config.ts:4-10 (registra as rotas) |
+| package.json:30 | dependencies | @softarc/native-federation-node | ^3.3.4 | native-federation | No | no import or invocation of `@softarc/native-federation-node` in the snapshot code and build files (literal search, excluding package-lock.json); only declared in package.json:30; projects/host-app/src/main.ts:1 and projects/host-app/src/app/app.routes.ts:2 import another package (`@angular-architects/native-federation`) |
+| package.json:36 | devDependencies | @angular-architects/native-federation | ^20.1.7 | native-federation | Yes | angular.json:17-29, angular.json:130-142 and angular.json:243-255 (target `build` of the three projects invokes builder `@angular-architects/native-federation:build`); angular.json:62, angular.json:175 and angular.json:288 (entry points `browser` of the projects); projects/customer-app/federation.config.js:1-10 and projects/orders-app/federation.config.js:1-10 (`withNativeFederation` with `exposes`); projects/host-app/src/main.ts:1-8 (imports and invokes `initFederation` before bootstrap); projects/host-app/src/app/app.routes.ts:2-19 (imports and invokes `loadRemoteModule`); projects/host-app/src/app/app.config.ts:4-10 (registers the routes) |
 
-## Notas
+## Notes
 
-- As listas de matches são idênticas para os dois pacotes, mas os imports, o `require` dos `federation.config.js` e os builders usam `@angular-architects/native-federation`. Isso não demonstra uso direto de `@softarc/native-federation-node`.
-- Os diretórios `projects/host-app/`, `projects/customer-app/` e `projects/orders-app/` não têm `package.json` próprio; pertencem ao pacote da raiz.
+- The match lists are identical for both packages, but the imports, `require` in `federation.config.js` and builders use `@angular-architects/native-federation`. This does not demonstrate direct use of `@softarc/native-federation-node`.
+- The `projects/host-app/`, `projects/customer-app/` and `projects/orders-app/` directories have no `package.json` of their own; they belong to the root package.
+

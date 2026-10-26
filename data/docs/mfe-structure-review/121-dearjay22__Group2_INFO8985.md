@@ -17,22 +17,22 @@ annotation:
 
 ## Workspace
 
-Nenhuma declaração de workspace.
+No workspace declaration.
 
-## Unidades
+## Units
 
-| Diretório | Marcadores | Manifesto | Entrada | Build | Workspace | Deploy | Unidade frontend | Motivo |
+| Directory | Markers | Manifest | Entry | Build | Workspace | Deploy | Frontend unit | Rationale |
 |---|---|---|---|---|---|---|---|---|
-| frontend/products-mf | frontend/products-mf/package.json | frontend/products-mf/package.json | frontend/products-mf/src/index.js:7-12 (entrada `src/index.*` da convenção do CRA; `ReactDOM.createRoot` renderiza `App`); frontend/products-mf/public/index.html:31 (`<div id="root">`, template HTML do CRA) | frontend/products-mf/package.json:17 (`"build": "react-scripts build"`, sem arquivo de configuração próprio) | — | frontend/products-mf/Dockerfile:1-12 (build `npm run build` e publicação em Nginx); docker-compose.yml:66-69 (serviço `products-mf`, `build: ./frontend/products-mf`, porta `3001:80`) | Yes | Aplicação CRA com entrada própria, build por `react-scripts` e imagem própria. |
-| frontend/shell-app | frontend/shell-app/package.json | frontend/shell-app/package.json | frontend/shell-app/src/index.js:7-12 (entrada `src/index.*` da convenção do CRA; `ReactDOM.createRoot` renderiza `App`); frontend/shell-app/public/index.html:31 (`<div id="root">`, template HTML do CRA) | frontend/shell-app/package.json:17 (`"build": "react-scripts build"`, sem arquivo de configuração próprio) | — | frontend/shell-app/Dockerfile:1-12 (build `npm run build` e publicação em Nginx); docker-compose.yml:59-62 (serviço `shell-app`, `build: ./frontend/shell-app`, porta `3000:80`) | Yes | Aplicação CRA com entrada própria, build por `react-scripts` e imagem própria. |
+| frontend/products-mf | frontend/products-mf/package.json | frontend/products-mf/package.json | frontend/products-mf/src/index.js:7-12 (`src/index.*` entry by CRA convention; `ReactDOM.createRoot` renders `App`); frontend/products-mf/public/index.html:31 (`<div id="root">`, CRA HTML template) | frontend/products-mf/package.json:17 (`"build": "react-scripts build"`, without its own configuration file) | — | frontend/products-mf/Dockerfile:1-12 (`npm run build` build and publishing in Nginx); docker-compose.yml:66-69 (`products-mf` service, `build: ./frontend/products-mf`, port `3001:80`) | Yes | CRA application with its own entry, build through `react-scripts` and its own image. |
+| frontend/shell-app | frontend/shell-app/package.json | frontend/shell-app/package.json | frontend/shell-app/src/index.js:7-12 (`src/index.*` entry by CRA convention; `ReactDOM.createRoot` renders `App`); frontend/shell-app/public/index.html:31 (`<div id="root">`, CRA HTML template) | frontend/shell-app/package.json:17 (`"build": "react-scripts build"`, without its own configuration file) | — | frontend/shell-app/Dockerfile:1-12 (`npm run build` build and publishing in Nginx); docker-compose.yml:59-62 (`shell-app` service, `build: ./frontend/shell-app`, port `3000:80`) | Yes | CRA application with its own entry, build through `react-scripts` and its own image. |
 
-## Resumo
+## Summary
 
-Aplicações frontend no snapshot: 2 (frontend/products-mf, frontend/shell-app).
+Frontend applications in the snapshot: 2 (frontend/products-mf, frontend/shell-app).
 
-## Notas
+## Notes
 
-- Os dois `package.json` têm a marca `workspace-config` no `artifacts.csv`, mas não declaram `workspaces` (`frontend/shell-app/package.json:1-39`; `frontend/products-mf/package.json:1-39`), e não há `package.json` na raiz nem `pnpm-workspace.yaml`, `lerna.json`, `turbo.json`, `nx.json`, `rush.json`, `angular.json` ou `project.json` no snapshot. O `matches.csv` não tem ocorrências `ws-*`.
-- O único workflow (`.github/workflows/ci.yml:18-19`, `docker compose build`) constrói todos os serviços juntos; não é job separado de nenhum dos diretórios. O deploy separado vem dos Dockerfiles e dos serviços próprios no Compose.
-- Os Dockerfiles de `backend/*` e os serviços de monitoramento do Compose não são frontend e não estão no `units.csv`.
-- A contagem (2) coincide com `frontend_units: 2` da classificação.
+- Both `package.json` files have the `workspace-config` marker in `artifacts.csv`, but do not declare `workspaces` (`frontend/shell-app/package.json:1-39`; `frontend/products-mf/package.json:1-39`), and there is no `package.json` at the root, nor `pnpm-workspace.yaml`, `lerna.json`, `turbo.json`, `nx.json`, `rush.json`, `angular.json` or `project.json` in the snapshot. `matches.csv` has no `ws-*` occurrences.
+- The only workflow (`.github/workflows/ci.yml:18-19`, `docker compose build`) builds all services together; it is not a separate job for any directory. Separate deployment comes from the Dockerfiles and their own services in Compose.
+- The Dockerfiles in `backend/*` and the Compose monitoring services are not frontend and are not in `units.csv`.
+- The count (2) matches the classification’s `frontend_units: 2`.

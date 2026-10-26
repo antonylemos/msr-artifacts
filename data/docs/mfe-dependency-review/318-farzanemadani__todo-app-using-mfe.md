@@ -15,6 +15,6 @@ annotation:
 
 # 318 — farzanemadani/todo-app-using-mfe
 
-## Dependências
+## Dependencies
 
-Nenhuma dependência das tecnologias no dependencies.csv.
+No dependency on the technologies in dependencies.csv.

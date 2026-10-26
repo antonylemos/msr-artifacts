@@ -15,28 +15,28 @@ annotation:
 
 # 309 — tonoizer/react-mf-patch-skew-repro
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-remote-import | host/src/App.jsx:3 | host | dynamic-loading | Yes | `lazy(() => import('remote_a/App'))` carrega o `./App` exposto pela unidade remote_a (remote_a/vite.config.js:22-24), declarada como remote em host/vite.config.js:22-26 (`http://localhost:5001/remoteEntry.js`); `RemoteA` é renderizado em host/src/App.jsx:76; cadeia ativa host/index.html:9 → host/src/main.jsx:3,7 → host/src/App.jsx |
-| src-remote-import | host/src/App.jsx:4 | host | dynamic-loading | Yes | `lazy(() => import('remote_b/App'))` carrega o `./App` exposto pela unidade remote_b (remote_b/vite.config.js:22-24), declarada como remote em host/vite.config.js:27-31 (`http://localhost:5002/remoteEntry.js`); `RemoteB` é renderizado em host/src/App.jsx:88; mesma cadeia de entrada de host/src/main.jsx:3,7 |
-| src-remote-import | remote_a/src/App.jsx:3 | remote_a | dynamic-loading | Yes | `lazy(() => import('remote_c/App'))` carrega o `./App` exposto pela unidade remote_c (remote_c/vite.config.js:22-24), declarada como remote em remote_a/vite.config.js:26-30 (`http://localhost:5003/remoteEntry.js`); `RemoteC` é renderizado em remote_a/src/App.jsx:12; o arquivo é a entrada standalone (remote_a/src/main.jsx:3,5) e o módulo exposto `./App` (remote_a/vite.config.js:23) |
+| src-remote-import | host/src/App.jsx:3 | host | dynamic-loading | Yes | `lazy(() => import('remote_a/App'))` loads the `./App` exposed by unit remote_a (remote_a/vite.config.js:22-24), declared as a remote at host/vite.config.js:22-26 (`http://localhost:5001/remoteEntry.js`); `RemoteA` is rendered at host/src/App.jsx:76; active chain host/index.html:9 → host/src/main.jsx:3,7 → host/src/App.jsx |
+| src-remote-import | host/src/App.jsx:4 | host | dynamic-loading | Yes | `lazy(() => import('remote_b/App'))` loads the `./App` exposed by unit remote_b (remote_b/vite.config.js:22-24), declared as a remote at host/vite.config.js:27-31 (`http://localhost:5002/remoteEntry.js`); `RemoteB` is rendered at host/src/App.jsx:88; same entry chain from host/src/main.jsx:3,7 |
+| src-remote-import | remote_a/src/App.jsx:3 | remote_a | dynamic-loading | Yes | `lazy(() => import('remote_c/App'))` loads the `./App` exposed by unit remote_c (remote_c/vite.config.js:22-24), declared as a remote at remote_a/vite.config.js:26-30 (`http://localhost:5003/remoteEntry.js`); `RemoteC` is rendered at remote_a/src/App.jsx:12; the file is the standalone entry (remote_a/src/main.jsx:3,5) and exposed module `./App` (remote_a/vite.config.js:23) |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | host/src/App.jsx:76 | host | runtime-composition | Yes | Renderiza `<RemoteA />`, componente da unidade remote_a, dentro de `ErrorBoundary` + `Suspense` (host/src/App.jsx:74-78); o componente vem do `lazy` em host/src/App.jsx:3; `onError={setAErr}` é callback do host para o ErrorBoundary |
-| manual | host/src/App.jsx:88 | host | runtime-composition | Yes | Renderiza `<RemoteB />`, componente da unidade remote_b, dentro de `ErrorBoundary` + `Suspense` (host/src/App.jsx:86-90); o componente vem do `lazy` em host/src/App.jsx:4 |
-| manual | remote_a/src/App.jsx:12 | remote_a | runtime-composition | Yes | Renderiza `<RemoteC />`, componente da unidade remote_c, dentro de `Suspense` (remote_a/src/App.jsx:11-13); o componente vem do `lazy` em remote_a/src/App.jsx:3 |
+| manual | host/src/App.jsx:76 | host | runtime-composition | Yes | Renders `<RemoteA />`, a component of unit remote_a, inside `ErrorBoundary` + `Suspense` (host/src/App.jsx:74-78); the component comes from `lazy` at host/src/App.jsx:3; `onError={setAErr}` is a host callback for ErrorBoundary |
+| manual | host/src/App.jsx:88 | host | runtime-composition | Yes | Renders `<RemoteB />`, a component of unit remote_b, inside `ErrorBoundary` + `Suspense` (host/src/App.jsx:86-90); the component comes from `lazy` at host/src/App.jsx:4 |
+| manual | remote_a/src/App.jsx:12 | remote_a | runtime-composition | Yes | Renders `<RemoteC />`, a component of unit remote_c, inside `Suspense` (remote_a/src/App.jsx:11-13); the component comes from `lazy` at remote_a/src/App.jsx:3 |
 
-## Resumo
+## Summary
 
-Construções com composição: 6 (dynamic-loading: 3, runtime-composition: 3).
+Constructs participating in composition: 6 (dynamic-loading: 3, runtime-composition: 3).
 
-## Notas
+## Notes
 
-- remote_a é host aninhado: é carregado pelo host (host/src/App.jsx:3) e carrega remote_c (remote_a/src/App.jsx:3), como descrito em README.md:12.
-- `ShareDump` (host/src/App.jsx:6-57) só lê globais do runtime de federação (`__mf_module_cache__`, `__FEDERATION__`) e grava `__SKEW_DUMP__` para o Playwright (host/src/App.jsx:46); não carrega nem se comunica com outra unidade, e não virou linha. O mesmo vale para `__SKEW_CRASHES__` (host/src/App.jsx:109-114).
-- A busca do passo 4 não achou outra construção; `scripts/capture.mjs` não é unidade.
+- remote_a is a nested host: loaded by host (host/src/App.jsx:3) and loads remote_c (remote_a/src/App.jsx:3), as described at README.md:12.
+- `ShareDump` (host/src/App.jsx:6-57) only reads federation runtime globals (`__mf_module_cache__`, `__FEDERATION__`) and writes `__SKEW_DUMP__` for Playwright (host/src/App.jsx:46); it neither loads nor communicates with another unit and did not become a row. The same applies to `__SKEW_CRASHES__` (host/src/App.jsx:109-114).
+- The step 4 search found no other construct; `scripts/capture.mjs` is not a unit.

@@ -20,57 +20,57 @@ annotation:
 
 # 329 — profedavidluna/arquitectura_software_moderno_decisiones
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** não é projeto de software com aplicação. É material didático de um curso de arquitetura de software (`README.md:1–3`), em quatro sessões (ADRs e C4, padrões distribuídos, arquiteturas web, escalabilidade), composto só por Markdown. Micro-frontends são um dos temas da sessão 3, com trechos de código como conteúdo de aula. O nome do repositório não é usado como evidência.
+- **Repository type:** not a software project with an application. Teaching material for a software architecture course (`README.md:1–3`), in four sessions (ADRs and C4, distributed patterns, web architectures, scalability), consisting only of Markdown. Micro-frontends are one topic in session 3, with code snippets as lesson content. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:330` registra rank 329, ID 1132423946, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:330` records rank 329, ID 1132423946, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:330` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:23192` (`terminology`, `unknown`, regra `recent-human-commit` com `activity_incomplete`) e `data/discovery/mfe-round-002/candidates.csv:23199` (`terminology`, `pass`).
+`data/samples/mfe-sample-001/sample.csv:330` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:23192` (`terminology`, `unknown`, rule `recent-human-commit` with `activity_incomplete`) and `data/discovery/mfe-round-002/candidates.csv:23199` (`terminology`, `pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with an empty `path`:
 
-| Consulta (`q`) | Subconsulta | Consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Effective query | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | `terminology-micro-frontend-repositories#created:2026-01` | `"micro frontend" in:name,description,readme pushed:>=2025-04-01 created:2026-01-01..2026-01-31` | 2026-10-07T22:30:48.763Z / 2026-10-08T15:57:42.306Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | `terminology-micro-frontends-repositories#created:2026-01` | `"micro frontends" in:name,description,readme pushed:>=2025-04-01 created:2026-01-01..2026-01-31` | 2026-10-07T22:59:58.776Z / 2026-10-08T16:07:54.827Z |
 
-Metadados do hit: descrição do objetivo do curso (sem os termos), sem tópicos, linguagem nula, sem licença, `fork: false`, tamanho 353, criação em 2026-01-11T23:34:49Z, push em 2026-01-18T02:30:03Z.
+Hit metadata: description of the course objective (without the terms), no topics, null language, no license, `fork: false`, size 353, created at 2026-01-11T23:34:49Z, pushed at 2026-01-18T02:30:03Z.
 
-A única ocorrência do termo no README raiz é `README.md:103` (“- Micro-frontends”, item do programa da sessão 3), com o hífen tratado como separador: casa o plural “micro frontends”; o singular não aparece isolado, e esse hit depende do processamento textual da busca do GitHub, que não está registrado. A última alteração alcançável do README é do merge `9eceae0` (2026-01-12), anterior às coletas de 7 e 8 de outubro de 2026; o README do SHA não é posterior às buscas.
+The only term occurrence in the root README is `README.md:103` (“- Micro-frontends”, session 3 syllabus item), with the hyphen treated as a separator: matches plural “micro frontends”; the singular does not appear separately, and this hit depends on GitHub search text processing, which is not recorded. The last reachable README change is from merge `9eceae0` (2026-01-12), before the collections on October 7 and 8, 2026; the README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 65 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. São 64 arquivos Markdown e `.gitignore`; não há manifesto, código-fonte, configuração de build nem workflow. | ausente |
-| Documentação (conteúdo de aula) | `sesion-03-arquitecturas-web/micro-frontends/README.md:1–44`: conceito, benefícios, desafios e técnicas (Module Federation, single-spa, Web Components), com um `ModuleFederationPlugin` de exemplo em bloco de código (`:23–36`). `sesion-03-arquitecturas-web/micro-frontends/ejemplo-dashboard.md:1–56`: diagrama Mermaid e trechos de shell e event bus de um dashboard hipotético. `sesion-03-arquitecturas-web/microfrontends/README.md:9–56`, `62–84`: configuração de host/remotes e um custom element como exemplos. | contexto |
-| Tecnologia / Configuração / Código-fonte / Composição / Build/deploy | Inexistentes; `ModuleFederationPlugin`, `customElements` e afins só ocorrem dentro de Markdown (`git grep -c` em `*.md`: 1 ocorrência em `micro-frontends/README.md`, 3 em `microfrontends/README.md`). Sem código, não há imports relativos a buscar. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 65 entries, all regular files `100644`; zero symlinks and zero gitlinks. These are 64 Markdown files and `.gitignore`; no manifest, source code, build configuration or workflow. | absent |
+| Documentation (lesson content) | `sesion-03-arquitecturas-web/micro-frontends/README.md:1–44`: concept, benefits, challenges and techniques (Module Federation, single-spa, Web Components), with an example `ModuleFederationPlugin` in a code block (`:23–36`). `sesion-03-arquitecturas-web/micro-frontends/ejemplo-dashboard.md:1–56`: Mermaid diagram and shell and event bus snippets for a hypothetical dashboard. `sesion-03-arquitecturas-web/microfrontends/README.md:9–56`, `62–84`: host/remotes configuration and a custom element as examples. | context |
+| Technology / Configuration / Source code / Composition / Build/deploy | Nonexistent; `ModuleFederationPlugin`, `customElements` and similar terms occur only inside Markdown (`git grep -c` in `*.md`: 1 occurrence in `micro-frontends/README.md`, 3 in `microfrontends/README.md`). Without code, there are no relative imports to search. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso, parcial (`blob:none`). 33 commits alcançáveis (33 em todos os refs), 9 merges, de 2026-01-11 (`ec39e68`, “Crear README principal del curso…”) a 2026-01-17 (SHA `4f7fa1c`, “Change folder name”). Autoria por metadados: `copilot-swe-agent[bot]` em 19 commits e o titular, “Prof. David Luna”/“David Luna” com o mesmo e-mail institucional, em 14 (9 pela interface web). Há cinco refs remotos `copilot/*` correspondentes aos PRs, não considerados à parte. A maior parte do conteúdo foi gerada por assistente de código e integrada por PRs; o histórico nunca conteve arquivos além de Markdown e `.gitignore`. Nenhum blob histórico foi lido. `git rev-list --objects $SHA --missing=print` identifica 67 objetos históricos ausentes; os arquivos citados do SHA foram lidos.
+Non-shallow, partial clone (`blob:none`). 33 reachable commits (33 across all refs), 9 merges, from 2026-01-11 (`ec39e68`, “Crear README principal del curso…”; English translation: “Create main course README…”) to 2026-01-17 (SHA `4f7fa1c`, “Change folder name”). Metadata authorship: `copilot-swe-agent[bot]` in 19 commits and the owner, “Prof. David Luna”/“David Luna” with the same institutional email, in 14 (9 through the web interface). There are five remote `copilot/*` refs corresponding to PRs, not considered separately. Most content was generated by a coding assistant and integrated through PRs; history never contained files beyond Markdown and `.gitignore`. No historical blob was read. `git rev-list --objects $SHA --missing=print` identifies 67 missing historical objects; the cited SHA files were read.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend; só documentos de curso (inventário). |
-| Q2 | No | Não há unidades. |
-| Q3 | No | Não há host, shell nem root config. |
-| Q4 | No | Nenhum mecanismo de composição configurado; os trechos de Module Federation e Web Components são conteúdo de aula em Markdown (`sesion-03-arquitecturas-web/microfrontends/README.md:13–56`). |
-| Q5 | No | Q1–Q4 convergem. |
+| Q1 | No | No frontend unit; only course documents (inventory). |
+| Q2 | No | There are no units. |
+| Q3 | No | There is no host, shell or root config. |
+| Q4 | No | No composition mechanism configured; Module Federation and Web Components snippets are Markdown lesson content (`sesion-03-arquitecturas-web/microfrontends/README.md:13–56`). |
+| Q5 | No | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “repositories mentioning micro-frontends without implementing them”; na seção 3.2 do protocolo, a “repositories that are purely documentation without an implementation”.
-- Mesmo caso do final 023 (apresentação sobre micro-frontends com código de Module Federation só como conteúdo) e da exclusão de conteúdo de 075/081/094/105.
-- `repo_type: other`, `frontend_units: 0`, `unit_organization: none`, arrays vazios.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. It matches “repositories mentioning micro-frontends without implementing them”; in protocol section 3.2, “repositories that are purely documentation without an implementation”.
+- Same case as final 023 (presentation about micro-frontends with Module Federation code only as content) and the content exclusion in 075/081/094/105.
+- `repo_type: other`, `frontend_units: 0`, `unit_organization: none`, empty arrays.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** trechos de `ModuleFederationPlugin`, `remotes`/`exposes` e `customElements.define` dentro de Markdown geram falso positivo em buscas por código, como em 023.
-- **Protocolo:** material didático majoritariamente gerado por `copilot-swe-agent[bot]` e integrado por PRs; os links do README apontam para pastas com nomes antigos (por exemplo, `./sesion-1-decisiones-arquitectonicas/`, `README.md:7`), enquanto a árvore usa `sesion-01-…` (último commit, “Change folder name”).
+- **RQ1 (misleading signals):** snippets of `ModuleFederationPlugin`, `remotes`/`exposes` and `customElements.define` inside Markdown generate false positives in code searches, as in 023.
+- **Protocol:** teaching material mostly generated by `copilot-swe-agent[bot]` and integrated through PRs; README links point to folders with old names (for example, `./sesion-1-decisiones-arquitectonicas/`, `README.md:7`), while the tree uses `sesion-01-…` (last commit, “Change folder name”).

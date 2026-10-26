@@ -16,45 +16,25 @@ annotation:
 
 # 229 — ayushpandey241626/microfrontend-demo
 
-## Leitura do repositório
+## Repository overview
 
-O único documento é o README.md da raiz, em inglês, que o `artifacts.csv` marca como
-`documentation`. Fora o título, é o README padrão gerado pelo Angular CLI: diz que o projeto foi
-gerado com a versão 19.2.13 (README.md:3) e só descreve `ng serve` em `http://localhost:4200/`,
-`ng generate`, `ng build` para `dist/`, `ng test` e `ng e2e` (README.md:5-59). Os blocos de
-comando (README.md:9-11, 19-21, 25-27, 33-35, 43-45, 51-53) não viram linha. O texto é de
-template e não fala das quatro unidades do workspace nem da federação entre elas.
+Sole document is English root README.md, which `artifacts.csv` marks as `documentation`. Apart from title, standard Angular CLI README: says generated with version 19.2.13 (README.md:3), only describes `ng serve` at `http://localhost:4200/`, `ng generate`, `ng build` to `dist/`, `ng test`, `ng e2e` (README.md:5-59). Command blocks (README.md:9-11, 19-21, 25-27, 33-35, 43-45, 51-53) yield no rows. Template text without four workspace units or federation.
 
-A única ocorrência `doc-*` é `doc-mfe-term` no título "# MicrofrontendDemo" (README.md:1). É um
-título, sem afirmação verificável sobre as unidades, e não virou linha.
+Sole `doc-*` occurrence `doc-mfe-term` in title "# MicrofrontendDemo" (README.md:1). Title without verifiable unit claim, no row.
 
-O `package.json` não tem `description`; o `name` só dá o nome do pacote, `microfrontend-demo`
-(package.json:2). Foram lidos os artefatos que as revisões anteriores citam: angular.json,
-package.json, os `webpack.config.js` e `webpack.prod.config.js` dos quatro projetos, os `main.ts`
-e `bootstrap.ts`, projects/host-app/src/app/app.routes.ts, app.config.ts, app.component.ts e
-auth.guard.ts, o formulário de login de login-mfe-app e os arquivos de .vscode/. Os comentários
-não são arquiteturais: "Optionally, log after configuration is exported", antes de um
-`console.log` (projects/mfe1/webpack.config.js:22; projects/mfe2/webpack.config.js:22);
-"Optionally clear any auth state here", no logout do host, um detalhe interno de autenticação
-(projects/host-app/src/app/app.component.ts:72); e os links de ajuda gerados pelo VS Code
-(.vscode/extensions.json:2; .vscode/launch.json:2; .vscode/tasks.json:2). Os rótulos de tela
-"Microfrontend Demo" (projects/host-app/src/app/app.component.html:8), "Microfrontend 1" e
-"This is MFE1 content" (projects/mfe1/src/app/mfe1/mfe1.component.html:1-2) e "Microfrontend 2"
-(projects/mfe2/src/app/mfe2/mfe2.component.html:1) são texto da interface, não documentação.
+`package.json` lacks `description`; `name` only package name `microfrontend-demo` (package.json:2). Artifacts cited by previous reviews were read: angular.json, package.json, four projects' `webpack.config.js`/`webpack.prod.config.js`, `main.ts`/`bootstrap.ts`, projects/host-app/src/app/app.routes.ts, app.config.ts, app.component.ts, auth.guard.ts, login-mfe-app login form, .vscode/ files. Comments non-architectural: "Optionally, log after configuration is exported" before `console.log` (projects/mfe1/webpack.config.js:22; projects/mfe2/webpack.config.js:22); "Optionally clear any auth state here" in host logout, internal authentication detail (projects/host-app/src/app/app.component.ts:72); VS Code help links (.vscode/extensions.json:2; .vscode/launch.json:2; .vscode/tasks.json:2). Screen labels "Microfrontend Demo" (projects/host-app/src/app/app.component.html:8), "Microfrontend 1", "This is MFE1 content" (projects/mfe1/src/app/mfe1/mfe1.component.html:1-2), "Microfrontend 2" (projects/mfe2/src/app/mfe2/mfe2.component.html:1) interface text rather than documentation.
 
-O repositório, portanto, não documenta sua arquitetura. Tudo o que se sabe dele vem dos
-artefatos, já registrado nas revisões anteriores: um host Angular que carrega três remotes
-(mfe1, mfe2 e login-mfe-app) por Module Federation em URLs fixas de `localhost`, com build
-separado para cada projeto e nenhum artefato de deploy.
+Repository therefore does not document architecture. Knowledge comes from artifacts recorded in previous reviews: Angular host loading three Module Federation remotes (mfe1, mfe2, login-mfe-app) at fixed `localhost` URLs, separate builds per project, no deployment artifact.
 
-## Afirmações
+## Claims
 
-Nenhuma afirmação arquitetural.
+No architectural claims.
 
-## Observações
+## Observations
 
-Sem afirmações.
+No claims.
 
-## Resumo
+## Summary
 
-Afirmações: 0.
+Claims: 0.
+

@@ -15,16 +15,17 @@ annotation:
 
 # 185 — Marcel-b-velop/vue-mf
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| app-1/package.json:14 | dependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | app-1/vite.config.ts:2 (`import federation from "@originjs/vite-plugin-federation"`); app-1/vite.config.ts:11-27 (`federation({ name: "remote-app1", ... exposes: { "./App1": ... }, remotes: { "remote-lib": ... }, shared })` em `plugins`); app-1/package.json:8 (build executa `vite build`, que lê a configuração padrão); app-1/src/main.ts:8 (consome `remote-lib/apiClient`) |
-| app-2/package.json:14 | dependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | app-2/vite.config.ts:2 (`import federation from "@originjs/vite-plugin-federation"`); app-2/vite.config.ts:11-30 (`federation({ name: "remote-app2", ... exposes: { "./App2", "./Home", "./LoginForm", "./RegisterForm" }, remotes: { "remote-lib": ... }, shared })` em `plugins`); app-2/package.json:8 (build executa `vite build`, que lê a configuração padrão) |
-| host/package.json:24 | devDependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | host/vite.config.ts:2 (`import federation from "@originjs/vite-plugin-federation"`); host/vite.config.ts:11-26 (`federation({ name: "host-app", remotes: { "remote-app1", "remote-app2", "remote-lib" }, shared })` em `plugins`); host/package.json:8 (build executa `vite build`, que lê a configuração padrão); host/src/main.ts:12-14 (`import("remote-app1/App1")`, `remote-app2/App2`, `remote-lib/Confirm`) |
-| lib/package.json:20 | dependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | lib/vite.config.ts:2 (`import federation from "@originjs/vite-plugin-federation"`); lib/vite.config.ts:17-32 (`federation({ name: "remote-lib", ... exposes: { "./Confirm", "./apiClient", "./types" }, shared })` em `plugins`); lib/package.json:11 (build executa `vite build`, que lê a configuração padrão) |
+| app-1/package.json:14 | dependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | app-1/vite.config.ts:2 (`import federation from "@originjs/vite-plugin-federation"`); app-1/vite.config.ts:11-27 (`federation({ name: "remote-app1", ... exposes: { "./App1": ... }, remotes: { "remote-lib": ... }, shared })` in `plugins`); app-1/package.json:8 (the build runs `vite build`, which reads the default configuration); app-1/src/main.ts:8 (consumes `remote-lib/apiClient`) |
+| app-2/package.json:14 | dependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | app-2/vite.config.ts:2 (`import federation from "@originjs/vite-plugin-federation"`); app-2/vite.config.ts:11-30 (`federation({ name: "remote-app2", ... exposes: { "./App2", "./Home", "./LoginForm", "./RegisterForm" }, remotes: { "remote-lib": ... }, shared })` in `plugins`); app-2/package.json:8 (the build runs `vite build`, which reads the default configuration) |
+| host/package.json:24 | devDependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | host/vite.config.ts:2 (`import federation from "@originjs/vite-plugin-federation"`); host/vite.config.ts:11-26 (`federation({ name: "host-app", remotes: { "remote-app1", "remote-app2", "remote-lib" }, shared })` in `plugins`); host/package.json:8 (the build runs `vite build`, which reads the default configuration); host/src/main.ts:12-14 (`import("remote-app1/App1")`, `remote-app2/App2`, `remote-lib/Confirm`) |
+| lib/package.json:20 | dependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | lib/vite.config.ts:2 (`import federation from "@originjs/vite-plugin-federation"`); lib/vite.config.ts:17-32 (`federation({ name: "remote-lib", ... exposes: { "./Confirm", "./apiClient", "./types" }, shared })` in `plugins`); lib/package.json:11 (the build runs `vite build`, which reads the default configuration) |
 
-## Notas
+## Notes
 
-- A busca pelo nome do pacote fora das listas da inspeção (grep no snapshot, sem lockfiles e `lib/playwright-report/`) só encontra os quatro `package.json` e os quatro `vite.config.ts` já listados.
-- `lib/vite.config.ts:1` importa `defineConfig` de `vitest/config`, que também serve ao `vite build`; não altera o julgamento.
+- The search for the package name outside the inspection lists (grep in the snapshot, excluding lockfiles and `lib/playwright-report/`) finds only the four `package.json` and four `vite.config.ts` files already listed.
+- `lib/vite.config.ts:1` imports `defineConfig` from `vitest/config`, which also serves `vite build`; it does not change the judgment.
+

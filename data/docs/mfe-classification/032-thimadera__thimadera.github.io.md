@@ -20,36 +20,36 @@ annotation:
 
 # 032 — thimadera/thimadera.github.io
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** production-oriented (site pessoal/portfólio no GitHub Pages, `.github/workflows/deploy.yml`)
+- **Repository type:** production-oriented (personal/portfolio site on GitHub Pages, `.github/workflows/deploy.yml`)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Tecnologia | `package.json`: React + Vite + Tailwind; nenhuma dependência de MFE | ausente |
-| Configuração | `vite.config.ts:1-20`: React, Tailwind e um plugin local de SEO (`seoHtml`); sem federação | ausente |
-| Código-fonte | `src/main.tsx:8`: um único `createRoot`; seções do portfólio (`src/components/{Hero,About,Experience,Projects,…}.tsx`) importadas por `src/App.tsx` | contrária |
-| Estrutura | Uma única app (um `package.json`, um entry); `posts/*.html` são páginas estáticas de blog | contrária |
-| Documentação (conteúdo) | `README.md:21` "Microfrontends (single-spa)" como competência; `linkedin-about.md:1,9`; `src/data/experience.ts:39-40,53-54` e `src/i18n/translations.ts:100,201` descrevem a experiência profissional do autor num portal de "20+ Angular microfrontends" com single-spa | contexto |
+| Technology | `package.json`: React + Vite + Tailwind; no MFE dependency | absent |
+| Configuration | `vite.config.ts:1-20`: React, Tailwind and a local SEO plugin (`seoHtml`); no federation | absent |
+| Source code | `src/main.tsx:8`: a single `createRoot`; portfolio sections (`src/components/{Hero,About,Experience,Projects,…}.tsx`) imported by `src/App.tsx` | contrary |
+| Structure | A single app (one `package.json`, one entry); `posts/*.html` are static blog pages | contrary |
+| Documentation (content) | `README.md:21` "Microfrontends (single-spa)" as a skill; `linkedin-about.md:1,9`; `src/data/experience.ts:39-40,53-54` and `src/i18n/translations.ts:100,201` describe the author's professional experience on a portal of "20+ Angular microfrontends" with single-spa | context |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend (`src/main.tsx:8`) |
-| Q2 | No | Não há unidades a comparar |
-| Q3 | No | Não há host, shell nem root config |
-| Q4 | No | Nenhum mecanismo de composição |
-| Q5 | No | Q1–Q4 convergem |
+| Q1 | No | A single frontend unit (`src/main.tsx:8`) |
+| Q2 | No | No units to compare |
+| Q3 | No | No host, shell or root config |
+| Q4 | No | No composition mechanism |
+| Q5 | No | Q1–Q4 converge |
 
-## Motivo
+## Rationale
 
-- É um site de portfólio React monolítico.
-- "microfrontends"/"single-spa" aparecem como dados de currículo do autor (experiência em outro projeto, privado), não como arquitetura deste repositório.
-- Corresponde a "conventional frontend monoliths" e a "repositories mentioning micro-frontends without implementing them".
+- This is a monolithic React portfolio site.
+- "microfrontends"/"single-spa" appear as the author's résumé data (experience on another, private project), not as this repository's architecture.
+- Matches "conventional frontend monoliths" and "repositories mentioning micro-frontends without implementing them".
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** mesmo padrão dos repositórios 011, 014 e 019, aqui com o termo também no código-fonte (`src/data/experience.ts`, `src/i18n/translations.ts`) como conteúdo textual, o que engana buscas por código.
+- **RQ1 (misleading signals):** same pattern as repositories 011, 014 and 019, here with the term also in source code (`src/data/experience.ts`, `src/i18n/translations.ts`) as textual content, misleading code searches.

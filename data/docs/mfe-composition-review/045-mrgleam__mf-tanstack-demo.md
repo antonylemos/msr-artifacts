@@ -20,23 +20,24 @@ annotation:
 
 # 045 — mrgleam/mf-tanstack-demo
 
-## Leitura do repositório
+## Repository overview
 
-Demonstração com duas aplicações React/Vite unidas por Module Federation (`@originjs/vite-plugin-federation`): `shell` é o host e `shop` é o remote, que expõe suas rotas (shop/vite.config.ts:9-12). O shell não importa o remote diretamente nas rotas. Ele usa um `ModuleLoader` próprio, com cache, retentativas e fallback (shell/src/moduleLoader.ts:26-98, 127-136). As retentativas não refazem a importação: o `import('shop/ShopRoutes')` é criado uma única vez em shell/src/moduleLoader.ts:130, e o laço só aguarda de novo a mesma promessa (shell/src/moduleLoader.ts:43-47), então uma falha de carga leva direto ao fallback. O shell encaixa as rotas recebidas na árvore do TanStack Router durante a criação do router (shell/src/router.tsx:52-103).
+A demonstration with two React/Vite applications joined by Module Federation (`@originjs/vite-plugin-federation`): `shell` is the host and `shop` is the remote, exposing its routes (shop/vite.config.ts:9-12). The shell does not import the remote directly in its routes. It uses its own `ModuleLoader`, with caching, retries and a fallback (shell/src/moduleLoader.ts:26-98, 127-136). The retries do not repeat the import: `import('shop/ShopRoutes')` is created only once in shell/src/moduleLoader.ts:130, and the loop only awaits the same promise again (shell/src/moduleLoader.ts:43-47), so a loading failure goes straight to the fallback. The shell fits the received routes into the TanStack Router tree during router creation (shell/src/router.tsx:52-103).
 
-A particularidade está no contrato entre os dois lados: o shell espera `default.routes` (shell/src/router.tsx:61-68), mas o shop exporta `routes` e `shopRouter` só por nome (shop/src/routes/ShopRoutes.tsx:49-53). O módulo remoto é carregado, mas nada no código garante que as rotas cheguem à árvore; o fallback `{ default: { routes: [] } }` (shell/src/moduleLoader.ts:134) indica que o shell pode seguir sem elas. O shop também roda sozinho, com seu próprio router (shop/src/main.tsx:4-7).
+The distinctive feature is the contract between both sides: the shell expects `default.routes` (shell/src/router.tsx:61-68), but shop exports `routes` and `shopRouter` only by name (shop/src/routes/ShopRoutes.tsx:49-53). The remote module is loaded, but nothing in the code guarantees that the routes reach the tree; the `{ default: { routes: [] } }` fallback (shell/src/moduleLoader.ts:134) indicates that the shell can continue without them. Shop also runs independently, with its own router (shop/src/main.tsx:4-7).
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | shell | shop | host → remote | origem → destino | module-federation | Yes | Yes | shell/vite.config.ts:9-11 (remote `shop` em `http://localhost:3001/shop/assets/remoteEntry.js`); shop/vite.config.ts:10-12 (`name: 'shop'`, `filename: 'remoteEntry.js'`, expõe `./ShopRoutes`); shop/vite.config.ts:6 (`base: '/shop/'`); shop/vite.config.ts:17 (porta 3001) | shell/src/moduleLoader.ts:130; shell/src/moduleLoader.ts:127; shell/src/router.tsx:52; shell/src/router.tsx:64 |
+| 1 | shell | shop | host → remote | source → target | module-federation | Yes | Yes | shell/vite.config.ts:9-11 (remote `shop` at `http://localhost:3001/shop/assets/remoteEntry.js`); shop/vite.config.ts:10-12 (`name: 'shop'`, `filename: 'remoteEntry.js'`, exposes `./ShopRoutes`); shop/vite.config.ts:6 (`base: '/shop/'`); shop/vite.config.ts:17 (port 3001) | shell/src/moduleLoader.ts:130; shell/src/moduleLoader.ts:127; shell/src/router.tsx:52; shell/src/router.tsx:64 |
 
-## Observações
+## Observations
 
-**1. shell → shop.** O remote `shop` declarado pelo shell corresponde à unidade shop pelo nome e pelo `remoteEntry.js` (shop/vite.config.ts:10-11) e pelo caminho `/shop/` (shop/vite.config.ts:6); a porta 3001 só corrobora. A relação é ativa porque o import é solicitado na inicialização do router (shell/src/main.tsx:4-7 → shell/src/router.tsx:116). A única linha Undetermined (shell/src/router.tsx:64) é a extração das rotas, afetada pelo desencontro de export descrito na leitura.
+**1. shell → shop.** The `shop` remote declared by the shell matches the shop unit through its name and `remoteEntry.js` (shop/vite.config.ts:10-11) and the `/shop/` path (shop/vite.config.ts:6); port 3001 only corroborates. The relationship is active because the import is requested during router initialization (shell/src/main.tsx:4-7 → shell/src/router.tsx:116). The only Undetermined line (shell/src/router.tsx:64) is route extraction, affected by the export mismatch described in the overview.
 
-## Resumo
+## Summary
 
-Relações: 1 (host → remote: 1). Ativas: 1. Destino fora do snapshot: 0.
-Unidades sem relação: nenhuma.
+Relationships: 1 (host → remote: 1). Active: 1. Target outside the snapshot: 0.
+Units without a relationship: none.
+

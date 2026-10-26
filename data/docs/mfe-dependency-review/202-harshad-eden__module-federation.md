@@ -15,11 +15,11 @@ annotation:
 
 # 202 — harshad-eden/module-federation
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| apps/product-config/package.json:23 | devDependencies | @originjs/vite-plugin-federation | ^1.3.5 | module-federation | Yes | apps/product-config/vite.config.ts:3-15 (configuração padrão do Vite importa `federation` e o invoca em plugins com `name: "productConfig"`, `exposes` e `shared`); apps/product-config/package.json:5-9 (`dev`/`build` executam `vite`/`vite build` sem configuração alternativa) |
-| apps/sales-portal/package.json:23 | devDependencies | @originjs/vite-plugin-federation | ^1.3.5 | module-federation | Yes | apps/sales-portal/vite.config.ts:3-15 (configuração padrão do Vite importa `federation` e o invoca em plugins com `name: "salesPortal"`, `exposes` e `shared`); apps/sales-portal/package.json:5-9 (`dev`/`build` executam `vite`/`vite build` sem configuração alternativa) |
-| apps/shell/package.json:24 | devDependencies | @originjs/vite-plugin-federation | ^1.3.5 | module-federation | Yes | apps/shell/vite.config.ts:3-16 (configuração padrão do Vite importa `federation` e o invoca em plugins com `name: "shell"`, `remotes` e `shared`); apps/shell/package.json:5-9 (`dev`/`build` executam `vite`/`vite build` sem configuração alternativa) |
-| apps/underwriter-portal/package.json:23 | devDependencies | @originjs/vite-plugin-federation | ^1.3.5 | module-federation | Yes | apps/underwriter-portal/vite.config.ts:3-15 (configuração padrão do Vite importa `federation` e o invoca em plugins com `name: "underwriterPortal"`, `exposes` e `shared`); apps/underwriter-portal/package.json:5-9 (`dev`/`build` executam `vite`/`vite build` sem configuração alternativa) |
+| apps/product-config/package.json:23 | devDependencies | @originjs/vite-plugin-federation | ^1.3.5 | module-federation | Yes | apps/product-config/vite.config.ts:3-15 (the default Vite configuration imports `federation` and invokes it in plugins with `name: "productConfig"`, `exposes` and `shared`); apps/product-config/package.json:5-9 (`dev`/`build` run `vite`/`vite build` with no alternative configuration) |
+| apps/sales-portal/package.json:23 | devDependencies | @originjs/vite-plugin-federation | ^1.3.5 | module-federation | Yes | apps/sales-portal/vite.config.ts:3-15 (the default Vite configuration imports `federation` and invokes it in plugins with `name: "salesPortal"`, `exposes` and `shared`); apps/sales-portal/package.json:5-9 (`dev`/`build` run `vite`/`vite build` with no alternative configuration) |
+| apps/shell/package.json:24 | devDependencies | @originjs/vite-plugin-federation | ^1.3.5 | module-federation | Yes | apps/shell/vite.config.ts:3-16 (the default Vite configuration imports `federation` and invokes it in plugins with `name: "shell"`, `remotes` and `shared`); apps/shell/package.json:5-9 (`dev`/`build` run `vite`/`vite build` with no alternative configuration) |
+| apps/underwriter-portal/package.json:23 | devDependencies | @originjs/vite-plugin-federation | ^1.3.5 | module-federation | Yes | apps/underwriter-portal/vite.config.ts:3-15 (the default Vite configuration imports `federation` and invokes it in plugins with `name: "underwriterPortal"`, `exposes` and `shared`); apps/underwriter-portal/package.json:5-9 (`dev`/`build` run `vite`/`vite build` with no alternative configuration) |

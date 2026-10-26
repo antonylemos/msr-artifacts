@@ -17,21 +17,21 @@ annotation:
 
 ## Workspace
 
-Nenhuma declaração de workspace.
+No workspace declaration.
 
-## Unidades
+## Units
 
-| Diretório | Marcadores | Manifesto | Entrada | Build | Workspace | Deploy | Unidade frontend | Motivo |
+| Directory | Markers | Manifest | Entry | Build | Workspace | Deploy | Frontend unit | Rationale |
 |---|---|---|---|---|---|---|---|---|
-| . | package.json | package.json:1-11 (manifesto da raiz, só `wp-pwa` em devDependencies) | — | package.json:9 (`wp-pwa build UX308_Assignment2_2025`, ferramenta externa sem configuração no snapshot) | — | .github/workflows/main.yml:29-30 (`diy-pwa/npm-build-2-gh-pages@v1.11`: npm run build e publicação no gh-pages) | Undetermined | Build e deploy declarados, mas nenhuma entrada de aplicação está no snapshot: só `wp-content/` de um site WordPress, montado pela ferramenta externa. |
+| . | package.json | package.json:1-11 (root manifest, only `wp-pwa` in devDependencies) | — | package.json:9 (`wp-pwa build UX308_Assignment2_2025`, external tool without configuration in the snapshot) | — | .github/workflows/main.yml:29-30 (`diy-pwa/npm-build-2-gh-pages@v1.11`: npm run build and publishing to gh-pages) | Undetermined | Build and deployment declared, but no application entry is in the snapshot: only `wp-content/` from a WordPress site, assembled by the external tool. |
 
-## Resumo
+## Summary
 
-Aplicações frontend no snapshot: 0.
+Frontend applications in the snapshot: 0.
 
-## Notas
+## Notes
 
-- O snapshot tem só `wp-content/` (temas, plugins, mu-plugins) de um site WordPress; o núcleo do WordPress e a página inicial vêm da ferramenta `wp-pwa` (package.json:6-9) e não estão no repositório. Os `templates/index.html` dos temas (ex.: `wp-content/themes/twentytwentyfive/templates/index.html:1`) são templates de bloco do WordPress, não entradas de aplicação.
-- A classificação registra frontend_units: 2: o site WordPress (host) e o formulário externo `Contact_form_UX308`, publicado em outra origem. A unidade externa está fora do snapshot e não vira linha; o host é a linha `.`, que fica Undetermined por falta de entrada observável. Por isso a contagem é 0.
-- A evidência de composição citada pela classificação, `wp-content/database/.ht.sqlite`, não está no snapshot: a normalização a removeu como binário (`normalization.json:21-23`, `preset:binaries`). Não muda esta etapa, que não avalia composição.
-- `package.json` aparece como `workspace-config` no `artifacts.csv`, mas não declara `workspaces` (package.json:1-11).
+- The snapshot has only `wp-content/` (themes, plugins, mu-plugins) from a WordPress site; the WordPress core and home page come from the `wp-pwa` tool (package.json:6-9) and are not in the repository. The themes’ `templates/index.html` files (e.g., `wp-content/themes/twentytwentyfive/templates/index.html:1`) are WordPress block templates, not application entries.
+- The classification records frontend_units: 2: the WordPress site (host) and the external form `Contact_form_UX308`, published at another origin. The external unit is outside the snapshot and does not become a row; the host is row `.`, which remains Undetermined for lack of an observable entry. Therefore the count is 0.
+- The composition evidence cited by the classification, `wp-content/database/.ht.sqlite`, is not in the snapshot: normalization removed it as a binary (`normalization.json:21-23`, `preset:binaries`). This does not change this stage, which does not assess composition.
+- `package.json` appears as `workspace-config` in `artifacts.csv`, but does not declare `workspaces` (package.json:1-11).

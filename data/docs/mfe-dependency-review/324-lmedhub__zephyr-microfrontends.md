@@ -15,13 +15,14 @@ annotation:
 
 # 324 — lmedhub/zephyr-microfrontends
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| frontend/package.json:59 | dependencies | @module-federation/enhanced | ^0.8.9 | module-federation | No | sem import ou require de `@module-federation/enhanced` em `frontend/` (grep em `*.ts`, `*.tsx`, `*.js`, `*.json`, `*.vue`; única ocorrência é a declaração em frontend/package.json:59); os quatro builds usam o plugin embutido do Rspack: frontend/apps/host/rspack.config.ts:1 (`require("@rspack/core")`), :82 (`new rspack.container.ModuleFederationPlugin({`); o mesmo em frontend/apps/remote-header/rspack.config.ts:73, frontend/apps/remote-footer/rspack.config.ts:73 e frontend/apps/url-shortener/rspack.config.ts:74 |
+| frontend/package.json:59 | dependencies | @module-federation/enhanced | ^0.8.9 | module-federation | No | no import or require of `@module-federation/enhanced` in `frontend/` (grep in `*.ts`, `*.tsx`, `*.js`, `*.json`, `*.vue`; the only occurrence is the declaration in frontend/package.json:59); the four builds use Rspack’s built-in plugin: frontend/apps/host/rspack.config.ts:1 (`require("@rspack/core")`), :82 (`new rspack.container.ModuleFederationPlugin({`); same in frontend/apps/remote-header/rspack.config.ts:73, frontend/apps/remote-footer/rspack.config.ts:73 and frontend/apps/url-shortener/rspack.config.ts:74 |
 
-## Notas
+## Notes
 
-- Todos os itens de `other_package_matches` são o `ModuleFederationPlugin` de `@rspack/core` (`rspack.container.ModuleFederationPlugin`), não o do pacote `@module-federation/enhanced`. A Module Federation está configurada e em uso, mas pelo Rspack; o pacote declarado na raiz não é usado.
-- Os manifestos das apps (`frontend/apps/*/package.json`) não declaram `@module-federation/enhanced`; só o `frontend/package.json` da raiz o declara.
+- All `other_package_matches` items are the `ModuleFederationPlugin` from `@rspack/core` (`rspack.container.ModuleFederationPlugin`), not the one from the `@module-federation/enhanced` package. Module Federation is configured and in use, but through Rspack; the package declared at the root is unused.
+- The app manifests (`frontend/apps/*/package.json`) do not declare `@module-federation/enhanced`; only the root `frontend/package.json` declares it.
+

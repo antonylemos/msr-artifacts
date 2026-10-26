@@ -13,17 +13,17 @@ annotation:
 
 # 136 — swtbhsmn/micro-frontend-demo
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem 2 commits, ambos em 2025-08-12, sem merges. O primeiro, `46f21b9` (2025-08-12, "microfrontend-demo"), cria de uma vez os 19 arquivos do repositório: `README.txt`, `.gitignore`, os três `.DS_Store` e, em `app1/` e `app2/`, `package.json`, `package-lock.json`, `webpack.config.js`, `public/index.html` e os fontes de `src/`. Host, remote e a configuração de Module Federation têm, portanto, primeira presença observável nesse commit; o histórico não mostra onde foram feitos antes. O commit do snapshot, `9cb91ce` (2025-08-12, "Update-Code"), só altera `.gitignore`.
+History up to snapshot has 2 commits, both on 2025-08-12, without merges. First, `46f21b9` (2025-08-12, "microfrontend-demo"), creates all 19 repository files at once: `README.txt`, `.gitignore`, three `.DS_Store` files and, in `app1/` and `app2/`, `package.json`, `package-lock.json`, `webpack.config.js`, `public/index.html` and `src/` sources. Host, remote and Module Federation configuration therefore have first observable presence in this commit; history does not show where they were developed before. Snapshot commit `9cb91ce` (2025-08-12, "Update-Code") changes only `.gitignore`.
 
-As revisões anteriores não deixaram ponto ambíguo que o histórico pudesse esclarecer: não há dependência declarada sem uso (a revisão de dependências não tem linha), unidade ou relação `Undetermined`, construção inativa ou comentada, deploy `Undetermined` (o deploy das duas aplicações é `não observado`) nem afirmação de documentação `contradita` ou `parcial` (as três são `corroborada`). Por isso o histórico não foi consultado além deste contexto.
+Previous reviews left no ambiguous point history could clarify: no declared unused dependency (dependency review has no row), `Undetermined` unit or relationship, inactive or commented-out construct, `Undetermined` deploy (deploy of both applications is `not observed`) or `contradicted` or `partial` documentation claim (all three are `corroborated`). Thus history was not consulted beyond this context.
 
-## Pontos
+## Points
 
-Nenhum ponto ambíguo nas revisões anteriores.
+No ambiguous points in previous reviews.
 
-## Comandos
+## Commands
 
 ```
 docs/mfe-history-review/tools/hist.sh swtbhsmn__micro-frontend-demo rev-list --count 9cb91cec30b991952a8bb405e8362b064256a26e
@@ -31,6 +31,6 @@ docs/mfe-history-review/tools/hist.sh swtbhsmn__micro-frontend-demo log --format
 docs/mfe-history-review/tools/hist.sh swtbhsmn__micro-frontend-demo rev-list --count --merges 9cb91cec30b991952a8bb405e8362b064256a26e
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 2 (2025-08-12 a 2025-08-12). Pontos: 0.
+Commits up to the snapshot: 2 (2025-08-12 to 2025-08-12). Points: 0.

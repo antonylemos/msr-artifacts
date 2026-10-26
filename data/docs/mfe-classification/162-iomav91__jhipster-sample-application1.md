@@ -20,81 +20,81 @@ annotation:
 
 # 162 — iomav91/jhipster-sample-application1
 
-## Contexto
+## Context
 
-Aplicação JHipster 8.11.0 do tipo `microservice` (Spring Boot + Maven, com Consul), gerada com cliente Angular configurado como microfrontend. O frontend é um remoto Module Federation que expõe módulos para um gateway JHipster (`.yo-rc.json:3`, `9`, `21`; `webpack/webpack.microfrontend.js:24–52`; `README.md:5`, `102–130`). O gateway não está no repositório. O repositório é a saída do gerador num único commit do “JHipster Bot”, sem entidades (`.yo-rc.json:17`), e os módulos expostos de rotas e navbar estão vazios. O nome do repositório não é usado como evidência.
+JHipster 8.11.0 `microservice` application (Spring Boot + Maven, with Consul), generated with an Angular client configured as a microfrontend. The frontend is a Module Federation remote exposing modules to a JHipster gateway (`.yo-rc.json:3`, `9`, `21`; `webpack/webpack.microfrontend.js:24–52`; `README.md:5`, `102–130`). The gateway is not in the repository. The repository is generator output in a single “JHipster Bot” commit, without entities (`.yo-rc.json:17`), and exposed route and navbar modules are empty. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:163` registra rank 162, ID 1031805791, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:163` records rank 162, ID 1031805791, status `cloned`, branch `main` and the front matter commit, which is HEAD of the clone and `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:163` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:17269` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:17273` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:163` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:17269` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:17273` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2025-08` e `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2025-08` and empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | 2026-10-07T18:50:52.808Z / 2026-10-08T15:39:00.430Z |
 | `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | 2026-10-07T22:08:46.359Z / 2026-10-08T15:47:49.789Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2025-08-01..2025-08-31`.
+Effective queries append `pushed:>=2025-04-01 created:2025-08-01..2025-08-31`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem Java, `fork: false`, tamanho 461;
-- criação em 2025-08-04T11:05:41Z, push em 2025-08-04T11:06:15Z.
+Hit metadata:
+- null description, no topics, language Java, `fork: false`, size 461;
+- created at 2025-08-04T11:05:41Z, pushed at 2025-08-04T11:06:15Z.
 
-Sem descrição, o acerto vem do README:
+Without a description, the hit comes from the README:
 - “Microfrontend”: `README.md:102` (“### Developing Microfrontend”);
 - “microfrontends”: `README.md:104`;
 - “microfrontend”: `README.md:116`, `120`, `125`, `128`.
 
-O README vem do único commit, que é o SHA (2025-08-04), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The README comes from the only commit, the SHA (2025-08-04), before October 2026 collection. The SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 315 entradas, 312 arquivos regulares `100644` e 3 executáveis `100755` (`.husky/pre-commit`, `mvnw`, `npmw`); zero symlinks e zero gitlinks. Há um único projeto: backend Spring Boot (`pom.xml`, `src/main/java`, `src/main/docker`) e cliente Angular em `src/main/webapp` (165 arquivos), com `angular.json` e `webpack/`. | contexto |
-| Configuração (gerador) | `.yo-rc.json:2–37`: `applicationType: "microservice"`, `clientFramework: "angular"`, `entities: []`, `jhipsterVersion: "8.11.0"`, `serviceDiscoveryType: "consul"`. | contexto |
-| Configuração (federação) | `webpack/webpack.microfrontend.js:24–52`: `withModuleFederationPlugin({ name: 'jhipstersampleapplication1', exposes: { './translation-module', './entity-navbar-items', './entity-routes' }, shared: … })`, sem `remotes`, com `shared` singleton de todas as dependências e de módulos internos do app (“Microfrontend api, should match across gateway and microservices”, `:3–4`). `webpack/webpack.custom.js:132–136`: aplica a configuração fora do `serve`. `angular.json:21`: builder `@angular-builders/custom-webpack:browser`. `package.json:104–105`: `@angular-architects/module-federation` 19.0.3. | forte |
-| Código-fonte (conteúdo exposto) | `src/main/webapp/app/entities/entity.routes.ts:3–5`: `routes` vazio (só a marca `jhipster-needle-add-entity-route`). `src/main/webapp/app/entities/entity-navbar-items.ts:3`: `EntityNavbarItems = []`. Só o módulo de tradução tem conteúdo. `src/main/webapp/app/app.component.ts:27`: `setMicrofrontend()`. | ambígua |
-| Documentação | `README.md:102–130`: o microfrontend depende de um gateway (“You must start a pre-built gateway…”) e o `build-watch` sincroniza com o frontend do gateway. `src/main/resources/static/index.html:86–87`: “Packaged microfrontends should be accessed through a JHipster gateway.” | moderada |
-| Código-fonte (fronteiras) | Imports por alias `app/…` dentro de `src/main/webapp`. O `shared` mapeia `app/core/*` e `app/shared/*` para compartilhamento com o gateway, sem import de código de outra unidade no repositório. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 315 entries, 312 regular `100644` files and 3 executables `100755` (`.husky/pre-commit`, `mvnw`, `npmw`); zero symlinks and zero gitlinks. A single project: Spring Boot backend (`pom.xml`, `src/main/java`, `src/main/docker`) and Angular client in `src/main/webapp` (165 files), with `angular.json` and `webpack/`. | context |
+| Configuration (generator) | `.yo-rc.json:2–37`: `applicationType: "microservice"`, `clientFramework: "angular"`, `entities: []`, `jhipsterVersion: "8.11.0"`, `serviceDiscoveryType: "consul"`. | context |
+| Configuration (federation) | `webpack/webpack.microfrontend.js:24–52`: `withModuleFederationPlugin({ name: 'jhipstersampleapplication1', exposes: { './translation-module', './entity-navbar-items', './entity-routes' }, shared: … })`, without `remotes`, with singleton `shared` for all dependencies and internal app modules (“Microfrontend api, should match across gateway and microservices”, `:3–4`). `webpack/webpack.custom.js:132–136`: applies configuration outside `serve`. `angular.json:21`: builder `@angular-builders/custom-webpack:browser`. `package.json:104–105`: `@angular-architects/module-federation` 19.0.3. | strong |
+| Source code (exposed content) | `src/main/webapp/app/entities/entity.routes.ts:3–5`: empty `routes` (only marker `jhipster-needle-add-entity-route`). `src/main/webapp/app/entities/entity-navbar-items.ts:3`: `EntityNavbarItems = []`. Only the translation module has content. `src/main/webapp/app/app.component.ts:27`: `setMicrofrontend()`. | ambiguous |
+| Documentation | `README.md:102–130`: the microfrontend depends on a gateway (“You must start a pre-built gateway…”) and `build-watch` synchronizes with the gateway frontend. `src/main/resources/static/index.html:86–87`: “Packaged microfrontends should be accessed through a JHipster gateway.” | moderate |
+| Source code (boundaries) | Imports through alias `app/…` within `src/main/webapp`. `shared` maps `app/core/*` and `app/shared/*` for sharing with the gateway, without importing another unit's code in the repository. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso com um único commit, o SHA `ef5d702` (2025-08-04T11:06:14Z, “Initial application generation by JHipster”), de `JHipster Bot <jhipster-bot@jhipster.tech>` como autor e committer. Criação e push nos metadados ocorrem no mesmo minuto. Não há alteração humana registrada após a geração. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone with a single commit, SHA `ef5d702` (2025-08-04T11:06:14Z, “Initial application generation by JHipster”), by `JHipster Bot <jhipster-bot@jhipster.tech>` as author and committer. Creation and push metadata fall in the same minute. No human change is recorded after generation. No historical blob was read and no object was missing.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend; a configuração de composição só tem `exposes` (`webpack.microfrontend.js:27–31`) e não referencia unidades externas. |
-| Q2 | Yes (para a unidade) | Entrada e build próprios do cliente Angular com federação (`angular.json:21`, `26–28`; `webpack.custom.js:132–136`). |
-| Q3 | Undetermined | O gateway JHipster que comporia o microfrontend não está no repositório (`README.md:104–105`). |
-| Q4 | Undetermined | O lado remoto está configurado; o consumidor não é observável. Além disso, os módulos expostos de rotas e navbar estão vazios (`entity.routes.ts:3–5`; `entity-navbar-items.ts:3`). |
-| Q5 | No | Há uma unidade preparada para composição, não uma instância de MFE no repositório. |
+| Q1 | No | A single frontend unit; composition configuration only has `exposes` (`webpack.microfrontend.js:27–31`) and references no external units. |
+| Q2 | Yes (for the unit) | Angular client's own entry and build with federation (`angular.json:21`, `26–28`; `webpack.custom.js:132–136`). |
+| Q3 | Undetermined | The JHipster gateway that would compose the microfrontend is not in the repository (`README.md:104–105`). |
+| Q4 | Undetermined | The remote side is configured; the consumer is not observable. Additionally, exposed route and navbar modules are empty (`entity.routes.ts:3–5`; `entity-navbar-items.ts:3`). |
+| Q5 | No | A unit is prepared for composition, rather than an MFE instance in the repository. |
 
-## Motivo
+## Rationale
 
-- Proposta `MFE-unit` com `status: review`. Literalmente, há “a single frontend unit explicitly prepared to be composed by an external host (e.g., Module Federation `exposes`…)”, com host (gateway) não observável, como nos finais 001/050/069.
-- **A revisão se justifica pelo conteúdo:** o repositório é saída intacta de gerador (único commit do JHipster Bot, `entities: []`), e o que se expõe ao gateway são rotas e itens de navbar vazios mais o módulo de tradução. A preparação é real, mas não há funcionalidade a compor. Isso pode ser lido como “MFE-related dependencies that are unused or experimental”.
-- **Não é um caso de gerador como 075/081/105:** aqueles eram ferramentas geradoras, sem unidade concreta (075 é CLI para gerar e manter plugins, 081 é uma plataforma de geração e 105 uma ferramenta de projetos; 081 e 105 não são finais), e 094 é um exercício, não um gerador. Aqui há uma unidade concreta gerada.
-- **Precedentes que não se aplicam:** não é plataforma de terceiros (102/074/080, 037), porque o gateway JHipster é recomendado como pre-built ou a partir do código-fonte (`README.md:104–114`), sem identificar o titular; essa inferência, portanto, não está resolvida pelo snapshot, e o final 037 trata de um componente de extensão de plataforma, o que não decide este caso. Não é code sharing (089/100), porque o contrato JHipster expõe rotas e menus.
-- **Campos:** `approaches: [module-federation]`, `ui_technologies: [angular]`, `build_tools: [webpack]` (configuração webpack explícita via custom-webpack), `frontend_units: 1`, `single-unit`. `repo_type: example`: aplicação de amostra gerada; `template` também seria defensável.
+- Proposed `MFE-unit` with `status: review`. Literally, there is “a single frontend unit explicitly prepared to be composed by an external host (e.g., Module Federation `exposes`…)”, with an unobservable host (gateway), as in final 001/050/069.
+- **Review is justified by content:** the repository is intact generator output (single JHipster Bot commit, `entities: []`), and what is exposed to the gateway is empty routes and navbar items plus the translation module. Preparation is real, but there is no functionality to compose. This may be read as “MFE-related dependencies that are unused or experimental”.
+- **Not a generator case like 075/081/105:** those were generating tools, without a concrete unit (075 is a CLI to generate and maintain plugins, 081 is a generation platform and 105 a project tool; 081 and 105 are not final), and 094 is an exercise, not a generator. Here there is a concrete generated unit.
+- **Inapplicable precedents:** not a third-party platform (102/074/080, 037), because the JHipster gateway is recommended pre-built or from source (`README.md:104–114`), without identifying its owner; this inference is therefore unresolved by the snapshot, and final 037 concerns a platform extension component, which does not decide this case. Not code sharing (089/100), because the JHipster contract exposes routes and menus.
+- **Fields:** `approaches: [module-federation]`, `ui_technologies: [angular]`, `build_tools: [webpack]` (explicit webpack configuration through custom-webpack), `frontend_units: 1`, `single-unit`. `repo_type: example`: generated sample application; `template` would also be defensible.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** microfrontends JHipster, com microsserviço Spring Boot e cliente Angular remoto em Module Federation, `shared` singleton de todas as dependências e de módulos internos (“Microfrontend api”), para composição por um gateway JHipster.
-- **RQ1 (sinais enganosos):** saída de gerador sem customização traz configuração MFE completa e documentação genérica, mas nenhuma funcionalidade exposta.
-- **Protocolo (busca):** as duas grafias buscadas estão literalmente no README. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ2:** JHipster microfrontends, with a Spring Boot microservice and Angular remote client in Module Federation, singleton `shared` for all dependencies and internal modules (“Microfrontend api”), for composition by a JHipster gateway.
+- **RQ1 (misleading signals):** uncustomized generator output brings complete MFE configuration and generic documentation, but no exposed functionality.
+- **Protocol (search):** both searched spellings are literally in the README. Eligibility changes from `unknown` (001) to `pass` (002).
 
-## Ponto para revisão conjunta
+## Point for joint review
 
-Decidir se um remoto gerado sem customização, cujos módulos expostos de rotas e navbar estão vazios, conta como MFE-unit.
+Decide whether an uncustomized generated remote, whose exposed route and navbar modules are empty, counts as MFE-unit.
 
-- **MFE-unit (proposto):** a configuração de `exposes`, o contrato com o gateway e o build federado estão completos e prontos para uso, como em 001/050.
-- **Non-MFE:** sem funcionalidade exposta e sem nenhuma alteração após a geração, a federação é estrutura não usada (“unused or experimental”), e o repositório é saída de gerador.
+- **MFE-unit (proposed):** `exposes` configuration, gateway contract and federated build are complete and ready for use, as in 001/050.
+- **Non-MFE:** without exposed functionality or any change after generation, federation is unused structure (“unused or experimental”), and the repository is generator output.
 
-Não se propõe regra nova. Até a decisão, preservar `MFE-unit`/`review`.
-- **Contribuição da revisão independente (Lupa):** concordância provisória com MFE-unit e `review`. A configuração Module Federation está ativa no build que não é `serve` e os caminhos expostos resolvem (`./translation-module`, `./entity-navbar-items` e `./entity-routes`, `webpack/webpack.microfrontend.js:24–34`); a dúvida real é se uma saída JHipster gerada, sem módulos de entidades e navegação funcionais, satisfaz a exceção MFE-unit ou cai em "MFE-related dependencies that are unused or experimental", e o checklist não define conteúdo funcional mínimo. Correções de citação: `README.md:5` descreve uma aplicação microservice e não é evidência de microfrontend (as evidências documentais são `README.md:102–130`); o compartilhamento de dependências está em `webpack/webpack.microfrontend.js:6–20` e o de módulos internos em `:32–50`; a busca de `../../` não foi vazia, e o achado em `alert.service.spec.ts:3` é interno e não cruza unidades; Q4 usa `src/main/webapp/app/entities/entity.routes.ts:3–7` e `src/main/webapp/app/entities/entity-navbar-items.ts:1–3`; Q2 acrescenta `package.json:17–18` e `:62–68` (scripts de build e watch); `README.md:116` é instrução genérica, não demonstrada pelo script atual (`package.json:18`), força moderada/ambígua; a árvore é inventário por `git ls-tree` do SHA e a proveniência vem das tabelas `hits` das duas bases `discovery.sqlite`, filtradas pelo ID. `repo_type: example` é razoável, com `template` como alternativa sem efeito sobre a classe. 074 (distribuição OpenMRS) e 080 (documentação) têm escopo diferente.
+No new rule is proposed. Until a decision, preserve `MFE-unit`/`review`.
+- **Independent review contribution (Lupa):** provisional agreement with MFE-unit and `review`. Module Federation configuration is active in the build that is not `serve` and exposed paths resolve (`./translation-module`, `./entity-navbar-items` and `./entity-routes`, `webpack/webpack.microfrontend.js:24–34`); the real uncertainty is whether generated JHipster output without functional entity and navigation modules satisfies the MFE-unit exception or falls under “MFE-related dependencies that are unused or experimental”, and the checklist does not define minimum functional content. Citation corrections: `README.md:5` describes a microservice application and is not microfrontend evidence (documentary evidence is `README.md:102–130`); dependency sharing is in `webpack/webpack.microfrontend.js:6–20` and internal module sharing in `:32–50`; the `../../` search was not empty, and the finding in `alert.service.spec.ts:3` is internal and does not cross units; Q4 uses `src/main/webapp/app/entities/entity.routes.ts:3–7` and `src/main/webapp/app/entities/entity-navbar-items.ts:1–3`; Q2 adds `package.json:17–18` and `:62–68` (build and watch scripts); `README.md:116` is a generic instruction, not demonstrated by the current script (`package.json:18`), moderate/ambiguous strength; the tree is a `git ls-tree` inventory at the SHA and provenance comes from `hits` tables in both `discovery.sqlite` databases, filtered by ID. `repo_type: example` is reasonable, with `template` as an alternative without effect on class. 074 (OpenMRS distribution) and 080 (documentation) have different scope.

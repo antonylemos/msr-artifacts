@@ -20,64 +20,64 @@ annotation:
 
 # 182 — webn00b/webn00b
 
-## Contexto
+## Context
 
-Repositório de perfil pessoal: um `README.md` de 29 linhas com apresentação de um desenvolvedor fullstack (Vue 3, TypeScript, Go) e uma imagem SVG animada de terminal (`README.md:1–10`; `assets/terminal.svg`). “micro-frontends” aparece numa lista de áreas de atuação (`README.md:11`). Não há código. O nome do repositório não é usado como evidência.
+Personal profile repository: a 29-line `README.md` introducing a fullstack developer (Vue 3, TypeScript, Go) and an animated terminal SVG image (`README.md:1–10`; `assets/terminal.svg`). “micro-frontends” appears in a list of work areas (`README.md:11`). There is no code. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:183` registra rank 182, ID 1389131816, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:183` records rank 182, ID 1389131816, status `cloned`, branch `main` and the front matter commit, which is HEAD of the clone and `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:183` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:37945` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:37977` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:183` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:37945` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:37977` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2026-09` e `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2026-09` and empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | 2026-10-07T22:42:59.653Z / 2026-10-08T16:02:15.900Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | 2026-10-07T23:12:35.014Z / 2026-10-08T16:10:44.980Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2026-09-01..2026-09-30`.
+Effective queries append `pushed:>=2025-04-01 created:2026-09-01..2026-09-30`.
 
-Metadados do hit:
-- descrição “Profile README”, sem os termos;
-- sem tópicos, linguagem nula, `fork: false`, tamanho 2;
-- criação em 2026-09-26T12:00:10Z, push em 2026-09-26T12:00:16Z.
+Hit metadata:
+- description “Profile README”, without the terms;
+- no topics, null language, `fork: false`, size 2;
+- created at 2026-09-26T12:00:10Z, pushed at 2026-09-26T12:00:16Z.
 
-O acerto vem de `README.md:11`, “- 🧩 Frontend architecture: micro-frontends, Feature-Sliced Design, design systems”, com grafia hifenizada e única ocorrência. A busca de frase trata o hífen como separador. A forma singular “micro frontend” não aparece literalmente; esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+The hit comes from `README.md:11`, “- 🧩 Frontend architecture: micro-frontends, Feature-Sliced Design, design systems”, hyphenated and the only occurrence. Phrase search treats the hyphen as a separator. The singular form “micro frontend” does not appear literally; that hit depends on GitHub search text processing, which is not recorded.
 
-O README vem do único commit, que é o SHA (2026-09-26), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The README comes from the only commit, the SHA (2026-09-26), before October 2026 collection. The SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 2 entradas, `README.md` e `assets/terminal.svg` (4.700 bytes), ambas `100644`; zero symlinks e zero gitlinks. Não há código, manifesto ou configuração. | contrária |
-| Documentação | `README.md:1–10`: imagem do terminal, “Hi, I'm Fedor”, apresentação profissional e áreas de experiência. `README.md:11`: “micro-frontends” entre áreas de arquitetura de frontend. É competência declarada, sem projeto descrito. | fraca |
-| Tecnologia / Configuração / Composição (busca) | `grep -i` no README e no SVG por `micro.?front` e `federation`: só `README.md:11`; o SVG não contém os termos. Nenhum mecanismo. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 2 entries, `README.md` and `assets/terminal.svg` (4,700 bytes), both `100644`; zero symlinks and zero gitlinks. No code, manifest or configuration. | contrary |
+| Documentation | `README.md:1–10`: terminal image, “Hi, I'm Fedor”, professional presentation and experience areas. `README.md:11`: “micro-frontends” among frontend architecture areas. A declared skill, without a described project. | weak |
+| Technology / Configuration / Composition (search) | `grep -i` in README and SVG for `micro.?front` and `federation`: only `README.md:11`; SVG does not contain the terms. No mechanism. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso com um único commit, o SHA `e096c97` (2026-09-26, “Add profile README with animated terminal”), de `f.savin <fedsavin@gmail.com>` como autor e committer. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone with a single commit, SHA `e096c97` (2026-09-26, “Add profile README with animated terminal”), by `f.savin <fedsavin@gmail.com>` as author and committer. No historical blob was read and no object was missing.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend; o inventário é só o README e uma imagem. |
-| Q2 | No | Sem unidades, não há entradas ou builds. |
-| Q3 | No | Não há host, shell ou configuração raiz. |
-| Q4 | No | Nenhum mecanismo de composição; “micro-frontends” só aparece na lista de competências (`README.md:11`). |
-| Q5 | No | Q1–Q4 são No: README de perfil pessoal. |
+| Q1 | No | No frontend unit; inventory is only README and an image. |
+| Q2 | No | Without units, there are no entries or builds. |
+| Q3 | No | No host, shell or root configuration. |
+| Q4 | No | No composition mechanism; “micro-frontends” appears only in the skill list (`README.md:11`). |
+| Q5 | No | Q1–Q4 are No: personal profile README. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “repositories mentioning micro-frontends without implementing them”.
-- Repositório sem implementação, como os perfis 011/064/068/073/077/101/111 (e os rascunhos 158/166/173/179): `frontend_units: 0`, `unit_organization: none`, `repo_type: other`, `ui_technologies: []` e `build_tools: []`.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. Matches “repositories mentioning micro-frontends without implementing them”.
+- Repository without implementation, like profiles 011/064/068/073/077/101/111 (and drafts 158/166/173/179): `frontend_units: 0`, `unit_organization: none`, `repo_type: other`, `ui_technologies: []` and `build_tools: []`.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** competência “micro-frontends” em README de perfil.
-- **Protocolo (busca):** o hit singular `"micro frontend"` não tem grafia literal. A elegibilidade muda de `unknown` (001) para `pass` (002).
-- **Contribuição da revisão independente (Lupa):** concordância integral com Non-MFE, Q1–Q5 No, `other`, zero unidades e `none`; sem decisão aberta (`draft`). O SHA contém só `README.md` e `assets/terminal.svg` (4.700 bytes, markup, estilo e animação de uma ilustração de terminal, sem referência a MFE); a menção a "micro-frontends" (`README.md:11`, junto de Feature-Sliced Design e design systems) é competência declarada. Proveniência: por eliminação o README é a origem dos dois hits, e a normalização de hífen e plural que explicaria a consulta singular é plausível, mas o mecanismo interno do GitHub não está gravado, e não se atribui uma regra de stemming como fato. A elegibilidade `unknown` da rodada 001 (`recent-human-commit`, `activity_incomplete`) é de coleta de atividade incompleta, e na rodada 002 há `qualifying_commit`; isso não altera a interpretação temática. As tecnologias do README (Vue 3, TypeScript, Go) e do SVG descrevem competências, e por isso `ui_technologies` e `build_tools` ficam vazios.
+- **RQ1 (misleading signals):** “micro-frontends” skill in a profile README.
+- **Protocol (search):** singular hit `"micro frontend"` has no literal spelling. Eligibility changes from `unknown` (001) to `pass` (002).
+- **Independent review contribution (Lupa):** full agreement with Non-MFE, Q1–Q5 No, `other`, zero units and `none`; no open decision (`draft`). SHA contains only `README.md` and `assets/terminal.svg` (4,700 bytes, terminal illustration markup, style and animation, without MFE reference); the “micro-frontends” mention (`README.md:11`, alongside Feature-Sliced Design and design systems) is a declared skill. Provenance: by elimination the README is the origin of both hits, and hyphen and plural normalization that would explain the singular query is plausible, but GitHub's internal mechanism is not recorded, and a stemming rule is not asserted as fact. Round 001 eligibility `unknown` (`recent-human-commit`, `activity_incomplete`) concerns incomplete activity collection, and round 002 has `qualifying_commit`; this does not change thematic interpretation. README technologies (Vue 3, TypeScript, Go) and SVG describe skills, hence `ui_technologies` and `build_tools` remain empty.

@@ -19,196 +19,196 @@ annotation:
 
 # 330 — DoniaMahmoud/react-microfrontend
 
-## Leitura do repositório
+## Repository overview
 
-Três aplicações JavaScript com configuração webpack própria compõem o exemplo: cart, container e products (#15–#17). A configuração do container nomeia cart e products como remotes (#2), e cada remote expõe seu bootstrap por Module Federation (#1, #3). Os imports federados do container (#11, #12) e as chamadas de montagem na sua página (#13, #14) concretizam as duas relações ativas (#18, #19). Essa cadeia liga unidades com entradas e builds próprios, sustentando a composição de frontend em runtime.
+Three JavaScript applications with own webpack configurations compose example: cart, container, products (#15–#17). Container configuration names cart/products remotes (#2), each exposing bootstrap through Module Federation (#1, #3). Container federated imports (#11, #12) and page mount calls (#13, #14) materialize two active relationships (#18, #19). Chain links own-entry/build units, supporting runtime frontend composition.
 
-Os builds são separados, mas o uso registrado se limita a servidores de desenvolvimento: deploy não observado e versionamento independente No nas três aplicações (#20–#22). As portas locais corroboram os endereços dos remotes, sem demonstrar publicação em produção. As configurações de cada remote e suas funções exportadas mostram partes do mecanismo (#1, #3, #7, #8); isoladamente, não estabelecem toda a organização.
+Builds separate but recorded usage limited to development servers: unobserved deployment and independent versioning No for three applications (#20–#22). Local ports corroborate remote addresses without demonstrating production publication. Remote configurations/exported functions show parts of mechanism (#1, #3, #7, #8); alone do not establish complete organization.
 
-Os bootstraps assíncronos são locais (#4–#6), e as chamadas condicionais de mount dentro dos remotes apenas montam cada aplicação isoladamente (#9, #10). Essas linhas também foram preservadas, embora não componham unidades. Os três comentários documentais têm corroboração no código e na estrutura (#23–#25), mas são sinais semânticos fracos por si. A declaração alternativa de singleton está comentada: a configuração ativa compartilha faker, sem aquela garantia (#1, #3). Não há dependência registrada na tabela da 3.4.2 nem ponto na tabela da 3.4.8, portanto essas dimensões não geram observações. Nada permanece ambíguo nas revisões finais.
+Asynchronous bootstraps local (#4–#6); conditional mount calls inside remotes only mount each application in isolation (#9, #10). Lines preserved although not composing units. Three documentary comments corroborated by code/structure (#23–#25), but alone weak semantic signals. Alternative singleton declaration commented out: active configuration shares faker without that guarantee (#1, #3). No dependency recorded in 3.4.2 table or point in 3.4.8 table, so no observations for those dimensions. Nothing remains ambiguous in final reviews.
 
-## Observações
+## Observations
 
 ### 1. cart/webpack.config.js:10-23
 
-**Observação:** ModuleFederationPlugin declara name cart, filename remoteEntry.js, expõe ./CartShow como ./src/bootstrap e inclui faker em shared. A alternativa shared com singleton: true aparece comentada.
+**Observation:** ModuleFederationPlugin declares name cart, filename remoteEntry.js, exposes ./CartShow as ./src/bootstrap and includes faker in shared. Alternative shared with singleton: true commented out.
 
-**Interpretação:** Configura Module Federation no remote cart, com interface exposta e dependência compartilhada. Esse bloco não nomeia uma unidade consumidora.
+**Interpretation:** Configures Module Federation in cart remote with exposed interface/shared dependency. Block names no consumer unit.
 
 ### 2. container/webpack.config.js:10-16
 
-**Observação:** ModuleFederationPlugin declara name container e dois remotes: products em products@http://localhost:8081/remoteEntry.js e cart em cart@http://localhost:8082/remoteEntry.js.
+**Observation:** ModuleFederationPlugin declares name container and two remotes: products at products@http://localhost:8081/remoteEntry.js and cart at cart@http://localhost:8082/remoteEntry.js.
 
-**Interpretação:** A configuração do host liga explicitamente o container às duas unidades remotas por Module Federation.
+**Interpretation:** Host configuration explicitly links container to two remote units through Module Federation.
 
 ### 3. products/webpack.config.js:10-23
 
-**Observação:** ModuleFederationPlugin declara name products, filename remoteEntry.js, expõe ./ProductsIndex como ./src/bootstrap e inclui faker em shared. A alternativa shared com singleton: true está comentada.
+**Observation:** ModuleFederationPlugin declares name products, filename remoteEntry.js, exposes ./ProductsIndex as ./src/bootstrap and includes faker in shared. Alternative shared with singleton: true commented out.
 
-**Interpretação:** Configura Module Federation no remote products e sua interface exposta, sem declarar o consumidor.
+**Interpretation:** Configures Module Federation in products remote/exposed interface without declaring consumer.
 
 ### 4. cart/src/index.js:4
 
-**Observação:** A entrada executa import("./bootstrap").
+**Observation:** Entry executes import("./bootstrap").
 
-**Interpretação:** Carrega assincronamente um módulo da própria unidade; essa linha sozinha não identifica um mecanismo de composição entre unidades.
+**Interpretation:** Asynchronously loads own-unit module; line alone identifies no inter-unit composition mechanism.
 
 ### 5. container/src/index.js:2
 
-**Observação:** A entrada executa import("./bootstrap").
+**Observation:** Entry executes import("./bootstrap").
 
-**Interpretação:** Adia a carga do bootstrap local do container, sem nomear ou ligar uma unidade remota nessa construção.
+**Interpretation:** Defers local container bootstrap loading without naming/linking remote unit in construct.
 
 ### 6. products/src/index.js:4
 
-**Observação:** A entrada executa import("./bootstrap").
+**Observation:** Entry executes import("./bootstrap").
 
-**Interpretação:** É bootstrap assíncrono local, um padrão tecnológico isolado que não demonstra composição entre unidades.
+**Interpretation:** Local asynchronous bootstrap, isolated technical pattern not demonstrating inter-unit composition.
 
 ### 7. cart/src/bootstrap.js:3-6; cart/src/bootstrap.js:15; cart/webpack.config.js:13-14
 
-**Observação:** A função mount(el) escreve em el.innerHTML o texto do carrinho gerado com faker; o arquivo exporta mount. A configuração expõe esse bootstrap como ./CartShow.
+**Observation:** Function mount(el) writes faker-generated cart text to el.innerHTML; file exports mount. Configuration exposes bootstrap as ./CartShow.
 
-**Interpretação:** A unidade oferece uma interface de montagem para consumo federado. A exportação prepara o mecanismo, sem por si nomear o consumidor ou estabelecer a ligação completa.
+**Interpretation:** Unit offers mounting interface for federated consumption. Export prepares mechanism without alone naming consumer/establishing full link.
 
 ### 8. products/src/bootstrap.js:4-13; products/src/bootstrap.js:26; products/webpack.config.js:13-14
 
-**Observação:** mount(el) gera três produtos com nome, preço e imagem e atribui o HTML a el.innerHTML. O arquivo exporta mount e é exposto como ./ProductsIndex.
+**Observation:** mount(el) generates three products with name, price, image and assigns HTML to el.innerHTML. File exports mount, exposed as ./ProductsIndex.
 
-**Interpretação:** A interface permite montar o fragmento de produtos por Module Federation, mas a construção de exportação não identifica quem o consome.
+**Interpretation:** Interface allows products fragment mounting through Module Federation, but export construct does not identify consumer.
 
 ### 9. cart/src/bootstrap.js:8-13; cart/public/index.html:4
 
-**Observação:** Em development, o código procura #dev-cart e chama mount(el) quando o encontra. O HTML próprio contém esse elemento.
+**Observation:** In development code finds #dev-cart, calls mount(el) when found. Own HTML contains element.
 
-**Interpretação:** É montagem interna da aplicação cart em desenvolvimento isolado, sem ligação entre unidades frontend.
+**Interpretation:** Internal cart mounting in isolated development without frontend-unit link.
 
 ### 10. products/src/bootstrap.js:17-25; products/public/index.html:5
 
-**Observação:** Em development, o código procura #dev-products e chama mount(el) se o elemento existe; ele está no HTML próprio de products.
+**Observation:** In development code finds #dev-products, calls mount(el) if element exists; element in products own HTML.
 
-**Interpretação:** A chamada atende à execução local de products e não realiza composição entre unidades.
+**Interpretation:** Call supports products local execution without inter-unit composition.
 
 ### 11. container/src/bootstrap.js:1; container/src/bootstrap.js:6; container/webpack.config.js:13
 
-**Observação:** O container importa mount de products/ProductsIndex como mountProducts e o chama na linha 6. O remote products é resolvido pelo endereço products@http://localhost:8081/remoteEntry.js.
+**Observation:** Container imports mount from products/ProductsIndex as mountProducts, calls it at line 6. Remote products resolved through products@http://localhost:8081/remoteEntry.js.
 
-**Interpretação:** O import nomeia a unidade remota e seu módulo, conectando o consumidor ao mecanismo federado de products.
+**Interpretation:** Import names remote unit/module, connecting consumer to products federation mechanism.
 
 ### 12. container/src/bootstrap.js:2; container/src/bootstrap.js:7; container/webpack.config.js:14
 
-**Observação:** O container importa mount de cart/CartShow como mountCart e o chama na linha 7. O remote cart é resolvido por cart@http://localhost:8082/remoteEntry.js.
+**Observation:** Container imports mount from cart/CartShow as mountCart, calls it at line 7. Remote cart resolved through cart@http://localhost:8082/remoteEntry.js.
 
-**Interpretação:** O import liga o container ao módulo da unidade cart por Module Federation.
+**Interpretation:** Import links container to cart unit module through Module Federation.
 
 ### 13. container/src/bootstrap.js:6; container/src/bootstrap.js:1; container/public/index.html:5
 
-**Observação:** mountProducts(document.querySelector("#my-products")) chama a função importada de products/ProductsIndex no elemento #my-products da página do container.
+**Observation:** mountProducts(document.querySelector("#my-products")) calls function imported from products/ProductsIndex on #my-products element of container page.
 
-**Interpretação:** A chamada monta a interface remota na página do host. É uso do mecanismo por uma função com alias, fora de uma rota, complementando o import que nomeia a unidade.
+**Interpretation:** Call mounts remote UI in host page. Mechanism used through aliased function outside route, complementing unit-naming import.
 
 ### 14. container/src/bootstrap.js:7; container/src/bootstrap.js:2; container/public/index.html:6
 
-**Observação:** mountCart(document.querySelector("#my-cart")) chama a função importada de cart/CartShow no elemento #my-cart da página do container.
+**Observation:** mountCart(document.querySelector("#my-cart")) calls function imported from cart/CartShow on #my-cart element of container page.
 
-**Interpretação:** A chamada aplica a montagem federada ao elemento do host; isoladamente é uma chamada do mecanismo fora de uma rota.
+**Interpretation:** Call applies federated mounting to host element; alone mechanism call outside route.
 
 ### 15. cart/; cart/package.json:1-20; cart/src/index.js:4; cart/src/bootstrap.js:8-13; cart/webpack.config.js:4-28
 
-**Observação:** O diretório cart tem pacote próprio, script start com webpack serve, entrada src/index.js com bootstrap assíncrono, montagem em #dev-cart e configuração webpack própria com template ./public/index.html e porta 8082.
+**Observation:** Cart directory has own package, webpack serve start script, src/index.js entry with asynchronous bootstrap, #dev-cart mounting and own webpack configuration with ./public/index.html template/port 8082.
 
-**Interpretação:** O conjunto confirma o limite de uma unidade frontend executável isoladamente em desenvolvimento, conforme Unidade frontend Yes.
+**Interpretation:** Confirms frontend unit boundary independently executable in development, Frontend unit Yes.
 
 ### 16. container/; container/package.json:1-19; container/src/index.js:2; container/src/bootstrap.js:6-7; container/webpack.config.js:4-21
 
-**Observação:** O diretório container tem pacote e script webpack serve próprios, entrada com bootstrap assíncrono, duas chamadas de montagem e configuração webpack com template próprio e porta 8080.
+**Observation:** Container directory has own package/webpack serve script, asynchronous-bootstrap entry, two mount calls, webpack configuration with own template/port 8080.
 
-**Interpretação:** O diretório delimita a aplicação frontend consumidora, com entrada e build próprios, conforme Unidade frontend Yes.
+**Interpretation:** Delimits consuming frontend application with own entry/build, Frontend unit Yes.
 
 ### 17. products/; products/package.json:1-20; products/src/index.js:4; products/src/bootstrap.js:17-25; products/webpack.config.js:4-29
 
-**Observação:** O diretório products reúne pacote próprio, script webpack serve, entrada com bootstrap assíncrono, montagem local em #dev-products e configuração webpack com template próprio e porta 8081.
+**Observation:** Products directory has own package, webpack serve script, asynchronous-bootstrap entry, local #dev-products mounting, webpack configuration with own template/port 8081.
 
-**Interpretação:** Confirma uma unidade frontend com fronteira e execução local próprias, conforme Unidade frontend Yes.
+**Interpretation:** Confirms frontend unit with own boundary/local execution, Frontend unit Yes.
 
 ### 18. container/src/bootstrap.js:2; container/src/bootstrap.js:7; container/webpack.config.js:14; cart/webpack.config.js:11-14; cart/src/bootstrap.js:15; container/public/index.html:6
 
-**Observação:** O container declara o remote cart, importa cart/CartShow e chama mountCart sobre #my-cart. Cart declara name cart, filename remoteEntry.js, expõe ./CartShow e exporta mount.
+**Observation:** Container declares remote cart, imports cart/CartShow, calls mountCart on #my-cart. Cart declares name cart, filename remoteEntry.js, exposes ./CartShow, exports mount.
 
-**Interpretação:** A correspondência entre destino, configuração e consumo estabelece a relação ativa container → cart por Module Federation, com ambos no snapshot.
+**Interpretation:** Matching target/configuration/consumption establishes active container → cart Module Federation relationship, both in snapshot.
 
 ### 19. container/src/bootstrap.js:1; container/src/bootstrap.js:6; container/webpack.config.js:13; products/webpack.config.js:11-14; products/src/bootstrap.js:26; container/public/index.html:5
 
-**Observação:** O container declara products, importa products/ProductsIndex e chama mountProducts sobre #my-products. Products declara name products, filename remoteEntry.js, expõe ./ProductsIndex e exporta mount.
+**Observation:** Container declares products, imports products/ProductsIndex, calls mountProducts on #my-products. Products declares name products, filename remoteEntry.js, exposes ./ProductsIndex, exports mount.
 
-**Interpretação:** Os nomes e a interface correspondentes estabelecem a relação ativa container → products por Module Federation, com ambos no snapshot.
+**Interpretation:** Matching names/interface establish active container → products Module Federation relationship, both in snapshot.
 
 ### 20. cart/webpack.config.js:4-28; cart/package.json:3; cart/package.json:7; container/webpack.config.js:14
 
-**Observação:** Cart tem configuração webpack própria em development, gera remoteEntry.js e usa webpack serve na porta 8082, referenciada pelo host. O manifesto declara versão 1.0.0. A 3.4.6 registra Build separado, Deploy não observado e Versionamento No.
+**Observation:** Cart has own development webpack configuration, generates remoteEntry.js, uses webpack serve at host-referenced port 8082. Manifest version 1.0.0. Section 3.4.6 records separate Build, unobserved Deployment, Versioning No.
 
-**Interpretação:** Há build próprio da aplicação, observado no contexto de desenvolvimento. Não há evidência de deploy ou versionamento independente.
+**Interpretation:** Own application build observed in development context. No independent deployment/versioning evidence.
 
 ### 21. container/webpack.config.js:4-21; container/package.json:3; container/package.json:7
 
-**Observação:** Container tem configuração webpack própria em development, com dois remotes e servidor na porta 8080, acionado por webpack serve. O manifesto declara versão 1.0.0. A 3.4.6 registra Build separado, Deploy não observado e Versionamento No.
+**Observation:** Container has own development webpack configuration with two remotes/server at port 8080 invoked through webpack serve. Manifest version 1.0.0. Section 3.4.6 records separate Build, unobserved Deployment, Versioning No.
 
-**Interpretação:** O build delimita a aplicação host e resolve remotes em runtime; a evidência disponível não estabelece deploy ou versionamento independente.
+**Interpretation:** Build delimits host/resolves remotes at runtime; available evidence does not establish independent deployment/versioning.
 
 ### 22. products/webpack.config.js:4-29; products/package.json:3; products/package.json:7; container/webpack.config.js:13
 
-**Observação:** Products tem configuração webpack própria em development, gera remoteEntry.js e usa webpack serve na porta 8081, referenciada pelo host. O manifesto declara versão 1.0.0. A 3.4.6 registra Build separado, Deploy não observado e Versionamento No.
+**Observation:** Products has own development webpack configuration, generates remoteEntry.js, uses webpack serve at host-referenced port 8081. Manifest version 1.0.0. Section 3.4.6 records separate Build, unobserved Deployment, Versioning No.
 
-**Interpretação:** Confirma build próprio de products no desenvolvimento, sem evidência de deploy ou versionamento independente.
+**Interpretation:** Confirms products own development build without independent deployment/versioning evidence.
 
 ### 23. products/src/bootstrap.js:3
 
-**Observação:** O comentário diz que a função recebe referência a um elemento HTML e adiciona nele o componente de produtos.
+**Observation:** Comment says function receives HTML element reference/adds products component into it.
 
-**Interpretação:** É uma descrição semântica da interface de montagem da unidade, corroborada pela função exportada e pelo uso na relação container → products.
+**Interpretation:** Semantic unit mounting-interface description corroborated by exported function/usage in container → products relationship.
 
 ### 24. products/src/bootstrap.js:15
 
-**Observação:** O comentário afirma que, em desenvolvimento e isolamento, mount deve ser chamado imediatamente.
+**Observation:** Comment claims mount must be called immediately in isolated development.
 
-**Interpretação:** Descreve a independência de execução local de products, corroborada pela guarda de desenvolvimento, pelo HTML e pelo build próprios; não afirma deploy independente.
+**Interpretation:** Describes products local-execution independence corroborated by development guard/own HTML/build; claims no independent deployment.
 
 ### 25. products/src/bootstrap.js:20
 
-**Observação:** O comentário assume que o container, identificado como HOST, não tem elemento com id dev-products.
+**Observation:** Comment assumes container, identified as HOST, has no element with id dev-products.
 
-**Interpretação:** Explicita a distinção entre a página local e a página consumidora. A ausência desse elemento no host e a montagem explícita de products corroboram a premissa.
+**Interpretation:** Explicit distinction between local/consumer pages. Host element absence/explicit products mounting corroborate premise.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.3 (cart, Marcadores e Build); 3.4.4 (cart/src/bootstrap.js:15, Observação); 3.4.5 #1 (Configuração); 3.4.6 #1 (Artefatos) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #7; configura #15; configura #18 |
-| 2 | 3.4.3 (container, Marcadores e Build); 3.4.4 (container/src/bootstrap.js:1 e :2, Observação); 3.4.5 #1, #2 (Configuração); 3.4.6 #1, #3 (Onde é servida), #2 (Artefatos) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #11; configura #12; configura #16; configura #18; configura #19 |
-| 3 | 3.4.3 (products, Marcadores e Build); 3.4.4 (products/src/bootstrap.js:26, Observação); 3.4.5 #2 (Configuração); 3.4.6 #3 (Artefatos); 3.4.7 #1 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #8; configura #17; configura #19 |
-| 4 | 3.4.4 (cart/src/index.js:4) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 5 | 3.4.4 (container/src/index.js:2) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 6 | 3.4.4 (products/src/index.js:4) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 7 | 3.4.4 (cart/src/bootstrap.js:15) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #18 |
-| 8 | 3.4.4 (products/src/bootstrap.js:26) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #19 |
-| 9 | 3.4.4 (cart/src/bootstrap.js:11) | 3 código | código-fonte | — | contexto | fraca | — |
-| 10 | 3.4.4 (products/src/bootstrap.js:23) | 3 código | código-fonte | — | contexto | fraca | — |
-| 11 | 3.4.4 (container/src/bootstrap.js:1) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #19 |
-| 12 | 3.4.4 (container/src/bootstrap.js:2) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #18 |
-| 13 | 3.4.4 (container/src/bootstrap.js:6, fora da mineração) | 3 código | código-fonte | module-federation | arquitetural | moderada | implementa #19 |
-| 14 | 3.4.4 (container/src/bootstrap.js:7, fora da mineração) | 3 código | código-fonte | module-federation | arquitetural | moderada | implementa #18 |
-| 15 | 3.4.3 (cart) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 16 | 3.4.3 (container) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 17 | 3.4.3 (products) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 18 | 3.4.5 #1 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #16; liga #15 |
-| 19 | 3.4.5 #2 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #16; liga #17 |
-| 20 | 3.4.6 #1 | 6 build-deploy | configuração | module-federation | arquitetural | moderada | publica #15 |
-| 21 | 3.4.6 #2 | 6 build-deploy | configuração | module-federation | arquitetural | moderada | publica #16 |
-| 22 | 3.4.6 #3 | 6 build-deploy | configuração | module-federation | arquitetural | moderada | publica #17 |
-| 23 | 3.4.7 #1 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #8; corrobora #19 |
-| 24 | 3.4.7 #2 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #10; corrobora #17; corrobora #22 |
-| 25 | 3.4.7 #3 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #19; corrobora container/public/index.html:1-8; corrobora products/public/index.html:5; corrobora products/src/bootstrap.js:18-24 |
+| 1 | 3.4.3 (cart, Markers and Build); 3.4.4 (cart/src/bootstrap.js:15, Observation); 3.4.5 #1 (Configuration); 3.4.6 #1 (Artifacts) | 2 configuration | configuration | module-federation | technological | moderate | configures #7; configures #15; configures #18 |
+| 2 | 3.4.3 (container, Markers and Build); 3.4.4 (container/src/bootstrap.js:1 and :2, Observation); 3.4.5 #1, #2 (Configuration); 3.4.6 #1, #3 (Where served), #2 (Artifacts) | 2 configuration | configuration | module-federation | architectural | strong | configures #11; configures #12; configures #16; configures #18; configures #19 |
+| 3 | 3.4.3 (products, Markers and Build); 3.4.4 (products/src/bootstrap.js:26, Observation); 3.4.5 #2 (Configuration); 3.4.6 #3 (Artifacts); 3.4.7 #1 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #8; configures #17; configures #19 |
+| 4 | 3.4.4 (cart/src/index.js:4) | 3 code | source code | — | technological | weak | — |
+| 5 | 3.4.4 (container/src/index.js:2) | 3 code | source code | — | technological | weak | — |
+| 6 | 3.4.4 (products/src/index.js:4) | 3 code | source code | — | technological | weak | — |
+| 7 | 3.4.4 (cart/src/bootstrap.js:15) | 3 code | source code | module-federation | technological | moderate | implements #18 |
+| 8 | 3.4.4 (products/src/bootstrap.js:26) | 3 code | source code | module-federation | technological | moderate | implements #19 |
+| 9 | 3.4.4 (cart/src/bootstrap.js:11) | 3 code | source code | — | context | weak | — |
+| 10 | 3.4.4 (products/src/bootstrap.js:23) | 3 code | source code | — | context | weak | — |
+| 11 | 3.4.4 (container/src/bootstrap.js:1) | 3 code | source code | module-federation | architectural | strong | implements #19 |
+| 12 | 3.4.4 (container/src/bootstrap.js:2) | 3 code | source code | module-federation | architectural | strong | implements #18 |
+| 13 | 3.4.4 (container/src/bootstrap.js:6, outside mining) | 3 code | source code | module-federation | architectural | moderate | implements #19 |
+| 14 | 3.4.4 (container/src/bootstrap.js:7, outside mining) | 3 code | source code | module-federation | architectural | moderate | implements #18 |
+| 15 | 3.4.3 (cart) | 4 structure | directory | — | architectural | moderate | — |
+| 16 | 3.4.3 (container) | 4 structure | directory | — | architectural | moderate | — |
+| 17 | 3.4.3 (products) | 4 structure | directory | — | architectural | moderate | — |
+| 18 | 3.4.5 #1 | 5 composition | source code | module-federation | architectural | strong | links #16; links #15 |
+| 19 | 3.4.5 #2 | 5 composition | source code | module-federation | architectural | strong | links #16; links #17 |
+| 20 | 3.4.6 #1 | 6 build-deploy | configuration | module-federation | architectural | moderate | publishes #15 |
+| 21 | 3.4.6 #2 | 6 build-deploy | configuration | module-federation | architectural | moderate | publishes #16 |
+| 22 | 3.4.6 #3 | 6 build-deploy | configuration | module-federation | architectural | moderate | publishes #17 |
+| 23 | 3.4.7 #1 | 7 documentation | comment | — | architectural | weak | corroborates #8; corroborates #19 |
+| 24 | 3.4.7 #2 | 7 documentation | comment | — | architectural | weak | corroborates #10; corroborates #17; corroborates #22 |
+| 25 | 3.4.7 #3 | 7 documentation | comment | — | architectural | weak | corroborates #19; corroborates container/public/index.html:1-8; corroborates products/public/index.html:5; corroborates products/src/bootstrap.js:18-24 |
 
-## Resumo
+## Summary
 
-Observações: 25. Dimensões (tecnologia: 0, configuração: 3, código: 11, estrutura: 3, composição: 2, build-deploy: 3, documentação: 3, histórico: 0). Força (forte: 5, moderada: 12, fraca: 8, ambígua: 0). Evidência (tecnológica: 7, arquitetural: 16, contexto: 2).
+Observations: 25. Dimensions (technology: 0, configuration: 3, code: 11, structure: 3, composition: 2, build-deploy: 3, documentation: 3, history: 0). Strength (strong: 5, moderate: 12, weak: 8, ambiguous: 0). Evidence (technological: 7, architectural: 16, context: 2).

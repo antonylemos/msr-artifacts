@@ -15,29 +15,29 @@ annotation:
 
 # 142 — lavesan/nx-zephyr-module-federation-example
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-remote-import | apps/shell/src/App.tsx:6 | apps/shell | dynamic-loading | Yes | `lazy(() => import("courses/App"))` carrega em runtime o módulo `./App` da unidade apps/courses (exposto em apps/courses/module-federation.config.ts:7-9), resolvido pelo remote `courses@${COURSES_URL}/remoteEntry.js` em apps/shell/module-federation.config.ts:21. Ativo: apps/shell/src/index.tsx:1 → apps/shell/src/bootstrap.tsx:3,10 → `Courses` renderizado em apps/shell/src/App.tsx:20. |
-| src-remote-import | apps/shell/src/App.tsx:7 | apps/shell | dynamic-loading | Yes | `lazy(() => import("profile/App"))` carrega em runtime o módulo `./App` da unidade apps/profile (exposto em apps/profile/module-federation.config.ts:7-9), resolvido pelo remote `profile@${PROFILE_URL}/remoteEntry.js` em apps/shell/module-federation.config.ts:22. Ativo pela mesma cadeia; `Profile` renderizado em apps/shell/src/App.tsx:21. |
-| src-async-bootstrap | apps/courses/src/index.tsx:1 | apps/courses | dynamic-loading | No | `import('./bootstrap')` carrega o próprio bootstrap (apps/courses/src/bootstrap.tsx:5-13); interno à unidade. |
-| src-async-bootstrap | apps/shell/src/index.tsx:1 | apps/shell | dynamic-loading | No | `import("./bootstrap")` carrega o próprio bootstrap (apps/shell/src/bootstrap.tsx:5-13); interno à unidade. |
+| src-remote-import | apps/shell/src/App.tsx:6 | apps/shell | dynamic-loading | Yes | `lazy(() => import("courses/App"))` loads at runtime module `./App` of unit apps/courses (exposed at apps/courses/module-federation.config.ts:7-9), resolved by remote `courses@${COURSES_URL}/remoteEntry.js` at apps/shell/module-federation.config.ts:21. Active: apps/shell/src/index.tsx:1 → apps/shell/src/bootstrap.tsx:3,10 → `Courses` rendered at apps/shell/src/App.tsx:20. |
+| src-remote-import | apps/shell/src/App.tsx:7 | apps/shell | dynamic-loading | Yes | `lazy(() => import("profile/App"))` loads at runtime module `./App` of unit apps/profile (exposed at apps/profile/module-federation.config.ts:7-9), resolved by remote `profile@${PROFILE_URL}/remoteEntry.js` at apps/shell/module-federation.config.ts:22. Active through the same chain; `Profile` rendered at apps/shell/src/App.tsx:21. |
+| src-async-bootstrap | apps/courses/src/index.tsx:1 | apps/courses | dynamic-loading | No | `import('./bootstrap')` loads its own bootstrap (apps/courses/src/bootstrap.tsx:5-13); internal to the unit. |
+| src-async-bootstrap | apps/shell/src/index.tsx:1 | apps/shell | dynamic-loading | No | `import("./bootstrap")` loads its own bootstrap (apps/shell/src/bootstrap.tsx:5-13); internal to the unit. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | apps/shell/src/App.tsx:18 | apps/shell | host-relationship | Yes | `Routes` declara os caminhos em que o shell usa as outras unidades: `/courses*` → `Courses` e `/profile*` → `Profile`, com redirecionamento de `/` para `/courses` (apps/shell/src/App.tsx:18-22), dentro de `BrowserRouter` e `Suspense` (apps/shell/src/App.tsx:13-17); App montado em apps/shell/src/bootstrap.tsx:10. Os links de navegação estão em apps/shell/src/components/Header.tsx:16-43. |
-| manual | apps/shell/src/App.tsx:20 | apps/shell | runtime-composition | Yes | O element da rota renderiza `<Courses />`, componente da unidade apps/courses resolvido pelo import remoto de apps/shell/src/App.tsx:6. |
-| manual | apps/shell/src/App.tsx:21 | apps/shell | runtime-composition | Yes | O element da rota renderiza `<Profile />`, componente da unidade apps/profile resolvido pelo import remoto de apps/shell/src/App.tsx:7. |
+| manual | apps/shell/src/App.tsx:18 | apps/shell | host-relationship | Yes | `Routes` declares the paths where shell uses the other units: `/courses*` → `Courses` and `/profile*` → `Profile`, with a redirect from `/` to `/courses` (apps/shell/src/App.tsx:18-22), inside `BrowserRouter` and `Suspense` (apps/shell/src/App.tsx:13-17); App mounted at apps/shell/src/bootstrap.tsx:10. Navigation links are at apps/shell/src/components/Header.tsx:16-43. |
+| manual | apps/shell/src/App.tsx:20 | apps/shell | runtime-composition | Yes | The route element renders `<Courses />`, a component of unit apps/courses resolved through the remote import at apps/shell/src/App.tsx:6. |
+| manual | apps/shell/src/App.tsx:21 | apps/shell | runtime-composition | Yes | The route element renders `<Profile />`, a component of unit apps/profile resolved through the remote import at apps/shell/src/App.tsx:7. |
 
-## Resumo
+## Summary
 
-Construções com composição: 5 (dynamic-loading: 2, host-relationship: 1, runtime-composition: 2).
+Constructs participating in composition: 5 (dynamic-loading: 2, host-relationship: 1, runtime-composition: 2).
 
-## Notas
+## Notes
 
-- apps/profile/src/index.tsx:1 importa `./bootstrap` de forma estática (`import "./bootstrap"`), por isso não aparece como `src-async-bootstrap`; não é construção de composição.
-- Não há mecanismo de comunicação entre unidades (sem `CustomEvent`, `postMessage`, `BroadcastChannel` ou barramento compartilhado) nos arquivos de código das três unidades.
-- As URLs dos remotes vêm de `VITE_COURSES_URL`/`VITE_PROFILE_URL` ou dos padrões em apps/shell/module-federation.config.ts:7-15; ambos os alvos estão no snapshot (apps/courses, apps/profile).
+- apps/profile/src/index.tsx:1 imports `./bootstrap` statically (`import "./bootstrap"`), so it does not appear as `src-async-bootstrap`; it is not a composition construct.
+- There is no communication mechanism between units (no `CustomEvent`, `postMessage`, `BroadcastChannel` or shared bus) in the three units’ code files.
+- The remote URLs come from `VITE_COURSES_URL`/`VITE_PROFILE_URL` or the defaults at apps/shell/module-federation.config.ts:7-15; both targets are in the snapshot (apps/courses, apps/profile).

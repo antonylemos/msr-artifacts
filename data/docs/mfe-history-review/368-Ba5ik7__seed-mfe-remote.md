@@ -13,25 +13,25 @@ annotation:
 
 # 368 — Ba5ik7/seed-mfe-remote
 
-## Leitura do repositório
+## Repository overview
 
-Há dois commits até o snapshot, de 2025-04-19 a 2025-04-20. `b95ce7d` (2025-04-19, “initial commit”) registra a primeira presença observável dos arquivos da raiz, incluindo `angular.json`, `package.json` e README; não contém os projetos em `projects/`. `3565dd8` (2025-04-20, “INIT”), o snapshot, adiciona os projetos `demo` e `seed-mfe-remote`, incluindo suas configurações webpack, componentes e rotas, e altera os arquivos da raiz. O log com nomes e status permite situar a introdução desses caminhos; não informa onde o código foi elaborado antes de entrar neste histórico.
+There are two commits up to snapshot, from 2025-04-19 to 2025-04-20. The `b95ce7d` (2025-04-19, “initial commit”) records first observable root file presence, including `angular.json`, `package.json` and README; it contains no projects in `projects/`. The `3565dd8` (2025-04-20, “INIT”), snapshot, adds projects `demo` and `seed-mfe-remote`, including webpack configurations, components and routes, and changes root files. Name and status log situates introduction of paths; it does not reveal where code was written before entering history.
 
-A configuração `remotes.seedMfeRemote` do demo e seus dois consumidores por URL foram adicionados no mesmo commit. O conteúdo dos três arquivos está disponível no clone e foi conferido: as chamadas já usam `remoteEntry` explícito, sem consultar o nome de `remotes`. Não há um estágio anterior desses arquivos no histórico observado. Isso esclarece a coexistência desde a introdução, sem demonstrar abandono, intenção ou uso anterior fora deste repositório. As demais revisões não deixam dependência, unidade, construção, relação, deploy ou afirmação documental indeterminados que exijam consulta histórica.
+Demo configuration `remotes.seedMfeRemote` and both URL consumers were added in same commit. All three file contents are available in clone and were checked: calls already use explicit `remoteEntry`, without consulting `remotes` name. Observed history has no earlier file stage. This clarifies coexistence since introduction without demonstrating abandonment, intention or earlier usage outside repository. Other reviews leave no undetermined dependency, unit, construct, relationship, deploy or documentary claim requiring historical query.
 
-## Pontos
+## Points
 
-| # | Ponto | Origem | Pergunta | Commits | Resultado |
+| # | Point | Origin | Question | Commits | Result |
 |---|---|---|---|---|---|
-| 1 | A entrada `remotes.seedMfeRemote`, sem uso pelas chamadas por URL, pertence a um estágio anterior da composição? | 3.4.4 Notas (docs/mfe-source-review/368-Ba5ik7__seed-mfe-remote.md:42; projects/demo/webpack.config.js:5-7); 3.4.5 relação #1 e Observações (docs/mfe-composition-review/368-Ba5ik7__seed-mfe-remote.md:27, :39) | estágios em conflito | b95ce7d, 2025-04-19, initial commit; 3565dd8, 2025-04-20, INIT | esclarecido |
+| 1 | Does entry `remotes.seedMfeRemote`, unused by URL calls, belong to earlier composition stage? | 3.4.4 Notes (docs/mfe-source-review/368-Ba5ik7__seed-mfe-remote.md:42; projects/demo/webpack.config.js:5-7); 3.4.5 relationship #1 and Observations (docs/mfe-composition-review/368-Ba5ik7__seed-mfe-remote.md:27, :39) | conflicting stages | b95ce7d, 2025-04-19, initial commit; 3565dd8, 2025-04-20, INIT | clarified |
 
-## Observações
+## Observations
 
-**1. Declaração de remote e carregamento por URL.** O log completo até o snapshot mostra que `projects/demo/webpack.config.js`, `projects/demo/src/app/app.component.ts` e `projects/demo/src/app/app.routes.ts` foram adicionados em `3565dd8` (2025-04-20, “INIT”), sem versões anteriores nesses caminhos. O conteúdo consultado mostra `remotes.seedMfeRemote` na configuração (linhas 5-7) e, simultaneamente, `loadRemoteModule` com `type: 'module'`, `remoteEntry` explícito e `exposedModule: './RemoteWidget'` no componente (linhas 26-30) e na rota (linhas 8-12). Portanto, nos artefatos consultados, não há transição de um consumo pelo nome declarado para o consumo por URL: ambos já coexistem na introdução dos arquivos. O resultado se limita a essa constatação; não prova que a entrada tenha sido abandonada, planejada ou copiada. O julgamento do snapshot permanece o das revisões anteriores: a composição está ativa pelas chamadas por URL, e a entrada nominal não é usada por elas.
+**1. Remote declaration and URL loading.** Complete log up to snapshot shows `projects/demo/webpack.config.js`, `projects/demo/src/app/app.component.ts` and `projects/demo/src/app/app.routes.ts` added in `3565dd8` (2025-04-20, “INIT”), without earlier versions at paths. Queried contents show `remotes.seedMfeRemote` in configuration (lines 5-7) and simultaneously `loadRemoteModule` with `type: 'module'`, explicit `remoteEntry` and `exposedModule: './RemoteWidget'` in component (lines 26-30) and route (lines 8-12). Thus queried artifacts have no transition from consumption through declared name to URL consumption: both already coexist at file introduction. Result is limited to observation; it does not prove entry abandoned, planned or copied. Snapshot judgment remains as previous reviews: composition is active through URL calls, and nominal entry is unused by them.
 
-## Comandos
+## Commands
 
-Executados a partir da raiz de `repo-miner`, com todas as consultas limitadas ao snapshot. A primeira tentativa do comando `log` foi impedida pela permissão de escrita no `commands.log`, antes de executar o Git; a repetição com a permissão necessária concluiu. Nenhuma consulta falhou por objeto ausente.
+Executed from `repo-miner` root, with all queries limited to snapshot. First `log` command attempt was blocked by write permission on `commands.log`, before executing Git; repetition with required permission completed. No query failed with missing object.
 
 ```sh
 LC_ALL=C docs/mfe-history-review/tools/fingerprint.sh | cmp - docs/mfe-history-review/tools/fingerprint-before.txt
@@ -43,8 +43,8 @@ docs/mfe-history-review/tools/hist.sh Ba5ik7__seed-mfe-remote show 3565dd875bd5b
 LC_ALL=C docs/mfe-history-review/tools/fingerprint.sh | cmp - docs/mfe-history-review/tools/fingerprint-before.txt
 ```
 
-As comparações antes e depois das consultas terminaram com código 0, sem diferenças na impressão digital dos clones.
+Comparisons before and after queries ended with code 0, without clone fingerprint differences.
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 2 (2025-04-19 a 2025-04-20). Pontos: 1 (esclarecido: 1, inconclusivo: 0, resolvido pelo snapshot: 0).
+Commits up to the snapshot: 2 (2025-04-19 to 2025-04-20). Points: 1 (clarified: 1, inconclusive: 0, resolved by the snapshot: 0).

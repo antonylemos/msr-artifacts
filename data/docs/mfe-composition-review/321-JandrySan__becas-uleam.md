@@ -20,117 +20,46 @@ annotation:
 
 # 321 — JandrySan/becas-uleam
 
-## Leitura do repositório
+## Repository overview
 
-Projeto acadêmico de "Demo Day" (`README.md:1`) para o fluxo de bolsas de uma universidade: uma
-contenedora vanilla-TS na raiz (`.`) faz o login único com Supabase e carrega, num único `<iframe>`
-(`index.html:61`), três módulos de frameworks diferentes — Vue (`1verificador-vue`, elegibilidade),
-React (`2postulacion-react`, postulação) e Angular (`3seguimiento-angular`, acompanhamento) —, um
-por integrante da equipe (`README.md:7-10`, `README.md:86-88`). O README diz que a equipe evitou
-Module Federation e preferiu compilar cada módulo na sua pasta e carregá-lo por iframe sob o mesmo
-domínio (`README.md:94`), com a sessão compartilhada por `localStorage` (`README.md:92`).
+An academic "Demo Day" project (`README.md:1`) for a university scholarship workflow: a vanilla-TS container at the root (`.`) handles single login with Supabase and loads, in a single `<iframe>` (`index.html:61`), three modules with different frameworks — Vue (`1verificador-vue`, eligibility), React (`2postulacion-react`, application) and Angular (`3seguimiento-angular`, tracking) —, one per team member (`README.md:7-10`, `README.md:86-88`). The README says the team avoided Module Federation, preferring to compile each module in its folder and load it through an iframe under the same domain (`README.md:94`), with session shared through `localStorage` (`README.md:92`).
 
-A contenedora é o host: os botões da `<nav class="tabs">` declaram os três módulos por `data-src`
-(`/vue/`, `/react/`, `/angular/#/seguimiento`, `index.html:24-26`) e `activate` troca `frame.src`
-pelo módulo escolhido (`src/main.ts:87-97`); depois do login, `showApp` abre o Vue para estudantes
-e o Angular para administradores, desabilitando os outros dois (`src/main.ts:120-130`). Os caminhos
-batem com o `base` de cada build (`1verificador-vue/vite.config.ts:5`, `2postulacion-react/vite.config.ts:5`,
-`3seguimiento-angular/package.json:7`) e com as pastas onde `scripts/build-integrado.mjs:14-19`
-copia os builds dentro do `dist` da raiz, que é o único deploy (`package.json:17`; `vercel.json:3-5`).
-Em desenvolvimento (`localhost:3000`), as URLs viram as portas 5173, 5174 e 4200 (`src/main.ts:24-34`).
+The container is the host: buttons in `<nav class="tabs">` declare all three modules through `data-src` (`/vue/`, `/react/`, `/angular/#/seguimiento`, `index.html:24-26`), and `activate` switches `frame.src` to the selected module (`src/main.ts:87-97`); after login, `showApp` opens Vue for students and Angular for administrators, disabling the other two (`src/main.ts:120-130`). Paths match each build's `base` (`1verificador-vue/vite.config.ts:5`, `2postulacion-react/vite.config.ts:5`, `3seguimiento-angular/package.json:7`) and folders where `scripts/build-integrado.mjs:14-19` copies builds into the root's `dist`, the only deployment (`package.json:17`; `vercel.json:3-5`). In development (`localhost:3000`), URLs become ports 5173, 5174 and 4200 (`src/main.ts:24-34`).
 
-A navegação e o estado correm por dois canais. Por `postMessage`, os módulos pedem à contenedora
-que troque de módulo (`{ modulo: 'postulacion' }`, `{ modulo: 'seguimiento' }`), avisam que estão
-prontos e enviam dados; a contenedora responde com `BECAS_PORTAL_STATE` ao módulo do iframe
-(`src/main.ts:75-85`, `:189-209`). Por `localStorage`, que só é comum às unidades no deploy
-integrado (mesma origem), a contenedora grava a sessão e os módulos gravam e leem os dados do
-estudante. O fluxo é linear: Vue avalia → React postula → Angular acompanha.
+Navigation and state use two channels. Through `postMessage`, modules ask the container to switch modules (`{ modulo: 'postulacion' }`, `{ modulo: 'seguimiento' }`), report readiness and send data; the container responds with `BECAS_PORTAL_STATE` to the iframe module (`src/main.ts:75-85`, `:189-209`). Through `localStorage`, common to units only in integrated deployment (same origin), the container writes the session, and modules write and read student data. The workflow is linear: Vue evaluates → React applies → Angular tracks.
 
-O que não virou relação: a contenedora espera `BECAS_VUE_READY` (`src/main.ts:205`), que o Vue
-nunca envia; `BECAS_POSTULACION_UPDATE` vai à contenedora, que não o trata, e o Angular, que o
-trata (`3seguimiento-angular/src/app/app.component.ts:28-30`), roda em outro carregamento do mesmo
-iframe e não o recebe de ninguém. O scaffold `1verificador-vue/verificador` é uma unidade isolada:
-fica fora do workspace e do build integrado, e nenhuma unidade o carrega.
+What did not become a relationship: the container waits for `BECAS_VUE_READY` (`src/main.ts:205`), never sent by Vue; `BECAS_POSTULACION_UPDATE` goes to the container, which does not handle it, while Angular, which handles it (`3seguimiento-angular/src/app/app.component.ts:28-30`), runs in another load of the same iframe and receives it from nobody. Scaffold `1verificador-vue/verificador` is an isolated unit: it is outside the workspace and integrated build, and no unit loads it.
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | . | 1verificador-vue | page → embedded-frontend | origem → destino | iframe | Yes | Yes | 1verificador-vue/vite.config.ts:5 (`base: '/vue/'`); scripts/build-integrado.mjs:14 (copia `1verificador-vue/dist` para `dist/vue`) | index.html:61; index.html:24 |
-| 2 | . | 2postulacion-react | page → embedded-frontend | origem → destino | iframe | Yes | Yes | 2postulacion-react/vite.config.ts:5 (`base: '/react/'`); scripts/build-integrado.mjs:15 (copia `2postulacion-react/dist` para `dist/react`) | index.html:61; index.html:24 |
-| 3 | . | 3seguimiento-angular | page → embedded-frontend | origem → destino | iframe | Yes | Yes | 3seguimiento-angular/package.json:7 (`ng build --base-href /angular/`); scripts/build-integrado.mjs:16-19 (copia o build Angular para `dist/angular`) | index.html:61; index.html:24 |
-| 4 | . | 1verificador-vue | communication | bidirecional | events | Yes | Yes | — | 1verificador-vue/src/views/HomeView.vue:92; 1verificador-vue/src/views/HomeView.vue:103; src/main.ts:138 |
-| 5 | . | 2postulacion-react | communication | bidirecional | events | Yes | Yes | — | 2postulacion-react/src/context/PostulacionContext.tsx:60; 2postulacion-react/src/context/PostulacionContext.tsx:69; 2postulacion-react/src/pages/VistaPrevia.tsx:99; src/main.ts:84 |
-| 6 | . | 3seguimiento-angular | communication | bidirecional | events | Yes | Yes | — | 3seguimiento-angular/src/app/app.component.ts:18; src/main.ts:84; src/main.ts:138 |
-| 7 | 1verificador-vue | 2postulacion-react | communication | origem → destino | other | Yes | Yes | — | 1verificador-vue/src/views/HomeView.vue:88 |
+| 1 | . | 1verificador-vue | page → embedded-frontend | source → target | iframe | Yes | Yes | 1verificador-vue/vite.config.ts:5 (`base: '/vue/'`); scripts/build-integrado.mjs:14 (copies `1verificador-vue/dist` to `dist/vue`) | index.html:61; index.html:24 |
+| 2 | . | 2postulacion-react | page → embedded-frontend | source → target | iframe | Yes | Yes | 2postulacion-react/vite.config.ts:5 (`base: '/react/'`); scripts/build-integrado.mjs:15 (copies `2postulacion-react/dist` to `dist/react`) | index.html:61; index.html:24 |
+| 3 | . | 3seguimiento-angular | page → embedded-frontend | source → target | iframe | Yes | Yes | 3seguimiento-angular/package.json:7 (`ng build --base-href /angular/`); scripts/build-integrado.mjs:16-19 (copies the Angular build to `dist/angular`) | index.html:61; index.html:24 |
+| 4 | . | 1verificador-vue | communication | bidirectional | events | Yes | Yes | — | 1verificador-vue/src/views/HomeView.vue:92; 1verificador-vue/src/views/HomeView.vue:103; src/main.ts:138 |
+| 5 | . | 2postulacion-react | communication | bidirectional | events | Yes | Yes | — | 2postulacion-react/src/context/PostulacionContext.tsx:60; 2postulacion-react/src/context/PostulacionContext.tsx:69; 2postulacion-react/src/pages/VistaPrevia.tsx:99; src/main.ts:84 |
+| 6 | . | 3seguimiento-angular | communication | bidirectional | events | Yes | Yes | — | 3seguimiento-angular/src/app/app.component.ts:18; src/main.ts:84; src/main.ts:138 |
+| 7 | 1verificador-vue | 2postulacion-react | communication | source → target | other | Yes | Yes | — | 1verificador-vue/src/views/HomeView.vue:88 |
 
-## Observações
+## Observations
 
-**1. . → 1verificador-vue.** O primeiro botão da navegação aponta para `data-src="/vue/"`
-(`index.html:24`), e `activate` põe esse valor em `frame.src` do iframe `moduleFrame`
-(`index.html:61`; `src/main.ts:91`). O destino foi resolvido por duas correspondências: `/vue/` é o
-`base` do build Vue (`1verificador-vue/vite.config.ts:5`) e a pasta para onde
-`scripts/build-integrado.mjs:14` copia `1verificador-vue/dist`. É o módulo aberto por padrão para
-estudantes (`src/main.ts:129`) e fica desabilitado para administradores (`src/main.ts:121-123`).
+**1. . → 1verificador-vue.** The first navigation button points to `data-src="/vue/"` (`index.html:24`), and `activate` puts that value in `frame.src` of iframe `moduleFrame` (`index.html:61`; `src/main.ts:91`). The target was resolved through two matches: `/vue/` is the Vue build's `base` (`1verificador-vue/vite.config.ts:5`) and the folder where `scripts/build-integrado.mjs:14` copies `1verificador-vue/dist`. It is the module opened by default for students (`src/main.ts:129`) and is disabled for administrators (`src/main.ts:121-123`).
 
-**2. . → 2postulacion-react.** Mesmo padrão com `data-src="/react/"` (`index.html:25`), que é o
-`base` do build React (`2postulacion-react/vite.config.ts:5`) e o destino da cópia em
-`scripts/build-integrado.mjs:15`. Além do clique, a contenedora abre esse módulo quando o Vue pede
-`{ modulo: 'postulacion' }` (`src/main.ts:199`; relação 4).
+**2. . → 2postulacion-react.** Same pattern with `data-src="/react/"` (`index.html:25`), the React build's `base` (`2postulacion-react/vite.config.ts:5`) and copy destination in `scripts/build-integrado.mjs:15`. Besides clicking, the container opens this module when Vue requests `{ modulo: 'postulacion' }` (`src/main.ts:199`; relationship 4).
 
-**3. . → 3seguimiento-angular.** Mesmo padrão com `data-src="/angular/#/seguimiento"`
-(`index.html:26`). O prefixo `/angular/` é o `--base-href` do build Angular
-(`3seguimiento-angular/package.json:7`) e a pasta da cópia em `scripts/build-integrado.mjs:16-19`.
-É o módulo aberto para administradores (`src/main.ts:124`) e o que a contenedora abre quando o
-React pede `{ modulo: 'seguimiento' }` (`src/main.ts:200`; relação 5).
+**3. . → 3seguimiento-angular.** Same pattern with `data-src="/angular/#/seguimiento"` (`index.html:26`). Prefix `/angular/` is the Angular build's `--base-href` (`3seguimiento-angular/package.json:7`) and the copy folder in `scripts/build-integrado.mjs:16-19`. It is the module opened for administrators (`src/main.ts:124`) and the one the container opens when React requests `{ modulo: 'seguimiento' }` (`src/main.ts:200`; relationship 5).
 
-**4. . → 1verificador-vue.** O Vue envia à janela da contenedora `BECAS_DATOS_ESTUDIANTE` ao fim
-de `evaluar` (`1verificador-vue/src/views/HomeView.vue:92-99`) e `{ modulo: 'postulacion' }` em
-`iniciarPostulacion` (`:101-104`); a contenedora grava os dados e troca o iframe para o React
-(`src/main.ts:192-199`). No outro sentido, a contenedora grava `usuario` no `localStorage` em
-`saveSession` (`src/main.ts:137`, linha `src/main.ts:138` da revisão de código-fonte), e o Vue lê
-essa chave para preencher o correio do formulário (`1verificador-vue/src/views/HomeView.vue:21`).
-A revisão de código-fonte só nomeia o Angular como leitor da sessão; o Vue foi resolvido aqui pela
-leitura de `usuario`. Por isso a direção é `bidirecional`. O trio junta o canal `postMessage` e o
-estado por `localStorage`; pela regra do pesquisador de 24/10, o mecanismo é `events`. O
-`BECAS_PORTAL_STATE` de `sendState` (`src/main.ts:84`) também chega ao Vue quando ele está no
-iframe, mas o Vue não escuta `message`, e a revisão de código-fonte dá como alvos dessa linha só o
-React e o Angular; por isso `src/main.ts:84` não está nesta linha.
+**4. . → 1verificador-vue.** Vue sends the container window `BECAS_DATOS_ESTUDIANTE` at the end of `evaluar` (`1verificador-vue/src/views/HomeView.vue:92-99`) and `{ modulo: 'postulacion' }` in `iniciarPostulacion` (`:101-104`); the container writes data and switches the iframe to React (`src/main.ts:192-199`). In the other direction, the container writes `usuario` in `localStorage` in `saveSession` (`src/main.ts:137`, line `src/main.ts:138` in the source code review), and Vue reads that key to fill the form's email (`1verificador-vue/src/views/HomeView.vue:21`). The source code review names only Angular as a session reader; Vue was resolved here through reading `usuario`. Hence direction is `bidirectional`. The trio combines channel `postMessage` and state through `localStorage`; under the researcher's rule of 24/10, mechanism is `events`. `BECAS_PORTAL_STATE` from `sendState` (`src/main.ts:84`) also reaches Vue when it is in the iframe, but Vue does not listen to `message`, and the source code review names only React and Angular as this line's targets; hence `src/main.ts:84` is absent from this row.
 
-**5. . → 2postulacion-react.** O React avisa que está pronto com `BECAS_REACT_READY` na montagem do
-`PostulacionProvider` (`2postulacion-react/src/context/PostulacionContext.tsx:53-62`), envia
-`BECAS_POSTULACION_UPDATE` a cada mudança de estado (`:63-70`) e pede `{ modulo: 'seguimiento' }`
-depois de gravar a postulação (`2postulacion-react/src/pages/VistaPrevia.tsx:99`). A contenedora
-responde ao `READY` com `sendState` (`src/main.ts:202-207`), cujo `BECAS_PORTAL_STATE` o React
-aplica (`2postulacion-react/src/context/PostulacionContext.tsx:56`): envio nos dois sentidos, logo
-`bidirecional`. Só há o canal `postMessage` nesta linha: as chaves de sessão gravadas em
-`src/main.ts:136-141` não são lidas pelo React, que lê as chaves `becas_*`
-(`2postulacion-react/src/context/PostulacionContext.tsx:4-6`). `BECAS_POSTULACION_UPDATE` não tem
-ramo no listener da contenedora (`src/main.ts:189-209`); a linha conta pelo envio, como registrou a
-revisão de código-fonte.
+**5. . → 2postulacion-react.** React reports readiness with `BECAS_REACT_READY` on mounting `PostulacionProvider` (`2postulacion-react/src/context/PostulacionContext.tsx:53-62`), sends `BECAS_POSTULACION_UPDATE` on each state change (`:63-70`) and requests `{ modulo: 'seguimiento' }` after writing the application (`2postulacion-react/src/pages/VistaPrevia.tsx:99`). The container responds to `READY` with `sendState` (`src/main.ts:202-207`), whose `BECAS_PORTAL_STATE` React applies (`2postulacion-react/src/context/PostulacionContext.tsx:56`): sending both ways, hence `bidirectional`. This row has only channel `postMessage`: session keys written in `src/main.ts:136-141` are not read by React, which reads keys `becas_*` (`2postulacion-react/src/context/PostulacionContext.tsx:4-6`). `BECAS_POSTULACION_UPDATE` has no branch in the container listener (`src/main.ts:189-209`); the row counts through sending, as recorded by the source code review.
 
-**6. . → 3seguimiento-angular.** O Angular envia `BECAS_ANGULAR_READY` no `ngOnInit`
-(`3seguimiento-angular/src/app/app.component.ts:17-19`), a contenedora responde com `sendState`
-(`src/main.ts:204`, `:207`, `:84`) e o Angular aplica `BECAS_PORTAL_STATE` com `aplicarSesion`
-(`3seguimiento-angular/src/app/app.component.ts:21-27`): envio nos dois sentidos, `bidirecional`.
-Além disso, a sessão gravada pela contenedora (`src/main.ts:136-141`) é lida pelo Angular em
-`becas_session` (`3seguimiento-angular/src/app/services/auth.service.ts:13-15`) e `usuario`
-(`3seguimiento-angular/src/app/services/seguimiento-store.service.ts:111`). O trio junta `postMessage`
-e `localStorage`; pela regra do pesquisador de 24/10, o mecanismo é `events`.
+**6. . → 3seguimiento-angular.** Angular sends `BECAS_ANGULAR_READY` in `ngOnInit` (`3seguimiento-angular/src/app/app.component.ts:17-19`), the container responds with `sendState` (`src/main.ts:204`, `:207`, `:84`), and Angular applies `BECAS_PORTAL_STATE` with `aplicarSesion` (`3seguimiento-angular/src/app/app.component.ts:21-27`): sending both ways, `bidirectional`. Additionally, the session written by the container (`src/main.ts:136-141`) is read by Angular in `becas_session` (`3seguimiento-angular/src/app/services/auth.service.ts:13-15`) and `usuario` (`3seguimiento-angular/src/app/services/seguimiento-store.service.ts:111`). The trio combines `postMessage` and `localStorage`; under the researcher's rule of 24/10, mechanism is `events`.
 
-**7. 1verificador-vue → 2postulacion-react.** O Vue grava `becas_datos_estudiante`, `becas_nombre` e
-`becas_email` em `evaluar` (`1verificador-vue/src/views/HomeView.vue:88-90`), e o React lê as mesmas
-chaves no estado inicial do `PostulacionProvider` (`2postulacion-react/src/context/PostulacionContext.tsx:4-6`,
-`:45-52`) e `becas_datos_estudiante` ao enviar a postulação
-(`2postulacion-react/src/pages/VistaPrevia.tsx:37-39`). Mecanismo `other`: é estado compartilhado
-por `localStorage` sob a mesma origem, sem mensagem entre os dois módulos, e o trio não tem canal de
-eventos. A ligação só funciona no deploy integrado; nas portas de desenvolvimento
-(`src/main.ts:24-34`) as origens são diferentes. O React regrava essas chaves
-(`2postulacion-react/src/context/PostulacionContext.tsx:65-68`) e a contenedora também as grava ao
-receber `BECAS_DATOS_ESTUDIANTE` (`src/main.ts:193-195`), mas nenhuma dessas linhas é construção na
-revisão de código-fonte; a direção fica a da gravação registrada.
+**7. 1verificador-vue → 2postulacion-react.** Vue writes `becas_datos_estudiante`, `becas_nombre` and `becas_email` in `evaluar` (`1verificador-vue/src/views/HomeView.vue:88-90`), and React reads the same keys in `PostulacionProvider`'s initial state (`2postulacion-react/src/context/PostulacionContext.tsx:4-6`, `:45-52`) and `becas_datos_estudiante` on submitting the application (`2postulacion-react/src/pages/VistaPrevia.tsx:37-39`). Mechanism `other`: state is shared through `localStorage` under the same origin, without a message between both modules, and the trio has no event channel. The connection only works in integrated deployment; on development ports (`src/main.ts:24-34`), origins differ. React rewrites these keys (`2postulacion-react/src/context/PostulacionContext.tsx:65-68`), and the container also writes them on receiving `BECAS_DATOS_ESTUDIANTE` (`src/main.ts:193-195`), but none of those lines is a construct in the source code review; direction follows the recorded write.
 
-## Resumo
+## Summary
 
-Relações: 7 (page → embedded-frontend: 3, communication: 4). Ativas: 7. Destino fora do snapshot: 0.
-Unidades sem relação: 1verificador-vue/verificador.
+Relationships: 7 (page → embedded-frontend: 3, communication: 4). Active: 7. Target outside the snapshot: 0.
+Units without a relationship: 1verificador-vue/verificador.
+

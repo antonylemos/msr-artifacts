@@ -17,22 +17,22 @@ annotation:
 
 ## Workspace
 
-Nenhuma declaração de workspace.
+No workspace declaration.
 
-## Unidades
+## Units
 
-| Diretório | Marcadores | Manifesto | Entrada | Build | Workspace | Deploy | Unidade frontend | Motivo |
+| Directory | Markers | Manifest | Entry | Build | Workspace | Deploy | Frontend unit | Rationale |
 |---|---|---|---|---|---|---|---|---|
-| app1 | app1/package.json;app1/webpack.config.js | app1/package.json:1-21 (pacote próprio `app1`) | app1/webpack.config.js:6 (`entry: "./src/index.js"`); app1/src/index.js:1 (`import('./bootstrap')`); app1/src/bootstrap.js:5-6 (monta React em `#root`); app1/webpack.config.js:35-37 (template `./public/index.html`) | app1/webpack.config.js:5-40 (configuração própria, porta 3001); app1/package.json:6 (`webpack serve --mode development --port 3001`) | — | — | Yes | Aplicação React com entrada e configuração webpack próprias, servida isoladamente. |
-| app2 | app2/package.json;app2/webpack.config.js | app2/package.json:1-21 (pacote próprio `app2`) | app2/webpack.config.js:6 (`entry: "./src/index.js"`); app2/src/index.js:1 (`import('./bootstrap')`); app2/src/bootstrap.js:5-6 (monta React em `#root`); app2/webpack.config.js:36-38 (template `./public/index.html`) | app2/webpack.config.js:5-41 (configuração própria, porta 3002); app2/package.json:6 (`webpack serve --mode development --port 3002`) | — | — | Yes | Aplicação React com entrada e configuração webpack próprias, servida isoladamente. |
+| app1 | app1/package.json;app1/webpack.config.js | app1/package.json:1-21 (own package `app1`) | app1/webpack.config.js:6 (`entry: "./src/index.js"`); app1/src/index.js:1 (`import('./bootstrap')`); app1/src/bootstrap.js:5-6 (mounts React at `#root`); app1/webpack.config.js:35-37 (template `./public/index.html`) | app1/webpack.config.js:5-40 (own configuration, port 3001); app1/package.json:6 (`webpack serve --mode development --port 3001`) | — | — | Yes | React application with its own entry and webpack configuration, served independently. |
+| app2 | app2/package.json;app2/webpack.config.js | app2/package.json:1-21 (own package `app2`) | app2/webpack.config.js:6 (`entry: "./src/index.js"`); app2/src/index.js:1 (`import('./bootstrap')`); app2/src/bootstrap.js:5-6 (mounts React at `#root`); app2/webpack.config.js:36-38 (template `./public/index.html`) | app2/webpack.config.js:5-41 (own configuration, port 3002); app2/package.json:6 (`webpack serve --mode development --port 3002`) | — | — | Yes | React application with its own entry and webpack configuration, served independently. |
 
-## Resumo
+## Summary
 
-Aplicações frontend no snapshot: 2 (app1, app2).
+Frontend applications in the snapshot: 2 (app1, app2).
 
-## Notas
+## Notes
 
-- O `artifacts.csv` marca os dois `package.json` como `workspace-config`, mas nenhum tem campo `workspaces` (app1/package.json:1-21; app2/package.json:1-21), o `matches.csv` não tem ocorrência `ws-*`, e não há manifesto raiz nem outro arquivo de workspace no snapshot.
-- Os dois `package.json` só têm o script `start` (`webpack serve` em modo development); não há script `build` nem configuração de produção. O build é a própria configuração webpack invocada por esse script.
-- Não há Dockerfile, CI ou configuração de hospedagem no snapshot, e o `matches.csv` não tem ocorrências `ops-*` ou `ci-*`.
-- A contagem 2 coincide com `frontend_units: 2` da classificação.
+- `artifacts.csv` marks both `package.json` files as `workspace-config`, but neither has a `workspaces` field (app1/package.json:1-21; app2/package.json:1-21), `matches.csv` has no `ws-*` occurrence, and there is no root manifest or other workspace file in the snapshot.
+- Both `package.json` files have only the `start` script (`webpack serve` in development mode); there is no `build` script or production configuration. The build is the webpack configuration itself invoked by this script.
+- There is no Dockerfile, CI or hosting configuration in the snapshot, and `matches.csv` has no `ops-*` or `ci-*` occurrences.
+- The count of 2 matches the classification’s `frontend_units: 2`.

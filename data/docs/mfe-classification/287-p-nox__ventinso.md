@@ -20,73 +20,73 @@ annotation:
 
 # 287 — p-nox/ventinso
 
-## Contexto
+## Context
 
-Marketplace de itens usados com backend em microsserviços Spring Boot (gateway, Eureka, Kafka, MySQL/MongoDB) e um único frontend React + Vite (`ReadMe.md:12–13`, `34–37`). A decomposição em serviços é só do backend; o frontend é uma SPA com roteamento interno que consome a API pelo gateway. O nome do repositório não é usado como evidência.
+Used-item marketplace with Spring Boot microservice backend (gateway, Eureka, Kafka, MySQL/MongoDB) and a single React + Vite frontend (`ReadMe.md:12–13`, `34–37`). Service decomposition concerns only backend; frontend is an SPA with internal routing consuming the API through gateway. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:288` registra rank 287, ID 1056098649, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:288` records rank 287, ID 1056098649, status `cloned`, branch `main` and the front matter commit, which is HEAD of the clone and `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:288` registra a estratégia `broader` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:18753` (`broader`, `unknown`) e `data/discovery/mfe-round-002/candidates.csv:18759` (`broader`, `pass`).
+`data/samples/mfe-sample-001/sample.csv:288` records strategy `broader` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:18753` (`broader`, `unknown`) and `data/discovery/mfe-round-002/candidates.csv:18759` (`broader`, `pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna um hit por rodada, do endpoint `repositories` e com `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns one hit per round, from endpoint `repositories` and with empty `path`:
 
-| Consulta (`q`) | Subconsulta | Consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Effective query | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `broader-frontend-orchestration`: `"frontend orchestration" in:name,description,readme` | `broader-frontend-orchestration#created:2025-Q3` | `"frontend orchestration" in:name,description,readme pushed:>=2025-04-01 created:2025-07-01..2025-09-30` | 2026-10-07T23:40:56.106Z / 2026-10-08T16:23:53.186Z |
 
-Metadados do hit:
-- descrição “Multi-service marketplace platform for buying and selling used items (Java Spring Boot + React)”, sem a frase pesquisada;
-- sem tópicos, linguagem Java, licença MIT, `fork: false`, tamanho 23136;
-- criação em 2025-09-13T11:39:02Z, push em 2026-02-09T21:12:37Z.
+Hit metadata:
+- description “Multi-service marketplace platform for buying and selling used items (Java Spring Boot + React)”, without searched phrase;
+- no topics, language Java, license MIT, `fork: false`, size 23136;
+- created at 2025-09-13T11:39:02Z, pushed at 2026-02-09T21:12:37Z.
 
-A grafia “frontend orchestration” não aparece literalmente no README. A única ocorrência de “orchestrat” no README é `ReadMe.md:13`: “**React + Vite (frontend)**, orchestrated via an **API Gateway**”, em que “frontend” e “orchestrated” são adjacentes separados por pontuação. O acerto depende do processamento textual da busca do GitHub (pontuação e flexão), que não está registrado; a frase descreve o backend orquestrado pelo gateway, não composição de frontend.
+Spelling “frontend orchestration” does not appear literally in README. Its only “orchestrat” occurrence is `ReadMe.md:13`: “**React + Vite (frontend)**, orchestrated via an **API Gateway**”, where “frontend” and “orchestrated” are adjacent, separated by punctuation. Hit depends on GitHub search text processing (punctuation and inflection), which is not recorded; phrase describes backend orchestrated by gateway, rather than frontend composition.
 
-A última alteração do README alcançável é o próprio SHA `5e03324` (2026-02-09T23:12:37+02:00, “Update ReadMe.md”), anterior às coletas de 7 e 8 de outubro de 2026. O README do SHA não é posterior às buscas.
+Last reachable README change is SHA `5e03324` itself (2026-02-09T23:12:37+02:00, “Update ReadMe.md”), before collection on October 7 and 8, 2026. The SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 531 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Dez módulos Maven em `backend/` (`api-gateway`, `auth-service`, `chat-service`, `discovery-service`, `inventory-preview-service`, `inventory-service`, `notification-service`, `order-service`, `payment-service`, `user-service`, agregados em `backend/pom.xml:13–24`), `docker/` (três compose), `config/` (MySQL, Prometheus) e um único projeto frontend em `frontend/`. Só há um `package.json` no SHA (`frontend/package.json`). | contrária |
-| Configuração (frontend) | `frontend/package.json:6–11`: scripts `dev`/`build`/`preview` com Vite; `:29–32`: React 19 e `react-router-dom`. `frontend/vite.config.js:6–23`: só `@vitejs/plugin-react` e aliases para pastas de `./src`; nenhum plugin de federação, `remotes`, `exposes` ou saída SystemJS. | contrária |
-| Código-fonte (entrada e roteamento) | `frontend/index.html:10–11`: um `#root` e um script `/src/main.jsx`. `frontend/src/main.jsx:10–22`: um `createRoot` com `BrowserRouter` e provedores de contexto. `frontend/src/App.jsx:3–19`, `69–135`: todas as páginas importadas estaticamente de `@pages`/`@components` e roteadas em um único `<Routes>`. | contrária |
-| Código-fonte (fronteiras) | Busca por imports relativos `../../` em `frontend/src`: única ocorrência `frontend/src/components/Layout/index.js:3` (reexporta `Breadcrumbs` de `../../pages/ItemPage/...`), interna ao mesmo projeto; nenhum import sai de `frontend/` (`backend/`, `config/`). Mostra acoplamento interno de uma só aplicação, não fronteira entre unidades. | contexto |
-| Configuração (backend) | `frontend/src/config/Config.js:1–37`: todos os endpoints passam por `API_BASE_URL` (`http://localhost:8083`), o gateway. Decomposição em microsserviços somente no backend (`ReadMe.md:43–46`, `109–163`). | contexto |
-| Build/deploy | `frontend/dockerfile:1–29`: um build Vite servido por Nginx; `frontend/nginx.conf:9–11`: fallback SPA para `index.html`. `docker/docker-compose.core.yml:13–28`: um único serviço `frontend` (porta 5173→80), dependente de `gateway-service`. | contrária |
-| Tecnologia / Configuração / Composição (busca) | `git grep -i` em todo o SHA, exceto `frontend/package-lock.json`, por `micro.?front`, `federation`, `single.?spa`, `remoteEntry`, `import.?map`, `customElements`, `<iframe`, `qiankun`, `wujie`, `systemjs`, `loadRemote`, `registerApplication` e `postMessage`: nenhuma ocorrência. No lockfile, `federation|single-spa|qiankun|wujie|systemjs`: nenhuma ocorrência. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 531 entries, all regular `100644` files; zero symlinks and zero gitlinks. Ten Maven modules in `backend/` (`api-gateway`, `auth-service`, `chat-service`, `discovery-service`, `inventory-preview-service`, `inventory-service`, `notification-service`, `order-service`, `payment-service`, `user-service`, aggregated in `backend/pom.xml:13–24`), `docker/` (three compose files), `config/` (MySQL, Prometheus) and a single frontend project in `frontend/`. Only one `package.json` at the SHA (`frontend/package.json`). | contrary |
+| Configuration (frontend) | `frontend/package.json:6–11`: Vite `dev`/`build`/`preview` scripts; `:29–32`: React 19 and `react-router-dom`. `frontend/vite.config.js:6–23`: only `@vitejs/plugin-react` and aliases to `./src` folders; no federation plugin, `remotes`, `exposes` or SystemJS output. | contrary |
+| Source code (entry and routing) | `frontend/index.html:10–11`: one `#root` and script `/src/main.jsx`. `frontend/src/main.jsx:10–22`: one `createRoot` with `BrowserRouter` and context providers. `frontend/src/App.jsx:3–19`, `69–135`: all pages statically imported from `@pages`/`@components` and routed in one `<Routes>`. | contrary |
+| Source code (boundaries) | Search for relative `../../` imports in `frontend/src`: only occurrence `frontend/src/components/Layout/index.js:3` (reexports `Breadcrumbs` from `../../pages/ItemPage/...`), internal to the same project; no import leaves `frontend/` (`backend/`, `config/`). Shows internal coupling of one application, rather than a unit boundary. | context |
+| Configuration (backend) | `frontend/src/config/Config.js:1–37`: all endpoints use `API_BASE_URL` (`http://localhost:8083`), the gateway. Microservice decomposition only in backend (`ReadMe.md:43–46`, `109–163`). | context |
+| Build/deploy | `frontend/dockerfile:1–29`: one Vite build served by Nginx; `frontend/nginx.conf:9–11`: SPA fallback to `index.html`. `docker/docker-compose.core.yml:13–28`: single service `frontend` (port 5173→80), depending on `gateway-service`. | contrary |
+| Technology / Configuration / Composition (search) | `git grep -i` across the SHA, except `frontend/package-lock.json`, for `micro.?front`, `federation`, `single.?spa`, `remoteEntry`, `import.?map`, `customElements`, `<iframe`, `qiankun`, `wujie`, `systemjs`, `loadRemote`, `registerApplication` and `postMessage`: no occurrences. In lockfile, `federation|single-spa|qiankun|wujie|systemjs`: no occurrences. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso, parcial (`blob:none`). 9 commits alcançáveis a partir do SHA (9 em todos os refs), nenhum merge, raiz `b862ed0` (2025-09-13, “Initial commit”, 432 arquivos adicionados). Refs: `main`, `origin/main` e `origin/HEAD` no SHA; tag `v1.0.0` em `f081156`, não ancestral considerado. Autoria: um único titular com duas identidades, `Panagiotis <139992839+p-nox@users.noreply.github.com>` (5 commits, 2 via interface web) e `p-nox <noskop@protonmail.com>` (4 commits). Por `git diff-tree --no-renames --name-status`:
-- 2025-09-13: commit inicial e dois commits de screenshots/README;
-- `17e955e` (2026-01-22, “Fix UI issues, optimize backend, and add chat service feature”), `efc5de9` (2026-01-27, Prometheus/Grafana) e `d2c860c` (2026-02-09, “Update core systems, UI, and refactor components”) alteram `backend/` e `frontend/` em bloco;
-- `0761a15` remove `uploads/`; `c170087` adiciona `architecture.png`; o SHA altera só `ReadMe.md`.
+Non-shallow, partial clone (`blob:none`). 9 commits reachable from the SHA (9 across all refs), no merges, root `b862ed0` (2025-09-13, “Initial commit”, 432 added files). Refs: `main`, `origin/main` and `origin/HEAD` at SHA; tag `v1.0.0` at `f081156`, not a considered ancestor. Authorship: one owner with two identities, `Panagiotis <139992839+p-nox@users.noreply.github.com>` (5 commits, 2 through web interface) and `p-nox <noskop@protonmail.com>` (4 commits). According to `git diff-tree --no-renames --name-status`:
+- 2025-09-13: initial commit and two screenshot/README commits;
+- `17e955e` (2026-01-22, “Fix UI issues, optimize backend, and add chat service feature”), `efc5de9` (2026-01-27, Prometheus/Grafana) and `d2c860c` (2026-02-09, “Update core systems, UI, and refactor components”) change `backend/` and `frontend/` together;
+- `0761a15` removes `uploads/`; `c170087` adds `architecture.png`; SHA changes only `ReadMe.md`.
 
-Os metadados não separam autoria intelectual por arquivo. O frontend permaneceu um só projeto em toda a sequência (nenhum commit adiciona segundo `package.json`). Nenhum blob histórico foi lido. `git rev-list --objects $SHA --missing=print` identifica 360 objetos históricos ausentes; `git log --shortstat` falha por blob promisor indisponível, e o histórico foi lido só por `--name-status` sem detecção de renames. Todos os blobs da árvore do SHA estão presentes (`git cat-file -e` em cada entrada de `ls-tree`).
+Metadata does not distinguish per-file intellectual authorship. Frontend remained one project throughout (no commit adds a second `package.json`). No historical blob was read. `git rev-list --objects $SHA --missing=print` identifies 360 missing historical objects; `git log --shortstat` fails because of an unavailable promisor blob, and history was read only through `--name-status` without rename detection. All SHA tree blobs are present (`git cat-file -e` for each `ls-tree` entry).
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend (`frontend/`, um `package.json`, um `index.html`, um `main.jsx`); nenhuma configuração de composição referencia outras unidades (`frontend/vite.config.js:6–23`; busca registrada). Os serviços de `backend/` não são unidades frontend. |
-| Q2 | No | Não há duas unidades frontend a avaliar; as páginas compartilham entrada e build (`frontend/src/App.jsx:4–13`; `frontend/dockerfile:15`). |
-| Q3 | No | O roteamento de `App.jsx:69–135` é interno a uma SPA; não há host que carregue, monte ou roteie unidades distintas. |
-| Q4 | No | Nenhum mecanismo de composição frontend configurado (busca registrada); o gateway compõe chamadas de API do backend (`Config.js:1–37`), não UI. |
-| Q5 | No | Q1–Q4 convergem: SPA monolítica sobre backend em microsserviços. |
+| Q1 | No | A single frontend unit (`frontend/`, one `package.json`, one `index.html`, one `main.jsx`); no composition configuration references other units (`frontend/vite.config.js:6–23`; recorded search). `backend/` services are not frontend units. |
+| Q2 | No | No two frontend units to assess; pages share entry and build (`frontend/src/App.jsx:4–13`; `frontend/dockerfile:15`). |
+| Q3 | No | Routing in `App.jsx:69–135` is internal to an SPA; no host loads, mounts or routes distinct units. |
+| Q4 | No | No configured frontend composition mechanism (recorded search); gateway composes backend API calls (`Config.js:1–37`), rather than UI. |
+| Q5 | No | Q1–Q4 converge: monolithic SPA over a microservice backend. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “conventional frontend monoliths”: uma SPA React/Vite com roteamento interno, sobre microsserviços de backend.
-- Não é `MFE-unit`: o projeto frontend não exporta contrato de integração para host externo (sem `exposes`, lifecycles ou bundle SystemJS em `vite.config.js:6–23` e `main.jsx:10–22`).
-- Diferentemente de 097/103/104, não há cadeia de composição incompleta ou não conectável; diferentemente de 089/100, não há federação usada para code sharing; diferentemente de 102/074/080, não há unidade ou plataforma de terceiros. Também não se assemelha a 076/084/096/106/109 (cadeia completa). A palavra “microservices” no README refere-se ao backend.
-- `frontend_units: 1`, `unit_organization: single-unit`, `ui_technologies: [react]`, `build_tools: [vite]` (`frontend/package.json:29–32`, `47`; `vite.config.js:1–7`). O README cita Tailwind/MUI (`ReadMe.md:35`); só MUI aparece no `package.json` (`:18`), e nenhum dos dois altera a contagem.
-- `repo_type: example`: o README apresenta o repositório como projeto de portfólio que “demonstrates” a arquitetura (`ReadMe.md:264–273`, “portfolio-grade project”), apesar de Dockerfiles e compose completos.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. Matches “conventional frontend monoliths”: one React/Vite SPA with internal routing over backend microservices.
+- Not `MFE-unit`: frontend project exports no integration contract for external host (no `exposes`, lifecycles or SystemJS bundle in `vite.config.js:6–23` and `main.jsx:10–22`).
+- Unlike 097/103/104, no incomplete or unconnectable composition chain; unlike 089/100, no federation for code sharing; unlike 102/074/080, no third-party unit or platform. Also unlike 076/084/096/106/109 (complete chain). Word “microservices” in README refers to backend.
+- `frontend_units: 1`, `unit_organization: single-unit`, `ui_technologies: [react]`, `build_tools: [vite]` (`frontend/package.json:29–32`, `47`; `vite.config.js:1–7`). README cites Tailwind/MUI (`ReadMe.md:35`); only MUI appears in `package.json` (`:18`), and neither changes count.
+- `repo_type: example`: README presents repository as a portfolio project that “demonstrates” architecture (`ReadMe.md:264–273`, “portfolio-grade project”), despite complete Dockerfiles and compose.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** arquitetura de microsserviços no backend com frontend único; a consulta ampla `"frontend orchestration"` casa a adjacência “(frontend)**, orchestrated via an API Gateway” (`ReadMe.md:13`), que descreve orquestração de serviços pelo gateway.
-- **Protocolo (busca):** a grafia pesquisada não ocorre literalmente; o hit depende de tokenização/flexão da busca do GitHub. A elegibilidade muda de `unknown` (001, `activity_incomplete`) para `pass` (002).
-- **Protocolo (tipo de repositório):** a escolha entre `example` (portfólio declarado) e `production` (deploy em contêineres, tag `v1.0.0`) não altera a classe.
+- **RQ1 (misleading signals):** backend microservice architecture with single frontend; broad query `"frontend orchestration"` matches adjacency “(frontend)**, orchestrated via an API Gateway” (`ReadMe.md:13`), describing service orchestration through gateway.
+- **Protocol (search):** searched spelling does not occur literally; hit depends on GitHub search tokenization/inflection. Eligibility changes from `unknown` (001, `activity_incomplete`) to `pass` (002).
+- **Protocol (repository type):** choosing `example` (declared portfolio) or `production` (container deployment, tag `v1.0.0`) does not change class.

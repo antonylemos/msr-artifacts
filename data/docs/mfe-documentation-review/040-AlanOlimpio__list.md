@@ -16,35 +16,35 @@ annotation:
 
 # 040 — AlanOlimpio/list
 
-## Leitura do repositório
+## Repository overview
 
-A documentação está em português e se resume ao README e à `description` do `package.json`. O README é o de um projeto de curso ("Webpack do básico ao avançado", README.md:1-3). Diz que o aplicativo é uma SPA, lista as bibliotecas usadas e explica como rodar o micro front end `list` na porta 9004. A `description` diz que o app foi criado "para ser usado no Module Federation" (package.json:4).
+Documentation is in Portuguese and consists only of README and the `description` in `package.json`. README belongs to a course project ("Webpack do básico ao avançado", English translation: "Webpack from basic to advanced", README.md:1-3). It says the application is a SPA, lists libraries used and explains running micro front end `list` on port 9004. The `description` says the app was created "para ser usado no Module Federation" (English translation: "to be used in Module Federation") (package.json:4).
 
-Foram lidos os artefatos que as revisões anteriores citam: package.json, webpack.config.js, vercel.json, public/index.html, src/index.js, src/bootstrap.js e os componentes `List` e `ListRoutes`. Nenhum tem comentário.
+Artifacts cited by previous reviews were read: package.json, webpack.config.js, vercel.json, public/index.html, src/index.js, src/bootstrap.js and components `List` and `ListRoutes`. None has a comment.
 
-O README foi escrito para um curso com vários micro-frontends: manda navegar "para pasta de cada micro front end" e entrar em `list` (README.md:29-35). O snapshot, porém, só tem essa aplicação, na raiz do repositório, sem pasta `list`. O outro micro-frontend do curso, o `RegisterApp`, só aparece como remote externo (webpack.config.js:52-55). Essas instruções não viraram linha.
+README was written for a course with several micro-frontends: it instructs navigating "para pasta de cada micro front end" (English translation: "to each micro front end's folder") and entering `list` (README.md:29-35). The snapshot, however, has only this application, at the repository root, without a `list` folder. The course's other micro-frontend, `RegisterApp`, appears only as an external remote (webpack.config.js:52-55). These instructions did not become rows.
 
-Ocorrências `doc-*` que não viraram linha: README.md:1 (título do curso, repetição da afirmação 2) e README.md:29 (instrução de execução). As demais estão nas afirmações 2 e 3.
+`doc-*` occurrences that did not become rows: README.md:1 (course title, repeating claim 2) and README.md:29 (execution instruction). Others are in claims 2 and 3.
 
-## Afirmações
+## Claims
 
-| # | Documento | Afirmação | Tema | Corroboração | Evidência |
+| # | Document | Claim | Theme | Corroboration | Evidence |
 |---|---|---|---|---|---|
-| 1 | README.md:11 | "Esse aplicativo é uma SPA." | estrutura | corroborada | 3.4.3 (uma aplicação, `.`); vercel.json:2-4 |
-| 2 | README.md:15 | "aplicação webpack module federation" | composição | corroborada | 3.4.2 (module-federation configurado); webpack.config.js:46-55 |
-| 3 | README.md:31 | "Micro front end `list`" (a aplicação é um micro-frontend) | estrutura | corroborada | 3.4.5 #1; webpack.config.js:47-51 |
-| 4 | package.json:4 | "Criando o app List para ser usado no Module Federation" (o app foi feito para ser consumido via Module Federation) | composição | corroborada | webpack.config.js:47-51 (`name: 'ListApp'`, expõe `./ListRoutes`) |
+| 1 | README.md:11 | "Esse aplicativo é uma SPA." (English translation: "This application is a SPA.") | structure | corroborated | 3.4.3 (one application, `.`); vercel.json:2-4 |
+| 2 | README.md:15 | "aplicação webpack module federation" (English translation: "webpack module federation application") | composition | corroborated | 3.4.2 (module-federation configured); webpack.config.js:46-55 |
+| 3 | README.md:31 | "Micro front end `list`" (English translation: "Micro front end list"; the application is a micro-frontend) | structure | corroborated | 3.4.5 #1; webpack.config.js:47-51 |
+| 4 | package.json:4 | "Criando o app List para ser usado no Module Federation" (English translation: "Creating the List app to be used in Module Federation"; the app was made for consumption through Module Federation) | composition | corroborated | webpack.config.js:47-51 (`name: 'ListApp'`, exposes `./ListRoutes`) |
 
-## Observações
+## Observations
 
-**1. README.md:11.** O repositório tem uma única aplicação, e a Vercel reescreve todas as rotas para `/`, como numa SPA.
+**1. README.md:11.** The repository has a single application, and Vercel rewrites all routes to `/`, as in a SPA.
 
-**2. README.md:15.** A aplicação usa o `ModuleFederationPlugin` do webpack, como remote e como consumidora. Repetição: o título (README.md:1).
+**2. README.md:15.** The application uses webpack's `ModuleFederationPlugin`, as both remote and consumer. Repetition: the title (README.md:1).
 
-**3. README.md:31.** A aplicação expõe `./ListRoutes` com o nome `ListApp` e consome o remote `RegisterApp`. É uma unidade de um conjunto maior, cujo restante está fora do snapshot.
+**3. README.md:31.** The application exposes `./ListRoutes` under name `ListApp` and consumes remote `RegisterApp`. It is a unit in a larger set whose remainder is outside the snapshot.
 
-**4. package.json:4.** A exposição de `./ListRoutes` confirma que a aplicação foi preparada para ser consumida por outro host. Nenhum consumidor está no snapshot, mas a afirmação é sobre o propósito da aplicação, e a configuração o sustenta.
+**4. package.json:4.** Exposing `./ListRoutes` confirms the application was prepared for consumption by another host. No consumer is in the snapshot, but the claim concerns the application's purpose, supported by configuration.
 
-## Resumo
+## Summary
 
-Afirmações: 4 (corroborada: 4, parcial: 0, contradita: 0, sem corroboração: 0). Temas: (estrutura: 2, composição: 2).
+Claims: 4 (corroborated: 4, partial: 0, contradicted: 0, uncorroborated: 0). Themes: (structure: 2, composition: 2).

@@ -13,17 +13,17 @@ annotation:
 
 # 271 — santhoshreddy500939/webpackconfig
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem 11 commits, de 2026-01-18 a 2026-01-25, com um merge (`70aea9e`, 2026-01-18, "Add README with instructions for converting files to React components"). O primeiro commit é `9cc9839` (2026-01-18, "conveting normal files into reactapp"), e o do snapshot é `e1f97e3` (2026-01-25, "modulefederation"). Antes dele, a mensagem de `25731f6` (2026-01-25) anuncia a divisão da configuração webpack em `common`, `dev` e `prod`.
+History up to snapshot has 11 commits, from 2026-01-18 to 2026-01-25, with one merge (`70aea9e`, 2026-01-18, "Add README with instructions for converting files to React components"). First commit is `9cc9839` (2026-01-18, "conveting normal files into reactapp"), and snapshot is `e1f97e3` (2026-01-25, "modulefederation"). Before it, message of `25731f6` (2026-01-25) announces splitting webpack configuration into `common`, `dev` and `prod`.
 
-As revisões anteriores não deixaram ponto ambíguo que o histórico pudesse esclarecer: não há dependência sem uso (a 3.4.2 não registra nenhuma), unidade ou relação `Undetermined`, construção desativada ou comentada, deploy `Undetermined` nem afirmação de documentação `contradita` ou `parcial` (a 3.4.7 não tem afirmações). A ausência da federação na configuração de produção e o placeholder `Application2` estão registrados nas revisões anteriores como leitura do snapshot, sem valor em aberto. Por isso o histórico não foi consultado além deste contexto.
+Previous reviews left no ambiguous point history could clarify: no unused dependency (3.4.2 records none), `Undetermined` unit or relationship, deactivated or commented-out construct, `Undetermined` deploy or `contradicted` or `partial` documentation claim (3.4.7 has no claims). Absence of federation in production configuration and placeholder `Application2` are recorded in previous reviews as snapshot observations, without open value. Thus history was not consulted beyond this context.
 
-## Pontos
+## Points
 
-Nenhum ponto ambíguo nas revisões anteriores.
+No ambiguous points in previous reviews.
 
-## Comandos
+## Commands
 
 ```
 docs/mfe-history-review/tools/hist.sh santhoshreddy500939__webpackconfig rev-list --count e1f97e37c21a6893a8dbf8cd6ea7a7f8c4a9058a
@@ -32,6 +32,6 @@ docs/mfe-history-review/tools/hist.sh santhoshreddy500939__webpackconfig log --f
 docs/mfe-history-review/tools/hist.sh santhoshreddy500939__webpackconfig log --format='%h %ad %s' --date=short e1f97e37c21a6893a8dbf8cd6ea7a7f8c4a9058a
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 11 (2026-01-18 a 2026-01-25). Pontos: 0.
+Commits up to the snapshot: 11 (2026-01-18 to 2026-01-25). Points: 0.

@@ -20,63 +20,63 @@ annotation:
 
 # 314 — RickyFirmansyah27/Portofolio
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** não é projeto de software. É um README de apresentação pessoal (descrição “About Me”) com currículo em PDF e ícones SVG.
+- **Repository type:** not a software project. Personal presentation README (description “About Me”) with PDF résumé and SVG icons.
 
-“Microfrontend Architecture” aparece como tecnologia usada num emprego anterior (`README.md:33–35`). Diferentemente dos perfis `owner/owner`, o repositório tem nome próprio, mas o conteúdo é do mesmo tipo. O nome do repositório não é usado como evidência.
+“Microfrontend Architecture” appears as technology used at a previous job (`README.md:33–35`). Unlike `owner/owner` profiles, repository has a distinct name, but content is the same type. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:315` registra rank 314, ID 543529019, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:315` records rank 314, ID 543529019, status `cloned`, branch `main` and the front matter commit, which is HEAD of the clone and `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:315` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:4860` e `data/discovery/mfe-round-002/candidates.csv:4864`, ambos com `terminology` e `pass`.
+`data/samples/mfe-sample-001/sample.csv:315` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:4860` and `data/discovery/mfe-round-002/candidates.csv:4864`, both with `terminology` and `pass`.
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories` e com `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories` and with empty `path`:
 
-| Consulta (`q`) | Subconsulta | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Collection 001 / 002 (UTC) |
 |---|---|---|
 | `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | `terminology-microfrontend-repositories#created:2022-09` | 2026-10-07T18:21:38.287Z / 2026-10-08T15:36:15.666Z |
 | `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | `terminology-microfrontends-repositories#created:2022-09` | 2026-10-07T22:05:46.292Z / 2026-10-08T15:45:52.727Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2022-09-01..2022-09-30`.
+Effective queries append `pushed:>=2025-04-01 created:2022-09-01..2022-09-30`.
 
-Metadados do hit (iguais nas duas rodadas): descrição “About Me”, sem tópicos, linguagem nula, `fork: false`, tamanho 283, criação em 2022-09-30T09:40:06Z, push em 2025-05-06T15:56:05Z.
+Hit metadata (same in both rounds): description “About Me”, no topics, null language, `fork: false`, size 283, created at 2022-09-30T09:40:06Z, pushed at 2025-05-06T15:56:05Z.
 
-A descrição não contém os termos; o acerto vem do README. A única grafia correspondente é “Microfrontend” (`README.md:34`, “…Microservice Architecture, Microfrontend”, continuando em `:35` com “Architecture.”), que casa literalmente `microfrontend`. A forma plural `microfrontends` não aparece; esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+Description lacks terms; hit comes from README. Only corresponding spelling is “Microfrontend” (`README.md:34`, “…Microservice Architecture, Microfrontend”, continuing at `:35` with “Architecture.”), literally matching `microfrontend`. Plural form `microfrontends` does not appear; that hit depends on GitHub search text processing, which is not recorded.
 
-O SHA (2025-05-06T22:56:05+07:00, isto é, 15:56:05Z) é a última alteração do README, coincide com o `pushed_at` e antecede as coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+SHA (2025-05-06T22:56:05+07:00, i.e., 15:56:05Z) is README's last change, coincides with `pushed_at` and precedes October 2026 collection. The SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 17 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. São `README.md`, `RickyFirmansyah.pdf` e 15 ícones SVG em `img/`. Não há código, manifesto nem build. | ausente |
-| Documentação | `README.md:8–10`: apresentação; `README.md:24–35`: experiência profissional, com “Microfrontend Architecture” entre as tecnologias usadas na PT. Dans Multi Pro (`:33–35`); `README.md:43–88`: badges de habilidades; `README.md:100–118`: projetos publicados em outros endereços. | fraca |
-| Tecnologia / Configuração / Código-fonte / Composição / Build/deploy | Inexistentes; nenhuma configuração de federação, single-spa, import map, iframe ou Web Components. Imports relativos entre unidades não se aplicam (não há código). | ausente |
+| Structure | `git ls-tree -r` at the SHA: 17 entries, all regular `100644` files; zero symlinks and zero gitlinks. `README.md`, `RickyFirmansyah.pdf` and 15 SVG icons in `img/`. No code, manifest or build. | absent |
+| Documentation | `README.md:8–10`: introduction; `README.md:24–35`: professional experience, with “Microfrontend Architecture” among technologies used at PT. Dans Multi Pro (`:33–35`); `README.md:43–88`: skill badges; `README.md:100–118`: projects published at other addresses. | weak |
+| Technology / Configuration / Source code / Composition / Build/deploy | Nonexistent; no federation, single-spa, import map, iframe or Web Components configuration. Relative imports between units do not apply (no code). | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso e parcial (`blob:none`). São 18 commits (18 em todos os refs), nenhum merge, todos de `Ricky Firmansyah <110955695+RickyFirmansyah27@users.noreply.github.com>` com committer `GitHub` (edições e uploads pela interface web), de 2022-09-30 (`a4b324a`, “Initial commit”) ao SHA (2025-05-06, “Update README.md”). Pelo `git log --no-renames --name-status`, os commits adicionam o README, o PDF e os ícones, e 15 deles modificam `README.md`. `git rev-list --objects $SHA --missing=print` lista 15 objetos ausentes, nenhum na árvore do SHA (versões anteriores do README); não foi possível datar a introdução do termo.
+Non-shallow, partial clone (`blob:none`). 18 commits (18 across all refs), no merges, all by `Ricky Firmansyah <110955695+RickyFirmansyah27@users.noreply.github.com>` with committer `GitHub` (web interface edits and uploads), from 2022-09-30 (`a4b324a`, “Initial commit”) to SHA (2025-05-06, “Update README.md”). According to `git log --no-renames --name-status`, commits add README, PDF and icons, and 15 modify `README.md`. `git rev-list --objects $SHA --missing=print` lists 15 missing objects, none in SHA tree (earlier README versions); term introduction could not be dated.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend: só README, PDF e ícones (inventário). |
-| Q2 | No | Não há unidades. |
-| Q3 | No | Não há host, shell nem root config. |
-| Q4 | No | Nenhum mecanismo de composição; “Microfrontend Architecture” é tecnologia citada em experiência profissional (`README.md:33–35`). |
-| Q5 | No | Q1–Q4 convergem. |
+| Q1 | No | No frontend unit: only README, PDF and icons (inventory). |
+| Q2 | No | No units. |
+| Q3 | No | No host, shell or root config. |
+| Q4 | No | No composition mechanism; “Microfrontend Architecture” is a technology cited in professional experience (`README.md:33–35`). |
+| Q5 | No | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “repositories mentioning micro-frontends without implementing them”.
-- Mesmo padrão dos perfis 011/064/068/073/077/101/111 (README de apresentação com micro-frontends como competência ou experiência), aqui num repositório com nome próprio em vez de `owner/owner`.
-- `frontend_units: 0`, `unit_organization: none`, `repo_type: other`, arrays de tecnologia vazios.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. Matches “repositories mentioning micro-frontends without implementing them”.
+- Same pattern as profiles 011/064/068/073/077/101/111 (presentation README with micro-frontends as skill or experience), here in a distinctly named repository instead of `owner/owner`.
+- `frontend_units: 0`, `unit_organization: none`, `repo_type: other`, empty technology arrays.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **Protocolo (busca/filtro):** o padrão de perfil aparece também fora de `owner == name` (descrição “About Me”). Um filtro automático apenas pelo nome não pegaria este caso.
-- **Protocolo (busca):** o hit plural `microfrontends` não tem grafia literal no README. A elegibilidade é `pass` nas duas rodadas.
+- **Protocol (search/filter):** profile pattern also occurs outside `owner == name` (description “About Me”). An automatic name-only filter would miss this case.
+- **Protocol (search):** plural hit `microfrontends` has no literal README spelling. Eligibility is `pass` in both rounds.

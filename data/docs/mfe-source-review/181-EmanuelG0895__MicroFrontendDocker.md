@@ -15,32 +15,32 @@ annotation:
 
 # 181 — EmanuelG0895/MicroFrontendDocker
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-remote-import | MF-Shell/@mf-types/MF_CharacterDetail/apis.d.ts:3 | MF-Shell | none | No | `typeof import('MF_CharacterDetail/Vista')` é tipo condicional num arquivo de declaração gerado do DTS do Module Federation (MF-Shell/@mf-types/index.d.ts:1-10); não carrega nada em runtime, e o `tsconfig` só inclui `src` (MF-Shell/tsconfig.json:19). O carregamento real de MF_CharacterDetail é o da linha MF-Shell/src/App.tsx:7. |
-| src-remote-import | MF-Shell/@mf-types/MF_CharacterDetail/compiled-types/components/view.d.ts:5 | MF-Shell | none | No | `import("react/jsx-runtime").JSX.Element` é só o tipo de retorno na declaração gerada do componente `View`; falso positivo do padrão. |
-| src-remote-import | MF-Shell/@mf-types/MF_Characters/compiled-types/components/vista.d.ts:5 | MF-Shell | none | No | `import("react/jsx-runtime").JSX.Element` é só o tipo de retorno na declaração gerada do componente `Vista`; falso positivo do padrão. |
-| src-remote-import | MF-Shell/src/App.tsx:7 | MF-Shell | dynamic-loading | Yes | `React.lazy(() => import("MF_CharacterDetail/View"))` (MF-Shell/src/App.tsx:6-8) carrega o módulo exposto `./View` de MF-CharacterDetail (MF-CharacterDetail/module-federation.config.ts:7), remote declarado em MF-Shell/module-federation.config.ts:4 e passado ao `ModuleFederationPlugin` em MF-Shell/rspack.config.ts:98; App.tsx é carregado por `import("./App")` na entrada MF-Shell/src/index.ts:1 (MF-Shell/rspack.config.ts:17). |
-| src-remote-import | MF-Shell/src/app/details.tsx:3 | MF-Shell | dynamic-loading | Yes | `React.lazy(() => import("MF_Characters/Vista"))` carrega o módulo exposto `./Vista` de MF-Characters (MF-Characters/module-federation.config.ts:5), remote declarado em MF-Shell/module-federation.config.ts:5; details.tsx é carregado pelo `React.lazy` de MF-Shell/src/App.tsx:10-12 e renderizado na rota `/details/:id` (MF-Shell/src/App.tsx:33-40). |
+| src-remote-import | MF-Shell/@mf-types/MF_CharacterDetail/apis.d.ts:3 | MF-Shell | none | No | `typeof import('MF_CharacterDetail/Vista')` is a conditional type in a generated Module Federation DTS declaration file (MF-Shell/@mf-types/index.d.ts:1-10); it loads nothing at runtime, and `tsconfig` only includes `src` (MF-Shell/tsconfig.json:19). Actual MF_CharacterDetail loading is at MF-Shell/src/App.tsx:7. |
+| src-remote-import | MF-Shell/@mf-types/MF_CharacterDetail/compiled-types/components/view.d.ts:5 | MF-Shell | none | No | `import("react/jsx-runtime").JSX.Element` is only the return type in the generated declaration of component `View`; a pattern false positive. |
+| src-remote-import | MF-Shell/@mf-types/MF_Characters/compiled-types/components/vista.d.ts:5 | MF-Shell | none | No | `import("react/jsx-runtime").JSX.Element` is only the return type in the generated declaration of component `Vista`; a pattern false positive. |
+| src-remote-import | MF-Shell/src/App.tsx:7 | MF-Shell | dynamic-loading | Yes | `React.lazy(() => import("MF_CharacterDetail/View"))` (MF-Shell/src/App.tsx:6-8) loads exposed module `./View` from MF-CharacterDetail (MF-CharacterDetail/module-federation.config.ts:7), a remote declared at MF-Shell/module-federation.config.ts:4 and passed to `ModuleFederationPlugin` at MF-Shell/rspack.config.ts:98; App.tsx is loaded by `import("./App")` at entry MF-Shell/src/index.ts:1 (MF-Shell/rspack.config.ts:17). |
+| src-remote-import | MF-Shell/src/app/details.tsx:3 | MF-Shell | dynamic-loading | Yes | `React.lazy(() => import("MF_Characters/Vista"))` loads exposed module `./Vista` from MF-Characters (MF-Characters/module-federation.config.ts:5), a remote declared at MF-Shell/module-federation.config.ts:5; details.tsx is loaded by `React.lazy` at MF-Shell/src/App.tsx:10-12 and rendered in route `/details/:id` (MF-Shell/src/App.tsx:33-40). |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | MF-Shell/src/App.tsx:24 | MF-Shell | host-relationship | Yes | `Routes` declara `/` para o componente remoto `CharacterInfo` (MF_CharacterDetail) e `/details/:id` para `Details`, que embrulha o remoto `Vista` de MF_Characters (MF-Shell/src/App.tsx:24-41); `App` é montado por `root.render(<App />)` em MF-Shell/src/App.tsx:55-56. |
-| manual | MF-Shell/src/App.tsx:29 | MF-Shell | runtime-composition | Yes | Renderiza no host o componente remoto `CharacterInfo` (`./View` de MF-CharacterDetail, MF-Shell/src/App.tsx:6-8) dentro de `Suspense`; o host passa o callback `onCharacterClick`, que navega para `/details/${id}` (MF-Shell/src/App.tsx:18-21). |
-| manual | MF-Shell/src/app/details.tsx:13 | MF-Shell | runtime-composition | Yes | Renderiza o componente remoto `Vista` de MF-Characters (MF-Shell/src/app/details.tsx:3) com o `characterId` lido da rota (MF-Shell/src/app/details.tsx:10-11); o `Suspense` em volta está em MF-Shell/src/App.tsx:36-38. |
+| manual | MF-Shell/src/App.tsx:24 | MF-Shell | host-relationship | Yes | `Routes` declares `/` for remote component `CharacterInfo` (MF_CharacterDetail) and `/details/:id` for `Details`, which wraps MF_Characters’ remote `Vista` (MF-Shell/src/App.tsx:24-41); `App` is mounted by `root.render(<App />)` at MF-Shell/src/App.tsx:55-56. |
+| manual | MF-Shell/src/App.tsx:29 | MF-Shell | runtime-composition | Yes | Renders in the host remote component `CharacterInfo` (`./View` from MF-CharacterDetail, MF-Shell/src/App.tsx:6-8) inside `Suspense`; the host passes callback `onCharacterClick`, which navigates to `/details/${id}` (MF-Shell/src/App.tsx:18-21). |
+| manual | MF-Shell/src/app/details.tsx:13 | MF-Shell | runtime-composition | Yes | Renders MF-Characters’ remote component `Vista` (MF-Shell/src/app/details.tsx:3) with `characterId` read from the route (MF-Shell/src/app/details.tsx:10-11); the enclosing `Suspense` is at MF-Shell/src/App.tsx:36-38. |
 
-## Resumo
+## Summary
 
-Construções com composição: 5 (dynamic-loading: 2, host-relationship: 1, runtime-composition: 2).
+Constructs participating in composition: 5 (dynamic-loading: 2, host-relationship: 1, runtime-composition: 2).
 
-## Notas
+## Notes
 
-- As três linhas de `MF-Shell/@mf-types/` são declarações de tipo geradas pelo DTS do Module Federation; não carregam nada. `MF-Shell/@mf-types/index.d.ts:2` importa `./MF_Characters/apis.d.ts`, que não está no snapshot.
-- `MF-Shell/src/types/federation.d.ts` e `MF-Shell/src/types.d.ts` só declaram módulos `MF_*` para o TypeScript; não viraram linha.
-- `import("./App")` em MF-Shell/src/index.ts:1, MF-Characters/src/index.ts:1 e MF-CharacterDetail/src/index.ts:1 é o bootstrap assíncrono interno de cada unidade e não está no `matches.csv` como `src-*`; não virou linha (interno, seria `No`).
-- Os remotes não importam nada de outra unidade: a busca do passo 4 não achou `import()`, `CustomEvent`, `postMessage` nem outro mecanismo em MF-Characters/src nem em MF-CharacterDetail/src. A comunicação entre o host e os remotes é só por props e callback (`onCharacterClick`, `characterId`).
-- As URLs dos remotes no host apontam para as portas de dev (`localhost:3003` para MF_CharacterDetail e `localhost:3002` para MF_Characters, MF-Shell/module-federation.config.ts:4-5), que batem com MF-CharacterDetail/rspack.config.ts:25 e MF-Characters/rspack.config.ts:25. Os Dockerfiles expõem outras portas (MF-CharacterDetail/Dockerfile:37 `EXPOSE 3002`, MF-Characters/Dockerfile:37 `EXPOSE 3001`); isso não muda as respostas desta etapa.
+- The three `MF-Shell/@mf-types/` rows are type declarations generated by Module Federation DTS; they load nothing. `MF-Shell/@mf-types/index.d.ts:2` imports `./MF_Characters/apis.d.ts`, absent from the snapshot.
+- `MF-Shell/src/types/federation.d.ts` and `MF-Shell/src/types.d.ts` only declare `MF_*` modules for TypeScript; they did not become rows.
+- `import("./App")` at MF-Shell/src/index.ts:1, MF-Characters/src/index.ts:1 and MF-CharacterDetail/src/index.ts:1 is each unit’s internal asynchronous bootstrap and is not in `matches.csv` as `src-*`; it did not become a row (internal, would be `No`).
+- The remotes import nothing from another unit: the step 4 search found no `import()`, `CustomEvent`, `postMessage` or other mechanism in MF-Characters/src or MF-CharacterDetail/src. Communication between host and remotes uses only props and callback (`onCharacterClick`, `characterId`).
+- The remote URLs in the host point to dev ports (`localhost:3003` for MF_CharacterDetail and `localhost:3002` for MF_Characters, MF-Shell/module-federation.config.ts:4-5), matching MF-CharacterDetail/rspack.config.ts:25 and MF-Characters/rspack.config.ts:25. The Dockerfiles expose different ports (MF-CharacterDetail/Dockerfile:37 `EXPOSE 3002`, MF-Characters/Dockerfile:37 `EXPOSE 3001`); this does not change this stage’s answers.

@@ -20,61 +20,61 @@ annotation:
 
 # 344 — UDI-ENCB/UDI-ENCB
 
-## Contexto
+## Context
 
-Repositório de documentação de um sistema administrativo (descrição “Config files for my GitHub profile.”, tópicos `config` e `github-config`). Contém só três arquivos: um `README.md` com a arquitetura geral, um diagrama SVG e o `nginx.conf` do gateway das APIs. O README descreve um “microfrontend”: um contenedor principal noutro repositório (`UDI-FRONT`) que instala cada aplicação como componente React via npm/GitHub e as mostra por `react-router` (`README.md:34`, `203`). Nenhum desses frontends está neste repositório. O nome do repositório não é usado como evidência.
+Documentation repository for an administrative system (description “Config files for my GitHub profile.”, topics `config` and `github-config`). Contains only three files: a `README.md` with general architecture, an SVG diagram and the API gateway `nginx.conf`. The README describes a “microfrontend”: a main container in another repository (`UDI-FRONT`) installing each application as a React component through npm/GitHub and displaying them through `react-router` (`README.md:34`, `203`). None of these frontends is in this repository. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:345` registra rank 344, ID 917305220, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede. Os valores de exemplo de segredos no README não são reproduzidos.
+`data/samples/mfe-sample-001/clones.csv:345` records rank 344, ID 917305220, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, execution or network access. Example secret values in the README are not reproduced.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:345` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:11430` e `data/discovery/mfe-round-002/candidates.csv:11436`, ambos com `pass`.
+`data/samples/mfe-sample-001/sample.csv:345` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:11430` and `data/discovery/mfe-round-002/candidates.csv:11436`, both with `pass`.
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2025-01` e `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2025-01` and an empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | 2026-10-07T18:25:45.558Z / 2026-10-08T15:37:14.194Z |
 | `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | 2026-10-07T22:06:50.848Z / 2026-10-08T15:46:51.097Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2025-01-01..2025-01-31`.
+The effective queries append `pushed:>=2025-04-01 created:2025-01-01..2025-01-31`.
 
-Metadados do hit:
-- descrição “Config files for my GitHub profile.”, tópicos `config` e `github-config`, linguagem nula, `fork: false`, tamanho 22;
-- criação em 2025-01-15T18:27:54Z, push em 2026-04-13T16:42:49Z.
+Hit metadata:
+- description “Config files for my GitHub profile.”, topics `config` and `github-config`, null language, `fork: false`, size 22;
+- created at 2025-01-15T18:27:54Z, pushed at 2026-04-13T16:42:49Z.
 
-A grafia “microfrontend” está em `README.md:34` (“…se opto por un sistema de "microfrontend".”). O plural não aparece literalmente; esse hit depende do processamento textual da busca do GitHub, que não está registrado. O README é do único commit (2026-04-13), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+Spelling “microfrontend” is in `README.md:34` (“…se opto por un sistema de "microfrontend".”; English translation: “…a 'microfrontend' system was chosen.”). The plural does not appear literally; this hit depends on GitHub search text processing, which is not recorded. The README is from the only commit (2026-04-13), before the October 2026 collections. The README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 3 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks: `README.md`, `Diagramas/ArquitecturaPrincipal.svg` e `nginx.conf`. Não há código frontend. | contrária |
-| Documentação | `README.md:34`: contenedor principal em `UDI-FRONT`; cada app “se sirve como un componente, este componente es descargado por el contenedor principal y mostrado mediante react router”. `README.md:52–80`: lista de apps e repositórios (`UDI-ADMIN-COMUNIDAD`, `ADMIN-CUENTAS-FRONT`, `FRON-APARTADO-AULAS`). `README.md:203–205`: cada app é um componente React instalado via GitHub/npm, em repositórios privados. | fraca |
-| Configuração | `nginx.conf:3–55`: `upstream`s e `location /api/...` para três APIs e `location /` servindo `/var/www/html`. É o gateway do backend e do build estático do contenedor, não um mecanismo de composição frontend. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 3 entries, all regular files `100644`; zero symlinks and zero gitlinks: `README.md`, `Diagramas/ArquitecturaPrincipal.svg` and `nginx.conf`. There is no frontend code. | contrary |
+| Documentation | `README.md:34`: main container in `UDI-FRONT`; each app “se sirve como un componente, este componente es descargado por el contenedor principal y mostrado mediante react router” (English translation: “is served as a component; this component is downloaded by the main container and displayed through react router”). `README.md:52–80`: list of apps and repositories (`UDI-ADMIN-COMUNIDAD`, `ADMIN-CUENTAS-FRONT`, `FRON-APARTADO-AULAS`). `README.md:203–205`: each app is a React component installed through GitHub/npm, in private repositories. | weak |
+| Configuration | `nginx.conf:3–55`: `upstream`s and `location /api/...` for three APIs and `location /` serving `/var/www/html`. This is the backend and container static build gateway, not a frontend composition mechanism. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; um único commit, `28d3116` (2026-04-13, “add documentation”), de “Tzintzun”. Só há o branch `main`. Não houve objeto ausente.
+Non-shallow clone; a single commit, `28d3116` (2026-04-13, “add documentation”), by “Tzintzun”. Only branch `main` exists. There was no missing object.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend no repositório; as unidades só são citadas na documentação, e não há configuração de composição que as referencie. |
-| Q2 | No | Sem unidades no snapshot, não há independência a avaliar. |
-| Q3 | No | Não há host, shell ou configuração raiz de composição no repositório; o contenedor está em `UDI-FRONT`. |
-| Q4 | No | Nenhum mecanismo de composição configurado; a integração descrita (pacotes npm em build) não está no snapshot. |
-| Q5 | No | Q1–Q4 são No: repositório de documentação da arquitetura. |
+| Q1 | No | No frontend unit in the repository; units are cited only in documentation, with no composition configuration referencing them. |
+| Q2 | No | Without units in the snapshot, there is no independence to assess. |
+| Q3 | No | There is no host, shell or root composition configuration in the repository; the container is in `UDI-FRONT`. |
+| Q4 | No | No composition mechanism configured; described integration (npm packages at build time) is not in the snapshot. |
+| Q5 | No | Q1–Q4 are No: architecture documentation repository. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “repositories mentioning micro-frontends without implementing them”.
-- Como nos finais 023 e 097, diagramas e descrições documentais não contam como unidades. A composição descrita (componentes React instalados via npm) ficaria perto da decisão em aberto sobre composição em build-time, mas não há código nem configuração neste snapshot para avaliá-la.
-- **Campos:** `repo_type: other`, `frontend_units: 0`, `unit_organization: none`, `approaches: []`, `ui_technologies: []`, `build_tools: []`.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. It matches “repositories mentioning micro-frontends without implementing them”.
+- As in finals 023 and 097, diagrams and documentation descriptions do not count as units. Described composition (React components installed through npm) would be close to the open build-time composition decision, but there is no code or configuration in this snapshot to assess it.
+- **Fields:** `repo_type: other`, `frontend_units: 0`, `unit_organization: none`, `approaches: []`, `ui_technologies: []`, `build_tools: []`.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** a arquitetura documentada (contenedor `UDI-FRONT` + apps como pacotes npm privados roteados por `react-router`) seria composição em build-time. Nenhum outro repositório `UDI-ENCB/*` aparece nos `candidates.csv` das duas rodadas; os repositórios citados não foram inspecionados.
-- **Protocolo (busca):** o hit plural não tem grafia literal. Elegibilidade `pass` nas duas rodadas.
+- **RQ2:** documented architecture (container `UDI-FRONT` + apps as private npm packages routed through `react-router`) would be build-time composition. No other `UDI-ENCB/*` repository appears in `candidates.csv` from either round; cited repositories were not inspected.
+- **Protocol (search):** the plural hit has no literal spelling. Eligibility `pass` in both rounds.

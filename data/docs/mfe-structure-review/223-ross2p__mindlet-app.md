@@ -17,19 +17,19 @@ annotation:
 
 ## Workspace
 
-Nenhuma declaração de workspace.
+No workspace declaration.
 
-## Unidades
+## Units
 
-| Diretório | Marcadores | Manifesto | Entrada | Build | Workspace | Deploy | Unidade frontend | Motivo |
+| Directory | Markers | Manifest | Entry | Build | Workspace | Deploy | Frontend unit | Rationale |
 |---|---|---|---|---|---|---|---|---|
 
-## Resumo
+## Summary
 
-Aplicações frontend no snapshot: 0.
+Frontend applications in the snapshot: 0.
 
-## Notas
+## Notes
 
-- O `units.csv` tem só o cabeçalho, e por isso a tabela não tem linhas. O snapshot não tem `package.json`, `angular.json`, `project.json` nem configuração de build; tem só `README.md`, `compose.yml`, `start-local-dev.sh`, `.gitmodules`, `skills-lock.json`, as configurações de nginx em `config/nginx/` e `infra/nginx/`, e as skills em `.agents/`.
-- A contagem difere de `frontend_units: 5` da classificação porque as cinco zonas são externas ao snapshot. São submódulos (.gitmodules:4-18: `apps/dashboard`, `apps/auth`, `apps/profile`, `apps/study`, `apps/decks`, cada um com repositório próprio), e os diretórios não existem em `files/`. `libs/types` e `libs/shared` (.gitmodules:1-3, 19-21) também são submódulos.
-- O deploy dessas zonas aparece só fora delas: compose.yml:15-108 declara um serviço por zona com `build.context: apps/<zona>` e `dockerfile: Dockerfile` (ex.: compose.yml:17-18). As ocorrências `ops-*` do `matches.csv` são do gateway nginx (`config/nginx/nginx.conf:31-71`, `infra/nginx/nginx.conf:29-65`), que não é unidade frontend. Não há ocorrências `ws-*` nem `ci-*`.
+- `units.csv` has only the header, so the table has no rows. The snapshot has no `package.json`, `angular.json`, `project.json` or build configuration; it has only `README.md`, `compose.yml`, `start-local-dev.sh`, `.gitmodules`, `skills-lock.json`, the nginx configurations in `config/nginx/` and `infra/nginx/`, and the skills in `.agents/`.
+- The count differs from the classification’s `frontend_units: 5` because the five zones are external to the snapshot. They are submodules (.gitmodules:4-18: `apps/dashboard`, `apps/auth`, `apps/profile`, `apps/study`, `apps/decks`, each with its own repository), and the directories do not exist in `files/`. `libs/types` and `libs/shared` (.gitmodules:1-3, 19-21) are also submodules.
+- Deployment of these zones appears only outside them: compose.yml:15-108 declares a service per zone with `build.context: apps/<zona>` and `dockerfile: Dockerfile` (e.g., compose.yml:17-18). The `ops-*` occurrences in `matches.csv` belong to the nginx gateway (`config/nginx/nginx.conf:31-71`, `infra/nginx/nginx.conf:29-65`), which is not a frontend unit. There are no `ws-*` or `ci-*` occurrences.

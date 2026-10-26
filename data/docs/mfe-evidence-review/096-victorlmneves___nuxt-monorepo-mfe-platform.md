@@ -19,820 +19,821 @@ annotation:
 
 # 096 — victorlmneves/_nuxt-monorepo-mfe-platform
 
-## Leitura do repositório
+## Repository overview
 
-Monorepo pnpm com um shell Nuxt 3 e quatro remotes Vue com webpack, dois em Vue 2 (admin e checkout) e dois em Vue 3 (dashboard e profile). Cada um tem manifesto, entrada e build próprios (#55 a #59, #70 a #74). Nenhuma dependência declara uma tecnologia de MFE: as cinco linhas da revisão de dependências são o pacote interno `@mfe/shared`, captado pelo nome (#1 a #5), e o `turbo` fica ambíguo, porque só os scripts do `package.json` o chamam (#6). A cadeia começa, então, na configuração:
-- **Configuração:** cada remote configura o `ModuleFederationPlugin` com nome próprio, `remoteEntry.js`, `./App` exposto e `vue` (e, nos Vue 3, `vuetify`) como `singleton` (#7 a #10).
-- **Código do host:** o shell não tem o plugin. O registro de `packages/shared` nomeia os quatro remotes, com rota, URL do `remoteEntry.js`, nome do container e módulo exposto (#53). A página catch-all escolhe o descritor pela rota e chama a montagem (#52). O loader injeta o script (#49), lê o container, chama `init({})` e `get('./App')` (#15, #16) e chama `mount`/`unmount` (#45, #46).
-- **Código dos remotes:** o `bootstrap.js` exposto exporta `mount` e `unmount` (#17 a #24, repetidos por sobreposição de padrões em #25, #28, #30, #33, #35, #38, #40, #43).
-- **Relações:** isso resulta em quatro relações host → remote ativas por Module Federation (#62 a #65). A elas se somam quatro relações de eventos de janela, do shell para cada remote (#66 a #69), feitas pelo barramento de `packages/shared` (#50, #51).
+pnpm monorepo with a Nuxt 3 shell and four Vue webpack remotes, two Vue 2 (admin and checkout) and two Vue 3 (dashboard and profile). Each has its own manifest, entry and build (#55 through #59, #70 through #74). No dependency declares an MFE technology: five dependency review rows are internal package `@mfe/shared`, detected by name (#1 through #5), and `turbo` remains ambiguous because only `package.json` scripts invoke it (#6). Chain therefore starts with configuration:
+- **Configuration:** each remote configures `ModuleFederationPlugin` with its own name, `remoteEntry.js`, exposed `./App` and `vue` (and, in Vue 3, `vuetify`) as `singleton` (#7 through #10).
+- **Host code:** shell has no plugin. Registry in `packages/shared` names four remotes, with route, `remoteEntry.js` URL, container name and exposed module (#53). Catch-all page selects descriptor by route and invokes mounting (#52). Loader injects script (#49), reads container, calls `init({})` and `get('./App')` (#15, #16), and calls `mount`/`unmount` (#45, #46).
+- **Remote code:** exposed `bootstrap.js` exports `mount` and `unmount` (#17 through #24, repeated through pattern overlap in #25, #28, #30, #33, #35, #38, #40, #43).
+- **Relationships:** four active host → remote relationships through Module Federation result (#62 through #65). Four window-event relationships from shell to each remote are added (#66 through #69), using `packages/shared` bus (#50, #51).
 
-Sinais que não são composição: o `import('./bootstrap')` e a chamada `mount` de cada `src/index.js` são a execução standalone de cada remote (#11 a #14, #29, #34, #39, #44); o `.$mount(el)` e o `app.mount(el)` são a renderização interna do Vue (#27, #32, #37, #42); o `onAuthLogout(() => unmount(el))` é a desmontagem da própria unidade ao receber o evento (#26, #31, #36, #41); e as duas linhas da interface `RemoteMount` são declarações de tipo (#47, #48). A raiz, `packages/shared` e `scripts` não são unidades (#54, #60, #61).
+Signals that are not composition: `import('./bootstrap')` and `mount` call in each `src/index.js` execute each remote standalone (#11 through #14, #29, #34, #39, #44); `.$mount(el)` and `app.mount(el)` are internal Vue rendering (#27, #32, #37, #42); `onAuthLogout(() => unmount(el))` unmounts same unit upon event reception (#26, #31, #36, #41); and two `RemoteMount` interface lines are type declarations (#47, #48). Root, `packages/shared` and `scripts` are not units (#54, #60, #61).
 
-Os cinco builds são separados, mas não há deploy no snapshot (#70 a #74): os endereços são todos `localhost`, e o `publicPath` dos remotes fica fixo em `http://localhost:300x/` também em produção (#7 a #10, #106).
+Five builds are separate, but snapshot has no deployment (#70 through #74): all addresses are `localhost`, and remote `publicPath` remains fixed at `http://localhost:300x/` in production too (#7 through #10, #106).
 
-A documentação confere com os artefatos em 31 das 35 afirmações. As quatro contradições estão no que se diz compartilhado: o cabeçalho, que só o shell usa (#80, #90), e o escopo `singleton`, que nem isola o Vuetify 2 (#87) nem leva o Vue 3 do shell aos remotes, porque o shell inicia cada container com escopo vazio (#89). O próprio comentário do loader confirma o escopo vazio (#104). O histórico não resolve as duas primeiras dúvidas: o código das aplicações só aparece como arquivo no commit do snapshot, e o conteúdo anterior, num gitlink, não está no clone (#111, #112). Ele esclarece que o título "only shared thing" sempre conviveu com o pacote compartilhado (#113) e que o `turbo` nunca teve outra invocação (#110).
+Documentation matches artifacts in 31 of 35 claims. Four contradictions concern what is called shared: header, used only by shell (#80, #90), and `singleton` scope, which neither isolates Vuetify 2 (#87) nor supplies shell Vue 3 to remotes, because shell initializes each container with empty scope (#89). Loader comment itself confirms empty scope (#104). History does not resolve first two uncertainties: application code only appears as files in snapshot commit, and earlier contents in a gitlink are absent from clone (#111, #112). It clarifies that title "only shared thing" always coexisted with shared package (#113) and `turbo` never had another invocation (#110).
 
-## Observações
+## Observations
 
 ### 1. apps/mfe-vue2-admin/package.json:13; apps/mfe-vue2-admin/src/bootstrap.js:3, 27-30
 
-**Observação:** `@mfe/shared` (`workspace:*`) está declarada em `dependencies`. O `bootstrap.js` importa `onAuthChanged` e `onAuthLogout` de `@mfe/shared/auth` e os usa no `mount`.
+**Observation:** `@mfe/shared` (`workspace:*`) is declared in `dependencies`. `bootstrap.js` imports `onAuthChanged` and `onAuthLogout` from `@mfe/shared/auth` and uses them in `mount`.
 
-**Interpretação:** É o pacote interno do workspace, captado pela tecnologia `mfe-term` pelo nome. A declaração, sozinha, não mostra um mecanismo de MFE; o uso fica no código.
+**Interpretation:** Internal workspace package, detected by technology `mfe-term` through its name. Declaration alone does not show an MFE mechanism; usage is in code.
 
 ### 2. apps/mfe-vue2-checkout/package.json:13; apps/mfe-vue2-checkout/src/bootstrap.js:3, 35-38
 
-**Observação:** `@mfe/shared` (`workspace:*`) está declarada em `dependencies`. O `bootstrap.js` importa `onAuthChanged` e `onAuthLogout` de `@mfe/shared/auth` e os usa no `mount`.
+**Observation:** `@mfe/shared` (`workspace:*`) is declared in `dependencies`. `bootstrap.js` imports `onAuthChanged` and `onAuthLogout` from `@mfe/shared/auth` and uses them in `mount`.
 
-**Interpretação:** É o pacote interno do workspace, captado pelo nome. A declaração, sozinha, não mostra um mecanismo de MFE.
+**Interpretation:** Internal workspace package, detected by name. Declaration alone does not show an MFE mechanism.
 
 ### 3. apps/mfe-vue3-dashboard/package.json:14; apps/mfe-vue3-dashboard/src/bootstrap.js:8, 29-30
 
-**Observação:** `@mfe/shared` (`workspace:*`) está declarada em `dependencies`. O `bootstrap.js` importa `onAuthChanged` e `onAuthLogout` de `@mfe/shared/auth` e os usa no `mount`.
+**Observation:** `@mfe/shared` (`workspace:*`) is declared in `dependencies`. `bootstrap.js` imports `onAuthChanged` and `onAuthLogout` from `@mfe/shared/auth` and uses them in `mount`.
 
-**Interpretação:** É o pacote interno do workspace, captado pelo nome. A declaração, sozinha, não mostra um mecanismo de MFE.
+**Interpretation:** Internal workspace package, detected by name. Declaration alone does not show an MFE mechanism.
 
 ### 4. apps/mfe-vue3-profile/package.json:14; apps/mfe-vue3-profile/src/bootstrap.js:8, 33-36
 
-**Observação:** `@mfe/shared` (`workspace:*`) está declarada em `dependencies`. O `bootstrap.js` importa `onAuthChanged` e `onAuthLogout` de `@mfe/shared/auth` e os usa no `mount`.
+**Observation:** `@mfe/shared` (`workspace:*`) is declared in `dependencies`. `bootstrap.js` imports `onAuthChanged` and `onAuthLogout` from `@mfe/shared/auth` and uses them in `mount`.
 
-**Interpretação:** É o pacote interno do workspace, captado pelo nome. A declaração, sozinha, não mostra um mecanismo de MFE.
+**Interpretation:** Internal workspace package, detected by name. Declaration alone does not show an MFE mechanism.
 
 ### 5. apps/shell/package.json:13; apps/shell/pages/app/[...mfe].vue:30, 40-41; apps/shell/stores/auth.ts:3
 
-**Observação:** `@mfe/shared` (`workspace:*`) está declarada em `dependencies`. A página catch-all importa `MFE_REGISTRY` e o usa para resolver a rota; a store de autenticação importa `broadcastLogin` e `broadcastLogout` de `@mfe/shared/auth`.
+**Observation:** `@mfe/shared` (`workspace:*`) is declared in `dependencies`. Catch-all page imports `MFE_REGISTRY` and uses it to resolve route; authentication store imports `broadcastLogin` and `broadcastLogout` from `@mfe/shared/auth`.
 
-**Interpretação:** É o pacote interno do workspace, captado pelo nome. O shell usa dele o registro dos remotes e o envio dos eventos, que ficam no código.
+**Interpretation:** Internal workspace package, detected by name. Shell uses its remote registry and event sending, implemented in code.
 
 ### 6. package.json:34; turbo.json:3-18
 
-**Observação:** `turbo` (`^2.0.0`) está declarada em `devDependencies`. `turbo.json` define as tasks `dev`, `build`, `lint` e `clean`. A única invocação de `turbo` está nos scripts do `package.json` da raiz, sem workflow de CI ou script de automação que o chame.
+**Observation:** `turbo` (`^2.0.0`) is declared in `devDependencies`. `turbo.json` defines tasks `dev`, `build`, `lint` and `clean`. Sole `turbo` invocation is in root `package.json` scripts, without CI workflow or automation script invoking it.
 
-**Interpretação:** É a ferramenta de monorepo, não uma tecnologia de MFE. Pela regra da revisão de dependências, o uso fica indeterminado: o Turborepo pode ser a orquestração efetiva do build ou só um atalho de scripts.
+**Interpretation:** Monorepo tool rather than MFE technology. Dependency review rule leaves usage undetermined: Turborepo may be actual build orchestration or just a script shortcut.
 
 ### 7. apps/mfe-vue2-admin/webpack.config.js:8-79
 
-**Observação:** `ModuleFederationPlugin` com `name: 'mfe_admin'`, `filename: 'remoteEntry.js'`, `exposes: { './App': './src/bootstrap.js' }` e `vue` compartilhado como `singleton` (`^2.7.0`) (:64-71). O `output.publicPath` é `http://localhost:3002/` (:14), e o `devServer` usa a porta 3002 (:75). Um `NormalModuleReplacementPlugin` redireciona os imports de `vuetify` para o `dist` pré-construído (:60-63).
+**Observation:** `ModuleFederationPlugin` with `name: 'mfe_admin'`, `filename: 'remoteEntry.js'`, `exposes: { './App': './src/bootstrap.js' }` and `vue` shared as `singleton` (`^2.7.0`) (:64-71). `output.publicPath` is `http://localhost:3002/` (:14), and `devServer` uses port 3002 (:75). A `NormalModuleReplacementPlugin` redirects `vuetify` imports to prebuilt `dist` (:60-63).
 
-**Interpretação:** A unidade está configurada como remote de Module Federation e oferece seu módulo de montagem a um host. O Vuetify 2 fica fora do escopo compartilhado.
+**Interpretation:** Unit is configured as a Module Federation remote and offers its mount module to a host. Vuetify 2 stays outside shared scope.
 
 ### 8. apps/mfe-vue2-checkout/webpack.config.js:8-81
 
-**Observação:** `ModuleFederationPlugin` com `name: 'mfe_checkout'`, `filename: 'remoteEntry.js'`, `exposes: { './App': './src/bootstrap.js' }` e `vue` compartilhado como `singleton` (`^2.7.0`) (:66-73). O `output.publicPath` é `http://localhost:3001/` (:14), e o `devServer` usa a porta 3001 (:77). Um `NormalModuleReplacementPlugin` redireciona os imports de `vuetify` para o `dist` pré-construído (:62-65).
+**Observation:** `ModuleFederationPlugin` with `name: 'mfe_checkout'`, `filename: 'remoteEntry.js'`, `exposes: { './App': './src/bootstrap.js' }` and `vue` shared as `singleton` (`^2.7.0`) (:66-73). `output.publicPath` is `http://localhost:3001/` (:14), and `devServer` uses port 3001 (:77). A `NormalModuleReplacementPlugin` redirects `vuetify` imports to prebuilt `dist` (:62-65).
 
-**Interpretação:** A unidade está configurada como remote de Module Federation e oferece seu módulo de montagem a um host. O Vuetify 2 fica fora do escopo compartilhado.
+**Interpretation:** Unit is configured as a Module Federation remote and offers its mount module to a host. Vuetify 2 stays outside shared scope.
 
 ### 9. apps/mfe-vue3-dashboard/webpack.config.js:7-69
 
-**Observação:** `ModuleFederationPlugin` com `name: 'mfe_dashboard'`, `filename: 'remoteEntry.js'`, `exposes: { './App': './src/bootstrap.js' }` e `vue` (`^3.5.0`) e `vuetify` (`^3.7.0`) compartilhados como `singleton` (:53-61). O `output.publicPath` é `http://localhost:3004/` (:13), e o `devServer` usa a porta 3004 (:65).
+**Observation:** `ModuleFederationPlugin` with `name: 'mfe_dashboard'`, `filename: 'remoteEntry.js'`, `exposes: { './App': './src/bootstrap.js' }` and `vue` (`^3.5.0`) and `vuetify` (`^3.7.0`) shared as `singleton` (:53-61). `output.publicPath` is `http://localhost:3004/` (:13), and `devServer` uses port 3004 (:65).
 
-**Interpretação:** A unidade está configurada como remote de Module Federation e oferece seu módulo de montagem a um host.
+**Interpretation:** Unit is configured as a Module Federation remote and offers its mount module to a host.
 
 ### 10. apps/mfe-vue3-profile/webpack.config.js:7-69
 
-**Observação:** `ModuleFederationPlugin` com `name: 'mfe_profile'`, `filename: 'remoteEntry.js'`, `exposes: { './App': './src/bootstrap.js' }` e `vue` (`^3.5.0`) e `vuetify` (`^3.7.0`) compartilhados como `singleton` (:53-61). O `output.publicPath` é `http://localhost:3003/` (:13), e o `devServer` usa a porta 3003 (:65).
+**Observation:** `ModuleFederationPlugin` with `name: 'mfe_profile'`, `filename: 'remoteEntry.js'`, `exposes: { './App': './src/bootstrap.js' }` and `vue` (`^3.5.0`) and `vuetify` (`^3.7.0`) shared as `singleton` (:53-61). `output.publicPath` is `http://localhost:3003/` (:13), and `devServer` uses port 3003 (:65).
 
-**Interpretação:** A unidade está configurada como remote de Module Federation e oferece seu módulo de montagem a um host.
+**Interpretation:** Unit is configured as a Module Federation remote and offers its mount module to a host.
 
 ### 11. apps/mfe-vue2-admin/src/index.js:1
 
-**Observação:** `import('./bootstrap').then(({ mount }) => {`, na entrada standalone de desenvolvimento.
+**Observation:** `import('./bootstrap').then(({ mount }) => {`, in standalone development entry.
 
-**Interpretação:** É um bootstrap assíncrono interno à unidade.
+**Interpretation:** An asynchronous bootstrap internal to unit.
 
 ### 12. apps/mfe-vue2-checkout/src/index.js:5
 
-**Observação:** `import('./bootstrap').then(({ mount }) => {`. O comentário de :1-3 diz que o arquivo só é usado no modo standalone.
+**Observation:** `import('./bootstrap').then(({ mount }) => {`. Comment at :1-3 says file is only used in standalone mode.
 
-**Interpretação:** É um bootstrap assíncrono interno à unidade.
+**Interpretation:** An asynchronous bootstrap internal to unit.
 
 ### 13. apps/mfe-vue3-dashboard/src/index.js:1
 
-**Observação:** `import('./bootstrap').then(({ mount }) => {`, na entrada standalone de desenvolvimento.
+**Observation:** `import('./bootstrap').then(({ mount }) => {`, in standalone development entry.
 
-**Interpretação:** É um bootstrap assíncrono interno à unidade.
+**Interpretation:** An asynchronous bootstrap internal to unit.
 
 ### 14. apps/mfe-vue3-profile/src/index.js:1
 
-**Observação:** `import('./bootstrap').then(({ mount }) => {`, na entrada standalone de desenvolvimento.
+**Observation:** `import('./bootstrap').then(({ mount }) => {`, in standalone development entry.
 
-**Interpretação:** É um bootstrap assíncrono interno à unidade.
+**Interpretation:** An asynchronous bootstrap internal to unit.
 
 ### 15. apps/shell/composables/useMfeLoader.ts:13-49
 
-**Observação:** `async function loadRemoteModule(descriptor: MfeDescriptor)` injeta o `remoteEntry.js` do descritor (:18), lê o container em `window[descriptor.remoteName]` (:21), chama `container.init({})` (:32), obtém `container.get(descriptor.exposedModule)` e executa a factory (:38-40), e exige uma função `mount` (:42-46).
+**Observation:** `async function loadRemoteModule(descriptor: MfeDescriptor)` injects descriptor's `remoteEntry.js` (:18), reads container at `window[descriptor.remoteName]` (:21), calls `container.init({})` (:32), obtains `container.get(descriptor.exposedModule)` and executes factory (:38-40), requiring a `mount` function (:42-46).
 
-**Interpretação:** O host implementa à mão o consumo de containers de Module Federation, para o remote que receber por parâmetro.
+**Interpretation:** Host manually implements Module Federation container consumption for remote received as parameter.
 
 ### 16. apps/shell/composables/useMfeLoader.ts:79
 
-**Observação:** `const remote = await loadRemoteModule(descriptor)`, dentro de `mountMfe` (:71-87).
+**Observation:** `const remote = await loadRemoteModule(descriptor)`, inside `mountMfe` (:71-87).
 
-**Interpretação:** O host resolve o container do remote que recebe por parâmetro antes de montá-lo.
+**Interpretation:** Host resolves container of remote received as parameter before mounting it.
 
 ### 17. apps/mfe-vue2-admin/src/bootstrap.js:24-39
 
-**Observação:** `export function mount(el, props)`, no arquivo exposto como `./App`. A função assina os eventos de autenticação e cria a instância Vue 2 do admin no elemento recebido.
+**Observation:** `export function mount(el, props)`, in file exposed as `./App`. Function subscribes to authentication events and creates the admin Vue 2 instance in received element.
 
-**Interpretação:** O admin oferece a função de montagem ao host.
+**Interpretation:** Admin offers mount function to host.
 
 ### 18. apps/mfe-vue2-admin/src/bootstrap.js:41-45
 
-**Observação:** `export function unmount(el)` destrói a instância Vue e cancela as assinaturas.
+**Observation:** `export function unmount(el)` destroys Vue instance and cancels subscriptions.
 
-**Interpretação:** O admin oferece a função de desmontagem que completa o ciclo de vida.
+**Interpretation:** Admin offers unmount function completing lifecycle.
 
 ### 19. apps/mfe-vue2-checkout/src/bootstrap.js:32-47
 
-**Observação:** `export function mount(el, props)`, no arquivo exposto como `./App`. A função assina os eventos de autenticação e cria a instância Vue 2 do checkout no elemento recebido.
+**Observation:** `export function mount(el, props)`, in file exposed as `./App`. Function subscribes to authentication events and creates the checkout Vue 2 instance in received element.
 
-**Interpretação:** O checkout oferece a função de montagem ao host.
+**Interpretation:** Checkout offers mount function to host.
 
 ### 20. apps/mfe-vue2-checkout/src/bootstrap.js:49-53
 
-**Observação:** `export function unmount(el)` destrói a instância Vue e cancela as assinaturas.
+**Observation:** `export function unmount(el)` destroys Vue instance and cancels subscriptions.
 
-**Interpretação:** O checkout oferece a função de desmontagem que completa o ciclo de vida.
+**Interpretation:** Checkout offers unmount function completing lifecycle.
 
 ### 21. apps/mfe-vue3-dashboard/src/bootstrap.js:26-34
 
-**Observação:** `export function mount(el, props)`, no arquivo exposto como `./App`. A função assina os eventos de autenticação e cria o app Vue 3 do dashboard com `createApp` no elemento recebido.
+**Observation:** `export function mount(el, props)`, in file exposed as `./App`. Function subscribes to authentication events and creates the dashboard Vue 3 app with `createApp` in received element.
 
-**Interpretação:** O dashboard oferece a função de montagem ao host.
+**Interpretation:** Dashboard offers mount function to host.
 
 ### 22. apps/mfe-vue3-dashboard/src/bootstrap.js:36-40
 
-**Observação:** `export function unmount(el)` desmonta o app Vue 3 e cancela as assinaturas.
+**Observation:** `export function unmount(el)` unmounts Vue 3 app and cancels subscriptions.
 
-**Interpretação:** O dashboard oferece a função de desmontagem que completa o ciclo de vida.
+**Interpretation:** Dashboard offers unmount function completing lifecycle.
 
 ### 23. apps/mfe-vue3-profile/src/bootstrap.js:28-41
 
-**Observação:** `export function mount(el, props)`, no arquivo exposto como `./App`. A função assina os eventos de autenticação e cria o app Vue 3 do profile com `createApp` no elemento recebido.
+**Observation:** `export function mount(el, props)`, in file exposed as `./App`. Function subscribes to authentication events and creates the profile Vue 3 app with `createApp` in received element.
 
-**Interpretação:** O profile oferece a função de montagem ao host.
+**Interpretation:** Profile offers mount function to host.
 
 ### 24. apps/mfe-vue3-profile/src/bootstrap.js:43-47
 
-**Observação:** `export function unmount(el)` desmonta o app Vue 3 e cancela as assinaturas.
+**Observation:** `export function unmount(el)` unmounts Vue 3 app and cancels subscriptions.
 
-**Interpretação:** O profile oferece a função de desmontagem que completa o ciclo de vida.
+**Interpretation:** Profile offers unmount function completing lifecycle.
 
 ### 25. apps/mfe-vue2-admin/src/bootstrap.js:24
 
-**Observação:** É a mesma declaração de `mount` do #17, reconhecida pelo padrão de chamada de montagem.
+**Observation:** Same `mount` declaration as #17, recognized by mount-call pattern.
 
-**Interpretação:** O admin oferece a função de montagem, sem chamá-la.
+**Interpretation:** Admin offers mount function without calling it.
 
-**Nota:** A 3.4.4 manteve as duas linhas por sobreposição de padrões, e a 3.5 mantém uma observação por linha. Vale também para #28, #30, #33, #35, #38, #40 e #43.
+**Note:** Section 3.4.4 retained both rows because of overlapping patterns, and 3.5 retains one observation per row. Also applies to #28, #30, #33, #35, #38, #40 and #43.
 
 ### 26. apps/mfe-vue2-admin/src/bootstrap.js:30
 
-**Observação:** `logoutUnsub = onAuthLogout(() => unmount(el))`, dentro do `mount`.
+**Observation:** `logoutUnsub = onAuthLogout(() => unmount(el))`, inside `mount`.
 
-**Interpretação:** O admin assina o evento de logout e desmonta a si mesmo; a desmontagem é interna à unidade.
+**Interpretation:** Admin subscribes to logout event and unmounts itself; unmounting is internal to unit.
 
 ### 27. apps/mfe-vue2-admin/src/bootstrap.js:32-38
 
-**Observação:** `new Vue({ ... render(h) { return h(App, ...) } }).$mount(el)`.
+**Observation:** `new Vue({ ... render(h) { return h(App, ...) } }).$mount(el)`.
 
-**Interpretação:** É a renderização interna do `App.vue` do admin, sem mecanismo de MFE.
+**Interpretation:** Internal rendering of admin `App.vue`, without MFE mechanism.
 
 ### 28. apps/mfe-vue2-admin/src/bootstrap.js:41
 
-**Observação:** É a mesma declaração de `unmount` do #18, reconhecida pelo padrão de chamada de montagem.
+**Observation:** Same `unmount` declaration as #18, recognized by mount-call pattern.
 
-**Interpretação:** O admin oferece a função de desmontagem, sem chamá-la.
+**Interpretation:** Admin offers unmount function without calling it.
 
 ### 29. apps/mfe-vue2-admin/src/index.js:2-8
 
-**Observação:** `mount(el, {...})` no `#mfe-app` da página standalone, com um usuário fictício e um `onLogout` que só escreve no console.
+**Observation:** `mount(el, {...})` in standalone page `#mfe-app`, with a fictitious user and `onLogout` that only writes to console.
 
-**Interpretação:** É uma montagem interna à unidade, para rodá-la sozinha.
+**Interpretation:** Mounting internal to unit, to run it standalone.
 
 ### 30. apps/mfe-vue2-checkout/src/bootstrap.js:32
 
-**Observação:** É a mesma declaração de `mount` do #19, reconhecida pelo padrão de chamada de montagem.
+**Observation:** Same `mount` declaration as #19, recognized by mount-call pattern.
 
-**Interpretação:** O checkout oferece a função de montagem, sem chamá-la.
+**Interpretation:** Checkout offers mount function without calling it.
 
 ### 31. apps/mfe-vue2-checkout/src/bootstrap.js:38
 
-**Observação:** `logoutUnsub = onAuthLogout(() => unmount(el))`, dentro do `mount`.
+**Observation:** `logoutUnsub = onAuthLogout(() => unmount(el))`, inside `mount`.
 
-**Interpretação:** O checkout assina o evento de logout e desmonta a si mesmo; a desmontagem é interna à unidade.
+**Interpretation:** Checkout subscribes to logout event and unmounts itself; unmounting is internal to unit.
 
 ### 32. apps/mfe-vue2-checkout/src/bootstrap.js:40-46
 
-**Observação:** `new Vue({ vuetify, ... render(h) { return h(App, ...) } }).$mount(el)`.
+**Observation:** `new Vue({ vuetify, ... render(h) { return h(App, ...) } }).$mount(el)`.
 
-**Interpretação:** É a renderização interna do `App.vue` do checkout, sem mecanismo de MFE.
+**Interpretation:** Internal rendering of checkout `App.vue`, without MFE mechanism.
 
 ### 33. apps/mfe-vue2-checkout/src/bootstrap.js:49
 
-**Observação:** É a mesma declaração de `unmount` do #20, reconhecida pelo padrão de chamada de montagem.
+**Observation:** Same `unmount` declaration as #20, recognized by mount-call pattern.
 
-**Interpretação:** O checkout oferece a função de desmontagem, sem chamá-la.
+**Interpretation:** Checkout offers unmount function without calling it.
 
 ### 34. apps/mfe-vue2-checkout/src/index.js:6-18
 
-**Observação:** `mount(el, {...})` no `#mfe-app` da página standalone, com um usuário fictício.
+**Observation:** `mount(el, {...})` in standalone page `#mfe-app`, with a fictitious user.
 
-**Interpretação:** É uma montagem interna à unidade, para rodá-la sozinha.
+**Interpretation:** Mounting internal to unit, to run it standalone.
 
 ### 35. apps/mfe-vue3-dashboard/src/bootstrap.js:26
 
-**Observação:** É a mesma declaração de `mount` do #21, reconhecida pelo padrão de chamada de montagem.
+**Observation:** Same `mount` declaration as #21, recognized by mount-call pattern.
 
-**Interpretação:** O dashboard oferece a função de montagem, sem chamá-la.
+**Interpretation:** Dashboard offers mount function without calling it.
 
 ### 36. apps/mfe-vue3-dashboard/src/bootstrap.js:30
 
-**Observação:** `logoutUnsub = onAuthLogout(() => unmount(el))`, dentro do `mount`.
+**Observation:** `logoutUnsub = onAuthLogout(() => unmount(el))`, inside `mount`.
 
-**Interpretação:** O dashboard assina o evento de logout e desmonta a si mesmo; a desmontagem é interna à unidade.
+**Interpretation:** Dashboard subscribes to logout event and unmounts itself; unmounting is internal to unit.
 
 ### 37. apps/mfe-vue3-dashboard/src/bootstrap.js:31-33
 
-**Observação:** `app = createApp(App, { user: userRef, onLogout })`, `app.use(vuetify)` e `app.mount(el)`.
+**Observation:** `app = createApp(App, { user: userRef, onLogout })`, `app.use(vuetify)` and `app.mount(el)`.
 
-**Interpretação:** É a renderização interna do `App.vue` do dashboard, sem mecanismo de MFE.
+**Interpretation:** Internal rendering of dashboard `App.vue`, without MFE mechanism.
 
 ### 38. apps/mfe-vue3-dashboard/src/bootstrap.js:36
 
-**Observação:** É a mesma declaração de `unmount` do #22, reconhecida pelo padrão de chamada de montagem.
+**Observation:** Same `unmount` declaration as #22, recognized by mount-call pattern.
 
-**Interpretação:** O dashboard oferece a função de desmontagem, sem chamá-la.
+**Interpretation:** Dashboard offers unmount function without calling it.
 
 ### 39. apps/mfe-vue3-dashboard/src/index.js:2-8
 
-**Observação:** `mount(el, {...})` no `#mfe-app` da página standalone, com um usuário fictício.
+**Observation:** `mount(el, {...})` in standalone page `#mfe-app`, with a fictitious user.
 
-**Interpretação:** É uma montagem interna à unidade, para rodá-la sozinha.
+**Interpretation:** Mounting internal to unit, to run it standalone.
 
 ### 40. apps/mfe-vue3-profile/src/bootstrap.js:28
 
-**Observação:** É a mesma declaração de `mount` do #23, reconhecida pelo padrão de chamada de montagem.
+**Observation:** Same `mount` declaration as #23, recognized by mount-call pattern.
 
-**Interpretação:** O profile oferece a função de montagem, sem chamá-la.
+**Interpretation:** Profile offers mount function without calling it.
 
 ### 41. apps/mfe-vue3-profile/src/bootstrap.js:36
 
-**Observação:** `logoutUnsub = onAuthLogout(() => unmount(el))`, dentro do `mount`.
+**Observation:** `logoutUnsub = onAuthLogout(() => unmount(el))`, inside `mount`.
 
-**Interpretação:** O profile assina o evento de logout e desmonta a si mesmo; a desmontagem é interna à unidade.
+**Interpretation:** Profile subscribes to logout event and unmounts itself; unmounting is internal to unit.
 
 ### 42. apps/mfe-vue3-profile/src/bootstrap.js:38-40
 
-**Observação:** `app = createApp(App, { user: userRef, onLogout })`, `app.use(vuetify)` e `app.mount(el)`.
+**Observation:** `app = createApp(App, { user: userRef, onLogout })`, `app.use(vuetify)` and `app.mount(el)`.
 
-**Interpretação:** É a renderização interna do `App.vue` do profile, sem mecanismo de MFE.
+**Interpretation:** Internal rendering of profile `App.vue`, without MFE mechanism.
 
 ### 43. apps/mfe-vue3-profile/src/bootstrap.js:43
 
-**Observação:** É a mesma declaração de `unmount` do #24, reconhecida pelo padrão de chamada de montagem.
+**Observation:** Same `unmount` declaration as #24, recognized by mount-call pattern.
 
-**Interpretação:** O profile oferece a função de desmontagem, sem chamá-la.
+**Interpretation:** Profile offers unmount function without calling it.
 
 ### 44. apps/mfe-vue3-profile/src/index.js:2-8
 
-**Observação:** `mount(el, {...})` no `#mfe-app` da página standalone, com um usuário fictício.
+**Observation:** `mount(el, {...})` in standalone page `#mfe-app`, with a fictitious user.
 
-**Interpretação:** É uma montagem interna à unidade, para rodá-la sozinha.
+**Interpretation:** Mounting internal to unit, to run it standalone.
 
 ### 45. apps/shell/composables/useMfeLoader.ts:76-87; apps/shell/pages/app/[...mfe].vue:24, 47-48
 
-**Observação:** `remote.mount(el, props)`, logo depois de `loadRemoteModule`. O elemento é o `div` de montagem da página catch-all, e as props são `user` e `onLogout`.
+**Observation:** `remote.mount(el, props)`, immediately after `loadRemoteModule`. Element is catch-all page mount `div`, and props are `user` and `onLogout`.
 
-**Interpretação:** O host monta no seu DOM o remote resolvido, qualquer que seja.
+**Interpretation:** Host mounts whichever remote was resolved in its DOM.
 
 ### 46. apps/shell/composables/useMfeLoader.ts:89-92
 
-**Observação:** `if (remote) remote.unmount(el)`, sobre o remote em cache. `unmountMfe` é chamado pela página catch-all em :54 e :59.
+**Observation:** `if (remote) remote.unmount(el)`, on cached remote. `unmountMfe` is called by catch-all page at :54 and :59.
 
-**Interpretação:** O host desmonta o remote que montou, qualquer que seja.
+**Interpretation:** Host unmounts whichever remote it mounted.
 
 ### 47. packages/shared/src/types/index.ts:26
 
-**Observação:** `mount(el: HTMLElement, props: RemoteMountProps): void`, na interface `RemoteMount` (:25-28), sob o comentário "Contract every remote must expose via its MF module".
+**Observation:** `mount(el: HTMLElement, props: RemoteMountProps): void`, in interface `RemoteMount` (:25-28), under comment "Contract every remote must expose via its MF module".
 
-**Interpretação:** É a assinatura de tipo do contrato de montagem, e não uma chamada.
+**Interpretation:** Mount contract type signature rather than a call.
 
 ### 48. packages/shared/src/types/index.ts:27
 
-**Observação:** `unmount(el: HTMLElement): void`, na mesma interface `RemoteMount`.
+**Observation:** `unmount(el: HTMLElement): void`, in same interface `RemoteMount`.
 
-**Interpretação:** É a assinatura de tipo do contrato de desmontagem, e não uma chamada.
+**Interpretation:** Unmount contract type signature rather than a call.
 
 ### 49. apps/shell/composables/useMfeLoader.ts:52-64; apps/shell/composables/useMfeLoader.ts:18
 
-**Observação:** `document.createElement('script')` com `src` igual à URL do descritor, anexado ao `head`; `injectScript` é chamado por `loadRemoteModule` com `descriptor.remoteUrl`.
+**Observation:** `document.createElement('script')` with `src` equal to descriptor URL, appended to `head`; `injectScript` is called by `loadRemoteModule` with `descriptor.remoteUrl`.
 
-**Interpretação:** O host carrega em runtime o `remoteEntry.js` do remote, como transporte do container de Module Federation.
+**Interpretation:** Host loads remote `remoteEntry.js` at runtime as Module Federation container transport.
 
 ### 50. packages/shared/src/auth/index.ts:10-16; apps/shell/stores/auth.ts:28
 
-**Observação:** `window.dispatchEvent(new CustomEvent<UserState>(AUTH_CHANGED, { detail: user }))` em `broadcastLogin`, com `AUTH_CHANGED = 'mfe:auth-changed'` (:3). A store de autenticação do shell chama `broadcastLogin(user)`, com o comentário "notifies Vue 2 + Vue 3 remotes via event bus".
+**Observation:** `window.dispatchEvent(new CustomEvent<UserState>(AUTH_CHANGED, { detail: user }))` in `broadcastLogin`, with `AUTH_CHANGED = 'mfe:auth-changed'` (:3). Shell authentication store calls `broadcastLogin(user)`, with comment "notifies Vue 2 + Vue 3 remotes via event bus".
 
-**Interpretação:** O shell envia o usuário autenticado por um evento de janela que qualquer unidade pode escutar.
+**Interpretation:** Shell sends authenticated user through a window event any unit can listen to.
 
 ### 51. packages/shared/src/auth/index.ts:18-24; apps/shell/stores/auth.ts:34
 
-**Observação:** `window.dispatchEvent(new CustomEvent(AUTH_LOGOUT))` em `broadcastLogout`, com `AUTH_LOGOUT = 'mfe:auth-logout'` (:4). O `logout` da store do shell chama `broadcastLogout()`.
+**Observation:** `window.dispatchEvent(new CustomEvent(AUTH_LOGOUT))` in `broadcastLogout`, with `AUTH_LOGOUT = 'mfe:auth-logout'` (:4). Shell store `logout` calls `broadcastLogout()`.
 
-**Interpretação:** O shell anuncia o logout por um evento de janela que qualquer unidade pode escutar.
+**Interpretation:** Shell announces logout through a window event any unit can listen to.
 
 ### 52. apps/shell/pages/app/[...mfe].vue:46; apps/shell/pages/app/[...mfe].vue:40-42, 24
 
-**Observação:** `await loader.mountMfe(mountEl.value, mfe.value, {...})` em `onMounted`. `mfe` é o descritor do registro cuja `route` é prefixo do caminho atual, e `mountEl` é o `div` de montagem.
+**Observation:** `await loader.mountMfe(mountEl.value, mfe.value, {...})` in `onMounted`. `mfe` is registry descriptor whose `route` prefixes current path, and `mountEl` is mount `div`.
 
-**Interpretação:** A página do host monta o remote que a rota escolheu no registro, qualquer que seja.
+**Interpretation:** Host page mounts whichever remote route selected from registry.
 
 ### 53. packages/shared/src/registry.ts:12-61
 
-**Observação:** `export const MFE_REGISTRY: MfeDescriptor[]` com quatro descritores: checkout `/app/checkout` e `mfe_checkout` (:14-23), admin `/app/admin` e `mfe_admin` (:26-35), profile `/app/profile` e `mfe_profile` (:38-47) e dashboard `/app/dashboard` e `mfe_dashboard` (:50-59). Cada um tem `remoteUrl` do `remoteEntry.js`, por variável de ambiente ou `http://localhost:3001` a `3004` (:5-9), e `exposedModule: './App'`.
+**Observation:** `export const MFE_REGISTRY: MfeDescriptor[]` with four descriptors: checkout `/app/checkout` and `mfe_checkout` (:14-23), admin `/app/admin` and `mfe_admin` (:26-35), profile `/app/profile` and `mfe_profile` (:38-47) and dashboard `/app/dashboard` and `mfe_dashboard` (:50-59). Each has `remoteUrl` for `remoteEntry.js`, through environment variable or `http://localhost:3001` through `3004` (:5-9), and `exposedModule: './App'`.
 
-**Interpretação:** O host declara, em código, quais unidades usa, onde encontrá-las e em que rota cada uma aparece.
+**Interpretation:** Host declares in code which units it uses, where to find them and each route.
 
 ### 54. .; package.json:1-52; package.json:19
 
-**Observação:** É o manifesto da raiz, só com devDependencies de tooling e um `build` que é `turbo run build`. Não tem entrada nem configuração de build próprias.
+**Observation:** Root manifest, with only tooling devDependencies and a `build` invoking `turbo run build`. It has no entry or build configuration of its own.
 
-**Interpretação:** É a raiz de coordenação do workspace, não uma unidade frontend.
+**Interpretation:** Workspace coordination root rather than frontend unit.
 
 ### 55. apps/mfe-vue2-admin; apps/mfe-vue2-admin/package.json:1-32; apps/mfe-vue2-admin/webpack.config.js:9, 8-79; apps/mfe-vue2-admin/src/index.js:1-8; apps/mfe-vue2-admin/src/bootstrap.js:32-38; apps/mfe-vue2-admin/package.json:7
 
-**Observação:** É uma aplicação Vue 2 com manifesto, configuração webpack, entrada (`./src/index.js`, que carrega o bootstrap e monta a UI) e `webpack --mode production` próprios.
+**Observation:** Vue 2 application with its own manifest, webpack configuration, entry (`./src/index.js`, loading bootstrap and mounting UI) and `webpack --mode production`.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with its own boundary.
 
 ### 56. apps/mfe-vue2-checkout; apps/mfe-vue2-checkout/package.json:1-33; apps/mfe-vue2-checkout/webpack.config.js:9, 8-81; apps/mfe-vue2-checkout/src/index.js:5-18; apps/mfe-vue2-checkout/src/bootstrap.js:40-46; apps/mfe-vue2-checkout/package.json:7
 
-**Observação:** É uma aplicação Vue 2 com manifesto, configuração webpack, entrada e `webpack --mode production` próprios.
+**Observation:** Vue 2 application with its own manifest, webpack configuration, entry and `webpack --mode production`.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with its own boundary.
 
 ### 57. apps/mfe-vue3-dashboard; apps/mfe-vue3-dashboard/package.json:1-32; apps/mfe-vue3-dashboard/webpack.config.js:8, 7-69; apps/mfe-vue3-dashboard/src/index.js:1-8; apps/mfe-vue3-dashboard/src/bootstrap.js:31-33; apps/mfe-vue3-dashboard/package.json:7
 
-**Observação:** É uma aplicação Vue 3 com manifesto, configuração webpack, entrada e `webpack --mode production` próprios.
+**Observation:** Vue 3 application with its own manifest, webpack configuration, entry and `webpack --mode production`.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with its own boundary.
 
 ### 58. apps/mfe-vue3-profile; apps/mfe-vue3-profile/package.json:1-32; apps/mfe-vue3-profile/webpack.config.js:8, 7-69; apps/mfe-vue3-profile/src/index.js:1-8; apps/mfe-vue3-profile/src/bootstrap.js:38-40; apps/mfe-vue3-profile/package.json:7
 
-**Observação:** É uma aplicação Vue 3 com manifesto, configuração webpack, entrada e `webpack --mode production` próprios.
+**Observation:** Vue 3 application with its own manifest, webpack configuration, entry and `webpack --mode production`.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with its own boundary.
 
 ### 59. apps/shell; apps/shell/package.json:1-35; apps/shell/app.vue:1-5; apps/shell/pages/app/[...mfe].vue:2-3; apps/shell/nuxt.config.ts:58-91; apps/shell/package.json:7
 
-**Observação:** É uma aplicação Nuxt 3 com manifesto, raiz `app.vue` com `<NuxtPage />`, páginas por rota, `defineNuxtConfig` com `ssr: true` e `nuxt build` próprios.
+**Observation:** Nuxt 3 application with its own manifest, `app.vue` root with `<NuxtPage />`, routed pages, `defineNuxtConfig` with `ssr: true` and `nuxt build`.
 
-**Interpretação:** É uma unidade frontend com limite próprio, no papel de host.
+**Interpretation:** Frontend unit with its own boundary, in host role.
 
 ### 60. packages/shared; packages/shared/package.json:1-11; packages/shared/package.json:5-10
 
-**Observação:** É um pacote com manifesto próprio que exporta `./src/index.ts`, `./auth` e `./types`: tipos, eventos de autenticação e o registro. Não tem entrada de aplicação nem build.
+**Observation:** Package with its own manifest exporting `./src/index.ts`, `./auth` and `./types`: types, authentication events and registry. It has no application entry or build.
 
-**Interpretação:** É um pacote compartilhado do workspace, não uma unidade frontend.
+**Interpretation:** Shared workspace package rather than frontend unit.
 
 ### 61. scripts; scripts/webpack.aliases.js:13-17
 
-**Observação:** Tem os aliases webpack usados pelos remotes, um servidor estático de `dist`, um health check e um script de início local. Não tem manifesto nem entrada de aplicação.
+**Observation:** Contains webpack aliases used by remotes, a static `dist` server, health check and local startup script. No manifest or application entry.
 
-**Interpretação:** São utilitários de build e de desenvolvimento, não uma unidade frontend.
+**Interpretation:** Build and development utilities rather than frontend unit.
 
 ### 62. packages/shared/src/registry.ts:26-35, 5-9; apps/shell/pages/app/[...mfe].vue:40-49; apps/shell/composables/useMfeLoader.ts:13-49, 79-80, 91; apps/mfe-vue2-admin/webpack.config.js:64-67; apps/mfe-vue2-admin/src/bootstrap.js:24, 41
 
-**Observação:** O descritor `admin` pede o container `mfe_admin` e o módulo `./App`, em `http://localhost:3002/remoteEntry.js` quando não há variável de ambiente. O remote se declara `mfe_admin`, gera `remoteEntry.js` e expõe `./App`, com `mount` e `unmount`. A rota `/app/admin` leva à página que carrega o container e chama `mount` no seu `div`.
+**Observation:** Descriptor `admin` requests container `mfe_admin` and module `./App`, at `http://localhost:3002/remoteEntry.js` without environment variable. Remote declares itself `mfe_admin`, generates `remoteEntry.js` and exposes `./App`, with `mount` and `unmount`. Route `/app/admin` leads to page loading container and calling `mount` in its `div`.
 
-**Interpretação:** É uma relação host → remote ativa por Module Federation.
+**Interpretation:** An active host → remote relationship through Module Federation.
 
 ### 63. packages/shared/src/registry.ts:14-23, 5-9; apps/shell/pages/app/[...mfe].vue:40-49; apps/shell/composables/useMfeLoader.ts:13-49, 79-80, 91; apps/mfe-vue2-checkout/webpack.config.js:66-69; apps/mfe-vue2-checkout/src/bootstrap.js:32, 49
 
-**Observação:** O descritor `checkout` pede o container `mfe_checkout` e o módulo `./App`, em `http://localhost:3001/remoteEntry.js` quando não há variável de ambiente. O remote se declara `mfe_checkout`, gera `remoteEntry.js` e expõe `./App`, com `mount` e `unmount`.
+**Observation:** Descriptor `checkout` requests container `mfe_checkout` and module `./App`, at `http://localhost:3001/remoteEntry.js` without environment variable. Remote declares itself `mfe_checkout`, generates `remoteEntry.js` and exposes `./App`, with `mount` and `unmount`.
 
-**Interpretação:** É uma relação host → remote ativa por Module Federation.
+**Interpretation:** An active host → remote relationship through Module Federation.
 
 ### 64. packages/shared/src/registry.ts:50-59, 5-9; apps/shell/pages/app/[...mfe].vue:40-49; apps/shell/composables/useMfeLoader.ts:13-49, 79-80, 91; apps/mfe-vue3-dashboard/webpack.config.js:53-56; apps/mfe-vue3-dashboard/src/bootstrap.js:26, 36
 
-**Observação:** O descritor `dashboard` pede o container `mfe_dashboard` e o módulo `./App`, em `http://localhost:3004/remoteEntry.js` quando não há variável de ambiente. O remote se declara `mfe_dashboard`, gera `remoteEntry.js` e expõe `./App`, com `mount` e `unmount`.
+**Observation:** Descriptor `dashboard` requests container `mfe_dashboard` and module `./App`, at `http://localhost:3004/remoteEntry.js` without environment variable. Remote declares itself `mfe_dashboard`, generates `remoteEntry.js` and exposes `./App`, with `mount` and `unmount`.
 
-**Interpretação:** É uma relação host → remote ativa por Module Federation. O shell trata o remote Vue 3 pelo mesmo contrato dos Vue 2.
+**Interpretation:** An active host → remote relationship through Module Federation. Shell treats Vue 3 remote through same contract as Vue 2 remotes.
 
 ### 65. packages/shared/src/registry.ts:38-47, 5-9; apps/shell/pages/app/[...mfe].vue:40-49; apps/shell/composables/useMfeLoader.ts:13-49, 79-80, 91; apps/mfe-vue3-profile/webpack.config.js:53-56; apps/mfe-vue3-profile/src/bootstrap.js:28, 43
 
-**Observação:** O descritor `profile` pede o container `mfe_profile` e o módulo `./App`, em `http://localhost:3003/remoteEntry.js` quando não há variável de ambiente. O remote se declara `mfe_profile`, gera `remoteEntry.js` e expõe `./App`, com `mount` e `unmount`.
+**Observation:** Descriptor `profile` requests container `mfe_profile` and module `./App`, at `http://localhost:3003/remoteEntry.js` without environment variable. Remote declares itself `mfe_profile`, generates `remoteEntry.js` and exposes `./App`, with `mount` and `unmount`.
 
-**Interpretação:** É uma relação host → remote ativa por Module Federation.
+**Interpretation:** An active host → remote relationship through Module Federation.
 
 ### 66. apps/shell/stores/auth.ts:28, 34; packages/shared/src/auth/index.ts:14, 22, 28-43; apps/mfe-vue2-admin/src/bootstrap.js:27-30
 
-**Observação:** O shell dispara `mfe:auth-changed` ao sincronizar a sessão e `mfe:auth-logout` no logout. O admin assina os dois eventos no seu `mount`: o primeiro atualiza o usuário da instância, o segundo desmonta o remote. O admin não envia eventos.
+**Observation:** Shell dispatches `mfe:auth-changed` when synchronizing session and `mfe:auth-logout` on logout. Admin subscribes to both events in its `mount`: first updates instance user, second unmounts remote. Admin sends no events.
 
-**Interpretação:** É uma relação de comunicação por eventos, ativa, do shell para o admin.
+**Interpretation:** An active event communication relationship from shell to admin.
 
 ### 67. apps/shell/stores/auth.ts:28, 34; packages/shared/src/auth/index.ts:14, 22, 28-43; apps/mfe-vue2-checkout/src/bootstrap.js:35-38
 
-**Observação:** O shell dispara os dois eventos, e o checkout os assina no seu `mount` e só recebe.
+**Observation:** Shell dispatches both events, and checkout subscribes in its `mount` and only receives.
 
-**Interpretação:** É uma relação de comunicação por eventos, ativa, do shell para o checkout.
+**Interpretation:** An active event communication relationship from shell to checkout.
 
 ### 68. apps/shell/stores/auth.ts:28, 34; packages/shared/src/auth/index.ts:14, 22, 28-43; apps/mfe-vue3-dashboard/src/bootstrap.js:29-30
 
-**Observação:** O shell dispara os dois eventos, e o dashboard os assina no seu `mount`, atualizando o `ref` do usuário, e só recebe.
+**Observation:** Shell dispatches both events, and dashboard subscribes in its `mount`, updating user `ref`, and only receives.
 
-**Interpretação:** É uma relação de comunicação por eventos, ativa, do shell para o dashboard.
+**Interpretation:** An active event communication relationship from shell to dashboard.
 
 ### 69. apps/shell/stores/auth.ts:28, 34; packages/shared/src/auth/index.ts:14, 22, 28-43; apps/mfe-vue3-profile/src/bootstrap.js:33-36
 
-**Observação:** O shell dispara os dois eventos, e o profile os assina no seu `mount` e só recebe.
+**Observation:** Shell dispatches both events, and profile subscribes in its `mount` and only receives.
 
-**Interpretação:** É uma relação de comunicação por eventos, ativa, do shell para o profile.
+**Interpretation:** An active event communication relationship from shell to profile.
 
 ### 70. apps/mfe-vue2-admin/package.json:7; apps/mfe-vue2-admin/webpack.config.js:11-16, 64-71; package.json:19, 27
 
-**Observação:** Tem `webpack --config webpack.config.js --mode production` e saída em `dist` próprios, com o container `mfe_admin` em `remoteEntry.js`; o `turbo run build` da raiz só dispara esse build. O único servidor do `dist` é o script de desenvolvimento `dev:remote:admin`, na porta 3002. Nenhum artefato publica a aplicação.
+**Observation:** It has its own `webpack --config webpack.config.js --mode production` and `dist` output, with container `mfe_admin` in `remoteEntry.js`; root `turbo run build` only invokes this build. Sole `dist` server is development script `dev:remote:admin`, on port 3002. No artifact publishes application.
 
-**Interpretação:** Há uma fronteira de build própria, sem deploy observado.
+**Interpretation:** A separate build boundary without observed deployment.
 
 ### 71. apps/mfe-vue2-checkout/package.json:7; apps/mfe-vue2-checkout/webpack.config.js:11-16, 66-73; package.json:19, 26
 
-**Observação:** Tem `webpack --mode production` e saída em `dist` próprios, com o container `mfe_checkout`. É servido localmente pelo `dev:remote:checkout` na porta 3001 ou pelo `devServer`. Nenhum artefato publica a aplicação.
+**Observation:** It has its own `webpack --mode production` and `dist` output, with container `mfe_checkout`. Served locally through `dev:remote:checkout` on port 3001 or `devServer`. No artifact publishes application.
 
-**Interpretação:** Há uma fronteira de build própria, sem deploy observado.
+**Interpretation:** A separate build boundary without observed deployment.
 
 ### 72. apps/mfe-vue3-dashboard/package.json:7; apps/mfe-vue3-dashboard/webpack.config.js:10-15, 53-61; package.json:19, 29
 
-**Observação:** Tem `webpack --mode production` e saída em `dist` próprios, com o container `mfe_dashboard`. É servido localmente pelo `dev:remote:dashboard` na porta 3004 ou pelo `devServer`. Nenhum artefato publica a aplicação.
+**Observation:** It has its own `webpack --mode production` and `dist` output, with container `mfe_dashboard`. Served locally through `dev:remote:dashboard` on port 3004 or `devServer`. No artifact publishes application.
 
-**Interpretação:** Há uma fronteira de build própria, sem deploy observado.
+**Interpretation:** A separate build boundary without observed deployment.
 
 ### 73. apps/mfe-vue3-profile/package.json:7; apps/mfe-vue3-profile/webpack.config.js:10-15, 53-56; package.json:19, 28
 
-**Observação:** Tem `webpack --mode production` e saída em `dist` próprios, com o container `mfe_profile`. É servido localmente pelo `dev:remote:profile` na porta 3003 ou pelo `devServer`. Nenhum artefato publica a aplicação.
+**Observation:** It has its own `webpack --mode production` and `dist` output, with container `mfe_profile`. Served locally through `dev:remote:profile` on port 3003 or `devServer`. No artifact publishes application.
 
-**Interpretação:** Há uma fronteira de build própria, sem deploy observado.
+**Interpretation:** A separate build boundary without observed deployment.
 
 ### 74. apps/shell/package.json:7-8; apps/shell/nuxt.config.ts:58-91; turbo.json:8-11; package.json:19
 
-**Observação:** Tem `nuxt build`, com saída `.output` só do shell, e `start: node .output/server/index.mjs` para o servidor SSR. O único endereço no snapshot é a porta 3000 do `nuxt dev`. Nenhum artefato empacota ou publica a aplicação.
+**Observation:** It has `nuxt build`, with shell-only `.output`, and `start: node .output/server/index.mjs` for SSR server. Sole snapshot address is port 3000 of `nuxt dev`. No artifact packages or publishes application.
 
-**Interpretação:** Há uma fronteira de build própria, sem deploy observado. Nenhum remote entra no build do shell.
+**Interpretation:** A separate build boundary without observed deployment. No remote enters shell build.
 
 ### 75. README.md:3
 
-**Observação:** "Micro-frontend monorepo supporting **Vue 2 + Vuetify 2** and **Vue 3 + Vuetify 3** remotes side-by-side, orchestrated by a **Nuxt 3 shell**."
+**Observation:** "Micro-frontend monorepo supporting **Vue 2 + Vuetify 2** and **Vue 3 + Vuetify 3** remotes side-by-side, orchestrated by a **Nuxt 3 shell**."
 
-**Interpretação:** Apresenta o repositório como um monorepo de remotes Vue 2 e Vue 3 orquestrados por um shell Nuxt 3. A afirmação é corroborada.
+**Interpretation:** Presents repository as monorepo of Vue 2 and Vue 3 remotes orchestrated by Nuxt 3 shell. Claim corroborated.
 
 ### 76. README.md:5
 
-**Observação:** "with Webpack Module Federation, Turborepo and pnpm workspaces".
+**Observation:** "with Webpack Module Federation, Turborepo and pnpm workspaces".
 
-**Interpretação:** Nomeia as tecnologias do projeto. Os remotes configuram o Module Federation, e o workspace pnpm e o Turborepo estão configurados. A afirmação é corroborada.
+**Interpretation:** Names project technologies. Remotes configure Module Federation, and pnpm workspace and Turborepo are configured. Claim corroborated.
 
 ### 77. README.md:13-28
 
-**Observação:** Árvore de `apps/` com `shell/ ← Nuxt 3 host`, `mfe-vue2-checkout/` e `mfe-vue2-admin/ ← Vue 2 + Vuetify 2` e `mfe-vue3-profile/` e `mfe-vue3-dashboard/ ← Vue 3 + Vuetify 3`.
+**Observation:** Tree of `apps/` with `shell/ ← Nuxt 3 host`, `mfe-vue2-checkout/` and `mfe-vue2-admin/ ← Vue 2 + Vuetify 2` and `mfe-vue3-profile/` and `mfe-vue3-dashboard/ ← Vue 3 + Vuetify 3`.
 
-**Interpretação:** Descreve as cinco aplicações e o framework de cada uma. A afirmação é corroborada.
+**Interpretation:** Describes five applications and framework of each. Claim corroborated.
 
 ### 78. README.md:17
 
-**Observação:** "index.vue ← Homepage / MFE selector grid".
+**Observation:** "index.vue ← Homepage / MFE selector grid".
 
-**Interpretação:** Afirma que a página inicial do shell lista os MFEs para escolha. Ela gera um cartão por descritor do registro, e a afirmação é corroborada.
+**Interpretation:** Claims shell homepage lists MFEs for selection. It generates a card per registry descriptor Claim corroborated.
 
 ### 79. README.md:18
 
-**Observação:** "app/[...mfe].vue ← Dynamic MFE container".
+**Observation:** "app/[...mfe].vue ← Dynamic MFE container".
 
-**Interpretação:** Afirma que a página catch-all é o contêiner onde os remotes são montados. A afirmação é corroborada.
+**Interpretation:** Claims catch-all page is container where remotes mount. Claim corroborated.
 
 ### 80. README.md:20
 
-**Observação:** "ShellHeader.vue ← Shared header (only shared UI element)".
+**Observation:** "ShellHeader.vue ← Shared header (only shared UI element)".
 
-**Interpretação:** Afirma que o cabeçalho é compartilhado entre unidades. Só o shell o usa, e a afirmação é contradita.
+**Interpretation:** Claims header is shared between units. Only shell uses it Claim contradicted.
 
 ### 81. README.md:22
 
-**Observação:** "useMfeLoader.ts ← Dynamic remote loader".
+**Observation:** "useMfeLoader.ts ← Dynamic remote loader".
 
-**Interpretação:** Afirma que o composable carrega os remotes em runtime. A afirmação é corroborada.
+**Interpretation:** Claims composable loads remotes at runtime. Claim corroborated.
 
 ### 82. README.md:31
 
-**Observação:** "shared/ ← @mfe/shared: types, auth bus, MFE registry".
+**Observation:** "shared/ ← @mfe/shared: types, auth bus, MFE registry".
 
-**Interpretação:** Afirma que um pacote comum às unidades reúne tipos, barramento de autenticação e registro. As cinco unidades o declaram e usam, e a afirmação é corroborada.
+**Interpretation:** Claims a package common to units groups types, authentication bus and registry. Five units declare and use it Claim corroborated.
 
 ### 83. README.md:34
 
-**Observação:** "auth/ ← CustomEvent auth bus (framework-agnostic)".
+**Observation:** "auth/ ← CustomEvent auth bus (framework-agnostic)".
 
-**Interpretação:** Nomeia o mecanismo de comunicação, eventos `CustomEvent` independentes de framework. A afirmação é corroborada.
+**Interpretation:** Names communication mechanism, framework-independent `CustomEvent` events. Claim corroborated.
 
 ### 84. README.md:35
 
-**Observação:** "registry.ts ← List of all MFEs shown on the homepage".
+**Observation:** "registry.ts ← List of all MFEs shown on the homepage".
 
-**Interpretação:** Afirma que o registro lista as unidades usadas pelo shell. A afirmação é corroborada.
+**Interpretation:** Claims registry lists units used by shell. Claim corroborated.
 
 ### 85. README.md:44
 
-**Observação:** "Each Vue 2 remote is a **plain Webpack 5 app** — no Nuxt."
+**Observation:** "Each Vue 2 remote is a **plain Webpack 5 app** — no Nuxt."
 
-**Interpretação:** Afirma que os remotes Vue 2 têm build webpack próprio. A afirmação é corroborada.
+**Interpretation:** Claims Vue 2 remotes have their own webpack builds. Claim corroborated.
 
 ### 86. README.md:44
 
-**Observação:** "Each remote brings its own isolated Vue 2 + Vuetify 2 instance […] completely isolated from the shell's Vue 3."
+**Observation:** "Each remote brings its own isolated Vue 2 + Vuetify 2 instance […] completely isolated from the shell's Vue 3."
 
-**Interpretação:** Afirma que cada remote Vue 2 roda com instâncias próprias, isoladas do shell. A afirmação é corroborada.
+**Interpretation:** Claims each Vue 2 remote runs with its own instances, isolated from shell. Claim corroborated.
 
 ### 87. README.md:44
 
-**Observação:** "via Module Federation's `singleton` scope".
+**Observation:** "via Module Federation's `singleton` scope".
 
-**Interpretação:** Atribui a instância de Vue 2 e Vuetify 2 ao escopo `singleton` do Module Federation. Só `vue` está no `shared`, o Vuetify 2 vem do `dist` pré-construído, e a afirmação é contradita.
+**Interpretation:** Attributes Vue 2 and Vuetify 2 instance to Module Federation `singleton` scope. Only `vue` is in `shared`, Vuetify 2 comes from prebuilt `dist` Claim contradicted.
 
 ### 88. README.md:46
 
-**Observação:** "Vue 3 remotes are also standalone Webpack apps (simpler than Nuxt for remotes)".
+**Observation:** "Vue 3 remotes are also standalone Webpack apps (simpler than Nuxt for remotes)".
 
-**Interpretação:** Afirma que os remotes Vue 3 têm build webpack próprio. A afirmação é corroborada.
+**Interpretation:** Claims Vue 3 remotes have their own webpack builds. Claim corroborated.
 
 ### 89. README.md:46
 
-**Observação:** "and share Vue 3 with the shell via MF's singleton scope".
+**Observation:** "and share Vue 3 with the shell via MF's singleton scope".
 
-**Interpretação:** Afirma que host e remotes Vue 3 compartilham o Vue 3. O shell não tem `ModuleFederationPlugin` e inicia cada container com escopo vazio, e a afirmação é contradita.
+**Interpretation:** Claims host and Vue 3 remotes share Vue 3. Shell has no `ModuleFederationPlugin` and initializes each container with empty scope Claim contradicted.
 
 ### 90. README.md:48
 
-**Observação:** "The only shared thing: the header".
+**Observation:** "The only shared thing: the header".
 
-**Interpretação:** Afirma que nada além do cabeçalho é compartilhado. O pacote `@mfe/shared` e o barramento de eventos ligam as cinco unidades, e o cabeçalho só é usado pelo shell. A afirmação é contradita.
+**Interpretation:** Claims nothing beyond header is shared. Package `@mfe/shared` and event bus connect five units, and header is only used by shell. Claim contradicted.
 
 ### 91. README.md:50
 
-**Observação:** "Remotes do **not** render their own header — the shell injects it above the remote's mount point."
+**Observation:** "Remotes do **not** render their own header — the shell injects it above the remote's mount point."
 
-**Interpretação:** Afirma que o shell dá a moldura e os remotes só o conteúdo. A afirmação é corroborada.
+**Interpretation:** Claims shell provides frame and remotes only content. Claim corroborated.
 
 ### 92. README.md:50
 
-**Observação:** "Remotes only receive `user` and `onLogout` as props."
+**Observation:** "Remotes only receive `user` and `onLogout` as props."
 
-**Interpretação:** Descreve as props que o host passa a cada remote. A afirmação é corroborada.
+**Interpretation:** Describes props host passes to each remote. Claim corroborated.
 
 ### 93. README.md:56
 
-**Observação:** "Shell logs in → calls `broadcastLogin(user)` → stores user in `sessionStorage` + fires `mfe:auth-changed`".
+**Observation:** "Shell logs in → calls `broadcastLogin(user)` → stores user in `sessionStorage` + fires `mfe:auth-changed`".
 
-**Interpretação:** Descreve o envio do estado de autenticação do shell aos remotes. A afirmação é corroborada.
+**Interpretation:** Describes shell sending authentication state to remotes. Claim corroborated.
 
 ### 94. README.md:57
 
-**Observação:** "Each remote subscribes to `mfe:auth-changed` on mount and updates its internal user ref".
+**Observation:** "Each remote subscribes to `mfe:auth-changed` on mount and updates its internal user ref".
 
-**Interpretação:** Descreve a recepção do evento em cada remote. A afirmação é corroborada.
+**Interpretation:** Describes event reception in each remote. Claim corroborated.
 
 ### 95. README.md:58
 
-**Observação:** "On logout, shell fires `mfe:auth-logout` → remotes unmount themselves".
+**Observation:** "On logout, shell fires `mfe:auth-logout` → remotes unmount themselves".
 
-**Interpretação:** Descreve o logout propagado por evento. A afirmação é corroborada.
+**Interpretation:** Describes event-propagated logout. Claim corroborated.
 
 ### 96. README.md:62
 
-**Observação:** "Every remote must export `{ mount(el, props), unmount(el) }` from its `bootstrap.js`. This is the `RemoteMount` interface defined in `@mfe/shared`. The shell's `useMfeLoader` composable calls this interface — it never knows whether it's talking to a Vue 2 or Vue 3 app."
+**Observation:** "Every remote must export `{ mount(el, props), unmount(el) }` from its `bootstrap.js`. This is the `RemoteMount` interface defined in `@mfe/shared`. The shell's `useMfeLoader` composable calls this interface — it never knows whether it's talking to a Vue 2 or Vue 3 app."
 
-**Interpretação:** Descreve o contrato de montagem entre host e remotes, independente do framework. A afirmação é corroborada.
+**Interpretation:** Describes framework-independent mounting contract between host and remotes. Claim corroborated.
 
 ### 97. README.md:87-95
 
-**Observação:** "Individual apps:" e `pnpm dev:shell      # shell only`, seguidos de um comando por remote.
+**Observation:** "Individual apps:" and `pnpm dev:shell      # shell only`, followed by one command per remote.
 
-**Interpretação:** Afirma que cada aplicação sobe sozinha em desenvolvimento. A afirmação é corroborada.
+**Interpretation:** Claims each application starts standalone in development. Claim corroborated.
 
 ### 98. apps/mfe-vue2-admin/webpack.config.js:53
 
-**Observação:** "Admin MFE (standalone dev)", título da página do `HtmlWebpackPlugin`.
+**Observation:** "Admin MFE (standalone dev)", page title of `HtmlWebpackPlugin`.
 
-**Interpretação:** Afirma que o admin roda sozinho em desenvolvimento. A afirmação é corroborada.
+**Interpretation:** Claims admin runs standalone in development. Claim corroborated.
 
 ### 99. apps/mfe-vue2-checkout/src/index.js:1-3
 
-**Observação:** "Async entry so Module Federation shared scopes initialise before the app runs. The shell loads bootstrap.js directly; this file is used only when running the checkout MFE standalone for development."
+**Observation:** "Async entry so Module Federation shared scopes initialise before the app runs. The shell loads bootstrap.js directly; this file is used only when running the checkout MFE standalone for development."
 
-**Interpretação:** Explica o bootstrap assíncrono pelo Module Federation e separa a entrada standalone do módulo que o shell carrega. A afirmação é corroborada.
+**Interpretation:** Explains asynchronous bootstrap through Module Federation and separates standalone entry from module loaded by shell. Claim corroborated.
 
 ### 100. apps/mfe-vue3-dashboard/webpack.config.js:48
 
-**Observação:** "Dashboard MFE (standalone dev)", título da página do `HtmlWebpackPlugin`.
+**Observation:** "Dashboard MFE (standalone dev)", page title of `HtmlWebpackPlugin`.
 
-**Interpretação:** Afirma que o dashboard roda sozinho em desenvolvimento. A afirmação é corroborada.
+**Interpretation:** Claims dashboard runs standalone in development. Claim corroborated.
 
 ### 101. apps/mfe-vue3-profile/webpack.config.js:48
 
-**Observação:** "Profile MFE (standalone dev)", título da página do `HtmlWebpackPlugin`.
+**Observation:** "Profile MFE (standalone dev)", page title of `HtmlWebpackPlugin`.
 
-**Interpretação:** Afirma que o profile roda sozinho em desenvolvimento. A afirmação é corroborada.
+**Interpretation:** Claims profile runs standalone in development. Claim corroborated.
 
 ### 102. apps/shell/composables/useMfeLoader.ts:17
 
-**Observação:** "Inject remoteEntry.js as a plain script tag".
+**Observation:** "Inject remoteEntry.js as a plain script tag".
 
-**Interpretação:** Descreve o transporte do `remoteEntry.js` por `<script>`. A afirmação é corroborada.
+**Interpretation:** Describes `remoteEntry.js` transport through `<script>`. Claim corroborated.
 
 ### 103. apps/shell/composables/useMfeLoader.ts:20
 
-**Observação:** "The remote sets itself on window[remoteName] via webpack MF".
+**Observation:** "The remote sets itself on window[remoteName] via webpack MF".
 
-**Interpretação:** Descreve como o container de Module Federation fica disponível ao host. A afirmação é corroborada.
+**Interpretation:** Describes how Module Federation container becomes available to host. Claim corroborated.
 
 ### 104. apps/shell/composables/useMfeLoader.ts:28-30
 
-**Observação:** "Shell has no MF plugin, so we pass an empty object — each remote manages its own singleton scope internally."
+**Observation:** "Shell has no MF plugin, so we pass an empty object — each remote manages its own singleton scope internally."
 
-**Interpretação:** Explica que o host inicia os containers sem escopo compartilhado. A afirmação é corroborada e desmente a de #89.
+**Interpretation:** Explains host initializes containers without shared scope. Claim corroborated. It refutes #89.
 
 ### 105. apps/shell/nuxt.config.ts:66
 
-**Observação:** "the shell never statically imports any remote module".
+**Observation:** "the shell never statically imports any remote module".
 
-**Interpretação:** Afirma que o shell não depende dos remotes em tempo de build. A afirmação é corroborada.
+**Interpretation:** Claims shell does not depend on remotes at build time. Claim corroborated.
 
 ### 106. packages/shared/src/registry.ts:3-4
 
-**Observação:** "Remote URLs fall back to localhost for local dev. In production set CHECKOUT_REMOTE_URL etc. in your environment."
+**Observation:** "Remote URLs fall back to localhost for local dev. In production set CHECKOUT_REMOTE_URL etc. in your environment."
 
-**Interpretação:** Afirma que o endereço de cada remote é trocável por variável de ambiente. A afirmação é corroborada; o `publicPath` dos remotes continua fixo em `localhost`.
+**Interpretation:** Claims each remote address can be changed through environment variable. Claim corroborated. Remote `publicPath` remains fixed at `localhost`.
 
 ### 107. scripts/dev-remote-server.js:4-5
 
-**Observação:** "Serves a built MFE's dist/ folder as a static file server with CORS. Useful when you want to run the shell in dev mode against pre-built remotes."
+**Observation:** "Serves a built MFE's dist/ folder as a static file server with CORS. Useful when you want to run the shell in dev mode against pre-built remotes."
 
-**Interpretação:** Afirma que cada remote construído pode ser servido à parte para o shell. A afirmação é corroborada.
+**Interpretation:** Claims each built remote can be served separately for shell. Claim corroborated.
 
 ### 108. scripts/health-check.js:4-5
 
-**Observação:** "Polls all MFE remoteEntry.js URLs until they respond (or times out). Run before starting the shell in production/CI to avoid blank pages."
+**Observation:** "Polls all MFE remoteEntry.js URLs until they respond (or times out). Run before starting the shell in production/CI to avoid blank pages."
 
-**Interpretação:** Descreve uma checagem da disponibilidade de cada remote antes de subir o shell. A afirmação é corroborada; nenhum artefato do snapshot a chama em produção ou CI.
+**Interpretation:** Describes checking each remote availability before starting shell. Claim corroborated. No snapshot artifact invokes it in production or CI.
 
 ### 109. scripts/webpack.aliases.js:3
 
-**Observação:** "Shared path aliases for all MFE remote webpack configs."
+**Observation:** "Shared path aliases for all MFE remote webpack configs."
 
-**Interpretação:** Descreve um utilitário de build comum aos quatro remotes. A afirmação é corroborada.
+**Interpretation:** Describes a build utility common to four remotes. Claim corroborated.
 
 ### 110. 74f5247 2026-05-29 (package.json, turbo.json); 84ffc24 2026-05-29
 
-**Observação:** `package.json` e `turbo.json` são criados em `74f5247` e não mudam até o snapshot. Nenhum commit cria ou remove workflow de CI, Dockerfile ou script que chame `turbo`; o único caminho removido no histórico é o gitlink `apps`.
+**Observation:** `package.json` and `turbo.json` are created in `74f5247` and do not change through snapshot. No commit creates or removes CI workflow, Dockerfile or script invoking `turbo`; sole path removed in history is gitlink `apps`.
 
-**Interpretação:** O `turbo` nunca teve invocação fora dos scripts do `package.json`; o `Undetermined` não é resto de uma automação abandonada. O ponto está esclarecido.
+**Interpretation:** `turbo` never had an invocation outside `package.json` scripts; `Undetermined` does not remain from abandoned automation. Point clarified.
 
 ### 111. 74f5247 2026-05-29 (README.md); 8606169 2026-05-29 (apps, gitlink); 84ffc24 2026-05-29 (apps/shell/components/ShellHeader.vue, apps/*/src/App.vue)
 
-**Observação:** O README com "Shared header" é o de `74f5247`, sem mudança até o snapshot. O `ShellHeader.vue` e os `App.vue` dos remotes aparecem como arquivos só em `84ffc24`; antes, `apps` era o gitlink `cb1c03a`, cujo commit não está no clone.
+**Observation:** README with "Shared header" is from `74f5247`, unchanged through snapshot. `ShellHeader.vue` and remote `App.vue` appear as files only in `84ffc24`; earlier, `apps` was gitlink `cb1c03a`, whose commit is absent from clone.
 
-**Interpretação:** O histórico não mostra se alguma versão anterior das aplicações usava o cabeçalho em mais de uma unidade. O ponto é inconclusivo, só sobre o passado: no snapshot, o cabeçalho é só do shell.
+**Interpretation:** History does not show whether an earlier application version used header in more than one unit. Point inconclusive, concerning only past: header is shell-only in snapshot.
 
 ### 112. 74f5247 2026-05-29 (README.md); 8606169 2026-05-29 (apps, gitlink); 84ffc24 2026-05-29 (apps/shell/nuxt.config.ts, apps/shell/composables/useMfeLoader.ts, apps/*/webpack.config.js)
 
-**Observação:** As frases sobre o escopo `singleton` estão no README de `74f5247`, sem mudança. Os artefatos que as desmentem têm a primeira presença observável em `84ffc24`, com um único commit no `log` de cada um. O conteúdo anterior, no gitlink `cb1c03a` ou no repositório de origem citado em README.md:5, não está disponível.
+**Observation:** Sentences about `singleton` scope are in README from `74f5247`, unchanged. Contradicting artifacts have first observable presence in `84ffc24`, with a single commit in each `log`. Earlier contents, in gitlink `cb1c03a` or origin repository cited in README.md:5, are unavailable.
 
-**Interpretação:** O histórico não mostra se o shell teve um `ModuleFederationPlugin` com o Vue 3 no escopo compartilhado. O ponto é inconclusivo, só sobre o passado: no snapshot, o shell inicia os containers com escopo vazio.
+**Interpretation:** History does not show whether shell had `ModuleFederationPlugin` with Vue 3 in shared scope. Point inconclusive, concerning only past: shell initializes containers with empty scope in snapshot.
 
 ### 113. 74f5247 2026-05-29 (README.md, packages/shared)
 
-**Observação:** O README e `packages/shared` entram juntos em `74f5247` e não mudam até o snapshot. A versão de `74f5247` do README já traz, logo abaixo de "The only shared thing: the header", a seção "Auth state sharing" com o barramento de `packages/shared/src/auth`.
+**Observation:** README and `packages/shared` enter together in `74f5247` and do not change through snapshot. README version from `74f5247` already contains, immediately below "The only shared thing: the header", section "Auth state sharing" with `packages/shared/src/auth` bus.
 
-**Interpretação:** O título nunca conviveu com uma versão sem o pacote compartilhado; a divergência é interna ao README desde a primeira versão observável. O ponto está esclarecido.
+**Interpretation:** Title never coexisted with a version without shared package; discrepancy is internal to README from first observable version. Point clarified.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.2 (apps/mfe-vue2-admin/package.json:13) | 1 tecnologia | manifesto | — | contexto | fraca | declara #26 |
-| 2 | 3.4.2 (apps/mfe-vue2-checkout/package.json:13) | 1 tecnologia | manifesto | — | contexto | fraca | declara #31 |
-| 3 | 3.4.2 (apps/mfe-vue3-dashboard/package.json:14) | 1 tecnologia | manifesto | — | contexto | fraca | declara #36 |
-| 4 | 3.4.2 (apps/mfe-vue3-profile/package.json:14) | 1 tecnologia | manifesto | — | contexto | fraca | declara #41 |
-| 5 | 3.4.2 (apps/shell/package.json:13) | 1 tecnologia | manifesto | — | contexto | fraca | declara #53; declara #50; declara #51 |
-| 6 | 3.4.2 (package.json:34) | 1 tecnologia | manifesto | — | contexto | ambígua | declara turbo.json:3-18 |
-| 7 | 3.4.2 (apps/mfe-vue2-admin/package.json:13, Evidência); 3.4.3 (apps/mfe-vue2-admin, Marcadores, Entrada e Build); 3.4.4 (apps/mfe-vue2-admin/src/bootstrap.js:24, src-mount-export e src-mount-call, Observação); 3.4.5 #1 (Configuração); 3.4.6 #1 (Onde é servida e Artefatos); 3.4.7 #13, #24, #35 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #55; configura #62 |
-| 8 | 3.4.2 (apps/mfe-vue2-checkout/package.json:13, Evidência); 3.4.3 (apps/mfe-vue2-checkout, Marcadores, Entrada e Build); 3.4.4 (apps/mfe-vue2-checkout/src/bootstrap.js:32, src-mount-export e src-mount-call, Observação); 3.4.5 #2 (Configuração); 3.4.6 #2 (Onde é servida e Artefatos); 3.4.7 #2, #11, #13, #25, #29, #30, #35 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #56; configura #63 |
-| 9 | 3.4.2 (apps/mfe-vue3-dashboard/package.json:14, Evidência); 3.4.3 (apps/mfe-vue3-dashboard, Marcadores, Entrada e Build); 3.4.4 (apps/mfe-vue3-dashboard/src/bootstrap.js:26, src-mount-export e src-mount-call, Observação); 3.4.5 #3 (Configuração); 3.4.6 #3 (Onde é servida e Artefatos); 3.4.7 #26, #35 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #57; configura #64 |
-| 10 | 3.4.2 (apps/mfe-vue3-profile/package.json:14, Evidência); 3.4.3 (apps/mfe-vue3-profile, Marcadores, Entrada e Build); 3.4.4 (apps/mfe-vue3-profile/src/bootstrap.js:28, src-mount-export e src-mount-call, Observação); 3.4.5 #4 (Configuração); 3.4.6 #4 (Onde é servida e Artefatos); 3.4.7 #14, #15, #27, #35 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #58; configura #65 |
-| 11 | 3.4.4 (apps/mfe-vue2-admin/src/index.js:1) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 12 | 3.4.4 (apps/mfe-vue2-checkout/src/index.js:5) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 13 | 3.4.4 (apps/mfe-vue3-dashboard/src/index.js:1) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 14 | 3.4.4 (apps/mfe-vue3-profile/src/index.js:1) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 15 | 3.4.4 (apps/shell/composables/useMfeLoader.ts:13) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #62; implementa #63; implementa #64; implementa #65 |
-| 16 | 3.4.4 (apps/shell/composables/useMfeLoader.ts:79) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #62; implementa #63; implementa #64; implementa #65 |
-| 17 | 3.4.4 (apps/mfe-vue2-admin/src/bootstrap.js:24, src-mount-export) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #62 |
-| 18 | 3.4.4 (apps/mfe-vue2-admin/src/bootstrap.js:41, src-mount-export) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #62 |
-| 19 | 3.4.4 (apps/mfe-vue2-checkout/src/bootstrap.js:32, src-mount-export) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #63 |
-| 20 | 3.4.4 (apps/mfe-vue2-checkout/src/bootstrap.js:49, src-mount-export) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #63 |
-| 21 | 3.4.4 (apps/mfe-vue3-dashboard/src/bootstrap.js:26, src-mount-export) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #64 |
-| 22 | 3.4.4 (apps/mfe-vue3-dashboard/src/bootstrap.js:36, src-mount-export) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #64 |
-| 23 | 3.4.4 (apps/mfe-vue3-profile/src/bootstrap.js:28, src-mount-export) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #65 |
-| 24 | 3.4.4 (apps/mfe-vue3-profile/src/bootstrap.js:43, src-mount-export) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #65 |
-| 25 | 3.4.4 (apps/mfe-vue2-admin/src/bootstrap.js:24, src-mount-call) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #62 |
-| 26 | 3.4.4 (apps/mfe-vue2-admin/src/bootstrap.js:30) | 3 código | código-fonte | events | tecnológica | fraca | — |
-| 27 | 3.4.4 (apps/mfe-vue2-admin/src/bootstrap.js:38) | 3 código | código-fonte | — | contexto | fraca | — |
-| 28 | 3.4.4 (apps/mfe-vue2-admin/src/bootstrap.js:41, src-mount-call) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #62 |
-| 29 | 3.4.4 (apps/mfe-vue2-admin/src/index.js:4) | 3 código | código-fonte | module-federation | tecnológica | fraca | — |
-| 30 | 3.4.4 (apps/mfe-vue2-checkout/src/bootstrap.js:32, src-mount-call) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #63 |
-| 31 | 3.4.4 (apps/mfe-vue2-checkout/src/bootstrap.js:38) | 3 código | código-fonte | events | tecnológica | fraca | — |
-| 32 | 3.4.4 (apps/mfe-vue2-checkout/src/bootstrap.js:46) | 3 código | código-fonte | — | contexto | fraca | — |
-| 33 | 3.4.4 (apps/mfe-vue2-checkout/src/bootstrap.js:49, src-mount-call) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #63 |
-| 34 | 3.4.4 (apps/mfe-vue2-checkout/src/index.js:8) | 3 código | código-fonte | module-federation | tecnológica | fraca | — |
-| 35 | 3.4.4 (apps/mfe-vue3-dashboard/src/bootstrap.js:26, src-mount-call) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #64 |
-| 36 | 3.4.4 (apps/mfe-vue3-dashboard/src/bootstrap.js:30) | 3 código | código-fonte | events | tecnológica | fraca | — |
-| 37 | 3.4.4 (apps/mfe-vue3-dashboard/src/bootstrap.js:33) | 3 código | código-fonte | — | contexto | fraca | — |
-| 38 | 3.4.4 (apps/mfe-vue3-dashboard/src/bootstrap.js:36, src-mount-call) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #64 |
-| 39 | 3.4.4 (apps/mfe-vue3-dashboard/src/index.js:4) | 3 código | código-fonte | module-federation | tecnológica | fraca | — |
-| 40 | 3.4.4 (apps/mfe-vue3-profile/src/bootstrap.js:28, src-mount-call) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #65 |
-| 41 | 3.4.4 (apps/mfe-vue3-profile/src/bootstrap.js:36) | 3 código | código-fonte | events | tecnológica | fraca | — |
-| 42 | 3.4.4 (apps/mfe-vue3-profile/src/bootstrap.js:40) | 3 código | código-fonte | — | contexto | fraca | — |
-| 43 | 3.4.4 (apps/mfe-vue3-profile/src/bootstrap.js:43, src-mount-call) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #65 |
-| 44 | 3.4.4 (apps/mfe-vue3-profile/src/index.js:4) | 3 código | código-fonte | module-federation | tecnológica | fraca | — |
-| 45 | 3.4.4 (apps/shell/composables/useMfeLoader.ts:80) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #62; implementa #63; implementa #64; implementa #65 |
-| 46 | 3.4.4 (apps/shell/composables/useMfeLoader.ts:91) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #62; implementa #63; implementa #64; implementa #65 |
-| 47 | 3.4.4 (packages/shared/src/types/index.ts:26) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 48 | 3.4.4 (packages/shared/src/types/index.ts:27) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 49 | 3.4.4 (apps/shell/composables/useMfeLoader.ts:57) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #62; implementa #63; implementa #64; implementa #65 |
-| 50 | 3.4.4 (packages/shared/src/auth/index.ts:14) | 3 código | código-fonte | events | tecnológica | moderada | implementa #66; implementa #67; implementa #68; implementa #69 |
-| 51 | 3.4.4 (packages/shared/src/auth/index.ts:22) | 3 código | código-fonte | events | tecnológica | moderada | implementa #66; implementa #67; implementa #68; implementa #69 |
-| 52 | 3.4.4 (apps/shell/pages/app/[...mfe].vue:46) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #62; implementa #63; implementa #64; implementa #65 |
-| 53 | 3.4.4 (packages/shared/src/registry.ts:12) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #62; implementa #63; implementa #64; implementa #65 |
-| 54 | 3.4.3 (.) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 55 | 3.4.3 (apps/mfe-vue2-admin) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 56 | 3.4.3 (apps/mfe-vue2-checkout) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 57 | 3.4.3 (apps/mfe-vue3-dashboard) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 58 | 3.4.3 (apps/mfe-vue3-profile) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 59 | 3.4.3 (apps/shell) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 60 | 3.4.3 (packages/shared) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 61 | 3.4.3 (scripts) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 62 | 3.4.5 #1 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #59; liga #55 |
-| 63 | 3.4.5 #2 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #59; liga #56 |
-| 64 | 3.4.5 #3 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #59; liga #57 |
-| 65 | 3.4.5 #4 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #59; liga #58 |
-| 66 | 3.4.5 #5 | 5 composição | código-fonte | events | arquitetural | forte | liga #59; liga #55 |
-| 67 | 3.4.5 #6 | 5 composição | código-fonte | events | arquitetural | forte | liga #59; liga #56 |
-| 68 | 3.4.5 #7 | 5 composição | código-fonte | events | arquitetural | forte | liga #59; liga #57 |
-| 69 | 3.4.5 #8 | 5 composição | código-fonte | events | arquitetural | forte | liga #59; liga #58 |
-| 70 | 3.4.6 #1 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #55 |
-| 71 | 3.4.6 #2 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #56 |
-| 72 | 3.4.6 #3 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #57 |
-| 73 | 3.4.6 #4 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #58 |
-| 74 | 3.4.6 #5 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #59 |
-| 75 | 3.4.7 #1 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #55; corrobora #56; corrobora #57; corrobora #58; corrobora #59; corrobora #62; corrobora #63; corrobora #64; corrobora #65 |
-| 76 | 3.4.7 #2 | 7 documentação | documentação | module-federation | tecnológica | fraca | corrobora #7; corrobora #8; corrobora #9; corrobora #10; corrobora #62; corrobora #63; corrobora #64; corrobora #65; corrobora pnpm-workspace.yaml:1-3; corrobora turbo.json:3-18 |
-| 77 | 3.4.7 #3 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #55; corrobora #56; corrobora #57; corrobora #58; corrobora #59 |
-| 78 | 3.4.7 #4 | 7 documentação | documentação | — | arquitetural | fraca | corrobora apps/shell/pages/index.vue:12-28 |
-| 79 | 3.4.7 #5 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #52; corrobora #62; corrobora #63; corrobora #64; corrobora #65 |
-| 80 | 3.4.7 #6 | 7 documentação | documentação | — | arquitetural | fraca | contradiz apps/shell/pages/index.vue:3; contradiz apps/shell/pages/app/[...mfe].vue:3; contradiz apps/mfe-vue2-checkout/src/App.vue:1-15 |
-| 81 | 3.4.7 #7 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #15; corrobora #16; corrobora #62; corrobora #63; corrobora #64; corrobora #65 |
-| 82 | 3.4.7 #8 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #1; corrobora #2; corrobora #3; corrobora #4; corrobora #5; corrobora #60 |
-| 83 | 3.4.7 #9 | 7 documentação | documentação | events | tecnológica | fraca | corrobora #50; corrobora #51; corrobora #66; corrobora #67; corrobora #68; corrobora #69 |
-| 84 | 3.4.7 #10 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #53; corrobora apps/shell/pages/index.vue:42 |
-| 85 | 3.4.7 #11 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #70; corrobora #71; corrobora #8 |
-| 86 | 3.4.7 #12 | 7 documentação | documentação | — | arquitetural | fraca | corrobora apps/mfe-vue2-checkout/src/bootstrap.js:8-20; corrobora #32; corrobora apps/shell/composables/useMfeLoader.ts:28-32 |
-| 87 | 3.4.7 #13 | 7 documentação | documentação | module-federation | tecnológica | fraca | contradiz #7; contradiz #8; contradiz apps/mfe-vue2-checkout/src/bootstrap.js:8-9 |
-| 88 | 3.4.7 #14 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #57; corrobora #58; corrobora #72; corrobora #73; corrobora #10 |
-| 89 | 3.4.7 #15 | 7 documentação | documentação | module-federation | arquitetural | fraca | contradiz apps/shell/composables/useMfeLoader.ts:28-32; contradiz apps/shell/nuxt.config.ts:58-91 |
-| 90 | 3.4.7 #16 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #1; contradiz #2; contradiz #3; contradiz #4; contradiz #5; contradiz #66; contradiz #67; contradiz #68; contradiz #69; contradiz apps/shell/pages/index.vue:3; contradiz apps/shell/pages/app/[...mfe].vue:3 |
-| 91 | 3.4.7 #17 | 7 documentação | documentação | — | arquitetural | fraca | corrobora apps/shell/pages/app/[...mfe].vue:3, 24; corrobora apps/mfe-vue2-admin/src/App.vue:1-15; corrobora apps/mfe-vue3-dashboard/src/App.vue:1-13 |
-| 92 | 3.4.7 #18 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #45; corrobora #52; corrobora packages/shared/src/types/index.ts:30-33 |
-| 93 | 3.4.7 #19 | 7 documentação | documentação | events | arquitetural | fraca | corrobora #50; corrobora #66; corrobora #67; corrobora #68; corrobora #69 |
-| 94 | 3.4.7 #20 | 7 documentação | documentação | events | arquitetural | fraca | corrobora apps/mfe-vue2-checkout/src/bootstrap.js:35-37; corrobora apps/mfe-vue3-profile/src/bootstrap.js:33-35; corrobora #66; corrobora #67; corrobora #68; corrobora #69 |
-| 95 | 3.4.7 #21 | 7 documentação | documentação | events | arquitetural | fraca | corrobora #26; corrobora #51; corrobora #66; corrobora #67; corrobora #68; corrobora #69 |
-| 96 | 3.4.7 #22 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #17; corrobora #18; corrobora #19; corrobora #20; corrobora #21; corrobora #22; corrobora #23; corrobora #24; corrobora #47; corrobora #48; corrobora apps/shell/composables/useMfeLoader.ts:38-46; corrobora #45; corrobora #62; corrobora #63; corrobora #64; corrobora #65 |
-| 97 | 3.4.7 #23 | 7 documentação | documentação | — | arquitetural | fraca | corrobora package.json:14-18; corrobora apps/shell/package.json:6; corrobora apps/mfe-vue2-checkout/package.json:6; corrobora #29; corrobora #34; corrobora #39; corrobora #44 |
-| 98 | 3.4.7 #24 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #55; corrobora #29 |
-| 99 | 3.4.7 #25 | 7 documentação | comentário | module-federation | arquitetural | fraca | corrobora #12; corrobora #8; corrobora #63 |
-| 100 | 3.4.7 #26 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #57; corrobora #39 |
-| 101 | 3.4.7 #27 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #58; corrobora #44 |
-| 102 | 3.4.7 #28 | 7 documentação | comentário | module-federation | tecnológica | fraca | corrobora #49 |
-| 103 | 3.4.7 #29 | 7 documentação | comentário | module-federation | tecnológica | fraca | corrobora apps/shell/composables/useMfeLoader.ts:21; corrobora #8; corrobora #53; corrobora #62; corrobora #63; corrobora #64; corrobora #65 |
-| 104 | 3.4.7 #30 | 7 documentação | comentário | module-federation | tecnológica | fraca | corrobora apps/shell/composables/useMfeLoader.ts:31-35; corrobora apps/shell/nuxt.config.ts:58-91; corrobora #8 |
-| 105 | 3.4.7 #31 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #74; corrobora apps/shell/package.json:12-20 |
-| 106 | 3.4.7 #32 | 7 documentação | comentário | — | arquitetural | fraca | corrobora packages/shared/src/registry.ts:5-9; corrobora #53 |
-| 107 | 3.4.7 #33 | 7 documentação | comentário | — | arquitetural | fraca | corrobora package.json:26-30; corrobora scripts/dev-remote-server.js:32-53 |
-| 108 | 3.4.7 #34 | 7 documentação | comentário | — | arquitetural | fraca | corrobora scripts/health-check.js:14-19, 38-64; corrobora package.json:25 |
-| 109 | 3.4.7 #35 | 7 documentação | comentário | — | contexto | fraca | corrobora #7; corrobora #8; corrobora #9; corrobora #10 |
-| 110 | 3.4.8 #1 | 8 histórico | histórico | — | contexto | fraca | explica #6 |
-| 111 | 3.4.8 #2 | 8 histórico | histórico | — | arquitetural | fraca | explica #80 |
-| 112 | 3.4.8 #3 | 8 histórico | histórico | module-federation | arquitetural | fraca | explica #87; explica #89 |
-| 113 | 3.4.8 #4 | 8 histórico | histórico | — | arquitetural | fraca | explica #90 |
+| 1 | 3.4.2 (apps/mfe-vue2-admin/package.json:13) | 1 technology | manifest | — | context | weak | declares #26 |
+| 2 | 3.4.2 (apps/mfe-vue2-checkout/package.json:13) | 1 technology | manifest | — | context | weak | declares #31 |
+| 3 | 3.4.2 (apps/mfe-vue3-dashboard/package.json:14) | 1 technology | manifest | — | context | weak | declares #36 |
+| 4 | 3.4.2 (apps/mfe-vue3-profile/package.json:14) | 1 technology | manifest | — | context | weak | declares #41 |
+| 5 | 3.4.2 (apps/shell/package.json:13) | 1 technology | manifest | — | context | weak | declares #53; declares #50; declares #51 |
+| 6 | 3.4.2 (package.json:34) | 1 technology | manifest | — | context | ambiguous | declares turbo.json:3-18 |
+| 7 | 3.4.2 (apps/mfe-vue2-admin/package.json:13, Evidence); 3.4.3 (apps/mfe-vue2-admin, Markers, Entry and Build); 3.4.4 (apps/mfe-vue2-admin/src/bootstrap.js:24, src-mount-export and src-mount-call, Observation); 3.4.5 #1 (Configuration); 3.4.6 #1 (Where served and Artifacts); 3.4.7 #13, #24, #35 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #55; configures #62 |
+| 8 | 3.4.2 (apps/mfe-vue2-checkout/package.json:13, Evidence); 3.4.3 (apps/mfe-vue2-checkout, Markers, Entry and Build); 3.4.4 (apps/mfe-vue2-checkout/src/bootstrap.js:32, src-mount-export and src-mount-call, Observation); 3.4.5 #2 (Configuration); 3.4.6 #2 (Where served and Artifacts); 3.4.7 #2, #11, #13, #25, #29, #30, #35 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #56; configures #63 |
+| 9 | 3.4.2 (apps/mfe-vue3-dashboard/package.json:14, Evidence); 3.4.3 (apps/mfe-vue3-dashboard, Markers, Entry and Build); 3.4.4 (apps/mfe-vue3-dashboard/src/bootstrap.js:26, src-mount-export and src-mount-call, Observation); 3.4.5 #3 (Configuration); 3.4.6 #3 (Where served and Artifacts); 3.4.7 #26, #35 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #57; configures #64 |
+| 10 | 3.4.2 (apps/mfe-vue3-profile/package.json:14, Evidence); 3.4.3 (apps/mfe-vue3-profile, Markers, Entry and Build); 3.4.4 (apps/mfe-vue3-profile/src/bootstrap.js:28, src-mount-export and src-mount-call, Observation); 3.4.5 #4 (Configuration); 3.4.6 #4 (Where served and Artifacts); 3.4.7 #14, #15, #27, #35 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #58; configures #65 |
+| 11 | 3.4.4 (apps/mfe-vue2-admin/src/index.js:1) | 3 code | source code | — | technological | weak | — |
+| 12 | 3.4.4 (apps/mfe-vue2-checkout/src/index.js:5) | 3 code | source code | — | technological | weak | — |
+| 13 | 3.4.4 (apps/mfe-vue3-dashboard/src/index.js:1) | 3 code | source code | — | technological | weak | — |
+| 14 | 3.4.4 (apps/mfe-vue3-profile/src/index.js:1) | 3 code | source code | — | technological | weak | — |
+| 15 | 3.4.4 (apps/shell/composables/useMfeLoader.ts:13) | 3 code | source code | module-federation | technological | moderate | implements #62; implements #63; implements #64; implements #65 |
+| 16 | 3.4.4 (apps/shell/composables/useMfeLoader.ts:79) | 3 code | source code | module-federation | technological | moderate | implements #62; implements #63; implements #64; implements #65 |
+| 17 | 3.4.4 (apps/mfe-vue2-admin/src/bootstrap.js:24, src-mount-export) | 3 code | source code | module-federation | technological | moderate | implements #62 |
+| 18 | 3.4.4 (apps/mfe-vue2-admin/src/bootstrap.js:41, src-mount-export) | 3 code | source code | module-federation | technological | moderate | implements #62 |
+| 19 | 3.4.4 (apps/mfe-vue2-checkout/src/bootstrap.js:32, src-mount-export) | 3 code | source code | module-federation | technological | moderate | implements #63 |
+| 20 | 3.4.4 (apps/mfe-vue2-checkout/src/bootstrap.js:49, src-mount-export) | 3 code | source code | module-federation | technological | moderate | implements #63 |
+| 21 | 3.4.4 (apps/mfe-vue3-dashboard/src/bootstrap.js:26, src-mount-export) | 3 code | source code | module-federation | technological | moderate | implements #64 |
+| 22 | 3.4.4 (apps/mfe-vue3-dashboard/src/bootstrap.js:36, src-mount-export) | 3 code | source code | module-federation | technological | moderate | implements #64 |
+| 23 | 3.4.4 (apps/mfe-vue3-profile/src/bootstrap.js:28, src-mount-export) | 3 code | source code | module-federation | technological | moderate | implements #65 |
+| 24 | 3.4.4 (apps/mfe-vue3-profile/src/bootstrap.js:43, src-mount-export) | 3 code | source code | module-federation | technological | moderate | implements #65 |
+| 25 | 3.4.4 (apps/mfe-vue2-admin/src/bootstrap.js:24, src-mount-call) | 3 code | source code | module-federation | technological | moderate | implements #62 |
+| 26 | 3.4.4 (apps/mfe-vue2-admin/src/bootstrap.js:30) | 3 code | source code | events | technological | weak | — |
+| 27 | 3.4.4 (apps/mfe-vue2-admin/src/bootstrap.js:38) | 3 code | source code | — | context | weak | — |
+| 28 | 3.4.4 (apps/mfe-vue2-admin/src/bootstrap.js:41, src-mount-call) | 3 code | source code | module-federation | technological | moderate | implements #62 |
+| 29 | 3.4.4 (apps/mfe-vue2-admin/src/index.js:4) | 3 code | source code | module-federation | technological | weak | — |
+| 30 | 3.4.4 (apps/mfe-vue2-checkout/src/bootstrap.js:32, src-mount-call) | 3 code | source code | module-federation | technological | moderate | implements #63 |
+| 31 | 3.4.4 (apps/mfe-vue2-checkout/src/bootstrap.js:38) | 3 code | source code | events | technological | weak | — |
+| 32 | 3.4.4 (apps/mfe-vue2-checkout/src/bootstrap.js:46) | 3 code | source code | — | context | weak | — |
+| 33 | 3.4.4 (apps/mfe-vue2-checkout/src/bootstrap.js:49, src-mount-call) | 3 code | source code | module-federation | technological | moderate | implements #63 |
+| 34 | 3.4.4 (apps/mfe-vue2-checkout/src/index.js:8) | 3 code | source code | module-federation | technological | weak | — |
+| 35 | 3.4.4 (apps/mfe-vue3-dashboard/src/bootstrap.js:26, src-mount-call) | 3 code | source code | module-federation | technological | moderate | implements #64 |
+| 36 | 3.4.4 (apps/mfe-vue3-dashboard/src/bootstrap.js:30) | 3 code | source code | events | technological | weak | — |
+| 37 | 3.4.4 (apps/mfe-vue3-dashboard/src/bootstrap.js:33) | 3 code | source code | — | context | weak | — |
+| 38 | 3.4.4 (apps/mfe-vue3-dashboard/src/bootstrap.js:36, src-mount-call) | 3 code | source code | module-federation | technological | moderate | implements #64 |
+| 39 | 3.4.4 (apps/mfe-vue3-dashboard/src/index.js:4) | 3 code | source code | module-federation | technological | weak | — |
+| 40 | 3.4.4 (apps/mfe-vue3-profile/src/bootstrap.js:28, src-mount-call) | 3 code | source code | module-federation | technological | moderate | implements #65 |
+| 41 | 3.4.4 (apps/mfe-vue3-profile/src/bootstrap.js:36) | 3 code | source code | events | technological | weak | — |
+| 42 | 3.4.4 (apps/mfe-vue3-profile/src/bootstrap.js:40) | 3 code | source code | — | context | weak | — |
+| 43 | 3.4.4 (apps/mfe-vue3-profile/src/bootstrap.js:43, src-mount-call) | 3 code | source code | module-federation | technological | moderate | implements #65 |
+| 44 | 3.4.4 (apps/mfe-vue3-profile/src/index.js:4) | 3 code | source code | module-federation | technological | weak | — |
+| 45 | 3.4.4 (apps/shell/composables/useMfeLoader.ts:80) | 3 code | source code | module-federation | technological | moderate | implements #62; implements #63; implements #64; implements #65 |
+| 46 | 3.4.4 (apps/shell/composables/useMfeLoader.ts:91) | 3 code | source code | module-federation | technological | moderate | implements #62; implements #63; implements #64; implements #65 |
+| 47 | 3.4.4 (packages/shared/src/types/index.ts:26) | 3 code | source code | — | technological | weak | — |
+| 48 | 3.4.4 (packages/shared/src/types/index.ts:27) | 3 code | source code | — | technological | weak | — |
+| 49 | 3.4.4 (apps/shell/composables/useMfeLoader.ts:57) | 3 code | source code | module-federation | technological | moderate | implements #62; implements #63; implements #64; implements #65 |
+| 50 | 3.4.4 (packages/shared/src/auth/index.ts:14) | 3 code | source code | events | technological | moderate | implements #66; implements #67; implements #68; implements #69 |
+| 51 | 3.4.4 (packages/shared/src/auth/index.ts:22) | 3 code | source code | events | technological | moderate | implements #66; implements #67; implements #68; implements #69 |
+| 52 | 3.4.4 (apps/shell/pages/app/[...mfe].vue:46) | 3 code | source code | module-federation | technological | moderate | implements #62; implements #63; implements #64; implements #65 |
+| 53 | 3.4.4 (packages/shared/src/registry.ts:12) | 3 code | source code | module-federation | architectural | strong | implements #62; implements #63; implements #64; implements #65 |
+| 54 | 3.4.3 (.) | 4 structure | directory | — | context | weak | — |
+| 55 | 3.4.3 (apps/mfe-vue2-admin) | 4 structure | directory | — | architectural | moderate | — |
+| 56 | 3.4.3 (apps/mfe-vue2-checkout) | 4 structure | directory | — | architectural | moderate | — |
+| 57 | 3.4.3 (apps/mfe-vue3-dashboard) | 4 structure | directory | — | architectural | moderate | — |
+| 58 | 3.4.3 (apps/mfe-vue3-profile) | 4 structure | directory | — | architectural | moderate | — |
+| 59 | 3.4.3 (apps/shell) | 4 structure | directory | — | architectural | moderate | — |
+| 60 | 3.4.3 (packages/shared) | 4 structure | directory | — | context | weak | — |
+| 61 | 3.4.3 (scripts) | 4 structure | directory | — | context | weak | — |
+| 62 | 3.4.5 #1 | 5 composition | source code | module-federation | architectural | strong | links #59; links #55 |
+| 63 | 3.4.5 #2 | 5 composition | source code | module-federation | architectural | strong | links #59; links #56 |
+| 64 | 3.4.5 #3 | 5 composition | source code | module-federation | architectural | strong | links #59; links #57 |
+| 65 | 3.4.5 #4 | 5 composition | source code | module-federation | architectural | strong | links #59; links #58 |
+| 66 | 3.4.5 #5 | 5 composition | source code | events | architectural | strong | links #59; links #55 |
+| 67 | 3.4.5 #6 | 5 composition | source code | events | architectural | strong | links #59; links #56 |
+| 68 | 3.4.5 #7 | 5 composition | source code | events | architectural | strong | links #59; links #57 |
+| 69 | 3.4.5 #8 | 5 composition | source code | events | architectural | strong | links #59; links #58 |
+| 70 | 3.4.6 #1 | 6 build-deploy | configuration | — | architectural | moderate | publishes #55 |
+| 71 | 3.4.6 #2 | 6 build-deploy | configuration | — | architectural | moderate | publishes #56 |
+| 72 | 3.4.6 #3 | 6 build-deploy | configuration | — | architectural | moderate | publishes #57 |
+| 73 | 3.4.6 #4 | 6 build-deploy | configuration | — | architectural | moderate | publishes #58 |
+| 74 | 3.4.6 #5 | 6 build-deploy | configuration | — | architectural | moderate | publishes #59 |
+| 75 | 3.4.7 #1 | 7 documentation | documentation | — | architectural | weak | corroborates #55; corroborates #56; corroborates #57; corroborates #58; corroborates #59; corroborates #62; corroborates #63; corroborates #64; corroborates #65 |
+| 76 | 3.4.7 #2 | 7 documentation | documentation | module-federation | technological | weak | corroborates #7; corroborates #8; corroborates #9; corroborates #10; corroborates #62; corroborates #63; corroborates #64; corroborates #65; corroborates pnpm-workspace.yaml:1-3; corroborates turbo.json:3-18 |
+| 77 | 3.4.7 #3 | 7 documentation | documentation | — | architectural | weak | corroborates #55; corroborates #56; corroborates #57; corroborates #58; corroborates #59 |
+| 78 | 3.4.7 #4 | 7 documentation | documentation | — | architectural | weak | corroborates apps/shell/pages/index.vue:12-28 |
+| 79 | 3.4.7 #5 | 7 documentation | documentation | — | architectural | weak | corroborates #52; corroborates #62; corroborates #63; corroborates #64; corroborates #65 |
+| 80 | 3.4.7 #6 | 7 documentation | documentation | — | architectural | weak | contradicts apps/shell/pages/index.vue:3; contradicts apps/shell/pages/app/[...mfe].vue:3; contradicts apps/mfe-vue2-checkout/src/App.vue:1-15 |
+| 81 | 3.4.7 #7 | 7 documentation | documentation | — | architectural | weak | corroborates #15; corroborates #16; corroborates #62; corroborates #63; corroborates #64; corroborates #65 |
+| 82 | 3.4.7 #8 | 7 documentation | documentation | — | architectural | weak | corroborates #1; corroborates #2; corroborates #3; corroborates #4; corroborates #5; corroborates #60 |
+| 83 | 3.4.7 #9 | 7 documentation | documentation | events | technological | weak | corroborates #50; corroborates #51; corroborates #66; corroborates #67; corroborates #68; corroborates #69 |
+| 84 | 3.4.7 #10 | 7 documentation | documentation | — | architectural | weak | corroborates #53; corroborates apps/shell/pages/index.vue:42 |
+| 85 | 3.4.7 #11 | 7 documentation | documentation | — | architectural | weak | corroborates #70; corroborates #71; corroborates #8 |
+| 86 | 3.4.7 #12 | 7 documentation | documentation | — | architectural | weak | corroborates apps/mfe-vue2-checkout/src/bootstrap.js:8-20; corroborates #32; corroborates apps/shell/composables/useMfeLoader.ts:28-32 |
+| 87 | 3.4.7 #13 | 7 documentation | documentation | module-federation | technological | weak | contradicts #7; contradicts #8; contradicts apps/mfe-vue2-checkout/src/bootstrap.js:8-9 |
+| 88 | 3.4.7 #14 | 7 documentation | documentation | — | architectural | weak | corroborates #57; corroborates #58; corroborates #72; corroborates #73; corroborates #10 |
+| 89 | 3.4.7 #15 | 7 documentation | documentation | module-federation | architectural | weak | contradicts apps/shell/composables/useMfeLoader.ts:28-32; contradicts apps/shell/nuxt.config.ts:58-91 |
+| 90 | 3.4.7 #16 | 7 documentation | documentation | — | architectural | weak | contradicts #1; contradicts #2; contradicts #3; contradicts #4; contradicts #5; contradicts #66; contradicts #67; contradicts #68; contradicts #69; contradicts apps/shell/pages/index.vue:3; contradicts apps/shell/pages/app/[...mfe].vue:3 |
+| 91 | 3.4.7 #17 | 7 documentation | documentation | — | architectural | weak | corroborates apps/shell/pages/app/[...mfe].vue:3, 24; corroborates apps/mfe-vue2-admin/src/App.vue:1-15; corroborates apps/mfe-vue3-dashboard/src/App.vue:1-13 |
+| 92 | 3.4.7 #18 | 7 documentation | documentation | — | architectural | weak | corroborates #45; corroborates #52; corroborates packages/shared/src/types/index.ts:30-33 |
+| 93 | 3.4.7 #19 | 7 documentation | documentation | events | architectural | weak | corroborates #50; corroborates #66; corroborates #67; corroborates #68; corroborates #69 |
+| 94 | 3.4.7 #20 | 7 documentation | documentation | events | architectural | weak | corroborates apps/mfe-vue2-checkout/src/bootstrap.js:35-37; corroborates apps/mfe-vue3-profile/src/bootstrap.js:33-35; corroborates #66; corroborates #67; corroborates #68; corroborates #69 |
+| 95 | 3.4.7 #21 | 7 documentation | documentation | events | architectural | weak | corroborates #26; corroborates #51; corroborates #66; corroborates #67; corroborates #68; corroborates #69 |
+| 96 | 3.4.7 #22 | 7 documentation | documentation | — | architectural | weak | corroborates #17; corroborates #18; corroborates #19; corroborates #20; corroborates #21; corroborates #22; corroborates #23; corroborates #24; corroborates #47; corroborates #48; corroborates apps/shell/composables/useMfeLoader.ts:38-46; corroborates #45; corroborates #62; corroborates #63; corroborates #64; corroborates #65 |
+| 97 | 3.4.7 #23 | 7 documentation | documentation | — | architectural | weak | corroborates package.json:14-18; corroborates apps/shell/package.json:6; corroborates apps/mfe-vue2-checkout/package.json:6; corroborates #29; corroborates #34; corroborates #39; corroborates #44 |
+| 98 | 3.4.7 #24 | 7 documentation | comment | — | architectural | weak | corroborates #55; corroborates #29 |
+| 99 | 3.4.7 #25 | 7 documentation | comment | module-federation | architectural | weak | corroborates #12; corroborates #8; corroborates #63 |
+| 100 | 3.4.7 #26 | 7 documentation | comment | — | architectural | weak | corroborates #57; corroborates #39 |
+| 101 | 3.4.7 #27 | 7 documentation | comment | — | architectural | weak | corroborates #58; corroborates #44 |
+| 102 | 3.4.7 #28 | 7 documentation | comment | module-federation | technological | weak | corroborates #49 |
+| 103 | 3.4.7 #29 | 7 documentation | comment | module-federation | technological | weak | corroborates apps/shell/composables/useMfeLoader.ts:21; corroborates #8; corroborates #53; corroborates #62; corroborates #63; corroborates #64; corroborates #65 |
+| 104 | 3.4.7 #30 | 7 documentation | comment | module-federation | technological | weak | corroborates apps/shell/composables/useMfeLoader.ts:31-35; corroborates apps/shell/nuxt.config.ts:58-91; corroborates #8 |
+| 105 | 3.4.7 #31 | 7 documentation | comment | — | architectural | weak | corroborates #74; corroborates apps/shell/package.json:12-20 |
+| 106 | 3.4.7 #32 | 7 documentation | comment | — | architectural | weak | corroborates packages/shared/src/registry.ts:5-9; corroborates #53 |
+| 107 | 3.4.7 #33 | 7 documentation | comment | — | architectural | weak | corroborates package.json:26-30; corroborates scripts/dev-remote-server.js:32-53 |
+| 108 | 3.4.7 #34 | 7 documentation | comment | — | architectural | weak | corroborates scripts/health-check.js:14-19, 38-64; corroborates package.json:25 |
+| 109 | 3.4.7 #35 | 7 documentation | comment | — | context | weak | corroborates #7; corroborates #8; corroborates #9; corroborates #10 |
+| 110 | 3.4.8 #1 | 8 history | history | — | context | weak | explains #6 |
+| 111 | 3.4.8 #2 | 8 history | history | — | architectural | weak | explains #80 |
+| 112 | 3.4.8 #3 | 8 history | history | module-federation | architectural | weak | explains #87; explains #89 |
+| 113 | 3.4.8 #4 | 8 history | history | — | architectural | weak | explains #90 |
 
-## Resumo
+## Summary
 
-Observações: 113. Dimensões (tecnologia: 6, configuração: 4, código: 43, estrutura: 8, composição: 8, build-deploy: 5, documentação: 35, histórico: 4). Força (forte: 9, moderada: 38, fraca: 65, ambígua: 1). Evidência (tecnológica: 48, arquitetural: 50, contexto: 15).
+Observations: 113. Dimensions (technology: 6, configuration: 4, code: 43, structure: 8, composition: 8, build-deploy: 5, documentation: 35, history: 4). Strength (strong: 9, moderate: 38, weak: 65, ambiguous: 1). Evidence (technological: 48, architectural: 50, context: 15).
+

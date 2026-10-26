@@ -19,227 +19,228 @@ annotation:
 
 # 229 — ayushpandey241626/microfrontend-demo
 
-## Leitura do repositório
+## Repository overview
 
-É um workspace Angular com um só `package.json` na raiz e quatro projetos em `projects/`: o shell `host-app` e os remotes `mfe1`, `mfe2` e `login-mfe-app` (#17 a #20). A raiz só coordena o workspace (#16). A cadeia de Module Federation está completa:
-- **Dependência:** `@angular-architects/module-federation` (#1), declarada uma vez para todos os projetos.
-- **Configuração:** cada remote se declara com `withModuleFederationPlugin` e expõe um único módulo de rotas (#3 a #5). O host usa o `ModuleFederationPlugin` do webpack e declara os três remotes em `localhost` (#2).
-- **Código:** o host importa `loadRemoteModule` (#10) e, na tabela de rotas (#14), carrega cada módulo exposto pela URL do `remoteEntry.js` de cada remote (#11 a #13).
-- **Relações:** isso resulta em três relações host → remote ativas (#21 a #23).
+Angular workspace with single root `package.json` and four projects in `projects/`: shell `host-app` and remotes `mfe1`, `mfe2` and `login-mfe-app` (#17 to #20). Root only coordinates workspace (#16). Module Federation chain complete:
+- **Dependency:** `@angular-architects/module-federation` (#1), declared once for all projects.
+- **Configuration:** each remote declares itself through `withModuleFederationPlugin`, exposing single route module (#3 to #5). Host uses webpack `ModuleFederationPlugin`, declaring three remotes at `localhost` (#2).
+- **Code:** host imports `loadRemoteModule` (#10), and in route table (#14) loads each exposed module through each remote `remoteEntry.js` URL (#11 to #13).
+- **Relationships:** yields three active host → remote relationships (#21 to #23).
 
-Além da federação, o login liga as unidades pela chave `isLoggedIn` do `localStorage`: o formulário do login-mfe-app grava a chave (#15), e o `AuthGuard` do host a lê para liberar `contacts` e `admin` (#24). Não é um mecanismo de MFE declarado; só funciona porque, dentro do host, as unidades rodam na mesma origem.
+Beyond federation, login links units through key `isLoggedIn` in `localStorage`: login-mfe-app form writes key (#15), and host `AuthGuard` reads it to allow `contacts` and `admin` (#24). No declared MFE mechanism; works only because within host units run under same origin.
 
-Os quatro builds são separados, com saída própria em `dist/` (#25 a #28), mas não há artefato de deploy, e todas as URLs dos remotes estão fixas em `localhost`.
+Four builds separate, with own `dist/` outputs (#25 to #28), but no deployment artifact; all remote URLs fixed at `localhost`.
 
-Sinais que enganam: o `import('./bootstrap')` de cada projeto é interno à unidade (#6 a #9). O mapa estático de `remotes` do host (#2) não é o que carrega os remotes: o código usa só a URL nas rotas. Por isso a chave `loginMfeApp`, diferente do `name` `login-mfe-app` (#3), não quebra a cadeia.
+Misleading signals: each project `import('./bootstrap')` internal to unit (#6 to #9). Static host `remotes` map (#2) does not load remotes: code uses only route URLs. Thus key `loginMfeApp`, differing from `name` `login-mfe-app` (#3), does not break chain.
 
-O repositório não documenta a arquitetura: o README é o padrão do Angular CLI e não tem afirmações. O histórico não tem pontos.
+Repository does not document architecture: default Angular CLI README has no claims. History has no points.
 
-## Observações
+## Observations
 
 ### 1. package.json:31
 
-**Observação:** `@angular-architects/module-federation` (`^19.0.3`) está declarada em `devDependencies` do manifesto único do workspace.
+**Observation:** `@angular-architects/module-federation` (`^19.0.3`) declared in `devDependencies` of single workspace manifest.
 
-**Interpretação:** A tecnologia de federação está presente no build dos quatro projetos. A configuração e o código a usam.
+**Interpretation:** Federation technology present in four project builds. Configuration and code use it.
 
 ### 2. projects/host-app/webpack.config.js:1-36
 
-**Observação:** Configuração extra do webpack, com `uniqueName: "hostApp"` e `publicPath: "auto"`. `ModuleFederationPlugin` do webpack (:6, :20) com `remotes` `mfe1: "mfe1@http://localhost:4201/remoteEntry.js"`, `mfe2: "mfe2@http://localhost:4202/remoteEntry.js"` e `loginMfeApp: "loginMfeApp@http://localhost:4203/remoteEntry.js"` (:21-25), e `shared` com `shareAll` em singleton e `strictVersion` (:26-32). `SharedMappings` registra o `tsconfig.app.json` do projeto (:8-9, :34).
+**Observation:** Extra webpack configuration, with `uniqueName: "hostApp"` and `publicPath: "auto"`. Webpack `ModuleFederationPlugin` (:6, :20) with `remotes` `mfe1: "mfe1@http://localhost:4201/remoteEntry.js"`, `mfe2: "mfe2@http://localhost:4202/remoteEntry.js"` and `loginMfeApp: "loginMfeApp@http://localhost:4203/remoteEntry.js"` (:21-25), and `shared` with `shareAll` as singleton and `strictVersion` (:26-32). `SharedMappings` registers project `tsconfig.app.json` (:8-9, :34).
 
-**Interpretação:** A configuração do host declara as três unidades locais como remotes e onde encontrá-las em desenvolvimento. O código não carrega os remotes por esses nomes, e sim pela URL do `remoteEntry.js` (#11 a #13).
+**Interpretation:** Host configuration declares three local units as remotes and development locations. Code loads remotes through `remoteEntry.js` URL rather than these names (#11 to #13).
 
-**Nota:** O `angular.json`, citado nas mesmas tabelas, só aponta o builder genérico `ngx-build-plus:browser` para os `webpack.config.js` (`extraWebpackConfig`), registra os projetos do workspace (dimensão 4) e fixa as portas de desenvolvimento, que a 3.4.5 marcou como "só corrobora". Os `webpack.prod.config.js` só reexportam o `webpack.config.js` do projeto, e o script `run:all` (package.json:10) só roda o servidor de desenvolvimento do pacote, sem contar como evidência na 3.4.2. Nenhum deles declara elemento da composição, e por isso não viraram observação.
+**Note:** `angular.json`, cited in same tables, only points generic builder `ngx-build-plus:browser` to `webpack.config.js` files (`extraWebpackConfig`), registers workspace projects (dimension 4) and fixes development ports, marked "only corroborates" in 3.4.5. Files `webpack.prod.config.js` only reexport project `webpack.config.js`; script `run:all` (package.json:10) only runs package development server without counting as evidence in 3.4.2. None declares composition element, therefore none became observation.
 
 ### 3. projects/login-mfe-app/webpack.config.js:1-21
 
-**Observação:** `withModuleFederationPlugin` declara `name: "login-mfe-app"`, `exposes: { "./LoginModule": "./projects/login-mfe-app/src/app/login/login-form.routes.ts" }` e `shared` com `shareAll` em singleton e `strictVersion`.
+**Observation:** `withModuleFederationPlugin` declares `name: "login-mfe-app"`, `exposes: { "./LoginModule": "./projects/login-mfe-app/src/app/login/login-form.routes.ts" }` and `shared` with `shareAll` as singleton and `strictVersion`.
 
-**Interpretação:** A unidade está configurada como remote e oferece suas rotas de login a um host.
+**Interpretation:** Unit configured as remote, offering login routes to host.
 
 ### 4. projects/mfe1/webpack.config.js:1-21
 
-**Observação:** `withModuleFederationPlugin` declara `name: "mfe1"`, `exposes: { "./ContactsModule": "./projects/mfe1/src/app/contact-list/contact-list.routes.ts" }` e `shared` com `shareAll` em singleton e `strictVersion`.
+**Observation:** `withModuleFederationPlugin` declares `name: "mfe1"`, `exposes: { "./ContactsModule": "./projects/mfe1/src/app/contact-list/contact-list.routes.ts" }` and `shared` with `shareAll` as singleton and `strictVersion`.
 
-**Interpretação:** A unidade está configurada como remote e oferece suas rotas de lista de contatos a um host.
+**Interpretation:** Unit configured as remote, offering contact list routes to host.
 
 ### 5. projects/mfe2/webpack.config.js:1-21
 
-**Observação:** `withModuleFederationPlugin` declara `name: "mfe2"`, `exposes: { "./AdminModule": "./projects/mfe2/src/app/contact-admin/contact-admin.routes.ts" }` e `shared` com `shareAll` em singleton e `strictVersion`.
+**Observation:** `withModuleFederationPlugin` declares `name: "mfe2"`, `exposes: { "./AdminModule": "./projects/mfe2/src/app/contact-admin/contact-admin.routes.ts" }` and `shared` with `shareAll` as singleton and `strictVersion`.
 
-**Interpretação:** A unidade está configurada como remote e oferece suas rotas de administração de contatos a um host.
+**Interpretation:** Unit configured as remote, offering contact administration routes to host.
 
 ### 6. projects/host-app/src/main.ts:1
 
-**Observação:** `import('./bootstrap').catch((err) => console.error(err));`.
+**Observation:** `import('./bootstrap').catch((err) => console.error(err));`.
 
-**Interpretação:** É um bootstrap assíncrono interno ao host.
+**Interpretation:** Asynchronous bootstrap internal to host.
 
 ### 7. projects/login-mfe-app/src/main.ts:1
 
-**Observação:** `import('./bootstrap')`.
+**Observation:** `import('./bootstrap')`.
 
-**Interpretação:** É um bootstrap assíncrono interno à unidade.
+**Interpretation:** Asynchronous bootstrap internal to unit.
 
 ### 8. projects/mfe1/src/main.ts:1
 
-**Observação:** `import('./bootstrap')`.
+**Observation:** `import('./bootstrap')`.
 
-**Interpretação:** É um bootstrap assíncrono interno à unidade.
+**Interpretation:** Asynchronous bootstrap internal to unit.
 
 ### 9. projects/mfe2/src/main.ts:1
 
-**Observação:** `import('./bootstrap')`.
+**Observation:** `import('./bootstrap')`.
 
-**Interpretação:** É um bootstrap assíncrono interno à unidade.
+**Interpretation:** Asynchronous bootstrap internal to unit.
 
 ### 10. projects/host-app/src/app/app.routes.ts:3
 
-**Observação:** Importa `loadRemoteModule` de `@angular-architects/module-federation`, usado em :17, :27 e :36.
+**Observation:** Imports `loadRemoteModule` from `@angular-architects/module-federation`, used at :17, :27 and :36.
 
-**Interpretação:** O mecanismo de carga remota está disponível nas rotas do host.
+**Interpretation:** Remote loading mechanism available in host routes.
 
 ### 11. projects/host-app/src/app/app.routes.ts:17; projects/mfe1/webpack.config.js:10-11
 
-**Observação:** Na rota `contacts`, protegida por `AuthGuard` (:15), `loadChildren` chama `loadRemoteModule({ type: 'module', exposedModule: './ContactsModule', remoteEntry: 'http://localhost:4201/remoteEntry.js' })` e usa `m.default` (:16-21).
+**Observation:** In route `contacts`, protected by `AuthGuard` (:15), `loadChildren` calls `loadRemoteModule({ type: 'module', exposedModule: './ContactsModule', remoteEntry: 'http://localhost:4201/remoteEntry.js' })`, using `m.default` (:16-21).
 
-**Interpretação:** O host carrega em runtime as rotas expostas pelo mfe1, pela URL do `remoteEntry.js` dele, e as liga ao caminho `contacts`.
+**Interpretation:** Host loads mfe1 exposed routes at runtime through its `remoteEntry.js` URL, linking them to path `contacts`.
 
 ### 12. projects/host-app/src/app/app.routes.ts:27; projects/mfe2/webpack.config.js:10-11
 
-**Observação:** Na rota `admin`, protegida por `AuthGuard` (:25), `loadChildren` chama `loadRemoteModule({ type: 'module', exposedModule: './AdminModule', remoteEntry: 'http://localhost:4202/remoteEntry.js' })` e usa `m.default` (:26-31).
+**Observation:** In route `admin`, protected by `AuthGuard` (:25), `loadChildren` calls `loadRemoteModule({ type: 'module', exposedModule: './AdminModule', remoteEntry: 'http://localhost:4202/remoteEntry.js' })`, using `m.default` (:26-31).
 
-**Interpretação:** O host carrega em runtime as rotas expostas pelo mfe2, pela URL do `remoteEntry.js` dele, e as liga ao caminho `admin`.
+**Interpretation:** Host loads mfe2 exposed routes at runtime through its `remoteEntry.js` URL, linking them to path `admin`.
 
 ### 13. projects/host-app/src/app/app.routes.ts:36; projects/login-mfe-app/webpack.config.js:10-11
 
-**Observação:** Na rota `login`, `loadChildren` chama `loadRemoteModule({ type: 'module', exposedModule: './LoginModule', remoteEntry: 'http://localhost:4203/remoteEntry.js' })` e usa `m.default` (:35-40).
+**Observation:** In route `login`, `loadChildren` calls `loadRemoteModule({ type: 'module', exposedModule: './LoginModule', remoteEntry: 'http://localhost:4203/remoteEntry.js' })`, using `m.default` (:35-40).
 
-**Interpretação:** O host carrega em runtime as rotas expostas pelo login-mfe-app, pela URL do `remoteEntry.js` dele, e as liga ao caminho `login`.
+**Interpretation:** Host loads login-mfe-app exposed routes at runtime through its `remoteEntry.js` URL, linking them to path `login`.
 
 ### 14. projects/host-app/src/app/app.routes.ts:7-46; projects/host-app/src/app/app.config.ts:12
 
-**Observação:** A tabela `routes` redireciona a rota vazia para `login` (:8-12), liga `contacts`, `admin` e `login` aos três `loadRemoteModule` (:13-41) e manda o resto para `NotFoundComponent` (:42-45). É registrada por `provideRouter(routes)`.
+**Observation:** Table `routes` redirects empty route to `login` (:8-12), links `contacts`, `admin` and `login` to three `loadRemoteModule` calls (:13-41), sending remainder to `NotFoundComponent` (:42-45). Registered through `provideRouter(routes)`.
 
-**Interpretação:** A tabela de rotas do host liga o caminho de cada unidade remota ao seu carregador.
+**Interpretation:** Host route table links each remote unit path to its loader.
 
 ### 15. projects/login-mfe-app/src/app/login/login-form/login-form.component.ts:63
 
-**Observação:** `localStorage.setItem('isLoggedIn', 'true');` no envio do formulário válido, seguido de `this.router.navigate(['/contacts'])` (:64).
+**Observation:** `localStorage.setItem('isLoggedIn', 'true');` on valid form submission, followed by `this.router.navigate(['/contacts'])` (:64).
 
-**Interpretação:** O login publica o estado da sessão numa chave do `localStorage`, um canal de estado compartilhado. A linha não nomeia a unidade que lê a chave.
+**Interpretation:** Login publishes session state to `localStorage` key, shared-state channel. Line names no unit reading key.
 
 ### 16. .; package.json:1-45; angular.json:5
 
-**Observação:** É a raiz do workspace Angular, com o manifesto único e o `angular.json` que declara os quatro projetos. Não tem entrada nem UI própria; os targets pertencem aos projetos.
+**Observation:** Angular workspace root, with single manifest and `angular.json` declaring four projects. No own entry/UI; targets belong to projects.
 
-**Interpretação:** É a raiz de coordenação, não uma unidade frontend.
+**Interpretation:** Coordination root rather than frontend unit.
 
 ### 17. projects/host-app; angular.json:6, 13-14, 34-35; projects/host-app/src/main.ts:1; projects/host-app/src/bootstrap.ts:5
 
-**Observação:** É um projeto Angular do workspace com entrada (`main.ts` → `bootstrap.ts`), target `build` com `ngx-build-plus:browser` e configuração webpack próprios.
+**Observation:** Angular workspace project with own entry (`main.ts` → `bootstrap.ts`), target `build` with `ngx-build-plus:browser` and webpack configuration.
 
-**Interpretação:** É uma unidade frontend com limite próprio, no papel de host.
+**Interpretation:** Frontend unit with own boundary, in host role.
 
 ### 18. projects/login-mfe-app; angular.json:309, 320-321, 341-342; projects/login-mfe-app/src/main.ts:1; projects/login-mfe-app/src/bootstrap.ts:5
 
-**Observação:** É um projeto Angular do workspace com entrada (`main.ts` → `bootstrap.ts`), target `build` com `ngx-build-plus:browser` e configuração webpack próprios.
+**Observation:** Angular workspace project with own entry (`main.ts` → `bootstrap.ts`), target `build` with `ngx-build-plus:browser` and webpack configuration.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with own boundary.
 
 ### 19. projects/mfe1; angular.json:107, 114-115, 135-136; projects/mfe1/src/main.ts:1; projects/mfe1/src/bootstrap.ts:5
 
-**Observação:** É um projeto Angular do workspace com entrada (`main.ts` → `bootstrap.ts`), target `build` com `ngx-build-plus:browser` e configuração webpack próprios.
+**Observation:** Angular workspace project with own entry (`main.ts` → `bootstrap.ts`), target `build` with `ngx-build-plus:browser` and webpack configuration.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with own boundary.
 
 ### 20. projects/mfe2; angular.json:208, 215-216, 236-237; projects/mfe2/src/main.ts:1; projects/mfe2/src/bootstrap.ts:5
 
-**Observação:** É um projeto Angular do workspace com entrada (`main.ts` → `bootstrap.ts`), target `build` com `ngx-build-plus:browser` e configuração webpack próprios.
+**Observation:** Angular workspace project with own entry (`main.ts` → `bootstrap.ts`), target `build` with `ngx-build-plus:browser` and webpack configuration.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with own boundary.
 
 ### 21. projects/host-app/src/app/app.routes.ts:3, 7, 36; projects/host-app/webpack.config.js:24; projects/login-mfe-app/webpack.config.js:7, 10-11
 
-**Observação:** A rota `login` do host carrega `./LoginModule` de `http://localhost:4203/remoteEntry.js`, a única exposição do login-mfe-app, que aponta para as rotas do formulário de login. O remote estático do host usa a chave `loginMfeApp`, diferente do `name: "login-mfe-app"`; a carga é pela URL.
+**Observation:** Host route `login` loads `./LoginModule` from `http://localhost:4203/remoteEntry.js`, only login-mfe-app exposure, pointing to login form routes. Static host remote uses key `loginMfeApp`, differing from `name: "login-mfe-app"`; loading through URL.
 
-**Interpretação:** É uma relação host → remote ativa.
+**Interpretation:** Active host → remote relationship.
 
 ### 22. projects/host-app/src/app/app.routes.ts:3, 7, 17; projects/host-app/webpack.config.js:22; projects/mfe1/webpack.config.js:7, 10-11
 
-**Observação:** A rota `contacts` do host, protegida pelo `AuthGuard`, carrega `./ContactsModule` de `http://localhost:4201/remoteEntry.js`, a exposição do mfe1. O remote estático `mfe1@` do host bate com o `name` do mfe1.
+**Observation:** Host route `contacts`, protected by `AuthGuard`, loads `./ContactsModule` from `http://localhost:4201/remoteEntry.js`, mfe1 exposure. Host static remote `mfe1@` matches mfe1 `name`.
 
-**Interpretação:** É uma relação host → remote ativa.
+**Interpretation:** Active host → remote relationship.
 
 ### 23. projects/host-app/src/app/app.routes.ts:3, 7, 27; projects/host-app/webpack.config.js:23; projects/mfe2/webpack.config.js:7, 10-11
 
-**Observação:** A rota `admin` do host, protegida pelo `AuthGuard`, carrega `./AdminModule` de `http://localhost:4202/remoteEntry.js`, a exposição do mfe2. O remote estático `mfe2@` do host bate com o `name` do mfe2.
+**Observation:** Host route `admin`, protected by `AuthGuard`, loads `./AdminModule` from `http://localhost:4202/remoteEntry.js`, mfe2 exposure. Host static remote `mfe2@` matches mfe2 `name`.
 
-**Interpretação:** É uma relação host → remote ativa.
+**Interpretation:** Active host → remote relationship.
 
 ### 24. projects/login-mfe-app/src/app/login/login-form/login-form.component.ts:63; projects/host-app/src/app/auth.guard.ts:11; projects/host-app/src/app/app.routes.ts:15, 25
 
-**Observação:** O formulário do login-mfe-app grava `isLoggedIn = 'true'` no `localStorage`, e o `AuthGuard` do host lê a mesma chave para liberar as rotas `contacts` e `admin`. Só o login grava a chave e só o host a lê; nenhum código a apaga, nem o logout do host (projects/host-app/src/app/app.component.ts:71-74). Nenhuma configuração declara o canal.
+**Observation:** Login-mfe-app form writes `isLoggedIn = 'true'` to `localStorage`; host `AuthGuard` reads same key to allow routes `contacts` and `admin`. Only login writes key; only host reads; no code deletes it, including host logout (projects/host-app/src/app/app.component.ts:71-74). No configuration declares channel.
 
-**Interpretação:** É uma relação de comunicação ativa por estado compartilhado no `localStorage`, do login-mfe-app para o host. Só vale com o login dentro da página do host, na mesma origem; isolado na porta 4203, o login-mfe-app tem `localStorage` próprio.
+**Interpretation:** Active shared-state communication relationship through `localStorage`, from login-mfe-app to host. Valid only with login inside host page under same origin; isolated at port 4203, login-mfe-app has own `localStorage`.
 
 ### 25. angular.json:13-16, 35, 53, 76-77; projects/host-app/webpack.config.js:11-36; projects/host-app/webpack.prod.config.js:1
 
-**Observação:** Target `build` próprio com `ngx-build-plus:browser` e saída `dist/host-app`; a configuração `production` usa o `webpack.prod.config.js`, que só reexporta o `webpack.config.js`. Os remotes são declarados e carregados em runtime, em `localhost`. Só é servido pelo `ng serve` na porta 4200. Não há artefato de deploy nem versão própria.
+**Observation:** Own target `build` with `ngx-build-plus:browser` and output `dist/host-app`; configuration `production` uses `webpack.prod.config.js`, only reexporting `webpack.config.js`. Remotes declared/loaded at runtime at `localhost`. Served only by `ng serve` at port 4200. No deployment artifact or own version.
 
-**Interpretação:** Há uma fronteira de build própria do host, sem deploy observado.
+**Interpretation:** Own host build boundary without observed deployment.
 
 ### 26. angular.json:320-323, 342, 383-384; projects/login-mfe-app/webpack.config.js:6-11
 
-**Observação:** Target `build` próprio com `ngx-build-plus:browser` e saída `dist/login-mfe-app`, que gera o remote `login-mfe-app` com `./LoginModule`. Só é servido pelo servidor de desenvolvimento na porta 4203, a do `remoteEntry.js` que o host carrega. Não há artefato de deploy nem versão própria.
+**Observation:** Own target `build` with `ngx-build-plus:browser` and output `dist/login-mfe-app`, generating remote `login-mfe-app` with `./LoginModule`. Served only by development server at port 4203, address of `remoteEntry.js` loaded by host. No deployment artifact or own version.
 
-**Interpretação:** Há uma fronteira de build própria do remote, sem deploy observado.
+**Interpretation:** Own remote build boundary without observed deployment.
 
 ### 27. angular.json:114-117, 136, 177-178; projects/mfe1/webpack.config.js:6-11
 
-**Observação:** Target `build` próprio com `ngx-build-plus:browser` e saída `dist/mfe1`, que gera o remote `mfe1` com `./ContactsModule`. Só é servido pelo servidor de desenvolvimento na porta 4201, a do `remoteEntry.js` que o host carrega. Não há artefato de deploy nem versão própria.
+**Observation:** Own target `build` with `ngx-build-plus:browser` and output `dist/mfe1`, generating remote `mfe1` with `./ContactsModule`. Served only by development server at port 4201, address of `remoteEntry.js` loaded by host. No deployment artifact or own version.
 
-**Interpretação:** Há uma fronteira de build própria do remote, sem deploy observado.
+**Interpretation:** Own remote build boundary without observed deployment.
 
 ### 28. angular.json:215-218, 237, 278-279; projects/mfe2/webpack.config.js:6-11
 
-**Observação:** Target `build` próprio com `ngx-build-plus:browser` e saída `dist/mfe2`, que gera o remote `mfe2` com `./AdminModule`. Só é servido pelo servidor de desenvolvimento na porta 4202, a do `remoteEntry.js` que o host carrega. Não há artefato de deploy nem versão própria.
+**Observation:** Own target `build` with `ngx-build-plus:browser` and output `dist/mfe2`, generating remote `mfe2` with `./AdminModule`. Served only by development server at port 4202, address of `remoteEntry.js` loaded by host. No deployment artifact or own version.
 
-**Interpretação:** Há uma fronteira de build própria do remote, sem deploy observado.
+**Interpretation:** Own remote build boundary without observed deployment.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.2 (package.json:31) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #2; declara #3; declara #4; declara #5; declara #10 |
-| 2 | 3.4.2 (package.json:31, Evidência); 3.4.3 (projects/host-app, Marcadores); 3.4.5 #1, #2, #3 (Configuração); 3.4.6 #1 (Artefatos) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #17; configura #21; configura #22; configura #23 |
-| 3 | 3.4.2 (package.json:31, Evidência); 3.4.3 (projects/login-mfe-app, Marcadores); 3.4.4 (projects/host-app/src/app/app.routes.ts:36, Observação); 3.4.5 #1 (Configuração); 3.4.6 #2 (Artefatos) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #18; configura #21 |
-| 4 | 3.4.2 (package.json:31, Evidência); 3.4.3 (projects/mfe1, Marcadores); 3.4.4 (projects/host-app/src/app/app.routes.ts:17, Observação); 3.4.5 #2 (Configuração); 3.4.6 #3 (Artefatos) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #19; configura #22 |
-| 5 | 3.4.2 (package.json:31, Evidência); 3.4.3 (projects/mfe2, Marcadores); 3.4.4 (projects/host-app/src/app/app.routes.ts:27, Observação); 3.4.5 #3 (Configuração); 3.4.6 #4 (Artefatos) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #20; configura #23 |
-| 6 | 3.4.4 (projects/host-app/src/main.ts:1) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 7 | 3.4.4 (projects/login-mfe-app/src/main.ts:1) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 8 | 3.4.4 (projects/mfe1/src/main.ts:1) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 9 | 3.4.4 (projects/mfe2/src/main.ts:1) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 10 | 3.4.4 (projects/host-app/src/app/app.routes.ts:3) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #21; implementa #22; implementa #23 |
-| 11 | 3.4.4 (projects/host-app/src/app/app.routes.ts:17) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #22 |
-| 12 | 3.4.4 (projects/host-app/src/app/app.routes.ts:27) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #23 |
-| 13 | 3.4.4 (projects/host-app/src/app/app.routes.ts:36) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #21 |
-| 14 | 3.4.4 (projects/host-app/src/app/app.routes.ts:7) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #21; implementa #22; implementa #23 |
-| 15 | 3.4.4 (projects/login-mfe-app/src/app/login/login-form/login-form.component.ts:63) | 3 código | código-fonte | other | tecnológica | moderada | implementa #24 |
-| 16 | 3.4.3 (.) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 17 | 3.4.3 (projects/host-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 18 | 3.4.3 (projects/login-mfe-app) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 19 | 3.4.3 (projects/mfe1) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 20 | 3.4.3 (projects/mfe2) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 21 | 3.4.5 #1 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #17; liga #18 |
-| 22 | 3.4.5 #2 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #17; liga #19 |
-| 23 | 3.4.5 #3 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #17; liga #20 |
-| 24 | 3.4.5 #4 | 5 composição | código-fonte | other | arquitetural | forte | liga #18; liga #17 |
-| 25 | 3.4.6 #1 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #17 |
-| 26 | 3.4.6 #2 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #18 |
-| 27 | 3.4.6 #3 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #19 |
-| 28 | 3.4.6 #4 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #20 |
+| 1 | 3.4.2 (package.json:31) | 1 technology | manifest | module-federation | technological | weak | declares #2; declares #3; declares #4; declares #5; declares #10 |
+| 2 | 3.4.2 (package.json:31, Evidence); 3.4.3 (projects/host-app, Markers); 3.4.5 #1, #2, #3 (Configuration); 3.4.6 #1 (Artifacts) | 2 configuration | configuration | module-federation | architectural | strong | configures #17; configures #21; configures #22; configures #23 |
+| 3 | 3.4.2 (package.json:31, Evidence); 3.4.3 (projects/login-mfe-app, Markers); 3.4.4 (projects/host-app/src/app/app.routes.ts:36, Observation); 3.4.5 #1 (Configuration); 3.4.6 #2 (Artifacts) | 2 configuration | configuration | module-federation | technological | moderate | configures #18; configures #21 |
+| 4 | 3.4.2 (package.json:31, Evidence); 3.4.3 (projects/mfe1, Markers); 3.4.4 (projects/host-app/src/app/app.routes.ts:17, Observation); 3.4.5 #2 (Configuration); 3.4.6 #3 (Artifacts) | 2 configuration | configuration | module-federation | technological | moderate | configures #19; configures #22 |
+| 5 | 3.4.2 (package.json:31, Evidence); 3.4.3 (projects/mfe2, Markers); 3.4.4 (projects/host-app/src/app/app.routes.ts:27, Observation); 3.4.5 #3 (Configuration); 3.4.6 #4 (Artifacts) | 2 configuration | configuration | module-federation | technological | moderate | configures #20; configures #23 |
+| 6 | 3.4.4 (projects/host-app/src/main.ts:1) | 3 code | source code | — | technological | weak | — |
+| 7 | 3.4.4 (projects/login-mfe-app/src/main.ts:1) | 3 code | source code | — | technological | weak | — |
+| 8 | 3.4.4 (projects/mfe1/src/main.ts:1) | 3 code | source code | — | technological | weak | — |
+| 9 | 3.4.4 (projects/mfe2/src/main.ts:1) | 3 code | source code | — | technological | weak | — |
+| 10 | 3.4.4 (projects/host-app/src/app/app.routes.ts:3) | 3 code | source code | module-federation | technological | moderate | implements #21; implements #22; implements #23 |
+| 11 | 3.4.4 (projects/host-app/src/app/app.routes.ts:17) | 3 code | source code | module-federation | architectural | strong | implements #22 |
+| 12 | 3.4.4 (projects/host-app/src/app/app.routes.ts:27) | 3 code | source code | module-federation | architectural | strong | implements #23 |
+| 13 | 3.4.4 (projects/host-app/src/app/app.routes.ts:36) | 3 code | source code | module-federation | architectural | strong | implements #21 |
+| 14 | 3.4.4 (projects/host-app/src/app/app.routes.ts:7) | 3 code | source code | module-federation | architectural | strong | implements #21; implements #22; implements #23 |
+| 15 | 3.4.4 (projects/login-mfe-app/src/app/login/login-form/login-form.component.ts:63) | 3 code | source code | other | technological | moderate | implements #24 |
+| 16 | 3.4.3 (.) | 4 structure | directory | — | context | weak | — |
+| 17 | 3.4.3 (projects/host-app) | 4 structure | directory | — | architectural | moderate | — |
+| 18 | 3.4.3 (projects/login-mfe-app) | 4 structure | directory | — | architectural | moderate | — |
+| 19 | 3.4.3 (projects/mfe1) | 4 structure | directory | — | architectural | moderate | — |
+| 20 | 3.4.3 (projects/mfe2) | 4 structure | directory | — | architectural | moderate | — |
+| 21 | 3.4.5 #1 | 5 composition | source code | module-federation | architectural | strong | links #17; links #18 |
+| 22 | 3.4.5 #2 | 5 composition | source code | module-federation | architectural | strong | links #17; links #19 |
+| 23 | 3.4.5 #3 | 5 composition | source code | module-federation | architectural | strong | links #17; links #20 |
+| 24 | 3.4.5 #4 | 5 composition | source code | other | architectural | strong | links #18; links #17 |
+| 25 | 3.4.6 #1 | 6 build-deploy | configuration | — | architectural | moderate | publishes #17 |
+| 26 | 3.4.6 #2 | 6 build-deploy | configuration | — | architectural | moderate | publishes #18 |
+| 27 | 3.4.6 #3 | 6 build-deploy | configuration | — | architectural | moderate | publishes #19 |
+| 28 | 3.4.6 #4 | 6 build-deploy | configuration | — | architectural | moderate | publishes #20 |
 
-## Resumo
+## Summary
 
-Observações: 28. Dimensões (tecnologia: 1, configuração: 4, código: 10, estrutura: 5, composição: 4, build-deploy: 4, documentação: 0, histórico: 0). Força (forte: 9, moderada: 13, fraca: 6, ambígua: 0). Evidência (tecnológica: 10, arquitetural: 17, contexto: 1).
+Observations: 28. Dimensions (technology: 1, configuration: 4, code: 10, structure: 5, composition: 4, build-deploy: 4, documentation: 0, history: 0). Strength (strong: 9, moderate: 13, weak: 6, ambiguous: 0). Evidence (technological: 10, architectural: 17, context: 1).
+

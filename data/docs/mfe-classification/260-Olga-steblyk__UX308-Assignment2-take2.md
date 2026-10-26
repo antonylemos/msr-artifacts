@@ -20,79 +20,79 @@ annotation:
 
 # 260 — Olga-steblyk/UX308-Assignment2-take2
 
-## Contexto
+## Context
 
-Site WordPress (Playground + SQLite) de trabalho de disciplina (“Assignment 2 Take 2”, descrição do repositório), versionado em `wp-content/` e exportado como site estático para o GitHub Pages pela CLI `wp-pwa`. A infraestrutura vem do template `cd-wordpress` (`README.md:1–15`; `package.json:2–10`; `.github/workflows/main.yml:28–32`), cujo README declara a intenção de ser “a consumer of microfrontends”.
+Course assignment WordPress site (Playground + SQLite) (“Assignment 2 Take 2”, repository description), versioned in `wp-content/` and exported as a static site to GitHub Pages through CLI `wp-pwa`. Infrastructure comes from template `cd-wordpress` (`README.md:1–15`; `package.json:2–10`; `.github/workflows/main.yml:28–32`), whose README declares the intent to be “a consumer of microfrontends”.
 
-Diferentemente dos rascunhos 160/206/224, o tema filho ativo (`every-byte-child-theme`) carrega em todas as páginas dois módulos ES de outra origem, do mesmo autor (`functions.php:14–15`):
+Unlike drafts 160/206/224, the active child theme (`every-byte-child-theme`) loads two ES modules from another origin, by the same author, on every page (`functions.php:14–15`):
 - `https://olga-steblyk.github.io/Assignment1_UX308/order.js`;
 - `https://olga-steblyk.github.io/Assignment1_UX308/fab.js`.
 
-O conteúdo das páginas, porém, não usa nenhum elemento desses módulos. O nome do repositório não é usado como evidência.
+Page content, however, uses no element from these modules. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:261` registra rank 260, ID 960060577, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Para inspecionar o banco, o blob `wp-content/database/.ht.sqlite` foi copiado para um diretório temporário fora de `data/`, consultado com `sqlite3 -readonly` e apagado. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:261` records rank 260, ID 960060577, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. To inspect the database, blob `wp-content/database/.ht.sqlite` was copied to a temporary directory outside `data/`, queried with `sqlite3 -readonly` and deleted. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:261` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:12592` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:12597` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:261` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:12592` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:12597` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2025-04` e `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2025-04` and an empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | 2026-10-07T18:28:59.843Z / 2026-10-08T15:37:41.421Z |
 | `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | 2026-10-07T22:07:24.011Z / 2026-10-08T15:47:06.493Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2025-04-01..2025-04-30`.
+The effective queries append `pushed:>=2025-04-01 created:2025-04-01..2025-04-30`.
 
-Metadados do hit:
-- descrição “Assignment 2 Take 2”, sem tópicos, linguagem PHP, `fork: false`, tamanho 26.142;
-- criação em 2025-04-03T19:48:02Z, push em 2025-04-04T00:31:52Z.
+Hit metadata:
+- description “Assignment 2 Take 2”, no topics, language PHP, `fork: false`, size 26.142;
+- created at 2025-04-03T19:48:02Z, pushed at 2025-04-04T00:31:52Z.
 
-As duas grafias buscadas estão em `README.md:13`: “The idea of this is as a consumer of microfrontends. There is an example microfrontend for [paypal standard](…)”. O README vem do commit-raiz `beb7a90` (2025-04-03) e não foi alterado depois, sendo anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+Both searched spellings are in `README.md:13`: “The idea of this is as a consumer of microfrontends. There is an example microfrontend for [paypal standard](…)”. The README comes from root commit `beb7a90` (2025-04-03) and was not changed afterward, predating the October 2026 collections. The README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 910 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Na raiz há 6 arquivos do template; os outros 904 estão em `wp-content/`: temas `every-byte-child-theme`, `twentytwentyfour` e `twentytwentythree`; plugins `akismet` e `ecommerce-product-catalog`; mu-plugins do Playground; banco `wp-content/database/.ht.sqlite`. | contexto |
-| Configuração (carga de unidade externa) | `wp-content/themes/every-byte-child-theme/functions.php:6–16`: `wp_enqueue_script_module` de `order.js` e `fab.js` em `olga-steblyk.github.io/Assignment1_UX308/` (`:14–15`), além do script local `customElements.js` (`:13`). Esses módulos são servidos por outra origem e outro repositório do autor; seu conteúdo não está no snapshot. | moderada |
-| Conteúdo (banco) | Na cópia temporária do banco, `wp_options` tem `stylesheet` = `every-byte-child-theme`, `template` = `twentytwentyfive`, `active_plugins` = `ecommerce-product-catalog` e `blogname` “Evry-byte”. Publicados: “Sample Page”, “Products” (`[show_product_catalog]`), o post “Hello world!” e uma navegação. A busca de bytes por `<x-`, `olga-steblyk.github.io`, `order.js`, `fab.js`, `<script`, `type="module"`, `<iframe`, `wp:html` e `microfrontend` não retorna nada. Nenhum elemento ou ponto de montagem dos módulos remotos aparece no conteúdo. | ambígua |
-| Código local | `wp-content/themes/every-byte-child-theme/customElements.js:1–7`: custom element `x-year`, local e trivial, não usado no conteúdo. | contexto |
-| Tema pai | O tema filho declara `Template: twentytwentyfive` (`style.css:5`), mas `wp-content/themes/twentytwentyfive/` foi removido em `6bf78ea`; o WordPress Playground pode supri-lo fora do repositório. | contexto |
-| Busca | Fora do banco, `micro.?front` só aparece no README do template. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 910 entries, all regular files `100644`; zero symlinks and zero gitlinks. At the root are 6 template files; the other 904 are in `wp-content/`: themes `every-byte-child-theme`, `twentytwentyfour` and `twentytwentythree`; plugins `akismet` and `ecommerce-product-catalog`; Playground mu-plugins; database `wp-content/database/.ht.sqlite`. | context |
+| Configuration (external unit loading) | `wp-content/themes/every-byte-child-theme/functions.php:6–16`: `wp_enqueue_script_module` of `order.js` and `fab.js` at `olga-steblyk.github.io/Assignment1_UX308/` (`:14–15`), plus local script `customElements.js` (`:13`). These modules are served from another origin and another author repository; their content is not in the snapshot. | moderate |
+| Content (database) | In the temporary database copy, `wp_options` has `stylesheet` = `every-byte-child-theme`, `template` = `twentytwentyfive`, `active_plugins` = `ecommerce-product-catalog` and `blogname` “Evry-byte”. Published: “Sample Page”, “Products” (`[show_product_catalog]`), post “Hello world!” and a navigation. Byte search for `<x-`, `olga-steblyk.github.io`, `order.js`, `fab.js`, `<script`, `type="module"`, `<iframe`, `wp:html` and `microfrontend` returns nothing. No remote module element or mounting point appears in the content. | ambiguous |
+| Local code | `wp-content/themes/every-byte-child-theme/customElements.js:1–7`: custom element `x-year`, local and trivial, unused in the content. | context |
+| Parent theme | The child theme declares `Template: twentytwentyfive` (`style.css:5`), but `wp-content/themes/twentytwentyfive/` was removed in `6bf78ea`; WordPress Playground may supply it outside the repository. | context |
+| Search | Outside the database, `micro.?front` appears only in the template README. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 20 commits em todos os refs, nenhum merge, todos de Olga-Stebko (noreply), em 2025-04-03 e 2025-04-04. Em `main`, depois do commit-raiz `beb7a90` (template), vêm:
-- `1329d94` (“included important aspects”), que cria o tema filho;
-- `df7d38c` (“attempt to include chat feature”), que altera `functions.php`;
-- o SHA `9c0ac6c` (“fixed order.js”), que altera `functions.php` e o banco.
+Non-shallow clone; 20 commits across all refs, no merges, all by Olga-Stebko (noreply), on 2025-04-03 and 2025-04-04. In `main`, after root commit `beb7a90` (template), come:
+- `1329d94` (“included important aspects”), creating the child theme;
+- `df7d38c` (“attempt to include chat feature”), changing `functions.php`;
+- SHA `9c0ac6c` (“fixed order.js”), changing `functions.php` and the database.
 
-O branch `origin/codespace-opulent-guide-x4pxr5vpxq5hvprx` tem commits posteriores (até 2025-04-04, “added index.html”, “chnged the php functions to be index.js”). O `gh-pages` é a saída de deploy. Nenhum desses branches foi considerado. Nenhum blob histórico foi lido e não houve objeto ausente.
+Branch `origin/codespace-opulent-guide-x4pxr5vpxq5hvprx` has later commits (through 2025-04-04, “added index.html”, “chnged the php functions to be index.js”). `gh-pages` is deployment output. Neither branch was considered. No historical blob was read and there was no missing object.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | O snapshot demonstra apenas o site WordPress; os scripts externos sem ponto de montagem observável não demonstram uma segunda unidade frontend integrada. |
-| Q2 | No | Não há unidade frontend independente observável na composição; há somente URLs de módulos externos. |
-| Q3 | No | O conteúdo não contém elemento, contêiner ou outro uso dos módulos enfileirados. |
-| Q4 | No | Enfileirar scripts externos sem uso observável não demonstra um mecanismo de composição de frontend. |
-| Q5 | No | Q1–Q4 não demonstram composição entre unidades frontend. |
+| Q1 | No | The snapshot demonstrates only the WordPress site; external scripts without an observable mounting point do not demonstrate a second integrated frontend unit. |
+| Q2 | No | No independent frontend unit observable in composition; there are only external module URLs. |
+| Q3 | No | Content contains no element, container or other use of the enqueued modules. |
+| Q4 | No | Enqueuing external scripts without observable use does not demonstrate a frontend composition mechanism. |
+| Q5 | No | Q1–Q4 do not demonstrate composition between frontend units. |
 
-## Motivo
+## Rationale
 
-- Classificado como `Non-MFE`: o snapshot só prova o carregamento de scripts externos, não sua montagem ou integração como unidades frontend.
-- **Comparação:** diferentemente de 049, não há elemento remoto no conteúdo; a carga isolada aproxima-se dos casos sem composição observável.
-- **Campos:** `approaches: []`, `ui_technologies: [wordpress]`, `build_tools: []` (CLI `wp-pwa`), `frontend_units: 1`, `unit_organization: multi-repo`, `repo_type: example`.
+- Classified as `Non-MFE`: the snapshot proves only external script loading, not their mounting or integration as frontend units.
+- **Comparison:** unlike 049, there is no remote element in content; isolated loading resembles cases without observable composition.
+- **Fields:** `approaches: []`, `ui_technologies: [wordpress]`, `build_tools: []` (CLI `wp-pwa`), `frontend_units: 1`, `unit_organization: multi-repo`, `repo_type: example`.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** composição por enfileiramento de módulos ES remotos no tema WordPress (`wp_enqueue_script_module`), em vez de inserção no conteúdo como em 049.
-- **Protocolo (snapshot):** o branch de codespace tem alterações posteriores em `functions.php`, fora do snapshot.
-- **Protocolo (busca):** as duas grafias buscadas estão literalmente em `README.md:13`. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ2:** composition through remote ES module enqueuing in the WordPress theme (`wp_enqueue_script_module`), instead of content insertion as in 049.
+- **Protocol (snapshot):** the codespace branch has later changes to `functions.php`, outside the snapshot.
+- **Protocol (search):** both searched spellings appear literally in `README.md:13`. Eligibility changes from `unknown` (001) to `pass` (002).
 
-## Decisão registrada
+## Recorded decision
 
-Classificado como `Non-MFE`. Os módulos externos são enfileirados pelo tema, mas o snapshot não contém elemento, contêiner ou outro ponto de montagem que demonstre seu uso. A simples carga de scripts externos não comprova composição de unidades frontend.
+Classified as `Non-MFE`. External modules are enqueued by the theme, but the snapshot contains no element, container or other mounting point demonstrating use. Simply loading external scripts does not prove composition of frontend units.

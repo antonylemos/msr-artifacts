@@ -20,63 +20,63 @@ annotation:
 
 # 211 — varshinir07/mfe-onehub-shell-app
 
-## Contexto
+## Context
 
-Aplicação React 19 gerada com Create React App e convertida para Webpack 5 com configuração própria (`package.json:18–22`; `src/webpack.config.js:1–102`). É o host “onehub” de Module Federation: consome dois remotos externos, `subscription` (`localhost:3001`) e `ownership` (`localhost:3002`), e monta cinco módulos deles num painel (`src/pages/Dashboard.jsx:3–26`). Os remotos não estão no repositório.
+React 19 application generated through Create React App and converted to Webpack 5 with own configuration (`package.json:18–22`; `src/webpack.config.js:1–102`). Module Federation host “onehub”: consumes two external remotes, `subscription` (`localhost:3001`) and `ownership` (`localhost:3002`), and mounts five of their modules in dashboard (`src/pages/Dashboard.jsx:3–26`). Remotes are absent from repository.
 
-O README é o padrão do CRA, com cabeçalho “mfe-onehub-shell / MFE Remote App for OnehubShell” (`README.md:1–2`). Esse rótulo de “Remote App” contradiz o código, que é o host. O nome do repositório não é usado como evidência.
+README is CRA standard, with heading “mfe-onehub-shell / MFE Remote App for OnehubShell” (`README.md:1–2`). “Remote App” label contradicts host code. Repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:212` registra rank 211, ID 996744917, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:212` records rank 211, ID 996744917, status `cloned`, branch `main` and front-matter commit, which is clone HEAD and `origin/main`. Every clone Git command used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:212` registra a estratégia `technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:14759` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:14765` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:212` records strategy `technology` and eligibility `pass`. Sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). ID appears in `data/discovery/mfe-round-001/candidates.csv:14759` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:14765` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna o mesmo hit em cada rodada, do endpoint `code`:
+`sqlite3 -readonly` query of tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns same hit in each round, at endpoint `code`:
 
-| Consulta (`q`) | Subconsulta / consulta efetiva | `path` | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery / effective query | `path` | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `technology-module-federation-plugin-js-code`: `ModuleFederationPlugin remotes extension:js` | `technology-module-federation-plugin-js-code#size:3000..3999` / `ModuleFederationPlugin remotes extension:js size:3000..3999` | `src/webpack.config.js` | 2026-10-07T22:37:04.337Z / 2026-10-08T16:16:17.639Z |
 
-O arquivo tem 3.440 bytes no SHA, dentro da faixa, e contém `ModuleFederationPlugin` (`:3`, `72`) com `remotes` (`:74–78`). Os metadados do hit de código trazem só a descrição “mfe-onehub-shell App”, sem tópicos nem datas. A entrada é só por código. O README (`README.md:1–2`) não contém os termos buscados por terminologia.
+File is 3.440 bytes at SHA, within range, and contains `ModuleFederationPlugin` (`:3`, `72`) with `remotes` (`:74–78`). Code-hit metadata provide only description “mfe-onehub-shell App”, without topics or dates. Entry is code-only. README (`README.md:1–2`) lacks terminology-searched terms.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 19 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Um único projeto (scaffold CRA: `public/`, `src/index.js`, `App.js`, testes, `reportWebVitals`), mais `src/pages/Dashboard.jsx` e `src/webpack.config.js`. | contexto |
-| Configuração (host) | `src/webpack.config.js:72–92`: `ModuleFederationPlugin` com `name: 'onehub'`, `remotes: { remote1: 'subscription@http://localhost:3001/remoteEntry.js', remote2: 'ownership@http://localhost:3002/remoteEntry.js' }` e `react`/`react-dom` singleton e `eager`. `package.json:19–20`: `start` e `build` usam essa configuração (`webpack serve --config src/webpack.config.js`). | forte |
-| Código-fonte (composição) | `src/pages/Dashboard.jsx:3–9`: `React.lazy(() => import('remote1/ModemAuthorization'))`, `remote1/SecurityPackage`, `remote1/Card`, `remote2/LabourHourHold` e `remote2/MobileService`. `:15–26`: renderizados sob `Suspense`, com `Card` recebendo props do host. `src/App.js:3–8` monta o `Dashboard`. | forte |
-| Unidades externas | Os remotos `subscription` e `ownership` não estão no repositório. A configuração os referencia por nome e URL, mas sem fonte nem documentação que os localize além de `localhost`. Na amostra, a mesma conta só tem este repositório (`sample.csv`). Nas duas rodadas, a conta tem mais um candidato, `varshinir07/varshinir07`, que é o repositório de perfil e não foi inspecionado. | moderada |
-| Código-fonte (fronteiras) | Imports relativos só dentro de `src/`; não há código dos remotos. | contexto |
-| Documentação | `README.md:1–2`: “MFE Remote App for OnehubShell”; o restante é o README do CRA. O rótulo diverge do papel observado no código (host). | ambígua |
+| Structure | `git ls-tree -r` at the SHA: 19 entries, all regular files `100644`; zero symlinks and zero gitlinks. One project (CRA scaffold: `public/`, `src/index.js`, `App.js`, tests, `reportWebVitals`), plus `src/pages/Dashboard.jsx` and `src/webpack.config.js`. | context |
+| Configuration (host) | `src/webpack.config.js:72–92`: `ModuleFederationPlugin` with `name: 'onehub'`, `remotes: { remote1: 'subscription@http://localhost:3001/remoteEntry.js', remote2: 'ownership@http://localhost:3002/remoteEntry.js' }` and singleton `react`/`react-dom` and `eager`. `package.json:19–20`: `start` and `build` use this configuration (`webpack serve --config src/webpack.config.js`). | strong |
+| Source code (composition) | `src/pages/Dashboard.jsx:3–9`: `React.lazy(() => import('remote1/ModemAuthorization'))`, `remote1/SecurityPackage`, `remote1/Card`, `remote2/LabourHourHold` and `remote2/MobileService`. `:15–26`: rendered under `Suspense`, with `Card` receiving host props. `src/App.js:3–8` mounts `Dashboard`. | strong |
+| External units | Remotes `subscription` and `ownership` are absent from repository. Configuration references them through name and URL, but no source or documentation locates them beyond `localhost`. In sample, same account has only this repository (`sample.csv`). In both rounds account has one more candidate, `varshinir07/varshinir07`, a profile repository not inspected. | moderate |
+| Source code (boundaries) | Relative imports stay within `src/`; no remote code. | context |
+| Documentation | `README.md:1–2`: “MFE Remote App for OnehubShell”; remainder is CRA README. Label diverges from observed code role (host). | ambiguous |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 2 commits, nenhum merge, de Varshini (noreply) pela interface web, ambos em 2025-06-05: `74cbf87` (“Initial commit”, só `README.md`) e o SHA `1ddddc4` (“Created OneHub Shell App”, 19 arquivos). Nenhum blob histórico foi lido. O clone é parcial (`blob:none`) e `git rev-list --objects --all --missing=print` identifica o blob `3c7947b…` ausente (a versão inicial do README); todos os arquivos citados do SHA atual estão presentes, mas o conteúdo anterior do README não pôde ser lido.
+Non-shallow clone; 2 commits, no merge, by Varshini (noreply) through web interface, both on 2025-06-05: `74cbf87` (“Initial commit”, only `README.md`) and SHA `1ddddc4` (“Created OneHub Shell App”, 19 files). No historical blob was read. Clone is partial (`blob:none`) and `git rev-list --objects --all --missing=print` identifies missing blob `3c7947b…` (initial README version); all cited current-SHA files are present, but earlier README content could not be read.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | O host e duas unidades externas referenciadas explicitamente pela configuração de composição (`src/webpack.config.js:74–78`). |
-| Q2 | Yes | Os remotos são externos e servidos separadamente (`localhost:3001`, `3002`), sem import de código-fonte. O host tem entrada e build próprios (`src/webpack.config.js:10`; `package.json:19–20`). |
-| Q3 | Yes | O host carrega e monta os módulos remotos no painel (`src/pages/Dashboard.jsx:15–26`). |
-| Q4 | Yes | `ModuleFederationPlugin` com `remotes`, consumido por `import('remote1/…')` e `import('remote2/…')`. |
-| Q5 | Yes | Q1–Q4 são Yes: host que compõe remotos externos. |
+| Q1 | Yes | Host and two external units explicitly referenced by composition configuration (`src/webpack.config.js:74–78`). |
+| Q2 | Yes | Remotes are external and separately served (`localhost:3001`, `3002`), without source-code import. Host has own entry/build (`src/webpack.config.js:10`; `package.json:19–20`). |
+| Q3 | Yes | Host loads and mounts remote modules in dashboard (`src/pages/Dashboard.jsx:15–26`). |
+| Q4 | Yes | `ModuleFederationPlugin` with `remotes`, consumed through `import('remote1/…')` and `import('remote2/…')`. |
+| Q5 | Yes | Q1–Q4 are Yes: host composing external remotes. |
 
-## Motivo
+## Rationale
 
-- `MFE-implemented` pela regra Q1–Q5 Yes, no caso de inclusão “repositories containing only the host, which references external remote units”. É o mesmo enquadramento de 087: a ausência dos fontes dos remotos não equivale à ausência de configuração de composição do host.
-- Os remotos estão em URLs fixas de `localhost`, não em variável de ambiente indefinida, então não se aplica a dúvida de 145/176/199.
-- Os módulos consumidos são, na maioria, fatias funcionais de tela (autorização de modem, pacote de segurança, serviços) montadas no painel; só `Card` é um componente genérico. Por isso o caso não se reduz ao compartilhamento de código de 089/100.
-- `build_tools: [webpack]`: configuração explícita do autor (`src/webpack.config.js`), usada pelos scripts, ao contrário do CRA não ejetado de 087. `react-scripts` resta só para `test`/`eject`.
-- `frontend_units: 3` (host e dois remotos referenciados), `unit_organization: multi-repo`, `ui_technologies: [react]`, `repo_type: example` (scaffold CRA, URLs `localhost`, sem deploy).
-- Não há decisão aberta.
+- `MFE-implemented` under Q1–Q5 Yes rule, inclusion case “repositories containing only the host, which references external remote units”. Same classification as 087: absent remote sources do not equal absent host composition configuration.
+- Remotes use fixed `localhost` URLs, not undefined environment variable, so uncertainty of 145/176/199 does not apply.
+- Consumed modules are mostly functional screen slices (modem authorization, security package, services) mounted in dashboard; only `Card` is generic component. Thus case does not reduce to code sharing in 089/100.
+- `build_tools: [webpack]`: explicit author configuration (`src/webpack.config.js`), used by scripts, unlike unejected CRA of 087. `react-scripts` remains only for `test`/`eject`.
+- `frontend_units: 3` (host and two referenced remotes), `unit_organization: multi-repo`, `ui_technologies: [react]`, `repo_type: example` (CRA scaffold, `localhost` URLs, without deployment).
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** host Webpack 5 com `ModuleFederationPlugin`, chaves locais (`remote1`, `remote2`) distintas dos nomes globais dos containers (`subscription`, `ownership`), e `shared` com `eager: true` sem bootstrap assíncrono (`src/index.js:1–12`).
-- **RQ1 (sinais enganosos):** README rotula o repositório como “Remote App” embora ele seja o host.
-- **Protocolo (busca):** entrada só pela busca de código; a elegibilidade muda de `unknown` (001) para `pass` (002).
-- **Contribuição da revisão independente (Lupa):** concordância integral com MFE-implemented, Q1–Q5 Yes, `module-federation`, React/webpack, três unidades referenciadas e `multi-repo`; sem decisão aberta (`draft`). É o caso explícito do checklist de repositório que contém só o host e referencia unidades externas, como os finais 008 (configuração em localhost e três unidades referenciadas) e 040 (consumo concreto de componente externo pelo host), que limitam a análise ao lado disponível. Limites a registrar: os provedores não foram inspecionados (o contraste com compartilhamento genérico não deve ser afirmado como inspeção dos provedores ausentes; basta registrar o padrão de composição pretendido), há um blob histórico ausente, a descrição do build no README não corresponde aos scripts e à configuração atuais, e `App.js:3–8` inclui o import e o elemento `Dashboard`, com o bloco da função indo até a linha 10.
+- **RQ2:** Webpack 5 host with `ModuleFederationPlugin`, local keys (`remote1`, `remote2`) differing from global container names (`subscription`, `ownership`), and `shared` with `eager: true` without asynchronous bootstrap (`src/index.js:1–12`).
+- **RQ1 (misleading signals):** README labels repository “Remote App” although it is host.
+- **Protocol (search):** entry only through code search; eligibility changes from `unknown` (001) to `pass` (002).
+- **Independent-review contribution (Lupa):** complete agreement with MFE-implemented, Q1–Q5 Yes, `module-federation`, React/webpack, three referenced units and `multi-repo`; no open decision (`draft`). Explicit checklist case of repository containing only host and referencing external units, as finals 008 (localhost configuration and three referenced units) and 040 (concrete consumption of external component by host), limiting analysis to available side. Limitations to record: providers were not inspected (contrast with generic sharing should not be asserted as inspection of absent providers; intended composition pattern suffices), one historical blob is missing, README build description does not match current scripts/configuration, and `App.js:3–8` includes import and `Dashboard` element, with function block ending at line 10.

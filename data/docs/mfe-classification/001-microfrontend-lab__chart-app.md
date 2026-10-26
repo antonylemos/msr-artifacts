@@ -20,39 +20,39 @@ annotation:
 
 # 001 — microfrontend-lab/chart-app
 
-## Contexto
+## Context
 
-Remote Module Federation de uma POC de micro-frontends (`README.md:4`, "micro frontend POC"). O host (portal) está em outro repositório, `microfrontend-lab/mf-registry` (`CLAUDE.md:8-11`).
+Module Federation remote in a micro-frontends POC (`README.md:4`, "micro frontend POC"). The host (portal) is in another repository, `microfrontend-lab/mf-registry` (`CLAUDE.md:8-11`).
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Tecnologia | `package.json`: `@module-federation/enhanced` em `devDependencies` | fraca |
-| Configuração | `rspack.config.ts:64-73`: `ModuleFederationPlugin` com `name: 'chartApp'`, `filename: 'remoteEntry.js'`, `exposes: { './ChartWidget' }`, `shared` singleton (react, react-dom, react-router); sem `remotes` | moderada |
-| Configuração | `rspack.config.ts:17`: `publicPath: 'auto'`, com comentário explicando que o remote é carregado na página do portal | moderada |
-| Código-fonte (exposição) | `src/index.tsx:1`: `import('./bootstrap')` (padrão de entry assíncrono de remote MF); `src/types/widget.ts:5`: `WidgetProps` (`basename`, `user`, `theme`) como contrato com o host | moderada |
-| Código-fonte (consumo) | Busca por `remotes`, `loadRemote`, `registerApplication` e import map em `src/`, `public/` e na config: nenhuma ocorrência | ausente |
-| Estrutura | Uma única unidade: um `package.json`, um entry point, um build | contrária |
-| Composição | Nenhum host no repositório; o host está em `microfrontend-lab/mf-registry` (`CLAUDE.md:8-11`) | ausente |
-| Build/deploy | `.github/workflows/deploy.yml:43-53`: `gsutil rsync` para `gs://mf-chart-app`, `remoteEntry.js` com `no-cache`; `infra/*.tf` cria o bucket (deploy independente) | moderada |
-| Documentação | `README.md:3-4`: "a remote in the `microfrontend-lab` micro frontend POC"; `README.md:51-58`: rota `/apps/chart` no portal e entrada de registry com a URL do `remoteEntry.js` | moderada |
-| Histórico | `3cc620f` "Fix publicPath: hardcoded prefix broke embedded chunk loading in production", uso real como remote | moderada |
+| Technology | `package.json`: `@module-federation/enhanced` in `devDependencies` | weak |
+| Configuration | `rspack.config.ts:64-73`: `ModuleFederationPlugin` with `name: 'chartApp'`, `filename: 'remoteEntry.js'`, `exposes: { './ChartWidget' }`, singleton `shared` (react, react-dom, react-router); no `remotes` | moderate |
+| Configuration | `rspack.config.ts:17`: `publicPath: 'auto'`, with a comment explaining that the remote is loaded on the portal page | moderate |
+| Source code (exposure) | `src/index.tsx:1`: `import('./bootstrap')` (MF remote asynchronous entry pattern); `src/types/widget.ts:5`: `WidgetProps` (`basename`, `user`, `theme`) as the contract with the host | moderate |
+| Source code (consumption) | Search for `remotes`, `loadRemote`, `registerApplication` and import map in `src/`, `public/` and the config: no occurrences | absent |
+| Structure | A single unit: one `package.json`, one entry point, one build | contrary |
+| Composition | No host in the repository; the host is in `microfrontend-lab/mf-registry` (`CLAUDE.md:8-11`) | absent |
+| Build/deploy | `.github/workflows/deploy.yml:43-53`: `gsutil rsync` to `gs://mf-chart-app`, `remoteEntry.js` with `no-cache`; `infra/*.tf` creates the bucket (independent deployment) | moderate |
+| Documentation | `README.md:3-4`: "a remote in the `microfrontend-lab` micro frontend POC"; `README.md:51-58`: `/apps/chart` route in the portal and a registry entry with the `remoteEntry.js` URL | moderate |
+| History | `3cc620f` "Fix publicPath: hardcoded prefix broke embedded chunk loading in production", actual use as a remote | moderate |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma só unidade frontend; a config de composição só tem `exposes` (`rspack.config.ts:67`) e não referencia unidades externas. O portal aparece só na documentação. |
-| Q2 | Yes | Para a unidade: entry, build e deploy próprios (`deploy.yml`, bucket dedicado) |
-| Q3 | Undetermined | O host que monta a unidade não está no repositório (`CLAUDE.md:11` aponta para outro repo) |
-| Q4 | Undetermined | O lado remote está configurado (`exposes`), mas o lado consumidor não é observável |
-| Q5 | No | A evidência mostra uma unidade preparada para composição, não uma instância de MFE no repositório |
+| Q1 | No | Only one frontend unit; the composition config has only `exposes` (`rspack.config.ts:67`) and does not reference external units. The portal appears only in documentation. |
+| Q2 | Yes | For this unit: its own entry, build and deployment (`deploy.yml`, dedicated bucket) |
+| Q3 | Undetermined | The host mounting the unit is not in the repository (`CLAUDE.md:11` points to another repo) |
+| Q4 | Undetermined | The remote side is configured (`exposes`), but the consumer side is not observable |
+| Q5 | No | The evidence shows a unit prepared for composition, not an MFE instance in the repository |
 
-## Motivo
+## Rationale
 
-- Q1 é No. Pela regra geral isso daria Non-MFE, mas o checklist abre a exceção MFE-unit: "a single frontend unit explicitly prepared to be composed by an external host (e.g., Module Federation `exposes`…), but the composing host is not observable".
-- O repositório cumpre os dois requisitos dessa exceção:
-  - **Preparado para composição:** `exposes`, `remoteEntry.js`, `shared` singleton, bootstrap assíncrono, `publicPath: 'auto'` e o contrato `WidgetProps`.
-  - **Host não observável:** o portal está em `microfrontend-lab/mf-registry`, fora do repositório.
-- Corresponde ao caso "repositories containing only a remote unit, without the composing host".
+- Q1 is No. Under the general rule this would yield Non-MFE, but the checklist allows the MFE-unit exception: "a single frontend unit explicitly prepared to be composed by an external host (e.g., Module Federation `exposes`…), but the composing host is not observable".
+- The repository meets both requirements of this exception:
+  - **Prepared for composition:** `exposes`, `remoteEntry.js`, singleton `shared`, asynchronous bootstrap, `publicPath: 'auto'` and the `WidgetProps` contract.
+  - **Host not observable:** the portal is in `microfrontend-lab/mf-registry`, outside the repository.
+- Matches the case "repositories containing only a remote unit, without the composing host".

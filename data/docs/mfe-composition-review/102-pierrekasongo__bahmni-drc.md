@@ -20,96 +20,97 @@ annotation:
 
 # 102 — pierrekasongo/bahmni-drc
 
-## Leitura do repositório
+## Repository overview
 
-É uma distribuição local de Bahmni/OpenMRS: o snapshot traz o frontend AngularJS do Bahmni
-(`openmrs-module-bahmniapps/ui`), backends, configurações e o Compose que monta os serviços. A
-única unidade frontend do snapshot é `openmrs-module-bahmniapps/ui`, um conjunto de páginas
-AngularJS (clinical, adt, bedmanagement, registration etc.) servido por Apache. A composição
-micro frontend está numa ponte React (`openmrs-module-bahmniapps/micro-frontends`), que a revisão
-estrutural não conta como unidade: o Webpack a constrói para dentro de
+A local Bahmni/OpenMRS distribution: the snapshot contains Bahmni's AngularJS frontend
+(`openmrs-module-bahmniapps/ui`), backends, configurations and the Compose assembling the services. The
+only snapshot frontend unit is `openmrs-module-bahmniapps/ui`, a set of AngularJS pages
+(clinical, adt, bedmanagement, registration etc.) served by Apache. Micro frontend composition
+resides in a React bridge (`openmrs-module-bahmniapps/micro-frontends`), which the structural
+review does not count as a unit: Webpack builds it into
 `ui/app/micro-frontends-dist` (`openmrs-module-bahmniapps/micro-frontends/webpack.config.js:21-25`),
-e as páginas do host a carregam por `<script>` (`openmrs-module-bahmniapps/ui/app/clinical/index.html:92-96`).
-Por isso a ponte não aparece como Origem: as relações partem de `openmrs-module-bahmniapps/ui`,
-que é quem usa os componentes.
+and host pages load it through `<script>` (`openmrs-module-bahmniapps/ui/app/clinical/index.html:92-96`).
+Hence the bridge does not appear as Source: relationships originate from `openmrs-module-bahmniapps/ui`,
+which uses the components.
 
-O host é um container Module Federation (`name: "bahmni_mfe_host"`, `exposes: {}`,
-`openmrs-module-bahmniapps/micro-frontends/webpack.config.js:34-40`) que consome um único remote,
-`bahmni_ipd`, sob o alias `@openmrs-mf/ipd` (`:38`). A URL do `remoteEntry.js` é montada em
-runtime na mesma origem da página, em `/ipd/remoteEntry.js` (`:113-135`); o proxy encaminha `/ipd`
-ao serviço `ipd` (`bahmni-proxy/resources/bahmni-proxy.conf:31-33`), que roda a imagem externa
-`bahmni/microfrontend-ipd` (`docker-compose.yml:586-593`, tag `1.0.0` em `.env:193`). O remote não
-tem fontes no snapshot. Dois módulos dele são consumidos (`IpdDashboard`, `CareViewDashboard`),
-embrulhados em React e registrados como componentes AngularJS com `react2angular`
-(`openmrs-module-bahmniapps/micro-frontends/src/ipd/index.js:19-34`); as páginas do host montam as
-tags na rota IPD da aplicação clínica e na rota `careViewDashboard` de adt e bedmanagement,
-passando `host-data`/`host-api`.
+The host is a Module Federation container (`name: "bahmni_mfe_host"`, `exposes: {}`,
+`openmrs-module-bahmniapps/micro-frontends/webpack.config.js:34-40`) consuming a single remote,
+`bahmni_ipd`, under alias `@openmrs-mf/ipd` (`:38`). The `remoteEntry.js` URL is assembled at
+runtime under the page's origin, at `/ipd/remoteEntry.js` (`:113-135`); the proxy forwards `/ipd`
+to the `ipd` service (`bahmni-proxy/resources/bahmni-proxy.conf:31-33`), running the external image
+`bahmni/microfrontend-ipd` (`docker-compose.yml:586-593`, tag `1.0.0` in `.env:193`). The remote has
+no sources in the snapshot. Two of its modules are consumed (`IpdDashboard`, `CareViewDashboard`),
+wrapped in React and registered as AngularJS components with `react2angular`
+(`openmrs-module-bahmniapps/micro-frontends/src/ipd/index.js:19-34`); host pages mount the
+tags on the clinical application's IPD route and the adt and bedmanagement `careViewDashboard` route,
+passing `host-data`/`host-api`.
 
-Há ainda, na aplicação de registro, um ponto de extensão que abre um iframe com `src` vindo da
-configuração e escuta `message` da janela embutida
+The registration application also has an extension point opening an iframe with `src` from
+configuration and listening for `message` from the embedded window
 (`openmrs-module-bahmniapps/ui/app/registration/controllers/patientCommonController.js:21`, `:35-54`).
-Nenhuma configuração do snapshot declara esse ponto de extensão, então destino e remetente ficam
-sem identidade. O que não virou relação: o bundle `next-ui` da mesma ponte registra só componentes
-locais (`openmrs-module-bahmniapps/micro-frontends/src/next-ui/index.js:1-39`); a carga dos bundles
-da ponte pelas páginas (`openmrs-module-bahmniapps/ui/app/clinical/index.html:95`) é interna ao
-host; os demais iframes (PDF da galeria, impressão, biblioteca vendorizada) não carregam unidades.
-O propósito é de produto (distribuição clínica), com a arquitetura MFE herdada do upstream Bahmni.
+No snapshot configuration declares this extension point, so target and sender remain
+unidentified. What did not become a relationship: the same bridge's `next-ui` bundle registers only local
+components (`openmrs-module-bahmniapps/micro-frontends/src/next-ui/index.js:1-39`); loading bridge
+bundles through the pages (`openmrs-module-bahmniapps/ui/app/clinical/index.html:95`) is internal to the
+host; other iframes (gallery PDF, printing, vendored library) do not load units.
+The purpose is a product (clinical distribution), with MFE architecture inherited from upstream Bahmni.
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | openmrs-module-bahmniapps/ui | bahmni_ipd | host → remote | origem → destino | module-federation | No | Yes | openmrs-module-bahmniapps/micro-frontends/webpack.config.js:34-40 (`ModuleFederationPlugin` `bahmni_mfe_host`, remote `@openmrs-mf/ipd` → `bahmni_ipd`, `exposes: {}`); openmrs-module-bahmniapps/micro-frontends/webpack.config.js:113-135 (URL `/ipd/remoteEntry.js` na origem da página, proxy de `get`/`init`); bahmni-proxy/resources/bahmni-proxy.conf:31-33 (`ProxyPass /ipd http://ipd/ipd`); docker-compose.yml:586-593 (serviço `ipd`, imagem `bahmni/microfrontend-ipd`); .env:193 (`IPD_TAG=1.0.0`) | openmrs-module-bahmniapps/micro-frontends/webpack.config.js:119; openmrs-module-bahmniapps/micro-frontends/webpack.config.js:38; openmrs-module-bahmniapps/micro-frontends/src/ipd/IpdDashboard.jsx:6; openmrs-module-bahmniapps/micro-frontends/src/ipd/CareViewDashboard.jsx:6; openmrs-module-bahmniapps/micro-frontends/src/ipd/index.js:21; openmrs-module-bahmniapps/micro-frontends/src/ipd/index.js:31; openmrs-module-bahmniapps/ui/app/clinical/app.js:328; openmrs-module-bahmniapps/ui/app/clinical/common/views/visitIpd.html:1; openmrs-module-bahmniapps/ui/app/adt/app.js:55; openmrs-module-bahmniapps/ui/app/bedmanagement/app.js:137 |
-| 2 | openmrs-module-bahmniapps/ui | org.bahmni.registration.identifier | page → embedded-frontend | origem → destino | iframe | Undetermined | Undetermined | — | openmrs-module-bahmniapps/ui/app/registration/views/patientIdentifier.html:93 |
+| 1 | openmrs-module-bahmniapps/ui | bahmni_ipd | host → remote | source → target | module-federation | No | Yes | openmrs-module-bahmniapps/micro-frontends/webpack.config.js:34-40 (`ModuleFederationPlugin` `bahmni_mfe_host`, remote `@openmrs-mf/ipd` → `bahmni_ipd`, `exposes: {}`); openmrs-module-bahmniapps/micro-frontends/webpack.config.js:113-135 (URL `/ipd/remoteEntry.js` under the page origin, proxy for `get`/`init`); bahmni-proxy/resources/bahmni-proxy.conf:31-33 (`ProxyPass /ipd http://ipd/ipd`); docker-compose.yml:586-593 (service `ipd`, image `bahmni/microfrontend-ipd`); .env:193 (`IPD_TAG=1.0.0`) | openmrs-module-bahmniapps/micro-frontends/webpack.config.js:119; openmrs-module-bahmniapps/micro-frontends/webpack.config.js:38; openmrs-module-bahmniapps/micro-frontends/src/ipd/IpdDashboard.jsx:6; openmrs-module-bahmniapps/micro-frontends/src/ipd/CareViewDashboard.jsx:6; openmrs-module-bahmniapps/micro-frontends/src/ipd/index.js:21; openmrs-module-bahmniapps/micro-frontends/src/ipd/index.js:31; openmrs-module-bahmniapps/ui/app/clinical/app.js:328; openmrs-module-bahmniapps/ui/app/clinical/common/views/visitIpd.html:1; openmrs-module-bahmniapps/ui/app/adt/app.js:55; openmrs-module-bahmniapps/ui/app/bedmanagement/app.js:137 |
+| 2 | openmrs-module-bahmniapps/ui | org.bahmni.registration.identifier | page → embedded-frontend | source → target | iframe | Undetermined | Undetermined | — | openmrs-module-bahmniapps/ui/app/registration/views/patientIdentifier.html:93 |
 | 3 | openmrs-module-bahmniapps/ui | org.bahmni.registration.identifier | communication | Undetermined | events | Undetermined | Undetermined | — | openmrs-module-bahmniapps/ui/app/registration/controllers/patientCommonController.js:39 |
 
-## Observações
+## Observations
 
-**1. openmrs-module-bahmniapps/ui → bahmni_ipd.** O destino é nomeado como aparece na
-configuração, `bahmni_ipd` (`openmrs-module-bahmniapps/micro-frontends/webpack.config.js:38`): o
-snapshot não tem a configuração do remote (`name`, `exposes`) para conferir. `No snapshot = No`
-porque o remote está identificado como externo: o caminho `/ipd` da URL montada em `:115-121` é
-encaminhado ao serviço `ipd` (`bahmni-proxy/resources/bahmni-proxy.conf:31-33`), que usa a imagem
-publicada `bahmni/microfrontend-ipd:${IPD_TAG}` (`docker-compose.yml:586-588`); o volume que
-apontaria para fontes locais está comentado (`:591-592`). A Origem é `openmrs-module-bahmniapps/ui`
-e não a ponte: as linhas da ponte (config, `lazy(() => import("@openmrs-mf/ipd/..."))` em
-`openmrs-module-bahmniapps/micro-frontends/src/ipd/IpdDashboard.jsx:6` e
-`openmrs-module-bahmniapps/micro-frontends/src/ipd/CareViewDashboard.jsx:6`, registro
-`react2angular` em `openmrs-module-bahmniapps/micro-frontends/src/ipd/index.js:21` e `:31`) estão
-num diretório `No` da revisão estrutural, e a unidade que carrega e monta o remote é o host, pelo
-módulo `bahmni.mfe.ipd` incluído em `openmrs-module-bahmniapps/ui/app/clinical/init.js:7-9` e pelas
-tags em `openmrs-module-bahmniapps/ui/app/clinical/common/views/visitIpd.html:1`,
-`openmrs-module-bahmniapps/ui/app/adt/app.js:55` e `openmrs-module-bahmniapps/ui/app/bedmanagement/app.js:137`.
-As duas exposições consumidas (`IpdDashboard`, `CareViewDashboard`) são do mesmo remote e formam
-uma linha. A direção é do host para o remote; o contrato `hostData`/`hostApi` passa dados e
-callbacks do host para a UI remota (`openmrs-module-bahmniapps/micro-frontends/src/ipd/IpdDashboard.jsx:20-28`),
-o que é parte desta carga e não comunicação por mensagens. `Ativa = Yes` pelas linhas `Yes` da
-revisão de código-fonte.
+**1. openmrs-module-bahmniapps/ui → bahmni_ipd.** The target is named as it appears in
+configuration, `bahmni_ipd` (`openmrs-module-bahmniapps/micro-frontends/webpack.config.js:38`): the
+snapshot lacks the remote configuration (`name`, `exposes`) needed to check it. `In snapshot = No`
+because the remote is identified as external: the `/ipd` path in the URL assembled at `:115-121` is
+forwarded to the `ipd` service (`bahmni-proxy/resources/bahmni-proxy.conf:31-33`), using the published
+image `bahmni/microfrontend-ipd:${IPD_TAG}` (`docker-compose.yml:586-588`); the volume that
+would point to local sources is commented out (`:591-592`). The Source is `openmrs-module-bahmniapps/ui`,
+not the bridge: the bridge lines (config, `lazy(() => import("@openmrs-mf/ipd/..."))` in
+`openmrs-module-bahmniapps/micro-frontends/src/ipd/IpdDashboard.jsx:6` and
+`openmrs-module-bahmniapps/micro-frontends/src/ipd/CareViewDashboard.jsx:6`,
+`react2angular` registration in `openmrs-module-bahmniapps/micro-frontends/src/ipd/index.js:21` and `:31`) reside
+in a `No` directory in the structural review, and the unit loading and mounting the remote is the host, through
+module `bahmni.mfe.ipd` included in `openmrs-module-bahmniapps/ui/app/clinical/init.js:7-9` and the
+tags in `openmrs-module-bahmniapps/ui/app/clinical/common/views/visitIpd.html:1`,
+`openmrs-module-bahmniapps/ui/app/adt/app.js:55` and `openmrs-module-bahmniapps/ui/app/bedmanagement/app.js:137`.
+Both consumed exposures (`IpdDashboard`, `CareViewDashboard`) belong to the same remote and form
+one row. Direction goes from host to remote; the `hostData`/`hostApi` contract passes data and
+callbacks from host to remote UI (`openmrs-module-bahmniapps/micro-frontends/src/ipd/IpdDashboard.jsx:20-28`),
+part of this loading rather than message communication. `Active = Yes` through the `Yes`
+source code review lines.
 
-**2. openmrs-module-bahmniapps/ui → org.bahmni.registration.identifier.** O iframe
+**2. openmrs-module-bahmniapps/ui → org.bahmni.registration.identifier.** The iframe
 `extension-popup` (`openmrs-module-bahmniapps/ui/app/registration/views/patientIdentifier.html:93`)
-recebe `src` do ponto de extensão `org.bahmni.registration.identifier` da configuração da
-aplicação (`openmrs-module-bahmniapps/ui/app/registration/controllers/patientCommonController.js:21`,
-`:35-37`). O destino leva o nome do ponto de extensão, único identificador que aparece no
-artefato. Nenhum arquivo do snapshot declara esse ponto (a busca só retorna o controller e seu
-teste), então não se sabe se o conteúdo é unidade local ou externa: `No snapshot = Undetermined`.
-`Ativa = Undetermined` porque a única linha de código é `Undetermined`.
+receives `src` from the application configuration's `org.bahmni.registration.identifier` extension point
+(`openmrs-module-bahmniapps/ui/app/registration/controllers/patientCommonController.js:21`,
+`:35-37`). The target takes the extension point's name, the only identifier appearing in the
+artifact. No snapshot file declares this point (search returns only the controller and its
+test), so whether the content is a local or external unit is unknown: `In snapshot = Undetermined`.
+`Active = Undetermined` because the only code line is `Undetermined`.
 
-**3. openmrs-module-bahmniapps/ui → org.bahmni.registration.identifier.** O host registra
-`$window.addEventListener("message", ...)` ao abrir o popup e, com o `patient` ou `patientUuid`
-recebido, preenche o formulário ou navega
-(`openmrs-module-bahmniapps/ui/app/registration/controllers/patientCommonController.js:39-54`). A
-Origem é `openmrs-module-bahmniapps/ui`, única unidade da revisão estrutural que participa da troca;
-o Destino é o conteúdo do iframe da relação 2, nomeado como lá. O host só recebe: não há
-`postMessage` do host para a janela embutida em `openmrs-module-bahmniapps/ui/app/registration`, o
-que descarta `bidirecional`, e a Origem, que recebe, não é quem envia, o que descarta
-`origem → destino`. O remetente esperado é a janela embutida, mas o handler não confere
-`source` nem `origin` da mensagem (`openmrs-module-bahmniapps/ui/app/registration/controllers/patientCommonController.js:39-40`), e o conteúdo do ponto de
-extensão não se resolve no snapshot, então não está estabelecido quem envia: `Direção = Undetermined`.
-`No snapshot = Undetermined` porque o Destino é o mesmo ponto de extensão não resolvido da relação 2;
-`Ativa = Undetermined` porque a única linha de código é `Undetermined`.
+**3. openmrs-module-bahmniapps/ui → org.bahmni.registration.identifier.** The host registers
+`$window.addEventListener("message", ...)` when opening the popup and, with the received `patient` or `patientUuid`,
+fills the form or navigates
+(`openmrs-module-bahmniapps/ui/app/registration/controllers/patientCommonController.js:39-54`). The
+Source is `openmrs-module-bahmniapps/ui`, the only structural review unit participating in the exchange;
+the Target is the iframe content from relationship 2, named as there. The host only receives: there is no
+`postMessage` from the host to the embedded window in `openmrs-module-bahmniapps/ui/app/registration`,
+ruling out `bidirectional`, and the receiving Source is not the sender, ruling out
+`source → target`. The expected sender is the embedded window, but the handler checks neither
+`source` nor `origin` of the message (`openmrs-module-bahmniapps/ui/app/registration/controllers/patientCommonController.js:39-40`), and the extension
+point content cannot be resolved in the snapshot, so the sender is not established: `Direction = Undetermined`.
+`In snapshot = Undetermined` because the Target is the same unresolved extension point as relationship 2;
+`Active = Undetermined` because the only code line is `Undetermined`.
 
-## Resumo
+## Summary
 
-Relações: 3 (host → remote: 1, page → embedded-frontend: 1, communication: 1). Ativas: 1. Destino fora do snapshot: 1.
-Unidades sem relação: nenhuma.
+Relationships: 3 (host → remote: 1, page → embedded-frontend: 1, communication: 1). Active: 1. Target outside the snapshot: 1.
+Units without a relationship: none.
+

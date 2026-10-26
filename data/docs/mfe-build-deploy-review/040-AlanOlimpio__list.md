@@ -16,22 +16,22 @@ annotation:
 
 # 040 — AlanOlimpio/list
 
-## Leitura do repositório
+## Repository overview
 
-Repositório com uma só aplicação, `ListApp`, feita num curso de webpack (README.md:1-3). É ao mesmo tempo remote, porque expõe `./ListRoutes`, e consumidor do remote `RegisterApp`, que está em outro repositório e é publicado num domínio Vercel próprio (webpack.config.js:46-55). O build é um `webpack --mode production` com saída em `dist` e `publicPath: 'auto'` (package.json:9; webpack.config.js:6-11). Com isso, os chunks são resolvidos a partir de onde o `remoteEntry.js` for servido, sem endereço fixo da própria aplicação.
+Repository with a single application, `ListApp`, made in a webpack course (README.md:1-3). It is both a remote, exposing `./ListRoutes`, and a consumer of remote `RegisterApp`, located in another repository and published at its own Vercel domain (webpack.config.js:46-55). Build is `webpack --mode production` with output in `dist` and `publicPath: 'auto'` (package.json:9; webpack.config.js:6-11). Chunks are thus resolved from wherever `remoteEntry.js` is served, without a fixed application address.
 
-O deploy é na Vercel, configurado no repositório. O `vercel.json` usa `@vercel/static-build` sobre o `package.json`, publica `dist` e reescreve todas as rotas para `/` (vercel.json:2-11). O README só explica como rodar localmente na porta 9004 (README.md:29-37; webpack.config.js:17).
+Deployment is on Vercel, configured in the repository. The `vercel.json` uses `@vercel/static-build` on `package.json`, publishes `dist` and rewrites all routes to `/` (vercel.json:2-11). README only explains local execution on port 9004 (README.md:29-37; webpack.config.js:17).
 
-## Aplicações
+## Applications
 
-| # | Aplicação | Build | Deploy | Onde é servida | Versionamento | Artefatos |
+| # | Application | Build | Deploy | Where served | Versioning | Artifacts |
 |---|---|---|---|---|---|---|
-| 1 | . | separado | separado | domínio Vercel, não registrado no snapshot (vercel.json:5-11); `http://localhost:9004` em desenvolvimento (webpack.config.js:17) | No | webpack.config.js:4-11 (configuração e saída próprias); package.json:9 (`webpack --mode production`); vercel.json:5-11 (build estático e publicação de `dist`) |
+| 1 | . | separate | separate | Vercel domain, not recorded in the snapshot (vercel.json:5-11); `http://localhost:9004` in development (webpack.config.js:17) | No | webpack.config.js:4-11 (own configuration and output); package.json:9 (`webpack --mode production`); vercel.json:5-11 (static build and publication of `dist`) |
 
-## Observações
+## Observations
 
-**1. Raiz (`.`).** Aplicação da raiz. Build e deploy próprios: a configuração da Vercel publica só esta aplicação. O consumidor dela, se houver, e o remote `RegisterApp` estão em outros repositórios, e o remote tem domínio próprio (webpack.config.js:53-54), o que é compatível com publicações independentes. O endereço desta aplicação não aparece no snapshot. A versão `1.0.0` (package.json:3) não é usada na publicação.
+**1. Root (`.`).** Root application. Own build and deployment: Vercel configuration publishes only this application. Its consumer, if any, and remote `RegisterApp` are in other repositories, and remote has its own domain (webpack.config.js:53-54), consistent with independent publications. This application’s address does not appear in the snapshot. Version `1.0.0` (package.json:3) is unused in publication.
 
-## Resumo
+## Summary
 
-Aplicações: 1. Build (separado: 1). Deploy (separado: 1). Versionamento independente: 0.
+Applications: 1. Build (separate: 1). Deploy (separate: 1). Independent versioning: 0.

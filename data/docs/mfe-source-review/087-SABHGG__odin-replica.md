@@ -15,36 +15,36 @@ annotation:
 
 # 087 — SABHGG/odin-replica
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-mount-export | src/root.app.js:16 | . | runtime-composition | No | Exporta o lifecycle `bootstrap` dos lifecycles React criados em src/root.app.js:6-14; o único consumidor é o registro da própria unidade em src/index.js:56-60 (`async () => RootApp`, importado em src/index.js:4), no mesmo bundle CRA; interno à unidade `.`. |
-| src-mount-export | src/root.app.js:17 | . | runtime-composition | No | Exporta o lifecycle `mount` do mesmo objeto de src/root.app.js:6-14, consumido pelo registro local de src/index.js:56-60; nenhuma outra unidade o consome (não há exposição de build; package.json:18-22 só tem os scripts do `react-scripts`). |
-| src-mount-export | src/root.app.js:18 | . | runtime-composition | No | Exporta o lifecycle `unmount` do mesmo objeto de src/root.app.js:6-14, com o mesmo consumidor interno de src/index.js:56-60. |
-| src-lifecycles | src/index.js:56 | . | runtime-composition | No | `registerApplication('odin-react', async () => RootApp, () => true)` (src/index.js:56-60) registra a própria unidade `.`: o objeto de lifecycles vem do import estático de src/index.js:4 e monta em `#root` (src/root.app.js:13, public/index.html:31); registro interno, sem outra unidade envolvida. |
-| src-lifecycles | src/index.js:63 | . | runtime-composition | Yes | `registerApplication('leadocs-angular', ...)` (src/index.js:63-100) registra a unidade externa `leadocs-angular`: loader de script (src/index.js:65-94), função de atividade `() => isLeadocsActive` (src/index.js:96) e `domElementGetter` para `#microfrontend-container` (src/index.js:98), nó criado pelo host em src/App.js:57. |
-| src-lifecycles | src/root.app.js:3 | . | runtime-composition | No | Importa `singleSpaReact`, usado em src/root.app.js:6 para criar os lifecycles da própria unidade; o uso que habilita é `No`. |
-| src-lifecycles | src/root.app.js:6 | . | runtime-composition | No | `singleSpaReact({ React, ReactDOM, rootComponent: App, ... })` (src/root.app.js:6-14) adapta o App local a lifecycles single-spa; é a própria unidade `.` se adaptando ao orquestrador do mesmo bundle (src/index.js:4 e 56-60). |
-| src-dynamic-script | src/index.js:72 | . | script-loading | Yes | Dentro do loader do remoto, cria o `<script>` com `src = LEAPDOCS_BUNDLE_URL` (src/index.js:73; URL em src/index.js:8-9, padrão `http://localhost:4200/main.js`) e o injeta em `document.head` (src/index.js:93), resolvendo com `globalThis.leapdocs` (src/index.js:78-80); carrega o bundle da unidade externa `leadocs-angular`, fora do snapshot. |
-| src-cross-unit-communication | src/App.js:18 | . | none | No | `window.dispatchEvent(...)` (src/App.js:18-22), acionado pelos botões da barra lateral (src/App.js:29-38), dispara um evento que só a própria unidade `.` escuta (src/index.js:47); emissor e receptor estão na mesma unidade, logo é evento interno, não construção de composição. A montagem da unidade externa é feita pelo orquestrador, registrada em src/index.js:63. |
-| src-cross-unit-communication | src/App.js:19 | . | none | No | `new CustomEvent('toggle-leapdocs', { detail: { isActive: sectionId === 'microfrontend' } })` (src/App.js:19-21) é o evento disparado em src/App.js:18, cujo único receptor é o listener da própria unidade `.` em src/index.js:47; evento interno, pelo mesmo motivo da linha de src/App.js:18. |
-| src-cross-unit-communication | src/index.js:47 | . | none | No | `globalThis.addEventListener('toggle-leapdocs', ...)` (src/index.js:47-51) recebe o evento emitido pela própria unidade `.` em src/App.js:18-22, grava `isLeadocsActive` (src/index.js:48) e chama `triggerAppChange()` (src/index.js:50); é o lado receptor de um evento interno à unidade, e a montagem de `leadocs-angular` fica a cargo do registro de src/index.js:63. |
+| src-mount-export | src/root.app.js:16 | . | runtime-composition | No | Exports the `bootstrap` lifecycle from the React lifecycles created at src/root.app.js:6-14; the only consumer is the unit’s own registration at src/index.js:56-60 (`async () => RootApp`, imported at src/index.js:4), in the same CRA bundle; internal to unit `.`. |
+| src-mount-export | src/root.app.js:17 | . | runtime-composition | No | Exports the `mount` lifecycle from the same object at src/root.app.js:6-14, consumed by local registration at src/index.js:56-60; no other unit consumes it (no build exposure; package.json:18-22 only has `react-scripts` scripts). |
+| src-mount-export | src/root.app.js:18 | . | runtime-composition | No | Exports the `unmount` lifecycle from the same object at src/root.app.js:6-14, with the same internal consumer at src/index.js:56-60. |
+| src-lifecycles | src/index.js:56 | . | runtime-composition | No | `registerApplication('odin-react', async () => RootApp, () => true)` (src/index.js:56-60) registers unit `.` itself: the lifecycle object comes from the static import at src/index.js:4 and mounts in `#root` (src/root.app.js:13, public/index.html:31); internal registration without another unit involved. |
+| src-lifecycles | src/index.js:63 | . | runtime-composition | Yes | `registerApplication('leadocs-angular', ...)` (src/index.js:63-100) registers the external `leadocs-angular` unit: script loader (src/index.js:65-94), activity function `() => isLeadocsActive` (src/index.js:96) and `domElementGetter` for `#microfrontend-container` (src/index.js:98), a node created by the host at src/App.js:57. |
+| src-lifecycles | src/root.app.js:3 | . | runtime-composition | No | Imports `singleSpaReact`, used at src/root.app.js:6 to create the unit’s own lifecycles; the use it enables is `No`. |
+| src-lifecycles | src/root.app.js:6 | . | runtime-composition | No | `singleSpaReact({ React, ReactDOM, rootComponent: App, ... })` (src/root.app.js:6-14) adapts the local App to single-spa lifecycles; this is unit `.` itself adapting to the orchestrator in the same bundle (src/index.js:4 and 56-60). |
+| src-dynamic-script | src/index.js:72 | . | script-loading | Yes | Inside the remote loader, creates the `<script>` with `src = LEAPDOCS_BUNDLE_URL` (src/index.js:73; URL at src/index.js:8-9, default `http://localhost:4200/main.js`) and injects it into `document.head` (src/index.js:93), resolving with `globalThis.leapdocs` (src/index.js:78-80); loads the bundle of the external `leadocs-angular` unit, outside the snapshot. |
+| src-cross-unit-communication | src/App.js:18 | . | none | No | `window.dispatchEvent(...)` (src/App.js:18-22), triggered by sidebar buttons (src/App.js:29-38), dispatches an event listened to only by unit `.` itself (src/index.js:47); sender and receiver are in the same unit, so this is an internal event rather than a composition construct. The external unit is mounted by the orchestrator, recorded at src/index.js:63. |
+| src-cross-unit-communication | src/App.js:19 | . | none | No | `new CustomEvent('toggle-leapdocs', { detail: { isActive: sectionId === 'microfrontend' } })` (src/App.js:19-21) is the event dispatched at src/App.js:18, whose only receiver is unit `.`’s own listener at src/index.js:47; internal event for the same reason as the src/App.js:18 row. |
+| src-cross-unit-communication | src/index.js:47 | . | none | No | `globalThis.addEventListener('toggle-leapdocs', ...)` (src/index.js:47-51) receives the event emitted by unit `.` itself at src/App.js:18-22, writes `isLeadocsActive` (src/index.js:48) and calls `triggerAppChange()` (src/index.js:50); this is the receiver side of an internal unit event, while mounting of `leadocs-angular` is handled by the registration at src/index.js:63. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | src/index.js:103 | . | runtime-composition | Yes | `start()` do single-spa (importado em src/index.js:3) inicia o orquestrador; sem ele nenhum dos registros de src/index.js:56-100 monta. É o que torna ativo o carregamento da unidade externa `leadocs-angular`. |
+| manual | src/index.js:103 | . | runtime-composition | Yes | `start()` from single-spa (imported at src/index.js:3) starts the orchestrator; without it, none of the registrations at src/index.js:56-100 mounts. This activates loading of the external `leadocs-angular` unit. |
 
-## Resumo
+## Summary
 
-Construções com composição: 3 (runtime-composition: 2, script-loading: 1).
+Constructs participating in composition: 3 (runtime-composition: 2, script-loading: 1).
 
-## Notas
+## Notes
 
-- O snapshot tem uma só unidade (`.`, revisão estrutural 087). O root single-spa e a aplicação React local estão no mesmo bundle CRA (src/index.js:4 importa `./root.app` estaticamente), por isso os lifecycles de `src/root.app.js` e o registro `odin-react` de src/index.js:56-60 são internos à unidade e ficaram `No`, como em 007 para o `mount` do próprio container. A única outra unidade é o remoto externo `leadocs-angular`, que não está no snapshot.
-- `triggerAppChange()` (src/index.js:50) e o `domElementGetter` de `#microfrontend-container` (src/index.js:98, nó criado em src/App.js:57) não viraram linha própria: são passos das linhas já registradas em src/index.js:47 e src/index.js:63, e estão nas observações delas.
-- O par `toggle-leapdocs` tem emissor (src/App.js:18) e receptor (src/index.js:47) na mesma unidade `.`: é evento interno, anotado como `none` / `No`. A montagem da unidade externa é feita pelo orquestrador single-spa, registrada em src/index.js:63; a ativação posterior pelo evento não torna o evento uma interação entre unidades.
-- `import('web-vitals')` em src/reportWebVitals.js:3 é carga dinâmica de um pacote npm dentro da própria unidade; não é construção de composição e não virou linha.
-- A busca do passo 4 em `src/`, `public/`, `README.md` e `package.json` não encontrou `customElements`, `<iframe`, `postMessage`, `BroadcastChannel`, `loadRemote*`, `initFederation`, `registerRemotes` nem `System.import`.
+- The snapshot has a single unit (`.`, structural review 087). The single-spa root and local React application are in the same CRA bundle (src/index.js:4 imports `./root.app` statically), so the `src/root.app.js` lifecycles and the `odin-react` registration at src/index.js:56-60 are internal to the unit and remained `No`, as in 007 for the container’s own `mount`. The only other unit is the external `leadocs-angular` remote, absent from the snapshot.
+- `triggerAppChange()` (src/index.js:50) and the `domElementGetter` for `#microfrontend-container` (src/index.js:98, node created at src/App.js:57) did not become separate rows: they are steps of the rows already recorded at src/index.js:47 and src/index.js:63, and are in their observations.
+- The `toggle-leapdocs` pair has sender (src/App.js:18) and receiver (src/index.js:47) in the same unit `.`: it is an internal event, annotated as `none` / `No`. The external unit is mounted by the single-spa orchestrator, recorded at src/index.js:63; later activation through the event does not make the event an inter-unit interaction.
+- `import('web-vitals')` at src/reportWebVitals.js:3 is dynamic loading of an npm package within the unit itself; it is not a composition construct and did not become a row.
+- The step 4 search in `src/`, `public/`, `README.md` and `package.json` found no `customElements`, `<iframe`, `postMessage`, `BroadcastChannel`, `loadRemote*`, `initFederation`, `registerRemotes` or `System.import`.

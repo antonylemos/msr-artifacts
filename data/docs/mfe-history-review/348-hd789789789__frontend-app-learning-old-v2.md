@@ -13,25 +13,25 @@ annotation:
 
 # 348 — hd789789789/frontend-app-learning-old-v2
 
-## Leitura do repositório
+## Repository overview
 
-O histórico alcançável até o snapshot tem 1.518 commits, de 2019-05-02 a 2025-11-16. O primeiro é `1a782f7` (2019-05-02, "Initial commit"), que já contém README.rst: essa é sua primeira presença observável, sem demonstrar onde o texto foi elaborado antes. O último é `d987aed` (2025-11-16, "chore: update browserslist DB (#1826)"). A análise se limita à dúvida da revisão documental sobre a convenção de variáveis de ambiente entre MFEs; não reconstrói uma trajetória de adoção.
+Reachable history up to snapshot has 1,518 commits, from 2019-05-02 to 2025-11-16. First is `1a782f7` (2019-05-02, "Initial commit"), already containing README.rst: first observable presence, without demonstrating where text was written before. Last is `d987aed` (2025-11-16, "chore: update browserslist DB (#1826)"). Analysis is limited to documentary review uncertainty about environment variable convention across MFEs; it does not reconstruct adoption trajectory.
 
-O README foi alterado em `1308d1e` (2021-08-06, "docs: explain the learning MFE specific environment variables (#578)"). A mensagem anuncia documentação das variáveis específicas da Learning, mas o conteúdo dessa versão não está disponível localmente. A última alteração do README até o snapshot é `d5a092b` (2025-03-26, "Update edx.rtd.io links to docs.openedx.org (#1654)"); sua mensagem anuncia atualização de links, sem demonstrar uma mudança na convenção de ambiente. O snapshot confirma configuração local, mas não fornece o manifesto de ambiente de outra MFE. Nenhum desses metadados resolve a abrangência da afirmação sobre todas as MFEs.
+README changed in `1308d1e` (2021-08-06, "docs: explain the learning MFE specific environment variables (#578)"). Message announces Learning-specific variable documentation, but contents of version are unavailable locally. Last README change up to snapshot is `d5a092b` (2025-03-26, "Update edx.rtd.io links to docs.openedx.org (#1654)"); message announces link update without demonstrating environment convention change. Snapshot confirms local configuration but provides no environment manifest from another MFE. None of metadata resolves scope of claim about all MFEs.
 
-As revisões 3.4.2 a 3.4.6 não deixam dependência sem uso ou indeterminada, unidade indeterminada, construção de composição inativa ou indeterminada, relação indeterminada ou deploy indeterminado. Os exemplos de plugins são identificados como exemplos, as duas barras de discussão têm seleção ativa por flag e o deploy é não observado; não são ambiguidades históricas adicionais. As afirmações sem corroboração sobre Tutor na 3.4.7 descrevem configuração externa ausente, sem conflito entre estágios observado. A única afirmação parcial é o ponto abaixo.
+Reviews 3.4.2 to 3.4.6 leave no unused or undetermined dependency, undetermined unit, inactive or undetermined composition construct, undetermined relationship or undetermined deploy. Plugin examples are identified as examples, both discussion bars have active flag selection and deploy is not observed; these are no additional historical ambiguities. Uncorroborated Tutor claims in 3.4.7 describe missing external configuration without observed stage conflict. Only partial claim is point below.
 
-## Pontos
+## Points
 
-| # | Ponto | Origem | Pergunta | Commits | Resultado |
+| # | Point | Origin | Question | Commits | Result |
 |---|---|---|---|---|---|
-| 1 | A afirmação de um conjunto obrigatório de variáveis comum a todas as MFEs tem suporte apenas no ambiente da Learning | 3.4.7 #6 (README.rst:145-147) | estágios em conflito | 1308d1e 2021-08-06 docs: explain the learning MFE specific environment variables (#578); d5a092b 2025-03-26 Update edx.rtd.io links to docs.openedx.org (#1654) | inconclusivo |
+| 1 | Claim of mandatory variable set common to all MFEs is supported only in Learning environment | 3.4.7 #6 (README.rst:145-147) | conflicting stages | 1308d1e 2021-08-06 docs: explain the learning MFE specific environment variables (#578); d5a092b 2025-03-26 Update edx.rtd.io links to docs.openedx.org (#1654) | inconclusive |
 
-## Observações
+## Observations
 
-**1. Variáveis comuns às MFEs.** README.rst:144-149 distingue a configuração por ambiente, a convenção geral e as variáveis adicionais da Learning. O snapshot contém variáveis de autenticação e sessão em .env:6-8, :26-28, :40, :51, mas só para esta aplicação, como registra a 3.4.7 #6. O histórico de caminhos confirma modificações de README.rst em `1308d1e` e `d5a092b`, não quais frases foram alteradas. A consulta `ls-tree` encontra README.rst em `1308d1e`, com objeto diferente do snapshot, mas `show 1308d1e:README.rst` falha com `fatal: bad object 1308d1e:README.rst`: o conteúdo histórico não está disponível, e não houve busca de objetos. A mensagem de `1308d1e` anuncia explicação de variáveis específicas, sem provar quando a afirmação geral apareceu, se veio de outro estágio ou se foi abandonada. Permanece inconclusivo; o julgamento parcial do snapshot não muda.
+**1. Variables common to MFEs.** README.rst:144-149 distinguishes per-environment configuration, general convention and additional Learning variables. Snapshot contains authentication and session variables at .env:6-8, :26-28, :40, :51, but only for this application, as recorded in 3.4.7 #6. Path history confirms README.rst modifications in `1308d1e` and `d5a092b`, rather than changed sentences. Query `ls-tree` finds README.rst at `1308d1e`, with object differing from snapshot, but `show 1308d1e:README.rst` fails with `fatal: bad object 1308d1e:README.rst`: historical contents are unavailable and no objects were fetched. Message of `1308d1e` announces specific variable explanation without proving when general claim appeared, whether from another stage or abandoned. Remains inconclusive; partial snapshot judgment does not change.
 
-## Comandos
+## Commands
 
 ```sh
 LC_ALL=C docs/mfe-history-review/tools/fingerprint.sh | cmp - docs/mfe-history-review/tools/fingerprint-before.txt
@@ -39,13 +39,13 @@ docs/mfe-history-review/tools/hist.sh hd789789789__frontend-app-learning-old-v2 
 docs/mfe-history-review/tools/hist.sh hd789789789__frontend-app-learning-old-v2 log --format='%h %ad %s' --date=short d987aed86134f6fa2a2a79d85f72fe44cfc0e5ee -- README.rst README.md
 docs/mfe-history-review/tools/hist.sh hd789789789__frontend-app-learning-old-v2 log --reverse --format='%h %ad %s' --date=short d987aed86134f6fa2a2a79d85f72fe44cfc0e5ee
 docs/mfe-history-review/tools/hist.sh hd789789789__frontend-app-learning-old-v2 show 1308d1e:README.rst
-# Falhou: fatal: bad object 1308d1e:README.rst (conteúdo histórico ausente).
+# Failed: fatal: bad object 1308d1e:README.rst (historical contents missing).
 docs/mfe-history-review/tools/hist.sh hd789789789__frontend-app-learning-old-v2 log --format='%h %ad %s' --date=short --name-status --no-renames d987aed86134f6fa2a2a79d85f72fe44cfc0e5ee -- README.rst
 docs/mfe-history-review/tools/hist.sh hd789789789__frontend-app-learning-old-v2 ls-tree d987aed86134f6fa2a2a79d85f72fe44cfc0e5ee -- README.rst
 docs/mfe-history-review/tools/hist.sh hd789789789__frontend-app-learning-old-v2 ls-tree 1308d1e -- README.rst
 LC_ALL=C docs/mfe-history-review/tools/fingerprint.sh | cmp - docs/mfe-history-review/tools/fingerprint-before.txt
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 1518 (2019-05-02 a 2025-11-16). Pontos: 1 (esclarecido: 0, inconclusivo: 1, resolvido pelo snapshot: 0).
+Commits up to the snapshot: 1518 (2019-05-02 to 2025-11-16). Points: 1 (clarified: 0, inconclusive: 1, resolved by the snapshot: 0).

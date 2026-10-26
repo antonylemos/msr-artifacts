@@ -13,28 +13,28 @@ annotation:
 
 # 211 — varshinir07/mfe-onehub-shell-app
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem 2 commits, ambos de 2025-06-05, sem merges. O primeiro, `74cbf87` ("Initial commit"), cria só o `README.md`. O segundo é o próprio snapshot, `1ddddc4` ("Created OneHub Shell App"): altera o `README.md` e cria todos os outros 18 arquivos, entre eles `package.json`, `src/webpack.config.js`, com o `ModuleFederationPlugin` do host `onehub`, e `src/pages/Dashboard.jsx`, que consome os remotes. A configuração e o código da composição não têm, portanto, primeira presença anterior ao snapshot: são introduzidos nele. Nenhum commit remove arquivo.
+History up to snapshot has 2 commits, both from 2025-06-05, without merges. First, `74cbf87` ("Initial commit"), creates only `README.md`. Second is snapshot itself, `1ddddc4` ("Created OneHub Shell App"): changes `README.md` and creates all other 18 files, including `package.json`, `src/webpack.config.js`, with `ModuleFederationPlugin` of host `onehub`, and `src/pages/Dashboard.jsx`, consuming remotes. Composition configuration and code therefore have no first presence before snapshot: they are introduced there. No commit removes a file.
 
-O clone não tem o conteúdo da versão do `README.md` de `74cbf87` (objeto `3c7947b` ausente); a do snapshot é outro objeto (`0c364be`). O que se sabe do primeiro commit é a lista de arquivos e a mensagem.
+Clone lacks contents of `README.md` version at `74cbf87` (missing object `3c7947b`); snapshot version is another object (`0c364be`). What is known about first commit is file list and message.
 
-Das revisões anteriores, a 3.4.2 não tem dependência (o plugin vem do próprio `webpack`), a 3.4.3 não tem unidade `Undetermined`, a 3.4.4 não tem construção inativa, comentada ou `Undetermined`, a 3.4.5 não tem relação `Undetermined` e a 3.4.6 não tem deploy `Undetermined` (é `não observado`). Da 3.4.7 vêm a afirmação `contradita` (#1) e a `parcial` (#5), uma por ponto.
+Of previous reviews, 3.4.2 has no dependency (plugin comes from `webpack` itself), 3.4.3 has no `Undetermined` unit, 3.4.4 has no inactive, commented-out or `Undetermined` construct, 3.4.5 has no `Undetermined` relationship and 3.4.6 has no `Undetermined` deploy (it is `not observed`). 3.4.7 provides `contradicted` claim (#1) and `partial` claim (#5), one per point.
 
-## Pontos
+## Points
 
-| # | Ponto | Origem | Pergunta | Commits | Resultado |
+| # | Point | Origin | Question | Commits | Result |
 |---|---|---|---|---|---|
-| 1 | O README chama o projeto de "MFE Remote App for OnehubShell", e o snapshot só tem o host `onehub` | 3.4.7 #1 | estágios em conflito | 74cbf87 2025-06-05 Initial commit; 1ddddc4 2025-06-05 Created OneHub Shell App | esclarecido |
-| 2 | O host compartilha `react` e `react-dom` como singleton com remotes que não estão no snapshot | 3.4.7 #5 | extração | 74cbf87 2025-06-05 Initial commit; 1ddddc4 2025-06-05 Created OneHub Shell App | esclarecido |
+| 1 | README calls project "MFE Remote App for OnehubShell", and snapshot has only host `onehub` | 3.4.7 #1 | conflicting stages | 74cbf87 2025-06-05 Initial commit; 1ddddc4 2025-06-05 Created OneHub Shell App | clarified |
+| 2 | Host shares `react` and `react-dom` as singletons with remotes outside snapshot | 3.4.7 #5 | extraction | 74cbf87 2025-06-05 Initial commit; 1ddddc4 2025-06-05 Created OneHub Shell App | clarified |
 
-## Observações
+## Observations
 
-**1. O README chama o projeto de "MFE Remote App for OnehubShell", e o snapshot só tem o host `onehub`.** O repositório só teve duas versões. A primeira, `74cbf87`, tem apenas o `README.md`, sem código. A segunda, `1ddddc4`, cria todo o código, já como host (`src/webpack.config.js` e `src/pages/Dashboard.jsx`), e altera o README no mesmo commit. Nunca houve, no repositório, uma versão em que o projeto fosse um remote, e o rótulo não é resto de um estágio anterior dele. O histórico não mostra se a linha README.md:2 já estava no README de `74cbf87` ou foi escrita em `1ddddc4`, porque o conteúdo da primeira versão não está no clone. Também não mostra se o rótulo foi copiado de outro repositório. A conclusão é que o rótulo e o código de host estão juntos desde a única versão com código.
+**1. README calls project "MFE Remote App for OnehubShell", and snapshot has only host `onehub`.** Repository had only two versions. First, `74cbf87`, has only `README.md`, without code. Second, `1ddddc4`, creates all code, already as host (`src/webpack.config.js` and `src/pages/Dashboard.jsx`), and changes README in same commit. Repository never had a version where project was a remote, and label is not a remnant of an earlier stage. History does not show whether line README.md:2 was already in README at `74cbf87` or written in `1ddddc4`, because first version contents are absent from clone. It also does not show whether label was copied from another repository. Conclusion is label and host code coexist since only version containing code.
 
-**2. O host compartilha `react` e `react-dom` como singleton com remotes que não estão no snapshot.** As listas de arquivos dos dois commits mostram tudo o que o repositório já teve: o `README.md` e os 18 arquivos do host criados em `1ddddc4`. Nenhum commit cria ou remove código, configuração ou pasta dos remotes `subscription` e `ownership`. Eles não foram extraídos deste repositório nem removidos dele: nunca estiveram aqui. O histórico não mostra onde ficam os remotes nem se eles declaram o mesmo `shared`, e a afirmação continua `parcial`.
+**2. Host shares `react` and `react-dom` as singletons with remotes outside snapshot.** File lists of both commits show everything repository ever had: `README.md` and 18 host files created in `1ddddc4`. No commit creates or removes code, configuration or directory of remotes `subscription` and `ownership`. They were neither extracted nor removed from this repository: they were never here. History does not show remote locations or whether they declare same `shared`, and claim remains `partial`.
 
-## Comandos
+## Commands
 
 ```
 docs/mfe-history-review/tools/hist.sh varshinir07__mfe-onehub-shell-app rev-list --count 1ddddc4241157e335c1b6e39372f050aa1705c1d
@@ -42,9 +42,9 @@ docs/mfe-history-review/tools/hist.sh varshinir07__mfe-onehub-shell-app rev-list
 docs/mfe-history-review/tools/hist.sh varshinir07__mfe-onehub-shell-app log --reverse --format='%h %ad %s' --date=short --name-status --no-renames 1ddddc4241157e335c1b6e39372f050aa1705c1d
 docs/mfe-history-review/tools/hist.sh varshinir07__mfe-onehub-shell-app ls-tree 74cbf87 -- README.md
 docs/mfe-history-review/tools/hist.sh varshinir07__mfe-onehub-shell-app ls-tree 1ddddc4241157e335c1b6e39372f050aa1705c1d -- README.md
-docs/mfe-history-review/tools/hist.sh varshinir07__mfe-onehub-shell-app show 74cbf87:README.md   # falhou: objeto ausente (bad object)
+docs/mfe-history-review/tools/hist.sh varshinir07__mfe-onehub-shell-app show 74cbf87:README.md   # failed: missing object (bad object)
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 2 (2025-06-05 a 2025-06-05). Pontos: 2 (esclarecido: 2, inconclusivo: 0, resolvido pelo snapshot: 0).
+Commits up to the snapshot: 2 (2025-06-05 to 2025-06-05). Points: 2 (clarified: 2, inconclusive: 0, resolved by the snapshot: 0).

@@ -15,10 +15,11 @@ annotation:
 
 # 223 — ross2p/mindlet-app
 
-## Dependências
+## Dependencies
 
-Nenhuma dependência das tecnologias no dependencies.csv.
+No dependency on the technologies in dependencies.csv.
 
-## Notas
+## Notes
 
-- O snapshot não tem nenhum `package.json`. As cinco zonas e as duas bibliotecas são submódulos Git (.gitmodules:1-21), e os fontes delas não estão no snapshot. Por isso as dependências delas não aparecem na inspeção.
+- The snapshot has no `package.json`. The five zones and two libraries are Git submodules (.gitmodules:1-21), and their sources are absent from the snapshot. Therefore their dependencies do not appear in the inspection.
+

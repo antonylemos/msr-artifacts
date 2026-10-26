@@ -20,56 +20,56 @@ annotation:
 
 # 370 — JohnatanCarlos/JohnatanCarlos
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** não é projeto de software. É o README de perfil do GitHub (repositório `<usuário>/<usuário>`, descrição “My Description!”), com apresentação profissional, tecnologias e contatos. Contém dados de contato pessoais (`README.md:29`), não reproduzidos aqui. A coincidência entre dono e nome é registrada só como tipo de repositório, não como evidência arquitetural.
+- **Repository type:** not a software project. It is a GitHub profile README (repository `<usuário>/<usuário>`, description “My Description!”), with a professional introduction, technologies and contacts. It contains personal contact details (`README.md:29`), not reproduced here. Owner/name coincidence is recorded only as repository type, not architectural evidence.
 
-`data/samples/mfe-sample-001/clones.csv:371` registra rank 370, ID 325860876, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:371` records rank 370, ID 325860876, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:371` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:1754` e `data/discovery/mfe-round-002/candidates.csv:1754`, ambos com `terminology` e `pass`.
+`data/samples/mfe-sample-001/sample.csv:371` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:1754` and `data/discovery/mfe-round-002/candidates.csv:1754`, both with `terminology` and `pass`.
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with an empty `path`:
 
-| Consulta (`q`) | Subconsulta | Consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Effective query | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | `terminology-micro-frontend-repositories#created:2020-12` | `"micro frontend" in:name,description,readme pushed:>=2025-04-01 created:2020-12-01..2020-12-31` | 2026-10-07T22:16:01.750Z / 2026-10-08T15:51:45.538Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | `terminology-micro-frontends-repositories#created:2020-12` | `"micro frontends" in:name,description,readme pushed:>=2025-04-01 created:2020-12-01..2020-12-31` | 2026-10-07T22:45:51.456Z / 2026-10-08T16:03:32.620Z |
 
-Metadados do hit: descrição “My Description!”, sem tópicos, linguagem nula, sem licença, `fork: false`, tamanho 15, 1 fork, criação em 2020-12-31T19:22:10Z, push em 2026-08-30T22:40:09Z.
+Hit metadata: description “My Description!”, no topics, null language, no license, `fork: false`, size 15, 1 fork, created at 2020-12-31T19:22:10Z, pushed at 2026-08-30T22:40:09Z.
 
-O plural “Micro Frontends” aparece literalmente em `README.md:12` (“…incluindo arquitetura de Micro Frontends/MFE…”) e `README.md:19` (“`Micro Frontends (MFE)`” na lista de tecnologias de front-end). O singular “micro frontend” não aparece isolado; esse hit depende do processamento textual da busca do GitHub, que não está registrado. A última alteração do README é o próprio SHA `8b50c6e` (2026-08-30, “Update introduction in README.md”), anterior às coletas de 7 e 8 de outubro de 2026; não é posterior às buscas.
+Plural “Micro Frontends” appears literally in `README.md:12` (“…incluindo arquitetura de Micro Frontends/MFE…”; English translation: “…including Micro Frontends/MFE architecture…”) and `README.md:19` (“`Micro Frontends (MFE)`” in the frontend technology list). Singular “micro frontend” does not appear separately; this hit depends on GitHub search text processing, which is not recorded. The last README change is SHA `8b50c6e` itself (2026-08-30, “Update introduction in README.md”), before the collections on October 7 and 8, 2026; it does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 1 entrada, arquivo regular `100644` (`README.md`, 1715 bytes); zero symlinks e zero gitlinks. | ausente |
-| Documentação | `README.md:12` e `README.md:19`: micro-frontends como experiência profissional e item da lista de tecnologias; `README.md:30`: link para portfólio externo, não seguido. | fraca |
-| Tecnologia / Configuração / Código-fonte / Composição / Build/deploy | Inexistentes no snapshot; sem código, não há imports a buscar. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 1 entry, regular file `100644` (`README.md`, 1715 bytes); zero symlinks and zero gitlinks. | absent |
+| Documentation | `README.md:12` and `README.md:19`: micro-frontends as professional experience and a technology list item; `README.md:30`: link to an external portfolio, not followed. | weak |
+| Technology / Configuration / Source code / Composition / Build/deploy | Nonexistent in the snapshot; without code, there are no imports to search. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso, parcial (`blob:none`). 11 commits alcançáveis (11 em todos os refs), nenhum merge, todos de “Johnatan Carlos” pela interface web (committer GitHub), de 2020-12-31 (`e42b2fd`, “Initial commit”) a 2026-08-30 (SHA). Todos os commits tocam só `README.md`; o histórico nunca conteve código. `git rev-list --objects $SHA --missing=print` identifica 10 objetos históricos ausentes; o blob do SHA está presente e foi lido.
+Non-shallow, partial clone (`blob:none`). 11 reachable commits (11 across all refs), no merge, all by “Johnatan Carlos” through the web interface (committer GitHub), from 2020-12-31 (`e42b2fd`, “Initial commit”) to 2026-08-30 (SHA). All commits touch only `README.md`; history never contained code. `git rev-list --objects $SHA --missing=print` identifies 10 missing historical objects; the SHA blob is present and was read.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend; só `README.md` (inventário). |
-| Q2 | No | Não há unidades. |
-| Q3 | No | Não há host, shell nem root config. |
-| Q4 | No | Nenhum mecanismo de composição; micro-frontends aparecem como experiência e tecnologia (`README.md:12`, `19`). |
-| Q5 | No | Q1–Q4 convergem. |
+| Q1 | No | No frontend unit; only `README.md` (inventory). |
+| Q2 | No | There are no units. |
+| Q3 | No | There is no host, shell or root config. |
+| Q4 | No | No composition mechanism; micro-frontends appear as experience and technology (`README.md:12`, `19`). |
+| Q5 | No | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “repositories mentioning micro-frontends without implementing them”, como os perfis 011/064/068/073/077/101/111. Na seção 3.2 do protocolo, cabe em “purely documentation without an implementation”.
-- `repo_type: other`, `frontend_units: 0`, `unit_organization: none`, arrays vazios.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. It matches “repositories mentioning micro-frontends without implementing them”, like profiles 011/064/068/073/077/101/111. In protocol section 3.2, it fits “purely documentation without an implementation”.
+- `repo_type: other`, `frontend_units: 0`, `unit_organization: none`, empty arrays.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** README de perfil (`owner == name`) criado em 2020 e reeditado em 2026, que entra pela partição `created:2020-12` graças ao push recente; mesmo padrão de 011.
-- **Protocolo:** o README expõe e-mail pessoal; a anotação não o reproduz.
+- **RQ1 (misleading signals):** profile README (`owner == name`) created in 2020 and reedited in 2026, entering partition `created:2020-12` thanks to a recent push; same pattern as 011.
+- **Protocol:** the README exposes a personal email; the annotation does not reproduce it.

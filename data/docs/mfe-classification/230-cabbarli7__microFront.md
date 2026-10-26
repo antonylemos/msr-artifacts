@@ -20,79 +20,79 @@ annotation:
 
 # 230 — cabbarli7/microFront
 
-## Contexto
+## Context
 
-Repositório webpack 5 com Module Federation em `packages/`:
-- `container` (React, host), que monta `marketing`;
-- `marketing` (React, remoto), que expõe `mount`;
-- `auth` e `dashboard`, que só têm `package.json` e lockfile.
+Webpack 5 repository with Module Federation in `packages/`:
+- `container` (React, host), which mounts `marketing`;
+- `marketing` (React, remote), which exposes `mount`;
+- `auth` and `dashboard`, which have only `package.json` and lockfile.
 
-Há um workflow de deploy em S3 só para o `container`. Não há README. A estrutura e os nomes são os do roteiro de curso dos rascunhos 174, 177, 197 e 216. Dois pontos do snapshot, porém, impedem afirmar que a configuração funciona como escrita:
-- todas as configurações webpack fazem `require("../../package.json")`, que aponta para um `packages/package.json` inexistente;
-- a configuração de produção do remoto expõe outra chave (`./MarketingApp`) que a importada pelo host (`marketing/Marketing`).
+There is an S3 deployment workflow only for `container`. There is no README. The structure and names match the course walkthrough in drafts 174, 177, 197 and 216. However, two aspects of the snapshot prevent claiming the configuration works as written:
+- all webpack configurations use `require("../../package.json")`, which points to a nonexistent `packages/package.json`;
+- the remote production configuration exposes a different key (`./MarketingApp`) from the one imported by the host (`marketing/Marketing`).
 
-O nome do repositório não é usado como evidência.
+The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:231` registra rank 230, ID 1069376251, status `cloned`, branch `master` e o commit do front matter, que é o HEAD do clone e de `origin/master`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:231` records rank 230, ID 1069376251, status `cloned`, branch `master` and the front matter commit, which is the HEAD of the clone and of `origin/master`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:231` registra a estratégia `technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:19529` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:19535` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:231` records strategy `technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:19529` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:19535` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `code`:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `code`:
 
-| Consulta (`q`) | Subconsulta | `path` | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | `path` | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `technology-module-federation-plugin-js-code`: `ModuleFederationPlugin remotes extension:js` | `…#size:600..699` | `packages/container/config/webpack.prod.js` | 2026-10-07T22:22:58.742Z / 2026-10-08T16:05:30.505Z |
-| idem | idem | `packages/container/config/webpack.dev.js` | 2026-10-07T22:23:05.816Z / 2026-10-08T16:05:36.364Z |
+| same | same | `packages/container/config/webpack.dev.js` | 2026-10-07T22:23:05.816Z / 2026-10-08T16:05:36.364Z |
 
-Os arquivos têm 653 e 647 bytes no SHA, dentro da faixa, e contêm `ModuleFederationPlugin` com `remotes`. Os metadados do hit de código vêm vazios. Não há README; a entrada é só por código.
+The files have 653 and 647 bytes at the SHA, within the range, and contain `ModuleFederationPlugin` with `remotes`. Code hit metadata is empty. There is no README; entry is through code only.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 27 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. `container` e `marketing` têm `package.json`, `config/webpack.{common,dev,prod}.js`, `public/index.html` e `src/` (`index.js` → `bootstrap.js`). `auth` e `dashboard` só têm `package.json` e lockfile. Não há `package.json` na raiz nem em `packages/`. | contexto |
-| Configuração (host) | `packages/container/config/webpack.dev.js:16–22`: `ModuleFederationPlugin` com `name: "container"` e `remotes: { marketing: "marketing@http://localhost:8081/remoteEntry.js" }`. `webpack.prod.js:14–20`: `marketing@${domain}/marketing/remoteEntry.js`, com `domain = process.env.PRODUCTION_DOMAIN` (`:6`). | forte |
-| Configuração (remoto) | `packages/marketing/config/webpack.dev.js:19–26`: `name: "marketing"`, `filename: "remoteEntry.js"`, `exposes: { "./Marketing": "./src/bootstrap" }`, porta 8081 (`:10`). `webpack.prod.js:13–19`: `exposes: { "./MarketingApp": "./src/bootstrap" }`, sem `filename`. | forte |
-| Código-fonte (composição) | `packages/container/src/components/MarketingApp.js:1–11`: `import { mount } from "marketing/Marketing"` e `mount(ref.current)`. `packages/container/src/App.js:4–12`: monta `MarketingApp`. `packages/marketing/src/bootstrap.js:5–16`: `mount` renderiza o app e só se monta sozinho em desenvolvimento isolado. | forte |
-| Configuração (inconsistência) | As quatro configurações com federação fazem `const packageJson = require("../../package.json")` (`packages/container/config/webpack.dev.js:5`; `webpack.prod.js:3`; `packages/marketing/config/webpack.dev.js:5`; `webpack.prod.js:3`) e usam `shared: packageJson.dependencies`. A partir de `packages/<pacote>/config/`, `../../package.json` resolve para `packages/package.json`, que não existe no snapshot. Os dados do próprio pacote estão em `packages/<pacote>/package.json` (`../package.json`). Além disso, a chave exposta em produção (`./MarketingApp`) diverge da importada pelo host (`marketing/Marketing`). | ambígua |
-| Build/deploy | `packages/container/package.json:4–7` e `packages/marketing/package.json:4–7`: scripts `start`/`build` próprios. `.github/workflows/comtainer.yml:1–27`: deploy só do `container` em S3 (`/container/latest`), sem invalidação nem `PRODUCTION_DOMAIN`; não há workflow para `marketing`. | moderada |
-| Código-fonte (fronteiras) | Os únicos `../..` são esses `require` de configuração; não há imports de código-fonte entre pacotes. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 27 entries, all regular files `100644`; zero symlinks and zero gitlinks. `container` and `marketing` have `package.json`, `config/webpack.{common,dev,prod}.js`, `public/index.html` and `src/` (`index.js` → `bootstrap.js`). `auth` and `dashboard` have only `package.json` and lockfile. There is no `package.json` at the root or in `packages/`. | context |
+| Configuration (host) | `packages/container/config/webpack.dev.js:16–22`: `ModuleFederationPlugin` with `name: "container"` and `remotes: { marketing: "marketing@http://localhost:8081/remoteEntry.js" }`. `webpack.prod.js:14–20`: `marketing@${domain}/marketing/remoteEntry.js`, with `domain = process.env.PRODUCTION_DOMAIN` (`:6`). | strong |
+| Configuration (remote) | `packages/marketing/config/webpack.dev.js:19–26`: `name: "marketing"`, `filename: "remoteEntry.js"`, `exposes: { "./Marketing": "./src/bootstrap" }`, port 8081 (`:10`). `webpack.prod.js:13–19`: `exposes: { "./MarketingApp": "./src/bootstrap" }`, without `filename`. | strong |
+| Source code (composition) | `packages/container/src/components/MarketingApp.js:1–11`: `import { mount } from "marketing/Marketing"` and `mount(ref.current)`. `packages/container/src/App.js:4–12`: mounts `MarketingApp`. `packages/marketing/src/bootstrap.js:5–16`: `mount` renders the app and mounts itself only in standalone development. | strong |
+| Configuration (inconsistency) | The four federation configurations use `const packageJson = require("../../package.json")` (`packages/container/config/webpack.dev.js:5`; `webpack.prod.js:3`; `packages/marketing/config/webpack.dev.js:5`; `webpack.prod.js:3`) and use `shared: packageJson.dependencies`. From `packages/<pacote>/config/`, `../../package.json` resolves to `packages/package.json`, which does not exist in the snapshot. The package’s own data is in `packages/<pacote>/package.json` (`../package.json`). Additionally, the key exposed in production (`./MarketingApp`) differs from the one imported by the host (`marketing/Marketing`). | ambiguous |
+| Build/deploy | `packages/container/package.json:4–7` and `packages/marketing/package.json:4–7`: their own `start`/`build` scripts. `.github/workflows/comtainer.yml:1–27`: deployment only of `container` to S3 (`/container/latest`), without invalidation or `PRODUCTION_DOMAIN`; there is no workflow for `marketing`. | moderate |
+| Source code (boundaries) | The only `../..` are these configuration `require`; there are no source code imports between packages. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 4 commits lineares, nenhum merge, todos de Elvin `<cabbarli.elvin75@gmail.com>`, entre 2025-10-03 e 2025-10-04:
-- `356eb21` (“First commit”): adiciona os pacotes;
-- `fb1ed07` (“Deployment configuration added”): adiciona o workflow e altera as configurações webpack dos dois pacotes;
-- `9b522a6` e o SHA `21d96ca` (“YML update”/“YML update v2”): ajustam o workflow.
+Non-shallow clone; 4 linear commits, no merges, all by Elvin `<cabbarli.elvin75@gmail.com>`, between 2025-10-03 and 2025-10-04:
+- `356eb21` (“First commit”): adds the packages;
+- `fb1ed07` (“Deployment configuration added”): adds the workflow and changes the webpack configurations of both packages;
+- `9b522a6` and SHA `21d96ca` (“YML update”/“YML update v2”): adjust the workflow.
 
-Nenhum blob histórico foi lido, e não se verificou se os `require` eram diferentes antes de `fb1ed07`. Não houve objeto ausente.
+No historical blob was read, and whether the `require` differed before `fb1ed07` was not checked. There was no missing object.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | Duas unidades implementadas, a remota referenciada pela configuração de composição do host (`packages/container/config/webpack.dev.js:18–20`). |
-| Q2 | Yes | Cada pacote tem entrada, configuração e scripts de build próprios, sem imports de código-fonte entre eles. |
-| Q3 | Yes | O container monta o remoto (`packages/container/src/App.js:9`; `MarketingApp.js:7–9`). |
-| Q4 | Undetermined | O mecanismo está configurado e consumido, mas as configurações como escritas exigem um arquivo inexistente (`require("../../package.json")`) e divergem entre desenvolvimento e produção na chave exposta. Pelo critério, “a configuration whose actual use is unclear is Undetermined”. |
-| Q5 | Undetermined | Nenhuma resposta No e Q4 Undetermined. |
+| Q1 | Yes | Two implemented units, the remote referenced by the host composition configuration (`packages/container/config/webpack.dev.js:18–20`). |
+| Q2 | Yes | Each package has its own entry point, configuration and build scripts, without source code imports between them. |
+| Q3 | Yes | The container mounts the remote (`packages/container/src/App.js:9`; `MarketingApp.js:7–9`). |
+| Q4 | Undetermined | The mechanism is configured and consumed, but the configurations as written require a nonexistent file (`require("../../package.json")`) and differ between development and production in the exposed key. Under the criterion, “a configuration whose actual use is unclear is Undetermined”. |
+| Q5 | Undetermined | No No answer and Q4 Undetermined. |
 
-## Motivo
+## Rationale
 
-- `Uncertain` pela regra “No question is No, but at least one is Undetermined”, com `status: review`.
-- **Intenção:** é o roteiro de curso de 174/177/197/216, em que host e remoto se ligam por `mount`.
-- **Inconsistência:** aqui as configurações apontam para um `package.json` fora dos pacotes, que não existe. É o mesmo tipo de situação de 103 (`Uncertain`/review): consumidor e produtor presentes, mas a cadeia não se completa como escrita. Por isso não se afirma Q4 Yes sem decidir se a falha de resolução é detalhe corrigível ou ausência de mecanismo funcional.
-- **Não é Non-MFE como 097:** lá a configuração não estava ligada ao build; aqui ela é chamada pelos scripts (`package.json:5–6`) e o código consome o remoto.
-- **Campos:** `approaches: [module-federation]`, `ui_technologies: [react]`, `build_tools: [webpack]`, `frontend_units: 2` (`auth` e `dashboard` só têm manifesto, como em 216), `unit_organization: monorepo`, `repo_type: example`.
+- `Uncertain` under the rule “No question is No, but at least one is Undetermined”, with `status: review`.
+- **Intent:** this is the course walkthrough from 174/177/197/216, in which host and remote connect through `mount`.
+- **Inconsistency:** here the configurations point to a `package.json` outside the packages, which does not exist. This is the same type of situation as 103 (`Uncertain`/review): consumer and producer present, but the chain does not complete as written. Therefore Q4 Yes is not claimed without deciding whether the resolution failure is a fixable detail or absence of a functional mechanism.
+- **It is not Non-MFE as in 097:** there the configuration was not connected to the build; here it is called by the scripts (`package.json:5–6`) and the code consumes the remote.
+- **Fields:** `approaches: [module-federation]`, `ui_technologies: [react]`, `build_tools: [webpack]`, `frontend_units: 2` (`auth` and `dashboard` have only manifests, as in 216), `unit_organization: monorepo`, `repo_type: example`.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** busca de código casa `ModuleFederationPlugin` com `remotes` em configuração que, como versionada, não resolve sua dependência de `package.json`.
-- **Protocolo (amostra):** quinto repositório da amostra com essa arquitetura de curso (174, 177, 197, 216).
-- **Protocolo (busca):** elegibilidade `unknown` (001) e `pass` (002); o branch padrão é `master`.
+- **RQ1 (misleading signals):** code search matches `ModuleFederationPlugin` with `remotes` in a configuration that, as versioned, does not resolve its `package.json` dependency.
+- **Protocol (sample):** fifth repository in the sample with this course architecture (174, 177, 197, 216).
+- **Protocol (search):** eligibility `unknown` (001) and `pass` (002); the default branch is `master`.
 
-## Decisão registrada
+## Recorded decision
 
-Mantido como `Uncertain`. Host e remoto implementam a composição por Module Federation e `mount`, mas as configurações exigem um `package.json` inexistente e divergem entre desenvolvimento e produção na chave exposta. A cadeia existe, porém o snapshot não permite confirmar que funciona como versionada.
+Retained as `Uncertain`. Host and remote implement composition through Module Federation and `mount`, but the configurations require a nonexistent `package.json` and differ between development and production in the exposed key. The chain exists, but the snapshot does not allow confirming that it works as versioned.

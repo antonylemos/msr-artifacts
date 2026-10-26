@@ -19,420 +19,421 @@ annotation:
 
 # 029 — wtlin1228/micro-frontend-workspace
 
-## Leitura do repositório
+## Repository overview
 
-Um host React compõe quatro aplicações por dois mecanismos ao mesmo tempo, a partir de um único registro, `APP_CONFIGS` (#32). Esse registro é a única observação de código que nomeia diretamente as unidades de destino. As demais construções do host são genéricas: recebem o nome e a entrada do registro.
+React host composes four applications through two simultaneous mechanisms from one registry, `APP_CONFIGS` (#32). Registry is sole code observation directly naming target units. Other host constructs are generic: receive registry name/entry.
 
-**Module Federation em runtime (app-mf-1 e app-mf-2):**
-- **Dependências:** o plugin de federação do Rsbuild e o runtime `@module-federation/enhanced` (#1 a #3, #5).
-- **Configuração:**
-  - cada remote se declara, expõe a fábrica do componente e fixa seu caminho público (#6 a #9);
-  - o host configura a federação com os `remotes` estáticos comentados (#10, #11).
-- **Código:** o host registra e carrega cada remote sob demanda, quando a rota é acessada (#17 a #19, #33 a #35).
+**Runtime Module Federation (app-mf-1 and app-mf-2):**
+- **Dependencies:** Rsbuild federation plugin/runtime `@module-federation/enhanced` (#1 through #3, #5).
+- **Configuration:**
+  - each remote declares itself, exposes component factory and fixes public path (#6 through #9);
+  - host configures federation with static `remotes` commented (#10, #11).
+- **Code:** host registers/loads each remote on demand when route accessed (#17 through #19, #33 through #35).
 
-**qiankun (app-qiankun-1 e app-qiankun-2):**
-- **Dependência:** `qiankun` (#4).
-- **Configuração:** cada sub-app é empacotada como biblioteca UMD com nome próprio (#12, #13).
-- **Código:** cada sub-app exporta os lifecycles (#20 a #27). O host registra as duas no orquestrador e o inicia (#28 a #31).
+**qiankun (app-qiankun-1 and app-qiankun-2):**
+- **Dependency:** `qiankun` (#4).
+- **Configuration:** each sub-app packaged as named UMD library (#12, #13).
+- **Code:** each sub-app exports lifecycles (#20 through #27). Host registers both with orchestrator/starts it (#28 through #31).
 
-**Relações:** as duas cadeias resultam em quatro relações ativas (#43 a #46), entre cinco unidades com limites próprios.
+**Relationships:** both chains produce four active relationships (#43 through #46) between five independently bounded units.
 
-Todas as aplicações têm build próprio, mas a saída fica presa a `localhost`, e não há deploy observado (#47 a #51). A documentação é curta e confere com a implementação, inclusive na combinação dos dois mecanismos (#53). O único ponto histórico, os `remotes` comentados, é resolvido pelo próprio snapshot (#55).
+All applications have own builds but outputs tied to `localhost`, without observed deployment (#47 through #51). Short documentation matches implementation, including two-mechanism combination (#53). Sole historical point, commented `remotes`, resolved by snapshot itself (#55).
 
-## Observações
+## Observations
 
 ### 1. packages/app-mf-1/package.json:17
 
-**Observação:** `@module-federation/rsbuild-plugin` (`^0.18.3`) está declarada em `devDependencies`.
+**Observation:** `@module-federation/rsbuild-plugin` (`^0.18.3`) declared in `devDependencies`.
 
-**Interpretação:** A tecnologia de federação está presente no build do app-mf-1.
+**Interpretation:** Federation technology present in app-mf-1 build.
 
 ### 2. packages/app-mf-2/package.json:17
 
-**Observação:** `@module-federation/rsbuild-plugin` (`^0.18.3`) está declarada em `devDependencies`.
+**Observation:** `@module-federation/rsbuild-plugin` (`^0.18.3`) declared in `devDependencies`.
 
-**Interpretação:** A tecnologia de federação está presente no build do app-mf-2.
+**Interpretation:** Federation technology present in app-mf-2 build.
 
 ### 3. packages/host/package.json:11
 
-**Observação:** `@module-federation/enhanced` (`^0.18.3`) está declarada em `dependencies`.
+**Observation:** `@module-federation/enhanced` (`^0.18.3`) declared in `dependencies`.
 
-**Interpretação:** O runtime de federação está presente no host, que o usa para carregar os remotes.
+**Interpretation:** Federation runtime present in host, used for remote loading.
 
 ### 4. packages/host/package.json:13
 
-**Observação:** `qiankun` (`^2.10.16`) está declarada em `dependencies`.
+**Observation:** `qiankun` (`^2.10.16`) declared in `dependencies`.
 
-**Interpretação:** O orquestrador qiankun está presente no host.
+**Interpretation:** Qiankun orchestrator present in host.
 
 ### 5. packages/host/package.json:19
 
-**Observação:** `@module-federation/rsbuild-plugin` (`^0.18.3`) está declarada em `devDependencies`.
+**Observation:** `@module-federation/rsbuild-plugin` (`^0.18.3`) declared in `devDependencies`.
 
-**Interpretação:** A tecnologia de federação está presente no build do host.
+**Interpretation:** Federation technology present in host build.
 
 ### 6. packages/app-mf-1/module-federation.config.ts:1-13
 
-**Observação:** `createModuleFederationConfig` declara `name: 'mf1'`, expõe `.` (`./src/exposed.tsx`), compartilha `react` e `react-dom` como singletons e fixa `getPublicPath` em `http://localhost:4001/`.
+**Observation:** `createModuleFederationConfig` declares `name: 'mf1'`, exposing `.` (`./src/exposed.tsx`), sharing `react` and `react-dom` as singletons, fixing `getPublicPath` at `http://localhost:4001/`.
 
-**Interpretação:** O app-mf-1 está configurado como remote, com um caminho público fixo.
+**Interpretation:** App-mf-1 configured as remote with fixed public path.
 
 ### 7. packages/app-mf-1/rsbuild.config.ts:1-25
 
-**Observação:** Aplica `pluginModuleFederation(moduleFederationConfig)`, com `assetPrefix: 'http://localhost:4001/'` e porta 4001.
+**Observation:** Applies `pluginModuleFederation(moduleFederationConfig)` with `assetPrefix: 'http://localhost:4001/'`, port 4001.
 
-**Interpretação:** O build do app-mf-1 usa o plugin de federação.
+**Interpretation:** App-mf-1 build uses federation plugin.
 
 ### 8. packages/app-mf-2/module-federation.config.ts:1-13
 
-**Observação:** `createModuleFederationConfig` declara `name: 'mf2'`, expõe `.` (`./src/exposed.tsx`), compartilha `react` e `react-dom` como singletons e fixa `getPublicPath` em `http://localhost:4002/`.
+**Observation:** `createModuleFederationConfig` declares `name: 'mf2'`, exposing `.` (`./src/exposed.tsx`), sharing `react` and `react-dom` as singletons, fixing `getPublicPath` at `http://localhost:4002/`.
 
-**Interpretação:** O app-mf-2 está configurado como remote, com um caminho público fixo.
+**Interpretation:** App-mf-2 configured as remote with fixed public path.
 
 ### 9. packages/app-mf-2/rsbuild.config.ts:1-25
 
-**Observação:** Aplica `pluginModuleFederation(moduleFederationConfig)`, com `assetPrefix: 'http://localhost:4002/'` e porta 4002.
+**Observation:** Applies `pluginModuleFederation(moduleFederationConfig)` with `assetPrefix: 'http://localhost:4002/'`, port 4002.
 
-**Interpretação:** O build do app-mf-2 usa o plugin de federação.
+**Interpretation:** App-mf-2 build uses federation plugin.
 
 ### 10. packages/host/module-federation.config.ts:1-16
 
-**Observação:** `createModuleFederationConfig` declara `name: 'host'` e `remotes` vazio, com `mf1` e `mf2` comentados e um comentário que remete à API de runtime. Usa `shareStrategy: 'loaded-first'` e compartilha `react` e `react-dom` como singletons.
+**Observation:** `createModuleFederationConfig` declares `name: 'host'`, empty `remotes`, with `mf1`/`mf2` commented and comment referring to runtime API. Uses `shareStrategy: 'loaded-first'`, sharing `react` and `react-dom` as singletons.
 
-**Interpretação:** O host está configurado como participante da federação, mas não declara remotes estáticos.
+**Interpretation:** Host configured as federation participant without static remotes.
 
-**Nota:** A configuração é do host, mas não nomeia remotes ativos. Por isso fica `moderada`, e não `forte`.
+**Note:** Host configuration does not name active remotes. Hence `moderate` rather than `strong`.
 
 ### 11. packages/host/rsbuild.config.ts:1-22
 
-**Observação:** Aplica `pluginModuleFederation(moduleFederationConfig)`, com porta 3000.
+**Observation:** Applies `pluginModuleFederation(moduleFederationConfig)` with port 3000.
 
-**Interpretação:** O build do host usa o plugin de federação.
+**Interpretation:** Host build uses federation plugin.
 
 ### 12. packages/app-qiankun-1/rsbuild.config.ts:1-29
 
-**Observação:** Empacota a aplicação como biblioteca `umd` chamada `qiankun1`, com `assetPrefix: 'http://localhost:3001/'` e porta 3001.
+**Observation:** Packages application as `umd` library named `qiankun1`, with `assetPrefix: 'http://localhost:3001/'`, port 3001.
 
-**Interpretação:** A sub-app está configurada para expor seus lifecycles ao orquestrador, pelo nome da biblioteca.
+**Interpretation:** Sub-app configured to expose lifecycles to orchestrator through library name.
 
 ### 13. packages/app-qiankun-2/rsbuild.config.ts:1-29
 
-**Observação:** Empacota a aplicação como biblioteca `umd` chamada `qiankun2`, com `assetPrefix: 'http://localhost:3002/'` e porta 3002.
+**Observation:** Packages application as `umd` library named `qiankun2`, with `assetPrefix: 'http://localhost:3002/'`, port 3002.
 
-**Interpretação:** A sub-app está configurada para expor seus lifecycles ao orquestrador, pelo nome da biblioteca.
+**Interpretation:** Sub-app configured to expose lifecycles to orchestrator through library name.
 
 ### 14. packages/app-mf-1/src/index.tsx:1
 
-**Observação:** `import('./bootstrap')`.
+**Observation:** `import('./bootstrap')`.
 
-**Interpretação:** É um bootstrap assíncrono interno à unidade.
+**Interpretation:** Asynchronous bootstrap internal to unit.
 
 ### 15. packages/app-mf-2/src/index.tsx:1
 
-**Observação:** `import('./bootstrap')`.
+**Observation:** `import('./bootstrap')`.
 
-**Interpretação:** É um bootstrap assíncrono interno à unidade.
+**Interpretation:** Asynchronous bootstrap internal to unit.
 
 ### 16. packages/host/src/index.tsx:1
 
-**Observação:** `import('./bootstrap')`.
+**Observation:** `import('./bootstrap')`.
 
-**Interpretação:** É um bootstrap assíncrono interno ao host.
+**Interpretation:** Asynchronous bootstrap internal to host.
 
 ### 17. packages/host/src/app-loaders/module-federation.ts:1-4
 
-**Observação:** Importa `registerRemotes` e `loadRemote` de `@module-federation/enhanced/runtime`.
+**Observation:** Imports `registerRemotes` and `loadRemote` from `@module-federation/enhanced/runtime`.
 
-**Interpretação:** O mecanismo de registro e carga em runtime está disponível no host.
+**Interpretation:** Runtime registration/loading mechanism available in host.
 
 ### 18. packages/host/src/app-loaders/module-federation.ts:27-32
 
-**Observação:** `registerRemotes` com o nome e a entrada vindos do registro de aplicações.
+**Observation:** `registerRemotes` with name/entry from application registry.
 
-**Interpretação:** O host registra em runtime o remote indicado pelo registro.
+**Interpretation:** Host registers registry-specified remote at runtime.
 
 ### 19. packages/host/src/app-loaders/module-federation.ts:34-43
 
-**Observação:** `loadRemote` carrega o módulo do remote e obtém a fábrica `getRootComponent`.
+**Observation:** `loadRemote` loads remote module, obtaining factory `getRootComponent`.
 
-**Interpretação:** O host carrega em runtime o componente do remote indicado.
+**Interpretation:** Host loads specified remote component at runtime.
 
 ### 20. packages/app-qiankun-1/src/index.tsx:1
 
-**Observação:** Reexporta os lifecycles de `./lifecycles`.
+**Observation:** Reexports lifecycles from `./lifecycles`.
 
-**Interpretação:** A sub-app oferece seus lifecycles ao orquestrador.
+**Interpretation:** Sub-app offers lifecycles to orchestrator.
 
 ### 21. packages/app-qiankun-1/src/lifecycles.tsx:14-16
 
-**Observação:** `bootstrap`, que só registra log.
+**Observation:** `bootstrap`, logging only.
 
-**Interpretação:** Faz parte do contrato de lifecycle da sub-app.
+**Interpretation:** Part of sub-app lifecycle contract.
 
 ### 22. packages/app-qiankun-1/src/lifecycles.tsx:22-39
 
-**Observação:** `mount` cria a raiz React no contêiner recebido e renderiza a aplicação com o `basepath`.
+**Observation:** `mount` creates React root in received container, rendering application with `basepath`.
 
-**Interpretação:** É o lifecycle que insere a sub-app na página do host.
+**Interpretation:** Lifecycle inserting sub-app into host page.
 
 ### 23. packages/app-qiankun-1/src/lifecycles.tsx:45-52
 
-**Observação:** `unmount` desmonta a raiz React.
+**Observation:** `unmount` unmounts React root.
 
-**Interpretação:** É o lifecycle que retira a sub-app da página do host.
+**Interpretation:** Lifecycle removing sub-app from host page.
 
 ### 24. packages/app-qiankun-2/src/index.tsx:1
 
-**Observação:** Reexporta os lifecycles de `./lifecycles`.
+**Observation:** Reexports lifecycles from `./lifecycles`.
 
-**Interpretação:** A sub-app oferece seus lifecycles ao orquestrador.
+**Interpretation:** Sub-app offers lifecycles to orchestrator.
 
 ### 25. packages/app-qiankun-2/src/lifecycles.tsx:14-16
 
-**Observação:** `bootstrap`, que só registra log.
+**Observation:** `bootstrap`, logging only.
 
-**Interpretação:** Faz parte do contrato de lifecycle da sub-app.
+**Interpretation:** Part of sub-app lifecycle contract.
 
 ### 26. packages/app-qiankun-2/src/lifecycles.tsx:22-39
 
-**Observação:** `mount` cria a raiz React no contêiner recebido e renderiza a aplicação com o `basepath`.
+**Observation:** `mount` creates React root in received container, rendering application with `basepath`.
 
-**Interpretação:** É o lifecycle que insere a sub-app na página do host.
+**Interpretation:** Lifecycle inserting sub-app into host page.
 
 ### 27. packages/app-qiankun-2/src/lifecycles.tsx:45-52
 
-**Observação:** `unmount` desmonta a raiz React.
+**Observation:** `unmount` unmounts React root.
 
-**Interpretação:** É o lifecycle que retira a sub-app da página do host.
+**Interpretation:** Lifecycle removing sub-app from host page.
 
 ### 28. packages/host/src/app-loaders/qiankun.ts:2
 
-**Observação:** Importa `registerMicroApps` e `start` de `qiankun`.
+**Observation:** Imports `registerMicroApps` and `start` from `qiankun`.
 
-**Interpretação:** O orquestrador está disponível no host.
+**Interpretation:** Orchestrator available in host.
 
 ### 29. packages/host/src/app-loaders/qiankun.ts:10-25
 
-**Observação:** `registerMicroApps` com `entry`, `container` e `activeRule` de cada aplicação qiankun do registro.
+**Observation:** `registerMicroApps` with `entry`, `container` and `activeRule` of each registry qiankun application.
 
-**Interpretação:** O host registra as sub-apps no orquestrador, com a regra de ativação por caminho.
+**Interpretation:** Host registers sub-apps with orchestrator, using path activation rule.
 
 ### 30. packages/host/src/App.tsx:7-9
 
-**Observação:** Um `useEffect` do `App` chama o registro das aplicações qiankun.
+**Observation:** `useEffect` in `App` calls qiankun application registration.
 
-**Interpretação:** O registro é disparado quando o host monta.
+**Interpretation:** Registration triggered on host mount.
 
 ### 31. packages/host/src/app-loaders/qiankun.ts:26
 
-**Observação:** `start()` depois do registro.
+**Observation:** `start()` after registration.
 
-**Interpretação:** O host inicia o orquestrador.
+**Interpretation:** Host starts orchestrator.
 
 ### 32. packages/host/src/configs/apps.ts:9-34
 
-**Observação:** `APP_CONFIGS` declara `app-mf-1` (`mf1`) e `app-mf-2` (`mf2`) como "Module Federation", com entrada `mf-manifest.json` em `localhost:4001` e `4002`. Declara `app-qiankun-1` (`qiankun1`) e `app-qiankun-2` (`qiankun2`) como "Qiankun", com `index.html` em `localhost:3001` e `3002`.
+**Observation:** `APP_CONFIGS` declares `app-mf-1` (`mf1`) and `app-mf-2` (`mf2`) as "Module Federation", `mf-manifest.json` entry at `localhost:4001` and `4002`. Declares `app-qiankun-1` (`qiankun1`) and `app-qiankun-2` (`qiankun2`) as "Qiankun", `index.html` at `localhost:3001` and `3002`.
 
-**Interpretação:** O host declara num único registro as quatro unidades que compõe e o mecanismo de cada uma.
+**Interpretation:** Host declares four composed units/mechanism of each in one registry.
 
 ### 33. packages/host/src/routes/apps.$baseRoute.tsx:12-25
 
-**Observação:** O loader da rota `/apps/$baseRoute` chama `getRemote` do carregador para a aplicação selecionada.
+**Observation:** Route `/apps/$baseRoute` loader calls loader `getRemote` for selected application.
 
-**Interpretação:** A carga do remote é disparada pela navegação.
+**Interpretation:** Remote loading triggered by navigation.
 
 ### 34. packages/host/src/routes/apps.$baseRoute.tsx:39-45
 
-**Observação:** `React.lazy` aguarda o componente devolvido pela fábrica do remote.
+**Observation:** `React.lazy` awaits component returned by remote factory.
 
-**Interpretação:** O componente remoto é carregado de forma preguiçosa.
+**Interpretation:** Remote component lazy-loaded.
 
 ### 35. packages/host/src/routes/apps.$baseRoute.tsx:52-56
 
-**Observação:** Renderiza `RootComponent` dentro de `Suspense`.
+**Observation:** Renders `RootComponent` within `Suspense`.
 
-**Interpretação:** O host renderiza o componente remoto na própria árvore.
+**Interpretation:** Host renders remote component in own tree.
 
 ### 36. .; package.json:1-16; pnpm-workspace.yaml:1-2
 
-**Observação:** É a raiz do workspace pnpm (`packages/*`), com os scripts de build em etapas e sem entrada de UI.
+**Observation:** Pnpm workspace root (`packages/*`), staged build scripts without UI entry.
 
-**Interpretação:** É a raiz de coordenação de um monorepo, e não uma unidade.
+**Interpretation:** Monorepo coordination root rather than unit.
 
 ### 37. packages/app-mf-1; packages/app-mf-1/package.json:1-12; packages/app-mf-1/src/index.tsx:1; packages/app-mf-1/src/bootstrap.tsx:6-15; packages/app-mf-1/rsbuild.config.ts:7-17
 
-**Observação:** Tem manifesto, entrada e build Rsbuild próprios.
+**Observation:** Own manifest, entry and Rsbuild build.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with own boundary.
 
 ### 38. packages/app-mf-2; packages/app-mf-2/package.json:1-12; packages/app-mf-2/src/index.tsx:1; packages/app-mf-2/src/bootstrap.tsx:6-15; packages/app-mf-2/rsbuild.config.ts:7-17
 
-**Observação:** Tem manifesto, entrada e build Rsbuild próprios.
+**Observation:** Own manifest, entry and Rsbuild build.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with own boundary.
 
 ### 39. packages/app-qiankun-1; packages/app-qiankun-1/package.json:1-12; packages/app-qiankun-1/src/index.tsx:1; packages/app-qiankun-1/src/lifecycles.tsx:22-38; packages/app-qiankun-1/rsbuild.config.ts:5-16
 
-**Observação:** Tem manifesto, entrada que exporta lifecycles e build Rsbuild próprios.
+**Observation:** Own manifest, lifecycle-exporting entry and Rsbuild build.
 
-**Interpretação:** É uma unidade frontend com limite próprio, iniciada pelo `mount`.
+**Interpretation:** Frontend unit with own boundary, started through `mount`.
 
 ### 40. packages/app-qiankun-2; packages/app-qiankun-2/package.json:1-12; packages/app-qiankun-2/src/index.tsx:1; packages/app-qiankun-2/src/lifecycles.tsx:22-38; packages/app-qiankun-2/rsbuild.config.ts:5-16
 
-**Observação:** Tem manifesto, entrada que exporta lifecycles e build Rsbuild próprios.
+**Observation:** Own manifest, lifecycle-exporting entry and Rsbuild build.
 
-**Interpretação:** É uma unidade frontend com limite próprio, iniciada pelo `mount`.
+**Interpretation:** Frontend unit with own boundary, started through `mount`.
 
 ### 41. packages/host; packages/host/package.json:1-12; packages/host/src/index.tsx:1; packages/host/src/bootstrap.tsx:5-12; packages/host/rsbuild.config.ts:7-17
 
-**Observação:** Tem manifesto, entrada e build Rsbuild próprios.
+**Observation:** Own manifest, entry and Rsbuild build.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with own boundary.
 
 ### 42. packages/lib-app-interface; packages/lib-app-interface/package.json:1-19; packages/lib-app-interface/rslib.config.ts:4-16
 
-**Observação:** É uma biblioteca de contrato e tipos construída com Rslib, sem entrada de aplicação.
+**Observation:** Contract/type library built with Rslib, without application entry.
 
-**Interpretação:** É uma biblioteca compartilhada, e não uma unidade frontend.
+**Interpretation:** Shared library rather than frontend unit.
 
 ### 43. packages/host/src/configs/apps.ts:10-15; packages/host/src/app-loaders/module-federation.ts:27-43; packages/host/src/routes/apps.$baseRoute.tsx:24, 52-56; packages/app-mf-1/module-federation.config.ts:4-7
 
-**Observação:** O host registra `mf1` com a entrada `http://localhost:4001/mf-manifest.json`, carrega a fábrica exposta e renderiza o componente. O nome corresponde à configuração do app-mf-1.
+**Observation:** Host registers `mf1` with entry `http://localhost:4001/mf-manifest.json`, loading exposed factory/rendering component. Name matches app-mf-1 configuration.
 
-**Interpretação:** É uma relação host → remote ativa.
+**Interpretation:** Active host → remote relationship.
 
 ### 44. packages/host/src/configs/apps.ts:16-21; packages/host/src/app-loaders/module-federation.ts:27-43; packages/host/src/routes/apps.$baseRoute.tsx:24, 52-56; packages/app-mf-2/module-federation.config.ts:4-7
 
-**Observação:** O mesmo fluxo para `mf2`, com entrada em `localhost:4002`.
+**Observation:** Same flow for `mf2`, entry at `localhost:4002`.
 
-**Interpretação:** É uma relação host → remote ativa.
+**Interpretation:** Active host → remote relationship.
 
 ### 45. packages/host/src/configs/apps.ts:22-27; packages/host/src/app-loaders/qiankun.ts:12-26; packages/app-qiankun-1/rsbuild.config.ts:13-15; packages/app-qiankun-1/src/lifecycles.tsx:14-52
 
-**Observação:** O host registra `app-qiankun-1` no qiankun com entrada `http://localhost:3001/index.html` e `activeRule` `/apps/app-qiankun-1`. O nome `qiankun1` corresponde à biblioteca UMD da sub-app.
+**Observation:** Host registers `app-qiankun-1` in qiankun with entry `http://localhost:3001/index.html` and `activeRule` `/apps/app-qiankun-1`. Name `qiankun1` matches sub-app UMD library.
 
-**Interpretação:** É uma relação root-config → application ativa.
+**Interpretation:** Active root-config → application relationship.
 
 ### 46. packages/host/src/configs/apps.ts:28-33; packages/host/src/app-loaders/qiankun.ts:12-26; packages/app-qiankun-2/rsbuild.config.ts:13-15; packages/app-qiankun-2/src/lifecycles.tsx:14-52
 
-**Observação:** O mesmo fluxo para `app-qiankun-2`, com entrada em `localhost:3002`.
+**Observation:** Same flow for `app-qiankun-2`, entry at `localhost:3002`.
 
-**Interpretação:** É uma relação root-config → application ativa.
+**Interpretation:** Active root-config → application relationship.
 
 ### 47. packages/app-mf-1/rsbuild.config.ts:7-25; packages/app-mf-1/package.json:7; package.json:11
 
-**Observação:** Tem `rsbuild build` próprio, disparado com os outros remotes por `build:apps`. O `assetPrefix` é fixo em `localhost:4001`, e não há artefato de deploy.
+**Observation:** Own `rsbuild build`, triggered with other remotes through `build:apps`. `assetPrefix` fixed at `localhost:4001`, no deployment artifact.
 
-**Interpretação:** Há uma fronteira de build própria, presa a `localhost`, sem deploy observado.
+**Interpretation:** Own build boundary tied to `localhost`, without observed deployment.
 
 ### 48. packages/app-mf-2/rsbuild.config.ts:7-25; packages/app-mf-2/package.json:7; package.json:11
 
-**Observação:** Tem `rsbuild build` próprio, com `assetPrefix` fixo em `localhost:4002`, e não há artefato de deploy.
+**Observation:** Own `rsbuild build`, `assetPrefix` fixed at `localhost:4002`, no deployment artifact.
 
-**Interpretação:** Há uma fronteira de build própria, presa a `localhost`, sem deploy observado.
+**Interpretation:** Own build boundary tied to `localhost`, without observed deployment.
 
 ### 49. packages/app-qiankun-1/rsbuild.config.ts:5-29; packages/app-qiankun-1/package.json:7; package.json:11
 
-**Observação:** Tem `rsbuild build` próprio, que gera a biblioteca UMD `qiankun1` com `assetPrefix` fixo em `localhost:3001`. Não há artefato de deploy.
+**Observation:** Own `rsbuild build` generating UMD library `qiankun1`, `assetPrefix` fixed at `localhost:3001`. No deployment artifact.
 
-**Interpretação:** Há uma fronteira de build própria, presa a `localhost`, sem deploy observado.
+**Interpretation:** Own build boundary tied to `localhost`, without observed deployment.
 
 ### 50. packages/app-qiankun-2/rsbuild.config.ts:5-29; packages/app-qiankun-2/package.json:7; package.json:11
 
-**Observação:** Tem `rsbuild build` próprio, que gera a biblioteca UMD `qiankun2` com `assetPrefix` fixo em `localhost:3002`. Não há artefato de deploy.
+**Observation:** Own `rsbuild build` generating UMD library `qiankun2`, `assetPrefix` fixed at `localhost:3002`. No deployment artifact.
 
-**Interpretação:** Há uma fronteira de build própria, presa a `localhost`, sem deploy observado.
+**Interpretation:** Own build boundary tied to `localhost`, without observed deployment.
 
 ### 51. packages/host/rsbuild.config.ts:7-22; packages/host/package.json:7; package.json:14
 
-**Observação:** Tem `rsbuild build` próprio, com script de raiz separado, rodado depois dos remotes. Não há artefato de deploy.
+**Observation:** Own `rsbuild build`, separate root script running after remotes. No deployment artifact.
 
-**Interpretação:** Há uma fronteira de build própria, sem deploy observado.
+**Interpretation:** Own build boundary without observed deployment.
 
 ### 52. README.md:1
 
-**Observação:** "micro-frontend workspace".
+**Observation:** "micro-frontend workspace".
 
-**Interpretação:** Apresenta o repositório como um workspace de micro-frontends. A afirmação é corroborada.
+**Interpretation:** Presents repository as micro-frontend workspace. Claim corroborated.
 
 ### 53. package.json:4
 
-**Observação:** "a micro-frontend workspace architected by qiankun and module federation".
+**Observation:** "a micro-frontend workspace architected by qiankun and module federation".
 
-**Interpretação:** Afirma que o workspace combina qiankun e Module Federation. A afirmação é corroborada.
+**Interpretation:** Claims workspace combines qiankun/Module Federation. Claim corroborated.
 
 ### 54. packages/host/module-federation.config.ts:6-7
 
-**Observação:** "we use the runtime API to load our remotes / see `src/app-loaders/module-federation.ts`".
+**Observation:** "we use the runtime API to load our remotes / see `src/app-loaders/module-federation.ts`".
 
-**Interpretação:** Afirma que os remotes são carregados pela API de runtime. A afirmação é corroborada.
+**Interpretation:** Claims runtime API remote loading. Claim corroborated.
 
-### 55. packages/host/module-federation.config.ts:5-10 (resolvido pelo snapshot)
+### 55. packages/host/module-federation.config.ts:5-10 (resolved by the snapshot)
 
-**Observação:** Os `remotes` estáticos do host estão comentados, e o próprio arquivo explica que os remotes são carregados pela API de runtime.
+**Observation:** Host static `remotes` commented; file itself explains runtime API remote loading.
 
-**Interpretação:** As entradas comentadas não são resto de um estágio abandonado. O snapshot resolve o ponto.
+**Interpretation:** Commented entries are no abandoned-stage remnant. Snapshot resolves point.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.2 (packages/app-mf-1/package.json:17) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #6; declara #7 |
-| 2 | 3.4.2 (packages/app-mf-2/package.json:17) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #8; declara #9 |
-| 3 | 3.4.2 (packages/host/package.json:11) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #17; declara #18; declara #19 |
-| 4 | 3.4.2 (packages/host/package.json:13) | 1 tecnologia | manifesto | qiankun | tecnológica | fraca | declara #28; declara #29; declara #31 |
-| 5 | 3.4.2 (packages/host/package.json:19) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #10; declara #11 |
-| 6 | 3.4.2 (packages/app-mf-1/package.json:17, Evidência); 3.4.3 (packages/app-mf-1, Marcadores); 3.4.5 #1 (Configuração) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #37; configura #43 |
-| 7 | 3.4.2 (packages/app-mf-1/package.json:17, Evidência); 3.4.3 (packages/app-mf-1, Marcadores e Build); 3.4.5 #1 (Configuração); 3.4.6 #1 (Artefatos) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #37; configura #43 |
-| 8 | 3.4.2 (packages/app-mf-2/package.json:17, Evidência); 3.4.3 (packages/app-mf-2, Marcadores); 3.4.5 #2 (Configuração) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #38; configura #44 |
-| 9 | 3.4.2 (packages/app-mf-2/package.json:17, Evidência); 3.4.3 (packages/app-mf-2, Marcadores e Build); 3.4.5 #2 (Configuração); 3.4.6 #2 (Artefatos) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #38; configura #44 |
-| 10 | 3.4.2 (packages/host/package.json:19, Evidência); 3.4.3 (packages/host, Marcadores); 3.4.7 #3 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #41 |
-| 11 | 3.4.2 (packages/host/package.json:19, Evidência); 3.4.3 (packages/host, Marcadores e Build); 3.4.6 #5 (Artefatos) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #41 |
-| 12 | 3.4.3 (packages/app-qiankun-1, Marcadores e Build); 3.4.5 #3 (Configuração); 3.4.6 #3 (Artefatos) | 2 configuração | configuração | qiankun | tecnológica | moderada | configura #39; configura #45 |
-| 13 | 3.4.3 (packages/app-qiankun-2, Marcadores e Build); 3.4.5 #4 (Configuração); 3.4.6 #4 (Artefatos) | 2 configuração | configuração | qiankun | tecnológica | moderada | configura #40; configura #46 |
-| 14 | 3.4.4 (packages/app-mf-1/src/index.tsx:1) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 15 | 3.4.4 (packages/app-mf-2/src/index.tsx:1) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 16 | 3.4.4 (packages/host/src/index.tsx:1) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 17 | 3.4.4 (packages/host/src/app-loaders/module-federation.ts:3) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #43; implementa #44 |
-| 18 | 3.4.4 (packages/host/src/app-loaders/module-federation.ts:27) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #43; implementa #44 |
-| 19 | 3.4.4 (packages/host/src/app-loaders/module-federation.ts:34) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #43; implementa #44 |
-| 20 | 3.4.4 (packages/app-qiankun-1/src/index.tsx:1) | 3 código | código-fonte | qiankun | tecnológica | moderada | implementa #45 |
-| 21 | 3.4.4 (packages/app-qiankun-1/src/lifecycles.tsx:14) | 3 código | código-fonte | qiankun | tecnológica | moderada | implementa #45 |
-| 22 | 3.4.4 (packages/app-qiankun-1/src/lifecycles.tsx:22) | 3 código | código-fonte | qiankun | tecnológica | moderada | implementa #45 |
-| 23 | 3.4.4 (packages/app-qiankun-1/src/lifecycles.tsx:45) | 3 código | código-fonte | qiankun | tecnológica | moderada | implementa #45 |
-| 24 | 3.4.4 (packages/app-qiankun-2/src/index.tsx:1) | 3 código | código-fonte | qiankun | tecnológica | moderada | implementa #46 |
-| 25 | 3.4.4 (packages/app-qiankun-2/src/lifecycles.tsx:14) | 3 código | código-fonte | qiankun | tecnológica | moderada | implementa #46 |
-| 26 | 3.4.4 (packages/app-qiankun-2/src/lifecycles.tsx:22) | 3 código | código-fonte | qiankun | tecnológica | moderada | implementa #46 |
-| 27 | 3.4.4 (packages/app-qiankun-2/src/lifecycles.tsx:45) | 3 código | código-fonte | qiankun | tecnológica | moderada | implementa #46 |
-| 28 | 3.4.4 (packages/host/src/app-loaders/qiankun.ts:2) | 3 código | código-fonte | qiankun | tecnológica | moderada | implementa #45; implementa #46 |
-| 29 | 3.4.4 (packages/host/src/app-loaders/qiankun.ts:25) | 3 código | código-fonte | qiankun | tecnológica | moderada | implementa #45; implementa #46 |
-| 30 | 3.4.4 (packages/host/src/App.tsx:8) | 3 código | código-fonte | qiankun | tecnológica | moderada | implementa #45; implementa #46 |
-| 31 | 3.4.4 (packages/host/src/app-loaders/qiankun.ts:26) | 3 código | código-fonte | qiankun | tecnológica | moderada | implementa #45; implementa #46 |
-| 32 | 3.4.4 (packages/host/src/configs/apps.ts:9) | 3 código | código-fonte | module-federation; qiankun | arquitetural | forte | implementa #43; implementa #44; implementa #45; implementa #46 |
-| 33 | 3.4.4 (packages/host/src/routes/apps.$baseRoute.tsx:24) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #43; implementa #44 |
-| 34 | 3.4.4 (packages/host/src/routes/apps.$baseRoute.tsx:43) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #43; implementa #44 |
-| 35 | 3.4.4 (packages/host/src/routes/apps.$baseRoute.tsx:54) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #43; implementa #44 |
-| 36 | 3.4.3 (.) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 37 | 3.4.3 (packages/app-mf-1) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 38 | 3.4.3 (packages/app-mf-2) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 39 | 3.4.3 (packages/app-qiankun-1) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 40 | 3.4.3 (packages/app-qiankun-2) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 41 | 3.4.3 (packages/host) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 42 | 3.4.3 (packages/lib-app-interface) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 43 | 3.4.5 #1 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #41; liga #37 |
-| 44 | 3.4.5 #2 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #41; liga #38 |
-| 45 | 3.4.5 #3 | 5 composição | código-fonte | qiankun | arquitetural | forte | liga #41; liga #39 |
-| 46 | 3.4.5 #4 | 5 composição | código-fonte | qiankun | arquitetural | forte | liga #41; liga #40 |
-| 47 | 3.4.6 #1 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #37 |
-| 48 | 3.4.6 #2 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #38 |
-| 49 | 3.4.6 #3 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #39 |
-| 50 | 3.4.6 #4 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #40 |
-| 51 | 3.4.6 #5 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #41 |
-| 52 | 3.4.7 #1 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #37; corrobora #38; corrobora #39; corrobora #40; corrobora #41 |
-| 53 | 3.4.7 #2 | 7 documentação | comentário | module-federation; qiankun | arquitetural | fraca | corrobora #4; corrobora #5; corrobora #43; corrobora #44; corrobora #45; corrobora #46 |
-| 54 | 3.4.7 #3 | 7 documentação | comentário | module-federation | arquitetural | fraca | corrobora #10; corrobora #18; corrobora #19 |
-| 55 | 3.4.8 #1 | 8 histórico | histórico | module-federation | tecnológica | fraca | explica #10; explica #54 |
+| 1 | 3.4.2 (packages/app-mf-1/package.json:17) | 1 technology | manifest | module-federation | technological | weak | declares #6; declares #7 |
+| 2 | 3.4.2 (packages/app-mf-2/package.json:17) | 1 technology | manifest | module-federation | technological | weak | declares #8; declares #9 |
+| 3 | 3.4.2 (packages/host/package.json:11) | 1 technology | manifest | module-federation | technological | weak | declares #17; declares #18; declares #19 |
+| 4 | 3.4.2 (packages/host/package.json:13) | 1 technology | manifest | qiankun | technological | weak | declares #28; declares #29; declares #31 |
+| 5 | 3.4.2 (packages/host/package.json:19) | 1 technology | manifest | module-federation | technological | weak | declares #10; declares #11 |
+| 6 | 3.4.2 (packages/app-mf-1/package.json:17, Evidence); 3.4.3 (packages/app-mf-1, Markers); 3.4.5 #1 (Configuration) | 2 configuration | configuration | module-federation | technological | moderate | configures #37; configures #43 |
+| 7 | 3.4.2 (packages/app-mf-1/package.json:17, Evidence); 3.4.3 (packages/app-mf-1, Markers and Build); 3.4.5 #1 (Configuration); 3.4.6 #1 (Artifacts) | 2 configuration | configuration | module-federation | technological | moderate | configures #37; configures #43 |
+| 8 | 3.4.2 (packages/app-mf-2/package.json:17, Evidence); 3.4.3 (packages/app-mf-2, Markers); 3.4.5 #2 (Configuration) | 2 configuration | configuration | module-federation | technological | moderate | configures #38; configures #44 |
+| 9 | 3.4.2 (packages/app-mf-2/package.json:17, Evidence); 3.4.3 (packages/app-mf-2, Markers and Build); 3.4.5 #2 (Configuration); 3.4.6 #2 (Artifacts) | 2 configuration | configuration | module-federation | technological | moderate | configures #38; configures #44 |
+| 10 | 3.4.2 (packages/host/package.json:19, Evidence); 3.4.3 (packages/host, Markers); 3.4.7 #3 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #41 |
+| 11 | 3.4.2 (packages/host/package.json:19, Evidence); 3.4.3 (packages/host, Markers and Build); 3.4.6 #5 (Artifacts) | 2 configuration | configuration | module-federation | technological | moderate | configures #41 |
+| 12 | 3.4.3 (packages/app-qiankun-1, Markers and Build); 3.4.5 #3 (Configuration); 3.4.6 #3 (Artifacts) | 2 configuration | configuration | qiankun | technological | moderate | configures #39; configures #45 |
+| 13 | 3.4.3 (packages/app-qiankun-2, Markers and Build); 3.4.5 #4 (Configuration); 3.4.6 #4 (Artifacts) | 2 configuration | configuration | qiankun | technological | moderate | configures #40; configures #46 |
+| 14 | 3.4.4 (packages/app-mf-1/src/index.tsx:1) | 3 code | source code | — | technological | weak | — |
+| 15 | 3.4.4 (packages/app-mf-2/src/index.tsx:1) | 3 code | source code | — | technological | weak | — |
+| 16 | 3.4.4 (packages/host/src/index.tsx:1) | 3 code | source code | — | technological | weak | — |
+| 17 | 3.4.4 (packages/host/src/app-loaders/module-federation.ts:3) | 3 code | source code | module-federation | technological | moderate | implements #43; implements #44 |
+| 18 | 3.4.4 (packages/host/src/app-loaders/module-federation.ts:27) | 3 code | source code | module-federation | technological | moderate | implements #43; implements #44 |
+| 19 | 3.4.4 (packages/host/src/app-loaders/module-federation.ts:34) | 3 code | source code | module-federation | technological | moderate | implements #43; implements #44 |
+| 20 | 3.4.4 (packages/app-qiankun-1/src/index.tsx:1) | 3 code | source code | qiankun | technological | moderate | implements #45 |
+| 21 | 3.4.4 (packages/app-qiankun-1/src/lifecycles.tsx:14) | 3 code | source code | qiankun | technological | moderate | implements #45 |
+| 22 | 3.4.4 (packages/app-qiankun-1/src/lifecycles.tsx:22) | 3 code | source code | qiankun | technological | moderate | implements #45 |
+| 23 | 3.4.4 (packages/app-qiankun-1/src/lifecycles.tsx:45) | 3 code | source code | qiankun | technological | moderate | implements #45 |
+| 24 | 3.4.4 (packages/app-qiankun-2/src/index.tsx:1) | 3 code | source code | qiankun | technological | moderate | implements #46 |
+| 25 | 3.4.4 (packages/app-qiankun-2/src/lifecycles.tsx:14) | 3 code | source code | qiankun | technological | moderate | implements #46 |
+| 26 | 3.4.4 (packages/app-qiankun-2/src/lifecycles.tsx:22) | 3 code | source code | qiankun | technological | moderate | implements #46 |
+| 27 | 3.4.4 (packages/app-qiankun-2/src/lifecycles.tsx:45) | 3 code | source code | qiankun | technological | moderate | implements #46 |
+| 28 | 3.4.4 (packages/host/src/app-loaders/qiankun.ts:2) | 3 code | source code | qiankun | technological | moderate | implements #45; implements #46 |
+| 29 | 3.4.4 (packages/host/src/app-loaders/qiankun.ts:25) | 3 code | source code | qiankun | technological | moderate | implements #45; implements #46 |
+| 30 | 3.4.4 (packages/host/src/App.tsx:8) | 3 code | source code | qiankun | technological | moderate | implements #45; implements #46 |
+| 31 | 3.4.4 (packages/host/src/app-loaders/qiankun.ts:26) | 3 code | source code | qiankun | technological | moderate | implements #45; implements #46 |
+| 32 | 3.4.4 (packages/host/src/configs/apps.ts:9) | 3 code | source code | module-federation; qiankun | architectural | strong | implements #43; implements #44; implements #45; implements #46 |
+| 33 | 3.4.4 (packages/host/src/routes/apps.$baseRoute.tsx:24) | 3 code | source code | module-federation | technological | moderate | implements #43; implements #44 |
+| 34 | 3.4.4 (packages/host/src/routes/apps.$baseRoute.tsx:43) | 3 code | source code | module-federation | technological | moderate | implements #43; implements #44 |
+| 35 | 3.4.4 (packages/host/src/routes/apps.$baseRoute.tsx:54) | 3 code | source code | module-federation | technological | moderate | implements #43; implements #44 |
+| 36 | 3.4.3 (.) | 4 structure | directory | — | context | weak | — |
+| 37 | 3.4.3 (packages/app-mf-1) | 4 structure | directory | — | architectural | moderate | — |
+| 38 | 3.4.3 (packages/app-mf-2) | 4 structure | directory | — | architectural | moderate | — |
+| 39 | 3.4.3 (packages/app-qiankun-1) | 4 structure | directory | — | architectural | moderate | — |
+| 40 | 3.4.3 (packages/app-qiankun-2) | 4 structure | directory | — | architectural | moderate | — |
+| 41 | 3.4.3 (packages/host) | 4 structure | directory | — | architectural | moderate | — |
+| 42 | 3.4.3 (packages/lib-app-interface) | 4 structure | directory | — | context | weak | — |
+| 43 | 3.4.5 #1 | 5 composition | source code | module-federation | architectural | strong | links #41; links #37 |
+| 44 | 3.4.5 #2 | 5 composition | source code | module-federation | architectural | strong | links #41; links #38 |
+| 45 | 3.4.5 #3 | 5 composition | source code | qiankun | architectural | strong | links #41; links #39 |
+| 46 | 3.4.5 #4 | 5 composition | source code | qiankun | architectural | strong | links #41; links #40 |
+| 47 | 3.4.6 #1 | 6 build-deploy | configuration | — | architectural | moderate | publishes #37 |
+| 48 | 3.4.6 #2 | 6 build-deploy | configuration | — | architectural | moderate | publishes #38 |
+| 49 | 3.4.6 #3 | 6 build-deploy | configuration | — | architectural | moderate | publishes #39 |
+| 50 | 3.4.6 #4 | 6 build-deploy | configuration | — | architectural | moderate | publishes #40 |
+| 51 | 3.4.6 #5 | 6 build-deploy | configuration | — | architectural | moderate | publishes #41 |
+| 52 | 3.4.7 #1 | 7 documentation | documentation | — | architectural | weak | corroborates #37; corroborates #38; corroborates #39; corroborates #40; corroborates #41 |
+| 53 | 3.4.7 #2 | 7 documentation | comment | module-federation; qiankun | architectural | weak | corroborates #4; corroborates #5; corroborates #43; corroborates #44; corroborates #45; corroborates #46 |
+| 54 | 3.4.7 #3 | 7 documentation | comment | module-federation | architectural | weak | corroborates #10; corroborates #18; corroborates #19 |
+| 55 | 3.4.8 #1 | 8 history | history | module-federation | technological | weak | explains #10; explains #54 |
 
-## Resumo
+## Summary
 
-Observações: 55. Dimensões (tecnologia: 5, configuração: 8, código: 22, estrutura: 7, composição: 4, build-deploy: 5, documentação: 3, histórico: 1). Força (forte: 5, moderada: 36, fraca: 14, ambígua: 0). Evidência (tecnológica: 35, arquitetural: 18, contexto: 2).
+Observations: 55. Dimensions (technology: 5, configuration: 8, code: 22, structure: 7, composition: 4, build-deploy: 5, documentation: 3, history: 1). Strength (strong: 5, moderate: 36, weak: 14, ambiguous: 0). Evidence (technological: 35, architectural: 18, context: 2).
+

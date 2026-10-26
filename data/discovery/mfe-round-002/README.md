@@ -1,20 +1,20 @@
-# Reconstrução e auditoria da descoberta
+# Discovery reconstruction and audit
 
-`candidates/` preserva o CSV de candidatos em partes textuais com registros completos e cabeçalho em cada arquivo. `discovery.sql.parts/` preserva a saída de `sqlite3 ... .dump`, também em texto. O comando é **`.dump`**, com ponto: ele exporta o esquema e os dados como SQL. A [documentação do SQLite](https://www.sqlite.org/cli.html#converting_an_entire_database_to_a_text_file) descreve a exportação e a restauração.
+`candidates/` preserves the candidate CSV in text parts with complete records and a header in every file. `discovery.sql.parts/` preserves the output of `sqlite3 ... .dump`, also as text. The command is **`.dump`**, with a leading dot: it exports schema and data as SQL. The [SQLite documentation](https://www.sqlite.org/cli.html#converting_an_entire_database_to_a_text_file) describes export and restoration.
 
-As partes têm tamanho alvo de 8 MiB. Um registro CSV ou uma linha SQL não é cortado para atender ao tamanho alvo. Os nomes com cinco dígitos mantêm a ordem da fonte. Os manifestos de [candidatos](candidates/manifest.json) e do [dump SQL](discovery.sql.parts/manifest.json) registram tamanhos, hashes e as verificações da reconstrução.
+Parts have a target size of 8 MiB. A CSV record or SQL line is not cut to meet the target size. Five-digit names retain source order. The [candidate](candidates/manifest.json) and [SQL dump](discovery.sql.parts/manifest.json) manifests record sizes, hashes and reconstruction checks.
 
-O texto permite comparar os dados com ferramentas locais sem depender de Git LFS. A divisão reduz o tamanho de cada arquivo, mas não reduz o volume total dos dados nem garante a visualização integral no navegador do GitHub. Os clones têm seu próprio [guia](../../clones/README.md).
+Text allows data comparison with local tools without depending on Git LFS. Splitting reduces each file's size, but neither reduces total data volume nor guarantees complete display in the GitHub browser interface. Clones have their own [guide](../../clones/README.md).
 
-## Candidatos
+## Candidates
 
-Execute os comandos a partir desta pasta. Primeiro confira todas as partes:
+Run commands from this folder. First check all parts:
 
 ```sh
 shasum -a 256 -c candidates/SHA256SUMS
 ```
 
-Reconstrua o CSV somente se ele ainda não existir. O cabeçalho é escrito uma vez; `tail` remove apenas a primeira linha de cada parte, sem interpretar ou reformatar os registros:
+Reconstruct the CSV only if it does not already exist. The header is written once; `tail` removes only the first line of each part, without interpreting or reformatting records:
 
 ```sh
 test ! -e candidates.csv && (
@@ -26,20 +26,20 @@ test ! -e candidates.csv && (
 shasum -a 256 -c candidates/RESTORED_SHA256SUMS
 ```
 
-O arquivo reconstruído deve ser idêntico byte a byte à fonte e ao hash de `candidates.csv` no manifesto histórico da descoberta. O arquivo completo é ignorado pelo Git; as partes são versionadas.
+The reconstructed file must be byte-identical to the source and match the `candidates.csv` hash in the historical discovery manifest. The complete file is ignored by Git; parts are tracked.
 
 ## SQLite
 
-O dump foi produzido a partir de uma cópia consistente obtida pela API de backup do SQLite, sem modificar o banco de origem. Os arquivos SQL compõem um único fluxo: não são migrações nem scripts independentes. A primeira parte contém o início da transação e a última, seu encerramento.
+The dump was produced from a consistent copy obtained through the SQLite backup API, without modifying the source database. SQL files form a single stream: they are not migrations or independent scripts. The first part contains the transaction's beginning and the last its ending.
 
-Confira as partes antes de executar qualquer SQL:
+Check parts before executing any SQL:
 
 ```sh
 shasum -a 256 -c discovery.sql.parts/SHA256SUMS
 cat discovery.sql.parts/part-*.sql | shasum -a 256
 ```
 
-O hash do fluxo deve corresponder a `dumpSha256` no manifesto. Para restaurar, escolha um arquivo novo; não use o banco local preexistente:
+The stream's hash must match `dumpSha256` in the manifest. To restore, choose a new file; do not use the pre-existing local database:
 
 ```sh
 test ! -e discovery-restored.sqlite && \
@@ -48,6 +48,6 @@ sqlite3 discovery-restored.sqlite 'PRAGMA integrity_check; PRAGMA foreign_key_ch
 sqlite3 discovery-restored.sqlite '.sha3sum --sha3-256 --schema'
 ```
 
-O resultado esperado é `ok`, nenhuma violação de chave estrangeira e o mesmo `contentSha3_256` registrado no manifesto do dump. A validação desta entrega também comparou o esquema e a contagem de todas as tabelas com a cópia de origem. O arquivo SQLite reconstruído pode ter bytes diferentes por causa da organização interna; a equivalência verificada é do esquema e dos dados.
+The expected result is `ok`, no foreign-key violations and the same `contentSha3_256` recorded in the dump manifest. Validation of this delivery also compared the schema and every table's count with the source copy. The reconstructed SQLite file may have different bytes because of internal organization; verified equivalence concerns schema and data.
 
-Os manifestos originais da descoberta permanecem intactos. A redação do relatório foi revisada, portanto seu hash editorial deve ser consultado no [inventário](../../inventory.json), enquanto o manifesto histórico conserva o hash do relatório na fonte.
+Original discovery manifests remain intact. Report wording was revised, so its editorial hash must be consulted in the [inventory](../../inventory.json), while the historical manifest retains the source report's hash.

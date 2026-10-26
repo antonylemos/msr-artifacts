@@ -20,41 +20,41 @@ annotation:
 
 # 045 — mrgleam/mf-tanstack-demo
 
-## Contexto
+## Context
 
-- **Abordagem de implementação:** Module Federation (`@originjs/vite-plugin-federation`) com composição de rotas do TanStack Router; gateway Kong para roteamento
-- **Tipo de repositório:** example/proof of concept ("demo", `README.md:1`)
+- **Implementation approach:** Module Federation (`@originjs/vite-plugin-federation`) with TanStack Router route composition; Kong gateway for routing
+- **Repository type:** example/proof of concept ("demo", `README.md:1`)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `shell/` (host) e `shop/` (remote), cada um com `package.json`, `vite.config.ts`, `index.html` e `src/main.tsx`; `kong-shell/` e `kong-remote/` com configs de gateway (`README.md:5-11`) | forte |
-| Configuração (host) | `shell/vite.config.ts:8-13`: `federation({ remotes: { shop: 'http://localhost:3001/shop/assets/remoteEntry.js' }, shared: [react, react-dom, @tanstack/react-router] })` | forte |
-| Configuração (remote) | `shop/vite.config.ts:6-14`: `base: '/shop/'`, `federation({ name: 'shop', filename: 'remoteEntry.js', exposes: { './ShopRoutes': './src/routes/ShopRoutes.tsx' } })` | forte |
-| Código-fonte (carga) | `shell/src/moduleLoader.ts:26-81`: loader com cache, retries e fallback; `:127-136`: `MODULE_CONFIGS.shop` com `import('shop/ShopRoutes')` e fallback `{ routes: [] }` | forte |
-| Código-fonte (composição) | `shell/src/router.tsx:53-92`: carrega os módulos configurados e enxerta as rotas remotas (`shopRoutes`) na árvore de rotas do shell (`replaceParentRoute(modules.shopRoutes, root)`) | forte |
-| Configuração (gateway) | `kong-remote/kong.yml:3-12`: `/` → shell (3000), `/shop` → shop (3001); `kong-shell/kong.yml:4-8`: só `/` → shell (layout controlado pelo shell) | moderada |
-| Código-fonte | Nenhum import de código-fonte entre `shell` e `shop` (sustenta a independência das unidades) | ausente |
-| Documentação | `README.md:1` "Microfrontend Monorepo with Vite, TanStack Router, and Module Federation"; `:7-10` papéis de host, remote e gateway | moderada |
+| Structure | `shell/` (host) and `shop/` (remote), each with `package.json`, `vite.config.ts`, `index.html` and `src/main.tsx`; `kong-shell/` and `kong-remote/` with gateway configs (`README.md:5-11`) | strong |
+| Configuration (host) | `shell/vite.config.ts:8-13`: `federation({ remotes: { shop: 'http://localhost:3001/shop/assets/remoteEntry.js' }, shared: [react, react-dom, @tanstack/react-router] })` | strong |
+| Configuration (remote) | `shop/vite.config.ts:6-14`: `base: '/shop/'`, `federation({ name: 'shop', filename: 'remoteEntry.js', exposes: { './ShopRoutes': './src/routes/ShopRoutes.tsx' } })` | strong |
+| Source code (loading) | `shell/src/moduleLoader.ts:26-81`: loader with cache, retries and fallback; `:127-136`: `MODULE_CONFIGS.shop` with `import('shop/ShopRoutes')` and fallback `{ routes: [] }` | strong |
+| Source code (composition) | `shell/src/router.tsx:53-92`: loads configured modules and grafts remote routes (`shopRoutes`) into the shell's route tree (`replaceParentRoute(modules.shopRoutes, root)`) | strong |
+| Configuration (gateway) | `kong-remote/kong.yml:3-12`: `/` → shell (3000), `/shop` → shop (3001); `kong-shell/kong.yml:4-8`: only `/` → shell (layout controlled by the shell) | moderate |
+| Source code | No source code imports between `shell` and `shop` (supports the units' independence) | absent |
+| Documentation | `README.md:1` "Microfrontend Monorepo with Vite, TanStack Router, and Module Federation"; `:7-10` host, remote and gateway roles | moderate |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | `shell` e `shop` |
-| Q2 | Yes | Entry, `vite.config.ts` e dev server próprios (3000/3001); sem import de código-fonte entre as apps |
-| Q3 | Yes | O shell enxerta as rotas do `shop` no seu roteador (`router.tsx:53-92`) |
-| Q4 | Yes | `remotes`/`exposes` configurados e usados via `import('shop/ShopRoutes')` (`moduleLoader.ts:130`) |
-| Q5 | Yes | Q1–Q4 convergem; nenhuma divergência a justificar |
+| Q1 | Yes | `shell` and `shop` |
+| Q2 | Yes | Their own entry, `vite.config.ts` and dev server (3000/3001); no source code imports between apps |
+| Q3 | Yes | The shell grafts `shop` routes into its router (`router.tsx:53-92`) |
+| Q4 | Yes | `remotes`/`exposes` configured and used through `import('shop/ShopRoutes')` (`moduleLoader.ts:130`) |
+| Q5 | Yes | Q1–Q4 converge; no discrepancy to justify |
 
-## Motivo
+## Rationale
 
-- Q1–Q5 são todos Yes, o que satisfaz a regra de MFE-implemented.
-- Corresponde a "monorepos containing a host and its remotes".
+- Q1–Q5 are all Yes, satisfying the MFE-implemented rule.
+- Matches "monorepos containing a host and its remotes".
 
-## Notas para análise
+## Analysis notes
 
-- **RQ3:** o remote expõe **rotas** (não um componente) e o host as integra na árvore do TanStack Router, uma composição no nível de roteamento.
-- **RQ3 (resiliência):** loader com retry e fallback (`moduleLoader.ts`) para o caso de o remote estar fora do ar, um artefato que mostra a preocupação com a independência de deploy.
-- **RQ3 (gateway):** as duas configs Kong mostram dois modos de acesso: remote via shell (`kong-shell`) ou também standalone (`kong-remote`).
+- **RQ3:** the remote exposes **routes** (not a component), and the host integrates them into the TanStack Router tree, a routing-level composition.
+- **RQ3 (resilience):** loader with retry and fallback (`moduleLoader.ts`) if the remote is unavailable, an artifact showing concern for deployment independence.
+- **RQ3 (gateway):** the two Kong configs show two access modes: remote through the shell (`kong-shell`) or also standalone (`kong-remote`).

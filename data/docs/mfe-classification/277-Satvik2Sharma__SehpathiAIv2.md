@@ -20,55 +20,55 @@ annotation:
 
 # 277 — Satvik2Sharma/SehpathiAIv2
 
-## Contexto
+## Context
 
-Aplicação full-stack de análise educacional: frontend React + Vite (`frontend/`) e backend FastAPI com NLP (`backend/`). Um `package.json` na raiz sobe os dois em paralelo com `concurrently` (`package.json:6–8`). O README diz que “The frontend orchestrates interactive client views while the backend executes NLP similarities…” (`README.md:45`). A palavra descreve o papel do frontend numa arquitetura cliente/servidor, não composição de unidades frontend. O nome do repositório não é usado como evidência.
+Full-stack educational analysis application: React + Vite frontend (`frontend/`) and FastAPI backend with NLP (`backend/`). A root `package.json` starts both in parallel through `concurrently` (`package.json:6–8`). The README says “The frontend orchestrates interactive client views while the backend executes NLP similarities…” (`README.md:45`). The word describes the frontend role in a client/server architecture, not composition of frontend units. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:278` registra rank 277, ID 1193454798, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede. Os arquivos `frontend/.env` e `frontend/.env.production` estão versionados, mas não foram lidos nem são citados.
+`data/samples/mfe-sample-001/clones.csv:278` records rank 277, ID 1193454798, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access. Files `frontend/.env` and `frontend/.env.production` are versioned, but were not read or cited.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:278` registra a estratégia `broader` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:27318` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:27324` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:278` records strategy `broader` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:27318` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:27324` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna um único hit em cada rodada. Ele vem do endpoint `repositories`, consulta `broader-frontend-orchestration` (`"frontend orchestration" in:name,description,readme`), subconsulta `…#created:2026-Q1`, com `path` vazio. As coletas são 2026-10-07T23:42:39.094Z (001) e 2026-10-08T16:24:27.627Z (002). A consulta efetiva acrescenta `pushed:>=2025-04-01 created:2026-01-01..2026-03-31`.
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns a single hit in each round. It comes from endpoint `repositories`, query `broader-frontend-orchestration` (`"frontend orchestration" in:name,description,readme`), subquery `…#created:2026-Q1`, with an empty `path`. Collections are 2026-10-07T23:42:39.094Z (001) and 2026-10-08T16:24:27.627Z (002). The effective query appends `pushed:>=2025-04-01 created:2026-01-01..2026-03-31`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem JavaScript, `fork: false`, tamanho 4.377;
-- criação em 2026-03-27T08:40:12Z, push em 2026-05-28T06:22:30Z.
+Hit metadata:
+- null description, no topics, language JavaScript, `fork: false`, size 4.377;
+- created at 2026-03-27T08:40:12Z, pushed at 2026-05-28T06:22:30Z.
 
-A frase exata “frontend orchestration” não aparece. O acerto vem de `README.md:45`, “The frontend orchestrates interactive client views…”, e depende do processamento textual da busca do GitHub, que não está registrado. A última alteração do README é `cc7e9ab` (2026-05-28), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The exact phrase “frontend orchestration” does not appear. The match comes from `README.md:45`, “The frontend orchestrates interactive client views…”, and depends on GitHub search text processing, which is not recorded. The last README change is `cc7e9ab` (2026-05-28), before the October 2026 collections. The README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 62 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Há `frontend/` (uma aplicação Vite com 25 arquivos em `src/`), `backend/` (FastAPI: `main.py`, `api/`, `ml/`, `services/`, `data/`), `output_screenshots/` (7 PNG) e `package.json`, `package-lock.json` e `README.md` na raiz. | contrária |
-| Frontend | `frontend/vite.config.js:1–16`: só `@vitejs/plugin-react` e alias `@`. `frontend/index.html:12`: um único `<script type="module" src="/src/main.jsx">`. `frontend/src/main.jsx:1–10`: monta `App` local. Os componentes ficam todos em `frontend/src/components/`. | contrária |
-| Busca de mecanismos | `git grep` no SHA, sem lockfiles, por `orchestrat`, `micro.?front`, `federation`, `single-spa`, `iframe`, `import-map` e `remoteEntry`: só `README.md:45`. | ausente |
-| Documentação | `README.md:43–70`: diagrama cliente React → API FastAPI; os “dashboards” e o chat são componentes do mesmo cliente. | contrária |
+| Structure | `git ls-tree -r` at the SHA: 62 entries, all regular files `100644`; zero symlinks and zero gitlinks. There are `frontend/` (one Vite application with 25 files in `src/`), `backend/` (FastAPI: `main.py`, `api/`, `ml/`, `services/`, `data/`), `output_screenshots/` (7 PNGs) and `package.json`, `package-lock.json` and `README.md` at the root. | contrary |
+| Frontend | `frontend/vite.config.js:1–16`: only `@vitejs/plugin-react` and alias `@`. `frontend/index.html:12`: a single `<script type="module" src="/src/main.jsx">`. `frontend/src/main.jsx:1–10`: mounts local `App`. All components are in `frontend/src/components/`. | contrary |
+| Mechanism search | `git grep` at the SHA, without lockfiles, for `orchestrat`, `micro.?front`, `federation`, `single-spa`, `iframe`, `import-map` and `remoteEntry`: only `README.md:45`. | absent |
+| Documentation | `README.md:43–70`: React client → FastAPI API diagram; “dashboards” and chat are components of the same client. | contrary |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 12 commits lineares, nenhum merge, de 2026-03-28 (`408888d`) a 2026-05-28 (SHA `91cdccb`, “Added real screenshots.”). Dez commits têm autor `Satvik2Sharma`. Dois têm autor “Satvik sharma” e foram criados na interface do GitHub, entre eles `66a8882` (“Deleted my friend's uploaded node_modules directory”). Só há o branch `main`. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 12 linear commits, no merges, from 2026-03-28 (`408888d`) to 2026-05-28 (SHA `91cdccb`, “Added real screenshots.”). Ten commits have author `Satvik2Sharma`. Two have author “Satvik sharma” and were created through the GitHub interface, including `66a8882` (“Deleted my friend's uploaded node_modules directory”). Only branch `main` exists. No historical blob was read and there was no missing object.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única aplicação frontend (`frontend/`); o backend não é unidade frontend. |
-| Q2 | No | Sem duas unidades frontend, não há independência a avaliar. |
-| Q3 | No | Não há host, shell ou configuração raiz de composição; `main.jsx` monta um `App` local. |
-| Q4 | No | Nenhum mecanismo de composição: Vite sem plugin de federação, um único entry (`frontend/index.html:12`). |
-| Q5 | No | Q1–Q4 são No: aplicação full-stack convencional. |
+| Q1 | No | A single frontend application (`frontend/`); the backend is not a frontend unit. |
+| Q2 | No | Without two frontend units, there is no independence to assess. |
+| Q3 | No | There is no host, shell or root composition configuration; `main.jsx` mounts a local `App`. |
+| Q4 | No | No composition mechanism: Vite without federation plugin, a single entry point (`frontend/index.html:12`). |
+| Q5 | No | Q1–Q4 are No: conventional full-stack application. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “conventional frontend monoliths” num projeto cliente/servidor.
-- Mesmo enquadramento dos rascunhos 217 e 221, que também entraram pela consulta ampla `"frontend orchestration"` por uso lexical de “orchestrate”.
-- **Campos:** `frontend_units: 1`, `unit_organization: single-unit`, `approaches: []`, `ui_technologies: [react]`, `build_tools: [vite]`, `repo_type: production` (aplicação implantada, segundo os selos de Vercel e Render em `README.md:3–4`).
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. It matches “conventional frontend monoliths” in a client/server project.
+- Same categorization as drafts 217 and 221, also entering through broader query `"frontend orchestration"` through lexical use of “orchestrate”.
+- **Fields:** `frontend_units: 1`, `unit_organization: single-unit`, `approaches: []`, `ui_technologies: [react]`, `build_tools: [vite]`, `repo_type: production` (deployed application, according to Vercel and Render badges in `README.md:3–4`).
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** “The frontend orchestrates…” num README de arquitetura cliente/servidor casa a consulta `"frontend orchestration"`.
-- **Protocolo (busca):** a frase exata não tem grafia literal. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ1 (misleading signals):** “The frontend orchestrates…” in a client/server architecture README matches query `"frontend orchestration"`.
+- **Protocol (search):** the exact phrase has no literal spelling. Eligibility changes from `unknown` (001) to `pass` (002).

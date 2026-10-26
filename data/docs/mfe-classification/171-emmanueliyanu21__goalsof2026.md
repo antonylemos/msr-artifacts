@@ -20,73 +20,73 @@ annotation:
 
 # 171 — emmanueliyanu21/goalsof2026
 
-## Contexto
+## Context
 
-Aplicação Next.js pessoal de acompanhamento de metas (“GoalsTracker”), com abas de painel, tarefas diárias, ideias, motivação e referências, e dados em `localStorage` (`app/page.tsx:12–40`). Tem demo na Vercel. O `README.md` não descreve a aplicação: é um guia de preparação para entrevista de React sênior (`README.md:1–12`). Nesse guia, micro-frontends e Module Federation aparecem como tópico de entrevista (`README.md:179–187`). O nome do repositório não é usado como evidência.
+Personal Next.js goal-tracking application (“GoalsTracker”), with dashboard, daily task, idea, motivation and reference tabs, and data in `localStorage` (`app/page.tsx:12–40`). Has a Vercel demo. `README.md` does not describe the application: it is a senior React interview preparation guide (`README.md:1–12`). In that guide, micro-frontends and Module Federation appear as an interview topic (`README.md:179–187`). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:172` registra rank 171, ID 1126203332, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:172` records rank 171, ID 1126203332, status `cloned`, branch `main` and the front matter commit, which is HEAD of the clone and `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:172` registra as estratégias `terminology;technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:22727` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:22733` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:172` records strategies `terminology;technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:22727` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:22733` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos três hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2026-01` e `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns the same three hits in each round, from endpoint `repositories`, with subquery `…#created:2026-01` and empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | 2026-10-07T22:30:48.763Z / 2026-10-08T15:57:44.440Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | 2026-10-07T22:59:58.776Z / 2026-10-08T16:07:54.827Z |
 | `technology-module-federation-repositories`: `"module federation" in:name,description,readme` | 2026-10-07T23:22:43.252Z / 2026-10-08T16:16:56.013Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2026-01-01..2026-01-31`.
+Effective queries append `pushed:>=2025-04-01 created:2026-01-01..2026-01-31`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem TypeScript, `fork: false`, tamanho 105;
-- criação em 2026-01-01T11:27:43Z, push em 2026-01-07T04:40:24Z;
+Hit metadata:
+- null description, no topics, language TypeScript, `fork: false`, size 105;
+- created at 2026-01-01T11:27:43Z, pushed at 2026-01-07T04:40:24Z;
 - homepage `goalsof2026.vercel.app`.
 
-Grafias no README:
+README spellings:
 - “micro-frontends”: `README.md:179` (“### ✔ "Architecture for micro-frontends"”);
 - “Module Federation”: `README.md:185` (“Module Federation (you already know this from Stanbic project)”).
 
-A busca de frase trata o hífen como separador. A forma singular “micro frontend” não aparece literalmente; esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+Phrase search treats the hyphen as a separator. The singular form “micro frontend” does not appear literally; that hit depends on GitHub search text processing, which is not recorded.
 
-A última alteração do README é o próprio SHA, `7ce9e26` (2026-01-07, “adding preparatory guide for Q&A session”), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The README's last change is the SHA itself, `7ce9e26` (2026-01-07, “adding preparatory guide for Q&A session”), before October 2026 collection. The SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 27 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Há um único projeto Next.js (App Router) na raiz: `app/page.tsx`, `app/layout.tsx`, `app/components/{tabs,shared}`, `next.config.ts` e `package.json`. | contrária |
-| Código-fonte | `app/page.tsx:1–40`: componente cliente com estado de metas, persistido em `localStorage`, e imports internos das abas (`./components/tabs/*`) e de componentes compartilhados. A busca por imports `../../` em `app` não retorna nada. | contrária |
-| Configuração / Build | `next.config.ts:3–5`: configuração vazia. `package.json:5–25`: `next dev/build/start`, `next` 16.1.1, React 19.2.3, Tailwind, sem dependência de federação. O `name` é `feanpay-web` (`package.json:2`); a aplicação e seus dados acompanham metas de usuários FeanPay (`app/page.tsx:15–17`; `app/components/tabs/IdeasLabTab.tsx:21–38`), de modo que o nome pode refletir esse contexto, e não se usa como evidência de origem diferente. | contrária |
-| Documentação | `README.md:1–12`: guia de preparação para entrevista. `README.md:179–187`: “Architecture for micro-frontends” com pontos-chave, entre eles Module Federation. É conteúdo, não descrição do repositório. | fraca |
-| Tecnologia / Configuração / Composição (busca) | `git grep -i` no SHA por `micro.?front` e `federation`: só `README.md:179` e `185`; nada em `app/`. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 27 entries, all regular `100644` files; zero symlinks and zero gitlinks. A single Next.js project (App Router) at the root: `app/page.tsx`, `app/layout.tsx`, `app/components/{tabs,shared}`, `next.config.ts` and `package.json`. | contrary |
+| Source code | `app/page.tsx:1–40`: client component with goal state persisted in `localStorage`, and internal tab (`./components/tabs/*`) and shared component imports. Searching for `../../` imports in `app` returns nothing. | contrary |
+| Configuration / Build | `next.config.ts:3–5`: empty configuration. `package.json:5–25`: `next dev/build/start`, `next` 16.1.1, React 19.2.3, Tailwind, without a federation dependency. `name` is `feanpay-web` (`package.json:2`); application and data track FeanPay user goals (`app/page.tsx:15–17`; `app/components/tabs/IdeasLabTab.tsx:21–38`), so the name may reflect this context, and is not used as evidence of different origin. | contrary |
+| Documentation | `README.md:1–12`: interview preparation guide. `README.md:179–187`: “Architecture for micro-frontends” with key points, including Module Federation. Content, rather than repository description. | weak |
+| Technology / Configuration / Composition (search) | `git grep -i` at the SHA for `micro.?front` and `federation`: only `README.md:179` and `185`; nothing in `app/`. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 7 commits, nenhum merge, todos de `emmanueliyanu21 <emmanueliyanu2012@gmail.com>`, de 2026-01-01 (`b7da3d4`, “first commit”) a 2026-01-07 (SHA). O guia de entrevista foi acrescentado ao README só no SHA. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 7 commits, no merges, all by `emmanueliyanu21 <emmanueliyanu2012@gmail.com>`, from 2026-01-01 (`b7da3d4`, “first commit”) to 2026-01-07 (SHA). The interview guide was added to the README only in the SHA. No historical blob was read and no object was missing.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única aplicação frontend; nenhuma configuração de composição. |
-| Q2 | No | Não há segunda unidade cuja independência possa ser avaliada. |
-| Q3 | No | Não há host compondo unidades; `app/page.tsx` só alterna abas internas. |
-| Q4 | No | Nenhum mecanismo de composição (`next.config.ts:3–5`; busca registrada). |
-| Q5 | No | Q1–Q4 são No: SPA pessoal com README de estudo que cita micro-frontends. |
+| Q1 | No | A single frontend application; no composition configuration. |
+| Q2 | No | There is no second unit whose independence could be assessed. |
+| Q3 | No | No host composes units; `app/page.tsx` only switches internal tabs. |
+| Q4 | No | No composition mechanism (`next.config.ts:3–5`; recorded search). |
+| Q5 | No | Q1–Q4 are No: personal SPA with a study README mentioning micro-frontends. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “conventional frontend monoliths” e a “repositories mentioning micro-frontends without implementing them”.
-- O termo é conteúdo de estudo, como em 023. Há uma aplicação real, por isso `frontend_units: 1` e `single-unit`, e não 0 como nos perfis sem implementação.
-- `ui_technologies: [react, next]`, `build_tools: []` (Next encapsula o bundler). `repo_type: other`: ferramenta pessoal de metas, sem caráter de exemplo de MFE, template ou produto.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. Matches “conventional frontend monoliths” and “repositories mentioning micro-frontends without implementing them”.
+- The term is study content, as in 023. A real application exists, hence `frontend_units: 1` and `single-unit`, rather than 0 as in profiles without implementation.
+- `ui_technologies: [react, next]`, `build_tools: []` (Next encapsulates the bundler). `repo_type: other`: personal goal tool, without the character of an MFE example, template or product.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** README usado como bloco de notas de entrevista, com tópicos de MFE e Module Federation, sobre uma aplicação sem relação com o tema. Bate em consultas terminológicas e de tecnologia.
-- **Protocolo (busca):** o hit singular `"micro frontend"` não tem grafia literal. A elegibilidade muda de `unknown` (001) para `pass` (002).
-- **Contribuição da revisão independente (Lupa):** concordância integral com Non-MFE e Q1–Q5 No (uma aplicação Next.js; abas, componentes e estado na mesma árvore, sem outra unidade nem mecanismo de composição); sem decisão aberta (`draft`). A menção a micro-frontends e Module Federation está em um guia de entrevista adicionado ao README no próprio SHA (2026-01-07), anterior às buscas, e não descreve a aplicação. A exceção MFE-unit não se aplica (sem `exposes`, ciclos de vida ou componente preparado para host externo). `repo_type: other` é defensável para uma ferramenta pessoal, embora mereça explicação mais forte diante da aplicação funcional e da homepage na Vercel, e entra na harmonização pendente de `repo_type`. O histórico (sete commits, uma única conta) não acusou objeto ausente nos logs por caminho consultados.
-- **Contribuição da revisão independente (Lupa), complemento:** a alegação de que o nome `feanpay-web` seria resquício de outro projeto não é comprovada e foi retirada. Os finais 019 e 032 classificam aplicações pessoais ou portfólios implantados como `production`, enquanto 014 é um app React convencional de tipo `template`; o `repo_type: other` daqui entra na harmonização pendente. 013 (Next Multi-Zones, quatro apps Next com `rewrites`) não é comparável. Q1 e Q2 do checklist devem apontar caminhos e linhas diretamente.
+- **RQ1 (misleading signals):** README used as an interview notebook, with MFE and Module Federation topics, atop an unrelated application. Matches terminology and technology queries.
+- **Protocol (search):** singular hit `"micro frontend"` has no literal spelling. Eligibility changes from `unknown` (001) to `pass` (002).
+- **Independent review contribution (Lupa):** full agreement with Non-MFE and Q1–Q5 No (one Next.js application; tabs, components and state in the same tree, without another unit or composition mechanism); no open decision (`draft`). The micro-frontends and Module Federation mention is in an interview guide added to the README in the SHA itself (2026-01-07), before searches, and does not describe the application. The MFE-unit exception does not apply (no `exposes`, lifecycles or component prepared for an external host). `repo_type: other` is defensible for a personal tool, although it merits stronger explanation given the functional application and Vercel homepage, and enters pending `repo_type` harmonization. History (seven commits, one account) showed no missing objects in consulted path-specific logs.
+- **Independent review contribution (Lupa), supplement:** the claim that name `feanpay-web` was a remnant of another project is unproven and was removed. Final 019 and 032 classify deployed personal applications or portfolios as `production`, whereas 014 is a conventional React app of type `template`; this record's `repo_type: other` enters pending harmonization. 013 (Next Multi-Zones, four Next apps with `rewrites`) is not comparable. Checklist Q1 and Q2 should point directly to paths and lines.

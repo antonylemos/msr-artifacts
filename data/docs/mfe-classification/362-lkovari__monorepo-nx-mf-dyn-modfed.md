@@ -20,88 +20,88 @@ annotation:
 
 # 362 — lkovari/monorepo-nx-mf-dyn-modfed
 
-## Contexto
+## Context
 
-Prova de conceito Angular 21 + Nx de “native module federation” com mensageria entre micro-frontends mediada pelo host (`README.md:3`). O workspace fica em `nx-mf-df/` (`README.md:5`). Ele tem:
-- um shell `main-host` (porta 4200);
-- três remotes `mf_remote_a`/`b`/`c` (4201–4203), carregados por rota;
-- duas libs compartilhadas: contratos Zod e UI/adaptadores de mensageria (`README.md:11–19`).
+Angular 21 + Nx proof of concept of “native module federation” with host-mediated messaging between micro-frontends (`README.md:3`). The workspace is in `nx-mf-df/` (`README.md:5`). It has:
+- a shell `main-host` (port 4200);
+- three remotes `mf_remote_a`/`b`/`c` (4201–4203), loaded by route;
+- two shared libs: Zod contracts and UI/messaging adapters (`README.md:11–19`).
 
-A comunicação usa o pacote npm `@lkovari/microfrontend-platform-communication`, do mesmo titular, com um barramento exposto pelo host em `window.__MFE_BRIDGE__` (`README.md:17`, `:19`, `:25`). O nome do repositório não é usado como evidência.
+Communication uses npm package `@lkovari/microfrontend-platform-communication`, from the same owner, with a bus exposed by the host at `window.__MFE_BRIDGE__` (`README.md:17`, `:19`, `:25`). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:363` registra rank 362, ID 1197367428, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:363` records rank 362, ID 1197367428, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:363` registra as estratégias `terminology;technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:27570` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:27577` (`pass`), ambos com `terminology;technology`.
+`data/samples/mfe-sample-001/sample.csv:363` records strategies `terminology;technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:27570` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:27577` (`pass`), both with `terminology;technology`.
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos três hits em cada rodada, do endpoint `repositories` e com `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same three hits in each round, from endpoint `repositories` and with an empty `path`:
 
-| Consulta (`q`) | Subconsulta | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Collection 001 / 002 (UTC) |
 |---|---|---|
 | `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | `…#created:2026-03` | 2026-10-07T20:32:52.350Z / 2026-10-08T15:41:53.292Z |
 | `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | `…#created:2026-03` | 2026-10-07T22:12:03.269Z / 2026-10-08T15:49:28.339Z |
 | `technology-module-federation-repositories`: `"module federation" in:name,description,readme` | `…#created:2026-03` | 2026-10-07T23:24:38.994Z / 2026-10-08T16:17:35.128Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2026-03-01..2026-03-31`.
+The effective queries append `pushed:>=2025-04-01 created:2026-03-01..2026-03-31`.
 
-Metadados do hit (iguais nas duas rodadas): descrição nula, sem tópicos, linguagem TypeScript, licença MIT, `fork: false`, tamanho 2162, criação em 2026-03-31T14:24:56Z, push em 2026-06-07T09:38:13Z.
+Hit metadata (identical in both rounds): null description, no topics, language TypeScript, MIT license, `fork: false`, size 2162, created at 2026-03-31T14:24:56Z, pushed at 2026-06-07T09:38:13Z.
 
-**Grafias:**
+**Spellings:**
 - **“module federation”:** `README.md:3` (“**native module federation**”);
-- **“microfrontend”:** `README.md:3` (“cross-microfrontend”, em que o hífen separa os termos na busca), também `:17` e `:287`, no nome do pacote `@lkovari/microfrontend-platform-communication`;
-- **“microfrontends”:** o plural não aparece literalmente; esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+- **“microfrontend”:** `README.md:3` (“cross-microfrontend”, where the hyphen separates terms in the search), also `:17` and `:287`, in package name `@lkovari/microfrontend-platform-communication`;
+- **“microfrontends”:** the plural does not appear literally; this hit depends on GitHub search text processing, which is not recorded.
 
-A última alteração do README é `147d615` (2026-05-24). O SHA (2026-06-07T11:38:12+02:00, isto é, 09:38:12Z) coincide com o `pushed_at`. Ambos antecedem as coletas de outubro de 2026, e o README do SHA não é posterior às buscas.
+The last README change is `147d615` (2026-05-24). The SHA (2026-06-07T11:38:12+02:00, that is, 09:38:12Z) matches `pushed_at`. Both predate the October 2026 collections, and the README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 228 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. `nx-mf-df/apps/` tem `main-host`, `mf_remote_a`, `mf_remote_b` e `mf_remote_c`, cada um com `federation.config.js`, `project.json`, `src/main.ts`, `src/bootstrap.ts` e `index.html`, além de quatro projetos e2e. `nx-mf-df/libs/` tem `common-ui-lib` e `contracts-platform-messaging`. Na raiz: README, changelogs e documentos de comunicação. | forte |
-| Configuração (host) | `nx-mf-df/apps/main-host/federation.config.js:3–9`: `withNativeFederation({ name: 'main-host', shared: shareAll(singleton, strictVersion) })`. `nx-mf-df/apps/main-host/public/federation.manifest.json:1–5`: `mf_remote_a`/`b`/`c` → `http://localhost:4201`–`4203/remoteEntry.json`. `nx-mf-df/apps/main-host/src/main.ts:3–5`: `initFederation('federation.manifest.json')` antes do bootstrap. | forte |
-| Configuração (remotes) | `nx-mf-df/apps/mf_remote_a/federation.config.js:4`, `:8–10`: `name: 'mf_remote_a'`, `exposes: { './Component': './apps/mf_remote_a/src/app/app.ts' }`; idem em `mf_remote_b` e `mf_remote_c` (`federation.config.js:4`, `:8–10`). `nx-mf-df/apps/mf_remote_a/src/main.ts:3–5` e `src/bootstrap.ts:1–5`: `initFederation()` e bootstrap próprio. | forte |
-| Código-fonte (composição) | `nx-mf-df/apps/main-host/src/app/app.routes.ts:2`, `:11–25`: rotas `mf_remote_a`/`b`/`c` com `loadRemoteModule('<remote>', './Component').then((m) => m.App)`. `nx-mf-df/apps/mf_remote_a/src/app/app.ts:14–31`: o componente raiz `App` exportado e exposto. | forte |
-| Configuração (correspondência da cadeia) | Os nomes do manifesto coincidem com os `name` dos remotes, e `./Component` coincide com `exposes`. As portas 4201–4203 coincidem com os dev-servers (`nx-mf-df/apps/mf_remote_a/project.json:53`, `:108`). Para o GitHub Pages, `nx-mf-df/scripts/gh-build.mjs:49–64` compila host e remotes com `baseHref` próprio e reescreve o manifesto do host com as URLs publicadas. | forte |
-| Build/deploy | `nx-mf-df/apps/main-host/project.json:10`, `:58–65`: `@angular-architects/native-federation:build` sobre `@angular/build:application`, `outputPath: dist/apps/main-host`, entry `apps/main-host/src/main.ts`; `nx-mf-df/apps/mf_remote_a/project.json:10`, `:58–65`: idem com `dist/apps/mf_remote_a`. Deploy por workflow (`.github/workflows/deploy-github-pages.yml:41`, `:45–47`). | moderada |
-| Código-fonte (fronteiras) | Busca ativa de imports relativos com `../../` em `apps` e `libs`: só os `eslint.config.mjs` para a config da raiz. Busca por caminhos ou aliases de outros apps: nenhuma ocorrência. Os apps usam as libs por path mapping (`nx-mf-df/tsconfig.base.json:17–22`; por exemplo `nx-mf-df/apps/mf_remote_a/src/app/app.ts:4–10` e `nx-mf-df/apps/main-host/src/app/app.config.ts:9–22`). | contexto |
-| Comunicação entre unidades | `nx-mf-df/apps/main-host/src/app/app.config.ts:31–47`: `provideBus` e `provideHostBridge({ remotes: [MF_REMOTE_A_ID, MF_REMOTE_B_ID, MF_REMOTE_C_ID] })`. Os remotes se ligam ao barramento do host via `window.__MFE_BRIDGE__` (`README.md:19`, `:25`). | moderada |
-| Conteúdo dos remotes | `nx-mf-df/apps/mf_remote_a/src/app/app.html:1–5`: toast, banner de mensageria, componente de boas-vindas e painel de histórico. `nx-mf-df/apps/mf_remote_a/src/app/nx-welcome.ts:1–15` (968 linhas) é o componente inicial do Nx (“This is a starter component and can be deleted”) adaptado. O domínio é demonstrativo. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 228 entries, all regular files `100644`; zero symlinks and zero gitlinks. `nx-mf-df/apps/` has `main-host`, `mf_remote_a`, `mf_remote_b` and `mf_remote_c`, each with `federation.config.js`, `project.json`, `src/main.ts`, `src/bootstrap.ts` and `index.html`, plus four e2e projects. `nx-mf-df/libs/` has `common-ui-lib` and `contracts-platform-messaging`. At the root: README, changelogs and communication documents. | strong |
+| Configuration (host) | `nx-mf-df/apps/main-host/federation.config.js:3–9`: `withNativeFederation({ name: 'main-host', shared: shareAll(singleton, strictVersion) })`. `nx-mf-df/apps/main-host/public/federation.manifest.json:1–5`: `mf_remote_a`/`b`/`c` → `http://localhost:4201`–`4203/remoteEntry.json`. `nx-mf-df/apps/main-host/src/main.ts:3–5`: `initFederation('federation.manifest.json')` before bootstrap. | strong |
+| Configuration (remotes) | `nx-mf-df/apps/mf_remote_a/federation.config.js:4`, `:8–10`: `name: 'mf_remote_a'`, `exposes: { './Component': './apps/mf_remote_a/src/app/app.ts' }`; likewise in `mf_remote_b` and `mf_remote_c` (`federation.config.js:4`, `:8–10`). `nx-mf-df/apps/mf_remote_a/src/main.ts:3–5` and `src/bootstrap.ts:1–5`: `initFederation()` and own bootstrap. | strong |
+| Source code (composition) | `nx-mf-df/apps/main-host/src/app/app.routes.ts:2`, `:11–25`: routes `mf_remote_a`/`b`/`c` with `loadRemoteModule('<remote>', './Component').then((m) => m.App)`. `nx-mf-df/apps/mf_remote_a/src/app/app.ts:14–31`: root component `App` exported and exposed. | strong |
+| Configuration (chain matching) | Manifest names match remote `name`, and `./Component` matches `exposes`. Ports 4201–4203 match dev servers (`nx-mf-df/apps/mf_remote_a/project.json:53`, `:108`). For GitHub Pages, `nx-mf-df/scripts/gh-build.mjs:49–64` builds host and remotes with their own `baseHref` and rewrites the host manifest with published URLs. | strong |
+| Build/deploy | `nx-mf-df/apps/main-host/project.json:10`, `:58–65`: `@angular-architects/native-federation:build` over `@angular/build:application`, `outputPath: dist/apps/main-host`, entry `apps/main-host/src/main.ts`; `nx-mf-df/apps/mf_remote_a/project.json:10`, `:58–65`: likewise with `dist/apps/mf_remote_a`. Deployment through workflow (`.github/workflows/deploy-github-pages.yml:41`, `:45–47`). | moderate |
+| Source code (boundaries) | Active search for relative imports with `../../` in `apps` and `libs`: only `eslint.config.mjs` to the root config. Search for other apps’ paths or aliases: no occurrence. Apps use libs through path mapping (`nx-mf-df/tsconfig.base.json:17–22`; for example `nx-mf-df/apps/mf_remote_a/src/app/app.ts:4–10` and `nx-mf-df/apps/main-host/src/app/app.config.ts:9–22`). | context |
+| Communication between units | `nx-mf-df/apps/main-host/src/app/app.config.ts:31–47`: `provideBus` and `provideHostBridge({ remotes: [MF_REMOTE_A_ID, MF_REMOTE_B_ID, MF_REMOTE_C_ID] })`. Remotes connect to the host bus through `window.__MFE_BRIDGE__` (`README.md:19`, `:25`). | moderate |
+| Remote content | `nx-mf-df/apps/mf_remote_a/src/app/app.html:1–5`: toast, messaging banner, welcome component and history panel. `nx-mf-df/apps/mf_remote_a/src/app/nx-welcome.ts:1–15` (968 lines) is the adapted Nx starter component (“This is a starter component and can be deleted”). The domain is demonstrative. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso e parcial (`blob:none`). São 19 commits alcançáveis a partir do SHA (25 em todos os refs, incluindo `origin/gh-pages`), sem merges. Todos têm o e-mail `laszlo.kovary@gmail.com`: autor `László Kővári`, e `LK` no commit inicial criado pelo GitHub.
+Non-shallow, partial clone (`blob:none`). There are 19 commits reachable from the SHA (25 across all refs, including `origin/gh-pages`), without merges. All have email `laszlo.kovary@gmail.com`: author `László Kővári`, and `LK` in the initial commit created through GitHub.
 
-Os registros vão de 2026-03-31 (`d722c85`, “Initial commit”) ao SHA (2026-06-07, “update platform comm library, add tests.”). As mensagens descrevem a construção passo a passo:
+Records run from 2026-03-31 (`d722c85`, “Initial commit”) to the SHA (2026-06-07, “update platform comm library, add tests.”). Messages describe construction step by step:
 - `a04c0bb`: “steps 1 - 12 create apps install angulararchitests native federation plugin, set host and remotes”;
 - `e642058`: “steps 12 - 18 ui-common-lib, routing, manifest”;
-- a adoção do pacote de comunicação próprio, em `81a1110`.
+- adoption of the owner’s communication package, in `81a1110`.
 
-`git rev-list --objects $SHA --missing=print` lista 156 objetos ausentes, nenhum na árvore do SHA.
+`git rev-list --objects $SHA --missing=print` lists 156 missing objects, none in the SHA tree.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | Quatro unidades: `main-host` e os três remotes referenciados no manifesto de federação (`nx-mf-df/apps/main-host/public/federation.manifest.json:1–5`). As libs e os projetos e2e não são contados. |
-| Q2 | Yes | Cada unidade tem `federation.config.js`, entry, `project.json`, build e dev-server próprios (`nx-mf-df/apps/main-host/project.json:10–65`; `nx-mf-df/apps/mf_remote_a/project.json:10–108`). Não há import de código-fonte entre apps; o compartilhamento é por libs com alias (busca registrada). |
-| Q3 | Yes | O shell roteia e carrega os três remotes (`nx-mf-df/apps/main-host/src/app/app.routes.ts:11–25`). |
-| Q4 | Yes | Native Federation configurada nos dois lados e usada por `initFederation` + `loadRemoteModule`, com nomes, módulo exposto e portas correspondentes. O manifesto de produção é gerado pelo script de deploy (`gh-build.mjs:57–64`). |
-| Q5 | Yes | Q1–Q4 convergem. |
+| Q1 | Yes | Four units: `main-host` and the three remotes referenced in the federation manifest (`nx-mf-df/apps/main-host/public/federation.manifest.json:1–5`). Libs and e2e projects are not counted. |
+| Q2 | Yes | Each unit has its own `federation.config.js`, entry, `project.json`, build and dev server (`nx-mf-df/apps/main-host/project.json:10–65`; `nx-mf-df/apps/mf_remote_a/project.json:10–108`). No source code import between apps; sharing uses aliased libs (recorded search). |
+| Q3 | Yes | The shell routes and loads the three remotes (`nx-mf-df/apps/main-host/src/app/app.routes.ts:11–25`). |
+| Q4 | Yes | Native Federation configured on both sides and used through `initFederation` + `loadRemoteModule`, with matching names, exposed module and ports. The production manifest is generated by the deployment script (`gh-build.mjs:57–64`). |
+| Q5 | Yes | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- `MFE-implemented`: Q1–Q5 Yes. Corresponde a “monorepos containing a host and its remotes” e a “examples… that actually compose frontend units”.
-- Mesmo padrão do final 059 e do rascunho 343: Native Federation com manifesto, `initFederation` e `loadRemoteModule` por rota, e libs por path mapping.
-- Cadeia completa como em 076/084/096/106/109.
-- Não é code sharing (089/100): cada remote expõe seu componente raiz, montado como página de uma rota do shell.
-- O conteúdo dos remotes é demonstrativo (componente inicial do Nx e painéis de mensageria). Isso não altera os critérios literais, que tratam da composição; difere de 023/075/081/094/105, em que a composição não está montada.
-- `frontend_units: 4`, `unit_organization: monorepo`, `approaches: [native-federation]`, `ui_technologies: [angular]`, `build_tools: [esbuild]` (builder `@angular/build:application`, como em 059 e 343). `repo_type: example` (“proof-of-concept”, `README.md:3`).
-- Não há decisão aberta.
+- `MFE-implemented`: Q1–Q5 Yes. It matches “monorepos containing a host and its remotes” and “examples… that actually compose frontend units”.
+- Same pattern as final 059 and draft 343: Native Federation with a manifest, `initFederation` and `loadRemoteModule` by route, and libs through path mapping.
+- Complete chain as in 076/084/096/106/109.
+- It is not code sharing (089/100): each remote exposes its root component, mounted as a shell route page.
+- Remote content is demonstrative (Nx starter component and messaging panels). This does not change the literal criteria, which concern composition; it differs from 023/075/081/094/105, where composition is not assembled.
+- `frontend_units: 4`, `unit_organization: monorepo`, `approaches: [native-federation]`, `ui_technologies: [angular]`, `build_tools: [esbuild]` (builder `@angular/build:application`, as in 059 and 343). `repo_type: example` (“proof-of-concept”, `README.md:3`).
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ3:** comunicação entre micro-frontends por barramento em processo do host, exposto em `window.__MFE_BRIDGE__`, com contratos Zod versionados, registro de tópicos e request/response (`README.md:23–103`). O README explica que um único barramento é necessário porque `createBus()` isolados em bundles diferentes não se veem (`README.md:25`).
-- **RQ3:** o README diz que, no shell integrado, o handler “remoto” da Demo Query roda no processo do host, inscrito com os IDs dos remotes (`README.md:142`). Parte da comunicação demonstrada não atravessa a fronteira real dos remotes.
-- **RQ1:** o README fixa o pacote de comunicação em `^0.2.1` (`README.md:287`), mas `nx-mf-df/package.json:89` declara `^0.3.2`.
-- **Protocolo (busca):** o hit plural não tem grafia literal, e o singular depende de “cross-microfrontend” e do nome do pacote. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ3:** communication between micro-frontends through an in-process host bus, exposed at `window.__MFE_BRIDGE__`, with versioned Zod contracts, topic registration and request/response (`README.md:23–103`). The README explains that a single bus is necessary because isolated `createBus()` in different bundles cannot see one another (`README.md:25`).
+- **RQ3:** the README says that, in the integrated shell, the Demo Query “remote” handler runs in the host process, registered with the remote IDs (`README.md:142`). Part of the demonstrated communication does not cross the actual remote boundary.
+- **RQ1:** the README pins the communication package at `^0.2.1` (`README.md:287`), but `nx-mf-df/package.json:89` declares `^0.3.2`.
+- **Protocol (search):** the plural hit has no literal spelling, and the singular depends on “cross-microfrontend” and the package name. Eligibility changes from `unknown` (001) to `pass` (002).

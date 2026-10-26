@@ -20,76 +20,76 @@ annotation:
 
 # 283 — israelmeinert/fiap-aula-arquitetura-no-front
 
-## Contexto
+## Context
 
-Material de aula de arquitetura front-end: slides em HTML/Markdown, roteiro, exercícios e 14 exemplos executáveis que implementam o mesmo domínio (“EventFlow”) em estilos de arquitetura diferentes (`README.md:1–5`; `scripts/exemplos.json:1–86`). Só o bloco 10, `exemplos/10-micro-frontends/`, compõe unidades: um shell (Vite/TypeScript) carrega em runtime dois remotos, Catálogo React e Checkout Angular. Cada remoto é compilado separadamente para um módulo ESM servido em sua própria porta (`exemplos/10-micro-frontends/README.md:15–23`). Os outros 13 blocos são aplicações isoladas, sem relação de composição. O nome do repositório não é usado como evidência.
+Front-end architecture class material: HTML/Markdown slides, outline, exercises and 14 executable examples implementing the same domain (“EventFlow”) in different architectural styles (`README.md:1–5`; `scripts/exemplos.json:1–86`). Only block 10, `exemplos/10-micro-frontends/`, composes units: a shell (Vite/TypeScript) loads two remotes at runtime, React Catalog and Angular Checkout. Each remote is separately compiled to an ESM module served on its own port (`exemplos/10-micro-frontends/README.md:15–23`). Other 13 blocks are isolated applications, without composition relationships. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:284` registra rank 283, ID 1408068032, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:284` records rank 283, ID 1408068032, status `cloned`, branch `main` and the front matter commit, which is HEAD of the clone and `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:284` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:38520` (`terminology`, `unknown`) e `data/discovery/mfe-round-002/candidates.csv:38556` (`terminology`, `pass`).
+`data/samples/mfe-sample-001/sample.csv:284` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:38520` (`terminology`, `unknown`) and `data/discovery/mfe-round-002/candidates.csv:38556` (`terminology`, `pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories` e com `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories` and with empty `path`:
 
-| Consulta (`q`) | Subconsulta | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Collection 001 / 002 (UTC) |
 |---|---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | `terminology-micro-frontend-repositories#created:>=2026-10-01` | 2026-10-07T22:44:09.214Z / 2026-10-08T16:02:37.417Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | `terminology-micro-frontends-repositories#created:>=2026-10-01` | 2026-10-07T23:13:19.642Z / 2026-10-08T16:11:03.037Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:>=2026-10-01`.
+Effective queries append `pushed:>=2025-04-01 created:>=2026-10-01`.
 
-Metadados do hit (iguais nas duas rodadas): descrição nula, sem tópicos, linguagem HTML, `fork: false`, tamanho 277, criação em 2026-10-07T00:47:22Z, push em 2026-10-07T00:48:50Z.
+Hit metadata (same in both rounds): null description, no topics, language HTML, `fork: false`, size 277, created at 2026-10-07T00:47:22Z, pushed at 2026-10-07T00:48:50Z.
 
-Sem descrição, o acerto vem do README:
-- **“micro frontends”:** “micro-frontends” em `README.md:22`, `:28` e `:49`; o hífen funciona como separador.
-- **“micro frontend”:** a forma singular não aparece literalmente no README raiz; esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+Without a description, the hit comes from README:
+- **“micro frontends”:** “micro-frontends” at `README.md:22`, `:28` and `:49`; hyphen acts as separator.
+- **“micro frontend”:** singular form does not appear literally in root README; that hit depends on GitHub search text processing, which is not recorded.
 
-O README só existe no commit único, que é o SHA (2026-10-06T21:48:41-03:00, isto é, 2026-10-07T00:48:41Z). Ele antecede as coletas, e o README do SHA não é posterior às buscas.
+README exists only in the single commit, the SHA (2026-10-06T21:48:41-03:00, i.e., 2026-10-07T00:48:41Z). It precedes collection, and the SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 405 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Raiz com `package.json` (workspaces `exemplos/*/react`, `angular`, `next`, `astro`, `apps/*`; `package.json:9–15`), slides (`aula-arquitetura-front-end.html`, `conteudo/`), `material/`, `scripts/`, `tests/` e 14 pastas em `exemplos/`. No bloco 10: `apps/shell`, `apps/catalogo-react`, `apps/checkout-angular` e `packages/contracts`. | contexto |
-| Código-fonte (remotos) | `exemplos/10-micro-frontends/apps/catalogo-react/src/mount.tsx:3–6`: `export async function mount(host)` cria uma raiz React e devolve o cleanup. `exemplos/10-micro-frontends/apps/checkout-angular/src/mount.ts:4–12`: `mount(host)` cria uma aplicação Angular (`createApplication`, `createComponent`) e devolve o cleanup. | forte |
-| Build (remotos) | `catalogo-react/package.json:6–9` e `checkout-angular/package.json:6–9`: `build` com `scripts/build-remoto.mjs` (o Angular antes com `ngc`) e `dev` com `scripts/servir-remoto.mjs` nas portas 4301/4302. `scripts/build-remoto.mjs:21–26`: esbuild gera `dist/microfrontend.js` em formato ESM a partir de `src/mount.tsx` ou `dist/compiled/mount.js`. `scripts/servir-remoto.mjs:1–6`: servidor estático de `dist` com CORS para o shell em 4300. | forte |
-| Configuração (shell) | `exemplos/10-micro-frontends/apps/shell/public/remotes.json:1–5`: manifesto versionado com `catalogo` → `http://127.0.0.1:4301/microfrontend.js` e `checkout` → `http://127.0.0.1:4302/microfrontend.js`. `apps/shell/package.json:6–9`: Vite na porta 4300 e build próprio. | forte |
-| Código-fonte (composição) | `apps/shell/src/main.ts:8–35`: busca `/remotes.json`, valida versão e origem (`:16–22`), carrega o remoto com `import(/* @vite-ignore */ url.href)` (`:23`), verifica o contrato `mount` (`:25`), monta num slot próprio (`:26`) e chama o cleanup ao trocar ou desmontar (`:7`, `:27–28`). `:36–38`: botões para abrir catálogo, checkout e desmontar. | forte |
-| Configuração (contrato) | `exemplos/10-micro-frontends/packages/contracts/mount.ts:1–5`: tipos `Cleanup`, `Mount`, `Remote` e `Manifest` (“Contrato de integração versionado, sem componentes ou estado global compartilhados”). | moderada |
-| Código-fonte (fronteiras) | Busca ativa de imports relativos que cruzam pastas no bloco 10. O shell importa só tipos do contrato (`apps/shell/src/main.ts:1`, `import type … from '../../../packages/contracts/mount'`) e a folha de estilo comum do material (`:2`, `../../../../../material/estilos.css`). Os remotos não importam o shell nem um ao outro (`catalogo-react/src/App.tsx:1`; `checkout-angular/src/mount.ts:1–3` só importam frameworks e arquivos próprios); os `../../../../scripts/*` dos `package.json` são ferramentas de build comuns. Nenhum import de código-fonte entre unidades. | contexto |
-| Testes | `tests/e2e/aula.spec.ts:142–154`: teste e2e do bloco 10 cobre montagem, limpeza, remontagem e falha de remoto (manifesto com URL inexistente). | moderada |
-| Documentação | `exemplos/10-micro-frontends/README.md:17–23`, `:107`, `:111`, `:117–125`: fluxo shell → manifesto → módulo ESM remoto → `mount` → `cleanup`, builds separados e exercício de recompilar só o catálogo sem novo build do shell. O deploy independente é descrito, não provisionado (“o laboratório não provisiona um pipeline de deploy”). | moderada |
+| Structure | `git ls-tree -r` at the SHA: 405 entries, all regular `100644` files; zero symlinks and zero gitlinks. Root with `package.json` (workspaces `exemplos/*/react`, `angular`, `next`, `astro`, `apps/*`; `package.json:9–15`), slides (`aula-arquitetura-front-end.html`, `conteudo/`), `material/`, `scripts/`, `tests/` and 14 folders in `exemplos/`. Block 10: `apps/shell`, `apps/catalogo-react`, `apps/checkout-angular` and `packages/contracts`. | context |
+| Source code (remotes) | `exemplos/10-micro-frontends/apps/catalogo-react/src/mount.tsx:3–6`: `export async function mount(host)` creates a React root and returns cleanup. `exemplos/10-micro-frontends/apps/checkout-angular/src/mount.ts:4–12`: `mount(host)` creates an Angular application (`createApplication`, `createComponent`) and returns cleanup. | strong |
+| Build (remotes) | `catalogo-react/package.json:6–9` and `checkout-angular/package.json:6–9`: `build` with `scripts/build-remoto.mjs` (Angular first with `ngc`) and `dev` with `scripts/servir-remoto.mjs` on ports 4301/4302. `scripts/build-remoto.mjs:21–26`: esbuild generates `dist/microfrontend.js` in ESM format from `src/mount.tsx` or `dist/compiled/mount.js`. `scripts/servir-remoto.mjs:1–6`: static `dist` server with CORS for shell at 4300. | strong |
+| Configuration (shell) | `exemplos/10-micro-frontends/apps/shell/public/remotes.json:1–5`: versioned manifest with `catalogo` → `http://127.0.0.1:4301/microfrontend.js` and `checkout` → `http://127.0.0.1:4302/microfrontend.js`. `apps/shell/package.json:6–9`: Vite on port 4300 and its own build. | strong |
+| Source code (composition) | `apps/shell/src/main.ts:8–35`: fetches `/remotes.json`, validates version and origin (`:16–22`), loads remote through `import(/* @vite-ignore */ url.href)` (`:23`), checks `mount` contract (`:25`), mounts in its own slot (`:26`) and calls cleanup on switching or unmounting (`:7`, `:27–28`). `:36–38`: buttons to open catalog, checkout and unmount. | strong |
+| Configuration (contract) | `exemplos/10-micro-frontends/packages/contracts/mount.ts:1–5`: types `Cleanup`, `Mount`, `Remote` and `Manifest` (“Contrato de integração versionado, sem componentes ou estado global compartilhados”, English translation: “Versioned integration contract, without shared components or global state”). | moderate |
+| Source code (boundaries) | Active search for relative imports crossing folders in block 10. Shell imports only contract types (`apps/shell/src/main.ts:1`, `import type … from '../../../packages/contracts/mount'`) and material's common stylesheet (`:2`, `../../../../../material/estilos.css`). Remotes import neither shell nor each other (`catalogo-react/src/App.tsx:1`; `checkout-angular/src/mount.ts:1–3` import only frameworks and their own files); `../../../../scripts/*` in `package.json` are common build tools. No source code imports between units. | context |
+| Tests | `tests/e2e/aula.spec.ts:142–154`: block 10 e2e test covers mounting, cleanup, remounting and remote failure (manifest with nonexistent URL). | moderate |
+| Documentation | `exemplos/10-micro-frontends/README.md:17–23`, `:107`, `:111`, `:117–125`: shell → manifest → remote ESM module → `mount` → `cleanup` flow, separate builds and exercise recompiling only catalog without rebuilding shell. Independent deployment is described, not provisioned (“o laboratório não provisiona um pipeline de deploy”, English translation: “the laboratory does not provision a deployment pipeline”). | moderate |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso. Há 1 commit, que é o SHA e a raiz (1 em todos os refs), sem merges: autor e committer `Israel M. <israelmeinert@gmail.com>`, 2026-10-06T21:48:41-03:00, “material completo da aula de front com slides implementação dos exemplos para cada arquitetura com exemplos de angular e react”. O commit único não permite distinguir a evolução ou a autoria por pasta. `git rev-list --objects $SHA --missing=print` não lista objetos ausentes.
+Non-shallow clone. There is 1 commit, the SHA and root (1 across all refs), without merges: author and committer `Israel M. <israelmeinert@gmail.com>`, 2026-10-06T21:48:41-03:00, “material completo da aula de front com slides implementação dos exemplos para cada arquitetura com exemplos de angular e react” (English translation: “complete front-end class material with slides, implementation of examples for each architecture with angular and react examples”). The single commit cannot distinguish evolution or per-folder authorship. `git rev-list --objects $SHA --missing=print` lists no missing objects.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | Três unidades no bloco 10: `shell`, `catalogo-react` e `checkout-angular`, as duas últimas referenciadas pelo manifesto de composição (`apps/shell/public/remotes.json:3–4`). |
-| Q2 | Yes | Cada unidade tem entrada e build próprios (shell: Vite, `apps/shell/package.json:7–8`; remotos: esbuild/ngc, `catalogo-react/package.json:7`, `checkout-angular/package.json:7`). Não há import de código-fonte entre unidades; o shell só importa tipos do contrato (busca registrada). |
-| Q3 | Yes | O shell carrega e monta os remotos na sua página (`apps/shell/src/main.ts:23–28`, `:36–37`). |
-| Q4 | Yes | Composição em runtime por manifesto e `import()` de módulo ESM remoto, com contrato `mount`/`cleanup` verificado (`main.ts:16–28`; `packages/contracts/mount.ts:2–5`). URLs e portas do manifesto correspondem aos servidores dos remotos (`servir-remoto.mjs:2–6`; `package.json` de cada remoto). |
-| Q5 | Yes | Q1–Q4 convergem. |
+| Q1 | Yes | Three units in block 10: `shell`, `catalogo-react` and `checkout-angular`, the latter two referenced by composition manifest (`apps/shell/public/remotes.json:3–4`). |
+| Q2 | Yes | Each unit has its own entry and build (shell: Vite, `apps/shell/package.json:7–8`; remotes: esbuild/ngc, `catalogo-react/package.json:7`, `checkout-angular/package.json:7`). No source code imports between units; shell imports only contract types (recorded search). |
+| Q3 | Yes | Shell loads and mounts remotes on its page (`apps/shell/src/main.ts:23–28`, `:36–37`). |
+| Q4 | Yes | Runtime composition through manifest and remote ESM module `import()`, with verified `mount`/`cleanup` contract (`main.ts:16–28`; `packages/contracts/mount.ts:2–5`). Manifest URLs and ports match remote servers (`servir-remoto.mjs:2–6`; each remote's `package.json`). |
+| Q5 | Yes | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- `MFE-implemented`: Q1–Q5 Yes. Corresponde a “examples, templates, and proofs of concept that actually compose frontend units”.
-- O repositório é material didático com vários estilos de arquitetura, mas o bloco 10 implementa e testa a composição. Não é conteúdo sem implementação (023/075/081/094/105).
-- Segue os finais 007 (repositório de exemplos com composição real em parte dos exemplos) e 002 (carga em runtime por URL com contrato `mount`).
-- Os demais 13 blocos não foram contados como unidades: são aplicações isoladas, como os demos não relacionados em 193.
-- Não é code sharing (089/100): os remotos são aplicações React e Angular completas, montadas com instâncias próprias.
-- Não é cadeia não conectável (097/103/104): manifesto, origens permitidas e portas correspondem.
-- `approaches: [runtime-script]`: o slug existente mais próximo (002). Aqui o carregamento é por `import()` de módulo ESM em vez de `<script>`; ver notas.
+- `MFE-implemented`: Q1–Q5 Yes. Matches “examples, templates, and proofs of concept that actually compose frontend units”.
+- Repository is teaching material with several architectural styles, but block 10 implements and tests composition. Not content without implementation (023/075/081/094/105).
+- Follows final 007 (example repository with actual composition in some examples) and 002 (runtime URL loading with `mount` contract).
+- Other 13 blocks were not counted as units: isolated applications, like unrelated demos in 193.
+- Not code sharing (089/100): remotes are complete React and Angular applications, mounted with their own instances.
+- Not an unconnectable chain (097/103/104): manifest, allowed origins and ports match.
+- `approaches: [runtime-script]`: closest existing slug (002). Here loading is through ESM module `import()` instead of `<script>`; see notes.
 - `frontend_units: 3`, `unit_organization: monorepo`, `ui_technologies: [react, angular]`, `build_tools: [esbuild, vite]`, `repo_type: example`.
-- Não há decisão aberta que altere a classe.
+- No open decision changes class.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2 (abordagem):** composição por manifesto JSON e `import()` dinâmico de módulos ESM remotos, com contrato tipado `mount(host) → cleanup`, verificação de versão e lista de origens permitidas. É próxima de `runtime-script` (002), mas sem `<script>` injetado nem global em `window`. Se os pesquisadores preferirem distinguir carga ESM por URL de carga por script, este é o primeiro caso desse tipo nesta série de triagem. Não se cria slug novo neste rascunho.
-- **RQ2:** remotos heterogêneos (React e Angular AOT com linker) montados pelo mesmo shell, cada um embutindo seu framework (`exemplos/10-micro-frontends/README.md:125`).
-- **RQ1:** o repositório mistura micro-frontends com outras 13 arquiteturas; contagens automáticas por `package.json` (todos os workspaces) superestimariam as unidades compostas.
-- **Protocolo (busca):** o hit singular não tem grafia literal no README raiz. A elegibilidade muda de `unknown` (001) para `pass` (002). Repositório criado em 2026-10-07, dentro da partição `created:>=2026-10-01`.
+- **RQ2 (approach):** composition through JSON manifest and dynamic `import()` of remote ESM modules, with typed contract `mount(host) → cleanup`, version checking and allowed-origin list. Close to `runtime-script` (002), but without injected `<script>` or `window` global. If researchers prefer distinguishing ESM URL loading from script loading, this is the first such case in this screening series. No new slug is created in this draft.
+- **RQ2:** heterogeneous remotes (React and Angular AOT with linker) mounted by the same shell, each embedding its framework (`exemplos/10-micro-frontends/README.md:125`).
+- **RQ1:** repository mixes micro-frontends with 13 other architectures; automated `package.json` counts (all workspaces) would overestimate composed units.
+- **Protocol (search):** singular hit has no literal spelling in root README. Eligibility changes from `unknown` (001) to `pass` (002). Repository created on 2026-10-07, within partition `created:>=2026-10-01`.

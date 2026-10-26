@@ -20,38 +20,38 @@ annotation:
 
 # 069 — AndreMqs/fiap_mf_main
 
-## Contexto
+## Context
 
-- **Abordagem de implementação:** Module Federation (`@originjs/vite-plugin-federation`)
-- **Tipo de repositório:** example/proof of concept (trabalho da pós FIAP: app de gerenciamento financeiro em três repositórios)
+- **Implementation approach:** Module Federation (`@originjs/vite-plugin-federation`)
+- **Repository type:** example/proof of concept (FIAP postgraduate assignment: financial management app in three repositories)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Documentação | `README.md:1-12`: "Projeto de Gerenciamento Financeiro com Microfrontends… Module Federation"; três repositórios: `fiap_mf_consumer_root` (container e orquestrador de rotas), `fiap_mf_home` (landing) e `fiap_mf_main` (área logada, este repositório) | moderada |
-| Configuração | `vite.config.ts:9-27`: `federation({ name: 'fiap_mf_main', filename: 'remoteEntry.js', exposes: { './Main': './src/App.tsx' }, shared: [react, react-dom, @mui/*, @emotion/*, lodash, recharts, classnames, zustand] })`; sem `remotes` | moderada |
-| Código-fonte (contrato) | `src/hooks/useParentApp.ts:1-19`: lê e grava o nome do usuário por `window.global.setUserName/getUserName`, funções fornecidas pelo container (contrato com o host) | moderada |
-| Estrutura | Uma única app (área logada: extrato, transações, investimentos, upload CSV) | contrária |
-| Composição | O container `fiap_mf_consumer_root` está em outro repositório, fora da amostra | ausente |
-| Build/deploy | `dockerfile`, `default.conf` (nginx), `docker-compose.yml` (com `db.json`, API mock): deploy próprio | moderada |
+| Documentation | `README.md:1-12`: "Projeto de Gerenciamento Financeiro com Microfrontends… Module Federation" [English translation: "Financial Management Project with Microfrontends… Module Federation"]; three repositories: `fiap_mf_consumer_root` (container and route orchestrator), `fiap_mf_home` (landing) and `fiap_mf_main` (logged-in area, this repository) | moderate |
+| Configuration | `vite.config.ts:9-27`: `federation({ name: 'fiap_mf_main', filename: 'remoteEntry.js', exposes: { './Main': './src/App.tsx' }, shared: [react, react-dom, @mui/*, @emotion/*, lodash, recharts, classnames, zustand] })`; no `remotes` | moderate |
+| Source code (contract) | `src/hooks/useParentApp.ts:1-19`: reads and writes the username through `window.global.setUserName/getUserName`, functions provided by the container (contract with the host) | moderate |
+| Structure | A single app (logged-in area: statement, transactions, investments, CSV upload) | contrary |
+| Composition | Container `fiap_mf_consumer_root` is in another repository, outside the sample | absent |
+| Build/deploy | `dockerfile`, `default.conf` (nginx), `docker-compose.yml` (with `db.json`, mock API): its own deployment | moderate |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade; a config de composição só tem `exposes` (`vite.config.ts:12-14`) |
-| Q2 | Yes (para a unidade) | Build e imagem próprios (`dockerfile`, `default.conf`) |
-| Q3 | Undetermined | O container `fiap_mf_consumer_root` não está no repositório |
-| Q4 | Undetermined | Lado remote configurado e contrato com o host (`useParentApp.ts`); o consumidor não é observável |
-| Q5 | No | Unidade preparada para composição, não uma instância de MFE no repositório |
+| Q1 | No | A single unit; composition config has only `exposes` (`vite.config.ts:12-14`) |
+| Q2 | Yes (for this unit) | Its own build and image (`dockerfile`, `default.conf`) |
+| Q3 | Undetermined | Container `fiap_mf_consumer_root` is not in the repository |
+| Q4 | Undetermined | Remote side configured and contract with the host (`useParentApp.ts`); the consumer is not observable |
+| Q5 | No | A unit prepared for composition, not an MFE instance in the repository |
 
-## Motivo
+## Rationale
 
-- Q1 é No; aplica-se a exceção MFE-unit: remote MF com `exposes` e contrato explícito com o container (`window.global`), host não observável.
-- Corresponde a "repositories containing only a remote unit, without the composing host".
+- Q1 is No; the MFE-unit exception applies: an MF remote with `exposes` and an explicit contract with the container (`window.global`), unobservable host.
+- Matches "repositories containing only a remote unit, without the composing host".
 
-## Notas para análise
+## Analysis notes
 
-- **Protocolo (ecossistema multi-repositório):** a arquitetura completa (container + home + main) está documentada no README, mas só este remote está na amostra.
-- **RQ3:** comunicação host ↔ remote por funções globais em `window.global`, um contrato simples e implícito.
+- **Protocol (multi-repository ecosystem):** the full architecture (container + home + main) is documented in the README, but only this remote is in the sample.
+- **RQ3:** host ↔ remote communication through global functions in `window.global`, a simple and implicit contract.

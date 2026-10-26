@@ -16,30 +16,30 @@ annotation:
 
 # 136 — swtbhsmn/micro-frontend-demo
 
-## Leitura do repositório
+## Repository overview
 
-A única documentação é o `README.txt` da raiz, em inglês, com 18 linhas. O `artifacts.csv` não tem nenhum arquivo do tipo `documentation` (o `README.txt` vem com a coluna `artifact_types` vazia), e o `matches.csv` não tem ocorrências `doc-*`. Como o arquivo é prosa sobre o projeto como um todo, foi lido inteiro e entra na tabela, como na revisão do repositório 013. Ele diz que o repositório é uma demonstração de micro-frontends com Module Federation do webpack, nomeia as duas aplicações e seus papéis, ensina a rodá-las e diz que o host carrega o componente do remote (README.txt:1-14). Tudo isso confere com as revisões anteriores: duas unidades (`app1` e `app2`), uma relação host → remote por Module Federation, build separado em modo development e nenhum deploy observado.
+Sole documentation is English root `README.txt`, with 18 lines. `artifacts.csv` contains no `documentation` files (`README.txt` has empty `artifact_types` column), and `matches.csv` no `doc-*` occurrences. Because file is project-wide prose, it was read in full and included in table, as in repository 013 review. It describes a micro-frontend demonstration using webpack Module Federation, names both applications and roles, gives run instructions and says host loads remote component (README.txt:1-14). All matches previous reviews: two units (`app1` and `app2`), one host → remote Module Federation relationship, separate development-mode builds and no observed deployment.
 
-Não viraram linha: os passos de execução (README.txt:7-13), que são instrução de execução — um terminal por pasta, `npm install` e `npm start`, primeiro o `app2` e depois o `app1` —, e que a revisão de build e deploy já usou para descrever a execução local; a ordem dos passos reflete que o host só compõe com o servidor do remote no ar (app1/webpack.config.js:31). Também não viraram linha as notas finais (README.txt:16-18): "minimal demo" é o tipo do repositório, "Node >= 18 and npm" é instalação e o ajuste de portas em `webpack.config.js` é detalhe de infraestrutura.
+Excluded: run steps (README.txt:7-13), execution instructions — terminal per directory, `npm install` and `npm start`, first `app2` then `app1` — already used by build and deployment review to describe local execution; order reflects host composing only while remote server runs (app1/webpack.config.js:31). Final notes also excluded (README.txt:16-18): "minimal demo" is repository type, "Node >= 18 and npm" concerns installation, and port adjustment in `webpack.config.js` is infrastructure detail.
 
-Foram lidos os artefatos que as revisões anteriores citam: os dois `package.json` (sem campo `description`; app1/package.json:1-21; app2/package.json:1-21), os dois `webpack.config.js`, os `index.js`, `bootstrap.js`, app1/src/App.jsx, app2/src/RemoteApp.jsx e os dois `public/index.html`. Nenhum deles tem comentário. Os textos de interface repetem os papéis do README — os títulos "App1 Host" e "App2 Remote" (app1/public/index.html:3; app2/public/index.html:3) e o cabeçalho "Host App (app1)" (app1/src/App.jsx:7) —, mas são texto da página, não documentação, e só são citados aqui.
+Artifacts cited by previous reviews were read: both `package.json` files (without `description`; app1/package.json:1-21; app2/package.json:1-21), both `webpack.config.js`, `index.js`, `bootstrap.js`, app1/src/App.jsx, app2/src/RemoteApp.jsx and both `public/index.html`. None has comments. Interface text repeats README roles — titles "App1 Host" and "App2 Remote" (app1/public/index.html:3; app2/public/index.html:3) and heading "Host App (app1)" (app1/src/App.jsx:7) — but is page text rather than documentation, cited only here.
 
-## Afirmações
+## Claims
 
-| # | Documento | Afirmação | Tema | Corroboração | Evidência |
+| # | Document | Claim | Theme | Corroboration | Evidence |
 |---|---|---|---|---|---|
-| 1 | README.txt:1 | "Microfrontend Webpack Module Federation demo" | estrutura | corroborada | 3.4.3 (app1 e app2 `Yes`); 3.4.5 #1; app1/webpack.config.js:2,28; app2/webpack.config.js:2,28 |
-| 2 | README.txt:3-5 | "Two apps: / - app1 (host) -> http://localhost:3001 / - app2 (remote) -> http://localhost:3002" | estrutura | corroborada | 3.4.3 (app1 e app2 `Yes`); 3.4.5 #1; 3.4.6 #1; 3.4.6 #2 |
-| 3 | README.txt:14 | "app1 will open at http://localhost:3001 and load remote component from app2" | composição | corroborada | 3.4.5 #1; 3.4.4 (`src-remote-import`, app1/src/App.jsx:2); app1/src/App.jsx:2,8-10 |
+| 1 | README.txt:1 | "Microfrontend Webpack Module Federation demo" | structure | corroborated | 3.4.3 (app1 and app2 `Yes`); 3.4.5 #1; app1/webpack.config.js:2,28; app2/webpack.config.js:2,28 |
+| 2 | README.txt:3-5 | "Two apps: / - app1 (host) -> http://localhost:3001 / - app2 (remote) -> http://localhost:3002" | structure | corroborated | 3.4.3 (app1 and app2 `Yes`); 3.4.5 #1; 3.4.6 #1; 3.4.6 #2 |
+| 3 | README.txt:14 | "app1 will open at http://localhost:3001 and load remote component from app2" | composition | corroborated | 3.4.5 #1; 3.4.4 (`src-remote-import`, app1/src/App.jsx:2); app1/src/App.jsx:2,8-10 |
 
-## Observações
+## Observations
 
-**1. README.txt:1.** O título diz que o projeto é uma demonstração de micro-frontends com Module Federation do webpack. A revisão estrutural registrou duas unidades frontend, `app1` e `app2`, e as duas configurações usam o `ModuleFederationPlugin` que vem no próprio pacote `webpack` (app1/webpack.config.js:2,28; app2/webpack.config.js:2,28), base da relação 3.4.5 #1. Por o plugin vir do `webpack`, e não de um pacote próprio, a revisão de dependências não tem linha de tecnologia; a tecnologia nomeada no título é a mesma que a revisão de composição registrou (`module-federation`), então não há divergência de nome.
+**1. README.txt:1.** Title says project demonstrates micro-frontends with webpack Module Federation. Structural review records two frontend units, `app1` and `app2`, and both configurations use `ModuleFederationPlugin` from `webpack` itself (app1/webpack.config.js:2,28; app2/webpack.config.js:2,28), basis of relationship 3.4.5 #1. Since plugin comes from `webpack` rather than own package, dependency review has no technology row; named technology matches composition review (`module-federation`), so no naming discrepancy.
 
-**2. README.txt:3-5.** As duas aplicações existem, cada uma com pasta, `package.json` e configuração webpack próprios (3.4.3), e os papéis conferem: `app1` declara o remote `app2` (app1/webpack.config.js:30-31) e `app2` se publica com `remoteEntry.js` e expõe `./RemoteApp` (app2/webpack.config.js:29-32), relação 3.4.5 #1. As portas 3001 e 3002 são as dos servidores de desenvolvimento (app1/webpack.config.js:8-9; app2/webpack.config.js:8-9; app1/package.json:6; app2/package.json:6), registradas em 3.4.6 #1 e #2; são detalhe de infraestrutura e não mudam a afirmação. Os títulos das páginas e o cabeçalho do host repetem os papéis (ver Leitura).
+**2. README.txt:3-5.** Both applications exist, each with own directory, `package.json` and webpack configuration (3.4.3), and roles match: `app1` declares remote `app2` (app1/webpack.config.js:30-31), and `app2` publishes through `remoteEntry.js` and exposes `./RemoteApp` (app2/webpack.config.js:29-32), relationship 3.4.5 #1. Ports 3001 and 3002 belong to development servers (app1/webpack.config.js:8-9; app2/webpack.config.js:8-9; app1/package.json:6; app2/package.json:6), recorded in 3.4.6 #1 and #2; infrastructure details without claim effect. Page titles and host heading repeat roles (see Repository overview).
 
-**3. README.txt:14.** O host carrega em runtime o componente exposto pelo remote: `React.lazy(() => import('app2/RemoteApp'))` (app1/src/App.jsx:2), renderizado dentro de `Suspense` (app1/src/App.jsx:8-10), resolvido pelo `remoteEntry.js` em `http://localhost:3002` (app1/webpack.config.js:31). É a relação ativa 3.4.5 #1 e a construção `src-remote-import` da revisão de código-fonte. O componente remoto é só um `div` com uma frase (app2/src/RemoteApp.jsx:3-5). A abertura em `http://localhost:3001` é a do `webpack serve --open` na porta 3001 (app1/package.json:6).
+**3. README.txt:14.** Host loads remote-exposed component at runtime: `React.lazy(() => import('app2/RemoteApp'))` (app1/src/App.jsx:2), rendered within `Suspense` (app1/src/App.jsx:8-10), resolved through `remoteEntry.js` at `http://localhost:3002` (app1/webpack.config.js:31). This is active relationship 3.4.5 #1 and source-code review construct `src-remote-import`. Remote component is only a `div` with one sentence (app2/src/RemoteApp.jsx:3-5). Opening `http://localhost:3001` comes from `webpack serve --open` on port 3001 (app1/package.json:6).
 
-## Resumo
+## Summary
 
-Afirmações: 3 (corroborada: 3, parcial: 0, contradita: 0, sem corroboração: 0). Temas: (estrutura: 2, composição: 1).
+Claims: 3 (corroborated: 3, partial: 0, contradicted: 0, uncorroborated: 0). Themes: (structure: 2, composition: 1).

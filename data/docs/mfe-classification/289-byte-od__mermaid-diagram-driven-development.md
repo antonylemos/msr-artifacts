@@ -20,76 +20,76 @@ annotation:
 
 # 289 — byte-od/mermaid-diagram-driven-development
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** ferramenta (CLI Node.js `mddd-cli` para “Mermaid Diagram Driven Development”, com skills e templates para assistentes de código; `package.json:2–15`; `readme.md:4`).
+- **Repository type:** tool (Node.js CLI `mddd-cli` for “Mermaid Diagram Driven Development”, with coding assistant skills and templates; `package.json:2–15`; `readme.md:4`).
 
-O README avisa que o projeto foi abandonado em favor de outro protocolo (`readme.md:1–2`). Micro-frontends e micro-apps aparecem só num diagrama Mermaid de exemplo no README (`readme.md:66–107`), que ilustra o que a ferramenta documenta, sobre uma plataforma fictícia de micro-apps. O nome do repositório não é usado como evidência.
+README warns project was abandoned in favor of another protocol (`readme.md:1–2`). Micro-frontends and micro-apps appear only in a README example Mermaid diagram (`readme.md:66–107`), illustrating what the tool documents, about a fictional micro-app platform. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:290` registra rank 289, ID 1247700661, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:290` records rank 289, ID 1247700661, status `cloned`, branch `main` and the front matter commit, which is HEAD of the clone and `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:290` registra as estratégias `terminology;broader` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:30585` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:30592` (`pass`), ambos com `terminology;broader`.
+`data/samples/mfe-sample-001/sample.csv:290` records strategies `terminology;broader` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:30585` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:30592` (`pass`), both with `terminology;broader`.
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos três hits em cada rodada, do endpoint `repositories` e com `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns the same three hits in each round, from endpoint `repositories` and with empty `path`:
 
-| Consulta (`q`) | Subconsulta | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Collection 001 / 002 (UTC) |
 |---|---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | `…#created:2026-05` | 2026-10-07T22:36:39.291Z / 2026-10-08T15:59:48.873Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | `…#created:2026-05` | 2026-10-07T23:05:10.076Z / 2026-10-08T16:09:15.173Z |
 | `broader-micro-apps`: `"micro apps" frontend in:name,description,readme` | `…#created:2026-Q2` | 2026-10-07T23:50:08.905Z / 2026-10-08T16:27:07.764Z |
 
-As subconsultas acrescentam `pushed:>=2025-04-01` e `created:2026-05-01..2026-05-31` (ou `2026-04-01..2026-06-30` para `broader-micro-apps`).
+Subqueries append `pushed:>=2025-04-01` and `created:2026-05-01..2026-05-31` (or `2026-04-01..2026-06-30` for `broader-micro-apps`).
 
-Metadados do hit (iguais nas duas rodadas): descrição “MDDD - Mermaid Diagram Driven Development”; tópicos `ia-development`, `mdd`, `mddd`, `mddd-development`, `sdd`, `spec-driven-development`; linguagem JavaScript; `fork: false`; tamanho 425; 21 estrelas; criação em 2026-05-23T16:59:49Z; push em 2026-07-26T00:24:25Z.
+Hit metadata (same in both rounds): description “MDDD - Mermaid Diagram Driven Development”; topics `ia-development`, `mdd`, `mddd`, `mddd-development`, `sdd`, `spec-driven-development`; language JavaScript; `fork: false`; size 425; 21 stars; created at 2026-05-23T16:59:49Z; pushed at 2026-07-26T00:24:25Z.
 
-Correspondências no README do SHA (`readme.md`):
-- **“micro frontend”:** `readme.md:100`, “Render Isolated UI Fragment / Micro-Frontend”, dentro do diagrama de exemplo; o hífen funciona como separador;
-- **“micro frontends”:** a forma plural não aparece literalmente;
-- **“micro apps” + frontend:** só a forma singular “Micro-App” (`readme.md:72`, `:80`, `:94`, `:97`, `:109`; “micro-app” em `:77`) e “Frontend” em `:94` (“Boot Micro-App Frontend/Backend Bundle”).
+Matches in SHA's README (`readme.md`):
+- **“micro frontend”:** `readme.md:100`, “Render Isolated UI Fragment / Micro-Frontend”, inside example diagram; hyphen acts as separator;
+- **“micro frontends”:** plural form does not appear literally;
+- **“micro apps” + frontend:** only singular form “Micro-App” (`readme.md:72`, `:80`, `:94`, `:97`, `:109`; “micro-app” at `:77`) and “Frontend” at `:94` (“Boot Micro-App Frontend/Backend Bundle”).
 
-Os hits do plural dependem do processamento textual da busca do GitHub, que não está registrado.
+Plural hits depend on GitHub search text processing, which is not recorded.
 
-A última alteração do README é o próprio SHA (`d294297`, 2026-07-25T21:24:25-03:00, isto é, 2026-07-26T00:24:25Z), igual ao `pushed_at` e anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+README's last change is the SHA itself (`d294297`, 2026-07-25T21:24:25-03:00, i.e., 2026-07-26T00:24:25Z), matching `pushed_at` and preceding October 2026 collection. The SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 38 entradas, sendo 37 arquivos regulares `100644` e 1 executável `100755` (`bin/cli.js`); zero symlinks e zero gitlinks. CLI em `bin/` e `src/` (comandos `init`, `listSpecs`, `status`, `validator`; serviços de arquivos e specs), testes em `tests/`, skills e templates em `.agents/`, `AGENTS.md`, `.clinerules`. Não há HTML, bundler nem aplicação frontend. | contrária |
-| Configuração | `package.json:2–9`: pacote `mddd-cli` com binário `md`; `:40–44`: dependências `@mermaid-js/mermaid-cli`, `commander`, `picocolors`. `bin/cli.js:1–20`: CLI Commander que usa os serviços de `src/`. | contrária |
-| Documentação (exemplo) | `readme.md:62–107`: “Architectural Diagram Example”, um `sequenceDiagram` de uma plataforma fictícia com “Micro-App Registry” (`:72`) e “Render Isolated UI Fragment / Micro-Frontend” (`:100`); `readme.md:109`: tabela de decisão de exemplo. É conteúdo ilustrativo da ferramenta de diagramas. | fraca |
-| Tecnologia / Configuração / Composição (busca) | `git grep -i` no SHA, exceto o README, por `micro.?front`, `micro.?app`, `federation`, `single.?spa`, `remoteEntry`, `import.?map`, `customElements` e `<iframe`: nenhuma ocorrência. | ausente |
-| Código-fonte (fronteiras) | Não há unidades frontend; os imports relativos de `bin/cli.js:5–11` para `src/` são da própria CLI. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 38 entries, comprising 37 regular `100644` files and 1 executable `100755` (`bin/cli.js`); zero symlinks and zero gitlinks. CLI in `bin/` and `src/` (commands `init`, `listSpecs`, `status`, `validator`; file and spec services), tests in `tests/`, skills and templates in `.agents/`, `AGENTS.md`, `.clinerules`. No HTML, bundler or frontend application. | contrary |
+| Configuration | `package.json:2–9`: package `mddd-cli` with binary `md`; `:40–44`: dependencies `@mermaid-js/mermaid-cli`, `commander`, `picocolors`. `bin/cli.js:1–20`: Commander CLI using `src/` services. | contrary |
+| Documentation (example) | `readme.md:62–107`: “Architectural Diagram Example”, a fictional platform `sequenceDiagram` with “Micro-App Registry” (`:72`) and “Render Isolated UI Fragment / Micro-Frontend” (`:100`); `readme.md:109`: example decision table. Illustrative diagramming tool content. | weak |
+| Technology / Configuration / Composition (search) | `git grep -i` at the SHA, except README, for `micro.?front`, `micro.?app`, `federation`, `single.?spa`, `remoteEntry`, `import.?map`, `customElements` and `<iframe`: no occurrences. | absent |
+| Source code (boundaries) | No frontend units; relative imports from `bin/cli.js:5–11` to `src/` belong to the CLI itself. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso e parcial (`blob:none`). São 121 commits (121 em todos os refs), 4 merges, todos com o e-mail `reisfilho1116@gmail.com`:
-- 115 como `JulioCRFilho`, com committer `JulioCRFilho`;
-- 5 como `Julio Cesar` e 1 como `TheTod`, com committer `GitHub`.
+Non-shallow, partial clone (`blob:none`). 121 commits (121 across all refs), 4 merges, all with email `reisfilho1116@gmail.com`:
+- 115 as `JulioCRFilho`, with committer `JulioCRFilho`;
+- 5 as `Julio Cesar` and 1 as `TheTod`, with committer `GitHub`.
 
-Os registros vão de 2026-05-23 (`15edb14`, “Initial”) ao SHA (2026-07-25, “Update readme.md”). O `package.json` aponta o repositório em `JulioCRFilho/mermaid-diagram-driven-development` (`package.json:32–39`), o que sugere transferência ou espelhamento para a organização `byte-od` (não verificado). `git rev-list --objects $SHA --missing=print` lista 314 objetos ausentes, nenhum na árvore do SHA. Nenhum blob histórico foi lido.
+Records span 2026-05-23 (`15edb14`, “Initial”) to SHA (2026-07-25, “Update readme.md”). `package.json` points to repository `JulioCRFilho/mermaid-diagram-driven-development` (`package.json:32–39`), suggesting transfer or mirroring to organization `byte-od` (unverified). `git rev-list --objects $SHA --missing=print` lists 314 missing objects, none in SHA tree. No historical blob was read.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend: o repositório é uma CLI Node.js (`package.json:2–9`; `bin/cli.js:1–20`). |
-| Q2 | No | Não há unidades. |
-| Q3 | No | Não há host, shell nem root config. |
-| Q4 | No | Nenhum mecanismo de composição; “Micro-Frontend” e “Micro-App” só aparecem num diagrama de exemplo (`readme.md:66–107`). |
-| Q5 | No | Q1–Q4 convergem. |
+| Q1 | No | No frontend unit: repository is a Node.js CLI (`package.json:2–9`; `bin/cli.js:1–20`). |
+| Q2 | No | No units. |
+| Q3 | No | No host, shell or root config. |
+| Q4 | No | No composition mechanism; “Micro-Frontend” and “Micro-App” appear only in an example diagram (`readme.md:66–107`). |
+| Q5 | No | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”.
-- Corresponde a “repositories mentioning micro-frontends without implementing them”: o termo aparece num diagrama ilustrativo de uma ferramenta de documentação.
-- Próximo dos casos de conteúdo e gerador (023/075/081/094/105) e de 252 (rascunho, skills para assistentes de código): ferramenta e documentação, não aplicação.
-- `repo_type: library` (CLI distribuída no npm), `frontend_units: 0`, `unit_organization: none`, arrays de tecnologia vazios.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”.
+- Matches “repositories mentioning micro-frontends without implementing them”: term appears in a documentation tool's illustrative diagram.
+- Close to content and generator cases (023/075/081/094/105) and 252 (draft, coding assistant skills): tool and documentation, rather than an application.
+- `repo_type: library` (npm-distributed CLI), `frontend_units: 0`, `unit_organization: none`, empty technology arrays.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** diagramas Mermaid de exemplo em READMEs (“Micro-App Registry”, “Micro-Frontend”) geram hits terminológicos e da consulta ampla `"micro apps" frontend` sem relação com a arquitetura do repositório.
-- **Protocolo (busca):** os hits plurais (`"micro frontends"` e `"micro apps"`) não têm grafia literal no README. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ1 (misleading signals):** example Mermaid diagrams in READMEs (“Micro-App Registry”, “Micro-Frontend”) generate terminology and broad query `"micro apps" frontend` hits unrelated to repository architecture.
+- **Protocol (search):** plural hits (`"micro frontends"` and `"micro apps"`) have no literal README spelling. Eligibility changes from `unknown` (001) to `pass` (002).

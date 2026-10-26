@@ -19,177 +19,177 @@ annotation:
 
 # 368 — Ba5ik7/seed-mfe-remote
 
-## Leitura do repositório
+## Repository overview
 
-A dependência de Module Federation (#1) se desdobra na exposição de `./RemoteWidget` pelo remote (#2), na declaração do remote pelo host (#3) e na integração das configurações aos targets Angular (#4–#7). Os diretórios `demo` e `seed-mfe-remote` são duas unidades frontend com entradas e builds próprios (#17–#18, #20–#21), sob uma raiz de coordenação que não é outra unidade (#16).
+Module Federation dependency (#1) unfolds into remote `./RemoteWidget` exposure (#2), host remote declaration (#3)/Angular-target configuration integration (#4–#7). Directories `demo`/`seed-mfe-remote` two frontend units with own entries/builds (#17–#18, #20–#21), under coordination root not another unit (#16).
 
-A ligação efetiva usa `loadRemoteModule` com URL explícita: o host carrega o componente (#11) e o monta no `ViewContainerRef` (#14), além de carregá-lo pela rota `remote` (#13, #15). Esses dois caminhos constituem uma única relação host → remote ativa (#19). Os imports do mecanismo (#10, #12) e os bootstraps assíncronos locais (#8–#9) não estabelecem sozinhos essa arquitetura.
+Effective link uses `loadRemoteModule` with explicit URL: host loads component (#11)/mounts in `ViewContainerRef` (#14), also loading through `remote` route (#13, #15). Two paths form single active host → remote relationship (#19). Mechanism imports (#10, #12)/local asynchronous bootstraps (#8–#9) do not alone establish architecture.
 
-A entrada nominal `remotes.seedMfeRemote` (#3) não é consultada pelas chamadas por URL. O histórico explica que ambas coexistem desde a introdução dos arquivos (#22), sem sustentar hipótese de abandono. Os builds separados não demonstram deploy nem versionamento independente (#20–#21). A 3.4.7 registra zero afirmações arquiteturais: o README padrão não acrescenta observações documentais. Não há indeterminação arquitetural nas revisões de entrada.
+Nominal entry `remotes.seedMfeRemote` (#3) not consulted by URL calls. History explains coexistence since file introduction (#22), supporting no abandonment hypothesis. Separate builds demonstrate no independent deployment/versioning (#20–#21). Section 3.4.7 records zero architectural claims: standard README adds no documentation observations. No architectural indeterminacy in input reviews.
 
-Na dimensão de configuração, cada target build/serve ocupa um bloco (#4–#7), incluindo suas variantes. Os arquivos `webpack.prod.config.js:1`, citados nas tabelas, só reexportam outra configuração e não declaram elemento de composição próprio; por isso não acrescentam observações. Portas e publicHost apenas corroboram a resolução e permanecem nos artefatos das observações correspondentes.
+In configuration dimension each build/serve target one block (#4–#7), including variants. Table-cited `webpack.prod.config.js:1` files only reexport another configuration without own composition element, so no extra observations. Ports/publicHost only corroborate resolution/remain in corresponding observation artifacts.
 
-## Observações
+## Observations
 
 ### 1. package.json:14
 
-**Observação:** O manifesto raiz declara `@angular-architects/module-federation` na versão `^19.0.3`; a revisão de dependências registra Configurada `Yes`.
+**Observation:** Root manifest declares `@angular-architects/module-federation` version `^19.0.3`; dependency review records Configured `Yes`.
 
-**Interpretação:** A declaração sinaliza Module Federation; configuração e uso precisam das observações próprias.
+**Interpretation:** Declaration signals Module Federation; configuration/usage require own observations.
 
 ### 2. projects/seed-mfe-remote/webpack.config.js:1-15
 
-**Observação:** A configuração chama `withModuleFederationPlugin`, define `name: seedMfeRemote`, expõe `./RemoteWidget` pelo caminho do componente e compartilha as dependências com `shareAll`, singleton e strictVersion.
+**Observation:** Configuration calls `withModuleFederationPlugin`, defines `name: seedMfeRemote`, exposes `./RemoteWidget` through component path/shares dependencies with `shareAll`, singleton/strictVersion.
 
-**Interpretação:** Configura o mecanismo e a interface exposta de uma unidade, sem declarar consumidor.
+**Interpretation:** Configures unit mechanism/exposed interface without declaring consumer.
 
 ### 3. projects/demo/webpack.config.js:1-13
 
-**Observação:** A configuração usa `withModuleFederationPlugin`, declara `remotes.seedMfeRemote` em `http://localhost:4202/remoteEntry.js` e compartilha dependências com `shareAll`, singleton e strictVersion.
+**Observation:** Configuration uses `withModuleFederationPlugin`, declares `remotes.seedMfeRemote` at `http://localhost:4202/remoteEntry.js`, shares dependencies with `shareAll`, singleton/strictVersion.
 
-**Interpretação:** Declara uma ligação do host a outro frontend por Module Federation. A relação nominal está configurada, embora as chamadas do código usem diretamente a URL.
+**Interpretation:** Declares host link to another frontend through Module Federation. Nominal relationship configured although code calls use URL directly.
 
 ### 4. angular.json:17-66
 
-**Observação:** O target `build` de `seed-mfe-remote` usa `ngx-build-plus:browser` e `extraWebpackConfig: projects/seed-mfe-remote/webpack.config.js`; production seleciona `projects/seed-mfe-remote/webpack.prod.config.js`.
+**Observation:** Target `build` of `seed-mfe-remote` uses `ngx-build-plus:browser` and `extraWebpackConfig: projects/seed-mfe-remote/webpack.config.js`; production selects `projects/seed-mfe-remote/webpack.prod.config.js`.
 
-**Interpretação:** Integra a configuração de federação ao build da unidade. O target não declara outra unidade como destino.
+**Interpretation:** Integrates federation configuration into unit build. Target names no other target unit.
 
 ### 5. angular.json:67-84
 
-**Observação:** O target `serve` de `seed-mfe-remote` usa `ngx-build-plus:dev-server` e `extraWebpackConfig: projects/seed-mfe-remote/webpack.config.js`; production seleciona `projects/seed-mfe-remote/webpack.prod.config.js`.
+**Observation:** Target `serve` of `seed-mfe-remote` uses `ngx-build-plus:dev-server` and `extraWebpackConfig: projects/seed-mfe-remote/webpack.config.js`; production selects `projects/seed-mfe-remote/webpack.prod.config.js`.
 
-**Interpretação:** Integra a configuração de federação ao servidor de desenvolvimento da unidade. O target não declara outra unidade como destino.
+**Interpretation:** Integrates federation configuration into unit development server. Target names no other target unit.
 
 ### 6. angular.json:122-171
 
-**Observação:** O target `build` de `demo` usa `ngx-build-plus:browser` e `extraWebpackConfig: projects/demo/webpack.config.js`; production seleciona `projects/demo/webpack.prod.config.js`.
+**Observation:** Target `build` of `demo` uses `ngx-build-plus:browser` and `extraWebpackConfig: projects/demo/webpack.config.js`; production selects `projects/demo/webpack.prod.config.js`.
 
-**Interpretação:** Integra a configuração de federação ao build da unidade. O target não declara outra unidade como destino.
+**Interpretation:** Integrates federation configuration into unit build. Target names no other target unit.
 
 ### 7. angular.json:172-189
 
-**Observação:** O target `serve` de `demo` usa `ngx-build-plus:dev-server` e `extraWebpackConfig: projects/demo/webpack.config.js`; production seleciona `projects/demo/webpack.prod.config.js`.
+**Observation:** Target `serve` of `demo` uses `ngx-build-plus:dev-server` and `extraWebpackConfig: projects/demo/webpack.config.js`; production selects `projects/demo/webpack.prod.config.js`.
 
-**Interpretação:** Integra a configuração de federação ao servidor de desenvolvimento da unidade. O target não declara outra unidade como destino.
+**Interpretation:** Integrates federation configuration into unit development server. Target names no other target unit.
 
 ### 8. projects/demo/src/main.ts:1-2; projects/demo/src/bootstrap.ts:5-6
 
-**Observação:** O entry de `demo` executa `import('./bootstrap')`, e o bootstrap inicia a aplicação Angular local.
+**Observation:** Entry of `demo` executes `import('./bootstrap')`; bootstrap starts local Angular application.
 
-**Interpretação:** É bootstrap assíncrono interno à unidade; sozinho não mostra tecnologia de MFE nem composição entre unidades. A 3.4.4 registra Composição `No`.
+**Interpretation:** Internal asynchronous bootstrap; alone shows neither MFE technology nor inter-unit composition. Section 3.4.4 records Composition `No`.
 
 ### 9. projects/seed-mfe-remote/src/main.ts:1-2; projects/seed-mfe-remote/src/bootstrap.ts:5-6
 
-**Observação:** O entry de `seed-mfe-remote` executa `import('./bootstrap')`, e o bootstrap inicia a aplicação Angular local.
+**Observation:** Entry of `seed-mfe-remote` executes `import('./bootstrap')`; bootstrap starts local Angular application.
 
-**Interpretação:** É bootstrap assíncrono interno à unidade; sozinho não mostra tecnologia de MFE nem composição entre unidades. A 3.4.4 registra Composição `No`.
+**Interpretation:** Internal asynchronous bootstrap; alone shows neither MFE technology nor inter-unit composition. Section 3.4.4 records Composition `No`.
 
 ### 10. projects/demo/src/app/app.component.ts:1
 
-**Observação:** O componente raiz importa `loadRemoteModule` de `@angular-architects/module-federation`.
+**Observation:** Root component imports `loadRemoteModule` from `@angular-architects/module-federation`.
 
-**Interpretação:** Disponibiliza o mecanismo de carregamento no host, sem identificar destino nesta linha.
+**Interpretation:** Provides host loading mechanism without target identification on line.
 
 ### 11. projects/demo/src/app/app.component.ts:24-36; projects/seed-mfe-remote/webpack.config.js:5-8; angular.json:80-81; projects/demo/src/bootstrap.ts:5
 
-**Observação:** Em `ngAfterViewInit`, o componente raiz do demo chama `loadRemoteModule` com `type: module`, `remoteEntry: http://localhost:4202/remoteEntry.js` e `exposedModule: ./RemoteWidget`. O remote expõe esse módulo e tem dev-server no endereço correspondente.
+**Observation:** In `ngAfterViewInit`, demo root calls `loadRemoteModule` with `type: module`, `remoteEntry: http://localhost:4202/remoteEntry.js`, `exposedModule: ./RemoteWidget`. Remote exposes module/has dev-server at matching address.
 
-**Interpretação:** O host resolve uma unidade distinta por URL e módulo exposto, ligando demo a seed-mfe-remote em runtime.
+**Interpretation:** Host resolves distinct unit through URL/exposed module, linking demo to seed-mfe-remote at runtime.
 
 ### 12. projects/demo/src/app/app.routes.ts:2
 
-**Observação:** O arquivo de rotas importa `loadRemoteModule` de `@angular-architects/module-federation`.
+**Observation:** Routes file imports `loadRemoteModule` from `@angular-architects/module-federation`.
 
-**Interpretação:** Prepara o mecanismo no roteamento, sem nomear uma unidade de destino nesta linha.
+**Interpretation:** Prepares routing mechanism without naming target unit on line.
 
 ### 13. projects/demo/src/app/app.routes.ts:5-13; projects/demo/src/app/app.config.ts:7; projects/demo/src/bootstrap.ts:5; projects/seed-mfe-remote/webpack.config.js:5-8; angular.json:80-81
 
-**Observação:** A rota `remote` usa `loadComponent` para carregar `./RemoteWidget` pela URL `http://localhost:4202/remoteEntry.js` e devolver `RemoteWidgetComponent`; `provideRouter(routes)` registra as rotas no bootstrap do host. O módulo e o endereço correspondem ao remote.
+**Observation:** Route `remote` uses `loadComponent` to load `./RemoteWidget` through `http://localhost:4202/remoteEntry.js`, return `RemoteWidgetComponent`; `provideRouter(routes)` registers host-bootstrap routes. Module/address match remote.
 
-**Interpretação:** A rota conecta um caminho do host ao componente da outra unidade por Module Federation.
+**Interpretation:** Route connects host path to other-unit component through Module Federation.
 
 ### 14. projects/demo/src/app/app.component.ts:12; projects/demo/src/app/app.component.ts:21-22; projects/demo/src/app/app.component.ts:36
 
-**Observação:** O template contém `ng-container #mfeHost`, obtido como `ViewContainerRef`; `createComponent(remoteComponent.RemoteWidgetComponent)` monta nele o componente retornado pelo carregamento.
+**Observation:** Template contains `ng-container #mfeHost`, obtained as `ViewContainerRef`; `createComponent(remoteComponent.RemoteWidgetComponent)` mounts load-returned component there.
 
-**Interpretação:** Materializa a montagem do componente remoto na UI do host; a chamada de montagem, isoladamente, recebe o resultado do carregamento e não resolve o destino.
+**Interpretation:** Materializes remote component mounting in host UI; isolated mount call receives loading result without resolving target.
 
 ### 15. projects/demo/src/app/app.routes.ts:4-14; projects/demo/src/app/app.config.ts:7; projects/demo/src/app/app.component.ts:15; projects/seed-mfe-remote/webpack.config.js:7-8; angular.json:80-81
 
-**Observação:** A tabela `routes` associa o caminho `remote` ao carregamento de `./RemoteWidget` pela URL do remote. As rotas são registradas por `provideRouter(routes)` e o host contém `router-outlet`.
+**Observation:** Table `routes` associates `remote` path with `./RemoteWidget` loading through remote URL. Routes registered by `provideRouter(routes)`, host contains `router-outlet`.
 
-**Interpretação:** A tabela estabelece a relação entre o caminho navegável do host e o componente exposto por seed-mfe-remote.
+**Interpretation:** Table establishes host navigable-path relationship with seed-mfe-remote exposed component.
 
 ### 16. .; package.json:1-41; angular.json:5-6; angular.json:17-20; angular.json:111; angular.json:122-125
 
-**Observação:** A raiz tem o manifesto único e o registro dos dois projetos; os targets pertencem aos diretórios em `projects/`. A 3.4.3 registra Unidade frontend `No` para a raiz.
+**Observation:** Root has single manifest/two-project registry; targets belong to `projects/` directories. Section 3.4.3 records Frontend unit `No` for root.
 
-**Interpretação:** A raiz coordena o workspace e não constitui uma terceira unidade frontend.
+**Interpretation:** Root coordinates workspace rather than third frontend unit.
 
 ### 17. projects/demo/; angular.json:122-125; angular.json:126; angular.json:143-144; angular.json:162; projects/demo/src/main.ts:1-2; projects/demo/src/bootstrap.ts:5-6
 
-**Observação:** O diretório `demo` tem entrada e bootstrap próprios, index e target `build` com saída `dist/demo` e configuração webpack própria. Não tem manifesto local. A 3.4.3 registra Unidade frontend `Yes`.
+**Observation:** Directory `demo` has own entry/bootstrap, index/target `build` with output `dist/demo` and own webpack configuration. No local manifest. Section 3.4.3 records Frontend unit `Yes`.
 
-**Interpretação:** Confirma o limite de uma unidade frontend host, mesmo com dependências declaradas no manifesto compartilhado.
+**Interpretation:** Confirms host frontend unit boundary despite shared-manifest dependencies.
 
 ### 18. projects/seed-mfe-remote/; angular.json:17-20; angular.json:21; angular.json:38-39; angular.json:57; projects/seed-mfe-remote/src/main.ts:1-2; projects/seed-mfe-remote/src/bootstrap.ts:5-6
 
-**Observação:** O diretório `seed-mfe-remote` tem entrada e bootstrap próprios, index e target `build` com saída `dist/seed-mfe-remote` e configuração webpack própria. Não tem manifesto local. A 3.4.3 registra Unidade frontend `Yes`.
+**Observation:** Directory `seed-mfe-remote` has own entry/bootstrap, index/target `build` with output `dist/seed-mfe-remote` and own webpack configuration. No local manifest. Section 3.4.3 records Frontend unit `Yes`.
 
-**Interpretação:** Confirma o limite de uma unidade frontend remote, mesmo com dependências declaradas no manifesto compartilhado.
+**Interpretation:** Confirms remote frontend unit boundary despite shared-manifest dependencies.
 
 ### 19. projects/demo/src/app/app.component.ts:26-36; projects/demo/src/app/app.routes.ts:4-14; projects/demo/webpack.config.js:5-7; projects/seed-mfe-remote/webpack.config.js:5-8; angular.json:80-81
 
-**Observação:** A relação #1 da 3.4.5 liga `projects/demo` a `projects/seed-mfe-remote`, por Module Federation, com No snapshot `Yes` e Ativa `Yes`. As chamadas resolvem `./RemoteWidget` pelo remoteEntry; a declaração nominal `seedMfeRemote` coincide com o nome do remote, mas não é consultada por elas.
+**Observation:** Relationship #1 in 3.4.5 links `projects/demo` to `projects/seed-mfe-remote` through Module Federation, In snapshot `Yes`, Active `Yes`. Calls resolve `./RemoteWidget` through remoteEntry; nominal declaration `seedMfeRemote` matches remote name but unconsulted by calls.
 
-**Interpretação:** Os dois caminhos de consumo pertencem à mesma relação host → remote ativa no snapshot. Atividade descreve a cadeia estática registrada, sem comprovar execução ou deploy.
+**Interpretation:** Two consumption paths belong to same active snapshot host → remote relationship. Activity describes recorded static chain without proven execution/deployment.
 
 ### 20. angular.json:122-125; angular.json:143-144; angular.json:162; projects/demo/webpack.prod.config.js:1; angular.json:185-186; package.json:3; package.json:12
 
-**Observação:** A aplicação `demo` tem target próprio, saída `dist/demo` e configuração production que reexporta a webpack de desenvolvimento. A 3.4.6 registra Build `separado`, Deploy `não observado` e Versionamento `No`; o endereço registrado é de dev-server.
+**Observation:** Application `demo` has own target/output `dist/demo` and production configuration reexporting development webpack. Section 3.4.6 records Build `separate`, Deployment `not observed`, Versioning `No`; recorded address dev-server.
 
-**Interpretação:** O build confirma uma fronteira por aplicação. Os artefatos não estabelecem publicação nem versionamento independente; servidor de desenvolvimento não comprova deploy.
+**Interpretation:** Build confirms per-application boundary. Artifacts establish no independent publication/versioning; development server proves no deployment.
 
 ### 21. angular.json:17-20; angular.json:38-39; angular.json:57; projects/seed-mfe-remote/webpack.prod.config.js:1; angular.json:80-81; package.json:3; package.json:12
 
-**Observação:** A aplicação `seed-mfe-remote` tem target próprio, saída `dist/seed-mfe-remote` e configuração production que reexporta a webpack de desenvolvimento. A 3.4.6 registra Build `separado`, Deploy `não observado` e Versionamento `No`; o endereço registrado é de dev-server.
+**Observation:** Application `seed-mfe-remote` has own target/output `dist/seed-mfe-remote` and production configuration reexporting development webpack. Section 3.4.6 records Build `separate`, Deployment `not observed`, Versioning `No`; recorded address dev-server.
 
-**Interpretação:** O build confirma uma fronteira por aplicação. Os artefatos não estabelecem publicação nem versionamento independente; servidor de desenvolvimento não comprova deploy.
+**Interpretation:** Build confirms per-application boundary. Artifacts establish no independent publication/versioning; development server proves no deployment.
 
 ### 22. b95ce7d 2025-04-19 (angular.json; package.json; README.md); 3565dd8 2025-04-20 (projects/demo/webpack.config.js; projects/demo/src/app/app.component.ts; projects/demo/src/app/app.routes.ts)
 
-**Observação:** A revisão histórica registra dois commits até o snapshot. Os três arquivos do demo foram adicionados em `3565dd8`, já com `remotes.seedMfeRemote` e as duas chamadas por URL explícita; não há versões anteriores desses caminhos no histórico observado. O ponto #1 está `esclarecido`.
+**Observation:** History review records two commits through snapshot. Three demo files added in `3565dd8` already with `remotes.seedMfeRemote`/two explicit-URL calls; no earlier path versions in observed history. Point #1 `clarified`.
 
-**Interpretação:** A coexistência é observável desde a introdução dos arquivos. Não sustenta uma transição de consumo pelo nome para consumo por URL, nem permite inferir abandono ou intenção. Explica a declaração sem uso pelas chamadas no snapshot.
+**Interpretation:** Coexistence observable since file introduction. Supports neither name-to-URL consumption transition nor abandonment/intent inference. Explains declaration unused by snapshot calls.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.2 (package.json:14) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #2; declara #3; declara #10; declara #11; declara #12; declara #13 |
-| 2 | 3.4.2 (Evidência); 3.4.3 (projects/seed-mfe-remote, Marcadores); 3.4.4 (src-load-remote, app.component.ts:26, Observação); 3.4.5 #1 (Configuração) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #18; configura #19 |
-| 3 | 3.4.2 (Evidência); 3.4.3 (projects/demo, Marcadores); 3.4.5 #1 (Configuração) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #17; configura #19 |
-| 4 | 3.4.2 (Evidência, angular.json:18, :39, :57); 3.4.3 (., Marcadores); 3.4.3 (projects/seed-mfe-remote, Build); 3.4.6 #2 (Artefatos) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #18; configura #21 |
-| 5 | 3.4.2 (Evidência, angular.json:68, :82, :72); 3.4.3 (., Marcadores); 3.4.3 (projects/seed-mfe-remote, Build) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #18; configura #21 |
-| 6 | 3.4.2 (Evidência, angular.json:123, :144, :162); 3.4.3 (., Marcadores); 3.4.3 (projects/demo, Build); 3.4.6 #1 (Artefatos) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #17; configura #20 |
-| 7 | 3.4.2 (Evidência, angular.json:173, :187, :177); 3.4.3 (., Marcadores); 3.4.3 (projects/demo, Build) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #17; configura #20 |
-| 8 | 3.4.4 (src-async-bootstrap, projects/demo/src/main.ts:1) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 9 | 3.4.4 (src-async-bootstrap, projects/seed-mfe-remote/src/main.ts:1) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 10 | 3.4.4 (src-load-remote, app.component.ts:1) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #19 |
-| 11 | 3.4.4 (src-load-remote, app.component.ts:26) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #19 |
-| 12 | 3.4.4 (src-load-remote, app.routes.ts:2) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #19 |
-| 13 | 3.4.4 (src-load-remote, app.routes.ts:8) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #19 |
-| 14 | 3.4.4 (manual, app.component.ts:36) | 3 código | código-fonte | module-federation | arquitetural | moderada | implementa #19 |
-| 15 | 3.4.4 (manual, app.routes.ts:4) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #19 |
-| 16 | 3.4.3 (.) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 17 | 3.4.3 (projects/demo) | 4 estrutura | diretório | module-federation | arquitetural | moderada | — |
-| 18 | 3.4.3 (projects/seed-mfe-remote) | 4 estrutura | diretório | module-federation | arquitetural | moderada | — |
-| 19 | 3.4.5 #1 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #17; liga #18 |
-| 20 | 3.4.6 #1 | 6 build-deploy | configuração | module-federation | arquitetural | moderada | publica #17 |
-| 21 | 3.4.6 #2 | 6 build-deploy | configuração | module-federation | arquitetural | moderada | publica #18 |
-| 22 | 3.4.8 #1 | 8 histórico | histórico | module-federation | arquitetural | fraca | explica #3; explica #11; explica #13; explica #19 |
+| 1 | 3.4.2 (package.json:14) | 1 technology | manifest | module-federation | technological | weak | declares #2; declares #3; declares #10; declares #11; declares #12; declares #13 |
+| 2 | 3.4.2 (Evidence); 3.4.3 (projects/seed-mfe-remote, Markers); 3.4.4 (src-load-remote, app.component.ts:26, Observation); 3.4.5 #1 (Configuration) | 2 configuration | configuration | module-federation | technological | moderate | configures #18; configures #19 |
+| 3 | 3.4.2 (Evidence); 3.4.3 (projects/demo, Markers); 3.4.5 #1 (Configuration) | 2 configuration | configuration | module-federation | architectural | strong | configures #17; configures #19 |
+| 4 | 3.4.2 (Evidence, angular.json:18, :39, :57); 3.4.3 (., Markers); 3.4.3 (projects/seed-mfe-remote, Build); 3.4.6 #2 (Artifacts) | 2 configuration | configuration | module-federation | technological | moderate | configures #18; configures #21 |
+| 5 | 3.4.2 (Evidence, angular.json:68, :82, :72); 3.4.3 (., Markers); 3.4.3 (projects/seed-mfe-remote, Build) | 2 configuration | configuration | module-federation | technological | moderate | configures #18; configures #21 |
+| 6 | 3.4.2 (Evidence, angular.json:123, :144, :162); 3.4.3 (., Markers); 3.4.3 (projects/demo, Build); 3.4.6 #1 (Artifacts) | 2 configuration | configuration | module-federation | technological | moderate | configures #17; configures #20 |
+| 7 | 3.4.2 (Evidence, angular.json:173, :187, :177); 3.4.3 (., Markers); 3.4.3 (projects/demo, Build) | 2 configuration | configuration | module-federation | technological | moderate | configures #17; configures #20 |
+| 8 | 3.4.4 (src-async-bootstrap, projects/demo/src/main.ts:1) | 3 code | source code | — | technological | weak | — |
+| 9 | 3.4.4 (src-async-bootstrap, projects/seed-mfe-remote/src/main.ts:1) | 3 code | source code | — | technological | weak | — |
+| 10 | 3.4.4 (src-load-remote, app.component.ts:1) | 3 code | source code | module-federation | technological | moderate | implements #19 |
+| 11 | 3.4.4 (src-load-remote, app.component.ts:26) | 3 code | source code | module-federation | architectural | strong | implements #19 |
+| 12 | 3.4.4 (src-load-remote, app.routes.ts:2) | 3 code | source code | module-federation | technological | moderate | implements #19 |
+| 13 | 3.4.4 (src-load-remote, app.routes.ts:8) | 3 code | source code | module-federation | architectural | strong | implements #19 |
+| 14 | 3.4.4 (manual, app.component.ts:36) | 3 code | source code | module-federation | architectural | moderate | implements #19 |
+| 15 | 3.4.4 (manual, app.routes.ts:4) | 3 code | source code | module-federation | architectural | strong | implements #19 |
+| 16 | 3.4.3 (.) | 4 structure | directory | — | context | weak | — |
+| 17 | 3.4.3 (projects/demo) | 4 structure | directory | module-federation | architectural | moderate | — |
+| 18 | 3.4.3 (projects/seed-mfe-remote) | 4 structure | directory | module-federation | architectural | moderate | — |
+| 19 | 3.4.5 #1 | 5 composition | source code | module-federation | architectural | strong | links #17; links #18 |
+| 20 | 3.4.6 #1 | 6 build-deploy | configuration | module-federation | architectural | moderate | publishes #17 |
+| 21 | 3.4.6 #2 | 6 build-deploy | configuration | module-federation | architectural | moderate | publishes #18 |
+| 22 | 3.4.8 #1 | 8 history | history | module-federation | architectural | weak | explains #3; explains #11; explains #13; explains #19 |
 
-## Resumo
+## Summary
 
-Observações: 22. Dimensões (tecnologia: 1, configuração: 6, código: 8, estrutura: 3, composição: 1, build-deploy: 2, documentação: 0, histórico: 1). Força (forte: 5, moderada: 12, fraca: 5, ambígua: 0). Evidência (tecnológica: 10, arquitetural: 11, contexto: 1).
+Observations: 22. Dimensions (technology: 1, configuration: 6, code: 8, structure: 3, composition: 1, build-deploy: 2, documentation: 0, history: 1). Strength (strong: 5, moderate: 12, weak: 5, ambiguous: 0). Evidence (technological: 10, architectural: 11, context: 1).

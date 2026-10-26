@@ -20,28 +20,29 @@ annotation:
 
 # 176 — Lnx117/single_spa_main
 
-## Leitura do repositório
+## Repository overview
 
-O repositório contém só o root config de uma aplicação single-spa. Ele é a única unidade do snapshot (`.`). Os dois microfrontends que compõe, `menu` e `base`, ficam fora dele. O projeto é um Vite com `vite-plugin-single-spa` em modo `type: 'root'` e `cssStrategy: 'multiMife'` (vite.config.ts:12-15), servido na porta 9080 (vite.config.ts:18). A página `index.html` tem dois contêineres, `single-spa-application:menu` dentro do `nav` e `single-spa-application:base` dentro do `main` (index.html:12, 17), e carrega `src/main.ts` como entrada (index.html:20). Esse arquivo registra as duas aplicações com `registerApplication`, ambas ativas em `/` e portanto montadas juntas em todas as rotas (src/main.ts:13-17, 21-25), e chama `start()` (src/main.ts:29).
+The repository contains only a single-spa application's root config. It is the snapshot's only unit (`.`). Both microfrontends it composes, `menu` and `base`, reside outside it. The project uses Vite with `vite-plugin-single-spa` in `type: 'root'` and `cssStrategy: 'multiMife'` mode (vite.config.ts:12-15), served on port 9080 (vite.config.ts:18). The `index.html` page has two containers, `single-spa-application:menu` inside `nav` and `single-spa-application:base` inside `main` (index.html:12, 17), and loads `src/main.ts` as the entry point (index.html:20). That file registers both applications with `registerApplication`, both active at `/` and therefore mounted together on all routes (src/main.ts:13-17, 21-25), and calls `start()` (src/main.ts:29).
 
-Cada aplicação é carregada por `import()` de uma URL lida de `import.meta.env` (src/main.ts:7, 15, 23). No snapshot, os valores só aparecem em `.envtest`: `VITE_MENU=http://localhost:9083/src/index.ts` e `VITE_BASE=http://localhost:9081/src/index.ts` (.envtest:8, 11). Os comentários desse arquivo explicam que cada microfrontend é um dev server Vite próprio em sua porta e que o `import()` traz os lifecycles `bootstrap`, `mount` e `unmount` (.envtest:2-4). Também citam, como passo futuro, builds publicados num CDN (.envtest:5). Não há import map, Module Federation, custom element, iframe nem troca de mensagens. A ligação com as unidades é só por URL.
+Each application is loaded through `import()` of a URL read from `import.meta.env` (src/main.ts:7, 15, 23). In the snapshot, values appear only in `.envtest`: `VITE_MENU=http://localhost:9083/src/index.ts` and `VITE_BASE=http://localhost:9081/src/index.ts` (.envtest:8, 11). That file's comments explain that each microfrontend is its own Vite dev server on its port and that `import()` brings the `bootstrap`, `mount` and `unmount` lifecycles (.envtest:2-4). They also mention CDN-published builds as a future step (.envtest:5). There is no import map, Module Federation, custom element, iframe or message exchange. The unit connection uses only URLs.
 
-É um exemplo pequeno, de seis arquivos, sem README. Há uma ressalva de execução: o comentário de src/main.ts:5-6 manda definir as URLs em `.env`/`.env.local`, mas o único arquivo versionado se chama `.envtest`, que o Vite não carrega por padrão. A ressalva já está nas revisões anteriores e não muda as relações, porque o alvo de cada registro é nomeado no código e a URL está declarada no snapshot.
+It is a small six-file example without a README. There is an execution caveat: the src/main.ts:5-6 comment directs setting the URLs in `.env`/`.env.local`, but the only versioned file is named `.envtest`, which Vite does not load by default. This caveat is already in previous reviews and does not change the relationships, because each registration target is named in code and its URL is declared in the snapshot.
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | . | menu | root-config → application | origem → destino | single-spa | No | Yes | vite.config.ts:12-15 (`vitePluginSingleSpa` com `type: 'root'`); .envtest:8 (`VITE_MENU=http://localhost:9083/src/index.ts`) | src/main.ts:13; src/main.ts:15; src/main.ts:29 |
-| 2 | . | base | root-config → application | origem → destino | single-spa | No | Yes | vite.config.ts:12-15 (`vitePluginSingleSpa` com `type: 'root'`); .envtest:11 (`VITE_BASE=http://localhost:9081/src/index.ts`) | src/main.ts:21; src/main.ts:23; src/main.ts:29 |
+| 1 | . | menu | root-config → application | source → target | single-spa | No | Yes | vite.config.ts:12-15 (`vitePluginSingleSpa` with `type: 'root'`); .envtest:8 (`VITE_MENU=http://localhost:9083/src/index.ts`) | src/main.ts:13; src/main.ts:15; src/main.ts:29 |
+| 2 | . | base | root-config → application | source → target | single-spa | No | Yes | vite.config.ts:12-15 (`vitePluginSingleSpa` with `type: 'root'`); .envtest:11 (`VITE_BASE=http://localhost:9081/src/index.ts`) | src/main.ts:21; src/main.ts:23; src/main.ts:29 |
 
-## Observações
+## Observations
 
-**1. . → menu.** O root config registra a aplicação `menu` com `app: () => import(env.VITE_MENU)` e `activeWhen: '/'` (src/main.ts:13-17). O single-spa a monta no contêiner `single-spa-application:menu` do `nav` (index.html:12) depois do `start()` (src/main.ts:29). O destino é identificado pelo nome do registro e pela URL `http://localhost:9083/src/index.ts` (.envtest:8), um dev server Vite de outro projeto (.envtest:2). Nenhuma unidade do snapshot corresponde a ele, daí No snapshot = `No`. O tipo é `root-config → application` porque o destino entra registrado no orquestrador, embora a carga seja um `import()` dinâmico. Ativa = `Yes`: as três linhas de código são `Yes` na revisão de código-fonte. A ressalva é a do nome do arquivo de ambiente, descrita na leitura do repositório.
+**1. . → menu.** The root config registers application `menu` with `app: () => import(env.VITE_MENU)` and `activeWhen: '/'` (src/main.ts:13-17). Single-spa mounts it in the `single-spa-application:menu` container in `nav` (index.html:12) after `start()` (src/main.ts:29). The target is identified by registration name and URL `http://localhost:9083/src/index.ts` (.envtest:8), a Vite dev server from another project (.envtest:2). No snapshot unit matches it, hence In snapshot = `No`. Type is `root-config → application` because the target enters registered in the orchestrator, although loading is dynamic `import()`. Active = `Yes`: all three code lines are `Yes` in the source code review. The caveat is the environment filename, described in the repository overview.
 
-**2. . → base.** Mesmo caminho da relação 1. O registro `base` (src/main.ts:21-25) carrega por `import()` a URL de `VITE_BASE`, `http://localhost:9081/src/index.ts` (.envtest:11), também ativo em `/`. A aplicação é montada no contêiner `single-spa-application:base` do `main` (index.html:17), em paralelo com `menu`. O destino está fora do snapshot e Ativa = `Yes` pelas linhas de src/main.ts:21, 23 e 29. A linha src/main.ts:29 (`start()`) sustenta as duas relações e aparece nas duas.
+**2. . → base.** The same path as relationship 1. Registration `base` (src/main.ts:21-25) loads through `import()` the URL in `VITE_BASE`, `http://localhost:9081/src/index.ts` (.envtest:11), also active at `/`. The application is mounted in the `single-spa-application:base` container in `main` (index.html:17), alongside `menu`. The target is outside the snapshot and Active = `Yes` through lines src/main.ts:21, 23 and 29. The src/main.ts:29 line (`start()`) supports both relationships and appears in both.
 
-## Resumo
+## Summary
 
-Relações: 2 (root-config → application: 2). Ativas: 2. Destino fora do snapshot: 2.
-Unidades sem relação: nenhuma.
+Relationships: 2 (root-config → application: 2). Active: 2. Target outside the snapshot: 2.
+Units without a relationship: none.
+

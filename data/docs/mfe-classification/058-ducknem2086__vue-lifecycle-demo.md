@@ -20,38 +20,38 @@ annotation:
 
 # 058 — ducknem2086/vue-lifecycle-demo
 
-## Contexto
+## Context
 
-- **Abordagem de implementação:** single-spa (`single-spa-vue`, bundle SystemJS para import map)
-- **Tipo de repositório:** example/proof of concept (projeto de estudo de Vue 3; README sobre lifecycle hooks em vietnamita)
+- **Implementation approach:** single-spa (`single-spa-vue`, SystemJS bundle for an import map)
+- **Repository type:** example/proof of concept (Vue 3 study project; Vietnamese README about lifecycle hooks)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Tecnologia | `package.json:26`: `single-spa-vue` ^3.0.1 | fraca |
-| Código-fonte (lifecycles) | `src/main.ts:2,45-69`: `singleSpaVue({ createApp, appOptions: { render() { return h(App, …) } }, handleInstance(app) { … vuetify, PrimeVue, pinia, router } })`; `:71-73`: `export const bootstrap / mount / unmount`, os lifecycles de uma aplicação single-spa | forte |
-| Configuração (build) | `vite.config.ts:11-24`: `input: 'src/main.ts'`, `preserveEntrySignatures: 'strict'`, `output.format: 'system'`, `entryFileNames: 'js/app.js'`, `base: ''` e `server.origin: 'http://localhost:1111'`, ou seja, saída SystemJS para ser carregada por um root config via import map | forte |
-| Estrutura | Uma única app Vue (views de CRUD de "proposal", "config", "business") | contrária |
-| Composição | Nenhum root config single-spa (`registerApplication`, import map) no repositório | ausente |
-| Histórico | `31d4b39` "migrate to spa": conversão da app para aplicação single-spa | moderada |
-| Documentação | `README.md`: notas sobre lifecycle hooks do Vue 3; nenhuma menção à arquitetura | ausente |
+| Technology | `package.json:26`: `single-spa-vue` ^3.0.1 | weak |
+| Source code (lifecycles) | `src/main.ts:2,45-69`: `singleSpaVue({ createApp, appOptions: { render() { return h(App, …) } }, handleInstance(app) { … vuetify, PrimeVue, pinia, router } })`; `:71-73`: `export const bootstrap / mount / unmount`, the lifecycles of a single-spa application | strong |
+| Configuration (build) | `vite.config.ts:11-24`: `input: 'src/main.ts'`, `preserveEntrySignatures: 'strict'`, `output.format: 'system'`, `entryFileNames: 'js/app.js'`, `base: ''` and `server.origin: 'http://localhost:1111'`, that is, SystemJS output for a root config to load through an import map | strong |
+| Structure | A single Vue app (CRUD views for "proposal", "config", "business") | contrary |
+| Composition | No single-spa root config (`registerApplication`, import map) in the repository | absent |
+| History | `31d4b39` "migrate to spa": conversion of the app into a single-spa application | moderate |
+| Documentation | `README.md`: notes about Vue 3 lifecycle hooks; no mention of architecture | absent |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade; nenhuma configuração de composição referencia outras unidades |
-| Q2 | Yes (para a unidade) | Build próprio em formato SystemJS (`vite.config.ts:11-24`) |
-| Q3 | Undetermined | O root config que registra a aplicação não está no repositório |
-| Q4 | Undetermined | Os lifecycles estão exportados; o lado que os registra não é observável |
-| Q5 | No | Unidade preparada para composição, não uma instância de MFE no repositório |
+| Q1 | No | A single unit; no composition configuration references other units |
+| Q2 | Yes (for this unit) | Its own build in SystemJS format (`vite.config.ts:11-24`) |
+| Q3 | Undetermined | The root config registering the application is not in the repository |
+| Q4 | Undetermined | Lifecycles are exported; the side registering them is not observable |
+| Q5 | No | A unit prepared for composition, not an MFE instance in the repository |
 
-## Motivo
+## Rationale
 
-- Q1 é No; aplica-se a exceção MFE-unit, no exemplo citado pelo próprio checklist: "exported single-spa lifecycles" com host não observável.
-- A preparação é completa: lifecycles exportados, build SystemJS com assinaturas preservadas e origem fixa para o import map.
+- Q1 is No; the MFE-unit exception applies, using the checklist's own example: "exported single-spa lifecycles" with an unobservable host.
+- Preparation is complete: exported lifecycles, SystemJS build with preserved signatures and a fixed origin for the import map.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos, inverso):** o nome ("vue-lifecycle-demo") e o README (lifecycle hooks do Vue) não indicam MFE; a evidência está só em `main.ts`, `vite.config.ts` e no commit "migrate to spa". "Lifecycle" aqui tem dois sentidos: hooks do Vue e lifecycles do single-spa.
+- **RQ1 (misleading signals, inverse):** the name ("vue-lifecycle-demo") and README (Vue lifecycle hooks) do not indicate MFE; evidence is only in `main.ts`, `vite.config.ts` and the "migrate to spa" commit. "Lifecycle" has two meanings here: Vue hooks and single-spa lifecycles.

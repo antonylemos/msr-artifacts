@@ -15,6 +15,6 @@ annotation:
 
 # 294 — angelantilantil-web/micro-frontend
 
-## Dependências
+## Dependencies
 
-Nenhuma dependência das tecnologias no dependencies.csv.
+No dependency on the technologies in dependencies.csv.

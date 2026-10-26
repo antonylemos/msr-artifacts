@@ -15,29 +15,29 @@ annotation:
 
 # 246 — shermondevelopment/microfrontend-shop
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-remote-import | apps/host/src/App.tsx:5 | apps/host | dynamic-loading | Yes | `lazy(() => import('header/Header'))` carrega em runtime o módulo exposto por apps/header (`"./Header": "./src/Header.tsx"`, apps/header/vite.config.ts:17-18), declarado como remote `header` no host (apps/host/vite.config.ts:26-32, `entry` em :12). Ativo: `App` é renderizado por apps/host/src/main.tsx:5 e :13, entrada de apps/host/index.html:11. |
-| src-remote-import | apps/host/src/App.tsx:6 | apps/host | dynamic-loading | Yes | `lazy(() => import('footer/Footer'))` carrega o módulo exposto por apps/footer (`'./Footer': './src/Footer.tsx'`, apps/footer/vite.config.ts:17-18), remote `footer` do host (apps/host/vite.config.ts:33-39, `entry` em :13). Mesma cadeia ativa da linha 5. |
-| src-remote-import | apps/host/src/App.tsx:7 | apps/host | dynamic-loading | Yes | `lazy(() => import('products/ProductsList'))` carrega o módulo exposto por apps/products (`"./ProductsList": "./src/ProductsList.tsx"`, apps/products/vite.config.ts:17-18), remote `products` do host (apps/host/vite.config.ts:40-46, `entry` em :14-15). Mesma cadeia ativa da linha 5. |
+| src-remote-import | apps/host/src/App.tsx:5 | apps/host | dynamic-loading | Yes | `lazy(() => import('header/Header'))` loads at runtime the module exposed by apps/header (`"./Header": "./src/Header.tsx"`, apps/header/vite.config.ts:17-18), declared as remote `header` in the host (apps/host/vite.config.ts:26-32, `entry` at :12). Active: `App` is rendered by apps/host/src/main.tsx:5 and :13, the entry of apps/host/index.html:11. |
+| src-remote-import | apps/host/src/App.tsx:6 | apps/host | dynamic-loading | Yes | `lazy(() => import('footer/Footer'))` loads the module exposed by apps/footer (`'./Footer': './src/Footer.tsx'`, apps/footer/vite.config.ts:17-18), host remote `footer` (apps/host/vite.config.ts:33-39, `entry` at :13). Same active chain as line 5. |
+| src-remote-import | apps/host/src/App.tsx:7 | apps/host | dynamic-loading | Yes | `lazy(() => import('products/ProductsList'))` loads the module exposed by apps/products (`"./ProductsList": "./src/ProductsList.tsx"`, apps/products/vite.config.ts:17-18), host remote `products` (apps/host/vite.config.ts:40-46, `entry` at :14-15). Same active chain as line 5. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | apps/host/src/App.tsx:14 | apps/host | runtime-composition | Yes | Renderiza `<Header />`, o componente remoto de apps/header carregado em apps/host/src/App.tsx:5, dentro de `RemoteErrorBoundary` e `Suspense` com `HeaderSkeleton` (:12-16). |
-| manual | apps/host/src/App.tsx:21 | apps/host | runtime-composition | Yes | Renderiza `<ProductsList />`, o componente remoto de apps/products carregado em apps/host/src/App.tsx:7, dentro de `RemoteErrorBoundary` e `Suspense` com `ProductSkeleton` (:19-23). |
-| manual | apps/host/src/App.tsx:28 | apps/host | runtime-composition | Yes | Renderiza `<Footer />`, o componente remoto de apps/footer carregado em apps/host/src/App.tsx:6, dentro de `RemoteErrorBoundary` e `Suspense` com `FooterSkeleton` (:26-30). |
-| manual | packages/shared/src/state/cart-store.ts:12 | — | communication | Yes | `useCartStore` (Zustand com `persist`, chave `cart-storage`, :70-72) é o estado do carrinho compartilhado entre apps/products e apps/header: exportado por packages/shared/src/index.ts:4 e declarado singleton (`zustand` e `@microfrontend/shared`) no host (apps/host/vite.config.ts:55-60), em apps/header (apps/header/vite.config.ts:27-32) e em apps/products (apps/products/vite.config.ts:27-32). apps/products escreve com `addProduct` (apps/products/src/components/Product.tsx:14 e :36, `ProductCard` usado em apps/products/src/ProductsList.tsx:30); apps/header lê os itens e remove com `removeAllProduct` (apps/header/src/Header.tsx:16-18 e :27). |
+| manual | apps/host/src/App.tsx:14 | apps/host | runtime-composition | Yes | Renders `<Header />`, the remote apps/header component loaded at apps/host/src/App.tsx:5, inside `RemoteErrorBoundary` and `Suspense` with `HeaderSkeleton` (:12-16). |
+| manual | apps/host/src/App.tsx:21 | apps/host | runtime-composition | Yes | Renders `<ProductsList />`, the remote apps/products component loaded at apps/host/src/App.tsx:7, inside `RemoteErrorBoundary` and `Suspense` with `ProductSkeleton` (:19-23). |
+| manual | apps/host/src/App.tsx:28 | apps/host | runtime-composition | Yes | Renders `<Footer />`, the remote apps/footer component loaded at apps/host/src/App.tsx:6, inside `RemoteErrorBoundary` and `Suspense` with `FooterSkeleton` (:26-30). |
+| manual | packages/shared/src/state/cart-store.ts:12 | — | communication | Yes | `useCartStore` (Zustand with `persist`, key `cart-storage`, :70-72) is cart state shared between apps/products and apps/header: exported by packages/shared/src/index.ts:4 and declared singleton (`zustand` and `@microfrontend/shared`) in the host (apps/host/vite.config.ts:55-60), apps/header (apps/header/vite.config.ts:27-32) and apps/products (apps/products/vite.config.ts:27-32). apps/products writes through `addProduct` (apps/products/src/components/Product.tsx:14 and :36, `ProductCard` used at apps/products/src/ProductsList.tsx:30); apps/header reads items and removes them through `removeAllProduct` (apps/header/src/Header.tsx:16-18 and :27). |
 
-## Resumo
+## Summary
 
-Construções com composição: 7 (dynamic-loading: 3, runtime-composition: 3, communication: 1).
+Constructs participating in composition: 7 (dynamic-loading: 3, runtime-composition: 3, communication: 1).
 
-## Notas
+## Notes
 
-- packages/shared é `No` na revisão estrutural, assim como `.`; por isso a unidade da linha do store é `—`.
-- apps/footer não usa o store nem declara `@microfrontend/shared` como compartilhado (apps/footer/vite.config.ts:20, `shared: ['react', 'react-dom']`).
-- A busca do passo 4 não encontrou `customElements`, `<iframe`, `postMessage`, `CustomEvent`/`dispatchEvent`, `BroadcastChannel` nem carga de script em apps/ e packages/; os usos de `useCartStore` em apps/header/src/Header.test.tsx são de teste.
+- packages/shared is `No` in the structural review, as is `.`; the unit of the store row is therefore `—`.
+- apps/footer neither uses the store nor declares `@microfrontend/shared` as shared (apps/footer/vite.config.ts:20, `shared: ['react', 'react-dom']`).
+- The step 4 search found no `customElements`, `<iframe`, `postMessage`, `CustomEvent`/`dispatchEvent`, `BroadcastChannel` or script loading in apps/ and packages/; uses of `useCartStore` in apps/header/src/Header.test.tsx are tests.

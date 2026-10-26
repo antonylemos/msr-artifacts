@@ -20,61 +20,61 @@ annotation:
 
 # 212 — Lisvu/micros-frontend
 
-## Contexto
+## Context
 
-Frontend React (Create React App ejetado, Ant Design, React Router) de uma plataforma de cursos on-line: login, cursos, módulos, quizzes, exercícios de programação, provas, notas e fórum. Consome uma API em `http://localhost:8000` (`src/api/request.js:3–7`). É uma única aplicação com rotas internas (`src/App.jsx:1–25`). O README é o padrão do CRA, e nenhum arquivo do snapshot menciona micro-frontends, Module Federation ou single-spa. O nome do repositório não é usado como evidência.
+React frontend (ejected Create React App, Ant Design, React Router) for online-course platform: login, courses, modules, quizzes, programming exercises, exams, grades and forum. Consumes API at `http://localhost:8000` (`src/api/request.js:3–7`). One application with internal routes (`src/App.jsx:1–25`). README is CRA standard, and no snapshot file mentions micro-frontends, Module Federation or single-spa. Repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:213` registra rank 212, ID 1160906326, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:213` records rank 212, ID 1160906326, status `cloned`, branch `main` and front-matter commit, which is clone HEAD and `origin/main`. Every clone Git command used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:213` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:25082` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:25089` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:213` records strategy `terminology` and eligibility `pass`. Sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). ID appears in `data/discovery/mfe-round-001/candidates.csv:25082` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:25089` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna o mesmo hit em cada rodada, do endpoint `repositories` e com `path` vazio:
+`sqlite3 -readonly` query of tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns same hit in each round, at endpoint `repositories` and with empty `path`:
 
-| Consulta (`q`) | Subconsulta / consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery / effective query | Collection 001 / 002 (UTC) |
 |---|---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | `terminology-micro-frontend-repositories#created:2026-02` / `"micro frontend" in:name,description,readme pushed:>=2025-04-01 created:2026-02-01..2026-02-28` | 2026-10-07T22:31:23.418Z / 2026-10-08T15:57:49.131Z |
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem JavaScript, `fork: false`, tamanho 666;
-- criação em 2026-02-18T14:09:19Z, push em 2026-03-31T10:12:28Z.
+Hit metadata:
+- null description, no topics, JavaScript language, `fork: false`, size 666;
+- creation at 2026-02-18T14:09:19Z, push at 2026-03-31T10:12:28Z.
 
-O README (`README.md:1–30`, padrão do CRA) não contém “micro frontend” nem variantes, e a descrição é nula. O único campo restante da consulta `in:name,description,readme` é o nome do repositório, que deve ser a origem do acerto pela tokenização da busca. Isso explica a entrada na amostra, mas não é evidência de classificação.
+README (`README.md:1–30`, CRA standard) contains neither “micro frontend” nor variants, and description is null. Sole remaining field of query `in:name,description,readme` is repository name, which must be retrieval origin through search tokenization. This explains sample entry, but is not classification evidence.
 
-O README vem de `422da70` (2026-02-18) e não foi alterado depois, sendo anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+README comes from `422da70` (2026-02-18) and was unchanged afterward, predating October 2026 collections. README at the SHA is not later than searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 71 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Um único projeto CRA ejetado: `config/` (Webpack, Jest, dev server), `scripts/` (`start.js`, `build.js`, `test.js`), `public/` e `src/` com `pages/` (20 arquivos, um deles vazio), `components/`, `api/` e `styles/`. | contrária |
-| Código-fonte | `src/App.jsx:1–25`: um `BrowserRouter` que importa estaticamente todas as páginas locais. `src/api/request.js:3–7`: cliente Axios para o backend local. | contrária |
-| Configuração / Build | `package.json:66–67`: `start`/`build` chamam `scripts/start.js`/`build.js` do CRA ejetado, que usam `config/webpack.config.js`. A busca no SHA (exceto lockfile) por `ModuleFederationPlugin`, `remoteEntry`, `federation`, `single-spa` e `micro.?front` não retorna nada. | contrária |
-| Documentação | `README.md:1–30`: README padrão do Create React App, sem menção a micro-frontends. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 71 entries, all regular files `100644`; zero symlinks and zero gitlinks. One ejected CRA project: `config/` (Webpack, Jest, dev server), `scripts/` (`start.js`, `build.js`, `test.js`), `public/` and `src/` with `pages/` (20 files, one empty), `components/`, `api/` and `styles/`. | contrary |
+| Source code | `src/App.jsx:1–25`: one `BrowserRouter` statically importing all local pages. `src/api/request.js:3–7`: Axios client for local backend. | contrary |
+| Configuration / Build | `package.json:66–67`: `start`/`build` call ejected CRA `scripts/start.js`/`build.js`, using `config/webpack.config.js`. SHA search (except lockfile) for `ModuleFederationPlugin`, `remoteEntry`, `federation`, `single-spa` and `micro.?front` returns nothing. | contrary |
+| Documentation | `README.md:1–30`: standard Create React App README, without micro-frontends mention. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 20 commits, 1 merge. Todos são de Lisvu: 19 como `Lisvu_chen <23301031@bjtu.edu.cn>` e o `88ef70a` inicial (2026-02-18, noreply, interface web). Há um merge `d6d0703` (“Merge remote content”, 2026-02-18) e depois commits de funcionalidades, com mensagens em chinês, até o SHA `fa92a02` (2026-03-19, ajuste do fórum). O e-mail institucional e as mensagens indicam trabalho acadêmico. O `pushed_at` (2026-03-31) é posterior ao SHA, sem outro branch no clone. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 20 commits, 1 merge. All by Lisvu: 19 as `Lisvu_chen <23301031@bjtu.edu.cn>` and initial `88ef70a` (2026-02-18, noreply, web interface). Merge `d6d0703` (“Merge remote content”, 2026-02-18) followed by feature commits with Chinese messages, up to SHA `fa92a02` (2026-03-19, forum adjustment). Institutional email and messages indicate academic work. `pushed_at` (2026-03-31) is later than SHA, without another clone branch. No historical blob was read and no object was missing.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única aplicação frontend (`src/App.jsx:1–25`); nenhuma configuração referencia outra unidade. |
-| Q2 | No | Não há segunda unidade cuja independência possa ser avaliada. |
-| Q3 | No | Não há host compondo unidades; as páginas são módulos internos do mesmo build. |
-| Q4 | No | Nenhum mecanismo de composição (busca registrada; `config/webpack.config.js` sem federação). |
-| Q5 | No | Q1–Q4 são No: monólito frontend React sem referência a micro-frontends no conteúdo. |
+| Q1 | No | One frontend application (`src/App.jsx:1–25`); no configuration references another unit. |
+| Q2 | No | No second unit exists whose independence could be evaluated. |
+| Q3 | No | No host composes units; pages are internal modules of same build. |
+| Q4 | No | No composition mechanism (recorded search; `config/webpack.config.js` without federation). |
+| Q5 | No | Q1–Q4 are No: React frontend monolith without micro-frontends reference in content. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “conventional frontend monoliths”.
-- O acerto vem só do nome do repositório; o conteúdo não usa o termo.
-- `frontend_units: 1`, `unit_organization: single-unit`, `ui_technologies: [react]`. `build_tools: [webpack]`, pois o CRA ejetado expõe `config/webpack.config.js` usado pelos scripts, como 019 e ao contrário do CRA não ejetado de 087. `repo_type: other`: trabalho acadêmico de aplicação, não exemplo de MFE.
-- Não há decisão aberta.
+- `Non-MFE` under rule “at least one question is No”. Matches “conventional frontend monoliths”.
+- Retrieval comes only from repository name; content does not use term.
+- `frontend_units: 1`, `unit_organization: single-unit`, `ui_technologies: [react]`. `build_tools: [webpack]`, since ejected CRA exposes `config/webpack.config.js` used by scripts, as 019 and unlike unejected CRA in 087. `repo_type: other`: academic application work, not MFE example.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** nome de repositório com “micros-frontend” num monólito CRA; a busca de frase casa só o nome.
-- **Protocolo (busca):** o acerto depende só do campo nome. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ1 (misleading signals):** repository named with “micros-frontend” in CRA monolith; phrase search matches only name.
+- **Protocol (search):** retrieval depends only on name field. Eligibility changes from `unknown` (001) to `pass` (002).

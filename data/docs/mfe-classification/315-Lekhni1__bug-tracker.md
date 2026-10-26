@@ -20,64 +20,64 @@ annotation:
 
 # 315 — Lekhni1/bug-tracker
 
-## Contexto
+## Context
 
-Rastreador de bugs (“BuggedOut”) com um frontend React/TypeScript/Vite e um backend Java (Spark) com Firestore (`README.md:1–5`, `38–45`). O README afirma uma arquitetura micro-frontend e a integração de React e Vue (`README.md:57`, `64`), mas o snapshot tem um único projeto frontend React e nenhum código Vue. Há também um script de terceiro versionado (`git-filter-repo`). O nome do repositório não é usado como evidência.
+Bug tracker (“BuggedOut”) with a React/TypeScript/Vite frontend and Java (Spark) backend with Firestore (`README.md:1–5`, `38–45`). README claims micro-frontend architecture and React/Vue integration (`README.md:57`, `64`), but snapshot has a single React frontend project and no Vue code. Also a versioned third-party script (`git-filter-repo`). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:316` registra rank 315, ID 1231840825, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:316` records rank 315, ID 1231840825, status `cloned`, branch `main` and the front matter commit, which is HEAD of the clone and `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:316` registra a estratégia `terminology` e elegibilidade `unknown`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:29700` (`terminology`, `unknown`, regra `recent-human-commit` com `activity_incomplete`) e `data/discovery/mfe-round-002/candidates.csv:29706` (`terminology`, `unknown`, regra `recent-human-commit` com `author_indeterminate`).
+`data/samples/mfe-sample-001/sample.csv:316` records strategy `terminology` and eligibility `unknown`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:29700` (`terminology`, `unknown`, rule `recent-human-commit` with `activity_incomplete`) and `data/discovery/mfe-round-002/candidates.csv:29706` (`terminology`, `unknown`, rule `recent-human-commit` with `author_indeterminate`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with empty `path`:
 
-| Consulta (`q`) | Subconsulta | Consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Effective query | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | `terminology-micro-frontend-repositories#created:2026-05` | `"micro frontend" in:name,description,readme pushed:>=2025-04-01 created:2026-05-01..2026-05-31` | 2026-10-07T22:36:54.296Z / 2026-10-08T15:59:53.854Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | `terminology-micro-frontends-repositories#created:2026-05` | `"micro frontends" in:name,description,readme pushed:>=2025-04-01 created:2026-05-01..2026-05-31` | 2026-10-07T23:05:29.173Z / 2026-10-08T16:09:18.306Z |
 
-Metadados do hit: descrição nula, sem tópicos, linguagem Python, sem licença, `fork: false`, tamanho 4828, criação em 2026-05-07T10:40:52Z, push em 2026-05-07T10:43:04Z.
+Hit metadata: null description, no topics, language Python, no license, `fork: false`, size 4828, created at 2026-05-07T10:40:52Z, pushed at 2026-05-07T10:43:04Z.
 
-A única ocorrência do termo é `README.md:64`: “Designed a modular micro-frontend architecture for scalable bug tracking features.”, no singular e hifenizado (a busca de frase trata o hífen como separador). O plural “micro frontends” não aparece literalmente; esse hit depende do processamento textual da busca do GitHub, que não está registrado. A linguagem `Python` dos metadados é compatível com o arquivo `git-filter-repo` (`git-filter-repo:1`, `#!/usr/bin/env python3`), apesar de `.gitattributes:6` marcar `*.py` como não detectável (o arquivo não tem extensão).
+Only term occurrence is `README.md:64`: “Designed a modular micro-frontend architecture for scalable bug tracking features.”, singular and hyphenated (phrase search treats hyphen as separator). Plural “micro frontends” does not appear literally; that hit depends on GitHub search text processing, which is not recorded. Metadata language `Python` is consistent with file `git-filter-repo` (`git-filter-repo:1`, `#!/usr/bin/env python3`), despite `.gitattributes:6` marking `*.py` as undetectable (file lacks extension).
 
-O README foi introduzido no único commit, o próprio SHA (2026-05-07), anterior às coletas de 7 e 8 de outubro de 2026. O README do SHA não é posterior às buscas.
+README was introduced in the single commit, SHA itself (2026-05-07), before collection on October 7 and 8, 2026. The SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 43 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Um backend Maven (`backend/pom.xml`, `backend/src/main/java/com/example/bugtracker/BugTracker.java`, `backend/Dockerfile`), um único projeto frontend em `frontend/bug-tracker-frontend/`, um `frontend/package-lock.json` vazio (`:1–6`, `"packages": {}`), `.circleci/config.yml`, `vercel.json` e `git-filter-repo`. | contrária |
-| Configuração (frontend) | `frontend/bug-tracker-frontend/package.json:5–9`: `vite`/`vite build`; `:10–15`: React 19, axios, react-toastify; nenhuma dependência Vue nem de composição. `frontend/bug-tracker-frontend/vite.config.ts:4–9`: só `react()` e porta 3000. | contrária |
-| Código-fonte (UI) | `frontend/bug-tracker-frontend/index.html:8–9`: um `#root` e `/src/index.tsx`; `src/index.tsx:7–14`: um `createRoot`; `src/App.tsx:1–8`: renderiza apenas `BugTrackerHome`. | contrária |
-| Código-fonte (fronteiras) | Busca por `../` em `*.ts`, `*.tsx`, `*.js`: `src/BugTrackerHome.tsx:18`, `src/components/BugTable.tsx:2` e `src/services/bugService.tsx:2`, todas para `bugTypes` dentro do mesmo projeto (a de `BugTrackerHome.tsx:18` aponta para `types/` fora de `src/`, caminho inexistente no inventário, que só tem `src/types/bugTypes.ts`). Não há segunda unidade a atravessar. | contexto |
-| Documentação | `README.md:57`: “Successfully integrated React and Vue in a shared frontend”; `README.md:64`: “modular micro-frontend architecture”. Busca por `vue` em todo o SHA, exceto lockfiles e `git-filter-repo`, só encontra `README.md:57`; os lockfiles não têm `node_modules/vue`. | fraca |
-| Tecnologia / Configuração / Composição (busca) | `git grep -i` no SHA (exceto lockfiles e `git-filter-repo`) por `micro.?front`, `federation`, `single.?spa`, `import.?map`, `iframe`, `customElements` e `qiankun`: só `README.md:64`. | ausente |
-| Build/deploy | `.circleci/config.yml:7–20`, `22–34`: um job de build do frontend e um do backend; `vercel.json:1–9`: um único build com `rewrite` de `/bugs` para o backend hospedado. | contrária |
+| Structure | `git ls-tree -r` at the SHA: 43 entries, all regular `100644` files; zero symlinks and zero gitlinks. Maven backend (`backend/pom.xml`, `backend/src/main/java/com/example/bugtracker/BugTracker.java`, `backend/Dockerfile`), one frontend project in `frontend/bug-tracker-frontend/`, empty `frontend/package-lock.json` (`:1–6`, `"packages": {}`), `.circleci/config.yml`, `vercel.json` and `git-filter-repo`. | contrary |
+| Configuration (frontend) | `frontend/bug-tracker-frontend/package.json:5–9`: `vite`/`vite build`; `:10–15`: React 19, axios, react-toastify; no Vue or composition dependency. `frontend/bug-tracker-frontend/vite.config.ts:4–9`: only `react()` and port 3000. | contrary |
+| Source code (UI) | `frontend/bug-tracker-frontend/index.html:8–9`: one `#root` and `/src/index.tsx`; `src/index.tsx:7–14`: one `createRoot`; `src/App.tsx:1–8`: renders only `BugTrackerHome`. | contrary |
+| Source code (boundaries) | Search for `../` in `*.ts`, `*.tsx`, `*.js`: `src/BugTrackerHome.tsx:18`, `src/components/BugTable.tsx:2` and `src/services/bugService.tsx:2`, all to `bugTypes` within same project (`BugTrackerHome.tsx:18` points to `types/` outside `src/`, a nonexistent inventory path, which has only `src/types/bugTypes.ts`). No second unit to cross into. | context |
+| Documentation | `README.md:57`: “Successfully integrated React and Vue in a shared frontend”; `README.md:64`: “modular micro-frontend architecture”. Search for `vue` across the SHA, except lockfiles and `git-filter-repo`, finds only `README.md:57`; lockfiles have no `node_modules/vue`. | weak |
+| Technology / Configuration / Composition (search) | `git grep -i` at the SHA (except lockfiles and `git-filter-repo`) for `micro.?front`, `federation`, `single.?spa`, `import.?map`, `iframe`, `customElements` and `qiankun`: only `README.md:64`. | absent |
+| Build/deploy | `.circleci/config.yml:7–20`, `22–34`: one frontend build job and one backend job; `vercel.json:1–9`: a single build with `/bugs` `rewrite` to hosted backend. | contrary |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso, parcial (`blob:none`). 1 commit (1 em todos os refs), nenhum merge: o próprio SHA `d3e0f8b` (2026-05-07T16:10:04+05:30, “bug tracker project”), autor e committer `lekhni kumbhare` com e-mail de host local (`…@lekhnis-MacBook-Air.local`), adicionando os 43 arquivos. O README lista dois outros contribuidores (`README.md:11–13`), que não aparecem nos metadados; os metadados mostram só um commit de importação em bloco e não permitem afirmar a origem do código nem separar autoria (a presença de `git-filter-repo` é registrada sem inferir reescrita de histórico). A rodada 002 registra `author_indeterminate` na regra de commit humano. `git rev-list --objects $SHA --missing=print` não identifica objetos ausentes.
+Non-shallow, partial clone (`blob:none`). 1 commit (1 across all refs), no merges: SHA `d3e0f8b` itself (2026-05-07T16:10:04+05:30, “bug tracker project”), author and committer `lekhni kumbhare` with local-host email (`…@lekhnis-MacBook-Air.local`), adding all 43 files. README lists two other contributors (`README.md:11–13`), absent from metadata; metadata shows only one bulk import commit and cannot establish code origin or distinguish authorship (`git-filter-repo` presence is recorded without inferring history rewriting). Round 002 records `author_indeterminate` under human commit rule. `git rev-list --objects $SHA --missing=print` identifies no missing objects.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend (`frontend/bug-tracker-frontend/`); a unidade Vue citada no README não existe no snapshot; nenhuma configuração de composição (busca registrada). |
-| Q2 | No | Não há duas unidades a avaliar. |
-| Q3 | No | Não há host, shell nem root config; a UI renderiza só `BugTrackerHome` (`src/App.tsx:4–6`). |
-| Q4 | No | Nenhum mecanismo de composição configurado; as afirmações de `README.md:57`, `64` não têm artefato correspondente. |
-| Q5 | No | Q1–Q4 convergem. |
+| Q1 | No | A single frontend unit (`frontend/bug-tracker-frontend/`); README-cited Vue unit is absent from snapshot; no composition configuration (recorded search). |
+| Q2 | No | No two units to assess. |
+| Q3 | No | No host, shell or root config; UI renders only `BugTrackerHome` (`src/App.tsx:4–6`). |
+| Q4 | No | No configured composition mechanism; claims at `README.md:57`, `64` have no corresponding artifact. |
+| Q5 | No | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “conventional frontend monoliths” e a “repositories mentioning micro-frontends without implementing them”: o README declara uma arquitetura micro-frontend e integração com Vue que o código não materializa.
-- Não é `MFE-unit`: a app não exporta contrato para host externo.
-- Não há cadeia parcial (097/103/104), code sharing (089/100) ou unidade de terceiros composta (102/074/080). O `git-filter-repo` é ferramenta de terceiro sem relação com a UI.
-- `frontend_units: 1`, `unit_organization: single-unit`, `ui_technologies: [react]`, `build_tools: [vite]`, `repo_type: example` (MVP de projeto, `README.md:60`).
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. Matches “conventional frontend monoliths” and “repositories mentioning micro-frontends without implementing them”: README declares micro-frontend architecture and Vue integration not materialized in code.
+- Not `MFE-unit`: app exports no external host contract.
+- No partial chain (097/103/104), code sharing (089/100) or composed third-party unit (102/074/080). `git-filter-repo` is a third-party tool unrelated to UI.
+- `frontend_units: 1`, `unit_organization: single-unit`, `ui_technologies: [react]`, `build_tools: [vite]`, `repo_type: example` (project MVP, `README.md:60`).
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** README com afirmações arquiteturais sem correspondência no código (“micro-frontend architecture”, “React and Vue in a shared frontend”, `README.md:57`, `64`); só a inspeção dos manifestos e da entrada desfaz o sinal.
-- **Protocolo (metadados):** linguagem `Python` atribuída pelo GitHub a um script de terceiro (`git-filter-repo`), não ao projeto; elegibilidade `unknown` nas duas rodadas, com motivo `author_indeterminate` em 002.
+- **RQ1 (misleading signals):** README with architectural claims unsupported by code (“micro-frontend architecture”, “React and Vue in a shared frontend”, `README.md:57`, `64`); only manifest and entry inspection dispels signal.
+- **Protocol (metadata):** GitHub language `Python` attributed to a third-party script (`git-filter-repo`), rather than project; eligibility `unknown` in both rounds, with reason `author_indeterminate` in 002.

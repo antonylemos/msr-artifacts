@@ -20,62 +20,62 @@ annotation:
 
 # 200 — LaurAndreea10/brief-studio
 
-## Contexto
+## Context
 
-“Brief Studio” (`README.md:1–8`): aplicação React + Vite de ferramentas de marketing (gerador de briefs, mood boards e análise de concorrentes) sobre APIs públicas gratuitas, publicada no GitHub Pages. É uma única aplicação com navegação por estado (`src/App.jsx:14–30`). O acerto da busca `"single-spa"` vem da expressão “The app is a single SPA with view-based routing” (`README.md:137`), não da biblioteca single-spa. O nome do repositório não é usado como evidência.
+“Brief Studio” (`README.md:1–8`): React + Vite marketing tool application (brief generator, mood boards and competitor analysis) using free public APIs, published on GitHub Pages. A single application with state-based navigation (`src/App.jsx:14–30`). Search hit `"single-spa"` comes from expression “The app is a single SPA with view-based routing” (`README.md:137`), rather than the single-spa library. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:201` registra rank 200, ID 1227454539, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:201` records rank 200, ID 1227454539, status `cloned`, branch `main` and the front matter commit, which is HEAD of the clone and `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:201` registra a estratégia `technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:29409` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:29415` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:201` records strategy `technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:29409` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:29415` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna um hit por rodada, do endpoint `repositories` e com `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns one hit per round, from endpoint `repositories` and with empty `path`:
 
-| Consulta (`q`) | Subconsulta | Consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Effective query | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `technology-single-spa-repositories`: `"single-spa" in:name,description,readme` | `technology-single-spa-repositories#created:2026-Q2` | `"single-spa" in:name,description,readme pushed:>=2025-04-01 created:2026-04-01..2026-06-30` | 2026-10-07T23:35:29.231Z / 2026-10-08T16:21:38.477Z |
 
-Metadados do hit:
-- descrição “A free marketing studio”, sem o termo;
-- sem tópicos, linguagem JavaScript, `fork: false`, tamanho 91;
-- criação em 2026-05-02T17:52:20Z, push em 2026-05-02T18:12:50Z;
+Hit metadata:
+- description “A free marketing studio”, without the term;
+- no topics, language JavaScript, `fork: false`, size 91;
+- created at 2026-05-02T17:52:20Z, pushed at 2026-05-02T18:12:50Z;
 - homepage `laurandreea10.github.io/brief-studio/`.
 
-O acerto vem de `README.md:137`, “The app is a single SPA with view-based routing managed entirely by `useState` in `App.jsx`.”. A grafia é “single SPA”, com espaço; a busca de frase do GitHub trata o hífen de `"single-spa"` como separador. Nenhum arquivo do SHA contém `single-spa`.
+The hit comes from `README.md:137`, “The app is a single SPA with view-based routing managed entirely by `useState` in `App.jsx`.”. Spelling is “single SPA”, with a space; GitHub phrase search treats the hyphen in `"single-spa"` as a separator. No SHA file contains `single-spa`.
 
-O README vem do commit-raiz `13d1011` (2026-05-02) e não foi alterado depois, sendo anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The README comes from root commit `13d1011` (2026-05-02) and never changed afterward, preceding October 2026 collection. The SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 31 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Há um único projeto Vite (`index.html`, `src/` com componentes, views, “engines” e i18n), `CASE_STUDY.md` e um workflow de deploy no GitHub Pages. | contrária |
-| Código-fonte | `src/App.jsx:14–30`: um único componente raiz alterna as views (`home`, `brief`, `mood`, `competitor`) por `useState`; as views são importadas estaticamente (`:4–9`). | contrária |
-| Configuração / Build | `vite.config.js:4–11`: `react()` e `base: '/brief-studio/'`. `package.json:7–24`: React, framer-motion e Vite, sem dependência MFE. | contrária |
-| Busca | `git grep -i` no SHA por `single.?spa`, `micro.?front` e `federation`: só `README.md:137`. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 31 entries, all regular `100644` files; zero symlinks and zero gitlinks. A single Vite project (`index.html`, `src/` with components, views, “engines” and i18n), `CASE_STUDY.md` and a GitHub Pages deployment workflow. | contrary |
+| Source code | `src/App.jsx:14–30`: a single root component switches views (`home`, `brief`, `mood`, `competitor`) through `useState`; views are statically imported (`:4–9`). | contrary |
+| Configuration / Build | `vite.config.js:4–11`: `react()` and `base: '/brief-studio/'`. `package.json:7–24`: React, framer-motion and Vite, without an MFE dependency. | contrary |
+| Search | `git grep -i` at the SHA for `single.?spa`, `micro.?front` and `federation`: only `README.md:137`. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 2 commits, nenhum merge, de `LaurAndreea10` (noreply) pela interface web: `13d1011` (2026-05-02, “Add files via upload”) e o SHA `6dff88d` (2026-05-02, “Add GitHub Actions workflow for deployment to Pages”). Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 2 commits, no merges, by `LaurAndreea10` (noreply) through the web interface: `13d1011` (2026-05-02, “Add files via upload”) and SHA `6dff88d` (2026-05-02, “Add GitHub Actions workflow for deployment to Pages”). No historical blob was read and no object was missing.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única aplicação frontend; nenhuma configuração de composição. |
-| Q2 | No | Não há segunda unidade cuja independência possa ser avaliada. |
-| Q3 | No | Não há host compondo unidades; `App.jsx` alterna views internas. |
-| Q4 | No | Nenhum mecanismo de composição (`vite.config.js:4–11`; busca registrada). |
-| Q5 | No | Q1–Q4 são No: SPA única captada pela expressão “single SPA”. |
+| Q1 | No | A single frontend application; no composition configuration. |
+| Q2 | No | There is no second unit whose independence could be assessed. |
+| Q3 | No | No host composes units; `App.jsx` switches internal views. |
+| Q4 | No | No composition mechanism (`vite.config.js:4–11`; recorded search). |
+| Q5 | No | Q1–Q4 are No: single SPA captured by expression “single SPA”. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. O acerto é lexical: “single SPA” no sentido de uma única aplicação de página única. É o mesmo falso positivo de 131, 144, 187 e 196.
-- Há uma aplicação real, por isso `frontend_units: 1` e `single-unit`. `ui_technologies: [react]`, `build_tools: [vite]`. `repo_type: other`: ferramenta pessoal publicada, sem caráter de exemplo de MFE, template ou biblioteca.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. The hit is lexical: “single SPA” meaning one single-page application. Same false positive as 131, 144, 187 and 196.
+- A real application exists, hence `frontend_units: 1` and `single-unit`. `ui_technologies: [react]`, `build_tools: [vite]`. `repo_type: other`: published personal tool, without the character of an MFE example, template or library.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** mais um caso de “single SPA” captado pela consulta de tecnologia `"single-spa"`; fica registrada a recorrência, sem proposta de regra.
-- **Protocolo (busca):** a elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ1 (misleading signals):** another “single SPA” case captured by technology query `"single-spa"`; recurrence is recorded, without a proposed rule.
+- **Protocol (search):** eligibility changes from `unknown` (001) to `pass` (002).

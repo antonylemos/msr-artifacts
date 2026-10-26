@@ -20,61 +20,61 @@ annotation:
 
 # 346 — janMoudry/Fluxa
 
-## Contexto
+## Context
 
-Biblioteca TypeScript publicada como `@jan.moudry/fluxa` (`package.json:2–18`): um event bus tipado com propagação em memória, entre abas (`BroadcastChannel`) e entre frames (`postMessage`), “designed for embedded widgets, micro-frontends, and apps that need cross-context event routing” (`README.md:1–17`). Não há aplicação frontend; as páginas HTML em `e2e/pages/` são fixtures de teste Playwright. O nome do repositório não é usado como evidência.
+TypeScript library published as `@jan.moudry/fluxa` (`package.json:2–18`): a typed event bus with propagation in memory, across tabs (`BroadcastChannel`) and across frames (`postMessage`), “designed for embedded widgets, micro-frontends, and apps that need cross-context event routing” (`README.md:1–17`). There is no frontend application; HTML pages in `e2e/pages/` are Playwright test fixtures. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:347` registra rank 346, ID 1140120830, status `cloned`, branch `production` e o commit do front matter, que é o HEAD do clone e de `origin/production`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:347` records rank 346, ID 1140120830, status `cloned`, branch `production` and the front matter commit, which is the HEAD of the clone and of `origin/production`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:347` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:23796` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:23803` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:347` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:23796` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:23803` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2026-01` e `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2026-01` and an empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | 2026-10-07T22:30:33.914Z / 2026-10-08T15:57:37.603Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | 2026-10-07T22:59:52.560Z / 2026-10-08T16:07:52.165Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2026-01-01..2026-01-31`.
+The effective queries append `pushed:>=2025-04-01 created:2026-01-01..2026-01-31`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem TypeScript, `fork: false`, tamanho 129;
-- criação em 2026-01-22T21:17:31Z, push em 2026-01-23T19:20:31Z.
+Hit metadata:
+- null description, no topics, language TypeScript, `fork: false`, size 129;
+- created at 2026-01-22T21:17:31Z, pushed at 2026-01-23T19:20:31Z.
 
-Grafias no README: “micro-frontends” em `README.md:8` e `README.md:94` (“Built for widgets, micro-frontends, and SDKs”). O singular não aparece literalmente no README; aparece como keyword em `package.json:44`, fora dos campos buscados. Esse hit depende do processamento textual da busca do GitHub, que não está registrado. A última alteração do README é `3422879` (2026-01-23), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+README spellings: “micro-frontends” in `README.md:8` and `README.md:94` (“Built for widgets, micro-frontends, and SDKs”). The singular does not appear literally in the README; it appears as a keyword in `package.json:44`, outside the searched fields. This hit depends on GitHub search text processing, which is not recorded. The last README change is `3422879` (2026-01-23), before the October 2026 collections. The README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 46 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Há `src/` (core, transports, utils), testes Vitest, testes Playwright com páginas HTML de fixture em `e2e/`, workflows de CI e arquivos de cache do npm versionados (`.npm/_cacache/…`). | contrária |
-| Biblioteca | `package.json:2–18`: pacote com `main`/`module`/`types` em `dist/` e `exports`. `src/transports/PostMessageTransport.ts`, `BroadcastChannelTransport.ts` e `MemoryTransport.ts`: canais de comunicação. | contrária |
-| Fixtures | `e2e/pages/host.html:9–35`: página de teste com `<iframe>` e `bus.registerFramePeer(...)`, usada para validar a propagação entre frames. São cenários de teste da biblioteca, não unidades de aplicação. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 46 entries, all regular files `100644`; zero symlinks and zero gitlinks. There are `src/` (core, transports, utils), Vitest tests, Playwright tests with HTML fixture pages in `e2e/`, CI workflows and versioned npm cache files (`.npm/_cacache/…`). | contrary |
+| Library | `package.json:2–18`: package with `main`/`module`/`types` in `dist/` and `exports`. `src/transports/PostMessageTransport.ts`, `BroadcastChannelTransport.ts` and `MemoryTransport.ts`: communication channels. | contrary |
+| Fixtures | `e2e/pages/host.html:9–35`: test page with `<iframe>` and `bus.registerFramePeer(...)`, used to validate cross-frame propagation. These are library test scenarios, not application units. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 15 commits, 2 merges de PR feitos na interface do GitHub, de 2026-01-22 (`74094d0`, “first commit”) a 2026-01-23 (SHA `4f585be`). Os autores aparecem como “jan.moudry”, “Jan Moudrý” e “moudryJan”. O branch padrão é `production`, o único remoto. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 15 commits, 2 PR merges made through the GitHub interface, from 2026-01-22 (`74094d0`, “first commit”) to 2026-01-23 (SHA `4f585be`). Authors appear as “jan.moudry”, “Jan Moudrý” and “moudryJan”. The default branch is `production`, the only remote. No historical blob was read and there was no missing object.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend; é uma biblioteca de comunicação. |
-| Q2 | No | Sem unidades, não há independência a avaliar. |
-| Q3 | No | Não há host, shell ou configuração raiz de aplicação; as páginas de `e2e/` são fixtures de teste. |
-| Q4 | No | O repositório oferece um mecanismo de comunicação, não uma composição configurada entre unidades. |
-| Q5 | No | Q1–Q4 são No: biblioteca de apoio a micro-frontends. |
+| Q1 | No | No frontend unit; this is a communication library. |
+| Q2 | No | Without units, there is no independence to assess. |
+| Q3 | No | There is no host, shell or root application configuration; pages in `e2e/` are test fixtures. |
+| Q4 | No | The repository offers a communication mechanism, not configured composition between units. |
+| Q5 | No | Q1–Q4 are No: library supporting micro-frontends. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “MFE frameworks and libraries (e.g., single-spa itself, federation plugins)”.
-- Mesmo enquadramento de 204 e 249 (ferramentas e bibliotecas do ecossistema).
-- **Campos:** `repo_type: library`, `frontend_units: 0`, `unit_organization: none`, `approaches: []`, `ui_technologies: []`, `build_tools: []`.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. It matches “MFE frameworks and libraries (e.g., single-spa itself, federation plugins)”.
+- Same categorization as 204 and 249 (ecosystem tools and libraries).
+- **Fields:** `repo_type: library`, `frontend_units: 0`, `unit_organization: none`, `approaches: []`, `ui_technologies: []`, `build_tools: []`.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** biblioteca que se apresenta como feita para micro-frontends casa as consultas terminológicas.
-- **Protocolo (busca):** o hit singular não tem grafia literal no README. O branch padrão é `production`. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ1 (misleading signals):** library presenting itself as designed for micro-frontends matches terminology queries.
+- **Protocol (search):** the singular hit has no literal spelling in the README. The default branch is `production`. Eligibility changes from `unknown` (001) to `pass` (002).

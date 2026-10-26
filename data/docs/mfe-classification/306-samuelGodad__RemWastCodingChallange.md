@@ -20,63 +20,63 @@ annotation:
 
 # 306 — samuelGodad/RemWastCodingChallange
 
-## Contexto
+## Context
 
-Desafio de código: redesenho da página de escolha de caçambas de um site comercial, em uma única SPA React + Vite (`README.md:1–12`). Micro-frontends aparecem só como possibilidade futura, numa lista de “Scalability Considerations”: “- **Micro-frontends**: Module federation for large teams” (`README.md:209`). O nome do repositório não é usado como evidência.
+Coding challenge: redesign of a commercial site's skip selection page, in a single React + Vite SPA (`README.md:1–12`). Micro-frontends appear only as a future possibility in a “Scalability Considerations” list: “- **Micro-frontends**: Module federation for large teams” (`README.md:209`). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:307` registra rank 306, ID 999101114, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:307` records rank 306, ID 999101114, status `cloned`, branch `main` and the front matter commit, which is HEAD of the clone and `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:307` registra as estratégias `terminology;technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:14933` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:14939` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:307` records strategies `terminology;technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:14933` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:14939` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos três hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2025-06` e `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns the same three hits in each round, from endpoint `repositories`, with subquery `…#created:2025-06` and empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | 2026-10-07T22:22:52.292Z / 2026-10-08T15:54:45.741Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | 2026-10-07T22:54:41.793Z / 2026-10-08T16:05:59.599Z |
 | `technology-module-federation-repositories`: `"module federation" in:name,description,readme` | 2026-10-07T23:18:25.947Z / 2026-10-08T16:15:07.266Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2025-06-01..2025-06-30`.
+Effective queries append `pushed:>=2025-04-01 created:2025-06-01..2025-06-30`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem TypeScript, `fork: false`, tamanho 54;
-- criação em 2025-06-09T18:33:13Z, push em 2025-06-21T04:53:41Z.
+Hit metadata:
+- null description, no topics, language TypeScript, `fork: false`, size 54;
+- created at 2025-06-09T18:33:13Z, pushed at 2025-06-21T04:53:41Z.
 
-As três grafias estão na mesma linha, `README.md:209`: “Micro-frontends” (plural, hifenizado) e “Module federation”. O singular não aparece literalmente; esse hit depende do processamento textual da busca do GitHub, que não está registrado. A última alteração do README é o próprio SHA (2025-06-21), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+All three spellings are on the same line, `README.md:209`: “Micro-frontends” (plural, hyphenated) and “Module federation”. Singular does not appear literally; that hit depends on GitHub search text processing, which is not recorded. README's last change is the SHA itself (2025-06-21), before October 2026 collection. The SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 59 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Uma única aplicação Vite na raiz: `index.html`, `src/` (componentes, hooks, serviços, páginas), `public/` e configs de TS, Tailwind e ESLint. | contrária |
-| Frontend | `vite.config.ts:1–19`: só `@vitejs/plugin-react-swc` e alias `@`. `index.html:30`: um único `<script type="module" src="/src/main.tsx">`. | contrária |
-| Busca de mecanismos | `git grep` no SHA, sem lockfile, por `micro.?front`, `federation`, `single-spa`, `remoteEntry` e `iframe`: só `README.md:209`. | ausente |
-| Documentação | `README.md:206–210`: micro-frontends com Module Federation listados como consideração futura de escalabilidade, ao lado de Redux/Zustand, i18n e SSR. | contrária |
+| Structure | `git ls-tree -r` at the SHA: 59 entries, all regular `100644` files; zero symlinks and zero gitlinks. A single Vite application at root: `index.html`, `src/` (components, hooks, services, pages), `public/` and TS, Tailwind and ESLint configs. | contrary |
+| Frontend | `vite.config.ts:1–19`: only `@vitejs/plugin-react-swc` and alias `@`. `index.html:30`: a single `<script type="module" src="/src/main.tsx">`. | contrary |
+| Mechanism search | `git grep` at the SHA, excluding lockfile, for `micro.?front`, `federation`, `single-spa`, `remoteEntry` and `iframe`: only `README.md:209`. | absent |
+| Documentation | `README.md:206–210`: micro-frontends with Module Federation listed as future scalability consideration, alongside Redux/Zustand, i18n and SSR. | contrary |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 3 commits lineares, nenhum merge, todos de `samuelGodad`, de 2025-06-09 (`d54269e`, “implement the redesign page”) a 2025-06-21 (SHA `64c8559`, “update the image url api”). Só há o branch `main`. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 3 linear commits, no merges, all by `samuelGodad`, from 2025-06-09 (`d54269e`, “implement the redesign page”) to 2025-06-21 (SHA `64c8559`, “update the image url api”). Only branch `main`. No historical blob was read and no object was missing.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única aplicação frontend. |
-| Q2 | No | Sem duas unidades, não há independência a avaliar. |
-| Q3 | No | Não há host, shell ou configuração raiz de composição. |
-| Q4 | No | Nenhum mecanismo de composição; Module Federation citado só como possibilidade futura (`README.md:209`). |
-| Q5 | No | Q1–Q4 são No: SPA convencional de desafio de código. |
+| Q1 | No | A single frontend application. |
+| Q2 | No | Without two units, there is no independence to assess. |
+| Q3 | No | No host, shell or root composition configuration. |
+| Q4 | No | No composition mechanism; Module Federation cited only as future possibility (`README.md:209`). |
+| Q5 | No | Q1–Q4 are No: conventional coding challenge SPA. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “conventional frontend monoliths” e a “repositories mentioning micro-frontends without implementing them”.
-- Como em 094 (final), o caráter de exercício ou desafio só define `repo_type: example`.
-- **Campos:** `frontend_units: 1`, `unit_organization: single-unit`, `approaches: []`, `ui_technologies: [react]`, `build_tools: [vite]`.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. Matches “conventional frontend monoliths” and “repositories mentioning micro-frontends without implementing them”.
+- As in 094 (final), exercise or challenge character determines only `repo_type: example`.
+- **Fields:** `frontend_units: 1`, `unit_organization: single-unit`, `approaches: []`, `ui_technologies: [react]`, `build_tools: [vite]`.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** uma linha de “considerações de escalabilidade” no README casa as três consultas, terminológicas e tecnológica.
-- **Protocolo (busca):** o hit singular não tem grafia literal. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ1 (misleading signals):** one README “scalability considerations” line matches all three terminology and technology queries.
+- **Protocol (search):** singular hit has no literal spelling. Eligibility changes from `unknown` (001) to `pass` (002).

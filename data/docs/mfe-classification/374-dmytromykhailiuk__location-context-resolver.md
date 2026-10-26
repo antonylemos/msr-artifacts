@@ -20,60 +20,60 @@ annotation:
 
 # 374 — dmytromykhailiuk/location-context-resolver
 
-## Contexto
+## Context
 
-Biblioteca TypeScript publicada como `@dmytromykhailiuk/location-context-resolver` (`package.json:2–4`, `25–30`). Ela resolve a origem, o pathname relativo ao base path e os query params da aplicação e de sua contraparte remota (`README.md:1–4`, `16–20`). O README a apresenta como útil para “a micro-frontend mounted under `/my-app` on a host shell, mirrored on its own remote origin” (`README.md:10–11`). O repositório contém `src/index.ts`, testes, uma página de documentação (`index.html`) e um playground. Não há aplicação composta. O nome do repositório não é usado como evidência.
+TypeScript library published as `@dmytromykhailiuk/location-context-resolver` (`package.json:2–4`, `25–30`). It resolves the origin, pathname relative to the base path and query params of an application and its remote counterpart (`README.md:1–4`, `16–20`). The README presents it as useful for “a micro-frontend mounted under `/my-app` on a host shell, mirrored on its own remote origin” (`README.md:10–11`). The repository contains `src/index.ts`, tests, a documentation page (`index.html`) and a playground. There is no composed application. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:375` registra rank 374, ID 1314279064, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:375` records rank 374, ID 1314279064, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:375` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:34318` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:34324` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:375` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:34318` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:34324` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2026-07` e `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2026-07` and an empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | 2026-10-07T22:40:01.772Z / 2026-10-08T16:01:15.155Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | 2026-10-07T23:10:08.452Z / 2026-10-08T16:10:08.061Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2026-07-01..2026-07-31`.
+The effective queries append `pushed:>=2025-04-01 created:2026-07-01..2026-07-31`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem HTML (a página de documentação), `fork: false`, tamanho 53;
-- criação em 2026-07-27T21:07:29Z, push em 2026-08-13T16:28:58Z.
+Hit metadata:
+- null description, no topics, language HTML (the documentation page), `fork: false`, size 53;
+- created at 2026-07-27T21:07:29Z, pushed at 2026-08-13T16:28:58Z.
 
-A grafia “micro-frontend” está em `README.md:10`. O plural não aparece literalmente; esse hit depende do processamento textual da busca do GitHub, que não está registrado. A última alteração do README é `1bd9de1` (2026-07-28), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+Spelling “micro-frontend” is in `README.md:10`. Plural does not appear literally; this hit depends on GitHub search text processing, which is not recorded. The last README change is `1bd9de1` (2026-07-28), before the October 2026 collections. The README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 22 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks: `src/index.ts`, seis testes, `playground/`, `index.html` (documentação) e configs de build (`tsup`, Vite do playground, Vitest, Biome). | contrária |
-| Biblioteca | `package.json:2–30`: pacote com `main`/`module`/`types` em `dist/`; `keywords` com `micro-frontend`, `microfrontend` e `module-federation` (`:16–18`). | contrária |
-| Documentação | `README.md:10–14`: cenários de uso (micro-frontend sob base path, white-label); a biblioteca não compõe unidades. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 22 entries, all regular files `100644`; zero symlinks and zero gitlinks: `src/index.ts`, six tests, `playground/`, `index.html` (documentation) and build configs (`tsup`, playground Vite, Vitest, Biome). | contrary |
+| Library | `package.json:2–30`: package with `main`/`module`/`types` in `dist/`; `keywords` with `micro-frontend`, `microfrontend` and `module-federation` (`:16–18`). | contrary |
+| Documentation | `README.md:10–14`: use cases (micro-frontend under a base path, white-label); the library does not compose units. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 2 commits lineares de Dmytro Mykhailiuk: `1bd9de1` (2026-07-28, “initial”) e o SHA `79f684d` (2026-08-13, “update homepage url”). Só há o branch `main`. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 2 linear commits by Dmytro Mykhailiuk: `1bd9de1` (2026-07-28, “initial”) and SHA `79f684d` (2026-08-13, “update homepage url”). Only branch `main` exists. No historical blob was read and there was no missing object.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend; é uma biblioteca utilitária, com página de documentação e playground. |
-| Q2 | No | Sem unidades, não há independência a avaliar. |
-| Q3 | No | Não há host, shell ou configuração raiz. |
-| Q4 | No | Nenhum mecanismo de composição configurado. |
-| Q5 | No | Q1–Q4 são No: biblioteca de apoio. |
+| Q1 | No | No frontend unit; a utility library with documentation page and playground. |
+| Q2 | No | Without units, there is no independence to assess. |
+| Q3 | No | There is no host, shell or root configuration. |
+| Q4 | No | No composition mechanism configured. |
+| Q5 | No | Q1–Q4 are No: supporting library. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “MFE frameworks and libraries”, como os rascunhos 204, 249 e 346.
-- **Campos:** `repo_type: library`, `frontend_units: 0`, `unit_organization: none`, `approaches: []`, `ui_technologies: []`, `build_tools: []`.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. It matches “MFE frameworks and libraries”, like drafts 204, 249 and 346.
+- **Fields:** `repo_type: library`, `frontend_units: 0`, `unit_organization: none`, `approaches: []`, `ui_technologies: []`, `build_tools: []`.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** biblioteca que cita micro-frontends como cenário de uso casa as consultas terminológicas.
-- **Protocolo (busca):** o hit plural não tem grafia literal. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ1 (misleading signals):** a library citing micro-frontends as a use case matches terminology queries.
+- **Protocol (search):** the plural hit has no literal spelling. Eligibility changes from `unknown` (001) to `pass` (002).

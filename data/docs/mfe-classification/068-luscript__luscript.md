@@ -20,29 +20,29 @@ annotation:
 
 # 068 — luscript/luscript
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** não é projeto de software (repositório de perfil do GitHub, `<usuário>/<usuário>`)
+- **Repository type:** not a software project (GitHub profile repository, `<user>/<user>`)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | Um único arquivo versionado: `README.md` | ausente |
-| Documentação | `README.md:11`: "My background includes end-to-end work with… microfrontends…" como experiência profissional | fraca |
-| Tecnologia / Configuração / Código-fonte / Build/deploy | Inexistentes | ausente |
+| Structure | A single tracked file: `README.md` | absent |
+| Documentation | `README.md:11`: "My background includes end-to-end work with… microfrontends…" as professional experience | weak |
+| Technology / Configuration / Source code / Build/deploy | Nonexistent | absent |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend; só `README.md` |
-| Q2 | No | Não há unidades |
-| Q3 | No | Não há host, shell nem root config |
-| Q4 | No | Nenhum mecanismo de composição |
-| Q5 | No | Q1–Q4 convergem |
+| Q1 | No | No frontend units; only `README.md` |
+| Q2 | No | No units |
+| Q3 | No | No host, shell or root config |
+| Q4 | No | No composition mechanism |
+| Q5 | No | Q1–Q4 converge |
 
-## Motivo
+## Rationale
 
-- README de perfil do GitHub; "microfrontends" aparece só como experiência profissional.
-- Corresponde a "repositories mentioning micro-frontends without implementing them"; na filtragem automática (seção 3.2 do protocolo), "clearly not software projects".
+- GitHub profile README; "microfrontends" appears only as professional experience.
+- Matches "repositories mentioning micro-frontends without implementing them"; in automatic filtering (protocol section 3.2), "clearly not software projects".

@@ -20,77 +20,77 @@ annotation:
 
 # 237 — Axiean/micro-store
 
-## Contexto
+## Context
 
-“Micro-Frontend E-Commerce Application” (`README.md:1–12`): duas aplicações Next.js 15 independentes, combinadas no padrão Multi-Zones:
-- `store-app` (zona 1, porta 3000), com a vitrine de produtos;
-- `cart-app` (zona 2, porta 3001, `basePath: "/cart"`), com o carrinho.
+“Micro-Frontend E-Commerce Application” (`README.md:1–12`): two independent Next.js 15 applications combined in the Multi-Zones pattern:
+- `store-app` (zone 1, port 3000), with the product storefront;
+- `cart-app` (zone 2, port 3001, `basePath: "/cart"`), with the cart.
 
-O `store-app` reescreve `/cart/:path*` para o `cart-app`, e as duas zonas compartilham o estado do carrinho por `localStorage`. Há um `docker-compose.yml` com um contêiner por zona. O README diz que o projeto foi feito como avaliação técnica de frontend (`README.md:3`). O nome do repositório não é usado como evidência.
+`store-app` rewrites `/cart/:path*` to `cart-app`, and both zones share cart state through `localStorage`. There is a `docker-compose.yml` with one container per zone. The README says the project was created as a frontend technical assessment (`README.md:3`). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:238` registra rank 237, ID 1031213794, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:238` records rank 237, ID 1031213794, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:238` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:17230` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:17234` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:238` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:17230` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:17234` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2025-08` e `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2025-08` and an empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | 2026-10-07T22:24:46.445Z / 2026-10-08T15:55:27.142Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | 2026-10-07T22:56:00.831Z / 2026-10-08T16:06:25.259Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2025-08-01..2025-08-31`.
+The effective queries append `pushed:>=2025-04-01 created:2025-08-01..2025-08-31`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem TypeScript, `fork: false`, tamanho 184;
-- criação em 2025-08-03T09:04:45Z, push em 2025-08-04T06:36:46Z.
+Hit metadata:
+- null description, no topics, language TypeScript, `fork: false`, size 184;
+- created at 2025-08-03T09:04:45Z, pushed at 2025-08-04T06:36:46Z.
 
-Grafias no README:
+Spellings in the README:
 - “Micro-Frontend”: `README.md:1`; “micro-frontend”: `README.md:3`;
 - “Micro-Frontends”: `README.md:5` (“Architecture: Multi-Zone Micro-Frontends”).
 
-A busca de frase trata o hífen como separador. A última alteração do README é o próprio SHA, `7ed9142` (2025-08-04), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+Phrase search treats the hyphen as a separator. The last README change is the SHA itself, `7ed9142` (2025-08-04), before the October 2026 collections. The README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 46 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. `store-app/` e `cart-app/` têm cada um `package.json`, `package-lock.json`, `next.config.ts`, `Dockerfile` e `src/` (App Router). Na raiz ficam `README.md`, `docker-compose.yml` e `.gitignore`. | contexto |
-| Configuração (composição por rota) | `store-app/next.config.ts:27–42`: `rewrites()` com `{ source: "/cart/:path*", destination: "http://cart-app:3000/cart/:path*" }`, descrito como “the core of the Multi-Zone micro-frontend architecture”. `cart-app/next.config.ts:4`: `basePath: "/cart"`. | forte |
-| Build/deploy | `docker-compose.yml:5–29`: serviços `store-app` (porta 3000) e `cart-app` (3001→3000), cada um com `build.context` e `Dockerfile` próprios. O hostname `cart-app` do rewrite é o nome do serviço no Compose. `store-app/Dockerfile:3–30` (e o análogo do carrinho) gera uma imagem `standalone`. Scripts próprios: `store-app/package.json:5–10`; `cart-app/package.json:5–10` (`-p 3001`). | forte |
-| Código-fonte (navegação e estado) | `store-app/src/components/Header.tsx:29`: `<a href="/cart">`, navegação de página inteira para a zona do carrinho. As duas zonas persistem o carrinho na mesma chave de `localStorage` (`store-app/src/store/cartStore.ts:82–85`; `cart-app/src/store/cartStore.ts:83`), em arquivos duplicados por zona, não importados. | moderada |
-| Código-fonte (fronteiras) | Busca por `../..` e por `../store-app` ou `../cart-app`: nenhuma ocorrência. Cada zona usa alias `@/` para o próprio `src`. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 46 entries, all regular files `100644`; zero symlinks and zero gitlinks. `store-app/` and `cart-app/` each have `package.json`, `package-lock.json`, `next.config.ts`, `Dockerfile` and `src/` (App Router). At the root are `README.md`, `docker-compose.yml` and `.gitignore`. | context |
+| Configuration (route composition) | `store-app/next.config.ts:27–42`: `rewrites()` with `{ source: "/cart/:path*", destination: "http://cart-app:3000/cart/:path*" }`, described as “the core of the Multi-Zone micro-frontend architecture”. `cart-app/next.config.ts:4`: `basePath: "/cart"`. | strong |
+| Build/deploy | `docker-compose.yml:5–29`: services `store-app` (port 3000) and `cart-app` (3001→3000), each with its own `build.context` and `Dockerfile`. The rewrite hostname `cart-app` is the Compose service name. `store-app/Dockerfile:3–30` (and the cart equivalent) generates a `standalone` image. Their own scripts: `store-app/package.json:5–10`; `cart-app/package.json:5–10` (`-p 3001`). | strong |
+| Source code (navigation and state) | `store-app/src/components/Header.tsx:29`: `<a href="/cart">`, full-page navigation to the cart zone. Both zones persist the cart under the same `localStorage` key (`store-app/src/store/cartStore.ts:82–85`; `cart-app/src/store/cartStore.ts:83`), in files duplicated per zone, not imported. | moderate |
+| Source code (boundaries) | Search for `../..` and for `../store-app` or `../cart-app`: no occurrences. Each zone uses alias `@/` for its own `src`. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 15 commits lineares, nenhum merge, todos de Axiean `<axieans@gmail.com>`, entre 2025-08-03 (`1718d95`, “init”) e 2025-08-04 (SHA `7ed9142`, “update readme”). `ce3eddd` (“docker file setup”) adiciona a conteinerização. Nenhum blob histórico foi lido. O clone é parcial (`blob:none`) e `git rev-list --objects $SHA --missing=print` mostra 52 objetos históricos ausentes; os arquivos atuais necessários foram legíveis e nenhum fetch foi tentado.
+Non-shallow clone; 15 linear commits, no merges, all by Axiean `<axieans@gmail.com>`, between 2025-08-03 (`1718d95`, “init”) and 2025-08-04 (SHA `7ed9142`, “update readme”). `ce3eddd` (“docker file setup”) adds containerization. No historical blob was read. The clone is partial (`blob:none`) and `git rev-list --objects $SHA --missing=print` shows 52 missing historical objects; the necessary current files were readable and no fetch was attempted.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | Duas unidades no repositório, a do carrinho referenciada pela configuração de composição (`store-app/next.config.ts:36–39`). |
-| Q2 | Yes | Cada zona tem `package.json`, lockfile, `next.config.ts`, `Dockerfile` e serviço próprios, sem imports de código-fonte entre elas. |
-| Q3 | Yes | O `store-app` é a entrada e encaminha `/cart` para o `cart-app`, que serve sob o mesmo domínio (`README.md:9–12`; `next.config.ts:32–41`). |
-| Q4 | Yes | Composição por rota com Next.js Multi-Zones (`rewrites` + `basePath`), configurada e coerente com o Compose. |
-| Q5 | Yes | Q1–Q4 são Yes: duas zonas Next.js compostas por rota. |
+| Q1 | Yes | Two units in the repository, the cart unit referenced by the composition configuration (`store-app/next.config.ts:36–39`). |
+| Q2 | Yes | Each zone has its own `package.json`, lockfile, `next.config.ts`, `Dockerfile` and service, without source code imports between them. |
+| Q3 | Yes | `store-app` is the entry point and forwards `/cart` to `cart-app`, which serves under the same domain (`README.md:9–12`; `next.config.ts:32–41`). |
+| Q4 | Yes | Route composition with Next.js Multi-Zones (`rewrites` + `basePath`), configured and consistent with Compose. |
+| Q5 | Yes | Q1–Q4 are Yes: two Next.js zones composed by route. |
 
-## Motivo
+## Rationale
 
-- `MFE-implemented` pela regra Q1–Q5 Yes, com `status: review`, como 013 (`multi-zones`, `MFE-implemented`/review). As duas zonas e a configuração de composição estão no snapshot.
-- A composição é por rota no servidor, com navegação de página inteira entre zonas. Ela depende da mesma revisão de 013 e do rascunho 199 (decisão aberta “link-only or iframe composition”, aqui com o host reservando e encaminhando o prefixo `/cart`). Diferente de 199, a localização da zona está definida (`http://cart-app:3000`, nome do serviço no `docker-compose.yml:20–24`).
-- `approaches: [multi-zones]`, `ui_technologies: [react, next]`, `build_tools: []` (convenção Next sem bundler explícito, como 199), `frontend_units: 2`, `unit_organization: monorepo`, `repo_type: example` (avaliação técnica, `README.md:3`).
+- `MFE-implemented` under the Q1–Q5 Yes rule, with `status: review`, as in 013 (`multi-zones`, `MFE-implemented`/review). Both zones and the composition configuration are in the snapshot.
+- Composition is by route on the server, with full-page navigation between zones. It depends on the same review as 013 and draft 199 (open decision “link-only or iframe composition”, here with the host reserving and forwarding prefix `/cart`). Unlike 199, the zone location is defined (`http://cart-app:3000`, service name in `docker-compose.yml:20–24`).
+- `approaches: [multi-zones]`, `ui_technologies: [react, next]`, `build_tools: []` (Next convention without explicit bundler, as in 199), `frontend_units: 2`, `unit_organization: monorepo`, `repo_type: example` (technical assessment, `README.md:3`).
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** Multi-Zones com `rewrites` resolvidos pela rede do Docker Compose, `basePath` na zona remota e estado do carrinho compartilhado por `localStorage` com a mesma chave.
-- **Protocolo (busca):** as grafias com hífen casam as consultas de frase. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ2:** Multi-Zones with `rewrites` resolved through the Docker Compose network, `basePath` in the remote zone and cart state shared through `localStorage` under the same key.
+- **Protocol (search):** hyphenated spellings match phrase queries. Eligibility changes from `unknown` (001) to `pass` (002).
 
-## Ponto para revisão conjunta
+## Point for joint review
 
-1. **Composição por zonas:** Multi-Zones por `rewrites` e navegação de página inteira conta como mecanismo de composição para Q4? É a mesma pergunta pendente em 013 e 199.
+1. **Zone composition:** does Multi-Zones through `rewrites` and full-page navigation count as a composition mechanism for Q4? This is the same question pending in 013 and 199.
 
-Se a resposta for positiva, o caso fica `MFE-implemented`. Se a composição por rota não contar, vira `Non-MFE`. Não se propõe regra nova. Até a decisão, preservar `review`.
-- **Contribuição da revisão independente (Lupa):** concordância com MFE-implemented (Q1–Q5 Yes), `multi-zones`, duas unidades em `monorepo` e `review`, e recomendação de decidir favoravelmente a composição por rotas neste caso e em 013. A composição por zonas está implementada: o servidor da vitrine reserva `/cart` e o encaminha a outra aplicação presente, cujo `basePath` é `/cart`. Divergência de campo, não adotada por contrariar a convenção vigente (flags de CLI não contam como configuração de bundler): ambos os manifests declaram `next dev --turbopack` (`cart-app/package.json:6`, `store-app/package.json:6`), e a revisora recomenda `build_tools: [turbopack]` como observação do modo dev (o build usa `next build` sem flag de bundler); mantido `build_tools: []`, e a alternativa fica registrada. Os precedentes 013 (MFE-implemented/`review`) e 199 (`Uncertain`/`review`) não são finais; a lacuna de `CART_DOMAIN` de 199 não existe aqui, pois há serviço, alvo e código efetivos. A busca textual: o README contém as variantes hifenizadas do singular e do plural (`README.md:1,3,5`); a compatibilidade entre consulta e grafia é observada e não propriedade geral demonstrada do GitHub. Também registrar o alias residual `../../packages/ui` e o escopo de `-p 3001`.
+If the answer is positive, the case remains `MFE-implemented`. If route composition does not count, it becomes `Non-MFE`. No new rule is proposed. Until the decision, preserve `review`.
+- **Independent review contribution (Lupa):** agreement with MFE-implemented (Q1–Q5 Yes), `multi-zones`, two units in `monorepo` and `review`, and recommendation to decide in favor of route composition in this case and in 013. Zone composition is implemented: the storefront server reserves `/cart` and forwards it to another present application, whose `basePath` is `/cart`. Field disagreement, not adopted because it contradicts the current convention (CLI flags do not count as bundler configuration): both manifests declare `next dev --turbopack` (`cart-app/package.json:6`, `store-app/package.json:6`), and the reviewer recommends `build_tools: [turbopack]` as an observation of dev mode (build uses `next build` without a bundler flag); `build_tools: []` retained, with the alternative recorded. Precedents 013 (MFE-implemented/`review`) and 199 (`Uncertain`/`review`) are not final; the `CART_DOMAIN` gap in 199 does not exist here, because there is an actual service, target and code. Text search: the README contains hyphenated singular and plural variants (`README.md:1,3,5`); compatibility between query and spelling is observed and is not a demonstrated general property of GitHub. Also record residual alias `../../packages/ui` and the scope of `-p 3001`.

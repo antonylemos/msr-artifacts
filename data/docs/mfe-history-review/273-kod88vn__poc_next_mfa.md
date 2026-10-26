@@ -13,104 +13,52 @@ annotation:
 
 # 273 — kod88vn/poc_next_mfa
 
-## Leitura do repositório
+## Repository overview
 
-5 commits até o snapshot, de 2026-04-11 a 2026-04-24. `9afe190` (2026-04-11, "Initial commit") só
-cria o `README.md`. `18d620e` (2026-04-12, "init") introduz a estrutura de duas zonas: `package.json`,
-`turbo.json`, `.gitignore`, `apps/shell`, `apps/shop` e `packages/ui` (com `Button.tsx`, `Header.tsx`,
-`index.ts` e `package.json`), e altera o `README.md`. `e001413` (2026-04-12, "ready for deploy")
-altera os `tsconfig.json` do shell e do shop e cria o `yarn.lock`. `3e95170` (2026-04-24, "feat:
-unified brand theme pipeline, ADA normalization, URL routing policy") introduz a terceira zona,
-`apps/duda` inteira (com `ARCHITECTURE.md`), cria `apps/shell/app/not-found/page.tsx`,
-`load-root-env.js`, `package-lock.json`, `test-duda-themes.js` e os testes, e altera
-`package.json`, `turbo.json`, os `next.config.js` e layouts do shell e do shop, a página inicial
-do shell e `packages/ui` (`Button.tsx`, `Header.tsx`, `index.ts`). O commit do snapshot, `d20db82`
-(2026-04-24, "feat: simplify header navigation and accessibility logic"), só toca
-`packages/ui/src/Header.tsx`, `packages/ui/src/headerThemeAccessibility.ts` e o teste
-correspondente. Nenhum commit até o snapshot remove arquivo (`--diff-filter=D` vazio).
+5 commits up to snapshot, from 2026-04-11 to 2026-04-24. The `9afe190` (2026-04-11, "Initial commit") creates only `README.md`. The `18d620e` (2026-04-12, "init") introduces two-zone structure: `package.json`, `turbo.json`, `.gitignore`, `apps/shell`, `apps/shop` and `packages/ui` (with `Button.tsx`, `Header.tsx`, `index.ts` and `package.json`), and changes `README.md`. The `e001413` (2026-04-12, "ready for deploy") changes shell and shop `tsconfig.json` files and creates `yarn.lock`. The `3e95170` (2026-04-24, "feat:
+unified brand theme pipeline, ADA normalization, URL routing policy") introduces third zone, entire `apps/duda` (with `ARCHITECTURE.md`), creates `apps/shell/app/not-found/page.tsx`, `load-root-env.js`, `package-lock.json`, `test-duda-themes.js` and tests, and changes `package.json`, `turbo.json`, shell and shop `next.config.js` files and layouts, shell homepage and `packages/ui` (`Button.tsx`, `Header.tsx`, `index.ts`). Snapshot commit `d20db82` (2026-04-24, "feat: simplify header navigation and accessibility logic") touches only `packages/ui/src/Header.tsx`, `packages/ui/src/headerThemeAccessibility.ts` and corresponding test. No commit up to snapshot removes a file (`--diff-filter=D` empty).
 
-O `README.md` não muda depois de `18d620e`: o objeto é o mesmo nesse commit e no snapshot
-(`f5abd49`). Ele é, portanto, anterior a `3e95170`, que cria a zona duda, o que explica por que o
-README fala em duas zonas, como a revisão de documentação supôs. O mesmo vale para
-`packages/ui/package.json` (objeto `fc2aabf` em `18d620e` e no snapshot).
+The `README.md` does not change after `18d620e`: object is identical in this commit and snapshot (`f5abd49`). It therefore predates `3e95170`, creating duda zone, explaining why README mentions two zones, as documentation review supposed. Same applies to `packages/ui/package.json` (object `fc2aabf` in `18d620e` and snapshot).
 
-O clone permite ver mensagens, datas, os arquivos criados ou alterados por commit e os
-identificadores dos objetos. O conteúdo das versões antigas dos arquivos alterados não está no
-clone: `show 18d620e:packages/ui/src/index.ts` e `show 18d620e:apps/shop/app/layout.tsx` falharam
-por objeto ausente. Só se leem versões antigas cujo objeto é o mesmo do snapshot, como o
-`README.md`.
+Clone reveals messages, dates, files created or changed per commit and object identifiers. Old version contents of changed files are absent from clone: `show 18d620e:packages/ui/src/index.ts` and `show 18d620e:apps/shop/app/layout.tsx` failed with missing objects. Only old versions whose object matches snapshot can be read, such as `README.md`.
 
-## Pontos
+## Points
 
-| # | Ponto | Origem | Pergunta | Commits | Resultado |
+| # | Point | Origin | Question | Commits | Result |
 |---|---|---|---|---|---|
-| 1 | `turbo` tem `turbo.json`, mas só os scripts do `package.json` o invocam | 3.4.2 (package.json:18) | uso de dependência | 18d620e 2026-04-12 init; 3e95170 2026-04-24 feat: unified brand theme pipeline, ADA normalization, URL routing policy | esclarecido |
-| 2 | "Independent deployability" sem artefato de deploy no snapshot | 3.4.7 #2 | ativo ou abandonado | 18d620e 2026-04-12 init; e001413 2026-04-12 ready for deploy; 3e95170 2026-04-24 feat: unified brand theme pipeline, ADA normalization, URL routing policy | esclarecido |
-| 3 | `Button` descrito como parte do design system compartilhado, mas nenhuma app o importa | 3.4.7 #9 | ativo ou abandonado | 18d620e 2026-04-12 init; 3e95170 2026-04-24 feat: unified brand theme pipeline, ADA normalization, URL routing policy | inconclusivo |
-| 4 | README diz que os links entre zonas usam só `<a>`, mas a página `not-found` do shell usa `<Link>` para `/shop` e `/duda` | 3.4.7 #13 | estágios em conflito | 18d620e 2026-04-12 init; 3e95170 2026-04-24 feat: unified brand theme pipeline, ADA normalization, URL routing policy | esclarecido |
-| 5 | README diz que o `turbo.json` constrói `packages/ui` antes das apps, mas o pacote não tem script `build` | 3.4.7 #14 | estágios em conflito | 18d620e 2026-04-12 init; 3e95170 2026-04-24 feat: unified brand theme pipeline, ADA normalization, URL routing policy | esclarecido |
-| 6 | Comentário do layout do shop diz que, pelo rewrite, a página usa o layout do shell como moldura | 3.4.7 #19 | estágios em conflito | 18d620e 2026-04-12 init; 3e95170 2026-04-24 feat: unified brand theme pipeline, ADA normalization, URL routing policy | inconclusivo |
+| 1 | `turbo` has `turbo.json`, but only `package.json` scripts invoke it | 3.4.2 (package.json:18) | dependency use | 18d620e 2026-04-12 init; 3e95170 2026-04-24 feat: unified brand theme pipeline, ADA normalization, URL routing policy | clarified |
+| 2 | "Independent deployability" without deploy artifact in snapshot | 3.4.7 #2 | active or abandoned | 18d620e 2026-04-12 init; e001413 2026-04-12 ready for deploy; 3e95170 2026-04-24 feat: unified brand theme pipeline, ADA normalization, URL routing policy | clarified |
+| 3 | `Button` described as part of shared design system, but no app imports it | 3.4.7 #9 | active or abandoned | 18d620e 2026-04-12 init; 3e95170 2026-04-24 feat: unified brand theme pipeline, ADA normalization, URL routing policy | inconclusive |
+| 4 | README says cross-zone links use only `<a>`, but shell `not-found` page uses `<Link>` to `/shop` and `/duda` | 3.4.7 #13 | conflicting stages | 18d620e 2026-04-12 init; 3e95170 2026-04-24 feat: unified brand theme pipeline, ADA normalization, URL routing policy | clarified |
+| 5 | README says `turbo.json` builds `packages/ui` before apps, but package has no `build` script | 3.4.7 #14 | conflicting stages | 18d620e 2026-04-12 init; 3e95170 2026-04-24 feat: unified brand theme pipeline, ADA normalization, URL routing policy | clarified |
+| 6 | Shop layout comment says page uses shell layout as frame through rewrite | 3.4.7 #19 | conflicting stages | 18d620e 2026-04-12 init; 3e95170 2026-04-24 feat: unified brand theme pipeline, ADA normalization, URL routing policy | inconclusive |
 
-## Observações
+## Observations
 
-**1. `turbo` sem invocação fora dos scripts.** O `package.json` e o `turbo.json` da raiz aparecem
-em `18d620e` e são alterados uma vez, em `3e95170`. Nenhum commit até o snapshot cria ou remove um
-workflow de CI, Dockerfile ou outro arquivo de automação: a árvore do snapshot não tem nenhum, e não
-há remoção no histórico. Os únicos scripts soltos, `load-root-env.js` e `test-duda-themes.js`,
-entram em `3e95170` e continuam no snapshot. O histórico esclarece que não houve invocação de
-`turbo` fora dos scripts que depois tenha sido apagada; não mostra o conteúdo das versões antigas
-dos scripts do `package.json`. A dependência continua `Undetermined`.
+**1. `turbo` without invocation outside scripts.** Root `package.json` and `turbo.json` appear in `18d620e` and change once, in `3e95170`. No commit up to snapshot creates or removes a CI workflow, Dockerfile or other automation file: snapshot tree has none, and history has no removal. Only standalone scripts, `load-root-env.js` and `test-duda-themes.js`, arrive in `3e95170` and remain in snapshot. History clarifies no `turbo` invocation outside scripts was later deleted; it does not show old contents of `package.json` scripts. Dependency remains `Undetermined`.
 
-**2. "Independent deployability".** A mensagem de `e001413` anuncia "ready for deploy", mas o
-commit só altera `apps/shell/tsconfig.json` e `apps/shop/tsconfig.json` e cria `yarn.lock`. Nenhum
-dos cinco commits cria ou remove Dockerfile, compose, workflow, manifesto de hospedagem ou
-configuração de proxy. O histórico esclarece que a ausência de artefato de deploy não é abandono:
-em nenhuma versão até o snapshot houve um. Não mostra se o projeto foi publicado por um caminho
-externo ao repositório (o `.gitignore` ignora `.vercel`, mas isso não é artefato).
+**2. "Independent deployability".** Message of `e001413` announces "ready for deploy", but commit changes only `apps/shell/tsconfig.json` and `apps/shop/tsconfig.json` and creates `yarn.lock`. None of five commits creates or removes Dockerfile, compose, workflow, hosting manifest or proxy configuration. History clarifies missing deploy artifact is not abandonment: no version up to snapshot had one. It does not show whether project was published through a path outside repository (`.gitignore` ignores `.vercel`, but that is not an artifact).
 
-**3. `Button` sem uso.** `packages/ui/src/Button.tsx` e `packages/ui/src/index.ts` aparecem em
-`18d620e`, junto com as apps shell e shop, e são alterados em `3e95170`, o mesmo commit que altera
-a página inicial e os layouts do shell e do shop. O `README.md`, que cita `Button`, é o mesmo desde
-`18d620e`. Para saber se alguma app importava o `Button` em `18d620e` seria preciso ler o conteúdo
-dessas versões, que não está no clone (`show 18d620e:packages/ui/src/index.ts` falhou por objeto
-ausente). O histórico não diz se o `Button` foi usado e deixou de ser, ou se nunca foi.
-Inconclusivo.
+**3. Unused `Button`.** The `packages/ui/src/Button.tsx` and `packages/ui/src/index.ts` appear in `18d620e`, together with shell and shop apps, and change in `3e95170`, same commit changing shell and shop homepage and layouts. The `README.md`, mentioning `Button`, is identical since `18d620e`. Knowing whether any app imported `Button` at `18d620e` would require reading those version contents, absent from clone (`show 18d620e:packages/ui/src/index.ts` failed with missing object). History does not say whether `Button` was used and stopped being used, or never used. Inconclusive.
 
-**4. `<a>` contra `<Link>`.** A afirmação "Cross-zone links use plain `<a>` tags (not `<Link>`)"
-está no `README.md` desde `18d620e` (mesmo objeto `f5abd49` no snapshot; a linha foi lida na versão
-desse commit). A página `apps/shell/app/not-found/page.tsx`, que usa `Link` para `/shop` e `/duda`,
-é criada depois, em `3e95170`, junto com a zona duda. O histórico esclarece que a afirmação e a
-página pertencem a estágios diferentes: o README foi escrito antes de a página existir e não foi
-atualizado quando ela entrou. Não mostra se o uso de `Link` nessa página foi intencional.
+**4. `<a>` versus `<Link>`.** Claim "Cross-zone links use plain `<a>` tags (not `<Link>`)" is in `README.md` since `18d620e` (same object `f5abd49` in snapshot; line was read at that commit). Page `apps/shell/app/not-found/page.tsx`, using `Link` to `/shop` and `/duda`, is created afterward in `3e95170`, together with duda zone. History clarifies claim and page belong to different stages: README was written before page existed and was not updated when it arrived. It does not show whether `Link` usage in page was intentional.
 
-**5. `packages/ui` construído antes das apps.** O `packages/ui/package.json` é criado em `18d620e`
-e nunca alterado (objeto `fc2aabf` em `18d620e` e no snapshot), e a frase do README
-(README.md:84) também é a mesma desde `18d620e`. Em nenhuma versão até o snapshot o pacote teve
-outro manifesto, portanto nunca teve script `build` para o `^build` rodar. O `turbo.json` foi
-alterado em `3e95170`, e o conteúdo da versão anterior não está no clone, mas a ausência do
-script está no manifesto do pacote, não no `turbo.json`. O histórico esclarece que a contradição
-não é resto de um estágio em que `packages/ui` tinha build próprio: ela existe desde que a frase foi
-escrita.
+**5. `packages/ui` built before apps.** The `packages/ui/package.json` is created in `18d620e` and never changed (object `fc2aabf` in `18d620e` and snapshot), and README sentence (README.md:84) is also identical since `18d620e`. No version up to snapshot had another package manifest, so it never had a `build` script for `^build` to run. The `turbo.json` changed in `3e95170`, and earlier version contents are absent from clone, but missing script is in package manifest, not `turbo.json`. History clarifies contradiction is not a remnant of a stage where `packages/ui` had own build: it exists since sentence was written.
 
-**6. Layout do shell como moldura.** `apps/shop/app/layout.tsx` aparece em `18d620e` e é alterado
-em `3e95170`, o mesmo commit que altera `apps/shell/next.config.js`. O conteúdo da versão de
-`18d620e` não está no clone (`show 18d620e:apps/shop/app/layout.tsx` falhou por objeto ausente), e
-o mesmo vale para a versão antiga do `next.config.js` do shell. O histórico não mostra se o
-comentário já existia na primeira versão nem se o comportamento descrito correspondia a uma
-configuração anterior. Inconclusivo.
+**6. Shell layout as frame.** The `apps/shop/app/layout.tsx` appears in `18d620e` and changes in `3e95170`, same commit changing `apps/shell/next.config.js`. Version contents at `18d620e` are absent from clone (`show 18d620e:apps/shop/app/layout.tsx` failed with missing object), as is old shell `next.config.js` version. History does not show whether comment already existed in first version or described behavior matched earlier configuration. Inconclusive.
 
-## Comandos
+## Commands
 
 ```
 docs/mfe-history-review/tools/hist.sh kod88vn__poc_next_mfa rev-list --count d20db8260825dc17ad4c68ac6df0595c1c59df23
 docs/mfe-history-review/tools/hist.sh kod88vn__poc_next_mfa log --format='%h %ad %s' --date=short --name-status d20db8260825dc17ad4c68ac6df0595c1c59df23
 docs/mfe-history-review/tools/hist.sh kod88vn__poc_next_mfa log --format='%h %ad %s' --date=short d20db8260825dc17ad4c68ac6df0595c1c59df23 -- 'package.json turbo.json'
-  # sem saída: os dois caminhos foram passados como um só (repetido abaixo, separado)
+  # no output: both paths were passed as one (repeated separately below)
 docs/mfe-history-review/tools/hist.sh kod88vn__poc_next_mfa log --format='%h %ad %s' --date=short d20db8260825dc17ad4c68ac6df0595c1c59df23 -- README.md
 docs/mfe-history-review/tools/hist.sh kod88vn__poc_next_mfa log --format='%h %ad %s' --date=short d20db8260825dc17ad4c68ac6df0595c1c59df23 -- packages/ui/package.json
 docs/mfe-history-review/tools/hist.sh kod88vn__poc_next_mfa log --format='%h %ad %s' --date=short d20db8260825dc17ad4c68ac6df0595c1c59df23 -- apps/shop/app/layout.tsx
 docs/mfe-history-review/tools/hist.sh kod88vn__poc_next_mfa log --format='%h %ad %s' --date=short d20db8260825dc17ad4c68ac6df0595c1c59df23 -- 'packages/ui/src/Button.tsx packages/ui/src/index.ts'
-  # sem saída: os dois caminhos foram passados como um só (repetido abaixo, separado)
+  # no output: both paths were passed as one (repeated separately below)
 docs/mfe-history-review/tools/hist.sh kod88vn__poc_next_mfa log --format='%h %ad %s' --date=short d20db8260825dc17ad4c68ac6df0595c1c59df23 -- apps/shell/app/not-found/page.tsx
 docs/mfe-history-review/tools/hist.sh kod88vn__poc_next_mfa ls-tree 18d620e -- packages/ui/package.json
 docs/mfe-history-review/tools/hist.sh kod88vn__poc_next_mfa ls-tree d20db8260825dc17ad4c68ac6df0595c1c59df23 -- packages/ui/package.json
@@ -119,15 +67,15 @@ docs/mfe-history-review/tools/hist.sh kod88vn__poc_next_mfa ls-tree d20db8260825
 docs/mfe-history-review/tools/hist.sh kod88vn__poc_next_mfa log --format='%h %ad %s' --date=short d20db8260825dc17ad4c68ac6df0595c1c59df23 -- package.json turbo.json
 docs/mfe-history-review/tools/hist.sh kod88vn__poc_next_mfa log --format='%h %ad %s' --date=short d20db8260825dc17ad4c68ac6df0595c1c59df23 -- packages/ui/src/Button.tsx packages/ui/src/index.ts
 docs/mfe-history-review/tools/hist.sh kod88vn__poc_next_mfa show 18d620e:packages/ui/src/index.ts
-  # falhou: fatal: bad object 18d620e:packages/ui/src/index.ts (objeto ausente no clone --filter=blob:none)
+  # failed: fatal: bad object 18d620e:packages/ui/src/index.ts (missing object in clone --filter=blob:none)
 docs/mfe-history-review/tools/hist.sh kod88vn__poc_next_mfa show 18d620e:apps/shop/app/layout.tsx
-  # falhou: fatal: bad object 18d620e:apps/shop/app/layout.tsx (objeto ausente no clone --filter=blob:none)
+  # failed: fatal: bad object 18d620e:apps/shop/app/layout.tsx (missing object in clone --filter=blob:none)
 docs/mfe-history-review/tools/hist.sh kod88vn__poc_next_mfa log --format='%h %ad %s' --date=short --diff-filter=D --name-status d20db8260825dc17ad4c68ac6df0595c1c59df23
-  # sem saída: nenhuma remoção até o snapshot
+  # no output: no removal up to the snapshot
 docs/mfe-history-review/tools/hist.sh kod88vn__poc_next_mfa ls-tree -r --name-only d20db8260825dc17ad4c68ac6df0595c1c59df23
 docs/mfe-history-review/tools/hist.sh kod88vn__poc_next_mfa show 18d620e:README.md
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 5 (2026-04-11 a 2026-04-24). Pontos: 6 (esclarecido: 4, inconclusivo: 2, resolvido pelo snapshot: 0).
+Commits up to the snapshot: 5 (2026-04-11 to 2026-04-24). Points: 6 (clarified: 4, inconclusive: 2, resolved by the snapshot: 0).

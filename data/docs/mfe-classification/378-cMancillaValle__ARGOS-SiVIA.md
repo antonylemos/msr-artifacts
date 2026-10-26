@@ -20,64 +20,64 @@ annotation:
 
 # 378 — cMancillaValle/ARGOS-SiVIA
 
-## Contexto
+## Context
 
-Plataforma acadêmica de segurança por visão computacional (“ARGOS - SiViA”; descrição do repositório): backend FastAPI com módulos de IA, um frontend principal em HTML/JS sem framework (`frontend/`) e um assistente de chat (“Hermes IA”) desenvolvido à parte em React/TypeScript/Vite (`frontend-hermes/`), compilado como Web Component e embutido no dashboard (`README.md:58–64`). O nome do repositório não é usado como evidência.
+Academic computer vision security platform (“ARGOS - SiViA”; repository description): FastAPI backend with AI modules, a main frontend in HTML/JS without a framework (`frontend/`) and a chat assistant (“Hermes IA”) developed separately in React/TypeScript/Vite (`frontend-hermes/`), built as a Web Component and embedded in the dashboard (`README.md:58–64`). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:379` registra rank 378, ID 1255336417, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:379` records rank 378, ID 1255336417, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:379` registra a estratégia `terminology` e elegibilidade `unknown`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:31029` e `data/discovery/mfe-round-002/candidates.csv:31037`, ambos com `terminology` e `unknown` (regra `recent-human-commit` com `activity_incomplete`).
+`data/samples/mfe-sample-001/sample.csv:379` records strategy `terminology` and eligibility `unknown`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:31029` and `data/discovery/mfe-round-002/candidates.csv:31037`, both with `terminology` and `unknown` (rule `recent-human-commit` with `activity_incomplete`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with an empty `path`:
 
-| Consulta (`q`) | Subconsulta | Consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Effective query | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | `terminology-micro-frontend-repositories#created:2026-05` | `"micro frontend" in:name,description,readme pushed:>=2025-04-01 created:2026-05-01..2026-05-31` | 2026-10-07T22:36:26.100Z / 2026-10-08T15:59:43.953Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | `terminology-micro-frontends-repositories#created:2026-05` | `"micro frontends" in:name,description,readme pushed:>=2025-04-01 created:2026-05-01..2026-05-31` | 2026-10-07T23:05:10.076Z / 2026-10-08T16:09:15.173Z |
 
-Metadados do hit: descrição em espanhol sobre a plataforma de segurança (sem os termos), sem tópicos, linguagem HTML, sem licença, `fork: false`, tamanho 406, criação em 2026-05-31T17:49:59Z, push em 2026-09-28T02:36:30Z.
+Hit metadata: Spanish description about the security platform (without the terms), no topics, language HTML, no license, `fork: false`, size 406, created at 2026-05-31T17:49:59Z, pushed at 2026-09-28T02:36:30Z.
 
-**README posterior às buscas.** O README do SHA foi alterado em `221f58c` (2026-10-09T23:39:47-05:00, “Migración de Flask a FastAPI completada.”), e o próprio SHA `4f6ef7f` é de 2026-10-10, ambos depois das coletas de 7 e 8 de outubro de 2026. A versão vigente nas buscas é a de `6fc3f39` (2026-09-15), cujo blob (`754b795…`) está ausente no clone parcial e não foi buscado; não é possível citar a linha exata que casou. No README do SHA, o singular hifenizado aparece em `README.md:63` (“Micro-frontend independiente construido en **React + TypeScript** con **Vite**”), `:70`, `:101`, `:208` e `:312`; o plural “micro frontends” não aparece literalmente.
+**README postdates the searches.** The README at the SHA was changed in `221f58c` (2026-10-09T23:39:47-05:00, “Migración de Flask a FastAPI completada.”; English translation: “Flask to FastAPI migration completed.”), and SHA `4f6ef7f` itself is from 2026-10-10, both after the collections on October 7 and 8, 2026. The version current during the searches is `6fc3f39` (2026-09-15), whose blob (`754b795…`) is absent from the partial clone and was not fetched; the exact matching line cannot be cited. In the SHA README, the hyphenated singular appears in `README.md:63` (“Micro-frontend independiente construido en **React + TypeScript** con **Vite**”; English translation: “Independent micro-frontend built in **React + TypeScript** with **Vite**”), `:70`, `:101`, `:208` and `:312`; plural “micro frontends” does not appear literally.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 144 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Duas unidades frontend: `frontend/` (HTML/CSS/JS estático com `dashboard.html`, `views/`, `js/router.js`) e `frontend-hermes/` (projeto Vite/React com `package.json`, `vite.config.ts`, `src/`); backend Python em `backend/`. | forte |
-| Configuração (unidade Hermes) | `frontend-hermes/vite.config.ts:10–16`: build de biblioteca com entrada `src/hermes-widget.tsx`, formato `iife`, arquivo `hermes-widget.js`, React embutido (`:17–23`) e CSS injetado por JS (`:3`, `8`). `frontend-hermes/package.json:6–11`: build próprio (`tsc -b && vite build`). | forte |
-| Código-fonte (contrato) | `frontend-hermes/src/hermes-widget.tsx:6–59`: custom element `hermes-widget` com Shadow DOM, atributos observados `token`, `api-base` e `modulo` (`:10–12`), montagem de `App` React (`:37–46`) e `customElements.define` (`:57–58`). `frontend-hermes/src/App.tsx:35–40`: escuta os eventos `toggle-hermes` e `close-hermes` em `window`. | forte |
-| Código-fonte (host) | `frontend/dashboard.html:359–361`: `<hermes-widget id="hermes-ai-widget" api-base="/api" modulo="dashboard">`; `:366`: `<script src="/hermes/hermes-widget.js">`; `:726–730`: injeta o token no atributo após o boot do router. `frontend/components/topbar.html:25–26` e `frontend/dashboard.html:421`: disparam `toggle-hermes`/`close-hermes`. | forte |
-| Build/deploy | `backend/main.py:92`: `HERMES_DIST` aponta para `frontend-hermes/dist`; `:281–287`: rota `/hermes/{filename}` serve o build do widget; `:291–293`: o resto de `frontend/` como estáticos. `ngrok_tunnel.py:50–62`: compila o widget antes de expor o servidor. `.gitignore:59`: `frontend-hermes/dist/` não é versionado. Deploy conjunto no mesmo servidor, com builds separados. | moderada |
-| Código-fonte (fronteiras) | Busca por `../` em `frontend-hermes/src` e configs: só imports internos (`HermesChat.tsx:6–7`, `useChat.ts:5–6` etc.). O host não importa código do widget; carrega o bundle por URL e se comunica por atributos e eventos. | forte |
-| Documentação | `README.md:58–64`, `101–108`, `208–214`: Hermes descrito como “micro-frontend independiente” e “Widget embebible del chatbot”. | moderada |
+| Structure | `git ls-tree -r` at the SHA: 144 entries, all regular files `100644`; zero symlinks and zero gitlinks. Two frontend units: `frontend/` (static HTML/CSS/JS with `dashboard.html`, `views/`, `js/router.js`) and `frontend-hermes/` (Vite/React project with `package.json`, `vite.config.ts`, `src/`); Python backend in `backend/`. | strong |
+| Configuration (Hermes unit) | `frontend-hermes/vite.config.ts:10–16`: library build with entry `src/hermes-widget.tsx`, format `iife`, file `hermes-widget.js`, bundled React (`:17–23`) and JS-injected CSS (`:3`, `8`). `frontend-hermes/package.json:6–11`: own build (`tsc -b && vite build`). | strong |
+| Source code (contract) | `frontend-hermes/src/hermes-widget.tsx:6–59`: custom element `hermes-widget` with Shadow DOM, observed attributes `token`, `api-base` and `modulo` (`:10–12`), mounting React `App` (`:37–46`) and `customElements.define` (`:57–58`). `frontend-hermes/src/App.tsx:35–40`: listens for events `toggle-hermes` and `close-hermes` on `window`. | strong |
+| Source code (host) | `frontend/dashboard.html:359–361`: `<hermes-widget id="hermes-ai-widget" api-base="/api" modulo="dashboard">`; `:366`: `<script src="/hermes/hermes-widget.js">`; `:726–730`: injects the token into the attribute after router boot. `frontend/components/topbar.html:25–26` and `frontend/dashboard.html:421`: dispatch `toggle-hermes`/`close-hermes`. | strong |
+| Build/deploy | `backend/main.py:92`: `HERMES_DIST` points to `frontend-hermes/dist`; `:281–287`: route `/hermes/{filename}` serves the widget build; `:291–293`: the rest of `frontend/` as static files. `ngrok_tunnel.py:50–62`: builds the widget before exposing the server. `.gitignore:59`: `frontend-hermes/dist/` is not versioned. Joint deployment on the same server, with separate builds. | moderate |
+| Source code (boundaries) | Search for `../` in `frontend-hermes/src` and configs: only internal imports (`HermesChat.tsx:6–7`, `useChat.ts:5–6` etc.). The host does not import widget code; it loads the bundle by URL and communicates through attributes and events. | strong |
+| Documentation | `README.md:58–64`, `101–108`, `208–214`: Hermes described as “micro-frontend independiente” (English translation: “independent micro-frontend”) and “Widget embebible del chatbot” (English translation: “Embeddable chatbot widget”). | moderate |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso, parcial (`blob:none`). 12 commits alcançáveis (12 em todos os refs), nenhum merge, de 2026-09-15 (`cdc871d`) a 2026-10-10 (SHA). Autoria: `cMancillaValle` (10 commits) e `evallejog` (2), ambos com e-mail institucional da mesma universidade. O widget Hermes já existe em `6fc3f39` (2026-09-15, “Finalizar merge con repositorio remoto”); a migração para FastAPI (`221f58c`) e o SHA são posteriores às buscas. Ref remoto `fastAPIpoc` não considerado à parte. `git rev-list --objects $SHA --missing=print` identifica 51 objetos históricos ausentes, entre eles o blob do README vigente nas buscas; os arquivos citados do SHA foram lidos.
+Non-shallow, partial clone (`blob:none`). 12 reachable commits (12 across all refs), no merge, from 2026-09-15 (`cdc871d`) to 2026-10-10 (SHA). Authorship: `cMancillaValle` (10 commits) and `evallejog` (2), both with institutional email from the same university. The Hermes widget already exists in `6fc3f39` (2026-09-15, “Finalizar merge con repositorio remoto”; English translation: “Finish merge with remote repository”); the FastAPI migration (`221f58c`) and SHA postdate the searches. Remote ref `fastAPIpoc` not considered separately. `git rev-list --objects $SHA --missing=print` identifies 51 missing historical objects, including the README blob current during the searches; cited SHA files were read.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | Duas unidades no repositório: o frontend estático e o widget Hermes, referenciado pelo host (`frontend/dashboard.html:361`, `366`). |
-| Q2 | Yes | O widget tem entrada e build próprios (`frontend-hermes/vite.config.ts:10–16`); o host é estático sem build; nenhum import de código-fonte entre eles. |
-| Q3 | Yes | O dashboard carrega e monta o widget e lhe passa sessão e contexto (`frontend/dashboard.html:359–366`, `726–730`). |
-| Q4 | Yes | Web Component com contrato explícito (atributos e eventos) carregado por `<script>` a partir do build servido em `/hermes/` (`backend/main.py:281–287`). |
-| Q5 | Yes | Q1–Q4 convergem. |
+| Q1 | Yes | Two units in the repository: the static frontend and Hermes widget, referenced by the host (`frontend/dashboard.html:361`, `366`). |
+| Q2 | Yes | The widget has its own entry and build (`frontend-hermes/vite.config.ts:10–16`); the host is static without a build; no source code import between them. |
+| Q3 | Yes | The dashboard loads and mounts the widget and passes session and context to it (`frontend/dashboard.html:359–366`, `726–730`). |
+| Q4 | Yes | Web Component with explicit contract (attributes and events) loaded through `<script>` from the build served at `/hermes/` (`backend/main.py:281–287`). |
+| Q5 | Yes | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- Q1–Q5 são Yes, o que satisfaz a regra de `MFE-implemented`. Segue o padrão do final 043: unidade construída à parte e composta em runtime como custom element por um host, não um pacote de componentes importado em build (não é “component library using Web Components”).
-- A ligação é resolvível no snapshot (entrada → `hermes-widget.js` → rota `/hermes/` → `<script>` no host), ao contrário de 328 e 103. O widget é uma funcionalidade completa com estado e API próprios, não utilitário (contraste com 089/100).
-- O deploy é conjunto (o mesmo FastAPI serve os dois), mas os builds são separados e o carregamento é em runtime, como na nota de deploy do final 059.
-- `frontend_units: 2`, `unit_organization: monorepo`, `approaches: [web-components]`, `ui_technologies: [react]` (o host não usa biblioteca de UI), `build_tools: [vite]`, `repo_type: example` (projeto acadêmico).
-- Não há decisão aberta que mude a classe.
+- Q1–Q5 are Yes, satisfying the `MFE-implemented` rule. It follows the pattern of final 043: a separately built unit composed at runtime as a custom element by a host, not a component package imported at build time (not a “component library using Web Components”).
+- The connection is resolvable in the snapshot (entry → `hermes-widget.js` → route `/hermes/` → `<script>` in the host), unlike 328 and 103. The widget is complete functionality with its own state and API, not a utility (contrast with 089/100).
+- Deployment is joint (the same FastAPI serves both), but builds are separate and loading occurs at runtime, as in the deployment note of final 059.
+- `frontend_units: 2`, `unit_organization: monorepo`, `approaches: [web-components]`, `ui_technologies: [react]` (the host uses no UI library), `build_tools: [vite]`, `repo_type: example` (academic project).
+- There is no open decision changing classification.
 
-## Notas para análise
+## Analysis notes
 
-- **Protocolo (README posterior às buscas):** o README e o SHA são de 9–10 de outubro de 2026, depois das coletas; a versão do README vigente nas buscas não está no clone parcial. A classificação usa o SHA fixado; a correspondência textual do hit não foi verificada linha a linha.
-- **RQ2:** Web Component React empacotado como IIFE com Shadow DOM e CSS injetado, embutido num frontend vanilla; contrato por atributos (`token`, `api-base`, `modulo`) e eventos globais.
-- **RQ3:** comunicação host→widget por atributos e `CustomEvent` em `window`; o widget consome a mesma API do backend (`api-base`).
-- **Protocolo (elegibilidade):** `unknown` nas duas rodadas (`activity_incomplete`).
+- **Protocol (README postdates the searches):** the README and SHA are from October 9–10, 2026, after collections; the README version current during the searches is not in the partial clone. Classification uses the fixed SHA; the hit’s text match was not verified line by line.
+- **RQ2:** React Web Component packaged as IIFE with Shadow DOM and injected CSS, embedded in a vanilla frontend; contract through attributes (`token`, `api-base`, `modulo`) and global events.
+- **RQ3:** host→widget communication through attributes and `CustomEvent` on `window`; the widget consumes the same backend API (`api-base`).
+- **Protocol (eligibility):** `unknown` in both rounds (`activity_incomplete`).

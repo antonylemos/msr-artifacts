@@ -16,28 +16,28 @@ annotation:
 
 # 052 — sunnywilsonveshapogu/microfrontends-demo
 
-## Leitura do repositório
+## Repository overview
 
-Demonstração com três aplicações webpack (`shell`, `header-mf` e `products-mf`), cada uma com manifesto, lockfile e `webpack.config.js` próprios. O `package.json` da raiz serve só de orquestrador: instala as três em sequência, sobe os três servidores de desenvolvimento com `concurrently` e encadeia os três builds num único comando (package.json:7, 11-12). Cada `build` roda `webpack --mode production` (ex.: shell/package.json:6), enquanto a configuração compartilhada declara `mode: 'development'` e um `devServer` (ex.: shell/webpack.config.js:4-8); a opção da linha de comando define o modo do build.
+Demonstration with three webpack applications (`shell`, `header-mf` and `products-mf`), each with its own manifest, lockfile and `webpack.config.js`. Root `package.json` only orchestrates: installs all three sequentially, starts all three development servers with `concurrently` and chains all three builds in a single command (package.json:7, 11-12). Each `build` runs `webpack --mode production` (for example: shell/package.json:6), while the shared configuration declares `mode: 'development'` and a `devServer` (for example: shell/webpack.config.js:4-8); the command-line option determines build mode.
 
-O snapshot está incompleto para o build: as três configurações apontam para um `./public/index.html` que não existe no repositório (shell/webpack.config.js:39-41). O README traz o conteúdo desses arquivos para o leitor criar à mão (README.md:20, 123). É por isso que as três aplicações são `Undetermined` na revisão estrutural. Não há Dockerfile, CI nem configuração de hospedagem, e as ocorrências `ops-*`, `ci-*` e `cfg-public-path` da mineração estão vazias. O README só indica as portas locais (README.md:27-30).
+The snapshot is incomplete for building: all three configurations point to a `./public/index.html` absent from the repository (shell/webpack.config.js:39-41). README provides these files’ contents for the reader to create manually (README.md:20, 123). This is why all three applications are `Undetermined` in the structural review. There is no Dockerfile, CI or hosting configuration, and mining `ops-*`, `ci-*` and `cfg-public-path` occurrences are empty. README only indicates local ports (README.md:27-30).
 
-## Aplicações
+## Applications
 
-| # | Aplicação | Build | Deploy | Onde é servida | Versionamento | Artefatos |
+| # | Application | Build | Deploy | Where served | Versioning | Artifacts |
 |---|---|---|---|---|---|---|
-| 1 | header-mf | separado | não observado | `http://localhost:3001` em desenvolvimento (header-mf/webpack.config.js:6-7; README.md:29) | No | header-mf/webpack.config.js:4-19 (configuração própria); header-mf/package.json:6 (`webpack --mode production`); package.json:12 (`build:all`) |
-| 2 | products-mf | separado | não observado | `http://localhost:3002` em desenvolvimento (products-mf/webpack.config.js:6-7; README.md:30) | No | products-mf/webpack.config.js:4-19 (configuração própria); products-mf/package.json:6 (`webpack --mode production`); package.json:12 (`build:all`) |
-| 3 | shell | separado | não observado | `http://localhost:3000` em desenvolvimento (shell/webpack.config.js:6-7; README.md:28) | No | shell/webpack.config.js:4-43 (configuração própria); shell/package.json:6 (`webpack --mode production`); package.json:12 (`build:all`) |
+| 1 | header-mf | separate | not observed | `http://localhost:3001` in development (header-mf/webpack.config.js:6-7; README.md:29) | No | header-mf/webpack.config.js:4-19 (own configuration); header-mf/package.json:6 (`webpack --mode production`); package.json:12 (`build:all`) |
+| 2 | products-mf | separate | not observed | `http://localhost:3002` in development (products-mf/webpack.config.js:6-7; README.md:30) | No | products-mf/webpack.config.js:4-19 (own configuration); products-mf/package.json:6 (`webpack --mode production`); package.json:12 (`build:all`) |
+| 3 | shell | separate | not observed | `http://localhost:3000` in development (shell/webpack.config.js:6-7; README.md:28) | No | shell/webpack.config.js:4-43 (own configuration); shell/package.json:6 (`webpack --mode production`); package.json:12 (`build:all`) |
 
-## Observações
+## Observations
 
-**1. header-mf.** Configuração e comando de build próprios. O `build:all` da raiz só encadeia os builds, e cada um gera a saída na própria pasta. O build depende do template ausente (header-mf/webpack.config.js:46). Por isso a separação está declarada, mas o snapshot não permite construir a aplicação sem completar o repositório. Sem deploy observado. A versão `1.0.0` não é usada.
+**1. header-mf.** Own configuration and build command. Root `build:all` only chains builds, each generating output in its own folder. Build depends on the missing template (header-mf/webpack.config.js:46). Separation is therefore declared, but the snapshot cannot build the application without completing the repository. No observed deployment. Version `1.0.0` is unused.
 
-**2. products-mf.** Mesmo arranjo, porta 3002, com o mesmo template ausente (products-mf/webpack.config.js:46).
+**2. products-mf.** Same arrangement, port 3002, with the same missing template (products-mf/webpack.config.js:46).
 
-**3. shell.** Mesmo arranjo, porta 3000. Os remotes estão fixados em `localhost` (shell/webpack.config.js:24-27).
+**3. shell.** Same arrangement, port 3000. Remotes are fixed at `localhost` (shell/webpack.config.js:24-27).
 
-## Resumo
+## Summary
 
-Aplicações: 3. Build (separado: 3). Deploy (não observado: 3). Versionamento independente: 0.
+Applications: 3. Build (separate: 3). Deploy (not observed: 3). Independent versioning: 0.

@@ -19,370 +19,370 @@ annotation:
 
 # 378 — cMancillaValle/ARGOS-SiVIA
 
-## Leitura do repositório
+## Repository overview
 
-As duas unidades são o host HTML/JS estático `frontend` (#23) e o widget React `frontend-hermes`, com entrada e build próprios (#24). A cadeia observada parte do invólucro e registro do custom element (#1–#3), passa pela tag e pelo carregamento do bundle no dashboard (#21–#22) e fecha na relação ativa host → widget (#25). A segunda relação ativa é a comunicação por eventos globais: o host emite `toggle-hermes` e `close-hermes`, recebidos pelo widget (#11–#14, #26). Os trechos individuais de eventos implementam o contrato; é a relação consolidada que situa os dois lados.
+Two units are static HTML/JS host `frontend` (#23) and React widget `frontend-hermes` with own entry/build (#24). Observed chain starts in custom-element wrapper/registration (#1–#3), passes through tag/dashboard bundle loading (#21–#22), closes in active host → widget relationship (#25). Second active relationship global-event communication: host emits `toggle-hermes`/`close-hermes`, widget receives (#11–#14, #26). Individual event excerpts implement contract; consolidated relationship situates both sides.
 
-O build do widget é separado e sua publicação é conjunta com o host no FastAPI (#27–#28). O compose não compila Hermes, e o caminho `/hermes/` depende do `dist` disponível. O script ngrok tenta construir o widget antes de expor o servidor. Essas evidências não comprovam execução autônoma funcional, sentido em que a afirmação de independência permanece sem corroboração (#31). A entrada HTML de desenvolvimento aponta para `main.tsx` ausente, divergência já presente na primeira ocorrência histórica consultada (#47).
+Widget build separate/publication joint with host in FastAPI (#27–#28). Compose does not compile Hermes; `/hermes/` path depends on available `dist`. Ngrok script attempts widget build before server exposure. Evidence does not prove functional autonomous execution, sense in which independence claim uncorroborated (#31). Development HTML entry points to absent `main.tsx`, divergence already at first consulted historical presence (#47).
 
-Os scripts de CDN, a reexecução de scripts dos fragmentos e os eventos internos `argos:navaway` são os 13 falsos positivos da revisão de código (#4–#10, #15–#20). Não acrescentam unidades ou relações. As afirmações sobre Flask estão contraditas pelo servidor atual (#32, #44), e o histórico não encerra a origem desses textos (#48). O instalador Windows segue sem corroboração (#38), embora sua exclusão do inventário tenha explicação no snapshot (#49). Nenhuma dessas limitações deixa o destino da composição ambíguo.
+CDN scripts, fragment-script reexecution/internal `argos:navaway` events are code review’s 13 false positives (#4–#10, #15–#20). Add no units/relationships. Flask claims contradicted by current server (#32, #44); history leaves text origin unresolved (#48). Windows installer uncorroborated (#38) although snapshot explains inventory exclusion (#49). None makes composition target ambiguous.
 
-A 3.4.2 não contém dependências a extrair. Não há observações de configuração elegíveis pelo passo 2: `vite.config.ts` configura biblioteca IIFE, saída, React e CSS, mas não declara builder/plugin de federação, host/remote, módulo exposto, compartilhamento federado, URL de remote, import map ou registro de aplicação. `name: HermesWidget` é o nome da biblioteca, não de host/remote. O compose configura o servidor compartilhado. Seus trechos pertinentes permanecem em estrutura, código e build/deploy; os comentários declarativos entram por suas linhas da 3.4.7. Não se acrescentaram dependências de React/Vite ausentes da tabela 3.4.2.
+Section 3.4.2 contains no dependencies to extract. No configuration observations eligible under step 2: `vite.config.ts` configures IIFE library, output, React/CSS, but declares no federation builder/plugin, host/remote, exposed module, federated sharing, remote URL, import map or application registry. `name: HermesWidget` library name rather than host/remote. Compose configures shared server. Relevant excerpts remain in structure, code/build-deployment; declarative comments enter through 3.4.7 rows. No React/Vite dependencies absent from 3.4.2 table added.
 
-Limite operacional: `docs/mfe-review-pipeline/regras-comuns.md` não estava disponível neste checkout durante a extração. A revisão segue a `INSTRUCTIONS.md` e o `_template.md` disponíveis, as sete revisões finais e a orientação explícita de entregar `draft`. A conferência de trechos foi feita somente no snapshot de aquisição, sem nova mineração ou consulta aos clones.
+Operational limit: `docs/mfe-review-pipeline/regras-comuns.md` unavailable in checkout during extraction. Review follows available `INSTRUCTIONS.md`/`_template.md`, seven final reviews/explicit instruction to deliver `draft`. Excerpts checked only in acquisition snapshot without new mining/clone queries.
 
-## Observações
+## Observations
 
 ### 1. frontend-hermes/src/hermes-widget.tsx:6; frontend-hermes/src/hermes-widget.tsx:10-28; frontend-hermes/src/hermes-widget.tsx:37-46
 
-**Observação:** A classe HermesWidget estende HTMLElement, observa token, api-base e modulo e monta App com createRoot no connectedCallback.
+**Observation:** HermesWidget class extends HTMLElement, observes token, api-base, modulo, mounts App with createRoot in connectedCallback.
 
-**Interpretação:** Implementa o invólucro Web Component da unidade React; o mecanismo de encapsulamento, isolado, não identifica um consumidor.
+**Interpretation:** Implements React-unit Web Component wrapper; isolated encapsulation mechanism identifies no consumer.
 
 ### 2. frontend-hermes/src/hermes-widget.tsx:16; frontend-hermes/src/hermes-widget.tsx:18-28
 
-**Observação:** O connectedCallback chama attachShadow com mode open, acrescenta um style com widgetCss e cria o ponto de montagem React.
+**Observation:** connectedCallback calls attachShadow with mode open, appends style with widgetCss/creates React mount point.
 
-**Interpretação:** O Shadow DOM delimita o encapsulamento do widget, sem ligar sozinho duas unidades.
+**Interpretation:** Shadow DOM delimits widget encapsulation without alone linking two units.
 
 ### 3. frontend-hermes/src/hermes-widget.tsx:58; frontend-hermes/src/hermes-widget.tsx:57
 
-**Observação:** customElements.define registra hermes-widget como HermesWidget, após verificar customElements.get.
+**Observation:** customElements.define registers hermes-widget as HermesWidget after customElements.get check.
 
-**Interpretação:** Disponibiliza a tag pública do widget. O registro do fornecedor é um mecanismo de composição, mas não nomeia outra unidade consumidora.
+**Interpretation:** Makes public widget tag available. Provider registration composition mechanism without naming other consumer unit.
 
-**Nota:** Mantém-se a força moderada, afastando a orientação forte para registros que nomeiam o destino: neste trecho, `customElements.define` associa a tag `hermes-widget` à classe local `HermesWidget` no fornecedor. Isoladamente, confirma o mecanismo disponibilizado por uma unidade, sem ligar diretamente duas unidades relativamente independentes. O consumo pelo host e a relação entre unidades estão nas observações #21 e #25 e não aumentam a força deste registro isolado.
+**Note:** Moderate strength retained rather than strong guidance for target-naming registries: here `customElements.define` associates tag `hermes-widget` with local class `HermesWidget` in provider. Alone confirms unit-offered mechanism without directly linking two relatively independent units. Host consumption/inter-unit relationship in observations #21 and #25 do not increase isolated-registration strength.
 
 ### 4. frontend/js/router.js:54; frontend/js/router.js:45-57; frontend/js/router.js:181-182
 
-**Observação:** loadComponent busca components/<arquivo>, insere o fragmento via innerHTML e recria seus scripts inline; os componentes solicitados são topbar.html e sidebar.html.
+**Observation:** loadComponent fetches components/<arquivo> (English explanation: file placeholder), inserts fragment through innerHTML/recreates inline scripts; requested components topbar.html and sidebar.html.
 
-**Interpretação:** É montagem interna do layout de frontend, sem carregar o bundle de outra unidade.
+**Interpretation:** Internal frontend layout mounting without other-unit bundle loading.
 
 ### 5. frontend/js/router.js:93; frontend/js/router.js:13-29; frontend/js/router.js:64-96
 
-**Observação:** loadView busca uma vista em views/, insere seu HTML e recria scripts inline; MODULES lista os arquivos das vistas.
+**Observation:** loadView fetches view in views/, inserts HTML/recreates inline scripts; MODULES lists view files.
 
-**Interpretação:** A navegação entre vistas permanece dentro de frontend e não estabelece composição entre unidades.
+**Interpretation:** View navigation inside frontend establishes no inter-unit composition.
 
 ### 6. frontend/views/mapa_transmilenio.html:604; frontend/views/mapa_transmilenio.html:592-608
 
-**Observação:** ensureLeaflet cria um script para leaflet.js no CDN unpkg quando a variável L ainda não existe.
+**Observation:** ensureLeaflet creates script for CDN unpkg leaflet.js when L variable absent.
 
-**Interpretação:** A carga dinâmica atende a uma biblioteca de mapas, sem representar outra unidade frontend.
+**Interpretation:** Dynamic loading serves map library rather than other frontend unit.
 
 ### 7. frontend/dashboard.html:14
 
-**Observação:** O dashboard inclui leaflet.js do CDN unpkg por uma tag script.
+**Observation:** Dashboard includes CDN unpkg leaflet.js through script tag.
 
-**Interpretação:** A dependência de biblioteca externa é um falso positivo para composição de unidades.
+**Interpretation:** External-library dependency false positive for unit composition.
 
 ### 8. frontend/dashboard.html:15
 
-**Observação:** O dashboard inclui o script do CDN do Tailwind.
+**Observation:** Dashboard includes Tailwind CDN script.
 
-**Interpretação:** A carga de estilos por biblioteca externa não identifica unidade frontend adicional.
+**Interpretation:** External-library styling load identifies no extra frontend unit.
 
 ### 9. frontend/index.html:23
 
-**Observação:** A página inicial inclui o script do CDN do Tailwind.
+**Observation:** Initial page includes Tailwind CDN script.
 
-**Interpretação:** A inclusão é infraestrutura visual da mesma unidade, sem composição entre aplicações.
+**Interpretation:** Visual infrastructure of same unit without inter-application composition.
 
 ### 10. frontend/login.html:12
 
-**Observação:** A página de login inclui o script do CDN do Tailwind.
+**Observation:** Login page includes Tailwind CDN script.
 
-**Interpretação:** A inclusão é uma biblioteca da página, sem fronteira de outra unidade.
+**Interpretation:** Page library without other-unit boundary.
 
 ### 11. frontend-hermes/src/App.tsx:35; frontend-hermes/src/App.tsx:25-42
 
-**Observação:** App registra em window um listener de toggle-hermes que alterna a abertura do painel e remove o listener no cleanup.
+**Observation:** App registers toggle-hermes window listener toggling panel opening/removes listener on cleanup.
 
-**Interpretação:** Implementa a recepção do evento de comunicação do widget; a assinatura do evento, sozinha, não identifica a unidade emissora.
+**Interpretation:** Implements widget communication-event reception; subscription alone identifies no sending unit.
 
 ### 12. frontend-hermes/src/App.tsx:36; frontend-hermes/src/App.tsx:30-40
 
-**Observação:** App registra em window um listener de close-hermes que solicita o fechamento do painel e remove o listener no cleanup.
+**Observation:** App registers close-hermes window listener requesting panel closure/removes listener on cleanup.
 
-**Interpretação:** Implementa a recepção do segundo evento do contrato; o listener não nomeia a unidade emissora.
+**Interpretation:** Implements second contract-event reception without naming sending unit.
 
 ### 13. frontend/components/topbar.html:26; frontend/components/topbar.html:24-30
 
-**Observação:** O botão Hermes IA dispara em window um CustomEvent chamado toggle-hermes.
+**Observation:** Hermes IA button dispatches CustomEvent named toggle-hermes in window.
 
-**Interpretação:** Implementa o envio do evento de abertura e fechamento; o disparo global não nomeia diretamente uma unidade destinatária.
+**Interpretation:** Implements opening/closing event send; global dispatch names no receiving unit directly.
 
 ### 14. frontend/dashboard.html:421; frontend/dashboard.html:408-422
 
-**Observação:** toggleProfileDrawer dispara close-hermes em window ao abrir o drawer de perfil.
+**Observation:** toggleProfileDrawer dispatches close-hermes in window on profile-drawer opening.
 
-**Interpretação:** Implementa o envio do evento de fechamento ao contrato global; o disparo isolado não declara o destinatário.
+**Interpretation:** Implements closure send to global contract; isolated dispatch declares no receiver.
 
 ### 15. frontend/js/router.js:71; frontend/js/router.js:64-70
 
-**Observação:** Antes de substituir o DOM, o roteador emite argos:navaway em document para as vistas limparem timers e listeners.
+**Observation:** Before DOM replacement router emits argos:navaway in document for views to clear timers/listeners.
 
-**Interpretação:** O evento coordena o ciclo de vida interno de frontend, sem comunicação com frontend-hermes.
+**Interpretation:** Coordinates internal frontend lifecycle without frontend-hermes communication.
 
 ### 16. frontend/views/auditoria.html:219; frontend/js/router.js:71
 
-**Observação:** A vista ouve argos:navaway em document e chama clearInterval sobre _autoRefresh, com once: true.
+**Observation:** View listens for argos:navaway in document/calls clearInterval on _autoRefresh with once: true.
 
-**Interpretação:** É limpeza interna de uma vista de frontend em resposta ao roteador da mesma unidade.
+**Interpretation:** Internal frontend-view cleanup responding to same-unit router.
 
 ### 17. frontend/views/auditoria.html:288; frontend/js/router.js:71
 
-**Observação:** A vista ouve argos:navaway em document e chama clearInterval sobre _sesAutoRefresh, com once: true.
+**Observation:** View listens for argos:navaway in document/calls clearInterval on _sesAutoRefresh with once: true.
 
-**Interpretação:** É limpeza interna de uma vista de frontend em resposta ao roteador da mesma unidade.
+**Interpretation:** Internal frontend-view cleanup responding to same-unit router.
 
 ### 18. frontend/views/dashboard_home.html:458; frontend/js/router.js:71
 
-**Observação:** A vista ouve argos:navaway em document e chama clearInterval sobre _interval, com once: true.
+**Observation:** View listens for argos:navaway in document/calls clearInterval on _interval with once: true.
 
-**Interpretação:** É limpeza interna de uma vista de frontend em resposta ao roteador da mesma unidade.
+**Interpretation:** Internal frontend-view cleanup responding to same-unit router.
 
 ### 19. frontend/views/infra_servidores.html:306; frontend/js/router.js:71
 
-**Observação:** A vista ouve argos:navaway em document e chama clearInterval sobre _pollTimer, com once: true.
+**Observation:** View listens for argos:navaway in document/calls clearInterval on _pollTimer with once: true.
 
-**Interpretação:** É limpeza interna de uma vista de frontend em resposta ao roteador da mesma unidade.
+**Interpretation:** Internal frontend-view cleanup responding to same-unit router.
 
 ### 20. frontend/views/mapa_transmilenio.html:616; frontend/views/mapa_transmilenio.html:617-622; frontend/js/router.js:71
 
-**Observação:** A vista ouve argos:navaway e remove o listener de resize e o mapa Leaflet.
+**Observation:** View listens for argos:navaway/removes resize listener/Leaflet map.
 
-**Interpretação:** A limpeza do mapa pertence ao ciclo de vida da mesma unidade frontend.
+**Interpretation:** Map cleanup part of same frontend unit lifecycle.
 
 ### 21. frontend/dashboard.html:361; frontend-hermes/src/hermes-widget.tsx:57-58
 
-**Observação:** O dashboard contém hermes-widget com id hermes-ai-widget e os atributos api-base="/api" e modulo="dashboard"; o fornecedor registra a mesma tag.
+**Observation:** Dashboard contains hermes-widget with id hermes-ai-widget/attributes api-base="/api", modulo="dashboard"; provider registers same tag.
 
-**Interpretação:** O host nomeia e instancia explicitamente o custom element fornecido por frontend-hermes.
+**Interpretation:** Host explicitly names/instantiates custom element supplied by frontend-hermes.
 
 ### 22. frontend/dashboard.html:366; frontend-hermes/vite.config.ts:11-15; backend/main.py:92; backend/main.py:281-288
 
-**Observação:** O dashboard inclui /hermes/hermes-widget.js; o Vite define esse nome de saída e o backend serve frontend-hermes/dist pelo prefixo /hermes/.
+**Observation:** Dashboard includes /hermes/hermes-widget.js; Vite defines output name/backend serves frontend-hermes/dist under /hermes/.
 
-**Interpretação:** O carregamento por URL resolve o bundle da outra unidade e participa da composição em runtime.
+**Interpretation:** URL loading resolves other-unit bundle/participates in runtime composition.
 
 ### 23. frontend/; frontend/index.html:23-24; frontend/dashboard.html:366-369
 
-**Observação:** frontend contém páginas HTML próprias, que carregam scripts estáticos e CDNs; a revisão registra ausência de build.
+**Observation:** frontend contains own HTML pages loading static scripts/CDNs; review records no build.
 
-**Interpretação:** Confirma o limite da unidade host estática, sem estabelecer sozinho toda a organização entre unidades.
+**Interpretation:** Confirms static host unit boundary without alone establishing whole inter-unit organization.
 
 ### 24. frontend-hermes/; frontend-hermes/package.json:1-31; frontend-hermes/package.json:8; frontend-hermes/vite.config.ts:10-16; frontend-hermes/src/hermes-widget.tsx:6; frontend-hermes/src/hermes-widget.tsx:27; frontend-hermes/src/hermes-widget.tsx:57-58
 
-**Observação:** frontend-hermes tem pacote próprio, build tsc -b && vite build e entrada src/hermes-widget.tsx, que monta React e registra hermes-widget; a saída Vite é uma biblioteca IIFE.
+**Observation:** frontend-hermes has own package, tsc -b && vite build/entry src/hermes-widget.tsx mounting React/registering hermes-widget; Vite output IIFE library.
 
-**Interpretação:** Confirma a unidade frontend com entrada e build próprios, encapsulada como Web Component. Isso não comprova execução autônoma funcional.
+**Interpretation:** Confirms own-entry/build frontend unit encapsulated as Web Component. Does not prove functional autonomous execution.
 
 ### 25. frontend/dashboard.html:361; frontend/dashboard.html:366; frontend-hermes/src/hermes-widget.tsx:6; frontend-hermes/src/hermes-widget.tsx:16; frontend-hermes/src/hermes-widget.tsx:58; frontend-hermes/vite.config.ts:11-15; backend/main.py:92; backend/main.py:281-288
 
-**Observação:** frontend usa a tag hermes-widget e carrega /hermes/hermes-widget.js. A tag é registrada por frontend-hermes, cujo build gera o bundle servido pelo FastAPI a partir de dist. A revisão registra destino presente e relação ativa.
+**Observation:** frontend uses hermes-widget tag/loads /hermes/hermes-widget.js. frontend-hermes registers tag/build generates bundle served by FastAPI from dist. Review records present target/active relationship.
 
-**Interpretação:** Liga diretamente o host e o widget por Web Components e carregamento em runtime, com destino e artefato resolvidos no snapshot.
+**Interpretation:** Directly links host/widget through Web Components/runtime loading, target/artifact resolved in snapshot.
 
 ### 26. frontend/components/topbar.html:26; frontend/dashboard.html:421; frontend-hermes/src/App.tsx:35-36
 
-**Observação:** frontend emite toggle-hermes no topbar e close-hermes no dashboard; App de frontend-hermes ouve ambos em window. A revisão registra relação ativa e direção origem → destino.
+**Observation:** frontend emits toggle-hermes in topbar/close-hermes in dashboard; frontend-hermes App listens for both in window. Review records active relationship/source → target direction.
 
-**Interpretação:** O par de emissores e receptores estabelece comunicação explícita do host para o widget, sem eventos de retorno registrados.
+**Interpretation:** Sender/receiver pair establishes explicit host-to-widget communication without recorded return events.
 
 ### 27. backend/main.py:91; backend/main.py:257-293; docker-compose.yml:3-24; ngrok_tunnel.py:95-111; ngrok_tunnel.py:153-161
 
-**Observação:** frontend é servido diretamente por FastAPI em /, /login, /dashboard e pelos estáticos em /. O compose monta o repositório no serviço único; o túnel expõe a mesma porta. Build sem build, deploy conjunto e versionamento No na revisão.
+**Observation:** frontend served directly by FastAPI at /, /login, /dashboard and statics at /. Compose mounts repository in single service/tunnel exposes same port. Review records no build, joint deployment, versioning No.
 
-**Interpretação:** O caminho de publicação situa o host, mas a ausência de build e o serviço compartilhado não demonstram independência de entrega.
+**Interpretation:** Publication path situates host but no build/shared service demonstrate no delivery independence.
 
 ### 28. frontend-hermes/package.json:8; frontend-hermes/vite.config.ts:11-15; backend/main.py:92; backend/main.py:281-288; docker-compose.yml:3-24; ngrok_tunnel.py:52-62; ngrok_tunnel.py:153-161
 
-**Observação:** frontend-hermes tem build tsc -b && vite build, com saída hermes-widget.js. O mesmo FastAPI publica seu dist em /hermes/. O script ngrok tenta construir antes de subir o servidor; o compose não constrói o widget. Build separado, deploy conjunto e versionamento No na revisão.
+**Observation:** frontend-hermes has tsc -b && vite build/output hermes-widget.js. Same FastAPI publishes dist at /hermes/. Ngrok script attempts build before server startup; compose does not build widget. Review records separate build, joint deployment, versioning No.
 
-**Interpretação:** O build próprio confirma um limite de entrega do widget, enquanto a publicação permanece compartilhada com o host. A rota depende de dist disponível.
+**Interpretation:** Own build confirms widget delivery boundary while publication shared with host. Route depends on available dist.
 
 ### 29. README.md:47-48
 
-**Observação:** O README apresenta o dashboard principal como interface SPA de múltiplos painéis renderizada dinamicamente com JavaScript vanilla.
+**Observation:** README presents main dashboard as multiple-panel SPA dynamically rendered with vanilla JavaScript.
 
-**Interpretação:** A descrição situa a unidade host; as vistas internas não são unidades adicionais. A revisão registra corroboração.
+**Interpretation:** Situates host unit; internal views no extra units. Review records corroboration.
 
 ### 30. README.md:63
 
-**Observação:** O README chama Hermes de micro-frontend construído em React e TypeScript com Vite.
+**Observation:** README calls Hermes micro-frontend built in React/TypeScript with Vite.
 
-**Interpretação:** Nomeia a unidade e sua tecnologia, em acordo com estrutura, build e consumo registrados; a afirmação permanece evidência semântica.
+**Interpretation:** Names unit/technology matching recorded structure, build/consumption; remains semantic evidence.
 
 ### 31. README.md:63
 
-**Observação:** O README qualifica Hermes como independente.
+**Observation:** README qualifies Hermes as independent.
 
-**Interpretação:** A revisão registra sem corroboração para execução autônoma funcional. O build próprio e o uso embutido não comprovam esse sentido de independência.
+**Interpretation:** Uncorroborated for functional autonomous execution per review. Own build/embedded usage prove no independence in this sense.
 
 ### 32. README.md:68
 
-**Observação:** O README diz que pyngrok expõe um servidor Flask à internet por túnel HTTP seguro.
+**Observation:** README says pyngrok exposes Flask server to internet through secure HTTP tunnel.
 
-**Interpretação:** A revisão registra a afirmação como contradita: o processo iniciado atualmente é FastAPI/Uvicorn. A segurança do túnel não foi verificada em execução.
+**Interpretation:** Contradicted per review: current started process FastAPI/Uvicorn. Tunnel security unverified in execution.
 
 ### 33. README.md:70
 
-**Observação:** O README declara build automático do micro-frontend Hermes antes do lançamento do túnel.
+**Observation:** README declares automatic Hermes micro-frontend build before tunnel launch.
 
-**Interpretação:** A revisão registra corroboração pela tentativa de build no script; uma falha é registrada como advertência e não garante interrupção do lançamento.
+**Interpretation:** Corroborated by script build attempt; failure logged warning does not guarantee launch interruption.
 
 ### 34. README.md:104
 
-**Observação:** A árvore do README descreve hermes-widget.tsx como widget embutível do chatbot.
+**Observation:** README tree describes hermes-widget.tsx as embeddable chatbot widget.
 
-**Interpretação:** A afirmação situa a entrada embutível de Hermes, corroborada pela relação de composição registrada.
+**Interpretation:** Situates Hermes embeddable entry, corroborated by recorded composition relationship.
 
 ### 35. README.md:110
 
-**Observação:** A árvore do README descreve dist como bundle compilado gerado por Vite.
+**Observation:** README tree describes dist as Vite-generated compiled bundle.
 
-**Interpretação:** A revisão registra corroboração pelo build e diretório de saída do widget, sem exigir bundle gerado versionado.
+**Interpretation:** Corroborated by widget build/output directory without requiring versioned generated bundle.
 
 ### 36. README.md:112-113
 
-**Observação:** O README identifica backend como servidor FastAPI e main.py como entrada com lifespan, roteadores e estáticos.
+**Observation:** README identifies backend FastAPI server/main.py entry with lifespan, routers/statics.
 
-**Interpretação:** A revisão registra corroboração do servidor atual. A afirmação descreve infraestrutura backend e não uma unidade frontend.
+**Interpretation:** Current server corroborated per review. Backend infrastructure rather than frontend unit.
 
 ### 37. README.md:214
 
-**Observação:** O README associa vite-plugin-css-injected-by-js a um widget embutível sem CSS externo.
+**Observation:** README associates vite-plugin-css-injected-by-js with embeddable widget without external CSS.
 
-**Interpretação:** A revisão registra corroboração pela configuração do plugin e pela injeção de CSS no Shadow DOM do widget; isso não se estende ao host inteiro.
+**Interpretation:** Corroborated by plugin configuration/widget Shadow DOM CSS injection; does not extend to entire host.
 
 ### 38. README.md:221
 
-**Observação:** O README lista Inno Setup para geração de instalador Windows .exe.
+**Observation:** README lists Inno Setup for Windows .exe installer generation.
 
-**Interpretação:** A revisão registra sem corroboração: a declaração não comprova geração ou distribuição do instalador.
+**Interpretation:** Uncorroborated per review: declaration proves no installer generation/distribution.
 
 ### 39. frontend-hermes/src/App.tsx:19
 
-**Observação:** Um comentário declara a sincronização do módulo do dashboard para o widget.
+**Observation:** Comment declares dashboard-module synchronization to widget.
 
-**Interpretação:** A revisão registra corroboração pela passagem de modulo pelo host e atualização do estado do widget. Isso não comprova acompanhamento de toda navegação interna.
+**Interpretation:** Corroborated by host modulo passing/widget state update. Does not prove following all internal navigation.
 
 ### 40. frontend-hermes/src/App.tsx:24
 
-**Observação:** Um comentário declara a escuta de evento global do topbar para abrir e fechar.
+**Observation:** Comment declares listening for global topbar event to open/close.
 
-**Interpretação:** A revisão registra corroboração pela emissão de toggle-hermes pelo host e sua recepção no widget.
+**Interpretation:** Corroborated by host toggle-hermes emission/widget reception.
 
 ### 41. frontend-hermes/vite.config.ts:17
 
-**Observação:** O comentário do Vite diz para impedir a externalização de React, para incluí-lo no bundle.
+**Observation:** Vite comment says prevent React externalization/include in bundle.
 
-**Interpretação:** A revisão registra corroboração em external: []. O comentário descreve empacotamento de uma biblioteca, sem declarar sozinho mecanismo de MFE ou relação entre unidades.
+**Interpretation:** Corroborated in external: []. Library packaging description alone declares no MFE mechanism/inter-unit relationship.
 
 ### 42. frontend/dashboard.html:687
 
-**Observação:** O comentário do dashboard diz que o widget é carregado via Web Component, nomeando hermes-widget.
+**Observation:** Dashboard comment says widget loaded through Web Component, names hermes-widget.
 
-**Interpretação:** Nomeia o mecanismo e a ligação com o widget, corroborados pelo registro da tag e seu uso no host. A afirmação isolada continua fraca.
+**Interpretation:** Names mechanism/widget link corroborated by tag registration/host usage. Isolated claim remains weak.
 
 ### 43. frontend/dashboard.html:688
 
-**Observação:** O comentário declara que o token será passado ao widget depois do carregamento do roteador.
+**Observation:** Comment declares token passed to widget after router loading.
 
-**Interpretação:** A revisão registra corroboração pela atribuição do token após AppRouter.init e pelo callback de atributos do widget; descreve compartilhamento de sessão entre unidades.
+**Interpretation:** Corroborated by token assignment after AppRouter.init/widget attribute callback; inter-unit session sharing.
 
 ### 44. frontend/js/api.js:4-5
 
-**Observação:** O comentário descreve o cliente API como comunicação entre frontend e backend Flask.
+**Observation:** Comment describes API client as frontend–Flask backend communication.
 
-**Interpretação:** A revisão registra contradita: a comunicação existe, mas o servidor atual é FastAPI. Trata-se da ligação com o backend.
+**Interpretation:** Contradicted: communication exists but current server FastAPI. Backend link.
 
 ### 45. frontend/js/api.js:9-10
 
-**Observação:** O comentário diz usar o host atual em localhost/LAN e window.location.origin em ngrok ou domínio externo.
+**Observation:** Comment says use current host in localhost/LAN, window.location.origin in ngrok/external domain.
 
-**Interpretação:** A revisão registra corroboração: a implementação compõe a API com a origem da página, em acordo com o servidor comum; não houve verificação de domínio público em execução.
+**Interpretation:** Corroborated: implementation builds API with page origin matching common server; no runtime public-domain verification.
 
 ### 46. ngrok_tunnel.py:3-5
 
-**Observação:** O cabeçalho diz expor o servidor FastAPI e o WebSocket de câmeras ao exterior por pyngrok.
+**Observation:** Header says expose FastAPI server/camera WebSocket externally through pyngrok.
 
-**Interpretação:** A revisão registra corroboração pelo início de Uvicorn e pelo túnel HTTP na mesma porta. A descrição situa a infraestrutura comum.
+**Interpretation:** Corroborated by Uvicorn startup/same-port HTTP tunnel. Common infrastructure description.
 
 ### 47. 6fc3f39 2026-09-15 (frontend-hermes/index.html; frontend-hermes/vite.config.ts; frontend-hermes/src/hermes-widget.tsx); frontend-hermes/index.html:11; frontend-hermes/vite.config.ts:11-15
 
-**Observação:** A revisão histórica registra a adição conjunta do HTML, da configuração Vite e do custom element em 6fc3f39, sem alterações posteriores nesses caminhos e sem registro de src/main.tsx. O resultado do ponto é esclarecido.
+**Observation:** History review records joint HTML/Vite configuration/custom-element addition in 6fc3f39 without later path changes/recorded src/main.tsx. Point clarified.
 
-**Interpretação:** A divergência entre o HTML de desenvolvimento e a entrada de biblioteca já existe na primeira presença observável. Não demonstra uma entrada autônoma anterior nem altera o limite do widget no snapshot.
+**Interpretation:** Development HTML/library-entry divergence exists since first observable presence. Demonstrates no earlier autonomous entry/changes no snapshot widget boundary.
 
 ### 48. 6fc3f39 2026-09-15 (README.md; ngrok_tunnel.py; frontend/js/api.js; backend/app.py); 0ffce61 2026-09-20 (frontend/js/api.js); 221f58c 2026-10-09 (README.md; ngrok_tunnel.py; backend/app.py; backend/main.py)
 
-**Observação:** A revisão registra a adição dos caminhos em 6fc3f39, mudança do cliente em 0ffce61 e alterações com adição de backend/main.py em 221f58c, cuja mensagem anuncia migração para FastAPI. Conteúdos anteriores de README, túnel e backend não estavam disponíveis; o resultado é inconclusivo.
+**Observation:** Review records path additions in 6fc3f39, client change in 0ffce61/changes adding backend/main.py in 221f58c, message announcing FastAPI migration. Earlier README, tunnel/backend contents unavailable; result inconclusive.
 
-**Interpretação:** A dúvida remanescente é sobre a origem histórica das referências a Flask. O servidor atual está identificado e as afirmações permanecem contraditas no snapshot; por isso a força é fraca.
+**Interpretation:** Remaining uncertainty Flask-reference historical origin. Current server identified/claims contradicted in snapshot, hence weak strength.
 
 ### 49. .gitignore:66-67; README.md:221
 
-**Observação:** O snapshot comenta que scripts de instalação são destinados à distribuição e exclui installer/. A revisão histórica registra resolvido pelo snapshot, sem consulta histórica específica para este ponto.
+**Observation:** Snapshot comments installation scripts intended for distribution/excludes installer/. History review records resolved by snapshot without specific historical query.
 
-**Interpretação:** A exclusão explica a lacuna do inventário, mas não comprova instalador construído ou distribuído. A afirmação documental permanece sem corroboração.
+**Interpretation:** Exclusion explains inventory gap but proves no built/distributed installer. Documentary claim uncorroborated.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.4 (frontend-hermes/src/hermes-widget.tsx:6) | 3 código | código-fonte | web-components | tecnológica | moderada | implementa #25 |
-| 2 | 3.4.4 (frontend-hermes/src/hermes-widget.tsx:16) | 3 código | código-fonte | web-components | tecnológica | moderada | implementa #25 |
-| 3 | 3.4.4 (frontend-hermes/src/hermes-widget.tsx:58) | 3 código | código-fonte | web-components | tecnológica | moderada | implementa #25 |
-| 4 | 3.4.4 (frontend/js/router.js:54) | 3 código | código-fonte | — | contexto | fraca | — |
-| 5 | 3.4.4 (frontend/js/router.js:93) | 3 código | código-fonte | — | contexto | fraca | — |
-| 6 | 3.4.4 (frontend/views/mapa_transmilenio.html:604) | 3 código | código-fonte | — | contexto | fraca | — |
-| 7 | 3.4.4 (frontend/dashboard.html:14) | 3 código | código-fonte | — | contexto | fraca | — |
-| 8 | 3.4.4 (frontend/dashboard.html:15) | 3 código | código-fonte | — | contexto | fraca | — |
-| 9 | 3.4.4 (frontend/index.html:23) | 3 código | código-fonte | — | contexto | fraca | — |
-| 10 | 3.4.4 (frontend/login.html:12) | 3 código | código-fonte | — | contexto | fraca | — |
-| 11 | 3.4.4 (frontend-hermes/src/App.tsx:35) | 3 código | código-fonte | events | tecnológica | moderada | implementa #26 |
-| 12 | 3.4.4 (frontend-hermes/src/App.tsx:36) | 3 código | código-fonte | events | tecnológica | moderada | implementa #26 |
-| 13 | 3.4.4 (frontend/components/topbar.html:26) | 3 código | código-fonte | events | tecnológica | moderada | implementa #26 |
-| 14 | 3.4.4 (frontend/dashboard.html:421) | 3 código | código-fonte | events | tecnológica | moderada | implementa #26 |
-| 15 | 3.4.4 (frontend/js/router.js:71) | 3 código | código-fonte | — | contexto | fraca | — |
-| 16 | 3.4.4 (frontend/views/auditoria.html:219) | 3 código | código-fonte | — | contexto | fraca | — |
-| 17 | 3.4.4 (frontend/views/auditoria.html:288) | 3 código | código-fonte | — | contexto | fraca | — |
-| 18 | 3.4.4 (frontend/views/dashboard_home.html:458) | 3 código | código-fonte | — | contexto | fraca | — |
-| 19 | 3.4.4 (frontend/views/infra_servidores.html:306) | 3 código | código-fonte | — | contexto | fraca | — |
-| 20 | 3.4.4 (frontend/views/mapa_transmilenio.html:616) | 3 código | código-fonte | — | contexto | fraca | — |
-| 21 | 3.4.4 (frontend/dashboard.html:361) | 3 código | código-fonte | web-components | arquitetural | forte | implementa #25 |
-| 22 | 3.4.4 (frontend/dashboard.html:366) | 3 código | código-fonte | web-components | arquitetural | forte | implementa #25 |
-| 23 | 3.4.3 (frontend) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 24 | 3.4.3 (frontend-hermes) | 4 estrutura | diretório | web-components | arquitetural | moderada | — |
-| 25 | 3.4.5 #1 | 5 composição | código-fonte | web-components | arquitetural | forte | liga #23; liga #24 |
-| 26 | 3.4.5 #2 | 5 composição | código-fonte | events | arquitetural | forte | liga #23; liga #24 |
-| 27 | 3.4.6 #1 | 6 build-deploy | deploy | — | arquitetural | fraca | publica #23 |
-| 28 | 3.4.6 #2 | 6 build-deploy | deploy | — | arquitetural | moderada | publica #24 |
-| 29 | 3.4.7 #1 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #23; corrobora frontend/js/router.js:13-29; corrobora #5 |
-| 30 | 3.4.7 #2 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #24; corrobora #28; corrobora #25 |
-| 31 | 3.4.7 #3 | 7 documentação | documentação | — | arquitetural | fraca | — |
-| 32 | 3.4.7 #4 | 7 documentação | documentação | — | contexto | fraca | contradiz ngrok_tunnel.py:95-111; contradiz ngrok_tunnel.py:153-161 |
-| 33 | 3.4.7 #5 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #28 |
-| 34 | 3.4.7 #6 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #25 |
-| 35 | 3.4.7 #7 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #28 |
-| 36 | 3.4.7 #8 | 7 documentação | documentação | — | contexto | fraca | corrobora backend/main.py:91-92; corrobora backend/main.py:257-293 |
-| 37 | 3.4.7 #9 | 7 documentação | documentação | — | arquitetural | fraca | corrobora frontend-hermes/vite.config.ts:3-8; corrobora #2 |
-| 38 | 3.4.7 #10 | 7 documentação | documentação | — | contexto | fraca | — |
-| 39 | 3.4.7 #11 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #21; corrobora frontend-hermes/src/hermes-widget.tsx:40-44; corrobora frontend-hermes/src/App.tsx:19-22; corrobora frontend-hermes/src/store/useHermesStore.ts:44 |
-| 40 | 3.4.7 #12 | 7 documentação | comentário | events | arquitetural | fraca | corrobora #26; corrobora #11; corrobora #13 |
-| 41 | 3.4.7 #13 | 7 documentação | comentário | — | contexto | fraca | corrobora frontend-hermes/vite.config.ts:17-23; corrobora #28 |
-| 42 | 3.4.7 #14 | 7 documentação | comentário | web-components | arquitetural | fraca | corrobora #25; corrobora #21; corrobora #22; corrobora #3 |
-| 43 | 3.4.7 #15 | 7 documentação | comentário | — | arquitetural | fraca | corrobora frontend/dashboard.html:724-730; corrobora frontend-hermes/src/hermes-widget.tsx:10-12; corrobora frontend-hermes/src/hermes-widget.tsx:31-44 |
-| 44 | 3.4.7 #16 | 7 documentação | comentário | — | contexto | fraca | contradiz backend/main.py:257-293 |
-| 45 | 3.4.7 #17 | 7 documentação | comentário | — | contexto | fraca | corrobora frontend/js/api.js:11-15; corrobora frontend/js/api.js:55; corrobora backend/main.py:257-293 |
-| 46 | 3.4.7 #18 | 7 documentação | comentário | — | contexto | fraca | corrobora ngrok_tunnel.py:95-111; corrobora ngrok_tunnel.py:153-161 |
-| 47 | 3.4.8 #1 | 8 histórico | histórico | — | arquitetural | fraca | explica #24; explica #31 |
-| 48 | 3.4.8 #2 | 8 histórico | histórico | — | contexto | fraca | explica #32; explica #44 |
-| 49 | 3.4.8 #3 | 8 histórico | histórico | — | contexto | fraca | explica #38 |
+| 1 | 3.4.4 (frontend-hermes/src/hermes-widget.tsx:6) | 3 code | source code | web-components | technological | moderate | implements #25 |
+| 2 | 3.4.4 (frontend-hermes/src/hermes-widget.tsx:16) | 3 code | source code | web-components | technological | moderate | implements #25 |
+| 3 | 3.4.4 (frontend-hermes/src/hermes-widget.tsx:58) | 3 code | source code | web-components | technological | moderate | implements #25 |
+| 4 | 3.4.4 (frontend/js/router.js:54) | 3 code | source code | — | context | weak | — |
+| 5 | 3.4.4 (frontend/js/router.js:93) | 3 code | source code | — | context | weak | — |
+| 6 | 3.4.4 (frontend/views/mapa_transmilenio.html:604) | 3 code | source code | — | context | weak | — |
+| 7 | 3.4.4 (frontend/dashboard.html:14) | 3 code | source code | — | context | weak | — |
+| 8 | 3.4.4 (frontend/dashboard.html:15) | 3 code | source code | — | context | weak | — |
+| 9 | 3.4.4 (frontend/index.html:23) | 3 code | source code | — | context | weak | — |
+| 10 | 3.4.4 (frontend/login.html:12) | 3 code | source code | — | context | weak | — |
+| 11 | 3.4.4 (frontend-hermes/src/App.tsx:35) | 3 code | source code | events | technological | moderate | implements #26 |
+| 12 | 3.4.4 (frontend-hermes/src/App.tsx:36) | 3 code | source code | events | technological | moderate | implements #26 |
+| 13 | 3.4.4 (frontend/components/topbar.html:26) | 3 code | source code | events | technological | moderate | implements #26 |
+| 14 | 3.4.4 (frontend/dashboard.html:421) | 3 code | source code | events | technological | moderate | implements #26 |
+| 15 | 3.4.4 (frontend/js/router.js:71) | 3 code | source code | — | context | weak | — |
+| 16 | 3.4.4 (frontend/views/auditoria.html:219) | 3 code | source code | — | context | weak | — |
+| 17 | 3.4.4 (frontend/views/auditoria.html:288) | 3 code | source code | — | context | weak | — |
+| 18 | 3.4.4 (frontend/views/dashboard_home.html:458) | 3 code | source code | — | context | weak | — |
+| 19 | 3.4.4 (frontend/views/infra_servidores.html:306) | 3 code | source code | — | context | weak | — |
+| 20 | 3.4.4 (frontend/views/mapa_transmilenio.html:616) | 3 code | source code | — | context | weak | — |
+| 21 | 3.4.4 (frontend/dashboard.html:361) | 3 code | source code | web-components | architectural | strong | implements #25 |
+| 22 | 3.4.4 (frontend/dashboard.html:366) | 3 code | source code | web-components | architectural | strong | implements #25 |
+| 23 | 3.4.3 (frontend) | 4 structure | directory | — | architectural | moderate | — |
+| 24 | 3.4.3 (frontend-hermes) | 4 structure | directory | web-components | architectural | moderate | — |
+| 25 | 3.4.5 #1 | 5 composition | source code | web-components | architectural | strong | links #23; links #24 |
+| 26 | 3.4.5 #2 | 5 composition | source code | events | architectural | strong | links #23; links #24 |
+| 27 | 3.4.6 #1 | 6 build-deploy | deploy | — | architectural | weak | publishes #23 |
+| 28 | 3.4.6 #2 | 6 build-deploy | deploy | — | architectural | moderate | publishes #24 |
+| 29 | 3.4.7 #1 | 7 documentation | documentation | — | architectural | weak | corroborates #23; corroborates frontend/js/router.js:13-29; corroborates #5 |
+| 30 | 3.4.7 #2 | 7 documentation | documentation | — | architectural | weak | corroborates #24; corroborates #28; corroborates #25 |
+| 31 | 3.4.7 #3 | 7 documentation | documentation | — | architectural | weak | — |
+| 32 | 3.4.7 #4 | 7 documentation | documentation | — | context | weak | contradicts ngrok_tunnel.py:95-111; contradicts ngrok_tunnel.py:153-161 |
+| 33 | 3.4.7 #5 | 7 documentation | documentation | — | architectural | weak | corroborates #28 |
+| 34 | 3.4.7 #6 | 7 documentation | documentation | — | architectural | weak | corroborates #25 |
+| 35 | 3.4.7 #7 | 7 documentation | documentation | — | architectural | weak | corroborates #28 |
+| 36 | 3.4.7 #8 | 7 documentation | documentation | — | context | weak | corroborates backend/main.py:91-92; corroborates backend/main.py:257-293 |
+| 37 | 3.4.7 #9 | 7 documentation | documentation | — | architectural | weak | corroborates frontend-hermes/vite.config.ts:3-8; corroborates #2 |
+| 38 | 3.4.7 #10 | 7 documentation | documentation | — | context | weak | — |
+| 39 | 3.4.7 #11 | 7 documentation | comment | — | architectural | weak | corroborates #21; corroborates frontend-hermes/src/hermes-widget.tsx:40-44; corroborates frontend-hermes/src/App.tsx:19-22; corroborates frontend-hermes/src/store/useHermesStore.ts:44 |
+| 40 | 3.4.7 #12 | 7 documentation | comment | events | architectural | weak | corroborates #26; corroborates #11; corroborates #13 |
+| 41 | 3.4.7 #13 | 7 documentation | comment | — | context | weak | corroborates frontend-hermes/vite.config.ts:17-23; corroborates #28 |
+| 42 | 3.4.7 #14 | 7 documentation | comment | web-components | architectural | weak | corroborates #25; corroborates #21; corroborates #22; corroborates #3 |
+| 43 | 3.4.7 #15 | 7 documentation | comment | — | architectural | weak | corroborates frontend/dashboard.html:724-730; corroborates frontend-hermes/src/hermes-widget.tsx:10-12; corroborates frontend-hermes/src/hermes-widget.tsx:31-44 |
+| 44 | 3.4.7 #16 | 7 documentation | comment | — | context | weak | contradicts backend/main.py:257-293 |
+| 45 | 3.4.7 #17 | 7 documentation | comment | — | context | weak | corroborates frontend/js/api.js:11-15; corroborates frontend/js/api.js:55; corroborates backend/main.py:257-293 |
+| 46 | 3.4.7 #18 | 7 documentation | comment | — | context | weak | corroborates ngrok_tunnel.py:95-111; corroborates ngrok_tunnel.py:153-161 |
+| 47 | 3.4.8 #1 | 8 history | history | — | architectural | weak | explains #24; explains #31 |
+| 48 | 3.4.8 #2 | 8 history | history | — | context | weak | explains #32; explains #44 |
+| 49 | 3.4.8 #3 | 8 history | history | — | context | weak | explains #38 |
 
-## Resumo
+## Summary
 
-Observações: 49. Dimensões (tecnologia: 0, configuração: 0, código: 22, estrutura: 2, composição: 2, build-deploy: 2, documentação: 18, histórico: 3). Força (forte: 4, moderada: 10, fraca: 35, ambígua: 0). Evidência (tecnológica: 7, arquitetural: 20, contexto: 22).
+Observations: 49. Dimensions (technology: 0, configuration: 0, code: 22, structure: 2, composition: 2, build-deploy: 2, documentation: 18, history: 3). Strength (strong: 4, moderate: 10, weak: 35, ambiguous: 0). Evidence (technological: 7, architectural: 20, context: 22).

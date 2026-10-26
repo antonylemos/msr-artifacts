@@ -17,23 +17,23 @@ annotation:
 
 ## Workspace
 
-angular.json:5 (`projects`) com três projetos: angular.json:6 e angular.json:13 (host-app, `root: projects/host-app`); angular.json:119 e angular.json:126 (customer-app, `root: projects/customer-app`); angular.json:232 e angular.json:239 (orders-app, `root: projects/orders-app`).
+angular.json:5 (`projects`) with three projects: angular.json:6 and angular.json:13 (host-app, `root: projects/host-app`); angular.json:119 and angular.json:126 (customer-app, `root: projects/customer-app`); angular.json:232 and angular.json:239 (orders-app, `root: projects/orders-app`).
 
-## Unidades
+## Units
 
-| Diretório | Marcadores | Manifesto | Entrada | Build | Workspace | Deploy | Unidade frontend | Motivo |
+| Directory | Markers | Manifest | Entry | Build | Workspace | Deploy | Frontend unit | Rationale |
 |---|---|---|---|---|---|---|---|---|
-| . | angular.json;package.json | package.json:1-10 (manifesto do workspace, script `build` = `ng build`) | — | — | — | — | No | Raiz de coordenação Angular; os targets pertencem às três aplicações em projects/, sem UI própria na raiz. |
-| projects/customer-app | projects/customer-app/federation.config.js | — | angular.json:175 (`browser` customer-app); projects/customer-app/src/main.ts:1-6 (carrega bootstrap); projects/customer-app/src/bootstrap.ts:1-6 (inicia a UI) | angular.json:130-142 (target `build` customer-app, native-federation); angular.json:172-175 (alvo `esbuild`, `@angular/build:application`) | angular.json:119 e angular.json:126 (projeto customer-app) | — | Yes | Projeto Angular com entrada e target de build próprios, sem necessidade de manifesto local. |
-| projects/host-app | projects/host-app/federation.config.js | — | angular.json:62 (`browser` host-app); projects/host-app/src/main.ts:1-8 (carrega bootstrap); projects/host-app/src/bootstrap.ts:1-6 (inicia a UI) | angular.json:17-29 (target `build` host-app, native-federation); angular.json:59-62 (alvo `esbuild`, `@angular/build:application`) | angular.json:6 e angular.json:13 (projeto host-app) | — | Yes | Projeto Angular com entrada e target de build próprios, sem necessidade de manifesto local. |
-| projects/orders-app | projects/orders-app/federation.config.js | — | angular.json:288 (`browser` orders-app); projects/orders-app/src/main.ts:1-6 (carrega bootstrap); projects/orders-app/src/bootstrap.ts:1-6 (inicia a UI) | angular.json:243-255 (target `build` orders-app, native-federation); angular.json:285-288 (alvo `esbuild`, `@angular/build:application`) | angular.json:232 e angular.json:239 (projeto orders-app) | — | Yes | Projeto Angular com entrada e target de build próprios, sem necessidade de manifesto local. |
+| . | angular.json;package.json | package.json:1-10 (workspace manifest, script `build` = `ng build`) | — | — | — | — | No | Angular coordination root; the targets belong to the three applications in projects/, with no UI of its own at the root. |
+| projects/customer-app | projects/customer-app/federation.config.js | — | angular.json:175 (`browser` customer-app); projects/customer-app/src/main.ts:1-6 (loads bootstrap); projects/customer-app/src/bootstrap.ts:1-6 (starts the UI) | angular.json:130-142 (customer-app `build` target, native-federation); angular.json:172-175 (`esbuild` target, `@angular/build:application`) | angular.json:119 and angular.json:126 (customer-app project) | — | Yes | Angular project with its own entry and build target, without requiring a local manifest. |
+| projects/host-app | projects/host-app/federation.config.js | — | angular.json:62 (`browser` host-app); projects/host-app/src/main.ts:1-8 (loads bootstrap); projects/host-app/src/bootstrap.ts:1-6 (starts the UI) | angular.json:17-29 (host-app `build` target, native-federation); angular.json:59-62 (`esbuild` target, `@angular/build:application`) | angular.json:6 and angular.json:13 (host-app project) | — | Yes | Angular project with its own entry and build target, without requiring a local manifest. |
+| projects/orders-app | projects/orders-app/federation.config.js | — | angular.json:288 (`browser` orders-app); projects/orders-app/src/main.ts:1-6 (loads bootstrap); projects/orders-app/src/bootstrap.ts:1-6 (starts the UI) | angular.json:243-255 (orders-app `build` target, native-federation); angular.json:285-288 (`esbuild` target, `@angular/build:application`) | angular.json:232 and angular.json:239 (orders-app project) | — | Yes | Angular project with its own entry and build target, without requiring a local manifest. |
 
-## Resumo
+## Summary
 
-Aplicações frontend no snapshot: 3 (projects/customer-app, projects/host-app, projects/orders-app).
+Frontend applications in the snapshot: 3 (projects/customer-app, projects/host-app, projects/orders-app).
 
-## Notas
+## Notes
 
-- O N coincide com `frontend_units: 3` da classificação.
-- Sem `Dockerfile`, CI ou configuração de hospedagem no snapshot, e sem ocorrências `ws-*`, `ops-*` ou `ci-*` no matches.csv; as aplicações se separam só pelos targets e portas do angular.json.
-- Os `assets` de cada alvo `esbuild` apontam para `projects/<app>/public` (ex.: angular.json:67-68), diretório ausente do snapshot; não afeta entrada nem build.
+- N matches the classification’s `frontend_units: 3`.
+- No `Dockerfile`, CI or hosting configuration in the snapshot, and no `ws-*`, `ops-*` or `ci-*` occurrences in matches.csv; the applications are separated only by angular.json targets and ports.
+- The `assets` of each `esbuild` target point to `projects/<app>/public` (e.g., angular.json:67-68), a directory missing from the snapshot; this does not affect entry or build.

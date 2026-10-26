@@ -15,29 +15,29 @@ annotation:
 
 # 368 — Ba5ik7/seed-mfe-remote
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-async-bootstrap | projects/demo/src/main.ts:1 | projects/demo | dynamic-loading | No | `import('./bootstrap')` carrega o bootstrap local do demo (projects/demo/src/main.ts:1, projects/demo/src/bootstrap.ts:5); interno à unidade. |
-| src-async-bootstrap | projects/seed-mfe-remote/src/main.ts:1 | projects/seed-mfe-remote | dynamic-loading | No | `import('./bootstrap')` carrega o bootstrap local do remote (projects/seed-mfe-remote/src/main.ts:1, projects/seed-mfe-remote/src/bootstrap.ts:5); interno à unidade. |
-| src-load-remote | projects/demo/src/app/app.component.ts:1 | projects/demo | remote-resolution | Yes | Importa `loadRemoteModule`, usado em projects/demo/src/app/app.component.ts:26-30 para carregar `./RemoteWidget` de seed-mfe-remote. |
-| src-load-remote | projects/demo/src/app/app.component.ts:26 | projects/demo | remote-resolution | Yes | Em `ngAfterViewInit`, `loadRemoteModule` com `remoteEntry: 'http://localhost:4202/remoteEntry.js'` e `exposedModule: './RemoteWidget'` (projects/demo/src/app/app.component.ts:24-30); alvo é projects/seed-mfe-remote, que expõe `./RemoteWidget` em projects/seed-mfe-remote/webpack.config.js:7-8 e serve na porta 4202 (angular.json:80). AppComponent é a raiz do demo (projects/demo/src/bootstrap.ts:5). |
-| src-load-remote | projects/demo/src/app/app.routes.ts:2 | projects/demo | remote-resolution | Yes | Importa `loadRemoteModule`, usado na rota `remote` em projects/demo/src/app/app.routes.ts:8-12. |
-| src-load-remote | projects/demo/src/app/app.routes.ts:8 | projects/demo | remote-resolution | Yes | `loadComponent` da rota `remote` chama `loadRemoteModule` com o mesmo remoteEntry e `./RemoteWidget` e devolve `RemoteWidgetComponent` (projects/demo/src/app/app.routes.ts:7-12); rotas registradas por `provideRouter(routes)` em projects/demo/src/app/app.config.ts:7, usado em projects/demo/src/bootstrap.ts:5. |
+| src-async-bootstrap | projects/demo/src/main.ts:1 | projects/demo | dynamic-loading | No | `import('./bootstrap')` loads demo’s local bootstrap (projects/demo/src/main.ts:1, projects/demo/src/bootstrap.ts:5); internal to the unit. |
+| src-async-bootstrap | projects/seed-mfe-remote/src/main.ts:1 | projects/seed-mfe-remote | dynamic-loading | No | `import('./bootstrap')` loads remote’s local bootstrap (projects/seed-mfe-remote/src/main.ts:1, projects/seed-mfe-remote/src/bootstrap.ts:5); internal to the unit. |
+| src-load-remote | projects/demo/src/app/app.component.ts:1 | projects/demo | remote-resolution | Yes | Imports `loadRemoteModule`, used at projects/demo/src/app/app.component.ts:26-30 to load `./RemoteWidget` from seed-mfe-remote. |
+| src-load-remote | projects/demo/src/app/app.component.ts:26 | projects/demo | remote-resolution | Yes | In `ngAfterViewInit`, `loadRemoteModule` with `remoteEntry: 'http://localhost:4202/remoteEntry.js'` and `exposedModule: './RemoteWidget'` (projects/demo/src/app/app.component.ts:24-30); target is projects/seed-mfe-remote, exposing `./RemoteWidget` at projects/seed-mfe-remote/webpack.config.js:7-8 and serving on port 4202 (angular.json:80). AppComponent is demo’s root (projects/demo/src/bootstrap.ts:5). |
+| src-load-remote | projects/demo/src/app/app.routes.ts:2 | projects/demo | remote-resolution | Yes | Imports `loadRemoteModule`, used in route `remote` at projects/demo/src/app/app.routes.ts:8-12. |
+| src-load-remote | projects/demo/src/app/app.routes.ts:8 | projects/demo | remote-resolution | Yes | `loadComponent` of route `remote` calls `loadRemoteModule` with the same remoteEntry and `./RemoteWidget` and returns `RemoteWidgetComponent` (projects/demo/src/app/app.routes.ts:7-12); routes registered by `provideRouter(routes)` at projects/demo/src/app/app.config.ts:7, used at projects/demo/src/bootstrap.ts:5. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | projects/demo/src/app/app.component.ts:36 | projects/demo | runtime-composition | Yes | `this.mfeHost.createComponent(remoteComponent.RemoteWidgetComponent)` monta o componente de seed-mfe-remote no `ng-container #mfeHost` do template (projects/demo/src/app/app.component.ts:12, :21-22, :36). |
-| manual | projects/demo/src/app/app.routes.ts:4 | projects/demo | host-relationship | Yes | A tabela `routes` declara que o caminho `remote` usa o `./RemoteWidget` de seed-mfe-remote (projects/demo/src/app/app.routes.ts:4-14), exibido no `<router-outlet>` do host (projects/demo/src/app/app.component.ts:15); registrada em projects/demo/src/app/app.config.ts:7. |
+| manual | projects/demo/src/app/app.component.ts:36 | projects/demo | runtime-composition | Yes | `this.mfeHost.createComponent(remoteComponent.RemoteWidgetComponent)` mounts the seed-mfe-remote component in the template’s `ng-container #mfeHost` (projects/demo/src/app/app.component.ts:12, :21-22, :36). |
+| manual | projects/demo/src/app/app.routes.ts:4 | projects/demo | host-relationship | Yes | The `routes` table declares that path `remote` uses seed-mfe-remote’s `./RemoteWidget` (projects/demo/src/app/app.routes.ts:4-14), shown in the host’s `<router-outlet>` (projects/demo/src/app/app.component.ts:15); registered at projects/demo/src/app/app.config.ts:7. |
 
-## Resumo
+## Summary
 
-Construções com composição: 6 (remote-resolution: 4, runtime-composition: 1, host-relationship: 1).
+Constructs participating in composition: 6 (remote-resolution: 4, runtime-composition: 1, host-relationship: 1).
 
-## Notas
+## Notes
 
-- O `remoteEntry` está fixo em `http://localhost:4202/remoteEntry.js` nas duas chamadas; a declaração `remotes.seedMfeRemote` em projects/demo/webpack.config.js:5-7 não é usada pelo código, que resolve o remote por URL com `type: 'module'`.
-- O seletor `app-remote-widget` (projects/seed-mfe-remote/src/app/remote-widget/remote-widget.component.ts:4) não aparece em nenhum template do demo; o componente entra só por `createComponent` e pela rota.
+- The `remoteEntry` is fixed at `http://localhost:4202/remoteEntry.js` in both calls; the `remotes.seedMfeRemote` declaration at projects/demo/webpack.config.js:5-7 is unused by code, which resolves remote by URL with `type: 'module'`.
+- Selector `app-remote-widget` (projects/seed-mfe-remote/src/app/remote-widget/remote-widget.component.ts:4) appears in no demo template; the component enters only through `createComponent` and the route.

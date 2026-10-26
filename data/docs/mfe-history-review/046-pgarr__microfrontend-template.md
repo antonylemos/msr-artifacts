@@ -13,17 +13,17 @@ annotation:
 
 # 046 — pgarr/microfrontend-template
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem 19 commits, de 2025-10-21 a 2025-10-26, sem merges. O primeiro commit é `9b65c14` (2025-10-21, "init"), e o do snapshot é `8869e12` (2025-10-26, "refactor: migrate from Material-UI to MUI and update dependencies").
+History up to snapshot has 19 commits, from 2025-10-21 to 2025-10-26, without merges. First commit is `9b65c14` (2025-10-21, "init"), and snapshot commit is `8869e12` (2025-10-26, "refactor: migrate from Material-UI to MUI and update dependencies").
 
-As revisões anteriores não deixaram ponto ambíguo que o histórico pudesse esclarecer: não há dependência sem uso, unidade ou relação `Undetermined`, construção desativada nem afirmação de documentação `contradita` ou `parcial`. Por isso o histórico não foi consultado além deste contexto.
+Previous reviews left no ambiguous point history could clarify: no unused dependency, `Undetermined` unit or relationship, disabled construct or `contradicted` or `partial` documentation claim exists. Thus history was not consulted beyond this context.
 
-## Pontos
+## Points
 
-Nenhum ponto ambíguo nas revisões anteriores.
+No ambiguous points in previous reviews.
 
-## Comandos
+## Commands
 
 ```
 docs/mfe-history-review/tools/hist.sh pgarr__microfrontend-template rev-list --count 8869e1289ab5b8e758cb6a465425997296b6ca32
@@ -32,6 +32,6 @@ docs/mfe-history-review/tools/hist.sh pgarr__microfrontend-template log --format
 docs/mfe-history-review/tools/hist.sh pgarr__microfrontend-template log --format='%h %ad %s' --date=short 8869e1289ab5b8e758cb6a465425997296b6ca32
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 19 (2025-10-21 a 2025-10-26). Pontos: 0.
+Commits up to the snapshot: 19 (2025-10-21 to 2025-10-26). Points: 0.

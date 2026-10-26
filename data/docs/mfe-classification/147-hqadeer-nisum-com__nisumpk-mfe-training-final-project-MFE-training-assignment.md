@@ -20,66 +20,66 @@ annotation:
 
 # 147 — hqadeer-nisum-com/nisumpk-mfe-training-final-project-MFE-training-assignment
 
-## Contexto
+## Context
 
-No commit registrado, o repositório contém só `LICENSE` e um `README.md` de 1.535 linhas com o **enunciado** do projeto final de um treinamento em micro-frontends. O enunciado pede shell/gateway, ao menos dois MFEs, Module Federation obrigatório, monorepo, CI/CD etc. (`README.md:1–30`; `README.md:61`; `README.md:261–289`). Não há implementação no snapshot. O nome do repositório não é usado como evidência.
+At recorded commit, repository contains only `LICENSE` and a 1.535-line `README.md` with **instructions** for a micro-frontends training final project. Instructions request shell/gateway, at least two MFEs, mandatory Module Federation, monorepo, CI/CD etc. (`README.md:1–30`; `README.md:61`; `README.md:261–289`). No implementation exists in snapshot. Repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:148` registra rank 147, ID 1362609771, status `cloned` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:148` records rank 147, ID 1362609771, status `cloned` and front-matter commit, which is clone HEAD and `origin/main`. Every clone Git command used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. No installation, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:148` registra as estratégias `terminology;technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:36962` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:36971` (`pass`), ambos com `terminology;technology`.
+`data/samples/mfe-sample-001/sample.csv:148` records strategies `terminology;technology` and eligibility `pass`. Sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). ID appears in `data/discovery/mfe-round-001/candidates.csv:36962` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:36971` (`pass`), both with `terminology;technology`.
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos três hits em cada rodada, do endpoint `repositories`, com subconsulta `#created:2026-09` e `path` vazio:
+`sqlite3 -readonly` query of tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns same three hits in each round, at endpoint `repositories`, with subquery `#created:2026-09` and empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `technology-module-federation-repositories`: `"module federation" in:name,description,readme` | 2026-10-07T23:31:04.154Z / 2026-10-08T16:19:36.684Z |
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | 2026-10-07T22:42:26.531Z / 2026-10-08T16:02:06.454Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | 2026-10-07T23:12:26.297Z / 2026-10-08T16:10:41.677Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2026-09-01..2026-09-30`.
+Effective queries append `pushed:>=2025-04-01 created:2026-09-01..2026-09-30`.
 
-Metadados do hit: descrição nula, sem tópicos, linguagem nula, `fork: false`, tamanho 149, criação em 2026-09-09T11:48:36Z, push em 2026-09-29T10:24:38Z. Sem descrição, o acerto vem do README, que tem as três grafias literais:
+Hit metadata: null description, no topics, null language, `fork: false`, size 149, creation at 2026-09-09T11:48:36Z, push at 2026-09-29T10:24:38Z. Without description, retrieval comes from README, with all three literal spellings:
 - “Micro Frontend”: `README.md:1`, `7`, `13`;
 - “Micro Frontends”: `README.md:30`;
 - “Module Federation”: `README.md:14`, `41`.
 
-A última alteração do README é o próprio SHA, `e99743b` (2026-09-09T03:29:03+05:00), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+Last README change is SHA itself, `e99743b` (2026-09-09T03:29:03+05:00), before October 2026 collections. README at the SHA is not later than searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 2 entradas, `LICENSE` e `README.md`, ambas `100644`; zero symlinks e zero gitlinks. Não há código, manifesto ou configuração. | contrária |
-| Documentação (enunciado) | `README.md:1–30`: “Final Project for the Micro Frontend (MFE) Training … you will design and build…”. `README.md:61`: “Your project must contain at least two Micro Frontends and one Gateway/Shell application”. `README.md:261–289`: Module Federation obrigatório, Gateway como host, MFEs como remotes. `README.md:663`, `827–863`: variáveis e deploy esperados. O texto prescreve o que o aluno deve construir; não descreve artefatos existentes. | fraca |
-| Tecnologia / Configuração / Composição (busca) | O inventário é só README e LICENSE; leitura e `git grep -i` por termos MFE só acham o enunciado. Nenhum mecanismo configurado. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 2 entries, `LICENSE` and `README.md`, both `100644`; zero symlinks and zero gitlinks. No code, manifest or configuration. | contrary |
+| Documentation (instructions) | `README.md:1–30`: “Final Project for the Micro Frontend (MFE) Training … you will design and build…”. `README.md:61`: “Your project must contain at least two Micro Frontends and one Gateway/Shell application”. `README.md:261–289`: mandatory Module Federation, Gateway as host, MFEs as remotes. `README.md:663`, `827–863`: expected variables and deployment. Text prescribes what student should build; it does not describe existing artifacts. | weak |
+| Technology / Configuration / Composition (search) | Inventory is only README and LICENSE; reading and `git grep -i` for MFE terms find only instructions. No configured mechanism. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 3 commits, nenhum merge, todos de `moiznisum <msiddique@nisum.com>`. A raiz `d1f0526` (“Initial commit”, 2026-09-09T03:21:47+05:00) adiciona `LICENSE` e `README.md`; `6c81bdb` e o SHA `e99743b` só alteram o README (`git log --no-renames --name-status`). O commit-raiz é anterior à criação do repositório nos metadados (2026-09-09T11:48:36Z), compatível com repositório gerado a partir de template de enunciado. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 3 commits, no merge, all by `moiznisum <msiddique@nisum.com>`. Root `d1f0526` (“Initial commit”, 2026-09-09T03:21:47+05:00) adds `LICENSE` and `README.md`; `6c81bdb` and SHA `e99743b` only change README (`git log --no-renames --name-status`). Root commit predates metadata repository creation (2026-09-09T11:48:36Z), compatible with repository generated from assignment template. No historical blob was read and no object was missing.
 
-Existe o ref `origin/feature/final-project-assignment` (`72e4f64`, hqadeer-nisum-com, 2026-09-29, “fix checkout request content type”), que descende do SHA (`git merge-base --is-ancestor`). O `pushed_at` dos metadados (2026-09-29) corresponde a esse branch. Pelo procedimento, o snapshot classificado é o commit registrado em `clones.csv`; o conteúdo desse branch não foi lido nem considerado.
+Ref `origin/feature/final-project-assignment` (`72e4f64`, hqadeer-nisum-com, 2026-09-29, “fix checkout request content type”) exists, descending from SHA (`git merge-base --is-ancestor`). Metadata `pushed_at` (2026-09-29) corresponds to that branch. Under procedure, classified snapshot is commit recorded in `clones.csv`; branch content was neither read nor considered.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend no snapshot; só README e LICENSE. As unidades do enunciado (`README.md:61`) são requisitos, não artefatos nem referências de configuração. |
-| Q2 | No | Sem unidades, não há entradas ou builds. |
-| Q3 | No | Não há host, shell ou configuração raiz. |
-| Q4 | No | Nenhum mecanismo de composição configurado; Module Federation aparece só como requisito (`README.md:261–289`). |
-| Q5 | No | Q1–Q4 são No: enunciado de exercício sem implementação no commit registrado. |
+| Q1 | No | No frontend unit in snapshot; only README and LICENSE. Units in instructions (`README.md:61`) are requirements, not artifacts or configuration references. |
+| Q2 | No | Without units, no entries or builds exist. |
+| Q3 | No | No host, shell or root configuration exists. |
+| Q4 | No | No composition mechanism is configured; Module Federation appears only as requirement (`README.md:261–289`). |
+| Q5 | No | Q1–Q4 are No: exercise instructions without implementation at recorded commit. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “repositories mentioning micro-frontends without implementing them”. É conteúdo didático, como 023, e repositório sem implementação, como os perfis 011/064/068/073/077/101/111, por isso `frontend_units: 0` e `unit_organization: none`.
-- `repo_type: other`: enunciado de treinamento, sem aplicação de exemplo, template de código ou biblioteca. `ui_technologies: []` e `build_tools: []`.
-- Não há decisão aberta sobre o checklist aplicado ao snapshot.
+- `Non-MFE` under rule “at least one question is No”. Matches “repositories mentioning micro-frontends without implementing them”. Educational content, as 023, and repository without implementation, as profiles 011/064/068/073/077/101/111, hence `frontend_units: 0` and `unit_organization: none`.
+- `repo_type: other`: training instructions, without example application, code template or library. `ui_technologies: []` and `build_tools: []`.
+- No decision remains open about checklist applied to snapshot.
 
-## Notas para análise
+## Analysis notes
 
-- **Protocolo (snapshot e branches):** existe o ref `origin/feature/final-project-assignment`, descendente do SHA, mas a existência do branch e o subject de seu commit não demonstram que haja nele uma implementação MFE; o conteúdo não foi lido. A amostra classifica o commit de `clones.csv` (branch `main`), e o caso é Non-MFE pelo snapshot. Registra-se como limitação de cobertura, sem inspecionar o branch.
-- **RQ1 (sinais enganosos):** enunciados de treinamento com vocabulário MFE denso (Module Federation, host, remotes) passam por todas as consultas terminológicas e de tecnologia sem conter código.
-- **Protocolo (busca):** as três grafias buscadas estão literalmente no README. A elegibilidade muda de `unknown` (001) para `pass` (002).
-- **Contribuição da revisão independente (Lupa):** concordância integral com Non-MFE e Q1–Q5 No (o snapshot é uma licença e um README que prescreve um exercício, sem implementação, manifesto, entrada de frontend nem unidade remota); sem decisão aberta. Correção adotada: a hipótese de que a solução do aluno esteja no branch remoto foi retirada, pois não é sustentada sem ler outro snapshot.
+- **Protocol (snapshot and branches):** ref `origin/feature/final-project-assignment` descends from SHA, but branch existence and commit subject demonstrate no MFE implementation there; content was not read. Sample classifies commit in `clones.csv` (branch `main`), and case is Non-MFE under snapshot. Recorded as coverage limitation, without branch inspection.
+- **RQ1 (misleading signals):** training instructions with dense MFE vocabulary (Module Federation, host, remotes) pass all terminology/technology queries without containing code.
+- **Protocol (search):** all three searched spellings are literally in README. Eligibility changes from `unknown` (001) to `pass` (002).
+- **Independent-review contribution (Lupa):** complete agreement with Non-MFE and Q1–Q5 No (snapshot is license and README prescribing an exercise, without implementation, manifest, frontend entry or remote unit); no open decision. Adopted correction: hypothesis that student solution is in remote branch was removed, unsupported without reading another snapshot.

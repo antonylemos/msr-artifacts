@@ -17,25 +17,25 @@ annotation:
 
 ## Workspace
 
-Nenhuma declaração de workspace.
+No workspace declaration.
 
-## Unidades
+## Units
 
-| Diretório | Marcadores | Manifesto | Entrada | Build | Workspace | Deploy | Unidade frontend | Motivo |
+| Directory | Markers | Manifest | Entry | Build | Workspace | Deploy | Frontend unit | Rationale |
 |---|---|---|---|---|---|---|---|---|
-| packages/auth | packages/auth/package.json | packages/auth/package.json:1-6 (somente manifesto e script de teste) | — | — | — | — | No | Somente manifesto e lockfile; não há código de UI, entrada ou build de aplicação no snapshot. |
-| packages/container | packages/container/package.json | packages/container/package.json:1-7 (manifesto próprio) | packages/container/src/index.js:1 (entrada convencional webpack, sem `entry` na configuração); packages/container/src/bootstrap.js:5 (monta React em `#_container-dev-root`); packages/container/config/webpack.common.js:19-21 (template `./public/index.html`) | packages/container/package.json:6 (`webpack --config config/webpack.prod.js`); packages/container/config/webpack.prod.js:1-29 (configuração própria) | — | .github/workflows/container.yml:8-13 (gatilho e working-directory em `packages/container`); .github/workflows/container.yml:30-31 (`npm run build`); .github/workflows/container.yml:36 (publica dist em `/container/latest`) | Yes | Aplicação com entrada, build webpack e workflow próprios. |
-| packages/container/config | packages/container/config/webpack.common.js;packages/container/config/webpack.dev.js;packages/container/config/webpack.prod.js | — | — | — | — | — | No | Configurações do build de packages/container; não constitui aplicação separada. |
-| packages/dashboard | packages/dashboard/package.json | packages/dashboard/package.json:1-7 (manifesto próprio) | — (sem `src/` no diretório) | — (packages/dashboard/package.json:6 `webpack --config config/webpack.prod.js`, mas `config/` não existe no snapshot) | — | — | No | Somente manifesto e lockfile; o script de build aponta para configuração ausente e não há código de UI nem entrada. |
-| packages/marketing | packages/marketing/package.json | packages/marketing/package.json:1-7 (manifesto próprio) | packages/marketing/src/index.js:1 (entrada convencional webpack, sem `entry` na configuração); packages/marketing/src/bootstrap.js:5-14 (`mount` e montagem isolada em desenvolvimento); packages/marketing/config/webpack.common.js:19-21 (template `./public/index.html`) | packages/marketing/package.json:6 (`webpack --config config/webpack.prod.js`); packages/marketing/config/webpack.prod.js:1-29 (configuração própria) | — | .github/workflows/marketing.yml:8-13 (gatilho e working-directory em `packages/marketing`); .github/workflows/marketing.yml:30-31 (`npm run build`); .github/workflows/marketing.yml:34 (publica dist em `/marketing/latest`) | Yes | Aplicação com entrada, build webpack e workflow próprios. |
-| packages/marketing/config | packages/marketing/config/webpack.common.js;packages/marketing/config/webpack.dev.js;packages/marketing/config/webpack.prod.js | — | — | — | — | — | No | Configurações do build de packages/marketing; não constitui aplicação separada. |
+| packages/auth | packages/auth/package.json | packages/auth/package.json:1-6 (manifest and test script only) | — | — | — | — | No | Manifest and lockfile only; there is no UI code, application entry or build in the snapshot. |
+| packages/container | packages/container/package.json | packages/container/package.json:1-7 (own manifest) | packages/container/src/index.js:1 (conventional webpack entry, no `entry` in configuration); packages/container/src/bootstrap.js:5 (mounts React at `#_container-dev-root`); packages/container/config/webpack.common.js:19-21 (template `./public/index.html`) | packages/container/package.json:6 (`webpack --config config/webpack.prod.js`); packages/container/config/webpack.prod.js:1-29 (own configuration) | — | .github/workflows/container.yml:8-13 (trigger and working-directory in `packages/container`); .github/workflows/container.yml:30-31 (`npm run build`); .github/workflows/container.yml:36 (publishes dist to `/container/latest`) | Yes | Application with its own entry, webpack build and workflow. |
+| packages/container/config | packages/container/config/webpack.common.js;packages/container/config/webpack.dev.js;packages/container/config/webpack.prod.js | — | — | — | — | — | No | Build configurations for packages/container; does not constitute a separate application. |
+| packages/dashboard | packages/dashboard/package.json | packages/dashboard/package.json:1-7 (own manifest) | — (no `src/` in the directory) | — (packages/dashboard/package.json:6 `webpack --config config/webpack.prod.js`, but `config/` does not exist in the snapshot) | — | — | No | Manifest and lockfile only; the build script points to missing configuration and there is neither UI code nor entry. |
+| packages/marketing | packages/marketing/package.json | packages/marketing/package.json:1-7 (own manifest) | packages/marketing/src/index.js:1 (conventional webpack entry, no `entry` in configuration); packages/marketing/src/bootstrap.js:5-14 (`mount` and standalone mounting in development); packages/marketing/config/webpack.common.js:19-21 (template `./public/index.html`) | packages/marketing/package.json:6 (`webpack --config config/webpack.prod.js`); packages/marketing/config/webpack.prod.js:1-29 (own configuration) | — | .github/workflows/marketing.yml:8-13 (trigger and working-directory in `packages/marketing`); .github/workflows/marketing.yml:30-31 (`npm run build`); .github/workflows/marketing.yml:34 (publishes dist to `/marketing/latest`) | Yes | Application with its own entry, webpack build and workflow. |
+| packages/marketing/config | packages/marketing/config/webpack.common.js;packages/marketing/config/webpack.dev.js;packages/marketing/config/webpack.prod.js | — | — | — | — | — | No | Build configurations for packages/marketing; does not constitute a separate application. |
 
-## Resumo
+## Summary
 
-Aplicações frontend no snapshot: 2 (packages/container, packages/marketing).
+Frontend applications in the snapshot: 2 (packages/container, packages/marketing).
 
-## Notas
+## Notes
 
-- O agrupamento em `packages/` não declara workspace: não há `package.json` na raiz e nenhum dos quatro manifestos tem `workspaces`. Os workflows usam cada aplicação como working-directory.
-- `packages/dashboard/package.json:5-6` declara `start` e `build` com `config/webpack.dev.js` e `config/webpack.prod.js`, ausentes do snapshot; sem entrada nem configuração de build, a linha fica `No` (só manifesto e lockfile). `Undetermined` também não mudaria a contagem do resumo.
-- A contagem (2) coincide com `frontend_units: 2` da classificação.
+- The grouping under `packages/` does not declare a workspace: there is no `package.json` at the root and none of the four manifests has `workspaces`. The workflows use each application as working-directory.
+- `packages/dashboard/package.json:5-6` declares `start` and `build` with `config/webpack.dev.js` and `config/webpack.prod.js`, missing from the snapshot; with neither entry nor build configuration, the row remains `No` (manifest and lockfile only). `Undetermined` would not change the summary count either.
+- The count (2) matches the classification’s `frontend_units: 2`.

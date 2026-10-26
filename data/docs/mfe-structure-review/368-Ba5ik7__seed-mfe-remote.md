@@ -17,22 +17,22 @@ annotation:
 
 ## Workspace
 
-angular.json:5 (`projects`) com dois projetos: angular.json:6 e angular.json:13 (seed-mfe-remote, `root: projects/seed-mfe-remote`); angular.json:111 e angular.json:118 (demo, `root: projects/demo`).
+angular.json:5 (`projects`) with two projects: angular.json:6 and angular.json:13 (seed-mfe-remote, `root: projects/seed-mfe-remote`); angular.json:111 and angular.json:118 (demo, `root: projects/demo`).
 
-## Unidades
+## Units
 
-| Diretório | Marcadores | Manifesto | Entrada | Build | Workspace | Deploy | Unidade frontend | Motivo |
+| Directory | Markers | Manifest | Entry | Build | Workspace | Deploy | Frontend unit | Rationale |
 |---|---|---|---|---|---|---|---|---|
-| . | angular.json;package.json | package.json:1-41 (manifesto único do workspace, script `build` = `ng build` em package.json:7) | — | — | — | — | No | Raiz de coordenação do workspace Angular; os targets pertencem aos dois projetos em projects/, sem UI própria na raiz. |
-| projects/demo | projects/demo/webpack.config.js;projects/demo/webpack.prod.config.js | — | angular.json:143 (`main: projects/demo/src/main.ts`); angular.json:126 (`index: projects/demo/src/index.html`); projects/demo/src/main.ts:1-2 (carrega bootstrap); projects/demo/src/bootstrap.ts:5-6 (`bootstrapApplication(AppComponent, appConfig)`) | angular.json:122-125 (target `build` com `ngx-build-plus:browser`, `outputPath: dist/demo`); angular.json:144 (`extraWebpackConfig: projects/demo/webpack.config.js`); angular.json:162 (`webpack.prod.config.js` em production); angular.json:172-173 e :185 (target `serve`, porta 4201) | angular.json:111 e angular.json:118 (projeto demo) | — | Yes | Projeto Angular (host) com entrada e target de build próprios, sem necessidade de manifesto local. |
-| projects/seed-mfe-remote | projects/seed-mfe-remote/webpack.config.js;projects/seed-mfe-remote/webpack.prod.config.js | — | angular.json:38 (`main: projects/seed-mfe-remote/src/main.ts`); angular.json:21 (`index: projects/seed-mfe-remote/src/index.html`); projects/seed-mfe-remote/src/main.ts:1-2 (carrega bootstrap); projects/seed-mfe-remote/src/bootstrap.ts:5-6 (`bootstrapApplication(AppRemoteComponent, appConfig)`) | angular.json:17-20 (target `build` com `ngx-build-plus:browser`, `outputPath: dist/seed-mfe-remote`); angular.json:39 (`extraWebpackConfig: projects/seed-mfe-remote/webpack.config.js`); angular.json:57 (`webpack.prod.config.js` em production); angular.json:67-68 e :80 (target `serve`, porta 4202) | angular.json:6 e angular.json:13 (projeto seed-mfe-remote) | — | Yes | Projeto Angular (remote) com entrada e target de build próprios, sem necessidade de manifesto local. |
+| . | angular.json;package.json | package.json:1-41 (single workspace manifest, script `build` = `ng build` in package.json:7) | — | — | — | — | No | Angular workspace coordination root; the targets belong to the two projects in projects/, with no UI of its own at the root. |
+| projects/demo | projects/demo/webpack.config.js;projects/demo/webpack.prod.config.js | — | angular.json:143 (`main: projects/demo/src/main.ts`); angular.json:126 (`index: projects/demo/src/index.html`); projects/demo/src/main.ts:1-2 (loads bootstrap); projects/demo/src/bootstrap.ts:5-6 (`bootstrapApplication(AppComponent, appConfig)`) | angular.json:122-125 (`build` target with `ngx-build-plus:browser`, `outputPath: dist/demo`); angular.json:144 (`extraWebpackConfig: projects/demo/webpack.config.js`); angular.json:162 (`webpack.prod.config.js` in production); angular.json:172-173 and :185 (`serve` target, port 4201) | angular.json:111 and angular.json:118 (demo project) | — | Yes | Angular project (host) with its own entry and build target, without requiring a local manifest. |
+| projects/seed-mfe-remote | projects/seed-mfe-remote/webpack.config.js;projects/seed-mfe-remote/webpack.prod.config.js | — | angular.json:38 (`main: projects/seed-mfe-remote/src/main.ts`); angular.json:21 (`index: projects/seed-mfe-remote/src/index.html`); projects/seed-mfe-remote/src/main.ts:1-2 (loads bootstrap); projects/seed-mfe-remote/src/bootstrap.ts:5-6 (`bootstrapApplication(AppRemoteComponent, appConfig)`) | angular.json:17-20 (`build` target with `ngx-build-plus:browser`, `outputPath: dist/seed-mfe-remote`); angular.json:39 (`extraWebpackConfig: projects/seed-mfe-remote/webpack.config.js`); angular.json:57 (`webpack.prod.config.js` in production); angular.json:67-68 and :80 (`serve` target, port 4202) | angular.json:6 and angular.json:13 (seed-mfe-remote project) | — | Yes | Angular project (remote) with its own entry and build target, without requiring a local manifest. |
 
-## Resumo
+## Summary
 
-Aplicações frontend no snapshot: 2 (projects/demo, projects/seed-mfe-remote).
+Frontend applications in the snapshot: 2 (projects/demo, projects/seed-mfe-remote).
 
-## Notas
+## Notes
 
-- O N coincide com `frontend_units: 2` da classificação.
-- Sem `Dockerfile`, CI ou configuração de hospedagem no snapshot, e sem ocorrências `ws-*`, `ops-*` ou `ci-*` no matches.csv; os dois projetos se separam só pelos targets, `outputPath` e portas do angular.json.
-- Os `assets` de cada target `build` apontam para `projects/<app>/public` (angular.json:30 e angular.json:135), diretório ausente do snapshot; não afeta entrada nem build.
+- N matches the classification’s `frontend_units: 2`.
+- No `Dockerfile`, CI or hosting configuration in the snapshot, and no `ws-*`, `ops-*` or `ci-*` occurrences in matches.csv; the two projects are separated only by angular.json targets, `outputPath` and ports.
+- The `assets` of each `build` target point to `projects/<app>/public` (angular.json:30 and angular.json:135), a directory missing from the snapshot; this does not affect entry or build.

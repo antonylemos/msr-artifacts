@@ -15,13 +15,14 @@ annotation:
 
 # 078 — vigneshwaran-chandrasekaran/microfrontend
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| angular-mfe/package.json:21 | devDependencies | @angular-architects/module-federation | ^16.0.4 | module-federation | Yes | angular-mfe/webpack.config.js:11-14 (`shareAll` e `withModuleFederationPlugin` importados de `@angular-architects/module-federation/webpack`); angular-mfe/webpack.config.js:23-30 (`withModuleFederationPlugin` com `name: 'angularMfe'`, `remoteEntry.js` e `exposes './mount'`); angular-mfe/angular.json:13-17 (builder `@angular-builders/custom-webpack:browser` com `customWebpackConfig.path: ./webpack.config.js`); angular-mfe/angular.json:51-52 (serve com `@angular-builders/custom-webpack:dev-server`) |
+| angular-mfe/package.json:21 | devDependencies | @angular-architects/module-federation | ^16.0.4 | module-federation | Yes | angular-mfe/webpack.config.js:11-14 (`shareAll` and `withModuleFederationPlugin` imported from `@angular-architects/module-federation/webpack`); angular-mfe/webpack.config.js:23-30 (`withModuleFederationPlugin` with `name: 'angularMfe'`, `remoteEntry.js` and `exposes './mount'`); angular-mfe/angular.json:13-17 (builder `@angular-builders/custom-webpack:browser` with `customWebpackConfig.path: ./webpack.config.js`); angular-mfe/angular.json:51-52 (serve with `@angular-builders/custom-webpack:dev-server`) |
 
-## Notas
+## Notes
 
-- `other_package_matches` aponta para `host/`, `react-mfe-1/`, `react-mfe-2/` e `vue-mfe/`, que usam o `ModuleFederationPlugin` do próprio webpack (`require('webpack/lib/container/ModuleFederationPlugin')`, por exemplo `host/webpack.config.js:3`), não este pacote; não foram usados como evidência.
-- Citam o pacote sem usá-lo: `angular-mfe/webpack.config.js:7` (comentário) e `host/webpack.config.js:26` (comentário sobre o formato de saída do remote Angular).
+- `other_package_matches` points to `host/`, `react-mfe-1/`, `react-mfe-2/` and `vue-mfe/`, which use webpack's own `ModuleFederationPlugin` (`require('webpack/lib/container/ModuleFederationPlugin')`, for example `host/webpack.config.js:3`), not this package; they were not used as evidence.
+- These mention the package without using it: `angular-mfe/webpack.config.js:7` (comment) and `host/webpack.config.js:26` (comment about the Angular remote output format).
+

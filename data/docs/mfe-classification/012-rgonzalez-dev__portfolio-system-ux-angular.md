@@ -20,40 +20,40 @@ annotation:
 
 # 012 — rgonzalez-dev/portfolio-system-ux-angular
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** example/proof of concept (sistema de portfólio com dados de demonstração)
+- **Repository type:** example/proof of concept (portfolio system with demonstration data)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Tecnologia | `package.json:38-39`: `@angular-architects/module-federation` e `@angular-architects/module-federation-tools` ^20 declarados | fraca |
-| Configuração | `angular.json:17` builder `@angular/build:application` (esbuild), `:19` um único entry `src/main.ts`; nenhum `webpack.config.js`, nenhum `withModuleFederationPlugin`, `remotes` ou `exposes` | contrária |
-| Código-fonte | Nenhuma ocorrência de `loadRemoteModule`, `remoteEntry` ou federation em `src/` | ausente |
-| Código-fonte | `src/app/app.routes.ts:4-58`: todas as rotas usam `loadComponent` com `import()` local (`./shell/features/...`, `./protected-features/...`), ou seja, lazy loading comum dentro da mesma app | contrária |
-| Estrutura | Uma única app Angular; as pastas `src/app/shell/` e `src/app/protected-features/` são organização interna, não unidades com entry ou build próprio | contrária |
-| Documentação | `ARCHITECTURE_OPTION4.md:1-7` "Enhanced Lazy Loading + Module Federation… Foundation for future micro frontend (MFE) separation"; `:199-220` plano em fases ("Phase 2: Polyrepo…", "Phase 3: Full Module Federation Setup"); `:284-296` "Module Federation (Future)"; `PHASE1_IMPLEMENTATION.md:5,248` "MFE-ready structure… Next: Phase 2 - Polyrepo migration with Module Federation" (intenção futura) | fraca |
-| Histórico | `81513c4` "refactoring to support MFE in the future"; `7499ea4` "refactoring project structure for MFE support v2" (intenção) | moderada |
-| Build/deploy | Um único build; sem CI/CD | contrária |
+| Technology | `package.json:38-39`: `@angular-architects/module-federation` and `@angular-architects/module-federation-tools` ^20 declared | weak |
+| Configuration | `angular.json:17` builder `@angular/build:application` (esbuild), `:19` a single entry `src/main.ts`; no `webpack.config.js`, no `withModuleFederationPlugin`, `remotes` or `exposes` | contrary |
+| Source code | No occurrences of `loadRemoteModule`, `remoteEntry` or federation in `src/` | absent |
+| Source code | `src/app/app.routes.ts:4-58`: all routes use `loadComponent` with local `import()` (`./shell/features/...`, `./protected-features/...`), that is, ordinary lazy loading within the same app | contrary |
+| Structure | A single Angular app; the `src/app/shell/` and `src/app/protected-features/` folders are internal organization, not units with their own entry or build | contrary |
+| Documentation | `ARCHITECTURE_OPTION4.md:1-7` "Enhanced Lazy Loading + Module Federation… Foundation for future micro frontend (MFE) separation"; `:199-220` phased plan ("Phase 2: Polyrepo…", "Phase 3: Full Module Federation Setup"); `:284-296` "Module Federation (Future)"; `PHASE1_IMPLEMENTATION.md:5,248` "MFE-ready structure… Next: Phase 2 - Polyrepo migration with Module Federation" (future intent) | weak |
+| History | `81513c4` "refactoring to support MFE in the future"; `7499ea4` "refactoring project structure for MFE support v2" (intent) | moderate |
+| Build/deploy | A single build; no CI/CD | contrary |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend (`angular.json:19`); nenhuma config de composição referencia unidades externas |
-| Q2 | No | `shell/` e `protected-features/` compartilham entry, build e deploy e são importados diretamente (`app.routes.ts:11-54`) |
-| Q3 | No | O "shell" é uma pasta interna, não um host que carrega unidades |
-| Q4 | No | A dependência MF está declarada (`package.json:38-39`), mas sem configuração nem uso; pelo critério operacional, "a declared dependency alone is No" |
-| Q5 | No | Q1–Q4 convergem; a documentação descreve uma migração futura, não o estado atual |
+| Q1 | No | A single frontend unit (`angular.json:19`); no composition config references external units |
+| Q2 | No | `shell/` and `protected-features/` share entry, build and deployment and are imported directly (`app.routes.ts:11-54`) |
+| Q3 | No | The "shell" is an internal folder, not a host loading units |
+| Q4 | No | The MF dependency is declared (`package.json:38-39`), but without configuration or use; under the operational criterion, "a declared dependency alone is No" |
+| Q5 | No | Q1–Q4 converge; the documentation describes a future migration, not the current state |
 
-## Motivo
+## Rationale
 
-- O repositório é um monolito Angular com lazy loading por rota, organizado em pastas que antecipam uma futura separação em MFEs.
-- Corresponde a dois casos Non-MFE: "MFE-related dependencies that are unused or experimental" (`package.json:38-39`, sem uso) e "repositories mentioning micro-frontends without implementing them" (`ARCHITECTURE_OPTION4.md`, `PHASE1_IMPLEMENTATION.md`).
-- Pelo protocolo (seção 3.4.7, revisão de documentação), uma documentação contradita pelos artefatos de implementação não basta como evidência. Aqui a própria documentação admite que o MF é "Future".
+- The repository is an Angular monolith with route-based lazy loading, organized into folders anticipating a future separation into MFEs.
+- Matches two Non-MFE cases: "MFE-related dependencies that are unused or experimental" (`package.json:38-39`, unused) and "repositories mentioning micro-frontends without implementing them" (`ARCHITECTURE_OPTION4.md`, `PHASE1_IMPLEMENTATION.md`).
+- Under the protocol (section 3.4.7, documentation review), documentation contradicted by implementation artifacts is insufficient evidence. Here, the documentation itself admits that MF is "Future".
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** este caso junta dependência de MF, pasta chamada `shell`, documentos de arquitetura com "Module Federation" no título e commits "MFE support". Todos os sinais de superfície apontam para MFE, mas a implementação é um monolito.
-- **RQ1 (histórico):** os commits mostram uma preparação para MFE (fase 1 de uma migração planejada), não uma adoção.
+- **RQ1 (misleading signals):** this case combines an MF dependency, a folder named `shell`, architecture documents with "Module Federation" in the title and "MFE support" commits. All surface signals point to MFE, but the implementation is a monolith.
+- **RQ1 (history):** commits show preparation for MFE (phase 1 of a planned migration), not adoption.

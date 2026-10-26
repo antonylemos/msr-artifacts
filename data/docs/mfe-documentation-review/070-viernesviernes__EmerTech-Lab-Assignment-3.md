@@ -16,34 +16,34 @@ annotation:
 
 # 070 — viernesviernes/EmerTech-Lab-Assignment-3
 
-## Leitura do repositório
+## Repository overview
 
-Os três `.md` são o README padrão do template Vite, um por aplicação (ex.: client/shell-app/README.md:1-3), e os `package.json` de `client/` e `server/` têm `description` vazia. A arquitetura só aparece num comentário do gateway GraphQL do backend, que lista as três aplicações e as suas portas para liberar CORS (server/gateway.js:12).
+All three `.md` files are standard Vite template READMEs, one per application (e.g.: client/shell-app/README.md:1-3), and `package.json` files in `client/` and `server/` have empty `description`. Architecture appears only in a backend GraphQL gateway comment listing all three applications and their ports to allow CORS (server/gateway.js:12).
 
-Foram lidos os artefatos que as revisões anteriores citam:
-- os `package.json`, as configurações Vite e os `index.html`;
-- os `main.jsx` e `App.jsx` das três aplicações;
-- os componentes de login do auth-app;
+Artifacts cited by previous reviews were read:
+- `package.json` files, Vite configurations and `index.html` files;
+- all three applications' `main.jsx` and `App.jsx` files;
+- auth-app login components;
 - server/gateway.js.
 
-Ficaram fora da tabela:
-- os comentários sobre o tratamento de cookies e subgrafos no gateway (server/gateway.js:46-74), uma relação entre backends;
-- o comentário do componente de redirecionamento do shell (client/shell-app/src/App.jsx:52), um detalhe interno.
+Excluded from the table:
+- comments about cookie and subgraph handling in gateway (server/gateway.js:46-74), a backend relationship;
+- shell redirect component comment (client/shell-app/src/App.jsx:52), an internal detail.
 
-A única afirmação confere com as revisões anteriores.
+The only claim matches previous reviews.
 
-Nenhuma ocorrência `doc-*` na mineração.
+No `doc-*` occurrences in mining.
 
-## Afirmações
+## Claims
 
-| # | Documento | Afirmação | Tema | Corroboração | Evidência |
+| # | Document | Claim | Theme | Corroboration | Evidence |
 |---|---|---|---|---|---|
-| 1 | server/gateway.js:12 | "Microfrontends: shell 3000, auth-app 3001, community-app 3002" (três micro-frontends, que o gateway aceita como origens) | estrutura | corroborada | 3.4.3 (três aplicações `Yes`); 3.4.5 #1-#2; server/gateway.js:13-17 |
+| 1 | server/gateway.js:12 | "Microfrontends: shell 3000, auth-app 3001, community-app 3002" (three micro-frontends accepted as origins by gateway) | structure | corroborated | 3.4.3 (three `Yes` applications); 3.4.5 #1-#2; server/gateway.js:13-17 |
 
-## Observações
+## Observations
 
-**1. server/gateway.js:12.** O comentário nomeia as três aplicações de `client/` como micro-frontends, e o gateway as aceita como origens de desenvolvimento (server/gateway.js:13-17). As portas são as dos scripts de cada aplicação (ver a revisão de build e deploy). É uma relação entre as unidades frontend e o backend de que elas dependem, e confirma de fora da pasta `client/` os papéis registrados nas revisões estrutural e de composição.
+**1. server/gateway.js:12.** The comment names all three `client/` applications as micro-frontends, and gateway accepts them as development origins (server/gateway.js:13-17). Ports are those in each application's scripts (see the build and deployment review). This is a relationship between frontend units and the backend they depend on, confirming from outside `client/` the roles recorded by structural and composition reviews.
 
-## Resumo
+## Summary
 
-Afirmações: 1 (corroborada: 1, parcial: 0, contradita: 0, sem corroboração: 0). Temas: (estrutura: 1).
+Claims: 1 (corroborated: 1, partial: 0, contradicted: 0, uncorroborated: 0). Themes: (structure: 1).

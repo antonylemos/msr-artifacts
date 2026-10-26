@@ -20,37 +20,37 @@ annotation:
 
 # 050 — Arfazappu/task-remote-app
 
-## Contexto
+## Context
 
-- **Abordagem de implementação:** Module Federation (`@originjs/vite-plugin-federation`)
-- **Tipo de repositório:** example/proof of concept (app de tarefas com Supabase; README é o boilerplate do Vite)
+- **Implementation approach:** Module Federation (`@originjs/vite-plugin-federation`)
+- **Repository type:** example/proof of concept (task app with Supabase; README is Vite boilerplate)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Configuração | `vite.config.js:8-15`: `federation({ name: 'taskApp', filename: 'remoteEntry.js', exposes: { './TaskDashboard': './src/TaskDashboard.jsx' }, shared: ['react', 'react-dom'] })`; sem `remotes` | moderada |
-| Código-fonte | `src/TaskDashboard.jsx:4`: `export default function TaskDashboard()`, o componente exposto; `src/main.jsx` + `src/App.jsx` montam standalone; `supabase.js` acessa o backend | moderada |
-| Estrutura | Uma única app (um `package.json`, um entry) | contrária |
-| Composição | Nenhum host no repositório; o nome ("task-remote-app") indica o papel de remote de um host externo, não observável | ausente |
-| Build/deploy | Histórico: `01bc8f8` "workflow setup" adicionou `.github/workflows/deploy-login.yml` (copiado de um app "Login"), depois renomeado para `deploy-task.yml` e removido em `8406479` ("Delete .github directory"); hoje não há pipeline no repositório | fraca |
-| Documentação | `README.md:1-12`: boilerplate do template React + Vite | ausente |
+| Configuration | `vite.config.js:8-15`: `federation({ name: 'taskApp', filename: 'remoteEntry.js', exposes: { './TaskDashboard': './src/TaskDashboard.jsx' }, shared: ['react', 'react-dom'] })`; no `remotes` | moderate |
+| Source code | `src/TaskDashboard.jsx:4`: `export default function TaskDashboard()`, the exposed component; `src/main.jsx` + `src/App.jsx` mount standalone; `supabase.js` accesses the backend | moderate |
+| Structure | A single app (one `package.json`, one entry) | contrary |
+| Composition | No host in the repository; the name ("task-remote-app") indicates its role as a remote for an external, unobservable host | absent |
+| Build/deploy | History: `01bc8f8` "workflow setup" added `.github/workflows/deploy-login.yml` (copied from a "Login" app), later renamed to `deploy-task.yml` and removed in `8406479` ("Delete .github directory"); there is currently no pipeline in the repository | weak |
+| Documentation | `README.md:1-12`: React + Vite template boilerplate | absent |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade; a config de composição só tem `exposes` (`vite.config.js:11-13`) |
-| Q2 | Yes (para a unidade) | Build próprio que gera `remoteEntry.js` |
-| Q3 | Undetermined | O host não está no repositório |
-| Q4 | Undetermined | O lado remote está configurado; o consumidor não é observável |
-| Q5 | No | A evidência mostra uma unidade preparada para composição, não uma instância de MFE no repositório |
+| Q1 | No | A single unit; composition config has only `exposes` (`vite.config.js:11-13`) |
+| Q2 | Yes (for this unit) | Its own build generating `remoteEntry.js` |
+| Q3 | Undetermined | The host is not in the repository |
+| Q4 | Undetermined | The remote side is configured; the consumer is not observable |
+| Q5 | No | The evidence shows a unit prepared for composition, not an MFE instance in the repository |
 
-## Motivo
+## Rationale
 
-- Q1 é No; aplica-se a exceção MFE-unit: unidade única "explicitly prepared to be composed by an external host (e.g., Module Federation `exposes`…)", com host não observável.
-- Corresponde a "repositories containing only a remote unit, without the composing host", como o repositório 001.
+- Q1 is No; the MFE-unit exception applies: a single unit "explicitly prepared to be composed by an external host (e.g., Module Federation `exposes`…)", with an unobservable host.
+- Matches "repositories containing only a remote unit, without the composing host", as in repository 001.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (histórico):** o workflow copiado de um "Login App" (`deploy-login.yml`) sugere uma arquitetura com vários remotes (login, task) e um host, cada um num repositório; nenhum deles está na amostra.
+- **RQ1 (history):** the workflow copied from a "Login App" (`deploy-login.yml`) suggests an architecture with several remotes (login, task) and a host, each in its own repository; none of them is in the sample.

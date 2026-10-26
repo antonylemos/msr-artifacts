@@ -19,247 +19,248 @@ annotation:
 
 # 049 — LebLeb03/UX308_Assignment2_2025
 
-## Leitura do repositório
+## Repository overview
 
-O snapshot é o `wp-content/` de um site WordPress feito a partir do template `cd-wordpress`. O núcleo do WordPress, o build e o servidor de desenvolvimento vêm da ferramenta externa `wp-pwa`. Não há dependência de tecnologia de MFE, e nenhum arquivo de configuração citado pelas revisões declara elemento da composição: o `package.json` só chama `wp-pwa`, e o workflow só publica. Por isso as dimensões 1 e 2 ficam vazias.
+Snapshot is `wp-content/` of WordPress site based on `cd-wordpress` template. WordPress core, build/development server come from external `wp-pwa`. No MFE technology dependency; no review-cited configuration declares composition element: `package.json` only calls `wp-pwa`, workflow only publishes. Thus dimensions 1 and 2 empty.
 
-A única unidade é a raiz `.` (#18). Ela fica ambígua porque nenhuma entrada de aplicação está no snapshot. O histórico explica a ausência: a entrada nunca foi versionada e é montada pela ferramenta (#29). A unidade tem build e deploy próprios, num único artefato publicado no GitHub Pages (#22). Duas afirmações confirmam essa publicação (#23, #24).
+Sole unit root `.` (#18), ambiguous because no snapshot application entry. History explains absence: entry never versioned, assembled by tool (#29). Unit has own build/deployment as single GitHub Pages artifact (#22). Two claims confirm publication (#23, #24).
 
-A cadeia de composição que existe está em PHP, e não em JavaScript nem em configuração:
-- **Código:** o tema-filho `chatbot` enfileira, como módulos ES, dois bundles de outras origens (#14, #15). As views do Akismet embutem, por iframe, telas de `tools.akismet.com` (#16, #17).
-- **Relações:** daí saem três relações com destino fora do snapshot (#19, #20, #21), todas ambíguas, porque o tema ativo e os plugins ativos ficam no banco.
-- **Histórico:** o banco versionado no commit do snapshot desfaz em parte essa dúvida. O `chatbot` é o tema ativo (#30), então os dois bundles são carregados pelo tema em uso. O Akismet está desativado (#31), então os iframes não são alcançados. As forças continuam as da 3.4, mas a leitura que sobra é que #19 e #20 são cargas reais de bundles externos, sem que o snapshot mostre o que eles fazem na página, e que #21 é uma tela administrativa de terceiros sem uso.
+Existing composition chain is PHP rather than JavaScript/configuration:
+- **Code:** child theme `chatbot` enqueues two other-origin bundles as ES modules (#14, #15). Akismet views embed `tools.akismet.com` screens through iframe (#16, #17).
+- **Relationships:** three external-target relationships (#19, #20, #21), all ambiguous because active theme/plugins stored in database.
+- **History:** snapshot-commit versioned database partly resolves doubt. `chatbot` active theme (#30), so both bundles loaded by in-use theme. Akismet disabled (#31), iframes unreachable. Strengths remain 3.4 values, but remaining reading is #19/#20 actual external bundle loads without snapshot showing page behavior, #21 unused third-party administrative screen.
 
-Há sinais que enganam. Nove linhas da mineração são eventos, iframes e testes de suporte de bibliotecas de terceiros (Bootstrap, sticky-sidebar, Colorbox, Akismet) (#1, #6-#13). Quatro são o custom element `x-year`, um utilitário de ano de copyright: duas no arquivo-modelo de um plugin (#2, #3) e duas no tema-filho (#4, #5). Nenhum deles liga unidades.
+Misleading signals. Nine mined rows are third-party library events/iframes/support tests (Bootstrap, sticky-sidebar, Colorbox, Akismet) (#1, #6-#13). Four are custom element `x-year`, copyright-year utility: two in plugin template (#2, #3), two in child theme (#4, #5). None links units.
 
-A documentação é o README do template, sem adaptação. Ele anuncia "a consumer of microfrontends" (#26), e os enfileiramentos dos bundles externos (#14, #15) confirmam essa ideia só em parte. O exemplo de PayPal (#27) e as "autonomous teams" (#28) ficam sem corroboração.
+Documentation is unadapted template README. Announces "a consumer of microfrontends" (#26), external-bundle enqueues (#14, #15) only partly confirming. PayPal example (#27)/"autonomous teams" (#28) uncorroborated.
 
-A composição que a classificação descreve (o formulário `<x-subscriberform>` de `lebleb03.github.io/Contact_form_UX308/`) estava no conteúdo de página do banco `wp-content/database/.ht.sqlite`. A normalização removeu esse banco do snapshot como binário. Nenhuma linha da 3.4 trata dele, e por isso ele não vira observação aqui.
+Classification-described composition (`<x-subscriberform>` form from `lebleb03.github.io/Contact_form_UX308/`) resided in database page content `wp-content/database/.ht.sqlite`. Normalization removed database as binary. No 3.4 row addresses it, hence no observation here.
 
-## Observações
+## Observations
 
 ### 1. wp-content/themes/resume-kit/assets/js/bootstrap.js:4973
 
-**Observação:** O comentário de cabeçalho `Bootstrap (v5.0.1): index.umd.js`, dentro do bundle do Bootstrap distribuído com o tema `resume-kit`.
+**Observation:** Header comment `Bootstrap (v5.0.1): index.umd.js` within Bootstrap bundle distributed with theme `resume-kit`.
 
-**Interpretação:** É a assinatura de um arquivo de biblioteca, não a URL do bundle de outra unidade.
+**Interpretation:** Library-file signature rather than other-unit bundle URL.
 
 ### 2. wp-content/mu-plugins/one-click-child-theme/templates/customElements.js:1; wp-content/mu-plugins/one-click-child-theme/one-click-child-theme.php:571-572
 
-**Observação:** `class CopyrightYear extends HTMLElement`, num arquivo-modelo do plugin One Click Child Theme. O plugin só o copia para o tema-filho que gera (wp-content/mu-plugins/one-click-child-theme/one-click-child-theme.php:571-572).
+**Observation:** `class CopyrightYear extends HTMLElement` in One Click Child Theme plugin template. Plugin only copies it to generated child theme (wp-content/mu-plugins/one-click-child-theme/one-click-child-theme.php:571-572).
 
-**Interpretação:** É um custom element utilitário que não é carregado onde está e não participa da composição.
+**Interpretation:** Utility custom element not loaded at current location/not participating in composition.
 
 ### 3. wp-content/mu-plugins/one-click-child-theme/templates/customElements.js:7
 
-**Observação:** `customElements.define("x-year", CopyrightYear)`, no mesmo arquivo-modelo.
+**Observation:** `customElements.define("x-year", CopyrightYear)` in same template file.
 
-**Interpretação:** Registra o utilitário só no tema-filho gerado. Não é unidade nem mecanismo de composição.
+**Interpretation:** Registers utility only in generated child theme. Neither unit nor composition mechanism.
 
 ### 4. wp-content/themes/chatbot/customElements.js:1; wp-content/themes/chatbot/customElements.js:2-4; wp-content/themes/chatbot/functions.php:13
 
-**Observação:** `class CopyrightYear extends HTMLElement`, no tema-filho `chatbot`, que enfileira o arquivo. O elemento só escreve o ano corrente (wp-content/themes/chatbot/customElements.js:2-4).
+**Observation:** `class CopyrightYear extends HTMLElement` in child theme `chatbot`, enqueuing file. Element only writes current year (wp-content/themes/chatbot/customElements.js:2-4).
 
-**Interpretação:** É um custom element interno ao host, sem ligação a outra unidade.
+**Interpretation:** Host-internal custom element without another-unit link.
 
 ### 5. wp-content/themes/chatbot/customElements.js:7
 
-**Observação:** `customElements.define("x-year", CopyrightYear)`. A tag `<x-year>` não aparece em nenhum arquivo do snapshot.
+**Observation:** `customElements.define("x-year", CopyrightYear)`. Tag `<x-year>` absent from all snapshot files.
 
-**Interpretação:** O utilitário é registrado no host e não compõe outra unidade.
+**Interpretation:** Utility registered in host without composing another unit.
 
 ### 6. wp-content/themes/resume-kit/assets/js/bootstrap.js:290
 
-**Observação:** `if (!document.documentElement.attachShadow)`, no utilitário `findShadowRoot` do bundle do Bootstrap.
+**Observation:** `if (!document.documentElement.attachShadow)` in Bootstrap bundle utility `findShadowRoot`.
 
-**Interpretação:** É um teste de suporte da biblioteca, não um custom element de unidade.
+**Interpretation:** Library support test rather than unit custom element.
 
 ### 7. wp-content/plugins/ecommerce-product-catalog/js/colorbox/jquery.colorbox.js:101
 
-**Observação:** `document.createElement('iframe')`, em `createIframe` do lightbox jQuery Colorbox do plugin de catálogo.
+**Observation:** `document.createElement('iframe')` in catalog plugin jQuery Colorbox lightbox `createIframe`.
 
-**Interpretação:** O frame mostra o conteúdo passado ao lightbox, e não outra unidade frontend.
+**Interpretation:** Frame displays lightbox-provided content rather than another frontend unit.
 
 ### 8. wp-content/plugins/akismet/_inc/akismet-frontend.js:20
 
-**Observação:** `window.addEventListener( 'testPassive', null, opts )`, seguido do `removeEventListener` correspondente (wp-content/plugins/akismet/_inc/akismet-frontend.js:14-22).
+**Observation:** `window.addEventListener( 'testPassive', null, opts )`, followed by corresponding `removeEventListener` (wp-content/plugins/akismet/_inc/akismet-frontend.js:14-22).
 
-**Interpretação:** É a detecção de suporte a listeners passivos, sem comunicação entre unidades.
+**Interpretation:** Passive-listener support detection without inter-unit communication.
 
 ### 9. wp-content/themes/pressbook/js/sticky-sidebar.js:612
 
-**Observação:** `new CustomEvent(eventName, { detail: data })`, no helper interno `eventTrigger` da biblioteca sticky-sidebar do tema.
+**Observation:** `new CustomEvent(eventName, { detail: data })` in theme sticky-sidebar library internal helper `eventTrigger`.
 
-**Interpretação:** É um evento da própria biblioteca, dentro de uma só unidade.
+**Interpretation:** Library’s own event within single unit.
 
 ### 10. wp-content/themes/pressbook/js/sticky-sidebar.js:617
 
-**Observação:** `element.dispatchEvent(event)`, que dispara o evento criado na linha 612.
+**Observation:** `element.dispatchEvent(event)`, dispatching event created at line 612.
 
-**Interpretação:** É um evento interno da biblioteca.
+**Interpretation:** Library-internal event.
 
 ### 11. wp-content/themes/resume-kit/assets/js/bootstrap.js:201
 
-**Observação:** `element.dispatchEvent(new Event(TRANSITION_END))`, em `triggerTransitionEnd` do Bootstrap.
+**Observation:** `element.dispatchEvent(new Event(TRANSITION_END))` in Bootstrap `triggerTransitionEnd`.
 
-**Interpretação:** É o evento de transição CSS da própria biblioteca.
+**Interpretation:** Library’s own CSS transition event.
 
 ### 12. wp-content/themes/resume-kit/assets/js/bootstrap.js:671
 
-**Observação:** `evt = new CustomEvent(event, {`, no despachante de eventos interno do Bootstrap.
+**Observation:** `evt = new CustomEvent(event, {` in Bootstrap internal event dispatcher.
 
-**Interpretação:** Cria o evento de um componente da biblioteca, não um canal entre unidades.
+**Interpretation:** Creates library component event rather than inter-unit channel.
 
 ### 13. wp-content/themes/resume-kit/assets/js/bootstrap.js:694
 
-**Observação:** `element.dispatchEvent(evt)`, que dispara o evento montado na linha 671.
+**Observation:** `element.dispatchEvent(evt)`, dispatching event assembled at line 671.
 
-**Interpretação:** É um evento interno da biblioteca.
+**Interpretation:** Library-internal event.
 
 ### 14. wp-content/themes/chatbot/functions.php:14; wp-content/themes/chatbot/functions.php:6-7
 
-**Observação:** `wp_enqueue_script_module('custom_module1',"https://lebleb03.github.io/Assignment_1_UX308/index.js")`, dentro de `theme_enqueue_styles`, ligada a `wp_enqueue_scripts`. O destino é outro repositório do mesmo autor, fora do snapshot. O tema-filho `chatbot` não é confirmado como tema ativo no snapshot.
+**Observation:** `wp_enqueue_script_module('custom_module1',"https://lebleb03.github.io/Assignment_1_UX308/index.js")` within `theme_enqueue_styles`, linked to `wp_enqueue_scripts`. Target another repository by same author, outside snapshot. Child theme `chatbot` not confirmed as active in snapshot.
 
-**Interpretação:** Continuam plausíveis duas leituras: o host carrega nas suas páginas o bundle de outra unidade, ou o tema não está em uso e a carga não acontece.
+**Interpretation:** Two plausible readings: host loads other-unit bundle in pages, or theme unused/loading absent.
 
 ### 15. wp-content/themes/chatbot/functions.php:15; wp-content/themes/chatbot/functions.php:7-16
 
-**Observação:** `wp_enqueue_script_module('custom_module2',"https://rhildred.github.io/chatter/fab.js")`, na mesma função. O destino é de outro autor e de outra origem, fora do snapshot.
+**Observation:** `wp_enqueue_script_module('custom_module2',"https://rhildred.github.io/chatter/fab.js")` in same function. Target by another author/another origin, outside snapshot.
 
-**Interpretação:** As mesmas duas leituras de #14: carga de um bundle externo pelo host ou carga que não acontece porque o tema não está ativo.
+**Interpretation:** Same two readings as #14: host external-bundle load or absent loading due to inactive theme.
 
 ### 16. wp-content/plugins/akismet/views/stats.php:11; wp-content/plugins/akismet/class.akismet-admin.php:1114-1117; wp-content/plugins/akismet/class.akismet.php:1721-1725
 
-**Observação:** `<iframe id="stats-iframe" src="https://tools.akismet.com/1.0/user-stats.php?…">`, na tela de estatísticas do Akismet. A cadeia vai do menu de administração até o `include` da view, mas a ativação do plugin não está no snapshot.
+**Observation:** `<iframe id="stats-iframe" src="https://tools.akismet.com/1.0/user-stats.php?…">` in Akismet statistics screen. Chain from administration menu through view `include`, but plugin activation absent from snapshot.
 
-**Interpretação:** Continuam plausíveis duas leituras: o painel administrativo embute uma interface externa de terceiros, ou o plugin está inativo e a tela não é alcançada.
+**Interpretation:** Two plausible readings: administrative panel embeds external third-party interface, or inactive plugin leaves screen unreachable.
 
 ### 17. wp-content/plugins/akismet/views/config.php:44; wp-content/plugins/akismet/class.akismet-admin.php:1114-1120
 
-**Observação:** `<iframe id="stats-iframe" … src="https://tools.akismet.com/1.0/snapshot.php?…">`, no gráfico-resumo da tela de configuração do Akismet, alcançado pelo ramo `else` de `display_page`.
+**Observation:** `<iframe id="stats-iframe" … src="https://tools.akismet.com/1.0/snapshot.php?…">` in Akismet configuration-screen summary chart, reached through `else` branch of `display_page`.
 
-**Interpretação:** As mesmas duas leituras de #16.
+**Interpretation:** Same two readings as #16.
 
 ### 18. .; package.json:1-11; package.json:9; .github/workflows/main.yml:29-30
 
-**Observação:** A raiz tem um `package.json` só com `wp-pwa` em `devDependencies`, um script `build` que chama `wp-pwa build UX308_Assignment2_2025` e um workflow que publica o resultado no `gh-pages`. Nenhuma entrada de aplicação está no snapshot, só o `wp-content/` de um site WordPress.
+**Observation:** Root `package.json` only has `wp-pwa` in `devDependencies`, script `build` calling `wp-pwa build UX308_Assignment2_2025`, workflow publishing result to `gh-pages`. No snapshot application entry, only WordPress site `wp-content/`.
 
-**Interpretação:** Continuam plausíveis duas leituras: a raiz é a unidade frontend do host (o site WordPress que a ferramenta monta e exporta), ou é só conteúdo e configuração para uma ferramenta externa, sem aplicação própria observável.
+**Interpretation:** Two plausible readings: root is host frontend unit (WordPress site tool assembles/exports), or merely content/configuration for external tool without observable own application.
 
 ### 19. wp-content/themes/chatbot/functions.php:14
 
-**Observação:** A raiz carrega, por script de módulo, `https://lebleb03.github.io/Assignment_1_UX308/index.js`. O destino não está no snapshot. A relação tem Ativa `Undetermined`.
+**Observation:** Root loads `https://lebleb03.github.io/Assignment_1_UX308/index.js` through module script. Target absent from snapshot. Relationship Active `Undetermined`.
 
-**Interpretação:** É uma relação por script com destino externo. Continuam plausíveis duas leituras: a composição de uma unidade de outra origem nas páginas do host, ou uma carga que não acontece porque o tema não está ativo.
+**Interpretation:** Script relationship with external target. Two plausible readings: composing other-origin unit in host pages, or loading absent due to inactive theme.
 
 ### 20. wp-content/themes/chatbot/functions.php:15
 
-**Observação:** A raiz carrega, por script de módulo, `https://rhildred.github.io/chatter/fab.js`, de outro autor. O destino não está no snapshot. A relação tem Ativa `Undetermined`.
+**Observation:** Root loads `https://rhildred.github.io/chatter/fab.js` through module script, by another author. Target absent from snapshot. Relationship Active `Undetermined`.
 
-**Interpretação:** As mesmas duas leituras de #19, com destino de terceiros.
+**Interpretation:** Same two readings as #19 with third-party target.
 
 ### 21. wp-content/plugins/akismet/views/stats.php:11; wp-content/plugins/akismet/views/config.php:44; wp-content/plugins/akismet/class.akismet-admin.php:1113-1120
 
-**Observação:** As telas de administração do Akismet embutem, por iframe, páginas de `tools.akismet.com/1.0/`. O destino é um serviço de terceiros fora do snapshot. A relação tem Ativa `Undetermined`.
+**Observation:** Akismet administrative screens embed `tools.akismet.com/1.0/` pages through iframe. Third-party service target outside snapshot. Relationship Active `Undetermined`.
 
-**Interpretação:** É uma relação page → embedded-frontend com destino externo. Continuam plausíveis duas leituras: o painel administrativo compõe uma interface de terceiros, ou o plugin está inativo e a relação não existe.
+**Interpretation:** Page → embedded-frontend relationship with external target. Two plausible readings: administrative panel composes third-party interface, or inactive plugin means relationship absent.
 
 ### 22. package.json:9; .github/workflows/main.yml:6-14; .github/workflows/main.yml:29-32
 
-**Observação:** O script `build` gera o site estático do repositório. O workflow `CI`, disparado na `main`, roda o build e publica o resultado no `gh-pages` pela action `diy-pwa/npm-build-2-gh-pages@v1.11`. Não há versão no `package.json`.
+**Observation:** Script `build` generates repository static site. Workflow `CI`, triggered on `main`, runs build/publishes result to `gh-pages` through action `diy-pwa/npm-build-2-gh-pages@v1.11`. No `package.json` version.
 
-**Interpretação:** O site tem fronteira de build e de deploy própria, num único artefato. Os destinos externos de #19, #20 e #21 não entram nele.
+**Interpretation:** Site has own build/deployment boundary in single artifact. External targets #19, #20 and #21 excluded.
 
 ### 23. .github/workflows/main.yml:29
 
-**Observação:** "run npm install, npm run build and publish to gh-pages".
+**Observation:** "run npm install, npm run build and publish to gh-pages".
 
-**Interpretação:** Descreve o passo de build e publicação que o próprio workflow executa. A afirmação é corroborada.
+**Interpretation:** Describes build/publication step workflow itself executes. Claim corroborated.
 
 ### 24. README.md:11
 
-**Observação:** "This will continuously deploy on gh-pages using the diy-pwa/npm-build-2-gh-pages@v1.11 plugin."
+**Observation:** "This will continuously deploy on gh-pages using the diy-pwa/npm-build-2-gh-pages@v1.11 plugin."
 
-**Interpretação:** Descreve a publicação contínua do site no GitHub Pages. A afirmação é corroborada.
+**Interpretation:** Describes continuous GitHub Pages site publication. Claim corroborated.
 
 ### 25. README.md:11
 
-**Observação:** "You can also deploy on a cloud provider by running `npm run build`. Your static site will be in the `dist/` folder."
+**Observation:** "You can also deploy on a cloud provider by running `npm run build`. Your static site will be in the `dist/` folder."
 
-**Interpretação:** Descreve uma forma de deploy sem artefato no snapshot, e o `dist/` é ignorado pelo git. A afirmação fica sem corroboração.
+**Interpretation:** Describes deployment form without snapshot artifact, `dist/` Git-ignored. Claim uncorroborated.
 
 ### 26. README.md:13
 
-**Observação:** "The idea of this is as a consumer of microfrontends."
+**Observation:** "The idea of this is as a consumer of microfrontends."
 
-**Interpretação:** Afirma que o site é um host que consome microfrontends. Os enfileiramentos de bundles externos no tema-filho (#14, #15) confirmam a ideia só em parte: nenhum artefato os chama de microfrontend, e o snapshot não confirma que eles estão ativos.
+**Interpretation:** Claims site is microfrontend-consuming host. Child-theme external-bundle enqueues (#14, #15) partly confirm only: no artifact calls them microfrontends, snapshot not confirming activity.
 
 ### 27. README.md:13
 
-**Observação:** "There is an example microfrontend for paypal standard here.", com link para o repositório `diy-pwa/paypal-microfrontend`.
+**Observation:** "There is an example microfrontend for paypal standard here.", with link to repository `diy-pwa/paypal-microfrontend`.
 
-**Interpretação:** Aponta para um exemplo externo, herdado do template. Nenhum artefato do snapshot o usa nem o desmente. A afirmação fica sem corroboração.
+**Interpretation:** Points to external template-inherited example. No snapshot artifact uses/disproves it. Claim uncorroborated.
 
 ### 28. README.md:15
 
-**Observação:** "Have fun composing work from autonomous teams."
+**Observation:** "Have fun composing work from autonomous teams."
 
-**Interpretação:** Afirma a composição de trabalho de equipes autônomas. Nenhum artefato mostra equipes distintas ou a evolução própria dos destinos externos. A afirmação fica sem corroboração.
+**Interpretation:** Claims composition of autonomous-team work. No artifact shows distinct teams/independent external-target evolution. Claim uncorroborated.
 
 ### 29. d7866b4 2025-03-27 (README.md, package.json, .gitignore, .github/workflows/main.yml)
 
-**Observação:** Os artefatos da raiz vêm do primeiro commit. O `.gitignore` ignora `dist` e `.wordpress` desde então, e nenhum caminho com esses nomes aparece no histórico. Depois do primeiro commit, o único caminho fora de `wp-content/` alterado é o `package.json`, em `57dac07`.
+**Observation:** Root artifacts from first commit. `.gitignore` ignores `dist` and `.wordpress` since then, no such historical paths. After first commit, sole changed path outside `wp-content/` is `package.json` in `57dac07`.
 
-**Interpretação:** A entrada da aplicação nunca foi versionada: ela é montada pela ferramenta externa. O ponto é resolvido pelo snapshot.
+**Interpretation:** Application entry never versioned: assembled by external tool. Point resolved by snapshot.
 
 ### 30. 57dac07 2025-03-28 (wp-content/themes/chatbot); 52bc0e2 2025-03-28 (wp-content/themes/chatbot/functions.php); 436e204 2025-03-29 (wp-content/themes/chatbot/functions.php); c09cbbe 2025-04-03 (wp-content/database/.ht.sqlite)
 
-**Observação:** O tema-filho `chatbot` é criado pelo autor em `57dac07`, e o `functions.php` muda em sete commits seguintes. A versão do snapshot é a mesma de `52bc0e2`. No banco do commit do snapshot, `wp_options` tem `stylesheet` = `chatbot`, `template` = `dark-mode` e `current_theme` = `chatbot`.
+**Observation:** Author creates child theme `chatbot` in `57dac07`, `functions.php` changing in seven later commits. Snapshot version same as `52bc0e2`. Snapshot-commit database `wp_options` has `stylesheet` = `chatbot`, `template` = `dark-mode` and `current_theme` = `chatbot`.
 
-**Interpretação:** Delimitado a esse banco, o `chatbot` é o tema ativo e enfileira os dois bundles externos. O banco não mostra o que os bundles fazem na página nem se o site publicado foi gerado a partir dele. O ponto está esclarecido.
+**Interpretation:** Limited to database, `chatbot` active/enqueues two external bundles. Database does not show page bundle behavior or whether published site generated from it. Point clarified.
 
 ### 31. d7866b4 2025-03-27 (wp-content/plugins/akismet/views); c09cbbe 2025-04-03 (wp-content/database/.ht.sqlite)
 
-**Observação:** As views do Akismet vêm do primeiro commit e não mudam até o snapshot. No banco do commit do snapshot, `active_plugins` lista só `ecommerce-product-catalog/ecommerce-product-catalog.php`.
+**Observation:** Akismet views from first commit, unchanged through snapshot. Snapshot-commit database `active_plugins` lists only `ecommerce-product-catalog/ecommerce-product-catalog.php`.
 
-**Interpretação:** Delimitado a esse banco, o Akismet está desativado, e as telas com os iframes para `tools.akismet.com` não são alcançadas. O plugin é cópia herdada do template. O ponto está esclarecido.
+**Interpretation:** Limited to database, Akismet disabled, iframe screens for `tools.akismet.com` unreachable. Plugin template-inherited copy. Point clarified.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.4 (wp-content/themes/resume-kit/assets/js/bootstrap.js:4973) | 3 código | código-fonte | — | contexto | fraca | — |
-| 2 | 3.4.4 (wp-content/mu-plugins/one-click-child-theme/templates/customElements.js:1) | 3 código | código-fonte | web-components | tecnológica | fraca | — |
-| 3 | 3.4.4 (wp-content/mu-plugins/one-click-child-theme/templates/customElements.js:7) | 3 código | código-fonte | web-components | tecnológica | fraca | — |
-| 4 | 3.4.4 (wp-content/themes/chatbot/customElements.js:1) | 3 código | código-fonte | web-components | tecnológica | fraca | — |
-| 5 | 3.4.4 (wp-content/themes/chatbot/customElements.js:7) | 3 código | código-fonte | web-components | tecnológica | fraca | — |
-| 6 | 3.4.4 (wp-content/themes/resume-kit/assets/js/bootstrap.js:290) | 3 código | código-fonte | — | contexto | fraca | — |
-| 7 | 3.4.4 (wp-content/plugins/ecommerce-product-catalog/js/colorbox/jquery.colorbox.js:101) | 3 código | código-fonte | — | contexto | fraca | — |
-| 8 | 3.4.4 (wp-content/plugins/akismet/_inc/akismet-frontend.js:20) | 3 código | código-fonte | — | contexto | fraca | — |
-| 9 | 3.4.4 (wp-content/themes/pressbook/js/sticky-sidebar.js:612) | 3 código | código-fonte | — | contexto | fraca | — |
-| 10 | 3.4.4 (wp-content/themes/pressbook/js/sticky-sidebar.js:617) | 3 código | código-fonte | — | contexto | fraca | — |
-| 11 | 3.4.4 (wp-content/themes/resume-kit/assets/js/bootstrap.js:201) | 3 código | código-fonte | — | contexto | fraca | — |
-| 12 | 3.4.4 (wp-content/themes/resume-kit/assets/js/bootstrap.js:671) | 3 código | código-fonte | — | contexto | fraca | — |
-| 13 | 3.4.4 (wp-content/themes/resume-kit/assets/js/bootstrap.js:694) | 3 código | código-fonte | — | contexto | fraca | — |
-| 14 | 3.4.4 (wp-content/themes/chatbot/functions.php:14) | 3 código | código-fonte | script | arquitetural | ambígua | implementa #19 |
-| 15 | 3.4.4 (wp-content/themes/chatbot/functions.php:15) | 3 código | código-fonte | script | arquitetural | ambígua | implementa #20 |
-| 16 | 3.4.4 (wp-content/plugins/akismet/views/stats.php:11) | 3 código | código-fonte | iframe | arquitetural | ambígua | implementa #21 |
-| 17 | 3.4.4 (wp-content/plugins/akismet/views/config.php:44) | 3 código | código-fonte | iframe | arquitetural | ambígua | implementa #21 |
-| 18 | 3.4.3 (.) | 4 estrutura | diretório | — | arquitetural | ambígua | — |
-| 19 | 3.4.5 #1 | 5 composição | código-fonte | script | arquitetural | ambígua | liga #18 |
-| 20 | 3.4.5 #2 | 5 composição | código-fonte | script | arquitetural | ambígua | liga #18 |
-| 21 | 3.4.5 #3 | 5 composição | código-fonte | iframe | arquitetural | ambígua | liga #18 |
-| 22 | 3.4.6 #1 | 6 build-deploy | CI | — | arquitetural | moderada | publica #18 |
-| 23 | 3.4.7 #1 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #22 |
-| 24 | 3.4.7 #2 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #22 |
-| 25 | 3.4.7 #3 | 7 documentação | documentação | — | arquitetural | fraca | — |
-| 26 | 3.4.7 #4 | 7 documentação | documentação | — | arquitetural | fraca | corrobora em parte #14; corrobora em parte #15 |
-| 27 | 3.4.7 #5 | 7 documentação | documentação | — | contexto | fraca | — |
-| 28 | 3.4.7 #6 | 7 documentação | documentação | — | arquitetural | fraca | — |
-| 29 | 3.4.8 #1 | 8 histórico | histórico | — | arquitetural | fraca | explica #18 |
-| 30 | 3.4.8 #2 | 8 histórico | histórico | script | arquitetural | fraca | explica #14; explica #15; explica #19; explica #20; explica #26 |
-| 31 | 3.4.8 #3 | 8 histórico | histórico | iframe | arquitetural | fraca | explica #16; explica #17; explica #21 |
+| 1 | 3.4.4 (wp-content/themes/resume-kit/assets/js/bootstrap.js:4973) | 3 code | source code | — | context | weak | — |
+| 2 | 3.4.4 (wp-content/mu-plugins/one-click-child-theme/templates/customElements.js:1) | 3 code | source code | web-components | technological | weak | — |
+| 3 | 3.4.4 (wp-content/mu-plugins/one-click-child-theme/templates/customElements.js:7) | 3 code | source code | web-components | technological | weak | — |
+| 4 | 3.4.4 (wp-content/themes/chatbot/customElements.js:1) | 3 code | source code | web-components | technological | weak | — |
+| 5 | 3.4.4 (wp-content/themes/chatbot/customElements.js:7) | 3 code | source code | web-components | technological | weak | — |
+| 6 | 3.4.4 (wp-content/themes/resume-kit/assets/js/bootstrap.js:290) | 3 code | source code | — | context | weak | — |
+| 7 | 3.4.4 (wp-content/plugins/ecommerce-product-catalog/js/colorbox/jquery.colorbox.js:101) | 3 code | source code | — | context | weak | — |
+| 8 | 3.4.4 (wp-content/plugins/akismet/_inc/akismet-frontend.js:20) | 3 code | source code | — | context | weak | — |
+| 9 | 3.4.4 (wp-content/themes/pressbook/js/sticky-sidebar.js:612) | 3 code | source code | — | context | weak | — |
+| 10 | 3.4.4 (wp-content/themes/pressbook/js/sticky-sidebar.js:617) | 3 code | source code | — | context | weak | — |
+| 11 | 3.4.4 (wp-content/themes/resume-kit/assets/js/bootstrap.js:201) | 3 code | source code | — | context | weak | — |
+| 12 | 3.4.4 (wp-content/themes/resume-kit/assets/js/bootstrap.js:671) | 3 code | source code | — | context | weak | — |
+| 13 | 3.4.4 (wp-content/themes/resume-kit/assets/js/bootstrap.js:694) | 3 code | source code | — | context | weak | — |
+| 14 | 3.4.4 (wp-content/themes/chatbot/functions.php:14) | 3 code | source code | script | architectural | ambiguous | implements #19 |
+| 15 | 3.4.4 (wp-content/themes/chatbot/functions.php:15) | 3 code | source code | script | architectural | ambiguous | implements #20 |
+| 16 | 3.4.4 (wp-content/plugins/akismet/views/stats.php:11) | 3 code | source code | iframe | architectural | ambiguous | implements #21 |
+| 17 | 3.4.4 (wp-content/plugins/akismet/views/config.php:44) | 3 code | source code | iframe | architectural | ambiguous | implements #21 |
+| 18 | 3.4.3 (.) | 4 structure | directory | — | architectural | ambiguous | — |
+| 19 | 3.4.5 #1 | 5 composition | source code | script | architectural | ambiguous | links #18 |
+| 20 | 3.4.5 #2 | 5 composition | source code | script | architectural | ambiguous | links #18 |
+| 21 | 3.4.5 #3 | 5 composition | source code | iframe | architectural | ambiguous | links #18 |
+| 22 | 3.4.6 #1 | 6 build-deploy | CI | — | architectural | moderate | publishes #18 |
+| 23 | 3.4.7 #1 | 7 documentation | comment | — | architectural | weak | corroborates #22 |
+| 24 | 3.4.7 #2 | 7 documentation | documentation | — | architectural | weak | corroborates #22 |
+| 25 | 3.4.7 #3 | 7 documentation | documentation | — | architectural | weak | — |
+| 26 | 3.4.7 #4 | 7 documentation | documentation | — | architectural | weak | partially corroborates #14; partially corroborates #15 |
+| 27 | 3.4.7 #5 | 7 documentation | documentation | — | context | weak | — |
+| 28 | 3.4.7 #6 | 7 documentation | documentation | — | architectural | weak | — |
+| 29 | 3.4.8 #1 | 8 history | history | — | architectural | weak | explains #18 |
+| 30 | 3.4.8 #2 | 8 history | history | script | architectural | weak | explains #14; explains #15; explains #19; explains #20; explains #26 |
+| 31 | 3.4.8 #3 | 8 history | history | iframe | architectural | weak | explains #16; explains #17; explains #21 |
 
-## Resumo
+## Summary
 
-Observações: 31. Dimensões (tecnologia: 0, configuração: 0, código: 17, estrutura: 1, composição: 3, build-deploy: 1, documentação: 6, histórico: 3). Força (forte: 0, moderada: 1, fraca: 22, ambígua: 8). Evidência (tecnológica: 4, arquitetural: 17, contexto: 10).
+Observations: 31. Dimensions (technology: 0, configuration: 0, code: 17, structure: 1, composition: 3, build-deploy: 1, documentation: 6, history: 3). Strength (strong: 0, moderate: 1, weak: 22, ambiguous: 8). Evidence (technological: 4, architectural: 17, context: 10).
+

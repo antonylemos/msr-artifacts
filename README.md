@@ -1,38 +1,38 @@
-# Artefatos da pesquisa — Micro frontends (MFE)
+# Research artifacts — Micro frontends (MFE)
 
-Este pacote reúne os dados e as análises de uma pesquisa sobre repositórios públicos do GitHub candidatos a implementar micro frontends. Ele cobre a descoberta dos candidatos, a amostragem, a triagem, a aquisição do corpus, a mineração, a inspeção de dependências e as revisões qualitativas. Este arquivo explica como o pacote está organizado e em que ordem consultá-lo. Os resultados ficam nas fontes indicadas abaixo, e todos os links são relativos.
+This package brings together data and analyses from a study of public GitHub repositories that are candidates for implementing micro frontends. It covers candidate discovery, sampling, screening, corpus acquisition, mining, dependency inspection and qualitative reviews. This file explains how the package is organized and the order in which to consult it. Results are in the sources indicated below, and all links are relative.
 
-## Mapa das pastas
+## Folder map
 
-| Pasta | Função |
+| Folder | Purpose |
 |---|---|
-| [`config/`](config/) | Método executável da pesquisa: protocolo de elegibilidade, catálogo de consultas e configurações de amostragem, aquisição, mineração e inspeção. |
-| [`data/discovery/`](data/discovery/) | Rodada de descoberta dos candidatos, com acertos por consulta, relatório de diagnóstico e partes textuais do CSV de candidatos e do dump SQL. |
-| [`data/samples/`](data/samples/) | Amostra sorteada dos candidatos elegíveis e registro da clonagem. |
-| [`data/docs/`](data/docs/) | Textos analíticos: as classificações e as oito revisões por repositório, cada uma com um documento metodológico. |
-| [`data/acquisitions/`](data/acquisitions/) | Corpus adquirido: um snapshot de cada repositório no commit estudado. Material de apoio. |
-| [`data/mining/`](data/mining/) e [`data/inspections/`](data/inspections/) | Dados estruturados da mineração e da inspeção de dependências, por repositório. |
-| [`data/clones/`](data/clones/) | Clones compactados dos repositórios, usados na revisão histórica. Material de apoio. |
+| [`config/`](config/) | Executable research method: eligibility protocol, query catalog, and sampling, acquisition, mining and inspection configurations. |
+| [`data/discovery/`](data/discovery/) | Candidate discovery round, with hits per query, a diagnostic report, and text parts of the candidate CSV and SQL dump. |
+| [`data/samples/`](data/samples/) | Random sample of eligible candidates and cloning records. |
+| [`data/docs/`](data/docs/) | Analytical texts: classifications and eight reviews per repository, each review family with a methodology document. |
+| [`data/acquisitions/`](data/acquisitions/) | Acquired corpus: a snapshot of each repository at the studied commit. Supporting material. |
+| [`data/mining/`](data/mining/) and [`data/inspections/`](data/inspections/) | Structured mining and dependency inspection data, per repository. |
+| [`data/clones/`](data/clones/) | Archived repository clones used in the historical review. Supporting material. |
 
-O [inventário](data/inventory.json) registra a origem, os hashes e a representação dos materiais deste corte. O [guia de integridade](data/README.md) explica sua conferência. Os metadados das análises e dos manifestos preservam as referências científicas da fonte; os hashes dos textos após revisão editorial ficam no inventário. As partes da descoberta e os clones têm [instruções de reconstrução](data/discovery/mfe-round-002/README.md) e [conferência dos arquivos compactados](data/clones/README.md).
+The [inventory](data/inventory.json) records the origin, hashes and representation of materials in this cut. The [integrity guide](data/README.md) explains how to check them. Analysis metadata and manifests preserve the source's scientific references; hashes of texts after editorial revision are in the inventory. Discovery parts and clones have [reconstruction instructions](data/discovery/mfe-round-002/README.md) and [archive verification guidance](data/clones/README.md).
 
-## Sequência de avaliação
+## Evaluation sequence
 
-Os arquivos de análise têm o mesmo nome em todas as etapas (`NNN-<owner>__<nome>.md`). Assim, o mesmo repositório pode ser acompanhado de uma etapa à outra.
+Analysis files have the same name at every stage (`NNN-<owner>__<name>.md`). This allows the same repository to be followed from one stage to the next.
 
-1. **Método.** Comece por [`config/protocols/micro-frontends.json`](config/protocols/micro-frontends.json), que define a elegibilidade, e pelo [catálogo de consultas](config/catalogs/micro-frontends.json), em que cada consulta traz a justificativa da busca. As demais configurações em [`config/`](config/) parametrizam as etapas seguintes.
-2. **Descoberta.** Leia o [relatório de diagnóstico](data/discovery/mfe-round-002/report.md) para ver a cobertura de cada consulta e as limitações da busca. Os candidatos estão nas [partes CSV](data/discovery/mfe-round-002/candidates/), e o banco está preservado nas [partes do dump SQL](data/discovery/mfe-round-002/discovery.sql.parts/). O [guia de reconstrução](data/discovery/mfe-round-002/README.md) explica como obter os arquivos completos e verificar sua integridade.
-3. **Amostragem.** O [manifesto](data/samples/mfe-sample-001/manifest.json) descreve o sorteio, e [`sample.csv`](data/samples/mfe-sample-001/sample.csv) lista a amostra.
-4. **Triagem.** As [classificações](data/docs/mfe-classification/) registram a decisão sobre cada repositório e as evidências em que ela se apoia. Esta é a primeira etapa com texto analítico.
-5. **Aquisição do corpus.** [`acquisition.csv`](data/acquisitions/mfe-corpus-001/acquisition.csv) lista os repositórios do corpus e o commit estudado. Os snapshots em [`corpus/`](data/acquisitions/mfe-corpus-001/corpus/) servem para conferir uma evidência citada nas revisões.
-6. **Mineração.** Os dados em [`data/mining/mfe-mining-001/`](data/mining/mfe-mining-001/) trazem artefatos, padrões e unidades por repositório, a partir do [resumo](data/mining/mfe-mining-001/summary.csv).
-7. **Inspeção de dependências.** Os dados em [`data/inspections/mfe-dependencies-001/`](data/inspections/mfe-dependencies-001/) trazem as dependências por tecnologia, a partir do [resumo](data/inspections/mfe-dependencies-001/summary.csv).
-8. **Revisões qualitativas.** Em cada pasta, leia primeiro o `INSTRUCTIONS.md`, que descreve o método da revisão, e depois os arquivos de análise. A ordem é:
-   1. [dependências](data/docs/mfe-dependency-review/INSTRUCTIONS.md): se cada pacote está configurado e em uso;
-   2. [estrutura](data/docs/mfe-structure-review/INSTRUCTIONS.md): quais diretórios são unidades frontend;
-   3. [código-fonte](data/docs/mfe-source-review/INSTRUCTIONS.md): quais construções de código fazem unidades interagirem;
-   4. [composição](data/docs/mfe-composition-review/INSTRUCTIONS.md): quais relações ligam as unidades;
-   5. [build e deploy](data/docs/mfe-build-deploy-review/INSTRUCTIONS.md): se build e deploy são separados ou conjuntos;
-   6. [documentação](data/docs/mfe-documentation-review/INSTRUCTIONS.md): o que a documentação afirma e se os artefatos a confirmam;
-   7. [histórico](data/docs/mfe-history-review/INSTRUCTIONS.md): o que o histórico de commits esclarece sobre pontos ambíguos. Os [clones](data/clones/) servem para conferir essas consultas;
-   8. [evidências](data/docs/mfe-evidence-review/INSTRUCTIONS.md): a síntese das revisões anteriores em observações classificadas por dimensão e por força.
+1. **Method.** Start with [`config/protocols/micro-frontends.json`](config/protocols/micro-frontends.json), which defines eligibility, and the [query catalog](config/catalogs/micro-frontends.json), where each query includes its search rationale. Other configurations in [`config/`](config/) parameterize subsequent stages.
+2. **Discovery.** Read the [diagnostic report](data/discovery/mfe-round-002/report.md) for each query's coverage and search limitations. Candidates are in the [CSV parts](data/discovery/mfe-round-002/candidates/), and the database is preserved in the [SQL dump parts](data/discovery/mfe-round-002/discovery.sql.parts/). The [reconstruction guide](data/discovery/mfe-round-002/README.md) explains how to obtain complete files and verify their integrity.
+3. **Sampling.** The [manifest](data/samples/mfe-sample-001/manifest.json) describes random sampling, and [`sample.csv`](data/samples/mfe-sample-001/sample.csv) lists the sample.
+4. **Screening.** [Classifications](data/docs/mfe-classification/) record the decision for each repository and its supporting evidence. This is the first stage with analytical text.
+5. **Corpus acquisition.** [`acquisition.csv`](data/acquisitions/mfe-corpus-001/acquisition.csv) lists corpus repositories and their studied commits. Snapshots in [`corpus/`](data/acquisitions/mfe-corpus-001/corpus/) support checking evidence cited in reviews.
+6. **Mining.** Data in [`data/mining/mfe-mining-001/`](data/mining/mfe-mining-001/) provides artifacts, patterns and units per repository, starting from the [summary](data/mining/mfe-mining-001/summary.csv).
+7. **Dependency inspection.** Data in [`data/inspections/mfe-dependencies-001/`](data/inspections/mfe-dependencies-001/) provides dependencies by technology, starting from the [summary](data/inspections/mfe-dependencies-001/summary.csv).
+8. **Qualitative reviews.** In each folder, first read `INSTRUCTIONS.md`, describing the review method, then the analysis files. The order is:
+   1. [dependencies](data/docs/mfe-dependency-review/INSTRUCTIONS.md): whether each package is configured and in use;
+   2. [structure](data/docs/mfe-structure-review/INSTRUCTIONS.md): which directories are frontend units;
+   3. [source code](data/docs/mfe-source-review/INSTRUCTIONS.md): which code constructs make units interact;
+   4. [composition](data/docs/mfe-composition-review/INSTRUCTIONS.md): which relationships connect units;
+   5. [build and deployment](data/docs/mfe-build-deploy-review/INSTRUCTIONS.md): whether build and deployment are separate or joint;
+   6. [documentation](data/docs/mfe-documentation-review/INSTRUCTIONS.md): what documentation claims and whether artifacts confirm it;
+   7. [history](data/docs/mfe-history-review/INSTRUCTIONS.md): what commit history clarifies about ambiguous points. [Clones](data/clones/) support checking these queries;
+   8. [evidence](data/docs/mfe-evidence-review/INSTRUCTIONS.md): synthesis of previous reviews into observations classified by dimension and strength.

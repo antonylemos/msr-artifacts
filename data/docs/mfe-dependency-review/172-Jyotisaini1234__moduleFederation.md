@@ -15,13 +15,14 @@ annotation:
 
 # 172 — Jyotisaini1234/moduleFederation
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| mfe1/package.json:15 | dependencies | @module-federation/node | ^2.7.14 | module-federation | No | sem import, plugin ou invocação de `@module-federation/node` nos arquivos de código e de build do snapshot (grep por `module-federation` em todos os arquivos, excluindo lockfiles); apenas declaração em mfe1/package.json:15. As ocorrências da inspeção são do plugin embutido no webpack: mfe1/webpack.config.ts:5, 11-12 e 74 (`import webpackPkg from 'webpack'`; `const { ModuleFederationPlugin } = container`; `new ModuleFederationPlugin({...})`) |
+| mfe1/package.json:15 | dependencies | @module-federation/node | ^2.7.14 | module-federation | No | no import, plugin or invocation of `@module-federation/node` in the snapshot code and build files (grep for `module-federation` in all files, excluding lockfiles); only declared in mfe1/package.json:15. The inspection occurrences refer to webpack’s built-in plugin: mfe1/webpack.config.ts:5, 11-12 and 74 (`import webpackPkg from 'webpack'`; `const { ModuleFederationPlugin } = container`; `new ModuleFederationPlugin({...})`) |
 
-## Notas
+## Notes
 
-- `same_package_matches` (mfe1/webpack.config.ts:12, 74, 76, 79, 81, 85) e `other_package_matches` (mfe2/webpack.config.ts:7, 37, 40, 41) apontam para o `ModuleFederationPlugin` de `webpack.container` (mfe1/webpack.config.ts:11-12; mfe2/webpack.config.ts:6-7), não para `@module-federation/node`. Module Federation está configurado, mas por outro pacote; isso já está na classificação.
-- O servidor SSR de `mfe1/src/server/server.ts` também não importa `@module-federation/node`.
+- `same_package_matches` (mfe1/webpack.config.ts:12, 74, 76, 79, 81, 85) and `other_package_matches` (mfe2/webpack.config.ts:7, 37, 40, 41) point to the `ModuleFederationPlugin` from `webpack.container` (mfe1/webpack.config.ts:11-12; mfe2/webpack.config.ts:6-7), not to `@module-federation/node`. Module Federation is configured, but through another package; this is already in the classification.
+- The SSR server in `mfe1/src/server/server.ts` also does not import `@module-federation/node`.
+

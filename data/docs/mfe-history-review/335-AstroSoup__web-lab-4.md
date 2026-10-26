@@ -13,28 +13,28 @@ annotation:
 
 # 335 — AstroSoup/web-lab-4
 
-## Leitura do repositório
+## Repository overview
 
-O histórico alcançável até o snapshot tem 29 commits, de 2025-11-28 a 2025-12-08: começa em `4441231` (2025-11-28, “Initial commit”) e termina em `2214561` (2025-12-08, “cleanup x2.”). Os pontos vêm das duas unidades `Undetermined` da revisão estrutural: seus `index.html` apontam para `src/main.js`, mas esses arquivos estão vazios no snapshot. As dependências e as construções de composição estão confirmadas nas revisões anteriores, e não há afirmações documentais a esclarecer.
+Reachable history up to snapshot has 29 commits, from 2025-11-28 to 2025-12-08: begins in `4441231` (2025-11-28, “Initial commit”) and ends in `2214561` (2025-12-08, “cleanup x2.”). Points come from two `Undetermined` units in structural review: their `index.html` files point to `src/main.js`, but files are empty in snapshot. Dependencies and composition constructs are confirmed in previous reviews, and no documentary claims need clarification.
 
-A consulta dos caminhos mostra a adição da entrada de remote-inputs em `53e46c0` (2025-12-05, “working frontend build.”) e da entrada de remote-results em `f5cb3ef` (2025-12-08, “Deploy configs for frontend.”). As árvores desses commits registram para cada entrada o mesmo objeto vazio encontrado no snapshot; o log dos caminhos não registra modificações posteriores. Isso esclarece a história desses arquivos: não há, nesses caminhos até o snapshot, uma entrada standalone antes funcional que tenha sido esvaziada. Não demonstra intenção nem abandono, nem altera os julgamentos estruturais. Os componentes dos dois remotes já têm primeira presença observável em `53e46c0`; isso não informa onde foram desenvolvidos antes de sua adição ao repositório. Não foi necessário consultar conteúdo histórico ausente: mensagens, estados dos caminhos e identificadores de objetos bastaram para os pontos delimitados.
+Path query shows remote-inputs entry addition in `53e46c0` (2025-12-05, “working frontend build.”) and remote-results entry addition in `f5cb3ef` (2025-12-08, “Deploy configs for frontend.”). Commit trees record same empty object for each entry as snapshot; path log records no later modifications. This clarifies file history: at these paths up to snapshot, no previously working standalone entry was emptied. This demonstrates neither intention nor abandonment, or changes structural judgments. Both remote components already have first observable presence in `53e46c0`; this does not reveal where developed before repository addition. No unavailable historical contents needed querying: messages, path statuses and object identifiers sufficed for delineated points.
 
-## Pontos
+## Points
 
-| # | Ponto | Origem | Pergunta | Commits | Resultado |
+| # | Point | Origin | Question | Commits | Result |
 |---|---|---|---|---|---|
-| 1 | A entrada de remote-inputs está vazia: houve uma entrada standalone anterior neste caminho? | 3.4.3 (frontend/vite/remote-inputs/src/main.js, linha da unidade frontend/vite/remote-inputs) | ativo ou abandonado | 53e46c0, 2025-12-05, working frontend build.; 2214561, 2025-12-08, cleanup x2. | esclarecido |
-| 2 | A entrada de remote-results está vazia: houve uma entrada standalone anterior neste caminho? | 3.4.3 (frontend/vite/remote-results/src/main.js, linha da unidade frontend/vite/remote-results) | ativo ou abandonado | f5cb3ef, 2025-12-08, Deploy configs for frontend.; 2214561, 2025-12-08, cleanup x2. | esclarecido |
+| 1 | Remote-inputs entry is empty: was there an earlier standalone entry at this path? | 3.4.3 (frontend/vite/remote-inputs/src/main.js, unit row frontend/vite/remote-inputs) | active or abandoned | 53e46c0, 2025-12-05, working frontend build.; 2214561, 2025-12-08, cleanup x2. | clarified |
+| 2 | Remote-results entry is empty: was there an earlier standalone entry at this path? | 3.4.3 (frontend/vite/remote-results/src/main.js, unit row frontend/vite/remote-results) | active or abandoned | f5cb3ef, 2025-12-08, Deploy configs for frontend.; 2214561, 2025-12-08, cleanup x2. | clarified |
 
-## Observações
+## Observations
 
-**1. Entrada de remote-inputs.** O snapshot confirma `src/main.js` com 0 bytes e a referência a ele em `frontend/vite/remote-inputs/index.html:11`. O log com estado dos caminhos registra a adição de ambos em `53e46c0` (2025-12-05, “working frontend build.”); depois só o index e a configuração Vite mudam, em `f5cb3ef` (2025-12-08, “Deploy configs for frontend.”). O `ls-tree` da adição e o do snapshot dão a `src/main.js` o mesmo objeto `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391`, que corresponde ao arquivo vazio observado no snapshot. Assim, este arquivo foi adicionado vazio e permaneceu assim no histórico consultado; não há evidência de esvaziamento de uma entrada standalone anterior neste caminho. Isso não prova que a unidade foi abandonada: o componente exposto continua consumido pelo host, como registra a 3.4.5 #1. O resultado esclarece somente a permanência da entrada vazia, sem resolver a intenção de execução independente nem mudar o `Undetermined` da 3.4.3.
+**1. Remote-inputs entry.** Snapshot confirms `src/main.js` with 0 bytes and reference at `frontend/vite/remote-inputs/index.html:11`. Path status log records addition of both in `53e46c0` (2025-12-05, “working frontend build.”); afterward only index and Vite configuration change, in `f5cb3ef` (2025-12-08, “Deploy configs for frontend.”). The `ls-tree` at addition and snapshot assign `src/main.js` same object `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391`, corresponding to empty file observed in snapshot. Thus file was added empty and remained so in queried history; no evidence shows emptying of earlier standalone entry at this path. This does not prove unit abandonment: exposed component remains consumed by host, as recorded in 3.4.5 #1. Result clarifies only persistence of empty entry, without resolving independent execution intention or changing `Undetermined` in 3.4.3.
 
-**2. Entrada de remote-results.** O snapshot também mostra 0 bytes em `src/main.js`, referenciado por `frontend/vite/remote-results/index.html:11`. A árvore de `53e46c0` já contém `ResultsContainer.vue` e `elements/Table.vue`, mas não a entrada `src/main.js`. O log registra a adição do index e dessa entrada em `f5cb3ef` (2025-12-08, “Deploy configs for frontend.”); a árvore desse commit e a do snapshot associam a entrada ao mesmo objeto vazio do ponto 1. Não há mudança posterior nesse caminho. Portanto, nos artefatos consultados, a entrada foi acrescentada já vazia, depois da primeira presença observável dos componentes, e não resulta da remoção de um bootstrap standalone nesse arquivo. A evidência não explica por que foi criada assim nem demonstra abandono; o consumo federado do componente permanece documentado na 3.4.5 #2. O `Undetermined` estrutural permanece como julgamento do snapshot.
+**2. Remote-results entry.** Snapshot also shows 0 bytes in `src/main.js`, referenced by `frontend/vite/remote-results/index.html:11`. Tree at `53e46c0` already contains `ResultsContainer.vue` and `elements/Table.vue`, but no entry `src/main.js`. Log records index and entry addition in `f5cb3ef` (2025-12-08, “Deploy configs for frontend.”); tree of this commit and snapshot associate entry with same empty object as point 1. No later change occurs at path. Thus queried artifacts show entry added already empty after first observable component presence, rather than removal of standalone bootstrap in file. Evidence neither explains why created this way nor demonstrates abandonment; federated component consumption remains documented in 3.4.5 #2. Structural `Undetermined` remains snapshot judgment.
 
-## Comandos
+## Commands
 
-A comparação abaixo foi executada antes e depois das consultas, com saída vazia e código 0 nas duas ocasiões:
+Comparison below was performed before and after queries, with empty output and code 0 on both occasions:
 
 ```sh
 LC_ALL=C docs/mfe-history-review/tools/fingerprint.sh | cmp - docs/mfe-history-review/tools/fingerprint-before.txt
@@ -48,8 +48,8 @@ docs/mfe-history-review/tools/hist.sh AstroSoup__web-lab-4 ls-tree -r 2214561f8c
 docs/mfe-history-review/tools/hist.sh AstroSoup__web-lab-4 ls-tree -r f5cb3ef -- frontend/vite/remote-results/src/main.js
 ```
 
-A primeira tentativa do segundo comando foi bloqueada pelo ambiente ao abrir `commands.log`, antes de executar Git; a repetição com acesso ao log foi bem-sucedida. Todas as revisões históricas consultadas são ancestrais do snapshot, identificadas no primeiro log. Não houve falhas por objeto ausente.
+First attempt at second command was blocked by environment when opening `commands.log`, before executing Git; repetition with log access succeeded. All queried historical revisions are snapshot ancestors identified in first log. No missing object failures occurred.
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 29 (2025-11-28 a 2025-12-08). Pontos: 2 (esclarecido: 2, inconclusivo: 0, resolvido pelo snapshot: 0).
+Commits up to the snapshot: 29 (2025-11-28 to 2025-12-08). Points: 2 (clarified: 2, inconclusive: 0, resolved by the snapshot: 0).

@@ -15,6 +15,6 @@ annotation:
 
 # 136 — swtbhsmn/micro-frontend-demo
 
-## Dependências
+## Dependencies
 
-Nenhuma dependência das tecnologias no dependencies.csv.
+No dependency on the technologies in dependencies.csv.

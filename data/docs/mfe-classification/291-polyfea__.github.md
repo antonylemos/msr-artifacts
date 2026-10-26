@@ -20,73 +20,73 @@ annotation:
 
 # 291 — polyfea/.github
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** não é projeto de software. É o repositório especial `.github` de uma organização do GitHub: um `README.md` raiz e o `profile/README.md`, exibido na página da organização, que apresenta o ecossistema Polyfea (controlador Kubernetes para implantar e integrar micro-frontends), mais a licença. O código do ecossistema está em outros repositórios da organização, fora deste snapshot. O nome do repositório não é usado como evidência.
+- **Repository type:** not a software project. A GitHub organization's special `.github` repository: a root `README.md` and `profile/README.md`, displayed on organization page, presenting the Polyfea ecosystem (Kubernetes controller for deploying and integrating micro-frontends), plus license. Ecosystem code is in other organization repositories, outside this snapshot. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:292` registra rank 291, ID 741331616, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:292` records rank 291, ID 741331616, status `cloned`, branch `main` and the front matter commit, which is HEAD of the clone and `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:292` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:7459` e `data/discovery/mfe-round-002/candidates.csv:7464`, ambos com `terminology` e `pass`.
+`data/samples/mfe-sample-001/sample.csv:292` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:7459` and `data/discovery/mfe-round-002/candidates.csv:7464`, both with `terminology` and `pass`.
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with empty `path`:
 
-| Consulta (`q`) | Subconsulta | Consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Effective query | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | `terminology-microfrontend-repositories#created:2024-01` | `microfrontend in:name,description,readme pushed:>=2025-04-01 created:2024-01-01..2024-01-31` | 2026-10-07T18:23:25.668Z / 2026-10-08T15:36:48.960Z |
 | `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | `terminology-microfrontends-repositories#created:2024-01` | `microfrontends in:name,description,readme pushed:>=2025-04-01 created:2024-01-01..2024-01-31` | 2026-10-07T22:06:19.842Z / 2026-10-08T15:46:24.913Z |
 
-Metadados do hit:
-- descrição “Polyfea Organization README”, sem os termos pesquisados;
-- sem tópicos, linguagem nula, licença Apache-2.0, `fork: false`, tamanho 9, 1 estrela;
-- criação em 2024-01-10T07:10:11Z, push em 2025-11-26T13:47:12Z.
+Hit metadata:
+- description “Polyfea Organization README”, without searched terms;
+- no topics, null language, license Apache-2.0, `fork: false`, size 9, 1 star;
+- created at 2024-01-10T07:10:11Z, pushed at 2025-11-26T13:47:12Z.
 
-Sem os termos no nome nem na descrição, o acerto vem de README:
-- `README.md:4` (raiz): “integration of microfrontends as a resources of the kubernetes” — grafia plural “microfrontends”; `README.md:2` traz o título com a grafia truncada “Microfronends”, que não casa.
-- `profile/README.md:1` “Polyfea Microfrontends ecosystem” e `profile/README.md:3` “integration of microfrontends” e “each microfrontend” (singular).
+Without terms in name or description, hit comes from a README:
+- `README.md:4` (root): “integration of microfrontends as a resources of the kubernetes” — plural spelling “microfrontends”; `README.md:2` has title with truncated spelling “Microfronends”, which does not match.
+- `profile/README.md:1` “Polyfea Microfrontends ecosystem” and `profile/README.md:3` “integration of microfrontends” and “each microfrontend” (singular).
 
-Os hits não informam qual arquivo a API indexou como README. O plural “microfrontends” ocorre literalmente em `README.md:4`; o singular “microfrontend” isolado só ocorre em `profile/README.md:3`. Se a busca considerou apenas o README raiz, o hit singular depende do processamento textual da busca do GitHub, que não está registrado.
+Hits do not identify which file API indexed as README. Plural “microfrontends” occurs literally at `README.md:4`; isolated singular “microfrontend” occurs only at `profile/README.md:3`. If search considered only root README, singular hit depends on GitHub search text processing, which is not recorded.
 
-A última alteração alcançável de `README.md` é `bef66fa` (2024-01-10) e a de `profile/README.md` é o próprio SHA `93281b3` (2025-11-26). Ambas antecedem as coletas de 7 e 8 de outubro de 2026; nenhum README do SHA é posterior às buscas.
+Last reachable `README.md` change is `bef66fa` (2024-01-10) and `profile/README.md`'s is SHA `93281b3` itself (2025-11-26). Both precede collection on October 7 and 8, 2026; no SHA README postdates searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 3 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks: `LICENSE`, `README.md` e `profile/README.md`. Não há manifesto, código, configuração de build nem asset. | ausente |
-| Documentação | `README.md:2–4` e `profile/README.md:1–3`: o ecossistema é descrito como controlador Kubernetes para “deployment and integration of microfrontends”, com “independent release cycles for each microfrontend”; `profile/README.md:5`: link externo para a documentação (`https://polyfea.github.io/documentation/`), não seguido. | fraca |
-| Tecnologia / Configuração / Código-fonte / Composição / Build/deploy | Inexistentes no snapshot; não há arquivo além dos três textos acima, portanto nem imports relativos entre unidades a buscar. | ausente |
-| Contexto (organização) | Outros repositórios da organização aparecem nas rodadas, fora deste snapshot: por exemplo, `polyfea/polyfea-controller`, `polyfea/core` e `polyfea/spa-base` (`data/discovery/mfe-round-002/candidates.csv:7308`, `7441`, `7474`). Só este está na amostra (`sample.csv`, uma ocorrência de `polyfea/`); os demais não foram inspecionados. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 3 entries, all regular `100644` files; zero symlinks and zero gitlinks: `LICENSE`, `README.md` and `profile/README.md`. No manifest, code, build configuration or asset. | absent |
+| Documentation | `README.md:2–4` and `profile/README.md:1–3`: ecosystem described as Kubernetes controller for “deployment and integration of microfrontends”, with “independent release cycles for each microfrontend”; `profile/README.md:5`: external documentation link (`https://polyfea.github.io/documentation/`), not followed. | weak |
+| Technology / Configuration / Source code / Composition / Build/deploy | Nonexistent in snapshot; no file beyond the three texts above, hence no relative imports between units to search for. | absent |
+| Context (organization) | Other organization repositories appear in rounds, outside this snapshot: for example, `polyfea/polyfea-controller`, `polyfea/core` and `polyfea/spa-base` (`data/discovery/mfe-round-002/candidates.csv:7308`, `7441`, `7474`). Only this one is in sample (`sample.csv`, one `polyfea/` occurrence); others were not inspected. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso, parcial (`blob:none`). 7 commits alcançáveis (7 em todos os refs), nenhum merge, raiz `427afbb` (2024-01-10, “Initial commit”, `LICENSE` e `README.md`). Refs: `main`, `origin/main` e `origin/HEAD` no SHA. Autoria:
-- Milan Unger, com duas identidades (`30626125+milung@users.noreply.github.com`, commits pela interface web, e um e-mail institucional), 6 commits de 2024-01-10 a 2024-05-24;
-- Michal Sevcik (`99325737+SevcikMichal@users.noreply.github.com`), o SHA `93281b3` (2025-11-26, “Add link to docs”), pela interface web.
+Non-shallow, partial clone (`blob:none`). 7 reachable commits (7 across all refs), no merges, root `427afbb` (2024-01-10, “Initial commit”, `LICENSE` and `README.md`). Refs: `main`, `origin/main` and `origin/HEAD` at SHA. Authorship:
+- Milan Unger, with two identities (`30626125+milung@users.noreply.github.com`, web interface commits, and an institutional email), 6 commits from 2024-01-10 to 2024-05-24;
+- Michal Sevcik (`99325737+SevcikMichal@users.noreply.github.com`), SHA `93281b3` (2025-11-26, “Add link to docs”), through web interface.
 
-Por `git diff-tree --no-renames --name-status`, todos os commits só adicionam ou alteram `README.md`, `profile/README.md` e `LICENSE`; o histórico nunca conteve código. Nenhum blob histórico foi lido. `git rev-list --objects $SHA --missing=print` identifica 4 objetos históricos ausentes, não identificados por tipo sem busca na rede; os três blobs do SHA estão presentes e foram lidos.
+According to `git diff-tree --no-renames --name-status`, all commits only add or change `README.md`, `profile/README.md` and `LICENSE`; history never contained code. No historical blob was read. `git rev-list --objects $SHA --missing=print` identifies 4 missing historical objects, not identified by type without network fetching; all three SHA blobs are present and were read.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend no repositório e nenhuma configuração de composição que referencie unidades externas; só `LICENSE`, `README.md` e `profile/README.md` (inventário). |
-| Q2 | No | Não há unidades. |
-| Q3 | No | Não há host, shell nem root config. |
-| Q4 | No | Nenhum mecanismo de composição configurado; a integração de micro-frontends é só descrita (`profile/README.md:3`). |
-| Q5 | No | Q1–Q4 convergem. |
+| Q1 | No | No frontend unit in repository or composition configuration referencing external units; only `LICENSE`, `README.md` and `profile/README.md` (inventory). |
+| Q2 | No | No units. |
+| Q3 | No | No host, shell or root config. |
+| Q4 | No | No configured composition mechanism; micro-frontend integration is only described (`profile/README.md:3`). |
+| Q5 | No | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “repositories mentioning micro-frontends without implementing them”, como os perfis 011/064/068/073/077/101/111; aqui o perfil é de organização (`profile/README.md`), não de usuário. Na seção 3.2 do protocolo, cabe em “purely documentation without an implementation”.
-- A menção não é competência pessoal, e sim a apresentação de um ecossistema MFE (controlador Kubernetes) mantido em outros repositórios. Isso aproximaria o projeto de “MFE frameworks and libraries”, mas este repositório não contém nem o framework: a classe segue só pelo conteúdo do snapshot.
-- Não é `MFE-unit`: não há unidade preparada para composição. Não há cadeia parcial (097/103/104), code sharing (089/100) ou unidade de terceiros (102/074/080) a avaliar.
-- `repo_type: other`, `frontend_units: 0`, `unit_organization: none`, arrays vazios.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. Matches “repositories mentioning micro-frontends without implementing them”, like profiles 011/064/068/073/077/101/111; here profile belongs to an organization (`profile/README.md`), rather than a user. In protocol section 3.2, fits “purely documentation without an implementation”.
+- Mention is not a personal skill, but presentation of an MFE ecosystem (Kubernetes controller) maintained in other repositories. That would bring the project closer to “MFE frameworks and libraries”, but this repository does not even contain the framework: class follows only snapshot content.
+- Not `MFE-unit`: no unit prepared for composition. No partial chain (097/103/104), code sharing (089/100) or third-party unit (102/074/080) to assess.
+- `repo_type: other`, `frontend_units: 0`, `unit_organization: none`, empty arrays.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** repositórios `.github` de organização (perfil em `profile/README.md`) entram pelo termo explícito no README, como os perfis de usuário (`owner == name`) de 011. O padrão `<org>/.github` sugere o mesmo tipo de filtro automático apontado em 011.
-- **Protocolo (famílias):** a organização tem ao menos oito repositórios nas rodadas (`data/discovery/mfe-round-002/candidates.csv:7308`, `7309`, `7441`, `7464`, `7474`, `8586`, `11596`, `21275`); se a análise de famílias for adotada, o ecossistema precisaria ser inspecionado nesses repositórios; a autodescrição como controlador e “ecosystem of components” (`README.md:4`) não basta para decidir entre framework e instância.
-- **Protocolo (busca):** o hit singular `microfrontend` só tem grafia literal isolada em `profile/README.md:3`; não está registrado qual README a busca indexou.
+- **RQ1 (misleading signals):** organization `.github` repositories (profile in `profile/README.md`) enter through explicit README term, like user profiles (`owner == name`) in 011. Pattern `<org>/.github` suggests the same automatic filter type noted in 011.
+- **Protocol (families):** organization has at least eight repositories in rounds (`data/discovery/mfe-round-002/candidates.csv:7308`, `7309`, `7441`, `7464`, `7474`, `8586`, `11596`, `21275`); if family analysis is adopted, ecosystem would need inspection in those repositories; self-description as controller and “ecosystem of components” (`README.md:4`) does not suffice to decide between framework and instance.
+- **Protocol (search):** singular hit `microfrontend` has isolated literal spelling only at `profile/README.md:3`; which README search indexed is not recorded.

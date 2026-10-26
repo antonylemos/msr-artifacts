@@ -15,6 +15,6 @@ annotation:
 
 # 253 — jangrohit/micro-front-end
 
-## Dependências
+## Dependencies
 
-Nenhuma dependência das tecnologias no dependencies.csv.
+No dependency on the technologies in dependencies.csv.

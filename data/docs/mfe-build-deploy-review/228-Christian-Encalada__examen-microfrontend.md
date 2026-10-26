@@ -16,30 +16,30 @@ annotation:
 
 # 228 — Christian-Encalada/examen-microfrontend
 
-## Leitura do repositório
+## Repository overview
 
-São três projetos npm independentes, sem workspace: o host `appclases` na raiz e os remotes `alert-sender` e `alert-dashboard` em subdiretórios, cada um com `package.json`, `package-lock.json` e `rspack.config.ts` próprios. Os três `package.json` têm os mesmos scripts: `build` (`rspack build` em produção), `build:dev`, `build:start` (`cd dist && rspack serve`) e `start` (`rspack serve` em desenvolvimento) (package.json:4-9; alert-sender/package.json:4-9; alert-dashboard/package.json:4-9). Não há script na raiz que dispare os builds dos remotes; o README manda instalar e iniciar cada projeto em seu diretório, em três terminais (README.md:23-66).
+Three independent npm projects, without workspace: host `appclases` at root and remotes `alert-sender` and `alert-dashboard` in subdirectories, each with its own `package.json`, `package-lock.json` and `rspack.config.ts`. All three `package.json` files have identical scripts: `build` (`rspack build` in production), `build:dev`, `build:start` (`cd dist && rspack serve`) and `start` (`rspack serve` in development) (package.json:4-9; alert-sender/package.json:4-9; alert-dashboard/package.json:4-9). No root script triggers remote builds; README instructs installing and starting each project in its directory, in three terminals (README.md:23-66).
 
-As três configurações Rspack são quase idênticas: entrada `./src/index.ts`, `HtmlRspackPlugin` com o `index.html` do projeto e `ModuleFederationPlugin` com o `module-federation.config.ts` do projeto (rspack.config.ts:17-19, 77-83). Diferem na porta do servidor de desenvolvimento (rspack.config.ts:25; alert-sender/rspack.config.ts:25; alert-dashboard/rspack.config.ts:25: 3000, 3001 e 3002) e no `output`, em que `uniqueName` e `publicPath` são próprios de cada aplicação (rspack.config.ts:29-34; alert-sender/rspack.config.ts:29-34; alert-dashboard/rspack.config.ts:29-34). Nenhuma define `output.path`, então cada build sai no `dist` do próprio projeto, ignorado pelo git (.gitignore:85).
+All three Rspack configurations are nearly identical: entry `./src/index.ts`, `HtmlRspackPlugin` with project `index.html` and `ModuleFederationPlugin` with project `module-federation.config.ts` (rspack.config.ts:17-19, 77-83). They differ in development server port (rspack.config.ts:25; alert-sender/rspack.config.ts:25; alert-dashboard/rspack.config.ts:25: 3000, 3001 and 3002) and `output`, where `uniqueName` and `publicPath` belong to each application (rspack.config.ts:29-34; alert-sender/rspack.config.ts:29-34; alert-dashboard/rspack.config.ts:29-34). None defines `output.path`, so each build outputs to its own project `dist`, ignored by git (.gitignore:85).
 
-Não há artefato de deploy no snapshot: nenhum workflow de CI, Dockerfile, compose, manifesto ou configuração de hospedagem, e o `matches.csv` não tem ocorrências `ops-*` nem `ci-*`. As únicas ocorrências do recorte são as três `cfg-public-path`, todas em `http://localhost` (rspack.config.ts:33; alert-sender/rspack.config.ts:33; alert-dashboard/rspack.config.ts:33), as mesmas portas das URLs dos remotes no host (module-federation.config.ts:6-7). É configuração de desenvolvimento: mesmo o build de produção fica preso a `localhost` pelo `publicPath`, e o `build:start` só serve o `dist` com o servidor do Rspack, rodado à mão.
+No deployment artifact is present in snapshot: no CI workflow, Dockerfile, compose, manifest or hosting configuration, and `matches.csv` has no `ops-*` or `ci-*` occurrences. The only occurrences in selected scope are three `cfg-public-path`, all at `http://localhost` (rspack.config.ts:33; alert-sender/rspack.config.ts:33; alert-dashboard/rspack.config.ts:33), same ports as remote URLs in host (module-federation.config.ts:6-7). This is development configuration: even production build remains tied to `localhost` by `publicPath`, and `build:start` only serves `dist` through Rspack server, run manually.
 
-## Aplicações
+## Applications
 
-| # | Aplicação | Build | Deploy | Onde é servida | Versionamento | Artefatos |
+| # | Application | Build | Deploy | Where served | Versioning | Artifacts |
 |---|---|---|---|---|---|---|
-| 1 | . | separado | não observado | `http://localhost:3000` em desenvolvimento (rspack.config.ts:25, 33) | No | rspack.config.ts:15-92 (configuração própria, entrada `./src/index.ts`); package.json:5 (`rspack build`) |
-| 2 | alert-dashboard | separado | não observado | `http://localhost:3002` em desenvolvimento (alert-dashboard/rspack.config.ts:25, 33) | No | alert-dashboard/rspack.config.ts:15-92 (configuração própria, gera `remoteEntry.js` pelo alert-dashboard/module-federation.config.ts:2-6); alert-dashboard/package.json:5 (`rspack build`) |
-| 3 | alert-sender | separado | não observado | `http://localhost:3001` em desenvolvimento (alert-sender/rspack.config.ts:25, 33) | No | alert-sender/rspack.config.ts:15-92 (configuração própria, gera `remoteEntry.js` pelo alert-sender/module-federation.config.ts:2-6); alert-sender/package.json:5 (`rspack build`) |
+| 1 | . | separate | not observed | `http://localhost:3000` in development (rspack.config.ts:25, 33) | No | rspack.config.ts:15-92 (own configuration, entry `./src/index.ts`); package.json:5 (`rspack build`) |
+| 2 | alert-dashboard | separate | not observed | `http://localhost:3002` in development (alert-dashboard/rspack.config.ts:25, 33) | No | alert-dashboard/rspack.config.ts:15-92 (own configuration, generates `remoteEntry.js` through alert-dashboard/module-federation.config.ts:2-6); alert-dashboard/package.json:5 (`rspack build`) |
+| 3 | alert-sender | separate | not observed | `http://localhost:3001` in development (alert-sender/rspack.config.ts:25, 33) | No | alert-sender/rspack.config.ts:15-92 (own configuration, generates `remoteEntry.js` through alert-sender/module-federation.config.ts:2-6); alert-sender/package.json:5 (`rspack build`) |
 
-## Observações
+## Observations
 
-**1. . (host `appclases`).** O build da raiz parte só de `./src/index.ts` (rspack.config.ts:17-19) e não inclui o código dos remotes, que o host consome em tempo de execução pelos `remoteEntry.js` em localhost (module-federation.config.ts:5-8); por isso `separado`, embora os remotes estejam em subdiretórios dele. O `publicPath` `http://localhost:3000/` (rspack.config.ts:33) e a porta 3000 (rspack.config.ts:25) são de desenvolvimento. A `version` `0.0.1` (package.json:3) não é usada em publicação.
+**1. . (host `appclases`).** Root build starts only from `./src/index.ts` (rspack.config.ts:17-19) and does not include remote code, consumed by host at runtime through `remoteEntry.js` files at localhost (module-federation.config.ts:5-8); hence `separate`, although remotes are in its subdirectories. The `publicPath` `http://localhost:3000/` (rspack.config.ts:33) and port 3000 (rspack.config.ts:25) are for development. The `version` `0.0.1` (package.json:3) is unused in publication.
 
-**2. alert-dashboard.** Projeto à parte, com build Rspack próprio (alert-dashboard/package.json:5; alert-dashboard/rspack.config.ts:15-92) que gera o `remoteEntry.js` do remote `AlertDashboard` (alert-dashboard/module-federation.config.ts:2-6). Servido só pelo servidor de desenvolvimento na porta 3002, com `publicPath` `http://localhost:3002/` (alert-dashboard/rspack.config.ts:25, 33). `version` `0.0.1` sem uso (alert-dashboard/package.json:3).
+**2. alert-dashboard.** Separate project, with own Rspack build (alert-dashboard/package.json:5; alert-dashboard/rspack.config.ts:15-92) generating `remoteEntry.js` for remote `AlertDashboard` (alert-dashboard/module-federation.config.ts:2-6). Served only by development server on port 3002, with `publicPath` `http://localhost:3002/` (alert-dashboard/rspack.config.ts:25, 33). The `version` `0.0.1` is unused (alert-dashboard/package.json:3).
 
-**3. alert-sender.** Mesma forma da aplicação 2: build próprio (alert-sender/package.json:5; alert-sender/rspack.config.ts:15-92), `remoteEntry.js` do remote `AlertSender` (alert-sender/module-federation.config.ts:2-6), porta 3001 e `publicPath` `http://localhost:3001/` (alert-sender/rspack.config.ts:25, 33). `version` `0.0.1` sem uso (alert-sender/package.json:3).
+**3. alert-sender.** Same arrangement as application 2: own build (alert-sender/package.json:5; alert-sender/rspack.config.ts:15-92), `remoteEntry.js` for remote `AlertSender` (alert-sender/module-federation.config.ts:2-6), port 3001 and `publicPath` `http://localhost:3001/` (alert-sender/rspack.config.ts:25, 33). The `version` `0.0.1` is unused (alert-sender/package.json:3).
 
-## Resumo
+## Summary
 
-Aplicações: 3. Build (separado: 3). Deploy (não observado: 3). Versionamento independente: 0.
+Applications: 3. Build (separate: 3). Deploy (not observed: 3). Independent versioning: 0.

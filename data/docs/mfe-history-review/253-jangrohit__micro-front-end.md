@@ -13,34 +13,34 @@ annotation:
 
 # 253 — jangrohit/micro-front-end
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem 15 commits, de 2026-03-09 a 2026-09-27. O primeiro, `f107f7b` (2026-03-09, “initial commit”), adiciona em bloco os quatro diretórios de pacotes, incluindo os arquivos de composição de container e marketing. Essa é a primeira presença observável desses artefatos, sem evidência de onde foram desenvolvidos antes. As revisões 3.4.2 a 3.4.6 não deixam dependências, unidades, construções, relações ou deploy com resultado indeterminado que exija investigação histórica.
+History up to snapshot has 15 commits, from 2026-03-09 to 2026-09-27. First, `f107f7b` (2026-03-09, “initial commit”), adds four package directories together, including container and marketing composition files. This is first observable presence of these artifacts, without evidence of where they were developed before. Reviews 3.4.2 to 3.4.6 leave no dependency, unit, construct, relationship or deploy with undetermined result requiring historical investigation.
 
-Os dois pontos vêm das afirmações contraditas na revisão documental. O histórico esclarece a ordem entre workflows e README: o workflow do container é adicionado em `5d05e98` (2026-09-27, “created git action for container”); o do marketing, em `e002f80` (2026-09-27, “update config”). Foi possível ler os dois workflows na versão de `e002f80`, já com build, publicação no S3 e invalidação de CloudFront. O README só é adicionado depois, no snapshot `c6c0dbc` (2026-09-27, “Create README.md”). Portanto, a frase que nega pipeline não documenta um estágio anterior à presença desses arquivos. A outra contradição, sobre roteadores aninhados, resolve-se pelo próprio snapshot, sem consulta histórica específica.
+Both points come from contradicted claims in documentation review. History clarifies workflow and README order: container workflow is added in `5d05e98` (2026-09-27, “created git action for container”); marketing workflow in `e002f80` (2026-09-27, “update config”). Both workflows could be read at version `e002f80`, already with build, S3 publication and CloudFront invalidation. README is added only afterward, in snapshot `c6c0dbc` (2026-09-27, “Create README.md”). Thus sentence denying pipeline does not document a stage before these files existed. Other contradiction, about nested routers, is resolved by snapshot itself without specific historical query.
 
-## Pontos
+## Points
 
-| # | Ponto | Origem | Pergunta | Commits | Resultado |
+| # | Point | Origin | Question | Commits | Result |
 |---|---|---|---|---|---|
-| 1 | O README nega a existência de pipeline de publicação, mas há dois workflows de deploy. | 3.4.6 (Leitura do repositório, contradição em README.md:104); 3.4.7 #22 | estágios em conflito | 5d05e98, 2026-09-27, created git action for container; e002f80, 2026-09-27, update config; c6c0dbc, 2026-09-27, Create README.md | esclarecido |
-| 2 | O README interpreta os BrowserRouter do host e do remote como aninhados na mesma árvore de componentes. | 3.4.7 #23 | estágios em conflito | — | resolvido pelo snapshot |
+| 1 | README denies publication pipeline existence, but there are two deploy workflows. | 3.4.6 (Repository overview, contradiction em README.md:104); 3.4.7 #22 | conflicting stages | 5d05e98, 2026-09-27, created git action for container; e002f80, 2026-09-27, update config; c6c0dbc, 2026-09-27, Create README.md | clarified |
+| 2 | README interprets host and remote BrowserRouter as nested in same component tree. | 3.4.7 #23 | conflicting stages | — | resolved by the snapshot |
 
-## Observações
+## Observations
 
-**1. Pipeline negado pelo README.** O log com nomes e estados dos arquivos registra a adição de `.github/workflows/container.yml` em `5d05e98` e de `.github/workflows/marketing.yml` em `e002f80`, ambos em 2026-09-27. A leitura dos dois arquivos em `e002f80` confirma `npm run build`, `aws s3 sync` para os prefixos próprios de container e marketing e invalidação de CloudFront. Nenhum commit posterior até o snapshot altera esses workflows; `c6c0dbc` apenas adiciona `README.md`, cujo texto em README.md:104 nega a existência do pipeline. Assim, os artefatos de publicação já existiam quando a afirmação apareceu, e não há no histórico consultado uma versão anterior do README que corresponda ao estágio sem workflows. Isso esclarece a cronologia da contradição, mas não a razão de sua escrita, uma possível origem externa ou se os jobs chegaram a executar. Não demonstra abandono dos workflows nem altera o deploy registrado na 3.4.6.
+**1. Pipeline denied by README.** Log with filenames and statuses records addition of `.github/workflows/container.yml` in `5d05e98` and `.github/workflows/marketing.yml` in `e002f80`, both on 2026-09-27. Reading both files at `e002f80` confirms `npm run build`, `aws s3 sync` to container and marketing own prefixes and CloudFront invalidation. No later commit up to snapshot changes these workflows; `c6c0dbc` only adds `README.md`, whose text at README.md:104 denies pipeline existence. Thus publication artifacts already existed when claim appeared, and queried history has no earlier README version corresponding to stage without workflows. This clarifies contradiction chronology, but not reason for writing, possible external origin or whether jobs ever ran. It neither demonstrates workflow abandonment nor changes deploy recorded in 3.4.6.
 
-**2. Roteadores interpretados como aninhados.** O próprio snapshot distingue a árvore DOM da árvore React: packages/container/src/App.js:17-20 coloca o wrapper dentro do BrowserRouter do host, mas packages/marketing/src/bootstrap.js:5-7 monta `<App />` por uma chamada própria a `ReactDOM.render` no elemento recebido. O BrowserRouter de packages/marketing/src/App.js:14-19 pertence a essa raiz separada. Isso resolve a interpretação de README.md:108 sem precisar postular estágios distintos do código. O possível efeito dos dois roteadores no histórico do navegador não foi executado nem verificado; a conclusão se limita à separação das árvores de componentes já registrada na 3.4.7.
+**2. Routers interpreted as nested.** Snapshot itself distinguishes DOM tree from React tree: packages/container/src/App.js:17-20 places wrapper inside host BrowserRouter, but packages/marketing/src/bootstrap.js:5-7 mounts `<App />` through its own `ReactDOM.render` call on received element. BrowserRouter at packages/marketing/src/App.js:14-19 belongs to this separate root. This resolves interpretation of README.md:108 without postulating different code stages. Possible effect of both routers on browser history was neither executed nor verified; conclusion is limited to component tree separation already recorded in 3.4.7.
 
-## Comandos
+## Commands
 
-Comparações de integridade executadas antes e depois das consultas, ambas sem diferenças:
+Integrity comparisons performed before and after queries, both without differences:
 
 ```sh
 LC_ALL=C docs/mfe-history-review/tools/fingerprint.sh | cmp - docs/mfe-history-review/tools/fingerprint-before.txt
 ```
 
-Consultas limitadas ao snapshot ou a seu ancestral `e002f80`:
+Queries limited to snapshot or its ancestor `e002f80`:
 
 ```sh
 docs/mfe-history-review/tools/hist.sh jangrohit__micro-front-end log --reverse --format='%h %cs %s' --name-status c6c0dbc9fb78b8baab20e74394647ca40b521355
@@ -48,6 +48,6 @@ docs/mfe-history-review/tools/hist.sh jangrohit__micro-front-end rev-list --coun
 docs/mfe-history-review/tools/hist.sh jangrohit__micro-front-end show e002f80:.github/workflows/container.yml e002f80:.github/workflows/marketing.yml
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 15 (2026-03-09 a 2026-09-27). Pontos: 2 (esclarecido: 1, inconclusivo: 0, resolvido pelo snapshot: 1).
+Commits up to the snapshot: 15 (2026-03-09 to 2026-09-27). Points: 2 (clarified: 1, inconclusive: 0, resolved by the snapshot: 1).

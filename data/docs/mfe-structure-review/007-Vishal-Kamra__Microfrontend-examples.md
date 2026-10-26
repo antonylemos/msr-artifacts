@@ -17,28 +17,28 @@ annotation:
 
 ## Workspace
 
-Nenhuma declaração de workspace.
+No workspace declaration.
 
-## Unidades
+## Units
 
-| Diretório | Marcadores | Manifesto | Entrada | Build | Workspace | Deploy | Unidade frontend | Motivo |
+| Directory | Markers | Manifest | Entry | Build | Workspace | Deploy | Frontend unit | Rationale |
 |---|---|---|---|---|---|---|---|---|
-| react-js/auth | react-js/auth/package.json | react-js/auth/package.json:1-6 (somente manifesto e script de teste) | — | — | — | — | No | Somente manifesto e lockfile; não há código de UI, entrada ou build de aplicação no snapshot. |
-| react-js/container | react-js/container/package.json | react-js/container/package.json:1-6 (pacote próprio) | react-js/container/src/index.js:1 (entrada convencional webpack); react-js/container/src/bootstrap.js:6-17 (monta React); react-js/container/config/webpack.dev.js:16-17 (template HTML) | react-js/container/config/webpack.dev.js:7-29 (configuração de desenvolvimento); react-js/container/package.json:5 (`webpack serve --config config/webpack.dev.js`) | — | — | Yes | Aplicação React com entrada própria e compilação webpack de desenvolvimento. |
-| react-js/container/config | react-js/container/config/webpack.common.js;react-js/container/config/webpack.dev.js;react-js/container/config/webpack.prod.js | — | — | — | — | — | No | Diretório de configuração usado pelo build de react-js/container; não é aplicação separada. |
-| react-js/dashboard | react-js/dashboard/package.json | react-js/dashboard/package.json:1-6 (somente manifesto e script de teste) | — | — | — | — | No | Somente manifesto e lockfile; não há código de UI, entrada ou build de aplicação no snapshot. |
-| react-js/marketing | react-js/marketing/package.json | react-js/marketing/package.json:1-6 (pacote próprio) | react-js/marketing/src/index.js:1 (entrada convencional webpack); react-js/marketing/src/bootstrap.js:6-17 (monta React); react-js/marketing/config/webpack.dev.js:16-17 (template HTML) | react-js/marketing/config/webpack.dev.js:7-29 (configuração de desenvolvimento); react-js/marketing/package.json:5 (`webpack serve --config config/webpack.dev.js`) | — | — | Yes | Aplicação React com entrada própria e compilação webpack de desenvolvimento. |
-| react-js/marketing/config | react-js/marketing/config/webpack.common.js;react-js/marketing/config/webpack.dev.js;react-js/marketing/config/webpack.prod.js | — | — | — | — | — | No | Diretório de configuração usado pelo build de react-js/marketing; não é aplicação separada. |
-| simple-js/Cart | simple-js/Cart/package.json;simple-js/Cart/webpack.config.js | simple-js/Cart/package.json:1-9 (pacote próprio) | simple-js/Cart/src/index.js:1 (entrada convencional webpack); simple-js/Cart/src/bootstrap.js:1-7 (inicia a UI) | simple-js/Cart/webpack.config.js:4-8 (configuração própria); simple-js/Cart/package.json:7 (script do servidor webpack) | — | — | Yes | Aplicação JavaScript com entrada e configuração de compilação próprias. |
-| simple-js/Container | simple-js/Container/package.json;simple-js/Container/webpack.config.js | simple-js/Container/package.json:1-9 (pacote próprio) | simple-js/Container/src/index.js:1 (entrada convencional webpack); simple-js/Container/src/bootstrap.js:1-5 (inicia a UI) | simple-js/Container/webpack.config.js:4-8 (configuração própria); simple-js/Container/package.json:7 (script do servidor webpack) | — | — | Yes | Aplicação JavaScript com entrada e configuração de compilação próprias. |
-| simple-js/Products | simple-js/Products/package.json;simple-js/Products/webpack.config.js | simple-js/Products/package.json:1-9 (pacote próprio) | simple-js/Products/src/index.js:1 (entrada convencional webpack); simple-js/Products/src/bootstrap.js:1-7 (inicia a UI) | simple-js/Products/webpack.config.js:4-8 (configuração própria); simple-js/Products/package.json:8 (script do servidor webpack) | — | — | Yes | Aplicação JavaScript com entrada e configuração de compilação próprias. |
+| react-js/auth | react-js/auth/package.json | react-js/auth/package.json:1-6 (manifest and test script only) | — | — | — | — | No | Manifest and lockfile only; there is no UI code, application entry or build in the snapshot. |
+| react-js/container | react-js/container/package.json | react-js/container/package.json:1-6 (own package) | react-js/container/src/index.js:1 (conventional webpack entry); react-js/container/src/bootstrap.js:6-17 (mounts React); react-js/container/config/webpack.dev.js:16-17 (HTML template) | react-js/container/config/webpack.dev.js:7-29 (development configuration); react-js/container/package.json:5 (`webpack serve --config config/webpack.dev.js`) | — | — | Yes | React application with its own entry and development webpack compilation. |
+| react-js/container/config | react-js/container/config/webpack.common.js;react-js/container/config/webpack.dev.js;react-js/container/config/webpack.prod.js | — | — | — | — | — | No | Configuration directory used by the react-js/container build; it is not a separate application. |
+| react-js/dashboard | react-js/dashboard/package.json | react-js/dashboard/package.json:1-6 (manifest and test script only) | — | — | — | — | No | Manifest and lockfile only; there is no UI code, application entry or build in the snapshot. |
+| react-js/marketing | react-js/marketing/package.json | react-js/marketing/package.json:1-6 (own package) | react-js/marketing/src/index.js:1 (conventional webpack entry); react-js/marketing/src/bootstrap.js:6-17 (mounts React); react-js/marketing/config/webpack.dev.js:16-17 (HTML template) | react-js/marketing/config/webpack.dev.js:7-29 (development configuration); react-js/marketing/package.json:5 (`webpack serve --config config/webpack.dev.js`) | — | — | Yes | React application with its own entry and development webpack compilation. |
+| react-js/marketing/config | react-js/marketing/config/webpack.common.js;react-js/marketing/config/webpack.dev.js;react-js/marketing/config/webpack.prod.js | — | — | — | — | — | No | Configuration directory used by the react-js/marketing build; it is not a separate application. |
+| simple-js/Cart | simple-js/Cart/package.json;simple-js/Cart/webpack.config.js | simple-js/Cart/package.json:1-9 (own package) | simple-js/Cart/src/index.js:1 (conventional webpack entry); simple-js/Cart/src/bootstrap.js:1-7 (starts the UI) | simple-js/Cart/webpack.config.js:4-8 (own configuration); simple-js/Cart/package.json:7 (webpack server script) | — | — | Yes | JavaScript application with its own entry and compilation configuration. |
+| simple-js/Container | simple-js/Container/package.json;simple-js/Container/webpack.config.js | simple-js/Container/package.json:1-9 (own package) | simple-js/Container/src/index.js:1 (conventional webpack entry); simple-js/Container/src/bootstrap.js:1-5 (starts the UI) | simple-js/Container/webpack.config.js:4-8 (own configuration); simple-js/Container/package.json:7 (webpack server script) | — | — | Yes | JavaScript application with its own entry and compilation configuration. |
+| simple-js/Products | simple-js/Products/package.json;simple-js/Products/webpack.config.js | simple-js/Products/package.json:1-9 (own package) | simple-js/Products/src/index.js:1 (conventional webpack entry); simple-js/Products/src/bootstrap.js:1-7 (starts the UI) | simple-js/Products/webpack.config.js:4-8 (own configuration); simple-js/Products/package.json:8 (webpack server script) | — | — | Yes | JavaScript application with its own entry and compilation configuration. |
 
-## Resumo
+## Summary
 
-Aplicações frontend no snapshot: 5 (react-js/container, react-js/marketing, simple-js/Cart, simple-js/Container, simple-js/Products).
+Frontend applications in the snapshot: 5 (react-js/container, react-js/marketing, simple-js/Cart, simple-js/Container, simple-js/Products).
 
-## Notas
+## Notes
 
-- react-js/auth e react-js/dashboard só contêm package.json e package-lock.json; dependências de UI não demonstram uma aplicação implementada.
-- As configurações webpack.prod.js de container e marketing estão vazias. Os Yes dessas unidades são sustentados pelos builds de desenvolvimento referenciados em seus scripts start, sem afirmar executabilidade de produção.
-- Os diretórios config pertencem às aplicações imediatamente acima; não herdam suas entradas ou builds como características próprias.
+- react-js/auth and react-js/dashboard contain only package.json and package-lock.json; UI dependencies do not demonstrate an implemented application.
+- The webpack.prod.js configurations for container and marketing are empty. The Yes decisions for these units are supported by the development builds referenced in their start scripts, without asserting production executability.
+- The config directories belong to the applications immediately above them; they do not inherit their entries or builds as their own characteristics.

@@ -20,42 +20,42 @@ annotation:
 
 # 077 — devravinder/devravinder
 
-## Contexto
+## Context
 
-Repositório de perfil pessoal, com apresentação profissional (`README.md:1–5`), tecnologias e competências (`README.md:8–71`), descrições de projetos e contatos (`README.md:73–96`). A arquitetura dos projetos externos não é atribuída ao candidato.
+Personal profile repository, with a professional introduction (`README.md:1–5`), technologies and skills (`README.md:8–71`), project descriptions and contacts (`README.md:73–96`). External projects' architecture is not attributed to the candidate.
 
-Clone conferido em `data/samples/mfe-sample-001/repos/devravinder__devravinder/`. Rank, ID e SHA correspondem à linha `cloned` de `data/samples/mfe-sample-001/clones.csv:78`. `git rev-parse HEAD` retornou o SHA do front matter e `git cat-file -t` confirmou um commit. A inspeção usou `git ls-tree -r`, `git show` e `git grep` no SHA fixado, sem acessar os sites vinculados ou depender do working tree.
+Clone checked in `data/samples/mfe-sample-001/repos/devravinder__devravinder/`. Rank, ID and SHA match the `cloned` row in `data/samples/mfe-sample-001/clones.csv:78`. `git rev-parse HEAD` returned the front matter SHA and `git cat-file -t` confirmed a commit. Inspection used `git ls-tree -r`, `git show` and `git grep` at the fixed SHA, without accessing linked sites or depending on the working tree.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura / Configuração / Código-fonte / Build/deploy | O inventário integral por `git ls-tree -r 47cb7cc90860e9b413c5b3a1ff049f4ebedae366` contém uma única entrada: `README.md`, modo `100644`, blob `7f40d96af0b833a659348aa264675acd72434fc8`. Não há gitlinks. Foram procurados manifestos de pacotes, fontes de UI, entradas de aplicações, configurações de bundler/composição e scripts/workflows de build/deploy: nenhum está presente na árvore. A leitura integral de `README.md:1–96` confirma uma apresentação pessoal, sem implementação frontend. | ausente |
-| Documentação | `README.md:57–64` lista competências de frontend; “Micro Frontend architecture” aparece em `README.md:64`. É uma competência declarada pelo autor, sem código/configuração que a implemente no candidato. | fraca |
-| Tecnologia | `README.md:12–13` exibe badges React/Next.js; `README.md:58–63` lista React, Redux e arquitetura de componentes. Esses sinais descrevem habilidades, sem manifestos ou fontes para atribuir tecnologias de UI a unidades do repositório. | fraca |
-| Documentação / Composição | `README.md:73–88` descreve Insta-Cred Loan App e Project Dashboard. O segundo é descrito como ferramenta para pesquisar/filtrar repositórios e recebe um link de website (`README.md:84–88`). Não há host, configuração de carregamento, montagem ou roteamento que relacione esses projetos como unidades de uma aplicação. `README.md:92–93` contém apenas contatos/portfólio. | contexto |
-| Tecnologia / Configuração / Código-fonte / Composição | Busca com `git grep -n -i -E` em toda a árvore, cujo único artefato é `README.md:1–96`, por `micro.?frontend`, `module.?federation`, `single.?spa`, `registerApplication`, `remoteEntry`, `remotes`, `exposes`, `import.?map`, `qiankun`, `wujie`, `iframe`, `customElements`, `createRoot`, `bootstrap`, `webpack`, `vite`, `package.json` e `<script`: somente a competência em `README.md:64` foi encontrada. A busca repetida sem `micro.?frontend` não teve ocorrências. Não foi encontrado mecanismo de composição ou preparação de unidade para host externo. | ausente |
+| Structure / Configuration / Source code / Build/deploy | Complete inventory through `git ls-tree -r 47cb7cc90860e9b413c5b3a1ff049f4ebedae366` contains a single entry: `README.md`, mode `100644`, blob `7f40d96af0b833a659348aa264675acd72434fc8`. There are no gitlinks. Searched for package manifests, UI sources, application entries, bundler/composition configurations and build/deployment scripts/workflows: none is in the tree. Complete reading of `README.md:1–96` confirms a personal introduction without frontend implementation. | absent |
+| Documentation | `README.md:57–64` lists frontend skills; “Micro Frontend architecture” appears in `README.md:64`. This is a skill declared by the author, without code/configuration implementing it in the candidate. | weak |
+| Technology | `README.md:12–13` displays React/Next.js badges; `README.md:58–63` lists React, Redux and component architecture. These signals describe skills, without manifests or sources for attributing UI technologies to repository units. | weak |
+| Documentation / Composition | `README.md:73–88` describes Insta-Cred Loan App and Project Dashboard. The latter is described as a tool for searching/filtering repositories and has a website link (`README.md:84–88`). No host, loading configuration, mounting or routing relates these projects as application units. `README.md:92–93` contains only contacts/portfolio. | context |
+| Technology / Configuration / Source code / Composition | Search through `git grep -n -i -E` across the entire tree, whose only artifact is `README.md:1–96`, for `micro.?frontend`, `module.?federation`, `single.?spa`, `registerApplication`, `remoteEntry`, `remotes`, `exposes`, `import.?map`, `qiankun`, `wujie`, `iframe`, `customElements`, `createRoot`, `bootstrap`, `webpack`, `vite`, `package.json` and `<script`: only the skill in `README.md:64` was found. Repeating the search without `micro.?frontend` found no occurrences. No composition mechanism or preparation of a unit for an external host was found. | absent |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | A árvore inventariada contém apenas `README.md:1–96`, sem unidades frontend ou configuração de composição que referencie unidades externas. Os projetos em `README.md:75–88` são descrições documentais, não unidades identificadas por configuração de composição. |
-| Q2 | No | Não há unidades com entradas e builds próprios no candidato. A seção de habilidades (`README.md:57–64`) e as descrições de projetos (`README.md:75–88`) não contêm os artefatos exigidos para estabelecer unidades relativamente independentes. A ausência de entradas/builds foi verificada na árvore completa. |
-| Q3 | No | Não há host, shell ou configuração raiz carregando, montando ou roteando unidades. Os links de projetos/portfólio em `README.md:73`, `README.md:88` e `README.md:92–93` são navegação documental em um perfil. |
-| Q4 | No | Inventário e busca integral não encontraram mecanismo configurado conectando unidades. A menção em `README.md:64` é uma competência, e os projetos descritos em `README.md:75–88` não são acompanhados de implementação ou configuração de composição. |
-| Q5 | No | O único artefato apresenta o autor (`README.md:1–5`), competências (`README.md:57–64`) e projetos externos (`README.md:73–88`). Não há evidência de instância MFE implementada, em concordância com Q1–Q4. |
+| Q1 | No | The inventoried tree contains only `README.md:1–96`, without frontend units or composition configuration referencing external units. Projects in `README.md:75–88` are documentary descriptions, not units identified through composition configuration. |
+| Q2 | No | No units with their own entries and builds exist in the candidate. The skills section (`README.md:57–64`) and project descriptions (`README.md:75–88`) do not contain artifacts required to establish relatively independent units. Absence of entries/builds was verified in the complete tree. |
+| Q3 | No | No host, shell or root configuration loads, mounts or routes units. Project/portfolio links in `README.md:73`, `README.md:88` and `README.md:92–93` are documentary navigation in a profile. |
+| Q4 | No | Inventory and complete search found no configured mechanism connecting units. The mention in `README.md:64` is a skill, and projects described in `README.md:75–88` are not accompanied by implementation or composition configuration. |
+| Q5 | No | The only artifact presents the author (`README.md:1–5`), skills (`README.md:57–64`) and external projects (`README.md:73–88`). No evidence of an implemented MFE instance exists, consistent with Q1–Q4. |
 
-## Motivo
+## Rationale
 
-- Aplica-se `Non-MFE`: há respostas No e não se aplica a exceção `MFE-unit`. Corresponde ao caso de exclusão de repositório que menciona micro-frontends sem implementá-los.
-- O inventário integral permite registrar `frontend_units: 0`; não é um caso de unidades inacessíveis ou de conteúdo não observável. O repositório contém um perfil em Markdown, sem aplicações ou gitlinks.
-- Não há unidade preparada para composição externa, como uma exposição federada ou ciclos de vida single-spa. Também não há configuração de composição de unidades externas, apenas descrições e links.
-- Não existe decisão aberta sobre composição por links, iframes ou pacotes: o candidato não apresenta uma aplicação composta cuja integração dependa desses mecanismos. Os hyperlinks pertencem à apresentação pessoal e não estabelecem unidades frontend independentes compondo uma aplicação.
-- `repo_type: other` registra o perfil pessoal. `approaches`, `ui_technologies` e `build_tools` permanecem vazios: as tecnologias mencionadas são competências, não implementação observada no repositório. A anotação permanece em `draft`.
+- `Non-MFE` applies: there are No answers and the `MFE-unit` exception does not apply. Matches exclusion of repositories mentioning micro-frontends without implementing them.
+- The complete inventory supports recording `frontend_units: 0`; this is not a case of inaccessible units or unobservable content. The repository contains a Markdown profile, without applications or gitlinks.
+- No unit is prepared for external composition, such as a federated exposure or single-spa lifecycles. There is also no composition configuration for external units, only descriptions and links.
+- There is no unresolved link-, iframe- or package-composition decision: the candidate does not present a composed application whose integration depends on those mechanisms. Hyperlinks belong to the personal introduction and do not establish independent frontend units composing an application.
+- `repo_type: other` records the personal profile. `approaches`, `ui_technologies` and `build_tools` remain empty: mentioned technologies are skills, not observed repository implementation. The annotation remains in `draft`.
 
-## Notas para análise
+## Analysis notes
 
-- **Protocolo:** o clone tem também o branch `origin/deploy` (`README.md` e `index.html`), fora do snapshot classificado; uma busca somente leitura nesse `index.html` não encontrou sinais de MFE. Não entra na análise.
+- **Protocol:** the clone also has branch `origin/deploy` (`README.md` and `index.html`), outside the classified snapshot; a read-only search in that `index.html` found no MFE signals. It is excluded from analysis.
 
-- **RQ1 (sinais enganosos):** a competência Micro Frontend (`README.md:64`), os badges de UI (`README.md:12–13`) e a descrição de projetos (`README.md:75–88`) fornecem sinais temáticos sem artefatos de arquitetura no candidato.
+- **RQ1 (misleading signals):** the Micro Frontend skill (`README.md:64`), UI badges (`README.md:12–13`) and project descriptions (`README.md:75–88`) provide topical signals without architectural artifacts in the candidate.

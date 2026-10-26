@@ -20,34 +20,34 @@ annotation:
 
 # 030 — jyotithakre05/module-federation
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** repositório vazio (não é projeto de software)
-- **Commit avaliado:** `658c4d0` (único commit, "Initial commit")
+- **Repository type:** empty repository (not a software project)
+- **Assessed commit:** `658c4d0` (only commit, "Initial commit")
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | Um único arquivo versionado: `.gitattributes` (`:1-2`, normalização de fim de linha, padrão da criação do repositório no GitHub); só o branch `main` | ausente |
-| Documentação | Só o nome do repositório ("module-federation"); sem README | fraca |
-| Tecnologia / Configuração / Código-fonte / Build/deploy | Inexistentes | ausente |
+| Structure | A single tracked file: `.gitattributes` (`:1-2`, line-ending normalization, default on repository creation in GitHub); only branch `main` | absent |
+| Documentation | Only the repository name ("module-federation"); no README | weak |
+| Technology / Configuration / Source code / Build/deploy | Nonexistent | absent |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend |
-| Q2 | No | Não há unidades |
-| Q3 | No | Não há host, shell nem root config |
-| Q4 | No | Nenhum mecanismo de composição |
-| Q5 | No | Q1–Q4 convergem |
+| Q1 | No | No frontend units |
+| Q2 | No | No units |
+| Q3 | No | No host, shell or root config |
+| Q4 | No | No composition mechanism |
+| Q5 | No | Q1–Q4 converge |
 
-## Motivo
+## Rationale
 
-- O repositório está vazio: só o commit inicial com `.gitattributes`. O termo "module-federation" está apenas no nome.
-- Na filtragem automática do protocolo (seção 3.2), seria eliminado como "repositories with no accessible source or configuration artifacts".
+- The repository is empty: only the initial commit with `.gitattributes`. The term "module-federation" appears only in the name.
+- In the protocol's automatic filtering (section 3.2), it would be excluded as "repositories with no accessible source or configuration artifacts".
 
-## Notas para análise
+## Analysis notes
 
-- **Protocolo (filtragem automática):** repositórios com um único arquivo de metadados (`.gitattributes`, `.gitignore`, `LICENSE`) podem ser excluídos por regra antes da triagem manual.
+- **Protocol (automatic filtering):** repositories with a single metadata file (`.gitattributes`, `.gitignore`, `LICENSE`) can be excluded by a rule before manual screening.

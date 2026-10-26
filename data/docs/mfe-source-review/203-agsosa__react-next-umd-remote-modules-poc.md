@@ -15,30 +15,30 @@ annotation:
 
 # 203 — agsosa/react-next-umd-remote-modules-poc
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-dynamic-script | shell/src/hooks/useRemoteModule.ts:79 | shell | script-loading | Yes | `document.createElement('script')` no hook `useRemoteModule` injeta o bundle UMD de `mf-1`: `script.src = url` (:80), `document.head.appendChild(script)` (:99) e, no `onload`, lê o componente de `window[moduleName][componentName]` (:23-24, :82-87); antes expõe `window.React`/`window.ReactDOM` (:36-37), que o bundle usa como globais externos (mf-1/vite.mf.ts:35, :42-45). O `url` é `MF1_BASE_URL + '/remote-modules/bundle.js'` (shell/src/components/RemoteHeader.tsx:19), saída do build `format: "umd"`, `name: "MF1_RemoteModules"` de `mf-1` (mf-1/vite.mf.ts:28, :37-39). Ativo: shell/src/pages/index.tsx:178 → `RemoteHeader` → `useRemoteModule` (shell/src/components/RemoteHeader.tsx:18). |
-| src-cross-unit-communication | mf-1/public/remote-modules/bundle.js:10 | mf-1 | none | No | Falso positivo em saída gerada: o `postMessage(r,"*")` casado é o polyfill de `setImmediate` embutido do axios (`` `axios@${Math.random()}` `` na mesma linha), que manda mensagem à própria janela para agendar callbacks; não é comunicação entre unidades. |
+| src-dynamic-script | shell/src/hooks/useRemoteModule.ts:79 | shell | script-loading | Yes | `document.createElement('script')` in hook `useRemoteModule` injects the `mf-1` UMD bundle: `script.src = url` (:80), `document.head.appendChild(script)` (:99) and, in `onload`, reads the component from `window[moduleName][componentName]` (:23-24, :82-87); first exposes `window.React`/`window.ReactDOM` (:36-37), used by the bundle as external globals (mf-1/vite.mf.ts:35, :42-45). The `url` is `MF1_BASE_URL + '/remote-modules/bundle.js'` (shell/src/components/RemoteHeader.tsx:19), output of the `format: "umd"`, `name: "MF1_RemoteModules"` build of `mf-1` (mf-1/vite.mf.ts:28, :37-39). Active: shell/src/pages/index.tsx:178 → `RemoteHeader` → `useRemoteModule` (shell/src/components/RemoteHeader.tsx:18). |
+| src-cross-unit-communication | mf-1/public/remote-modules/bundle.js:10 | mf-1 | none | No | False positive in generated output: the matched `postMessage(r,"*")` is axios’s embedded `setImmediate` polyfill (`` `axios@${Math.random()}` `` on the same line), which sends messages to its own window to schedule callbacks; not inter-unit communication. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | shell/src/components/RemoteHeader.tsx:18 | shell | script-loading | Yes | `useRemoteModule<HeaderProps>({ url: MF1_BASE_URL + "/remote-modules/bundle.js", moduleName: "MF1_RemoteModules", componentName: "Header" })` (:18-22) passa ao carregador a URL do bundle UMD de `mf-1` e pede o componente `Header` (exportado em mf-1/src/RemoteModules/RemoteModules.ts:10); `MF1_BASE_URL` vem de `publicRuntimeConfig` (shell/src/components/RemoteHeader.tsx:8-10; shell/next.config.js:8, padrão `http://localhost:3001`, porta de mf-1/package.json:7). |
-| manual | shell/src/components/RemoteHeader.tsx:37 | shell | runtime-composition | Yes | `<Header appName="Shell App" router={router} onMount={handleMount} />` renderiza no shell o `Header` de `mf-1` obtido em :14-22; o shell passa o próprio `router` do Next, que o remote usa para navegar (mf-1/src/RemoteModules/Header.tsx:83-85, :104-106). Usado em shell/src/pages/index.tsx:178, shell/src/pages/fulfilment.tsx:29 e shell/src/pages/orders/[id].tsx:273, :289. |
-| manual | shell/src/components/RemoteFulfilment.tsx:29 | shell | script-loading | Yes | `useRemoteModule<FulfilmentProps>({ url: MF1_BASE_URL + '/remote-modules/bundle.js', moduleName: 'MF1_RemoteModules', componentName: 'Fulfilment' })` (:29-33) carrega o mesmo bundle de `mf-1` e pede o componente `Fulfilment` (mf-1/src/RemoteModules/RemoteModules.ts:10); se o script já está no `head`, o hook reaproveita (shell/src/hooks/useRemoteModule.ts:55-75). |
-| manual | shell/src/components/RemoteFulfilment.tsx:65 | shell | runtime-composition | Yes | `<Fulfilment onFulfil={onFulfil} onTrack={onTrack} />` (:65-68) renderiza no shell o `Fulfilment` de `mf-1`, com callbacks do shell. Usado em shell/src/pages/fulfilment.tsx:30. |
-| manual | shell/src/components/RemoteFulfilmentDetails.tsx:29 | shell | script-loading | Yes | `useRemoteModule<FulfilmentDetailsProps>({ url: MF1_BASE_URL + '/remote-modules/bundle.js', moduleName: 'MF1_RemoteModules', componentName: 'FulfilmentDetails' })` (:29-33) carrega o bundle de `mf-1` e pede o componente `FulfilmentDetails` (mf-1/src/RemoteModules/RemoteModules.ts:10). |
-| manual | shell/src/components/RemoteFulfilmentDetails.tsx:65 | shell | runtime-composition | Yes | `<FulfilmentDetailsComponent orderId={orderId} onStatusChange={onStatusChange} />` (:65-68) renderiza no shell o `FulfilmentDetails` de `mf-1`. Usado em shell/src/pages/orders/[id].tsx:410. |
+| manual | shell/src/components/RemoteHeader.tsx:18 | shell | script-loading | Yes | `useRemoteModule<HeaderProps>({ url: MF1_BASE_URL + "/remote-modules/bundle.js", moduleName: "MF1_RemoteModules", componentName: "Header" })` (:18-22) passes the `mf-1` UMD bundle URL to the loader and requests component `Header` (exported at mf-1/src/RemoteModules/RemoteModules.ts:10); `MF1_BASE_URL` comes from `publicRuntimeConfig` (shell/src/components/RemoteHeader.tsx:8-10; shell/next.config.js:8, default `http://localhost:3001`, port from mf-1/package.json:7). |
+| manual | shell/src/components/RemoteHeader.tsx:37 | shell | runtime-composition | Yes | `<Header appName="Shell App" router={router} onMount={handleMount} />` renders in shell the `Header` from `mf-1` obtained at :14-22; shell passes its own Next `router`, used by the remote for navigation (mf-1/src/RemoteModules/Header.tsx:83-85, :104-106). Used at shell/src/pages/index.tsx:178, shell/src/pages/fulfilment.tsx:29 and shell/src/pages/orders/[id].tsx:273, :289. |
+| manual | shell/src/components/RemoteFulfilment.tsx:29 | shell | script-loading | Yes | `useRemoteModule<FulfilmentProps>({ url: MF1_BASE_URL + '/remote-modules/bundle.js', moduleName: 'MF1_RemoteModules', componentName: 'Fulfilment' })` (:29-33) loads the same `mf-1` bundle and requests component `Fulfilment` (mf-1/src/RemoteModules/RemoteModules.ts:10); if the script is already in the `head`, the hook reuses it (shell/src/hooks/useRemoteModule.ts:55-75). |
+| manual | shell/src/components/RemoteFulfilment.tsx:65 | shell | runtime-composition | Yes | `<Fulfilment onFulfil={onFulfil} onTrack={onTrack} />` (:65-68) renders in shell the `Fulfilment` from `mf-1`, with shell callbacks. Used at shell/src/pages/fulfilment.tsx:30. |
+| manual | shell/src/components/RemoteFulfilmentDetails.tsx:29 | shell | script-loading | Yes | `useRemoteModule<FulfilmentDetailsProps>({ url: MF1_BASE_URL + '/remote-modules/bundle.js', moduleName: 'MF1_RemoteModules', componentName: 'FulfilmentDetails' })` (:29-33) loads the `mf-1` bundle and requests component `FulfilmentDetails` (mf-1/src/RemoteModules/RemoteModules.ts:10). |
+| manual | shell/src/components/RemoteFulfilmentDetails.tsx:65 | shell | runtime-composition | Yes | `<FulfilmentDetailsComponent orderId={orderId} onStatusChange={onStatusChange} />` (:65-68) renders in shell the `FulfilmentDetails` from `mf-1`. Used at shell/src/pages/orders/[id].tsx:410. |
 
-## Resumo
+## Summary
 
-Construções com composição: 7 (script-loading: 4, runtime-composition: 3).
+Constructs participating in composition: 7 (script-loading: 4, runtime-composition: 3).
 
-## Notas
+## Notes
 
-- A única ocorrência `src-cross-unit-communication` está em `mf-1/public/remote-modules/bundle.js`, saída versionada do build Vite (`outDir: "public/remote-modules"`, mf-1/vite.mf.ts:28), e é código do axios.
-- Não há mecanismo explícito de comunicação entre unidades: o shell e o remote trocam dados só por props e callbacks (`router`, `onMount`, `onFulfil`, `onTrack`, `onStatusChange`).
-- `mf-1` também usa os mesmos componentes localmente, por import estático (mf-1/src/pages/index.tsx:3-4, mf-1/src/pages/fulfilment.tsx:3-4); isso é interno à unidade e não vira linha.
+- The only `src-cross-unit-communication` occurrence is in `mf-1/public/remote-modules/bundle.js`, versioned Vite build output (`outDir: "public/remote-modules"`, mf-1/vite.mf.ts:28), and is axios code.
+- There is no explicit communication mechanism between units: shell and remote exchange data only through props and callbacks (`router`, `onMount`, `onFulfil`, `onTrack`, `onStatusChange`).
+- `mf-1` also uses the same components locally through static imports (mf-1/src/pages/index.tsx:3-4, mf-1/src/pages/fulfilment.tsx:3-4); this is internal to the unit and does not become a row.

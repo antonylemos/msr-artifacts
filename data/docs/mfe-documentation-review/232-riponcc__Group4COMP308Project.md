@@ -16,135 +16,57 @@ annotation:
 
 # 232 — riponcc/Group4COMP308Project
 
-## Leitura do repositório
+## Repository overview
 
-A documentação do projeto é o README.md da raiz, em inglês. Ele apresenta um "Municipal Issue
-Management System" de disciplina (COMP308, Centennial College; README.md:259, 271), com três
-microsserviços de backend e três aplicações frontend unidas por Module Federation: um shell host e
-dois módulos, user e issue (README.md:3, 19-27). Os outros três arquivos `documentation` do
-`artifacts.csv`, client/shell-app/README.md, client/user-app/README.md e client/issue-app/README.md,
-são o README padrão do template React + Vite, idênticos entre si (client/shell-app/README.md:1-3) e
-sem afirmação sobre o projeto; não viram linha.
+Project documentation is English root README.md. Presents course "Municipal Issue
+Management System" (COMP308, Centennial College; README.md:259, 271), three backend microservices/three Module Federation frontend applications: shell host, user/issue modules (README.md:3, 19-27). Other three `documentation` files in `artifacts.csv`, client/shell-app/README.md, client/user-app/README.md, client/issue-app/README.md, identical React + Vite template READMEs (client/shell-app/README.md:1-3), without project claims/rows.
 
-No que diz das unidades frontend, o README confere com as revisões anteriores: três aplicações
-React/Vite com `@originjs/vite-plugin-federation`, o shell como host dos remotes `userApp` e
-`issueApp`. Ele não diz como o shell alterna entre as duas (por login, com eventos em `window`);
-isso só aparece nos comentários do código, que viraram linhas (#7 a #10). O único ponto que destoa
-é o comentário que chama de "Gateway" o endpoint consultado pelo shell, que é o auth-service (#6).
+Frontend claims match previous reviews: three React/Vite applications with `@originjs/vite-plugin-federation`, shell hosting `userApp`/`issueApp` remotes. Does not describe switching (login, `window` events), only code comments, rows #7 through #10. Sole discrepancy: comment calls shell-queried endpoint "Gateway", actually auth-service (#6).
 
-As cinco ocorrências `doc-*` (todas `doc-integration-technology`) estão nas linhas 1 a 3 da tabela:
-README.md:3 e :12 na linha 1, README.md:25 e :234 na linha 2, e README.md:41 na linha 3.
+Five `doc-*` occurrences (all `doc-integration-technology`) in table rows 1 through 3: README.md:3 and :12 row 1, README.md:25 and :234 row 2, README.md:41 row 3.
 
-Não viraram linha, no README: a lista de papéis da equipe (README.md:11-15), que descreve tarefas
-das pessoas, inclusive "DevOps: Service orchestration, environment configuration, deployment"
-(README.md:15), sem dizer como as unidades são implantadas; as portas e funções dos microsserviços
-(README.md:19-22, 194-214, 233), que são só de backend; as bibliotecas do frontend (README.md:40-45),
-que não dizem nada sobre as unidades como conjunto; as portas das aplicações (README.md:25-27), um
-detalhe de infraestrutura; a segurança, incluindo "JWT-based authentication across all services" e
-"CORS configuration for frontend access" (README.md:218-222); e as seções de funcionalidades,
-aparência, testes, limitações e planos (README.md:154-190, 224-255). Os blocos de comando de
-instalação, `.env` e execução (README.md:63-66, 69-89, 97-115, 121-149) não viram linha. Eles
-mandam subir os seis processos em terminais separados, o shell em `npm run dev` e a user-app e a
-issue-app em `npm run preview` (README.md:138-148), e abrir `http://localhost:3000` (README.md:152);
-a revisão de build e deploy já os registrou na Leitura dela.
+README exclusions: team roles (README.md:11-15), personal tasks including "DevOps: Service orchestration, environment configuration, deployment" (README.md:15), without unit deployment details; microservice ports/functions (README.md:19-22, 194-214, 233), backend only; frontend libraries (README.md:40-45), no collective-unit properties; application ports (README.md:25-27), infrastructure; security including "JWT-based authentication across all services"/"CORS configuration for frontend access" (README.md:218-222); feature/appearance/test/limitation/plan sections (README.md:154-190, 224-255). Installation/`.env`/run command blocks (README.md:63-66, 69-89, 97-115, 121-149) yield no rows. Instruct six processes/separate terminals, shell `npm run dev`, user-app/issue-app `npm run preview` (README.md:138-148), open `http://localhost:3000` (README.md:152); build and deployment overview already records.
 
-Foram lidos os comentários dos artefatos que as revisões anteriores citam: os três `vite.config.js`,
-os três `package.json` de `client/`, client/shell-app/src/App.jsx e main.jsx, client/user-app/src/App.jsx
-e UserComponent.jsx, client/issue-app/src/App.jsx, main.jsx e components/Header.jsx, e
-server/package.json. Os `package.json` de `client/` não têm `description`, e a de server/package.json
-é vazia (server/package.json:4). Não são arquiteturais: os comentários com o nome do arquivo
-(client/shell-app/vite.config.js:27; client/user-app/vite.config.js:2, que dá o caminho errado
-`user-app/src/vite.config.js`; client/issue-app/vite.config.js:1; client/user-app/src/App.jsx:1;
-client/issue-app/src/App.jsx:2; client/issue-app/src/components/Header.jsx:1); os de porta
-(client/shell-app/vite.config.js:24, dentro da configuração antiga toda comentada de :1-26, e :54;
-client/issue-app/vite.config.js:8); "Initial check from GraphQL" (client/shell-app/src/App.jsx:45),
-um detalhe da autenticação do shell; os de configuração do Apollo Client
-(client/user-app/src/App.jsx:5, 17; client/issue-app/src/App.jsx:43); e os que separam rotas,
-componentes e menus por papel dentro da issue-app (client/issue-app/src/App.jsx:17-38, 63-151, 184;
-client/issue-app/src/components/Header.jsx:59-81) e as mutações da user-app
-(client/user-app/src/UserComponent.jsx:8). Os comentários que repetem afirmações estão nos
-parágrafos das linhas 2 e 6.
+Comments read in previously cited artifacts: three `vite.config.js`, three `package.json` files in `client/`, client/shell-app/src/App.jsx and main.jsx, client/user-app/src/App.jsx and UserComponent.jsx, client/issue-app/src/App.jsx, main.jsx and components/Header.jsx, server/package.json. `package.json` in `client/` lacks `description`, server/package.json empty (server/package.json:4). Non-architectural: filename comments (client/shell-app/vite.config.js:27; client/user-app/vite.config.js:2, wrong `user-app/src/vite.config.js` path; client/issue-app/vite.config.js:1; client/user-app/src/App.jsx:1; client/issue-app/src/App.jsx:2; client/issue-app/src/components/Header.jsx:1); port comments (client/shell-app/vite.config.js:24, inside commented old :1-26 configuration, :54; client/issue-app/vite.config.js:8); "Initial check from GraphQL" (client/shell-app/src/App.jsx:45), shell authentication detail; Apollo Client configuration (client/user-app/src/App.jsx:5, 17; client/issue-app/src/App.jsx:43); role-separated routes/components/menus within issue-app (client/issue-app/src/App.jsx:17-38, 63-151, 184; client/issue-app/src/components/Header.jsx:59-81), user-app mutations (client/user-app/src/UserComponent.jsx:8). Repeating comments in row 2/6 paragraphs.
 
-## Afirmações
+## Claims
 
-| # | Documento | Afirmação | Tema | Corroboração | Evidência |
+| # | Document | Claim | Theme | Corroboration | Evidence |
 |---|---|---|---|---|---|
-| 1 | README.md:3 | "built with microservices architecture and React Module Federation" | composição | corroborada | 3.4.2 (três linhas `@originjs/vite-plugin-federation`, Configurada `Yes`); 3.4.5 #1-#2; 3.4.3 (três microsserviços em `server/microservices/`) |
-| 2 | README.md:24-27 | "Shell App (Port 3000): Main Module Federation host / User App (Port 3001): Authentication module / Issue App (Port 3002): Issue management module" | estrutura | corroborada | 3.4.3 (client/shell-app, client/user-app e client/issue-app `Yes`); 3.4.5 #1-#2; client/shell-app/vite.config.js:36-42 |
-| 3 | README.md:41 | "Vite (Module Federation)" (a federação é feita com o Vite) | composição | corroborada | 3.4.2 (três linhas `@originjs/vite-plugin-federation`); client/shell-app/vite.config.js:30, 36; client/user-app/vite.config.js:5, 10; client/issue-app/vite.config.js:4, 14 |
-| 4 | client/issue-app/vite.config.js:15 | "Unique name for Issue Microfrontend" | composição | corroborada | 3.4.5 #2; client/issue-app/vite.config.js:15; client/shell-app/vite.config.js:37, 41; client/user-app/vite.config.js:11 |
-| 5 | client/issue-app/vite.config.js:18 | "Expose main microfrontend entrypoint" | composição | corroborada | 3.4.5 #2; client/issue-app/vite.config.js:17-18; client/shell-app/src/App.jsx:11 |
-| 6 | client/shell-app/src/App.jsx:13 | "Check logged-in user from Gateway" (o shell consulta o usuário num gateway) | composição | contradita | client/shell-app/src/main.jsx:13-15; server/microservices/auth-service/config/config.js:9; 3.4.3 (server e os três microsserviços) |
-| 7 | client/shell-app/src/App.jsx:30 | "Handle login from UserApp" | composição | corroborada | 3.4.4 (client/shell-app/src/App.jsx:42; client/user-app/src/UserComponent.jsx:56); 3.4.5 #4 |
-| 8 | client/shell-app/src/App.jsx:36 | "Handle logout from other apps" | composição | corroborada | 3.4.4 (client/user-app/src/UserComponent.jsx:74; client/issue-app/src/components/Header.jsx:39); 3.4.5 #3-#4; client/shell-app/src/App.jsx:43 |
-| 9 | client/shell-app/src/App.jsx:63 | "If not logged in → Show User Login App" | composição | corroborada | 3.4.4 (manual client/shell-app/src/App.jsx:64); 3.4.5 #1 |
-| 10 | client/shell-app/src/App.jsx:66 | "After login → Show Issue Management App" | composição | corroborada | 3.4.4 (manual client/shell-app/src/App.jsx:67); 3.4.5 #2 |
+| 1 | README.md:3 | "built with microservices architecture and React Module Federation" | composition | corroborated | 3.4.2 (three rows `@originjs/vite-plugin-federation`, Configured `Yes`); 3.4.5 #1-#2; 3.4.3 (three microservices in `server/microservices/`) |
+| 2 | README.md:24-27 | "Shell App (Port 3000): Main Module Federation host / User App (Port 3001): Authentication module / Issue App (Port 3002): Issue management module" | structure | corroborated | 3.4.3 (client/shell-app, client/user-app and client/issue-app `Yes`); 3.4.5 #1-#2; client/shell-app/vite.config.js:36-42 |
+| 3 | README.md:41 | "Vite (Module Federation)" (federation through Vite) | composition | corroborated | 3.4.2 (three rows `@originjs/vite-plugin-federation`); client/shell-app/vite.config.js:30, 36; client/user-app/vite.config.js:5, 10; client/issue-app/vite.config.js:4, 14 |
+| 4 | client/issue-app/vite.config.js:15 | "Unique name for Issue Microfrontend" | composition | corroborated | 3.4.5 #2; client/issue-app/vite.config.js:15; client/shell-app/vite.config.js:37, 41; client/user-app/vite.config.js:11 |
+| 5 | client/issue-app/vite.config.js:18 | "Expose main microfrontend entrypoint" | composition | corroborated | 3.4.5 #2; client/issue-app/vite.config.js:17-18; client/shell-app/src/App.jsx:11 |
+| 6 | client/shell-app/src/App.jsx:13 | "Check logged-in user from Gateway" (shell queries user through gateway) | composition | contradicted | client/shell-app/src/main.jsx:13-15; server/microservices/auth-service/config/config.js:9; 3.4.3 (server and three microservices) |
+| 7 | client/shell-app/src/App.jsx:30 | "Handle login from UserApp" | composition | corroborated | 3.4.4 (client/shell-app/src/App.jsx:42; client/user-app/src/UserComponent.jsx:56); 3.4.5 #4 |
+| 8 | client/shell-app/src/App.jsx:36 | "Handle logout from other apps" | composition | corroborated | 3.4.4 (client/user-app/src/UserComponent.jsx:74; client/issue-app/src/components/Header.jsx:39); 3.4.5 #3-#4; client/shell-app/src/App.jsx:43 |
+| 9 | client/shell-app/src/App.jsx:63 | "If not logged in → Show User Login App" | composition | corroborated | 3.4.4 (manual client/shell-app/src/App.jsx:64); 3.4.5 #1 |
+| 10 | client/shell-app/src/App.jsx:66 | "After login → Show Issue Management App" | composition | corroborated | 3.4.4 (manual client/shell-app/src/App.jsx:67); 3.4.5 #2 |
 
-## Observações
+## Observations
 
-**1. README.md:3.** A frase de abertura diz que o sistema usa arquitetura de microsserviços e
-"React Module Federation". As três aplicações de `client/` têm `@originjs/vite-plugin-federation`
-configurado (3.4.2), e o shell carrega a user-app e a issue-app por federação (3.4.5 #1-#2). A
-parte dos microsserviços é de backend: são os três serviços de `server/microservices/`, que a
-revisão estrutural marcou como não frontend. "Frontend Development: React Module Federation"
-(README.md:12) repete a afirmação, como papel da equipe.
+**1. README.md:3.** Opening says microservices/"React Module Federation". Three `client/` applications configure `@originjs/vite-plugin-federation` (3.4.2), shell loading user-app/issue-app through federation (3.4.5 #1-#2). Microservices backend-only: three `server/microservices/` services, structural review non-frontend. "Frontend Development: React Module Federation" (README.md:12) repeats as team role.
 
-**2. README.md:24-27.** A lista dá as três aplicações frontend e os papéis: o shell como host de
-Module Federation, a user-app como módulo de autenticação e a issue-app como módulo de gestão de
-ocorrências. É o que a revisão estrutural e a de composição registram: três unidades, com o shell
-declarando os remotes `userApp` e `issueApp` (client/shell-app/vite.config.js:39-42), a user-app
-servindo a tela de login e cadastro e a issue-app a gestão de ocorrências. As portas da lista
-conferem com os scripts (3.4.6), mas não pesam na corroboração. Repetem a afirmação "3 Frontend
-modules with Module Federation" (README.md:234), o comentário "Microfrontends" sobre os dois imports
-remotos do shell, com os papéis "login/register" e "issue reporter" (client/shell-app/src/App.jsx:9-11),
-e "Added Issue App" ao lado do remote `issueApp` (client/shell-app/vite.config.js:41).
+**2. README.md:24-27.** Lists three frontend applications/roles: shell Module Federation host, user-app authentication, issue-app issue management. Structural/composition reviews same: three units, shell declaring `userApp`/`issueApp` (client/shell-app/vite.config.js:39-42), user-app login/registration screen, issue-app issue management. Listed ports match scripts (3.4.6), without judgment weight. Repetitions: "3 Frontend
+modules with Module Federation" (README.md:234), "Microfrontends" over shell remote imports with "login/register"/"issue reporter" roles (client/shell-app/src/App.jsx:9-11), "Added Issue App" next to `issueApp` (client/shell-app/vite.config.js:41).
 
-**3. README.md:41.** Na pilha do frontend, o README põe o Module Federation entre parênteses ao
-lado do Vite. A federação vem de um plugin do Vite, `@originjs/vite-plugin-federation`, importado e
-chamado na configuração de cada aplicação (client/shell-app/vite.config.js:30, 36;
-client/user-app/vite.config.js:5, 10; client/issue-app/vite.config.js:4, 14). O README não nomeia o
-plugin, mas o mecanismo é o mesmo que a revisão de dependências registrou.
+**3. README.md:41.** Frontend stack places Module Federation parenthetically beside Vite. Federation through Vite plugin `@originjs/vite-plugin-federation`, imported/called per application (client/shell-app/vite.config.js:30, 36; client/user-app/vite.config.js:5, 10; client/issue-app/vite.config.js:4, 14). README omits plugin name, same dependency-review mechanism.
 
-**4. client/issue-app/vite.config.js:15.** O comentário diz que `issueApp` é o nome único do
-microfrontend da issue-app. Os três nomes de federação são distintos (`shellApp`, `userApp` e
-`issueApp`; client/shell-app/vite.config.js:37; client/user-app/vite.config.js:11;
-client/issue-app/vite.config.js:15), e o shell usa exatamente `issueApp` para declarar e importar o
-remote (client/shell-app/vite.config.js:41; client/shell-app/src/App.jsx:11).
+**4. client/issue-app/vite.config.js:15.** Comment says `issueApp` unique issue-app microfrontend name. Three distinct federation names (`shellApp`, `userApp`, `issueApp`; client/shell-app/vite.config.js:37; client/user-app/vite.config.js:11; client/issue-app/vite.config.js:15), shell uses exact `issueApp` in remote declaration/import (client/shell-app/vite.config.js:41; client/shell-app/src/App.jsx:11).
 
-**5. client/issue-app/vite.config.js:18.** O comentário diz que a issue-app expõe o seu ponto de
-entrada principal. A entrada exposta é `'./App': './src/App'` (client/issue-app/vite.config.js:17-18),
-e é esse módulo que o shell importa e renderiza depois do login (client/shell-app/src/App.jsx:11, 67;
-3.4.5 #2).
+**5. client/issue-app/vite.config.js:18.** Comment says issue-app exposes main entry. Exposed `'./App': './src/App'` (client/issue-app/vite.config.js:17-18), shell imports/renders after login (client/shell-app/src/App.jsx:11, 67; 3.4.5 #2).
 
-**6. client/shell-app/src/App.jsx:13.** O comentário diz que o shell verifica o usuário logado num
-gateway, e "// Gateway" ao lado do endereço do Apollo Client do shell (client/shell-app/src/main.jsx:14)
-repete a afirmação. O endereço é `http://localhost:4001/graphql` (client/shell-app/src/main.jsx:13-15),
-a porta do auth-service (server/microservices/auth-service/config/config.js:9; README.md:20). O
-snapshot não tem gateway: `server/` tem só o manifesto vazio e os três microsserviços (3.4.3). Há
-sinais de um gateway na porta 4000 que não está no snapshot: um Apollo Client comentado da user-app,
-com o comentário "Set up Apollo Client for the gateway" (client/user-app/src/App.jsx:17-22), a origem
-`http://localhost:4000` no CORS do auth-service (server/microservices/auth-service/auth-microservice.js:160)
-e o esquema montado como subgrafo (server/microservices/auth-service/auth-microservice.js:174). Mas o
-código ativo do shell consulta o auth-service diretamente, e a afirmação é `contradita`.
+**6. client/shell-app/src/App.jsx:13.** Comment says shell checks logged-in user through gateway; "// Gateway" by shell Apollo address (client/shell-app/src/main.jsx:14) repeats. Address `http://localhost:4001/graphql` (client/shell-app/src/main.jsx:13-15), auth-service port (server/microservices/auth-service/config/config.js:9; README.md:20). No snapshot gateway: `server/` only empty manifest/three microservices (3.4.3). Indications of absent port-4000 gateway: commented user-app Apollo Client, "Set up Apollo Client for the gateway" (client/user-app/src/App.jsx:17-22), origin `http://localhost:4000` in auth-service CORS (server/microservices/auth-service/auth-microservice.js:160), subgraph schema (server/microservices/auth-service/auth-microservice.js:174). Active shell code queries auth-service directly, hence `contradicted`.
 
-**7. client/shell-app/src/App.jsx:30.** O comentário está no handler do evento `loginSuccess`, que o
-shell escuta em `window` (client/shell-app/src/App.jsx:31-34, 42) e que a user-app dispara ao
-concluir o login (client/user-app/src/UserComponent.jsx:56). É a relação de comunicação 3.4.5 #4.
+**7. client/shell-app/src/App.jsx:30.** Comment in `loginSuccess` handler, shell listening on `window` (client/shell-app/src/App.jsx:31-34, 42), user-app firing on successful login (client/user-app/src/UserComponent.jsx:56). Communication relationship 3.4.5 #4.
 
-**8. client/shell-app/src/App.jsx:36.** O comentário está no handler do evento `logout`
-(client/shell-app/src/App.jsx:37-40, 43). As "other apps" são as duas unidades: a user-app dispara
-`logout` na mutação de logout (client/user-app/src/UserComponent.jsx:74) e a issue-app pelo
-cabeçalho (client/issue-app/src/components/Header.jsx:39), relações 3.4.5 #4 e #3.
+**8. client/shell-app/src/App.jsx:36.** Comment in `logout` handler (client/shell-app/src/App.jsx:37-40, 43). "other apps" both units: user-app fires `logout` on logout mutation (client/user-app/src/UserComponent.jsx:74), issue-app through header (client/issue-app/src/components/Header.jsx:39), relationships 3.4.5 #4 and #3.
 
-**9. client/shell-app/src/App.jsx:63.** Sem login, o shell renderiza `<UserApp />`
-(client/shell-app/src/App.jsx:64), o `./App` da user-app, que monta o formulário de login e cadastro
-(client/user-app/src/App.jsx:31). Corresponde à linha manual da revisão de código-fonte e à relação
-3.4.5 #1.
+**9. client/shell-app/src/App.jsx:63.** Without login shell renders `<UserApp />` (client/shell-app/src/App.jsx:64), user-app `./App` mounting login/registration form (client/user-app/src/App.jsx:31). Matches source-code manual row, relationship 3.4.5 #1.
 
-**10. client/shell-app/src/App.jsx:66.** Com login, o shell renderiza `<IssueApp>` e passa o usuário
-da query `CurrentUser` (client/shell-app/src/App.jsx:67), o `./App` da issue-app. Corresponde à
-linha manual da revisão de código-fonte e à relação 3.4.5 #2.
+**10. client/shell-app/src/App.jsx:66.** Logged in, shell renders `<IssueApp>`, passing user from query `CurrentUser` (client/shell-app/src/App.jsx:67), issue-app `./App`. Matches source-code manual row, relationship 3.4.5 #2.
 
-## Resumo
+## Summary
 
-Afirmações: 10 (corroborada: 9, parcial: 0, contradita: 1, sem corroboração: 0). Temas: (estrutura: 1, composição: 9).
+Claims: 10 (corroborated: 9, partial: 0, contradicted: 1, uncorroborated: 0). Themes: (structure: 1, composition: 9).

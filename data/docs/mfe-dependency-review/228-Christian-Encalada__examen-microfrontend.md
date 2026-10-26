@@ -15,16 +15,17 @@ annotation:
 
 # 228 — Christian-Encalada/examen-microfrontend
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| alert-dashboard/package.json:27 | dependencies | @module-federation/enhanced | ^0.8.9 | module-federation | Yes | alert-dashboard/rspack.config.ts:5 (`import { ModuleFederationPlugin } from "@module-federation/enhanced/rspack"`); alert-dashboard/rspack.config.ts:81 (`new ModuleFederationPlugin(mfConfig)`); alert-dashboard/module-federation.config.ts:1-8 (`name: "AlertDashboard"`, `filename: "remoteEntry.js"`, `exposes: { "./AlertDashboard": ... }`, importado em alert-dashboard/rspack.config.ts:8); alert-dashboard/package.json:5 (`"build": "cross-env NODE_ENV=production rspack build"`, que usa o `rspack.config.ts` do diretório) |
-| alert-sender/package.json:27 | dependencies | @module-federation/enhanced | ^0.8.9 | module-federation | Yes | alert-sender/rspack.config.ts:5 (`import { ModuleFederationPlugin } from "@module-federation/enhanced/rspack"`); alert-sender/rspack.config.ts:81 (`new ModuleFederationPlugin(mfConfig)`); alert-sender/module-federation.config.ts:1-8 (`name: "AlertSender"`, `filename: "remoteEntry.js"`, `exposes: { "./AlertSender": ... }`, importado em alert-sender/rspack.config.ts:8); alert-sender/package.json:5 (`"build": "cross-env NODE_ENV=production rspack build"`, que usa o `rspack.config.ts` do diretório) |
-| package.json:27 | dependencies | @module-federation/enhanced | ^0.8.9 | module-federation | Yes | rspack.config.ts:5 (`import { ModuleFederationPlugin } from "@module-federation/enhanced/rspack"`); rspack.config.ts:81 (`new ModuleFederationPlugin(mfConfig)`); module-federation.config.ts:1-9 (`name: "appclases"`, `remotes: { AlertSender: ..., AlertDashboard: ... }`, importado em rspack.config.ts:8); package.json:5 (`"build": "cross-env NODE_ENV=production rspack build"`, que usa o `rspack.config.ts` da raiz) |
+| alert-dashboard/package.json:27 | dependencies | @module-federation/enhanced | ^0.8.9 | module-federation | Yes | alert-dashboard/rspack.config.ts:5 (`import { ModuleFederationPlugin } from "@module-federation/enhanced/rspack"`); alert-dashboard/rspack.config.ts:81 (`new ModuleFederationPlugin(mfConfig)`); alert-dashboard/module-federation.config.ts:1-8 (`name: "AlertDashboard"`, `filename: "remoteEntry.js"`, `exposes: { "./AlertDashboard": ... }`, imported in alert-dashboard/rspack.config.ts:8); alert-dashboard/package.json:5 (`"build": "cross-env NODE_ENV=production rspack build"`, which uses the `rspack.config.ts` in the directory) |
+| alert-sender/package.json:27 | dependencies | @module-federation/enhanced | ^0.8.9 | module-federation | Yes | alert-sender/rspack.config.ts:5 (`import { ModuleFederationPlugin } from "@module-federation/enhanced/rspack"`); alert-sender/rspack.config.ts:81 (`new ModuleFederationPlugin(mfConfig)`); alert-sender/module-federation.config.ts:1-8 (`name: "AlertSender"`, `filename: "remoteEntry.js"`, `exposes: { "./AlertSender": ... }`, imported in alert-sender/rspack.config.ts:8); alert-sender/package.json:5 (`"build": "cross-env NODE_ENV=production rspack build"`, which uses the `rspack.config.ts` in the directory) |
+| package.json:27 | dependencies | @module-federation/enhanced | ^0.8.9 | module-federation | Yes | rspack.config.ts:5 (`import { ModuleFederationPlugin } from "@module-federation/enhanced/rspack"`); rspack.config.ts:81 (`new ModuleFederationPlugin(mfConfig)`); module-federation.config.ts:1-9 (`name: "appclases"`, `remotes: { AlertSender: ..., AlertDashboard: ... }`, imported in rspack.config.ts:8); package.json:5 (`"build": "cross-env NODE_ENV=production rspack build"`, which uses the `rspack.config.ts` at the root) |
 
-## Notas
+## Notes
 
-- Cada `package.json` é julgado pelas ocorrências do próprio pacote (`same_package_matches`); as de `other_package_matches` são as mesmas configurações nos outros dois projetos, que têm `package.json` próprio e declaram o pacote cada um.
-- Os `module-federation.config.ts` não importam o pacote; entram na evidência porque são o objeto passado ao `ModuleFederationPlugin` importado do pacote.
-- A busca fora das listas (grep de `module-federation` em `*.ts`, `*.tsx`, `*.js`, `*.json`, sem lockfiles) só achou, além dos configs, `@mf-types/index.d.ts:3`, `:11` e `:19` (`declare module "@module-federation/runtime"` e afins), tipos gerados pela federação, não uso do pacote.
+- Each `package.json` is judged by its own package's occurrences (`same_package_matches`); the `other_package_matches` occurrences are the same configurations in the other two projects, each with its own `package.json` and package declaration.
+- The `module-federation.config.ts` files do not import the package; they are evidence because they are the object passed to the `ModuleFederationPlugin` imported from the package.
+- The search outside the lists (grep for `module-federation` in `*.ts`, `*.tsx`, `*.js`, `*.json`, excluding lockfiles) found, besides the configurations, only `@mf-types/index.d.ts:3`, `:11` and `:19` (`declare module "@module-federation/runtime"` and similar), types generated by federation, rather than package use.
+

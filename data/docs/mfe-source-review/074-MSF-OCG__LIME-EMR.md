@@ -15,22 +15,22 @@ annotation:
 
 # 074 — MSF-OCG/LIME-EMR
 
-## Construções da mineração
+## Mined constructs
 
-Nenhuma ocorrência src-* no matches.csv.
+No src-* occurrences in matches.csv.
 
-## Construções fora da mineração
+## Constructs outside mining
 
-Nenhuma construção adicional.
+No additional constructs.
 
-## Resumo
+## Summary
 
-Construções com composição: 0.
+Constructs participating in composition: 0.
 
-## Notas
+## Notes
 
-- O `matches.csv` tem 37 linhas, nenhuma com `pattern` começando por `src-`: só `ci-workflow-file` (9), `ops-compose-service` (12), `ops-deployment-file` (5), `ops-dockerfile` (2), `doc-import-map-zones` (5), `doc-mfe-term` (3) e `doc-independence` (1).
-- A revisão estrutural julga `No` os dois diretórios candidatos (`.`, pacote de testes Playwright; `docs`, site Docsify), ou seja, 0 aplicações frontend no snapshot. Qualquer linha desta etapa receberia `Unidade: —`.
-- O snapshot tem 450 arquivos fora de `.yarn/` e quase nenhum código de UI: 10 `.ts` (todos em `e2e/`, specs Playwright), 1 `.js` (`playwright.config.js`), 1 `.html` (`docs/index.html`) e 3 `.groovy` em `scripts/`. A busca do passo 4 (`import(`, `React.lazy`, `loadRemote*`, `initFederation`, `registerRemotes`, `System.import`, `customElements`, `registerApplication`, `registerMicroApps`, `<iframe`, `postMessage`, `CustomEvent`, `BroadcastChannel`, `createElement('script')`) não teve nenhuma ocorrência fora de `.yarn/releases/yarn-4.13.0.cjs`, que é o binário do gerenciador de pacotes empacotado no repositório.
-- `docs/index.html:35-40` carrega seis scripts de CDN (`docsify.min.js`, `search.min.js`, quatro componentes do Prism). Não entraram no `matches.csv` porque o regex de `src-html-external-script` exige `https?://` e as URLs são relativas ao protocolo (`//cdn.jsdelivr.net/...`). Não viraram linha manual porque são bibliotecas de terceiros do próprio site de documentação, não o bundle de outra unidade.
-- O mecanismo de composição que a classificação registra (`approaches: [import-maps]`) não aparece em código-fonte neste commit. Toda referência a import map está em configuração ou build: `distro/configs/openmrs/frontend_assembly/spa-assemble-config.json` (42 `frontendModules`), `README.md:1081-1082` e os `pom.xml` dos três sites (`sites/mosul/pom.xml:232-233`, `sites/bunia/pom.xml:330-331`, `sites/matsapha/pom.xml:285-286`), que ligam `scripts/remove-importmap-entries.groovy` ao build. Esse script edita `importmap.json` e `routes.registry.json` em `target/` (`scripts/remove-importmap-entries.groovy:71-100`) e falha o build quando uma rota fica sem entrada no mapa (`:113-122`); é manutenção dos mapas em tempo de build, não carregamento, resolução, montagem ou registro em runtime, e por isso não cabe em nenhum dos tipos do passo 4. Os mapas que ele edita são gerados e não estão no snapshot, e o app-shell que os consome é externo ao repositório.
+- The `matches.csv` has 37 rows, none with `pattern` starting with `src-`: only `ci-workflow-file` (9), `ops-compose-service` (12), `ops-deployment-file` (5), `ops-dockerfile` (2), `doc-import-map-zones` (5), `doc-mfe-term` (3) and `doc-independence` (1).
+- The structural review judges both candidate directories `No` (`.`, a Playwright test package; `docs`, a Docsify site), meaning 0 frontend applications in the snapshot. Any row in this stage would receive `Unit: —`.
+- The snapshot has 450 files outside `.yarn/` and almost no UI code: 10 `.ts` (all in `e2e/`, Playwright specs), 1 `.js` (`playwright.config.js`), 1 `.html` (`docs/index.html`) and 3 `.groovy` in `scripts/`. The step 4 search (`import(`, `React.lazy`, `loadRemote*`, `initFederation`, `registerRemotes`, `System.import`, `customElements`, `registerApplication`, `registerMicroApps`, `<iframe`, `postMessage`, `CustomEvent`, `BroadcastChannel`, `createElement('script')`) had no occurrences outside `.yarn/releases/yarn-4.13.0.cjs`, the package manager binary bundled in the repository.
+- `docs/index.html:35-40` loads six CDN scripts (`docsify.min.js`, `search.min.js`, four Prism components). They were not included in `matches.csv` because the `src-html-external-script` regex requires `https?://` and the URLs are protocol-relative (`//cdn.jsdelivr.net/...`). They did not become manual rows because they are third-party libraries of the documentation site itself rather than another unit’s bundle.
+- The composition mechanism recorded by the classification (`approaches: [import-maps]`) does not appear in source code at this commit. Every import map reference is in configuration or build: `distro/configs/openmrs/frontend_assembly/spa-assemble-config.json` (42 `frontendModules`), `README.md:1081-1082` and the `pom.xml` files of the three sites (`sites/mosul/pom.xml:232-233`, `sites/bunia/pom.xml:330-331`, `sites/matsapha/pom.xml:285-286`), which connect `scripts/remove-importmap-entries.groovy` to the build. This script edits `importmap.json` and `routes.registry.json` in `target/` (`scripts/remove-importmap-entries.groovy:71-100`) and fails the build when a route lacks an entry in the map (`:113-122`); this is build-time map maintenance rather than runtime loading, resolution, mounting or registration, so it does not fit any step 4 type. The maps it edits are generated and absent from the snapshot, and the app-shell consuming them is external to the repository.

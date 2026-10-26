@@ -20,27 +20,28 @@ annotation:
 
 # 253 — jangrohit/micro-front-end
 
-## Leitura do repositório
+## Repository overview
 
-Exemplo de micro-frontends com o Module Federation nativo do webpack 5 (README.md:3). O host é `packages/container`, em React, e o único remote ligado a ele é `packages/marketing`, também em React, com as páginas Landing e Pricing (README.md:10-14). O marketing expõe `./MarketingApp` a partir do seu `src/bootstrap` (packages/marketing/config/webpack.prod.js:19-24), que exporta uma função `mount(el)` que renderiza o `App` do marketing no elemento recebido (packages/marketing/src/bootstrap.js:5-7, 17). O container importa essa função e a chama num componente wrapper (packages/container/src/components/MarketingApp.js:3, 9), renderizado direto no `App` do host, sem rota que o selecione (packages/container/src/App.js:19).
+A micro-frontends example with webpack 5's native Module Federation (README.md:3). The host is `packages/container`, in React, and its only connected remote is `packages/marketing`, also React, with Landing and Pricing pages (README.md:10-14). Marketing exposes `./MarketingApp` from its `src/bootstrap` (packages/marketing/config/webpack.prod.js:19-24), exporting a `mount(el)` function rendering marketing's `App` on the received element (packages/marketing/src/bootstrap.js:5-7, 17). Container imports this function and calls it in a wrapper component (packages/container/src/components/MarketingApp.js:3, 9), rendered directly in the host's `App`, without a selecting route (packages/container/src/App.js:19).
 
-O contrato é só o elemento: o container não passa callbacks nem histórico, e o remote não devolve nada (packages/container/src/components/MarketingApp.js:9). Não há troca de mensagens entre as unidades. Em desenvolvimento, o marketing também se monta sozinho em `#_marketing-dev-root` (packages/marketing/src/bootstrap.js:9-13), o que é montagem isolada da própria unidade, não composição.
+The contract is only the element: container passes neither callbacks nor history, and the remote returns nothing (packages/container/src/components/MarketingApp.js:9). There is no inter-unit message exchange. In development, marketing also mounts itself independently at `#_marketing-dev-root` (packages/marketing/src/bootstrap.js:9-13), an isolated mount of the unit itself, not composition.
 
-No build de produção, cada aplicação publica em `/<app>/latest/` (packages/container/config/webpack.prod.js:10; packages/marketing/config/webpack.prod.js:10), e o container busca o remote num domínio vindo de `PRODUCTION_DOMAIN` (packages/container/config/webpack.prod.js:5, 22). Com os workflows por aplicação indicados na revisão estrutural, isso aponta deploy independente das duas unidades num mesmo domínio.
+In the production build, each application publishes under `/<app>/latest/` (packages/container/config/webpack.prod.js:10; packages/marketing/config/webpack.prod.js:10), and container fetches the remote on a domain from `PRODUCTION_DOMAIN` (packages/container/config/webpack.prod.js:5, 22). Together with the per-application workflows identified in the structural review, this points to independent deployment of both units on the same domain.
 
-`packages/auth` e `packages/dashboard` têm só `package.json` e lockfile; são `No` na revisão estrutural, o container não declara remote para eles (packages/container/config/webpack.prod.js:21-23) e o README diz que não estão ligados ao host (README.md:47-48). Por isso não entram em nenhuma relação.
+`packages/auth` and `packages/dashboard` have only `package.json` and lockfiles; they are `No` in the structural review, container declares no remote for them (packages/container/config/webpack.prod.js:21-23), and the README says they are not connected to the host (README.md:47-48). Hence they enter no relationship.
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | packages/container | packages/marketing | host → remote | origem → destino | module-federation | Yes | Yes | packages/container/config/webpack.prod.js:21-22 (remote `marketing@${domain}/marketing/latest/remoteEntry.js`); packages/container/config/webpack.dev.js:16-17 (remote `marketing@http://localhost:8081/remoteEntry.js`); packages/marketing/config/webpack.prod.js:10, 20-23 (`publicPath: "/marketing/latest/"`, `name: "marketing"`, `filename: "remoteEntry.js"`, expõe `./MarketingApp`); packages/marketing/config/webpack.dev.js:9, 16-19 (porta 8081, `name: "marketing"`, `filename: "remoteEntry.js"`, expõe `./MarketingApp`) | packages/marketing/src/bootstrap.js:17; packages/container/src/components/MarketingApp.js:9; packages/container/src/components/MarketingApp.js:3 |
+| 1 | packages/container | packages/marketing | host → remote | source → target | module-federation | Yes | Yes | packages/container/config/webpack.prod.js:21-22 (remote `marketing@${domain}/marketing/latest/remoteEntry.js`); packages/container/config/webpack.dev.js:16-17 (remote `marketing@http://localhost:8081/remoteEntry.js`); packages/marketing/config/webpack.prod.js:10, 20-23 (`publicPath: "/marketing/latest/"`, `name: "marketing"`, `filename: "remoteEntry.js"`, exposes `./MarketingApp`); packages/marketing/config/webpack.dev.js:9, 16-19 (port 8081, `name: "marketing"`, `filename: "remoteEntry.js"`, exposes `./MarketingApp`) | packages/marketing/src/bootstrap.js:17; packages/container/src/components/MarketingApp.js:9; packages/container/src/components/MarketingApp.js:3 |
 
-## Observações
+## Observations
 
-**1. packages/container → packages/marketing.** O container importa `mount` de `marketing/MarketingApp` (packages/container/src/components/MarketingApp.js:3) e o chama com o `div` do wrapper (packages/container/src/components/MarketingApp.js:9). O destino foi resolvido pelo nome do remote e pelo módulo exposto: `name: "marketing"` e `./MarketingApp` em packages/marketing/config/webpack.prod.js:20-23, com o caminho `/marketing/latest/` igual ao `publicPath` do marketing (packages/marketing/config/webpack.prod.js:10). Em desenvolvimento, a URL `localhost:8081` do remote (packages/container/config/webpack.dev.js:17) bate com a porta do devServer do marketing (packages/marketing/config/webpack.dev.js:9), mas a correspondência vem do nome. A relação é ativa: o wrapper é renderizado em packages/container/src/App.js:19, o `App` é iniciado em packages/container/src/bootstrap.js:5 e o bootstrap é carregado por packages/container/src/index.js:1.
+**1. packages/container → packages/marketing.** Container imports `mount` from `marketing/MarketingApp` (packages/container/src/components/MarketingApp.js:3) and calls it with the wrapper's `div` (packages/container/src/components/MarketingApp.js:9). The target was resolved through remote name and exposed module: `name: "marketing"` and `./MarketingApp` in packages/marketing/config/webpack.prod.js:20-23, with path `/marketing/latest/` equaling marketing's `publicPath` (packages/marketing/config/webpack.prod.js:10). In development, the remote's `localhost:8081` URL (packages/container/config/webpack.dev.js:17) matches marketing's devServer port (packages/marketing/config/webpack.dev.js:9), but the match comes from the name. The relationship is active: the wrapper is rendered in packages/container/src/App.js:19, `App` starts in packages/container/src/bootstrap.js:5 and bootstrap is loaded by packages/container/src/index.js:1.
 
-## Resumo
+## Summary
 
-Relações: 1 (host → remote: 1). Ativas: 1. Destino fora do snapshot: 0.
-Unidades sem relação: nenhuma.
+Relationships: 1 (host → remote: 1). Active: 1. Target outside the snapshot: 0.
+Units without a relationship: none.
+

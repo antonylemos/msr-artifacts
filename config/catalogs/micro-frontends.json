@@ -5,35 +5,35 @@
       "strategy": "terminology",
       "endpoint": "repositories",
       "q": "topic:microfrontend",
-      "rationale": "Busca repositórios que os mantenedores marcaram com o tópico \"microfrontend\". O tópico é uma declaração explícita de que o projeto trata de micro-frontends e serve de sinal para selecionar candidatos (protocolo, seção 3.1, procedimento 1). Cada grafia é consultada à parte porque o GitHub trata tópicos com grafias diferentes como etiquetas distintas."
+      "rationale": "Searches for repositories that maintainers tagged with the \"microfrontend\" topic. The topic is an explicit declaration that the project concerns micro-frontends and serves as a signal for selecting candidates (protocol, section 3.1, procedure 1). Each spelling is queried separately because GitHub treats differently spelled topics as distinct labels."
     },
     {
       "id": "terminology-topic-microfrontends",
       "strategy": "terminology",
       "endpoint": "repositories",
       "q": "topic:microfrontends",
-      "rationale": "Busca repositórios que os mantenedores marcaram com o tópico \"microfrontends\". O tópico é uma declaração explícita de que o projeto trata de micro-frontends e serve de sinal para selecionar candidatos (protocolo, seção 3.1, procedimento 1). Cada grafia é consultada à parte porque o GitHub trata tópicos com grafias diferentes como etiquetas distintas."
+      "rationale": "Searches for repositories that maintainers tagged with the \"microfrontends\" topic. The topic is an explicit declaration that the project concerns micro-frontends and serves as a signal for selecting candidates (protocol, section 3.1, procedure 1). Each spelling is queried separately because GitHub treats differently spelled topics as distinct labels."
     },
     {
       "id": "terminology-topic-micro-frontend",
       "strategy": "terminology",
       "endpoint": "repositories",
       "q": "topic:micro-frontend",
-      "rationale": "Busca repositórios que os mantenedores marcaram com o tópico \"micro-frontend\". O tópico é uma declaração explícita de que o projeto trata de micro-frontends e serve de sinal para selecionar candidatos (protocolo, seção 3.1, procedimento 1). Cada grafia é consultada à parte porque o GitHub trata tópicos com grafias diferentes como etiquetas distintas."
+      "rationale": "Searches for repositories that maintainers tagged with the \"micro-frontend\" topic. The topic is an explicit declaration that the project concerns micro-frontends and serves as a signal for selecting candidates (protocol, section 3.1, procedure 1). Each spelling is queried separately because GitHub treats differently spelled topics as distinct labels."
     },
     {
       "id": "terminology-topic-micro-frontends",
       "strategy": "terminology",
       "endpoint": "repositories",
       "q": "topic:micro-frontends",
-      "rationale": "Busca repositórios que os mantenedores marcaram com o tópico \"micro-frontends\". O tópico é uma declaração explícita de que o projeto trata de micro-frontends e serve de sinal para selecionar candidatos (protocolo, seção 3.1, procedimento 1). Cada grafia é consultada à parte porque o GitHub trata tópicos com grafias diferentes como etiquetas distintas."
+      "rationale": "Searches for repositories that maintainers tagged with the \"micro-frontends\" topic. The topic is an explicit declaration that the project concerns micro-frontends and serves as a signal for selecting candidates (protocol, section 3.1, procedure 1). Each spelling is queried separately because GitHub treats differently spelled topics as distinct labels."
     },
     {
       "id": "terminology-microfrontend-repositories",
       "strategy": "terminology",
       "endpoint": "repositories",
       "q": "microfrontend in:name,description,readme",
-      "rationale": "Busca repositórios que mencionam \"microfrontend\" no nome, na descrição ou no README. A menção é um sinal para selecionar candidatos e não confirma que o projeto implementa micro-frontends. A consulta é dividida por mês de criação, a partir de 2019, para que cada fatia fique abaixo do limite de 1.000 resultados por consulta da busca do GitHub (protocolo, seção 3.1, procedimento 1).",
+      "rationale": "Searches for repositories that mention \"microfrontend\" in their name, description or README. The mention is a signal for selecting candidates and does not confirm that the project implements micro-frontends. The query is partitioned by creation month, starting in 2019, so that each slice stays below the GitHub search limit of 1,000 results per query (protocol, section 3.1, procedure 1).",
       "partition": {
         "by": "created",
         "from": "2019-01-01",
@@ -45,7 +45,7 @@
       "strategy": "terminology",
       "endpoint": "repositories",
       "q": "microfrontends in:name,description,readme",
-      "rationale": "Busca repositórios que mencionam \"microfrontends\" no nome, na descrição ou no README. A menção é um sinal para selecionar candidatos e não confirma que o projeto implementa micro-frontends. A consulta é dividida por mês de criação, a partir de 2019, para que cada fatia fique abaixo do limite de 1.000 resultados por consulta da busca do GitHub (protocolo, seção 3.1, procedimento 1).",
+      "rationale": "Searches for repositories that mention \"microfrontends\" in their name, description or README. The mention is a signal for selecting candidates and does not confirm that the project implements micro-frontends. The query is partitioned by creation month, starting in 2019, so that each slice stays below the GitHub search limit of 1,000 results per query (protocol, section 3.1, procedure 1).",
       "partition": {
         "by": "created",
         "from": "2019-01-01",
@@ -57,7 +57,7 @@
       "strategy": "terminology",
       "endpoint": "repositories",
       "q": "\"micro frontend\" in:name,description,readme",
-      "rationale": "Busca repositórios que mencionam \"micro frontend\" no nome, na descrição ou no README. Na busca do GitHub, essa expressão equivale a \"micro-frontend\", e por isso uma única consulta cobre as duas grafias. A menção é um sinal para selecionar candidatos e não confirma que o projeto implementa micro-frontends. A consulta é dividida por mês de criação, a partir de 2019, para que cada fatia fique abaixo do limite de 1.000 resultados por consulta da busca do GitHub (protocolo, seção 3.1, procedimento 1).",
+      "rationale": "Searches for repositories that mention \"micro frontend\" in their name, description or README. In GitHub search, this expression is equivalent to \"micro-frontend\", so a single query covers both spellings. The mention is a signal for selecting candidates and does not confirm that the project implements micro-frontends. The query is partitioned by creation month, starting in 2019, so that each slice stays below the GitHub search limit of 1,000 results per query (protocol, section 3.1, procedure 1).",
       "partition": {
         "by": "created",
         "from": "2019-01-01",
@@ -69,7 +69,7 @@
       "strategy": "terminology",
       "endpoint": "repositories",
       "q": "\"micro frontends\" in:name,description,readme",
-      "rationale": "Busca repositórios que mencionam \"micro frontends\" no nome, na descrição ou no README. Na busca do GitHub, essa expressão equivale a \"micro-frontends\", e por isso uma única consulta cobre as duas grafias. A menção é um sinal para selecionar candidatos e não confirma que o projeto implementa micro-frontends. A consulta é dividida por mês de criação, a partir de 2019, para que cada fatia fique abaixo do limite de 1.000 resultados por consulta da busca do GitHub (protocolo, seção 3.1, procedimento 1).",
+      "rationale": "Searches for repositories that mention \"micro frontends\" in their name, description or README. In GitHub search, this expression is equivalent to \"micro-frontends\", so a single query covers both spellings. The mention is a signal for selecting candidates and does not confirm that the project implements micro-frontends. The query is partitioned by creation month, starting in 2019, so that each slice stays below the GitHub search limit of 1,000 results per query (protocol, section 3.1, procedure 1).",
       "partition": {
         "by": "created",
         "from": "2019-01-01",
@@ -81,21 +81,21 @@
       "strategy": "technology",
       "endpoint": "repositories",
       "q": "topic:module-federation",
-      "rationale": "Busca repositórios que os mantenedores marcaram com o tópico \"module-federation\". O tópico indica o uso de uma tecnologia de composição, mesmo quando o projeto não usa o termo micro-frontend (protocolo, seção 3.1, procedimento 2)."
+      "rationale": "Searches for repositories that maintainers tagged with the \"module-federation\" topic. The topic indicates the use of a composition technology, even when the project does not use the term micro-frontend (protocol, section 3.1, procedure 2)."
     },
     {
       "id": "technology-topic-single-spa",
       "strategy": "technology",
       "endpoint": "repositories",
       "q": "topic:single-spa",
-      "rationale": "Busca repositórios que os mantenedores marcaram com o tópico \"single-spa\". O tópico indica o uso de uma tecnologia de composição, mesmo quando o projeto não usa o termo micro-frontend (protocolo, seção 3.1, procedimento 2)."
+      "rationale": "Searches for repositories that maintainers tagged with the \"single-spa\" topic. The topic indicates the use of a composition technology, even when the project does not use the term micro-frontend (protocol, section 3.1, procedure 2)."
     },
     {
       "id": "technology-module-federation-repositories",
       "strategy": "technology",
       "endpoint": "repositories",
       "q": "\"module federation\" in:name,description,readme",
-      "rationale": "Busca repositórios que mencionam \"module federation\" no nome, na descrição ou no README. O sinal é a menção à tecnologia, que independe do termo micro-frontend. A consulta é dividida por mês de criação, a partir de 2019, para que cada fatia fique abaixo do limite de 1.000 resultados por consulta da busca do GitHub (protocolo, seção 3.1, procedimento 2).",
+      "rationale": "Searches for repositories that mention \"module federation\" in their name, description or README. The signal is the mention of the technology, independently of the term micro-frontend. The query is partitioned by creation month, starting in 2019, so that each slice stays below the GitHub search limit of 1,000 results per query (protocol, section 3.1, procedure 2).",
       "partition": {
         "by": "created",
         "from": "2019-01-01",
@@ -107,7 +107,7 @@
       "strategy": "technology",
       "endpoint": "repositories",
       "q": "\"single-spa\" in:name,description,readme",
-      "rationale": "Busca repositórios que mencionam \"single-spa\" no nome, na descrição ou no README. O sinal é a menção à tecnologia. As aspas impedem que a busca separe o termo no hífen. A consulta é dividida por trimestre de criação, a partir de 2019, para que cada fatia fique abaixo do limite de 1.000 resultados por consulta da busca do GitHub (protocolo, seção 3.1, procedimento 2).",
+      "rationale": "Searches for repositories that mention \"single-spa\" in their name, description or README. The signal is the mention of the technology. Quotation marks prevent the search from splitting the term at the hyphen. The query is partitioned by creation quarter, starting in 2019, so that each slice stays below the GitHub search limit of 1,000 results per query (protocol, section 3.1, procedure 2).",
       "partition": {
         "by": "created",
         "from": "2019-01-01",
@@ -119,21 +119,21 @@
       "strategy": "technology",
       "endpoint": "repositories",
       "q": "\"web components\" \"micro frontends\" in:readme",
-      "rationale": "Busca READMEs que mencionam \"web components\" junto com \"micro frontends\". Web Components é uma API nativa do navegador e não deixa um artefato que indique, por si só, a composição de aplicações. Por isso a consulta exige que o termo apareça junto com micro-frontends, o que exclui as bibliotecas de componentes."
+      "rationale": "Searches for READMEs that mention \"web components\" together with \"micro frontends\". Web Components is a native browser API and leaves no artifact that, on its own, indicates application composition. The query therefore requires the term to appear together with micro-frontends, which excludes component libraries."
     },
     {
       "id": "technology-web-components-microfrontends-repositories",
       "strategy": "technology",
       "endpoint": "repositories",
       "q": "\"web components\" microfrontends in:readme",
-      "rationale": "Busca READMEs que mencionam \"web components\" junto com \"microfrontends\", sem espaço. É a variante da consulta anterior para a outra grafia, porque a busca trata \"microfrontends\" e \"micro frontends\" como termos distintos."
+      "rationale": "Searches for READMEs that mention \"web components\" together with \"microfrontends\", without a space. This is the previous query's variant for the other spelling, because the search treats \"microfrontends\" and \"micro frontends\" as distinct terms."
     },
     {
       "id": "technology-module-federation-package-code",
       "strategy": "technology",
       "endpoint": "code",
       "q": "\"@module-federation\" filename:package.json",
-      "rationale": "Busca arquivos package.json que declaram dependências do escopo \"@module-federation\". Uma dependência declarada de Module Federation é sinal da tecnologia, independentemente do uso do termo micro-frontend (protocolo, seção 3.1, procedimento 2). A consulta é dividida por faixas de tamanho de arquivo para que cada faixa fique abaixo do limite de 1.000 resultados por consulta da busca do GitHub.",
+      "rationale": "Searches for package.json files declaring dependencies in the \"@module-federation\" scope. A declared Module Federation dependency is a technology signal, regardless of the use of the term micro-frontend (protocol, section 3.1, procedure 2). The query is partitioned by file-size ranges so that each range stays below the GitHub search limit of 1,000 results per query.",
       "partition": {
         "by": "size",
         "bounds": [
@@ -147,7 +147,7 @@
       "strategy": "technology",
       "endpoint": "code",
       "q": "\"@originjs/vite-plugin-federation\" filename:package.json",
-      "rationale": "Busca arquivos package.json que declaram o pacote \"@originjs/vite-plugin-federation\", o plugin de federação de módulos para Vite. É a dependência que indica Module Federation em projetos Vite (protocolo, seção 3.1, procedimento 2). A consulta é dividida por faixas de tamanho de arquivo para que cada faixa fique abaixo do limite de 1.000 resultados por consulta da busca do GitHub.",
+      "rationale": "Searches for package.json files declaring the \"@originjs/vite-plugin-federation\" package, the module federation plugin for Vite. This dependency indicates Module Federation in Vite projects (protocol, section 3.1, procedure 2). The query is partitioned by file-size ranges so that each range stays below the GitHub search limit of 1,000 results per query.",
       "partition": {
         "by": "size",
         "bounds": [
@@ -161,7 +161,7 @@
       "strategy": "technology",
       "endpoint": "code",
       "q": "\"@angular-architects/module-federation\" filename:package.json",
-      "rationale": "Busca arquivos package.json que declaram o pacote \"@angular-architects/module-federation\", a integração de Module Federation com Angular. É a dependência que indica Module Federation em projetos Angular (protocolo, seção 3.1, procedimento 2). A consulta é dividida por faixas de tamanho de arquivo para que cada faixa fique abaixo do limite de 1.000 resultados por consulta da busca do GitHub.",
+      "rationale": "Searches for package.json files declaring the \"@angular-architects/module-federation\" package, the Module Federation integration for Angular. This dependency indicates Module Federation in Angular projects (protocol, section 3.1, procedure 2). The query is partitioned by file-size ranges so that each range stays below the GitHub search limit of 1,000 results per query.",
       "partition": {
         "by": "size",
         "bounds": [
@@ -175,14 +175,14 @@
       "strategy": "technology",
       "endpoint": "code",
       "q": "\"@angular-architects/native-federation\" filename:package.json",
-      "rationale": "Busca arquivos package.json que declaram o pacote \"@angular-architects/native-federation\". Native Federation é uma abordagem adicional de composição admitida pelo protocolo, e a dependência declarada é o sinal procurado."
+      "rationale": "Searches for package.json files declaring the \"@angular-architects/native-federation\" package. Native Federation is an additional composition approach allowed by the protocol, and the declared dependency is the signal sought."
     },
     {
       "id": "technology-single-spa-package-code",
       "strategy": "technology",
       "endpoint": "code",
       "q": "\"single-spa\" filename:package.json",
-      "rationale": "Busca arquivos package.json que mencionam \"single-spa\". Uma dependência declarada de single-spa é sinal da tecnologia (protocolo, seção 3.1, procedimento 2). A consulta é dividida por faixas de tamanho de arquivo para que cada faixa fique abaixo do limite de 1.000 resultados por consulta da busca do GitHub.",
+      "rationale": "Searches for package.json files mentioning \"single-spa\". A declared single-spa dependency is a technology signal (protocol, section 3.1, procedure 2). The query is partitioned by file-size ranges so that each range stays below the GitHub search limit of 1,000 results per query.",
       "partition": {
         "by": "size",
         "bounds": [
@@ -196,7 +196,7 @@
       "strategy": "technology",
       "endpoint": "code",
       "q": "ModuleFederationPlugin remotes extension:js",
-      "rationale": "Busca arquivos JavaScript que contêm \"ModuleFederationPlugin\" e \"remotes\". Uma configuração que declara remotes é evidência de composição, e não apenas da presença de uma dependência. A consulta é dividida por faixas de tamanho de arquivo para que cada faixa fique abaixo do limite de 1.000 resultados por consulta da busca do GitHub.",
+      "rationale": "Searches for JavaScript files containing \"ModuleFederationPlugin\" and \"remotes\". A configuration declaring remotes is evidence of composition, not merely of a dependency's presence. The query is partitioned by file-size ranges so that each range stays below the GitHub search limit of 1,000 results per query.",
       "partition": {
         "by": "size",
         "bounds": [
@@ -210,7 +210,7 @@
       "strategy": "technology",
       "endpoint": "code",
       "q": "ModuleFederationPlugin remotes extension:ts",
-      "rationale": "Busca arquivos TypeScript que contêm \"ModuleFederationPlugin\" e \"remotes\". É a mesma consulta das configurações em JavaScript, aplicada aos arquivos em TypeScript. A consulta é dividida por faixas de tamanho de arquivo para que cada faixa fique abaixo do limite de 1.000 resultados por consulta da busca do GitHub.",
+      "rationale": "Searches for TypeScript files containing \"ModuleFederationPlugin\" and \"remotes\". This is the same query used for JavaScript configurations, applied to TypeScript files. The query is partitioned by file-size ranges so that each range stays below the GitHub search limit of 1,000 results per query.",
       "partition": {
         "by": "size",
         "bounds": [
@@ -224,7 +224,7 @@
       "strategy": "technology",
       "endpoint": "code",
       "q": "registerApplication singleSpa",
-      "rationale": "Busca arquivos de código que contêm \"registerApplication\" e \"singleSpa\". O registro de aplicações no single-spa é evidência de composição. A consulta é dividida por faixas de tamanho de arquivo para que cada faixa fique abaixo do limite de 1.000 resultados por consulta da busca do GitHub.",
+      "rationale": "Searches for code files containing \"registerApplication\" and \"singleSpa\". Application registration in single-spa is evidence of composition. The query is partitioned by file-size ranges so that each range stays below the GitHub search limit of 1,000 results per query.",
       "partition": {
         "by": "size",
         "bounds": [0, 1000, 2000, 3000, 4000, 6000, 10000]
@@ -235,28 +235,28 @@
       "strategy": "technology",
       "endpoint": "code",
       "q": "customElements.define registerApplication",
-      "rationale": "Busca arquivos de código que contêm \"customElements.define\" e \"registerApplication\". O sinal procurado é o de custom elements registrados como aplicações, que pode indicar uma combinação de Web Components e single-spa."
+      "rationale": "Searches for code files containing \"customElements.define\" and \"registerApplication\". The signal sought is custom elements registered as applications, which may indicate a combination of Web Components and single-spa."
     },
     {
       "id": "broader-frontend-composition",
       "strategy": "broader",
       "endpoint": "repositories",
       "q": "\"frontend composition\" in:name,description,readme",
-      "rationale": "Busca repositórios que mencionam \"frontend composition\" no nome, na descrição ou no README. É um termo mais amplo que micro-frontend, incluído para ampliar a cobertura da descoberta (protocolo, seção 3.1, procedimento 3)."
+      "rationale": "Searches for repositories that mention \"frontend composition\" in their name, description or README. This is a broader term than micro-frontend, included to expand discovery coverage (protocol, section 3.1, procedure 3)."
     },
     {
       "id": "broader-frontend-decomposition",
       "strategy": "broader",
       "endpoint": "repositories",
       "q": "\"frontend decomposition\" in:name,description,readme",
-      "rationale": "Busca repositórios que mencionam \"frontend decomposition\" no nome, na descrição ou no README. É um termo mais amplo que micro-frontend, incluído para ampliar a cobertura da descoberta (protocolo, seção 3.1, procedimento 3)."
+      "rationale": "Searches for repositories that mention \"frontend decomposition\" in their name, description or README. This is a broader term than micro-frontend, included to expand discovery coverage (protocol, section 3.1, procedure 3)."
     },
     {
       "id": "broader-frontend-orchestration",
       "strategy": "broader",
       "endpoint": "repositories",
       "q": "\"frontend orchestration\" in:name,description,readme",
-      "rationale": "Busca repositórios que mencionam \"frontend orchestration\" no nome, na descrição ou no README. É um termo mais amplo que micro-frontend, incluído para ampliar a cobertura da descoberta (protocolo, seção 3.1, procedimento 3). A consulta é dividida por trimestre de criação, a partir de 2019, para que cada fatia fique abaixo do limite de 1.000 resultados por consulta da busca do GitHub.",
+      "rationale": "Searches for repositories that mention \"frontend orchestration\" in their name, description or README. This is a broader term than micro-frontend, included to expand discovery coverage (protocol, section 3.1, procedure 3). The query is partitioned by creation quarter, starting in 2019, so that each slice stays below the GitHub search limit of 1,000 results per query.",
       "partition": {
         "by": "created",
         "from": "2019-01-01",
@@ -268,14 +268,14 @@
       "strategy": "broader",
       "endpoint": "repositories",
       "q": "\"federated modules\" in:name,description,readme",
-      "rationale": "Busca repositórios que mencionam \"federated modules\" no nome, na descrição ou no README. É um termo mais amplo que Module Federation, incluído para ampliar a cobertura da descoberta (protocolo, seção 3.1, procedimento 3)."
+      "rationale": "Searches for repositories that mention \"federated modules\" in their name, description or README. This is a broader term than Module Federation, included to expand discovery coverage (protocol, section 3.1, procedure 3)."
     },
     {
       "id": "broader-micro-apps",
       "strategy": "broader",
       "endpoint": "repositories",
       "q": "\"micro apps\" frontend in:name,description,readme",
-      "rationale": "Busca repositórios que mencionam \"micro apps\" e \"frontend\" no nome, na descrição ou no README. Micro-aplicações de frontend são um termo associado a micro-frontends, citado na seção 3.4.7 do protocolo. A consulta é dividida por trimestre de criação, a partir de 2019, para que cada fatia fique abaixo do limite de 1.000 resultados por consulta da busca do GitHub.",
+      "rationale": "Searches for repositories that mention \"micro apps\" and \"frontend\" in their name, description or README. Frontend micro-applications are a term associated with micro-frontends, cited in protocol section 3.4.7. The query is partitioned by creation quarter, starting in 2019, so that each slice stays below the GitHub search limit of 1,000 results per query.",
       "partition": {
         "by": "created",
         "from": "2019-01-01",

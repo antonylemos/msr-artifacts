@@ -15,25 +15,25 @@ annotation:
 
 # 275 — waelbaraka/GitHub-HelpDesk-DashBoard-main
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-remote-import | Frontend/src/components/layouts/DashboardLayout.jsx:144 | Frontend | dynamic-loading | Yes | `React.lazy` com `import('remote_app/WhatsAppChannelSettingsPage')` carrega a página exposta pela unidade whatsapp-module-frontend (`remote_app` em Frontend/vite.config.js:20, `name: 'remote_app'` e `exposes` em whatsapp-module-frontend/vite.config.js:13-19). Ativa: renderizada pela rota em Frontend/src/components/layouts/DashboardLayout.jsx:385; DashboardLayout é a rota `/*` em Frontend/src/App.jsx:48, e App é renderizado em Frontend/src/main.jsx:30. |
+| src-remote-import | Frontend/src/components/layouts/DashboardLayout.jsx:144 | Frontend | dynamic-loading | Yes | `React.lazy` with `import('remote_app/WhatsAppChannelSettingsPage')` loads the page exposed by unit whatsapp-module-frontend (`remote_app` at Frontend/vite.config.js:20, `name: 'remote_app'` and `exposes` at whatsapp-module-frontend/vite.config.js:13-19). Active: rendered by the route at Frontend/src/components/layouts/DashboardLayout.jsx:385; DashboardLayout is route `/*` at Frontend/src/App.jsx:48, and App is rendered at Frontend/src/main.jsx:30. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | Frontend/src/components/layouts/DashboardLayout.jsx:385 | Frontend | runtime-composition | Yes | O element da rota `/integrations/whatsapp` renderiza `RemoteWhatsAppSettingsPage`, resolvido da unidade whatsapp-module-frontend em Frontend/src/components/layouts/DashboardLayout.jsx:144, dentro de `Suspense`/`Routes` (Frontend/src/components/layouts/DashboardLayout.jsx:356-357). O host passa `apiClient={platformApi}` e `useAuthStoreHook={useAuthStore}` (importados em Frontend/src/components/layouts/DashboardLayout.jsx:65 e :69), recebidos em whatsapp-module-frontend/src/pages/WhatsAppChannelSettingsPage.jsx:196. |
+| manual | Frontend/src/components/layouts/DashboardLayout.jsx:385 | Frontend | runtime-composition | Yes | The element of route `/integrations/whatsapp` renders `RemoteWhatsAppSettingsPage`, resolved from unit whatsapp-module-frontend at Frontend/src/components/layouts/DashboardLayout.jsx:144, inside `Suspense`/`Routes` (Frontend/src/components/layouts/DashboardLayout.jsx:356-357). The host passes `apiClient={platformApi}` and `useAuthStoreHook={useAuthStore}` (imported at Frontend/src/components/layouts/DashboardLayout.jsx:65 and :69), received at whatsapp-module-frontend/src/pages/WhatsAppChannelSettingsPage.jsx:196. |
 
-## Resumo
+## Summary
 
-Construções com composição: 2 (dynamic-loading: 1, runtime-composition: 1).
+Constructs participating in composition: 2 (dynamic-loading: 1, runtime-composition: 1).
 
-## Notas
+## Notes
 
-- `Frontend/src/modules/moduleLoader.js:2` define `loadRemoteComponent`, mas é um placeholder que só devolve um componente fictício (Frontend/src/modules/moduleLoader.js:20-32) e não é importado por nenhum arquivo de `Frontend/src`; o `FEDERATION_REMOTES_CONFIG` com as URLs de `remoteEntry.js` (Frontend/src/modules/moduleLoader.js:8-18) não é usado. Não virou linha.
-- O carregamento genérico de remotos por módulo instalado está comentado em Frontend/src/components/layouts/DashboardLayout.jsx:410; as rotas dinâmicas renderizam só `GenericPage` (Frontend/src/components/layouts/DashboardLayout.jsx:405, :414).
-- O remoto declara o host como remote (`platform_host` em whatsapp-module-frontend/vite.config.js:28), mas os imports de `platform_host/authStore` e `platform_host/apiClient` estão comentados em whatsapp-module-frontend/src/components/Button.jsx:5-7; o remoto recebe API e store do host por props. Nenhum consumo de módulo do host no código do remoto.
-- Os demais `lazy(() => import(...))` do host (Frontend/src/App.jsx:8-9, Frontend/src/components/layouts/DashboardLayout.jsx:123-143 e :145) carregam páginas locais da própria unidade e não estão no matches.csv.
+- `Frontend/src/modules/moduleLoader.js:2` defines `loadRemoteComponent`, but is a placeholder returning only a dummy component (Frontend/src/modules/moduleLoader.js:20-32) and is not imported by any `Frontend/src` file; `FEDERATION_REMOTES_CONFIG` with the `remoteEntry.js` URLs (Frontend/src/modules/moduleLoader.js:8-18) is unused. It did not become a row.
+- Generic remote loading by installed module is commented out at Frontend/src/components/layouts/DashboardLayout.jsx:410; dynamic routes render only `GenericPage` (Frontend/src/components/layouts/DashboardLayout.jsx:405, :414).
+- The remote declares the host as a remote (`platform_host` at whatsapp-module-frontend/vite.config.js:28), but `platform_host/authStore` and `platform_host/apiClient` imports are commented out at whatsapp-module-frontend/src/components/Button.jsx:5-7; the remote receives the host API and store through props. No consumption of a host module in remote code.
+- The host’s other `lazy(() => import(...))` calls (Frontend/src/App.jsx:8-9, Frontend/src/components/layouts/DashboardLayout.jsx:123-143 and :145) load local pages of the unit itself and are not in matches.csv.

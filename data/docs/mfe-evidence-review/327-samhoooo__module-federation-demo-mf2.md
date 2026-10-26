@@ -19,180 +19,180 @@ annotation:
 
 # 327 — samhoooo/module-federation-demo-mf2
 
-## Leitura do repositório
+## Repository overview
 
-A cadeia parte das dependências de Module Federation (#1–#2), passa pela exposição do cabeçalho em HeaderApp (#3) e pela configuração do consumidor HomeApp por manifesto (#4), chegando ao carregamento e à renderização no host (#6–#7). As duas unidades têm entradas e builds próprios (#8–#9, #11–#12). A correspondência do nome remoto e do módulo exposto sustenta uma relação ativa home-app → header-app (#10), num repositório com duas aplicações React/Rspack.
+Chain starts with Module Federation dependencies (#1–#2), passes through HeaderApp header exposure (#3) and manifest-based HomeApp consumer configuration (#4), reaching host loading/rendering (#6–#7). Both units have own entries/builds (#8–#9, #11–#12). Matching remote name/exposed module supports active home-app → header-app relationship (#10), in repository with two React/Rspack applications.
 
-O import em declaração gerada (#5) é um sinal que não carrega código em runtime. A documentação descreve os papéis das unidades, a composição e a tipagem entre builds (#13–#21), mas a afirmação de build/deploy separado só é corroborada na parte do build (#22). Deploy independente não foi observado (#11–#12). O histórico esclarece que essa afirmação e as configurações de desenvolvimento coexistem desde o primeiro commit, sem um estágio de deploy abandonado registrado (#23); publicação externa e intenção futura permanecem fora do que ele esclarece.
+Generated-declaration import (#5) does not load runtime code. Documentation describes unit roles, composition and cross-build typing (#13–#21), but separate build/deployment claim corroborated only for build (#22). Independent deployment unobserved (#11–#12). History clarifies claim/development configurations coexist since first commit without recorded abandoned deployment stage (#23); external publication/future intent outside what history clarifies.
 
-## Observações
+## Observations
 
 ### 1. header-app/package.json:15
 
-**Observação:** O manifesto de header-app declara `@module-federation/enhanced` em devDependencies, versão `^2.8.2`.
+**Observation:** Manifest of header-app declares `@module-federation/enhanced` in devDependencies, version `^2.8.2`.
 
-**Interpretação:** É um sinal tecnológico isolado de Module Federation; a configuração efetiva está em #3.
+**Interpretation:** Isolated Module Federation technology signal; effective configuration in #3.
 
 ### 2. home-app/package.json:15
 
-**Observação:** O manifesto de home-app declara `@module-federation/enhanced` em devDependencies, versão `^2.8.2`.
+**Observation:** Manifest of home-app declares `@module-federation/enhanced` in devDependencies, version `^2.8.2`.
 
-**Interpretação:** É um sinal tecnológico isolado de Module Federation; a configuração efetiva está em #4.
+**Interpretation:** Isolated Module Federation technology signal; effective configuration in #4.
 
 ### 3. header-app/rspack.config.js:57-75
 
-**Observação:** O `ModuleFederationPlugin` configura `name: "HeaderApp"`, `filename: "remoteEntry.js"`, exposição `./Header` a partir de `./src/App`, `dts: true` e React/ReactDOM compartilhados como singletons.
+**Observation:** `ModuleFederationPlugin` configures `name: "HeaderApp"`, `filename: "remoteEntry.js"`, exposure `./Header` from `./src/App`, `dts: true` and React/ReactDOM shared as singletons.
 
-**Interpretação:** Configura a oferta de um módulo de UI e de tipos por uma unidade, sem nomear um consumidor.
+**Interpretation:** Configures UI module/type offer by unit without naming consumer.
 
 ### 4. home-app/rspack.config.js:46-66
 
-**Observação:** O `ModuleFederationPlugin` configura `name: "HomeApp"`, remote `HeaderApp` em `HeaderApp@http://localhost:4001/mf-manifest.json`, `dts: true` e React/ReactDOM compartilhados como singletons.
+**Observation:** `ModuleFederationPlugin` configures `name: "HomeApp"`, remote `HeaderApp` at `HeaderApp@http://localhost:4001/mf-manifest.json`, `dts: true` and React/ReactDOM shared as singletons.
 
-**Interpretação:** Liga o host HomeApp à unidade remota HeaderApp por manifesto, configurando o consumo de código e tipos.
+**Interpretation:** Links host HomeApp to remote HeaderApp through manifest, configuring code/type consumption.
 
 ### 5. home-app/@mf-types/HeaderApp/apis.d.ts:3; home-app/tsconfig.json:15-17; home-app/@mf-types/index.d.ts:1-22
 
-**Observação:** A declaração gerada usa `typeof import('HeaderApp/Header')` num tipo condicional. O tsconfig resolve `HeaderApp/*` para as declarações locais de `@mf-types`.
+**Observation:** Generated declaration uses `typeof import('HeaderApp/Header')` in conditional type. tsconfig resolves `HeaderApp/*` to local `@mf-types` declarations.
 
-**Interpretação:** A sintaxe de import remoto neste arquivo é tipagem, não carregamento em runtime; a 3.4.4 registra Composição No.
+**Interpretation:** Remote-import syntax in file is typing rather than runtime loading; 3.4.4 records Composition No.
 
 ### 6. home-app/src/App.tsx:13; home-app/rspack.config.js:51-53; header-app/rspack.config.js:60-62
 
-**Observação:** `lazy(() => import('HeaderApp/Header'))` nomeia o módulo remoto. O host resolve HeaderApp pelo manifesto e o remote expõe `./Header` a partir de `./src/App`.
+**Observation:** `lazy(() => import('HeaderApp/Header'))` names remote module. Host resolves HeaderApp through manifest; remote exposes `./Header` from `./src/App`.
 
-**Interpretação:** O carregamento nomeia o destino da composição e conecta o host ao módulo de UI de header-app.
+**Interpretation:** Loading names composition target/connects host to header-app UI module.
 
 ### 7. home-app/src/App.tsx:11-20; header-app/src/App.tsx:14-20
 
-**Observação:** Dentro de Suspense, o host renderiza `<Header title="Header (MF2)" variant={HeaderVariant.Light} />`. Header vem do lazy e HeaderVariant do import estático de `HeaderApp/Header`.
+**Observation:** Inside Suspense, host renders `<Header title="Header (MF2)" variant={HeaderVariant.Light} />`. Header from lazy; HeaderVariant from static import of `HeaderApp/Header`.
 
-**Interpretação:** Integra o cabeçalho remoto à página por props; a renderização usa o componente preparado pelo carregamento, sem nomear diretamente o destino na tag.
+**Interpretation:** Integrates remote header into page through props; rendering uses load-prepared component without directly naming target in tag.
 
 ### 8. header-app/; header-app/rspack.config.js:7; header-app/src/entry.ts:1; header-app/src/index.tsx:11-16; header-app/rspack.config.js:54-56; header-app/package.json:11
 
-**Observação:** O diretório header-app tem manifesto, entrada própria por entry.ts e index.tsx, template HTML e configuração Rspack próprios; o script de build é `rspack build`.
+**Observation:** Directory header-app has own manifest, entry through entry.ts and index.tsx, HTML template/Rspack configuration; build script `rspack build`.
 
-**Interpretação:** Confirma o limite de uma unidade frontend, o remote HeaderApp, que também renderiza sua própria página.
+**Interpretation:** Confirms frontend unit boundary, remote HeaderApp also rendering own page.
 
 ### 9. home-app/; home-app/rspack.config.js:6; home-app/src/entry.ts:1; home-app/src/index.tsx:11-16; home-app/rspack.config.js:43-45; home-app/package.json:11
 
-**Observação:** O diretório home-app tem manifesto, entrada própria por entry.ts e index.tsx, template HTML e configuração Rspack próprios; o script de build é `rspack build`.
+**Observation:** Directory home-app has own manifest, entry through entry.ts and index.tsx, HTML template/Rspack configuration; build script `rspack build`.
 
-**Interpretação:** Confirma o limite de outra unidade frontend, o host HomeApp.
+**Interpretation:** Confirms frontend unit boundary, host HomeApp.
 
 ### 10. home-app/src/App.tsx:13; home-app/src/App.tsx:19; home-app/rspack.config.js:51-53; header-app/rspack.config.js:58-62
 
-**Observação:** home-app declara HeaderApp pelo manifesto, importa `HeaderApp/Header` e renderiza Header. O nome HeaderApp e a exposição `./Header` correspondem à configuração de header-app.
+**Observation:** home-app declares HeaderApp through manifest, imports `HeaderApp/Header`, renders Header. HeaderApp name/exposure `./Header` match header-app configuration.
 
-**Interpretação:** A relação host → remote está ativa e tem ambas as unidades no snapshot: o host compõe seu topo de página com a UI do remote.
+**Interpretation:** Active host → remote relationship with both units in snapshot: host composes page top with remote UI.
 
 ### 11. header-app/package.json:10-12; header-app/rspack.config.js:6-81
 
-**Observação:** header-app tem build próprio com `rspack build`; sua configuração Rspack usa modo development, porta 4001, publicPath localhost e o plugin de federação. A 3.4.6 registra Build separado, Deploy não observado e Versionamento No.
+**Observation:** header-app has own `rspack build`; Rspack configuration uses development mode, port 4001, localhost publicPath/federation plugin. Section 3.4.6 records separate Build, unobserved Deployment and Versioning No.
 
-**Interpretação:** Sustenta a separação do build da unidade, mas os artefatos de desenvolvimento não demonstram deploy independente.
+**Interpretation:** Supports unit build separation but development artifacts do not demonstrate independent deployment.
 
 ### 12. home-app/package.json:10-12; home-app/rspack.config.js:5-72
 
-**Observação:** home-app tem build próprio com `rspack build`; sua configuração Rspack usa modo development, porta 4000, publicPath localhost e o remote HeaderApp por manifesto. A 3.4.6 registra Build separado, Deploy não observado e Versionamento No.
+**Observation:** home-app has own `rspack build`; Rspack configuration uses development mode, port 4000, localhost publicPath and manifest-based HeaderApp remote. Section 3.4.6 records separate Build, unobserved Deployment and Versioning No.
 
-**Interpretação:** Sustenta a separação do build do host, sem demonstrar deploy independente.
+**Interpretation:** Supports host build separation without demonstrating independent deployment.
 
 ### 13. README.md:3
 
-**Observação:** O README apresenta um exemplo desenhado com o padrão arquitetural micro frontend usando Module Federation 2.0.
+**Observation:** README presents example designed with micro frontend architectural pattern using Module Federation 2.0.
 
-**Interpretação:** Afirma uma organização de MFE, corroborada pelas duas unidades e sua relação; a afirmação sozinha é semântica.
+**Interpretation:** Claims MFE organization corroborated by two units/relationship; claim alone semantic.
 
 ### 14. README.md:5-6
 
-**Observação:** O README chama header-app de remote, diz que expõe `./Header` e publica `mf-manifest.json` e tipos `.d.ts` gerados.
+**Observation:** README calls header-app remote, says it exposes `./Header` and publishes `mf-manifest.json`/generated `.d.ts` types.
 
-**Interpretação:** Descreve o papel e a oferta da unidade remota, corroborados pela configuração, relação e declarações geradas.
+**Interpretation:** Describes remote role/offer corroborated by configuration, relationship and generated declarations.
 
 ### 15. README.md:11-12
 
-**Observação:** O README chama home-app de host, consumidor de `HeaderApp/Header` pelo manifesto, com checagem de tipos mesmo em build separado.
+**Observation:** README calls home-app host, consuming `HeaderApp/Header` through manifest with type checking even in separate build.
 
-**Interpretação:** Descreve o consumo entre unidades e a tipagem entre builds, corroborados pela relação, pelos builds e pelo paths do TypeScript.
+**Interpretation:** Describes cross-unit consumption/cross-build typing corroborated by relationship, builds/TypeScript paths.
 
 ### 16. README.md:19-20
 
-**Observação:** O README manda iniciar header-app primeiro e diz que home-app busca nele o bundle de runtime e os tipos ao iniciar.
+**Observation:** README instructs starting header-app first, says home-app retrieves runtime bundle/types on startup.
 
-**Interpretação:** Descreve a dependência do consumidor em relação ao remote. Conforme a 3.4.7, os tipos são buscados no início; o código remoto é carregado quando o navegador abre o host.
+**Interpretation:** Describes consumer dependency on remote. Per 3.4.7 types fetched on startup; remote code loaded when browser opens host.
 
 ### 17. README.md:28
 
-**Observação:** O README orienta abrir `http://localhost:4001` para ver o remote Header App.
+**Observation:** README instructs opening `http://localhost:4001` to see remote Header App.
 
-**Interpretação:** Afirma que o remote pode apresentar UI sozinho, corroborado pela entrada e pelo template próprios.
+**Interpretation:** Claims remote can show UI alone, corroborated by own entry/template.
 
 ### 18. README.md:30
 
-**Observação:** O README orienta checar os tipos de cada aplicação isoladamente com `npm run typecheck`.
+**Observation:** README instructs isolated application type checking through `npm run typecheck`.
 
-**Interpretação:** Afirma autonomia da checagem de tipos das unidades, corroborada pelos scripts individuais e pelas declarações incluídas no host.
+**Interpretation:** Unit type-check autonomy corroborated by individual scripts/declarations included in host.
 
 ### 19. home-app/rspack.config.js:48-50
 
-**Observação:** O comentário diz que os remotes são resolvidos pelo `mf-manifest.json` em vez de uma URL fixa de remoteEntry.js, permitindo resolução em runtime.
+**Observation:** Comment says remotes resolved through `mf-manifest.json` rather than fixed remoteEntry.js URL, allowing runtime resolution.
 
-**Interpretação:** Descreve o mecanismo que liga consumidor e remote, corroborado pelo manifesto configurado e pelo import dinâmico. A URL do manifesto também é fixa, como ressalva a 3.4.7.
+**Interpretation:** Describes consumer/remote mechanism corroborated by configured manifest/dynamic import. Manifest URL also fixed, as 3.4.7 qualifies.
 
 ### 20. home-app/src/App.tsx:3-5
 
-**Observação:** O comentário diz que o TypeScript baixou as declarações geradas de HeaderApp para `./@mf-types/HeaderApp` e as resolve pelo paths `HeaderApp/*`.
+**Observation:** Comment says TypeScript downloaded HeaderApp generated declarations to `./@mf-types/HeaderApp`, resolving them through paths `HeaderApp/*`.
 
-**Interpretação:** Descreve a ligação de tipos entre as unidades, corroborada pelas declarações, pelo mapeamento local e pelo dts configurado.
+**Interpretation:** Describes cross-unit type link corroborated by declarations, local mapping/configured dts.
 
 ### 21. home-app/src/App.tsx:5-8
 
-**Observação:** O comentário diz que HeaderVariant é um enum de header-app e que seu import traz tipo e valores de runtime do build remoto, sem pacote comum nem declarações escritas à mão.
+**Observation:** Comment says HeaderVariant is header-app enum whose import brings types/runtime values from remote build without common package/handwritten declarations.
 
-**Interpretação:** Descreve consumo de valores e tipos entre builds, corroborado pelo import estático registrado nas Notas da 3.4.4, pelo enum e pela exposição do módulo.
+**Interpretation:** Describes cross-build value/type consumption corroborated by static import recorded in 3.4.4 Notes, enum/module exposure.
 
 ### 22. home-app/src/App.tsx:8-10
 
-**Observação:** O comentário diz que tsc rejeita props inválidas mesmo que header-app tenha build/deploy completamente separado.
+**Observation:** Comment says tsc rejects invalid props even with completely separate header-app build/deployment.
 
-**Interpretação:** A afirmação é parcial na 3.4.7: os builds são separados, mas o deploy separado não tem artefato observado.
+**Interpretation:** Partial claim in 3.4.7: builds separate, but separate deployment has no observed artifact.
 
 ### 23. eeac072 2026-08-10 (home-app/src/App.tsx; header-app/package.json; home-app/package.json; header-app/rspack.config.js; home-app/rspack.config.js)
 
-**Observação:** A 3.4.8 registra que o primeiro commit cria o comentário sobre build/deploy separado e as duas aplicações com configurações de desenvolvimento. Os dois commits seguintes só alteram o README; nenhum dos três cria ou remove artefato de deploy. O ponto foi esclarecido.
+**Observation:** Section 3.4.8 records first commit creating separate build/deployment comment and both applications with development configurations. Next two commits change only README; none of three creates/removes deployment artifact. Point clarified.
 
-**Interpretação:** O histórico explica que comentário e ausência de deploy provisionado coexistem desde a primeira presença observável, sem registrar um estágio de deploy abandonado. Não esclarece publicação fora do repositório nem intenção futura.
+**Interpretation:** History explains comment/absence of provisioned deployment coexist since first observable presence without abandoned deployment stage. Does not clarify external publication/future intent.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.2 (header-app/package.json:15) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #3 |
-| 2 | 3.4.2 (home-app/package.json:15) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #4 |
-| 3 | 3.4.2 (header-app/package.json:15, Evidência); 3.4.3 (header-app, Marcadores e Build); 3.4.4 (home-app/src/App.tsx:13, Observação); 3.4.5 #1 (Configuração); 3.4.6 #1 (Artefatos); 3.4.7 #2, #8, #9 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #8; configura #10 |
-| 4 | 3.4.2 (home-app/package.json:15, Evidência); 3.4.3 (home-app, Marcadores e Build); 3.4.4 (home-app/@mf-types/HeaderApp/apis.d.ts:3 e home-app/src/App.tsx:13, :19, Observação); 3.4.5 #1 (Configuração); 3.4.6 #2 (Artefatos); 3.4.7 #2, #3, #4, #7, #8 (Evidência) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #6; configura #7; configura #9; configura #10 |
-| 5 | 3.4.4 (home-app/@mf-types/HeaderApp/apis.d.ts:3) | 3 código | código-fonte | module-federation | tecnológica | fraca | — |
-| 6 | 3.4.4 (home-app/src/App.tsx:13) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #10 |
-| 7 | 3.4.4 (home-app/src/App.tsx:19) | 3 código | código-fonte | module-federation | arquitetural | moderada | implementa #10 |
-| 8 | 3.4.3 (header-app) | 4 estrutura | diretório | module-federation | arquitetural | moderada | — |
-| 9 | 3.4.3 (home-app) | 4 estrutura | diretório | module-federation | arquitetural | moderada | — |
-| 10 | 3.4.5 #1 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #9; liga #8 |
-| 11 | 3.4.6 #1 | 6 build-deploy | configuração | module-federation | arquitetural | moderada | publica #8 |
-| 12 | 3.4.6 #2 | 6 build-deploy | configuração | module-federation | arquitetural | moderada | publica #9 |
-| 13 | 3.4.7 #1 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #1; corrobora #2; corrobora #8; corrobora #9; corrobora #10 |
-| 14 | 3.4.7 #2 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #3; corrobora #4; corrobora #10; corrobora home-app/@mf-types/HeaderApp/Header.d.ts:1-2 |
-| 15 | 3.4.7 #3 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #4; corrobora #10; corrobora #11; corrobora #12; corrobora home-app/tsconfig.json:15-17 |
-| 16 | 3.4.7 #4 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #6; corrobora #4; corrobora header-app/rspack.config.js:14-20 |
-| 17 | 3.4.7 #5 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #8 |
-| 18 | 3.4.7 #6 | 7 documentação | documentação | — | arquitetural | fraca | corrobora header-app/package.json:12; corrobora home-app/package.json:12; corrobora home-app/tsconfig.json:15-19 |
-| 19 | 3.4.7 #7 | 7 documentação | comentário | module-federation | arquitetural | fraca | corrobora #4; corrobora #6; corrobora #10 |
-| 20 | 3.4.7 #8 | 7 documentação | comentário | module-federation | arquitetural | fraca | corrobora #3; corrobora #4; corrobora home-app/tsconfig.json:15-17; corrobora home-app/@mf-types/HeaderApp/compiled-types/App.d.ts:1-12 |
-| 21 | 3.4.7 #9 | 7 documentação | comentário | module-federation | arquitetural | fraca | corrobora home-app/src/App.tsx:11; corrobora header-app/src/App.tsx:4-7; corrobora #3; corrobora home-app/@mf-types/index.d.ts:1-22 |
-| 22 | 3.4.7 #10 | 7 documentação | comentário | — | arquitetural | fraca | corrobora em parte #11; corrobora em parte #12 |
-| 23 | 3.4.8 #1 | 8 histórico | histórico | — | arquitetural | fraca | explica #22; explica #11; explica #12 |
+| 1 | 3.4.2 (header-app/package.json:15) | 1 technology | manifest | module-federation | technological | weak | declares #3 |
+| 2 | 3.4.2 (home-app/package.json:15) | 1 technology | manifest | module-federation | technological | weak | declares #4 |
+| 3 | 3.4.2 (header-app/package.json:15, Evidence); 3.4.3 (header-app, Markers and Build); 3.4.4 (home-app/src/App.tsx:13, Observation); 3.4.5 #1 (Configuration); 3.4.6 #1 (Artifacts); 3.4.7 #2, #8, #9 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #8; configures #10 |
+| 4 | 3.4.2 (home-app/package.json:15, Evidence); 3.4.3 (home-app, Markers and Build); 3.4.4 (home-app/@mf-types/HeaderApp/apis.d.ts:3 and home-app/src/App.tsx:13, :19, Observation); 3.4.5 #1 (Configuration); 3.4.6 #2 (Artifacts); 3.4.7 #2, #3, #4, #7, #8 (Evidence) | 2 configuration | configuration | module-federation | architectural | strong | configures #6; configures #7; configures #9; configures #10 |
+| 5 | 3.4.4 (home-app/@mf-types/HeaderApp/apis.d.ts:3) | 3 code | source code | module-federation | technological | weak | — |
+| 6 | 3.4.4 (home-app/src/App.tsx:13) | 3 code | source code | module-federation | architectural | strong | implements #10 |
+| 7 | 3.4.4 (home-app/src/App.tsx:19) | 3 code | source code | module-federation | architectural | moderate | implements #10 |
+| 8 | 3.4.3 (header-app) | 4 structure | directory | module-federation | architectural | moderate | — |
+| 9 | 3.4.3 (home-app) | 4 structure | directory | module-federation | architectural | moderate | — |
+| 10 | 3.4.5 #1 | 5 composition | source code | module-federation | architectural | strong | links #9; links #8 |
+| 11 | 3.4.6 #1 | 6 build-deploy | configuration | module-federation | architectural | moderate | publishes #8 |
+| 12 | 3.4.6 #2 | 6 build-deploy | configuration | module-federation | architectural | moderate | publishes #9 |
+| 13 | 3.4.7 #1 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #1; corroborates #2; corroborates #8; corroborates #9; corroborates #10 |
+| 14 | 3.4.7 #2 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #3; corroborates #4; corroborates #10; corroborates home-app/@mf-types/HeaderApp/Header.d.ts:1-2 |
+| 15 | 3.4.7 #3 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #4; corroborates #10; corroborates #11; corroborates #12; corroborates home-app/tsconfig.json:15-17 |
+| 16 | 3.4.7 #4 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #6; corroborates #4; corroborates header-app/rspack.config.js:14-20 |
+| 17 | 3.4.7 #5 | 7 documentation | documentation | — | architectural | weak | corroborates #8 |
+| 18 | 3.4.7 #6 | 7 documentation | documentation | — | architectural | weak | corroborates header-app/package.json:12; corroborates home-app/package.json:12; corroborates home-app/tsconfig.json:15-19 |
+| 19 | 3.4.7 #7 | 7 documentation | comment | module-federation | architectural | weak | corroborates #4; corroborates #6; corroborates #10 |
+| 20 | 3.4.7 #8 | 7 documentation | comment | module-federation | architectural | weak | corroborates #3; corroborates #4; corroborates home-app/tsconfig.json:15-17; corroborates home-app/@mf-types/HeaderApp/compiled-types/App.d.ts:1-12 |
+| 21 | 3.4.7 #9 | 7 documentation | comment | module-federation | architectural | weak | corroborates home-app/src/App.tsx:11; corroborates header-app/src/App.tsx:4-7; corroborates #3; corroborates home-app/@mf-types/index.d.ts:1-22 |
+| 22 | 3.4.7 #10 | 7 documentation | comment | — | architectural | weak | partially corroborates #11; partially corroborates #12 |
+| 23 | 3.4.8 #1 | 8 history | history | — | architectural | weak | explains #22; explains #11; explains #12 |
 
-## Resumo
+## Summary
 
-Observações: 23. Dimensões (tecnologia: 2, configuração: 2, código: 3, estrutura: 2, composição: 1, build-deploy: 2, documentação: 10, histórico: 1). Força (forte: 3, moderada: 6, fraca: 14, ambígua: 0). Evidência (tecnológica: 4, arquitetural: 19, contexto: 0).
+Observations: 23. Dimensions (technology: 2, configuration: 2, code: 3, structure: 2, composition: 1, build-deploy: 2, documentation: 10, history: 1). Strength (strong: 3, moderate: 6, weak: 14, ambiguous: 0). Evidence (technological: 4, architectural: 19, context: 0).

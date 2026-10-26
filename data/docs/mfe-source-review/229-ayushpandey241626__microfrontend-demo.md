@@ -15,32 +15,32 @@ annotation:
 
 # 229 — ayushpandey241626/microfrontend-demo
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-async-bootstrap | projects/host-app/src/main.ts:1 | projects/host-app | dynamic-loading | No | `import('./bootstrap')` carrega o próprio bootstrap (projects/host-app/src/bootstrap.ts:5); interno à unidade. |
-| src-async-bootstrap | projects/login-mfe-app/src/main.ts:1 | projects/login-mfe-app | dynamic-loading | No | `import('./bootstrap')` carrega o próprio bootstrap (projects/login-mfe-app/src/bootstrap.ts:5); interno à unidade. |
-| src-async-bootstrap | projects/mfe1/src/main.ts:1 | projects/mfe1 | dynamic-loading | No | `import('./bootstrap')` carrega o próprio bootstrap (projects/mfe1/src/bootstrap.ts:5); interno à unidade. |
-| src-async-bootstrap | projects/mfe2/src/main.ts:1 | projects/mfe2 | dynamic-loading | No | `import('./bootstrap')` carrega o próprio bootstrap (projects/mfe2/src/bootstrap.ts:5); interno à unidade. |
-| src-load-remote | projects/host-app/src/app/app.routes.ts:3 | projects/host-app | remote-resolution | Yes | Importa `loadRemoteModule` de `@angular-architects/module-federation`, usado em projects/host-app/src/app/app.routes.ts:17, :27 e :36. |
-| src-load-remote | projects/host-app/src/app/app.routes.ts:17 | projects/host-app | remote-resolution | Yes | `loadRemoteModule({ type: 'module', exposedModule: './ContactsModule', remoteEntry: 'http://localhost:4201/remoteEntry.js' })` (projects/host-app/src/app/app.routes.ts:17-21) carrega as rotas de projects/mfe1 na rota `contacts`; `./ContactsModule` exposto em projects/mfe1/webpack.config.js:10-11 e porta 4201 em angular.json:177; rotas registradas por `provideRouter(routes)` em projects/host-app/src/app/app.config.ts:12, usado em projects/host-app/src/bootstrap.ts:5. |
-| src-load-remote | projects/host-app/src/app/app.routes.ts:27 | projects/host-app | remote-resolution | Yes | `loadRemoteModule({ type: 'module', exposedModule: './AdminModule', remoteEntry: 'http://localhost:4202/remoteEntry.js' })` (projects/host-app/src/app/app.routes.ts:27-31) carrega as rotas de projects/mfe2 na rota `admin`; `./AdminModule` exposto em projects/mfe2/webpack.config.js:10-11 e porta 4202 em angular.json:278; mesma cadeia de registro da linha anterior. |
-| src-load-remote | projects/host-app/src/app/app.routes.ts:36 | projects/host-app | remote-resolution | Yes | `loadRemoteModule({ type: 'module', exposedModule: './LoginModule', remoteEntry: 'http://localhost:4203/remoteEntry.js' })` (projects/host-app/src/app/app.routes.ts:36-40) carrega as rotas de projects/login-mfe-app na rota `login`; `./LoginModule` exposto em projects/login-mfe-app/webpack.config.js:10-11 e porta 4203 em angular.json:383; mesma cadeia de registro. |
+| src-async-bootstrap | projects/host-app/src/main.ts:1 | projects/host-app | dynamic-loading | No | `import('./bootstrap')` loads its own bootstrap (projects/host-app/src/bootstrap.ts:5); internal to the unit. |
+| src-async-bootstrap | projects/login-mfe-app/src/main.ts:1 | projects/login-mfe-app | dynamic-loading | No | `import('./bootstrap')` loads its own bootstrap (projects/login-mfe-app/src/bootstrap.ts:5); internal to the unit. |
+| src-async-bootstrap | projects/mfe1/src/main.ts:1 | projects/mfe1 | dynamic-loading | No | `import('./bootstrap')` loads its own bootstrap (projects/mfe1/src/bootstrap.ts:5); internal to the unit. |
+| src-async-bootstrap | projects/mfe2/src/main.ts:1 | projects/mfe2 | dynamic-loading | No | `import('./bootstrap')` loads its own bootstrap (projects/mfe2/src/bootstrap.ts:5); internal to the unit. |
+| src-load-remote | projects/host-app/src/app/app.routes.ts:3 | projects/host-app | remote-resolution | Yes | Imports `loadRemoteModule` from `@angular-architects/module-federation`, used at projects/host-app/src/app/app.routes.ts:17, :27 and :36. |
+| src-load-remote | projects/host-app/src/app/app.routes.ts:17 | projects/host-app | remote-resolution | Yes | `loadRemoteModule({ type: 'module', exposedModule: './ContactsModule', remoteEntry: 'http://localhost:4201/remoteEntry.js' })` (projects/host-app/src/app/app.routes.ts:17-21) loads projects/mfe1’s routes in route `contacts`; `./ContactsModule` exposed at projects/mfe1/webpack.config.js:10-11 and port 4201 at angular.json:177; routes registered by `provideRouter(routes)` at projects/host-app/src/app/app.config.ts:12, used at projects/host-app/src/bootstrap.ts:5. |
+| src-load-remote | projects/host-app/src/app/app.routes.ts:27 | projects/host-app | remote-resolution | Yes | `loadRemoteModule({ type: 'module', exposedModule: './AdminModule', remoteEntry: 'http://localhost:4202/remoteEntry.js' })` (projects/host-app/src/app/app.routes.ts:27-31) loads projects/mfe2’s routes in route `admin`; `./AdminModule` exposed at projects/mfe2/webpack.config.js:10-11 and port 4202 at angular.json:278; same registration chain as the preceding row. |
+| src-load-remote | projects/host-app/src/app/app.routes.ts:36 | projects/host-app | remote-resolution | Yes | `loadRemoteModule({ type: 'module', exposedModule: './LoginModule', remoteEntry: 'http://localhost:4203/remoteEntry.js' })` (projects/host-app/src/app/app.routes.ts:36-40) loads projects/login-mfe-app’s routes in route `login`; `./LoginModule` exposed at projects/login-mfe-app/webpack.config.js:10-11 and port 4203 at angular.json:383; same registration chain. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | projects/host-app/src/app/app.routes.ts:7 | projects/host-app | host-relationship | Yes | A tabela `routes` declara onde cada remote entra no host: `contacts` → mfe1, `admin` → mfe2, `login` → login-mfe-app, com redirecionamento inicial para `login` (projects/host-app/src/app/app.routes.ts:7-46); `contacts` e `admin` protegidas por `AuthGuard` (:15, :25); registrada por `provideRouter(routes)` em projects/host-app/src/app/app.config.ts:12. |
-| manual | projects/login-mfe-app/src/app/login/login-form/login-form.component.ts:63 | projects/login-mfe-app | communication | Yes | `localStorage.setItem('isLoggedIn', 'true')` grava o estado de sessão no login e navega para `/contacts` (:64); a mesma chave é lida pelo `AuthGuard` do host (projects/host-app/src/app/auth.guard.ts:11) para liberar as rotas `contacts` e `admin` (projects/host-app/src/app/app.routes.ts:15, :25). O componente entra no host pelas rotas expostas em projects/login-mfe-app/src/app/login/login-form.routes.ts:4. |
+| manual | projects/host-app/src/app/app.routes.ts:7 | projects/host-app | host-relationship | Yes | The `routes` table declares where each remote enters the host: `contacts` → mfe1, `admin` → mfe2, `login` → login-mfe-app, with an initial redirect to `login` (projects/host-app/src/app/app.routes.ts:7-46); `contacts` and `admin` protected by `AuthGuard` (:15, :25); registered by `provideRouter(routes)` at projects/host-app/src/app/app.config.ts:12. |
+| manual | projects/login-mfe-app/src/app/login/login-form/login-form.component.ts:63 | projects/login-mfe-app | communication | Yes | `localStorage.setItem('isLoggedIn', 'true')` writes session state during login and navigates to `/contacts` (:64); the same key is read by the host’s `AuthGuard` (projects/host-app/src/app/auth.guard.ts:11) to allow routes `contacts` and `admin` (projects/host-app/src/app/app.routes.ts:15, :25). The component enters the host through routes exposed at projects/login-mfe-app/src/app/login/login-form.routes.ts:4. |
 
-## Resumo
+## Summary
 
-Construções com composição: 6 (remote-resolution: 4, host-relationship: 1, communication: 1).
+Constructs participating in composition: 6 (remote-resolution: 4, host-relationship: 1, communication: 1).
 
-## Notas
+## Notes
 
-- Os `remotes` estáticos de projects/host-app/webpack.config.js:21-25 (`mfe1`, `mfe2`, `loginMfeApp`) não são usados no código: não há `import('mfe1/...')` nem equivalente; o host carrega os três remotes só por `loadRemoteModule` com `type: 'module'` e URL de `remoteEntry`. O nome `loginMfeApp` difere do `name: "login-mfe-app"` em projects/login-mfe-app/webpack.config.js:7, o que não afeta a carga por URL.
-- O logout do host (projects/host-app/src/app/app.component.ts:71-74) só navega para `/login`; nenhum código remove a chave `isLoggedIn`.
-- A busca do passo 4 achou também `import()` locais de rotas internas (projects/mfe1/src/app/app.routes.ts:8, projects/mfe2/src/app/app.routes.ts:7, projects/login-mfe-app/src/app/app.routes.ts:7) e o uso de `localStorage` da chave `contacts` dentro de mfe1 (projects/mfe1/src/app/contact-list/contact-list.component.ts:109, :301, :318); são internos à unidade e não viraram linha. Não há custom elements, iframes, `postMessage`, `CustomEvent`, `BroadcastChannel` nem injeção de script.
+- The static `remotes` at projects/host-app/webpack.config.js:21-25 (`mfe1`, `mfe2`, `loginMfeApp`) are not used in code: there is no `import('mfe1/...')` or equivalent; the host loads all three remotes only through `loadRemoteModule` with `type: 'module'` and a `remoteEntry` URL. The `loginMfeApp` name differs from `name: "login-mfe-app"` at projects/login-mfe-app/webpack.config.js:7, which does not affect URL-based loading.
+- The host logout (projects/host-app/src/app/app.component.ts:71-74) only navigates to `/login`; no code removes the `isLoggedIn` key.
+- The step 4 search also found local `import()` calls of internal routes (projects/mfe1/src/app/app.routes.ts:8, projects/mfe2/src/app/app.routes.ts:7, projects/login-mfe-app/src/app/app.routes.ts:7) and `localStorage` use of key `contacts` within mfe1 (projects/mfe1/src/app/contact-list/contact-list.component.ts:109, :301, :318); these are internal to the unit and did not become rows. There are no custom elements, iframes, `postMessage`, `CustomEvent`, `BroadcastChannel` or script injection.

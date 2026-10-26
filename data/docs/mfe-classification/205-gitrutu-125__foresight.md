@@ -20,66 +20,66 @@ annotation:
 
 # 205 — gitrutu-125/foresight
 
-## Contexto
+## Context
 
-Projeto Python de previsão de demanda e risco de estoque, sem README. O conteúdo próprio é:
-- dados CSV em `data/`;
-- notebooks de EDA;
-- scripts em `src/` (`features.py`, `forecast_baseline.py`, `forecast_model.py`, `pipeline.py`, `risk_scoring.py`, `generate_data.py`);
-- uma API FastAPI em `service/main.py`;
-- relatórios Markdown e um painel Power BI (`foresight.pbix`).
+Python demand-forecasting and inventory-risk project, without README. Own content consists of:
+- CSV data in `data/`;
+- EDA notebooks;
+- scripts in `src/` (`features.py`, `forecast_baseline.py`, `forecast_model.py`, `pipeline.py`, `risk_scoring.py`, `generate_data.py`);
+- FastAPI API in `service/main.py`;
+- Markdown reports and Power BI dashboard (`foresight.pbix`).
 
-O repositório versiona também um ambiente virtual inteiro (`venv/`), que inclui o JupyterLab. Os três `package.json` do JupyterLab dentro de `venv/` são a origem do acerto. Não há código frontend próprio. O nome do repositório não é usado como evidência.
+Repository also versions an entire virtual environment (`venv/`), including JupyterLab. Three JupyterLab `package.json` files inside `venv/` are retrieval origin. No own frontend code exists. Repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:206` registra rank 205, ID 1330863363, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:206` records rank 205, ID 1330863363, status `cloned`, branch `main` and front-matter commit, which is clone HEAD and `origin/main`. Every clone Git command used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. No installation, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:206` registra a estratégia `technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:35164` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:35170` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:206` records strategy `technology` and eligibility `pass`. Sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). ID appears in `data/discovery/mfe-round-001/candidates.csv:35164` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:35170` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos três hits em cada rodada, do endpoint `code`:
+`sqlite3 -readonly` query of tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns same three hits in each round, at endpoint `code`:
 
-| Consulta (`q`) | Subconsulta / consulta efetiva | `path` | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery / effective query | `path` | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `technology-module-federation-package-code`: `"@module-federation" filename:package.json` | `technology-module-federation-package-code#size:>=10000` / `"@module-federation" filename:package.json size:>=10000` | `venv/share/jupyter/lab/static/package.json` | 2026-10-07T21:51:14.693Z / 2026-10-08T15:44:35.791Z |
-| idem | idem | `venv/Lib/site-packages/jupyterlab/staging/package.json` | 2026-10-07T21:51:19.718Z / 2026-10-08T15:44:41.040Z |
-| idem | idem | `venv/Lib/site-packages/jupyterlab/static/package.json` | 2026-10-07T21:51:19.718Z / 2026-10-08T15:44:41.040Z |
+| same | same | `venv/Lib/site-packages/jupyterlab/staging/package.json` | 2026-10-07T21:51:19.718Z / 2026-10-08T15:44:41.040Z |
+| same | same | `venv/Lib/site-packages/jupyterlab/static/package.json` | 2026-10-07T21:51:19.718Z / 2026-10-08T15:44:41.040Z |
 
-Os três arquivos têm 14.693 bytes no SHA, dentro da faixa. São o manifesto `@jupyterlab/application-top` (`:2`) com `"@module-federation/runtime-tools": "^2.0.0"` em `devDependencies` (`:211`), parte do pacote JupyterLab instalado no ambiente virtual. Entraram em `ef3c3ae3` (“clean dataset”, 2026-08-12) e não foram alterados depois.
+All three files are 14.693 bytes at SHA, within range. Manifest is `@jupyterlab/application-top` (`:2`) with `"@module-federation/runtime-tools": "^2.0.0"` in `devDependencies` (`:211`), part of JupyterLab package installed in virtual environment. They entered in `ef3c3ae3` (“clean dataset”, 2026-08-12) and were unchanged afterward.
 
-Os metadados do hit de código trazem só a descrição: “FORESIGHT is an AI-powered demand forecasting and inventory intelligence platform… through an interactive Streamlit dashboard.” Não há tópicos, linguagem nem datas, e a descrição não menciona micro-frontends. Não há README no SHA; a entrada é só por código.
+Code-hit metadata provide only description: “FORESIGHT is an AI-powered demand forecasting and inventory intelligence platform… through an interactive Streamlit dashboard.” No topics, language or dates, and description mentions no micro-frontends. No README at SHA; entry is code-only.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 27.724 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. São 27.688 sob `venv/` (pacotes Python instalados, incluindo IPython e JupyterLab) e 36 próprias: `data/`, `notebooks/`, `demo files/` (dois notebooks), `.ipynb_checkpoints/`, `src/`, `service/`, `reports/`, `images/`, `foresight.pbix`, `requirements.txt` e `.gitignore`. Os 18 `package.json` estão todos em `venv/`. | contrária |
-| Código-fonte | `service/main.py:1–30`: API FastAPI (“FORESIGHT Scoring Service”); `service/requirements.txt`: `fastapi`, `uvicorn`, `pandas`, `pydantic`. Fora de `venv/` não há arquivo `.js`, `.ts`, `.jsx`, `.tsx`, `.vue` ou `.html`. | contrária |
-| Tecnologia (acerto) | `venv/share/jupyter/lab/static/package.json:2`, `211`: dependência de desenvolvimento do build do próprio JupyterLab, código de terceiros vendorizado no ambiente virtual. Não é configuração deste projeto. | contrária |
-| Busca | `git grep -i` no SHA, excluindo `venv/` e `data/`, por `streamlit`, `micro.?front` e `federation`: só menções a Streamlit como opção de deploy (`reports/deployment_guide.md:4`; `service/main.py:15`) e o `.pyc` correspondente. Nenhum dashboard Streamlit no código. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 27.724 entries, all regular files `100644`; zero symlinks and zero gitlinks. There are 27.688 under `venv/` (installed Python packages including IPython and JupyterLab) and 36 own entries: `data/`, `notebooks/`, `demo files/` (two notebooks), `.ipynb_checkpoints/`, `src/`, `service/`, `reports/`, `images/`, `foresight.pbix`, `requirements.txt` and `.gitignore`. All 18 `package.json` files are in `venv/`. | contrary |
+| Source code | `service/main.py:1–30`: FastAPI API (“FORESIGHT Scoring Service”); `service/requirements.txt`: `fastapi`, `uvicorn`, `pandas`, `pydantic`. Outside `venv/` there is no `.js`, `.ts`, `.jsx`, `.tsx`, `.vue` or `.html` file. | contrary |
+| Technology (hit) | `venv/share/jupyter/lab/static/package.json:2`, `211`: development dependency of JupyterLab’s own build, third-party code vendored in virtual environment. Not configuration of this project. | contrary |
+| Search | `git grep -i` at the SHA, excluding `venv/` and `data/`, for `streamlit`, `micro.?front` and `federation`: only Streamlit mentions as deployment option (`reports/deployment_guide.md:4`; `service/main.py:15`) and corresponding `.pyc`. No Streamlit dashboard in code. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 6 commits lineares, nenhum merge, todos de Raksha `<biradarrutuja125@gmail.com>`, de 2026-08-12 (`ef3c3ae3`, “clean dataset”, que adiciona 27.092 arquivos de `venv/`) a 2026-08-17. O SHA `e76cbf22` (“Initial commit: FORESIGHT project”) é o último commit, apesar da mensagem, e só adiciona `.gitignore`, que passa a ignorar `venv/` sem removê-lo do índice. `e879fb61` (“Dashboard Created”) adiciona `foresight.pbix`, `service/` e mais 585 arquivos de `venv/`. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 6 linear commits, no merge, all by Raksha `<biradarrutuja125@gmail.com>`, from 2026-08-12 (`ef3c3ae3`, “clean dataset”, adding 27.092 files in `venv/`) to 2026-08-17. SHA `e76cbf22` (“Initial commit: FORESIGHT project”) is last commit despite message, and only adds `.gitignore`, starting to ignore `venv/` without removing it from index. `e879fb61` (“Dashboard Created”) adds `foresight.pbix`, `service/` and 585 more files in `venv/`. No historical blob was read and no object was missing.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend própria; o código é Python (scripts, notebooks, API FastAPI). |
-| Q2 | No | Sem unidades, não há entradas ou builds frontend a avaliar. |
-| Q3 | No | Não há host, shell ou configuração raiz. |
-| Q4 | No | O único sinal é uma dependência declarada no manifesto do JupyterLab vendorizado (`venv/…/package.json:211`). Pelo critério, “a declared dependency alone is No”, e ela nem pertence ao projeto. |
-| Q5 | No | Q1–Q4 são No: projeto de ciência de dados com ambiente virtual versionado. |
+| Q1 | No | No own frontend unit; code is Python (scripts, notebooks, FastAPI API). |
+| Q2 | No | Without units, no frontend entries or builds require evaluation. |
+| Q3 | No | No host, shell or root configuration exists. |
+| Q4 | No | Sole signal is a dependency declared in vendored JupyterLab manifest (`venv/…/package.json:211`). Under criterion, “a declared dependency alone is No”, and it does not even belong to project. |
+| Q5 | No | Q1–Q4 are No: data-science project with versioned virtual environment. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. O acerto vem de código de terceiros (JupyterLab) dentro de `venv/` versionado por engano, não de uso do projeto.
-- Difere de 102/074/080, em que o código de terceiros era a plataforma hospedeira das unidades. Aqui é só um pacote instalado, sem relação com a aplicação.
-- `frontend_units: 0`, `unit_organization: none`, `approaches: []`, `ui_technologies: []`, `build_tools: []` (não há UI web própria; o painel é um arquivo Power BI). `repo_type: other`: projeto de análise com API, nem exemplo de MFE, nem template, nem biblioteca.
-- Não há decisão aberta.
+- `Non-MFE` under rule “at least one question is No”. Retrieval comes from third-party code (JupyterLab) in accidentally versioned `venv/`, not project use.
+- Differs from 102/074/080, where third-party code was units’ hosting platform. Here it is only installed package, unrelated to application.
+- `frontend_units: 0`, `unit_organization: none`, `approaches: []`, `ui_technologies: []`, `build_tools: []` (no own web UI; dashboard is Power BI file). `repo_type: other`: analysis project with API, neither MFE example, template nor library.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** dependência `@module-federation/runtime-tools` do JupyterLab em `venv/` versionado casa a busca de código por `package.json`. Os três caminhos são cópias do mesmo manifesto.
-- **Protocolo (busca):** a elegibilidade muda de `unknown` (001) para `pass` (002). O repositório não tem README, então não há grafia a citar.
+- **RQ1 (misleading signals):** JupyterLab dependency `@module-federation/runtime-tools` in versioned `venv/` matches code search for `package.json`. Three paths are copies of same manifest.
+- **Protocol (search):** eligibility changes from `unknown` (001) to `pass` (002). Repository has no README, so no spelling can be cited.

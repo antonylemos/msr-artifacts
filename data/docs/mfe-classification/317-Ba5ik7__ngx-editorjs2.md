@@ -20,76 +20,76 @@ annotation:
 
 # 317 — Ba5ik7/ngx-editorjs2
 
-## Contexto
+## Context
 
-Biblioteca Angular de editor de blocos inspirado no Editor.js (`@tmdjr/ngx-editor-js2`), com uma aplicação de demonstração (`README.md:1–8`; `projects/ngx-editor-js2/package.json:2–3`; `angular.json:6–7`, `:95–96`). O README lista blocos opcionais publicados como pacotes npm separados. Um deles, “MFE Loader Block”, é descrito como “Dynamically load and embed micro-frontends using Module Federation” (`README.md:143–150`), mas seu código não está neste repositório. O nome do repositório não é usado como evidência.
+Angular block editor library inspired by Editor.js (`@tmdjr/ngx-editor-js2`), with a demonstration application (`README.md:1–8`; `projects/ngx-editor-js2/package.json:2–3`; `angular.json:6–7`, `:95–96`). The README lists optional blocks published as separate npm packages. One, “MFE Loader Block”, is described as “Dynamically load and embed micro-frontends using Module Federation” (`README.md:143–150`), but its code is not in this repository. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:318` registra rank 317, ID 919807021, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:318` records rank 317, ID 919807021, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:318` registra as estratégias `terminology;technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:11476` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:11482` (`pass`), ambos com `terminology;technology`.
+`data/samples/mfe-sample-001/sample.csv:318` records strategies `terminology;technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:11476` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:11482` (`pass`), both with `terminology;technology`.
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos três hits em cada rodada, do endpoint `repositories` e com `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same three hits in each round, from endpoint `repositories` and with an empty `path`:
 
-| Consulta (`q`) | Subconsulta | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Collection 001 / 002 (UTC) |
 |---|---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | `…#created:2025-01` | 2026-10-07T22:20:03.469Z / 2026-10-08T15:53:38.009Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | `…#created:2025-01` | 2026-10-07T22:51:15.534Z / 2026-10-08T16:05:13.495Z |
 | `technology-module-federation-repositories`: `"module federation" in:name,description,readme` | `…#created:2025-01` | 2026-10-07T23:16:43.767Z / 2026-10-08T16:13:50.133Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2025-01-01..2025-01-31`.
+The effective queries append `pushed:>=2025-04-01 created:2025-01-01..2025-01-31`.
 
-Metadados do hit (iguais nas duas rodadas): descrição sobre o editor de blocos Angular, sem os termos buscados; sem tópicos; linguagem TypeScript; `fork: false`; tamanho 1932; 8 estrelas; homepage no GitHub Pages; criação em 2025-01-21T03:44:47Z; push em 2026-02-15T03:28:11Z.
+Hit metadata (identical in both rounds): description about the Angular block editor, without the searched terms; no topics; language TypeScript; `fork: false`; size 1932; 8 stars; GitHub Pages homepage; created at 2025-01-21T03:44:47Z; pushed at 2026-02-15T03:28:11Z.
 
-Correspondências no README raiz: a única linha é `README.md:144`, “Dynamically load and embed micro-frontends using Module Federation.”
-- casa literalmente “module federation” e, com o hífen como separador, “micro frontends”;
-- a forma singular “micro frontend” não aparece literalmente; esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+Root README matches: the only line is `README.md:144`, “Dynamically load and embed micro-frontends using Module Federation.”
+- literally matches “module federation” and, with the hyphen as separator, “micro frontends”;
+- singular “micro frontend” does not appear literally; this hit depends on GitHub search text processing, which is not recorded.
 
-A mesma frase aparece em `projects/ngx-editor-js2/README.md:144`, que não é o README indexado.
+The same phrase appears in `projects/ngx-editor-js2/README.md:144`, which is not the indexed README.
 
-A última alteração do README raiz é `e9f2914` (2025-07-13), e o SHA é de 2026-02-14T22:28:11-05:00 (2026-02-15T03:28:11Z, igual ao `pushed_at`). Ambos antecedem as coletas de outubro de 2026, e o README do SHA não é posterior às buscas.
+The last root README change is `e9f2914` (2025-07-13), and the SHA is from 2026-02-14T22:28:11-05:00 (2026-02-15T03:28:11Z, matching `pushed_at`). Both predate the October 2026 collections, and the README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 70 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Workspace Angular com `projects/ngx-editor-js2` (biblioteca, schematics) e `projects/ngx-editorjs2-demo` (aplicação de demonstração), mais `docs/`, `mock/` e workflow de publicação. | contrária |
-| Configuração / Build | `angular.json:6–7`, `:18`, `:22`: aplicação `ngx-editorjs2-demo` com `@angular/build:application` e entry `projects/ngx-editorjs2-demo/src/main.ts`; `angular.json:95–96`, `:102`: biblioteca `ngx-editor-js2` com `ng-packagr`. `package.json:5–6`: builds do demo (GitHub Pages) e da biblioteca. `projects/ngx-editor-js2/package.json:2–3`: pacote `@tmdjr/ngx-editor-js2`. | contrária |
-| Código-fonte (demo) | `projects/ngx-editorjs2-demo/src/app/components/document.component.ts:3`, `:13–18`: o demo importa `NgxEditorJs2Component` de `ngx-editor-js2` (biblioteca do workspace) e o renderiza; `projects/ngx-editorjs2-demo/src/app/services/app.service.ts:2`: tipos da biblioteca. É consumo de biblioteca em build time. | contrária |
-| Código-fonte (schematic) | `projects/ngx-editor-js2/schematics/ng-add/index.ts:61–66`: o `ng add` sabe instalar o pacote externo `@tmdjr/ngx-editor-js2-mfe-loader` com peer `@angular-architects/module-federation`. O bloco MFE Loader não está no repositório. | fraca |
-| Documentação | `README.md:143–150`: “MFE Loader Block” como pacote npm opcional, ao lado de blocos de citação, código e Mermaid (`:120–160`). | fraca |
-| Tecnologia / Configuração / Composição (busca) | `git grep -i` no SHA, exceto lockfile e README raiz, por `micro.?front`, `federation`, `single.?spa`, `remoteEntry`, `import.?map`, `customElements` e `<iframe`: só `projects/ngx-editor-js2/README.md:144` e o schematic acima. Nenhuma configuração de federação. | ausente |
-| Código-fonte (fronteiras) | Os imports relativos `../../` ficam dentro da biblioteca (por exemplo, `projects/ngx-editor-js2/src/lib/components/blocks/header-block.component.ts:2–10`). O demo usa a biblioteca pelo nome do pacote. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 70 entries, all regular files `100644`; zero symlinks and zero gitlinks. Angular workspace with `projects/ngx-editor-js2` (library, schematics) and `projects/ngx-editorjs2-demo` (demonstration application), plus `docs/`, `mock/` and publication workflow. | contrary |
+| Configuration / Build | `angular.json:6–7`, `:18`, `:22`: application `ngx-editorjs2-demo` with `@angular/build:application` and entry `projects/ngx-editorjs2-demo/src/main.ts`; `angular.json:95–96`, `:102`: library `ngx-editor-js2` with `ng-packagr`. `package.json:5–6`: demo (GitHub Pages) and library builds. `projects/ngx-editor-js2/package.json:2–3`: package `@tmdjr/ngx-editor-js2`. | contrary |
+| Source code (demo) | `projects/ngx-editorjs2-demo/src/app/components/document.component.ts:3`, `:13–18`: the demo imports `NgxEditorJs2Component` from `ngx-editor-js2` (workspace library) and renders it; `projects/ngx-editorjs2-demo/src/app/services/app.service.ts:2`: library types. Build-time library consumption. | contrary |
+| Source code (schematic) | `projects/ngx-editor-js2/schematics/ng-add/index.ts:61–66`: `ng add` can install external package `@tmdjr/ngx-editor-js2-mfe-loader` with peer `@angular-architects/module-federation`. The MFE Loader block is not in the repository. | weak |
+| Documentation | `README.md:143–150`: “MFE Loader Block” as an optional npm package, alongside quote, code and Mermaid blocks (`:120–160`). | weak |
+| Technology / Configuration / Composition (search) | `git grep -i` at the SHA, except lockfile and root README, for `micro.?front`, `federation`, `single.?spa`, `remoteEntry`, `import.?map`, `customElements` and `<iframe`: only `projects/ngx-editor-js2/README.md:144` and the schematic above. No federation configuration. | absent |
+| Source code (boundaries) | Relative imports `../../` stay within the library (for example, `projects/ngx-editor-js2/src/lib/components/blocks/header-block.component.ts:2–10`). The demo uses the library through its package name. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso e parcial (`blob:none`). São 139 commits alcançáveis a partir do SHA (184 em todos os refs), 2 merges:
-- 136 de `Wesley DuSell`/`Wesley` `<dusellfam@gmail.com>`, 2 deles com committer `GitHub`;
-- 1 de `Adrian Johnson`, com committer `GitHub`.
+Non-shallow, partial clone (`blob:none`). There are 139 commits reachable from the SHA (184 across all refs), 2 merges:
+- 136 by `Wesley DuSell`/`Wesley` `<dusellfam@gmail.com>`, 2 with committer `GitHub`;
+- 1 by `Adrian Johnson`, with committer `GitHub`.
 
-Os registros vão de 2025-01-19 (`25da15c`, “initial commit”) ao SHA (2026-02-14). Os branches remotos `codex/…`, `copilot/…` e `gh-pages` não foram considerados. `git rev-list --objects $SHA --missing=print` lista 446 objetos ausentes, nenhum na árvore do SHA. Nenhum blob histórico foi lido.
+Records run from 2025-01-19 (`25da15c`, “initial commit”) to the SHA (2026-02-14). Remote branches `codex/…`, `copilot/…` and `gh-pages` were not considered. `git rev-list --objects $SHA --missing=print` lists 446 missing objects, none in the SHA tree. No historical blob was read.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única aplicação (o demo) que consome uma biblioteca do mesmo workspace (`angular.json:6–22`, `:95–102`; `document.component.ts:3`). Nenhuma configuração de composição referencia unidades; o bloco MFE Loader é pacote externo citado no README. |
-| Q2 | No | Não há duas unidades frontend; biblioteca e demo não são unidades compostas. |
-| Q3 | No | Não há host que carregue unidades. |
-| Q4 | No | Nenhum mecanismo de composição configurado neste repositório (busca registrada). |
-| Q5 | No | Q1–Q4 convergem. |
+| Q1 | No | A single application (the demo) consuming a library from the same workspace (`angular.json:6–22`, `:95–102`; `document.component.ts:3`). No composition configuration references units; the MFE Loader block is an external package cited in the README. |
+| Q2 | No | There are not two frontend units; library and demo are not composed units. |
+| Q3 | No | No host loading units. |
+| Q4 | No | No composition mechanism configured in this repository (recorded search). |
+| Q5 | No | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”.
-- Corresponde a “component libraries…” (aqui uma biblioteca de componentes Angular, não Web Components) e a “repositories mentioning micro-frontends without implementing them”: o carregador de micro-frontends é um bloco opcional distribuído em outro pacote.
-- Próximo de 248 (rascunho, biblioteca que cita micro-frontends como cenário) e dos casos de biblioteca 015/148/165.
-- `repo_type: library`. `frontend_units: 1` e `single-unit` contam o demo, como o site de 080. `ui_technologies: [angular]`. `build_tools: []`: o builder do Angular CLI e o ng-packagr encapsulam o bundler.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”.
+- It matches “component libraries…” (here an Angular component library, not Web Components) and “repositories mentioning micro-frontends without implementing them”: the micro-frontend loader is an optional block distributed in another package.
+- Close to 248 (draft, library citing micro-frontends as a use case) and library cases 015/148/165.
+- `repo_type: library`. `frontend_units: 1` and `single-unit` count the demo, like the site in 080. `ui_technologies: [angular]`. `build_tools: []`: the Angular CLI builder and ng-packagr encapsulate the bundler.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** uma única linha de README sobre um pacote-satélite (“MFE Loader Block”, `README.md:144`) gera três hits terminológicos e de tecnologia. O código correspondente não está no repositório.
-- **Protocolo (famílias):** o mesmo dono tem nas rodadas `Ba5ik7/ngx-editor-js2-blocks` e `Ba5ik7/seed-mfe-remote` (`data/discovery/mfe-round-002/candidates.csv:11728`, `:13194`), fora da amostra e não inspecionados. O bloco MFE Loader pode estar no primeiro, mas isso não foi verificado.
-- **Protocolo (busca):** o hit singular não tem grafia literal. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ1 (misleading signals):** a single README line about a satellite package (“MFE Loader Block”, `README.md:144`) generates three terminology and technology hits. The corresponding code is not in the repository.
+- **Protocol (families):** the same owner has `Ba5ik7/ngx-editor-js2-blocks` and `Ba5ik7/seed-mfe-remote` in the rounds (`data/discovery/mfe-round-002/candidates.csv:11728`, `:13194`), outside the sample and not inspected. The MFE Loader block may be in the former, but this was not verified.
+- **Protocol (search):** the singular hit has no literal spelling. Eligibility changes from `unknown` (001) to `pass` (002).

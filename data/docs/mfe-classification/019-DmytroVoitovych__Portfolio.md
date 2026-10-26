@@ -20,37 +20,37 @@ annotation:
 
 # 019 — DmytroVoitovych/Portfolio
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** production-oriented application (site de portfólio pessoal com deploy na Vercel, `package.json:5`)
+- **Repository type:** production-oriented application (personal portfolio site deployed on Vercel, `package.json:5`)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Tecnologia | `package.json:51`: React 18 (Create React App ejetado: `config/webpack.config.js`, `scripts/build.js`); nenhuma dependência de MFE | ausente |
-| Configuração | `config/webpack.config.js` é o webpack padrão do CRA ejetado; nenhum `ModuleFederationPlugin`, `remotes` ou `exposes` | ausente |
-| Código-fonte | `src/index.js:10`: um único `ReactDOM.createRoot(...).render`; componentes (`header`, `hero`, `Projects`, `Form`, `footer`) importados estaticamente por `src/components/App.jsx` | contrária |
-| Código-fonte | Nenhuma ocorrência de `federation`, `single-spa`, `customElements`, `remoteEntry` ou `iframe` | ausente |
-| Estrutura | Uma única app (um `package.json`, um entry) | contrária |
-| Build/deploy | `.github/workflows/deploy.yml` e `main.yml` com um único build/deploy | contrária |
-| Documentação | `README.md:196`: "Experimenting with: WebAssembly and micro-frontends", só na apresentação pessoal do autor | fraca |
+| Technology | `package.json:51`: React 18 (ejected Create React App: `config/webpack.config.js`, `scripts/build.js`); no MFE dependency | absent |
+| Configuration | `config/webpack.config.js` is the default webpack from ejected CRA; no `ModuleFederationPlugin`, `remotes` or `exposes` | absent |
+| Source code | `src/index.js:10`: a single `ReactDOM.createRoot(...).render`; components (`header`, `hero`, `Projects`, `Form`, `footer`) statically imported by `src/components/App.jsx` | contrary |
+| Source code | No occurrences of `federation`, `single-spa`, `customElements`, `remoteEntry` or `iframe` | absent |
+| Structure | A single app (one `package.json`, one entry) | contrary |
+| Build/deploy | `.github/workflows/deploy.yml` and `main.yml` with a single build/deployment | contrary |
+| Documentation | `README.md:196`: "Experimenting with: WebAssembly and micro-frontends", only in the author's personal introduction | weak |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend (`src/index.js:10`) |
-| Q2 | No | Não há unidades a comparar |
-| Q3 | No | Não há host, shell nem root config |
-| Q4 | No | Nenhum mecanismo de composição |
-| Q5 | No | Q1–Q4 convergem |
+| Q1 | No | A single frontend unit (`src/index.js:10`) |
+| Q2 | No | No units to compare |
+| Q3 | No | No host, shell or root config |
+| Q4 | No | No composition mechanism |
+| Q5 | No | Q1–Q4 converge |
 
-## Motivo
+## Rationale
 
-- É um site de portfólio React monolítico; nada nele prepara uma unidade para composição.
-- Corresponde a "conventional frontend monoliths" e a "repositories mentioning micro-frontends without implementing them": o termo aparece só na autodescrição do autor (`README.md:196`).
+- This is a monolithic React portfolio site; nothing in it prepares a unit for composition.
+- Matches "conventional frontend monoliths" and "repositories mentioning micro-frontends without implementing them": the term appears only in the author's self-description (`README.md:196`).
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** mesmo padrão dos repositórios 011 e 014: o termo vem do perfil profissional no README.
+- **RQ1 (misleading signals):** same pattern as repositories 011 and 014: the term comes from the professional profile in the README.

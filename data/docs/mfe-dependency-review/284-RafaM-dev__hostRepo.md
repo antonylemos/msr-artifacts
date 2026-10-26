@@ -15,13 +15,14 @@ annotation:
 
 # 284 — RafaM-dev/hostRepo
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| package.json:26 | devDependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | vite.config.ts:3 (`import federation from "@originjs/vite-plugin-federation"`); vite.config.ts:8-15 (`federation({ name: "host", ... remotes: { "mf-remoteDetails": ... }, shared: ["react", "react-dom"] })` em `plugins`); package.json:7-8 (`vite` e `vite build`, que carregam o `vite.config.ts` da raiz); src/features/episodes_list/ListEpisodes.tsx:15 (`import DetailEpisode from "mf-remoteDetails/DetailEpisode"`, o remoto declarado em vite.config.ts:12), montado na rota `/episodes` em src/App.tsx:11 |
+| package.json:26 | devDependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | vite.config.ts:3 (`import federation from "@originjs/vite-plugin-federation"`); vite.config.ts:8-15 (`federation({ name: "host", ... remotes: { "mf-remoteDetails": ... }, shared: ["react", "react-dom"] })` in `plugins`); package.json:7-8 (`vite` and `vite build`, which load the `vite.config.ts` at the root); src/features/episodes_list/ListEpisodes.tsx:15 (`import DetailEpisode from "mf-remoteDetails/DetailEpisode"`, the remote declared in vite.config.ts:12), mounted on route `/episodes` in src/App.tsx:11 |
 
-## Notas
+## Notes
 
-- As três ocorrências da inspeção estão em `same_package_matches` (vite.config.ts:8, :11, :14); `other_package_matches` está vazio. O grep fora das listas acha só o import em vite.config.ts:3 e a declaração em package.json:26.
-- `vite.config.ts` não é referenciado por nome: o Vite o carrega por convenção a partir da raiz, onde rodam os scripts `dev` e `build`.
+- The three inspection occurrences are in `same_package_matches` (vite.config.ts:8, :11, :14); `other_package_matches` is empty. Grep outside the lists finds only the import in vite.config.ts:3 and declaration in package.json:26.
+- `vite.config.ts` is not referenced by name: Vite loads it by convention from the root, where the `dev` and `build` scripts run.
+

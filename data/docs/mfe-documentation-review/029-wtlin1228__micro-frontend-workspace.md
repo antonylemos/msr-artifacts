@@ -16,41 +16,41 @@ annotation:
 
 # 029 — wtlin1228/micro-frontend-workspace
 
-## Leitura do repositório
+## Repository overview
 
-A documentação em prosa é mínima. O README da raiz tem o título, uma tabela de portas por pacote e os passos de build e preview (README.md:1-23). Os READMEs de cada pacote são templates do Rsbuild e do Rslib (ex.: packages/app-mf-1/README.md; packages/lib-app-interface/README.md). A descrição mais direta da arquitetura está na `description` do `package.json` da raiz: "a micro-frontend workspace architected by qiankun and module federation" (package.json:4).
+Prose documentation is minimal. The root README has the title, a per-package port table and build and preview steps (README.md:1-23). Each package's READMEs are Rsbuild and Rslib templates (e.g.: packages/app-mf-1/README.md; packages/lib-app-interface/README.md). The most direct architecture description is in the `description` of the root `package.json`: "a micro-frontend workspace architected by qiankun and module federation" (package.json:4).
 
-Foram lidos os artefatos que as revisões anteriores citam:
-- `package.json` e `pnpm-workspace.yaml`;
-- as configurações Rsbuild, Rslib e de Module Federation;
-- o host (`App.tsx`, `bootstrap.tsx`, `router.tsx`, `configs/apps.ts` e os carregadores em `app-loaders/`);
-- os `index.tsx`, `bootstrap.tsx`, `App.tsx`, `exposed.tsx` e `lifecycles.tsx` dos remotes.
+Artifacts cited by previous reviews were read:
+- `package.json` and `pnpm-workspace.yaml`;
+- Rsbuild, Rslib and Module Federation configurations;
+- host (`App.tsx`, `bootstrap.tsx`, `router.tsx`, `configs/apps.ts` and loaders in `app-loaders/`);
+- remotes' `index.tsx`, `bootstrap.tsx`, `App.tsx`, `exposed.tsx` and `lifecycles.tsx`.
 
-Comentários com conteúdo arquitetural:
-- **Host:** o da configuração de Module Federation explica que os remotes são carregados pela API de runtime.
-- **Sub-apps qiankun:** os de `lifecycles.tsx` reproduzem a documentação do qiankun sobre quando `bootstrap` e `mount` são chamados (packages/app-qiankun-1/src/lifecycles.tsx:8-13, 18-20). É texto da biblioteca, não afirmação sobre este projeto, e por isso não vira linha.
-- **Configuração dos apps:** um comentário em `configs/apps.ts` diz que, "in a real-world scenario", as configurações viriam de uma API do backend (packages/host/src/configs/apps.ts:8). É hipótese, não descrição do snapshot.
+Comments with architectural content:
+- **Host:** the Module Federation configuration comment explains that remotes are loaded through the runtime API.
+- **Qiankun sub-apps:** comments in `lifecycles.tsx` reproduce qiankun documentation about when `bootstrap` and `mount` are called (packages/app-qiankun-1/src/lifecycles.tsx:8-13, 18-20). This is library text, not a claim about this project, hence no row.
+- **App configuration:** a comment in `configs/apps.ts` says that "in a real-world scenario", configuration would come from a backend API (packages/host/src/configs/apps.ts:8). A hypothesis, rather than a snapshot description.
 
-O que a documentação diz confere com as revisões anteriores: um workspace com um host, dois remotes de Module Federation e dois sub-apps qiankun.
+Documentation matches previous reviews: a workspace with one host, two Module Federation remotes and two qiankun sub-apps.
 
-Ocorrências `doc-*` que não viraram linha: README.md:8 e 9, que são linhas da tabela de portas (detalhe de infraestrutura). README.md:1 está na afirmação 1.
+`doc-*` occurrences that did not become rows: README.md:8 and 9, rows in the port table (an infrastructure detail). README.md:1 is in claim 1.
 
-## Afirmações
+## Claims
 
-| # | Documento | Afirmação | Tema | Corroboração | Evidência |
+| # | Document | Claim | Theme | Corroboration | Evidence |
 |---|---|---|---|---|---|
-| 1 | README.md:1 | "micro-frontend workspace" | estrutura | corroborada | 3.4.3 (cinco aplicações no workspace pnpm); pnpm-workspace.yaml:1-2 |
-| 2 | package.json:4 | "a micro-frontend workspace architected by qiankun and module federation" (o workspace combina qiankun e Module Federation) | estrutura | corroborada | 3.4.2 (qiankun e module-federation configurados); 3.4.5 #1-#4 |
-| 3 | packages/host/module-federation.config.ts:6-7 | "we use the runtime API to load our remotes / see `src/app-loaders/module-federation.ts`" (os remotes são carregados pela API de runtime) | composição | corroborada | 3.4.4; packages/host/module-federation.config.ts:5-10; packages/host/src/app-loaders/module-federation.ts:27, 34 |
+| 1 | README.md:1 | "micro-frontend workspace" | structure | corroborated | 3.4.3 (five applications in the pnpm workspace); pnpm-workspace.yaml:1-2 |
+| 2 | package.json:4 | "a micro-frontend workspace architected by qiankun and module federation" (the workspace combines qiankun and Module Federation) | structure | corroborated | 3.4.2 (qiankun and module-federation configured); 3.4.5 #1-#4 |
+| 3 | packages/host/module-federation.config.ts:6-7 | "we use the runtime API to load our remotes / see `src/app-loaders/module-federation.ts`" (remotes are loaded through the runtime API) | composition | corroborated | 3.4.4; packages/host/module-federation.config.ts:5-10; packages/host/src/app-loaders/module-federation.ts:27, 34 |
 
-## Observações
+## Observations
 
-**1. README.md:1.** O workspace tem cinco aplicações e uma biblioteca em `packages/`, todas membros do workspace pnpm. O título não diz mais do que isso.
+**1. README.md:1.** The workspace has five applications and a library in `packages/`, all pnpm workspace members. The title says no more than that.
 
-**2. package.json:4.** A descrição nomeia as duas tecnologias que a revisão de composição encontrou: duas relações `host → remote` por Module Federation (app-mf-1 e app-mf-2) e duas `root-config → application` por qiankun (app-qiankun-1 e app-qiankun-2), todas a partir do host. A declaração de uma composição híbrida confere.
+**2. package.json:4.** The description names both technologies found by the composition review: two `host → remote` relationships through Module Federation (app-mf-1 and app-mf-2), and two `root-config → application` through qiankun (app-qiankun-1 and app-qiankun-2), all from host. The hybrid composition declaration matches.
 
-**3. packages/host/module-federation.config.ts:6-7.** O bloco `remotes` da configuração está vazio, com as entradas estáticas comentadas (packages/host/module-federation.config.ts:8-9). O carregador registra os remotes e os carrega em runtime com `registerRemotes` e `loadRemote`, a partir da lista de `configs/apps.ts`.
+**3. packages/host/module-federation.config.ts:6-7.** Configuration block `remotes` is empty, with static entries commented out (packages/host/module-federation.config.ts:8-9). The loader registers remotes and loads them at runtime with `registerRemotes` and `loadRemote`, from the `configs/apps.ts` list.
 
-## Resumo
+## Summary
 
-Afirmações: 3 (corroborada: 3, parcial: 0, contradita: 0, sem corroboração: 0). Temas: (estrutura: 2, composição: 1).
+Claims: 3 (corroborated: 3, partial: 0, contradicted: 0, uncorroborated: 0). Themes: (structure: 2, composition: 1).

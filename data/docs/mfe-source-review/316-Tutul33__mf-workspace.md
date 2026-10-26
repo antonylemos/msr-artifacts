@@ -15,36 +15,36 @@ annotation:
 
 # 316 — Tutul33/mf-workspace
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-async-bootstrap | projects/customer-app/src/main.ts:5 | projects/customer-app | dynamic-loading | No | `import('./bootstrap')` carrega o bootstrap local de customer-app depois de initFederation (projects/customer-app/src/main.ts:3-5; projects/customer-app/src/bootstrap.ts:5); interno à unidade. |
-| src-async-bootstrap | projects/host-app/src/main.ts:7 | projects/host-app | dynamic-loading | No | `import('./bootstrap')` carrega o bootstrap local do host depois de initFederation (projects/host-app/src/main.ts:3-7; projects/host-app/src/bootstrap.ts:5); interno à unidade. |
-| src-async-bootstrap | projects/orders-app/src/main.ts:5 | projects/orders-app | dynamic-loading | No | `import('./bootstrap')` carrega o bootstrap local de orders-app depois de initFederation (projects/orders-app/src/main.ts:3-5; projects/orders-app/src/bootstrap.ts:5); interno à unidade. |
-| src-load-remote | projects/customer-app/src/main.ts:1 | projects/customer-app | remote-resolution | No | Importa initFederation para a chamada sem argumento em projects/customer-app/src/main.ts:3; prepara o runtime da própria unidade, sem resolver outra aplicação. |
-| src-load-remote | projects/customer-app/src/main.ts:3 | projects/customer-app | remote-resolution | No | `initFederation()` sem manifesto nem remotes; customer-app só expõe `./CustomerRoutes` (projects/customer-app/federation.config.js:7-10), que o host carrega sem executar este main. |
-| src-load-remote | projects/host-app/src/app/app.routes.ts:2 | projects/host-app | remote-resolution | Yes | Importa loadRemoteModule usado nas rotas `customers` e `orders` (projects/host-app/src/app/app.routes.ts:8 e projects/host-app/src/app/app.routes.ts:16). |
-| src-load-remote | projects/host-app/src/app/app.routes.ts:8 | projects/host-app | remote-resolution | Yes | Rota `customers` carrega `./CustomerRoutes` de http://localhost:4301/remoteEntry.json e usa `CustomerRoutesModule` (projects/host-app/src/app/app.routes.ts:5-11); 4301 é a porta de customer-app (angular.json:227), que expõe o módulo em projects/customer-app/federation.config.js:9 (classe em projects/customer-app/src/app/customer/customer-routes.module.ts:12). Rotas registradas por provideRouter em projects/host-app/src/app/app.config.ts:10, usado em projects/host-app/src/bootstrap.ts:5. |
-| src-load-remote | projects/host-app/src/app/app.routes.ts:16 | projects/host-app | remote-resolution | Yes | Rota `orders` carrega `./OrdersRoutes` de http://localhost:4302/remoteEntry.json e usa `OrdersRoutesModule` (projects/host-app/src/app/app.routes.ts:13-19); 4302 é a porta de orders-app (angular.json:340), que expõe o módulo em projects/orders-app/federation.config.js:9 (classe em projects/orders-app/src/app/orders/orders-routes.module.ts:12). Mesma cadeia de registro da linha 8. |
-| src-load-remote | projects/host-app/src/main.ts:1 | projects/host-app | remote-resolution | No | Importa initFederation para a chamada de projects/host-app/src/main.ts:3, que recebeu No (ver a linha seguinte). |
-| src-load-remote | projects/host-app/src/main.ts:3 | projects/host-app | remote-resolution | No | `initFederation` registra o remote `customerApp` em http://localhost:4200/remoteEntry.json (projects/host-app/src/main.ts:3-5), mas 4200 é a porta do próprio host (angular.json:114; README.md:192), não a de customer-app (4301, angular.json:227); o nome `customerApp` não é usado por nenhum loadRemoteModule, que recebe a URL direto (projects/host-app/src/app/app.routes.ts:9 e :17). Não resolve outra unidade; ver Notas. |
-| src-load-remote | projects/orders-app/src/main.ts:1 | projects/orders-app | remote-resolution | No | Importa initFederation para a chamada sem argumento em projects/orders-app/src/main.ts:3; prepara o runtime da própria unidade, sem resolver outra aplicação. |
-| src-load-remote | projects/orders-app/src/main.ts:3 | projects/orders-app | remote-resolution | No | `initFederation()` sem manifesto nem remotes; orders-app só expõe `./OrdersRoutes` (projects/orders-app/federation.config.js:7-10), que o host carrega sem executar este main. |
+| src-async-bootstrap | projects/customer-app/src/main.ts:5 | projects/customer-app | dynamic-loading | No | `import('./bootstrap')` loads the local customer-app bootstrap after initFederation (projects/customer-app/src/main.ts:3-5; projects/customer-app/src/bootstrap.ts:5); internal to the unit. |
+| src-async-bootstrap | projects/host-app/src/main.ts:7 | projects/host-app | dynamic-loading | No | `import('./bootstrap')` loads the host’s local bootstrap after initFederation (projects/host-app/src/main.ts:3-7; projects/host-app/src/bootstrap.ts:5); internal to the unit. |
+| src-async-bootstrap | projects/orders-app/src/main.ts:5 | projects/orders-app | dynamic-loading | No | `import('./bootstrap')` loads the local orders-app bootstrap after initFederation (projects/orders-app/src/main.ts:3-5; projects/orders-app/src/bootstrap.ts:5); internal to the unit. |
+| src-load-remote | projects/customer-app/src/main.ts:1 | projects/customer-app | remote-resolution | No | Imports initFederation for the call without arguments at projects/customer-app/src/main.ts:3; prepares the unit’s own runtime without resolving another application. |
+| src-load-remote | projects/customer-app/src/main.ts:3 | projects/customer-app | remote-resolution | No | `initFederation()` without a manifest or remotes; customer-app only exposes `./CustomerRoutes` (projects/customer-app/federation.config.js:7-10), loaded by the host without executing this main. |
+| src-load-remote | projects/host-app/src/app/app.routes.ts:2 | projects/host-app | remote-resolution | Yes | Imports loadRemoteModule used in routes `customers` and `orders` (projects/host-app/src/app/app.routes.ts:8 and projects/host-app/src/app/app.routes.ts:16). |
+| src-load-remote | projects/host-app/src/app/app.routes.ts:8 | projects/host-app | remote-resolution | Yes | Route `customers` loads `./CustomerRoutes` from http://localhost:4301/remoteEntry.json and uses `CustomerRoutesModule` (projects/host-app/src/app/app.routes.ts:5-11); 4301 is customer-app’s port (angular.json:227), exposing the module at projects/customer-app/federation.config.js:9 (class at projects/customer-app/src/app/customer/customer-routes.module.ts:12). Routes registered by provideRouter at projects/host-app/src/app/app.config.ts:10, used at projects/host-app/src/bootstrap.ts:5. |
+| src-load-remote | projects/host-app/src/app/app.routes.ts:16 | projects/host-app | remote-resolution | Yes | Route `orders` loads `./OrdersRoutes` from http://localhost:4302/remoteEntry.json and uses `OrdersRoutesModule` (projects/host-app/src/app/app.routes.ts:13-19); 4302 is orders-app’s port (angular.json:340), exposing the module at projects/orders-app/federation.config.js:9 (class at projects/orders-app/src/app/orders/orders-routes.module.ts:12). Same registration chain as line 8. |
+| src-load-remote | projects/host-app/src/main.ts:1 | projects/host-app | remote-resolution | No | Imports initFederation for the call at projects/host-app/src/main.ts:3, which received No (see the following row). |
+| src-load-remote | projects/host-app/src/main.ts:3 | projects/host-app | remote-resolution | No | `initFederation` registers remote `customerApp` at http://localhost:4200/remoteEntry.json (projects/host-app/src/main.ts:3-5), but 4200 is the host’s own port (angular.json:114; README.md:192) rather than customer-app’s (4301, angular.json:227); name `customerApp` is used by no loadRemoteModule, which receives the URL directly (projects/host-app/src/app/app.routes.ts:9 and :17). Does not resolve another unit; see Notes. |
+| src-load-remote | projects/orders-app/src/main.ts:1 | projects/orders-app | remote-resolution | No | Imports initFederation for the call without arguments at projects/orders-app/src/main.ts:3; prepares the unit’s own runtime without resolving another application. |
+| src-load-remote | projects/orders-app/src/main.ts:3 | projects/orders-app | remote-resolution | No | `initFederation()` without a manifest or remotes; orders-app only exposes `./OrdersRoutes` (projects/orders-app/federation.config.js:7-10), loaded by the host without executing this main. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | projects/host-app/src/app/app.routes.ts:4 | projects/host-app | host-relationship | Yes | `routes` declara os caminhos `customers` e `orders` que nomeiam customer-app e orders-app (projects/host-app/src/app/app.routes.ts:4-26), registrados por provideRouter em projects/host-app/src/app/app.config.ts:10; apresentados pelos links e pelo `<router-outlet />` de projects/host-app/src/app/app.html:1-3. |
+| manual | projects/host-app/src/app/app.routes.ts:4 | projects/host-app | host-relationship | Yes | `routes` declares paths `customers` and `orders` naming customer-app and orders-app (projects/host-app/src/app/app.routes.ts:4-26), registered by provideRouter at projects/host-app/src/app/app.config.ts:10; presented through links and the `<router-outlet />` at projects/host-app/src/app/app.html:1-3. |
 
-## Resumo
+## Summary
 
-Construções com composição: 4 (remote-resolution: 3, host-relationship: 1).
+Constructs participating in composition: 4 (remote-resolution: 3, host-relationship: 1).
 
-## Notas
+## Notes
 
-- Cadeia ativa do host: angular.json:62 → projects/host-app/src/main.ts:3-7 → projects/host-app/src/bootstrap.ts:5 → projects/host-app/src/app/app.config.ts:10 → projects/host-app/src/app/app.routes.ts:4-26.
-- O `initFederation` do host (projects/host-app/src/main.ts:3-5) recebeu No, e não Undetermined, porque a URL aponta para a porta do próprio host e a composição com customer-app passa toda por loadRemoteModule com URL explícita. Se a intenção era registrar customer-app, a porta está errada; isso não muda o Resumo, pois nem No nem Undetermined contam.
-- A busca do passo 4 achou ainda `import('./customer/home/home')` em projects/customer-app/src/app/app.routes.ts:7, lazy loading interno de customer-app, e trechos de código no README.md e em angular_20_microfrontend_app_guide.md, que não são construções. Não há `customElements`, `<iframe`, `postMessage`, `CustomEvent`, `BroadcastChannel`, injeção de `<script>`, `registerRemotes`, `addEventListener` ou serviço compartilhado entre unidades em `projects/`.
-- A rota vazia do host redireciona para ela mesma (projects/host-app/src/app/app.routes.ts:21-25); não afeta as rotas dos remotes.
+- Active host chain: angular.json:62 → projects/host-app/src/main.ts:3-7 → projects/host-app/src/bootstrap.ts:5 → projects/host-app/src/app/app.config.ts:10 → projects/host-app/src/app/app.routes.ts:4-26.
+- The host’s `initFederation` (projects/host-app/src/main.ts:3-5) received No rather than Undetermined because the URL points to the host’s own port and all customer-app composition goes through loadRemoteModule with an explicit URL. If the intention was to register customer-app, the port is wrong; this does not change the Summary, since neither No nor Undetermined counts.
+- The step 4 search also found `import('./customer/home/home')` at projects/customer-app/src/app/app.routes.ts:7, internal customer-app lazy loading, and code excerpts in README.md and angular_20_microfrontend_app_guide.md, which are not constructs. There are no `customElements`, `<iframe`, `postMessage`, `CustomEvent`, `BroadcastChannel`, `<script>` injection, `registerRemotes`, `addEventListener` or shared inter-unit service in `projects/`.
+- The host’s empty route redirects to itself (projects/host-app/src/app/app.routes.ts:21-25); it does not affect the remote routes.

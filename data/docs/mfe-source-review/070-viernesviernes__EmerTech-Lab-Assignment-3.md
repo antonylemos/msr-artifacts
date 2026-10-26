@@ -15,30 +15,30 @@ annotation:
 
 # 070 — viernesviernes/EmerTech-Lab-Assignment-3
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-remote-import | client/shell-app/src/App.jsx:5 | client/shell-app | dynamic-loading | Yes | Importa authApp/App em client/shell-app/src/App.jsx:5, montado pela rota /login em client/shell-app/src/App.jsx:45; App iniciado por client/shell-app/src/main.jsx:5-20. |
-| src-remote-import | client/shell-app/src/App.jsx:6 | client/shell-app | dynamic-loading | Yes | Importa communityApp/App em client/shell-app/src/App.jsx:6, montado pela rota /community em client/shell-app/src/App.jsx:46; App iniciado por client/shell-app/src/main.jsx:5-20. |
-| src-cross-unit-communication | client/auth-app/src/subcomponents/Login.jsx:37 | client/auth-app | communication | Yes | O login da unidade auth dispara loginSuccess com isLoggedIn (client/auth-app/src/subcomponents/Login.jsx:31-38); o shell escuta o evento em client/shell-app/src/App.jsx:24-28. Login está ligado ao componente remoto por client/auth-app/src/AuthComponent.jsx:4 e client/auth-app/src/AuthComponent.jsx:27. |
-| src-cross-unit-communication | client/shell-app/src/App.jsx:28 | client/shell-app | communication | Yes | O shell registra listener para loginSuccess e atualiza seu estado a partir de event.detail (client/shell-app/src/App.jsx:23-28); evento emitido pela outra unidade em client/auth-app/src/subcomponents/Login.jsx:37. |
+| src-remote-import | client/shell-app/src/App.jsx:5 | client/shell-app | dynamic-loading | Yes | Imports authApp/App at client/shell-app/src/App.jsx:5, mounted by the /login route at client/shell-app/src/App.jsx:45; App started by client/shell-app/src/main.jsx:5-20. |
+| src-remote-import | client/shell-app/src/App.jsx:6 | client/shell-app | dynamic-loading | Yes | Imports communityApp/App at client/shell-app/src/App.jsx:6, mounted by the /community route at client/shell-app/src/App.jsx:46; App started by client/shell-app/src/main.jsx:5-20. |
+| src-cross-unit-communication | client/auth-app/src/subcomponents/Login.jsx:37 | client/auth-app | communication | Yes | The auth unit’s login dispatches loginSuccess with isLoggedIn (client/auth-app/src/subcomponents/Login.jsx:31-38); the shell listens for the event at client/shell-app/src/App.jsx:24-28. Login is connected to the remote component through client/auth-app/src/AuthComponent.jsx:4 and client/auth-app/src/AuthComponent.jsx:27. |
+| src-cross-unit-communication | client/shell-app/src/App.jsx:28 | client/shell-app | communication | Yes | The shell registers a listener for loginSuccess and updates its state from event.detail (client/shell-app/src/App.jsx:23-28); event emitted by the other unit at client/auth-app/src/subcomponents/Login.jsx:37. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | client/shell-app/src/App.jsx:43 | client/shell-app | host-relationship | Yes | Routes declara /login e /community para as duas aplicações remotas (client/shell-app/src/App.jsx:43-47); BrowserRouter instalado em client/shell-app/src/main.jsx:18-22. |
-| manual | client/shell-app/src/App.jsx:45 | client/shell-app | runtime-composition | Yes | Renderiza AuthApp na rota /login, após sua resolução por import remoto em client/shell-app/src/App.jsx:5; App do host é usado em client/shell-app/src/main.jsx:20. |
-| manual | client/shell-app/src/App.jsx:46 | client/shell-app | runtime-composition | Yes | Renderiza CommunityApp na rota /community, após sua resolução por import remoto em client/shell-app/src/App.jsx:6; App do host é usado em client/shell-app/src/main.jsx:20. |
+| manual | client/shell-app/src/App.jsx:43 | client/shell-app | host-relationship | Yes | Routes declares /login and /community for the two remote applications (client/shell-app/src/App.jsx:43-47); BrowserRouter installed at client/shell-app/src/main.jsx:18-22. |
+| manual | client/shell-app/src/App.jsx:45 | client/shell-app | runtime-composition | Yes | Renders AuthApp in the /login route after resolution through the remote import at client/shell-app/src/App.jsx:5; the host App is used at client/shell-app/src/main.jsx:20. |
+| manual | client/shell-app/src/App.jsx:46 | client/shell-app | runtime-composition | Yes | Renders CommunityApp in the /community route after resolution through the remote import at client/shell-app/src/App.jsx:6; the host App is used at client/shell-app/src/main.jsx:20. |
 
-## Resumo
+## Summary
 
-Construções com composição: 7 (dynamic-loading: 2, communication: 2, host-relationship: 1, runtime-composition: 2).
+Constructs participating in composition: 7 (dynamic-loading: 2, communication: 2, host-relationship: 1, runtime-composition: 2).
 
-## Notas
+## Notes
 
-- A comunicação loginSuccess é entre a unidade auth e o shell, não um evento interno isolado: emissão e listener ativos foram encontrados nos dois lados. O payload é lido em client/shell-app/src/App.jsx:24-25.
-- Após emitir o evento, Login navega para / em client/auth-app/src/subcomponents/Login.jsx:38. O shell também consulta a sessão no backend em client/shell-app/src/App.jsx:19-21; essa consulta HTTP não foi contada como comunicação entre frontends.
-- Cadeia do emissor: componente remoto client/auth-app/src/App.jsx:5-22 → client/auth-app/src/AuthComponent.jsx:4-27 → Login. Cadeia do receptor: client/shell-app/src/main.jsx:5-20 → client/shell-app/src/App.jsx:23-37. Nenhum ponto de dúvida.
-- Pelo critério de construções fora da mineração (passo 4 do método), ficam fora da tabela a remoção do listener `loginSuccess` em client/shell-app/src/App.jsx:35 (ponto de uso do evento registrado em :28) e os exports dos componentes expostos em client/auth-app/src/App.jsx:27 e client/community-app/src/App.jsx:23.
+- The loginSuccess communication is between the auth unit and shell rather than an isolated internal event: active emission and listener were found on both sides. The payload is read at client/shell-app/src/App.jsx:24-25.
+- After emitting the event, Login navigates to / at client/auth-app/src/subcomponents/Login.jsx:38. The shell also queries the backend session at client/shell-app/src/App.jsx:19-21; this HTTP query was not counted as communication between frontends.
+- Sender chain: remote component client/auth-app/src/App.jsx:5-22 → client/auth-app/src/AuthComponent.jsx:4-27 → Login. Receiver chain: client/shell-app/src/main.jsx:5-20 → client/shell-app/src/App.jsx:23-37. No point of doubt.
+- Under the criteria for constructs outside mining (method step 4), removal of the `loginSuccess` listener at client/shell-app/src/App.jsx:35 (a usage point of the event recorded at :28) and exports of the exposed components at client/auth-app/src/App.jsx:27 and client/community-app/src/App.jsx:23 remain outside the table.

@@ -15,35 +15,35 @@ annotation:
 
 # 228 — Christian-Encalada/examen-microfrontend
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-remote-import | @mf-types/AlertDashboard/apis.d.ts:3 | . | none | No | `typeof import('AlertDashboard/AlertDashboard')` é tipo condicional num arquivo de declaração gerado do DTS do Module Federation (@mf-types/index.d.ts:1-26), usado só pelo TypeScript via `paths` (tsconfig.json:15-17); não carrega nada em runtime. O carregamento real é o import estático em src/App.tsx:4 (linha manual de src/App.tsx:66). |
-| src-remote-import | @mf-types/AlertDashboard/compiled-types/components/AlertDashboard.d.ts:1 | . | none | No | `import("react/jsx-runtime").JSX.Element` é só o tipo de retorno na declaração gerada do componente `AlertDashboard`; falso positivo do padrão. |
-| src-remote-import | @mf-types/AlertSender/apis.d.ts:3 | . | none | No | `typeof import('AlertSender/AlertSender')` é tipo condicional num arquivo de declaração gerado do DTS do Module Federation (@mf-types/index.d.ts:1-26), usado só pelo TypeScript via `paths` (tsconfig.json:15-17); não carrega nada em runtime. O carregamento real é o import estático em src/App.tsx:3 (linha manual de src/App.tsx:63). |
-| src-remote-import | @mf-types/AlertSender/compiled-types/components/AlertSender.d.ts:1 | . | none | No | `import("react/jsx-runtime").JSX.Element` é só o tipo de retorno na declaração gerada do componente `AlertSender`; falso positivo do padrão. |
-| src-mount-export | src/types/federation.d.ts:2 | . | none | No | Assinatura `export function mount(el: HTMLElement)` dentro de `declare module "Footer/Footer"` (src/types/federation.d.ts:1-5): só declaração de tipo, sem implementação. Não há remote `Footer` na configuração do host (module-federation.config.ts:5-8) nem import de `Footer/Footer` no código. |
-| src-mount-call | src/types/federation.d.ts:2 | . | none | No | Mesma linha da anterior: é a assinatura de tipo `mount(el: HTMLElement)` em `declare module "Footer/Footer"`, não uma chamada; nenhum código chama `mount`. |
-| src-cross-unit-communication | alert-dashboard/src/components/AlertDashboard.tsx:103 | alert-dashboard | communication | Yes | `window.addEventListener('academic-alert', handleAlert)` no `useEffect` do componente (alert-dashboard/src/components/AlertDashboard.tsx:97-108) recebe o `CustomEvent` disparado pela unidade alert-sender (alert-sender/src/components/AlertSender.tsx:72-80) e mostra o `detail` (alert-dashboard/src/components/AlertDashboard.tsx:98-101). Ativo: o componente é exposto (alert-dashboard/module-federation.config.ts:4-6) e renderizado pelo host em src/App.tsx:66, na mesma página que AlertSender (src/App.tsx:63). |
-| src-cross-unit-communication | alert-sender/src/components/AlertSender.tsx:72 | alert-sender | communication | Yes | `new CustomEvent('academic-alert', { detail: { type, message, timestamp } })` criado em `sendAlert` (alert-sender/src/components/AlertSender.tsx:71-81), chamado pelos botões (alert-sender/src/components/AlertSender.tsx:87-95); o alvo é a unidade alert-dashboard, que escuta o evento em alert-dashboard/src/components/AlertDashboard.tsx:103. Ativo: o componente é exposto (alert-sender/module-federation.config.ts:4-6) e renderizado pelo host em src/App.tsx:63. |
-| src-cross-unit-communication | alert-sender/src/components/AlertSender.tsx:80 | alert-sender | communication | Yes | `window.dispatchEvent(event)` dispara o `CustomEvent` `academic-alert` criado na linha 72 (alert-sender/src/components/AlertSender.tsx:72-80) para a unidade alert-dashboard (alert-dashboard/src/components/AlertDashboard.tsx:103). Mesmo mecanismo da linha anterior. |
+| src-remote-import | @mf-types/AlertDashboard/apis.d.ts:3 | . | none | No | `typeof import('AlertDashboard/AlertDashboard')` is a conditional type in a generated Module Federation DTS declaration file (@mf-types/index.d.ts:1-26), used only by TypeScript through `paths` (tsconfig.json:15-17); loads nothing at runtime. Actual loading is the static import at src/App.tsx:4 (manual row at src/App.tsx:66). |
+| src-remote-import | @mf-types/AlertDashboard/compiled-types/components/AlertDashboard.d.ts:1 | . | none | No | `import("react/jsx-runtime").JSX.Element` is only the return type in the generated declaration of component `AlertDashboard`; a pattern false positive. |
+| src-remote-import | @mf-types/AlertSender/apis.d.ts:3 | . | none | No | `typeof import('AlertSender/AlertSender')` is a conditional type in a generated Module Federation DTS declaration file (@mf-types/index.d.ts:1-26), used only by TypeScript through `paths` (tsconfig.json:15-17); loads nothing at runtime. Actual loading is the static import at src/App.tsx:3 (manual row at src/App.tsx:63). |
+| src-remote-import | @mf-types/AlertSender/compiled-types/components/AlertSender.d.ts:1 | . | none | No | `import("react/jsx-runtime").JSX.Element` is only the return type in the generated declaration of component `AlertSender`; a pattern false positive. |
+| src-mount-export | src/types/federation.d.ts:2 | . | none | No | Signature `export function mount(el: HTMLElement)` within `declare module "Footer/Footer"` (src/types/federation.d.ts:1-5): only a type declaration without implementation. There is no `Footer` remote in host configuration (module-federation.config.ts:5-8) or `Footer/Footer` import in code. |
+| src-mount-call | src/types/federation.d.ts:2 | . | none | No | The same line as above: a type signature `mount(el: HTMLElement)` in `declare module "Footer/Footer"` rather than a call; no code calls `mount`. |
+| src-cross-unit-communication | alert-dashboard/src/components/AlertDashboard.tsx:103 | alert-dashboard | communication | Yes | `window.addEventListener('academic-alert', handleAlert)` in the component’s `useEffect` (alert-dashboard/src/components/AlertDashboard.tsx:97-108) receives the `CustomEvent` dispatched by unit alert-sender (alert-sender/src/components/AlertSender.tsx:72-80) and shows the `detail` (alert-dashboard/src/components/AlertDashboard.tsx:98-101). Active: the component is exposed (alert-dashboard/module-federation.config.ts:4-6) and rendered by the host at src/App.tsx:66, on the same page as AlertSender (src/App.tsx:63). |
+| src-cross-unit-communication | alert-sender/src/components/AlertSender.tsx:72 | alert-sender | communication | Yes | `new CustomEvent('academic-alert', { detail: { type, message, timestamp } })` created in `sendAlert` (alert-sender/src/components/AlertSender.tsx:71-81), called by buttons (alert-sender/src/components/AlertSender.tsx:87-95); the target is unit alert-dashboard, which listens for the event at alert-dashboard/src/components/AlertDashboard.tsx:103. Active: the component is exposed (alert-sender/module-federation.config.ts:4-6) and rendered by the host at src/App.tsx:63. |
+| src-cross-unit-communication | alert-sender/src/components/AlertSender.tsx:80 | alert-sender | communication | Yes | `window.dispatchEvent(event)` dispatches the `CustomEvent` `academic-alert` created on line 72 (alert-sender/src/components/AlertSender.tsx:72-80) to unit alert-dashboard (alert-dashboard/src/components/AlertDashboard.tsx:103). Same mechanism as the preceding row. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | src/App.tsx:63 | . | runtime-composition | Yes | Renderiza `<AlertSender />`, componente da unidade alert-sender, na primeira seção do host (src/App.tsx:62-64); o componente vem do import estático `AlertSender/AlertSender` em src/App.tsx:3, resolvido pelo remote `AlertSender@http://localhost:3001/remoteEntry.js` (module-federation.config.ts:6) e exposto em alert-sender/module-federation.config.ts:4-6. App é carregado por src/index.ts:1 e renderizado em src/App.tsx:72-74. |
-| manual | src/App.tsx:66 | . | runtime-composition | Yes | Renderiza `<AlertDashboard />`, componente da unidade alert-dashboard, na segunda seção do host (src/App.tsx:65-67); o componente vem do import estático `AlertDashboard/AlertDashboard` em src/App.tsx:4, resolvido pelo remote `AlertDashboard@http://localhost:3002/remoteEntry.js` (module-federation.config.ts:7) e exposto em alert-dashboard/module-federation.config.ts:4-6. App é carregado por src/index.ts:1 e renderizado em src/App.tsx:72-74. |
+| manual | src/App.tsx:63 | . | runtime-composition | Yes | Renders `<AlertSender />`, a component of unit alert-sender, in the first host section (src/App.tsx:62-64); the component comes from static import `AlertSender/AlertSender` at src/App.tsx:3, resolved by remote `AlertSender@http://localhost:3001/remoteEntry.js` (module-federation.config.ts:6) and exposed at alert-sender/module-federation.config.ts:4-6. App is loaded by src/index.ts:1 and rendered at src/App.tsx:72-74. |
+| manual | src/App.tsx:66 | . | runtime-composition | Yes | Renders `<AlertDashboard />`, a component of unit alert-dashboard, in the second host section (src/App.tsx:65-67); the component comes from static import `AlertDashboard/AlertDashboard` at src/App.tsx:4, resolved by remote `AlertDashboard@http://localhost:3002/remoteEntry.js` (module-federation.config.ts:7) and exposed at alert-dashboard/module-federation.config.ts:4-6. App is loaded by src/index.ts:1 and rendered at src/App.tsx:72-74. |
 
-## Resumo
+## Summary
 
-Construções com composição: 5 (communication: 3, runtime-composition: 2).
+Constructs participating in composition: 5 (communication: 3, runtime-composition: 2).
 
-## Notas
+## Notes
 
-- As quatro linhas de `@mf-types/` são declarações de tipo geradas pelo DTS do Module Federation; não carregam nada. As `loadRemote` de @mf-types/index.d.ts:8-25 também são só declarações e não viraram linha.
-- `src/types/federation.d.ts` declara um módulo `Footer/Footer` que não corresponde a nenhum remote do snapshot; parece resto de outro projeto e não participa da composição.
-- Os `import("./App")` de src/index.ts:1, alert-sender/src/index.ts:1 e alert-dashboard/src/index.ts:1 são internos à própria unidade e não viraram linha.
-- A comunicação entre alert-sender e alert-dashboard só funciona quando os dois estão na mesma página, o que acontece no host (src/App.tsx:62-67); cada remoto rodando sozinho (alert-sender/src/App.tsx:4-10, alert-dashboard/src/App.tsx:4-10) não tem o outro lado do evento.
-- A busca do passo 4 não achou custom elements, iframes, `postMessage`, `BroadcastChannel`, `localStorage`, `loadRemote` chamado nem injeção de script.
+- The four `@mf-types/` rows are type declarations generated by Module Federation DTS; they load nothing. The `loadRemote` declarations at @mf-types/index.d.ts:8-25 are also only declarations and did not become rows.
+- `src/types/federation.d.ts` declares a `Footer/Footer` module corresponding to no remote in the snapshot; it appears to be a remnant of another project and does not participate in composition.
+- The `import("./App")` calls at src/index.ts:1, alert-sender/src/index.ts:1 and alert-dashboard/src/index.ts:1 are internal to their own units and did not become rows.
+- Communication between alert-sender and alert-dashboard only works when both are on the same page, as happens in the host (src/App.tsx:62-67); each remote running alone (alert-sender/src/App.tsx:4-10, alert-dashboard/src/App.tsx:4-10) lacks the other event side.
+- The step 4 search found no custom elements, iframes, `postMessage`, `BroadcastChannel`, `localStorage`, `loadRemote` calls or script injection.

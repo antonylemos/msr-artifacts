@@ -20,62 +20,62 @@ annotation:
 
 # 341 — thirupathi124/SDE-1
 
-## Contexto
+## Context
 
-Exercício de frontend para um processo seletivo (“A frontend assignment project for **RAGA.AI**”, `README.md:3`): uma única aplicação Next.js 16 (App Router) de SaaS de saúde, com Firebase Auth, shadcn/ui e dados simulados em JSON (`README.md:1–34`, `67–74`). Micro-frontends aparecem só como possibilidade futura: “…making the app ready for micro-frontend splits or API integration without restructuring pages.” (`README.md:78`). O nome do repositório não é usado como evidência.
+Frontend exercise for a hiring process (“A frontend assignment project for **RAGA.AI**”, `README.md:3`): a single Next.js 16 (App Router) healthcare SaaS application, with Firebase Auth, shadcn/ui and mock JSON data (`README.md:1–34`, `67–74`). Micro-frontends appear only as a future possibility: “…making the app ready for micro-frontend splits or API integration without restructuring pages.” (`README.md:78`). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:342` registra rank 341, ID 1226451008, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:342` records rank 341, ID 1226451008, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:342` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:29354` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:29360` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:342` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:29354` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:29360` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2026-05` e `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2026-05` and an empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | 2026-10-07T22:36:39.291Z / 2026-10-08T15:59:48.873Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | 2026-10-07T23:05:10.076Z / 2026-10-08T16:09:15.173Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2026-05-01..2026-05-31`.
+The effective queries append `pushed:>=2025-04-01 created:2026-05-01..2026-05-31`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem TypeScript, `fork: false`, tamanho 177;
-- criação em 2026-05-01T12:16:37Z, push em 2026-05-01T12:33:54Z.
+Hit metadata:
+- null description, no topics, language TypeScript, `fork: false`, size 177;
+- created at 2026-05-01T12:16:37Z, pushed at 2026-05-01T12:33:54Z.
 
-A única grafia é “micro-frontend”, em `README.md:78`. O plural não aparece literalmente; esse hit depende do processamento textual da busca do GitHub, que não está registrado. A última alteração do README é `bd37c42` (2026-05-01), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The only spelling is “micro-frontend”, in `README.md:78`. The plural does not appear literally; this hit depends on GitHub search text processing, which is not recorded. The last README change is `bd37c42` (2026-05-01), before the October 2026 collections. The README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 71 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Uma única aplicação Next.js na raiz: `app/` (páginas), `components/`, `context/`, `hooks/`, `lib/`, `data/*.json`, `public/` (PWA) e configs. | contrária |
-| Configuração | `next.config.ts:1–12`: só `reactStrictMode` e o wrapper PWA (`@ducanh2912/next-pwa`); sem `rewrites`, zonas ou federação. | contrária |
-| Busca de mecanismos | `git grep` no SHA, sem lockfile, por `micro.?front`, `federation`, `iframe`, `single-spa`, `remoteEntry`, `zones` e `rewrites`: só `README.md:78`. | ausente |
-| Documentação | `README.md:76–78`: as pastas de funcionalidade são módulos internos da mesma aplicação, “ready for micro-frontend splits” no futuro. | contrária |
+| Structure | `git ls-tree -r` at the SHA: 71 entries, all regular files `100644`; zero symlinks and zero gitlinks. A single Next.js application at the root: `app/` (pages), `components/`, `context/`, `hooks/`, `lib/`, `data/*.json`, `public/` (PWA) and configs. | contrary |
+| Configuration | `next.config.ts:1–12`: only `reactStrictMode` and PWA wrapper (`@ducanh2912/next-pwa`); no `rewrites`, zones or federation. | contrary |
+| Mechanism search | `git grep` at the SHA, without lockfile, for `micro.?front`, `federation`, `iframe`, `single-spa`, `remoteEntry`, `zones` and `rewrites`: only `README.md:78`. | absent |
+| Documentation | `README.md:76–78`: feature folders are internal modules of the same application, “ready for micro-frontend splits” in the future. | contrary |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 3 commits lineares, nenhum merge, todos de `thirupathi-lab`, de 2026-04-28 (`38be4a9`, “Initial commit from Create Next App”) a 2026-05-01 (SHA `87e0d01`, “app process completed”). Só há o branch `main`. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 3 linear commits, no merges, all by `thirupathi-lab`, from 2026-04-28 (`38be4a9`, “Initial commit from Create Next App”) to 2026-05-01 (SHA `87e0d01`, “app process completed”). Only branch `main` exists. No historical blob was read and there was no missing object.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única aplicação frontend; os “módulos” de funcionalidade são pastas internas (`README.md:78`). |
-| Q2 | No | Sem duas unidades, não há independência a avaliar. |
-| Q3 | No | Não há host, shell ou configuração raiz de composição. |
-| Q4 | No | Nenhum mecanismo de composição (`next.config.ts:1–12`). |
-| Q5 | No | Q1–Q4 são No: aplicação Next.js convencional de exercício. |
+| Q1 | No | A single frontend application; feature “modules” are internal folders (`README.md:78`). |
+| Q2 | No | Without two units, there is no independence to assess. |
+| Q3 | No | There is no host, shell or root composition configuration. |
+| Q4 | No | No composition mechanism (`next.config.ts:1–12`). |
+| Q5 | No | Q1–Q4 are No: conventional Next.js exercise application. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “conventional frontend monoliths” e a “repositories mentioning micro-frontends without implementing them”.
-- Como no final 094 (exercício de entrevista), o caráter de exercício só define `repo_type: example`. Mesmo enquadramento do rascunho 306 (micro-frontends citados como possibilidade futura).
-- **Campos:** `frontend_units: 1`, `unit_organization: single-unit`, `approaches: []`, `ui_technologies: [react, next]`, `build_tools: []` (Next.js sem bundler explícito, como em 094).
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. It matches “conventional frontend monoliths” and “repositories mentioning micro-frontends without implementing them”.
+- As in final 094 (interview exercise), exercise status defines only `repo_type: example`. Same categorization as draft 306 (micro-frontends cited as a future possibility).
+- **Fields:** `frontend_units: 1`, `unit_organization: single-unit`, `approaches: []`, `ui_technologies: [react, next]`, `build_tools: []` (Next.js without explicit bundler, as in 094).
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** uma linha sobre prontidão para “micro-frontend splits” casa as duas consultas terminológicas.
-- **Protocolo (busca):** o hit plural não tem grafia literal. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ1 (misleading signals):** one line about readiness for “micro-frontend splits” matches both terminology queries.
+- **Protocol (search):** the plural hit has no literal spelling. Eligibility changes from `unknown` (001) to `pass` (002).

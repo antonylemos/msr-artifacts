@@ -20,59 +20,59 @@ annotation:
 
 # 369 — Boopathi-V-143/Micro-FrontEnd-React
 
-## Contexto
+## Context
 
-Repositório vazio: o único commit, criado pela interface do GitHub, contém só um `README.md` de duas linhas que repete o identificador “Micro-FrontEnd-React” (`README.md:1–2`). Não há código, configuração nem dependências. O nome do repositório não é usado como evidência.
+Empty repository: the only commit, created through the GitHub interface, contains only a two-line `README.md` repeating identifier “Micro-FrontEnd-React” (`README.md:1–2`). There is no code, configuration or dependency. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:370` registra rank 369, ID 1068958688, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:370` records rank 369, ID 1068958688, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:370` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:19509` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:19515` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:370` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:19509` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:19515` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2025-10` e `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2025-10` and an empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | 2026-10-07T22:26:30.472Z / 2026-10-08T15:56:06.882Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | 2026-10-07T22:57:16.375Z / 2026-10-08T16:06:53.306Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2025-10-01..2025-10-31`.
+The effective queries append `pushed:>=2025-04-01 created:2025-10-01..2025-10-31`.
 
-Metadados do hit:
-- descrição “Micro-FrontEnd-React”, sem tópicos, linguagem nula, `fork: false`, tamanho 0;
-- criação em 2025-10-03T07:17:37Z, push em 2025-10-03T07:17:38Z.
+Hit metadata:
+- description “Micro-FrontEnd-React”, no topics, null language, `fork: false`, size 0;
+- created at 2025-10-03T07:17:37Z, pushed at 2025-10-03T07:17:38Z.
 
-O único texto é o identificador “Micro-FrontEnd-React”, em `README.md:1–2` e na descrição. O plural não aparece; os hits dependem do processamento textual da busca do GitHub, que não está registrado. O README é do único commit (2025-10-03), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The only text is identifier “Micro-FrontEnd-React”, in `README.md:1–2` and the description. The plural does not appear; hits depend on GitHub search text processing, which is not recorded. The README is from the only commit (2025-10-03), before the October 2026 collections. The README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 1 entrada, arquivo regular `100644` (`README.md`, 44 bytes); zero symlinks e zero gitlinks. | contrária |
-| Documentação | `README.md:1–2`: só o título repetido. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 1 entry, regular file `100644` (`README.md`, 44 bytes); zero symlinks and zero gitlinks. | contrary |
+| Documentation | `README.md:1–2`: only the repeated title. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; um único commit, `8c19363` (2025-10-03, “Initial commit”), de `Boopathi-V-143`, criado pela interface do GitHub. Só há o branch `main`. Não houve objeto ausente.
+Non-shallow clone; a single commit, `8c19363` (2025-10-03, “Initial commit”), by `Boopathi-V-143`, created through the GitHub interface. Only branch `main` exists. There was no missing object.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend; só um README de duas linhas. |
-| Q2 | No | Sem unidades, não há independência a avaliar. |
-| Q3 | No | Não há host, shell ou configuração raiz. |
-| Q4 | No | Nenhum mecanismo de composição. |
-| Q5 | No | Q1–Q4 são No: repositório vazio. |
+| Q1 | No | No frontend unit; only a two-line README. |
+| Q2 | No | Without units, there is no independence to assess. |
+| Q3 | No | There is no host, shell or root configuration. |
+| Q4 | No | No composition mechanism. |
+| Q5 | No | Q1–Q4 are No: empty repository. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”: o termo está só no título e na descrição, sem implementação.
-- Mesmo enquadramento dos rascunhos 265 e 300 (repositórios só com README inicial) e dos perfis 011/064/068/073/077/101/111.
-- **Campos:** `repo_type: other`, `frontend_units: 0`, `unit_organization: none`, `approaches: []`, `ui_technologies: []`, `build_tools: []`.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”: the term is only in the title and description, without implementation.
+- Same categorization as drafts 265 and 300 (repositories with only an initial README) and profiles 011/064/068/073/077/101/111.
+- **Fields:** `repo_type: other`, `frontend_units: 0`, `unit_organization: none`, `approaches: []`, `ui_technologies: []`, `build_tools: []`.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **Protocolo (busca):** o identificador hifenizado do título e da descrição (e o nome) casa as duas consultas; o plural não tem grafia literal. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **Protocol (search):** the hyphenated identifier in the title and description (and name) matches both queries; the plural has no literal spelling. Eligibility changes from `unknown` (001) to `pass` (002).

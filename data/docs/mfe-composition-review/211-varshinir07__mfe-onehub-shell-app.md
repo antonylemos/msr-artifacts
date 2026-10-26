@@ -20,28 +20,29 @@ annotation:
 
 # 211 — varshinir07/mfe-onehub-shell-app
 
-## Leitura do repositório
+## Repository overview
 
-O repositório contém só o host de Module Federation, um projeto React criado com Create React App e passado para uma configuração Webpack 5 própria (src/webpack.config.js:1-102). O host se declara `onehub` e não expõe nada; consome dois remotes fora do snapshot, declarados com chaves locais distintas dos nomes dos containers: `remote1` → `subscription@http://localhost:3001/remoteEntry.js` e `remote2` → `ownership@http://localhost:3002/remoteEntry.js` (src/webpack.config.js:72-78). `react` e `react-dom` são compartilhados como singleton e `eager` (src/webpack.config.js:79-91), e a entrada renderiza o App diretamente, sem bootstrap assíncrono (src/index.js:7-12).
+The repository contains only a Module Federation host, a React project created with Create React App and moved to its own Webpack 5 configuration (src/webpack.config.js:1-102). The host declares itself as `onehub` and exposes nothing; it consumes two remotes outside the snapshot, declared with local keys differing from their container names: `remote1` → `subscription@http://localhost:3001/remoteEntry.js` and `remote2` → `ownership@http://localhost:3002/remoteEntry.js` (src/webpack.config.js:72-78). `react` and `react-dom` are shared as singletons and `eager` (src/webpack.config.js:79-91), and the entry point renders App directly, without asynchronous bootstrap (src/index.js:7-12).
 
-Toda a composição está numa única tela: `src/pages/Dashboard.jsx` carrega por `React.lazy` três módulos de `subscription` (`ModemAuthorization`, `SecurityPackage`, `Card`) e dois de `ownership` (`LabourHourHold`, `MobileService`) (src/pages/Dashboard.jsx:3-9) e os renderiza lado a lado sob um único `React.Suspense` (src/pages/Dashboard.jsx:15-26); só `Card` recebe props do host (src/pages/Dashboard.jsx:22-25). O Dashboard é montado pelo App (src/App.js:3, 8). Não há roteamento, comunicação entre unidades nem tratamento de falha de carga além do fallback "Loading...".
+All composition resides in a single screen: `src/pages/Dashboard.jsx` loads through `React.lazy` three modules from `subscription` (`ModemAuthorization`, `SecurityPackage`, `Card`) and two from `ownership` (`LabourHourHold`, `MobileService`) (src/pages/Dashboard.jsx:3-9), rendering them side by side under a single `React.Suspense` (src/pages/Dashboard.jsx:15-26); only `Card` receives host props (src/pages/Dashboard.jsx:22-25). Dashboard is mounted by App (src/App.js:3, 8). There is no routing, inter-unit communication or loading-failure handling beyond the "Loading..." fallback.
 
-É um exemplo: URLs fixas de `localhost`, sem deploy, com o README padrão do CRA. O cabeçalho do README chama o projeto de "MFE Remote App for OnehubShell" (README.md:1-2), o que diverge do código, em que ele é o host. Os remotes não estão no snapshot nem são localizados por outra referência além da URL local.
+It is an example: fixed `localhost` URLs, no deployment, with the standard CRA README. The README header calls the project "MFE Remote App for OnehubShell" (README.md:1-2), differing from the code, where it is the host. The remotes are absent from the snapshot and are not located through any reference beyond the local URL.
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | . | subscription | host → remote | origem → destino | module-federation | No | Yes | src/webpack.config.js:76 (`remote1: 'subscription@http://localhost:3001/remoteEntry.js'`) | src/pages/Dashboard.jsx:3; src/pages/Dashboard.jsx:4; src/pages/Dashboard.jsx:9; src/pages/Dashboard.jsx:16; src/pages/Dashboard.jsx:17; src/pages/Dashboard.jsx:22 |
-| 2 | . | ownership | host → remote | origem → destino | module-federation | No | Yes | src/webpack.config.js:77 (`remote2: 'ownership@http://localhost:3002/remoteEntry.js'`) | src/pages/Dashboard.jsx:6; src/pages/Dashboard.jsx:7; src/pages/Dashboard.jsx:18; src/pages/Dashboard.jsx:19 |
+| 1 | . | subscription | host → remote | source → target | module-federation | No | Yes | src/webpack.config.js:76 (`remote1: 'subscription@http://localhost:3001/remoteEntry.js'`) | src/pages/Dashboard.jsx:3; src/pages/Dashboard.jsx:4; src/pages/Dashboard.jsx:9; src/pages/Dashboard.jsx:16; src/pages/Dashboard.jsx:17; src/pages/Dashboard.jsx:22 |
+| 2 | . | ownership | host → remote | source → target | module-federation | No | Yes | src/webpack.config.js:77 (`remote2: 'ownership@http://localhost:3002/remoteEntry.js'`) | src/pages/Dashboard.jsx:6; src/pages/Dashboard.jsx:7; src/pages/Dashboard.jsx:18; src/pages/Dashboard.jsx:19 |
 
-## Observações
+## Observations
 
-**1. . → subscription.** O host importa `remote1/ModemAuthorization`, `remote1/SecurityPackage` e `remote1/Card` (src/pages/Dashboard.jsx:3, 4, 9) e os renderiza em src/pages/Dashboard.jsx:16, 17 e 22-25, este último com as props `topic` e `description`. A chave `remote1` é mapeada para o container `subscription` em `localhost:3001` (src/webpack.config.js:76); o Destino é o nome do container como aparece no artefato, já que não há unidade correspondente no snapshot. Ativa = Yes pelas linhas `Yes` da revisão de código-fonte, na cadeia src/index.js:8-12 → src/App.js:8 → Dashboard.
+**1. . → subscription.** The host imports `remote1/ModemAuthorization`, `remote1/SecurityPackage` and `remote1/Card` (src/pages/Dashboard.jsx:3, 4, 9) and renders them in src/pages/Dashboard.jsx:16, 17 and 22-25, the last with props `topic` and `description`. Key `remote1` is mapped to container `subscription` at `localhost:3001` (src/webpack.config.js:76); Target is the container name as appearing in the artifact, since no snapshot unit matches it. Active = Yes through the `Yes` source code review lines, in chain src/index.js:8-12 → src/App.js:8 → Dashboard.
 
-**2. . → ownership.** O host importa `remote2/LabourHourHold` e `remote2/MobileService` (src/pages/Dashboard.jsx:6-7) e os renderiza em src/pages/Dashboard.jsx:18-19. A chave `remote2` é mapeada para o container `ownership` em `localhost:3002` (src/webpack.config.js:77), fora do snapshot. Ativa = Yes pela mesma cadeia da relação 1.
+**2. . → ownership.** The host imports `remote2/LabourHourHold` and `remote2/MobileService` (src/pages/Dashboard.jsx:6-7) and renders them in src/pages/Dashboard.jsx:18-19. Key `remote2` is mapped to container `ownership` at `localhost:3002` (src/webpack.config.js:77), outside the snapshot. Active = Yes through the same chain as relationship 1.
 
-## Resumo
+## Summary
 
-Relações: 2 (host → remote: 2). Ativas: 2. Destino fora do snapshot: 2.
-Unidades sem relação: nenhuma.
+Relationships: 2 (host → remote: 2). Active: 2. Target outside the snapshot: 2.
+Units without a relationship: none.
+

@@ -15,26 +15,26 @@ annotation:
 
 # 332 — karthik5656/Catalog.App
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-remote-import | src/frontend/apps/ui-catalog/vite.config.ts:37 | src/frontend/apps/ui-catalog | dynamic-loading | Yes | O plugin `remoteAppsPlugin` gera, para cada entrada de `remotes.json`, ``Component: React.lazy(() => import("${app.scope}/${modulePath}"))`` (:32-39), ou seja, `import("merchantApp/App")` e `import("consumerApp/App")`, módulos expostos como `"./App"` pelos remotes (src/frontend/apps/ui-catalog-merchant/vite.config.ts:19-21; src/frontend/apps/ui-catalog-consumer/vite.config.ts:19-21). O código vai para `src/remoteApps.generated.tsx` (src/frontend/apps/ui-catalog/vite.config.ts:27, :41-50), gerado no `buildStart` (:57-59) e ignorado pelo git (src/frontend/apps/ui-catalog/.gitignore:16), por isso ausente do snapshot. Ativo: o plugin está em `plugins` (src/frontend/apps/ui-catalog/vite.config.ts:84), e `remoteApps` é importado em src/frontend/apps/ui-catalog/src/App.tsx:3. |
+| src-remote-import | src/frontend/apps/ui-catalog/vite.config.ts:37 | src/frontend/apps/ui-catalog | dynamic-loading | Yes | Plugin `remoteAppsPlugin` generates, for each `remotes.json` entry, ``Component: React.lazy(() => import("${app.scope}/${modulePath}"))`` (:32-39), meaning `import("merchantApp/App")` and `import("consumerApp/App")`, modules exposed as `"./App"` by remotes (src/frontend/apps/ui-catalog-merchant/vite.config.ts:19-21; src/frontend/apps/ui-catalog-consumer/vite.config.ts:19-21). The code goes to `src/remoteApps.generated.tsx` (src/frontend/apps/ui-catalog/vite.config.ts:27, :41-50), generated in `buildStart` (:57-59) and ignored by git (src/frontend/apps/ui-catalog/.gitignore:16), hence absent from the snapshot. Active: the plugin is in `plugins` (src/frontend/apps/ui-catalog/vite.config.ts:84), and `remoteApps` is imported at src/frontend/apps/ui-catalog/src/App.tsx:3. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | src/frontend/apps/ui-catalog/remotes.json:3 | src/frontend/apps/ui-catalog | host-relationship | Yes | Registro dos remotes do shell: `"scope": "merchantApp"` com `"url": "http://localhost:3001/assets/remoteEntry.js"`, `"module": "./App"` e `"route": "merchant"` (src/frontend/apps/ui-catalog/remotes.json:2-8), e `"scope": "consumerApp"` com `http://localhost:3002/assets/remoteEntry.js` e `"route": "consumer"` (:9-15). As portas 3001 e 3002 são as de ui-catalog-merchant (src/frontend/apps/ui-catalog-merchant/vite.config.ts:9) e ui-catalog-consumer (src/frontend/apps/ui-catalog-consumer/vite.config.ts:9). O arquivo é lido pelo `vite.config.ts` do shell para montar os `remotes` da federação (src/frontend/apps/ui-catalog/vite.config.ts:10-17, :85-89) e gerar as rotas (:30). |
-| manual | src/frontend/apps/ui-catalog/src/App.tsx:26 | src/frontend/apps/ui-catalog | runtime-composition | Yes | Renderiza `<Component />`, o componente remoto lazy de cada entrada de `remoteApps`, dentro de `Suspense` na rota `${route}/*` (src/frontend/apps/ui-catalog/src/App.tsx:14-28), isto é, `merchant/*` → ui-catalog-merchant e `consumer/*` → ui-catalog-consumer, sob o `ShellLayout` (:12). Cadeia: src/frontend/apps/ui-catalog/index.html:11 → src/frontend/apps/ui-catalog/src/main.tsx:7-10 → `App`. O menu do shell lista as mesmas rotas (src/frontend/apps/ui-catalog/src/components/ShellLayout.tsx:27-31). |
+| manual | src/frontend/apps/ui-catalog/remotes.json:3 | src/frontend/apps/ui-catalog | host-relationship | Yes | Shell remote registry: `"scope": "merchantApp"` with `"url": "http://localhost:3001/assets/remoteEntry.js"`, `"module": "./App"` and `"route": "merchant"` (src/frontend/apps/ui-catalog/remotes.json:2-8), and `"scope": "consumerApp"` with `http://localhost:3002/assets/remoteEntry.js` and `"route": "consumer"` (:9-15). Ports 3001 and 3002 belong to ui-catalog-merchant (src/frontend/apps/ui-catalog-merchant/vite.config.ts:9) and ui-catalog-consumer (src/frontend/apps/ui-catalog-consumer/vite.config.ts:9). The file is read by the shell’s `vite.config.ts` to assemble federation `remotes` (src/frontend/apps/ui-catalog/vite.config.ts:10-17, :85-89) and generate routes (:30). |
+| manual | src/frontend/apps/ui-catalog/src/App.tsx:26 | src/frontend/apps/ui-catalog | runtime-composition | Yes | Renders `<Component />`, the lazy remote component of each `remoteApps` entry, inside `Suspense` in route `${route}/*` (src/frontend/apps/ui-catalog/src/App.tsx:14-28), meaning `merchant/*` → ui-catalog-merchant and `consumer/*` → ui-catalog-consumer, under `ShellLayout` (:12). Chain: src/frontend/apps/ui-catalog/index.html:11 → src/frontend/apps/ui-catalog/src/main.tsx:7-10 → `App`. The shell menu lists the same routes (src/frontend/apps/ui-catalog/src/components/ShellLayout.tsx:27-31). |
 
-## Resumo
+## Summary
 
-Construções com composição: 3 (dynamic-loading: 1, host-relationship: 1, runtime-composition: 1).
+Constructs participating in composition: 3 (dynamic-loading: 1, host-relationship: 1, runtime-composition: 1).
 
-## Notas
+## Notes
 
-- O arquivo gerado pelo plugin (`remoteApps.generated.tsx`) não está no snapshot; a única ocorrência `src-*` é a do template em src/frontend/apps/ui-catalog/vite.config.ts:37.
-- ui-catalog-merchant declara `name: "consumerApp"` na federação (src/frontend/apps/ui-catalog-merchant/vite.config.ts:17), o mesmo nome de ui-catalog-consumer (src/frontend/apps/ui-catalog-consumer/vite.config.ts:17); o shell o referencia como `merchantApp` pela URL da porta 3001 (src/frontend/apps/ui-catalog/remotes.json:3-4).
-- Os dois remotes têm um plugin de build em modo watch que faz uma requisição HTTP a `http://localhost:3000/__fullReload` (src/frontend/apps/ui-catalog-merchant/vite.config.ts:24-45; src/frontend/apps/ui-catalog-consumer/vite.config.ts:24-45), atendida pelo servidor de desenvolvimento do shell (src/frontend/apps/ui-catalog/vite.config.ts:90-102). É ferramenta de desenvolvimento, não comunicação entre as aplicações em runtime; não virou linha.
-- Nenhum mecanismo de comunicação entre unidades (`CustomEvent`, `postMessage`, `BroadcastChannel`, `localStorage`) no código dos três apps.
+- The plugin-generated file (`remoteApps.generated.tsx`) is absent from the snapshot; the only `src-*` occurrence is the template at src/frontend/apps/ui-catalog/vite.config.ts:37.
+- ui-catalog-merchant declares `name: "consumerApp"` in federation (src/frontend/apps/ui-catalog-merchant/vite.config.ts:17), the same name as ui-catalog-consumer (src/frontend/apps/ui-catalog-consumer/vite.config.ts:17); shell references it as `merchantApp` through the port 3001 URL (src/frontend/apps/ui-catalog/remotes.json:3-4).
+- Both remotes have a build plugin in watch mode making an HTTP request to `http://localhost:3000/__fullReload` (src/frontend/apps/ui-catalog-merchant/vite.config.ts:24-45; src/frontend/apps/ui-catalog-consumer/vite.config.ts:24-45), handled by the shell development server (src/frontend/apps/ui-catalog/vite.config.ts:90-102). This is a development tool rather than runtime inter-application communication; it did not become a row.
+- No communication mechanism between units (`CustomEvent`, `postMessage`, `BroadcastChannel`, `localStorage`) in the three apps’ code.

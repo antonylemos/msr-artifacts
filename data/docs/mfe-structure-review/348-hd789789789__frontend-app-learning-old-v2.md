@@ -17,22 +17,22 @@ annotation:
 
 ## Workspace
 
-Nenhuma declaração de workspace.
+No workspace declaration.
 
-## Unidades
+## Units
 
-| Diretório | Marcadores | Manifesto | Entrada | Build | Workspace | Deploy | Unidade frontend | Motivo |
+| Directory | Markers | Manifest | Entry | Build | Workspace | Deploy | Frontend unit | Rationale |
 |---|---|---|---|---|---|---|---|---|
-| . | package.json;webpack.dev.config.js;webpack.prod.config.js | package.json | src/index.jsx:41 (convenção `src/index.*` de `createConfig` do `@openedx/frontend-build`, sem `entry` declarado no snapshot; `createRoot(document.getElementById('root'))`); public/index.html:17 (template com `<div id="root">`) | webpack.prod.config.js:2-5 (`createConfig('webpack-prod')` do `@openedx/frontend-build`); webpack.dev.config.js:2-4 (`createConfig('webpack-dev')`); package.json:13 (`fedx-scripts webpack`) | — | .github/workflows/validate.yml:17 (`make validate.ci`, que roda `npm run build` em Makefile:60) | Yes | Única aplicação do snapshot (a Learning MFE, React), com entrada e build próprios |
-| public | public/index.html | — | — | — | — | — | No | Parte da unidade `.`: `public/index.html` é o template HTML do build da raiz, e webpack.prod.config.js:8-15 copia `public/static` para `dist/static` |
+| . | package.json;webpack.dev.config.js;webpack.prod.config.js | package.json | src/index.jsx:41 (`src/index.*` convention of `createConfig` from `@openedx/frontend-build`, no `entry` declared in the snapshot; `createRoot(document.getElementById('root'))`); public/index.html:17 (template with `<div id="root">`) | webpack.prod.config.js:2-5 (`createConfig('webpack-prod')` from `@openedx/frontend-build`); webpack.dev.config.js:2-4 (`createConfig('webpack-dev')`); package.json:13 (`fedx-scripts webpack`) | — | .github/workflows/validate.yml:17 (`make validate.ci`, which runs `npm run build` in Makefile:60) | Yes | The snapshot’s only application (the Learning MFE, React), with its own entry and build |
+| public | public/index.html | — | — | — | — | — | No | Part of unit `.`: `public/index.html` is the HTML template for the root build, and webpack.prod.config.js:8-15 copies `public/static` to `dist/static` |
 
-## Resumo
+## Summary
 
-Aplicações frontend no snapshot: 1 (.).
+Frontend applications in the snapshot: 1 (.).
 
-## Notas
+## Notes
 
-- A classificação registra `frontend_units: 2`: esta aplicação e a Discussions MFE, que fica fora do snapshot e só entra por `<iframe>` com a URL `DISCUSSIONS_MFE_BASE_URL`.
-- O `entry` e o uso de `public/index.html` vêm da configuração padrão do `@openedx/frontend-build` (pacote externo, fora do snapshot); o snapshot só mostra a chamada `createConfig` e os arquivos nas posições convencionais.
-- O único `ws-*` do `matches.csv` é `ws-path-alias` em tsconfig.json:6 (`paths` com `@src/*`), alias de importação, não declaração de workspace.
-- O workflow `validate.yml` roda testes, lint e build em CI, sem publicar artefato de implantação; os demais workflows (`ci-workflow-file`) são de gestão de issues, commitlint e lockfile. `catalog-info.yaml` é metadado de catálogo, não deploy.
+- The classification records `frontend_units: 2`: this application and the Discussions MFE, which is outside the snapshot and only enters through `<iframe>` with the URL `DISCUSSIONS_MFE_BASE_URL`.
+- The `entry` and use of `public/index.html` come from the default configuration of `@openedx/frontend-build` (external package, outside the snapshot); the snapshot only shows the `createConfig` call and the files in conventional locations.
+- The only `ws-*` in `matches.csv` is `ws-path-alias` in tsconfig.json:6 (`paths` with `@src/*`), an import alias, not a workspace declaration.
+- The `validate.yml` workflow runs tests, lint and build in CI, without publishing a deployment artifact; the other workflows (`ci-workflow-file`) manage issues, commitlint and lockfile. `catalog-info.yaml` is catalog metadata, not deployment.

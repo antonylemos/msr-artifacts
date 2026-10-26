@@ -20,67 +20,67 @@ annotation:
 
 # 367 — Aestheticsuraj234/resources-2026
 
-## Contexto
+## Context
 
-Repositório de notas de estudo: “Advanced Frontend & React — Deep Dive Notes”, com 30 tópicos (`README.md:1–3`) e um segundo documento, `backend.md`. Micro-frontends são um dos tópicos (`README.md:35`, `346–357`), descritos conceitualmente com Module Federation e single-spa. Não há código. O nome do repositório não é usado como evidência.
+Study notes repository: “Advanced Frontend & React — Deep Dive Notes”, with 30 topics (`README.md:1–3`) and a second document, `backend.md`. Micro-frontends are one topic (`README.md:35`, `346–357`), described conceptually with Module Federation and single-spa. There is no code. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:368` registra rank 367, ID 1238375866, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:368` records rank 367, ID 1238375866, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:368` registra as estratégias `terminology;technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:30055` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:30061` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:368` records strategies `terminology;technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:30055` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:30061` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos quatro hits em cada rodada, todos do endpoint `repositories` e com `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same four hits in each round, all from endpoint `repositories` and with an empty `path`:
 
-| Consulta (`q`) | Subconsulta | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Collection 001 / 002 (UTC) |
 |---|---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | `…#created:2026-05` | 2026-10-07T22:35:41.883Z / 2026-10-08T15:59:28.928Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | `…#created:2026-05` | 2026-10-07T23:04:12.402Z / 2026-10-08T16:09:04.849Z |
 | `technology-module-federation-repositories`: `"module federation" in:name,description,readme` | `…#created:2026-05` | 2026-10-07T23:26:38.626Z / 2026-10-08T16:18:13.090Z |
 | `technology-single-spa-repositories`: `"single-spa" in:name,description,readme` | `…#created:2026-Q2` | 2026-10-07T23:35:29.231Z / 2026-10-08T16:21:38.477Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01` e `created:2026-05-01..2026-05-31` (ou `2026-04-01..2026-06-30` para single-spa).
+The effective queries append `pushed:>=2025-04-01` and `created:2026-05-01..2026-05-31` (or `2026-04-01..2026-06-30` for single-spa).
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem nula, `fork: false`, tamanho 22;
-- criação em 2026-05-14T04:15:38Z, push em 2026-05-14T12:05:24Z.
+Hit metadata:
+- null description, no topics, null language, `fork: false`, size 22;
+- created at 2026-05-14T04:15:38Z, pushed at 2026-05-14T12:05:24Z.
 
-Grafias no README:
-- “Micro-frontends”: `README.md:35`, `346` e `348`; o singular não aparece literalmente;
+Spellings in the README:
+- “Micro-frontends”: `README.md:35`, `346` and `348`; singular does not appear literally;
 - “Module Federation”: `README.md:352`;
 - “Single-SPA”: `README.md:357`.
 
-A última alteração do README é `f909b9f` (2026-05-14), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The last README change is `f909b9f` (2026-05-14), before the October 2026 collections. The README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 2 entradas, arquivos regulares `100644` (`README.md`, 40.419 bytes; `backend.md`, 11.028 bytes); zero symlinks e zero gitlinks. Não há código. | contrária |
-| Documentação | `README.md:346–357`: texto explicativo sobre micro-frontends, estratégias de integração, Module Federation e single-spa, como tópico de estudo. | fraca |
+| Structure | `git ls-tree -r` at the SHA: 2 entries, regular files `100644` (`README.md`, 40.419 bytes; `backend.md`, 11.028 bytes); zero symlinks and zero gitlinks. There is no code. | contrary |
+| Documentation | `README.md:346–357`: explanatory text about micro-frontends, integration strategies, Module Federation and single-spa, as a study topic. | weak |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 3 commits lineares, nenhum merge, todos de “Suraj Kumar Jha aka Sigma”, em 2026-05-14, dois deles feitos na interface do GitHub. Só há o branch `main`. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 3 linear commits, no merge, all by “Suraj Kumar Jha aka Sigma”, on 2026-05-14, two through the GitHub interface. Only branch `main` exists. No historical blob was read and there was no missing object.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend; só documentos Markdown. |
-| Q2 | No | Sem unidades, não há independência a avaliar. |
-| Q3 | No | Não há host, shell ou configuração raiz. |
-| Q4 | No | Nenhum mecanismo configurado; os mecanismos só são descritos (`README.md:352`, `357`). |
-| Q5 | No | Q1–Q4 são No: notas de estudo. |
+| Q1 | No | No frontend unit; only Markdown documents. |
+| Q2 | No | Without units, there is no independence to assess. |
+| Q3 | No | There is no host, shell or root configuration. |
+| Q4 | No | No mechanism configured; mechanisms are only described (`README.md:352`, `357`). |
+| Q5 | No | Q1–Q4 are No: study notes. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “repositories mentioning micro-frontends without implementing them”.
-- Como no final 023 (conteúdo), texto explicativo sobre MFE não constitui implementação.
-- **Campos:** `repo_type: other`, `frontend_units: 0`, `unit_organization: none`, `approaches: []`, `ui_technologies: []`, `build_tools: []`.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. It matches “repositories mentioning micro-frontends without implementing them”.
+- As in final 023 (content), explanatory MFE text does not constitute implementation.
+- **Fields:** `repo_type: other`, `frontend_units: 0`, `unit_organization: none`, `approaches: []`, `ui_technologies: []`, `build_tools: []`.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** um tópico de notas de estudo casa as quatro consultas, terminológicas e tecnológicas.
-- **Protocolo (busca):** o hit singular não tem grafia literal. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ1 (misleading signals):** a study notes topic matches all four queries, terminology and technology.
+- **Protocol (search):** the singular hit has no literal spelling. Eligibility changes from `unknown` (001) to `pass` (002).

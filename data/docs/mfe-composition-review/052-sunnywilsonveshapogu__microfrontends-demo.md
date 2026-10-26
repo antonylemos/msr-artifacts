@@ -20,26 +20,27 @@ annotation:
 
 # 052 — sunnywilsonveshapogu/microfrontends-demo
 
-## Leitura do repositório
+## Repository overview
 
-Demonstração com um `shell` React e dois remotes, `header-mf` e `products-mf`, ligados pelo Module Federation nativo do webpack 5. O shell monta a página com o cabeçalho de um remote e a lista de produtos do outro, cada um carregado por `import()` com tratamento de falha e renderizado em `Suspense` (shell/src/App.js:3-34). As três aplicações compartilham `react` e `react-dom` como singletons (ex.: header-mf/webpack.config.js:28-43).
+A demonstration with a React `shell` and two remotes, `header-mf` and `products-mf`, linked by webpack 5's native Module Federation. The shell assembles the page with one remote's header and the other's product list, each loaded through `import()` with failure handling and rendered in `Suspense` (shell/src/App.js:3-34). All three applications share `react` and `react-dom` as singletons (e.g.: header-mf/webpack.config.js:28-43).
 
-Particularidade: as três unidades são Undetermined na revisão estrutural porque o `public/index.html` exigido pelo build não existe no snapshot (ex.: shell/webpack.config.js:40). O snapshot não compila como está, mas o código de composição está completo e ligado aos pontos de entrada.
+Distinctive feature: all three units are Undetermined in the structural review because the `public/index.html` required by the build is absent from the snapshot (e.g.: shell/webpack.config.js:40). The snapshot does not compile as it stands, but the composition code is complete and connected to the entry points.
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | shell | header-mf | host → remote | origem → destino | module-federation | Yes | Yes | shell/webpack.config.js:23-25 (remote `headerMf@http://localhost:3001/remoteEntry.js`); header-mf/webpack.config.js:23-26 (`name: 'headerMf'`, `filename: 'remoteEntry.js'`, expõe `./Header`); header-mf/webpack.config.js:7 (porta 3001) | shell/src/App.js:5; shell/src/App.js:25 |
-| 2 | shell | products-mf | host → remote | origem → destino | module-federation | Yes | Yes | shell/webpack.config.js:23-24, 26 (remote `productsMf@http://localhost:3002/remoteEntry.js`); products-mf/webpack.config.js:23-26 (`name: 'productsMf'`, `filename: 'remoteEntry.js'`, expõe `./Products`); products-mf/webpack.config.js:7 (porta 3002) | shell/src/App.js:13; shell/src/App.js:33 |
+| 1 | shell | header-mf | host → remote | source → target | module-federation | Yes | Yes | shell/webpack.config.js:23-25 (remote `headerMf@http://localhost:3001/remoteEntry.js`); header-mf/webpack.config.js:23-26 (`name: 'headerMf'`, `filename: 'remoteEntry.js'`, exposes `./Header`); header-mf/webpack.config.js:7 (port 3001) | shell/src/App.js:5; shell/src/App.js:25 |
+| 2 | shell | products-mf | host → remote | source → target | module-federation | Yes | Yes | shell/webpack.config.js:23-24, 26 (remote `productsMf@http://localhost:3002/remoteEntry.js`); products-mf/webpack.config.js:23-26 (`name: 'productsMf'`, `filename: 'remoteEntry.js'`, exposes `./Products`); products-mf/webpack.config.js:7 (port 3002) | shell/src/App.js:13; shell/src/App.js:33 |
 
-## Observações
+## Observations
 
-**1. shell → header-mf.** O shell importa `headerMf/Header` (shell/src/App.js:3-9) e o renderiza em `Suspense` (shell/src/App.js:24-26). O nome `headerMf` e o módulo `./Header` correspondem a header-mf/webpack.config.js:23-26; a porta 3001 só corrobora.
+**1. shell → header-mf.** The shell imports `headerMf/Header` (shell/src/App.js:3-9) and renders it in `Suspense` (shell/src/App.js:24-26). The name `headerMf` and module `./Header` match header-mf/webpack.config.js:23-26; port 3001 only corroborates.
 
-**2. shell → products-mf.** Mesmo padrão com `productsMf/Products` (shell/src/App.js:11-17, 32-34). O nome e o módulo correspondem a products-mf/webpack.config.js:23-26; a porta 3002 só corrobora.
+**2. shell → products-mf.** The same pattern with `productsMf/Products` (shell/src/App.js:11-17, 32-34). The name and module match products-mf/webpack.config.js:23-26; port 3002 only corroborates.
 
-## Resumo
+## Summary
 
-Relações: 2 (host → remote: 2). Ativas: 2. Destino fora do snapshot: 0.
-Unidades sem relação: nenhuma.
+Relationships: 2 (host → remote: 2). Active: 2. Target outside the snapshot: 0.
+Units without a relationship: none.
+

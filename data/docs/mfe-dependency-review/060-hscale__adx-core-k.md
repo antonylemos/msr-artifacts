@@ -15,28 +15,29 @@ annotation:
 
 # 060 — hscale/adx-core-k
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| adx-core/apps/auth/package.json:41 | devDependencies | @originjs/vite-plugin-federation | ^1.3.5 | module-federation | Yes | adx-core/apps/auth/vite.config.ts:3-28 (configuração padrão do Vite importa `federation` e o invoca em plugins com `name: 'auth_app'`, `filename: 'remoteEntry.js'`, exposes e shared); adx-core/apps/auth/package.json:7-9 (`vite --port 3001 --host`, `tsc && vite build`, sem configuração alternativa) |
-| adx-core/apps/file/package.json:26 | devDependencies | @originjs/vite-plugin-federation | ^1.3.5 | module-federation | Yes | adx-core/apps/file/vite.config.ts:3-26 (importa `federation` e o invoca com `name: 'file_app'`, exposes e shared); adx-core/apps/file/package.json:7-9 (`vite --port 3003 --host`, `tsc && vite build`) |
-| adx-core/apps/module/package.json:39 | devDependencies | @originjs/vite-plugin-federation | ^1.3.5 | module-federation | Yes | adx-core/apps/module/vite.config.ts:3-28 (importa `federation` e o invoca com `name: 'module_app'`, exposes e shared); adx-core/apps/module/package.json:7-9 (`vite --port 3006 --host`, `tsc && vite build`) |
-| adx-core/apps/shell/package.json:40 | devDependencies | @originjs/vite-plugin-federation | ^1.3.5 | module-federation | Yes | adx-core/apps/shell/vite.config.ts:3-53 (importa `federation` e o invoca com `name: 'shell'`, remotes para os seis apps e shared); adx-core/apps/shell/package.json:7-9 (`vite --port 3000 --host`, `tsc && vite build`); adx-core/apps/shell/src/App.tsx:16-21 (`React.lazy(() => import('auth_app/App'))` e demais remotes) |
-| adx-core/apps/tenant/package.json:36 | devDependencies | @originjs/vite-plugin-federation | ^1.3.5 | module-federation | Yes | adx-core/apps/tenant/vite.config.ts:3-27 (importa `federation` e o invoca com `name: 'tenant_app'`, exposes e shared); adx-core/apps/tenant/package.json:7-9 (`vite --port 3002 --host`, `tsc && vite build`) |
-| adx-core/apps/user/package.json:26 | devDependencies | @originjs/vite-plugin-federation | ^1.3.5 | module-federation | Yes | adx-core/apps/user/vite.config.ts:3-26 (importa `federation` e o invoca com `name: 'user_app'`, exposes e shared); adx-core/apps/user/package.json:7-9 (`vite --port 3004 --host`, `tsc && vite build`) |
-| adx-core/apps/workflow/package.json:26 | devDependencies | @originjs/vite-plugin-federation | ^1.3.5 | module-federation | Yes | adx-core/apps/workflow/vite.config.ts:3-26 (importa `federation` e o invoca com `name: 'workflow_app'`, exposes e shared); adx-core/apps/workflow/package.json:7-9 (`vite --port 3005 --host`, `tsc && vite build`) |
+| adx-core/apps/auth/package.json:41 | devDependencies | @originjs/vite-plugin-federation | ^1.3.5 | module-federation | Yes | adx-core/apps/auth/vite.config.ts:3-28 (the default Vite configuration imports `federation` and invokes it in plugins with `name: 'auth_app'`, `filename: 'remoteEntry.js'`, exposes and shared); adx-core/apps/auth/package.json:7-9 (`vite --port 3001 --host`, `tsc && vite build`, with no alternative configuration) |
+| adx-core/apps/file/package.json:26 | devDependencies | @originjs/vite-plugin-federation | ^1.3.5 | module-federation | Yes | adx-core/apps/file/vite.config.ts:3-26 (imports `federation` and invokes it with `name: 'file_app'`, exposes and shared); adx-core/apps/file/package.json:7-9 (`vite --port 3003 --host`, `tsc && vite build`) |
+| adx-core/apps/module/package.json:39 | devDependencies | @originjs/vite-plugin-federation | ^1.3.5 | module-federation | Yes | adx-core/apps/module/vite.config.ts:3-28 (imports `federation` and invokes it with `name: 'module_app'`, exposes and shared); adx-core/apps/module/package.json:7-9 (`vite --port 3006 --host`, `tsc && vite build`) |
+| adx-core/apps/shell/package.json:40 | devDependencies | @originjs/vite-plugin-federation | ^1.3.5 | module-federation | Yes | adx-core/apps/shell/vite.config.ts:3-53 (imports `federation` and invokes it with `name: 'shell'`, remotes for the six apps and shared); adx-core/apps/shell/package.json:7-9 (`vite --port 3000 --host`, `tsc && vite build`); adx-core/apps/shell/src/App.tsx:16-21 (`React.lazy(() => import('auth_app/App'))` and other remotes) |
+| adx-core/apps/tenant/package.json:36 | devDependencies | @originjs/vite-plugin-federation | ^1.3.5 | module-federation | Yes | adx-core/apps/tenant/vite.config.ts:3-27 (imports `federation` and invokes it with `name: 'tenant_app'`, exposes and shared); adx-core/apps/tenant/package.json:7-9 (`vite --port 3002 --host`, `tsc && vite build`) |
+| adx-core/apps/user/package.json:26 | devDependencies | @originjs/vite-plugin-federation | ^1.3.5 | module-federation | Yes | adx-core/apps/user/vite.config.ts:3-26 (imports `federation` and invokes it with `name: 'user_app'`, exposes and shared); adx-core/apps/user/package.json:7-9 (`vite --port 3004 --host`, `tsc && vite build`) |
+| adx-core/apps/workflow/package.json:26 | devDependencies | @originjs/vite-plugin-federation | ^1.3.5 | module-federation | Yes | adx-core/apps/workflow/vite.config.ts:3-26 (imports `federation` and invokes it with `name: 'workflow_app'`, exposes and shared); adx-core/apps/workflow/package.json:7-9 (`vite --port 3005 --host`, `tsc && vite build`) |
 
-## Notas
+## Notes
 
-- Os `other_package_matches` de cada linha são os `vite.config.ts` dos outros seis apps; cada um tem
-  o próprio `package.json` com a mesma dependência, então a evidência de cada linha vem só do
-  `vite.config.ts` do próprio app.
-- Fora das listas, a busca por `vite-plugin-federation` em `.ts`, `.tsx`, `.js`, `.mjs` e `.json`
-  só achou os sete `vite.config.ts` e os sete `package.json`.
-- A configuração do plugin é usada pelo build de cada app, mas vários `exposes` apontam para
-  arquivos que não existem no snapshot (ex.: `adx-core/apps/file/vite.config.ts:13-15`,
+- The `other_package_matches` for each row are the `vite.config.ts` files of the other six apps; each has
+  its own `package.json` with the same dependency, so each row's evidence comes only from
+  its own app's `vite.config.ts`.
+- Outside the lists, the search for `vite-plugin-federation` in `.ts`, `.tsx`, `.js`, `.mjs` and `.json`
+  found only the seven `vite.config.ts` and seven `package.json` files.
+- The plugin configuration is used by each app's build, but several `exposes` point to
+  files absent from the snapshot (e.g.: `adx-core/apps/file/vite.config.ts:13-15`,
   `adx-core/apps/user/vite.config.ts:13-15`, `adx-core/apps/workflow/vite.config.ts:13-15`,
-  `adx-core/apps/tenant/vite.config.ts:13`, `adx-core/apps/module/vite.config.ts:15-17`), e
-  `file`, `tenant`, `user` e `workflow` não têm `index.html`. Isso afeta a execução do build, não
-  a configuração do pacote; a classificação já registra essa lacuna.
+  `adx-core/apps/tenant/vite.config.ts:13`, `adx-core/apps/module/vite.config.ts:15-17`), and
+  `file`, `tenant`, `user` and `workflow` have no `index.html`. This affects build execution, not
+  package configuration; the classification already records this gap.
+

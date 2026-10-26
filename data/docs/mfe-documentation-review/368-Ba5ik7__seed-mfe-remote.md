@@ -16,23 +16,23 @@ annotation:
 
 # 368 — Ba5ik7/seed-mfe-remote
 
-## Leitura do repositório
+## Repository overview
 
-O único documento do tipo `documentation` em `artifacts.csv` é `README.md`, lido integralmente. Em inglês, ele conserva o texto padrão do Angular CLI: geração do projeto pela versão 19.0.6, servidor de desenvolvimento, scaffolding, build, testes e links de referência (README.md:1-59). O título `SeedMfeRemote` (README.md:1) é um nome, sem afirmação arquitetural. A orientação de acesso foi ajustada para `http://localhost:4202/` (README.md:13), porta configurada para o remote (angular.json:80-81); trata-se de instrução de execução. Os blocos de comandos `ng serve`, `ng generate`, `ng build`, `ng test` e `ng e2e` (README.md:9-11, :19-21, :25-27, :33-35, :43-45, :51-53) e a explicação genérica de saída em `dist/` (README.md:37) pertencem ao template da ferramenta e não descrevem a composição ou a separação das unidades deste projeto. Não há diagramas, árvores comentadas ou afirmações sobre host, remote, independência ou compartilhamento. O `matches.csv` não contém ocorrências `doc-*`.
+Sole `documentation` document in `artifacts.csv` is `README.md`, read in full. English standard Angular CLI text: project generation with version 19.0.6, development server, scaffolding, build, tests and reference links (README.md:1-59). Title `SeedMfeRemote` (README.md:1) is name without architectural claim. Access guidance was adjusted to `http://localhost:4202/` (README.md:13), configured remote port (angular.json:80-81); execution instruction. `ng serve`, `ng generate`, `ng build`, `ng test` and `ng e2e` command blocks (README.md:9-11, :19-21, :25-27, :33-35, :43-45, :51-53) and generic `dist/` output explanation (README.md:37) belong to tool template without describing project unit composition/separation. No diagrams, annotated trees or host/remote/independence/sharing claims exist. `matches.csv` contains no `doc-*` occurrences.
 
-As revisões 3.4.2 a 3.4.6 estão `final` e têm o mesmo commit da classificação e do `acquisition.csv`. Elas mostram uma composição que o README não explica: `demo` declara o remote `seedMfeRemote` (projects/demo/webpack.config.js:5-7), cujo `./RemoteWidget` é exposto pelo outro projeto (projects/seed-mfe-remote/webpack.config.js:5-8). O host carrega esse componente por URL e o monta em `ViewContainerRef`, além de oferecê-lo pela rota `remote` (projects/demo/src/app/app.component.ts:24-36; projects/demo/src/app/app.routes.ts:5-12). Os dois projetos têm targets e saídas de build próprios (angular.json:17-20, :122-125). Essas são evidências de implementação já registradas nas etapas anteriores, sem afirmação documental correspondente para confrontar nesta etapa.
+Reviews 3.4.2 through 3.4.6 are `final`, sharing classification/`acquisition.csv` commit. They show composition README does not explain: `demo` declares remote `seedMfeRemote` (projects/demo/webpack.config.js:5-7), whose `./RemoteWidget` is exposed by other project (projects/seed-mfe-remote/webpack.config.js:5-8). Host loads component by URL, mounting in `ViewContainerRef` and offering through route `remote` (projects/demo/src/app/app.component.ts:24-36; projects/demo/src/app/app.routes.ts:5-12). Both projects have own build targets/outputs (angular.json:17-20, :122-125). Implementation evidence already recorded by previous stages without corresponding documentary claim to compare here.
 
-Foram lidos os comentários e campos descritivos dos artefatos citados nas revisões anteriores: `package.json:1-41`, `angular.json:1-220`, `.gitignore:1-42`, `.vscode/tasks.json:1-42`, as configurações webpack e webpack de produção dos dois projetos (projects/demo/webpack.config.js:1-13; projects/demo/webpack.prod.config.js:1; projects/seed-mfe-remote/webpack.config.js:1-15; projects/seed-mfe-remote/webpack.prod.config.js:1), os respectivos `src/main.ts:1-2`, `src/bootstrap.ts:1-6`, `src/index.html:1-13`, `src/app/app.config.ts:1-8`, e os componentes e rotas (projects/demo/src/app/app.component.ts:1-41; projects/demo/src/app/app.routes.ts:1-14; projects/seed-mfe-remote/src/app/app.component.ts:1-10; projects/seed-mfe-remote/src/app/app.routes.ts:1-3; projects/seed-mfe-remote/src/app/remote-widget/remote-widget.component.ts:1-10). O manifesto não tem campo `description`; os comentários do `.gitignore` e das tarefas do editor apenas explicam arquivos gerados e ferramentas. Os títulos da interface, como “Angular Module Federation” e “Remote Widget Component” (projects/demo/src/app/app.component.ts:9-11), são rótulos, sem explicação arquitetural. Nenhum desses textos acrescenta afirmação à tabela.
+Comments/descriptive fields read in artifacts cited by previous reviews: `package.json:1-41`, `angular.json:1-220`, `.gitignore:1-42`, `.vscode/tasks.json:1-42`, both projects’ webpack/production webpack configurations (projects/demo/webpack.config.js:1-13; projects/demo/webpack.prod.config.js:1; projects/seed-mfe-remote/webpack.config.js:1-15; projects/seed-mfe-remote/webpack.prod.config.js:1), corresponding `src/main.ts:1-2`, `src/bootstrap.ts:1-6`, `src/index.html:1-13`, `src/app/app.config.ts:1-8`, components/routes (projects/demo/src/app/app.component.ts:1-41; projects/demo/src/app/app.routes.ts:1-14; projects/seed-mfe-remote/src/app/app.component.ts:1-10; projects/seed-mfe-remote/src/app/app.routes.ts:1-3; projects/seed-mfe-remote/src/app/remote-widget/remote-widget.component.ts:1-10). Manifest lacks `description`; `.gitignore`/editor-task comments only explain generated files/tools. Interface titles such as “Angular Module Federation” and “Remote Widget Component” (projects/demo/src/app/app.component.ts:9-11) are labels without architectural explanation. None adds table claims.
 
-## Afirmações
+## Claims
 
-| # | Documento | Afirmação | Tema | Corroboração | Evidência |
+| # | Document | Claim | Theme | Corroboration | Evidence |
 |---|---|---|---|---|---|
 
-## Observações
+## Observations
 
-Não foram identificadas afirmações arquiteturais nos textos examinados. A ausência de documentação da composição não contradiz a cadeia de implementação registrada nas revisões anteriores.
+No architectural claims identified in examined texts. Absence of composition documentation does not contradict implementation chain recorded by previous reviews.
 
-## Resumo
+## Summary
 
-Afirmações: 0.
+Claims: 0.

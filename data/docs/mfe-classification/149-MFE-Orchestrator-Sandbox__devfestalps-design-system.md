@@ -20,84 +20,84 @@ annotation:
 
 # 149 — MFE-Orchestrator-Sandbox/devfestalps-design-system
 
-## Contexto
+## Context
 
-Remoto Vite + React gerado do template “template-vite-remote”, cuja descrição é “Template for MFE orchestator Vite remote microfrontend” (`README.md:1–2`). Ele expõe por Module Federation um único componente, `./Button` (`vite.config.js:9–16`). O workflow publica o `dist` na plataforma externa “MFE Orchestrator”, com o slug `devfestalps-design-system` (`.github/workflows/build-and-deploy.yml:63–70`). O host que consumiria o remoto não está no repositório. O nome do repositório e o do dono não são usados como evidência.
+Vite + React remote generated from “template-vite-remote”, described as “Template for MFE orchestator Vite remote microfrontend” (`README.md:1–2`). It exposes one component through Module Federation, `./Button` (`vite.config.js:9–16`). Workflow publishes `dist` to external “MFE Orchestrator” platform, with slug `devfestalps-design-system` (`.github/workflows/build-and-deploy.yml:63–70`). Host that would consume remote is absent from repository. Repository and owner names are not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:150` registra rank 149, ID 1101963462, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:150` records rank 149, ID 1101963462, status `cloned`, branch `main` and front-matter commit, which is clone HEAD and `origin/main`. Every clone Git command used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:150` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:21371` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:21377` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:150` records strategy `terminology` and eligibility `pass`. Sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). ID appears in `data/discovery/mfe-round-001/candidates.csv:21371` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:21377` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories` e com `path` vazio:
+`sqlite3 -readonly` query of tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns same two hits in each round, at endpoint `repositories` and with empty `path`:
 
-| Consulta (`q`) | Subconsulta | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Collection 001 / 002 (UTC) |
 |---|---|---|
 | `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | `terminology-microfrontend-repositories#created:2025-11` | 2026-10-07T19:17:25.775Z / 2026-10-08T15:40:03.503Z |
 | `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | `terminology-microfrontends-repositories#created:2025-11` | 2026-10-07T22:09:51.233Z / 2026-10-08T15:48:26.230Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2025-11-01..2025-11-30`.
+Effective queries append `pushed:>=2025-04-01 created:2025-11-01..2025-11-30`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem CSS, `fork: false`, tamanho 78;
-- criação em 2025-11-22T15:10:11Z e push em 2026-02-16T22:17:36Z, este dos branches do Dependabot.
+Hit metadata:
+- null description, no topics, CSS language, `fork: false`, size 78;
+- creation at 2025-11-22T15:10:11Z and push at 2026-02-16T22:17:36Z, latter from Dependabot branches.
 
-Sem descrição, o acerto vem do README, cuja única grafia é “microfrontend”, no singular, em `README.md:2`. A forma plural “microfrontends” não aparece no README nem na descrição. Esse hit depende do processamento textual da busca do GitHub, que não está registrado, como em 143.
+Without description, retrieval comes from README, whose sole spelling is singular “microfrontend”, in `README.md:2`. Plural form “microfrontends” appears in neither README nor description. This hit depends on unrecorded GitHub search text processing, as in 143.
 
-O README vem da raiz `c4148d8` (2025-11-22) e não foi alterado depois. É anterior às coletas de outubro de 2026, e o README do SHA não é posterior às buscas.
+README comes from root `c4148d8` (2025-11-22) and was unchanged afterward. It predates October 2026 collections, and README at the SHA is not later than searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 17 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Há um único projeto Vite na raiz (`package.json`, `vite.config.js`, `index.html`, `src/`, `public/`, `pnpm-lock.yaml`) e workflows em `.github/`. Não há host nem segunda aplicação. | contexto |
-| Configuração (federação) | `vite.config.js:9–16`: `federation({ name: "remote_app", filename: "remoteEntry.js", exposes: { './Button': './src/components/Button' }, shared: ['react','react-dom'] })`. Não há `remotes`. `vite.config.js:18–23`: `modulePreload: false`, `target: 'esnext'` e `cssCodeSplit: false`, ajustes usuais de remoto com esse plugin. | moderada |
-| Código-fonte (módulo exposto) | `src/components/Button.jsx:6–20`: componente `Button` com estado local de contador e rótulo “DevFest Alps II {state}”, exportado nomeado e como default. `src/main.jsx:6–10` e `src/App.jsx:5`, `22`: app standalone de demonstração que renderiza o próprio `Button`. | moderada |
-| Código-fonte (fronteiras) | Os imports de `src` são todos internos (`./App`, `./components/Button`, `./Button.css`, `./assets/react.svg`). A busca por `../`, `remotes`, `registerApplication`, `customElements` e `iframe` em `src`, `vite.config.js` e `index.html` não retorna nada. | contexto |
-| Build/deploy | `package.json:6–9`: `vite`/`vite build`. `.github/workflows/build-and-deploy.yml:3–13`: o workflow dispara em tags ou manualmente. `.github/workflows/build-and-deploy.yml:60–70`: roda `pnpm build` e chama `mfe-orchestrator-hub/github-action@0.0.29` com `microfrontend-slug: devfestalps-design-system`, `domain: https://console.mfe-orchestrator.dev` e `file-path: './dist'`. Há a tag `1.3.0` no SHA. Os caches citam `host/node_modules` e `remote/node_modules` (`:48–51`), diretórios inexistentes no repositório, herdados do template. | moderada |
-| Tecnologia | `package.json:10–20`: `react`/`react-dom` ^19.2.0, `@originjs/vite-plugin-federation` ^1.4.1, `@vitejs/plugin-react` e `vite` ^7.1.12. `pnpm-lock.yaml:291`, `548` e `578` resolvem `@originjs/vite-plugin-federation` 1.4.1, `react` 19.2.0 e `vite` 7.1.12. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 17 entries, all regular files `100644`; zero symlinks and zero gitlinks. One Vite project at root (`package.json`, `vite.config.js`, `index.html`, `src/`, `public/`, `pnpm-lock.yaml`) and workflows in `.github/`. No host or second application. | context |
+| Configuration (federation) | `vite.config.js:9–16`: `federation({ name: "remote_app", filename: "remoteEntry.js", exposes: { './Button': './src/components/Button' }, shared: ['react','react-dom'] })`. No `remotes`. `vite.config.js:18–23`: `modulePreload: false`, `target: 'esnext'` and `cssCodeSplit: false`, usual remote adjustments for this plugin. | moderate |
+| Source code (exposed module) | `src/components/Button.jsx:6–20`: component `Button` with local counter state and label “DevFest Alps II {state}”, named and default-exported. `src/main.jsx:6–10` and `src/App.jsx:5`, `22`: standalone demo app rendering own `Button`. | moderate |
+| Source code (boundaries) | Imports in `src` are all internal (`./App`, `./components/Button`, `./Button.css`, `./assets/react.svg`). Search for `../`, `remotes`, `registerApplication`, `customElements` and `iframe` in `src`, `vite.config.js` and `index.html` returns nothing. | context |
+| Build/deploy | `package.json:6–9`: `vite`/`vite build`. `.github/workflows/build-and-deploy.yml:3–13`: workflow triggers on tags or manually. `.github/workflows/build-and-deploy.yml:60–70`: runs `pnpm build` and calls `mfe-orchestrator-hub/github-action@0.0.29` with `microfrontend-slug: devfestalps-design-system`, `domain: https://console.mfe-orchestrator.dev` and `file-path: './dist'`. Tag `1.3.0` exists at SHA. Caches cite `host/node_modules` and `remote/node_modules` (`:48–51`), nonexistent repository directories inherited from template. | moderate |
+| Technology | `package.json:10–20`: `react`/`react-dom` ^19.2.0, `@originjs/vite-plugin-federation` ^1.4.1, `@vitejs/plugin-react` and `vite` ^7.1.12. `pnpm-lock.yaml:291`, `548` and `578` resolve `@originjs/vite-plugin-federation` 1.4.1, `react` 19.2.0 and `vite` 7.1.12. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 7 commits em todos os refs, nenhum merge.
-- **Raiz:** `c4148d8` (2025-11-22T15:10:13Z, “Initial commit”) de `MFE Orchestrator Bot <bot@mfe-orchestrator.dev>` adiciona os 17 arquivos. `LICENSE:3` traz “Copyright (c) 2025 MFE Orchestrator Hub”.
-- **Autor humano:** Lorenzo De Francesco `<lorenzo.defrancesco@step4business.com>` faz `bbddfc5` (“first commit”) e o SHA `fec8551` (“DEV FEST ALPS 2”). Os dois só alteram `src/components/Button.jsx` (`git log --no-renames --name-status`).
-- **Dependabot:** `49d14d8` está no histórico de `main`. Os bumps posteriores (`270b9c1`, `8fc3dd7`, `9f3b90e`) ficam em branches `origin/dependabot/*` e não foram considerados.
+Non-shallow clone; 7 commits across all refs, no merge.
+- **Root:** `c4148d8` (2025-11-22T15:10:13Z, “Initial commit”) by `MFE Orchestrator Bot <bot@mfe-orchestrator.dev>` adds 17 files. `LICENSE:3` contains “Copyright (c) 2025 MFE Orchestrator Hub”.
+- **Human author:** Lorenzo De Francesco `<lorenzo.defrancesco@step4business.com>` makes `bbddfc5` (“first commit”) and SHA `fec8551` (“DEV FEST ALPS 2”). Both only change `src/components/Button.jsx` (`git log --no-renames --name-status`).
+- **Dependabot:** `49d14d8` is in `main` history. Later bumps (`270b9c1`, `8fc3dd7`, `9f3b90e`) are on branches `origin/dependabot/*` and were not considered.
 
-Configuração, workflow e app vêm todos do commit gerado pelo bot; a contribuição autoral se limita ao conteúdo do botão. O diff histórico de `Button.jsx` não foi lido: o blob `9f6ea764…` falta no clone parcial e não foi buscado. O clone ficou inalterado.
+Configuration, workflow and app all come from bot-generated commit; original contribution is limited to button content. Historical diff of `Button.jsx` was not read: blob `9f6ea764…` is absent from partial clone and was not fetched. Clone remained unchanged.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade. A configuração de composição só tem `exposes` (`vite.config.js:12–14`) e não referencia unidades externas. |
-| Q2 | Yes (para a unidade) | Entrada e build próprios que geram `remoteEntry.js` (`vite.config.js:11`; `package.json:8`), publicados separadamente (`.github/workflows/build-and-deploy.yml:63–70`). |
-| Q3 | Undetermined | O host não está no repositório. A plataforma de destino só aparece como alvo de publicação no workflow. |
-| Q4 | Undetermined | O lado remoto está configurado; o consumidor não é observável. |
-| Q5 | No | A evidência mostra uma unidade preparada para composição, não uma instância de MFE no repositório. |
+| Q1 | No | One unit. Composition configuration has only `exposes` (`vite.config.js:12–14`) and references no external units. |
+| Q2 | Yes (for the unit) | Own entry and build generating `remoteEntry.js` (`vite.config.js:11`; `package.json:8`), published separately (`.github/workflows/build-and-deploy.yml:63–70`). |
+| Q3 | Undetermined | Host is absent from repository. Target platform appears only as workflow publication target. |
+| Q4 | Undetermined | Remote side is configured; consumer is not observable. |
+| Q5 | No | Evidence shows a unit prepared for composition, not an MFE instance in repository. |
 
-## Motivo
+## Rationale
 
-- Proposta `MFE-unit` com `status: review`. Q1 é No, mas a exceção do checklist se aplica literalmente: “a single frontend unit explicitly prepared to be composed by an external host (e.g., Module Federation `exposes`…), but the composing host is not observable”.
-- O padrão é o mesmo dos finais 050 (Vite + `@originjs/vite-plugin-federation`, um `exposes`, `shared` React e sem `remotes`) e 001. Repete-se o mesmo vetor de checklist.
-- A revisão é necessária pelo que é exposto. Em 001/050 os módulos expostos eram widgets ou telas de aplicação (`ChartWidget`, `TaskDashboard`). Aqui é um único `Button` genérico, e o checklist exclui “Module Federation used only for code sharing, not for composing frontend units”, como discutido em 089/100.
-- Há ainda uma plataforma de terceiros como destino (MFE Orchestrator), em linha com a questão de 102/074/080, e um repositório gerado por template de plataforma, em linha com os casos de gerador e template 075/081/094/105.
-- `repo_type: template`: o repositório é instância de um template de plataforma (`README.md:1–2`; commit-raiz do bot), com conteúdo de demonstração de evento (“DevFest Alps II”). `example` também seria defensável. `frontend_units: 1`, `unit_organization: single-unit`, `ui_technologies: [react]`, `build_tools: [vite]`, `approaches: [module-federation]`.
+- Proposal `MFE-unit` with `status: review`. Q1 is No, but checklist exception applies literally: “a single frontend unit explicitly prepared to be composed by an external host (e.g., Module Federation `exposes`…), but the composing host is not observable”.
+- Same pattern as finals 050 (Vite + `@originjs/vite-plugin-federation`, one `exposes`, React `shared` and no `remotes`) and 001. Same checklist vector repeats.
+- Review is needed because of what is exposed. In 001/050 exposed modules were widgets or application screens (`ChartWidget`, `TaskDashboard`). Here it is one generic `Button`, and checklist excludes “Module Federation used only for code sharing, not for composing frontend units”, as discussed in 089/100.
+- There is also a third-party platform as destination (MFE Orchestrator), in line with 102/074/080 question, and platform-template-generated repository, in line with generator/template cases 075/081/094/105.
+- `repo_type: template`: repository is instance of platform template (`README.md:1–2`; bot root commit), with event demonstration content (“DevFest Alps II”). `example` would also be defensible. `frontend_units: 1`, `unit_organization: single-unit`, `ui_technologies: [react]`, `build_tools: [vite]`, `approaches: [module-federation]`.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** remoto Module Federation para Vite publicado em um orquestrador de MFEs hospedado (SaaS) por GitHub Action, com versão vinda da tag Git. O host e o registro ficam na plataforma, fora do repositório.
-- **RQ1 (sinais enganosos):** o caráter de “design system” só aparece no nome; o snapshot expõe um botão de demonstração. O nome não foi usado como evidência.
-- **Protocolo (busca):** o hit plural `microfrontends` não tem grafia correspondente no README nem na descrição. A elegibilidade muda de `unknown` (001) para `pass` (002).
-- **Protocolo (amostra):** o dono parece hospedar vários repositórios gerados pelo mesmo template de sandbox. Nenhum outro foi consultado.
+- **RQ2:** Vite Module Federation remote published to a hosted MFE orchestrator (SaaS) through GitHub Action, with version from Git tag. Host and registry remain in platform, outside repository.
+- **RQ1 (misleading signals):** “design system” character appears only in name; snapshot exposes a demonstration button. Name was not used as evidence.
+- **Protocol (search):** plural hit `microfrontends` has no corresponding spelling in README or description. Eligibility changes from `unknown` (001) to `pass` (002).
+- **Protocol (sample):** owner appears to host several repositories generated from same sandbox template. No other was queried.
 
-## Ponto para revisão conjunta
+## Point for joint review
 
-Decidir se um remoto cujo único módulo exposto é um componente genérico (`./Button`), publicado em plataforma de orquestração de terceiros e gerado por template dessa plataforma, conta como “frontend unit explicitly prepared to be composed”.
+Decide whether a remote whose sole exposed module is generic component (`./Button`), published to a third-party orchestration platform and generated from that platform’s template, counts as “frontend unit explicitly prepared to be composed”.
 
-- **Aceitar:** a configuração é idêntica à de 050, e o checklist não fixa tamanho mínimo do módulo exposto. Fica `MFE-unit`.
-- **Não aceitar:** expor um componente de UI isolado configura “Module Federation used only for code sharing”, como na dúvida de 089/100. A classe passa a `Non-MFE`, com `approaches: []`.
+- **Accept:** configuration is identical to 050, and checklist sets no minimum exposed-module size. Remains `MFE-unit`.
+- **Do not accept:** exposing an isolated UI component constitutes “Module Federation used only for code sharing”, as in uncertainty of 089/100. Class becomes `Non-MFE`, with `approaches: []`.
 
-Não se propõe regra nova. Até a decisão, preservar `MFE-unit`/`review`.
-- **Contribuição da revisão independente (Lupa):** concordância com MFE-unit e `review`, com ressalva interpretativa real: a distinção entre unidade remota e compartilhamento de componente quando o único export é um botão genérico (`./Button`). Os finais comparáveis mais próximos são 001 (export `ChartWidget`) e 050 (`TaskDashboard`), ambos com uma unidade remota, `exposes`, sem host no repositório e checklist No/Yes/Undetermined/Undetermined/No, finalizados como MFE-unit; aqui a fronteira funcional do export parece mais próxima de code sharing, o que justifica não aplicar o precedente automaticamente. 089 e 100 (`Uncertain`/`review`) servem de comparadores da mesma questão, sem resolvê-la. Q3 e Q4 Undetermined são inevitáveis com o host e o consumidor fora do snapshot. `repo_type: template` é defensável pela origem automatizada e pelo README, e `example` também caberia ao app de demonstração configurado para deploy; escolha secundária, sem efeito na classe.
+No new rule is proposed. Until decision, preserve `MFE-unit`/`review`.
+- **Independent-review contribution (Lupa):** agreement with MFE-unit and `review`, with real interpretive caveat: distinction between remote unit and component sharing when sole export is a generic button (`./Button`). Closest comparable finals are 001 (export `ChartWidget`) and 050 (`TaskDashboard`), both with one remote unit, `exposes`, without repository host and checklist No/Yes/Undetermined/Undetermined/No, finalized as MFE-unit; here export’s functional boundary appears closer to code sharing, justifying no automatic precedent application. 089 and 100 (`Uncertain`/`review`) compare same question without resolving it. Q3 and Q4 Undetermined are inevitable with host/consumer outside snapshot. `repo_type: template` is defensible through automated origin and README, and `example` would also fit demo app configured for deployment; secondary choice without class effect.

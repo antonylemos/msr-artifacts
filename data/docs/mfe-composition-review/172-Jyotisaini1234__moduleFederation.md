@@ -20,23 +20,24 @@ annotation:
 
 # 172 — Jyotisaini1234/moduleFederation
 
-## Leitura do repositório
+## Repository overview
 
-Exemplo mínimo de Module Federation com o `ModuleFederationPlugin` embutido no webpack 5 (mfe1/webpack.config.ts:11-12; mfe2/webpack.config.ts:6-7) e duas aplicações React em TypeScript. `mfe1` (“Product Listing”) é o host, com `name: 'app1'` e um único remote, `app2` (mfe1/webpack.config.ts:74-78). `mfe2` (“Cart Application”) é o remote: declara `name: 'app2'`, `filename: 'remoteEntry.js'` e expõe `./App` (mfe2/webpack.config.ts:37-40), um componente que só mostra um título (mfe2/src/App.tsx:3-14). O host carrega esse componente com `React.lazy(() => import("app2/App"))`, com um fallback de erro que pede para subir o app2 na porta 3002 (mfe1/src/App.tsx:3-12), e o renderiza dentro de `Suspense` logo abaixo do seu próprio título (mfe1/src/App.tsx:23-27). As duas unidades compartilham `react` e `react-dom` como singletons (mfe1/webpack.config.ts:79-88; mfe2/webpack.config.ts:41) e usam a fronteira assíncrona `import("./bootstrap")` (mfe1/src/index.tsx:3; mfe2/src/index.tsx:1).
+A minimal Module Federation example with webpack 5's built-in `ModuleFederationPlugin` (mfe1/webpack.config.ts:11-12; mfe2/webpack.config.ts:6-7) and two React applications in TypeScript. `mfe1` (“Product Listing”) is the host, with `name: 'app1'` and a single remote, `app2` (mfe1/webpack.config.ts:74-78). `mfe2` (“Cart Application”) is the remote: it declares `name: 'app2'`, `filename: 'remoteEntry.js'` and exposes `./App` (mfe2/webpack.config.ts:37-40), a component showing only a title (mfe2/src/App.tsx:3-14). The host loads this component with `React.lazy(() => import("app2/App"))`, with an error fallback requesting that app2 be started on port 3002 (mfe1/src/App.tsx:3-12), and renders it inside `Suspense` immediately below its own title (mfe1/src/App.tsx:23-27). Both units share `react` and `react-dom` as singletons (mfe1/webpack.config.ts:79-88; mfe2/webpack.config.ts:41) and use the asynchronous boundary `import("./bootstrap")` (mfe1/src/index.tsx:3; mfe2/src/index.tsx:1).
 
-O que não virou relação: uma versão alternativa do `App` do host, com import condicional para SSR, está toda comentada (mfe1/src/App.tsx:35-53). `mfe1` também traz um servidor SSR experimental que renderiza o mesmo `App` e injeta os bundles da própria `mfe1` por `<script src="/static/...">` (mfe1/src/server/server.ts:7, 54, 84); nenhum script do mfe1/package.json o executa (mfe1/package.json:8-9). A variável `window.app2Url` é gravada (mfe1/src/index.tsx:1; mfe1/src/server/server.ts:81) e tipada (mfe1/src/types/global.d.ts:17), mas o endereço do remote vem fixo do webpack (mfe1/webpack.config.ts:77). Não há comunicação entre as unidades além da renderização do componente.
+What did not become a relationship: an alternative version of the host's `App`, with a conditional SSR import, is entirely commented out (mfe1/src/App.tsx:35-53). `mfe1` also contains an experimental SSR server rendering the same `App` and injecting `mfe1`'s own bundles through `<script src="/static/...">` (mfe1/src/server/server.ts:7, 54, 84); no mfe1/package.json script executes it (mfe1/package.json:8-9). Variable `window.app2Url` is written (mfe1/src/index.tsx:1; mfe1/src/server/server.ts:81) and typed (mfe1/src/types/global.d.ts:17), but the remote address is fixed in webpack (mfe1/webpack.config.ts:77). There is no inter-unit communication beyond component rendering.
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | mfe1 | mfe2 | host → remote | origem → destino | module-federation | Yes | Yes | mfe1/webpack.config.ts:74-78 (`name: 'app1'`; remote `app2` em `app2@http://localhost:3002/remoteEntry.js`); mfe2/webpack.config.ts:37-40 (`name: 'app2'`, `filename: 'remoteEntry.js'`, expõe `./App`); mfe2/webpack.config.ts:17 (porta 3002) | mfe1/src/App.tsx:4; mfe1/src/App.tsx:26 |
+| 1 | mfe1 | mfe2 | host → remote | source → target | module-federation | Yes | Yes | mfe1/webpack.config.ts:74-78 (`name: 'app1'`; remote `app2` at `app2@http://localhost:3002/remoteEntry.js`); mfe2/webpack.config.ts:37-40 (`name: 'app2'`, `filename: 'remoteEntry.js'`, exposes `./App`); mfe2/webpack.config.ts:17 (port 3002) | mfe1/src/App.tsx:4; mfe1/src/App.tsx:26 |
 
-## Observações
+## Observations
 
-**1. mfe1 → mfe2.** O remote `app2` declarado pelo host (mfe1/webpack.config.ts:77) corresponde à unidade `mfe2` pelo `name: 'app2'` e pelo `filename: 'remoteEntry.js'` (mfe2/webpack.config.ts:38-39), e o módulo pedido, `app2/App` (mfe1/src/App.tsx:4), é o `./App` exposto em mfe2/webpack.config.ts:40; a porta 3002 (mfe2/webpack.config.ts:17) só corrobora. As duas linhas de código são `Yes` na revisão de código-fonte: o import remoto e a renderização de `<RemoteApp2 />` (mfe1/src/App.tsx:26), alcançados a partir de mfe1/src/index.tsx:3 → mfe1/src/bootstrap.tsx:15, 18. O tipo do módulo remoto é declarado à mão no host (mfe1/src/types/global.d.ts:9-13).
+**1. mfe1 → mfe2.** The `app2` remote declared by the host (mfe1/webpack.config.ts:77) matches unit `mfe2` through `name: 'app2'` and `filename: 'remoteEntry.js'` (mfe2/webpack.config.ts:38-39), and the requested module, `app2/App` (mfe1/src/App.tsx:4), is the `./App` exposed in mfe2/webpack.config.ts:40; port 3002 (mfe2/webpack.config.ts:17) only corroborates. Both code lines are `Yes` in the source code review: the remote import and rendering of `<RemoteApp2 />` (mfe1/src/App.tsx:26), reached from mfe1/src/index.tsx:3 → mfe1/src/bootstrap.tsx:15, 18. The remote module's type is declared manually in the host (mfe1/src/types/global.d.ts:9-13).
 
-## Resumo
+## Summary
 
-Relações: 1 (host → remote: 1). Ativas: 1. Destino fora do snapshot: 0.
-Unidades sem relação: nenhuma.
+Relationships: 1 (host → remote: 1). Active: 1. Target outside the snapshot: 0.
+Units without a relationship: none.
+

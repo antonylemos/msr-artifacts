@@ -17,23 +17,23 @@ annotation:
 
 ## Workspace
 
-Nenhuma declaração de workspace.
+No workspace declaration.
 
-## Unidades
+## Units
 
-| Diretório | Marcadores | Manifesto | Entrada | Build | Workspace | Deploy | Unidade frontend | Motivo |
+| Directory | Markers | Manifest | Entry | Build | Workspace | Deploy | Frontend unit | Rationale |
 |---|---|---|---|---|---|---|---|---|
-| app-shell | app-shell/index.html | — | app-shell/index.html:9-29 (página HTML com UI) | — (estático, sem build) | — | — | Yes | Página HTML própria que carrega só arquivos estáticos (app-shell/index.html:7 `style.css`); não precisa de build. |
-| app1 | app1/index.html | — | app1/index.html:3-4 (carrega app.js e instancia elemento); app1/app.js:1-6 (UI do custom element) | — (estático, sem build) | — | — | Yes | Página HTML própria que carrega `app.js` sem imports de pacotes; não precisa de build. |
-| app2 | app2/index.html | — | app2/index.html:3-4 (carrega app.js e instancia elemento); app2/app.js:1-6 (UI do custom element) | — (estático, sem build) | — | — | Yes | Página HTML própria que carrega `app.js` sem imports de pacotes; não precisa de build. |
-| app3 | app3/index.html;app3/package.json;app3/vite.config.js | app3/package.json:1-11 (pacote próprio) | app3/vite.config.js:9-15 (entrada de build MyCounterElement.jsx); app3/src/MyCounterElement.jsx:20-28 (monta React e registra elemento); app3/index.html:11-12 (entrada standalone) | app3/vite.config.js:4-16 (build IIFE próprio); app3/package.json:8 (`vite build`) | — | — | Yes | Aplicação React encapsulada em custom element, com entrada e build Vite próprios. |
+| app-shell | app-shell/index.html | — | app-shell/index.html:9-29 (HTML page with UI) | — (static, no build) | — | — | Yes | Own HTML page that loads only static files (app-shell/index.html:7 `style.css`); requires no build. |
+| app1 | app1/index.html | — | app1/index.html:3-4 (loads app.js and instantiates the element); app1/app.js:1-6 (custom element UI) | — (static, no build) | — | — | Yes | Own HTML page that loads `app.js` without package imports; requires no build. |
+| app2 | app2/index.html | — | app2/index.html:3-4 (loads app.js and instantiates the element); app2/app.js:1-6 (custom element UI) | — (static, no build) | — | — | Yes | Own HTML page that loads `app.js` without package imports; requires no build. |
+| app3 | app3/index.html;app3/package.json;app3/vite.config.js | app3/package.json:1-11 (own package) | app3/vite.config.js:9-15 (MyCounterElement.jsx build entry); app3/src/MyCounterElement.jsx:20-28 (mounts React and registers the element); app3/index.html:11-12 (standalone entry) | app3/vite.config.js:4-16 (own IIFE build); app3/package.json:8 (`vite build`) | — | — | Yes | React application encapsulated in a custom element, with its own entry and Vite build. |
 
-## Resumo
+## Summary
 
-Aplicações frontend no snapshot: 4 (app-shell, app1, app2, app3).
+Frontend applications in the snapshot: 4 (app-shell, app1, app2, app3).
 
-## Notas
+## Notes
 
-- app-shell, app1 e app2 são páginas estáticas servidas diretamente: app1/app.js e app2/app.js não têm imports, e app-shell/index.html só carrega o próprio `style.css` e scripts das outras unidades por URL (app-shell/index.html:14, :20 e :26). Pela regra de página estática sem build, são unidades frontend.
-- O resumo (4) coincide com `frontend_units: 4` da classificação.
-- README.md:39-69 orienta servir cada diretório com `http-server` em portas distintas (3000 a 3003); são instruções de execução local, não artefato de deploy.
+- app-shell, app1 and app2 are static pages served directly: app1/app.js and app2/app.js have no imports, and app-shell/index.html only loads its own `style.css` and scripts from the other units by URL (app-shell/index.html:14, :20 and :26). Under the static page without a build rule, they are frontend units.
+- The summary (4) matches the classification’s `frontend_units: 4`.
+- README.md:39-69 instructs serving each directory with `http-server` on different ports (3000 to 3003); these are local execution instructions, not a deployment artifact.

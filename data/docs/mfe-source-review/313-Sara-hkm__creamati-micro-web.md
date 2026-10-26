@@ -15,23 +15,23 @@ annotation:
 
 # 313 — Sara-hkm/creamati-micro-web
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-iframe | frontend/container/src/App.tsx:239 | frontend/container | embedding | Yes | `<iframe>` do container cujo `src` escolhe, pela aba ativa, a URL publicada de um dos quatro micro-frontends: `.../golden-sample-react-micro-web/user-management/`, `/data-grid/`, `/analytics/` e `/settings/` (frontend/container/src/App.tsx:240-245); os segmentos coincidem com os `destination_dir` de publicação das unidades `frontend/user-management-app`, `frontend/data-grid-app`, `frontend/analytics-app` e `frontend/settings-app` (.github/workflows/deploy-all.yml:86-89 e 116). O frame só é renderizado fora da aba `home` (frontend/container/src/App.tsx:138 e 218), e as abas vêm de `menuItems` (frontend/container/src/App.tsx:12-18), acionadas por `openMicroFrontend` (:8-10, :93, :158). Ativo: `App` é renderizado pela entrada `frontend/container/src/index.tsx:4` e `:10-14`. |
+| src-iframe | frontend/container/src/App.tsx:239 | frontend/container | embedding | Yes | Container `<iframe>` whose `src` selects, according to the active tab, the published URL of one of the four micro-frontends: `.../golden-sample-react-micro-web/user-management/`, `/data-grid/`, `/analytics/` and `/settings/` (frontend/container/src/App.tsx:240-245); the segments match the publication `destination_dir` values of units `frontend/user-management-app`, `frontend/data-grid-app`, `frontend/analytics-app` and `frontend/settings-app` (.github/workflows/deploy-all.yml:86-89 and 116). The frame is rendered only outside tab `home` (frontend/container/src/App.tsx:138 and 218), and tabs come from `menuItems` (frontend/container/src/App.tsx:12-18), triggered by `openMicroFrontend` (:8-10, :93, :158). Active: `App` is rendered by entry `frontend/container/src/index.tsx:4` and `:10-14`. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-Nenhuma construção adicional.
+No additional constructs.
 
-## Resumo
+## Summary
 
-Construções com composição: 1 (embedding: 1).
+Constructs participating in composition: 1 (embedding: 1).
 
-## Notas
+## Notes
 
-- As URLs do `iframe` apontam para `olivium-dev.github.io/golden-sample-react-micro-web/` (frontend/container/src/App.tsx:241-244), não para o GitHub Pages deste repositório (`Sara-hkm`), onde os workflows do snapshot publicariam; os caminhos coincidem com os destinos de publicação das quatro unidades, por isso a composição é `Yes` com alvo nessas unidades, servidas de uma origem externa.
-- Os quatro micro-frontends não têm construção de composição: `App.tsx` só renderiza conteúdo estático (ex.: frontend/analytics-app/src/App.tsx:4-34); não há `postMessage` nem outra comunicação entre o container e os frames.
-- O único `import()` nas unidades é o `import('web-vitals')` padrão do CRA em `src/reportWebVitals.ts:5` de cada app, interno à unidade; não vira linha.
-- `.cursor/templates/` (ex.: `RemoteComponent.template.tsx`, `webpack.config.template.js`) são modelos para geração de código, fora de qualquer unidade da revisão estrutural e não usados por nenhum build; não foram registrados.
+- The `iframe` URLs point to `olivium-dev.github.io/golden-sample-react-micro-web/` (frontend/container/src/App.tsx:241-244) rather than this repository’s GitHub Pages (`Sara-hkm`), where snapshot workflows would publish; the paths match the four units’ publication destinations, so composition is `Yes` targeting those units, served from an external origin.
+- The four micro-frontends have no composition construct: `App.tsx` only renders static content (for example: frontend/analytics-app/src/App.tsx:4-34); there is no `postMessage` or other communication between container and frames.
+- The only `import()` in the units is the standard CRA `import('web-vitals')` at each app’s `src/reportWebVitals.ts:5`, internal to the unit; it does not become a row.
+- `.cursor/templates/` (for example: `RemoteComponent.template.tsx`, `webpack.config.template.js`) are code generation templates, outside any structural review unit and unused by any build; they were not recorded.

@@ -15,28 +15,28 @@ annotation:
 
 # 216 — fi-x64/mfe
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-async-bootstrap | packages/container/src/index.js:1 | packages/container | dynamic-loading | No | `import('./bootstrap')` carrega o bootstrap local do próprio container (packages/container/src/bootstrap.js:1-5); interno à unidade. |
-| src-async-bootstrap | packages/marketing/src/index.js:1 | packages/marketing | dynamic-loading | No | `import('./bootstrap')` carrega o bootstrap local do próprio marketing (packages/marketing/src/bootstrap.js:1-22); interno à unidade. |
-| src-mount-export | packages/marketing/src/bootstrap.js:22 | packages/marketing | runtime-composition | Yes | Exporta `mount(el)`, que renderiza a App do marketing no elemento recebido (packages/marketing/src/bootstrap.js:6-8); `./src/bootstrap` é exposto como `./MarketingApp` em packages/marketing/config/webpack.prod.js:16-18 e packages/marketing/config/webpack.dev.js:19-21 e consumido pelo container em packages/container/src/components/MarketingApp.js:1 e :8. |
-| src-mount-call | packages/container/src/components/MarketingApp.js:8 | packages/container | runtime-composition | Yes | Monta o remote `marketing` no `ref` do wrapper, dentro de `useEffect` (packages/container/src/components/MarketingApp.js:5-11); remote declarado em packages/container/config/webpack.prod.js:17-19 (`${domain}/marketing/latest/remoteEntry.js`) e packages/container/config/webpack.dev.js:18-20 (`http://localhost:8081/remoteEntry.js`); wrapper renderizado em packages/container/src/App.js:11, App renderizada em packages/container/src/bootstrap.js:5, carregado pela entrada packages/container/src/index.js:1. |
-| src-mount-import | packages/container/src/components/MarketingApp.js:1 | packages/container | runtime-composition | Yes | Importa `mount` do remote `marketing/MarketingApp`, usado em packages/container/src/components/MarketingApp.js:8. |
+| src-async-bootstrap | packages/container/src/index.js:1 | packages/container | dynamic-loading | No | `import('./bootstrap')` loads the container’s own local bootstrap (packages/container/src/bootstrap.js:1-5); internal to the unit. |
+| src-async-bootstrap | packages/marketing/src/index.js:1 | packages/marketing | dynamic-loading | No | `import('./bootstrap')` loads marketing’s own local bootstrap (packages/marketing/src/bootstrap.js:1-22); internal to the unit. |
+| src-mount-export | packages/marketing/src/bootstrap.js:22 | packages/marketing | runtime-composition | Yes | Exports `mount(el)`, which renders the marketing App on the received element (packages/marketing/src/bootstrap.js:6-8); `./src/bootstrap` is exposed as `./MarketingApp` at packages/marketing/config/webpack.prod.js:16-18 and packages/marketing/config/webpack.dev.js:19-21 and consumed by container at packages/container/src/components/MarketingApp.js:1 and :8. |
+| src-mount-call | packages/container/src/components/MarketingApp.js:8 | packages/container | runtime-composition | Yes | Mounts remote `marketing` on the wrapper’s `ref`, inside `useEffect` (packages/container/src/components/MarketingApp.js:5-11); remote declared at packages/container/config/webpack.prod.js:17-19 (`${domain}/marketing/latest/remoteEntry.js`) and packages/container/config/webpack.dev.js:18-20 (`http://localhost:8081/remoteEntry.js`); wrapper rendered at packages/container/src/App.js:11, App rendered at packages/container/src/bootstrap.js:5, loaded by entry packages/container/src/index.js:1. |
+| src-mount-import | packages/container/src/components/MarketingApp.js:1 | packages/container | runtime-composition | Yes | Imports `mount` from remote `marketing/MarketingApp`, used at packages/container/src/components/MarketingApp.js:8. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-Nenhuma construção adicional.
+No additional constructs.
 
-## Resumo
+## Summary
 
-Construções com composição: 3 (runtime-composition: 3).
+Constructs participating in composition: 3 (runtime-composition: 3).
 
-## Notas
+## Notes
 
-- O container renderiza o wrapper `<MarketingApp />` abaixo do `<Header />` (packages/container/src/App.js:10-11), sem tabela de rotas que nomeie as unidades; a montagem do remote já está na linha de packages/container/src/components/MarketingApp.js:8, e o render do wrapper local não vira linha.
-- O `mount(devRoot)` de packages/marketing/src/bootstrap.js:16 é a montagem isolada do marketing em desenvolvimento (`#_marketing-dev-root`, packages/marketing/public/index.html:5) e não está no `matches.csv`; não vira linha.
-- `Header` aceita `signedIn` e `onSignOut` (packages/container/src/components/Header.js:57), mas o container não os passa (packages/container/src/App.js:10); nenhum callback ou prop é trocado com o remote no `mount(ref.current)`.
-- `packages/auth` e `packages/dashboard` não têm código-fonte no snapshot.
-- Nenhum custom element, iframe, `postMessage`, `CustomEvent`, `BroadcastChannel` ou armazenamento compartilhado no código das unidades.
+- Container renders wrapper `<MarketingApp />` below `<Header />` (packages/container/src/App.js:10-11), without a route table naming the units; remote mounting is already in the packages/container/src/components/MarketingApp.js:8 row, and rendering the local wrapper does not become a row.
+- The `mount(devRoot)` at packages/marketing/src/bootstrap.js:16 is the isolated marketing development mount (`#_marketing-dev-root`, packages/marketing/public/index.html:5) and is not in `matches.csv`; it does not become a row.
+- `Header` accepts `signedIn` and `onSignOut` (packages/container/src/components/Header.js:57), but container does not pass them (packages/container/src/App.js:10); no callback or prop is exchanged with the remote in `mount(ref.current)`.
+- `packages/auth` and `packages/dashboard` have no source code in the snapshot.
+- No custom element, iframe, `postMessage`, `CustomEvent`, `BroadcastChannel` or shared storage in the units’ code.

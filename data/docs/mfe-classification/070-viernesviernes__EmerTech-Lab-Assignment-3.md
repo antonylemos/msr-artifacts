@@ -20,39 +20,39 @@ annotation:
 
 # 070 — viernesviernes/EmerTech-Lab-Assignment-3
 
-## Contexto
+## Context
 
-- **Abordagem de implementação:** Module Federation (`@originjs/vite-plugin-federation`)
-- **Tipo de repositório:** example/proof of concept (trabalho de disciplina, "Emerging Technologies Lab Assignment 3": frontend MF + microsserviços GraphQL)
+- **Implementation approach:** Module Federation (`@originjs/vite-plugin-federation`)
+- **Repository type:** example/proof of concept (course assignment, "Emerging Technologies Lab Assignment 3": MF frontend + GraphQL microservices)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `client/shell-app`, `client/auth-app` e `client/community-app`, cada um com `package.json`, `vite.config.js`, `index.html` e `src/main.jsx`; `server/` com gateway e microsserviços GraphQL (auth, community-engagement) | forte |
-| Configuração (host) | `client/shell-app/vite.config.js:10-13`: `name: 'shellApp'`, `remotes: { authApp: 'http://localhost:3001/assets/remoteEntry.js', communityApp: 'http://localhost:3002/assets/remoteEntry.js' }`; porta 3000 (`:28`) | forte |
-| Configuração (remotes) | `client/auth-app/vite.config.js:10-13` e `client/community-app/vite.config.js:10-13`: `name`, `filename: 'remoteEntry.js'`, `exposes: { './App': './src/App.jsx' }`; portas 3001/3002 | forte |
-| Código-fonte (composição) | `client/shell-app/src/App.jsx:5-6`: `lazy(() => import('authApp/App'))` e `import('communityApp/App')`; `:43-47`: rotas `/login` e `/community` montam os remotes | forte |
-| Código-fonte (comunicação) | `client/shell-app/src/App.jsx:25-31`: o shell escuta o evento `loginSuccess` (`window.addEventListener`) disparado pelo remote de autenticação | moderada |
-| Build/deploy | `client/package.json:10`: `concurrently` com `npm run deploy` (build + preview) de cada remote e `dev` do shell; `client/auth-app/package.json:8-11` | moderada |
-| Código-fonte | Nenhum import de código-fonte entre as apps (sustenta a independência das unidades) | ausente |
+| Structure | `client/shell-app`, `client/auth-app` and `client/community-app`, each with `package.json`, `vite.config.js`, `index.html` and `src/main.jsx`; `server/` with gateway and GraphQL microservices (auth, community-engagement) | strong |
+| Configuration (host) | `client/shell-app/vite.config.js:10-13`: `name: 'shellApp'`, `remotes: { authApp: 'http://localhost:3001/assets/remoteEntry.js', communityApp: 'http://localhost:3002/assets/remoteEntry.js' }`; port 3000 (`:28`) | strong |
+| Configuration (remotes) | `client/auth-app/vite.config.js:10-13` and `client/community-app/vite.config.js:10-13`: `name`, `filename: 'remoteEntry.js'`, `exposes: { './App': './src/App.jsx' }`; ports 3001/3002 | strong |
+| Source code (composition) | `client/shell-app/src/App.jsx:5-6`: `lazy(() => import('authApp/App'))` and `import('communityApp/App')`; `:43-47`: routes `/login` and `/community` mount remotes | strong |
+| Source code (communication) | `client/shell-app/src/App.jsx:25-31`: the shell listens for the `loginSuccess` event (`window.addEventListener`) triggered by the authentication remote | moderate |
+| Build/deploy | `client/package.json:10`: `concurrently` with `npm run deploy` (build + preview) for each remote and shell `dev`; `client/auth-app/package.json:8-11` | moderate |
+| Source code | No source code imports between apps (supports the units' independence) | absent |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | `shell-app`, `auth-app` e `community-app` |
-| Q2 | Yes | `vite.config.js`, entry, build e porta próprios; sem import de código-fonte entre as apps |
-| Q3 | Yes | O shell roteia e monta os remotes (`App.jsx:43-47`) |
-| Q4 | Yes | `remotes`/`exposes` configurados e usados via `import('<remote>/App')` |
-| Q5 | Yes | Q1–Q4 convergem; nenhuma divergência a justificar |
+| Q1 | Yes | `shell-app`, `auth-app` and `community-app` |
+| Q2 | Yes | Their own `vite.config.js`, entry, build and port; no source code imports between apps |
+| Q3 | Yes | The shell routes to and mounts remotes (`App.jsx:43-47`) |
+| Q4 | Yes | `remotes`/`exposes` configured and used through `import('<remote>/App')` |
+| Q5 | Yes | Q1–Q4 converge; no discrepancy to justify |
 
-## Motivo
+## Rationale
 
-- Q1–Q5 são todos Yes, o que satisfaz a regra de MFE-implemented.
-- Corresponde a "monorepos containing a host and its remotes" e a "examples… that actually compose frontend units".
+- Q1–Q5 are all Yes, satisfying the MFE-implemented rule.
+- Matches "monorepos containing a host and its remotes" and "examples… that actually compose frontend units".
 
-## Notas para análise
+## Analysis notes
 
-- **RQ3:** comunicação remote → host por `CustomEvent` global (`loginSuccess`), além do estado de sessão consultado pelo shell via GraphQL.
-- Arquitetura alinhada entre frontend e backend: cada remote corresponde a um microsserviço (auth, community).
+- **RQ3:** remote → host communication through a global `CustomEvent` (`loginSuccess`), alongside session state queried by the shell through GraphQL.
+- Aligned frontend/backend architecture: each remote corresponds to a microservice (auth, community).

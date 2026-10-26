@@ -15,39 +15,39 @@ annotation:
 
 # 106 — alimohammadi/micro-frontend
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-async-bootstrap | ecomm/container/src/index.js:1 | ecomm/container | dynamic-loading | No | `import('./bootstrap')` em ecomm/container/src/index.js:1 carrega o bootstrap da própria unidade; interno. |
-| src-async-bootstrap | packages/container/src/index.js:1 | packages/container | dynamic-loading | No | `import('./bootstrap')` em packages/container/src/index.js:1 carrega o bootstrap da própria unidade; interno. |
-| src-async-bootstrap | packages/marketing/src/index.js:1 | packages/marketing | dynamic-loading | No | `import("./bootstrap")` em packages/marketing/src/index.js:1 carrega o bootstrap da própria unidade; interno. |
-| src-mount-export | ecomm/cart/src/mount.js:26 | ecomm/cart | runtime-composition | Yes | Exporta `mount(el)` definido em ecomm/cart/src/mount.js:3-7; exposto como `./CartShow` → `./src/mount` em ecomm/cart/webpack.config.js:13-15 e consumido pelo host em ecomm/container/src/bootstrap.js:3. |
-| src-mount-export | ecomm/products/src/mount.js:31 | ecomm/products | runtime-composition | Yes | Exporta `mount(el)` definido em ecomm/products/src/mount.js:5-12; exposto como `./ProductsIndex` → `./src/mount.js` em ecomm/products/webpack.config.js:13-15 e consumido pelo host em ecomm/container/src/bootstrap.js:1. |
-| src-mount-export | packages/marketing/src/bootstrap.js:17 | packages/marketing | runtime-composition | Yes | Exporta `mount(el)` definido em packages/marketing/src/bootstrap.js:6-8, que renderiza o App de Marketing; exposto como `./MarketingApp` → `./src/bootstrap` em packages/marketing/config/webpack.dev.js:20-22 e consumido em packages/container/src/components/MarketingApp.js:1. |
-| src-mount-call | ecomm/cart/src/mount.js:17 | ecomm/cart | runtime-composition | No | Montagem isolada de desenvolvimento no próprio elemento `#dev-cart` (ecomm/cart/src/mount.js:14-19; elemento em ecomm/cart/public/index.html:9); interna à unidade. |
-| src-mount-call | ecomm/products/src/mount.js:22 | ecomm/products | runtime-composition | No | Montagem isolada de desenvolvimento no próprio elemento `#dev-products` (ecomm/products/src/mount.js:19-24; elemento em ecomm/products/public/index.html:9); interna à unidade. |
-| src-mount-call | packages/container/src/components/MarketingApp.js:8 | packages/container | runtime-composition | Yes | `mount(ref.current)` monta a unidade packages/marketing no div do adaptador (packages/container/src/components/MarketingApp.js:7-11); o adaptador é renderizado pelo App do host em packages/container/src/App.js:10, montado em packages/container/src/bootstrap.js:5. |
-| src-mount-import | ecomm/container/src/bootstrap.js:1 | ecomm/container | runtime-composition | Yes | Importa `mount` de `products/ProductsIndex` sob o alias `productsMount`, chamado em ecomm/container/src/bootstrap.js:5; remote `products@http://localhost:8081/remoteEntry.js` em ecomm/container/webpack.config.js:21. Alvo: ecomm/products. |
-| src-mount-import | ecomm/container/src/bootstrap.js:3 | ecomm/container | runtime-composition | Yes | Importa `mount` de `carts/CartShow` sob o alias `cartMount`, chamado em ecomm/container/src/bootstrap.js:6; alias `carts` → `cart@http://localhost:8082/remoteEntry.js` em ecomm/container/webpack.config.js:22. Alvo: ecomm/cart. |
-| src-mount-import | packages/container/src/components/MarketingApp.js:1 | packages/container | runtime-composition | Yes | Importa `mount` de `marketing/MarketingApp`, chamado em packages/container/src/components/MarketingApp.js:8; remote `marketing@http://localhost:8081/remoteEntry.js` em packages/container/config/webpack.dev.js:19. Alvo: packages/marketing. |
+| src-async-bootstrap | ecomm/container/src/index.js:1 | ecomm/container | dynamic-loading | No | `import('./bootstrap')` at ecomm/container/src/index.js:1 loads the unit’s own bootstrap; internal. |
+| src-async-bootstrap | packages/container/src/index.js:1 | packages/container | dynamic-loading | No | `import('./bootstrap')` at packages/container/src/index.js:1 loads the unit’s own bootstrap; internal. |
+| src-async-bootstrap | packages/marketing/src/index.js:1 | packages/marketing | dynamic-loading | No | `import("./bootstrap")` at packages/marketing/src/index.js:1 loads the unit’s own bootstrap; internal. |
+| src-mount-export | ecomm/cart/src/mount.js:26 | ecomm/cart | runtime-composition | Yes | Exports `mount(el)` defined at ecomm/cart/src/mount.js:3-7; exposed as `./CartShow` → `./src/mount` at ecomm/cart/webpack.config.js:13-15 and consumed by the host at ecomm/container/src/bootstrap.js:3. |
+| src-mount-export | ecomm/products/src/mount.js:31 | ecomm/products | runtime-composition | Yes | Exports `mount(el)` defined at ecomm/products/src/mount.js:5-12; exposed as `./ProductsIndex` → `./src/mount.js` at ecomm/products/webpack.config.js:13-15 and consumed by the host at ecomm/container/src/bootstrap.js:1. |
+| src-mount-export | packages/marketing/src/bootstrap.js:17 | packages/marketing | runtime-composition | Yes | Exports `mount(el)` defined at packages/marketing/src/bootstrap.js:6-8, which renders the Marketing App; exposed as `./MarketingApp` → `./src/bootstrap` at packages/marketing/config/webpack.dev.js:20-22 and consumed at packages/container/src/components/MarketingApp.js:1. |
+| src-mount-call | ecomm/cart/src/mount.js:17 | ecomm/cart | runtime-composition | No | Isolated development mount on its own `#dev-cart` element (ecomm/cart/src/mount.js:14-19; element at ecomm/cart/public/index.html:9); internal to the unit. |
+| src-mount-call | ecomm/products/src/mount.js:22 | ecomm/products | runtime-composition | No | Isolated development mount on its own `#dev-products` element (ecomm/products/src/mount.js:19-24; element at ecomm/products/public/index.html:9); internal to the unit. |
+| src-mount-call | packages/container/src/components/MarketingApp.js:8 | packages/container | runtime-composition | Yes | `mount(ref.current)` mounts unit packages/marketing in the adapter div (packages/container/src/components/MarketingApp.js:7-11); the adapter is rendered by the host App at packages/container/src/App.js:10, mounted at packages/container/src/bootstrap.js:5. |
+| src-mount-import | ecomm/container/src/bootstrap.js:1 | ecomm/container | runtime-composition | Yes | Imports `mount` from `products/ProductsIndex` under alias `productsMount`, called at ecomm/container/src/bootstrap.js:5; remote `products@http://localhost:8081/remoteEntry.js` at ecomm/container/webpack.config.js:21. Target: ecomm/products. |
+| src-mount-import | ecomm/container/src/bootstrap.js:3 | ecomm/container | runtime-composition | Yes | Imports `mount` from `carts/CartShow` under alias `cartMount`, called at ecomm/container/src/bootstrap.js:6; alias `carts` → `cart@http://localhost:8082/remoteEntry.js` at ecomm/container/webpack.config.js:22. Target: ecomm/cart. |
+| src-mount-import | packages/container/src/components/MarketingApp.js:1 | packages/container | runtime-composition | Yes | Imports `mount` from `marketing/MarketingApp`, called at packages/container/src/components/MarketingApp.js:8; remote `marketing@http://localhost:8081/remoteEntry.js` at packages/container/config/webpack.dev.js:19. Target: packages/marketing. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | ecomm/container/src/bootstrap.js:5 | ecomm/container | runtime-composition | Yes | `productsMount(document.querySelector("#my-products"))` monta a UI de ecomm/products no elemento `#my-products` do host (ecomm/container/public/index.html:9); import remoto em ecomm/container/src/bootstrap.js:1 e entrada em ecomm/container/src/index.js:1. O alias não casou com o padrão src-mount-call. |
-| manual | ecomm/container/src/bootstrap.js:6 | ecomm/container | runtime-composition | Yes | `cartMount(document.querySelector("#my-cart"))` monta a UI de ecomm/cart no elemento `#my-cart` do host (ecomm/container/public/index.html:10); import remoto em ecomm/container/src/bootstrap.js:3 e entrada em ecomm/container/src/index.js:1. O alias não casou com o padrão src-mount-call. |
+| manual | ecomm/container/src/bootstrap.js:5 | ecomm/container | runtime-composition | Yes | `productsMount(document.querySelector("#my-products"))` mounts the ecomm/products UI in the host’s `#my-products` element (ecomm/container/public/index.html:9); remote import at ecomm/container/src/bootstrap.js:1 and entry at ecomm/container/src/index.js:1. The alias did not match the src-mount-call pattern. |
+| manual | ecomm/container/src/bootstrap.js:6 | ecomm/container | runtime-composition | Yes | `cartMount(document.querySelector("#my-cart"))` mounts the ecomm/cart UI in the host’s `#my-cart` element (ecomm/container/public/index.html:10); remote import at ecomm/container/src/bootstrap.js:3 and entry at ecomm/container/src/index.js:1. The alias did not match the src-mount-call pattern. |
 
-## Resumo
+## Summary
 
-Construções com composição: 9 (runtime-composition: 9).
+Constructs participating in composition: 9 (runtime-composition: 9).
 
-## Notas
+## Notes
 
-- Como na revisão final do repositório 007, as chamadas com alias (`productsMount`, `cartMount`) não casaram com `src-mount-call` e foram registradas manualmente; os mounts isolados de desenvolvimento são internos às respectivas unidades.
-- `ecomm/products/src/index.js:1` e `ecomm/cart/src/index.js:1` fazem `import("./mount")`, que o padrão `src-async-bootstrap` não pegou por procurar `./bootstrap`. São `import()` de arquivo local da própria unidade, não de outra unidade, e por isso não viram linha manual.
-- `packages/marketing/src/bootstrap.js:13` (`mount(devRoot)`) e `packages/container/src/bootstrap.js:5` (`ReactDom.render(<App />, "#root")`) também não casaram com `src-mount-call`; são montagens internas às próprias unidades e não entram na tabela manual.
-- `<MarketingApp />` em packages/container/src/App.js:10 é o adaptador local do host, não o componente importado do remote; o consumo do remote está no próprio adaptador (linhas 1 e 8).
-- A busca do passo 4 não encontrou `customElements`, `<iframe`, `postMessage`, `CustomEvent`, `BroadcastChannel`, injeção de `<script>`, `loadRemote*`, `initFederation`, `registerApplication` nem `registerMicroApps` nos arquivos de código do snapshot. A composição é inteiramente Module Federation com contrato `mount(el)`.
-- O remote de produção de packages/container depende de `PRODUCTION_DOMAIN` (packages/container/config/webpack.prod.js:6,18), sem valor no snapshot; as respostas acima se apoiam nas configurações de desenvolvimento acionadas pelos scripts.
+- As in the final review of repository 007, aliased calls (`productsMount`, `cartMount`) did not match `src-mount-call` and were recorded manually; isolated development mounts are internal to their respective units.
+- `ecomm/products/src/index.js:1` and `ecomm/cart/src/index.js:1` use `import("./mount")`, which the `src-async-bootstrap` pattern did not capture because it looks for `./bootstrap`. These are `import()` calls for local files of the unit itself rather than another unit, so they do not become manual rows.
+- `packages/marketing/src/bootstrap.js:13` (`mount(devRoot)`) and `packages/container/src/bootstrap.js:5` (`ReactDom.render(<App />, "#root")`) also did not match `src-mount-call`; these mounts are internal to their own units and do not enter the manual table.
+- `<MarketingApp />` at packages/container/src/App.js:10 is the host’s local adapter rather than the component imported from the remote; remote consumption is inside the adapter itself (lines 1 and 8).
+- The step 4 search found no `customElements`, `<iframe`, `postMessage`, `CustomEvent`, `BroadcastChannel`, `<script>` injection, `loadRemote*`, `initFederation`, `registerApplication` or `registerMicroApps` in the snapshot code files. Composition is entirely Module Federation with the `mount(el)` contract.
+- The packages/container production remote depends on `PRODUCTION_DOMAIN` (packages/container/config/webpack.prod.js:6,18), without a value in the snapshot; the answers above rely on development configurations triggered by the scripts.

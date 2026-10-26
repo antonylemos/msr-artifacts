@@ -1,14 +1,14 @@
-# Integridade e proveniência do pacote
+# Package integrity and provenance
 
-O [inventário](inventory.json) registra o corte importado, a seleção dos materiais, seus tamanhos e hashes SHA-256. O escopo mantém as etapas já representadas neste pacote: descoberta, amostragem, classificações, corpus, mineração, inspeção, oito revisões e seus métodos. Os clones correspondem aos 100 repositórios do corpus. Templates, documentos operacionais, análises consolidadas, perfis e backups da ferramenta de origem não integram esta importação.
+The [inventory](inventory.json) records the imported cut, material selection, sizes and SHA-256 hashes. Scope retains the stages already represented in this package: discovery, sampling, classifications, corpus, mining, inspection, eight reviews and their methods. Clones correspond to the 100 corpus repositories. Templates, operational documents, consolidated analyses, profiles and source-tool backups are not part of this import.
 
-Em `items`, `bytes` e `sha256` descrevem o arquivo entregue. Nos textos revisados, `sourceBytes` e `sourceSha256` descrevem a fonte científica importada, e `representation: editorial-revision` identifica a diferença editorial. O front matter das análises mantém os metadados atuais da fonte, inclusive hashes, commits, datas e status. Os manifestos científicos também permanecem intactos; suas referências não foram substituídas pelos hashes editoriais.
+In `items`, `bytes` and `sha256` describe the delivered file. For revised texts, `sourceBytes` and `sourceSha256` describe the imported scientific source, and `representation: editorial-revision` identifies the editorial difference. Analysis front matter retains the source's current metadata, including hashes, commits, dates and status. Scientific manifests also remain intact; their references have not been replaced with editorial hashes.
 
-`editorial` distingue a leitura da narrativa da conferência mecânica de tabelas, código e campos científicos. As evidências dos repositórios não foram reavaliadas e nenhum julgamento científico foi refeito. `sourceFindings` registra inconsistências preexistentes observadas durante a leitura, sem tratá-las como decisões novas nem corrigir os resultados por inferência.
+`editorial` distinguishes narrative reading from mechanical checks of tables, code and scientific fields. Repository evidence was not reassessed and no scientific judgment was repeated. `sourceFindings` records pre-existing inconsistencies observed during reading, without treating them as new decisions or correcting results by inference.
 
-## Conferência dos arquivos
+## Checking files
 
-Execute a partir da raiz do pacote, com Python 3.11 ou superior:
+Run from the package root, with Python 3.11 or later:
 
 ```sh
 python3 - <<'PY'
@@ -25,20 +25,20 @@ for item in records:
         assert hashlib.file_digest(stream, 'sha256').hexdigest() == item['sha256'], path
 assert inventory['totals']['files'] == len(inventory['items'])
 assert inventory['totals']['bytes'] == sum(item['bytes'] for item in inventory['items'])
-print(f'{len(records)} arquivos conferidos')
+print(f'{len(records)} files checked')
 PY
 ```
 
-O inventário não inclui a si próprio. Os arquivos completos reconstruídos de candidatos e SQLite são ignorados pelo Git; a representação versionada está nas partes. Consulte os guias de [reconstrução da descoberta](discovery/mfe-round-002/README.md) e de [clones](clones/README.md) para verificar também sua recomposição.
+The inventory excludes itself. Reconstructed complete candidate and SQLite files are ignored by Git; their tracked representation is in parts. Consult the [discovery reconstruction](discovery/mfe-round-002/README.md) and [clone](clones/README.md) guides to also verify reassembly.
 
-## Inclusão dos snapshots no Git
+## Including snapshots in Git
 
-Os snapshots preservam os `.gitignore` dos projetos estudados. Essas regras, além das regras deste repositório, podem ocultar arquivos que fazem parte do corpus adquirido. A lista exata está em `git.ignoredSnapshotPaths` no inventário.
+Snapshots preserve studied projects' `.gitignore` files. These rules, together with this repository's rules, may hide files belonging to the acquired corpus. The exact list is in `git.ignoredSnapshotPaths` in the inventory.
 
-Ao preparar um commit, inclua o corpus explicitamente com `-f`, a partir da raiz do pacote, para que esses arquivos também sejam versionados:
+When preparing a commit, explicitly include the corpus with `-f`, from the package root, so these files are also tracked:
 
 ```sh
 git add -f -- data/acquisitions/mfe-corpus-001/corpus/
 ```
 
-O comando atua somente no corpus adquirido. Os demais artefatos podem ser adicionados normalmente. A atualização do pacote não executa esse comando, não faz commit e preserva o que já estava preparado no index.
+The command acts only on the acquired corpus. Other artifacts can be added normally. The package update does not run this command, make a commit or change what was already staged in the index.

@@ -20,83 +20,37 @@ annotation:
 
 # 273 — kod88vn/poc_next_mfa
 
-## Leitura do repositório
+## Repository overview
 
-Prova de conceito de Next.js 16 Multi-Zones num monorepo npm workspaces + Turborepo
-(README.md:1, 3). Três aplicações Next.js: `apps/shell` (porta 3000), o host com a página inicial
-e a navegação global (README.md:18; apps/shell/package.json:7, 9); `apps/shop` (porta 3001), a
-listagem e o detalhe de produtos sob `basePath: '/shop'` (apps/shop/next.config.js:19;
-apps/shop/package.json:7, 9); e `apps/duda` (porta 3002), sob `basePath: '/duda'`
-(apps/duda/next.config.js:6; apps/duda/package.json:7, 9). A biblioteca `packages/ui` (`@repo/ui`)
-fornece o `Header` comum e é compilada dentro de cada app por `transpilePackages`
-(apps/shell/next.config.js:9); é código compartilhado, não unidade.
+A Next.js 16 Multi-Zones proof of concept in an npm workspaces + Turborepo monorepo (README.md:1, 3). Three Next.js applications: `apps/shell` (port 3000), the host with the homepage and global navigation (README.md:18; apps/shell/package.json:7, 9); `apps/shop` (port 3001), product listing and detail under `basePath: '/shop'` (apps/shop/next.config.js:19; apps/shop/package.json:7, 9); and `apps/duda` (port 3002), under `basePath: '/duda'` (apps/duda/next.config.js:6; apps/duda/package.json:7, 9). Library `packages/ui` (`@repo/ui`) provides the common `Header` and is compiled into each app through `transpilePackages` (apps/shell/next.config.js:9); it is shared code, not a unit.
 
-A composição é por rota no servidor, não por montagem na página. O shell declara em `rewrites()`
-que `/duda` vai para `http://localhost:3002/duda` e que `/shop` e `/shop/:path*` vão para
-`http://localhost:3001/shop...` (apps/shell/next.config.js:25-43); o comentário chama isso de
-"MULTI-ZONE ROUTING — the core MFE \"string\"" (apps/shell/next.config.js:12). As zonas respondem
-no caminho declarado pelo seu `basePath` e liberam CORS para a origem do shell
-(apps/shop/next.config.js:29-41; apps/duda/next.config.js:10-22). Cada zona renderiza a página
-inteira com layout próprio. Como em 013 e 237, nenhum dos tipos `host → remote`,
-`root-config → application`, `application → custom-element` ou `page → embedded-frontend` descreve
-essa forma de entrada, por isso as duas relações de rota estão como `other`.
+Composition occurs through routes on the server, rather than mounting on the page. The shell declares in `rewrites()` that `/duda` goes to `http://localhost:3002/duda` and `/shop` and `/shop/:path*` go to `http://localhost:3001/shop...` (apps/shell/next.config.js:25-43); the comment calls this "MULTI-ZONE ROUTING — the core MFE \"string\"" (apps/shell/next.config.js:12). Zones respond at the path declared by their `basePath` and allow CORS for the shell's origin (apps/shop/next.config.js:29-41; apps/duda/next.config.js:10-22). Each zone renders the entire page with its own layout. As in 013 and 237, none of types `host → remote`, `root-config → application`, `application → custom-element` or `page → embedded-frontend` describes this entry form, so both route relationships are `other`.
 
-A segunda ligação é o contador do carrinho. A Server Action `addToCart` do shop grava o cookie
-`mfe_cart_count` com `path: '/'` (apps/shop/app/actions.ts:26-31), e os layouts do shell e da duda
-o leem e passam como `cartCount` ao `Header` (apps/shell/app/layout.tsx:29-32, 58;
-apps/duda/app/layout.tsx:24-27, 82). O README descreve o cookie como compartilhado "by both zones"
-(README.md:13, 72), escrito antes da zona duda, que também o lê.
+The second connection is the cart counter. Shop's Server Action `addToCart` writes cookie `mfe_cart_count` with `path: '/'` (apps/shop/app/actions.ts:26-31), and shell and duda layouts read it and pass it as `cartCount` to `Header` (apps/shell/app/layout.tsx:29-32, 58; apps/duda/app/layout.tsx:24-27, 82). The README describes the cookie as shared "by both zones" (README.md:13, 72), written before the duda zone, which also reads it.
 
-O que não virou relação: a navegação entre zonas é por link de página inteira (`<a href="/shop">`
-e `<a href="/duda">` em apps/shell/app/page.tsx:67-78 e no `Header` compartilhado,
-packages/ui/src/Header.tsx:73-85), que não é tipo de relação. A zona duda busca no servidor o HTML
-de um site externo do construtor Duda e o injeta na página (apps/duda/app/page.tsx:10-13); esse
-site não é unidade do repositório, e a única ocorrência de `<iframe` no código é a sanitização que
-remove iframes desse HTML (apps/duda/lib/duda-landing.ts:387). Particularidade do rewrite da duda:
-cobre só `/duda`, sem a forma `/duda/:path*` que o shop tem (apps/shell/next.config.js:29 e 39).
+What did not become a relationship: navigation between zones is through full-page links (`<a href="/shop">` and `<a href="/duda">` in apps/shell/app/page.tsx:67-78 and in the shared `Header`, packages/ui/src/Header.tsx:73-85), which is not a relationship type. The duda zone fetches HTML from an external Duda builder website on the server and injects it into the page (apps/duda/app/page.tsx:10-13); that website is not a repository unit, and the only occurrence of `<iframe` in code is sanitization removing iframes from that HTML (apps/duda/lib/duda-landing.ts:387). A particularity of duda's rewrite: it covers only `/duda`, without the `/duda/:path*` form that shop has (apps/shell/next.config.js:29 and 39).
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | apps/shell | apps/duda | other | origem → destino | other | Yes | Yes | apps/shell/next.config.js:28-31 (`/duda` → `http://localhost:3002/duda`); apps/duda/next.config.js:6 (`basePath: '/duda'`); apps/duda/package.json:7, 9 (porta 3002) | apps/shell/next.config.js:25 |
-| 2 | apps/shell | apps/shop | other | origem → destino | other | Yes | Yes | apps/shell/next.config.js:32-41 (`/shop` e `/shop/:path*` → `http://localhost:3001/shop...`); apps/shop/next.config.js:19 (`basePath: '/shop'`); apps/shop/package.json:7, 9 (porta 3001) | apps/shell/next.config.js:25 |
-| 3 | apps/shop | apps/duda | communication | origem → destino | other | Yes | Yes | — | apps/shop/app/actions.ts:26 |
-| 4 | apps/shop | apps/shell | communication | origem → destino | other | Yes | Yes | — | apps/shop/app/actions.ts:26 |
+| 1 | apps/shell | apps/duda | other | source → target | other | Yes | Yes | apps/shell/next.config.js:28-31 (`/duda` → `http://localhost:3002/duda`); apps/duda/next.config.js:6 (`basePath: '/duda'`); apps/duda/package.json:7, 9 (port 3002) | apps/shell/next.config.js:25 |
+| 2 | apps/shell | apps/shop | other | source → target | other | Yes | Yes | apps/shell/next.config.js:32-41 (`/shop` and `/shop/:path*` → `http://localhost:3001/shop...`); apps/shop/next.config.js:19 (`basePath: '/shop'`); apps/shop/package.json:7, 9 (port 3001) | apps/shell/next.config.js:25 |
+| 3 | apps/shop | apps/duda | communication | source → target | other | Yes | Yes | — | apps/shop/app/actions.ts:26 |
+| 4 | apps/shop | apps/shell | communication | source → target | other | Yes | Yes | — | apps/shop/app/actions.ts:26 |
 
-## Observações
+## Observations
 
-**1. apps/shell → apps/duda.** O shell repassa `/duda` para `http://localhost:3002/duda`
-(apps/shell/next.config.js:28-31). O destino foi resolvido pelo caminho: `/duda` é o `basePath` de
-`apps/duda` (apps/duda/next.config.js:6), cuja página `DudaPage` responde nessa rota
-(apps/duda/app/page.tsx:9); a porta 3002 dos scripts `dev`/`start` (apps/duda/package.json:7, 9)
-só corrobora. Tipo e mecanismo são `other`: o shell não carrega módulos da zona nem a registra num
-orquestrador; encaminha a requisição para outra aplicação, que responde com a página inteira
-(Next.js Multi-Zones por `rewrites`), como em 013 e 237. A direção é a do encaminhamento. Só a rota
-`/duda` está no rewrite; a zona tem uma única página.
+**1. apps/shell → apps/duda.** The shell forwards `/duda` to `http://localhost:3002/duda` (apps/shell/next.config.js:28-31). The target was resolved through the path: `/duda` is the `basePath` of `apps/duda` (apps/duda/next.config.js:6), whose `DudaPage` page responds at that route (apps/duda/app/page.tsx:9); port 3002 in scripts `dev`/`start` (apps/duda/package.json:7, 9) only corroborates. Type and mechanism are `other`: the shell neither loads zone modules nor registers it in an orchestrator; it forwards the request to another application, which responds with the entire page (Next.js Multi-Zones through `rewrites`), as in 013 and 237. Direction follows forwarding. Only route `/duda` is in the rewrite; the zone has a single page.
 
-**2. apps/shell → apps/shop.** Mesmo padrão com `/shop` e `/shop/:path*` para
-`http://localhost:3001/shop` e `http://localhost:3001/shop/:path*` (apps/shell/next.config.js:32-41).
-O prefixo `/shop` é o `basePath` de `apps/shop` (apps/shop/next.config.js:19), e o comentário da
-zona diz que o rewrite do shell encaminha `localhost:3000/shop/*` para ela
-(apps/shop/next.config.js:13-14); a porta 3001 (apps/shop/package.json:7, 9) corrobora. A mesma
-linha de código sustenta as relações 1 e 2.
+**2. apps/shell → apps/shop.** Same pattern with `/shop` and `/shop/:path*` to `http://localhost:3001/shop` and `http://localhost:3001/shop/:path*` (apps/shell/next.config.js:32-41). Prefix `/shop` is the `basePath` of `apps/shop` (apps/shop/next.config.js:19), and the zone's comment says that the shell rewrite forwards `localhost:3000/shop/*` to it (apps/shop/next.config.js:13-14); port 3001 (apps/shop/package.json:7, 9) corroborates. The same code line supports relationships 1 and 2.
 
-**3. apps/shop → apps/duda.** A Server Action `addToCart` grava o cookie `mfe_cart_count` com
-`path: '/'` (apps/shop/app/actions.ts:26-31), disparada pelos formulários
-`<form action={addToCart}>` (apps/shop/app/page.tsx:124; apps/shop/app/[id]/page.tsx:141). O layout
-da duda lê o cookie (apps/duda/app/layout.tsx:24-27) e passa a contagem ao `Header`
-(apps/duda/app/layout.tsx:82). Mecanismo `other`: é estado compartilhado por cookie, não troca de
-eventos, como as relações de cookie de 013; não há canal `events` neste repositório. A leitura não
-foi registrada como construção na revisão de código-fonte, então a direção fica a da gravação, a
-única construção registrada.
+**3. apps/shop → apps/duda.** Server Action `addToCart` writes cookie `mfe_cart_count` with `path: '/'` (apps/shop/app/actions.ts:26-31), triggered by forms `<form action={addToCart}>` (apps/shop/app/page.tsx:124; apps/shop/app/[id]/page.tsx:141). The duda layout reads the cookie (apps/duda/app/layout.tsx:24-27) and passes the count to `Header` (apps/duda/app/layout.tsx:82). Mechanism `other`: this is state shared through a cookie, rather than event exchange, as in cookie relationships in 013; there is no `events` channel in this repository. Reading was not recorded as a construct in the source code review, so direction follows writing, the only recorded construct.
 
-**4. apps/shop → apps/shell.** Mesmo cookie, lido pelo layout do shell
-(apps/shell/app/layout.tsx:29-32) e passado ao `Header` (apps/shell/app/layout.tsx:58). Vale a
-mesma observação sobre o mecanismo e a direção. O próprio shop também lê o cookie no seu layout
-(apps/shop/app/layout.tsx:32-35), o que não é relação entre unidades.
+**4. apps/shop → apps/shell.** The same cookie, read by the shell layout (apps/shell/app/layout.tsx:29-32) and passed to `Header` (apps/shell/app/layout.tsx:58). The same observation on mechanism and direction applies. Shop itself also reads the cookie in its layout (apps/shop/app/layout.tsx:32-35), which is not an inter-unit relationship.
 
-## Resumo
+## Summary
 
-Relações: 4 (other: 2, communication: 2). Ativas: 4. Destino fora do snapshot: 0.
-Unidades sem relação: nenhuma.
+Relationships: 4 (other: 2, communication: 2). Active: 4. Target outside the snapshot: 0.
+Units without a relationship: none.
+

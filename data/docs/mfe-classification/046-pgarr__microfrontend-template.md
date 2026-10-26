@@ -20,40 +20,40 @@ annotation:
 
 # 046 — pgarr/microfrontend-template
 
-## Contexto
+## Context
 
-- **Abordagem de implementação:** Module Federation (webpack 5) com contrato `mount(el, options)`; híbrido React + Vue
-- **Tipo de repositório:** template (nome "microfrontend-template"; mesma estrutura de curso dos repositórios 007 e 017; sem README)
-- **Commit avaliado:** `8869e12` (branch padrão `master`)
+- **Implementation approach:** Module Federation (webpack 5) with a `mount(el, options)` contract; React + Vue hybrid
+- **Repository type:** template (named "microfrontend-template"; same course structure as repositories 007 and 017; no README)
+- **Assessed commit:** `8869e12` (default branch `master`)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | Quatro apps na raiz: `container`, `marketing`, `auth` (React) e `dashboard` (Vue, `dashboard/src/bootstrap.js:1,6` `createApp`), cada uma com `package.json`, `config/webpack.{common,dev,prod}.js`, `public/index.html`, `src/index.js` e `src/bootstrap.js` | forte |
-| Configuração (host) | `container/config/webpack.dev.js:19-23`: `remotes` para `marketing` (8081), `auth` (8082) e `dashboard` (8083); `container/config/webpack.prod.js:16-20`: os mesmos em `${domain}/<app>/latest/remoteEntry.js` | forte |
-| Configuração (remotes) | `{auth,dashboard,marketing}/config/webpack.prod.js:14-17`: `name`, `filename: 'remoteEntry.js'`, `exposes` (`./AuthApp`, `./DashboardApp`, `./MarketingApp` → `./src/bootstrap`) | forte |
-| Código-fonte (composição) | `container/src/App.js:8-10` `lazy` dos wrappers; `:29-37` rotas `/auth/*`, `/dashboard` e `/*` montam cada remote | forte |
-| Código-fonte (integração) | `container/src/components/AuthApp.js:1,13` e `MarketingApp.js:1,13`: `import { mount } from '<remote>/<App>'` + `mount(ref.current, { … })` com `onParentNavigate`; `DashboardApp.js:1,8` monta o remote Vue | forte |
-| Build/deploy | `.github/workflows/{container,marketing,auth,dashboard}.yml`: um workflow por app, disparado por `paths` (`auth.yml:6`), com `aws s3 sync dist s3://…/<app>/latest` (`:23`) e invalidação do CloudFront para `remoteEntry.js` (`:28`) | forte |
-| Documentação | Sem README | ausente |
+| Structure | Four apps at the root: `container`, `marketing`, `auth` (React) and `dashboard` (Vue, `dashboard/src/bootstrap.js:1,6` `createApp`), each with `package.json`, `config/webpack.{common,dev,prod}.js`, `public/index.html`, `src/index.js` and `src/bootstrap.js` | strong |
+| Configuration (host) | `container/config/webpack.dev.js:19-23`: `remotes` for `marketing` (8081), `auth` (8082) and `dashboard` (8083); `container/config/webpack.prod.js:16-20`: the same at `${domain}/<app>/latest/remoteEntry.js` | strong |
+| Configuration (remotes) | `{auth,dashboard,marketing}/config/webpack.prod.js:14-17`: `name`, `filename: 'remoteEntry.js'`, `exposes` (`./AuthApp`, `./DashboardApp`, `./MarketingApp` → `./src/bootstrap`) | strong |
+| Source code (composition) | `container/src/App.js:8-10` `lazy` loading of wrappers; `:29-37` routes `/auth/*`, `/dashboard` and `/*` mount each remote | strong |
+| Source code (integration) | `container/src/components/AuthApp.js:1,13` and `MarketingApp.js:1,13`: `import { mount } from '<remote>/<App>'` + `mount(ref.current, { … })` with `onParentNavigate`; `DashboardApp.js:1,8` mounts the Vue remote | strong |
+| Build/deploy | `.github/workflows/{container,marketing,auth,dashboard}.yml`: one workflow per app, triggered by `paths` (`auth.yml:6`), with `aws s3 sync dist s3://…/<app>/latest` (`:23`) and CloudFront invalidation for `remoteEntry.js` (`:28`) | strong |
+| Documentation | No README | absent |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | `container`, `marketing`, `auth` e `dashboard` |
-| Q2 | Yes | Webpack, entry e workflow de deploy próprios por app (S3 por prefixo); sem import de código-fonte entre apps |
-| Q3 | Yes | O container roteia e monta os três remotes (`App.js:29-37`) |
-| Q4 | Yes | `remotes`/`exposes` em dev e prod, usados via `mount` (`AuthApp.js:1,13`) |
-| Q5 | Yes | Q1–Q4 convergem; nenhuma divergência a justificar |
+| Q1 | Yes | `container`, `marketing`, `auth` and `dashboard` |
+| Q2 | Yes | Each app has its own webpack, entry and deployment workflow (S3 by prefix); no source code imports between apps |
+| Q3 | Yes | The container routes to and mounts all three remotes (`App.js:29-37`) |
+| Q4 | Yes | `remotes`/`exposes` in development and production, used through `mount` (`AuthApp.js:1,13`) |
+| Q5 | Yes | Q1–Q4 converge; no discrepancy to justify |
 
-## Motivo
+## Rationale
 
-- Q1–Q5 são todos Yes, o que satisfaz a regra de MFE-implemented.
-- Corresponde a "monorepos containing a host and its remotes", "hybrid implementations" (remote Vue em container React) e "examples, templates… that actually compose frontend units".
+- Q1–Q5 are all Yes, satisfying the MFE-implemented rule.
+- Matches "monorepos containing a host and its remotes", "hybrid implementations" (Vue remote in a React container) and "examples, templates… that actually compose frontend units".
 
-## Notas para análise
+## Analysis notes
 
-- **Protocolo (família):** mesma arquitetura dos repositórios 007 (incompleto) e 017 (completo): `container` + `marketing`/`auth`/`dashboard`, `mount(el)` + `onParentNavigate`, deploy em S3/CloudFront por prefixo `<app>/latest`. Três ocorrências até aqui; vale registrar como família de repositórios derivados do mesmo material didático na análise (RQ1/RQ2), para não superestimar a frequência de certos artefatos.
-- **Protocolo (família, diferença em relação ao 017):** usa `react-router-dom` v6 (`Routes`, `Navigate`) no container, em vez de `Switch`/`Redirect`.
+- **Protocol (family):** same architecture as repositories 007 (incomplete) and 017 (complete): `container` + `marketing`/`auth`/`dashboard`, `mount(el)` + `onParentNavigate`, S3/CloudFront deployment by `<app>/latest` prefix. Three occurrences so far; it should be recorded as a family of repositories derived from the same instructional material in analysis (RQ1/RQ2), to avoid overestimating the frequency of certain artifacts.
+- **Protocol (family, difference from 017):** uses `react-router-dom` v6 (`Routes`, `Navigate`) in the container, instead of `Switch`/`Redirect`.

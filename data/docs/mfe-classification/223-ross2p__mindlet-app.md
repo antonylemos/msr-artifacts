@@ -20,81 +20,81 @@ annotation:
 
 # 223 — ross2p/mindlet-app
 
-## Contexto
+## Context
 
-“Mindlet — superproject” (`README.md:1–11`): repositório agregador de cinco micro-frontends Next.js 16 (“`basePath` per zone”: dashboard, auth, profile, study, decks) e de duas bibliotecas (`@ross2p/shared`, `@ross2p/types`). Todos são submódulos Git (`.gitmodules:1–21`). O superprojeto contém só a orquestração local:
-- `compose.yml`, com um serviço Docker por zona e um nginx como gateway;
-- configurações de nginx (`infra/nginx/`) que roteiam os prefixos `/dashboard/`, `/auth/`, `/profile/`, `/study/` e `/decks/` para cada zona.
+“Mindlet — superproject” (`README.md:1–11`): aggregator repository of five Next.js 16 micro-frontends (“`basePath` per zone”: dashboard, auth, profile, study, decks) and two libraries (`@ross2p/shared`, `@ross2p/types`). All are Git submodules (`.gitmodules:1–21`). Superproject contains only local orchestration:
+- `compose.yml`, with one Docker service per zone and nginx gateway;
+- nginx configurations (`infra/nginx/`) routing prefixes `/dashboard/`, `/auth/`, `/profile/`, `/study/` and `/decks/` to each zone.
 
-Os fontes das zonas não estão no snapshot, porque os submódulos são gitlinks. O nome do repositório não é usado como evidência.
+Zone sources are absent from snapshot because submodules are gitlinks. Repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:224` registra rank 223, ID 1091389540, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Os submódulos não foram inicializados. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:224` records rank 223, ID 1091389540, status `cloned`, branch `main` and front-matter commit, which is clone HEAD and `origin/main`. Every clone Git command used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. Submodules were not initialized. No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:224` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:20784` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:20790` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:224` records strategy `terminology` and eligibility `pass`. Sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). ID appears in `data/discovery/mfe-round-001/candidates.csv:20784` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:20790` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2025-11` e `path` vazio:
+`sqlite3 -readonly` query of tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns same two hits in each round, at endpoint `repositories`, with subquery `…#created:2025-11` and empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | 2026-10-07T22:28:09.204Z / 2026-10-08T15:56:45.972Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | 2026-10-07T22:58:13.574Z / 2026-10-08T16:07:13.967Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2025-11-01..2025-11-30`.
+Effective queries append `pushed:>=2025-04-01 created:2025-11-01..2025-11-30`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem Python (pelos scripts em `.agents/`), `fork: false`, tamanho 549;
-- criação em 2025-11-07T00:28:37Z, push em 2026-09-22T11:45:46Z.
+Hit metadata:
+- null description, no topics, Python language (from scripts in `.agents/`), `fork: false`, size 549;
+- creation at 2025-11-07T00:28:37Z, push at 2026-09-22T11:45:46Z.
 
-O acerto vem de `README.md:3`, “Micro-frontends: **dashboard**, **auth**, **profile**, **study**, **decks** (Next.js 16, `basePath` per zone)…”. A busca de frase trata o hífen como separador. O singular “micro frontend” não aparece literalmente no README; esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+Retrieval comes from `README.md:3`, “Micro-frontends: **dashboard**, **auth**, **profile**, **study**, **decks** (Next.js 16, `basePath` per zone)…”. Phrase search treats hyphen as separator. Singular “micro frontend” appears literally nowhere in README; this hit depends on unrecorded GitHub search text processing.
 
-A última alteração do README é `91bfed2` (2026-08-29), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+Last README change is `91bfed2` (2026-08-29), before October 2026 collections. README at the SHA is not later than searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 62 entradas, sendo 54 arquivos regulares `100644`, 1 executável `100755` (`.agents/skills/ui-ux-pro-max/scripts/core.py`) e 7 gitlinks `160000` (`apps/auth`, `apps/dashboard`, `apps/decks`, `apps/profile`, `apps/study`, `libs/shared`, `libs/types`); zero symlinks. 38 entradas são skills de agentes de IA em `.agents/`. As outras são `README.md`, `compose.yml`, `start-local-dev.sh`, `.gitmodules`, `config/nginx/` e `infra/nginx/`. | contexto |
-| Unidades (submódulos) | `.gitmodules:4–18`: cada zona aponta para um repositório próprio (`mindlet-dashboard`, `mindlet-app-auth`, `mindlet-profile`, `mindlet-study`, `mindlet-decks`). Os fontes não estão no snapshot; framework e `basePath` só são documentados (`README.md:3`; `compose.yml:1`). | ambígua |
-| Configuração (composição por rota) | `infra/nginx/nginx.conf:14–18`: upstreams `dashboard:3000`, `auth:3000`, `profile:3000`, `study:3000`, `decks:3000`. `:29–66`: `location /dashboard/ { proxy_pass http://mindlet_dashboard/; }` e análogos, com `/` redirecionando para `/dashboard/`. `infra/nginx/nginx.conf.local:16–68` faz o mesmo para `localhost:3001–3005`. `infra/nginx/routing-map.frontend.conf:1–9` mapeia os prefixos para os serviços. | forte |
-| Build/deploy | `compose.yml:14–127`: cada zona com `build.context: apps/<zona>`, `Dockerfile`, `env_file` e porta próprios; o serviço `nginx` monta as configurações e depende das cinco zonas. `README.md:34–35`: gateway em `localhost:8080`, zonas em `/dashboard/`, `/auth/login`, `/profile/me`, `/study/`, `/decks/`. | forte |
-| Compartilhamento | `README.md:53–74`: `@ross2p/shared` publicado no GitHub Packages; em desenvolvimento local, as apps usam `"@ross2p/shared": "file:../../libs/shared"` (`:74`). É dependência de pacote entre as zonas, não verificável no snapshot. | contexto |
-| Busca | `git grep` no SHA interrompeu ao exigir um objeto ausente do clone parcial (`0dfbd9f`, não buscado); a busca foi refeita arquivo a arquivo em `README.md`, `compose.yml`, `start-local-dev.sh`, `config/nginx/*` e `infra/nginx/*`, com `ModuleFederation`, `registerApplication`, `importmap` e `rewrites`, sem ocorrências. Fora dos submódulos não há código de aplicação; não há `ModuleFederationPlugin`, `registerApplication`, import map ou `rewrites` do Next no superprojeto. A composição observável é a do proxy reverso. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 62 entries, including 54 regular files `100644`, 1 executable `100755` (`.agents/skills/ui-ux-pro-max/scripts/core.py`) and 7 gitlinks `160000` (`apps/auth`, `apps/dashboard`, `apps/decks`, `apps/profile`, `apps/study`, `libs/shared`, `libs/types`); zero symlinks. 38 entries are AI-agent skills in `.agents/`. Others are `README.md`, `compose.yml`, `start-local-dev.sh`, `.gitmodules`, `config/nginx/` and `infra/nginx/`. | context |
+| Units (submodules) | `.gitmodules:4–18`: each zone points to own repository (`mindlet-dashboard`, `mindlet-app-auth`, `mindlet-profile`, `mindlet-study`, `mindlet-decks`). Sources are absent from snapshot; framework and `basePath` are only documented (`README.md:3`; `compose.yml:1`). | ambiguous |
+| Configuration (route composition) | `infra/nginx/nginx.conf:14–18`: upstreams `dashboard:3000`, `auth:3000`, `profile:3000`, `study:3000`, `decks:3000`. `:29–66`: `location /dashboard/ { proxy_pass http://mindlet_dashboard/; }` and equivalents, with `/` redirecting to `/dashboard/`. `infra/nginx/nginx.conf.local:16–68` does same for `localhost:3001–3005`. `infra/nginx/routing-map.frontend.conf:1–9` maps prefixes to services. | strong |
+| Build/deploy | `compose.yml:14–127`: each zone with own `build.context: apps/<zona>`, `Dockerfile`, `env_file` and port; service `nginx` mounts configurations and depends on five zones. `README.md:34–35`: gateway at `localhost:8080`, zones at `/dashboard/`, `/auth/login`, `/profile/me`, `/study/`, `/decks/`. | strong |
+| Sharing | `README.md:53–74`: `@ross2p/shared` published on GitHub Packages; in local development, apps use `"@ross2p/shared": "file:../../libs/shared"` (`:74`). Package dependency between zones, unverifiable in snapshot. | context |
+| Search | `git grep` at the SHA stopped when requesting missing partial-clone object (`0dfbd9f`, not fetched); search repeated file by file in `README.md`, `compose.yml`, `start-local-dev.sh`, `config/nginx/*` and `infra/nginx/*`, with `ModuleFederation`, `registerApplication`, `importmap` and `rewrites`, without occurrences. Outside submodules no application code exists; no `ModuleFederationPlugin`, `registerApplication`, import map or Next `rewrites` in superproject. Observable composition is reverse proxy. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 45 commits, 5 merges, todos de Rostyslav Pasternak: 41 como `ross2p` e 4 como `Rostyslav` (noreply, merges de PR).
-- **Raiz:** `9a1af72` (2026-01-29, “feat: initialize main app with Next.js…”), quando o repositório ainda era uma aplicação única.
-- **Virada:** `404dce1` (2026-05-03, “feat: micro-frontends — submodules, nginx compose, @ross2p/shared”) converte o repositório em superprojeto.
+Non-shallow clone; 45 commits, 5 merges, all by Rostyslav Pasternak: 41 as `ross2p` and 4 as `Rostyslav` (noreply, PR merges).
+- **Root:** `9a1af72` (2026-01-29, “feat: initialize main app with Next.js…”), when repository was still one application.
+- **Turning point:** `404dce1` (2026-05-03, “feat: micro-frontends — submodules, nginx compose, @ross2p/shared”) converts repository into superproject.
 - **SHA:** `868bf9c` (2026-09-22, “chore: update submodules to latest main hashes”).
 
-Os branches `origin/feature/auth` e `origin/feature/auth-review-fixes` não foram considerados. Nenhum blob histórico foi lido. Todos os blobs regulares do SHA estão presentes no clone; o objeto `0dfbd9f` pedido pelo `git grep` não pertence à árvore regular do SHA e não foi buscado. Os commits dos gitlinks também não foram buscados.
+Branches `origin/feature/auth` and `origin/feature/auth-review-fixes` were not considered. No historical blob was read. All regular SHA blobs are present in clone; object `0dfbd9f` requested by `git grep` is outside regular SHA tree and was not fetched. Gitlink commits were also not fetched.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | Cinco unidades frontend referenciadas explicitamente pela configuração de composição (`infra/nginx/nginx.conf:14–18`; `compose.yml:15–108`). |
-| Q2 | Yes | Cada zona é repositório próprio (`.gitmodules`), com `Dockerfile`, build, porta e serviço próprios (`compose.yml`); unidades externas implantadas separadamente. O único vínculo declarado é o pacote `@ross2p/shared`. |
-| Q3 | Yes | O gateway nginx roteia os prefixos de uma mesma entrada (`localhost:8080`) para as zonas e redireciona `/` para `/dashboard/` (`infra/nginx/nginx.conf:29–66`). |
-| Q4 | Yes | O nginx compõe as zonas por prefixos sob uma entrada única, e o `compose.yml` declara os serviços e builds correspondentes. As configurações internas de `basePath` estão nos submódulos, mas o mecanismo de roteamento observável é completo e coerente. |
-| Q5 | Yes | Q1–Q4 demonstram zonas independentes compostas por gateway comum. |
+| Q1 | Yes | Five frontend units explicitly referenced by composition configuration (`infra/nginx/nginx.conf:14–18`; `compose.yml:15–108`). |
+| Q2 | Yes | Each zone is own repository (`.gitmodules`), with own `Dockerfile`, build, port and service (`compose.yml`); external units separately deployed. Sole declared link is package `@ross2p/shared`. |
+| Q3 | Yes | Nginx gateway routes prefixes from one entry (`localhost:8080`) to zones and redirects `/` to `/dashboard/` (`infra/nginx/nginx.conf:29–66`). |
+| Q4 | Yes | Nginx composes zones through prefixes under one entry, and `compose.yml` declares corresponding services/builds. Internal `basePath` configurations are in submodules, but observable routing mechanism is complete and consistent. |
+| Q5 | Yes | Q1–Q4 demonstrate independent zones composed through common gateway. |
 
-## Motivo
+## Rationale
 
-- Classificado como `MFE-implemented`: o gateway nginx integra cinco zonas independentes por prefixos, com serviços e builds declarados no compose.
-- **Mecanismo:** é composição por zonas, implementada por nginx em vez de `rewrites` do Next. Mantém-se `approaches: [multi-zones]`, como declarado no README (“`basePath` per zone”).
-- **Unidades:** as cinco zonas são externas ao snapshot (gitlinks), como no caso de host que referencia unidades externas (087). Não é o caso de 097/103/104, em que faltava cadeia executável: aqui o gateway e o compose estão completos e consistentes entre si (nomes de serviço, portas e prefixos).
-- **Campos:** `frontend_units: 5`, `unit_organization: multi-repo` (submódulos), `ui_technologies: [react, next]` (pelo README e pelo compose; os fontes não foram observados), `build_tools: []`, `repo_type: example` (projeto pessoal com stack local).
+- Classified as `MFE-implemented`: nginx gateway integrates five independent zones through prefixes, with services/builds declared in compose.
+- **Mechanism:** zone composition, implemented through nginx instead of Next `rewrites`. Retain `approaches: [multi-zones]`, as declared in README (“`basePath` per zone”).
+- **Units:** five zones are external to snapshot (gitlinks), as host referencing external units (087). Unlike 097/103/104, where executable chain was missing: gateway and compose here are complete and mutually consistent (service names, ports and prefixes).
+- **Fields:** `frontend_units: 5`, `unit_organization: multi-repo` (submodules), `ui_technologies: [react, next]` (through README and compose; sources not observed), `build_tools: []`, `repo_type: example` (personal project with local stack).
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** superprojeto com submódulos por zona e gateway nginx por prefixo, com biblioteca compartilhada publicada em registro privado e referenciada por `file:` no desenvolvimento local.
-- **RQ1 (sinais enganosos):** a linguagem do repositório é “Python” por causa de skills de agentes versionadas em `.agents/`.
-- **Protocolo (snapshot):** as unidades estão em gitlinks; sem inicializar os submódulos, `basePath` e a navegação entre zonas não são verificáveis.
-- **Protocolo (busca):** o hit singular não tem grafia literal. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ2:** superproject with per-zone submodules and per-prefix nginx gateway, with shared library published in private registry and referenced through `file:` in local development.
+- **RQ1 (misleading signals):** repository language is “Python” because of agent skills versioned in `.agents/`.
+- **Protocol (snapshot):** units are gitlinks; without initializing submodules, `basePath` and inter-zone navigation are unverifiable.
+- **Protocol (search):** singular hit has no literal spelling. Eligibility changes from `unknown` (001) to `pass` (002).
 
-## Decisão registrada
+## Recorded decision
 
-Promovido para `MFE-implemented`. O superprojeto compõe cinco zonas Next.js por gateway nginx, com rotas por prefixo, serviços e builds independentes definidos em `compose.yml`. Os fontes internos das zonas estão em submódulos, mas a orquestração observável é suficiente para confirmar a composição.
+Promoted to `MFE-implemented`. Superproject composes five Next.js zones through nginx gateway, with prefix routes, independent services/builds defined in `compose.yml`. Internal zone sources are in submodules, but observable orchestration suffices to confirm composition.

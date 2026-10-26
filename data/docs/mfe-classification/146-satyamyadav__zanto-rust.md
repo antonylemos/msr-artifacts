@@ -20,65 +20,65 @@ annotation:
 
 # 146 — satyamyadav/zanto-rust
 
-## Contexto
+## Context
 
-“zanto”: assistente de IA local-first em Rust, com biblioteca `zanto-core`, CLI de terminal e app desktop Tauri com UI SvelteKit, mais um site de marketing Astro em `site/` (`README.md:9`; `README.md:92–99`; `site/astro.config.mjs:11–18`). O produto chama de “micro-apps” as ferramentas internas, como Personal Finance (`README.md:39–40`). Elas são módulos Svelte do mesmo build do desktop, importados estaticamente pelo canvas, não unidades frontend separadas. O nome do repositório não é usado como evidência.
+“zanto”: local-first Rust AI assistant, with library `zanto-core`, terminal CLI and Tauri desktop app with SvelteKit UI, plus Astro marketing site in `site/` (`README.md:9`; `README.md:92–99`; `site/astro.config.mjs:11–18`). Product calls internal tools “micro-apps”, such as Personal Finance (`README.md:39–40`). These are Svelte modules of same desktop build, statically imported by canvas, not separate frontend units. Repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:147` registra rank 146, ID 1264718438, status `cloned` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:147` records rank 146, ID 1264718438, status `cloned` and front-matter commit, which is clone HEAD and `origin/main`. Every clone Git command used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:147` registra a estratégia `broader` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:31587` (`broader`, `unknown`) e `data/discovery/mfe-round-002/candidates.csv:31595` (`broader`, `pass`).
+`data/samples/mfe-sample-001/sample.csv:147` records strategy `broader` and eligibility `pass`. Sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). ID appears in `data/discovery/mfe-round-001/candidates.csv:31587` (`broader`, `unknown`) and `data/discovery/mfe-round-002/candidates.csv:31595` (`broader`, `pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna um hit por rodada, do endpoint `repositories` e com `path` vazio:
+`sqlite3 -readonly` query of tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns one hit per round, at endpoint `repositories` and with empty `path`:
 
-| Consulta (`q`) | Subconsulta | Consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Effective query | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `broader-micro-apps`: `"micro apps" frontend in:name,description,readme` | `broader-micro-apps#created:2026-Q2` | `"micro apps" frontend in:name,description,readme pushed:>=2025-04-01 created:2026-04-01..2026-06-30` | 2026-10-07T23:50:27.916Z / 2026-10-08T16:27:12.314Z |
 
-Metadados do hit:
-- descrição sobre o workspace de IA local-first, com “focused apps like Personal Finance”, sem “micro apps”;
-- tópicos incluem `desktop-app`, `tauri` e `sevltekit`;
-- linguagem Rust, `fork: false`, criação em 2026-06-10T05:57:57Z, push em 2026-07-02T17:46:20Z, homepage no GitHub Pages.
+Hit metadata:
+- description about local-first AI workspace, with “focused apps like Personal Finance”, without “micro apps”;
+- topics include `desktop-app`, `tauri` and `sevltekit`;
+- Rust language, `fork: false`, creation at 2026-06-10T05:57:57Z, push at 2026-07-02T17:46:20Z, GitHub Pages homepage.
 
-O README contém “**Micro-apps.**” (`README.md:39`, grafia hifenizada) e “frontend” (`README.md:97`, “terminal frontend”), os dois termos exigidos pela consulta.
+README contains “**Micro-apps.**” (`README.md:39`, hyphenated spelling) and “frontend” (`README.md:97`, “terminal frontend”), both query-required terms.
 
-A última alteração do README é `fa0dbd7` (2026-06-28). Ela e o SHA (2026-07-02) antecedem as coletas de outubro de 2026, e o README do SHA não é posterior às buscas.
+Last README change is `fa0dbd7` (2026-06-28). It and SHA (2026-07-02) predate October 2026 collections, and README at the SHA is not later than searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 411 entradas, 410 arquivos regulares `100644` e 1 executável `100755` (`install.sh`); zero symlinks e zero gitlinks. Workspace Cargo com `crates/zanto-core`, `crates/zanto-cli` e `crates/zanto-desktop` (`README.md:94–99`), um site Astro em `site/` e documentação em `docs/`. Só há dois projetos frontend: `crates/zanto-desktop/package.json` e `site/package.json`. | contexto |
-| Código-fonte (micro-apps) | `crates/zanto-desktop/src/lib/components/Canvas.svelte:6`: `import FinanceV1 from "$lib/apps/finance/FinanceV1.svelte"`, renderizado em `Canvas.svelte:116–120`. `crates/zanto-desktop/src/lib/registry.ts:13–15`, `32–34`: componentes da finance registrados num mapa estático junto aos blocos genéricos. `crates/zanto-desktop/src/lib/stores/app.svelte.ts:15–24`: lista e “monta” apps via IPC Tauri, isto é, ativa o perfil de backend, não carrega código frontend. | contrária |
-| Documentação (arquitetura) | `docs/product.md:27–33`: “A micro app is a self-contained Svelte module mounted in the desktop shell's right-side panel… Think micro-frontends — each app is independently defined, mounted, and switched at runtime”. `crates/zanto-desktop/src-tauri/src/app.rs:1–4`: app = fatia Rust + fatia Svelte + manifesto. `docs/archive/genui-d.md:70–71` e `75`: micro-app “not a separately built application”; entrega “CDN/ESM micro-app” foi descartada. | contrária |
-| Configuração / Build/deploy | Desktop: um único build SvelteKit com `adapter-static` (`crates/zanto-desktop/svelte.config.js:9–15`) e Vite (`crates/zanto-desktop/vite.config.js:12–41`), empacotado pelo Tauri (`crates/zanto-desktop/src-tauri/tauri.conf.json:6–11`). Site: Astro estático independente (`site/package.json:7–11`; `site/astro.config.mjs:11–18`). Nenhum dos dois carrega o outro. | contrária |
-| Código-fonte (fronteiras) | Busca por imports relativos em `site` e `crates/zanto-desktop/src`. Os `../` do desktop ficam dentro de `src/lib/apps/finance` (por exemplo, `v1/AccountsTab.svelte:4–6`), e `src/lib/mock/backend.ts:8` lê fixtures em `contract/`, do próprio projeto. O site não referencia `crates/` nem o desktop. | contexto |
-| Tecnologia / Configuração / Composição (busca) | `git grep -i` no SHA, exceto lockfiles e `docs/archive`, por `micro.?front`, `federation`, `single.?spa`, `remoteEntry`, `import.?map`, `customElements`, `<iframe`, `qiankun` e `wujie`. Os acertos são texto, mais o componente executável `Html.svelte` (iframe sandbox para HTML gerado, reaberto em `ArtifactHub.svelte:360`), que não é unidade remota: `docs/product.md:31`, `docs/feature-roadmap.md:51` (iframe sandbox para artefatos HTML gerados, como plano) e falsos positivos (`fetch_url.rs:276`, `import.rs:208`, `finance-v1-plan.md`). Nenhum mecanismo de composição. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 411 entries, 410 regular files `100644` and 1 executable `100755` (`install.sh`); zero symlinks and zero gitlinks. Cargo workspace with `crates/zanto-core`, `crates/zanto-cli` and `crates/zanto-desktop` (`README.md:94–99`), Astro site in `site/` and documentation in `docs/`. Only two frontend projects: `crates/zanto-desktop/package.json` and `site/package.json`. | context |
+| Source code (micro-apps) | `crates/zanto-desktop/src/lib/components/Canvas.svelte:6`: `import FinanceV1 from "$lib/apps/finance/FinanceV1.svelte"`, rendered at `Canvas.svelte:116–120`. `crates/zanto-desktop/src/lib/registry.ts:13–15`, `32–34`: finance components registered in a static map alongside generic blocks. `crates/zanto-desktop/src/lib/stores/app.svelte.ts:15–24`: lists and “mounts” apps through Tauri IPC, that is, activates backend profile, not frontend code loading. | contrary |
+| Documentation (architecture) | `docs/product.md:27–33`: “A micro app is a self-contained Svelte module mounted in the desktop shell's right-side panel… Think micro-frontends — each app is independently defined, mounted, and switched at runtime”. `crates/zanto-desktop/src-tauri/src/app.rs:1–4`: app = Rust slice + Svelte slice + manifest. `docs/archive/genui-d.md:70–71` and `75`: micro-app “not a separately built application”; “CDN/ESM micro-app” delivery was discarded. | contrary |
+| Configuration / Build/deploy | Desktop: one SvelteKit build with `adapter-static` (`crates/zanto-desktop/svelte.config.js:9–15`) and Vite (`crates/zanto-desktop/vite.config.js:12–41`), packaged by Tauri (`crates/zanto-desktop/src-tauri/tauri.conf.json:6–11`). Site: independent static Astro (`site/package.json:7–11`; `site/astro.config.mjs:11–18`). Neither loads other. | contrary |
+| Source code (boundaries) | Relative-import search in `site` and `crates/zanto-desktop/src`. Desktop `../` stays within `src/lib/apps/finance` (for example, `v1/AccountsTab.svelte:4–6`), and `src/lib/mock/backend.ts:8` reads fixtures in `contract/`, of same project. Site references neither `crates/` nor desktop. | context |
+| Technology / Configuration / Composition (search) | `git grep -i` at the SHA, except lockfiles and `docs/archive`, for `micro.?front`, `federation`, `single.?spa`, `remoteEntry`, `import.?map`, `customElements`, `<iframe`, `qiankun` and `wujie`. Hits are text, plus executable component `Html.svelte` (sandbox iframe for generated HTML, reopened in `ArtifactHub.svelte:360`), not a remote unit: `docs/product.md:31`, `docs/feature-roadmap.md:51` (sandbox iframe for generated HTML artifacts, as plan) and false positives (`fetch_url.rs:276`, `import.rs:208`, `finance-v1-plan.md`). No composition mechanism. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 336 commits, nenhum merge, todos de Satyam `<satyamyadav3@gmail.com>`, de 2026-06-09 (`24acb39`, “core structure”) a 2026-07-02. Por caminho (`git log --no-renames`): `crates/zanto-desktop` 231 commits, `crates/zanto-core` 76, `site` 3 e `docs` 78. Há tags `v1.0.0-beta.0` a `v1.0.0-beta.3` e dois refs remotos `worktree-agent-*`, cujo conteúdo não foi considerado. `CLAUDE.md` e `.claude/` indicam uso de assistente de código; os metadados não separam autoria intelectual. Nenhum blob histórico foi lido. A travessia completa de `git log --name-status` em `crates/zanto-desktop`, `crates/zanto-core` e `docs` falha com `GIT_NO_LAZY_FETCH=1` por objetos promisor indisponíveis no clone parcial; os logs por caminho necessários estão disponíveis.
+Non-shallow clone; 336 commits, no merge, all by Satyam `<satyamyadav3@gmail.com>`, from 2026-06-09 (`24acb39`, “core structure”) to 2026-07-02. By path (`git log --no-renames`): `crates/zanto-desktop` 231 commits, `crates/zanto-core` 76, `site` 3 and `docs` 78. Tags `v1.0.0-beta.0` to `v1.0.0-beta.3` and two remote refs `worktree-agent-*` exist, whose content was not considered. `CLAUDE.md` and `.claude/` indicate coding-assistant use; metadata do not separate intellectual authorship. No historical blob was read. Complete `git log --name-status` traversal in `crates/zanto-desktop`, `crates/zanto-core` and `docs` fails with `GIT_NO_LAZY_FETCH=1` for unavailable promisor objects in partial clone; necessary path logs are available.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | Dois projetos frontend identificáveis no repositório: a aplicação desktop SvelteKit/Tauri e o site Astro (`frontend_units: 2`). As “micro-apps” não são unidades separadas: são módulos do mesmo build importados estaticamente (`Canvas.svelte:6`; `registry.ts:13–15`). Q1 conta unidades identificáveis no repositório, referenciadas ou não por configuração de composição (cf. 042). |
-| Q2 | Yes | Desktop e site têm entrada e build próprios e não importam o código um do outro; o site é independente do desktop. A finance compartilha entrada e build com o shell desktop (`svelte.config.js:9–15`; `vite.config.js:12–41`), e não conta como unidade à parte. |
-| Q3 | No | O desktop monta módulos internos, não unidades independentes. O site e o desktop não participam da mesma aplicação. |
-| Q4 | No | Nenhum mecanismo de composição frontend configurado. A “montagem” é import estático mais ativação de perfil por IPC (`app.svelte.ts:21–24`). |
-| Q5 | No | Q1–Q4 são No: app desktop modular com “micro-apps” internos e site separado, sem composição de unidades. |
+| Q1 | Yes | Two identifiable frontend projects in repository: SvelteKit/Tauri desktop application and Astro site (`frontend_units: 2`). “Micro-apps” are not separate units: modules of same build imported statically (`Canvas.svelte:6`; `registry.ts:13–15`). Q1 counts identifiable repository units, referenced by composition configuration or otherwise (cf. 042). |
+| Q2 | Yes | Desktop and site have own entry/build and do not import each other’s code; site is independent of desktop. Finance shares entry/build with desktop shell (`svelte.config.js:9–15`; `vite.config.js:12–41`), and does not count separately. |
+| Q3 | No | Desktop mounts internal modules, not independent units. Site and desktop do not participate in same application. |
+| Q4 | No | No frontend composition mechanism is configured. “Mounting” is static import plus IPC profile activation (`app.svelte.ts:21–24`). |
+| Q5 | No | Q1–Q4 are No: modular desktop app with internal “micro-apps” and separate site, without unit composition. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No” (Q3 e Q4 No; Q1 e Q2 Yes por haver dois projetos frontend independentes, desktop e site, que não compõem um ao outro). Corresponde a “conventional frontend monoliths”, por modularização interna chamada de micro-app, e a “monorepos containing several unrelated frontend applications” (desktop e site).
-- A analogia “Think micro-frontends” (`docs/product.md:31`) é autodescrição, e o próprio histórico de design registra que a entrega separada de micro-apps foi descartada (`docs/archive/genui-d.md:70–75`). Por isso não se trata como mecanismo de composição.
-- `frontend_units: 2` (desktop SvelteKit e site Astro), `unit_organization: monorepo`. `ui_technologies: [svelte, astro]`. `build_tools: [vite]` pela configuração explícita do desktop; o Astro encapsula o bundler do site. `repo_type: production`: produto distribuído por releases e tags (`README.md:43–50`).
-- Não há decisão aberta: o iframe citado no roadmap é sandbox para artefatos gerados, não composição de unidades, e não está implementado como composição.
+- `Non-MFE` under rule “at least one question is No” (Q3 and Q4 No; Q1 and Q2 Yes for two independent frontend projects, desktop and site, not composing each other). Matches “conventional frontend monoliths”, for internal modularization called micro-app, and “monorepos containing several unrelated frontend applications” (desktop and site).
+- Analogy “Think micro-frontends” (`docs/product.md:31`) is self-description, and design history itself records discarded separate micro-app delivery (`docs/archive/genui-d.md:70–75`). Thus it is not treated as composition mechanism.
+- `frontend_units: 2` (SvelteKit desktop and Astro site), `unit_organization: monorepo`. `ui_technologies: [svelte, astro]`. `build_tools: [vite]` through explicit desktop configuration; Astro encapsulates site bundler. `repo_type: production`: product distributed through releases and tags (`README.md:43–50`).
+- No decision remains open: roadmap iframe is sandbox for generated artifacts, not unit composition, and is not implemented as composition.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** “micro-app” como nome de módulo interno de produto (com backend Rust e UI Svelte no mesmo binário), acompanhado da analogia “Think micro-frontends”. A consulta ampla `"micro apps" frontend` capta esse vocabulário.
-- **Protocolo (busca):** os dois termos da consulta aparecem em linhas distintas do README (`README.md:39`, `97`). A elegibilidade muda de `unknown` (001) para `pass` (002).
-- **Contribuição da revisão independente (Lupa):** concordância com Non-MFE e `draft`; divergência adotada nas respostas Q1/Q2, que passaram de No a Yes. Fundamento verificável: o texto literal de Q1 conta unidades frontend identificáveis no repositório, e Q2 pede entrada e build próprios sem import de código entre as unidades; desktop e site cumprem os dois, e o final 042 aplica Q1 Yes a duas apps frontend em monorepo, excluindo a classe por Q4 No. Aqui, adicionalmente, desktop e site nem se compõem (Q3 No), e Q5 No acompanha Q3/Q4. Também foram corrigidas a descrição da busca por `<iframe` e a afirmação de que não faltavam objetos no histórico.
+- **RQ1 (misleading signals):** “micro-app” as internal product-module name (with Rust backend and Svelte UI in same binary), accompanied by analogy “Think micro-frontends”. Broad query `"micro apps" frontend` captures this vocabulary.
+- **Protocol (search):** both query terms appear in distinct README lines (`README.md:39`, `97`). Eligibility changes from `unknown` (001) to `pass` (002).
+- **Independent-review contribution (Lupa):** agreement with Non-MFE and `draft`; adopted disagreement in Q1/Q2 answers, changed from No to Yes. Verifiable rationale: literal Q1 text counts identifiable repository frontend units, and Q2 asks for own entry/build without code import between units; desktop and site satisfy both, and final 042 applies Q1 Yes to two monorepo frontend apps, excluding class through Q4 No. Here, additionally, desktop and site do not compose (Q3 No), and Q5 No follows Q3/Q4. Description of search for `<iframe` and assertion of no missing historical objects were also corrected.

@@ -20,23 +20,24 @@ annotation:
 
 # 342 — bank20baht/poc-angular-native-federation-tailwindcss
 
-## Leitura do repositório
+## Repository overview
 
-Prova de conceito em Angular 20 com duas unidades, `host` e `remote`, cada uma com seu próprio workspace Angular, ligadas por **Native Federation** (`@angular-architects/native-federation`). O host registra o remote antes do bootstrap, apontando para `http://localhost:4201/remoteEntry.json` (host/src/main.ts:3-5), e o carrega em duas rotas: a rota vazia monta o componente exposto `./Component` e a rota `flights` monta o conjunto de rotas exposto `./routes` (host/src/app/app.routes.ts:7-29). O remote declara `name: 'remote'` e expõe esses dois módulos (remote/federation.config.js:5-10); o resultado aparece no `<router-outlet>` do host (host/src/app/app.html:2). Cada carga tem um fallback local se o remote não responder (host/src/app/app.routes.ts:13-16, 24-27). É um repositório de demonstração, sem Dockerfile, CI ou configuração de hospedagem; as URLs são de desenvolvimento local.
+An Angular 20 proof of concept with two units, `host` and `remote`, each with its own Angular workspace, connected through **Native Federation** (`@angular-architects/native-federation`). The host registers the remote before bootstrap, pointing to `http://localhost:4201/remoteEntry.json` (host/src/main.ts:3-5), and loads it at two routes: the empty route mounts exposed component `./Component`, and route `flights` mounts exposed route set `./routes` (host/src/app/app.routes.ts:7-29). The remote declares `name: 'remote'` and exposes both modules (remote/federation.config.js:5-10); the result appears in the host's `<router-outlet>` (host/src/app/app.html:2). Each load has a local fallback if the remote does not respond (host/src/app/app.routes.ts:13-16, 24-27). A demonstration repository, without Dockerfile, CI or hosting configuration; URLs are for local development.
 
-O assunto declarado do projeto é o estilo: o Tailwind do host varre o código-fonte do remote (host/src/styles.css:4) para gerar as classes que os templates do remote usam quando montados dentro do host. É um acoplamento de build no nível de CSS, não uma relação de composição em tempo de execução, e não virou linha da tabela. O host também declara um módulo `remote/Styles?inline` (host/src/remote.d.ts:1) que nenhum arquivo importa e que o remote não expõe (remote/federation.config.js:7-10). O `initFederation()` do remote (remote/src/main.ts:3) não resolve outra unidade. Não há troca de mensagens entre as unidades.
+The project's declared topic is styling: the host's Tailwind scans remote source code (host/src/styles.css:4) to generate classes used by remote templates when mounted inside the host. This is build coupling at CSS level, rather than a runtime composition relationship, and did not become a table row. The host also declares module `remote/Styles?inline` (host/src/remote.d.ts:1), imported by no file and not exposed by the remote (remote/federation.config.js:7-10). The remote's `initFederation()` (remote/src/main.ts:3) does not resolve another unit. There is no inter-unit message exchange.
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | host | remote | host → remote | origem → destino | native-federation | Yes | Yes | host/src/main.ts:3-5 (`initFederation` com `remote` → `http://localhost:4201/remoteEntry.json`); remote/federation.config.js:5-10 (`name: 'remote'`, expõe `./Component` e `./routes`); remote/angular.json:108 (porta 4201 do remote) | host/src/app/app.routes.ts:1; host/src/app/app.routes.ts:11; host/src/app/app.routes.ts:22; host/src/main.ts:1; host/src/main.ts:3; host/src/app/app.routes.ts:7 |
+| 1 | host | remote | host → remote | source → target | native-federation | Yes | Yes | host/src/main.ts:3-5 (`initFederation` with `remote` → `http://localhost:4201/remoteEntry.json`); remote/federation.config.js:5-10 (`name: 'remote'`, exposes `./Component` and `./routes`); remote/angular.json:108 (port 4201 of the remote) | host/src/app/app.routes.ts:1; host/src/app/app.routes.ts:11; host/src/app/app.routes.ts:22; host/src/main.ts:1; host/src/main.ts:3; host/src/app/app.routes.ts:7 |
 
-## Observações
+## Observations
 
-**1. host → remote.** O nome `remote` usado em `initFederation` (host/src/main.ts:4) e em `loadRemoteModule` (host/src/app/app.routes.ts:11, 22) corresponde ao `name: 'remote'` de remote/federation.config.js:5, e os módulos pedidos, `./Component` e `./routes`, aos `exposes` de remote/federation.config.js:8-9, que apontam para o `App` (remote/src/app/app.ts:10) e para `APP_ROUTES` (remote/src/app/modules/home/home.routes.ts:3); a porta 4201 (remote/angular.json:108) só corrobora. As duas cargas dão o mesmo trio e ficam numa linha. Ativa `Yes`: as rotas são registradas por `provideRouter(routes)` (host/src/app/app.config.ts:10), e as linhas da revisão de código-fonte que sustentam a relação são todas `Yes`. Os fallbacks locais não mudam a direção nem o destino.
+**1. host → remote.** Name `remote` used in `initFederation` (host/src/main.ts:4) and `loadRemoteModule` (host/src/app/app.routes.ts:11, 22) matches `name: 'remote'` in remote/federation.config.js:5, and requested modules `./Component` and `./routes` match `exposes` in remote/federation.config.js:8-9, pointing to `App` (remote/src/app/app.ts:10) and `APP_ROUTES` (remote/src/app/modules/home/home.routes.ts:3); port 4201 (remote/angular.json:108) only corroborates. Both loads yield the same trio and remain in one row. Active `Yes`: routes are registered by `provideRouter(routes)` (host/src/app/app.config.ts:10), and source code review lines supporting the relationship are all `Yes`. Local fallbacks change neither direction nor target.
 
-## Resumo
+## Summary
 
-Relações: 1 (host → remote: 1). Ativas: 1. Destino fora do snapshot: 0.
-Unidades sem relação: nenhuma.
+Relationships: 1 (host → remote: 1). Active: 1. Target outside the snapshot: 0.
+Units without a relationship: none.
+

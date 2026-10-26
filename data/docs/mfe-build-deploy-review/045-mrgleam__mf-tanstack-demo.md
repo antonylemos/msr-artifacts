@@ -16,31 +16,31 @@ annotation:
 
 # 045 — mrgleam/mf-tanstack-demo
 
-## Leitura do repositório
+## Repository overview
 
-Duas aplicações Vite independentes, `shell` e `shop`, cada uma com manifesto, lockfile e `vite.config.ts` próprios, e sem workspace. O `shop` é construído com `base: '/shop/'` e saída em `dist` (shop/vite.config.ts:6, 20-25). O shell busca o remote em `http://localhost:3001/shop/assets/remoteEntry.js` (shell/vite.config.ts:9-11). O README manda rodar as duas com `npm run dev`, cada uma no seu terminal (README.md:22-30). As duas também têm `preview` com porta fixa (shell/vite.config.ts:30-33; shop/vite.config.ts:26-29).
+Two independent Vite applications, `shell` and `shop`, each with its own manifest, lockfile and `vite.config.ts`, without a workspace. The `shop` is built with `base: '/shop/'` and output in `dist` (shop/vite.config.ts:6, 20-25). Shell fetches remote at `http://localhost:3001/shop/assets/remoteEntry.js` (shell/vite.config.ts:9-11). README instructs running both with `npm run dev`, each in its own terminal (README.md:22-30). Both also have `preview` with a fixed port (shell/vite.config.ts:30-33; shop/vite.config.ts:26-29).
 
-As pastas `kong-shell/` e `kong-remote/` trazem dois arranjos alternativos de um gateway Kong em Docker, sem banco e com configuração declarativa, que o README apresenta como "Choose one" (README.md:32-44). Nenhum dos dois empacota ou publica as aplicações: o Kong roda em contêiner e encaminha para os servidores que já estão rodando na máquina (`host.docker.internal:3000` e `:3001`).
-- **kong-shell:** só uma rota, `/` → shell (kong-shell/kong.yml:3-9), com TLS e certificados gerados à mão (kong-shell/docker-compose.yml:12-17; kong-shell/start-kong-ssl.sh:6-11).
-- **kong-remote:** acrescenta a rota `/shop` → shop, sem remover o prefixo (kong-remote/kong.yml:8-13), para acessar o remote também sozinho, segundo o README (README.md:10, 41-44).
+Folders `kong-shell/` and `kong-remote/` provide two alternative Kong gateway arrangements in Docker, without a database and with declarative configuration, presented by README as "Choose one" (README.md:32-44). Neither packages or publishes the applications: Kong runs in a container and forwards to servers already running on the machine (`host.docker.internal:3000` and `:3001`).
+- **kong-shell:** only one route, `/` → shell (kong-shell/kong.yml:3-9), with TLS and manually generated certificates (kong-shell/docker-compose.yml:12-17; kong-shell/start-kong-ssl.sh:6-11).
+- **kong-remote:** adds route `/shop` → shop without stripping the prefix (kong-remote/kong.yml:8-13), to access remote on its own as well, according to README (README.md:10, 41-44).
 
-Os arranjos têm inconsistências entre si:
-- **Portas:** o README indica `http://localhost:8000` (README.md:46-49), e é isso que o `kong-remote` publica (kong-remote/docker-compose.yml:5-7). O `kong-shell`, porém, publica a porta HTTP 8000 do contêiner na 8080 do host (kong-shell/docker-compose.yml:5-8), e o script dele anuncia as portas internas 8000/8443 (kong-shell/start-kong-ssl.sh:29-31).
-- **Remote no kong-shell:** o shell continua buscando o remote direto em `localhost:3001`, fora do gateway.
+The arrangements have inconsistencies between them:
+- **Ports:** README indicates `http://localhost:8000` (README.md:46-49), which is what `kong-remote` publishes (kong-remote/docker-compose.yml:5-7). However, `kong-shell` publishes container HTTP port 8000 on host port 8080 (kong-shell/docker-compose.yml:5-8), and its script announces internal ports 8000/8443 (kong-shell/start-kong-ssl.sh:29-31).
+- **Remote in kong-shell:** shell continues fetching remote directly at `localhost:3001`, outside the gateway.
 
-## Aplicações
+## Applications
 
-| # | Aplicação | Build | Deploy | Onde é servida | Versionamento | Artefatos |
+| # | Application | Build | Deploy | Where served | Versioning | Artifacts |
 |---|---|---|---|---|---|---|
-| 1 | shell | separado | não observado | `http://localhost:3000` (shell/vite.config.ts:15-16, 30-31); `/` do gateway Kong, encaminhado ao servidor local (kong-shell/kong.yml:3-8; kong-remote/kong.yml:3-7) | No | shell/vite.config.ts:5-34 (configuração própria); shell/package.json:7 (`vite build`); kong-shell/kong.yml:3-9 (rota do gateway para o servidor local) |
-| 2 | shop | separado | não observado | `http://localhost:3001/shop/` (shop/vite.config.ts:6, 16-17); `/shop` do gateway Kong, encaminhado ao servidor local (kong-remote/kong.yml:8-13) | No | shop/vite.config.ts:5-30 (configuração própria, `base: '/shop/'`); shop/package.json:7 (`vite build`); kong-remote/kong.yml:8-13 (rota do gateway para o servidor local) |
+| 1 | shell | separate | not observed | `http://localhost:3000` (shell/vite.config.ts:15-16, 30-31); `/` of the Kong gateway, forwarded to the local server (kong-shell/kong.yml:3-8; kong-remote/kong.yml:3-7) | No | shell/vite.config.ts:5-34 (own configuration); shell/package.json:7 (`vite build`); kong-shell/kong.yml:3-9 (gateway route to the local server) |
+| 2 | shop | separate | not observed | `http://localhost:3001/shop/` (shop/vite.config.ts:6, 16-17); `/shop` of the Kong gateway, forwarded to the local server (kong-remote/kong.yml:8-13) | No | shop/vite.config.ts:5-30 (own configuration, `base: '/shop/'`); shop/package.json:7 (`vite build`); kong-remote/kong.yml:8-13 (gateway route to the local server) |
 
-## Observações
+## Observations
 
-**1. shell.** Build próprio. O deploy é `não observado`: o gateway só encaminha para o servidor de desenvolvimento do shell, que o README manda subir com `npm run dev` (README.md:28-29). Nada empacota ou publica o build. A versão `1.0.0` não é usada.
+**1. shell.** Own build. Deploy is `not observed`: gateway only forwards to shell’s development server, which README instructs starting with `npm run dev` (README.md:28-29). Nothing packages or publishes the build. Version `1.0.0` is unused.
 
-**2. shop.** Build próprio, com `base` próprio. Isso permite que o remote divida uma origem com o shell, sob o prefixo `/shop`, como faz o `kong-remote`. É o mesmo princípio de caminho por aplicação dos repositórios 059 e 017, só que aqui sobre servidores locais. O deploy é `não observado` pelo mesmo motivo do shell.
+**2. shop.** Own build with its own `base`. This allows remote to share an origin with shell under prefix `/shop`, as `kong-remote` does. This is the same per-application path principle as repositories 059 and 017, but here on local servers. Deploy is `not observed` for the same reason as shell.
 
-## Resumo
+## Summary
 
-Aplicações: 2. Build (separado: 2). Deploy (não observado: 2). Versionamento independente: 0.
+Applications: 2. Build (separate: 2). Deploy (not observed: 2). Independent versioning: 0.

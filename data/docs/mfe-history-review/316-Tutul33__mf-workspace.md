@@ -13,32 +13,32 @@ annotation:
 
 # 316 — Tutul33/mf-workspace
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem 5 commits, todos em 2025-11-18. O primeiro, `1137709` ("initial commit"), registra os arquivos de workspace, sem os projetos. O segundo, `f038259` ("Commit"), adiciona os três projetos, suas configurações de federação, entradas e rotas, e modifica os manifestos e angular.json. As versões consultadas desse segundo commit já contêm o roteamento por URL direta para os dois remotos, o mapa divergente de inicialização do host e as alternativas de exposição comentadas. É a introdução desses arquivos no histórico disponível; isso não informa onde foram desenvolvidos antes.
+History up to snapshot has 5 commits, all on 2025-11-18. First, `1137709` ("initial commit"), records workspace files without projects. Second, `f038259` ("Commit"), adds three projects, their federation configurations, entries and routes, and modifies manifests and angular.json. Queried versions from second commit already contain direct-URL routing to both remotes, mismatched host initialization map and commented-out exposure alternatives. This introduces files in available history; it does not reveal where they were developed before.
 
-Os três commits seguintes só acrescentam ou alteram documentação: `1a56f1c` ("Commit app") cria angular_20_microfrontend_app_guide.md; `53ab035` e `eb6d1cc` (ambos "Commit") alteram README.md. Não há uma etapa posterior de alteração do código das aplicações nesse intervalo. Todos os conteúdos históricos solicitados estavam disponíveis localmente. O histórico explica a permanência dos artefatos, sem mudar os julgamentos das revisões do snapshot nem demonstrar execução ou intenção de abandono.
+Next three commits only add or change documentation: `1a56f1c` ("Commit app") creates angular_20_microfrontend_app_guide.md; `53ab035` and `eb6d1cc` (both "Commit") change README.md. No later application code change stage occurs in interval. All requested historical contents were available locally. History explains artifact persistence without changing snapshot review judgments or demonstrating execution or abandonment intention.
 
-## Pontos
+## Points
 
-| # | Ponto | Origem | Pergunta | Commits | Resultado |
+| # | Point | Origin | Question | Commits | Result |
 |---|---|---|---|---|---|
-| 1 | Dependência `@softarc/native-federation-node` declarada sem uso direto observado | 3.4.2 (package.json:30) | uso de dependência | f038259 2025-11-18 Commit | esclarecido |
-| 2 | Mapa `customerApp` do host diverge das URLs usadas pelas rotas | 3.4.4 (projects/host-app/src/main.ts:3); 3.4.5 (Leitura do repositório); 3.4.7 (Leitura do repositório) | estágios em conflito | f038259 2025-11-18 Commit | esclarecido |
-| 3 | Exposições alternativas de `./Component` estão comentadas nos dois remotos | 3.4.5 (Leitura do repositório: projects/customer-app/federation.config.js:8 e projects/orders-app/federation.config.js:8); 3.4.7 (Leitura do repositório) | ativo ou abandonado | f038259 2025-11-18 Commit | esclarecido |
-| 4 | Árvore documentada inclui diretórios sem arquivos no inventário do snapshot | 3.4.7 #5 (README.md:213-251) | estágios em conflito | f038259 2025-11-18 Commit; eb6d1cc 2025-11-18 Commit | esclarecido |
+| 1 | Dependency `@softarc/native-federation-node` declared without observed direct usage | 3.4.2 (package.json:30) | dependency use | f038259 2025-11-18 Commit | clarified |
+| 2 | Host `customerApp` map differs from URLs used by routes | 3.4.4 (projects/host-app/src/main.ts:3); 3.4.5 (Repository overview); 3.4.7 (Repository overview) | conflicting stages | f038259 2025-11-18 Commit | clarified |
+| 3 | Alternative exposures of `./Component` are commented out in both remotes | 3.4.5 (Repository overview: projects/customer-app/federation.config.js:8 and projects/orders-app/federation.config.js:8); 3.4.7 (Repository overview) | active or abandoned | f038259 2025-11-18 Commit | clarified |
+| 4 | Documented tree includes directories without files in snapshot inventory | 3.4.7 #5 (README.md:213-251) | conflicting stages | f038259 2025-11-18 Commit; eb6d1cc 2025-11-18 Commit | clarified |
 
-## Observações
+## Observations
 
-**1. Dependência declarada sem uso direto.** O package.json de `f038259` já declara `@softarc/native-federation-node`, como no snapshot. Os projetos são adicionados nesse commit e nenhum de seus arquivos muda depois; package.json também não muda nos três commits restantes. O main do host, suas rotas e os federation.config.js consultados nessa versão usam `@angular-architects/native-federation`. Assim, para os projetos e manifestos examinados, não há uma versão anterior com uso direto que depois tenha sido removido: a declaração já acompanha a primeira versão desses projetos, sem conexão direta observada. O histórico não explica por que o pacote foi declarado nem demonstra abandono. O `No` de 3.4.2 permanece.
+**1. Dependency declared without direct usage.** package.json at `f038259` already declares `@softarc/native-federation-node`, matching snapshot. Projects are added in this commit and none of their files changes afterward; package.json also does not change in remaining three commits. Queried host main, routes and federation.config.js files at this version use `@angular-architects/native-federation`. Thus examined projects and manifests have no earlier direct-usage version later removed: declaration already accompanies first project version, without observed direct connection. History neither explains declaration reason nor demonstrates abandonment. The `No` in 3.4.2 remains.
 
-**2. Mapa divergente do host.** Em `f038259`, projects/host-app/src/main.ts já registra `customerApp` em `http://localhost:4200/remoteEntry.json`, enquanto projects/host-app/src/app/app.routes.ts já carrega os remotos por URLs diretas nas portas 4301 e 4302. Ambos são criados juntos e não mudam depois. Portanto, nesses arquivos o mapa e o roteamento não são vestígios de duas versões sucessivas: coexistem desde a introdução no repositório. Não é possível concluir se o mapa foi copiado ou planejado para outro arranjo; não há transição observável de um mapa antes usado para um mapa abandonado.
+**2. Mismatched host map.** In `f038259`, projects/host-app/src/main.ts already registers `customerApp` at `http://localhost:4200/remoteEntry.json`, while projects/host-app/src/app/app.routes.ts already loads remotes through direct URLs at ports 4301 and 4302. Both are created together and do not change afterward. Thus in these files map and routing are not traces of successive versions: they coexist since repository introduction. Whether map was copied or planned for another arrangement cannot be concluded; no transition from previously used map to abandoned map is observable.
 
-**3. Exposições comentadas de componentes.** Os dois federation.config.js são criados em `f038259` já com `./Component` comentado e com `./CustomerRoutes` ou `./OrdersRoutes` ativo. Nenhum deles muda depois. A única versão registrada desses arquivos já tem essa forma, sem uma exposição de componente ativa que tenha sido desativada posteriormente. Isso esclarece a sequência disponível, mas não a intenção de manter as alternativas comentadas nem a origem anterior do código.
+**3. Commented-out component exposures.** Both federation.config.js files are created in `f038259` already with `./Component` commented out and `./CustomerRoutes` or `./OrdersRoutes` active. Neither changes afterward. Only recorded version of these files already has this form, without active component exposure later deactivated. This clarifies available sequence, but not intention behind retaining commented-out alternatives or earlier code origins.
 
-**4. Diretórios da árvore documentada.** O próprio snapshot explica parte da diferença: .gitignore:4,10,32 exclui dist, node_modules e o cache de .angular; angular.json:68,181,294 configura os caminhos public como assets. Para public, o histórico acrescenta evidência: `f038259` cria um favicon.ico em cada um dos três diretórios, e ls-tree no commit do snapshot ainda lista esses três arquivos. Esses caminhos existem na árvore Git do commit, embora seus arquivos não estejam no inventário adquirido usado pelas revisões anteriores. Não há remoção posterior desses assets no histórico até o snapshot. A diferença documental não demonstra uma configuração de assets abandonada nem uma etapa antiga removida. Isso explica o limite entre as fontes sem modificar a corroboração `parcial` de 3.4.7, baseada no snapshot adquirido.
+**4. Documented tree directories.** Snapshot itself explains part of difference: .gitignore:4,10,32 excludes dist, node_modules and .angular cache; angular.json:68,181,294 configures public paths as assets. For public, history adds evidence: `f038259` creates a favicon.ico in each of three directories, and ls-tree at snapshot commit still lists all three files. These paths exist in commit Git tree, although files are absent from acquired inventory used by previous reviews. No later removal of these assets occurs in history up to snapshot. Documentation difference demonstrates neither abandoned asset configuration nor removed earlier stage. This explains source boundary without modifying `partial` corroboration in 3.4.7, based on acquired snapshot.
 
-## Comandos
+## Commands
 
 ```sh
 docs/mfe-history-review/tools/hist.sh Tutul33__mf-workspace log --reverse --name-status --no-renames --format='%h %ad %s' --date=short eb6d1cc782f44fa05b6a6d83c23edf20487af9db
@@ -51,12 +51,12 @@ docs/mfe-history-review/tools/hist.sh Tutul33__mf-workspace show f038259:project
 docs/mfe-history-review/tools/hist.sh Tutul33__mf-workspace ls-tree -r --name-only eb6d1cc782f44fa05b6a6d83c23edf20487af9db -- projects/customer-app/public projects/host-app/public projects/orders-app/public
 ```
 
-A primeira tentativa do comando log foi bloqueada ao gravar commands.log, antes de consultar o clone; a repetição autorizada concluiu. Não houve falha por objeto ausente. A comparação abaixo foi executada antes e depois das consultas, com igualdade em ambas:
+First log command attempt was blocked when writing commands.log, before querying clone; authorized repetition completed. No missing object failure occurred. Comparison below was performed before and after queries, identical in both:
 
 ```sh
 LC_ALL=C docs/mfe-history-review/tools/fingerprint.sh | cmp - docs/mfe-history-review/tools/fingerprint-before.txt
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 5 (2025-11-18 a 2025-11-18). Pontos: 4 (esclarecido: 4, inconclusivo: 0, resolvido pelo snapshot: 0).
+Commits up to the snapshot: 5 (2025-11-18 to 2025-11-18). Points: 4 (clarified: 4, inconclusive: 0, resolved by the snapshot: 0).

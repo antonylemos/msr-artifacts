@@ -20,45 +20,45 @@ annotation:
 
 # 048 — navikt/tms-mikrofrontend-selector
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** production-oriented (serviço da NAV, a agência norueguesa de trabalho e bem-estar, para o portal "Min side"; 320 commits, deploy NAIS dev/prod)
-- **Classificação:** Non-MFE (componente de backend de uma arquitetura de MFE real em produção; mantido pelos pesquisadores, com interpretação ainda em aberto)
+- **Repository type:** production-oriented (service from NAV, the Norwegian Labour and Welfare Administration, for the "Min side" portal; 320 commits, NAIS development/production deployment)
+- **Classification:** Non-MFE (backend component of a real production MFE architecture; retained by the researchers, with interpretation still unresolved)
 
-O repositório é um **serviço backend em Kotlin** ("Tjeneste som holder oversikt over hvilke mikrofrontends som skal vises på min side", ou seja, o serviço que controla quais micro-frontends aparecem no Min side, `README.md:2`). Ele funciona como registro e seletor: guarda quais micro-frontends cada usuário deve ver e devolve ao portal as URLs dos bundles JS a carregar. Os micro-frontends (criados a partir de `navikt/tms-microfrontend-template-ssr`, `howto.md:5`) e o portal Min side (host) estão em outros repositórios.
+The repository is a **Kotlin backend service** ("Tjeneste som holder oversikt over hvilke mikrofrontends som skal vises på min side" [English translation: "Service that keeps track of which micro-frontends should be displayed on Min side"], `README.md:2`). It acts as a registry and selector: stores which micro-frontends each user should see and returns the JS bundle URLs for the portal to load. The micro-frontends (created from `navikt/tms-microfrontend-template-ssr`, `howto.md:5`) and the Min side portal (host) are in other repositories.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | Só backend: `app/` (Ktor + Postgres + Kafka/Rapids, `app/src/main/kotlin/…`), `lib/` (builder de mensagens para produtores, `lib/src/main/kotlin/no/nav/tms/microfrontend/Actions.kt`), `nais/{dev,prod}-gcp/nais.yaml`, `Dockerfile` | contrária |
-| Código-fonte (API de registro) | `README.md:15-31`: `GET /microfrontends` retorna `[{ microfrontend_id, url: "https://cdn…/mk1….js" }]` + `offerStepup`; `app/src/main/kotlin/…/SelectorApi.kt:30` (papel na composição) | forte |
-| Configuração (manifesto) | `update-manifests-v2.py:3-21`: registra cada MFE em `manifests-v2.json` com `url`, `appname`, `namespace`, `fallback`, `ssr`; `versions/ManifestsStorage.kt:8-24`: lê o manifesto de um bucket GCS em runtime (papel na composição) | forte |
-| Código-fonte (seleção) | `EnableSubscriber.kt`/`DisableSubscriber.kt`: ativam/desativam MFEs por usuário via mensagens; `collector/regelmotor/ContentRules.kt` + `app/src/main/resources/contentrules.yaml`: regras de exibição; `database/Microfrontend.kt` | moderada |
-| Documentação | `howto.md:1-30`: guia para equipes produtoras de micro-frontends (template SSR, `nais.yaml`, workflow de deploy, atualização do manifesto, canal `#minside-microfrontends`) | moderada |
-| Build/deploy | `.github/workflows/update-manifest*.yaml`, `manual-manifest-update.yaml`: atualização do manifesto de MFEs como parte do deploy dos produtores | moderada |
+| Structure | Backend only: `app/` (Ktor + Postgres + Kafka/Rapids, `app/src/main/kotlin/…`), `lib/` (message builder for producers, `lib/src/main/kotlin/no/nav/tms/microfrontend/Actions.kt`), `nais/{dev,prod}-gcp/nais.yaml`, `Dockerfile` | contrary |
+| Source code (registration API) | `README.md:15-31`: `GET /microfrontends` returns `[{ microfrontend_id, url: "https://cdn…/mk1….js" }]` + `offerStepup`; `app/src/main/kotlin/…/SelectorApi.kt:30` (role in composition) | strong |
+| Configuration (manifest) | `update-manifests-v2.py:3-21`: registers each MFE in `manifests-v2.json` with `url`, `appname`, `namespace`, `fallback`, `ssr`; `versions/ManifestsStorage.kt:8-24`: reads the manifest from a GCS bucket at runtime (role in composition) | strong |
+| Source code (selection) | `EnableSubscriber.kt`/`DisableSubscriber.kt`: enable/disable MFEs per user through messages; `collector/regelmotor/ContentRules.kt` + `app/src/main/resources/contentrules.yaml`: display rules; `database/Microfrontend.kt` | moderate |
+| Documentation | `howto.md:1-30`: guide for micro-frontend producer teams (SSR template, `nais.yaml`, deployment workflow, manifest update, channel `#minside-microfrontends`) | moderate |
+| Build/deploy | `.github/workflows/update-manifest*.yaml`, `manual-manifest-update.yaml`: MFE manifest updates as part of producers' deployment | moderate |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend no repositório; os MFEs só aparecem como entradas de manifesto/registro em runtime (bucket GCS, banco), não como configuração versionada aqui |
-| Q2 | Yes (externas) | Os MFEs são implantados separadamente (CDN, NAIS), segundo `howto.md` |
-| Q3 | No | O host (portal Min side) não está no repositório; este serviço não monta, carrega nem roteia unidades: só informa quais URLs carregar |
-| Q4 | Undetermined | É parte do mecanismo de composição (registro dinâmico), mas a carga/montagem acontece no host ausente |
-| Q5 | No | O repositório não contém frontend; é um serviço de suporte à composição |
+| Q1 | No | No frontend unit in the repository; MFEs appear only as runtime manifest/registry entries (GCS bucket, database), not as configuration tracked here |
+| Q2 | Yes (external) | MFEs are deployed separately (CDN, NAIS), according to `howto.md` |
+| Q3 | No | The host (Min side portal) is not in the repository; this service does not mount, load or route units: it only reports which URLs to load |
+| Q4 | Undetermined | It is part of the composition mechanism (dynamic registry), but loading/mounting occurs in the absent host |
+| Q5 | No | The repository contains no frontend; it is a composition support service |
 
-## Motivo
+## Rationale
 
-- Q1 e Q3 são No; a exceção MFE-unit não se aplica (não há unidade frontend). Na filtragem automática (seção 3.2 do protocolo), cabe em "repositories containing no relevant frontend implementation".
-- Apesar disso, é **evidência forte de uma arquitetura de MFE real em produção** (NAV Min side), distribuída em vários repositórios: registro de MFEs por usuário, manifesto com URL/SSR/fallback, guia para equipes produtoras.
+- Q1 and Q3 are No; the MFE-unit exception does not apply (there is no frontend unit). In automatic filtering (protocol section 3.2), it fits "repositories containing no relevant frontend implementation".
+- Nevertheless, this is **strong evidence of a real production MFE architecture** (NAV Min side), distributed across several repositories: per-user MFE registry, manifest with URL/SSR/fallback, guide for producer teams.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ3:** relação host → remote mediada por um **serviço de registro em runtime** (frontend service discovery) com regras por usuário, nível de sensibilidade (`offerStepup`) e SSR, uma camada que os exemplos didáticos não têm.
+- **RQ3:** host → remote relationship mediated by a **runtime registry service** (frontend service discovery) with per-user rules, sensitivity level (`offerStepup`) and SSR, a layer absent from instructional examples.
 
-## Ponto para revisão conjunta
+## Point for joint review
 
-- **Alternativa — Uncertain**, por coerência com o repositório 038 (meta-repositório que descreve um MFE cujo código está fora). Diferença: o 038 descreve o sistema inteiro (host + sub-apps); este repositório é um componente backend específico.
-- **Regra sugerida:** "serviços backend de registro/seleção de MFEs (service discovery de frontends) sem unidade frontend no repositório são Non-MFE, mas registrados como evidência de ecossistema".
-- Para a mineração, poderia valer buscar o repositório do host (portal Min side) e um MFE produtor fora da amostra, se o estudo aceitar expansão por bola de neve; o protocolo atual não prevê isso.
+- **Alternative — Uncertain**, for consistency with repository 038 (a meta-repository describing an MFE whose code is external). Difference: 038 describes the entire system (host + sub-apps); this repository is a specific backend component.
+- **Suggested rule:** "backend MFE registry/selection services (frontend service discovery) without a frontend unit in the repository are Non-MFE, but recorded as ecosystem evidence".
+- For mining, it might be useful to seek the host repository (Min side portal) and a producer MFE outside the sample, if the study accepts snowball expansion; the current protocol does not provide for it.

@@ -20,36 +20,36 @@ annotation:
 
 # 041 — ahucha/Micro-frontend
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** example/proof of concept (exercício didático "PixelArena - Checkpoint 1 : Le Bug du Lobby", `README.md:1`)
-- **Commit avaliado:** `72c6f43` (único commit)
+- **Repository type:** example/proof of concept (instructional exercise "PixelArena - Checkpoint 1 : Le Bug du Lobby" [English translation: "PixelArena - Checkpoint 1: The Lobby Bug"], `README.md:1`)
+- **Assessed commit:** `72c6f43` (only commit)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Documentação | `README.md:1-37`: exercício em que o aluno muda a cor do botão do Lobby; `:41-46` pergunta se os outros botões também mudaram "e por quê"; `:55-62` marca cada CSS com uma "Equipe" (Navbar, Lobby, Leaderboard) | contexto |
-| Estrutura | Uma única app React: `src/App.jsx` e três componentes em `src/components/` (`Navbar`, `Lobby`, `Leaderboard`) | contrária |
-| Configuração | `webpack.config.js:1-40`: webpack com Babel, CSS e `HtmlWebpackPlugin`; sem `ModuleFederationPlugin`; `package.json` sem dependências de MFE | ausente |
-| Código-fonte | `src/index.js:5-6` um único `createRoot`; `src/App.jsx:2-4` importa estaticamente `Navbar`, `Lobby` e `Leaderboard` | contrária |
+| Documentation | `README.md:1-37`: exercise where the student changes the Lobby button's color; `:41-46` asks whether the other buttons also changed "e por quê" [English translation: "and why"]; `:55-62` labels each CSS with an "Equipe" [English translation: "Team"] (Navbar, Lobby, Leaderboard) | context |
+| Structure | A single React app: `src/App.jsx` and three components in `src/components/` (`Navbar`, `Lobby`, `Leaderboard`) | contrary |
+| Configuration | `webpack.config.js:1-40`: webpack with Babel, CSS and `HtmlWebpackPlugin`; no `ModuleFederationPlugin`; `package.json` without MFE dependencies | absent |
+| Source code | `src/index.js:5-6` a single `createRoot`; `src/App.jsx:2-4` statically imports `Navbar`, `Lobby` and `Leaderboard` | contrary |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend (`src/index.js:5`) |
-| Q2 | No | Os "times" são componentes importados diretamente (`App.jsx:2-4`), com um só build |
-| Q3 | No | Não há host, shell nem root config |
-| Q4 | No | Nenhum mecanismo de composição |
-| Q5 | No | Q1–Q4 convergem |
+| Q1 | No | A single frontend unit (`src/index.js:5`) |
+| Q2 | No | The "teams" are directly imported components (`App.jsx:2-4`), with one build |
+| Q3 | No | No host, shell or root config |
+| Q4 | No | No composition mechanism |
+| Q5 | No | Q1–Q4 converge |
 
-## Motivo
+## Rationale
 
-- É o ponto de partida de um exercício sobre micro-frontends: um monolito React em que os CSS globais de "times" diferentes colidem (o bug que o aluno deve descobrir), provavelmente para motivar a separação em MFEs nos próximos checkpoints.
-- O nome do repositório ("Micro-frontend") reflete o tema do curso, não a implementação.
-- Corresponde a "conventional frontend monoliths" e a "repositories mentioning micro-frontends without implementing them".
+- This is the starting point of a micro-frontends exercise: a React monolith where global CSS from different "teams" collides (the bug the student must discover), probably to motivate separation into MFEs in later checkpoints.
+- The repository name ("Micro-frontend") reflects the course topic, not the implementation.
+- Matches "conventional frontend monoliths" and "repositories mentioning micro-frontends without implementing them".
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** o termo está no nome do repositório; o conteúdo é o "antes" didático de uma migração para MFE.
+- **RQ1 (misleading signals):** the term is in the repository name; the content is the instructional "before" of an MFE migration.

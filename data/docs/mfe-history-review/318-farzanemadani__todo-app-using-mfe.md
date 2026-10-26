@@ -13,35 +13,21 @@ annotation:
 
 # 318 — farzanemadani/todo-app-using-mfe
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem três commits, entre 2026-04-12 e 2026-04-26:
-`67d1b09` (2026-04-12, "first commit"), `3847612` (2026-04-26, "feat:add readme") e
-`21fc477` (2026-04-26, "feat:add readme"), o snapshot. As duas últimas mensagens anunciam
-trabalho no README; não foi consultado o conteúdo dessas mudanças. A contagem e as mensagens
-servem apenas para delimitar o histórico disponível, sem inferir uma trajetória de adoção.
+History up to snapshot has three commits, between 2026-04-12 and 2026-04-26: `67d1b09` (2026-04-12, "first commit"), `3847612` (2026-04-26, "feat:add readme") and `21fc477` (2026-04-26, "feat:add readme"), snapshot. Last two messages announce README work; contents of changes were not queried. Count and messages serve only to delineate available history, without inferring adoption trajectory.
 
-As revisões 3.4.2 a 3.4.7 não deixam pontos ambíguos para consulta histórica. A 3.4.2 não
-registra dependência das tecnologias inspecionadas; as três unidades da 3.4.3 são `Yes`;
-as sete construções da 3.4.4 têm composição `Yes`; as três relações da 3.4.5 estão presentes
-e ativas. Na 3.4.6, deploy é `não observado`, sem `Undetermined`, e as 14 afirmações da
-3.4.7 são `corroborada`. Os comentários de desenvolvimento nas configurações de produção
-e a entrada local antiga comentada, mencionados na 3.4.7, não configuram uma construção
-de composição ambígua. Os limites das entradas isoladas dos remotes também já estão
-descritos pelas revisões como comportamento do snapshot, sem afirmação documental conflitante.
-Não foi necessário consultar versões antigas de arquivos.
+Reviews 3.4.2 to 3.4.7 leave no ambiguous points for historical query. 3.4.2 records no dependency on inspected technologies; three units in 3.4.3 are `Yes`; seven constructs in 3.4.4 have composition `Yes`; three relationships in 3.4.5 are present and active. In 3.4.6, deploy is `not observed`, without `Undetermined`, and 14 claims in 3.4.7 are `corroborated`. Development comments in production configurations and old commented-out local entry, mentioned in 3.4.7, do not constitute ambiguous composition construct. Limits of isolated remote entries are also already described by reviews as snapshot behavior, without conflicting documentation claim. No old file version query was necessary.
 
-## Pontos
+## Points
 
-Nenhum ponto ambíguo nas revisões anteriores.
+No ambiguous points in previous reviews.
 
-## Observações
+## Observations
 
-As consultas ficaram limitadas ao commit do snapshot e foram feitas exclusivamente por
-`docs/mfe-history-review/tools/hist.sh`. A comparação do fingerprint com `LC_ALL=C`, antes
-e depois das consultas, não apresentou diferenças.
+Queries were limited to snapshot commit and performed exclusively through `docs/mfe-history-review/tools/hist.sh`. Fingerprint comparison with `LC_ALL=C`, before and after queries, showed no differences.
 
-## Comandos
+## Commands
 
 ```sh
 LC_ALL=C docs/mfe-history-review/tools/fingerprint.sh | cmp - docs/mfe-history-review/tools/fingerprint-before.txt
@@ -50,6 +36,6 @@ docs/mfe-history-review/tools/hist.sh farzanemadani__todo-app-using-mfe log --re
 LC_ALL=C docs/mfe-history-review/tools/fingerprint.sh | cmp - docs/mfe-history-review/tools/fingerprint-before.txt
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 3 (2026-04-12 a 2026-04-26). Pontos: 0.
+Commits up to the snapshot: 3 (2026-04-12 to 2026-04-26). Points: 0.

@@ -15,13 +15,14 @@ annotation:
 
 # 273 — kod88vn/poc_next_mfa
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| package.json:18 | devDependencies | turbo | ^2.3.3 | monorepo-tool | Undetermined | turbo.json:5-26 (tasks `build`, `dev`, `lint`, `type-check`, `clean` configuradas); a única invocação de `turbo` está nos scripts de package.json:9-11 e `:13-14`, que não contam como uso; sem workflow de CI, Dockerfile ou script de automação que chame `turbo` (grep, excluindo lockfiles) |
+| package.json:18 | devDependencies | turbo | ^2.3.3 | monorepo-tool | Undetermined | turbo.json:5-26 (tasks `build`, `dev`, `lint`, `type-check`, `clean` configured); the only invocation of `turbo` is in the scripts in package.json:9-11 and `:13-14`, which do not count as use; no CI workflow, Dockerfile or automation script calling `turbo` (grep, excluding the lockfiles) |
 
-## Notas
+## Notes
 
-- O único item de `same_package_matches`, `package.json:4`, é a linha `"workspaces": [` (`package.json:4-7`), declaração do workspace npm, não configuração do Turborepo.
-- As demais ocorrências de `turbo` fora de `turbo.json` são documentação ou texto de UI: README.md:57, README.md:84, apps/duda/ARCHITECTURE.md:24, apps/shell/app/page.tsx:28 e `:80`, .gitignore:28-29.
+- The only `same_package_matches` item, `package.json:4`, is the `"workspaces": [` line (`package.json:4-7`), an npm workspace declaration, not Turborepo configuration.
+- The other `turbo` occurrences outside `turbo.json` are documentation or UI text: README.md:57, README.md:84, apps/duda/ARCHITECTURE.md:24, apps/shell/app/page.tsx:28 and `:80`, .gitignore:28-29.
+

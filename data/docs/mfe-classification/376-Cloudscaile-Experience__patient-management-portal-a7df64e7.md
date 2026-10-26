@@ -20,87 +20,87 @@ annotation:
 
 # 376 — Cloudscaile-Experience/patient-management-portal-a7df64e7
 
-## Contexto
+## Context
 
-“Patient Management Portal”: extensão para uma plataforma (tenant `cloudscaile`) composta de duas partes:
-- uma API Fastify (`js/`);
-- um micro-frontend React (`web/`) que expõe `./PatientManagement` e `./PatientDetail` por Module Federation para um host (`README.md:1–8`, `:43`; `manifest.json:1–30`).
+“Patient Management Portal”: extension for a platform (tenant `cloudscaile`) comprising two parts:
+- a Fastify API (`js/`);
+- a React micro-frontend (`web/`) exposing `./PatientManagement` and `./PatientDetail` through Module Federation to a host (`README.md:1–8`, `:43`; `manifest.json:1–30`).
 
-O host não está no repositório. O remote depende da ponte `@cloudscaile-eng/web-ext-utils` para axios, store Redux, tema, i18n e toasts.
+The host is not in the repository. The remote depends on bridge `@cloudscaile-eng/web-ext-utils` for axios, Redux store, theme, i18n and toasts.
 
-A árvore do SHA é idêntica à do candidato 161 (`Cloudscaile-Experience/patient-management-portal-b32c1776`, anotação `MFE-unit`/review). Os dois commits têm o mesmo tree `332910855d40e61b46aa315c62db04aff7583c28`, e a comparação das 141 entradas de `git ls-tree -r` não mostra diferença de caminho nem de blob. O nome do repositório não é usado como evidência.
+The SHA tree is identical to candidate 161 (`Cloudscaile-Experience/patient-management-portal-b32c1776`, annotation `MFE-unit`/review). Both commits have the same tree `332910855d40e61b46aa315c62db04aff7583c28`, and comparison of the 141 `git ls-tree -r` entries shows no path or blob difference. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:377` registra rank 376, ID 1314943076, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:377` records rank 376, ID 1314943076, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:377` registra as estratégias `terminology;technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:34357` (`unknown`, `recent-human-commit` com `activity_incomplete`) e `data/discovery/mfe-round-002/candidates.csv:34363` (`pass`, `qualifying_commit`), ambos com `terminology;technology`.
+`data/samples/mfe-sample-001/sample.csv:377` records strategies `terminology;technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:34357` (`unknown`, `recent-human-commit` with `activity_incomplete`) and `data/discovery/mfe-round-002/candidates.csv:34363` (`pass`, `qualifying_commit`), both with `terminology;technology`.
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos três hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2026-07` e `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same three hits in each round, from endpoint `repositories`, with subquery `…#created:2026-07` and an empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | 2026-10-07T22:38:35.473Z / 2026-10-08T16:00:43.513Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | 2026-10-07T23:08:31.860Z / 2026-10-08T16:09:50.872Z |
 | `technology-module-federation-repositories`: `"module federation" in:name,description,readme` | 2026-10-07T23:28:59.650Z / 2026-10-08T16:18:56.800Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2026-07-01..2026-07-31`. As coletas coincidem, ao milissegundo, com as do 161 nas mesmas subconsultas.
+The effective queries append `pushed:>=2025-04-01 created:2026-07-01..2026-07-31`. Collection times match those of 161 in the same subqueries, to the millisecond.
 
-Metadados do hit (iguais nas duas rodadas): descrição nula, sem tópicos, linguagem TypeScript, sem licença, `fork: false`, tamanho 239, criação em 2026-07-28T12:16:59Z, push em 2026-07-28T12:17:02Z.
+Hit metadata (identical in both rounds): null description, no topics, language TypeScript, no license, `fork: false`, size 239, created at 2026-07-28T12:16:59Z, pushed at 2026-07-28T12:17:02Z.
 
-Grafias no README:
-- **“micro-frontend”:** `README.md:3` (“React micro-frontend”), `:8`, `:35`, `:43`, `:52`; “Micro-frontend” em `:77`. A frase “micro frontend” casaria se a busca tratar o hífen como separador, o que não está registrado.
+Spellings in the README:
+- **“micro-frontend”:** `README.md:3` (“React micro-frontend”), `:8`, `:35`, `:43`, `:52`; “Micro-frontend” in `:77`. Phrase “micro frontend” would match if search treats the hyphen as a separator, which is not recorded.
 - **“Module Federation”:** `README.md:8` (“Module Federation component consumed by the host”).
-- **“micro frontends”:** o plural não aparece; esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+- **“micro frontends”:** plural does not appear; this hit depends on GitHub search text processing, which is not recorded.
 
-O README vem do único commit, que é o SHA (2026-07-28T12:16:59Z), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The README comes from the only commit, the SHA (2026-07-28T12:16:59Z), before the October 2026 collections. The README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 141 entradas, 138 arquivos regulares `100644` e 3 executáveis `100755` (`js/entrypoint.sh`, `js/scripts/migrate.sh`, `js/scripts/seed-if-new-db.sh`); zero symlinks e zero gitlinks. Há `js/` (API Fastify + Drizzle/PostgreSQL), `web/` (único projeto frontend), `manifest.json` e `lefthook.yml` na raiz, e `.claude/` com skills e `CLAUDE.md` em ambos os pacotes. | contexto |
-| Configuração (federação) | `web/webpack/webpack.common.cjs:45–65`: `ModuleFederationPlugin({ name: 'remote', filename: 'remoteEntry.js', exposes: { './PatientManagement', './PatientDetail' }, shared: react, react-dom, react-router, i18next, react-i18next singleton })`, sem `remotes`. `web/webpack/webpack.prod.cjs:11–16`: `publicPath: 'auto'`. `web/src/index.tsx:1`: bootstrap assíncrono. | forte |
-| Configuração (registro) | `manifest.json:2–24`: `tenant`, `extensionName`, `web.scope: "remote"`, `remoteFileName: "remoteEntry.js"` e módulos `./PatientManagement` e `./PatientDetail` com tamanhos de grade. É a declaração do remote para o host da plataforma. | moderada |
-| Código-fonte (contrato com o host) | `web/src/utils/extension.ts:1–78`: `getExtension(tenant, name)`, `getExtAxios`, `getReduxStore`, `injectReducers`, `getTheme`, `registerTranslation`, `toast`, `getEventBus` e `getUser`, de `@cloudscaile-eng/web-ext-utils` (`web/package.json:17`). `web/src/containers/PatientManagementContainer.tsx:9–26` e `web/src/containers/PatientDetailContainer.tsx:16–22`, `:67–88`: registram traduções no host e recebem props de rota. `web/README.md:3`, `:118–126` e `web/.claude/skills/micro-frontend-integration/SKILL.md:7`: “never standalone in production”; o host controla rotas, store e tema. | moderada |
-| Código-fonte (fronteiras) | `web/` usa o alias `@` → `web/src` (`web/webpack/webpack.common.cjs:13–15`). Busca ativa por imports `../` em `web` e `js` e por imports de `js/` a partir de `web`: nenhuma ocorrência. | contexto |
-| Build/deploy | `web/package.json:4–12`: `webpack` com configurações dev e prod; `bootstrap.tsx:1–14` e `App.tsx:14–20` só para execução local. Não há host, shell nem configuração de `remotes`. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 141 entries, 138 regular files `100644` and 3 executables `100755` (`js/entrypoint.sh`, `js/scripts/migrate.sh`, `js/scripts/seed-if-new-db.sh`); zero symlinks and zero gitlinks. There are `js/` (Fastify + Drizzle/PostgreSQL API), `web/` (only frontend project), `manifest.json` and `lefthook.yml` at the root, and `.claude/` with skills and `CLAUDE.md` in both packages. | context |
+| Configuration (federation) | `web/webpack/webpack.common.cjs:45–65`: `ModuleFederationPlugin({ name: 'remote', filename: 'remoteEntry.js', exposes: { './PatientManagement', './PatientDetail' }, shared: react, react-dom, react-router, i18next, react-i18next singleton })`, without `remotes`. `web/webpack/webpack.prod.cjs:11–16`: `publicPath: 'auto'`. `web/src/index.tsx:1`: asynchronous bootstrap. | strong |
+| Configuration (registration) | `manifest.json:2–24`: `tenant`, `extensionName`, `web.scope: "remote"`, `remoteFileName: "remoteEntry.js"` and modules `./PatientManagement` and `./PatientDetail` with grid sizes. This declares the remote to the platform host. | moderate |
+| Source code (host contract) | `web/src/utils/extension.ts:1–78`: `getExtension(tenant, name)`, `getExtAxios`, `getReduxStore`, `injectReducers`, `getTheme`, `registerTranslation`, `toast`, `getEventBus` and `getUser`, from `@cloudscaile-eng/web-ext-utils` (`web/package.json:17`). `web/src/containers/PatientManagementContainer.tsx:9–26` and `web/src/containers/PatientDetailContainer.tsx:16–22`, `:67–88`: register translations in the host and receive route props. `web/README.md:3`, `:118–126` and `web/.claude/skills/micro-frontend-integration/SKILL.md:7`: “never standalone in production”; the host controls routes, store and theme. | moderate |
+| Source code (boundaries) | `web/` uses alias `@` → `web/src` (`web/webpack/webpack.common.cjs:13–15`). Active search for `../` imports in `web` and `js` and imports from `js/` in `web`: no occurrence. | context |
+| Build/deploy | `web/package.json:4–12`: `webpack` with dev and prod configurations; `bootstrap.tsx:1–14` and `App.tsx:14–20` only for local execution. There is no host, shell or `remotes` configuration. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso com um único commit (1 em todos os refs), o SHA `b2bcbb4` (2026-07-28T12:16:59Z, “Initial commit”). Autor e committer são `Cloudscaile-Experience <dev@cloudscaile.com>`. Criação e push nos metadados ocorrem no mesmo segundo do commit, ou 3 s depois.
+Non-shallow clone with a single commit (1 across all refs), SHA `b2bcbb4` (2026-07-28T12:16:59Z, “Initial commit”). Author and committer are `Cloudscaile-Experience <dev@cloudscaile.com>`. Metadata creation and push occur in the same second as the commit, or 3 s later.
 
-O commit do 161 (`b8a9112`, 2026-07-17) é de outra data, mas tem a mesma árvore. Dois repositórios da mesma organização com conteúdo idêntico e sufixos hexadecimais no nome são compatíveis com criação automatizada por ferramenta da plataforma. Isso não está demonstrado pelos metadados.
+Commit 161 (`b8a9112`, 2026-07-17) has a different date but the same tree. Two repositories from the same organization with identical content and hexadecimal name suffixes are consistent with automated creation by platform tooling. Metadata does not demonstrate this.
 
-`git rev-list --objects $SHA --missing=print` não lista objetos ausentes.
+`git rev-list --objects $SHA --missing=print` lists no missing objects.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend (`web/`). A configuração de composição só tem `exposes` (`web/webpack/webpack.common.cjs:48–51`) e não referencia unidades externas. A API `js/` não é unidade frontend. |
-| Q2 | Yes | Para a unidade: entry e build próprios que geram `remoteEntry.js` (`web/webpack/webpack.common.cjs:10`, `:46–47`; `web/package.json:6`). |
-| Q3 | Undetermined | O host da plataforma não está no repositório; só aparece pelo contrato da ponte (`web/src/utils/extension.ts`) e pelo `manifest.json`. |
-| Q4 | Undetermined | O lado remoto está configurado; o consumidor não é observável. |
-| Q5 | No | Há uma unidade preparada para composição, não uma instância de MFE no repositório. |
+| Q1 | No | A single frontend unit (`web/`). Composition configuration has only `exposes` (`web/webpack/webpack.common.cjs:48–51`) and references no external units. API `js/` is not a frontend unit. |
+| Q2 | Yes | For the unit: own entry and build generating `remoteEntry.js` (`web/webpack/webpack.common.cjs:10`, `:46–47`; `web/package.json:6`). |
+| Q3 | Undetermined | The platform host is not in the repository; it appears only through the bridge contract (`web/src/utils/extension.ts`) and `manifest.json`. |
+| Q4 | Undetermined | The remote side is configured; the consumer is not observable. |
+| Q5 | No | There is a unit prepared for composition, not an MFE instance in the repository. |
 
-## Motivo
+## Rationale
 
-- Proposta `MFE-unit` com `status: review`, idêntica à do 161, já que o conteúdo do SHA é o mesmo.
-- A exceção do checklist se aplica literalmente: “a single frontend unit explicitly prepared to be composed by an external host (e.g., Module Federation `exposes`…), but the composing host is not observable”.
-- Fica em aberto a mesma questão de plataforma do 161:
-  - o 037 classificou como `Non-MFE` uma unidade cujo único host é o mecanismo de extensão de uma plataforma de terceiros;
-  - aqui o tenant e a organização titular coincidem (`manifest.json:3–4`; conta `Cloudscaile-Experience`).
-- Não se usa o paralelo com gerador (075) ou exercício (094) para classificar: a origem automatizada não está demonstrada.
-- Campos iguais aos do 161: `approaches: [module-federation]`, `ui_technologies: [react]`, `build_tools: [webpack]`, `frontend_units: 1`, `unit_organization: single-unit`, `repo_type: example` (`production` também seria defensável).
+- Proposed `MFE-unit` with `status: review`, identical to 161, since SHA content is the same.
+- The checklist exception applies literally: “a single frontend unit explicitly prepared to be composed by an external host (e.g., Module Federation `exposes`…), but the composing host is not observable”.
+- The same platform question as in 161 remains open:
+  - 037 classified a unit whose only host is a third-party platform’s extension mechanism as `Non-MFE`;
+  - here the tenant and owning organization match (`manifest.json:3–4`; account `Cloudscaile-Experience`).
+- The generator (075) or exercise (094) parallel is not used for classification: automated origin is not demonstrated.
+- Same fields as 161: `approaches: [module-federation]`, `ui_technologies: [react]`, `build_tools: [webpack]`, `frontend_units: 1`, `unit_organization: single-unit`, `repo_type: example` (`production` would also be defensible).
 
-## Notas para análise
+## Analysis notes
 
-- **Protocolo (famílias/duplicatas):** 161 e 376 têm árvores idênticas (mesmo tree `3329108…`) e entram pelas mesmas três consultas na mesma subconsulta mensal. Uma deduplicação por tree do HEAD ou por hash de conteúdo evitaria contar duas vezes a mesma unidade nas RQs.
-- **RQ2:** remote Module Federation de plataforma de extensões multi-tenant, com manifesto declarativo (módulos e tamanhos de grade) e SDK de ponte que entrega serviços do host.
-- **Protocolo (busca):** o hit plural não tem grafia correspondente. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **Protocol (families/duplicates):** 161 and 376 have identical trees (same tree `3329108…`) and enter through the same three queries in the same monthly subquery. Deduplication by HEAD tree or content hash would avoid counting the same unit twice in the RQs.
+- **RQ2:** Module Federation remote in a multi-tenant extension platform, with declarative manifest (modules and grid sizes) and bridge SDK providing host services.
+- **Protocol (search):** the plural hit has no corresponding spelling. Eligibility changes from `unknown` (001) to `pass` (002).
 
-## Ponto para revisão conjunta
+## Point for joint review
 
-1. **Mesma decisão do 161.** Um remote Module Federation preparado para o host de uma plataforma de extensões, com manifesto e SDK próprios dela e mantido pela organização da plataforma, conta como `MFE-unit` ou segue o precedente 037 (`Non-MFE`)? A classe deste candidato deve acompanhar a decisão tomada para o 161.
-2. **Duplicata exata.** Decidir se o 376 permanece como observação independente na amostra ou é tratado como duplicata do 161 para fins de contagem. Isso não altera a classificação individual.
+1. **Same decision as 161.** Does a Module Federation remote prepared for an extension platform host, with the platform’s own manifest and SDK and maintained by its organization, count as `MFE-unit` or follow precedent 037 (`Non-MFE`)? This candidate’s classification should follow the decision for 161.
+2. **Exact duplicate.** Decide whether 376 remains an independent observation in the sample or is treated as a duplicate of 161 for counting purposes. This does not change individual classification.

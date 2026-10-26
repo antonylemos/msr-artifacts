@@ -20,67 +20,67 @@ annotation:
 
 # 154 — saha007subham/frontend_prep_hub
 
-## Contexto
+## Context
 
-“Frontend Prep Hub”: landing page em React + Vite + Tailwind + Three.js de uma futura plataforma de estudo para engenheiros frontend (`README.md:3–7`, `24–28`). O snapshot implementa só a página inicial (`src/App.jsx:6–17`; `README.md:282–287`, Fase 1). “Micro Frontends” aparece apenas como tópico de estudo listado no README e nos dados mock da página. O nome do repositório não é usado como evidência.
+“Frontend Prep Hub”: React + Vite + Tailwind + Three.js landing page for a future study platform for frontend engineers (`README.md:3–7`, `24–28`). The snapshot implements only the home page (`src/App.jsx:6–17`; `README.md:282–287`, Phase 1). “Micro Frontends” appears only as a study topic listed in the README and the page's mock data. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:155` registra rank 154, ID 1280642191, status `cloned`, branch `master` e o commit do front matter, que é o HEAD do clone e de `origin/master`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:155` records rank 154, ID 1280642191, status `cloned`, branch `master` and the front matter commit, which is HEAD of the clone and `origin/master`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:155` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:32488` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:32496` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:155` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:32488` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:32496` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2026-06` e `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2026-06` and empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | 2026-10-07T22:38:09.942Z / 2026-10-08T16:00:33.998Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | 2026-10-07T23:07:40.889Z / 2026-10-08T16:09:41.336Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2026-06-01..2026-06-30`.
+Effective queries append `pushed:>=2025-04-01 created:2026-06-01..2026-06-30`.
 
-Metadados do hit:
-- descrição “Frontend Prep Hub is a modern learning platform for frontend engineers to master JavaScript, React, Frontend System Design, DSA, Machine Coding, and interview preparation—all in one place.”, sem os termos;
-- sem tópicos, linguagem JavaScript, `fork: false`, tamanho 72;
-- criação em 2026-06-25T19:44:00Z, push em 2026-06-28T13:44:48Z.
+Hit metadata:
+- description “Frontend Prep Hub is a modern learning platform for frontend engineers to master JavaScript, React, Frontend System Design, DSA, Machine Coding, and interview preparation—all in one place.”, without the terms;
+- no topics, language JavaScript, `fork: false`, size 72;
+- created at 2026-06-25T19:44:00Z, pushed at 2026-06-28T13:44:48Z.
 
-O acerto vem de `README.md:99`, “- Micro Frontends”, item da lista de tópicos de “Frontend System Design”. A forma singular “micro frontend” não aparece no README nem na descrição; esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+The hit comes from `README.md:99`, “- Micro Frontends”, an item in the “Frontend System Design” topic list. The singular form “micro frontend” does not appear in the README or description; that hit depends on GitHub search text processing, which is not recorded.
 
-A última alteração do README é o próprio SHA, `3f598f2` (2026-06-28), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The README's last change is the SHA itself, `3f598f2` (2026-06-28), before October 2026 collection. The SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 37 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Há um único projeto Vite na raiz (`package.json`, `vite.config.js`, `index.html`, `src/` com `pages/LandingPage.jsx`, seções, UI, contexto de tema e `data/mockData.js`). As pastas `routes/`, `styles/` e `utils/` da estrutura do README (`README.md:187–214`) não existem. | contrária |
-| Código-fonte | `src/main.jsx:6–10` monta `App`. `src/App.jsx:6–17` tem um `BrowserRouter` com uma só rota para `LandingPage`. Os imports são internos (`./context/ThemeContext`, `./pages/LandingPage`). | contrária |
-| Configuração / Build | `vite.config.js:6–11`: só `react()` e `tailwindcss()`. `package.json:6–31`: `vite`/`vite build`, sem plugin de federação ou dependência MFE. | contrária |
-| Conteúdo | `README.md:82–100`: “Micro Frontends” como item da lista de tópicos de estudo. `src/data/mockData.js:114`, `215–216`: “microfrontends”, “microfrontend setups” e “Micro-Frontends” em textos de cartões da landing page. | fraca |
-| Tecnologia / Configuração / Composição (busca) | `git grep -i` no SHA (exceto `package-lock.json`) por `micro.?front`, `federation`, `single-spa`, `remoteEntry`, `customElements`, `iframe` e `../../../`: só os textos acima. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 37 entries, all regular `100644` files; zero symlinks and zero gitlinks. A single Vite project is at the root (`package.json`, `vite.config.js`, `index.html`, `src/` with `pages/LandingPage.jsx`, sections, UI, theme context and `data/mockData.js`). The `routes/`, `styles/` and `utils/` folders in the README's structure (`README.md:187–214`) do not exist. | contrary |
+| Source code | `src/main.jsx:6–10` mounts `App`. `src/App.jsx:6–17` has a `BrowserRouter` with a single route to `LandingPage`. Imports are internal (`./context/ThemeContext`, `./pages/LandingPage`). | contrary |
+| Configuration / Build | `vite.config.js:6–11`: only `react()` and `tailwindcss()`. `package.json:6–31`: `vite`/`vite build`, without a federation plugin or MFE dependency. | contrary |
+| Content | `README.md:82–100`: “Micro Frontends” as an item in the study topic list. `src/data/mockData.js:114`, `215–216`: “microfrontends”, “microfrontend setups” and “Micro-Frontends” in landing page card text. | weak |
+| Technology / Configuration / Composition (search) | `git grep -i` at the SHA (except `package-lock.json`) for `micro.?front`, `federation`, `single-spa`, `remoteEntry`, `customElements`, `iframe` and `../../../`: only the text above. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 4 commits, nenhum merge, todos de Subham Saha. Três são de `<saha007subham@gmail.com>` e o SHA, editado pela interface web, é de `<84348407+saha007subham@users.noreply.github.com>`. A raiz `1cb1fe4` (2026-06-26, “feat: initialize Frontend Prep Hub”) adiciona todo o código. `cc10941`, `3f924b5` e o SHA `3f598f2` só alteram o README (`git log --no-renames --name-status`). Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 4 commits, no merges, all by Subham Saha. Three use `<saha007subham@gmail.com>` and the SHA, edited through the web interface, uses `<84348407+saha007subham@users.noreply.github.com>`. Root `1cb1fe4` (2026-06-26, “feat: initialize Frontend Prep Hub”) adds all code. `cc10941`, `3f924b5` and SHA `3f598f2` change only the README (`git log --no-renames --name-status`). No historical blob was read and no object was missing.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única aplicação frontend; nenhuma configuração de composição referencia outras unidades. |
-| Q2 | No | Não há segunda unidade cuja independência possa ser avaliada. |
-| Q3 | No | Não há host compondo unidades; `App.jsx` só roteia a própria landing page. |
-| Q4 | No | Nenhum mecanismo de composição configurado (`vite.config.js:6–11`; busca registrada). |
-| Q5 | No | Q1–Q4 são No: SPA convencional que só cita micro-frontends como conteúdo de estudo. |
+| Q1 | No | A single frontend application; no composition configuration references other units. |
+| Q2 | No | There is no second unit whose independence could be assessed. |
+| Q3 | No | No host composes units; `App.jsx` only routes its own landing page. |
+| Q4 | No | No composition mechanism configured (`vite.config.js:6–11`; recorded search). |
+| Q5 | No | Q1–Q4 are No: conventional SPA that only mentions micro-frontends as study content. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “conventional frontend monoliths” e a “repositories mentioning micro-frontends without implementing them”.
-- O termo é conteúdo, como em 023, aqui em lista de tópicos de uma plataforma de estudo. Diferentemente dos perfis sem implementação (011/064/068/073/077/101/111), há uma aplicação real, por isso `frontend_units: 1` e `single-unit`.
-- `repo_type: other`: landing page de produto pessoal em fase inicial, sem caráter de exemplo de MFE, template ou biblioteca. `production` também seria defensável. `ui_technologies: [react]`, `build_tools: [vite]`.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. Matches “conventional frontend monoliths” and “repositories mentioning micro-frontends without implementing them”.
+- The term is content, as in 023, here in a study platform's topic list. Unlike profiles without implementation (011/064/068/073/077/101/111), there is a real application, hence `frontend_units: 1` and `single-unit`.
+- `repo_type: other`: personal product landing page in an early stage, without the character of an MFE example, template or library. `production` would also be defensible. `ui_technologies: [react]`, `build_tools: [vite]`.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** item de lista de tópicos (“Micro Frontends”) em README de plataforma de estudo basta para a consulta terminológica de frase.
-- **Protocolo (busca):** o hit singular `"micro frontend"` não tem grafia correspondente. A elegibilidade muda de `unknown` (001) para `pass` (002).
-- **Contribuição da revisão independente (Lupa):** concordância com Non-MFE, Q1–Q5 No e uma unidade (src/Vite), com `draft`; o hit veio de conteúdo educacional do README, sem configuração nem implementação MFE. O parecer apontou uma divergência sobre uma seção de revisão conjunta que citaria `vue/` e uma primeira contagem de quatro alvos; verificado que esse texto não consta desta anotação nem há `vue/` na árvore do commit (a menção corresponde a outra anotação, a 080), de modo que não houve alteração. A revisora confirmou ainda que parte da estrutura listada no README (linhas 187–214: `vue/`, `routes/`, `styles/`, `utils/`) não corresponde ao snapshot.
+- **RQ1 (misleading signals):** a topic list item (“Micro Frontends”) in a study platform README suffices for the terminology phrase query.
+- **Protocol (search):** the singular hit `"micro frontend"` has no corresponding spelling. Eligibility changes from `unknown` (001) to `pass` (002).
+- **Independent review contribution (Lupa):** agreement with Non-MFE, Q1–Q5 No and one unit (src/Vite), with `draft`; the hit came from the README's educational content, without MFE configuration or implementation. The review pointed out a discrepancy regarding a joint review section that supposedly cited `vue/` and an initial count of four targets; verification showed that this text is not in this annotation and there is no `vue/` in the commit tree (the mention belongs to another annotation, 080), so no change was made. The reviewer also confirmed that part of the structure listed in the README (lines 187–214: `vue/`, `routes/`, `styles/`, `utils/`) does not match the snapshot.

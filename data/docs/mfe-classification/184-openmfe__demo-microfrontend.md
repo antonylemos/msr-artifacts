@@ -20,72 +20,72 @@ annotation:
 
 # 184 — openmfe/demo-microfrontend
 
-## Contexto
+## Context
 
-“MFE Demo” (`README.md:1–3`): microfrontend de demonstração segundo a especificação OpenMFE. O frontend é um custom element `<hotel-offers>` em JavaScript puro com Shadow DOM, empacotado como IIFE pelo Rollup. Ele vem acompanhado de um manifesto OpenMFE (`frontend/src/openmfe/manifest.yaml`) que descreve tag, atributos, eventos e URLs de pré-renderização e semântica, servidas por um backend Express. A descrição do repositório o apresenta como demo e “boilerplate for new projects”. O host que incorporaria o elemento não está no repositório; `frontend/src/index.html` é só página de pré-visualização (“This is just a preview file”, `index.html:4–6`). O nome do repositório não é usado como evidência.
+“MFE Demo” (`README.md:1–3`): demonstration microfrontend following the OpenMFE specification. The frontend is a plain JavaScript custom element `<hotel-offers>` with Shadow DOM, bundled as IIFE by Rollup. It comes with an OpenMFE manifest (`frontend/src/openmfe/manifest.yaml`) describing tag, attributes, events and prerendering and semantic URLs, served by an Express backend. Repository description presents it as a demo and “boilerplate for new projects”. The host that would embed the element is not in the repository; `frontend/src/index.html` is only a preview page (“This is just a preview file”, `index.html:4–6`). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:185` registra rank 184, ID 571288769, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:185` records rank 184, ID 571288769, status `cloned`, branch `main` and the front matter commit, which is HEAD of the clone and `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:185` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:5199` e `data/discovery/mfe-round-002/candidates.csv:5204`, ambos com `pass`.
+`data/samples/mfe-sample-001/sample.csv:185` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:5199` and `data/discovery/mfe-round-002/candidates.csv:5204`, both `pass`.
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2022-11` e `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2022-11` and empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | 2026-10-07T18:21:42.189Z / 2026-10-08T15:36:19.819Z |
 | `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | 2026-10-07T22:05:51.315Z / 2026-10-08T15:45:56.552Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2022-11-01..2022-11-30`.
+Effective queries append `pushed:>=2025-04-01 created:2022-11-01..2022-11-30`.
 
-Metadados do hit:
-- descrição “A demo microfrontend, used to show common patterns and as a boilerplate for new projects.”;
-- sem tópicos, linguagem JavaScript, `fork: false`, tamanho 197;
-- criação em 2022-11-27T18:53:12Z, push em 2026-05-31T13:36:32Z.
+Hit metadata:
+- description “A demo microfrontend, used to show common patterns and as a boilerplate for new projects.”;
+- no topics, language JavaScript, `fork: false`, size 197;
+- created at 2022-11-27T18:53:12Z, pushed at 2026-05-31T13:36:32Z.
 
-Grafias:
-- “microfrontend”: `README.md:3` (“This is a demo of a microfrontend…”) e a descrição;
-- “microfrontends”: o plural não aparece no README nem na descrição; esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+Spellings:
+- “microfrontend”: `README.md:3` (“This is a demo of a microfrontend…”) and description;
+- “microfrontends”: plural does not appear in the README or description; that hit depends on GitHub search text processing, which is not recorded.
 
-A última alteração do README é `914da7f` (2022-03-24), muito anterior às coletas. O README do SHA não é posterior às buscas.
+The README's last change is `914da7f` (2022-03-24), long before collection. The SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 27 entradas, 25 arquivos regulares `100644` e 2 executáveis `100755` (`.env`, `dev.sh`); zero symlinks e zero gitlinks. Há `frontend/` (Rollup, `src/main.js`, `src/openmfe/`, fontes) e `backend/` (Express com `runtime`, `prerender` e `semantic`, e um cache JSON). | contexto |
-| Código-fonte (unidade) | `frontend/src/main.js:1–17`, `161`: classe `HotelOffers extends HTMLElement` com Shadow DOM, `observedAttributes` `region` e `customElements.define('hotel-offers', HotelOffers)`. `:111–116`: busca dados em `__BACKEND_URL__/api`. `:131–136`: emite `CustomEvent` (`hotel-offers.add-to-wishlist`, `openmfe.analytics`). | forte |
-| Configuração (manifesto OpenMFE) | `frontend/src/openmfe/manifest.yaml:1–80`: `version` da especificação, `tag: hotel-offers`, `url.frontend: ../main.js`, `url.prerender`/`url.semantic`, atributos com schema, eventos com schema e exemplos. É o contrato declarado para hosts externos. `frontend/rollup.config.js:30–46`: copia o manifesto para `dist/openmfe` substituindo as URLs. | forte |
-| Build/deploy | `frontend/rollup.config.js:6–11`: saída `dist/main.js` em formato IIFE. `frontend/package.json:8–14`: `rollup`, `browser-sync`/`serve` na porta `MFE_FRONTEND_PORT`. `frontend/serve.json:1–9`: CORS `*` para ser carregado por outras origens. `backend/src/index.js:1–33`: servidor dos endpoints `api`, `prerender` e `semantic`. | moderada |
-| Código-fonte (host) | `frontend/src/index.html:4–6`, `27–39`: página de pré-visualização que insere `<hotel-offers region="1197">`, carrega `/main.js` e escuta os eventos. Ela se declara arquivo de desenvolvimento, não host de composição. | contexto |
-| Código-fonte (fronteiras) | `frontend/src/main.js` não importa outros módulos; a ligação com o backend é por HTTP. Não há imports `../` entre `frontend` e `backend`. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 27 entries, 25 regular `100644` files and 2 executables `100755` (`.env`, `dev.sh`); zero symlinks and zero gitlinks. There are `frontend/` (Rollup, `src/main.js`, `src/openmfe/`, fonts) and `backend/` (Express with `runtime`, `prerender` and `semantic`, and a JSON cache). | context |
+| Source code (unit) | `frontend/src/main.js:1–17`, `161`: class `HotelOffers extends HTMLElement` with Shadow DOM, `observedAttributes` `region` and `customElements.define('hotel-offers', HotelOffers)`. `:111–116`: fetches data from `__BACKEND_URL__/api`. `:131–136`: emits `CustomEvent` (`hotel-offers.add-to-wishlist`, `openmfe.analytics`). | strong |
+| Configuration (OpenMFE manifest) | `frontend/src/openmfe/manifest.yaml:1–80`: specification `version`, `tag: hotel-offers`, `url.frontend: ../main.js`, `url.prerender`/`url.semantic`, attributes with schema, events with schema and examples. Declared contract for external hosts. `frontend/rollup.config.js:30–46`: copies manifest to `dist/openmfe`, replacing URLs. | strong |
+| Build/deploy | `frontend/rollup.config.js:6–11`: output `dist/main.js` in IIFE format. `frontend/package.json:8–14`: `rollup`, `browser-sync`/`serve` on port `MFE_FRONTEND_PORT`. `frontend/serve.json:1–9`: CORS `*` for loading by other origins. `backend/src/index.js:1–33`: server for `api`, `prerender` and `semantic` endpoints. | moderate |
+| Source code (host) | `frontend/src/index.html:4–6`, `27–39`: preview page inserting `<hotel-offers region="1197">`, loading `/main.js` and listening to events. Declares itself a development file, rather than a composing host. | context |
+| Source code (boundaries) | `frontend/src/main.js` imports no other modules; connection to backend is through HTTP. No `../` imports between `frontend` and `backend`. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 13 commits, nenhum merge, todos de Alexander Günsche (`git@lxg.de` 12, `lxg@amazon.com` 1). O desenvolvimento vai de 2022-02-02 (`f0320f5`, “initial commit”) a 2022-07-28 (`0f4b12f`, “add ISC license”). O SHA `5cfca8d` (2026-05-31, “Modernise build deps for current Node (20+)”) só altera `package.json`, `package-lock.json` e `rollup.config.js` (`git diff-tree`) e mantém o `pushed_at` recente. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 13 commits, no merges, all by Alexander Günsche (`git@lxg.de` 12, `lxg@amazon.com` 1). Development spans 2022-02-02 (`f0320f5`, “initial commit”) to 2022-07-28 (`0f4b12f`, “add ISC license”). SHA `5cfca8d` (2026-05-31, “Modernise build deps for current Node (20+)”) changes only `package.json`, `package-lock.json` and `rollup.config.js` (`git diff-tree`) and keeps `pushed_at` recent. No historical blob was read and no object was missing.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend (`<hotel-offers>`); o manifesto descreve a própria unidade e não referencia outras. O backend não é unidade frontend. |
-| Q2 | Yes (para a unidade) | Entrada e build próprios que geram `dist/main.js` (`rollup.config.js:6–11`), servidos com CORS para outras origens (`serve.json`). |
-| Q3 | Undetermined | O host que incorporaria o elemento não está no repositório; `index.html` é só pré-visualização (`index.html:4–6`). |
-| Q4 | Undetermined | O lado da unidade está preparado (custom element mais manifesto OpenMFE); o consumidor não é observável. |
-| Q5 | No | Há uma unidade preparada para composição por host externo, não uma instância de MFE no repositório. |
+| Q1 | No | A single frontend unit (`<hotel-offers>`); manifest describes the unit itself and references no others. Backend is not a frontend unit. |
+| Q2 | Yes (for the unit) | Its own entry and build generating `dist/main.js` (`rollup.config.js:6–11`), served with CORS for other origins (`serve.json`). |
+| Q3 | Undetermined | The host that would embed the element is not in the repository; `index.html` is only a preview (`index.html:4–6`). |
+| Q4 | Undetermined | Unit side is prepared (custom element plus OpenMFE manifest); consumer is not observable. |
+| Q5 | No | A unit is prepared for composition by an external host, rather than an MFE instance in the repository. |
 
-## Motivo
+## Rationale
 
-- `MFE-unit` pela exceção do checklist: “a single frontend unit explicitly prepared to be composed by an external host…, but the composing host is not observable”. Corresponde a “repositories containing only a remote unit, without the composing host”.
-- O padrão é o do final 004, em que a preparação é um custom element com Shadow DOM e entrada estável para o shell. Aqui a preparação é ainda mais explícita: há um manifesto padronizado (OpenMFE) com contrato de atributos e eventos.
-- Não é “component library using Web Components”: é uma unidade de domínio (ofertas de hotel) com backend próprio e contrato de integração, não uma biblioteca de componentes. Não há plataforma de terceiros como único host (102/074/080, 037): a especificação OpenMFE é aberta e o host é qualquer aplicação.
-- `approaches: [web-components]`, `ui_technologies: []` (custom element em JavaScript puro), `build_tools: [rollup]`, `frontend_units: 1`, `unit_organization: single-unit`. `repo_type: example` (“demo”, `README.md:3`); como a descrição também diz “boilerplate”, `template` seria defensável.
-- Não há decisão aberta.
+- `MFE-unit` under the checklist exception: “a single frontend unit explicitly prepared to be composed by an external host…, but the composing host is not observable”. Matches “repositories containing only a remote unit, without the composing host”.
+- Same pattern as final 004, where preparation is a custom element with Shadow DOM and stable shell entry. Here preparation is even more explicit: a standardized manifest (OpenMFE) with attribute and event contract.
+- Not a “component library using Web Components”: a domain unit (hotel offers) with its own backend and integration contract, rather than a component library. No third-party platform as only host (102/074/080, 037): OpenMFE specification is open and any application can be host.
+- `approaches: [web-components]`, `ui_technologies: []` (plain JavaScript custom element), `build_tools: [rollup]`, `frontend_units: 1`, `unit_organization: single-unit`. `repo_type: example` (“demo”, `README.md:3`); as description also says “boilerplate”, `template` would be defensible.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** micro-frontend por Web Components com manifesto declarativo OpenMFE (atributos, eventos com JSON Schema, pré-renderização e endpoint semântico) e eventos `CustomEvent` para o host, inclusive o canal `openmfe.analytics`.
-- **RQ3:** a unidade inclui backend próprio (dados, pré-render HTML, semântica); o contrato com o host é inteiramente declarativo.
-- **Protocolo (busca/elegibilidade):** o hit plural `microfrontends` não tem grafia literal. Elegibilidade `pass` nas duas rodadas, com o `pushed_at` mantido por uma atualização de dependências em 2026.
-- **Contribuição da revisão independente (Lupa):** concordância integral com MFE-unit e Q1 No, Q2 Yes, Q3/Q4 Undetermined, Q5 No; sem incerteza arquitetural aberta (`draft`). A unidade é um custom element com Shadow DOM, build Rollup independente, manifesto OpenMFE e configuração de CORS; o `index.html` é uma prévia de desenvolvimento e não demonstra host. Divergência de metadado, sem efeito na classe: a revisora recomenda `repo_type: template` em vez de `example`, porque a descrição registrada na busca diz que o repositório serve também "as a boilerplate for new projects", enquanto o README o chama de demo (`README.md:1–3`). Os finais distinguem boilerplate genérico (014) e template de widgets (051), ambos `template`, de uma demo de custom element (004), `example`. Mantido `example` (demo executável), e a alternativa `template` é escolha de taxonomia a validar pelo pesquisador, junto com a harmonização pendente de `repo_type`.
+- **RQ2:** Web Components micro-frontend with declarative OpenMFE manifest (attributes, JSON Schema events, prerendering and semantic endpoint) and `CustomEvent` events for host, including channel `openmfe.analytics`.
+- **RQ3:** unit includes its own backend (data, HTML prerendering, semantics); host contract is entirely declarative.
+- **Protocol (search/eligibility):** plural hit `microfrontends` has no literal spelling. Eligibility `pass` in both rounds, with `pushed_at` maintained by a dependency update in 2026.
+- **Independent review contribution (Lupa):** full agreement with MFE-unit and Q1 No, Q2 Yes, Q3/Q4 Undetermined, Q5 No; no open architectural uncertainty (`draft`). Unit is a custom element with Shadow DOM, independent Rollup build, OpenMFE manifest and CORS configuration; `index.html` is a development preview and does not demonstrate a host. Metadata disagreement without class effect: reviewer recommends `repo_type: template` instead of `example`, because recorded search description says the repository also serves “as a boilerplate for new projects”, while README calls it a demo (`README.md:1–3`). Final records distinguish generic boilerplate (014) and widget template (051), both `template`, from custom element demo (004), `example`. `example` retained (executable demo), and alternative `template` is a taxonomy choice for researcher validation, alongside pending `repo_type` harmonization.

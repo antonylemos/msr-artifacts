@@ -13,17 +13,17 @@ annotation:
 
 # 070 — viernesviernes/EmerTech-Lab-Assignment-3
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem 30 commits, de 2026-03-16 a 2026-04-04, com 5 merges. O primeiro commit é `fbad849` (2026-03-16, "First commit to implement SOC"), e o do snapshot é `98845d1` (2026-04-04, "Final changes with frontend").
+History up to snapshot has 30 commits, from 2026-03-16 to 2026-04-04, with 5 merges. First commit is `fbad849` (2026-03-16, "First commit to implement SOC"), and snapshot commit is `98845d1` (2026-04-04, "Final changes with frontend").
 
-As revisões anteriores não deixaram ponto ambíguo que o histórico pudesse esclarecer: não há dependência sem uso, unidade ou relação `Undetermined`, construção desativada nem afirmação de documentação `contradita` ou `parcial`. Por isso o histórico não foi consultado além deste contexto.
+Previous reviews left no ambiguous point history could clarify: no unused dependency, `Undetermined` unit or relationship, disabled construct or `contradicted` or `partial` documentation claim exists. Thus history was not consulted beyond this context.
 
-## Pontos
+## Points
 
-Nenhum ponto ambíguo nas revisões anteriores.
+No ambiguous points in previous reviews.
 
-## Comandos
+## Commands
 
 ```
 docs/mfe-history-review/tools/hist.sh viernesviernes__EmerTech-Lab-Assignment-3 rev-list --count 98845d1a3f9c1b41df04512b4472ee2d21085b6b
@@ -32,6 +32,6 @@ docs/mfe-history-review/tools/hist.sh viernesviernes__EmerTech-Lab-Assignment-3 
 docs/mfe-history-review/tools/hist.sh viernesviernes__EmerTech-Lab-Assignment-3 log --format='%h %ad %s' --date=short 98845d1a3f9c1b41df04512b4472ee2d21085b6b
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 30 (2026-03-16 a 2026-04-04). Pontos: 0.
+Commits up to the snapshot: 30 (2026-03-16 to 2026-04-04). Points: 0.

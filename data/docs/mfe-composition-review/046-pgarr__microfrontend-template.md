@@ -20,33 +20,34 @@ annotation:
 
 # 046 — pgarr/microfrontend-template
 
-## Leitura do repositório
+## Repository overview
 
-Template com a mesma arquitetura do repositório 017: um `container` React e três remotes, `auth` e `marketing` em React e `dashboard` em Vue, com o Module Federation nativo do webpack 5. Cada remote expõe uma função `mount` (ex.: auth/src/bootstrap.js:46), e o container a chama em wrappers carregados de forma *lazy* pelas rotas (container/src/App.js:29-36).
+A template with the same architecture as repository 017: a React `container` and three remotes, `auth` and `marketing` in React and `dashboard` in Vue, using webpack 5's native Module Federation. Each remote exposes a `mount` function (e.g.: auth/src/bootstrap.js:46), and the container calls it in wrappers loaded *lazily* by the routes (container/src/App.js:29-36).
 
-Em auth e marketing, `mount(el, opções)` sincroniza a navegação: o container passa `onNavigate` e `onSignIn` e recebe `onParentNavigate` (container/src/components/AuthApp.js:13-29; container/src/components/MarketingApp.js:13-28), e esses remotes usam histórico em memória quando montados pelo container (auth/src/bootstrap.js:7-11). O dashboard define só `mount(el)`, sem histórico nem opções (dashboard/src/bootstrap.js:5-8), e o container passa apenas o elemento (container/src/components/DashboardApp.js:8).
+In auth and marketing, `mount(el, opções)` (English translation: mount with an element and options) synchronizes navigation: the container passes `onNavigate` and `onSignIn` and receives `onParentNavigate` (container/src/components/AuthApp.js:13-29; container/src/components/MarketingApp.js:13-28), and these remotes use memory history when mounted by the container (auth/src/bootstrap.js:7-11). Dashboard defines only `mount(el)`, without history or options (dashboard/src/bootstrap.js:5-8), and the container passes only the element (container/src/components/DashboardApp.js:8).
 
-O container também controla quando o dashboard aparece: guarda `isSignedIn`, que o callback de login do auth liga antes de navegar para `/dashboard` (container/src/App.js:13-18), e nessa rota renderiza o dashboard só se houver login; senão, redireciona para `/` (container/src/App.js:33-35). Essas trocas por callback não viraram construções na revisão de código-fonte (seção 3.4.4 do protocolo), por isso não aparecem como `communication`.
+The container also controls when dashboard appears: it stores `isSignedIn`, which the auth login callback enables before navigating to `/dashboard` (container/src/App.js:13-18), and on that route it renders dashboard only when logged in; otherwise it redirects to `/` (container/src/App.js:33-35). These callback exchanges did not become constructs in the source code review (protocol section 3.4.4), so they do not appear as `communication`.
 
-Em produção, cada aplicação publica em `/<app>/latest/` (ex.: auth/config/webpack.prod.js:10), e o container busca os remotes no domínio de `PRODUCTION_DOMAIN` (container/config/webpack.prod.js:6, 17-20): deploy independente por unidade, num mesmo domínio. Por ser template, o conteúdo das telas é genérico; o valor está na estrutura.
+In production, each application publishes under `/<app>/latest/` (e.g.: auth/config/webpack.prod.js:10), and the container looks up remotes on the `PRODUCTION_DOMAIN` domain (container/config/webpack.prod.js:6, 17-20): independent deployment per unit, on the same domain. As a template, its screen contents are generic; the value lies in the structure.
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | container | auth | host → remote | origem → destino | module-federation | Yes | Yes | container/config/webpack.prod.js:17, 19 (remote `auth@${domain}/auth/latest/remoteEntry.js`); container/config/webpack.dev.js:20, 22 (remote `auth@http://localhost:8082/remoteEntry.js`); auth/config/webpack.prod.js:10-17 (`publicPath: '/auth/latest/'`, `name: 'auth'`, `filename: 'remoteEntry.js'`, expõe `./AuthApp`) | auth/src/bootstrap.js:46; container/src/components/AuthApp.js:13; container/src/components/AuthApp.js:1; container/src/App.js:29 |
-| 2 | container | dashboard | host → remote | origem → destino | module-federation | Yes | Yes | container/config/webpack.prod.js:17, 20 (remote `dashboard@${domain}/dashboard/latest/remoteEntry.js`); container/config/webpack.dev.js:20, 23 (remote `dashboard@http://localhost:8083/remoteEntry.js`); dashboard/config/webpack.prod.js:10-17 (`publicPath: '/dashboard/latest/'`, `name: 'dashboard'`, `filename: 'remoteEntry.js'`, expõe `./DashboardApp`) | dashboard/src/bootstrap.js:22; container/src/components/DashboardApp.js:8; container/src/components/DashboardApp.js:1; container/src/App.js:29 |
-| 3 | container | marketing | host → remote | origem → destino | module-federation | Yes | Yes | container/config/webpack.prod.js:17-18 (remote `marketing@${domain}/marketing/latest/remoteEntry.js`); container/config/webpack.dev.js:20-21 (remote `marketing@http://localhost:8081/remoteEntry.js`); marketing/config/webpack.prod.js:10-17 (`publicPath: '/marketing/latest/'`, `name: 'marketing'`, `filename: 'remoteEntry.js'`, expõe `./MarketingApp`) | marketing/src/bootstrap.js:46; container/src/components/MarketingApp.js:13; container/src/components/MarketingApp.js:1; container/src/App.js:29 |
+| 1 | container | auth | host → remote | source → target | module-federation | Yes | Yes | container/config/webpack.prod.js:17, 19 (remote `auth@${domain}/auth/latest/remoteEntry.js`); container/config/webpack.dev.js:20, 22 (remote `auth@http://localhost:8082/remoteEntry.js`); auth/config/webpack.prod.js:10-17 (`publicPath: '/auth/latest/'`, `name: 'auth'`, `filename: 'remoteEntry.js'`, exposes `./AuthApp`) | auth/src/bootstrap.js:46; container/src/components/AuthApp.js:13; container/src/components/AuthApp.js:1; container/src/App.js:29 |
+| 2 | container | dashboard | host → remote | source → target | module-federation | Yes | Yes | container/config/webpack.prod.js:17, 20 (remote `dashboard@${domain}/dashboard/latest/remoteEntry.js`); container/config/webpack.dev.js:20, 23 (remote `dashboard@http://localhost:8083/remoteEntry.js`); dashboard/config/webpack.prod.js:10-17 (`publicPath: '/dashboard/latest/'`, `name: 'dashboard'`, `filename: 'remoteEntry.js'`, exposes `./DashboardApp`) | dashboard/src/bootstrap.js:22; container/src/components/DashboardApp.js:8; container/src/components/DashboardApp.js:1; container/src/App.js:29 |
+| 3 | container | marketing | host → remote | source → target | module-federation | Yes | Yes | container/config/webpack.prod.js:17-18 (remote `marketing@${domain}/marketing/latest/remoteEntry.js`); container/config/webpack.dev.js:20-21 (remote `marketing@http://localhost:8081/remoteEntry.js`); marketing/config/webpack.prod.js:10-17 (`publicPath: '/marketing/latest/'`, `name: 'marketing'`, `filename: 'remoteEntry.js'`, exposes `./MarketingApp`) | marketing/src/bootstrap.js:46; container/src/components/MarketingApp.js:13; container/src/components/MarketingApp.js:1; container/src/App.js:29 |
 
-## Observações
+## Observations
 
-**1. container → auth.** O container importa `mount` de `auth/AuthApp` e o chama no wrapper (container/src/components/AuthApp.js:1, 13). O nome, o módulo e o caminho `/auth/latest/` correspondem a auth/config/webpack.prod.js:10-17.
+**1. container → auth.** The container imports `mount` from `auth/AuthApp` and calls it in the wrapper (container/src/components/AuthApp.js:1, 13). The name, module and `/auth/latest/` path match auth/config/webpack.prod.js:10-17.
 
-**2. container → dashboard.** Mesmo padrão com `dashboard/DashboardApp` (container/src/components/DashboardApp.js:1, 8). O nome, o módulo e o caminho correspondem a dashboard/config/webpack.prod.js:10-17. O `app.mount` do Vue dentro do remote é interno à unidade.
+**2. container → dashboard.** The same pattern with `dashboard/DashboardApp` (container/src/components/DashboardApp.js:1, 8). The name, module and path match dashboard/config/webpack.prod.js:10-17. Vue's `app.mount` inside the remote is internal to the unit.
 
-**3. container → marketing.** Mesmo padrão com `marketing/MarketingApp` (container/src/components/MarketingApp.js:1, 13). O nome, o módulo e o caminho correspondem a marketing/config/webpack.prod.js:10-17.
+**3. container → marketing.** The same pattern with `marketing/MarketingApp` (container/src/components/MarketingApp.js:1, 13). The name, module and path match marketing/config/webpack.prod.js:10-17.
 
-## Resumo
+## Summary
 
-Relações: 3 (host → remote: 3). Ativas: 3. Destino fora do snapshot: 0.
-Unidades sem relação: nenhuma.
+Relationships: 3 (host → remote: 3). Active: 3. Target outside the snapshot: 0.
+Units without a relationship: none.
+

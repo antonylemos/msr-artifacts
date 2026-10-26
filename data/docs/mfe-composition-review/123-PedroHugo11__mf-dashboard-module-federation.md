@@ -20,28 +20,29 @@ annotation:
 
 # 123 — PedroHugo11/mf-dashboard-module-federation
 
-## Leitura do repositório
+## Repository overview
 
-Prova de conceito de um dashboard React com Vite e `@originjs/vite-plugin-federation`, em três projetos independentes na raiz, sem workspace. `shell` é o host e `mfe-weather` e `mfe-counter` são remotes de Module Federation. O shell declara os dois remotes por URL fixa em `localhost` (shell/vite.config.ts:14-18) e compartilha `react` e `react-dom` (shell/vite.config.ts:19); cada remote se nomeia, gera `remoteEntry.js` e expõe a chave `./Widget`, que aponta para o seu `src/bootstrap` (mfe-weather/vite.config.ts:14-20; mfe-counter/vite.config.ts:14-20). O `bootstrap.tsx` só reexporta o widget da unidade (mfe-weather/src/bootstrap.tsx:1-2; mfe-counter/src/bootstrap.tsx:1-2).
+A proof of concept for a React dashboard with Vite and `@originjs/vite-plugin-federation`, in three independent root projects, without a workspace. `shell` is the host and `mfe-weather` and `mfe-counter` are Module Federation remotes. The shell declares both remotes through fixed URLs on `localhost` (shell/vite.config.ts:14-18) and shares `react` and `react-dom` (shell/vite.config.ts:19); each remote names itself, generates `remoteEntry.js` and exposes key `./Widget`, pointing to its `src/bootstrap` (mfe-weather/vite.config.ts:14-20; mfe-counter/vite.config.ts:14-20). `bootstrap.tsx` only re-exports the unit's widget (mfe-weather/src/bootstrap.tsx:1-2; mfe-counter/src/bootstrap.tsx:1-2).
 
-A composição é por componentes num só dashboard. O shell carrega `weather/Widget` e `counter/Widget` por `React.lazy` (shell/src/App.tsx:3-4) e os renderiza em dois cards, cada um sob `Suspense` com um esqueleto de carregamento (shell/src/App.tsx:16-28). Os tipos dos dois módulos federados são declarados à mão como componentes sem props (shell/src/vite-env.d.ts:1-9). Cada remote também roda sozinho, montando o mesmo widget que expõe (mfe-weather/src/main.tsx:4-6; mfe-counter/src/main.tsx:4-6).
+Composition uses components in a single dashboard. The shell loads `weather/Widget` and `counter/Widget` through `React.lazy` (shell/src/App.tsx:3-4) and renders them in two cards, each under `Suspense` with a loading skeleton (shell/src/App.tsx:16-28). The two federated modules' types are declared manually as components without props (shell/src/vite-env.d.ts:1-9). Each remote also runs independently, mounting the same widget it exposes (mfe-weather/src/main.tsx:4-6; mfe-counter/src/main.tsx:4-6).
 
-As URLs dos remotes usam as portas 4173 e 4174 (shell/vite.config.ts:16-17), e não as portas de `server.port` dos remotes, 5173 e 5174 (mfe-weather/vite.config.ts:6-8; mfe-counter/vite.config.ts:6-8). Elas casam com o `vite preview` dos remotes, que não tem porta própria (mfe-counter/package.json:10), na ordem do README: build e preview de weather, depois de counter, e então `npm run dev` no shell (README.md:67-78). Não há comunicação entre as unidades, custom elements, iframes nem scripts injetados (revisão de código-fonte, Notas). Todas as três unidades estão em alguma relação.
+The remote URLs use ports 4173 and 4174 (shell/vite.config.ts:16-17), rather than the remotes' `server.port` values, 5173 and 5174 (mfe-weather/vite.config.ts:6-8; mfe-counter/vite.config.ts:6-8). They match the remotes' `vite preview`, which has no port of its own (mfe-counter/package.json:10), in README order: build and preview weather, then counter, then `npm run dev` in the shell (README.md:67-78). There is no inter-unit communication, custom elements, iframes or injected scripts (source code review, Notes). All three units participate in a relationship.
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | shell | mfe-weather | host → remote | origem → destino | module-federation | Yes | Yes | shell/vite.config.ts:16 (remote `weather` em `http://localhost:4173/assets/remoteEntry.js`); shell/vite.config.ts:19 (`shared` react, react-dom); mfe-weather/vite.config.ts:15-18 (`name: "weather"`, `filename: "remoteEntry.js"`, expõe `./Widget`) | shell/src/App.tsx:3; shell/src/App.tsx:19 |
-| 2 | shell | mfe-counter | host → remote | origem → destino | module-federation | Yes | Yes | shell/vite.config.ts:17 (remote `counter` em `http://localhost:4174/assets/remoteEntry.js`); shell/vite.config.ts:19 (`shared` react, react-dom); mfe-counter/vite.config.ts:15-18 (`name: "counter"`, `filename: "remoteEntry.js"`, expõe `./Widget`) | shell/src/App.tsx:4; shell/src/App.tsx:25 |
+| 1 | shell | mfe-weather | host → remote | source → target | module-federation | Yes | Yes | shell/vite.config.ts:16 (remote `weather` at `http://localhost:4173/assets/remoteEntry.js`); shell/vite.config.ts:19 (`shared` react, react-dom); mfe-weather/vite.config.ts:15-18 (`name: "weather"`, `filename: "remoteEntry.js"`, exposes `./Widget`) | shell/src/App.tsx:3; shell/src/App.tsx:19 |
+| 2 | shell | mfe-counter | host → remote | source → target | module-federation | Yes | Yes | shell/vite.config.ts:17 (remote `counter` at `http://localhost:4174/assets/remoteEntry.js`); shell/vite.config.ts:19 (`shared` react, react-dom); mfe-counter/vite.config.ts:15-18 (`name: "counter"`, `filename: "remoteEntry.js"`, exposes `./Widget`) | shell/src/App.tsx:4; shell/src/App.tsx:25 |
 
-## Observações
+## Observations
 
-**1. shell → mfe-weather.** O especificador `weather/Widget` (shell/src/App.tsx:3) corresponde ao remote `weather` do shell (shell/vite.config.ts:16) e, na unidade mfe-weather, ao `name: "weather"` e à chave `./Widget` (mfe-weather/vite.config.ts:15-18); o destino foi resolvido por esse nome e pela chave exposta, não pela porta. O arquivo exposto exporta por default o `WeatherWidget` (mfe-weather/src/bootstrap.tsx:1-2), renderizado no card "Weather" (shell/src/App.tsx:17-21). Ativa porque as duas linhas de código são `Yes`. A porta 4173 da URL não está fixada na configuração do remote; ela depende de o `vite preview` de weather subir primeiro, como o README manda (README.md:67-69).
+**1. shell → mfe-weather.** The `weather/Widget` specifier (shell/src/App.tsx:3) matches the shell's `weather` remote (shell/vite.config.ts:16) and, in the mfe-weather unit, `name: "weather"` and key `./Widget` (mfe-weather/vite.config.ts:15-18); the target was resolved through that name and exposed key, not the port. The exposed file default-exports `WeatherWidget` (mfe-weather/src/bootstrap.tsx:1-2), rendered in the "Weather" card (shell/src/App.tsx:17-21). Active because both code lines are `Yes`. The URL's port 4173 is not fixed in the remote configuration; it depends on weather's `vite preview` starting first, as directed by the README (README.md:67-69).
 
-**2. shell → mfe-counter.** Mesma resolução: `counter/Widget` (shell/src/App.tsx:4), remote `counter` (shell/vite.config.ts:17), `name: "counter"` e `./Widget` (mfe-counter/vite.config.ts:15-18), que reexporta o `CounterWidget` (mfe-counter/src/bootstrap.tsx:1-2), renderizado no card "Counter" (shell/src/App.tsx:23-27). Ativa porque as duas linhas de código são `Yes`. A porta 4174 também não está fixada no remote e corresponde ao segundo `vite preview` da sequência do README (README.md:71-73).
+**2. shell → mfe-counter.** The same resolution: `counter/Widget` (shell/src/App.tsx:4), remote `counter` (shell/vite.config.ts:17), `name: "counter"` and `./Widget` (mfe-counter/vite.config.ts:15-18), re-exporting `CounterWidget` (mfe-counter/src/bootstrap.tsx:1-2), rendered in the "Counter" card (shell/src/App.tsx:23-27). Active because both code lines are `Yes`. Port 4174 is also not fixed in the remote and corresponds to the second `vite preview` in the README sequence (README.md:71-73).
 
-## Resumo
+## Summary
 
-Relações: 2 (host → remote: 2). Ativas: 2. Destino fora do snapshot: 0.
-Unidades sem relação: nenhuma.
+Relationships: 2 (host → remote: 2). Active: 2. Target outside the snapshot: 0.
+Units without a relationship: none.
+

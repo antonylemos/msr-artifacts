@@ -16,24 +16,25 @@ annotation:
 
 # 197 — charger17/mfe
 
-## Leitura do repositório
+## Repository overview
 
-O repositório não tem documentação. O `artifacts.csv` não marca nenhum arquivo como `documentation`, e o snapshot não tem `.md`. O único arquivo de texto na raiz, `readme.txt`, tem 2 bytes: só uma quebra de linha (CR LF), sem texto. Nenhum dos quatro `package.json` tem `description`; o campo `name` só dá o nome do pacote (packages/auth/package.json:2; packages/container/package.json:2; packages/dashboard/package.json:2; packages/marketing/package.json:2). As quatro páginas `public/index.html` têm o título genérico "Document" (ex.: packages/container/public/index.html:6).
+Repository has no documentation. `artifacts.csv` marks no files as `documentation`, snapshot has no `.md`. Sole root text file, `readme.txt`, is 2 bytes: only CR LF newline without text. None of four `package.json` files has `description`; `name` only names package (packages/auth/package.json:2; packages/container/package.json:2; packages/dashboard/package.json:2; packages/marketing/package.json:2). Four `public/index.html` pages have generic title "Document" (e.g.: packages/container/public/index.html:6).
 
-Foram lidos os artefatos que as revisões anteriores citam: os quatro workflows de `.github/workflows/`, os `webpack.common.js`, `webpack.dev.js` e `webpack.prod.js` de cada pacote, os quatro `package.json`, os `src/index.js` e `src/bootstrap.js`, o `src/App.js` do container e do auth, os wrappers `packages/container/src/components/{AuthApp,DashboardApp,MarketingApp}.js` e os componentes `Signin.js` e `Signup.js` do auth. Nenhum deles tem comentário. Os workflows só têm nomes de job e de passo, como `deploy-auth` (.github/workflows/auth.yml:1), `deploy-container`, `deploy-dashboard` e `deploy-marketing` (linha 1 de cada workflow) e "Build project" e "Upload to S3" (.github/workflows/auth.yml:29, 48). São rótulos, não afirmações. Os únicos comentários do snapshot marcam trechos visuais dentro de componentes ("Hero unit", "Footer", "Menu Common"; ex.: packages/marketing/src/components/Landing.js:72; packages/dashboard/src/components/Dashboard.vue:394), além de um bloco de template comentado (packages/dashboard/src/components/Dashboard.vue:138). Tratam da aparência de uma unidade e não entram.
+Artifacts cited by previous reviews were read: four workflows in `.github/workflows/`, each package's `webpack.common.js`, `webpack.dev.js`, `webpack.prod.js`, four `package.json`, `src/index.js`, `src/bootstrap.js`, container/auth `src/App.js`, wrappers `packages/container/src/components/{AuthApp,DashboardApp,MarketingApp}.js`, auth components `Signin.js` and `Signup.js`. None has comments. Workflows only have job/step names, such as `deploy-auth` (.github/workflows/auth.yml:1), `deploy-container`, `deploy-dashboard`, `deploy-marketing` (line 1 per workflow), "Build project", "Upload to S3" (.github/workflows/auth.yml:29, 48). Labels rather than claims. Sole snapshot comments mark visual component sections ("Hero unit", "Footer", "Menu Common"; e.g.: packages/marketing/src/components/Landing.js:72; packages/dashboard/src/components/Dashboard.vue:394), plus commented template block (packages/dashboard/src/components/Dashboard.vue:138). Concern one unit's appearance, excluded.
 
-Sem documentação, tudo o que se sabe da arquitetura vem dos artefatos, já registrados nas revisões anteriores. Elas mostram um container React que compõe três remotes (auth, marketing e o dashboard em Vue) por Module Federation, com build e deploy separados para cada um.
+Without documentation, architecture knowledge comes from artifacts recorded in previous reviews. They show React container composing three Module Federation remotes (auth, marketing, Vue dashboard), with separate builds/deployments for each.
 
-Nenhuma ocorrência `doc-*` na mineração.
+No `doc-*` mining occurrences.
 
-## Afirmações
+## Claims
 
-Nenhuma afirmação arquitetural.
+No architectural claims.
 
-## Observações
+## Observations
 
-Sem afirmações.
+No claims.
 
-## Resumo
+## Summary
 
-Afirmações: 0.
+Claims: 0.
+

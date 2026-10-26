@@ -15,20 +15,20 @@ annotation:
 
 # 223 — ross2p/mindlet-app
 
-## Construções da mineração
+## Mined constructs
 
-Nenhuma ocorrência src-* no matches.csv.
+No src-* occurrences in matches.csv.
 
-## Construções fora da mineração
+## Constructs outside mining
 
-Nenhuma construção adicional.
+No additional constructs.
 
-## Resumo
+## Summary
 
-Construções com composição: 0.
+Constructs participating in composition: 0.
 
-## Notas
+## Notes
 
-- O `matches.csv` não tem linhas `src-*`, e a tabela "Unidades" da revisão estrutural não tem linhas: o snapshot não tem código de nenhuma das cinco zonas. Elas são submódulos com repositório próprio (.gitmodules:4-18: `apps/dashboard`, `apps/auth`, `apps/profile`, `apps/study`, `apps/decks`), e os diretórios não existem em `files/`. Os alvos da composição ficam todos fora do snapshot.
-- A composição multi-zones aparece só no gateway nginx, que é configuração de deploy e não código de unidade: infra/nginx/routing-map.frontend.conf:1-9 mapeia `/dashboard`, `/auth`, `/profile`, `/study` e `/decks` para o serviço de cada zona. Por isso não vira linha manual.
-- A busca do passo 4 só encontrou exemplos de documentação nas skills de `.agents/` (ex.: `lazy(() => import('./HeavyChart'))` em .agents/skills/frontend-patterns/SKILL.md:324-325 e linhas de dados em .agents/skills/ui-ux-pro-max/data/*.csv). Não são código de unidade e não viram linha.
+- The `matches.csv` has no `src-*` rows, and the structural review’s "Units" table has no rows: the snapshot has no code from any of the five zones. They are submodules with their own repositories (.gitmodules:4-18: `apps/dashboard`, `apps/auth`, `apps/profile`, `apps/study`, `apps/decks`), and the directories do not exist in `files/`. All composition targets are outside the snapshot.
+- Multi-zone composition appears only in the nginx gateway, which is deploy configuration rather than unit code: infra/nginx/routing-map.frontend.conf:1-9 maps `/dashboard`, `/auth`, `/profile`, `/study` and `/decks` to each zone’s service. It therefore does not become a manual row.
+- The step 4 search found only documentation examples in `.agents/` skills (for example: `lazy(() => import('./HeavyChart'))` at .agents/skills/frontend-patterns/SKILL.md:324-325 and data rows in .agents/skills/ui-ux-pro-max/data/*.csv). These are not unit code and do not become rows.

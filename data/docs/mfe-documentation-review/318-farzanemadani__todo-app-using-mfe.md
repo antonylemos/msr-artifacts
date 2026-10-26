@@ -16,149 +16,73 @@ annotation:
 
 # 318 — farzanemadani/todo-app-using-mfe
 
-## Leitura do repositório
+## Repository overview
 
-A documentação é só o README da raiz (README.md:1-129), em inglês, o único artefato
-`documentation` do `artifacts.csv`. Ele descreve o projeto como um exemplo pequeno de micro-frontends
-com React e Module Federation do webpack: três aplicações (`host-app`, o shell com o roteador, e dois
-remotes, `todoForm-app` e `todoList-app`), os endereços `remoteEntry.js` que o host carrega, as rotas
-em que cada remote entra, a troca de dados pelo `localStorage`, o build separado de cada aplicação e
-os módulos expostos. Termina com notas que reconhecem os limites do exemplo: sem `package.json` na
-raiz, configuração de produção do host ainda em `localhost`, dados só no navegador.
+Documentation consists solely of English root README (README.md:1-129), the only `documentation` artifact in `artifacts.csv`. It describes a small micro-frontend example with React and webpack Module Federation: three applications (`host-app`, shell with router, and two remotes, `todoForm-app` and `todoList-app`), `remoteEntry.js` addresses loaded by host, remote routes, data exchange through `localStorage`, separate application builds and exposed modules. Closing notes acknowledge example limits: no root `package.json`, host production configuration still on `localhost`, browser-only data.
 
-O README confere com as revisões anteriores em todos os pontos. A revisão de dependências não
-registra tecnologia (o `ModuleFederationPlugin` vem do próprio `webpack`, host-app/webpack.prod.js:4,
-sem pacote próprio), e a revisão de composição registra o mecanismo `module-federation` nas relações
-1 e 2; por isso "Webpack Module Federation" não nomeia tecnologia diferente da registrada. O README
-não afirma deploy: ao contrário, diz que a configuração de produção precisaria de outras URLs
-(README.md:128), o que bate com o `não observado` da revisão de build e deploy.
+README matches previous reviews throughout. Dependency review records no technology (`ModuleFederationPlugin` comes from `webpack` itself, host-app/webpack.prod.js:4, without its own package), and composition review records `module-federation` mechanism in relationships 1 and 2; thus "Webpack Module Federation" names no different technology. README claims no deployment: instead, it says production configuration needs other URLs (README.md:128), matching build/deployment review’s `not observed`.
 
-Ficaram fora da tabela:
-- o título "Todo App Using Micro Frontends" (README.md:1) e os títulos de seção "Module Federation
-  Setup" (README.md:113) e "Host remotes" (README.md:115), que nomeiam o tema sem afirmar nada além
-  das linhas da tabela;
-- as funcionalidades e a pilha da aplicação (README.md:17-19, 24-30): tarefas, `react-router-dom`,
-  `react-hot-toast`, React 19, Webpack 5, Babel, CSS. "Module Federation" na lista (README.md:26)
-  repete a afirmação 1; o roteamento entre as telas é a afirmação 7;
-- a árvore de pastas sem comentários (README.md:34-39), que repete as três pastas da afirmação 2;
-- as instruções de instalação e execução (README.md:58-71, 89-93), os blocos de comando
-  (README.md:67-71, 77-87, 99-103) e a lista de portas (README.md:107-111), que é detalhe de
-  infraestrutura; as portas 3001 e 3002 aparecem na afirmação 6 só como parte das URLs dos remotes.
+Excluded from table:
+- title "Todo App Using Micro Frontends" (README.md:1) and section titles "Module Federation
+  Setup" (README.md:113) and "Host remotes" (README.md:115), naming the subject without claims beyond table rows;
+- functionality/application stack (README.md:17-19, 24-30): tasks, `react-router-dom`, `react-hot-toast`, React 19, Webpack 5, Babel, CSS. "Module Federation" in list (README.md:26) repeats claim 1; inter-screen routing is claim 7;
+- uncommented folder tree (README.md:34-39), repeating claim 2’s three folders;
+- installation/execution instructions (README.md:58-71, 89-93), command blocks (README.md:67-71, 77-87, 99-103) and port list (README.md:107-111), an infrastructure detail; ports 3001 and 3002 appear in claim 6 only within remote URLs.
 
-Ocorrências `doc-*` que não viraram linha: README.md:1 (título), README.md:26 (item da pilha, na
-afirmação 1), README.md:113 (título de seção), README.md:115 (título de seção, ver afirmação 10) e
-README.md:15 (repetição, no parágrafo da afirmação 2). As demais estão nas afirmações da tabela: README.md:3 na 1, README.md:11 na 3,
-README.md:43 na 6 e README.md:128 na 13.
+`doc-*` occurrences without rows: README.md:1 (title), README.md:26 (stack item in claim 1), README.md:113 (section title), README.md:115 (section title, see claim 10) and README.md:15 (repetition in claim 2 paragraph). Others are table claims: README.md:3 in 1, README.md:11 in 3, README.md:43 in 6 and README.md:128 in 13.
 
-Foram lidos os artefatos que as revisões anteriores citam: os três `package.json` (a `description`
-está vazia em todos, host-app/package.json:12; todoForm-app/package.json:12;
-todoList-app/package.json:13), os seis `webpack.*.js`, os `index.js`, `bootstrap.js` e `App.jsx`
-das três aplicações, `host-app/src/components/header.jsx`, os dois componentes expostos e os três
-`public/index.html`. Os comentários dos `webpack.prod.js` só desativam código (`devServer`,
-`ReactRefreshWebpackPlugin`, a entrada antiga `./src/index.js`, por exemplo
-todoForm-app/webpack.prod.js:3, 8, 15-18) e não afirmam nada sobre a arquitetura. Os títulos das
-páginas ("Todo - Host App" etc., host-app/public/index.html:6) e o "Monolyth - TodoApp" do cabeçalho
-do host (host-app/src/components/header.jsx:7) são texto de interface.
+Artifacts cited by previous reviews were read: three `package.json` files (`description` empty in all, host-app/package.json:12; todoForm-app/package.json:12; todoList-app/package.json:13), six `webpack.*.js`, three applications’ `index.js`, `bootstrap.js` and `App.jsx`, `host-app/src/components/header.jsx`, both exposed components and three `public/index.html`. `webpack.prod.js` comments only disable code (`devServer`, `ReactRefreshWebpackPlugin`, old entry `./src/index.js`, e.g. todoForm-app/webpack.prod.js:3, 8, 15-18), without architectural claims. Page titles ("Todo - Host App" etc., host-app/public/index.html:6) and host header’s "Monolyth - TodoApp" (host-app/src/components/header.jsx:7) are interface text.
 
-## Afirmações
+## Claims
 
-| # | Documento | Afirmação | Tema | Corroboração | Evidência |
+| # | Document | Claim | Theme | Corroboration | Evidence |
 |---|---|---|---|---|---|
-| 1 | README.md:3 | "A small React micro-frontend project built with Webpack Module Federation." | estrutura | corroborada | 3.4.3 (três unidades `Yes`); 3.4.5 #1, #2; host-app/webpack.prod.js:4, 49-55 |
-| 2 | README.md:5-9 | "splits a todo application into three separate apps: `host-app`: the shell application and router; `todoForm-app`: the remote responsible for adding and editing tasks; `todoList-app`: the remote responsible for listing and deleting tasks" | estrutura | corroborada | 3.4.3 (host-app, todoForm-app, todoList-app `Yes`); 3.4.5 #1, #2; host-app/src/index.js:7-9; host-app/src/App.jsx:12-22 |
-| 3 | README.md:11 | "The apps communicate through Module Federation and share todo data through `localStorage`." | composição | corroborada | 3.4.5 #1, #2, #3; todoForm-app/src/components/todoForm.jsx:29, 40; todoList-app/src/components/ToDoList.jsx:8, 12 |
-| 4 | README.md:16 | "Lazy-loaded remote modules using `React.lazy` and `Suspense`" | composição | corroborada | 3.4.4 (host-app/src/App.jsx:2 e :3, dynamic-loading); host-app/src/App.jsx:13-21 |
-| 5 | README.md:20 | "Separate development and production webpack configs for each app" | build-deploy | corroborada | 3.4.3 (coluna Build); host-app/package.json:7-8; todoForm-app/package.json:7-8; todoList-app/package.json:8-9 |
-| 6 | README.md:43-46 | "The `host-app` […] loads two remote applications: `todoForm_app` from `http://localhost:3001/remoteEntry.js`; `todoList_app` from `http://localhost:3002/remoteEntry.js`" | composição | corroborada | 3.4.5 #1, #2; host-app/webpack.dev.js:48-51; host-app/webpack.prod.js:7-8, 52-55 |
-| 7 | README.md:48-52 | "Routes in the host: `/`: shows the todo list remote; `/add`: opens the add-task form remote; `/edit/:id`: opens the edit-task form remote" | composição | corroborada | 3.4.4 (host-app/src/App.jsx:12, host-relationship; :14, :17, :20, runtime-composition); host-app/src/App.jsx:12-22 |
-| 8 | README.md:75 | "Start each app in a separate terminal" (cada aplicação roda no próprio processo) | independência | corroborada | 3.4.6 #1-#3 (servidores de desenvolvimento); host-app/webpack.dev.js:13-16; todoForm-app/webpack.dev.js:15-18; todoList-app/webpack.dev.js:14-17 |
-| 9 | README.md:97, 105 | "Build each app separately […] Production bundles are generated in each app's `build/` directory." | build-deploy | corroborada | 3.4.6 #1-#3 (`separado`); host-app/webpack.prod.js:12-15; todoForm-app/webpack.prod.js:10-13; todoList-app/webpack.prod.js:9-12 |
-| 10 | README.md:115-118 | "Host remotes: `todoForm_app/TodoForm`; `todoList_app/todoList`" | composição | corroborada | 3.4.4 (host-app/src/App.jsx:2 e :3); 3.4.5 #1, #2 |
-| 11 | README.md:120-123 | "`todoForm-app` exposes `./TodoForm`; `todoList-app` exposes `./todoList`" | composição | corroborada | 3.4.5 #1, #2; todoForm-app/webpack.prod.js:51-52; todoList-app/webpack.prod.js:50-51 |
-| 12 | README.md:127 | "There is no root `package.json`, so dependencies are installed per app." | estrutura | corroborada | 3.4.3 (Workspace: nenhuma declaração; Notas); host-app/package.json:13-32; todoForm-app/package.json:13-32; todoList-app/package.json:14-32 |
-| 13 | README.md:128 | "The production config in `host-app` currently points to remotes on `localhost`, so deployment would need updated remote URLs." | build-deploy | corroborada | 3.4.6 #1-#3 (`não observado`); host-app/webpack.prod.js:7-8, 53-54 |
-| 14 | README.md:129 | "Todo data is browser-local only and is not backed by an API or database." | outro | corroborada | 3.4.5 #3; todoForm-app/src/components/todoForm.jsx:16-40; todoList-app/src/components/ToDoList.jsx:8-12 |
+| 1 | README.md:3 | "A small React micro-frontend project built with Webpack Module Federation." | structure | corroborated | 3.4.3 (three units `Yes`); 3.4.5 #1, #2; host-app/webpack.prod.js:4, 49-55 |
+| 2 | README.md:5-9 | "splits a todo application into three separate apps: `host-app`: the shell application and router; `todoForm-app`: the remote responsible for adding and editing tasks; `todoList-app`: the remote responsible for listing and deleting tasks" | structure | corroborated | 3.4.3 (host-app, todoForm-app, todoList-app `Yes`); 3.4.5 #1, #2; host-app/src/index.js:7-9; host-app/src/App.jsx:12-22 |
+| 3 | README.md:11 | "The apps communicate through Module Federation and share todo data through `localStorage`." | composition | corroborated | 3.4.5 #1, #2, #3; todoForm-app/src/components/todoForm.jsx:29, 40; todoList-app/src/components/ToDoList.jsx:8, 12 |
+| 4 | README.md:16 | "Lazy-loaded remote modules using `React.lazy` and `Suspense`" | composition | corroborated | 3.4.4 (host-app/src/App.jsx:2 and :3, dynamic-loading); host-app/src/App.jsx:13-21 |
+| 5 | README.md:20 | "Separate development and production webpack configs for each app" | build-deploy | corroborated | 3.4.3 (Build column); host-app/package.json:7-8; todoForm-app/package.json:7-8; todoList-app/package.json:8-9 |
+| 6 | README.md:43-46 | "The `host-app` […] loads two remote applications: `todoForm_app` from `http://localhost:3001/remoteEntry.js`; `todoList_app` from `http://localhost:3002/remoteEntry.js`" | composition | corroborated | 3.4.5 #1, #2; host-app/webpack.dev.js:48-51; host-app/webpack.prod.js:7-8, 52-55 |
+| 7 | README.md:48-52 | "Routes in the host: `/`: shows the todo list remote; `/add`: opens the add-task form remote; `/edit/:id`: opens the edit-task form remote" | composition | corroborated | 3.4.4 (host-app/src/App.jsx:12, host-relationship; :14, :17, :20, runtime-composition); host-app/src/App.jsx:12-22 |
+| 8 | README.md:75 | "Start each app in a separate terminal" (each application runs in its own process) | independence | corroborated | 3.4.6 #1-#3 (development servers); host-app/webpack.dev.js:13-16; todoForm-app/webpack.dev.js:15-18; todoList-app/webpack.dev.js:14-17 |
+| 9 | README.md:97, 105 | "Build each app separately […] Production bundles are generated in each app's `build/` directory." | build-deploy | corroborated | 3.4.6 #1-#3 (`separate`); host-app/webpack.prod.js:12-15; todoForm-app/webpack.prod.js:10-13; todoList-app/webpack.prod.js:9-12 |
+| 10 | README.md:115-118 | "Host remotes: `todoForm_app/TodoForm`; `todoList_app/todoList`" | composition | corroborated | 3.4.4 (host-app/src/App.jsx:2 and :3); 3.4.5 #1, #2 |
+| 11 | README.md:120-123 | "`todoForm-app` exposes `./TodoForm`; `todoList-app` exposes `./todoList`" | composition | corroborated | 3.4.5 #1, #2; todoForm-app/webpack.prod.js:51-52; todoList-app/webpack.prod.js:50-51 |
+| 12 | README.md:127 | "There is no root `package.json`, so dependencies are installed per app." | structure | corroborated | 3.4.3 (Workspace: no declaration; Notes); host-app/package.json:13-32; todoForm-app/package.json:13-32; todoList-app/package.json:14-32 |
+| 13 | README.md:128 | "The production config in `host-app` currently points to remotes on `localhost`, so deployment would need updated remote URLs." | build-deploy | corroborated | 3.4.6 #1-#3 (`not observed`); host-app/webpack.prod.js:7-8, 53-54 |
+| 14 | README.md:129 | "Todo data is browser-local only and is not backed by an API or database." | other | corroborated | 3.4.5 #3; todoForm-app/src/components/todoForm.jsx:16-40; todoList-app/src/components/ToDoList.jsx:8-12 |
 
-## Observações
+## Observations
 
-**1. README.md:3.** O snapshot tem três aplicações React com build webpack próprio, ligadas pelo
-`ModuleFederationPlugin` do webpack (host-app/webpack.prod.js:4, 49-55), o que a revisão de
-composição registrou como duas relações host → remote com mecanismo `module-federation`. A pilha
-repete "Module Federation" (README.md:26). A revisão de dependências não lista tecnologia porque o
-plugin vem do pacote `webpack` (host-app/package.json:30), sem dependência própria de federação.
+**1. README.md:3.** Snapshot has three React applications with own webpack builds, linked by webpack `ModuleFederationPlugin` (host-app/webpack.prod.js:4, 49-55), recorded by composition review as two host → remote relationships with `module-federation` mechanism. Stack repeats "Module Federation" (README.md:26). Dependency review lists no technology because plugin comes from package `webpack` (host-app/package.json:30), without its own federation dependency.
 
-**2. README.md:5-9.** As três pastas são as três unidades `Yes` da revisão estrutural. O host tem o
-roteador (`BrowserRouter`, host-app/src/index.js:7-9) e monta os dois remotes nas rotas
-(host-app/src/App.jsx:12-22). Os papéis funcionais conferem: o formulário é montado em `/add` e
-`/edit/:id` e grava a tarefa (todoForm-app/src/components/todoForm.jsx:25-42); a lista lê e exclui
-(todoList-app/src/components/ToDoList.jsx:8-12). A mesma afirmação aparece em "Micro-frontend
-architecture with a host and two remotes" (README.md:15) e na árvore de pastas (README.md:34-39).
+**2. README.md:5-9.** Three folders are structural review’s three `Yes` units. Host has router (`BrowserRouter`, host-app/src/index.js:7-9) and mounts both remotes at routes (host-app/src/App.jsx:12-22). Functional roles match: form mounts at `/add` and `/edit/:id` and saves task (todoForm-app/src/components/todoForm.jsx:25-42); list reads/deletes (todoList-app/src/components/ToDoList.jsx:8-12). Same claim appears in "Micro-frontend
+architecture with a host and two remotes" (README.md:15) and folder tree (README.md:34-39).
 
-**3. README.md:11.** A primeira parte é a federação das relações 1 e 2 da revisão de composição. A
-segunda é a relação 3: as duas telas leem e gravam a chave `todos` (todoForm-app/src/components/todoForm.jsx:16, 27-29, 33-40;
-todoList-app/src/components/ToDoList.jsx:8, 12), portanto ao menos duas unidades usam o mesmo dado; o
-host não toca nele. A chave é repetida em README.md:54. O compartilhamento só vale com as duas telas
-na página do host, na mesma origem; isoladas, nas portas 3001 e 3002, cada uma teria o próprio
-`localStorage`, o que o README não diz.
+**3. README.md:11.** First part is federation in composition review relationships 1 and 2. Second is relationship 3: both screens read/write key `todos` (todoForm-app/src/components/todoForm.jsx:16, 27-29, 33-40; todoList-app/src/components/ToDoList.jsx:8, 12), so at least two units use the same data; host does not touch it. Key repeats at README.md:54. Sharing holds only with both screens on host page, same origin; isolated on ports 3001 and 3002, each would have its own `localStorage`, unstated in README.
 
-**4. README.md:16.** O host declara os dois componentes remotos com `React.lazy(() => import(...))`
-(host-app/src/App.jsx:2-3) e cada rota os envolve em `Suspense` com fallback "loading"
-(host-app/src/App.jsx:13-21).
+**4. README.md:16.** Host declares both remote components through `React.lazy(() => import(...))` (host-app/src/App.jsx:2-3), with each route wrapping them in `Suspense` and fallback "loading" (host-app/src/App.jsx:13-21).
 
-**5. README.md:20.** Cada aplicação tem `webpack.dev.js` (modo `development`, com `devServer`) e
-`webpack.prod.js` (modo `production`), usados pelos scripts `start` e `build` do próprio
-`package.json` (host-app/package.json:7-8; todoForm-app/package.json:7-8;
-todoList-app/package.json:8-9), como a revisão estrutural registrou na coluna Build.
+**5. README.md:20.** Each application has `webpack.dev.js` (mode `development`, with `devServer`) and `webpack.prod.js` (mode `production`), used by `start` and `build` scripts of its own `package.json` (host-app/package.json:7-8; todoForm-app/package.json:7-8; todoList-app/package.json:8-9), as structural review recorded in Build column.
 
-**6. README.md:43-46.** Os dois endereços estão no `remotes` do host, literais na configuração de
-desenvolvimento (host-app/webpack.dev.js:48-51) e por constantes na de produção
-(host-app/webpack.prod.js:7-8, 52-55). Os nomes `todoForm_app` e `todoList_app` batem com o `name`
-dos remotes (todoForm-app/webpack.prod.js:49; todoList-app/webpack.prod.js:48). A porta 3000 do host
-(host-app/webpack.dev.js:14) é detalhe de infraestrutura e fica no trecho só como contexto.
+**6. README.md:43-46.** Both addresses are in host `remotes`, literal in development configuration (host-app/webpack.dev.js:48-51) and through constants in production (host-app/webpack.prod.js:7-8, 52-55). Names `todoForm_app` and `todoList_app` match remote `name` (todoForm-app/webpack.prod.js:49; todoList-app/webpack.prod.js:48). Host port 3000 (host-app/webpack.dev.js:14) is infrastructure detail retained only as context.
 
-**7. README.md:48-52.** As três rotas estão em host-app/src/App.jsx:12-22: `/` com `ToDoList`, `/add`
-com `TodoForm` e `/edit/:id` com `TodoForm type='edit'`. O README não diz, mas os remotes navegam
-entre si pelo roteador do host (todoList-app/src/components/ToDoList.jsx:21;
-todoForm-app/src/components/todoForm.jsx:31, 42), como a revisão de composição descreve.
+**7. README.md:48-52.** Three routes are at host-app/src/App.jsx:12-22: `/` with `ToDoList`, `/add` with `TodoForm` and `/edit/:id` with `TodoForm type='edit'`. Unstated in README, remotes navigate between each other through host router (todoList-app/src/components/ToDoList.jsx:21; todoForm-app/src/components/todoForm.jsx:31, 42), as composition review describes.
 
-**8. README.md:75.** A instrução diz que cada aplicação é iniciada à parte, cada uma com o próprio
-`webpack serve` (`start` em host-app/package.json:7; todoForm-app/package.json:7;
-todoList-app/package.json:8) e `devServer` próprio nas portas 3000, 3001 e 3002. É isso que se
-confirma: processos separados. O README não afirma que cada remote funciona sozinho, e o snapshot
-não o sustentaria por inteiro: o `App.jsx` de todoForm-app só renderiza `<div>App</div>`
-(todoForm-app/src/App.jsx:3-7), e o de todoList-app renderiza `ToDoList`
-(todoList-app/src/App.jsx:7), que usa `useNavigate` (todoList-app/src/components/ToDoList.jsx:7) sem
-`BrowserRouter` na entrada do remote (todoList-app/src/index.js:3-4).
+**8. README.md:75.** Instruction says each application starts separately, each with own `webpack serve` (`start` at host-app/package.json:7; todoForm-app/package.json:7; todoList-app/package.json:8) and own `devServer` on ports 3000, 3001 and 3002. That is what is confirmed: separate processes. README does not claim each remote works alone, and snapshot would not fully support it: todoForm-app `App.jsx` only renders `<div>App</div>` (todoForm-app/src/App.jsx:3-7), while todoList-app renders `ToDoList` (todoList-app/src/App.jsx:7), using `useNavigate` (todoList-app/src/components/ToDoList.jsx:7) without `BrowserRouter` in remote entry (todoList-app/src/index.js:3-4).
 
-**9. README.md:97, 105.** As duas frases dizem a mesma coisa: um build por aplicação, cada um com
-saída própria. Cada `webpack.prod.js` grava `bundle.js` em `build/` do próprio projeto
-(host-app/webpack.prod.js:12-15; todoForm-app/webpack.prod.js:10-13; todoList-app/webpack.prod.js:9-12),
-e não há script que dispare os três juntos; a revisão de build e deploy marcou as três como
-`separado`. O bloco de comandos entre as frases (README.md:99-103) repete os scripts `build`.
+**9. README.md:97, 105.** Both sentences say the same: one build per application, each with own output. Each `webpack.prod.js` writes `bundle.js` to its project’s `build/` (host-app/webpack.prod.js:12-15; todoForm-app/webpack.prod.js:10-13; todoList-app/webpack.prod.js:9-12), with no script triggering all three together; build/deployment review marked all three `separate`. Command block between sentences (README.md:99-103) repeats `build` scripts.
 
-**10. README.md:115-118.** Os dois especificadores são os dos `import()` do host
-(host-app/src/App.jsx:2-3), resolvidos pelos remotes declarados em host-app/webpack.prod.js:53-54.
-O título "Host remotes" (README.md:115) é a ocorrência `doc-host-remote` desta seção.
+**10. README.md:115-118.** Both specifiers match host `import()` calls (host-app/src/App.jsx:2-3), resolved through remotes declared at host-app/webpack.prod.js:53-54. Title "Host remotes" (README.md:115) is this section’s `doc-host-remote` occurrence.
 
-**11. README.md:120-123.** As exposições conferem com os dois remotes, nas duas configurações:
-`./TodoForm` aponta para `./src/components/todoForm.jsx` (todoForm-app/webpack.prod.js:51-52;
-todoForm-app/webpack.dev.js:51-52) e `./todoList`, em minúsculas, para
-`./src/components/ToDoList.jsx` (todoList-app/webpack.prod.js:50-51; todoList-app/webpack.dev.js:50-51).
+**11. README.md:120-123.** Exposures match both remotes in both configurations: `./TodoForm` points to `./src/components/todoForm.jsx` (todoForm-app/webpack.prod.js:51-52; todoForm-app/webpack.dev.js:51-52) and lowercase `./todoList` to `./src/components/ToDoList.jsx` (todoList-app/webpack.prod.js:50-51; todoList-app/webpack.dev.js:50-51).
 
-**12. README.md:127.** Não há `package.json` na raiz do snapshot, e os três `package.json` não
-declaram `workspaces`; cada um lista as próprias `dependencies` e `devDependencies`
-(host-app/package.json:13-32; todoForm-app/package.json:13-32; todoList-app/package.json:14-32). A
-instrução de instalar dentro de cada aplicação (README.md:65) é a consequência dita aqui.
+**12. README.md:127.** No root `package.json` exists in snapshot, and three `package.json` files declare no `workspaces`; each lists its own `dependencies` and `devDependencies` (host-app/package.json:13-32; todoForm-app/package.json:13-32; todoList-app/package.json:14-32). Instruction to install within each application (README.md:65) is the consequence stated here.
 
-**13. README.md:128.** As constantes `todoformAppurl` e `todolistAppurl` do `webpack.prod.js` do host
-valem `http://localhost:3001` e `http://localhost:3002` (host-app/webpack.prod.js:7-8) e alimentam
-os remotes (host-app/webpack.prod.js:53-54). Nenhum artefato do snapshot publica as aplicações, e o
-próprio README trata o deploy como trabalho por fazer.
+**13. README.md:128.** Constants `todoformAppurl` and `todolistAppurl` in host `webpack.prod.js` have values `http://localhost:3001` and `http://localhost:3002` (host-app/webpack.prod.js:7-8), feeding remotes (host-app/webpack.prod.js:53-54). No snapshot artifact publishes applications, and README itself treats deployment as pending work.
 
-**14. README.md:129.** O único armazenamento das tarefas é o `localStorage`
-(todoForm-app/src/components/todoForm.jsx:16-40; todoList-app/src/components/ToDoList.jsx:8-12);
-não há chamada de rede nos `src/` das três aplicações nem backend no snapshot.
+**14. README.md:129.** Sole task storage is `localStorage` (todoForm-app/src/components/todoForm.jsx:16-40; todoList-app/src/components/ToDoList.jsx:8-12); no network call exists in three applications’ `src/`, nor backend in snapshot.
 
-## Resumo
+## Summary
 
-Afirmações: 14 (corroborada: 14, parcial: 0, contradita: 0, sem corroboração: 0). Temas: (estrutura: 3, composição: 6, build-deploy: 3, independência: 1, outro: 1).
+Claims: 14 (corroborated: 14, partial: 0, contradicted: 0, uncorroborated: 0). Themes: (structure: 3, composition: 6, build-deploy: 3, independence: 1, other: 1).

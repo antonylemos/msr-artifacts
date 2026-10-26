@@ -15,6 +15,6 @@ annotation:
 
 # 283 — israelmeinert/fiap-aula-arquitetura-no-front
 
-## Dependências
+## Dependencies
 
-Nenhuma dependência das tecnologias no dependencies.csv.
+No dependency on the technologies in dependencies.csv.

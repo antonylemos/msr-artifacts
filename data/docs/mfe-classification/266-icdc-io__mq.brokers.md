@@ -20,79 +20,79 @@ annotation:
 
 # 266 — icdc-io/mq.brokers
 
-## Contexto
+## Context
 
-Aplicação remota React + Rsbuild, com Module Federation, para gerir *brokers* de fila de mensagens. Expõe `./brokers` e consome componentes, hooks e store de um host chamado `container` (“Chrome Host application”, `README.md:1–6`, `45–49`). O README avisa que a aplicação “cannot run independently” (`README.md:47`). O host não está neste repositório. O nome do repositório e o da organização não são usados como evidência.
+Remote React + Rsbuild application with Module Federation for managing message queue *brokers*. Exposes `./brokers` and consumes components, hooks and store from a host named `container` (“Chrome Host application”, `README.md:1–6`, `45–49`). The README warns the application “cannot run independently” (`README.md:47`). The host is not in this repository. Repository and organization names are not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:267` registra rank 266, ID 1213410215, status `cloned`, branch `master` e o commit do front matter, que é o HEAD do clone e de `origin/master`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:267` records rank 266, ID 1213410215, status `cloned`, branch `master` and the front matter commit, which is the HEAD of the clone and of `origin/master`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:267` registra as estratégias `terminology;technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:28606` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:28612` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:267` records strategies `terminology;technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:28606` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:28612` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos três hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2026-04` e `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same three hits in each round, from endpoint `repositories`, with subquery `…#created:2026-04` and an empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | 2026-10-07T20:52:29.002Z / 2026-10-08T15:42:17.890Z |
 | `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | 2026-10-07T22:12:31.008Z / 2026-10-08T15:49:40.260Z |
 | `technology-module-federation-repositories`: `"module federation" in:name,description,readme` | 2026-10-07T23:25:04.169Z / 2026-10-08T16:17:43.049Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2026-04-01..2026-04-30`.
+The effective queries append `pushed:>=2025-04-01 created:2026-04-01..2026-04-30`.
 
-Metadados do hit:
-- descrição “mFE for Brokers app in MessageQueue service”, sem tópicos, linguagem JavaScript, `fork: false`, tamanho 528;
-- criação no GitHub em 2026-04-17T10:54:38Z, push em 2026-07-07T07:38:24Z.
+Hit metadata:
+- description “mFE for Brokers app in MessageQueue service”, no topics, language JavaScript, `fork: false`, size 528;
+- created on GitHub at 2026-04-17T10:54:38Z, pushed at 2026-07-07T07:38:24Z.
 
-Grafias no README:
-- “microfrontend”: `README.md:3` (“The **Brokers** microfrontend is part of the **Message Queue** application group.”); também `README.md:25`, como “Microfrontend integration”;
-- “Microfrontends”: `README.md:35`, primeira coluna da tabela;
-- “Module Federation”: `README.md:4`, `25` e `35`.
+Spellings in the README:
+- “microfrontend”: `README.md:3` (“The **Brokers** microfrontend is part of the **Message Queue** application group.”); also `README.md:25`, as “Microfrontend integration”;
+- “Microfrontends”: `README.md:35`, first table column;
+- “Module Federation”: `README.md:4`, `25` and `35`.
 
-O arquivo `README.md` foi adicionado no commit inicial `e4f026e` (2024-04-23), sem conteúdo substantivo, e o conteúdo atual (com as menções a microfrontend e Module Federation) foi escrito em `846ceb3` (2025-11-04), sem mudança até o SHA. É anterior às coletas de outubro de 2026, portanto o README do SHA não é posterior às buscas.
+File `README.md` was added in initial commit `e4f026e` (2024-04-23), without substantive content, and current content (with microfrontend and Module Federation mentions) was written in `846ceb3` (2025-11-04), unchanged through the SHA. It predates the October 2026 collections, so the README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 68 entradas, 67 arquivos regulares `100644` e 1 executável `100755` (`src/utils/search.js`); zero symlinks e zero gitlinks. Uma única aplicação: `package.json`, `rsbuild.config.mjs`, `modulefederation.config.js`, `public/i18n.json` e `src/` com páginas, componentes, queries e estilos. | contexto |
-| Remoto (exposição) | `modulefederation.config.js:3–8`: `name: "mq_brokers"`, `filename: "remoteEntry.js"`, `exposes: { "./brokers": "./src/brokers.jsx" }`. `src/brokers.jsx:11–33`: componente com rotas internas (`<Routes>`), sem `BrowserRouter`, o que pressupõe roteamento externo. | forte |
-| Consumo do host | `modulefederation.config.js:9–14`: remoto `container` em `host@http://localhost:8000/general.js` (desenvolvimento) ou `host@/general.js`. `:15–36`: `react`, `react-router-dom`, `react-i18next` e `@tanstack/react-query` como singletons. 30 arquivos de `src/` importam módulos `container/*`, como `container/Api`, `Button`, `Form`, `Loader` e `ReduxActions` (por exemplo, `src/pages/BrokersList.jsx:2–9`). | forte |
-| Build | `rsbuild.config.mjs:1`, `22–33`: `ModuleFederationPlugin` de `@module-federation/enhanced/rspack` aplicado com `mfConfig(envMode)`; porta 8044 (`:12–14`). `package.json:20–23`, `29–35`: dependências e scripts Rsbuild. | forte |
-| Código-fonte (fronteiras) | Os imports relativos ficam dentro de `src/`: o mais profundo é `../../`, a partir de `src/components/BrokerForm/`. Não há `../../../` nem caminhos fora do repositório. O que vem do host chega por `container/*` (federação), não por caminho de arquivo. | contexto |
-| Documentação | `README.md:6`, `13`, `24`, `36–40`, `45–49`: integração no host, consumo de UI e hooks do host e impossibilidade de executar sozinho. | moderada |
+| Structure | `git ls-tree -r` at the SHA: 68 entries, 67 regular files `100644` and 1 executable `100755` (`src/utils/search.js`); zero symlinks and zero gitlinks. A single application: `package.json`, `rsbuild.config.mjs`, `modulefederation.config.js`, `public/i18n.json` and `src/` with pages, components, queries and styles. | context |
+| Remote (exposure) | `modulefederation.config.js:3–8`: `name: "mq_brokers"`, `filename: "remoteEntry.js"`, `exposes: { "./brokers": "./src/brokers.jsx" }`. `src/brokers.jsx:11–33`: component with internal routes (`<Routes>`), without `BrowserRouter`, presupposing external routing. | strong |
+| Host consumption | `modulefederation.config.js:9–14`: remote `container` at `host@http://localhost:8000/general.js` (development) or `host@/general.js`. `:15–36`: `react`, `react-router-dom`, `react-i18next` and `@tanstack/react-query` as singletons. 30 files in `src/` import `container/*` modules, such as `container/Api`, `Button`, `Form`, `Loader` and `ReduxActions` (for example, `src/pages/BrokersList.jsx:2–9`). | strong |
+| Build | `rsbuild.config.mjs:1`, `22–33`: `ModuleFederationPlugin` from `@module-federation/enhanced/rspack` applied with `mfConfig(envMode)`; port 8044 (`:12–14`). `package.json:20–23`, `29–35`: Rsbuild dependencies and scripts. | strong |
+| Source code (boundaries) | Relative imports remain inside `src/`: the deepest is `../../`, from `src/components/BrokerForm/`. There is no `../../../` or paths outside the repository. What comes from the host arrives through `container/*` (federation), not file paths. | context |
+| Documentation | `README.md:6`, `13`, `24`, `36–40`, `45–49`: host integration, consumption of host UI and hooks and inability to run alone. | moderate |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso:
-- **Commits:** 45 em todos os refs, 14 deles merges, de 2024-04-23 (`e4f026e`, “Initial Commit”) a 2026-07-07 (SHA `87574f0`, “Merge branch 'dev' into 'master'”).
-- **Autores:** nomes Dzmitry Valashchuk (19 commits, mais 12 registrados só pelo e-mail), Pavel Kazlou (12, em três grafias), Dzmitry Sakovich (1) e Daniil Satsura (1). Todos usam o mesmo domínio de e-mail corporativo.
-- **Origem:** `package.json:7–8` aponta para um GitLab próprio e há `.gitlab-ci.yml` (Biome e Gitleaks). O histórico é anterior à criação no GitHub, o que é compatível com espelhamento.
-- **Federação:** `modulefederation.config.js` existe desde `9c3e6d6` (2025-01-29).
+Non-shallow clone:
+- **Commits:** 45 across all refs, 14 of them merges, from 2024-04-23 (`e4f026e`, “Initial Commit”) to 2026-07-07 (SHA `87574f0`, “Merge branch 'dev' into 'master'”).
+- **Authors:** names Dzmitry Valashchuk (19 commits, plus 12 recorded only by email), Pavel Kazlou (12, in three spellings), Dzmitry Sakovich (1) and Daniil Satsura (1). All use the same corporate email domain.
+- **Origin:** `package.json:7–8` points to its own GitLab and there is `.gitlab-ci.yml` (Biome and Gitleaks). History predates GitHub creation, consistent with mirroring.
+- **Federation:** `modulefederation.config.js` exists since `9c3e6d6` (2025-01-29).
 
-Só há o branch `master`. Nenhum blob histórico foi lido. O clone é parcial (`blob:none`) e `git rev-list --objects $SHA --missing=print` enumera 189 objetos históricos ausentes; os arquivos do SHA foram lidos.
+Only branch `master` exists. No historical blob was read. The clone is partial (`blob:none`) and `git rev-list --objects $SHA --missing=print` enumerates 189 missing historical objects; the SHA files were read.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend. O host `container` é referenciado (`modulefederation.config.js:9–14`), mas não está no repositório. |
-| Q2 | Yes | Unidade com build próprio (Rsbuild + `ModuleFederationPlugin`) e `remoteEntry.js`; não há import por caminho de arquivo para fora do repositório. |
-| Q3 | Undetermined | O host que compõe o remoto não é observável. |
-| Q4 | Undetermined | A unidade está preparada para composição (`exposes`), mas a composição não é observável no snapshot. |
-| Q5 | No | Vetor de exceção MFE-unit: só a unidade remota, sem o host. |
+| Q1 | No | A single frontend unit. Host `container` is referenced (`modulefederation.config.js:9–14`), but is not in the repository. |
+| Q2 | Yes | Unit with its own build (Rsbuild + `ModuleFederationPlugin`) and `remoteEntry.js`; no file-path import outside the repository. |
+| Q3 | Undetermined | The host composing the remote is not observable. |
+| Q4 | Undetermined | The unit is prepared for composition (`exposes`), but composition is not observable in the snapshot. |
+| Q5 | No | MFE-unit exception vector: only the remote unit, without the host. |
 
-## Motivo
+## Rationale
 
-- `MFE-unit`: “repositories containing only a remote unit, without the composing host”, com `exposes` de Module Federation. Mesmo vetor dos finais 001 e 050.
-- **Dependência do host:** o remoto também consome módulos expostos pelo host (`container/*`). É federação bidirecional, não compartilhamento de código-fonte como em 089/100, e não muda a classe.
-- **Organização:** outros repositórios da mesma organização estão nas rodadas, entre eles `icdc-io/cloud.chrome` e vários `*.*` de serviços (`data/discovery/mfe-round-002/candidates.csv`). Só este está na amostra; os demais não foram inspecionados. Não é plataforma de terceiros (102/074/080): o host é da própria organização.
-- **Campos:** `approaches: [module-federation]`, `ui_technologies: [react]`, `build_tools: [rsbuild]` (como em 029), `frontend_units: 1`, `unit_organization: single-unit`. `repo_type: production`: aplicação de serviço real, com CI, histórico de mais de dois anos e vários autores.
-- Não há decisão aberta.
+- `MFE-unit`: “repositories containing only a remote unit, without the composing host”, with Module Federation `exposes`. Same vector as finals 001 and 050.
+- **Host dependency:** the remote also consumes modules exposed by the host (`container/*`). This is bidirectional federation, not source code sharing as in 089/100, and does not change the class.
+- **Organization:** other repositories from the same organization appear in the rounds, including `icdc-io/cloud.chrome` and several `*.*` services (`data/discovery/mfe-round-002/candidates.csv`). Only this one is in the sample; others were not inspected. This is not a third-party platform (102/074/080): the host belongs to the same organization.
+- **Fields:** `approaches: [module-federation]`, `ui_technologies: [react]`, `build_tools: [rsbuild]` (as in 029), `frontend_units: 1`, `unit_organization: single-unit`. `repo_type: production`: real service application, with CI, history spanning more than two years and multiple authors.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** remoto Rsbuild com `@module-federation/enhanced/rspack` que expõe uma subárvore de rotas e consome do host a biblioteca de UI, o cliente de API, a store Redux e utilitários (`container/*`). A dependência é bidirecional entre host e remoto.
-- **Protocolo (amostra):** a mesma organização tem 34 candidatos na rodada 002; só este entrou na amostra.
-- **Protocolo (busca):** as três grafias estão literalmente no README. A elegibilidade muda de `unknown` (001) para `pass` (002).
-- **Contribuição da revisão independente (Lupa):** concordância com MFE-unit e com o vetor No/Yes/Undetermined/Undetermined/No, `module-federation`, React/Rsbuild, uma unidade e `single-unit`, sem decisão aberta (`draft`). Correções adotadas: o arquivo `README.md` entrou em `e4f026e` e o conteúdo atual em `846ceb3`; o intervalo de `shared` é `modulefederation.config.js:15–36`; e a lista de objetos ausentes (189, verificada) substitui a afirmação de completude, ao contrário do relato do parecer, que dava o clone como completo. A revisora recomendou promover a final, mas a promoção cabe ao pesquisador.
+- **RQ2:** Rsbuild remote with `@module-federation/enhanced/rspack` exposing a route subtree and consuming the host UI library, API client, Redux store and utilities (`container/*`). Dependency is bidirectional between host and remote.
+- **Protocol (sample):** the same organization has 34 candidates in round 002; only this one entered the sample.
+- **Protocol (search):** all three spellings appear literally in the README. Eligibility changes from `unknown` (001) to `pass` (002).
+- **Independent review contribution (Lupa):** agreement with MFE-unit and vector No/Yes/Undetermined/Undetermined/No, `module-federation`, React/Rsbuild, one unit and `single-unit`, without an open decision (`draft`). Adopted corrections: file `README.md` entered in `e4f026e` and current content in `846ceb3`; the `shared` range is `modulefederation.config.js:15–36`; and the missing object list (189, verified) replaces the completeness claim, contrary to the review report stating the clone was complete. The reviewer recommended promotion to final, but promotion belongs to the researcher.

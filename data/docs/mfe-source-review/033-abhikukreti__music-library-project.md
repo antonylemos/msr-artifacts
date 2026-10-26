@@ -15,26 +15,26 @@ annotation:
 
 # 033 — abhikukreti/music-library-project
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-remote-import | main-app/src/App.jsx:5 | main-app | dynamic-loading | Yes | React.lazy importa music_library/MusicLibrary em main-app/src/App.jsx:5; o componente remoto é montado após login em main-app/src/App.jsx:21-23 e App é iniciado por main-app/src/main.jsx:6-14. |
-| src-cross-unit-communication | music-library/public/mockServiceWorker.js:312 | music-library | none | No | music-library/public/mockServiceWorker.js:291-318 é código gerado do MSW que troca mensagens com seu cliente para simular requests; client.postMessage não comunica duas unidades frontend. |
+| src-remote-import | main-app/src/App.jsx:5 | main-app | dynamic-loading | Yes | React.lazy imports music_library/MusicLibrary at main-app/src/App.jsx:5; the remote component is mounted after login at main-app/src/App.jsx:21-23 and App is started by main-app/src/main.jsx:6-14. |
+| src-cross-unit-communication | music-library/public/mockServiceWorker.js:312 | music-library | none | No | music-library/public/mockServiceWorker.js:291-318 is generated MSW code that exchanges messages with its client to mock requests; client.postMessage does not communicate between two frontend units. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | main-app/src/App.jsx:22 | main-app | runtime-composition | Yes | Renderiza o componente remoto MusicLibrary e passa o papel isAdmin do host (main-app/src/App.jsx:8-22); o componente é resolvido pelo import em main-app/src/App.jsx:5. |
+| manual | main-app/src/App.jsx:22 | main-app | runtime-composition | Yes | Renders the remote MusicLibrary component and passes the host’s isAdmin role (main-app/src/App.jsx:8-22); the component is resolved through the import at main-app/src/App.jsx:5. |
 
-## Resumo
+## Summary
 
-Construções com composição: 2 (dynamic-loading: 1, runtime-composition: 1).
+Constructs participating in composition: 2 (dynamic-loading: 1, runtime-composition: 1).
 
-## Notas
+## Notes
 
-- A ocorrência em arquivo gerado do MSW foi mantida na primeira tabela, como exige matches.csv, mas não representa comunicação entre unidades. Arquivos gerados foram excluídos das buscas adicionais.
-- O import de ./mocks/browser em music-library/src/main.jsx:10 é local à unidade. A entrada de composição usa o componente exposto, enquanto music-library/src/App.jsx:4 é sua montagem standalone interna.
-- A cadeia do host é main-app/index.html:11 → main-app/src/main.jsx:6-14 → main-app/src/App.jsx:5-22. Não há ponto de dúvida no código observado.
-- Pelo critério de construções fora da mineração (passo 4 do método), ficam fora da tabela a prop `isAdmin` lida em music-library/src/MusicLibrary.jsx:8 (passada em main-app/src/App.jsx:22) e o export do componente em music-library/src/MusicLibrary.jsx:104, exposto em music-library/vite.config.js:11-12.
+- The occurrence in a generated MSW file was retained in the first table, as required by matches.csv, but does not represent communication between units. Generated files were excluded from additional searches.
+- The ./mocks/browser import at music-library/src/main.jsx:10 is local to the unit. The composition entry uses the exposed component, while music-library/src/App.jsx:4 is its internal standalone mount.
+- The host chain is main-app/index.html:11 → main-app/src/main.jsx:6-14 → main-app/src/App.jsx:5-22. There is no point of doubt in the observed code.
+- Under the criteria for constructs outside mining (method step 4), the `isAdmin` prop read at music-library/src/MusicLibrary.jsx:8 (passed at main-app/src/App.jsx:22) and the component export at music-library/src/MusicLibrary.jsx:104, exposed at music-library/vite.config.js:11-12, remain outside the table.

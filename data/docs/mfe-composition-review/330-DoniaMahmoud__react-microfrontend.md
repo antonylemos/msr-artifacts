@@ -20,26 +20,27 @@ annotation:
 
 # 330 — DoniaMahmoud/react-microfrontend
 
-## Leitura do repositório
+## Repository overview
 
-Exemplo didático de Module Federation em JavaScript puro, com três aplicações webpack: `container` é o host e `products` e `cart` são remotes. O host declara os dois remotes por nome e URL do `remoteEntry.js` (container/webpack.config.js:12-15), importa a função `mount` de cada um (container/src/bootstrap.js:1-2) e a chama sobre dois `div` da sua página (container/src/bootstrap.js:6-7; container/public/index.html:5-6). O bootstrap do host é carregado de forma assíncrona (container/src/index.js:2), o padrão usual para que o webpack resolva os remotes antes do uso.
+An educational Module Federation example in plain JavaScript, with three webpack applications: `container` is the host, and `products` and `cart` are remotes. The host declares both remotes by name and `remoteEntry.js` URL (container/webpack.config.js:12-15), imports each one's `mount` function (container/src/bootstrap.js:1-2) and calls it on two `div` elements in its page (container/src/bootstrap.js:6-7; container/public/index.html:5-6). The host bootstrap is loaded asynchronously (container/src/index.js:2), the usual pattern for webpack to resolve remotes before use.
 
-Cada remote expõe o seu `bootstrap` (products/webpack.config.js:13-15; cart/webpack.config.js:13-15), cuja função `mount(el)` só escreve HTML gerado com `faker` no elemento recebido (products/src/bootstrap.js:4-13; cart/src/bootstrap.js:3-6). Os dois remotes também rodam sozinhos em desenvolvimento, montando em `#dev-products`/`#dev-cart` quando o elemento existe (products/src/bootstrap.js:17-25; cart/src/bootstrap.js:8-13); essa montagem é interna a cada unidade e não virou relação. O `faker` aparece em `shared` nos dois remotes (products/webpack.config.js:16; cart/webpack.config.js:16), mas é dependência compartilhada, não composição. Não há troca de mensagens entre as unidades nem entre os dois remotes, e só há modo de desenvolvimento (`mode: "development"` nos três configs, linha 5).
+Each remote exposes its `bootstrap` (products/webpack.config.js:13-15; cart/webpack.config.js:13-15), whose `mount(el)` function only writes HTML generated with `faker` into the received element (products/src/bootstrap.js:4-13; cart/src/bootstrap.js:3-6). Both remotes also run independently in development, mounting at `#dev-products`/`#dev-cart` when the element exists (products/src/bootstrap.js:17-25; cart/src/bootstrap.js:8-13); that mounting is internal to each unit and did not become a relationship. `faker` appears in `shared` in both remotes (products/webpack.config.js:16; cart/webpack.config.js:16), but is a shared dependency rather than composition. There is no message exchange between units or between both remotes, and only development mode exists (`mode: "development"` in all three configurations, line 5).
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | container | cart | host → remote | origem → destino | module-federation | Yes | Yes | container/webpack.config.js:14 (remote `cart` em `cart@http://localhost:8082/remoteEntry.js`); cart/webpack.config.js:11-14 (`name: "cart"`, `filename: "remoteEntry.js"`, expõe `./CartShow`); cart/webpack.config.js:7 (porta 8082) | cart/src/bootstrap.js:15; container/src/bootstrap.js:2; container/src/bootstrap.js:7 |
-| 2 | container | products | host → remote | origem → destino | module-federation | Yes | Yes | container/webpack.config.js:13 (remote `products` em `products@http://localhost:8081/remoteEntry.js`); products/webpack.config.js:11-14 (`name: "products"`, `filename: "remoteEntry.js"`, expõe `./ProductsIndex`); products/webpack.config.js:7 (porta 8081) | products/src/bootstrap.js:26; container/src/bootstrap.js:1; container/src/bootstrap.js:6 |
+| 1 | container | cart | host → remote | source → target | module-federation | Yes | Yes | container/webpack.config.js:14 (remote `cart` at `cart@http://localhost:8082/remoteEntry.js`); cart/webpack.config.js:11-14 (`name: "cart"`, `filename: "remoteEntry.js"`, exposes `./CartShow`); cart/webpack.config.js:7 (port 8082) | cart/src/bootstrap.js:15; container/src/bootstrap.js:2; container/src/bootstrap.js:7 |
+| 2 | container | products | host → remote | source → target | module-federation | Yes | Yes | container/webpack.config.js:13 (remote `products` at `products@http://localhost:8081/remoteEntry.js`); products/webpack.config.js:11-14 (`name: "products"`, `filename: "remoteEntry.js"`, exposes `./ProductsIndex`); products/webpack.config.js:7 (port 8081) | products/src/bootstrap.js:26; container/src/bootstrap.js:1; container/src/bootstrap.js:6 |
 
-## Observações
+## Observations
 
-**1. container → cart.** O remote `cart` do host corresponde à unidade cart pelo nome e pelo módulo: o host importa `cart/CartShow` (container/src/bootstrap.js:2) e cart declara `name: "cart"` e expõe `./CartShow` (cart/webpack.config.js:11-14); a porta 8082 só corrobora. O host monta o carrinho em `#my-cart` (container/src/bootstrap.js:7; container/public/index.html:6), usando o `mount` exportado em cart/src/bootstrap.js:15. As três linhas de código são `Yes` na revisão de código-fonte, por isso a relação é ativa.
+**1. container → cart.** The host's remote `cart` matches unit cart through name and module: the host imports `cart/CartShow` (container/src/bootstrap.js:2), and cart declares `name: "cart"` and exposes `./CartShow` (cart/webpack.config.js:11-14); port 8082 only corroborates. The host mounts the cart at `#my-cart` (container/src/bootstrap.js:7; container/public/index.html:6), using `mount` exported in cart/src/bootstrap.js:15. All three code lines are `Yes` in the source code review, hence the relationship is active.
 
-**2. container → products.** Mesma cadeia: o host importa `products/ProductsIndex` (container/src/bootstrap.js:1), e products declara `name: "products"` e expõe `./ProductsIndex` (products/webpack.config.js:11-14), com porta 8081 (products/webpack.config.js:7). O host monta a lista de produtos em `#my-products` (container/src/bootstrap.js:6; container/public/index.html:5), usando o `mount` exportado em products/src/bootstrap.js:26. As três linhas de código são `Yes`, por isso a relação é ativa.
+**2. container → products.** Same chain: the host imports `products/ProductsIndex` (container/src/bootstrap.js:1), and products declares `name: "products"` and exposes `./ProductsIndex` (products/webpack.config.js:11-14), with port 8081 (products/webpack.config.js:7). The host mounts the product list at `#my-products` (container/src/bootstrap.js:6; container/public/index.html:5), using `mount` exported in products/src/bootstrap.js:26. All three code lines are `Yes`, hence the relationship is active.
 
-## Resumo
+## Summary
 
-Relações: 2 (host → remote: 2). Ativas: 2. Destino fora do snapshot: 0.
-Unidades sem relação: nenhuma.
+Relationships: 2 (host → remote: 2). Active: 2. Target outside the snapshot: 0.
+Units without a relationship: none.
+

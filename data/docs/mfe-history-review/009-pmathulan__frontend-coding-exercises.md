@@ -13,27 +13,27 @@ annotation:
 
 # 009 — pmathulan/frontend-coding-exercises
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem um único commit, `89a3c27` (2025-05-07, "first commit"), que é o próprio snapshot. Os seis exercícios chegaram de uma vez, e o histórico não traz nenhuma informação além do snapshot.
+History up to snapshot has a single commit, `89a3c27` (2025-05-07, "first commit"), snapshot itself. All six exercises arrived at once, and history provides no information beyond snapshot.
 
-## Pontos
+## Points
 
-| # | Ponto | Origem | Pergunta | Commits | Resultado |
+| # | Point | Origin | Question | Commits | Result |
 |---|---|---|---|---|---|
-| 1 | A rota `mfe2` do shell está comentada | 3.4.4 (microfrontend-workspace/projects/shell/src/app/app.routes.ts:17) | ativo ou abandonado | 89a3c27 2025-05-07 first commit | inconclusivo |
-| 2 | O chart `spa-helm/` não se liga a nenhuma aplicação | 3.4.6 (Deploy `Undetermined`) | ativo ou abandonado | 89a3c27 2025-05-07 first commit | inconclusivo |
-| 3 | O README do workspace cita um alias em `tsconfig.base.json`, arquivo que não existe | 3.4.7 #10 | estágios em conflito | 89a3c27 2025-05-07 first commit | inconclusivo |
+| 1 | Shell route `mfe2` is commented out | 3.4.4 (microfrontend-workspace/projects/shell/src/app/app.routes.ts:17) | active or abandoned | 89a3c27 2025-05-07 first commit | inconclusive |
+| 2 | Chart `spa-helm/` connects to no application | 3.4.6 (Deploy `Undetermined`) | active or abandoned | 89a3c27 2025-05-07 first commit | inconclusive |
+| 3 | Workspace README cites an alias in `tsconfig.base.json`, a nonexistent file | 3.4.7 #10 | conflicting stages | 89a3c27 2025-05-07 first commit | inconclusive |
 
-## Observações
+## Observations
 
-**1. A rota `mfe2` do shell está comentada.** O arquivo de rotas chega já com a rota comentada no único commit. Não dá para saber se ela chegou a funcionar antes do primeiro commit ou se foi só planejada.
+**1. Shell route `mfe2` is commented out.** Routes file arrives with route already commented out in only commit. Whether it worked before first commit or was only planned cannot be known.
 
-**2. O chart `spa-helm/` não se liga a nenhuma aplicação.** O chart chega com os exercícios no único commit, e o histórico não diz para qual deles foi feito.
+**2. Chart `spa-helm/` connects to no application.** Chart arrives with exercises in only commit, and history does not say which it was designed for.
 
-**3. O README do workspace cita um alias em `tsconfig.base.json`, arquivo que não existe.** O README e o `tsconfig.json` chegam juntos no único commit, e não há versão com `tsconfig.base.json` no histórico. Não dá para saber se o README descreve uma organização anterior ao primeiro commit.
+**3. Workspace README cites an alias in `tsconfig.base.json`, a nonexistent file.** README and `tsconfig.json` arrive together in only commit, without any version containing `tsconfig.base.json` in history. Whether README describes organization before first commit cannot be known.
 
-## Comandos
+## Commands
 
 ```
 docs/mfe-history-review/tools/hist.sh pmathulan__frontend-coding-exercises rev-list --count 89a3c271484ece4e37f719db9093c9157721a240
@@ -45,6 +45,6 @@ docs/mfe-history-review/tools/hist.sh pmathulan__frontend-coding-exercises log -
 docs/mfe-history-review/tools/hist.sh pmathulan__frontend-coding-exercises log --format='%h %ad' --date=short 89a3c271484ece4e37f719db9093c9157721a240 -- microfrontend-workspace/tsconfig.json
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 1 (2025-05-07 a 2025-05-07). Pontos: 3 (esclarecido: 0, inconclusivo: 3, resolvido pelo snapshot: 0).
+Commits up to the snapshot: 1 (2025-05-07 to 2025-05-07). Points: 3 (clarified: 0, inconclusive: 3, resolved by the snapshot: 0).

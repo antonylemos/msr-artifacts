@@ -13,17 +13,17 @@ annotation:
 
 # 040 — AlanOlimpio/list
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem 3 commits, de 2025-06-27 a 2026-01-28, sem merges. O primeiro commit é `207fbef` (2025-06-27, "feat: cria projeto"), e o do snapshot é `6ff9bfa` (2026-01-28, "chore: atualiza libs com vulnerabilidades de segurança").
+History up to snapshot has 3 commits, from 2025-06-27 to 2026-01-28, without merges. First commit is `207fbef` (2025-06-27, "feat: cria projeto" (English translation: "feat: create project")), and snapshot commit is `6ff9bfa` (2026-01-28, "chore: atualiza libs com vulnerabilidades de segurança" (English translation: "chore: update libraries with security vulnerabilities")).
 
-As revisões anteriores não deixaram ponto ambíguo que o histórico pudesse esclarecer: não há dependência sem uso, unidade ou relação `Undetermined`, construção desativada nem afirmação de documentação `contradita` ou `parcial`. Por isso o histórico não foi consultado além deste contexto.
+Previous reviews left no ambiguous point history could clarify: no unused dependency, `Undetermined` unit or relationship, disabled construct or `contradicted` or `partial` documentation claim exists. Thus history was not consulted beyond this context.
 
-## Pontos
+## Points
 
-Nenhum ponto ambíguo nas revisões anteriores.
+No ambiguous points in previous reviews.
 
-## Comandos
+## Commands
 
 ```
 docs/mfe-history-review/tools/hist.sh AlanOlimpio__list rev-list --count 6ff9bfa3a94bb5920f60aabacc8f56298cbf4326
@@ -32,6 +32,6 @@ docs/mfe-history-review/tools/hist.sh AlanOlimpio__list log --format=%ad --date=
 docs/mfe-history-review/tools/hist.sh AlanOlimpio__list log --format='%h %ad %s' --date=short 6ff9bfa3a94bb5920f60aabacc8f56298cbf4326
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 3 (2025-06-27 a 2026-01-28). Pontos: 0.
+Commits up to the snapshot: 3 (2025-06-27 to 2026-01-28). Points: 0.

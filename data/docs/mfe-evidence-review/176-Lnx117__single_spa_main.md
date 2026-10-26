@@ -19,223 +19,250 @@ annotation:
 
 # 176 — Lnx117/single_spa_main
 
-## Leitura do repositório
+## Repository overview
 
-O snapshot tem seis arquivos e só uma unidade, o root config single-spa na raiz, um projeto Vite (#10). Os dois microfrontends que ele compõe, `menu` e `base`, estão em outros repositórios e só aparecem como URLs de dev servers em `localhost`.
+Snapshot has six files and one unit, root-level single-spa root config, a Vite project (#10). Both composed microfrontends, `menu` and `base`, live in other repositories and only appear as `localhost` development-server URLs.
 
-A cadeia que sustenta a arquitetura está toda no root:
-- **Dependências:** `single-spa` e `vite-plugin-single-spa` são declarados e usados (#1, #2).
-- **Configuração:** o plugin é configurado em modo `type: 'root'` (#3), e o `.envtest` dá as URLs de `menu` e `base` (#4).
-- **Código:** os registros `menu` e `base` nomeiam as unidades externas (#5, #6), as funções de carga trazem os lifecycles por `import()` das URLs das variáveis de ambiente (#7, #8), e `start()` inicia o orquestrador (#9).
-- **Relações:** daí saem duas relações root-config → application, ativas e com destino fora do snapshot (#11, #12).
+Architecture-supporting chain is entirely in root:
+- **Dependencies:** `single-spa` and `vite-plugin-single-spa` declared and used (#1, #2).
+- **Configuration:** plugin configured in `type: 'root'` mode (#3), and `.envtest` gives `menu` and `base` URLs (#4).
+- **Code:** registrations `menu` and `base` name external units (#5, #6), loading functions fetch lifecycles through `import()` of environment-variable URLs (#7, #8), and `start()` starts orchestrator (#9).
+- **Relationships:** two active root-config → application relationships result, with targets outside snapshot (#11, #12).
 
-O build é próprio do root, sem deploy no repositório (#13).
+Root has own build, without deployment in repository (#13).
 
-A ressalva é de execução: o código diz que as URLs vêm de `.env`/`.env.local`, mas o único arquivo versionado com elas é `.envtest`, que o Vite não carrega por padrão (#4, #20). O histórico não explica a diferença, porque os dois arquivos chegam juntos no único commit (#27). Isso não muda as relações: o alvo de cada registro é nomeado no código e a URL está declarada no snapshot.
+Execution caveat: code says URLs come from `.env`/`.env.local`, but sole versioned file containing them is `.envtest`, not loaded by Vite by default (#4, #20). History does not explain difference because both files arrive together in sole commit (#27). This does not change relationships: each registration target is named in code and URL declared in snapshot.
 
-A documentação está toda nos comentários, em russo, de `.envtest`, `src/main.ts` e `vite.config.ts`. Ela confirma o papel do root e dos registros (#15, #17–#19, #21–#25). Ficam confirmadas só em parte as afirmações que dependem dos microfrontends ausentes ou de arquivos não versionados: o dev server Vite de cada microfrontend (#14), os arquivos `.env` (#20) e a isolação de CSS (#26). Os builds num CDN não têm artefato (#16). Nada fica ambíguo no snapshot. O que não se observa é o próprio lado dos microfrontends.
+Documentation consists entirely of Russian comments in `.envtest`, `src/main.ts` and `vite.config.ts`. Confirms root and registration roles (#15, #17–#19, #21–#25). Claims depending on absent microfrontends or unversioned files are only partially confirmed: each microfrontend's Vite development server (#14), `.env` files (#20) and CSS isolation (#26). CDN builds have no artifact (#16). Nothing remains ambiguous in snapshot. Microfrontend side itself is unobserved.
 
-Configuração: ficaram 2 blocos. `vite.config.ts` serve uma única unidade e entrou pelo plugin single-spa (#3). O `.envtest` entrou pelas URLs dos microfrontends (#4). Ficaram de fora:
-- o bloco `server` de `vite.config.ts:17-22`, com a porta 9080 do dev server, citada em 3.4.6 #1 (Onde é servida) e em 3.4.7 #1 (Evidência), e o alias `@` de `vite.config.ts:23-29`;
-- os `scripts` de `package.json:6-10`, que são build e servidor de desenvolvimento (dimensão 6);
-- `index.html`, que não é arquivo de configuração: os contêineres e a entrada estão nas observações de código e de estrutura (#5, #6, #10).
+Configuration: 2 blocks retained. `vite.config.ts` serves one unit, included through single-spa plugin (#3). `.envtest` included through microfrontend URLs (#4). Excluded:
+- `server` block of `vite.config.ts:17-22`, with development-server port 9080 cited in 3.4.6 #1 (Where served) and 3.4.7 #1 (Evidence), and alias `@` in `vite.config.ts:23-29`;
+- `scripts` in `package.json:6-10`, concerning build and development server (dimension 6);
+- `index.html`, not a configuration file: containers and entry appear in code and structure observations (#5, #6, #10).
 
-## Observações
+## Observations
 
 ### 1. package.json:16
 
-**Observação:** `single-spa` `^6.0.3` em `dependencies`. A revisão o marca como configurado, pelo import em src/main.ts:3, pelos `registerApplication` em src/main.ts:13-17 e 21-25 e pelo `start()` em src/main.ts:29.
+**Observation:** `single-spa` `^6.0.3` in `dependencies`. Review marks configured through import in src/main.ts:3, `registerApplication` calls in src/main.ts:13-17 and 21-25 and `start()` in src/main.ts:29.
 
-**Interpretação:** O root declara o orquestrador single-spa e o usa na entrada.
+**Interpretation:** Root declares single-spa orchestrator and uses it in entry.
 
 ### 2. package.json:20
 
-**Observação:** `vite-plugin-single-spa` `^1.1.0` em `devDependencies`. A revisão o marca como configurado, pelo import em vite.config.ts:3 e pela chamada em `plugins` (vite.config.ts:12-15), carregada pelos scripts `vite` e `vite build` (package.json:7-8).
+**Observation:** `vite-plugin-single-spa` `^1.1.0` in `devDependencies`. Review marks configured through import in vite.config.ts:3 and call in `plugins` (vite.config.ts:12-15), loaded by scripts `vite` and `vite build` (package.json:7-8).
 
-**Interpretação:** O root declara o plugin Vite do single-spa e o usa na própria configuração de build.
+**Interpretation:** Root declares single-spa Vite plugin and uses it in own build configuration.
 
 ### 3. vite.config.ts:3; vite.config.ts:12-15
 
-**Observação:** `vitePluginSingleSpa({ type: 'root', cssStrategy: 'multiMife' })` na lista `plugins` do `defineConfig` (vite.config.ts:5-16), importado de `vite-plugin-single-spa`. O arquivo não declara remotes nem URLs.
+**Observation:** `vitePluginSingleSpa({ type: 'root', cssStrategy: 'multiMife' })` in `plugins` list of `defineConfig` (vite.config.ts:5-16), imported from `vite-plugin-single-spa`. File declares no remotes or URLs.
 
-**Interpretação:** A configuração põe o projeto no papel de root config do single-spa e define a estratégia de CSS para várias aplicações. Configura o mecanismo na unidade, sem nomear as outras.
+**Interpretation:** Configuration gives project single-spa root config role and defines CSS strategy for multiple applications. Configures mechanism in unit without naming others.
 
 ### 4. .envtest:8; .envtest:11; .envtest:2-4
 
-**Observação:** `VITE_MENU=http://localhost:9083/src/index.ts` e `VITE_BASE=http://localhost:9081/src/index.ts`, com os comentários de que cada microfrontend é um dev server Vite na sua porta e de que `main.ts` faz `import()` dessas URLs para carregar os lifecycles `bootstrap`, `mount` e `unmount`. O arquivo se chama `.envtest`; o comentário de src/main.ts:5-6 fala em `.env`/`.env.local`, que não estão no snapshot.
+**Observation:** `VITE_MENU=http://localhost:9083/src/index.ts` and `VITE_BASE=http://localhost:9081/src/index.ts`, with comments saying each microfrontend is Vite development server on own port and `main.ts` uses `import()` on URLs to load lifecycles `bootstrap`, `mount` and `unmount`. File named `.envtest`; comment in src/main.ts:5-6 mentions `.env`/`.env.local`, absent from snapshot.
 
-**Interpretação:** O arquivo declara os endereços pelos quais o root resolve as duas unidades externas, `menu` e `base`. O nome do arquivo é uma ressalva de execução local: o Vite não o carrega por padrão.
+**Interpretation:** File declares addresses through which root resolves external units `menu` and `base`. Filename is a local execution caveat: Vite does not load it by default.
 
 ### 5. src/main.ts:13-17; src/main.ts:3; index.html:12
 
-**Observação:** `registerApplication({ name: 'menu', app: () => import(env.VITE_MENU), activeWhen: '/' })`, com `registerApplication` importado de `single-spa`. A página tem o contêiner `single-spa-application:menu` dentro do `<nav>`.
+**Observation:** `registerApplication({ name: 'menu', app: () => import(env.VITE_MENU), activeWhen: '/' })`, with `registerApplication` imported from `single-spa`. Page has container `single-spa-application:menu` inside `<nav>`.
 
-**Interpretação:** O root registra pelo nome a aplicação externa `menu`, ativa em todas as rotas, e define onde ela monta.
+**Interpretation:** Root registers external application `menu` by name, active on all routes, and defines mount location.
 
 ### 6. src/main.ts:21-25; index.html:17
 
-**Observação:** `registerApplication({ name: 'base', app: () => import(env.VITE_BASE), activeWhen: '/' })`. A página tem o contêiner `single-spa-application:base` dentro de `<main>`.
+**Observation:** `registerApplication({ name: 'base', app: () => import(env.VITE_BASE), activeWhen: '/' })`. Page has container `single-spa-application:base` inside `<main>`.
 
-**Interpretação:** O root registra pelo nome a aplicação externa `base`, também ativa em todas as rotas, ao lado de `menu`.
+**Interpretation:** Root registers external application `base` by name, also active on all routes alongside `menu`.
 
 ### 7. src/main.ts:15; src/main.ts:7; .envtest:8
 
-**Observação:** `app: () => import(/* @vite-ignore */ env.VITE_MENU)`, com `env` lido de `import.meta.env`. O valor de `VITE_MENU` no snapshot só está em `.envtest`.
+**Observation:** `app: () => import(/* @vite-ignore */ env.VITE_MENU)`, with `env` read from `import.meta.env`. Snapshot value of `VITE_MENU` only in `.envtest`.
 
-**Interpretação:** A função de carga do registro `menu` traz em runtime os lifecycles do microfrontend externo pela URL da variável de ambiente.
+**Interpretation:** Loading function of registration `menu` fetches external microfrontend lifecycles at runtime through environment-variable URL.
 
 ### 8. src/main.ts:23; .envtest:11
 
-**Observação:** `app: () => import(/* @vite-ignore */ env.VITE_BASE)`. O valor de `VITE_BASE` no snapshot só está em `.envtest`.
+**Observation:** `app: () => import(/* @vite-ignore */ env.VITE_BASE)`. Snapshot value of `VITE_BASE` only in `.envtest`.
 
-**Interpretação:** A função de carga do registro `base` traz em runtime os lifecycles do microfrontend externo pela URL da variável de ambiente.
+**Interpretation:** Loading function of registration `base` fetches external microfrontend lifecycles at runtime through environment-variable URL.
 
 ### 9. src/main.ts:29; src/main.ts:3
 
-**Observação:** `start()`, importado de `single-spa`.
+**Observation:** `start()`, imported from `single-spa`.
 
-**Interpretação:** Inicia o orquestrador. Sem ele os registros de `menu` e `base` não montam.
+**Interpretation:** Starts orchestrator. Without it, `menu` and `base` registrations do not mount.
 
 ### 10. .; index.html:20; vite.config.ts:5-16; package.json:8
 
-**Observação:** Projeto Vite na raiz, com `package.json`, página de entrada `index.html` que carrega `/src/main.ts`, configuração Vite com o plugin single-spa e build `vite build`, sem workspace.
+**Observation:** Root Vite project, with `package.json`, entry page `index.html` loading `/src/main.ts`, Vite configuration with single-spa plugin and `vite build`, without workspace.
 
-**Interpretação:** É a única unidade frontend do snapshot, o root config, com limite próprio.
+**Interpretation:** Sole frontend unit in snapshot, root config with own boundary.
 
 ### 11. src/main.ts:13; src/main.ts:15; src/main.ts:29; .envtest:8; vite.config.ts:12-15
 
-**Observação:** O root `.` registra `menu` no single-spa, carrega os lifecycles por `import()` da URL `http://localhost:9083/src/index.ts` e inicia o orquestrador, com o plugin em `type: 'root'`. O destino não está no snapshot.
+**Observation:** Root `.` registers `menu` in single-spa, loads lifecycles through `import()` from URL `http://localhost:9083/src/index.ts` and starts orchestrator, with plugin in `type: 'root'`. Target absent from snapshot.
 
-**Interpretação:** É uma relação root-config → application ativa, com destino externo.
+**Interpretation:** An active root-config → application relationship with external target.
 
 ### 12. src/main.ts:21; src/main.ts:23; src/main.ts:29; .envtest:11; vite.config.ts:12-15
 
-**Observação:** O root `.` registra `base`, carrega os lifecycles por `import()` da URL `http://localhost:9081/src/index.ts` e inicia o orquestrador. O destino não está no snapshot, e a aplicação é montada em paralelo com `menu`.
+**Observation:** Root `.` registers `base`, loads lifecycles through `import()` from URL `http://localhost:9081/src/index.ts` and starts orchestrator. Target absent from snapshot, and application mounted alongside `menu`.
 
-**Interpretação:** É uma relação root-config → application ativa, com destino externo.
+**Interpretation:** An active root-config → application relationship with external target.
 
 ### 13. package.json:8; vite.config.ts:5-16
 
-**Observação:** `"build": "vite build"` na raiz, com a configuração do root config. Os `import()` dos microfrontends têm `@vite-ignore` e são resolvidos em runtime (src/main.ts:15, 23). Não há artefato de deploy; `dev` e `preview` são comandos de desenvolvimento, e a versão `1.0.0` não é usada em publicação.
+**Observation:** `"build": "vite build"` at root, with root config configuration. Microfrontend `import()` calls have `@vite-ignore` and resolve at runtime (src/main.ts:15, 23). No deployment artifact; `dev` and `preview` are development commands, and version `1.0.0` unused in publication.
 
-**Interpretação:** O root tem build próprio, que não inclui os microfrontends, sem deploy observado nem versionamento independente.
+**Interpretation:** Root has own build excluding microfrontends, without observed deployment or independent versioning.
 
 ### 14. .envtest:2
 
-**Observação:** "В dev-режиме каждый микрофронт — отдельный Vite dev-сервер на своём порту." (No modo dev, cada microfront é um dev server Vite separado, na sua própria porta.)
+**Observation:** "В dev-режиме каждый микрофронт — отдельный Vite dev-сервер на своём порту."
 
-**Interpretação:** Afirma que cada microfrontend roda à parte, num servidor próprio. As portas distintas confirmam a separação; que cada servidor seja um Vite fica sem artefato. A afirmação é corroborada em parte.
+**English translation:** In development mode each microfrontend is a separate Vite development server on its own port.
+
+**Interpretation:** Claims each microfrontend runs separately on own server. Distinct ports confirm separation; each server being Vite has no artifact. Claim partially corroborated.
 
 ### 15. .envtest:3-4
 
-**Observação:** "main.ts делает import() по этим URL, чтобы загрузить lifecycle-хуки (bootstrap, mount, unmount) каждого микрофронта." (main.ts faz import() dessas URLs para carregar os hooks de lifecycle de cada microfront.)
+**Observation:** "main.ts делает import() по этим URL, чтобы загрузить lifecycle-хуки (bootstrap, mount, unmount) каждого микрофронта."
 
-**Interpretação:** Afirma como o root carrega os microfrontends. A afirmação é corroborada pelos `import()` das funções de carga.
+**English translation:** main.ts imports these URLs to load each microfrontend lifecycle hooks: bootstrap, mount and unmount.
+
+**Interpretation:** Claims how root loads microfrontends. Claim corroborated by loading-function `import()` calls.
 
 ### 16. .envtest:5
 
-**Observação:** "А потом уже можно использовать билды по типу VITE_MENU_URL=https://test-cdn.breez.ru/bt/menu/index.js" (Depois já se podem usar builds do tipo VITE_MENU_URL=…)
+**Observation:** "А потом уже можно использовать билды по типу VITE_MENU_URL=https://test-cdn.breez.ru/bt/menu/index.js"
 
-**Interpretação:** Afirma um passo futuro, com os microfrontends publicados num CDN. Nenhum artefato do snapshot faz esse build nem aponta para o endereço, e a afirmação fica sem corroboração.
+**English translation:** Later, builds hosted at a CDN URL can be used.
+
+**Interpretation:** Claims future step with microfrontends published on CDN. No snapshot artifact performs build or points to address. Claim remains uncorroborated.
 
 ### 17. .envtest:7
 
-**Observação:** "Навигационное меню" (Menu de navegação), rótulo de `VITE_MENU`.
+**Observation:** "Навигационное меню"
 
-**Interpretação:** Afirma o papel da unidade `menu` na página. A afirmação é corroborada pelo registro e pelo contêiner no `<nav>`.
+**English translation:** Navigation menu label of `VITE_MENU`.
+
+**Interpretation:** Claims unit `menu` page role. Claim corroborated by registration and container in `<nav>`.
 
 ### 18. .envtest:10
 
-**Observação:** "Основной контент страниц" (Conteúdo principal das páginas), rótulo de `VITE_BASE`.
+**Observation:** "Основной контент страниц"
 
-**Interpretação:** Afirma o papel da unidade `base` na página. A afirmação é corroborada pelo registro e pelo contêiner em `<main>`.
+**English translation:** Main page content label of `VITE_BASE`.
+
+**Interpretation:** Claims unit `base` page role. Claim corroborated by registration and container in `<main>`.
 
 ### 19. src/main.ts:1-2
 
-**Observação:** "Root config single-spa — точка входа, которая регистрирует и запускает все микрофронтенды приложения." (Root config single-spa — ponto de entrada que registra e inicia todos os microfrontends da aplicação.)
+**Observation:** "Root config single-spa — точка входа, которая регистрирует и запускает все микрофронтенды приложения."
 
-**Interpretação:** Afirma que o arquivo é a entrada do root config e registra e inicia os microfrontends. A afirmação é corroborada.
+**English translation:** Single-spa root config — entry registering and starting all application microfrontends.
+
+**Interpretation:** Claims file is root config entry, registering and starting microfrontends. Claim corroborated.
 
 ### 20. src/main.ts:5-6
 
-**Observação:** "URL-адреса микрофронтендов берутся из переменных окружения Vite (файл .env / .env.local), чтобы легко переключать адреса между dev/prod." (As URLs dos microfrontends vêm das variáveis de ambiente do Vite (arquivo .env / .env.local), para trocar facilmente os endereços entre dev/prod.)
+**Observation:** "URL-адреса микрофронтендов берутся из переменных окружения Vite (файл .env / .env.local), чтобы легко переключать адреса между dev/prod."
 
-**Interpretação:** Afirma de onde vêm as URLs dos microfrontends. A leitura por variável de ambiente é confirmada; os arquivos `.env`/`.env.local` e a troca dev/prod ficam sem artefato. A afirmação é corroborada em parte.
+**English translation:** Microfrontend URLs come from Vite environment variables, in environment files, to switch addresses easily between development and production.
+
+**Interpretation:** Claims microfrontend URL origin. Environment-variable reading confirmed; files `.env`/`.env.local` and development/production switch have no artifact. Claim partially corroborated.
 
 ### 21. src/main.ts:10
 
-**Observação:** "activeWhen: '/' — монтируется на всех маршрутах (всегда виден)." (activeWhen: '/' — é montado em todas as rotas (sempre visível).)
+**Observation:** "activeWhen: '/' — монтируется на всех маршрутах (всегда виден)."
 
-**Interpretação:** Afirma quando a unidade `menu` é montada. A afirmação é corroborada.
+**English translation:** activeWhen: '/' — mounted on all routes, always visible.
+
+**Interpretation:** Claims when unit `menu` mounts. Claim corroborated.
 
 ### 22. src/main.ts:20
 
-**Observação:** "Тоже активен на '/', т.е. отображается параллельно с menu." (Também ativo em '/', isto é, exibido em paralelo com menu.)
+**Observation:** "Тоже активен на '/', т.е. отображается параллельно с menu."
 
-**Interpretação:** Afirma que `base` e `menu` são exibidas juntas. A afirmação é corroborada.
+**English translation:** Also active on '/', displayed alongside menu.
+
+**Interpretation:** Claims `base` and `menu` display together. Claim corroborated.
 
 ### 23. src/main.ts:27-28
 
-**Observação:** "Запуск single-spa: начинает слушать изменения URL и монтировать/размонтировать зарегистрированные микрофронтенды." (Início do single-spa: começa a escutar mudanças de URL e a montar/desmontar os microfrontends registrados.)
+**Observation:** "Запуск single-spa: начинает слушать изменения URL и монтировать/размонтировать зарегистрированные микрофронтенды."
 
-**Interpretação:** Afirma o papel de `start()`. A afirmação é corroborada.
+**English translation:** Starting single-spa: begins listening to URL changes and mounting/unmounting registered microfrontends.
+
+**Interpretation:** Claims role of `start()`. Claim corroborated.
 
 ### 24. vite.config.ts:7
 
-**Observação:** "Интеграция с single-spa — микрофронтендовым оркестратором." (Integração com single-spa, orquestrador de microfrontends.)
+**Observation:** "Интеграция с single-spa — микрофронтендовым оркестратором."
 
-**Interpretação:** Nomeia a tecnologia do plugin. A afirmação é corroborada.
+**English translation:** Integration with single-spa, microfrontend orchestrator.
+
+**Interpretation:** Names plugin technology. Claim corroborated.
 
 ### 25. vite.config.ts:8-9
 
-**Observação:** "type: 'root' — этот проект является корневым (root config), т.е. он загружает и монтирует дочерние микрофронтенды." (type: 'root' — este projeto é o raiz (root config), isto é, carrega e monta os microfrontends filhos.)
+**Observation:** "type: 'root' — этот проект является корневым (root config), т.е. он загружает и монтирует дочерние микрофронтенды."
 
-**Interpretação:** Afirma que o projeto é o root que compõe os microfrontends. A afirmação é corroborada pela opção do plugin e pelas relações.
+**English translation:** type: 'root' — project is root config, loading and mounting child microfrontends.
+
+**Interpretation:** Claims project is root composing microfrontends. Claim corroborated by plugin option and relationships.
 
 ### 26. vite.config.ts:10-11
 
-**Observação:** "cssStrategy: 'multiMife' — изоляция CSS между микрофронтендами, чтобы стили одного приложения не ломали другое." (cssStrategy: 'multiMife' — isolação de CSS entre os microfrontends, para que os estilos de uma aplicação não quebrem a outra.)
+**Observation:** "cssStrategy: 'multiMife' — изоляция CSS между микрофронтендами, чтобы стили одного приложения не ломали другое."
 
-**Interpretação:** Afirma o efeito de uma opção do plugin. A opção está configurada; a isolação depende dos microfrontends ausentes e fica sem artefato. A afirmação é corroborada em parte.
+**English translation:** cssStrategy: 'multiMife' — CSS isolation between microfrontends so application styles do not break another.
+
+**Interpretation:** Claims plugin option effect. Option configured; isolation depends on absent microfrontends and has no artifact. Claim partially corroborated.
 
 ### 27. 112c73b 2026-03-14 (src/main.ts; .envtest)
 
-**Observação:** `src/main.ts`, com o comentário sobre `.env`/`.env.local`, e `.envtest`, com os valores de `VITE_MENU` e `VITE_BASE`, chegam juntos no único commit, que é o snapshot. Nenhum `.env` ou `.env.local` aparece no histórico, nem como arquivo removido.
+**Observation:** `src/main.ts`, with comment about `.env`/`.env.local`, and `.envtest`, with values of `VITE_MENU` and `VITE_BASE`, arrive together in sole commit, snapshot. No `.env` or `.env.local` appears in history, even as removed file.
 
-**Interpretação:** O histórico não diz se `.envtest` é um `.env` renomeado para ser versionado ou uma cópia de exemplo de um arquivo mantido fora do repositório. A dúvida é sobre a origem do arquivo; no snapshot, as URLs estão declaradas e as relações seguem ativas.
+**Interpretation:** History does not say whether `.envtest` is an `.env` renamed for versioning or example copy of externally maintained file. Uncertainty concerns file origin; URLs are declared in snapshot and relationships remain active.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.2 (package.json:16) | 1 tecnologia | manifesto | single-spa | tecnológica | fraca | declara #5; declara #6; declara #9 |
-| 2 | 3.4.2 (package.json:20) | 1 tecnologia | manifesto | single-spa | tecnológica | fraca | declara #3 |
-| 3 | 3.4.2 (package.json:20, Evidência); 3.4.3 (., Build); 3.4.5 #1, #2 (Configuração); 3.4.6 #1 (Artefatos); 3.4.7 #11, #12, #13 (Evidência) | 2 configuração | configuração | single-spa | tecnológica | moderada | configura #10; configura #11; configura #12 |
-| 4 | 3.4.4 (src/main.ts:15, :23, Observação); 3.4.5 #1, #2 (Configuração); 3.4.7 #1, #7 (Evidência) | 2 configuração | configuração | single-spa | arquitetural | forte | configura #11; configura #12; configura #7; configura #8 |
-| 5 | 3.4.4 (src/main.ts:13) | 3 código | código-fonte | single-spa | arquitetural | forte | implementa #11 |
-| 6 | 3.4.4 (src/main.ts:21) | 3 código | código-fonte | single-spa | arquitetural | forte | implementa #12 |
-| 7 | 3.4.4 (src/main.ts:15) | 3 código | código-fonte | single-spa | tecnológica | moderada | implementa #11 |
-| 8 | 3.4.4 (src/main.ts:23) | 3 código | código-fonte | single-spa | tecnológica | moderada | implementa #12 |
-| 9 | 3.4.4 (src/main.ts:29) | 3 código | código-fonte | single-spa | tecnológica | moderada | implementa #11; implementa #12 |
-| 10 | 3.4.3 (.) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 11 | 3.4.5 #1 | 5 composição | código-fonte | single-spa | arquitetural | forte | liga #10 |
-| 12 | 3.4.5 #2 | 5 composição | código-fonte | single-spa | arquitetural | forte | liga #10 |
-| 13 | 3.4.6 #1 | 6 build-deploy | manifesto | — | arquitetural | moderada | publica #10 |
-| 14 | 3.4.7 #1 | 7 documentação | comentário | — | arquitetural | fraca | corrobora em parte #4; corrobora em parte #11; corrobora em parte #12 |
-| 15 | 3.4.7 #2 | 7 documentação | comentário | single-spa | tecnológica | fraca | corrobora #7; corrobora #8; corrobora #11; corrobora #12 |
-| 16 | 3.4.7 #3 | 7 documentação | comentário | — | arquitetural | fraca | — |
-| 17 | 3.4.7 #4 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #5; corrobora #11 |
-| 18 | 3.4.7 #5 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #6; corrobora #12 |
-| 19 | 3.4.7 #6 | 7 documentação | comentário | single-spa | arquitetural | fraca | corrobora #10; corrobora #5; corrobora #6; corrobora #9; corrobora #11; corrobora #12 |
-| 20 | 3.4.7 #7 | 7 documentação | comentário | — | tecnológica | fraca | corrobora em parte #7; corrobora em parte #8; corrobora em parte #4 |
-| 21 | 3.4.7 #8 | 7 documentação | comentário | single-spa | arquitetural | fraca | corrobora #5; corrobora #11 |
-| 22 | 3.4.7 #9 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #6; corrobora #12 |
-| 23 | 3.4.7 #10 | 7 documentação | comentário | single-spa | tecnológica | fraca | corrobora #9 |
-| 24 | 3.4.7 #11 | 7 documentação | comentário | single-spa | tecnológica | fraca | corrobora #2; corrobora #3 |
-| 25 | 3.4.7 #12 | 7 documentação | comentário | single-spa | arquitetural | fraca | corrobora #3; corrobora #11; corrobora #12 |
-| 26 | 3.4.7 #13 | 7 documentação | comentário | — | tecnológica | fraca | corrobora em parte #3 |
-| 27 | 3.4.8 #1 | 8 histórico | histórico | — | tecnológica | fraca | explica #4; explica #20 |
+| 1 | 3.4.2 (package.json:16) | 1 technology | manifest | single-spa | technological | weak | declares #5; declares #6; declares #9 |
+| 2 | 3.4.2 (package.json:20) | 1 technology | manifest | single-spa | technological | weak | declares #3 |
+| 3 | 3.4.2 (package.json:20, Evidence); 3.4.3 (., Build); 3.4.5 #1, #2 (Configuration); 3.4.6 #1 (Artifacts); 3.4.7 #11, #12, #13 (Evidence) | 2 configuration | configuration | single-spa | technological | moderate | configures #10; configures #11; configures #12 |
+| 4 | 3.4.4 (src/main.ts:15, :23, Observation); 3.4.5 #1, #2 (Configuration); 3.4.7 #1, #7 (Evidence) | 2 configuration | configuration | single-spa | architectural | strong | configures #11; configures #12; configures #7; configures #8 |
+| 5 | 3.4.4 (src/main.ts:13) | 3 code | source code | single-spa | architectural | strong | implements #11 |
+| 6 | 3.4.4 (src/main.ts:21) | 3 code | source code | single-spa | architectural | strong | implements #12 |
+| 7 | 3.4.4 (src/main.ts:15) | 3 code | source code | single-spa | technological | moderate | implements #11 |
+| 8 | 3.4.4 (src/main.ts:23) | 3 code | source code | single-spa | technological | moderate | implements #12 |
+| 9 | 3.4.4 (src/main.ts:29) | 3 code | source code | single-spa | technological | moderate | implements #11; implements #12 |
+| 10 | 3.4.3 (.) | 4 structure | directory | — | architectural | moderate | — |
+| 11 | 3.4.5 #1 | 5 composition | source code | single-spa | architectural | strong | links #10 |
+| 12 | 3.4.5 #2 | 5 composition | source code | single-spa | architectural | strong | links #10 |
+| 13 | 3.4.6 #1 | 6 build-deploy | manifest | — | architectural | moderate | publishes #10 |
+| 14 | 3.4.7 #1 | 7 documentation | comment | — | architectural | weak | partially corroborates #4; partially corroborates #11; partially corroborates #12 |
+| 15 | 3.4.7 #2 | 7 documentation | comment | single-spa | technological | weak | corroborates #7; corroborates #8; corroborates #11; corroborates #12 |
+| 16 | 3.4.7 #3 | 7 documentation | comment | — | architectural | weak | — |
+| 17 | 3.4.7 #4 | 7 documentation | comment | — | architectural | weak | corroborates #5; corroborates #11 |
+| 18 | 3.4.7 #5 | 7 documentation | comment | — | architectural | weak | corroborates #6; corroborates #12 |
+| 19 | 3.4.7 #6 | 7 documentation | comment | single-spa | architectural | weak | corroborates #10; corroborates #5; corroborates #6; corroborates #9; corroborates #11; corroborates #12 |
+| 20 | 3.4.7 #7 | 7 documentation | comment | — | technological | weak | partially corroborates #7; partially corroborates #8; partially corroborates #4 |
+| 21 | 3.4.7 #8 | 7 documentation | comment | single-spa | architectural | weak | corroborates #5; corroborates #11 |
+| 22 | 3.4.7 #9 | 7 documentation | comment | — | architectural | weak | corroborates #6; corroborates #12 |
+| 23 | 3.4.7 #10 | 7 documentation | comment | single-spa | technological | weak | corroborates #9 |
+| 24 | 3.4.7 #11 | 7 documentation | comment | single-spa | technological | weak | corroborates #2; corroborates #3 |
+| 25 | 3.4.7 #12 | 7 documentation | comment | single-spa | architectural | weak | corroborates #3; corroborates #11; corroborates #12 |
+| 26 | 3.4.7 #13 | 7 documentation | comment | — | technological | weak | partially corroborates #3 |
+| 27 | 3.4.8 #1 | 8 history | history | — | technological | weak | explains #4; explains #20 |
 
-## Resumo
+## Summary
 
-Observações: 27. Dimensões (tecnologia: 2, configuração: 2, código: 5, estrutura: 1, composição: 2, build-deploy: 1, documentação: 13, histórico: 1). Força (forte: 5, moderada: 6, fraca: 16, ambígua: 0). Evidência (tecnológica: 12, arquitetural: 15, contexto: 0).
+Observations: 27. Dimensions (technology: 2, configuration: 2, code: 5, structure: 1, composition: 2, build-deploy: 1, documentation: 13, history: 1). Strength (strong: 5, moderate: 6, weak: 16, ambiguous: 0). Evidence (technological: 12, architectural: 15, context: 0).
+

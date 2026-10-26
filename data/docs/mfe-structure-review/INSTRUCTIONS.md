@@ -1,164 +1,164 @@
-# Método: revisão estrutural
+# Method: structural review
 
-Os caminhos começados por `docs/` preservam a organização do projeto de origem (`repo-miner`). Neste pacote, as análises correspondentes estão em `data/docs/`. Os caminhos e hashes registrados nas análises mantêm sua função de proveniência.
+Paths beginning with `docs/` preserve the organization of the source project (`repo-miner`). In this package, the corresponding analyses are in `data/docs/`. The paths and hashes recorded in the analyses retain their provenance role.
 
-Este documento descreve como foi feita a revisão estrutural e como ler os arquivos
-`NNN-<owner>__<name>.md` desta pasta. Cada arquivo registra a revisão de um repositório do corpus,
-e os passos abaixo seguem a ordem da revisão: ler os arquivos do snapshot vem antes de qualquer julgamento.
+This document describes how the structural review was conducted and how to read the
+`NNN-<owner>__<name>.md` files in this folder. Each file records the review of one corpus repository,
+and the steps below follow the review order: reading the snapshot files comes before any judgment.
 
-## Objetivo
+## Objective
 
-Seção 3.4.3 do protocolo (*Structural mining*): identificar as **fronteiras das aplicações
-frontend** de cada repositório. A mineração já listou, de forma mecânica, os diretórios
-candidatos (`units.csv`). Esta etapa registra, para cada um, as características estruturais
-observáveis e decide se ele é uma unidade frontend.
+Protocol section 3.4.3 (*Structural mining*): identify the **frontend application boundaries**
+in each repository. Mining has already mechanically listed candidate directories
+(`units.csv`). This stage records the observable structural characteristics of each
+candidate and decides whether it is a frontend unit.
 
-A análise é cautelosa: vários diretórios de aplicação mostram decomposição, mas **não** estabelecem
-uma implementação MFE. Esta etapa não reclassifica o repositório, não avalia composição
-(seção 3.4.5 do protocolo) e não altera os arquivos de `../mfe-classification/`.
+The analysis is cautious: multiple application directories show decomposition, but do **not** establish
+an MFE implementation. This stage does not reclassify the repository, assess composition
+(protocol section 3.4.5), or modify files in `../mfe-classification/`.
 
-## Fontes consultadas (somente leitura)
+## Sources consulted (read only)
 
-| O quê | Caminho |
+| What | Path |
 |---|---|
-| Lista de repositórios | `data/acquisitions/mfe-corpus-001/acquisition.csv` |
-| Unidades candidatas | `data/mining/mfe-mining-001/repos/<owner>__<name>/units.csv` |
-| Tipos de cada arquivo | `data/mining/mfe-mining-001/repos/<owner>__<name>/artifacts.csv` |
-| Ocorrências de workspace, deploy e CI | `data/mining/mfe-mining-001/repos/<owner>__<name>/matches.csv` (padrões `ws-*`, `ops-*`, `ci-*`) |
-| Versão e hash da mineração | `data/mining/mfe-mining-001/manifest.json` (`version`, `configSha256`) |
-| Arquivos do snapshot | `data/acquisitions/mfe-corpus-001/corpus/<owner>__<name>/files/` |
-| Classificação (id, commit, contexto) | `docs/mfe-classification/NNN-<owner>__<name>.md` |
+| Repository list | `data/acquisitions/mfe-corpus-001/acquisition.csv` |
+| Candidate units | `data/mining/mfe-mining-001/repos/<owner>__<name>/units.csv` |
+| File types | `data/mining/mfe-mining-001/repos/<owner>__<name>/artifacts.csv` |
+| Workspace, deployment and CI occurrences | `data/mining/mfe-mining-001/repos/<owner>__<name>/matches.csv` (`ws-*`, `ops-*`, `ci-*` patterns) |
+| Mining version and hash | `data/mining/mfe-mining-001/manifest.json` (`version`, `configSha256`) |
+| Snapshot files | `data/acquisitions/mfe-corpus-001/corpus/<owner>__<name>/files/` |
+| Classification (id, commit, context) | `docs/mfe-classification/NNN-<owner>__<name>.md` |
 
-Todo `artefato:linha` é relativo a `files/` do snapshot. A revisão nunca usa o clone em `data/samples/`.
+Every `artifact:line` is relative to the snapshot's `files/` directory. The review never uses the clone in `data/samples/`.
 
-A revisão não modifica nada em `data/` e não reexecuta `mine` nem `inspect-dependencies`.
+The review does not modify anything in `data/` or rerun `mine` or `inspect-dependencies`.
 
-As classificações, as revisões anteriores e as configurações em `config/` são consultadas sem alteração.
+Classifications, previous reviews and configurations in `config/` are consulted without modification.
 
-## Produto
+## Output
 
-Um arquivo `docs/mfe-structure-review/NNN-<owner>__<name>.md` por repositório, com o
-**mesmo nome** do arquivo de classificação. O exemplo completo é `008-mrmechazilla__host-app.md`.
+One `docs/mfe-structure-review/NNN-<owner>__<name>.md` file per repository, with the
+**same name** as its classification file. The complete example is `008-mrmechazilla__host-app.md`.
 
-Cada arquivo tem esta estrutura:
+Each file has this structure:
 
-1. Front matter com os campos descritos no passo 1.
-2. Título `# NNN — <owner>/<name>`.
-3. Seção "Workspace": uma declaração de workspace ou a frase fixa de ausência.
-4. Seção "Unidades": uma tabela com as colunas `Diretório`, `Marcadores`, `Manifesto`, `Entrada`,
-   `Build`, `Workspace`, `Deploy`, `Unidade frontend` e `Motivo`.
-5. Seção "Resumo".
-6. Seção "Notas" (opcional) e, quando o `status` é `review`, a seção "Ponto para revisão conjunta".
+1. Front matter with the fields described in step 1.
+2. Title `# NNN — <owner>/<name>`.
+3. "Workspace" section: a workspace declaration or the fixed sentence indicating its absence.
+4. "Units" section: a table with the columns `Directory`, `Markers`, `Manifest`, `Entry`,
+   `Build`, `Workspace`, `Deploy`, `Frontend unit` and `Rationale`.
+5. "Summary" section.
+6. Optional "Notes" section and, when `status` is `review`, the "Point for joint review" section.
 
-## Procedimento por repositório
+## Procedure per repository
 
-### 1. Cabeçalho do arquivo
+### 1. File header
 
-O `NNN` do nome vem do arquivo correspondente em `../mfe-classification/`. O front matter registra:
+The `NNN` in the filename comes from the corresponding file in `../mfe-classification/`. The front matter records:
 
-- `id`, `full_name`, `commit`: copiados do front matter da classificação.
+- `id`, `full_name`, `commit`: copied from the classification's front matter.
 - `mining.output`: `data/mining/mfe-mining-001`.
-- `mining.version` e `mining.config_sha256`: copiados de `version` e `configSha256` do `manifest.json` da mineração.
+- `mining.version` and `mining.config_sha256`: copied from `version` and `configSha256` in the mining `manifest.json`.
 - `annotation.method`: `manual`.
-- `annotation.status`: `draft` enquanto a revisão não foi validada. A validação final cabe ao pesquisador, e só ele promove o status para `final`.
-- `annotation.date`: data da revisão, no formato `AAAA-MM-DD`.
+- `annotation.status`: `draft` while the review has not been validated. Final validation is the researcher's responsibility, and only the researcher promotes the status to `final`.
+- `annotation.date`: review date, in `YYYY-MM-DD` format.
 
-O `commit` deve ser o mesmo do `acquisition.csv` da aquisição. Se divergir, a revisão é interrompida
-e a divergência é registrada em "Ponto para revisão conjunta".
+The `commit` must match the acquisition's `acquisition.csv`. If it differs, the review is interrupted
+and the discrepancy is recorded in "Point for joint review".
 
-### 2. Registro do workspace
+### 2. Recording the workspace
 
-A declaração de workspace do repositório é procurada e registrada em uma linha na seção "Workspace".
-As formas aceitas são:
+Search for the repository's workspace declaration and record it on one line in the "Workspace" section.
+Accepted forms are:
 - `pnpm-workspace.yaml`, `lerna.json`, `rush.json`, `turbo.json`, `nx.json`;
-- `workspaces` em um `package.json`;
-- `projects` em `angular.json` com mais de um projeto, ou `project.json` do Nx.
+- `workspaces` in a `package.json`;
+- `projects` in `angular.json` with more than one project, or Nx's `project.json`.
 
-As ocorrências `ws-workspaces` do `matches.csv` e os arquivos `workspace-config` do `artifacts.csv`
-são o ponto de partida; a declaração é confirmada abrindo o arquivo. Sem declaração, a frase fixa é:
-"Nenhuma declaração de workspace."
+The `ws-workspaces` occurrences in `matches.csv` and the `workspace-config` files in `artifacts.csv`
+are the starting point; confirm the declaration by opening the file. Without a declaration, use the fixed sentence:
+"No workspace declaration."
 
-### 3. Cópia das linhas do `units.csv`
+### 3. Copying the `units.csv` rows
 
-A tabela tem uma linha para cada linha de `units.csv`, **na mesma ordem**, sem juntar nem omitir linhas:
+The table has one row for each row of `units.csv`, **in the same order**, without merging or omitting rows:
 
-| Coluna da tabela | Coluna do CSV |
+| Table column | CSV column |
 |---|---|
-| Diretório | `directory` |
-| Marcadores | `markers` |
+| Directory | `directory` |
+| Markers | `markers` |
 
-Os valores não são corrigidos nem normalizados: aparecem exatamente como estão no CSV.
-Diretórios que não estão no `units.csv` não são acrescentados; se faltar uma unidade, a falta é registrada em "Notas".
+Values are neither corrected nor normalized: they appear exactly as they do in the CSV.
+Do not add directories absent from `units.csv`; if a unit is missing, record its absence in "Notes".
 
-### 4. Preenchimento das características
+### 4. Filling in the characteristics
 
-Para cada linha, os arquivos do diretório são abertos e cada coluna recebe `artefato:linha` com uma
-descrição curta entre parênteses, ou `—` quando não há:
+For each row, open the directory's files and fill each column with `artifact:line` and a
+short description in parentheses, or `—` when absent:
 
-| Coluna | O que procurar |
+| Column | What to look for |
 |---|---|
-| Manifesto | `<dir>/package.json` existe? Cite o caminho. |
-| Entrada | Onde a entrada da aplicação é declarada ou usada pelo build: `main`/`browser`/`index` no `angular.json` ou `project.json`; `entry` no webpack/rspack/rsbuild; `index.html` do diretório no Vite; `source.entry` no rsbuild (ou a convenção `src/index.*` quando não há). |
-| Build | Configuração de build própria e como é invocada: `vite.config.*`, `webpack.config.*`, `rsbuild.config.*` com o script `build` do `package.json:linha`, ou o alvo `build` no `angular.json`/`project.json`. Página estática que não precisa de build: `— (estático, sem build)`. |
-| Workspace | Linha da declaração do passo 2 que inclui o diretório (ex.: `pnpm-workspace.yaml:2` com `packages/*`). |
-| Deploy | Artefato de build ou deploy separado para este diretório: `Dockerfile` no diretório, job de CI que constrói ou publica só este diretório, configuração de hospedagem (`vercel.json`, `netlify.toml`). O ponto de partida são as ocorrências `ops-*` e `ci-*` do `matches.csv`. |
+| Manifest | Does `<dir>/package.json` exist? Cite the path. |
+| Entry | Where the application entry is declared or used by the build: `main`/`browser`/`index` in `angular.json` or `project.json`; `entry` in webpack/rspack/rsbuild; the directory's `index.html` in Vite; `source.entry` in rsbuild (or the `src/index.*` convention when absent). |
+| Build | Its own build configuration and how it is invoked: `vite.config.*`, `webpack.config.*`, `rsbuild.config.*` with the `build` script in `package.json:line`, or the `build` target in `angular.json`/`project.json`. A static page that needs no build: `— (static, no build)`. |
+| Workspace | The line of the declaration from step 2 that includes the directory (e.g., `pnpm-workspace.yaml:2` with `packages/*`). |
+| Deploy | A separate build or deployment artifact for this directory: a `Dockerfile` in the directory, a CI job that builds or publishes only this directory, hosting configuration (`vercel.json`, `netlify.toml`). Start with the `ops-*` and `ci-*` occurrences in `matches.csv`. |
 
-Uma característica herdada de outra linha não conta para esta: por exemplo, o `src/index.html`
-usado pelo `angular.json` da raiz é a entrada da linha `.`, não da linha `src`.
+A characteristic inherited from another row does not count for this one: for example, `src/index.html`
+used by the root `angular.json` is the entry for the `.` row, not the `src` row.
 
-### 5. Julgamento de cada linha
+### 5. Judging each row
 
-A coluna `Unidade frontend` é decidida com estas regras, nesta ordem:
+Decide the `Frontend unit` column using these rules in this order:
 
-| Resposta | Quando |
+| Answer | When |
 |---|---|
-| `No` | O diretório é parte de outra unidade (sua entrada ou build são usados pelo build de outra linha, como `src/` de um projeto Angular), é biblioteca ou pacote compartilhado sem entrada de aplicação, não é frontend (servidor, ferramenta, documentação), ou não tem entrada nem build (por exemplo, só `package.json` e lockfile). |
-| `Yes` | O diretório tem entrada própria que inicia uma UI **e** build próprio (configuração ou alvo) **ou** não precisa de build, de modo que pode ser construído ou servido como aplicação frontend sozinho. Não precisa de build: a entrada é um HTML do próprio diretório que carrega diretamente arquivos estáticos (JS, CSS), sem imports de pacotes npm que exijam bundler. |
-| `Undetermined` | Tem entrada ou build, mas não ambos de forma clara, ou os artefatos são contraditórios (por exemplo, um build declarado que referencia um arquivo ausente do snapshot). |
+| `No` | The directory is part of another unit (its entry or build is used by another row's build, such as `src/` in an Angular project), is a library or shared package without an application entry, is not frontend (server, tool, documentation), or has neither entry nor build (for example, only `package.json` and a lockfile). |
+| `Yes` | The directory has its own entry that starts a UI **and** its own build (configuration or target), **or** requires no build, so it can be built or served independently as a frontend application. No build required: its entry is an HTML file in the directory itself that loads static files (JS, CSS) directly, without npm package imports requiring a bundler. |
+| `Undetermined` | It has an entry or a build, but not clearly both, or the artifacts are contradictory (for example, a declared build referencing a file missing from the snapshot). |
 
-A coluna `Motivo` traz uma frase curta. Na dúvida entre `Yes` e `Undetermined`, a resposta é
-`Undetermined`, com a explicação em "Notas".
+The `Rationale` column contains a short sentence. When in doubt between `Yes` and `Undetermined`, answer
+`Undetermined` and explain in "Notes".
 
-Observações:
-- Uma unidade fora do snapshot (remote em outro repositório, citado pela classificação) não vira linha; ela é registrada em "Notas".
-- Uma unidade frontend sem `package.json` próprio é possível (projetos de um workspace Angular ou Nx).
-- Deploy separado reforça a fronteira, mas não é exigido para `Yes`.
+Observations:
+- A unit outside the snapshot (a remote in another repository, cited by the classification) does not become a row; record it in "Notes".
+- A frontend unit can exist without its own `package.json` (projects in an Angular or Nx workspace).
+- Separate deployment reinforces the boundary but is not required for `Yes`.
 
-### 6. Resumo
+### 6. Summary
 
-A seção "Resumo" traz exatamente a frase: "Aplicações frontend no snapshot: N (dir1, dir2, ...)." com as
-linhas `Yes`, na ordem da tabela. Com zero: "Aplicações frontend no snapshot: 0."
-Essa contagem são as fronteiras de aplicação frontend observáveis no snapshot, participem ou não da
-composição. Ela não é o `frontend_units` da classificação, que conta as unidades da aplicação MFE,
-inclusive as que estão fora do repositório.
-Se N diferir de `frontend_units` da classificação, a diferença é explicada em "Notas" (por exemplo, unidades externas).
+The "Summary" section contains exactly the sentence: "Frontend applications in the snapshot: N (dir1, dir2, ...)." with the
+`Yes` rows in table order. For zero: "Frontend applications in the snapshot: 0."
+This count represents the frontend application boundaries observable in the snapshot, whether or not they
+participate in composition. It is not the classification's `frontend_units`, which counts the units of the MFE application,
+including those outside the repository.
+If N differs from the classification's `frontend_units`, explain the difference in "Notes" (for example, external units).
 
-### 7. Notas e revisão conjunta
+### 7. Notes and joint review
 
-- **Notas** (opcional): unidades externas, diferença em relação à classificação, unidade que faltou no `units.csv`, sinais enganosos.
-- **Ponto para revisão conjunta**: obrigatório se `status: review`.
+- **Notes** (optional): external units, differences from the classification, a unit missing from `units.csv`, misleading signals.
+- **Point for joint review**: required if `status: review`.
 
-Quando algo contradiz a classificação do repositório, a revisão não propõe mudá-la; a contradição
-é registrada em "Notas".
+When something contradicts the repository classification, the review does not propose changing it; record
+the contradiction in "Notes".
 
-## Verificações de consistência
+## Consistency checks
 
-Antes de considerar um arquivo concluído, confere-se que:
+Before considering a file complete, check that:
 
-- o nome do arquivo é igual ao da classificação;
-- `commit` é igual ao da classificação e ao do `acquisition.csv`;
-- `version` e `config_sha256` são os do `manifest.json` da mineração;
-- a seção "Workspace" tem uma declaração com `artefato:linha` ou a frase fixa;
-- o número de linhas da tabela é igual ao de linhas de dados do `units.csv`, e as duas colunas copiadas são idênticas;
-- toda célula de característica tem `artefato:linha` ou `—`;
-- toda linha tem `Unidade frontend` em `Yes | No | Undetermined` e um motivo;
-- o "Resumo" lista exatamente as linhas `Yes`;
-- toda citação foi aberta no snapshot, e a linha citada contém o que foi descrito;
-- o arquivo não contém comentários ou marcações de preenchimento;
-- `status` é `draft` ou o valor definido pelo pesquisador.
+- its filename matches the classification's;
+- `commit` matches the classification and `acquisition.csv`;
+- `version` and `config_sha256` match the mining `manifest.json`;
+- the "Workspace" section has a declaration with `artifact:line` or the fixed sentence;
+- the number of table rows equals the number of data rows in `units.csv`, and the two copied columns are identical;
+- every characteristic cell has `artifact:line` or `—`;
+- every row has `Frontend unit` in `Yes | No | Undetermined` and a rationale;
+- the "Summary" lists exactly the `Yes` rows;
+- every citation was opened in the snapshot, and the cited line contains what was described;
+- the file contains no comments or completion placeholders;
+- `status` is `draft` or the value set by the researcher.
 
-## Quando a mineração mudar
+## When mining changes
 
-Se `mine` for executado com outro catálogo (nova `version`, novo `config_sha256`), os arquivos
-desta pasta continuam válidos só para a versão registrada no front matter. Os repositórios cujo
-`units.csv` mudou precisam ser revisados de novo, com o bloco `mining` atualizado.
+If `mine` runs with another catalog (new `version`, new `config_sha256`), the files
+in this folder remain valid only for the version recorded in the front matter. Repositories whose
+`units.csv` changed must be reviewed again, with the `mining` block updated.

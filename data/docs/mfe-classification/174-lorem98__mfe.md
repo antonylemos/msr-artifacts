@@ -20,84 +20,84 @@ annotation:
 
 # 174 — lorem98/mfe
 
-## Contexto
+## Context
 
-“Micro Frontend PoC — Webpack Module Federation” (`README.md:1–5`): monorepo com quatro pacotes webpack 5.
-- `container` (React 17): shell que consome os três remotos.
-- `marketing` e `auth` (React 17): remotos que expõem `mount`.
-- `dashboard` (Vue 3): remoto montado dentro do React sem biblioteca de interop.
+“Micro Frontend PoC — Webpack Module Federation” (`README.md:1–5`): monorepo with four webpack 5 packages.
+- `container` (React 17): shell consuming all three remotes.
+- `marketing` and `auth` (React 17): remotes exposing `mount`.
+- `dashboard` (Vue 3): remote mounted within React without an interop library.
 
-Cada pacote tem workflow próprio de deploy em S3/CloudFront. O nome do repositório não é usado como evidência.
+Each package has its own S3/CloudFront deployment workflow. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:175` registra rank 174, ID 1150753074, status `cloned`, branch `master` e o commit do front matter, que é o HEAD do clone e de `origin/master`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:175` records rank 174, ID 1150753074, status `cloned`, branch `master` and the front matter commit, which is HEAD of the clone and `origin/master`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:175` registra as estratégias `terminology;technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:24472` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:24479` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:175` records strategies `terminology;technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:24472` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:24479` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos quatro hits em cada rodada:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns the same four hits in each round:
 
-| Consulta (`q`) | Endpoint | Subconsulta | `path` | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Endpoint | Subquery | `path` | Collection 001 / 002 (UTC) |
 |---|---|---|---|---|
 | `technology-module-federation-plugin-js-code`: `ModuleFederationPlugin remotes extension:js` | code | `…#size:700..799` | `packages/container/config/webpack.dev.js` | 2026-10-07T22:23:51.937Z / 2026-10-08T16:06:18.116Z |
-| `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | repositories | `…#created:2026-02` | vazio | 2026-10-07T22:32:05.378Z / 2026-10-08T15:58:08.819Z |
-| `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | repositories | `…#created:2026-02` | vazio | 2026-10-07T23:00:40.387Z / 2026-10-08T16:08:10.841Z |
-| `technology-module-federation-repositories`: `"module federation" in:name,description,readme` | repositories | `…#created:2026-02` | vazio | 2026-10-07T23:23:04.794Z / 2026-10-08T16:17:03.151Z |
+| `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | repositories | `…#created:2026-02` | empty | 2026-10-07T22:32:05.378Z / 2026-10-08T15:58:08.819Z |
+| `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | repositories | `…#created:2026-02` | empty | 2026-10-07T23:00:40.387Z / 2026-10-08T16:08:10.841Z |
+| `technology-module-federation-repositories`: `"module federation" in:name,description,readme` | repositories | `…#created:2026-02` | empty | 2026-10-07T23:23:04.794Z / 2026-10-08T16:17:03.151Z |
 
-As consultas de repositórios acrescentam `pushed:>=2025-04-01 created:2026-02-01..2026-02-28`; a de código, `size:700..799`.
+Repository queries append `pushed:>=2025-04-01 created:2026-02-01..2026-02-28`; the code query appends `size:700..799`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem JavaScript, `fork: false`, tamanho 245;
-- criação em 2026-02-05T16:44:19Z, push em 2026-05-21T13:57:41Z.
+Hit metadata:
+- null description, no topics, language JavaScript, `fork: false`, size 245;
+- created at 2026-02-05T16:44:19Z, pushed at 2026-05-21T13:57:41Z.
 
-Grafias e linhas:
-- **Código:** o arquivo casado tem 771 bytes no SHA, dentro da faixa, e contém `ModuleFederationPlugin` e `remotes` (`packages/container/config/webpack.dev.js:2`, `15–21`).
-- **README:** “Micro Frontend” em `README.md:1`, “micro frontend” em `README.md:3` e “Module Federation” em `README.md:1`, `3`, `5`, `32` e outras.
-- **Sem grafia literal:** o plural “micro frontends” não aparece no README nem na descrição; esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+Spellings and lines:
+- **Code:** the matched file has 771 bytes at the SHA, within the range, and contains `ModuleFederationPlugin` and `remotes` (`packages/container/config/webpack.dev.js:2`, `15–21`).
+- **README:** “Micro Frontend” at `README.md:1`, “micro frontend” at `README.md:3` and “Module Federation” at `README.md:1`, `3`, `5`, `32` and elsewhere.
+- **Without literal spelling:** plural “micro frontends” does not appear in the README or description; that hit depends on GitHub search text processing, which is not recorded.
 
-O README foi criado em `91feee5` (2026-05-11) e não foi alterado depois, sendo anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The README was created in `91feee5` (2026-05-11) and never changed afterward, preceding October 2026 collection. The SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 51 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Há quatro pacotes em `packages/` (`container`, `marketing`, `auth`, `dashboard`), cada um com `package.json`, `config/webpack.{common,dev,prod}.js`, `public/index.html` e `src/` com `index.js` → `bootstrap.js`. Há quatro workflows em `.github/workflows/`. Não há workspace na raiz. | contexto |
-| Configuração (host) | `packages/container/config/webpack.dev.js:15–23`: `remotes` `marketing`, `auth` e `dashboard` em `localhost:8081/8082/8083/remoteEntry.js`. `packages/container/config/webpack.prod.js:15–23`: as mesmas remotes em `${PRODUCTION_DOMAIN}/<pacote>/latest/remoteEntry.js`. | forte |
-| Configuração (remotos) | `packages/marketing/config/webpack.dev.js:16–22` e `webpack.prod.js:13–20`: `exposes: { './MarketingApp': './src/bootstrap' }`. `packages/auth/config/webpack.dev.js:15–23`: `exposes: { './AuthApp' }`. `packages/dashboard/config/webpack.dev.js:16–30` e `webpack.prod.js:15–27`: `exposes: { './DashboardApp' }`, com `vue` singleton. | forte |
-| Código-fonte (composição) | `packages/container/src/App.js:13–49`: rotas `/auth`, `/dashboard` (protegida por `signedIn`) e `/`, cada uma renderizando um wrapper. `src/components/MarketingApp.js:1–25`, `AuthApp.js:21–41` e `DashboardApp.js:15–26`: `import { mount } from "<remote>/<App>"` e `mount(ref.current, …)`, com sincronização bidirecional de histórico (`onNavigate`/`onParentNavigate`) e callback `onSignIn`. `packages/marketing/src/bootstrap.js:7–46` e `packages/dashboard/src/bootstrap.js:12–36`: `mount` exportado, com memory history embutido e execução isolada em desenvolvimento. | forte |
-| Código-fonte (fronteiras) | A busca por imports `../../` em `packages` não retorna nada. Os imports entre pacotes são só os federados (`marketing/MarketingApp`, `auth/AuthApp`, `dashboard/DashboardApp`). | contexto |
-| Build/deploy | `.github/workflows/container.yml:1–36`: build com `PRODUCTION_DOMAIN`, `aws s3 sync dist s3://…/container/latest` e invalidação do CloudFront, disparado só por mudanças em `packages/container/**`. Há workflows análogos para `marketing`, `auth` e `dashboard`. As versões de webpack 5 são declaradas por pacote (por exemplo, `packages/container/package.json:26`; `packages/dashboard/package.json:29`). | forte |
+| Structure | `git ls-tree -r` at the SHA: 51 entries, all regular `100644` files; zero symlinks and zero gitlinks. Four packages in `packages/` (`container`, `marketing`, `auth`, `dashboard`), each with `package.json`, `config/webpack.{common,dev,prod}.js`, `public/index.html` and `src/` with `index.js` → `bootstrap.js`. Four workflows in `.github/workflows/`. No root workspace. | context |
+| Configuration (host) | `packages/container/config/webpack.dev.js:15–23`: `remotes` `marketing`, `auth` and `dashboard` at `localhost:8081/8082/8083/remoteEntry.js`. `packages/container/config/webpack.prod.js:15–23`: same remotes at `${PRODUCTION_DOMAIN}/<pacote>/latest/remoteEntry.js` (the original placeholder means package). | strong |
+| Configuration (remotes) | `packages/marketing/config/webpack.dev.js:16–22` and `webpack.prod.js:13–20`: `exposes: { './MarketingApp': './src/bootstrap' }`. `packages/auth/config/webpack.dev.js:15–23`: `exposes: { './AuthApp' }`. `packages/dashboard/config/webpack.dev.js:16–30` and `webpack.prod.js:15–27`: `exposes: { './DashboardApp' }`, with singleton `vue`. | strong |
+| Source code (composition) | `packages/container/src/App.js:13–49`: routes `/auth`, `/dashboard` (protected by `signedIn`) and `/`, each rendering a wrapper. `src/components/MarketingApp.js:1–25`, `AuthApp.js:21–41` and `DashboardApp.js:15–26`: `import { mount } from "<remote>/<App>"` and `mount(ref.current, …)`, with bidirectional history synchronization (`onNavigate`/`onParentNavigate`) and callback `onSignIn`. `packages/marketing/src/bootstrap.js:7–46` and `packages/dashboard/src/bootstrap.js:12–36`: exported `mount`, with embedded memory history and standalone execution in development. | strong |
+| Source code (boundaries) | Searching for `../../` imports in `packages` returns nothing. Cross-package imports are only federated (`marketing/MarketingApp`, `auth/AuthApp`, `dashboard/DashboardApp`). | context |
+| Build/deploy | `.github/workflows/container.yml:1–36`: build with `PRODUCTION_DOMAIN`, `aws s3 sync dist s3://…/container/latest` and CloudFront invalidation, triggered only by changes in `packages/container/**`. Analogous workflows exist for `marketing`, `auth` and `dashboard`. webpack 5 versions are declared per package (for example, `packages/container/package.json:26`; `packages/dashboard/package.json:29`). | strong |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 17 commits, nenhum merge, todos de `lorem98 <lorenzo.medda24@gmail.com>`, de 2026-02-05 (`ba3fc6f`, “Initial commit”) a 2026-05-21 (SHA `44eb295`, “Revert previous temp commit”).
-- **Marketing:** o `container` e o `marketing` com workflows vêm de fevereiro.
-- **Navegação:** a navegação bidirecional entra em `2be6f54` (2026-03-24).
-- **Auth e dashboard:** `6af9f6d` cria o auth e `91feee5` cria o dashboard e o README (2026-05-11); os workflows de auth e dashboard vêm em `60008a4`.
+Non-shallow clone; 17 commits, no merges, all by `lorem98 <lorenzo.medda24@gmail.com>`, from 2026-02-05 (`ba3fc6f`, “Initial commit”) to 2026-05-21 (SHA `44eb295`, “Revert previous temp commit”).
+- **Marketing:** `container` and `marketing` with workflows date from February.
+- **Navigation:** bidirectional navigation enters in `2be6f54` (2026-03-24).
+- **Auth and dashboard:** `6af9f6d` creates auth and `91feee5` creates dashboard and README (2026-05-11); auth and dashboard workflows enter in `60008a4`.
 
-A estrutura (`container`, `marketing`, `auth` e `dashboard` com `mount`, memory history e deploy S3/CloudFront `latest`) lembra um roteiro de curso, mas essa origem é hipótese não verificada: nem as citações nem o histórico local identificam curso, fonte comum ou grau de replicação. O histórico incremental e as extensões (Vue 3 com Chart.js, README próprio) mostram a evolução do autor `lorem98`, sem provar autoria intelectual. O `git diff` do commit temporário `d1cf5a5` não completou por blob ausente no clone parcial (`9aaa14e3…`), que não foi buscado; o clone ficou inalterado.
+The structure (`container`, `marketing`, `auth` and `dashboard` with `mount`, memory history and S3/CloudFront `latest` deployment) resembles a course outline, but that origin is an unverified hypothesis: neither citations nor local history identify a course, common source or replication extent. Incremental history and extensions (Vue 3 with Chart.js, its own README) show evolution by author `lorem98`, without proving intellectual authorship. `git diff` for temporary commit `d1cf5a5` did not complete because of a missing blob in the partial clone (`9aaa14e3…`), which was not fetched; the clone remained unchanged.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | Quatro unidades no repositório, referenciadas pela configuração de composição do container (`packages/container/config/webpack.dev.js:17–21`). |
-| Q2 | Yes | Cada pacote tem entrada, build e deploy próprios (`config/webpack.*.js`; workflows por pacote com `paths` próprios), sem imports de código-fonte entre eles. |
-| Q3 | Yes | O container monta os três remotos por rota no mesmo shell (`packages/container/src/App.js:25–44`). |
-| Q4 | Yes | Module Federation configurado no host e nos remotos, consumido por `import { mount }` e chamado nos wrappers (`MarketingApp.js:1`, `10`; `AuthApp.js:1`, `26`; `DashboardApp.js:1`, `21`). |
-| Q5 | Yes | Q1–Q4 são Yes: shell com três remotos (React e Vue) e deploy independente. |
+| Q1 | Yes | Four units in the repository, referenced by container composition configuration (`packages/container/config/webpack.dev.js:17–21`). |
+| Q2 | Yes | Each package has its own entry, build and deployment (`config/webpack.*.js`; per-package workflows with their own `paths`), without source code imports between them. |
+| Q3 | Yes | The container mounts all three remotes by route in the same shell (`packages/container/src/App.js:25–44`). |
+| Q4 | Yes | Module Federation configured in host and remotes, consumed through `import { mount }` and called in wrappers (`MarketingApp.js:1`, `10`; `AuthApp.js:1`, `26`; `DashboardApp.js:1`, `21`). |
+| Q5 | Yes | Q1–Q4 are Yes: shell with three remotes (React and Vue) and independent deployment. |
 
-## Motivo
+## Rationale
 
-- `MFE-implemented` pela regra Q1–Q5 Yes. Corresponde a “monorepos containing a host and its remotes” e a “examples… that actually compose frontend units”.
-- A cadeia está completa no snapshot, como em 076/084/096/106/109, com deploy independente por pacote. Os módulos expostos são aplicações inteiras montadas por rota, não componentes compartilhados, por isso não cabe a dúvida de code sharing de 089/100.
-- Mesmo que haja origem em roteiro de curso (hipótese não verificada), isso não reduz o caso a conteúdo ou exercício sem composição (023/094): o checklist inclui “examples… that actually compose frontend units”, e a composição está implementada.
+- `MFE-implemented` under the Q1–Q5 Yes rule. Matches “monorepos containing a host and its remotes” and “examples… that actually compose frontend units”.
+- The chain is complete in the snapshot, as in 076/084/096/106/109, with independent deployment per package. Exposed modules are whole applications mounted by route, rather than shared components, so the code sharing uncertainty in 089/100 does not apply.
+- Even if originating from a course outline (unverified hypothesis), this does not reduce the case to content or an exercise without composition (023/094): the checklist includes “examples… that actually compose frontend units”, and composition is implemented.
 - `approaches: [module-federation]`, `ui_technologies: [react, vue]`, `build_tools: [webpack]`, `frontend_units: 4`, `unit_organization: monorepo`, `repo_type: example` (“PoC”, `README.md:1`).
-- Não há decisão aberta.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** integração por função `mount(el, props)` exposta por cada remoto, independente de framework (React e Vue 3), com sincronização de roteamento entre memory history e browser history e estado de autenticação passado por callback.
-- **RQ3:** um workflow de CI/CD por unidade, com filtro de `paths`, publicando em `/<pacote>/latest/` no S3 e invalidando o CloudFront. É deploy independente explícito.
-- **Protocolo (busca):** quatro consultas casam, inclusive a busca de código no `webpack.dev.js` do container. O hit plural `"micro frontends"` não tem grafia literal. A elegibilidade muda de `unknown` (001) para `pass` (002).
-- **Contribuição da revisão independente (Lupa):** concordância integral com MFE-implemented, Q1–Q5 Yes, `module-federation`, `[react, vue]`, `webpack`, quatro unidades e `monorepo`; sem decisão aberta (`draft`). A cadeia container → três remotos (cada remote expõe um bootstrap com `mount`, montado pelo container em uma rota, inclusive a unidade Vue 3) está confirmada em nomes, arquivos, entradas e código. Ressalva operacional verificada: `auth.yml:32` e `dashboard.yml:32` invalidam apenas `/auth/latest/index.html` e `/dashboard/latest/index.html`, enquanto o host consome `remoteEntry.js`; a atualização de cache dos remotes pode não ocorrer, o que limita a alegação de deploy produtivo plenamente operacional, sem desfazer a composição nem o deploy por pacote. Q2 deve usar `src/index.js` e `package.json:4–6` de cada pacote, e não o curinga `config/webpack.*.js`; as buscas negativas por imports devem registrar escopo e termos. A árvore (`git ls-tree`) e os resultados SQLite são dados estruturados, sem linhas de texto.
+- **RQ2:** integration through `mount(el, props)` exposed by each remote, framework-independent (React and Vue 3), with routing synchronization between memory history and browser history and authentication state passed through callback.
+- **RQ3:** one CI/CD workflow per unit, with `paths` filter, publishing to `/<pacote>/latest/` (the original placeholder means package) on S3 and invalidating CloudFront. Explicit independent deployment.
+- **Protocol (search):** four queries match, including code search in the container's `webpack.dev.js`. Plural hit `"micro frontends"` has no literal spelling. Eligibility changes from `unknown` (001) to `pass` (002).
+- **Independent review contribution (Lupa):** full agreement with MFE-implemented, Q1–Q5 Yes, `module-federation`, `[react, vue]`, `webpack`, four units and `monorepo`; no open decision (`draft`). The container → three remotes chain (each remote exposes a bootstrap with `mount`, mounted by the container in a route, including the Vue 3 unit) is confirmed in names, files, entries and code. Verified operational caveat: `auth.yml:32` and `dashboard.yml:32` invalidate only `/auth/latest/index.html` and `/dashboard/latest/index.html`, while the host consumes `remoteEntry.js`; remote cache updates may not occur, limiting the claim of fully operational production deployment, without undoing composition or per-package deployment. Q2 should use `src/index.js` and `package.json:4–6` of each package, rather than wildcard `config/webpack.*.js`; negative import searches should record scope and terms. Tree (`git ls-tree`) and SQLite results are structured data, without text lines.

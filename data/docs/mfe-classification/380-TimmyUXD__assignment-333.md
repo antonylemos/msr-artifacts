@@ -20,74 +20,74 @@ annotation:
 
 # 380 — TimmyUXD/assignment-333
 
-## Contexto
+## Context
 
-Site WordPress criado a partir do template `cd-wordpress` (WordPress Playground com banco SQLite versionado, CLI `wp-pwa` e deploy em GitHub Pages). O site, “assignment 3”, é um catálogo de vinhos: tema-filho `economics-child` sobre `economics` e o plugin `ecommerce-product-catalog`. O README é o texto do template: descreve o projeto como “consumer of microfrontends” e aponta um exemplo externo (`README.md:1–15`). O nome do repositório não é usado como evidência.
+WordPress site created from template `cd-wordpress` (WordPress Playground with versioned SQLite database, CLI `wp-pwa` and GitHub Pages deployment). The site, “assignment 3”, is a wine catalog: child theme `economics-child` over `economics` and plugin `ecommerce-product-catalog`. The README is template text: it describes the project as a “consumer of microfrontends” and points to an external example (`README.md:1–15`). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:381` registra rank 380, ID 1177333595, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:381` records rank 380, ID 1177333595, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-O banco `wp-content/database/.ht.sqlite` do SHA foi lido com `sqlite3 -readonly` numa cópia temporária fora do repositório, removida após a consulta.
+Database `wp-content/database/.ht.sqlite` at the SHA was read with `sqlite3 -readonly` in a temporary copy outside the repository, removed after the query.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:381` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:26174` (`unknown`, `recent-human-commit` com `activity_incomplete`) e `data/discovery/mfe-round-002/candidates.csv:26181` (`pass`), ambos com `terminology`.
+`data/samples/mfe-sample-001/sample.csv:381` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:26174` (`unknown`, `recent-human-commit` with `activity_incomplete`) and `data/discovery/mfe-round-002/candidates.csv:26181` (`pass`), both with `terminology`.
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories` e com `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories` and with an empty `path`:
 
-| Consulta (`q`) | Subconsulta | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Collection 001 / 002 (UTC) |
 |---|---|---|
 | `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | `…#created:2026-03` | 2026-10-07T20:15:07.163Z / 2026-10-08T15:41:35.968Z |
 | `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | `…#created:2026-03` | 2026-10-07T22:11:29.411Z / 2026-10-08T15:49:19.998Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2026-03-01..2026-03-31`.
+The effective queries append `pushed:>=2025-04-01 created:2026-03-01..2026-03-31`.
 
-Metadados do hit (iguais nas duas rodadas): descrição nula, sem tópicos, linguagem PHP, licença MIT, `fork: false`, tamanho 27600, criação em 2026-03-09T23:38:44Z, push em 2026-03-16T23:20:37Z.
+Hit metadata (identical in both rounds): null description, no topics, language PHP, MIT license, `fork: false`, size 27600, created at 2026-03-09T23:38:44Z, pushed at 2026-03-16T23:20:37Z.
 
-**Grafias:** as duas estão em `README.md:13` (“The idea of this is as a consumer of microfrontends. There is an example microfrontend for [paypal standard](https://github.com/diy-pwa/paypal-microfrontend) here.”).
+**Spellings:** both are in `README.md:13` (“The idea of this is as a consumer of microfrontends. There is an example microfrontend for [paypal standard](https://github.com/diy-pwa/paypal-microfrontend) here.”).
 
-O README vem do commit inicial `8b2065f` (2026-03-09) e não foi alterado depois. É o mesmo blob (`7451429`) do README do final 119, ou seja, texto do template. O README do SHA não é posterior às buscas.
+The README comes from initial commit `8b2065f` (2026-03-09) and was not changed later. It is the same blob (`7451429`) as the README of final 119, that is, template text. The README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 1.262 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Seis arquivos do template na raiz (`README.md`, `package.json`, `.github/workflows/main.yml`, `.gitignore`, `LICENSE.txt`, `.devcontainer/devcontainer.json`) e `wp-content/` do Playground. Em `wp-content/`: banco SQLite, mu-plugins, plugins `ecommerce-product-catalog` (668 arquivos), `akismet` e `tiny-gtag-js-analytics`, temas padrão `twentytwenty*`, `economics`, `economics-child` e `wpico`, e `uploads/2026` (35 arquivos). | contexto |
-| Configuração / Build | `package.json:2–10`: só `wp-pwa` (`dev`, `preview`, `build assignment-333`); nenhum bundler nem configuração de composição. | contrária |
-| Conteúdo (banco) | `wp_options`: `template` = `economics`, `stylesheet` = `economics-child`, `blogname` = “assignment 3” e plugins ativos `ecommerce-product-catalog` e `tiny-gtag-js-analytics`. `wp_posts` publicados: “Hello world!”, “Sample Page”, “Products”, navegação, estilos globais e cinco `al_product` de vinhos. Busca em `post_content` por `<script`, `<x-`, `iframe`, `microfrontend`, `paypal` e `x-year`: nenhuma ocorrência. | contrária |
-| Tema (scripts) | `wp-content/themes/economics-child/functions.php:6–14`: enfileira os estilos e o script local `customElements.js`. `wp-content/themes/economics-child/customElements.js:1–7` define `<x-year>`, com o mesmo blob (`6a4b5cd`) do modelo `wp-content/mu-plugins/one-click-child-theme/templates/customElements.js`. É código gerado pelo plugin de tema-filho, não usado no conteúdo (busca acima). | ausente |
-| Tecnologia / Composição (busca) | `git grep` no SHA por `microfrontend`, `micro-frontend`, `paypal-micro`, `remoteEntry` e `customElements.define`, fora dos plugins de terceiros grandes: só `README.md:13` e os dois `customElements.js` acima. Os `wp_enqueue_script` e `<script src=` dos temas e plugins carregam só arquivos locais ou o Google Tag Manager (`wp-content/plugins/tiny-gtag-js-analytics/tiny-gtag-js-analytics.php:483`). | ausente |
+| Structure | `git ls-tree -r` at the SHA: 1.262 entries, all regular files `100644`; zero symlinks and zero gitlinks. Six template files at the root (`README.md`, `package.json`, `.github/workflows/main.yml`, `.gitignore`, `LICENSE.txt`, `.devcontainer/devcontainer.json`) and Playground `wp-content/`. In `wp-content/`: SQLite database, mu-plugins, plugins `ecommerce-product-catalog` (668 files), `akismet` and `tiny-gtag-js-analytics`, standard themes `twentytwenty*`, `economics`, `economics-child` and `wpico`, and `uploads/2026` (35 files). | context |
+| Configuration / Build | `package.json:2–10`: only `wp-pwa` (`dev`, `preview`, `build assignment-333`); no bundler or composition configuration. | contrary |
+| Content (database) | `wp_options`: `template` = `economics`, `stylesheet` = `economics-child`, `blogname` = “assignment 3” and active plugins `ecommerce-product-catalog` and `tiny-gtag-js-analytics`. Published `wp_posts`: “Hello world!”, “Sample Page”, “Products”, navigation, global styles and five wine `al_product`. Search in `post_content` for `<script`, `<x-`, `iframe`, `microfrontend`, `paypal` and `x-year`: no occurrence. | contrary |
+| Theme (scripts) | `wp-content/themes/economics-child/functions.php:6–14`: enqueues styles and local script `customElements.js`. `wp-content/themes/economics-child/customElements.js:1–7` defines `<x-year>`, with the same blob (`6a4b5cd`) as template `wp-content/mu-plugins/one-click-child-theme/templates/customElements.js`. Code generated by the child-theme plugin, unused in content (search above). | absent |
+| Technology / Composition (search) | `git grep` at the SHA for `microfrontend`, `micro-frontend`, `paypal-micro`, `remoteEntry` and `customElements.define`, outside large third-party plugins: only `README.md:13` and the two `customElements.js` above. Theme and plugin `wp_enqueue_script` and `<script src=` load only local files or Google Tag Manager (`wp-content/plugins/tiny-gtag-js-analytics/tiny-gtag-js-analytics.php:483`). | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso e parcial (`blob:none`). São 3 commits alcançáveis a partir do SHA (5 em todos os refs, incluindo os deploys de `origin/gh-pages`), sem merges:
-- `8b2065f` (2026-03-09, “Initial commit”, `Timmy Fatukasi <timmyking05@gmail.com>`, committer GitHub): o template;
-- `2968aec` (2026-03-10, “wines pt2”, `Timmy Fatukasi`): adiciona `wp-content/` (banco, mu-plugins, plugins, temas e uploads);
-- `cad8a78` (2026-03-16, “add folder for wp-pwa build”), o SHA: altera só `package.json`.
+Non-shallow, partial clone (`blob:none`). There are 3 commits reachable from the SHA (5 across all refs, including deployments on `origin/gh-pages`), without merges:
+- `8b2065f` (2026-03-09, “Initial commit”, `Timmy Fatukasi <timmyking05@gmail.com>`, committer GitHub): the template;
+- `2968aec` (2026-03-10, “wines pt2”, `Timmy Fatukasi`): adds `wp-content/` (database, mu-plugins, plugins, themes and uploads);
+- `cad8a78` (2026-03-16, “add folder for wp-pwa build”), the SHA: changes only `package.json`.
 
-Os commits de `gh-pages` são de `TimmyUXD` (“deploy: …”).
+Commits on `gh-pages` are by `TimmyUXD` (“deploy: …”).
 
-`git rev-list --objects $SHA --missing=print` lista 1 objeto ausente, `75eb2e7`: o `package.json` anterior ao SHA, igual ao do template no final 119. Não pertence à árvore do SHA.
+`git rev-list --objects $SHA --missing=print` lists 1 missing object, `75eb2e7`: `package.json` before the SHA, identical to the template in final 119. It is not part of the SHA tree.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Um site WordPress (tema-filho + catálogo), sem duas unidades próprias nem referência de composição a unidades externas. O conteúdo do banco não carrega script ou elemento de outra origem (busca registrada). |
-| Q2 | No | Não há conjunto de unidades com entradas ou builds próprios; `package.json:2–10` só tem os comandos globais do site. |
-| Q3 | No | Não há host que monte unidades: o tema renderiza o conteúdo WordPress, e o único custom element (`x-year`) é código gerado não usado. |
-| Q4 | No | Nenhum mecanismo de composição configurado. A menção do README (`README.md:13`) é texto do template, e o exemplo PayPal citado não é carregado pelo site. |
-| Q5 | No | Q1–Q4 convergem. |
+| Q1 | No | One WordPress site (child theme + catalog), without two own units or a composition reference to external units. Database content loads no script or element from another origin (recorded search). |
+| Q2 | No | There is no set of units with their own entries or builds; `package.json:2–10` has only global site commands. |
+| Q3 | No | No host mounting units: the theme renders WordPress content, and the only custom element (`x-year`) is unused generated code. |
+| Q4 | No | No composition mechanism configured. README mention (`README.md:13`) is template text, and the cited PayPal example is not loaded by the site. |
+| Q5 | No | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “conventional frontend monoliths” e a menção temática sem composição.
-- Mesmo enquadramento do final 119 e dos rascunhos 160/206/224 da família `cd-wordpress`. Difere de 049 (script de outra origem e elemento no conteúdo) e de 260 (módulos remotos enfileirados no tema): aqui não há carga externa.
-- Plugins e temas de terceiros (catálogo, Akismet, temas padrão, `economics`) não contam como unidades nem como composição autoral (cuidados de 074/080/102).
-- `frontend_units: 1` (o site), `single-unit`, `ui_technologies: [wordpress]`, `build_tools: []` (CLI `wp-pwa`) e `repo_type: example` seguem 119.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. It matches “conventional frontend monoliths” and thematic mention without composition.
+- Same categorization as final 119 and drafts 160/206/224 of family `cd-wordpress`. It differs from 049 (script from another origin and element in content) and 260 (remote modules enqueued in the theme): here there is no external loading.
+- Third-party plugins and themes (catalog, Akismet, standard themes, `economics`) do not count as units or authorial composition (cautions from 074/080/102).
+- `frontend_units: 1` (the site), `single-unit`, `ui_technologies: [wordpress]`, `build_tools: []` (CLI `wp-pwa`) and `repo_type: example` follow 119.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **Protocolo (família):** a filiação ao template `cd-wordpress` é verificável por blobs: `README.md` (`7451429`) e `.github/workflows/main.yml` (`a4a3cb6`) são iguais aos do final 119. O `package.json` foi alterado no SHA (nome do build).
-- **RQ1 (sinais enganosos):** o README do template (“consumer of microfrontends”, `README.md:13`) leva trabalhos da disciplina às consultas terminológicas, mas a composição depende do conteúdo de cada site; aqui não há nenhuma.
-- **Protocolo:** a elegibilidade muda de `unknown` (001) para `pass` (002).
+- **Protocol (family):** membership in template family `cd-wordpress` is verifiable through blobs: `README.md` (`7451429`) and `.github/workflows/main.yml` (`a4a3cb6`) match final 119. `package.json` was changed at the SHA (build name).
+- **RQ1 (misleading signals):** the template README (“consumer of microfrontends”, `README.md:13`) brings course assignments into terminology queries, but composition depends on each site’s content; here there is none.
+- **Protocol:** eligibility changes from `unknown` (001) to `pass` (002).

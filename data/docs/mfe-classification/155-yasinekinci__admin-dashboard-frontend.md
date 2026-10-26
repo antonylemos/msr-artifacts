@@ -20,73 +20,73 @@ annotation:
 
 # 155 — yasinekinci/admin-dashboard-frontend
 
-## Contexto
+## Context
 
-Projeto Vite + React + TypeScript recém-criado, com o código padrão do scaffold (contador e logos em `src/App.tsx:6–33`), e workflow de deploy para Azure Static Web Apps. O README é uma lista de tópicos a estudar ou aplicar (React, Redux, autenticação, estilos, testes, CI/CD etc.), entre os quais “Micro Frontend” (`README.md:3–7`). Não há implementação além do scaffold. O nome do repositório não é usado como evidência.
+Newly created Vite + React + TypeScript project, with default scaffold code (counter and logos in `src/App.tsx:6–33`) and an Azure Static Web Apps deployment workflow. The README is a list of topics to study or apply (React, Redux, authentication, styles, tests, CI/CD etc.), including “Micro Frontend” (`README.md:3–7`). There is no implementation beyond the scaffold. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:156` registra rank 155, ID 977898028, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:156` records rank 155, ID 977898028, status `cloned`, branch `main` and the front matter commit, which is HEAD of the clone and `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:156` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:13655` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:13661` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:156` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:13655` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:13661` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2025-05` e `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2025-05` and empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | 2026-10-07T22:21:59.654Z / 2026-10-08T15:54:21.435Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | 2026-10-07T22:53:14.512Z / 2026-10-08T16:05:40.430Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2025-05-01..2025-05-31`.
+Effective queries append `pushed:>=2025-04-01 created:2025-05-01..2025-05-31`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem CSS, `fork: false`, tamanho 48;
-- criação em 2025-05-05T06:35:03Z, push em 2025-05-07T10:54:27Z;
+Hit metadata:
+- null description, no topics, language CSS, `fork: false`, size 48;
+- created at 2025-05-05T06:35:03Z, pushed at 2025-05-07T10:54:27Z;
 - homepage `lemon-hill-09b3ffd10.6.azurestaticapps.net`.
 
-Sem descrição, o acerto vem de `README.md:4`, “Micro Frontend”, única ocorrência. A forma plural “micro frontends” não aparece no README; esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+Without a description, the hit comes from `README.md:4`, “Micro Frontend”, the only occurrence. The plural form “micro frontends” does not appear in the README; that hit depends on GitHub search text processing, which is not recorded.
 
-A última alteração do README é o próprio SHA, `3d2dcd7` (2025-05-05), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The README's last change is the SHA itself, `3d2dcd7` (2025-05-05), before October 2026 collection. The SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 18 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Há um único projeto Vite na raiz (`package.json`, `vite.config.ts`, `index.html`, `src/` com `App.tsx`, `main.tsx`, CSS e `assets/react.svg`) e um workflow. | contrária |
-| Código-fonte | `src/main.tsx:6–10` monta `App`. `src/App.tsx:1–35` é o template padrão do Vite (contador, logos). Os imports são internos. | contrária |
-| Configuração / Build/deploy | `vite.config.ts:5–7`: só `react()`. `package.json:6–27`: `tsc -b && vite build`, dependências só `react`/`react-dom`. `.github/workflows/azure-static-web-apps-lemon-hill-09b3ffd10.yml:22–33`: deploy único de `dist` na Azure. | contrária |
-| Documentação | `README.md:1–61`: lista de tópicos (“React / Micro Frontend / Function vs Class Components / Hooks / formik”, Redux, Auth, Ant Design etc.), sem descrição de arquitetura implementada. | fraca |
-| Tecnologia / Configuração / Composição (busca) | `git grep -i` no SHA (exceto `package-lock.json`) por `micro.?front`, `federation`, `single-spa`, `remoteEntry`, `customElements` e `iframe`: só `README.md:4`. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 18 entries, all regular `100644` files; zero symlinks and zero gitlinks. A single Vite project is at the root (`package.json`, `vite.config.ts`, `index.html`, `src/` with `App.tsx`, `main.tsx`, CSS and `assets/react.svg`) and a workflow. | contrary |
+| Source code | `src/main.tsx:6–10` mounts `App`. `src/App.tsx:1–35` is the default Vite template (counter, logos). Imports are internal. | contrary |
+| Configuration / Build/deploy | `vite.config.ts:5–7`: only `react()`. `package.json:6–27`: `tsc -b && vite build`, dependencies only `react`/`react-dom`. `.github/workflows/azure-static-web-apps-lemon-hill-09b3ffd10.yml:22–33`: single deployment of `dist` to Azure. | contrary |
+| Documentation | `README.md:1–61`: topic list (“React / Micro Frontend / Function vs Class Components / Hooks / formik”, Redux, Auth, Ant Design etc.), without a description of implemented architecture. | weak |
+| Technology / Configuration / Composition (search) | `git grep -i` at the SHA (except `package-lock.json`) for `micro.?front`, `federation`, `single-spa`, `remoteEntry`, `customElements` and `iframe`: only `README.md:4`. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso. O SHA tem 6 commits, nenhum merge, todos de Yasin Ekinci com dois e-mails, `@dzdtech.com` e `@yandex.com`, em 2025-05-05. Pelo `git log --no-renames --name-status`:
-- a raiz `9149e56` (“Initial commit”, via GitHub) adiciona `.gitignore` e `README.md`;
-- `b46c245` (“create react vite app”) adiciona o scaffold;
-- `81fa867` e `e6f7db0` tratam do workflow da Azure;
-- `973f7f9` e o SHA `3d2dcd7` alteram só o README.
+Non-shallow clone. The SHA has 6 commits, no merges, all by Yasin Ekinci with two email addresses, `@dzdtech.com` and `@yandex.com`, on 2025-05-05. According to `git log --no-renames --name-status`:
+- root `9149e56` (“Initial commit”, through GitHub) adds `.gitignore` and `README.md`;
+- `b46c245` (“create react vite app”) adds the scaffold;
+- `81fa867` and `e6f7db0` concern the Azure workflow;
+- `973f7f9` and SHA `3d2dcd7` change only the README.
 
-O branch `origin/first` (`e917bcd`, 2025-05-07) descende do SHA e tem commits de teste (“deneme”, “deneme2”, “deneme3”) de Ali Yurtsever, mais um merge de PR. O `pushed_at` corresponde a ele. Esse branch não foi considerado. Nenhum blob histórico foi lido. O clone é parcial (`blob:none`) e `git rev-list --objects --missing=print` no SHA reporta cinco blobs promisor ausentes; as árvores, os metadados dos seis commits e os arquivos do snapshot foram lidos localmente, sem rede.
+Branch `origin/first` (`e917bcd`, 2025-05-07) descends from the SHA and has test commits (“deneme”, “deneme2”, “deneme3”) by Ali Yurtsever, plus a PR merge. English translation of the original Turkish commit titles: “test”, “test two”, “test three”. `pushed_at` corresponds to this branch. This branch was not considered. No historical blob was read. The clone is partial (`blob:none`) and `git rev-list --objects --missing=print` at the SHA reports five missing promisor blobs; trees, metadata for the six commits and snapshot files were read locally, without network.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única aplicação (scaffold Vite); nenhuma configuração de composição referencia outras unidades. |
-| Q2 | No | Não há segunda unidade cuja independência possa ser avaliada. |
-| Q3 | No | Não há host compondo unidades. |
-| Q4 | No | Nenhum mecanismo de composição configurado (`vite.config.ts:5–7`; busca registrada). |
-| Q5 | No | Q1–Q4 são No: scaffold com lista de tópicos que cita micro-frontends. |
+| Q1 | No | A single application (Vite scaffold); no composition configuration references other units. |
+| Q2 | No | There is no second unit whose independence could be assessed. |
+| Q3 | No | No host composes units. |
+| Q4 | No | No composition mechanism configured (`vite.config.ts:5–7`; recorded search). |
+| Q5 | No | Q1–Q4 are No: scaffold with a topic list mentioning micro-frontends. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “repositories mentioning micro-frontends without implementing them” e a “conventional frontend monoliths”, aqui em estado de scaffold.
-- O termo é conteúdo de lista de estudo, como em 023. Há uma aplicação mínima real, por isso `frontend_units: 1` e `single-unit`, e não 0 como nos perfis sem implementação (011/064/068/073/077/101/111).
-- `repo_type: other`: repositório inicial de estudo ou planejamento sem caráter de exemplo de MFE, template ou produto. `ui_technologies: [react]`, `build_tools: [vite]`.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. Matches “repositories mentioning micro-frontends without implementing them” and “conventional frontend monoliths”, here at the scaffold stage.
+- The term is study list content, as in 023. There is a minimal real application, hence `frontend_units: 1` and `single-unit`, rather than 0 as in profiles without implementation (011/064/068/073/077/101/111).
+- `repo_type: other`: initial study or planning repository without the character of an MFE example, template or product. `ui_technologies: [react]`, `build_tools: [vite]`.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** README em forma de lista de tópicos de estudo, com “Micro Frontend” como item, sobre um scaffold Vite.
-- **Protocolo (busca):** o hit plural `"micro frontends"` não tem grafia correspondente. A elegibilidade muda de `unknown` (001) para `pass` (002).
-- **Contribuição da revisão independente (Lupa):** concordância integral com Non-MFE, Q1–Q5 No, uma unidade (`index.html` → `src/main.tsx` → `src/App.tsx`), `single-unit` e `other`; sem decisão aberta. Correção adotada: a frase de que não havia objeto ausente foi substituída (cinco blobs promisor ausentes, verificado). O ramo `origin/first` descende do SHA, com commits `deneme` em `src/App.css` e um merge, e só altera `App.css` e README; não faz parte do snapshot avaliado.
+- **RQ1 (misleading signals):** README in study topic list form, with “Micro Frontend” as an item, on a Vite scaffold.
+- **Protocol (search):** the plural hit `"micro frontends"` has no corresponding spelling. Eligibility changes from `unknown` (001) to `pass` (002).
+- **Independent review contribution (Lupa):** full agreement with Non-MFE, Q1–Q5 No, one unit (`index.html` → `src/main.tsx` → `src/App.tsx`), `single-unit` and `other`; no open decision. Adopted correction: the sentence claiming no objects were missing was replaced (five missing promisor blobs, verified). Branch `origin/first` descends from the SHA, with `deneme` commits in `src/App.css` and a merge, and changes only `App.css` and README; it is not part of the assessed snapshot. English translation of the original commit label “deneme”: test.

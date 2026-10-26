@@ -20,62 +20,62 @@ annotation:
 
 # 361 — angelcolorado/endurance-ui
 
-## Contexto
+## Context
 
-SPA Angular (standalone, SSR, Tailwind) de logística de corridas, com módulos de autenticação, dashboard, eventos e logística (`src/app/features/`). O README a descreve como “Angular SPA — micro-frontend client for the EnduranceOps race logistics platform.” (`README.md:3`). No snapshot, porém, é uma aplicação Angular única, sem federação, host ou outra unidade. `ABOUT_ME.md:5` cita “arquitecturas de micro-frontends” como interesse do autor. O nome do repositório não é usado como evidência.
+Angular SPA (standalone, SSR, Tailwind) for race logistics, with authentication, dashboard, event and logistics modules (`src/app/features/`). The README describes it as “Angular SPA — micro-frontend client for the EnduranceOps race logistics platform.” (`README.md:3`). In the snapshot, however, it is a single Angular application, without federation, host or another unit. `ABOUT_ME.md:5` cites “arquitecturas de micro-frontends” (English translation: “micro-frontends architectures”) as an author interest. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:362` registra rank 361, ID 1265404002, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:362` records rank 361, ID 1265404002, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:362` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:31632` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:31640` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:362` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:31632` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:31640` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2026-06` e `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2026-06` and an empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | 2026-10-07T22:38:23.431Z / 2026-10-08T16:00:38.564Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | 2026-10-07T23:08:11.673Z / 2026-10-08T16:09:47.363Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2026-06-01..2026-06-30`.
+The effective queries append `pushed:>=2025-04-01 created:2026-06-01..2026-06-30`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem TypeScript, `fork: false`, tamanho 382;
-- criação em 2026-06-10T18:38:44Z, push em 2026-07-03T22:16:17Z.
+Hit metadata:
+- null description, no topics, language TypeScript, `fork: false`, size 382;
+- created at 2026-06-10T18:38:44Z, pushed at 2026-07-03T22:16:17Z.
 
-A grafia “micro-frontend” está em `README.md:3`. O plural não aparece no README; aparece em `ABOUT_ME.md:5`, fora dos campos buscados. Esse hit depende do processamento textual da busca do GitHub, que não está registrado. A última alteração do README é o próprio SHA (2026-07-03), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+Spelling “micro-frontend” is in `README.md:3`. The plural does not appear in the README; it appears in `ABOUT_ME.md:5`, outside the searched fields. This hit depends on GitHub search text processing, which is not recorded. The last README change is the SHA itself (2026-07-03), before the October 2026 collections. The README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 72 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Uma única aplicação Angular (`angular.json`, `src/app/`, `src/main.ts`, `src/main.server.ts`, `src/server.ts`) e documentos (`README.md`, `CLAUDE.md`, `ABOUT_ME.md`). | contrária |
-| Build | `angular.json`: um projeto com `@angular/build:application` (`:17`), `dev-server` (`:64`) e `unit-test` (`:76`). Nenhum builder de federação. | contrária |
-| Busca de mecanismos | `git grep` no SHA, sem lockfile, por `federation`, `remoteEntry`, `single-spa`, `iframe` e `loadRemote`: nada. | ausente |
-| Documentação | `README.md:3`: “micro-frontend client” para a plataforma, ou seja, o papel esperado do cliente, sem host nem composição no repositório. | fraca |
+| Structure | `git ls-tree -r` at the SHA: 72 entries, all regular files `100644`; zero symlinks and zero gitlinks. A single Angular application (`angular.json`, `src/app/`, `src/main.ts`, `src/main.server.ts`, `src/server.ts`) and documents (`README.md`, `CLAUDE.md`, `ABOUT_ME.md`). | contrary |
+| Build | `angular.json`: one project with `@angular/build:application` (`:17`), `dev-server` (`:64`) and `unit-test` (`:76`). No federation builder. | contrary |
+| Mechanism search | `git grep` at the SHA, without lockfile, for `federation`, `remoteEntry`, `single-spa`, `iframe` and `loadRemote`: nothing. | absent |
+| Documentation | `README.md:3`: “micro-frontend client” for the platform, meaning the client’s expected role, without host or composition in the repository. | weak |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 17 commits lineares, nenhum merge, todos de Angel Colorado, de 2026-06-10 a 2026-07-03 (SHA `7b53daa`). Há 12 branches `feat/*` remotos, não considerados. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 17 linear commits, no merges, all by Angel Colorado, from 2026-06-10 to 2026-07-03 (SHA `7b53daa`). There are 12 remote `feat/*` branches, not considered. No historical blob was read and there was no missing object.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única aplicação frontend; nenhuma outra unidade referenciada por configuração de composição. |
-| Q2 | No | Sem duas unidades, não há independência a avaliar. |
-| Q3 | No | Não há host, shell ou configuração raiz que componha unidades. |
-| Q4 | No | Nenhum mecanismo de composição configurado. |
-| Q5 | No | Q1–Q4 são No: SPA Angular convencional descrita como “micro-frontend client”. |
+| Q1 | No | A single frontend application; no other unit referenced by composition configuration. |
+| Q2 | No | Without two units, there is no independence to assess. |
+| Q3 | No | There is no host, shell or root configuration composing units. |
+| Q4 | No | No composition mechanism configured. |
+| Q5 | No | Q1–Q4 are No: conventional Angular SPA described as “micro-frontend client”. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “conventional frontend monoliths” e a “repositories mentioning micro-frontends without implementing them”.
-- Não é `MFE-unit`: não há nada que a prepare para composição por um host externo, como `exposes`, lifecycles ou Custom Elements.
-- **Campos:** `frontend_units: 1`, `unit_organization: single-unit`, `approaches: []`, `ui_technologies: [angular]`, `build_tools: [esbuild]` (builder `application` do Angular, como em 059 e 316), `repo_type: production`.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. It matches “conventional frontend monoliths” and “repositories mentioning micro-frontends without implementing them”.
+- It is not `MFE-unit`: nothing prepares it for composition by an external host, such as `exposes`, lifecycles or Custom Elements.
+- **Fields:** `frontend_units: 1`, `unit_organization: single-unit`, `approaches: []`, `ui_technologies: [angular]`, `build_tools: [esbuild]` (Angular `application` builder, as in 059 and 316), `repo_type: production`.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** “micro-frontend client” no README de uma SPA única casa as consultas terminológicas.
-- **Protocolo (busca):** o plural está só em `ABOUT_ME.md`, fora dos campos buscados. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ1 (misleading signals):** “micro-frontend client” in a single SPA README matches terminology queries.
+- **Protocol (search):** the plural is only in `ABOUT_ME.md`, outside the searched fields. Eligibility changes from `unknown` (001) to `pass` (002).

@@ -16,28 +16,28 @@ annotation:
 
 # 316 — Tutul33/mf-workspace
 
-## Leitura do repositório
+## Repository overview
 
-Workspace Angular único (um `package.json` e um `angular.json` na raiz) com três projetos ligados por Native Federation: `host-app`, `customer-app` e `orders-app`. Cada projeto tem o próprio target `build`, com o builder `@angular-architects/native-federation:build` (angular.json:17-18; angular.json:130-131; angular.json:243-244), que na configuração `production` delega ao alvo `esbuild` do mesmo projeto (angular.json:21-22; angular.json:134-135; angular.json:247-248), um `@angular/build:application` próprio (angular.json:59-60; angular.json:172-173; angular.json:285-286). Nenhum alvo define `outputPath`, e a pasta de saída `/dist` é ignorada pelo git (.gitignore:4). Os scripts da raiz só chamam o CLI: `start` = `ng serve`, `build` = `ng build`, `watch` = `ng build --watch --configuration development` (package.json:6-8), sem nome de projeto.
+Single Angular workspace (one `package.json` and one `angular.json` at root) with three projects linked by Native Federation: `host-app`, `customer-app` and `orders-app`. Each project has its own target `build`, with builder `@angular-architects/native-federation:build` (angular.json:17-18; angular.json:130-131; angular.json:243-244), delegating in configuration `production` to same project’s `esbuild` target (angular.json:21-22; angular.json:134-135; angular.json:247-248), its own `@angular/build:application` (angular.json:59-60; angular.json:172-173; angular.json:285-286). No target defines `outputPath`, and output directory `/dist` is ignored by git (.gitignore:4). Root scripts only call CLI: `start` = `ng serve`, `build` = `ng build`, `watch` = `ng build --watch --configuration development` (package.json:6-8), without project name.
 
-Tudo o que existe é de desenvolvimento. Cada projeto tem um `serve-original` com porta própria, 4200, 4301 e 4302 (angular.json:114; angular.json:227; angular.json:340), e o host aponta para os remotes em `http://localhost:4301/remoteEntry.json` e `http://localhost:4302/remoteEntry.json` (projects/host-app/src/app/app.routes.ts:9; projects/host-app/src/app/app.routes.ts:17). O README e o guia `angular_20_microfrontend_app_guide.md` mandam abrir três terminais com `ng serve` (README.md:189-191), o que não é deploy. A `.vscode/tasks.json` só roda os scripts `start` e `test` (.vscode/tasks.json:6-7; .vscode/tasks.json:24-25). Não há Dockerfile, compose, CI nem configuração de hospedagem no snapshot, e o `matches.csv` não tem ocorrências `ops-*`, `ci-*` ou `cfg-public-path`.
+Everything present is for development. Each project has `serve-original` with own port, 4200, 4301 and 4302 (angular.json:114; angular.json:227; angular.json:340), and host points to remotes at `http://localhost:4301/remoteEntry.json` and `http://localhost:4302/remoteEntry.json` (projects/host-app/src/app/app.routes.ts:9; projects/host-app/src/app/app.routes.ts:17). README and guide `angular_20_microfrontend_app_guide.md` instruct opening three terminals with `ng serve` (README.md:189-191), which is not deploy. The `.vscode/tasks.json` only runs scripts `start` and `test` (.vscode/tasks.json:6-7; .vscode/tasks.json:24-25). No Dockerfile, compose, CI or hosting configuration is present in snapshot, and `matches.csv` has no `ops-*`, `ci-*` or `cfg-public-path` occurrences.
 
-## Aplicações
+## Applications
 
-| # | Aplicação | Build | Deploy | Onde é servida | Versionamento | Artefatos |
+| # | Application | Build | Deploy | Where served | Versioning | Artifacts |
 |---|---|---|---|---|---|---|
-| 1 | projects/customer-app | separado | não observado | `http://localhost:4301` em desenvolvimento (angular.json:227; projects/host-app/src/app/app.routes.ts:9) | No | angular.json:130-135 (target `build` próprio, native-federation); angular.json:172-173 (alvo `esbuild` próprio, `@angular/build:application`) |
-| 2 | projects/host-app | separado | não observado | `http://localhost:4200` em desenvolvimento (angular.json:114) | No | angular.json:17-22 (target `build` próprio, native-federation); angular.json:59-60 (alvo `esbuild` próprio, `@angular/build:application`) |
-| 3 | projects/orders-app | separado | não observado | `http://localhost:4302` em desenvolvimento (angular.json:340; projects/host-app/src/app/app.routes.ts:17) | No | angular.json:243-248 (target `build` próprio, native-federation); angular.json:285-286 (alvo `esbuild` próprio, `@angular/build:application`) |
+| 1 | projects/customer-app | separate | not observed | `http://localhost:4301` in development (angular.json:227; projects/host-app/src/app/app.routes.ts:9) | No | angular.json:130-135 (own target `build`, native-federation); angular.json:172-173 (own target `esbuild`, `@angular/build:application`) |
+| 2 | projects/host-app | separate | not observed | `http://localhost:4200` in development (angular.json:114) | No | angular.json:17-22 (own target `build`, native-federation); angular.json:59-60 (own target `esbuild`, `@angular/build:application`) |
+| 3 | projects/orders-app | separate | not observed | `http://localhost:4302` in development (angular.json:340; projects/host-app/src/app/app.routes.ts:17) | No | angular.json:243-248 (own target `build`, native-federation); angular.json:285-286 (own target `esbuild`, `@angular/build:application`) |
 
-## Observações
+## Observations
 
-**1. projects/customer-app.** O build é separado: o projeto tem target `build` e alvo `esbuild` próprios, com entrada em projects/customer-app/src/main.ts (angular.json:130-135; angular.json:172-175), e gera o `remoteEntry.json` que o host carrega da porta 4301 (projects/host-app/src/app/app.routes.ts:9). Essa porta é a do `serve-original` (angular.json:227), só de desenvolvimento, e nenhum artefato do snapshot publica a aplicação, daí `não observado`. Não há versão própria: o único `version` é o `0.0.0` do workspace (package.json:3), sem uso em publicação.
+**1. projects/customer-app.** Separate build: project has its own target `build` and target `esbuild`, with entry at projects/customer-app/src/main.ts (angular.json:130-135; angular.json:172-175), generating `remoteEntry.json` loaded by host from port 4301 (projects/host-app/src/app/app.routes.ts:9). This port belongs to `serve-original` (angular.json:227), development-only, and no snapshot artifact publishes application, hence `not observed`. No own version: the only `version` is workspace `0.0.0` (package.json:3), unused in publication.
 
-**2. projects/host-app.** Mesma forma: target `build` e alvo `esbuild` próprios (angular.json:17-22; angular.json:59-60), servido em desenvolvimento na porta 4200 (angular.json:114). Os endereços dos remotes ficam escritos em código como `localhost` (projects/host-app/src/app/app.routes.ts:9; projects/host-app/src/app/app.routes.ts:17), sem configuração por ambiente, o que reforça que o repositório não traz uma forma de publicação.
+**2. projects/host-app.** Same arrangement: own target `build` and target `esbuild` (angular.json:17-22; angular.json:59-60), served in development on port 4200 (angular.json:114). Remote addresses are written in code as `localhost` (projects/host-app/src/app/app.routes.ts:9; projects/host-app/src/app/app.routes.ts:17), without per-environment configuration, reinforcing repository’s lack of a publication method.
 
-**3. projects/orders-app.** Igual ao customer-app: target `build` e alvo `esbuild` próprios (angular.json:243-248; angular.json:285-286), `remoteEntry.json` consumido pelo host na porta 4302 (projects/host-app/src/app/app.routes.ts:17; angular.json:340), sem deploy nem versão própria.
+**3. projects/orders-app.** Like customer-app: own target `build` and target `esbuild` (angular.json:243-248; angular.json:285-286), `remoteEntry.json` consumed by host on port 4302 (projects/host-app/src/app/app.routes.ts:17; angular.json:340), without deploy or own version.
 
-## Resumo
+## Summary
 
-Aplicações: 3. Build (separado: 3). Deploy (não observado: 3). Versionamento independente: 0.
+Applications: 3. Build (separate: 3). Deploy (not observed: 3). Independent versioning: 0.

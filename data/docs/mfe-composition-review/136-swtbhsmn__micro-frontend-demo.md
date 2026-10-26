@@ -20,23 +20,24 @@ annotation:
 
 # 136 — swtbhsmn/micro-frontend-demo
 
-## Leitura do repositório
+## Repository overview
 
-Demonstração mínima de Module Federation do webpack com duas aplicações React no mesmo repositório (README.txt:1-5): `app1` é o host e `app2` é o remote. As duas usam o `ModuleFederationPlugin` que vem no próprio webpack (app1/webpack.config.js:2; app2/webpack.config.js:2), e não um pacote separado; por isso a revisão de dependências não tem linha de tecnologia. O app2 se publica como `app2` com `remoteEntry.js` e expõe um único componente, `./RemoteApp` (app2/webpack.config.js:29-32). O app1 declara esse remote (app1/webpack.config.js:30-31), carrega o componente com `React.lazy` e o renderiza dentro de `Suspense` (app1/src/App.jsx:2, 8-10). As duas compartilham `react` e `react-dom` como singletons (app1/webpack.config.js:33; app2/webpack.config.js:34).
+A minimal webpack Module Federation demonstration with two React applications in the same repository (README.txt:1-5): `app1` is the host and `app2` is the remote. Both use the `ModuleFederationPlugin` bundled with webpack (app1/webpack.config.js:2; app2/webpack.config.js:2), rather than a separate package; hence the dependency review has no technology row. App2 publishes as `app2` with `remoteEntry.js` and exposes a single component, `./RemoteApp` (app2/webpack.config.js:29-32). App1 declares this remote (app1/webpack.config.js:30-31), loads the component with `React.lazy` and renders it inside `Suspense` (app1/src/App.jsx:2, 8-10). Both share `react` and `react-dom` as singletons (app1/webpack.config.js:33; app2/webpack.config.js:34).
 
-O repositório é só um exemplo de uso: o componente remoto é um `div` com uma frase (app2/src/RemoteApp.jsx:3-5), não há props nem troca de dados entre as unidades, e as duas configurações estão em modo development, com servidores locais nas portas 3001 e 3002 (app1/webpack.config.js:7-9; app2/webpack.config.js:7-9). O app2 também roda sozinho, renderizando o mesmo componente na sua própria página (app2/src/bootstrap.js:3-6); esse modo isolado não é relação.
+The repository is only a usage example: the remote component is a `div` with a sentence (app2/src/RemoteApp.jsx:3-5), there are no props or data exchanges between units, and both configurations are in development mode, with local servers on ports 3001 and 3002 (app1/webpack.config.js:7-9; app2/webpack.config.js:7-9). App2 also runs independently, rendering the same component on its own page (app2/src/bootstrap.js:3-6); this isolated mode is not a relationship.
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | app1 | app2 | host → remote | origem → destino | module-federation | Yes | Yes | app1/webpack.config.js:30-31 (remote `app2` em `http://localhost:3002/remoteEntry.js`); app2/webpack.config.js:29-32 (`name: "app2"`, `filename: "remoteEntry.js"`, expõe `./RemoteApp`); app2/webpack.config.js:9 (porta 3002) | app1/src/App.jsx:2; app1/src/App.jsx:9 |
+| 1 | app1 | app2 | host → remote | source → target | module-federation | Yes | Yes | app1/webpack.config.js:30-31 (remote `app2` at `http://localhost:3002/remoteEntry.js`); app2/webpack.config.js:29-32 (`name: "app2"`, `filename: "remoteEntry.js"`, exposes `./RemoteApp`); app2/webpack.config.js:9 (port 3002) | app1/src/App.jsx:2; app1/src/App.jsx:9 |
 
-## Observações
+## Observations
 
-**1. app1 → app2.** O remote `app2@…/remoteEntry.js` declarado pelo host (app1/webpack.config.js:31) corresponde à unidade app2 pelo `name: "app2"` e pelo `filename: "remoteEntry.js"` (app2/webpack.config.js:29-30); a porta 3002 (app2/webpack.config.js:9) só corrobora. O módulo importado, `app2/RemoteApp` (app1/src/App.jsx:2), é o `./RemoteApp` exposto em app2/webpack.config.js:31-32. A relação é ativa porque o componente é renderizado no `App` do host (app1/src/App.jsx:9), e esse `App` é montado na entrada (app1/src/index.js:1 → app1/src/bootstrap.js:3, 6).
+**1. app1 → app2.** The `app2@…/remoteEntry.js` remote declared by the host (app1/webpack.config.js:31) matches the app2 unit through `name: "app2"` and `filename: "remoteEntry.js"` (app2/webpack.config.js:29-30); port 3002 (app2/webpack.config.js:9) only corroborates. The imported module, `app2/RemoteApp` (app1/src/App.jsx:2), is the `./RemoteApp` exposed in app2/webpack.config.js:31-32. The relationship is active because the component is rendered in the host's `App` (app1/src/App.jsx:9), and that `App` is mounted at the entry point (app1/src/index.js:1 → app1/src/bootstrap.js:3, 6).
 
-## Resumo
+## Summary
 
-Relações: 1 (host → remote: 1). Ativas: 1. Destino fora do snapshot: 0.
-Unidades sem relação: nenhuma.
+Relationships: 1 (host → remote: 1). Active: 1. Target outside the snapshot: 0.
+Units without a relationship: none.
+

@@ -13,32 +13,32 @@ annotation:
 
 # 245 — dvreddy007/mfe-sample
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem 2 commits, de 2025-05-17 a 2025-05-25, sem merges. O primeiro, `e4a97c4` (2025-05-17, "push first commit"), cria de uma vez todo o código: os `package.json` da raiz e dos três pacotes, o `lerna.json`, o `README.md`, os `vite.config.js`, o manifesto de rotas, o `Loader.vue`, o plugin de federação e os `entry.js` dos remotes. O segundo, `d4cef45` (2025-05-25, "Add or update the Azure App Service build and deployment workflow config"), é o snapshot e só cria `.github/workflows/main_vdumpavue3.yml`. Nenhum arquivo do primeiro commit muda depois: os identificadores dos objetos de `README.md`, `lerna.json`, `package.json`, `packages/host/vite.config.js` e `packages/host/src/routeManifest.js` são os mesmos em `e4a97c4` e no snapshot.
+History up to snapshot has 2 commits, from 2025-05-17 to 2025-05-25, without merges. First, `e4a97c4` (2025-05-17, "push first commit"), creates all code at once: root and three package `package.json` files, `lerna.json`, `README.md`, `vite.config.js` files, route manifest, `Loader.vue`, federation plugin and remote `entry.js` files. Second, `d4cef45` (2025-05-25, "Add or update the Azure App Service build and deployment workflow config"), is snapshot and creates only `.github/workflows/main_vdumpavue3.yml`. No first-commit file changes afterward: object identifiers of `README.md`, `lerna.json`, `package.json`, `packages/host/vite.config.js` and `packages/host/src/routeManifest.js` are identical in `e4a97c4` and snapshot.
 
-O código, o README e as configurações já estão no primeiro commit, então são primeira presença observável, não introdução: o histórico não diz onde nem em que ordem foram feitos antes. Também não há versão anterior para comparar com o README, que manda clonar outro repositório (README.md:41-42). A única introdução que o histórico mostra é a do workflow do Azure.
+Code, README and configurations already exist in first commit, so this is first observable presence rather than introduction: history does not say where or in what order they were developed before. There is also no earlier version to compare with README, instructing cloning another repository (README.md:41-42). Only introduction shown by history is Azure workflow.
 
-## Pontos
+## Points
 
-| # | Ponto | Origem | Pergunta | Commits | Resultado |
+| # | Point | Origin | Question | Commits | Result |
 |---|---|---|---|---|---|
-| 1 | O `lerna` é declarado e só aparece no script `dev` da raiz, com `lerna.json` mínimo | 3.4.2 (package.json:12); 3.4.7 #12 | uso de dependência | e4a97c4 2025-05-17 push first commit | inconclusivo |
-| 2 | O workflow do Azure publica o zip do repositório inteiro sem construir nenhum pacote, e o deploy das três aplicações ficou `Undetermined` | 3.4.6 #1, #2, #3; 3.4.7 #1 | ativo ou abandonado | e4a97c4 2025-05-17 push first commit; d4cef45 2025-05-25 Add or update the Azure App Service build and deployment workflow config | inconclusivo |
-| 3 | O README atribui rotas e roteamento próprios aos micro frontends e atualização de rotas em tempo de execução, e as rotas são fixas no manifesto do host | 3.4.7 #5, #7, #13 | estágios em conflito | e4a97c4 2025-05-17 push first commit | inconclusivo |
-| 4 | O comentário do `filename` do host fala nos módulos remotos do próprio host, e o host não tem `exposes` | 3.4.7 #18 | ativo ou abandonado | e4a97c4 2025-05-17 push first commit | inconclusivo |
+| 1 | The `lerna` is declared and appears only in root `dev` script, with minimal `lerna.json` | 3.4.2 (package.json:12); 3.4.7 #12 | dependency use | e4a97c4 2025-05-17 push first commit | inconclusive |
+| 2 | Azure workflow publishes entire repository zip without building any package, and deploy of three applications remained `Undetermined` | 3.4.6 #1, #2, #3; 3.4.7 #1 | active or abandoned | e4a97c4 2025-05-17 push first commit; d4cef45 2025-05-25 Add or update the Azure App Service build and deployment workflow config | inconclusive |
+| 3 | README attributes own routes and routing and runtime route updates to micro frontends, and routes are fixed in host manifest | 3.4.7 #5, #7, #13 | conflicting stages | e4a97c4 2025-05-17 push first commit | inconclusive |
+| 4 | Host `filename` comment mentions host own remote modules, and host has no `exposes` | 3.4.7 #18 | active or abandoned | e4a97c4 2025-05-17 push first commit | inconclusive |
 
-## Observações
+## Observations
 
-**1. `lerna` declarado e só no script `dev`.** `package.json` e `lerna.json` têm um único commit, `e4a97c4`, e o mesmo objeto no primeiro commit e no snapshot. O `lerna` não foi configurado e depois abandonado dentro do histórico observável: o estado é o mesmo desde a primeira presença. O histórico não diz se o `lerna run dev` era usado para subir os pacotes, nem se o `lerna.json` mínimo já veio assim do exemplo de origem. O `lerna` continua `Undetermined`.
+**1. `lerna` declared and only in `dev` script.** The `package.json` and `lerna.json` have a single commit, `e4a97c4`, and same object in first commit and snapshot. The `lerna` was not configured and later abandoned within observable history: state is unchanged since first presence. History does not say whether `lerna run dev` was used to start packages, or whether minimal `lerna.json` already came that way from source example. The `lerna` remains `Undetermined`.
 
-**2. Deploy no Azure.** O workflow é criado sozinho em `d4cef45`, oito dias depois do código, e é o último commit até o snapshot. A mensagem anuncia a criação ou atualização da configuração de build e deploy do Azure App Service, o texto padrão desse assistente. O commit não altera nenhum `package.json`: a raiz continua sem `build`, `test` e `start` (package.json, mesmo objeto em `e4a97c4` e no snapshot). Ou seja, o workflow foi acrescentado sobre um código que não foi adaptado para ele. O histórico não mostra se a publicação rodou, se serviu alguma das aplicações ou se foi usada depois, e não há commit posterior. Saber quando o workflow apareceu não prova uso nem abandono. O deploy continua `Undetermined`.
+**2. Azure deploy.** Workflow is created alone in `d4cef45`, eight days after code, and is last commit up to snapshot. Message announces creation or update of Azure App Service build and deploy configuration, wizard default text. Commit changes no `package.json`: root still lacks `build`, `test` and `start` (package.json, same object in `e4a97c4` and snapshot). Thus workflow was added on top of code not adapted for it. History does not show whether publication ran, served any application or was used afterward, and no subsequent commit exists. Knowing when workflow appeared proves neither usage nor abandonment. Deploy remains `Undetermined`.
 
-**3. Roteamento descrito no README e rotas no manifesto do host.** O `README.md`, o `routeManifest.js` e o `router/index.js` só têm o commit `e4a97c4` e não mudam até o snapshot. Em `e4a97c4` não existe `packages/host/src/router/routeManifest.js`, o caminho do título de README.md:78; o diretório `packages/host/src/router` só tem `index.js`. Dentro do histórico observável, portanto, não há um estágio do código com rotas vindas dos remotes, roteamento próprio neles ou o manifesto no caminho do README. README e código chegam juntos, e o histórico não diz se o README foi escrito para outro estágio ou copiado do exemplo de origem antes do primeiro commit.
+**3. README routing description and host manifest routes.** The `README.md`, `routeManifest.js` and `router/index.js` have only commit `e4a97c4` and do not change up to snapshot. In `e4a97c4`, `packages/host/src/router/routeManifest.js`, path in README.md:78 title, does not exist; directory `packages/host/src/router` has only `index.js`. Thus observable history has no code stage with routes coming from remotes, their own routing or manifest at README path. README and code arrive together, and history does not say whether README was written for another stage or copied from source example before first commit.
 
-**4. Comentário do `filename` do host.** O `packages/host/vite.config.js` só tem o commit `e4a97c4`, com o mesmo objeto no snapshot. Não há versão em que o host tenha `exposes`; o comentário e a configuração sem `exposes` chegam juntos. O histórico não diz se o comentário é resto de uma configuração anterior ao primeiro commit ou uma intenção não realizada.
+**4. Host `filename` comment.** The `packages/host/vite.config.js` has only commit `e4a97c4`, with same object in snapshot. There is no version where host has `exposes`; comment and configuration without `exposes` arrive together. History does not say whether comment is a remnant of configuration before first commit or unrealized intention.
 
-## Comandos
+## Commands
 
 ```
 docs/mfe-history-review/tools/hist.sh dvreddy007__mfe-sample rev-list --count d4cef45fce1d97c3d4d80d232dc9e9fbad9cfd1a
@@ -56,6 +56,6 @@ docs/mfe-history-review/tools/hist.sh dvreddy007__mfe-sample ls-tree d4cef45fce1
 docs/mfe-history-review/tools/hist.sh dvreddy007__mfe-sample ls-tree -r --name-only e4a97c4 -- packages/host/src/router
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 2 (2025-05-17 a 2025-05-25). Pontos: 4 (esclarecido: 0, inconclusivo: 4, resolvido pelo snapshot: 0).
+Commits up to the snapshot: 2 (2025-05-17 to 2025-05-25). Points: 4 (clarified: 0, inconclusive: 4, resolved by the snapshot: 0).

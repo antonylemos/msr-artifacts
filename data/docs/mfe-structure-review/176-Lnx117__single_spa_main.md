@@ -17,20 +17,20 @@ annotation:
 
 ## Workspace
 
-Nenhuma declaração de workspace.
+No workspace declaration.
 
-## Unidades
+## Units
 
-| Diretório | Marcadores | Manifesto | Entrada | Build | Workspace | Deploy | Unidade frontend | Motivo |
+| Directory | Markers | Manifest | Entry | Build | Workspace | Deploy | Frontend unit | Rationale |
 |---|---|---|---|---|---|---|---|---|
-| . | index.html;package.json;vite.config.ts | package.json | index.html:20 (`<script type="module" src="/src/main.ts">`, página de entrada do Vite no diretório) | vite.config.ts:5-16 (`defineConfig` com `vitePluginSingleSpa`); package.json:8 (`vite build`) | — | — | Yes | Root config single-spa com entrada `index.html` e build Vite próprios |
+| . | index.html;package.json;vite.config.ts | package.json | index.html:20 (`<script type="module" src="/src/main.ts">`, Vite entry page in the directory) | vite.config.ts:5-16 (`defineConfig` with `vitePluginSingleSpa`); package.json:8 (`vite build`) | — | — | Yes | single-spa root config with its own `index.html` entry and Vite build |
 
-## Resumo
+## Summary
 
-Aplicações frontend no snapshot: 1 (.).
+Frontend applications in the snapshot: 1 (.).
 
-## Notas
+## Notes
 
-- A classificação registra `frontend_units: 3`: o root config e os microfrontends `menu` e `base`, que estão fora do snapshot e só aparecem como URLs em `.envtest:8` e `.envtest:11` (`localhost:9083` e `localhost:9081`), carregadas por `src/main.ts:15` e `:23`.
-- `artifacts.csv` marca `package.json` como `workspace-config`, mas o arquivo não tem campo `workspaces` (`package.json:1-22`) e o `matches.csv` não tem ocorrências `ws-*`; não há workspace.
-- Nenhuma ocorrência `ops-*` ou `ci-*` no `matches.csv` e nenhum Dockerfile, workflow ou configuração de hospedagem no snapshot (6 arquivos).
+- The classification records `frontend_units: 3`: the root config and the microfrontends `menu` and `base`, which are outside the snapshot and appear only as URLs in `.envtest:8` and `.envtest:11` (`localhost:9083` and `localhost:9081`), loaded by `src/main.ts:15` and `:23`.
+- `artifacts.csv` marks `package.json` as `workspace-config`, but the file has no `workspaces` field (`package.json:1-22`) and `matches.csv` has no `ws-*` occurrences; there is no workspace.
+- No `ops-*` or `ci-*` occurrence in `matches.csv` and no Dockerfile, workflow or hosting configuration in the snapshot (6 files).

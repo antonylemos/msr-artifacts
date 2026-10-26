@@ -15,24 +15,24 @@ annotation:
 
 # 322 — Stevenjsg/vue-microfrontends-ecosystem
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-remote-import | apps/shell/src/App.vue:6 | apps/shell | dynamic-loading | Yes | `defineAsyncComponent(() => import('dashboard/Widget'))` (apps/shell/src/App.vue:5-7, `defineAsyncComponent` importado de `vue` em :2) carrega em runtime o `./Widget` exposto pela unidade apps/dashboard (`./src/components/WidgetDinero.vue`, apps/dashboard/vite.config.ts:21-23), pelo remote `dashboard` → `http://localhost:5001/assets/remoteEntry.js` (apps/shell/vite.config.ts:22); tipo declarado em apps/shell/src/vite-env.d.ts:3-7. Ativo: `App.vue` é montado pela entrada do shell (apps/shell/src/main.ts:3-5, apps/shell/index.html:11) e renderiza o componente em :23. |
+| src-remote-import | apps/shell/src/App.vue:6 | apps/shell | dynamic-loading | Yes | `defineAsyncComponent(() => import('dashboard/Widget'))` (apps/shell/src/App.vue:5-7, `defineAsyncComponent` imported from `vue` at :2) loads at runtime the `./Widget` exposed by unit apps/dashboard (`./src/components/WidgetDinero.vue`, apps/dashboard/vite.config.ts:21-23), through remote `dashboard` → `http://localhost:5001/assets/remoteEntry.js` (apps/shell/vite.config.ts:22); type declared at apps/shell/src/vite-env.d.ts:3-7. Active: `App.vue` is mounted by the shell entry (apps/shell/src/main.ts:3-5, apps/shell/index.html:11) and renders the component at :23. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | apps/shell/src/App.vue:23 | apps/shell | runtime-composition | Yes | `<DashboardWidget />` renderiza no host o `Widget` de apps/dashboard, carregado por `defineAsyncComponent` em apps/shell/src/App.vue:5-7, dentro de `<Suspense>` com fallback "Cargando microfrontend..." (apps/shell/src/App.vue:21-28); `App.vue` é o componente raiz montado em apps/shell/src/main.ts:5. |
+| manual | apps/shell/src/App.vue:23 | apps/shell | runtime-composition | Yes | `<DashboardWidget />` renders in the host the `Widget` from apps/dashboard, loaded by `defineAsyncComponent` at apps/shell/src/App.vue:5-7, inside `<Suspense>` with fallback "Cargando microfrontend..." (**English translation:** "Loading microfrontend...") (apps/shell/src/App.vue:21-28); `App.vue` is the root component mounted at apps/shell/src/main.ts:5. |
 
-## Resumo
+## Summary
 
-Construções com composição: 2 (dynamic-loading: 1, runtime-composition: 1).
+Constructs participating in composition: 2 (dynamic-loading: 1, runtime-composition: 1).
 
-## Notas
+## Notes
 
-- Os remotes `cms` e `kanban` são declarados no shell (apps/shell/vite.config.ts:23-24) e apps/cms e apps/kanban expõem `./Cms` e `./Kanban` (apps/cms/vite.config.ts:19-21, apps/kanban/vite.config.ts:19-21), mas nenhum código do shell importa `cms/...` nem `kanban/...`: o único `import()` do snapshot é o de apps/shell/src/App.vue:6.
-- A busca do passo 4 (`*.ts`, `*.vue`, `*.html`, `*.js`) não achou `customElements`, `<iframe>`, `postMessage`, `CustomEvent`, `BroadcastChannel`, `dispatchEvent`, `addEventListener` nem carga de script; os remotes não têm código de comunicação (apps/cms/src/App.vue, apps/kanban/src/App.vue e apps/dashboard/src/components/WidgetDinero.vue só têm template e estado local).
-- O shell também usa `MyButton` e `setupMsg` de packages/ui-kit (apps/shell/src/App.vue:3, :14-15), por import estático de workspace; packages/ui-kit é `No` na revisão estrutural, então não é composição entre unidades.
+- Remotes `cms` and `kanban` are declared in shell (apps/shell/vite.config.ts:23-24), and apps/cms and apps/kanban expose `./Cms` and `./Kanban` (apps/cms/vite.config.ts:19-21, apps/kanban/vite.config.ts:19-21), but no shell code imports `cms/...` or `kanban/...`: the snapshot’s only `import()` is at apps/shell/src/App.vue:6.
+- The step 4 search (`*.ts`, `*.vue`, `*.html`, `*.js`) found no `customElements`, `<iframe>`, `postMessage`, `CustomEvent`, `BroadcastChannel`, `dispatchEvent`, `addEventListener` or script loading; the remotes have no communication code (apps/cms/src/App.vue, apps/kanban/src/App.vue and apps/dashboard/src/components/WidgetDinero.vue have only templates and local state).
+- Shell also uses `MyButton` and `setupMsg` from packages/ui-kit (apps/shell/src/App.vue:3, :14-15), through a static workspace import; packages/ui-kit is `No` in the structural review, so this is not inter-unit composition.

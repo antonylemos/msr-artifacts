@@ -20,76 +20,76 @@ annotation:
 
 # 222 — sero-labs/sero-humanizer-plugin
 
-## Contexto
+## Context
 
-Plugin “Humanizer” do Sero (`package.json:2–4`; `README.md:1–5`). Ele reescreve textos com estilos e remove padrões de escrita de IA, e tem duas partes:
-- uma extensão Pi para o agente (`extension/index.ts`), com ferramenta, comando e uma skill (`skills/humanizer/SKILL.md`);
-- uma UI web React construída como remote Module Federation (`vite.config.ts:1–52`), que o host Sero carrega e monta na área principal (`README.md:41–46`).
+Sero “Humanizer” plugin (`package.json:2–4`; `README.md:1–5`). Rewrites text in various styles and removes AI-writing patterns, with two parts:
+- Pi agent extension (`extension/index.ts`), with tool, command and skill (`skills/humanizer/SKILL.md`);
+- React web UI built as Module Federation remote (`vite.config.ts:1–52`), loaded and mounted by Sero host in main area (`README.md:41–46`).
 
-O manifesto declara a app para o Sero (`package.json:23–45`), com `"ui": "./dist/ui/remoteEntry.js"` e `"component": "HumanizerApp"`. O host Sero não está no repositório. O nome do repositório e o da organização não são usados como evidência.
+Manifest declares Sero app (`package.json:23–45`), with `"ui": "./dist/ui/remoteEntry.js"` and `"component": "HumanizerApp"`. Sero host is absent from repository. Repository and organization names are not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:223` registra rank 222, ID 1191011861, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:223` records rank 222, ID 1191011861, status `cloned`, branch `main` and front-matter commit, which is clone HEAD and `origin/main`. Every clone Git command used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:223` registra a estratégia `technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:27135` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:27141` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:223` records strategy `technology` and eligibility `pass`. Sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). ID appears in `data/discovery/mfe-round-001/candidates.csv:27135` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:27141` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna o mesmo hit em cada rodada, do endpoint `code`:
+`sqlite3 -readonly` query of tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns same hit in each round, at endpoint `code`:
 
-| Consulta (`q`) | Subconsulta / consulta efetiva | `path` | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery / effective query | `path` | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `technology-module-federation-package-code`: `"@module-federation" filename:package.json` | `technology-module-federation-package-code#size:2000..2249` / `"@module-federation" filename:package.json size:2000..2249` | `package.json` | 2026-10-07T19:59:44.705Z / 2026-10-08T15:42:41.920Z |
 
-O `package.json` tem 2.200 bytes no SHA, dentro da faixa, e declara `"@module-federation/vite": "1.21.6"` (`:60`). Esse valor foi gravado pelo próprio SHA, `3acd5e1` (2026-09-26, “upgrade Module Federation Vite to 1.21.6”), antes das coletas. Os metadados do hit de código trazem só a descrição “Humanizer app for Sero — transform text with creative writing styles and remove AI patterns”, sem tópicos nem datas. A entrada é só por código. O README não contém termos de micro-frontend nem de Module Federation.
+`package.json` is 2.200 bytes at SHA, within range, and declares `"@module-federation/vite": "1.21.6"` (`:60`). Value was recorded by SHA itself, `3acd5e1` (2026-09-26, “upgrade Module Federation Vite to 1.21.6”), before collections. Code-hit metadata provide only description “Humanizer app for Sero — transform text with creative writing styles and remove AI patterns”, without topics or dates. Entry is code-only. README contains neither micro-frontend nor Module Federation terms.
 
-Nas duas rodadas, a mesma organização tem outros 17 candidatos, entre eles `sero-labs/sero` (ID 1152424927) e vários `sero-*-plugin`. Na amostra, só este repositório aparece (`sample.csv:223`).
+In both rounds same organization has 17 other candidates, including `sero-labs/sero` (ID 1152424927) and several `sero-*-plugin`. Only this repository appears in sample (`sample.csv:223`).
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 40 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Há um único pacote: `ui/` (app React, `index.html` “Sero Humanizer (remote)”, componentes e libs), `extension/` (extensão Pi), `shared/types.ts`, `skills/`, `vite.config.ts` e `package.json`. | contexto |
-| Configuração (remoto) | `vite.config.ts:21–36`: `federation({ name: 'sero_humanizer', filename: 'remoteEntry.js', manifest: true, exposes: { './HumanizerApp': './ui/HumanizerApp.tsx' }, shared: react/react-dom/streamdown singleton })`. O comentário diz “The host (Sero on 5173) declares this as a remote and imports components via MF” (`:4–5`). Porta própria 5192 (`:38–42`). | forte |
-| Contrato com o host | `package.json:23–34`: `sero.app` com `ui: "./dist/ui/remoteEntry.js"`, `component: "HumanizerApp"`, `devPort: 5192`, `styleIsolation: "scope"`. `ui/HumanizerApp.tsx:18`, `37–39`: usa `useAppState` e `useAI` do runtime da plataforma (`@sero-ai/app-runtime`). `README.md:9–16`: o Sero clona, instala, constrói a UI e a carrega na barra lateral. | forte |
-| Host | O host Sero não está no snapshot. Ele aparece como candidato `sero-labs/sero` nas rodadas, fora da amostra e não inspecionado. | ambígua |
-| Código-fonte (fronteiras) | Imports relativos só dentro do pacote: `ui/` e `extension/` compartilham `../shared/types` (`ui/HumanizerApp.tsx:22–23`; `extension/index.ts:21–22`), que são tipos do próprio plugin. Não há outra unidade frontend. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 40 entries, all regular files `100644`; zero symlinks and zero gitlinks. One package: `ui/` (React app, `index.html` “Sero Humanizer (remote)”, components and libs), `extension/` (Pi extension), `shared/types.ts`, `skills/`, `vite.config.ts` and `package.json`. | context |
+| Configuration (remote) | `vite.config.ts:21–36`: `federation({ name: 'sero_humanizer', filename: 'remoteEntry.js', manifest: true, exposes: { './HumanizerApp': './ui/HumanizerApp.tsx' }, shared: react/react-dom/streamdown singleton })`. Comment says “The host (Sero on 5173) declares this as a remote and imports components via MF” (`:4–5`). Own port 5192 (`:38–42`). | strong |
+| Host contract | `package.json:23–34`: `sero.app` with `ui: "./dist/ui/remoteEntry.js"`, `component: "HumanizerApp"`, `devPort: 5192`, `styleIsolation: "scope"`. `ui/HumanizerApp.tsx:18`, `37–39`: uses `useAppState` and `useAI` from platform runtime (`@sero-ai/app-runtime`). `README.md:9–16`: Sero clones, installs, builds UI and loads it in sidebar. | strong |
+| Host | Sero host is absent from snapshot. It appears as candidate `sero-labs/sero` in rounds, outside sample and uninspected. | ambiguous |
+| Source code (boundaries) | Relative imports stay within package: `ui/` and `extension/` share `../shared/types` (`ui/HumanizerApp.tsx:22–23`; `extension/index.ts:21–22`), plugin’s own types. No other frontend unit. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 21 commits lineares, nenhum merge, da mesma pessoa: 15 como monobyte e 6 como Dan Carter, com o mesmo e-mail.
-- **Raiz:** `c2ddd55` (2026-03-24, “feat(SERO-008): initial plugin scaffold — @sero-ai/plugin-humanizer”).
-- **Evolução:** governança em abril (licença, CODEOWNERS, CI); depois, atualizações de SDK, de runtime da plataforma e do Module Federation (`e54aa46`, SHA `3acd5e1`).
+Non-shallow clone; 21 linear commits, no merge, by same person: 15 as monobyte and 6 as Dan Carter, with same email.
+- **Root:** `c2ddd55` (2026-03-24, “feat(SERO-008): initial plugin scaffold — @sero-ai/plugin-humanizer”).
+- **Evolution:** governance in April (license, CODEOWNERS, CI); then SDK, platform-runtime and Module Federation updates (`e54aa46`, SHA `3acd5e1`).
 
-O README de instalação aponta `github.com/monobyte/sero-humanizer-plugin` (`README.md:12`), compatível com transferência, renomeação ou origem anterior, mas isso não prova a transferência do repositório; o vínculo atual com Sero é mais diretamente sustentado por `CONTRIBUTING.md:5`, pelo manifesto e pelo runtime da plataforma. Nenhum blob histórico foi lido. O clone é parcial (`blob:none`) e `git rev-list --objects --all --missing=print` encontra 28 objetos históricos ausentes; os arquivos do SHA usados como evidência foram lidos, e as mensagens e status dos commits estão disponíveis.
+Installation README points to `github.com/monobyte/sero-humanizer-plugin` (`README.md:12`), compatible with transfer, rename or earlier origin, but not proof of repository transfer; current Sero relationship is more directly supported by `CONTRIBUTING.md:5`, manifest and platform runtime. No historical blob was read. Clone is partial (`blob:none`) and `git rev-list --objects --all --missing=print` finds 28 missing historical objects; SHA evidence files were read, and commit messages/statuses are available.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend (`ui/`); a configuração de composição deste repositório só tem `exposes`, sem referenciar outra unidade. |
-| Q2 | Yes | Entrada, build (`vite build`, `package.json:10–14`) e porta próprios; instalada e construída separadamente pelo host (`README.md:15–16`). |
-| Q3 | Undetermined | O host Sero não é observável; o manifesto e o comentário indicam montagem pelo host (`package.json:31–32`; `vite.config.ts:4–5`). |
-| Q4 | Undetermined | Mecanismo preparado do lado do remoto (`exposes`, `remoteEntry.js`, manifesto), mas a conexão depende do host ausente. |
-| Q5 | No | Uma unidade preparada para composição por host externo não observável. |
+| Q1 | No | One frontend unit (`ui/`); repository composition configuration has only `exposes`, without referencing another unit. |
+| Q2 | Yes | Own entry, build (`vite build`, `package.json:10–14`) and port; separately installed/built by host (`README.md:15–16`). |
+| Q3 | Undetermined | Sero host is not observable; manifest and comment indicate host mounting (`package.json:31–32`; `vite.config.ts:4–5`). |
+| Q4 | Undetermined | Mechanism prepared on remote side (`exposes`, `remoteEntry.js`, manifest), but connection depends on absent host. |
+| Q5 | No | One unit prepared for composition by unobservable external host. |
 
-## Motivo
+## Rationale
 
-- `MFE-unit` pela regra “single frontend unit explicitly prepared to be composed by an external host (e.g., Module Federation `exposes`)… but the composing host is not observable”, com o vetor de exceção (`q1: no`, `q2: yes`, `q3/q4: undetermined`, `q5: no`) dos finais 001/050/069/004/058.
-- É o mesmo caso dos rascunhos 161 e 189: remoto Module Federation para a plataforma de extensões da própria organização, com manifesto e runtime da plataforma. Por isso o status é `review`, à espera da mesma decisão sobre 037 (plugin de plataforma, final `Non-MFE`).
-- `approaches: [module-federation]`, `ui_technologies: [react]`, `build_tools: [vite]`, `frontend_units: 1`, `unit_organization: single-unit`. `repo_type: production`, por ser plugin publicado, com versão, CI, licença e política de segurança; se a revisão preferir `example`, como em 161/189, o campo acompanha a decisão.
+- `MFE-unit` under rule “single frontend unit explicitly prepared to be composed by an external host (e.g., Module Federation `exposes`)… but the composing host is not observable”, with exception vector (`q1: no`, `q2: yes`, `q3/q4: undetermined`, `q5: no`) of finals 001/050/069/004/058.
+- Same case as drafts 161 and 189: Module Federation remote for own organization’s extension platform, with manifest and platform runtime. Thus status is `review`, awaiting same decision about 037 (platform plugin, final `Non-MFE`).
+- `approaches: [module-federation]`, `ui_technologies: [react]`, `build_tools: [vite]`, `frontend_units: 1`, `unit_organization: single-unit`. `repo_type: production`, as published plugin with version, CI, license and security policy; if review prefers `example`, as in 161/189, field follows decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** plugins de uma aplicação desktop de agente de IA (Sero) distribuídos como remotos Module Federation Vite, com isolamento de CSS (`seroPluginCssScope`, `vite.config.ts:20`) e estado mediado pelo host.
-- **Protocolo (amostra):** a organização tem 18 candidatos em cada rodada (o host e muitos plugins), só um na amostra; o host está fora da amostra.
-- **Protocolo (busca):** a elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ2:** AI-agent desktop application (Sero) plugins distributed as Vite Module Federation remotes, with CSS isolation (`seroPluginCssScope`, `vite.config.ts:20`) and host-mediated state.
+- **Protocol (sample):** organization has 18 candidates in each round (host and many plugins), only one in sample; host lies outside sample.
+- **Protocol (search):** eligibility changes from `unknown` (001) to `pass` (002).
 
-## Ponto para revisão conjunta
+## Point for joint review
 
-1. **Plugin de plataforma de primeira parte:** um remoto Module Federation preparado para o host de extensões da própria organização conta como MFE-unit ou segue 037?
-   - **MFE-unit (proposto):** `exposes`, `remoteEntry.js`, `shared` singleton e contrato explícito com o host, como em 161/189.
-   - **Non-MFE:** segue 037, porque o único host é o mecanismo de plugins de uma plataforma.
-2. **`repo_type`:** `production` (plugin publicado e mantido) ou `example`, como foi usado em 161/189.
+1. **First-party platform plugin:** does a Module Federation remote prepared for own organization’s extension host count as MFE-unit or follow 037?
+   - **MFE-unit (proposed):** `exposes`, `remoteEntry.js`, singleton `shared` and explicit host contract, as 161/189.
+   - **Non-MFE:** follows 037, since sole host is platform’s plugin mechanism.
+2. **`repo_type`:** `production` (published/maintained plugin) or `example`, as used in 161/189.
 
-Não se propõe regra nova. Até a decisão, preservar `MFE-unit`/`review`, coerente com 161 e 189.
-- **Contribuição da revisão independente (Lupa):** concordância provisória com MFE-unit e `review`: a unidade React está explicitamente preparada para composição por Module Federation e o host consumidor não é observável (montagem apenas documentada, `README.md:15–16,43–46`; a busca local por clone do host não deu resultado). O vetor No/Yes/Undetermined/Undetermined/No é coerente com a exceção. A decisão real é o enquadramento pelo precedente de plataforma 037; o simples uso do nome "plugin" não elimina a preparação comprovada. Os finais 001, 050 e 069 enquadram como MFE-unit uma única unidade com exposição e contrato explícitos e host ausente, e 004 e 058 confirmam o vetor. A revisora recomenda manter `repo_type: production` (sem segunda decisão pendente) e concentrar o ponto de revisão no escopo da regra de plugins; se prevalecer Non-MFE por 037, será preciso ajustar classe e `approaches` ao padrão do template, preservando no corpo a federação observada. O README foi alterado pela última vez em `80802ec` (2026-03-24), anterior às buscas.
+No new rule is proposed. Until decision, preserve `MFE-unit`/`review`, consistent with 161 and 189.
+- **Independent-review contribution (Lupa):** provisional agreement with MFE-unit and `review`: React unit is explicitly prepared for Module Federation composition and consumer host is unobservable (mounting only documented, `README.md:15–16,43–46`; local host-clone search yielded nothing). No/Yes/Undetermined/Undetermined/No vector is consistent with exception. Real decision concerns platform precedent 037; mere name "plugin" does not eliminate proven preparation. Finals 001, 050 and 069 classify as MFE-unit one unit with explicit exposure/contract and absent host, and 004 and 058 confirm vector. Reviewer recommends retaining `repo_type: production` (without second pending decision) and focusing review point on plugin-rule scope; if Non-MFE under 037 prevails, class and `approaches` must follow template convention while preserving observed federation in body. README was last changed in `80802ec` (2026-03-24), before searches.

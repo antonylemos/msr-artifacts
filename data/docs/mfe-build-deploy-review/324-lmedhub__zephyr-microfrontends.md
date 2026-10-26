@@ -16,100 +16,35 @@ annotation:
 
 # 324 — lmedhub/zephyr-microfrontends
 
-## Leitura do repositório
+## Repository overview
 
-O frontend fica em `frontend/`, com quatro aplicações Rspack em `frontend/apps/`, e o repositório
-tem também um backend Go em `backend/`. Não há workspace: o `install:all` da raiz instala cada
-aplicação à parte (frontend/package.json:6). Cada aplicação tem `build` próprio,
-`NODE_ENV=production rspack build` (frontend/apps/host/package.json:9;
-frontend/apps/remote-header/package.json:5; frontend/apps/remote-footer/package.json:5;
-frontend/apps/url-shortener/package.json:5), e o `frontend/package.json` só entra no diretório de
-cada uma para rodá-lo (`build:host`, `build:header`, `build:footer`, `build:shortener`), com
-`build:all` encadeando os quatro, remotes antes do host (frontend/package.json:12-16). O
-`clean:build` apaga `apps/*/dist` (frontend/package.json:28), ou seja, cada build sai no `dist` da
-própria aplicação, que fica fora do git (.gitignore:85).
+Frontend resides in `frontend/`, with four Rspack applications in `frontend/apps/`, and repository also has a Go backend in `backend/`. No workspace: root `install:all` installs each application separately (frontend/package.json:6). Each application has its own `build`, `NODE_ENV=production rspack build` (frontend/apps/host/package.json:9; frontend/apps/remote-header/package.json:5; frontend/apps/remote-footer/package.json:5; frontend/apps/url-shortener/package.json:5), and `frontend/package.json` only enters each directory to run it (`build:host`, `build:header`, `build:footer`, `build:shortener`), with `build:all` chaining all four, remotes before host (frontend/package.json:12-16). The `clean:build` deletes `apps/*/dist` (frontend/package.json:28), so each build outputs to application’s own `dist`, outside git (.gitignore:85).
 
-A publicação vem do Zephyr Cloud. Os quatro `rspack.config.ts` exportam a configuração envolvida
-em `withZephyr()` do `zephyr-webpack-plugin` (frontend/apps/host/rspack.config.ts:5, 7;
-frontend/apps/remote-header/rspack.config.ts:5, 7; frontend/apps/remote-footer/rspack.config.ts:5, 7;
-frontend/apps/url-shortener/rspack.config.ts:3, 5), plugin de build que envia o resultado de cada
-build ao Zephyr Cloud; foi esse o artefato de deploy apontado pela revisão estrutural. Há outros
-sinais de uso do serviço: o `.gitignore` ignora a pasta `.zephyr` (.gitignore:118-119), e o host
-declara `zephyr:dependencies` com `remote-header@^1.0.0` e `remote-footer@^1.0.0`
-(frontend/apps/host/package.json:4-7). O snapshot não tem mais nenhuma configuração da Zephyr
-(nem o endereço onde cada aplicação fica publicada), e o host continua apontando os remotes para
-`localhost` fixo (frontend/apps/host/rspack.config.ts:84-88). O README só descreve o projeto como
-uso de "Zephyr Cloud" e lista as portas locais (frontend/README.md:3, 7-9).
+Publication comes from Zephyr Cloud. All four `rspack.config.ts` files export configuration wrapped in `withZephyr()` from `zephyr-webpack-plugin` (frontend/apps/host/rspack.config.ts:5, 7; frontend/apps/remote-header/rspack.config.ts:5, 7; frontend/apps/remote-footer/rspack.config.ts:5, 7; frontend/apps/url-shortener/rspack.config.ts:3, 5), a build plugin uploading each build result to Zephyr Cloud; this was deployment artifact identified by structural review. Other signs of service use exist: `.gitignore` ignores directory `.zephyr` (.gitignore:118-119), and host declares `zephyr:dependencies` with `remote-header@^1.0.0` and `remote-footer@^1.0.0` (frontend/apps/host/package.json:4-7). Snapshot has no further Zephyr configuration (nor address where each application is published), and host still points remotes to fixed `localhost` (frontend/apps/host/rspack.config.ts:84-88). README only describes project as using "Zephyr Cloud" and lists local ports (frontend/README.md:3, 7-9).
 
-Fora do Zephyr, só há configuração de desenvolvimento: o `devServer` de cada aplicação, com portas
-3000 a 3003 (frontend/apps/host/rspack.config.ts:17-18; frontend/apps/remote-header/rspack.config.ts:13-14;
-frontend/apps/remote-footer/rspack.config.ts:13-14; frontend/apps/url-shortener/rspack.config.ts:11-12),
-e os scripts `serve`/`start` com `rspack serve` (frontend/apps/host/package.json:11-13;
-frontend/apps/url-shortener/package.json:7-8), disparados juntos por `serve:all` e `start:all`
-(frontend/package.json:21, 26). Os `serve:header` e `serve:footer` da raiz chamam um script `serve`
-que essas duas aplicações não têm (frontend/package.json:18-19; frontend/apps/remote-header/package.json:4-8;
-frontend/apps/remote-footer/package.json:4-8). As ocorrências `ops-cors` do `matches.csv` são os
-cabeçalhos `Access-Control-Allow-Origin: *` desses `devServer` dos três remotes
-(frontend/apps/remote-header/rspack.config.ts:17-19; frontend/apps/remote-footer/rspack.config.ts:17-19;
-frontend/apps/url-shortener/rspack.config.ts:15-17), e a `cfg-public-path` é o `publicPath: "auto"`
-do host (frontend/apps/host/rspack.config.ts:13-15). O host fixa `mode: "development"` na
-configuração (frontend/apps/host/rspack.config.ts:12), mesmo no `build` de produção.
+Outside Zephyr, only development configuration exists: each application’s `devServer`, with ports 3000 to 3003 (frontend/apps/host/rspack.config.ts:17-18; frontend/apps/remote-header/rspack.config.ts:13-14; frontend/apps/remote-footer/rspack.config.ts:13-14; frontend/apps/url-shortener/rspack.config.ts:11-12), and scripts `serve`/`start` with `rspack serve` (frontend/apps/host/package.json:11-13; frontend/apps/url-shortener/package.json:7-8), triggered together by `serve:all` and `start:all` (frontend/package.json:21, 26). Root `serve:header` and `serve:footer` call script `serve` absent from those two applications (frontend/package.json:18-19; frontend/apps/remote-header/package.json:4-8; frontend/apps/remote-footer/package.json:4-8). The `ops-cors` occurrences in `matches.csv` are `Access-Control-Allow-Origin: *` headers of these three remote `devServer` blocks (frontend/apps/remote-header/rspack.config.ts:17-19; frontend/apps/remote-footer/rspack.config.ts:17-19; frontend/apps/url-shortener/rspack.config.ts:15-17), and `cfg-public-path` is host `publicPath: "auto"` (frontend/apps/host/rspack.config.ts:13-15). Host fixes `mode: "development"` in configuration (frontend/apps/host/rspack.config.ts:12), even for production `build`.
 
-Os artefatos `ops-dockerfile`, `ops-compose-service` e `ops-deployment-file` são todos do backend
-Go e não cobrem nenhuma aplicação frontend. O `backend/Dockerfile` compila o servidor em duas
-etapas (backend/Dockerfile:1, 10, 12), e o `backend/docker-compose.yml` sobe esse serviço na porta
-8080 com Postgres e Redis (backend/docker-compose.yml:4-9, 17-18, 27-28). O Dockerfile gera o
-binário `url-shortener` (backend/Dockerfile:10), mas copia e executa `backend`
-(backend/Dockerfile:16, 18), nome que só o `Makefile` produz (backend/Makefile:8-9). Não há
-workflow de CI no snapshot.
+Artifacts `ops-dockerfile`, `ops-compose-service` and `ops-deployment-file` all belong to Go backend and cover no frontend application. The `backend/Dockerfile` compiles server in two stages (backend/Dockerfile:1, 10, 12), and `backend/docker-compose.yml` starts this service on port 8080 with Postgres and Redis (backend/docker-compose.yml:4-9, 17-18, 27-28). Dockerfile generates binary `url-shortener` (backend/Dockerfile:10), but copies and executes `backend` (backend/Dockerfile:16, 18), a name produced only by `Makefile` (backend/Makefile:8-9). No CI workflow is present in snapshot.
 
-## Aplicações
+## Applications
 
-| # | Aplicação | Build | Deploy | Onde é servida | Versionamento | Artefatos |
+| # | Application | Build | Deploy | Where served | Versioning | Artifacts |
 |---|---|---|---|---|---|---|
-| 1 | frontend/apps/host | separado | separado | `http://localhost:3000` em desenvolvimento (frontend/apps/host/rspack.config.ts:18; frontend/apps/host/package.json:12) | No | frontend/apps/host/package.json:9 (`rspack build`); frontend/apps/host/rspack.config.ts:7 (`withZephyr()`, publicação no Zephyr Cloud); frontend/apps/host/rspack.config.ts:82-94 (federation `host`); frontend/package.json:12, :16 (`build:host`, `build:all`) |
-| 2 | frontend/apps/remote-footer | separado | separado | `http://localhost:3002` em desenvolvimento (frontend/apps/remote-footer/rspack.config.ts:14; frontend/apps/host/rspack.config.ts:86) | No | frontend/apps/remote-footer/package.json:5 (`rspack build`); frontend/apps/remote-footer/rspack.config.ts:7 (`withZephyr()`, publicação no Zephyr Cloud); frontend/apps/remote-footer/rspack.config.ts:73-79 (federation `remote_footer`, gera `remoteEntry.js`); frontend/package.json:14, :16 (`build:footer`, `build:all`) |
-| 3 | frontend/apps/remote-header | separado | separado | `http://localhost:3001` em desenvolvimento (frontend/apps/remote-header/rspack.config.ts:14; frontend/apps/host/rspack.config.ts:85) | No | frontend/apps/remote-header/package.json:5 (`rspack build`); frontend/apps/remote-header/rspack.config.ts:7 (`withZephyr()`, publicação no Zephyr Cloud); frontend/apps/remote-header/rspack.config.ts:73-79 (federation `remote_header`, gera `remoteEntry.js`); frontend/package.json:13, :16 (`build:header`, `build:all`) |
-| 4 | frontend/apps/url-shortener | separado | separado | `http://localhost:3003` em desenvolvimento (frontend/apps/url-shortener/rspack.config.ts:12; frontend/apps/host/rspack.config.ts:87) | No | frontend/apps/url-shortener/package.json:5 (`rspack build`); frontend/apps/url-shortener/rspack.config.ts:5 (`withZephyr()`, publicação no Zephyr Cloud); frontend/apps/url-shortener/rspack.config.ts:74-79 (federation `url_shortener`, gera `remoteEntry.js`); frontend/package.json:15, :16 (`build:shortener`, `build:all`) |
+| 1 | frontend/apps/host | separate | separate | `http://localhost:3000` in development (frontend/apps/host/rspack.config.ts:18; frontend/apps/host/package.json:12) | No | frontend/apps/host/package.json:9 (`rspack build`); frontend/apps/host/rspack.config.ts:7 (`withZephyr()`, publication to Zephyr Cloud); frontend/apps/host/rspack.config.ts:82-94 (federation `host`); frontend/package.json:12, :16 (`build:host`, `build:all`) |
+| 2 | frontend/apps/remote-footer | separate | separate | `http://localhost:3002` in development (frontend/apps/remote-footer/rspack.config.ts:14; frontend/apps/host/rspack.config.ts:86) | No | frontend/apps/remote-footer/package.json:5 (`rspack build`); frontend/apps/remote-footer/rspack.config.ts:7 (`withZephyr()`, publication to Zephyr Cloud); frontend/apps/remote-footer/rspack.config.ts:73-79 (federation `remote_footer`, generates `remoteEntry.js`); frontend/package.json:14, :16 (`build:footer`, `build:all`) |
+| 3 | frontend/apps/remote-header | separate | separate | `http://localhost:3001` in development (frontend/apps/remote-header/rspack.config.ts:14; frontend/apps/host/rspack.config.ts:85) | No | frontend/apps/remote-header/package.json:5 (`rspack build`); frontend/apps/remote-header/rspack.config.ts:7 (`withZephyr()`, publication to Zephyr Cloud); frontend/apps/remote-header/rspack.config.ts:73-79 (federation `remote_header`, generates `remoteEntry.js`); frontend/package.json:13, :16 (`build:header`, `build:all`) |
+| 4 | frontend/apps/url-shortener | separate | separate | `http://localhost:3003` in development (frontend/apps/url-shortener/rspack.config.ts:12; frontend/apps/host/rspack.config.ts:87) | No | frontend/apps/url-shortener/package.json:5 (`rspack build`); frontend/apps/url-shortener/rspack.config.ts:5 (`withZephyr()`, publication to Zephyr Cloud); frontend/apps/url-shortener/rspack.config.ts:74-79 (federation `url_shortener`, generates `remoteEntry.js`); frontend/package.json:15, :16 (`build:shortener`, `build:all`) |
 
-## Observações
+## Observations
 
-**1. frontend/apps/host.** Build Rspack próprio, com entrada `src/App.tsx`
-(frontend/apps/host/rspack.config.ts:9-10). Os remotes não entram no artefato do host: ele os
-carrega em tempo de execução pelas URLs `localhost` de frontend/apps/host/rspack.config.ts:84-88,
-que ficam embutidas no build; se o `withZephyr()` as troca na publicação, isso não aparece no
-snapshot. Deploy separado pelo `withZephyr()` da própria configuração
-(frontend/apps/host/rspack.config.ts:7), o mesmo arranjo das outras aplicações; não há endereço
-publicado no snapshot, e o `serve` na porta 3000 (frontend/apps/host/package.json:12) é o servidor
-do Rspack, não publicação. A versão `1.0.0` (frontend/apps/host/package.json:3) não aparece em
-nenhuma publicação. O `zephyr:dependencies` (frontend/apps/host/package.json:4-7) cita as versões
-dos remotes header e footer, não a do host, e não cita o url-shortener.
+**1. frontend/apps/host.** Own Rspack build, with entry `src/App.tsx` (frontend/apps/host/rspack.config.ts:9-10). Remotes do not enter host artifact: loads them at runtime through `localhost` URLs in frontend/apps/host/rspack.config.ts:84-88, embedded in build; if `withZephyr()` replaces them at publication, this is absent from snapshot. Separate deploy through `withZephyr()` of own configuration (frontend/apps/host/rspack.config.ts:7), same arrangement as other applications; no published address is present in snapshot, and `serve` on port 3000 (frontend/apps/host/package.json:12) is Rspack server, not publication. Version `1.0.0` (frontend/apps/host/package.json:3) appears in no publication. The `zephyr:dependencies` (frontend/apps/host/package.json:4-7) cites versions of header and footer remotes, not host, and does not cite url-shortener.
 
-**2. frontend/apps/remote-footer.** Build próprio, que gera o `remoteEntry.js` do remote
-`remote_footer` (frontend/apps/remote-footer/rspack.config.ts:74-75), e deploy separado pelo
-`withZephyr()` da sua configuração (frontend/apps/remote-footer/rspack.config.ts:7). Porta 3002 no
-`devServer` (frontend/apps/remote-footer/rspack.config.ts:14), a mesma que o host usa
-(frontend/apps/host/rspack.config.ts:86). A versão `1.0.0` (frontend/apps/remote-footer/package.json:3)
-é a faixa que o host pede em `zephyr:dependencies` (frontend/apps/host/package.json:6), mas o
-snapshot não mostra essa versão sendo usada na publicação do footer, por isso `No`.
+**2. frontend/apps/remote-footer.** Own build, generating `remoteEntry.js` for remote `remote_footer` (frontend/apps/remote-footer/rspack.config.ts:74-75), and separate deploy through `withZephyr()` of its configuration (frontend/apps/remote-footer/rspack.config.ts:7). Port 3002 in `devServer` (frontend/apps/remote-footer/rspack.config.ts:14), same as used by host (frontend/apps/host/rspack.config.ts:86). Version `1.0.0` (frontend/apps/remote-footer/package.json:3) is range requested by host in `zephyr:dependencies` (frontend/apps/host/package.json:6), but snapshot does not show this version used in footer publication, hence `No`.
 
-**3. frontend/apps/remote-header.** Mesmo arranjo do footer, com o remote `remote_header`
-(frontend/apps/remote-header/rspack.config.ts:74-75), `withZephyr()` próprio
-(frontend/apps/remote-header/rspack.config.ts:7) e porta 3001 (frontend/apps/remote-header/rspack.config.ts:14;
-frontend/apps/host/rspack.config.ts:85). A versão `1.0.0` (frontend/apps/remote-header/package.json:3)
-casa com a faixa do `zephyr:dependencies` do host (frontend/apps/host/package.json:5), com a mesma
-limitação do footer.
+**3. frontend/apps/remote-header.** Same arrangement as footer, with remote `remote_header` (frontend/apps/remote-header/rspack.config.ts:74-75), own `withZephyr()` (frontend/apps/remote-header/rspack.config.ts:7) and port 3001 (frontend/apps/remote-header/rspack.config.ts:14; frontend/apps/host/rspack.config.ts:85). Version `1.0.0` (frontend/apps/remote-header/package.json:3) matches host `zephyr:dependencies` range (frontend/apps/host/package.json:5), with same limitation as footer.
 
-**4. frontend/apps/url-shortener.** Remote Vue 3 com build Rspack próprio (com `vue-loader`,
-frontend/apps/url-shortener/rspack.config.ts:33-46), que gera o `remoteEntry.js` do remote
-`url_shortener` (frontend/apps/url-shortener/rspack.config.ts:75-76), e deploy separado pelo
-`withZephyr()` da sua configuração (frontend/apps/url-shortener/rspack.config.ts:5). Porta 3003
-(frontend/apps/url-shortener/rspack.config.ts:12; frontend/apps/host/rspack.config.ts:87). É o único
-remote com script `serve` (frontend/apps/url-shortener/package.json:8), também `rspack serve`. Não
-consta no `zephyr:dependencies` do host, e sua versão `1.0.0`
-(frontend/apps/url-shortener/package.json:3) não aparece em publicação. Também fica fora dos scripts
-`lint` e `type-check` da raiz (frontend/package.json:29-30), que não fazem parte do build.
+**4. frontend/apps/url-shortener.** Vue 3 remote with own Rspack build (with `vue-loader`, frontend/apps/url-shortener/rspack.config.ts:33-46), generating `remoteEntry.js` for remote `url_shortener` (frontend/apps/url-shortener/rspack.config.ts:75-76), and separate deploy through `withZephyr()` of its configuration (frontend/apps/url-shortener/rspack.config.ts:5). Port 3003 (frontend/apps/url-shortener/rspack.config.ts:12; frontend/apps/host/rspack.config.ts:87). The only remote with script `serve` (frontend/apps/url-shortener/package.json:8), also `rspack serve`. Absent from host `zephyr:dependencies`, and its version `1.0.0` (frontend/apps/url-shortener/package.json:3) appears in no publication. Also excluded from root scripts `lint` and `type-check` (frontend/package.json:29-30), not part of build.
 
-## Resumo
+## Summary
 
-Aplicações: 4. Build (separado: 4). Deploy (separado: 4). Versionamento independente: 0.
+Applications: 4. Build (separate: 4). Deploy (separate: 4). Independent versioning: 0.

@@ -20,23 +20,24 @@ annotation:
 
 # 033 — abhikukreti/music-library-project
 
-## Leitura do repositório
+## Repository overview
 
-Exemplo com duas aplicações React/Vite unidas por Module Federation (`@originjs/vite-plugin-federation`): `main-app` é o host e `music-library` é o remote, que expõe o componente `MusicLibrary` (music-library/vite.config.js:8-13). O host carrega o componente com `React.lazy` e só o mostra depois do login, passando o papel do usuário como prop `isAdmin` (main-app/src/App.jsx:5-22). O controle de acesso fica dividido: o host decide se o usuário entra (login) e qual é o papel dele; o remote usa `isAdmin` para decidir se mostra o formulário de inclusão e os botões de exclusão de músicas (music-library/src/MusicLibrary.jsx:41, 84, 95).
+An example with two React/Vite applications joined by Module Federation (`@originjs/vite-plugin-federation`): `main-app` is the host and `music-library` is the remote, exposing the `MusicLibrary` component (music-library/vite.config.js:8-13). The host loads the component with `React.lazy` and displays it only after login, passing the user's role as the `isAdmin` prop (main-app/src/App.jsx:5-22). Access control is split: the host decides whether the user enters (login) and their role; the remote uses `isAdmin` to decide whether to show the song addition form and deletion buttons (music-library/src/MusicLibrary.jsx:41, 84, 95).
 
-Particularidade: o host não aponta para localhost, e sim para um deploy publicado na Netlify (main-app/vite.config.js:11). O snapshot contém a fonte do remote, mas a composição em execução depende do artefato hospedado, que pode ter divergido dela. O remote também roda sozinho e usa MSW para simular a API (music-library/src/main.jsx:10).
+Distinctive feature: the host points to a published Netlify deployment, rather than localhost (main-app/vite.config.js:11). The snapshot contains the remote's source, but running composition depends on the hosted artifact, which may have diverged from it. The remote also runs independently and uses MSW to simulate the API (music-library/src/main.jsx:10).
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | main-app | music-library | host → remote | origem → destino | module-federation | Yes | Yes | main-app/vite.config.js:8-12 (remote `music_library` em `https://astonishing-seahorse-d2decf.netlify.app/assets/remoteEntry.js`); music-library/vite.config.js:8-13 (`name: 'music_library'`, `filename: 'remoteEntry.js'`, expõe `./MusicLibrary`) | main-app/src/App.jsx:5; main-app/src/App.jsx:22 |
+| 1 | main-app | music-library | host → remote | source → target | module-federation | Yes | Yes | main-app/vite.config.js:8-12 (remote `music_library` at `https://astonishing-seahorse-d2decf.netlify.app/assets/remoteEntry.js`); music-library/vite.config.js:8-13 (`name: 'music_library'`, `filename: 'remoteEntry.js'`, exposes `./MusicLibrary`) | main-app/src/App.jsx:5; main-app/src/App.jsx:22 |
 
-## Observações
+## Observations
 
-**1. main-app → music-library.** O nome `music_library` e o módulo `./MusicLibrary` importado pelo host correspondem a music-library/vite.config.js:9-12, por isso o destino é a unidade do snapshot, mesmo com a URL apontando para a Netlify. Ver a leitura sobre a diferença entre a fonte e o artefato publicado.
+**1. main-app → music-library.** The name `music_library` and module `./MusicLibrary` imported by the host match music-library/vite.config.js:9-12, so the target is the snapshot unit, even with the URL pointing to Netlify. See the overview on the distinction between the source and published artifact.
 
-## Resumo
+## Summary
 
-Relações: 1 (host → remote: 1). Ativas: 1. Destino fora do snapshot: 0.
-Unidades sem relação: nenhuma.
+Relationships: 1 (host → remote: 1). Active: 1. Target outside the snapshot: 0.
+Units without a relationship: none.
+

@@ -15,13 +15,14 @@ annotation:
 
 # 257 — ral-facilities/scigateway
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| package.json:50 | dependencies | single-spa | 6.0.3 | single-spa | Yes | src/state/actions/loadMicroFrontends.tsx:2 e 31-49 (`import * as singleSpa from 'single-spa'`; `singleSpa.registerApplication(name, () => loadReactApp(name), (location) => ...)`); src/state/actions/scigateway.actions.tsx:8, 69, 363 e 391/401/408 (importa `single-spa` e `./loadMicroFrontends`; `loadMicroFrontends.init(settings.plugins)`; `singleSpa.start()`); src/App.tsx:9-11 e 50 (importa `configureSite` e chama `dispatch(configureSite())`); src/main.tsx:3 e 9 (importa `./App` e renderiza); index.html:32 (`<script type="module" src="/src/main.tsx">`, entrada do Vite) |
+| package.json:50 | dependencies | single-spa | 6.0.3 | single-spa | Yes | src/state/actions/loadMicroFrontends.tsx:2 and 31-49 (`import * as singleSpa from 'single-spa'`; `singleSpa.registerApplication(name, () => loadReactApp(name), (location) => ...)`); src/state/actions/scigateway.actions.tsx:8, 69, 363 and 391/401/408 (imports `single-spa` and `./loadMicroFrontends`; `loadMicroFrontends.init(settings.plugins)`; `singleSpa.start()`); src/App.tsx:9-11 and 50 (imports `configureSite` and calls `dispatch(configureSite())`); src/main.tsx:3 and 9 (imports `./App` and renders); index.html:32 (`<script type="module" src="/src/main.tsx">`, Vite entry point) |
 
-## Notas
+## Notes
 
-- `server/e2e-plugin/main.js:9`, em `same_package_matches`, é um bundle compilado do plugin de demonstração (outro repositório, segundo `server/README.md`), com código de single-spa embutido; não é uso deste pacote pelo host e não foi usado como evidência.
-- Fora das listas, o grep por `single-spa` também acha `src/state/middleware/scigateway.middleware.tsx:6` e 153-156 (`getAppStatus`, `triggerAppChange`) e `src/routing/routing.component.tsx:6` e 165 (`unloadApplication`), além de mocks em testes (`src/setupTests.ts:32`).
+- `server/e2e-plugin/main.js:9`, in `same_package_matches`, is a compiled bundle of the demonstration plugin (another repository, according to `server/README.md`), with embedded single-spa code; it is not use of this package by the host and was not used as evidence.
+- Outside the lists, grep for `single-spa` also finds `src/state/middleware/scigateway.middleware.tsx:6` and 153-156 (`getAppStatus`, `triggerAppChange`) and `src/routing/routing.component.tsx:6` and 165 (`unloadApplication`), besides test mocks (`src/setupTests.ts:32`).
+

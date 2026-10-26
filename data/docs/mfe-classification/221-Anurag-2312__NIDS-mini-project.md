@@ -20,71 +20,71 @@ annotation:
 
 # 221 — Anurag-2312/NIDS-mini-project
 
-## Contexto
+## Context
 
-“Deep Learning Based Intrusion Detection System” (`README.md:1–3`): sistema de detecção de intrusão em rede com CNN 2D e OpenMax. A arquitetura (`README.md:7–17`) tem:
-- um frontend React (`frontend/`, porta 5173);
-- um “Orchestrator” FastAPI (porta 8080), que é um gateway de API (`README.md:70`);
-- quatro serviços de backend: CICFlowMeter em Docker, pré-processador, serviço de modelo e motor de decisão.
+“Deep Learning Based Intrusion Detection System” (`README.md:1–3`): network intrusion detection system with 2D CNN and OpenMax. Architecture (`README.md:7–17`) has:
+- one React frontend (`frontend/`, port 5173);
+- FastAPI “Orchestrator” (port 8080), an API gateway (`README.md:70`);
+- four backend services: Docker CICFlowMeter, preprocessor, model service and decision engine.
 
-Há também notebooks de treino, modelos treinados, gráficos de relatório e PCAPs de exemplo. O acerto da busca vem da proximidade entre “Frontend” e “Orchestrator” no diagrama do README, não de orquestração de frontends. O nome do repositório não é usado como evidência.
+Also training notebooks, trained models, report charts and example PCAPs. Search retrieval comes from proximity between “Frontend” and “Orchestrator” in README diagram, not frontend orchestration. Repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:222` registra rank 221, ID 1199584113, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:222` records rank 221, ID 1199584113, status `cloned`, branch `main` and front-matter commit, which is clone HEAD and `origin/main`. Every clone Git command used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:222` registra a estratégia `broader` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:27677` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:27684` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:222` records strategy `broader` and eligibility `pass`. Sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). ID appears in `data/discovery/mfe-round-001/candidates.csv:27677` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:27684` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna o mesmo hit em cada rodada, do endpoint `repositories` e com `path` vazio:
+`sqlite3 -readonly` query of tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns same hit in each round, at endpoint `repositories` and with empty `path`:
 
-| Consulta (`q`) | Subconsulta / consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery / effective query | Collection 001 / 002 (UTC) |
 |---|---|---|
 | `broader-frontend-orchestration`: `"frontend orchestration" in:name,description,readme` | `broader-frontend-orchestration#created:2026-Q2` / `"frontend orchestration" in:name,description,readme pushed:>=2025-04-01 created:2026-04-01..2026-06-30` | 2026-10-07T23:43:23.958Z / 2026-10-08T16:24:39.269Z |
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem Jupyter Notebook, `fork: false`, tamanho 26.315;
-- criação em 2026-04-02T13:51:02Z, push em 2026-04-07T09:46:45Z.
+Hit metadata:
+- null description, no topics, Jupyter Notebook language, `fork: false`, size 26.315;
+- creation at 2026-04-02T13:51:02Z, push at 2026-04-07T09:46:45Z.
 
-A grafia literal “frontend orchestration” não aparece. No diagrama, `README.md:8` diz “Frontend (React, :5173)” e `README.md:11` diz “Orchestrator (FastAPI, :8080)”, separados por linhas de setas (`:9–10`). O acerto depende do processamento textual da busca do GitHub (stemming e pontuação), que não está registrado.
+Literal spelling “frontend orchestration” is absent. In diagram, `README.md:8` says “Frontend (React, :5173)” and `README.md:11` says “Orchestrator (FastAPI, :8080)”, separated by arrow lines (`:9–10`). Retrieval depends on unrecorded GitHub search text processing (stemming and punctuation).
 
-O `README.md` vem de `68df833` (2025-12-23 pela data de autoria) e não foi alterado depois, sendo anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+`README.md` comes from `68df833` (2025-12-23 by author date) and was unchanged afterward, predating October 2026 collections. README at the SHA is not later than searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 176 entradas, 173 arquivos regulares `100644` e 3 executáveis `100755` (`start_all.sh`, `stop_all.sh`, `decision_engine/test_requests.sh`); zero symlinks e zero gitlinks. Um único projeto frontend (`frontend/`, com `index.html`, `package.json`, `vite.config.js` e `src/`), cinco serviços Python, `training_scripts/`, `trained_models/`, `report_charts/` e `sample_pcaps/`. | contrária |
-| Configuração (frontend) | `frontend/vite.config.js:5–15`: plugins React e Tailwind e proxy de `/api` para o orquestrador em `localhost:8080`. `frontend/package.json:12–18`: React 19, React Router, JSZip, uuid; nenhuma dependência de composição. | contrária |
-| Arquitetura | `README.md:7–17`, `70`: o “Orchestrator” é um gateway de API FastAPI que coordena serviços de backend; o frontend é um só cliente desse gateway. São microsserviços de backend, não unidades frontend. | contrária |
-| Busca | `git grep -i` em `*.md` e `frontend/` por `orchestrat`, `micro.?front`, `federation` e `single.?spa`: só menções ao orquestrador de backend (`README.md:11`, `70`, `86`; `frontend/src/hooks/useServiceHealth.jsx:34–37`; `frontend/src/components/testing/FullPipelineTest.jsx:46`) e “container orchestration” (`decision_engine/ARCHITECTURE.md:241`). Os imports do frontend ficam dentro de `frontend/src`. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 176 entries, 173 regular files `100644` and 3 executables `100755` (`start_all.sh`, `stop_all.sh`, `decision_engine/test_requests.sh`); zero symlinks and zero gitlinks. One frontend project (`frontend/`, with `index.html`, `package.json`, `vite.config.js` and `src/`), five Python services, `training_scripts/`, `trained_models/`, `report_charts/` and `sample_pcaps/`. | contrary |
+| Configuration (frontend) | `frontend/vite.config.js:5–15`: React and Tailwind plugins and `/api` proxy to orchestrator at `localhost:8080`. `frontend/package.json:12–18`: React 19, React Router, JSZip, uuid; no composition dependency. | contrary |
+| Architecture | `README.md:7–17`, `70`: “Orchestrator” is FastAPI API gateway coordinating backend services; frontend is one gateway client. Backend microservices, not frontend units. | contrary |
+| Search | `git grep -i` in `*.md` and `frontend/` for `orchestrat`, `micro.?front`, `federation` and `single.?spa`: only backend-orchestrator mentions (`README.md:11`, `70`, `86`; `frontend/src/hooks/useServiceHealth.jsx:34–37`; `frontend/src/components/testing/FullPipelineTest.jsx:46`) and “container orchestration” (`decision_engine/ARCHITECTURE.md:241`). Frontend imports stay within `frontend/src`. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 72 commits lineares, nenhum merge, de sete autores: KingsukNandi (17), Suhani Sinha (12), Aranya Dutta (12), Pritha Sutradhar (11), Anurag Kumar (10, noreply), oishik-biswas (9) e Anurag-2312 (1).
-- **Raiz:** `68df833` (“Initial project setup with README and gitignore”, autoria 2025-12-23).
+Non-shallow clone; 72 linear commits, no merge, by seven authors: KingsukNandi (17), Suhani Sinha (12), Aranya Dutta (12), Pritha Sutradhar (11), Anurag Kumar (10, noreply), oishik-biswas (9) and Anurag-2312 (1).
+- **Root:** `68df833` (“Initial project setup with README and gitignore”, author date 2025-12-23).
 - **SHA:** `a7e65c9` (2026-04-07, “Updated package-lock.json for local environment”).
 
-As datas de autoria começam antes da criação do repositório (2026-04-02) e muitas têm horários redondos (`10:00:00`, `14:00:00`), o que indica histórico reconstruído antes da publicação. Nenhum blob histórico foi lido e não houve objeto ausente.
+Author dates begin before repository creation (2026-04-02) and many have round times (`10:00:00`, `14:00:00`), indicating history reconstructed before publication. No historical blob was read and no object was missing.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única aplicação frontend (`frontend/`); os demais componentes são serviços de backend. |
-| Q2 | No | Não há segunda unidade frontend cuja independência possa ser avaliada. |
-| Q3 | No | Não há host compondo unidades frontend; o orquestrador é um gateway de API (`README.md:70`). |
-| Q4 | No | Nenhum mecanismo de composição de frontends (`frontend/vite.config.js:5–15`; busca registrada). |
-| Q5 | No | Q1–Q4 são No: sistema de ML com frontend único e microsserviços de backend. |
+| Q1 | No | One frontend application (`frontend/`); other components are backend services. |
+| Q2 | No | No second frontend unit exists whose independence could be evaluated. |
+| Q3 | No | No host composes frontend units; orchestrator is API gateway (`README.md:70`). |
+| Q4 | No | No frontend-composition mechanism (`frontend/vite.config.js:5–15`; recorded search). |
+| Q5 | No | Q1–Q4 are No: ML system with single frontend and backend microservices. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. O acerto é lexical, como em 178 e 217 e nos casos anteriores da consulta `"frontend orchestration"`: “Frontend” e “Orchestrator” (gateway de backend) próximos no README.
-- Microsserviços de backend com um frontend único correspondem a “conventional frontend monoliths” do lado da UI.
-- `frontend_units: 1`, `unit_organization: single-unit`, `ui_technologies: [react]`, `build_tools: [vite]`, `repo_type: other` (projeto acadêmico em equipe).
-- Não há decisão aberta.
+- `Non-MFE` under rule “at least one question is No”. Retrieval is lexical, as 178 and 217 and previous query `"frontend orchestration"` cases: “Frontend” and “Orchestrator” (backend gateway) nearby in README.
+- Backend microservices with single frontend correspond to “conventional frontend monoliths” on UI side.
+- `frontend_units: 1`, `unit_organization: single-unit`, `ui_technologies: [react]`, `build_tools: [vite]`, `repo_type: other` (academic team project).
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** diagrama com “Frontend” acima de “Orchestrator” de backend casa a consulta ampla `"frontend orchestration"`.
-- **Protocolo (busca):** a grafia buscada não é literal. A elegibilidade muda de `unknown` (001) para `pass` (002).
-- **Protocolo (histórico):** datas de autoria anteriores à criação do repositório, com horários redondos.
+- **RQ1 (misleading signals):** diagram with “Frontend” above backend “Orchestrator” matches broad query `"frontend orchestration"`.
+- **Protocol (search):** searched spelling is not literal. Eligibility changes from `unknown` (001) to `pass` (002).
+- **Protocol (history):** author dates before repository creation, with round times.

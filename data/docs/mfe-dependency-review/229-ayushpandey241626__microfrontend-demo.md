@@ -15,15 +15,16 @@ annotation:
 
 # 229 — ayushpandey241626/microfrontend-demo
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| package.json:31 | devDependencies | @angular-architects/module-federation | ^19.0.3 | module-federation | Yes | projects/host-app/webpack.config.js:2-5 (`shareAll`, `SharedMappings` importados de `@angular-architects/module-federation/webpack`), usado em projects/host-app/webpack.config.js:8-9 e :26-34; projects/mfe1/webpack.config.js:1-4 e :6-21, projects/mfe2/webpack.config.js:1-4 e :6-21, projects/login-mfe-app/webpack.config.js:1-4 e :6-21 (`withModuleFederationPlugin` com `exposes`); angular.json:14, :115, :216, :321 (builder `ngx-build-plus:browser`) e angular.json:35, :136, :237, :342 (`extraWebpackConfig` de cada projeto); projects/host-app/src/app/app.routes.ts:3 e :16-40 (`loadRemoteModule` nas rotas `contacts`, `admin`, `login`), registrado por `provideRouter(routes)` em projects/host-app/src/app/app.config.ts:12 |
+| package.json:31 | devDependencies | @angular-architects/module-federation | ^19.0.3 | module-federation | Yes | projects/host-app/webpack.config.js:2-5 (`shareAll`, `SharedMappings` imported from `@angular-architects/module-federation/webpack`), used in projects/host-app/webpack.config.js:8-9 and :26-34; projects/mfe1/webpack.config.js:1-4 and :6-21, projects/mfe2/webpack.config.js:1-4 and :6-21, projects/login-mfe-app/webpack.config.js:1-4 and :6-21 (`withModuleFederationPlugin` with `exposes`); angular.json:14, :115, :216, :321 (builder `ngx-build-plus:browser`) and angular.json:35, :136, :237, :342 (`extraWebpackConfig` of each project); projects/host-app/src/app/app.routes.ts:3 and :16-40 (`loadRemoteModule` in routes `contacts`, `admin`, `login`), registered by `provideRouter(routes)` in projects/host-app/src/app/app.config.ts:12 |
 
-## Notas
+## Notes
 
-- Todas as ocorrências da inspeção estão em `same_package_matches`; `other_package_matches` está vazio. `projects/*` não têm `package.json` próprio e pertencem ao pacote da raiz.
-- `package.json:10` (script `run:all` com `mf-dev-server.js`) cita o pacote sem usá-lo; não foi contado como evidência.
-- O host usa `ModuleFederationPlugin` direto do webpack (projects/host-app/webpack.config.js:6), com só `shareAll`/`SharedMappings` vindos do pacote; os remotos usam `withModuleFederationPlugin` do pacote.
-- Os `webpack.prod.config.js` só reexportam o `webpack.config.js` do projeto (por exemplo, projects/mfe1/webpack.prod.config.js:1).
+- All inspection occurrences are in `same_package_matches`; `other_package_matches` is empty. `projects/*` have no `package.json` of their own and belong to the root package.
+- `package.json:10` (script `run:all` with `mf-dev-server.js`) mentions the package without using it; it was not counted as evidence.
+- The host uses `ModuleFederationPlugin` directly from webpack (projects/host-app/webpack.config.js:6), with only `shareAll`/`SharedMappings` coming from the package; the remotes use the package's `withModuleFederationPlugin`.
+- The `webpack.prod.config.js` files only re-export the project's `webpack.config.js` (for example, projects/mfe1/webpack.prod.config.js:1).
+

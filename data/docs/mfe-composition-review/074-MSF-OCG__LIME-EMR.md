@@ -20,23 +20,24 @@ annotation:
 
 # 074 — MSF-OCG/LIME-EMR
 
-## Leitura do repositório
+## Repository overview
 
-Distribuição OpenMRS 3 da MSF-OCG, montada sobre a Ozone HIS e empacotada por Maven para três locais (`sites/mosul`, `sites/bunia`, `sites/matsapha`). O repositório não contém o código de nenhuma aplicação frontend: ele escolhe quais módulos ESM externos entram na distribuição e como eles se comportam. A configuração de montagem fixa a versão do core e lista 42 `frontendModules` com versão (distro/configs/openmrs/frontend_assembly/spa-assemble-config.json:2-46), e exclui seis módulos padrão (distro/configs/openmrs/frontend_assembly/spa-assemble-config.json:48-55). A configuração de UI ajusta esses módulos pelo nome do pacote: liga feature flags do `@openmrs/esm-app-shell` (distro/configs/openmrs/frontend_config/msf-frontend-config.json:18-20) e põe a extensão `patient-flags-list` em slots do patient chart (distro/configs/openmrs/frontend_config/msf-frontend-config.json:27-39; distro/configs/openmrs/frontend_config/msf-frontend-config.json:146-158). O build troca a configuração de frontend no `.env` gerado e acrescenta configurações a `SPA_CONFIG_URLS` (distro/pom.xml:446-447; distro/pom.xml:460-461).
+MSF-OCG's OpenMRS 3 distribution, built on Ozone HIS and packaged by Maven for three sites (`sites/mosul`, `sites/bunia`, `sites/matsapha`). The repository contains no frontend application code: it selects which external ESM modules enter the distribution and how they behave. The assembly configuration pins the core version and lists 42 versioned `frontendModules` (distro/configs/openmrs/frontend_assembly/spa-assemble-config.json:2-46), and excludes six default modules (distro/configs/openmrs/frontend_assembly/spa-assemble-config.json:48-55). The UI configuration adjusts those modules by package name: it enables feature flags for `@openmrs/esm-app-shell` (distro/configs/openmrs/frontend_config/msf-frontend-config.json:18-20) and places the `patient-flags-list` extension in patient chart slots (distro/configs/openmrs/frontend_config/msf-frontend-config.json:27-39; distro/configs/openmrs/frontend_config/msf-frontend-config.json:146-158). The build replaces frontend configuration in the generated `.env` and adds configurations to `SPA_CONFIG_URLS` (distro/pom.xml:446-447; distro/pom.xml:460-461).
 
-O host que compõe esses módulos é o `@openmrs/esm-app-shell`, que é externo. Segundo o próprio script do repositório, o app-shell carrega cada bundle pelo `importmap.json` e registra páginas e extensões pelo `routes.registry.json` (scripts/remove-importmap-entries.groovy:7-16). Os dois mapas são gerados no build e não estão no snapshot. O que está versionado é a manutenção deles: cada site roda `remove-importmap-entries.groovy` na fase `process-resources` para tirar módulos da sua distribuição (sites/mosul/pom.xml:220-234, que remove `@openmrs/esm-ward-app` e `@openmrs/esm-patient-task-list-app` em :229; sites/bunia/pom.xml:327; sites/matsapha/pom.xml:282). O script apaga as entradas nos dois mapas (scripts/remove-importmap-entries.groovy:71-100) e falha o build se uma rota ficar sem entrada no import map (scripts/remove-importmap-entries.groovy:111-123).
+The host composing those modules is the external `@openmrs/esm-app-shell`. According to the repository's own script, app-shell loads each bundle through `importmap.json` and registers pages and extensions through `routes.registry.json` (scripts/remove-importmap-entries.groovy:7-16). Both maps are generated during the build and absent from the snapshot. What is versioned is their maintenance: each site runs `remove-importmap-entries.groovy` during `process-resources` to remove modules from its distribution (sites/mosul/pom.xml:220-234, removing `@openmrs/esm-ward-app` and `@openmrs/esm-patient-task-list-app` at :229; sites/bunia/pom.xml:327; sites/matsapha/pom.xml:282). The script deletes entries from both maps (scripts/remove-importmap-entries.groovy:71-100) and fails the build if a route lacks an import map entry (scripts/remove-importmap-entries.groovy:111-123).
 
-Nenhuma relação foi registrada. A revisão estrutural julga `No` os dois diretórios candidatos, `.` (testes Playwright) e `docs` (site Docsify), e conta 0 aplicações frontend no snapshot. A revisão de código-fonte não tem nenhuma construção `Yes` ou `Undetermined`, e a revisão de dependências não tem dependência das tecnologias inspecionadas. Uma relação precisa de uma Origem que seja diretório `Yes` ou `Undetermined` da revisão estrutural, e aqui não há nenhum. A origem real da composição (o app-shell) e os destinos (os 42 módulos) estão todos fora do snapshot, e a ligação entre eles passa por mapas gerados que também não estão nele. As declarações acima mostram quais unidades a distribuição compõe e como o build mantém os mapas, mas não ligam duas unidades do snapshot. Isso não contradiz a classificação (`MFE-implemented`, `approaches: [import-maps]`, 42 unidades `multi-repo`): o repositório configura uma composição cujas partes ficam todas em outros repositórios.
+No relationship was recorded. The structural review judges both candidate directories `No`, `.` (Playwright tests) and `docs` (Docsify site), and counts 0 frontend applications in the snapshot. The source code review has no `Yes` or `Undetermined` construct, and the dependency review has no dependency on the inspected technologies. A relationship requires a Source directory that is `Yes` or `Undetermined` in the structural review, and here there is none. The actual composition source (app-shell) and targets (the 42 modules) are all outside the snapshot, and their connection passes through generated maps also absent from it. The declarations above show which units the distribution composes and how the build maintains the maps, but do not connect two snapshot units. This does not contradict the classification (`MFE-implemented`, `approaches: [import-maps]`, 42 `multi-repo` units): the repository configures a composition whose parts all reside in other repositories.
 
-## Relações
+## Relationships
 
-Nenhuma relação.
+No relationship.
 
-## Observações
+## Observations
 
-Nenhuma relação. A revisão de código-fonte não tem linha `Yes` ou `Undetermined` para distribuir na coluna Código.
+No relationship. The source code review has no `Yes` or `Undetermined` row to distribute in the Code column.
 
-## Resumo
+## Summary
 
-Relações: 0. Ativas: 0. Destino fora do snapshot: 0.
-Unidades sem relação: nenhuma.
+Relationships: 0. Active: 0. Target outside the snapshot: 0.
+Units without a relationship: none.
+

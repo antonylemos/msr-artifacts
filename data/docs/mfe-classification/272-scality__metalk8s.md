@@ -20,82 +20,82 @@ annotation:
 
 # 272 — scality/metalk8s
 
-## Contexto
+## Context
 
-MetalK8s é uma distribuição Kubernetes on-prem da Scality (descrição do repositório: “An opinionated Kubernetes distribution with a focus on long-term on-prem deployments”). Além de Salt, charts, operators e buildchain, o repositório contém duas aplicações frontend compostas por Module Federation:
-- `shell-ui`: o shell (navbar, autenticação, alertas), que descobre as UIs implantadas e monta cada uma por rota;
-- `ui`: a “MetalK8s Platform UI”, um remote com views `platform` e `alerts`.
+MetalK8s is Scality’s on-prem Kubernetes distribution (repository description: “An opinionated Kubernetes distribution with a focus on long-term on-prem deployments”). Besides Salt, charts, operators and buildchain, the repository contains two frontend applications composed through Module Federation:
+- `shell-ui`: the shell (navbar, authentication, alerts), discovering deployed UIs and mounting each by route;
+- `ui`: the “MetalK8s Platform UI”, a remote with `platform` and `alerts` views.
 
-As duas têm imagens e recursos de deploy próprios (`ScalityUI` para o shell, `ScalityUIComponent` + `ScalityUIComponentExposer` para a UI). O nome do repositório não é usado como evidência.
+Both have their own images and deployment resources (`ScalityUI` for the shell, `ScalityUIComponent` + `ScalityUIComponentExposer` for the UI). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:273` registra rank 272, ID 124905930, status `cloned`, branch `development/134.0` (a padrão) e o commit do front matter, que é o HEAD do clone e de `origin/development/134.0`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:273` records rank 272, ID 124905930, status `cloned`, branch `development/134.0` (the default) and the front matter commit, which is the HEAD of the clone and of `origin/development/134.0`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:273` registra a estratégia `technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:262` (`technology`, `unknown`) e `data/discovery/mfe-round-002/candidates.csv:262` (`technology`, `pass`).
+`data/samples/mfe-sample-001/sample.csv:273` records strategy `technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:262` (`technology`, `unknown`) and `data/discovery/mfe-round-002/candidates.csv:262` (`technology`, `pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos três hits em cada rodada, do endpoint `code`:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same three hits in each round, from endpoint `code`:
 
-| Consulta (`q`) | Subconsulta | `path` | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | `path` | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `technology-module-federation-package-code`: `"@module-federation" filename:package.json` | `…#size:2250..2499` | `shell-ui/package.json` | 2026-10-07T20:00:02.514Z / 2026-10-08T15:43:06.180Z |
-| idem | `…#size:4000..5999` | `ui/package.json` | 2026-10-07T20:52:26.866Z / 2026-10-08T15:44:06.777Z |
+| same | `…#size:4000..5999` | `ui/package.json` | 2026-10-07T20:52:26.866Z / 2026-10-08T15:44:06.777Z |
 | `technology-module-federation-plugin-ts-code`: `ModuleFederationPlugin remotes extension:ts` | `…#size:6000..9999` | `ui/rspack.config.ts` | 2026-10-07T22:40:28.914Z / 2026-10-08T16:19:36.642Z |
 
-Os metadados do hit de código registram só a descrição e `fork: false`.
+Code hit metadata records only description and `fork: false`.
 
-Correspondências no SHA:
-- `shell-ui/package.json` (2.312 bytes) declara `@module-federation/enhanced` (`:20`);
-- `ui/package.json` (5.342 bytes) é casado pela faixa de tamanho;
-- `ui/rspack.config.ts` (6.436 bytes) contém `ModuleFederationPlugin` (`:5`, `:118`) e `remotes` (`:128–132`).
+Matches at the SHA:
+- `shell-ui/package.json` (2.312 bytes) declares `@module-federation/enhanced` (`:20`);
+- `ui/package.json` (5.342 bytes) matches the size range;
+- `ui/rspack.config.ts` (6.436 bytes) contains `ModuleFederationPlugin` (`:5`, `:118`) and `remotes` (`:128–132`).
 
-Os dois `package.json` foram alterados pela última vez em `5e3e25294` (2026-09-10) e o `rspack.config.ts` em `828adbb88` (2026-04-10), antes das coletas. O acerto não depende do README, que não menciona Module Federation nem micro-frontends (busca por `micro`, `federation`, `shell` e `ui` só encontra links de documentação e blocos `shell`).
+Both `package.json` were last changed in `5e3e25294` (2026-09-10) and `rspack.config.ts` in `828adbb88` (2026-04-10), before collections. The match does not depend on the README, which mentions neither Module Federation nor micro-frontends (search for `micro`, `federation`, `shell` and `ui` finds only documentation links and `shell` blocks).
 
-**Snapshot posterior às buscas:** o SHA é um merge de 2026-10-08T21:10:51Z, posterior às duas coletas, mas não altera os arquivos casados.
+**Snapshot after searches:** the SHA is a merge from 2026-10-08T21:10:51Z, after both collections, but does not change matched files.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 3.086 entradas, sendo 3.040 arquivos regulares `100644`, 45 executáveis `100755`, 1 symlink `120000` (`tests/versions.py` → `../buildchain/buildchain/versions.py`) e zero gitlinks. O frontend está em `shell-ui/` (98 entradas) e `ui/` (611); o restante é infraestrutura (`charts/`, `salt/`, `operator/`, `storage-operator/`, `buildchain/`, `docs/`, `tests/`). `ui/@mf-types/` versiona 375 arquivos de tipos gerados do shell (330 sob `node_modules/`), que não são unidade. | contexto |
-| Configuração (remote) | `ui/rspack.config.ts:32–34`: entry `metalk8s_ui`; `:118–127`: `ModuleFederationPlugin({ name: 'metalk8s', filename: \`static/js/remoteEntry.${version}.js\`, exposes: { './FederableApp', './platformLibrary', './AlertsNavbarUpdater', './Metalk8sLocalVolumeProvider', './PlatformGlobalHealthBarFederated' } })`; `:128–132`: `remotes: { shell }` só em desenvolvimento; `:133–150`: `shared` singletons; `:171–206`: `MicroAppRuntimeConfigurationPlugin`. | forte |
-| Configuração (contrato do remote) | `ui/public/.well-known/micro-app-configuration:1–49`: `MicroAppConfiguration` com `remoteEntryPath: /mf-manifest.json`, views `platform` (`/`) e `alerts` (`/alerts`) apontando para `./FederableApp` no escopo `metalk8s`, hook `./platformLibrary` e `navbarUpdaterComponents` `./AlertsNavbarUpdater`. | forte |
-| Configuração (shell) | `shell-ui/rspack.config.ts:46`: entry `./src/index.tsx`; `:130–144`: `ModuleFederationPlugin({ name: 'shell', exposes: { './App', './lang', './auth/AuthProvider', './alerts/…', './navbar/navbarHooks', './moduleFederation/…', './useNotificationCenter' } })`; `:145–207`: `shared` singletons eager. `shell-ui/public/config.json:2–15`: navbar com views `platform` e `alerts` do kind `metalk8s-ui` e `discoveryUrl: /shell/deployed-ui-apps.json`. | forte |
-| Código-fonte (composição) | `shell-ui/src/index.tsx:1–8` → `shell-ui/src/FederatedApp.tsx`. `shell-ui/src/initFederation/UIListProvider.tsx:66–79` busca a lista de UIs implantadas em `discoveryURL`. `FederatedApp.tsx:57–95` (`FederatedRoute`) monta `FederatedComponent` com `url=${app.url}${remoteEntryPath}?version=…`, `module` e `scope` vindos da configuração da micro-app. `:97–136` (`InternalRouter`) gera uma rota por view federada. | forte |
-| Código-fonte (lado do remote) | `ui/src/FederableApp.tsx:120–122`: `export default function FederableApp(props: FederatedAppProps)`, que envolve a app em `ShellHooksProvider` com `shellHooks`/`shellAlerts` recebidos do shell. A app Redux/Saga da plataforma fica em `ui/src/containers/App`. | forte |
-| Código-fonte (fronteiras) | Busca ativa por imports relativos que cruzem `ui/` e `shell-ui/` (`../shell-ui`, `../ui/`, `../../shell-ui`): nenhuma ocorrência fora de `@mf-types`. A única referência da UI ao shell é tipo gerado: `ui/src/FederableApp.tsx:21` importa `FederatedAppProps` de `../@mf-types/shell/App` (cópia de tipos em `ui/@mf-types`, gerada pelo MF), não de `shell-ui/src`. A busca por `'shell/` em `ui/src` não encontra imports do módulo federado; a integração com o shell é por props e `@scality/module-federation`. | contexto |
-| Build/deploy | Builds próprios (`shell-ui/package.json:8–9`; `ui/package.json:38–39`) e imagens separadas: `buildchain/buildchain/image.py:418–419` (`shell-ui/Dockerfile`), `images/metalk8s-ui/Dockerfile`. `salt/metalk8s/addons/shell-ui/deployed/ui-operator-cr.sls:15–50`: recurso `ScalityUI` `shell-ui-cp` com a imagem do shell e navbar com as views `platform`/`alerts` de `metalk8s-ui`. `salt/metalk8s/addons/ui/deployed/ui-operator-cr.sls:15–74`: `ScalityUIComponent` `metalk8s-ui` (imagem própria, montada em `.well-known`) e `ScalityUIComponentExposer` ligando-o ao `ScalityUI` `shell-ui-cp`. | forte |
-| Tecnologia | `@scality/module-federation` 1.6.1 nos dois pacotes (`shell-ui/package.json:52`; `ui/package.json:11`): biblioteca da mesma organização para `FederatedComponent`, configuração de micro-apps e hooks do shell. | moderada |
+| Structure | `git ls-tree -r` at the SHA: 3.086 entries, comprising 3.040 regular files `100644`, 45 executables `100755`, 1 symlink `120000` (`tests/versions.py` → `../buildchain/buildchain/versions.py`) and zero gitlinks. Frontend is in `shell-ui/` (98 entries) and `ui/` (611); the rest is infrastructure (`charts/`, `salt/`, `operator/`, `storage-operator/`, `buildchain/`, `docs/`, `tests/`). `ui/@mf-types/` versions 375 shell-generated type files (330 under `node_modules/`), which are not a unit. | context |
+| Configuration (remote) | `ui/rspack.config.ts:32–34`: entry point `metalk8s_ui`; `:118–127`: `ModuleFederationPlugin({ name: 'metalk8s', filename: \`static/js/remoteEntry.${version}.js\`, exposes: { './FederableApp', './platformLibrary', './AlertsNavbarUpdater', './Metalk8sLocalVolumeProvider', './PlatformGlobalHealthBarFederated' } })`; `:128–132`: `remotes: { shell }` only in development; `:133–150`: singleton `shared`; `:171–206`: `MicroAppRuntimeConfigurationPlugin`. | strong |
+| Configuration (remote contract) | `ui/public/.well-known/micro-app-configuration:1–49`: `MicroAppConfiguration` with `remoteEntryPath: /mf-manifest.json`, views `platform` (`/`) and `alerts` (`/alerts`) pointing to `./FederableApp` in scope `metalk8s`, hook `./platformLibrary` and `navbarUpdaterComponents` `./AlertsNavbarUpdater`. | strong |
+| Configuration (shell) | `shell-ui/rspack.config.ts:46`: entry point `./src/index.tsx`; `:130–144`: `ModuleFederationPlugin({ name: 'shell', exposes: { './App', './lang', './auth/AuthProvider', './alerts/…', './navbar/navbarHooks', './moduleFederation/…', './useNotificationCenter' } })`; `:145–207`: eager singleton `shared`. `shell-ui/public/config.json:2–15`: navbar with views `platform` and `alerts` of kind `metalk8s-ui` and `discoveryUrl: /shell/deployed-ui-apps.json`. | strong |
+| Source code (composition) | `shell-ui/src/index.tsx:1–8` → `shell-ui/src/FederatedApp.tsx`. `shell-ui/src/initFederation/UIListProvider.tsx:66–79` fetches the deployed UI list from `discoveryURL`. `FederatedApp.tsx:57–95` (`FederatedRoute`) mounts `FederatedComponent` with `url=${app.url}${remoteEntryPath}?version=…`, `module` and `scope` from micro-app configuration. `:97–136` (`InternalRouter`) generates one route per federated view. | strong |
+| Source code (remote side) | `ui/src/FederableApp.tsx:120–122`: `export default function FederableApp(props: FederatedAppProps)`, wrapping the app in `ShellHooksProvider` with `shellHooks`/`shellAlerts` received from the shell. The platform Redux/Saga app is in `ui/src/containers/App`. | strong |
+| Source code (boundaries) | Active relative import search crossing `ui/` and `shell-ui/` (`../shell-ui`, `../ui/`, `../../shell-ui`): no occurrences outside `@mf-types`. The UI’s only shell reference is a generated type: `ui/src/FederableApp.tsx:21` imports `FederatedAppProps` from `../@mf-types/shell/App` (type copy in `ui/@mf-types`, generated by MF), not from `shell-ui/src`. Search for `'shell/` in `ui/src` finds no federated module imports; shell integration is through props and `@scality/module-federation`. | context |
+| Build/deploy | Own builds (`shell-ui/package.json:8–9`; `ui/package.json:38–39`) and separate images: `buildchain/buildchain/image.py:418–419` (`shell-ui/Dockerfile`), `images/metalk8s-ui/Dockerfile`. `salt/metalk8s/addons/shell-ui/deployed/ui-operator-cr.sls:15–50`: resource `ScalityUI` `shell-ui-cp` with shell image and navbar with `platform`/`alerts` views from `metalk8s-ui`. `salt/metalk8s/addons/ui/deployed/ui-operator-cr.sls:15–74`: `ScalityUIComponent` `metalk8s-ui` (own image, mounted at `.well-known`) and `ScalityUIComponentExposer` connecting it to `ScalityUI` `shell-ui-cp`. | strong |
+| Technology | `@scality/module-federation` 1.6.1 in both packages (`shell-ui/package.json:52`; `ui/package.json:11`): same-organization library for `FederatedComponent`, micro-app configuration and shell hooks. | moderate |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso e parcial (`blob:none`). São 12.526 commits alcançáveis a partir do SHA (15.242 em todos os refs), 5.150 merges, de 83 identidades. As principais são o bot de merge `bert-e <wall_e@scality.com>` (4.415) e desenvolvedores com e-mail `@scality.com`, por exemplo Teddy Andrieux (1.762), YanJin (1.030), Alexandre Allard (685) e Guillaume Demonet (662). A raiz é `d77803a49` (2019-02-05, Nicolas Trangez). Por caminho: `ui/` tem 2.219 commits e `shell-ui/` 558; o shell surge em `f28782afa` (2021-02-24, “solutions-navbar: Rename to shell-ui”). Há 719 refs remotos; só o SHA da branch padrão foi considerado.
+Non-shallow and partial clone (`blob:none`). There are 12.526 commits reachable from the SHA (15.242 across all refs), 5.150 merges, by 83 identities. Main ones are merge bot `bert-e <wall_e@scality.com>` (4.415) and developers with `@scality.com` email, for example Teddy Andrieux (1.762), YanJin (1.030), Alexandre Allard (685) and Guillaume Demonet (662). The root is `d77803a49` (2019-02-05, Nicolas Trangez). By path: `ui/` has 2.219 commits and `shell-ui/` 558; the shell appears in `f28782afa` (2021-02-24, “solutions-navbar: Rename to shell-ui”). There are 719 remote refs; only the default branch SHA was considered.
 
-`git rev-list --objects $SHA --missing=print` lista 24.620 objetos ausentes, nenhum na árvore do SHA (comparação entre os objetos da árvore e a lista de ausentes: zero em comum). Nenhum blob histórico foi lido.
+`git rev-list --objects $SHA --missing=print` lists 24.620 missing objects, none in the SHA tree (comparison between tree objects and the missing list: zero in common). No historical blob was read.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | Duas unidades próprias: `shell-ui` e `ui` (MetalK8s Platform UI), com entries próprias (`shell-ui/rspack.config.ts:46`; `ui/rspack.config.ts:32–34`). |
-| Q2 | Yes | Builds, imagens e recursos de deploy separados (`shell-ui/package.json:8–9`; `ui/package.json:38–39`; os dois `ui-operator-cr.sls`). Nenhum import de código-fonte entre as unidades; a UI usa só tipos gerados em `ui/@mf-types` (`ui/src/FederableApp.tsx:21`). |
-| Q3 | Yes | O shell descobre as UIs implantadas e roteia as views federadas (`UIListProvider.tsx:66–79`; `FederatedApp.tsx:57–136`). No deploy, o `ScalityUIComponentExposer` liga `metalk8s-ui` ao `ScalityUI` do shell (`salt/metalk8s/addons/ui/deployed/ui-operator-cr.sls:52–74`). |
-| Q4 | Yes | Module Federation configurado nos dois lados e conectado. Os módulos `./FederableApp` e `./AlertsNavbarUpdater` e o escopo `metalk8s` da `micro-app-configuration` correspondem aos `exposes` e ao `name` de `ui/rspack.config.ts:119–126`. O shell carrega o `remoteEntryPath` por `FederatedComponent` (`FederatedApp.tsx:85–94`). |
-| Q5 | Yes | Q1–Q4 convergem. |
+| Q1 | Yes | Two own units: `shell-ui` and `ui` (MetalK8s Platform UI), with their own entry points (`shell-ui/rspack.config.ts:46`; `ui/rspack.config.ts:32–34`). |
+| Q2 | Yes | Separate builds, images and deployment resources (`shell-ui/package.json:8–9`; `ui/package.json:38–39`; both `ui-operator-cr.sls`). No source code import between units; the UI uses only generated types in `ui/@mf-types` (`ui/src/FederableApp.tsx:21`). |
+| Q3 | Yes | The shell discovers deployed UIs and routes federated views (`UIListProvider.tsx:66–79`; `FederatedApp.tsx:57–136`). In deployment, `ScalityUIComponentExposer` connects `metalk8s-ui` to the shell `ScalityUI` (`salt/metalk8s/addons/ui/deployed/ui-operator-cr.sls:52–74`). |
+| Q4 | Yes | Module Federation configured on both sides and connected. Modules `./FederableApp` and `./AlertsNavbarUpdater` and scope `metalk8s` of `micro-app-configuration` match `exposes` and `name` in `ui/rspack.config.ts:119–126`. The shell loads `remoteEntryPath` through `FederatedComponent` (`FederatedApp.tsx:85–94`). |
+| Q5 | Yes | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- `MFE-implemented`: Q1–Q5 Yes. Corresponde a “monorepos containing a host and its remotes”, com composição em runtime por descoberta de UIs implantadas.
-- Cadeia completa como em 076/084/096/106/109, aqui com nível de produção: versão no nome do `remoteEntry`, configuração de micro-app em `.well-known`, discovery e operator Kubernetes de UI.
-- Não é plugin de plataforma de terceiros (037, 258): shell, remote e biblioteca `@scality/module-federation` são da mesma organização, e o shell é parte do produto.
-- Não é code sharing (089/100): o remote fornece views completas (`platform`, `alerts`) montadas por rota.
-- O `remotes: shell` da UI só em desenvolvimento (`ui/rspack.config.ts:128–132`) não altera a análise.
-- `frontend_units: 2` (os tipos vendorizados em `@mf-types` e o cliente gerador de CRDs em `tools/` não são unidades), `unit_organization: monorepo`, `ui_technologies: [react]`, `build_tools: [rspack]`, `approaches: [module-federation]`, `repo_type: production`.
-- Não há decisão aberta.
+- `MFE-implemented`: Q1–Q5 Yes. It matches “monorepos containing a host and its remotes”, with runtime composition through deployed UI discovery.
+- Complete chain as in 076/084/096/106/109, here at production level: version in the `remoteEntry` name, micro-app configuration in `.well-known`, discovery and Kubernetes UI operator.
+- This is not a third-party platform plugin (037, 258): shell, remote and library `@scality/module-federation` belong to the same organization, and the shell is part of the product.
+- This is not code sharing (089/100): the remote provides complete views (`platform`, `alerts`) mounted by route.
+- The UI’s development-only `remotes: shell` (`ui/rspack.config.ts:128–132`) does not change the analysis.
+- `frontend_units: 2` (vendored types in `@mf-types` and the CRD generator client in `tools/` are not units), `unit_organization: monorepo`, `ui_technologies: [react]`, `build_tools: [rspack]`, `approaches: [module-federation]`, `repo_type: production`.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** Module Federation (`@module-federation/enhanced/rspack`) sobre uma camada própria de micro-apps (`@scality/module-federation`). O remote publica `micro-app-configuration` (build) e `runtime-app-configuration` (execução) em `.well-known`. O shell faz discovery em `deployed-ui-apps.json` e monta views e “navbar updaters” federados.
-- **RQ3:** composição declarada também na infraestrutura: os CRDs `ScalityUI`, `ScalityUIComponent` e `ScalityUIComponentExposer`, aplicados por Salt, conectam as imagens das unidades no cluster.
-- **RQ1:** tipos gerados do shell versionados em `ui/@mf-types/` (com cópias de `node_modules`) aparecem como dezenas de `package.json` no inventário e podem inflar contagens automáticas de unidades.
-- **Protocolo (snapshot):** o SHA clonado (merge de 2026-10-08T21:10:51Z) é posterior às coletas, sem mudança nos arquivos casados.
+- **RQ2:** Module Federation (`@module-federation/enhanced/rspack`) over a custom micro-app layer (`@scality/module-federation`). The remote publishes `micro-app-configuration` (build) and `runtime-app-configuration` (execution) in `.well-known`. The shell performs discovery in `deployed-ui-apps.json` and mounts federated views and “navbar updaters”.
+- **RQ3:** composition also declared in infrastructure: CRDs `ScalityUI`, `ScalityUIComponent` and `ScalityUIComponentExposer`, applied through Salt, connect unit images in the cluster.
+- **RQ1:** versioned shell-generated types in `ui/@mf-types/` (with `node_modules` copies) appear as dozens of `package.json` in the inventory and can inflate automatic unit counts.
+- **Protocol (snapshot):** the cloned SHA (merge from 2026-10-08T21:10:51Z) postdates collections, without changes to matched files.

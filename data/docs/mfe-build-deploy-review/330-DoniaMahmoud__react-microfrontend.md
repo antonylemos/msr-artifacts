@@ -16,28 +16,28 @@ annotation:
 
 # 330 — DoniaMahmoud/react-microfrontend
 
-## Leitura do repositório
+## Repository overview
 
-Exemplo didático de Module Federation em JavaScript puro, com três aplicações webpack independentes: `container` (host), `products` e `cart` (remotes). Não há `package.json` na raiz nem workspace; cada aplicação tem `package.json`, `package-lock.json` e `webpack.config.js` próprios. O único script de cada `package.json` é `start`, com `webpack serve` (cart/package.json:7; container/package.json:7; products/package.json:7); não há script `build`. As três configurações usam `mode: "development"` e fixam a porta do servidor de desenvolvimento: 8080 no container, 8081 no products e 8082 no cart (container/webpack.config.js:5-8; products/webpack.config.js:5-8; cart/webpack.config.js:5-8).
+Teaching example of Module Federation in plain JavaScript, with three independent webpack applications: `container` (host), `products` and `cart` (remotes). No root `package.json` or workspace; each application has its own `package.json`, `package-lock.json` and `webpack.config.js`. The only script in each `package.json` is `start`, with `webpack serve` (cart/package.json:7; container/package.json:7; products/package.json:7); no script `build` exists. All three configurations use `mode: "development"` and fix development server port: 8080 in container, 8081 in products and 8082 in cart (container/webpack.config.js:5-8; products/webpack.config.js:5-8; cart/webpack.config.js:5-8).
 
-Tudo o que existe é configuração de desenvolvimento. O host busca os remotes em `http://localhost:8081/remoteEntry.js` e `http://localhost:8082/remoteEntry.js` (container/webpack.config.js:13-14), endereços dos servidores de desenvolvimento dos remotes. Não há Dockerfile, compose, workflow de CI, configuração de hospedagem nem proxy no snapshot, e o `matches.csv` não tem ocorrência `ops-*`, `ci-*` ou `cfg-public-path`. O `.gitignore` exclui `dist/` e `build/` (.gitignore:4-6).
+Everything present is development configuration. Host fetches remotes at `http://localhost:8081/remoteEntry.js` and `http://localhost:8082/remoteEntry.js` (container/webpack.config.js:13-14), remote development server addresses. No Dockerfile, compose, CI workflow, hosting configuration or proxy is present in snapshot, and `matches.csv` has no `ops-*`, `ci-*` or `cfg-public-path` occurrence. The `.gitignore` excludes `dist/` and `build/` (.gitignore:4-6).
 
-## Aplicações
+## Applications
 
-| # | Aplicação | Build | Deploy | Onde é servida | Versionamento | Artefatos |
+| # | Application | Build | Deploy | Where served | Versioning | Artifacts |
 |---|---|---|---|---|---|---|
-| 1 | cart | separado | não observado | `http://localhost:8082` em desenvolvimento (cart/webpack.config.js:6-7; container/webpack.config.js:14) | No | cart/webpack.config.js:4-28 (configuração própria, gera `remoteEntry.js`); cart/package.json:7 (`webpack serve`) |
-| 2 | container | separado | não observado | `http://localhost:8080` em desenvolvimento (container/webpack.config.js:6-7) | No | container/webpack.config.js:4-21 (configuração própria, host com dois remotes); container/package.json:7 (`webpack serve`) |
-| 3 | products | separado | não observado | `http://localhost:8081` em desenvolvimento (products/webpack.config.js:6-7; container/webpack.config.js:13) | No | products/webpack.config.js:4-29 (configuração própria, gera `remoteEntry.js`); products/package.json:7 (`webpack serve`) |
+| 1 | cart | separate | not observed | `http://localhost:8082` in development (cart/webpack.config.js:6-7; container/webpack.config.js:14) | No | cart/webpack.config.js:4-28 (own configuration, generates `remoteEntry.js`); cart/package.json:7 (`webpack serve`) |
+| 2 | container | separate | not observed | `http://localhost:8080` in development (container/webpack.config.js:6-7) | No | container/webpack.config.js:4-21 (own configuration, host with two remotes); container/package.json:7 (`webpack serve`) |
+| 3 | products | separate | not observed | `http://localhost:8081` in development (products/webpack.config.js:6-7; container/webpack.config.js:13) | No | products/webpack.config.js:4-29 (own configuration, generates `remoteEntry.js`); products/package.json:7 (`webpack serve`) |
 
-## Observações
+## Observations
 
-**1. cart.** O build é separado porque a configuração webpack e as dependências são só desta aplicação (cart/webpack.config.js:4-28; cart/package.json:12-19), mesmo que o único uso dela seja o servidor de desenvolvimento. Ela gera o `remoteEntry.js` com o módulo `./CartShow` (cart/webpack.config.js:10-15). Deploy não observado: só há `webpack serve` na porta 8082. A versão `1.0.0` (cart/package.json:3) não é usada em publicação.
+**1. cart.** Separate build because webpack configuration and dependencies belong only to this application (cart/webpack.config.js:4-28; cart/package.json:12-19), even if development server is its only use. It generates `remoteEntry.js` with module `./CartShow` (cart/webpack.config.js:10-15). Deploy not observed: only `webpack serve` on port 8082. Version `1.0.0` (cart/package.json:3) is unused in publication.
 
-**2. container.** Configuração e servidor próprios na porta 8080 (container/webpack.config.js:4-21). O código dos remotes não entra no seu build: chega em runtime pelos `remoteEntry.js` em `localhost` (container/webpack.config.js:12-15). Deploy não observado. A versão `1.0.0` (container/package.json:3) não é usada em publicação.
+**2. container.** Own configuration and server on port 8080 (container/webpack.config.js:4-21). Remote code does not enter its build: arrives at runtime through `remoteEntry.js` files at `localhost` (container/webpack.config.js:12-15). Deploy not observed. Version `1.0.0` (container/package.json:3) is unused in publication.
 
-**3. products.** Mesmo arranjo do cart, com servidor na porta 8081 e o módulo `./ProductsIndex` exposto (products/webpack.config.js:6-15). Deploy não observado. A versão `1.0.0` (products/package.json:3) não é usada em publicação.
+**3. products.** Same arrangement as cart, with server on port 8081 and exposed module `./ProductsIndex` (products/webpack.config.js:6-15). Deploy not observed. Version `1.0.0` (products/package.json:3) is unused in publication.
 
-## Resumo
+## Summary
 
-Aplicações: 3. Build (separado: 3). Deploy (não observado: 3). Versionamento independente: 0.
+Applications: 3. Build (separate: 3). Deploy (not observed: 3). Independent versioning: 0.

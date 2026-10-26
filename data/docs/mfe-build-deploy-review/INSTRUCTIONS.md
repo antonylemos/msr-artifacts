@@ -1,150 +1,150 @@
-# Método: revisão de build e deploy
+# Method: build and deployment review
 
-Os caminhos começados por `docs/` preservam a organização do projeto de origem (`repo-miner`). Neste pacote, as análises correspondentes estão em `data/docs/`. Os caminhos e hashes registrados nas análises mantêm sua função de proveniência.
+Paths beginning with `docs/` preserve the organization of the source project (`repo-miner`). In this package, the corresponding analyses are in `data/docs/`. The paths and hashes recorded in the analyses retain their provenance role.
 
-Este documento descreve como foi feita a revisão de build e deploy e como ler os arquivos
-`NNN-<owner>__<name>.md` desta pasta. Cada arquivo registra a revisão de um repositório do corpus.
+This document describes how the build and deployment review was conducted and how to read the
+`NNN-<owner>__<name>.md` files in this folder. Each file records the review of one corpus repository.
 
-## Objetivo
+## Objective
 
-Seção 3.4.6 do protocolo (*Build and deployment mining*): examinar as configurações de build e
-deploy em busca de evidência de que as unidades frontend são **construídas ou implantadas
-separadamente**. Artefatos relevantes: workflows de CI/CD, Dockerfiles, manifestos de deploy,
-configurações de hospedagem, pacotes frontend versionados de forma independente e configurações
-de hospedagem dos remotes.
+Protocol section 3.4.6 (*Build and deployment mining*): examine build and deployment configurations
+for evidence that frontend units are **built or deployed separately**. Relevant artifacts:
+CI/CD workflows, Dockerfiles, deployment manifests, hosting configurations,
+independently versioned frontend packages and remote hosting configurations.
 
-A revisão estrutural (seção 3.4.3 do protocolo) já apontou, por diretório, **um** artefato de build e **um** de
-deploy, quando havia. Esta etapa parte dela e responde, por aplicação, se o build e o deploy são
-**separados ou conjuntos**. No repositório 059, cada aplicação tem build próprio, mas as três são
-publicadas numa única imagem nginx: build `separado`, deploy `conjunto`.
+The structural review (protocol section 3.4.3) already identified **one** build artifact and **one**
+deployment artifact per directory, where present. This stage starts from that review and answers,
+for each application, whether build and deployment are **separate or joint**. In repository 059,
+each application has its own build, but all three are published in a single nginx image: `separate` build,
+`joint` deployment.
 
-O arquivo tem duas partes com papéis diferentes:
+The file has two parts with different roles:
 
-- **A tabela é o critério.** Cada coluna tem vocabulário fixo e regra, para que as aplicações
-  possam ser contadas e comparadas entre repositórios.
-- **O texto é a leitura.** A "Leitura do repositório" e os parágrafos de "Observações" são livres.
-  Eles registram o que a tabela não expressa, para que quem lê entenda o projeto sem voltar ao código.
+- **The table expresses the criteria.** Each column has a fixed vocabulary and rule, so applications
+  can be counted and compared across repositories.
+- **The text provides the interpretation.** The "Repository overview" and "Observations" paragraphs are free-form.
+  They record what the table cannot express, allowing readers to understand the project without returning to the code.
 
-Esta etapa não reclassifica o repositório e não altera as revisões anteriores.
+This stage does not reclassify the repository or modify previous reviews.
 
-## Fontes consultadas (somente leitura)
+## Sources consulted (read only)
 
-| O quê | Caminho |
+| What | Path |
 |---|---|
-| Lista de repositórios | `data/acquisitions/mfe-corpus-001/acquisition.csv` |
-| Aplicações | `docs/mfe-structure-review/NNN-<owner>__<name>.md` (tabela "Unidades", colunas Build, Workspace e Deploy) |
-| Ocorrências de deploy e CI | `data/mining/mfe-mining-001/repos/<owner>__<name>/matches.csv` (padrões `ops-*`, `ci-*`, `cfg-public-path`) |
-| Endereços dos remotes | `docs/mfe-composition-review/NNN-<owner>__<name>.md` (coluna Configuração) |
+| Repository list | `data/acquisitions/mfe-corpus-001/acquisition.csv` |
+| Applications | `docs/mfe-structure-review/NNN-<owner>__<name>.md` ("Units" table, Build, Workspace and Deploy columns) |
+| Deployment and CI occurrences | `data/mining/mfe-mining-001/repos/<owner>__<name>/matches.csv` (`ops-*`, `ci-*`, `cfg-public-path` patterns) |
+| Remote addresses | `docs/mfe-composition-review/NNN-<owner>__<name>.md` (Configuration column) |
 | Manifest | `data/mining/mfe-mining-001/manifest.json` |
-| Arquivos do snapshot | `data/acquisitions/mfe-corpus-001/corpus/<owner>__<name>/files/` |
-| Classificação (id, commit) | `docs/mfe-classification/NNN-<owner>__<name>.md` |
+| Snapshot files | `data/acquisitions/mfe-corpus-001/corpus/<owner>__<name>/files/` |
+| Classification (id, commit) | `docs/mfe-classification/NNN-<owner>__<name>.md` |
 
-Todo `artefato:linha` é relativo a `files/` do snapshot. A revisão nunca usa `data/samples/` e não modifica nada em `data/`.
+Every `artifact:line` is relative to the snapshot's `files/` directory. The review never uses `data/samples/` or modifies anything in `data/`.
 
-As revisões anteriores, os dados e as configurações consultados são fontes de evidência e não
-são alterados nesta etapa. A validação final cabe ao pesquisador.
+Previous reviews, data and configurations consulted are sources of evidence and are not
+modified in this stage. Final validation is the researcher's responsibility.
 
-## Produto
+## Output
 
-Um arquivo `docs/mfe-build-deploy-review/NNN-<owner>__<name>.md` por repositório, com o **mesmo nome**
-do arquivo de classificação.
+One `docs/mfe-build-deploy-review/NNN-<owner>__<name>.md` file per repository, with the **same name**
+as its classification file.
 
-Cada arquivo tem esta estrutura:
+Each file has this structure:
 
-1. Front matter com os campos descritos no passo 1.
-2. Título `# NNN — <owner>/<name>`.
-3. Seção "Leitura do repositório": texto livre.
-4. Seção "Aplicações": uma tabela com as colunas `#`, `Aplicação`, `Build`, `Deploy`, `Onde é servida`,
-   `Versionamento` e `Artefatos`.
-5. Seção "Observações": um parágrafo por aplicação.
-6. Seção "Resumo".
+1. Front matter with the fields described in step 1.
+2. Title `# NNN — <owner>/<name>`.
+3. "Repository overview" section: free-form text.
+4. "Applications" section: a table with the columns `#`, `Application`, `Build`, `Deploy`, `Where served`,
+   `Versioning` and `Artifacts`.
+5. "Observations" section: one paragraph per application.
+6. "Summary" section.
 
-## Procedimento por repositório
+## Procedure per repository
 
-### 1. Cabeçalho do arquivo
+### 1. File header
 
-O front matter registra `id`, `full_name` e `commit`, copiados da classificação; `inputs.mining`,
-copiado da revisão estrutural; `status: draft` enquanto a revisão não foi validada (só o pesquisador
-promove o status para `final`); e a data da revisão.
+The front matter records `id`, `full_name` and `commit`, copied from the classification; `inputs.mining`,
+copied from the structural review; `status: draft` while the review has not been validated (only the researcher
+promotes the status to `final`); and the review date.
 
-As revisões estrutural e de composição devem estar `final` e ter o mesmo `commit` do
-`acquisition.csv`, e o bloco de inputs deve bater com o manifest. Se algo divergir, o `status` passa a
-`review` e a divergência é registrada em "Ponto para revisão conjunta".
+The structural and composition reviews must be `final` and have the same `commit` as
+`acquisition.csv`, and the input block must match the manifest. If anything differs, change `status` to
+`review` and record the discrepancy in "Point for joint review".
 
-### 2. Levantamento dos artefatos
+### 2. Gathering the artifacts
 
-- Os artefatos das colunas Build, Workspace e Deploy da revisão estrutural.
-- Cada arquivo apontado por uma ocorrência `ops-*`, `ci-*` ou `cfg-public-path` do `matches.csv`.
-- Os scripts de build dos `package.json` (o da raiz e o de cada aplicação) e o que eles invocam.
-- Os endereços dos remotes na coluna Configuração da revisão de composição.
+- Artifacts from the structural review's Build, Workspace and Deploy columns.
+- Every file pointed to by an `ops-*`, `ci-*` or `cfg-public-path` occurrence in `matches.csv`.
+- The `package.json` build scripts (at the root and in each application) and what they invoke.
+- Remote addresses in the composition review's Configuration column.
 
-Cada um é aberto. Todo arquivo apontado pelo `matches.csv` aparece em "Artefatos" ou é explicado
-no texto (ex.: Dockerfile do backend, ocorrência `cors` num servidor de API).
+Open each one. Every file pointed to by `matches.csv` appears in "Artifacts" or is explained
+in the text (e.g., a backend Dockerfile, a `cors` occurrence in an API server).
 
-### 3. Preenchimento da tabela
+### 3. Filling in the table
 
-A tabela tem uma linha por diretório `Yes` ou `Undetermined` da revisão estrutural, na ordem de lá.
-Sem nenhum, a tabela é substituída pela frase: "Nenhuma aplicação frontend na revisão estrutural."
+The table has one row per `Yes` or `Undetermined` directory from the structural review, in that review's order.
+With none, replace the table with the sentence: "No frontend applications in the structural review."
 
-| Coluna | Valores |
+| Column | Values |
 |---|---|
-| # | Número da aplicação, usado nos parágrafos de "Observações". |
-| Aplicação | Diretório, como na revisão estrutural. |
-| Build | `separado`: a aplicação tem build próprio, que gera um artefato só dela (mesmo que um script da raiz dispare os builds de todas). `conjunto`: o código da aplicação sai no mesmo artefato de build de outra aplicação. `sem build`: página estática servida como está. `Undetermined`: não dá para estabelecer. |
-| Deploy | `separado`: um artefato do snapshot empacota ou publica a aplicação à parte (imagem, serviço do compose, job de CI, configuração de hospedagem própria). Job ou serviço próprio só sustenta `separado` quando empacota ou publica a aplicação à parte das demais; executar builds separados não basta. `conjunto`: a aplicação é publicada no mesmo artefato que outra (uma imagem, um deploy de hospedagem). `não observado`: nenhum artefato de deploy do snapshot cobre a aplicação; comandos usados só em desenvolvimento (`vite`, `webpack serve`, `ng serve`, um `http-server` rodado à mão) não contam. `Undetermined`: há artefato, mas não dá para estabelecer se cobre a aplicação ou se está em uso; ou há artefatos que publicam a aplicação à parte e outros que a publicam junto com outra (as duas formas são descritas no parágrafo da aplicação). |
-| Onde é servida | Endereço onde a aplicação é publicada ou servida, com artefato:linha (URL, caminho como `/remotes/promote/`, porta). Vários endereços são separados por `; `; `—` se não houver. |
-| Versionamento | `Yes`: a aplicação tem versão própria usada para publicá-la ou liberá-la (ex.: job que publica o pacote com o nome e a versão dela). `No`: não foi observado no snapshot; um campo `version` sem uso na publicação é `No`. |
-| Artefatos | `artefato:linha (o que faz)`, separados por `; `, ou `—`. Os que sustentam Build, Deploy e Versionamento. |
+| # | Application number, used in the "Observations" paragraphs. |
+| Application | Directory, as in the structural review. |
+| Build | `separate`: the application has its own build, which generates an artifact solely for it (even if a root script triggers all builds). `joint`: the application's code is included in the same build artifact as another application. `no build`: a static page served as is. `Undetermined`: cannot be established. |
+| Deploy | `separate`: an artifact in the snapshot packages or publishes the application separately (image, compose service, CI job, its own hosting configuration). A dedicated job or service supports `separate` only when it packages or publishes the application separately from the others; running separate builds is insufficient. `joint`: the application is published in the same artifact as another (one image, one hosting deployment). `not observed`: no deployment artifact in the snapshot covers the application; commands used only in development (`vite`, `webpack serve`, `ng serve`, a manually run `http-server`) do not count. `Undetermined`: an artifact exists, but whether it covers the application or is in use cannot be established; or some artifacts publish the application separately while others publish it together with another (describe both forms in the application's paragraph). |
+| Where served | Address where the application is published or served, with artifact:line (URL, path such as `/remotes/promote/`, port). Separate multiple addresses with `; `; use `—` if none exists. |
+| Versioning | `Yes`: the application has its own version used to publish or release it (e.g., a job publishing the package with its name and version). `No`: not observed in the snapshot; a `version` field not used in publishing is `No`. |
+| Artifacts | `artifact:line (what it does)`, separated by `; `, or `—`. Those supporting Build, Deploy and Versioning. |
 
-`não observado` registra ausência de evidência, não evidência de ausência: a aplicação pode ser
-publicada por algo fora do repositório. `Undetermined` registra evidência ambígua: existe um
-artefato de deploy, mas sua relação com a aplicação não se resolve no snapshot (ex.: chart genérico
-que não nomeia nenhuma aplicação).
+`not observed` records absence of evidence, not evidence of absence: the application may be
+published by something outside the repository. `Undetermined` records ambiguous evidence: a
+deployment artifact exists, but its relationship to the application cannot be resolved in the snapshot (e.g., a generic chart
+that does not name any application).
 
-Documentação (README) não é artefato de deploy: o que ela afirma vai para o texto e para a revisão
-de documentação (seção 3.4.7 do protocolo), mas não decide a coluna Deploy.
+Documentation (README) is not a deployment artifact: its claims go into the text and the documentation
+review (protocol section 3.4.7), but do not determine the Deploy column.
 
-### 4. Textos
+### 4. Texts
 
-**Leitura do repositório.** Um ou mais parágrafos livres sobre como o repositório é construído,
-empacotado e publicado: scripts e workspace, CI, imagens, compose, proxy, hospedagem; se é
-configuração de desenvolvimento ou de produção; artefatos que não cobrem nenhuma aplicação
-frontend; contradições entre artefatos. O texto é escrito para quem não vai abrir o código.
+**Repository overview.** One or more free-form paragraphs about how the repository is built,
+packaged and published: scripts and workspace, CI, images, compose, proxy, hosting; whether the
+configuration is for development or production; artifacts that do not cover any frontend
+application; contradictions between artifacts. Write for readers who will not open the code.
 
-**Observações.** Um parágrafo por aplicação, na ordem da tabela, começando por
-`**N. aplicação.**`. O texto é livre: o que sustenta ou limita os valores da linha, o que a aplicação
-compartilha com as outras e o que for particular a ela.
+**Observations.** One paragraph per application, in table order, beginning with
+`**N. application.**`. The text is free-form: what supports or limits the row's values, what the application
+shares with others and what is particular to it.
 
-Nos dois textos, `artefato:linha` é citado ao afirmar algo sobre o código, e cada citação é aberta no snapshot.
+In both texts, cite `artifact:line` when making a claim about the code, and open each citation in the snapshot.
 
-### 5. Resumo
+### 5. Summary
 
-O resumo tem exatamente uma linha:
+The summary has exactly one line:
 
 ```
-Aplicações: N. Build (valor: n, ...). Deploy (valor: n, ...). Versionamento independente: v.
+Applications: N. Build (value: n, ...). Deploy (value: n, ...). Independent versioning: v.
 ```
 
-`N` = linhas da tabela; em Build e Deploy, só os valores presentes, na ordem do vocabulário do
-passo 3; `v` = Versionamento `Yes`. Sem aplicações: "Aplicações: 0."
+`N` = table rows; in Build and Deploy, only values present, in the vocabulary order from
+step 3; `v` = Versioning `Yes`. Without applications: "Applications: 0."
 
-Quando algo contradiz a classificação do repositório, a revisão não propõe mudá-la; a divergência
-é registrada na "Leitura do repositório".
+When something contradicts the repository classification, the review does not propose changing it; record
+the discrepancy in "Repository overview".
 
-## Verificações de consistência
+## Consistency checks
 
-Antes de considerar um arquivo concluído, confere-se que:
+Before considering a file complete, check that:
 
-- o front matter segue o passo 1;
-- há uma linha para cada diretório `Yes` ou `Undetermined` da revisão estrutural, na ordem de lá;
-- os valores das colunas usam os vocabulários do passo 3;
-- todo arquivo apontado por `ops-*`, `ci-*` ou `cfg-public-path` aparece em "Artefatos" ou no texto;
-- há um parágrafo em "Observações" para cada linha da tabela;
-- toda citação foi aberta no snapshot;
-- o "Resumo" confere com a tabela;
-- o arquivo não contém comentários ou marcações de preenchimento.
+- the front matter follows step 1;
+- there is one row for each `Yes` or `Undetermined` directory from the structural review, in that review's order;
+- column values use the vocabularies from step 3;
+- every file pointed to by `ops-*`, `ci-*` or `cfg-public-path` appears in "Artifacts" or in the text;
+- there is one "Observations" paragraph for each table row;
+- every citation was opened in the snapshot;
+- the "Summary" agrees with the table;
+- the file contains no comments or completion placeholders.
 
-## Quando uma revisão anterior mudar
+## When a previous review changes
 
-Se a revisão estrutural ou de composição de um repositório mudar, o arquivo desse repositório
-precisa ser revisado de novo, com `annotation.date` atualizado.
+If a repository's structural or composition review changes, that repository's file
+must be reviewed again, with `annotation.date` updated.

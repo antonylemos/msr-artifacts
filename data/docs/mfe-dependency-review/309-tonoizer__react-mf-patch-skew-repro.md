@@ -15,17 +15,18 @@ annotation:
 
 # 309 — tonoizer/react-mf-patch-skew-repro
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| host/package.json:15 | devDependencies | @module-federation/vite | 1.21.6 | module-federation | Yes | host/vite.config.js:3 (`import { federation } from '@module-federation/vite'`); host/vite.config.js:19-36 (configuração padrão do Vite invoca `federation({ name: 'host', remotes: { remote_a, remote_b }, shared, ... })` em plugins); host/package.json:6 (build executa `vite build` sem configuração alternativa) |
-| remote_a/package.json:15 | devDependencies | @module-federation/vite | 1.21.6 | module-federation | Yes | remote_a/vite.config.js:3 (`import { federation } from '@module-federation/vite'`); remote_a/vite.config.js:19-35 (configuração padrão do Vite invoca `federation({ name: 'remote_a', filename: 'remoteEntry.js', exposes: { './App' }, remotes: { remote_c }, shared, ... })`); remote_a/package.json:6 (build executa `vite build` sem configuração alternativa) |
-| remote_b/package.json:15 | devDependencies | @module-federation/vite | 1.21.6 | module-federation | Yes | remote_b/vite.config.js:3 (`import { federation } from '@module-federation/vite'`); remote_b/vite.config.js:19-28 (configuração padrão do Vite invoca `federation({ name: 'remote_b', filename: 'remoteEntry.js', exposes: { './App' }, shared, ... })`); remote_b/package.json:6 (build executa `vite build` sem configuração alternativa) |
-| remote_c/package.json:15 | devDependencies | @module-federation/vite | 1.21.6 | module-federation | Yes | remote_c/vite.config.js:3 (`import { federation } from '@module-federation/vite'`); remote_c/vite.config.js:19-28 (configuração padrão do Vite invoca `federation({ name: 'remote_c', filename: 'remoteEntry.js', exposes: { './App' }, shared, ... })`); remote_c/package.json:6 (build executa `vite build` sem configuração alternativa) |
+| host/package.json:15 | devDependencies | @module-federation/vite | 1.21.6 | module-federation | Yes | host/vite.config.js:3 (`import { federation } from '@module-federation/vite'`); host/vite.config.js:19-36 (the default Vite configuration invokes `federation({ name: 'host', remotes: { remote_a, remote_b }, shared, ... })` in plugins); host/package.json:6 (the build runs `vite build` with no alternative configuration) |
+| remote_a/package.json:15 | devDependencies | @module-federation/vite | 1.21.6 | module-federation | Yes | remote_a/vite.config.js:3 (`import { federation } from '@module-federation/vite'`); remote_a/vite.config.js:19-35 (the default Vite configuration invokes `federation({ name: 'remote_a', filename: 'remoteEntry.js', exposes: { './App' }, remotes: { remote_c }, shared, ... })`); remote_a/package.json:6 (the build runs `vite build` with no alternative configuration) |
+| remote_b/package.json:15 | devDependencies | @module-federation/vite | 1.21.6 | module-federation | Yes | remote_b/vite.config.js:3 (`import { federation } from '@module-federation/vite'`); remote_b/vite.config.js:19-28 (the default Vite configuration invokes `federation({ name: 'remote_b', filename: 'remoteEntry.js', exposes: { './App' }, shared, ... })`); remote_b/package.json:6 (the build runs `vite build` with no alternative configuration) |
+| remote_c/package.json:15 | devDependencies | @module-federation/vite | 1.21.6 | module-federation | Yes | remote_c/vite.config.js:3 (`import { federation } from '@module-federation/vite'`); remote_c/vite.config.js:19-28 (the default Vite configuration invokes `federation({ name: 'remote_c', filename: 'remoteEntry.js', exposes: { './App' }, shared, ... })`); remote_c/package.json:6 (the build runs `vite build` with no alternative configuration) |
 
-## Notas
+## Notes
 
-- As listas da inspeção citam as linhas 5-10 de cada `vite.config.js`, que são o objeto `shared` (singletons de React), e não o import; o import está na linha 3, fora das listas.
-- Fora dos `vite.config.js`, o nome do escopo só aparece em `README.md:1` e `:24`, em `evidence/RESULT.json` e como chave de `Symbol.for('module-federation.shared-cache-owners')` em `host/src/App.jsx:11` e `scripts/capture.mjs:62`; nenhum desses importa o pacote.
-- O repositório é uma reprodução de defeito: o build de produção é o objeto do experimento e, segundo `evidence/RESULT.json`, falha em runtime. Isso não muda o julgamento da linha, que só pergunta se o plugin está configurado e em uso no build.
+- The inspection lists cite lines 5-10 of each `vite.config.js`, which are the `shared` object (React singletons), rather than the import; the import is on line 3, outside the lists.
+- Outside the `vite.config.js` files, the scope name appears only in `README.md:1` and `:24`, in `evidence/RESULT.json` and as the key of `Symbol.for('module-federation.shared-cache-owners')` in `host/src/App.jsx:11` and `scripts/capture.mjs:62`; none of these imports the package.
+- The repository is a defect reproduction: the production build is the subject of the experiment and, according to `evidence/RESULT.json`, fails at runtime. This does not change the row judgment, which only asks whether the plugin is configured and in use in the build.
+

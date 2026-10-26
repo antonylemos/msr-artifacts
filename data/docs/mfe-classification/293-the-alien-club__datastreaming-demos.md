@@ -20,69 +20,69 @@ annotation:
 
 # 293 — the-alien-club/datastreaming-demos
 
-## Contexto
+## Context
 
-Coleção de demos da plataforma Alien Intelligence Data Streaming (`README.md:1–3`): cinco aplicações Next.js independentes, cada uma em sua pasta (`alien-agents/`, `avatar/`, `bnf/`, `openaire/packages/frontend/`, `publisher-demo/`), mais serviços sem UI (`bnf/broker`, `bnf/worker-v2`, `openaire/packages/mcp`, `openaire/packages/viz-mcp`). Três delas são publicadas no mesmo host (`demo.alien.club`) sob prefixos distintos por VirtualServices Istio separados; a quarta (`bnf`) tem subdomínio próprio e `avatar` não tem chart. O nome do repositório não é usado como evidência.
+Alien Intelligence Data Streaming platform demo collection (`README.md:1–3`): five independent Next.js applications, each in its own folder (`alien-agents/`, `avatar/`, `bnf/`, `openaire/packages/frontend/`, `publisher-demo/`), plus services without UI (`bnf/broker`, `bnf/worker-v2`, `openaire/packages/mcp`, `openaire/packages/viz-mcp`). Three are published on the same host (`demo.alien.club`) under distinct prefixes through separate Istio VirtualServices; fourth (`bnf`) has its own subdomain and `avatar` has no chart. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:294` registra rank 293, ID 1080315685, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução, acesso à rede ou leitura do submódulo.
+`data/samples/mfe-sample-001/clones.csv:294` records rank 293, ID 1080315685, status `cloned`, branch `main` and the front matter commit, which is HEAD of the clone and `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, build, execution, network access or submodule reading occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:294` registra a estratégia `broader` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:20110` (`broader`, `unknown`, regra `recent-human-commit` com `activity_incomplete`) e `data/discovery/mfe-round-002/candidates.csv:20116` (`broader`, `pass`).
+`data/samples/mfe-sample-001/sample.csv:294` records strategy `broader` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:20110` (`broader`, `unknown`, rule `recent-human-commit` with `activity_incomplete`) and `data/discovery/mfe-round-002/candidates.csv:20116` (`broader`, `pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna um hit por rodada, do endpoint `repositories` e com `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns one hit per round, from endpoint `repositories` and with empty `path`:
 
-| Consulta (`q`) | Subconsulta | Consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Effective query | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `broader-frontend-orchestration`: `"frontend orchestration" in:name,description,readme` | `broader-frontend-orchestration#created:2025-Q4` | `"frontend orchestration" in:name,description,readme pushed:>=2025-04-01 created:2025-10-01..2025-12-31` | 2026-10-07T23:41:29.688Z / 2026-10-08T16:24:05.096Z |
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem TypeScript, licença MIT, `fork: false`, tamanho 22303;
-- criação em 2025-10-21T07:35:39Z, push em 2026-07-22T15:51:04Z.
+Hit metadata:
+- null description, no topics, language TypeScript, license MIT, `fork: false`, size 22303;
+- created at 2025-10-21T07:35:39Z, pushed at 2026-07-22T15:51:04Z.
 
-A grafia “frontend orchestration” não aparece literalmente. A única ocorrência de “orchestrat” no README é `README.md:41`: “The frontend orchestrates 5 specialized agents that call a dedicated MCP server” (demo OpenAIRE), em que um frontend orquestra agentes de IA, não unidades frontend. O acerto depende do processamento textual da busca do GitHub (flexão), que não está registrado.
+Spelling “frontend orchestration” does not appear literally. Only “orchestrat” occurrence in README is `README.md:41`: “The frontend orchestrates 5 specialized agents that call a dedicated MCP server” (OpenAIRE demo), where a frontend orchestrates AI agents, rather than frontend units. Hit depends on GitHub search text processing (inflection), which is not recorded.
 
-A última alteração alcançável do README é `dc7e52b` (2026-06-08), anterior às coletas de 7 e 8 de outubro de 2026. O README do SHA não é posterior às buscas.
+Last reachable README change is `dc7e52b` (2026-06-08), before collection on October 7 and 8, 2026. The SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 1247 entradas, 1232 arquivos regulares `100644`, 14 executáveis `100755`, zero symlinks e 1 gitlink (`160000`), `openaire/environment/plugin`, submódulo de `the-alien-club/claude-marketplace` (`.gitmodules:1–4`), não percorrido. Não há `workspaces` nem orquestrador de monorepo na raiz; cada projeto tem `package.json` próprio. | contexto |
-| Estrutura (unidades frontend) | Cinco apps Next.js com scripts `dev`/`build`/`start` próprios: `alien-agents/package.json` (Next 16.2.4), `avatar/package.json` (15.5.6), `bnf/package.json` (16.2.9), `openaire/packages/frontend/package.json` (14.2.15, React 18) e `publisher-demo/package.json` (16.2.4). `bnf/broker`, `bnf/worker-v2`, `openaire/packages/mcp` e `openaire/packages/viz-mcp` são servidores `tsx`/`tsc` sem UI. `bnf/design/` (31 arquivos) é um pacote de handoff de design, com `support.js` gerado (`bnf/design/support.js:1`), não uma app. | contexto |
-| Documentação | `README.md:5–114` apresenta quatro demos distintas (Alien Agents, OpenAIRE, Avatar, Publisher Demo), cada uma com tech stack e “Quick Start” próprios; não descreve uma aplicação única nem navegação entre elas. | contrária |
-| Build/deploy (mesmo host) | `alien-agents/helm/alien-agents-chart/values.yaml:36–39`: `demo.alien.club`, `path: /agents`, `gateway: shared`. `openaire/helm/openaire-chart/values.yaml:22–23`: `demo.alien.club`, `/openaire`. `publisher-demo/helm/publisher-demo-chart/values.yaml:17–26`: no mesmo host, toma o catch-all `/` e o comentário afirma que “the two existing demos keep their routes and everything else lands here”; `publisher-demo/helm/DEPLOY.md:4–5` repete a coexistência. Cada chart tem seu próprio VirtualService (por exemplo, `openaire/helm/openaire-chart/templates/virtualservice.yaml:11–25`, roteando o prefixo ao serviço próprio). | ambígua |
-| Configuração (basePath) | `alien-agents/next.config.ts:7`, `14`: `basePath` de `NEXT_PUBLIC_BASE_PATH`, fixado em `/agents` no build (`alien-agents/Dockerfile:20–21`). `openaire/packages/frontend/next.config.mjs:4–6` e `lib/basePath.ts:5–8`: `/openaire` em produção. `bnf/next.config.ts:26–52` e `publisher-demo/next.config.ts:3–9`: sem `basePath`. Nenhum `rewrites`, `assetPrefix` ou proxy para outra app em qualquer `next.config`. | contrária |
-| Código-fonte (navegação) | Busca por literais `/agents` e `/openaire` (com ou sem `https://demo.alien.club`) em `publisher-demo`, `avatar`, `bnf` e `openaire/packages/frontend`, fora de Markdown e lockfiles: só ocorrências internas do próprio `openaire` (`lib/basePath.ts:7`; comentário em `app/api/auth/[...all]/route.ts:9`). Em `publisher-demo`, as menções a `openaire`/`bnf` são nomes de servidores MCP no cálculo de preços (`publisher-demo/app/api/demo/pricing/route.ts:175–180`), não links de UI. Nenhuma app linka, carrega ou embute outra. | ausente |
-| Código-fonte (fronteiras) | Varredura de todos os especificadores relativos (`./`, `../`) em `*.ts`, `*.tsx`, `*.js`, `*.mjs`, `*.jsx`, `*.cjs` e `*.css` do SHA (811 especificadores), resolvidos contra a raiz de cada projeto: nenhum sai do projeto de origem. Os `../../` encontrados (por exemplo, `alien-agents/app/api/chat/cancel/route.ts:3`) ficam dentro da própria app. Cada `tsconfig.json` mapeia `@/*` para `./*` do próprio projeto (por exemplo, `alien-agents/tsconfig.json:21–22`). | contexto |
-| Tecnologia / Configuração / Composição (busca) | `git grep -i` no SHA, exceto lockfiles, por `micro.?front`, `federation`, `single.?spa`, `remoteEntry`, `import.?map`, `customElements`, `qiankun`, `wujie`, `systemjs`, `loadRemote`, `registerApplication`, `multi.?zone` e `assetPrefix`: só `customElements.get` no runtime gerado de design (`bnf/design/support.js:1095–1135`) e um falso positivo (`openaire/packages/mcp/src/utils/sanitize.ts:20`). `<iframe`: nenhuma ocorrência. `package.json`/lockfiles por `@module-federation`, `single-spa`, `qiankun`, `@originjs`: nenhuma. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 1247 entries, 1232 regular `100644` files, 14 executables `100755`, zero symlinks and 1 gitlink (`160000`), `openaire/environment/plugin`, submodule of `the-alien-club/claude-marketplace` (`.gitmodules:1–4`), not traversed. No root `workspaces` or monorepo orchestrator; each project has its own `package.json`. | context |
+| Structure (frontend units) | Five Next.js apps with their own `dev`/`build`/`start` scripts: `alien-agents/package.json` (Next 16.2.4), `avatar/package.json` (15.5.6), `bnf/package.json` (16.2.9), `openaire/packages/frontend/package.json` (14.2.15, React 18) and `publisher-demo/package.json` (16.2.4). `bnf/broker`, `bnf/worker-v2`, `openaire/packages/mcp` and `openaire/packages/viz-mcp` are `tsx`/`tsc` servers without UI. `bnf/design/` (31 files) is a design handoff package, with generated `support.js` (`bnf/design/support.js:1`), rather than an app. | context |
+| Documentation | `README.md:5–114` presents four distinct demos (Alien Agents, OpenAIRE, Avatar, Publisher Demo), each with its own tech stack and “Quick Start”; describes neither one application nor navigation between them. | contrary |
+| Build/deploy (same host) | `alien-agents/helm/alien-agents-chart/values.yaml:36–39`: `demo.alien.club`, `path: /agents`, `gateway: shared`. `openaire/helm/openaire-chart/values.yaml:22–23`: `demo.alien.club`, `/openaire`. `publisher-demo/helm/publisher-demo-chart/values.yaml:17–26`: on same host, takes catch-all `/` and comment states “the two existing demos keep their routes and everything else lands here”; `publisher-demo/helm/DEPLOY.md:4–5` repeats coexistence. Each chart has its own VirtualService (for example, `openaire/helm/openaire-chart/templates/virtualservice.yaml:11–25`, routing prefix to its own service). | ambiguous |
+| Configuration (basePath) | `alien-agents/next.config.ts:7`, `14`: `basePath` from `NEXT_PUBLIC_BASE_PATH`, fixed to `/agents` at build (`alien-agents/Dockerfile:20–21`). `openaire/packages/frontend/next.config.mjs:4–6` and `lib/basePath.ts:5–8`: `/openaire` in production. `bnf/next.config.ts:26–52` and `publisher-demo/next.config.ts:3–9`: no `basePath`. No `rewrites`, `assetPrefix` or proxy to another app in any `next.config`. | contrary |
+| Source code (navigation) | Search for literals `/agents` and `/openaire` (with or without `https://demo.alien.club`) in `publisher-demo`, `avatar`, `bnf` and `openaire/packages/frontend`, outside Markdown and lockfiles: only internal occurrences in `openaire` itself (`lib/basePath.ts:7`; comment in `app/api/auth/[...all]/route.ts:9`). In `publisher-demo`, `openaire`/`bnf` mentions are MCP server names in pricing calculation (`publisher-demo/app/api/demo/pricing/route.ts:175–180`), rather than UI links. No app links, loads or embeds another. | absent |
+| Source code (boundaries) | Scan of all relative specifiers (`./`, `../`) in SHA's `*.ts`, `*.tsx`, `*.js`, `*.mjs`, `*.jsx`, `*.cjs` and `*.css` (811 specifiers), resolved against each project root: none leave originating project. Found `../../` (for example, `alien-agents/app/api/chat/cancel/route.ts:3`) stay within the app itself. Each `tsconfig.json` maps `@/*` to its own project's `./*` (for example, `alien-agents/tsconfig.json:21–22`). | context |
+| Technology / Configuration / Composition (search) | `git grep -i` at the SHA, except lockfiles, for `micro.?front`, `federation`, `single.?spa`, `remoteEntry`, `import.?map`, `customElements`, `qiankun`, `wujie`, `systemjs`, `loadRemote`, `registerApplication`, `multi.?zone` and `assetPrefix`: only `customElements.get` in generated design runtime (`bnf/design/support.js:1095–1135`) and a false positive (`openaire/packages/mcp/src/utils/sanitize.ts:20`). `<iframe`: no occurrences. `package.json`/lockfiles for `@module-federation`, `single-spa`, `qiankun`, `@originjs`: none. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso, parcial (`blob:none`). 414 commits alcançáveis a partir do SHA (447 em todos os refs), 11 merges, raiz `7771f68` (2025-10-21, “Initial commit”, Xqua). O SHA é o merge do PR #3 (`feature/bnf-prod-cutover-config`, 2026-07-22, autor Xqua, committer GitHub). Há 17 refs remotos `feature/*`, `fix/*` e `staging`, cujo conteúdo não foi considerado.
+Non-shallow, partial clone (`blob:none`). 414 commits reachable from the SHA (447 across all refs), 11 merges, root `7771f68` (2025-10-21, “Initial commit”, Xqua). SHA is PR #3 merge (`feature/bnf-prod-cutover-config`, 2026-07-22, author Xqua, committer GitHub). 17 remote refs `feature/*`, `fix/*` and `staging`, whose content was not considered.
 
-Autoria por metadados: Leo, com dois e-mails (`leo@jogl.io`, 380 commits; `leo@alien.club`, 13), concentra quase todo o histórico; seguem `nomeforme` (15), Xqua com dois e-mails (4) e `yoratoni` (2). Pelo `git log --no-renames` por pasta, as demos entram em momentos diferentes: `avatar` em 2025-10-21 (7 commits), `openaire` em 2025-12-01 (64), `alien-agents` em 2026-05-29 (20 sob esse nome; o README a descreve como antigo “LDS Chatbot”, `README.md:11`), `publisher-demo` em 2026-06-08 (37) e `bnf` em 2026-06-18 (150). A sequência é de demos acrescentadas uma a uma, não de uma aplicação decomposta. Os metadados não separam autoria intelectual; `CLAUDE.md` e `.claude/skills` em `alien-agents/` indicam uso de assistente de código. Nenhum blob histórico foi lido. `git rev-list --objects $SHA --missing=print` identifica 3074 objetos históricos ausentes; os arquivos do SHA citados foram lidos.
+Metadata authorship: Leo, with two emails (`leo@jogl.io`, 380 commits; `leo@alien.club`, 13), accounts for almost all history; followed by `nomeforme` (15), Xqua with two emails (4) and `yoratoni` (2). According to per-folder `git log --no-renames`, demos enter at different times: `avatar` on 2025-10-21 (7 commits), `openaire` on 2025-12-01 (64), `alien-agents` on 2026-05-29 (20 under this name; README describes it as former “LDS Chatbot”, `README.md:11`), `publisher-demo` on 2026-06-08 (37) and `bnf` on 2026-06-18 (150). Sequence is demos added one at a time, rather than one decomposed application. Metadata does not distinguish intellectual authorship; `CLAUDE.md` and `.claude/skills` in `alien-agents/` indicate coding assistant use. No historical blob was read. `git rev-list --objects $SHA --missing=print` identifies 3074 missing historical objects; cited SHA files were read.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | Cinco unidades frontend identificáveis no repositório: `alien-agents`, `avatar`, `bnf`, `openaire/packages/frontend` e `publisher-demo`, cada uma com `package.json` e scripts Next próprios. Q1 conta unidades identificáveis no repositório, referenciadas ou não por configuração de composição (cf. 146). |
-| Q2 | Yes | Entrada e build próprios por app (`next build` em cada `package.json`; Dockerfiles e charts separados) e nenhum import de código-fonte entre elas (varredura de especificadores relativos; `@/*` local em cada `tsconfig.json`). |
-| Q3 | No | O README apresenta demos distintas (`README.md:5–114`); nenhuma app carrega, monta ou linka outra. A publicação de três delas no mesmo host é coexistência declarada (`publisher-demo/helm/publisher-demo-chart/values.yaml:19–23`), sem shell, host ou root config comum. |
-| Q4 | No | Nenhum mecanismo de composição frontend configurado (busca registrada); os `basePath` só isolam cada app sob seu prefixo, sem `rewrites`/`assetPrefix` de uma app para outra. |
-| Q5 | No | Q3 e Q4 são No: coleção de demos independentes. |
+| Q1 | Yes | Five identifiable frontend units in repository: `alien-agents`, `avatar`, `bnf`, `openaire/packages/frontend` and `publisher-demo`, each with its own `package.json` and Next scripts. Q1 counts identifiable repository units, whether or not referenced by composition configuration (cf. 146). |
+| Q2 | Yes | Own entry and build per app (`next build` in each `package.json`; separate Dockerfiles and charts) and no source code imports between them (relative specifier scan; local `@/*` in each `tsconfig.json`). |
+| Q3 | No | README presents distinct demos (`README.md:5–114`); no app loads, mounts or links another. Publishing three on same host is declared coexistence (`publisher-demo/helm/publisher-demo-chart/values.yaml:19–23`), without a common shell, host or root config. |
+| Q4 | No | No configured frontend composition mechanism (recorded search); `basePath` only isolates each app under its prefix, without `rewrites`/`assetPrefix` from one app to another. |
+| Q5 | No | Q3 and Q4 are No: independent demo collection. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “monorepos containing several unrelated frontend applications” e a “multiple frontend applications without explicit composition”.
-- O roteamento por prefixo no gateway Istio de `demo.alien.club` distribui requisições entre produtos diferentes no mesmo domínio, configurado separadamente por chart; não há shell nem navegação entre eles. Como no final 028, roteamento de infraestrutura não é composição de unidades. O contraste com 013 (Multi-Zones) é que lá um shell próprio declara `rewrites` para zonas com `assetPrefix` e liga as zonas por links de um mesmo produto; aqui não há nenhum dos três.
-- Não é `MFE-unit`: nenhuma app exporta contrato para host externo. Não há cadeia parcial (097/103/104), federação para code sharing (089/100) nem unidade de terceiros composta (102/074/080). O submódulo (`openaire/environment/plugin`) aponta a um marketplace de plugins do assistente de código, não a uma unidade frontend.
-- `frontend_units: 5`, `unit_organization: monorepo`, `ui_technologies: [react, next]` (como em 013), `build_tools: []` (bundler encapsulado pelo Next, sem configuração explícita de bundler), `repo_type: example` (“Collection of demo applications”, `README.md:3`).
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. Matches “monorepos containing several unrelated frontend applications” and “multiple frontend applications without explicit composition”.
+- Prefix routing in `demo.alien.club`'s Istio gateway distributes requests among different products under the same domain, configured separately per chart; no shell or navigation between them. As in final 028, infrastructure routing is not unit composition. Contrast with 013 (Multi-Zones): there a dedicated shell declares `rewrites` to zones with `assetPrefix` and links zones of the same product; here none of the three exists.
+- Not `MFE-unit`: no app exports an external host contract. No partial chain (097/103/104), federation for code sharing (089/100) or composed third-party unit (102/074/080). Submodule (`openaire/environment/plugin`) points to a coding assistant plugin marketplace, rather than a frontend unit.
+- `frontend_units: 5`, `unit_organization: monorepo`, `ui_technologies: [react, next]` (as in 013), `build_tools: []` (Next-encapsulated bundler, without explicit bundler configuration), `repo_type: example` (“Collection of demo applications”, `README.md:3`).
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** “frontend orchestrates … agents” (`README.md:41`) casa a consulta ampla `"frontend orchestration"` por flexão; trata de orquestração de agentes de IA.
-- **RQ3 (gateway ≠ shell):** vários produtos sob o mesmo host com prefixos (`/agents`, `/openaire`, `/`) por VirtualServices independentes. Se o pesquisador quiser tratar co-hospedagem por prefixo como sinal de composição por rota, o caso deve ser reavaliado junto com 013 (ainda `review`); pela evidência do snapshot (produtos distintos, sem shell nem links), não foi tratado assim.
-- **Protocolo (busca):** a elegibilidade muda de `unknown` (001, `activity_incomplete`) para `pass` (002).
+- **RQ1 (misleading signals):** “frontend orchestrates … agents” (`README.md:41`) matches broad query `"frontend orchestration"` through inflection; concerns AI agent orchestration.
+- **RQ3 (gateway ≠ shell):** several products under the same host with prefixes (`/agents`, `/openaire`, `/`) through independent VirtualServices. If researcher wishes to treat prefix co-hosting as a route composition signal, case should be reassessed alongside 013 (still `review`); under snapshot evidence (distinct products, without shell or links), it was not treated that way.
+- **Protocol (search):** eligibility changes from `unknown` (001, `activity_incomplete`) to `pass` (002).

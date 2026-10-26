@@ -16,53 +16,24 @@ annotation:
 
 # 143 — Residencias-Faculdade/MicroFrontend
 
-## Leitura do repositório
+## Repository overview
 
-O repositório tem uma só aplicação frontend, a casca Vite da raiz (`.`). Não há workspace nem
-workflow de CI, e o `matches.csv` não tem ocorrência `ci-*` nem `cfg-public-path`. O build é
-`tsc && vite build` (package.json:8), com saída em `dist` (vite.config.ts:8); os outros scripts são
-o servidor de desenvolvimento `vite` na porta 3000 e o `vite preview` (package.json:7, :9;
-vite.config.ts:7).
+The repository has only one frontend application, root Vite shell (`.`). No workspace or CI workflow is present, and `matches.csv` has no `ci-*` or `cfg-public-path` occurrence. Build is `tsc && vite build` (package.json:8), with output in `dist` (vite.config.ts:8); other scripts are development server `vite` on port 3000 and `vite preview` (package.json:7, :9; vite.config.ts:7).
 
-O empacotamento é uma imagem Docker de dois estágios: `node:22-alpine` instala as dependências e
-roda `npm run build` (Dockerfile:2-9), e `nginx:alpine` copia o `nginx.conf` e o `dist/` da casca
-para `/usr/share/nginx/html/` e expõe a porta 80 (Dockerfile:12-18). O `nginx.conf` serve a SPA com
-`try_files ... /index.html` (nginx.conf:9-11), cache de um ano com `Access-Control-Allow-Origin "*"`
-para os assets (nginx.conf:14-19) e `no-cache` para o `index.html` (nginx.conf:22-25). O
-`docker-compose.yml` constrói essa imagem no serviço `shell`, com `context: .`, publicando a porta 80
-do container em `${SHELL_PORT:-3000}` do host (docker-compose.yml:4-15). É uma montagem local: o
-Keycloak do mesmo compose roda em `start-dev` (docker-compose.yml:36).
+Packaging is a two-stage Docker image: `node:22-alpine` installs dependencies and runs `npm run build` (Dockerfile:2-9), and `nginx:alpine` copies `nginx.conf` and shell `dist/` to `/usr/share/nginx/html/` and exposes port 80 (Dockerfile:12-18). The `nginx.conf` serves SPA with `try_files ... /index.html` (nginx.conf:9-11), one-year caching with `Access-Control-Allow-Origin "*"` for assets (nginx.conf:14-19) and `no-cache` for `index.html` (nginx.conf:22-25). The `docker-compose.yml` builds this image in service `shell`, with `context: .`, publishing container port 80 at host `${SHELL_PORT:-3000}` (docker-compose.yml:4-15). This is a local setup: Keycloak in same compose runs in `start-dev` (docker-compose.yml:36).
 
-Os demais artefatos `ops-*` não cobrem aplicação frontend do snapshot. O serviço `posts-crud` do
-compose constrói um "Micro frontend Angular (outro repo)" a partir de
-`context: ../Caio/aprendendo/primeiro-projeto`, fora do repositório (docker-compose.yml:17-24); a
-ocorrência `ops-cors` de docker-compose.yml:18 é o comentário que pede a esse frontend expor
-`main.js` com CORS. O serviço `keycloak` usa a imagem publicada `quay.io/keycloak/keycloak:26.2`
-(docker-compose.yml:34-35), e `Dockerfile.keycloak` empacota o Keycloak com o realm do projeto
-(Dockerfile.keycloak:1-8), sem serviço do compose que o use. As ocorrências `ops-hosting` estão no
-README, que cita Vercel/Railway como cenário de produção da casca (README.md:56) e manda publicar o
-frontend plugado e anotar a URL do `main.js` (README.md:182); não há configuração de hospedagem
-no snapshot, e o README não decide a coluna Deploy. O exemplo de registro do README usa `posts-crud`
-em `http://localhost:4200/main.js` (README.md:64), enquanto o registro do snapshot aponta
-`member-manager` em `https://crud-member-manager.vercel.app/main.js`
-(public/microfrontends.json:6), endereço da unidade externa, não da casca.
+Other `ops-*` artifacts do not cover snapshot frontend applications. Compose service `posts-crud` builds a "Micro frontend Angular (outro repo)" (English translation: "Angular micro frontend (another repo)") from `context: ../Caio/aprendendo/primeiro-projeto`, outside repository (docker-compose.yml:17-24); the `ops-cors` occurrence at docker-compose.yml:18 is a comment requesting this frontend expose `main.js` with CORS. Service `keycloak` uses published image `quay.io/keycloak/keycloak:26.2` (docker-compose.yml:34-35), and `Dockerfile.keycloak` packages Keycloak with project realm (Dockerfile.keycloak:1-8), without a compose service using it. The `ops-hosting` occurrences are in README, citing Vercel/Railway as production scenario for shell (README.md:56) and instructing publication of plugged-in frontend and recording `main.js` URL (README.md:182); no hosting configuration is present in snapshot, and README does not decide Deploy column. README registration example uses `posts-crud` at `http://localhost:4200/main.js` (README.md:64), whereas snapshot registry points to `member-manager` at `https://crud-member-manager.vercel.app/main.js` (public/microfrontends.json:6), external unit’s address, not shell’s.
 
-## Aplicações
+## Applications
 
-| # | Aplicação | Build | Deploy | Onde é servida | Versionamento | Artefatos |
+| # | Application | Build | Deploy | Where served | Versioning | Artifacts |
 |---|---|---|---|---|---|---|
-| 1 | . | separado | separado | porta `${SHELL_PORT:-3000}` do host, 80 no container (docker-compose.yml:9; Dockerfile:17; nginx.conf:3) | No | package.json:8 (`tsc && vite build`); vite.config.ts:8 (`outDir: 'dist'`); Dockerfile:2-9 (build da casca); Dockerfile:12-18 (imagem Nginx com o `dist/` da casca); nginx.conf:9-25 (SPA e cache); docker-compose.yml:4-15 (serviço `shell`, `context: .`) |
+| 1 | . | separate | separate | port `${SHELL_PORT:-3000}` on host, 80 in container (docker-compose.yml:9; Dockerfile:17; nginx.conf:3) | No | package.json:8 (`tsc && vite build`); vite.config.ts:8 (`outDir: 'dist'`); Dockerfile:2-9 (shell build); Dockerfile:12-18 (Nginx image with shell `dist/`); nginx.conf:9-25 (SPA and cache); docker-compose.yml:4-15 (service `shell`, `context: .`) |
 
-## Observações
+## Observations
 
-**1. ..** Casca da raiz. Build separado: o build Vite gera o `dist` só dela (package.json:8;
-vite.config.ts:8); o código do custom element `member-manager` não entra nesse artefato, é carregado
-em runtime de outro endereço (public/microfrontends.json:6). Deploy separado: a imagem do
-Dockerfile empacota só o `dist/` da casca (Dockerfile:16), e o serviço `shell` do compose a
-constrói à parte do `posts-crud`, que tem imagem e porta próprias a partir de outro repositório
-(docker-compose.yml:4-9, :19-24). Sem versionamento: package.json:3 declara `1.0.0`, sem uso em
-publicação, e o pacote é `private` (package.json:4).
+**1. ..** Root shell. Separate build: Vite build generates only its own `dist` (package.json:8; vite.config.ts:8); custom element `member-manager` code does not enter artifact, loading at runtime from another address (public/microfrontends.json:6). Separate deploy: Dockerfile image packages only shell `dist/` (Dockerfile:16), and compose service `shell` builds it separately from `posts-crud`, having its own image and port from another repository (docker-compose.yml:4-9, :19-24). No versioning: package.json:3 declares `1.0.0`, unused in publication, and package is `private` (package.json:4).
 
-## Resumo
+## Summary
 
-Aplicações: 1. Build (separado: 1). Deploy (separado: 1). Versionamento independente: 0.
+Applications: 1. Build (separate: 1). Deploy (separate: 1). Independent versioning: 0.

@@ -13,144 +13,59 @@ annotation:
 
 # 074 — MSF-OCG/LIME-EMR
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem 1036 commits, 28 deles merges, de 2024-04-11 a 2026-10-06. O
-primeiro é `c60c10b` (2024-04-11, "Initial setup for distro, iraq and mosul"). Ele já traz
-`distro/configs/openmrs/frontend_assembly/spa-assemble-config.json` e
-`distro/configs/openmrs/frontend_config/msf-frontend-config.json`: a separação entre a lista de
-módulos e a configuração de UI é uma primeira presença observável, não uma introdução. O último é o
-próprio snapshot, `4de9e41` (2026-10-06, "(feat) Add a Matsapha User Administrator role (#472)").
+History up to snapshot has 1036 commits, including 28 merges, from 2024-04-11 to 2026-10-06. First is `c60c10b` (2024-04-11, "Initial setup for distro, iraq and mosul"). Already contains `distro/configs/openmrs/frontend_assembly/spa-assemble-config.json` and `distro/configs/openmrs/frontend_config/msf-frontend-config.json`: separation between module list and UI configuration is first observable presence, not introduction. Last is snapshot itself, `4de9e41` (2026-10-06, "(feat) Add a Matsapha User Administrator role (#472)").
 
-As revisões 3.4.2 a 3.4.6 não deixaram nada em aberto para o histórico: não há dependência das
-tecnologias inspecionadas, as duas pastas candidatas são `No`, não há construção de composição,
-relação nem aplicação com deploy. Todos os pontos vêm da 3.4.7. Viraram ponto as afirmações
-`contradita` e as `parcial` em que a diferença pode ser resto de um estágio anterior. As demais
-`parcial` (#1, #4, #9, #12, #17, #22, #23, #28) e a `sem corroboração` (#29) dependem de artefatos
-externos ou de comportamento do app-shell em runtime, que o histórico deste repositório não mostra.
+Reviews 3.4.2 to 3.4.6 left nothing open for history: no inspected-technology dependency, both candidate directories are `No`, and no composition construct, relationship or application with deploy exists. All points come from 3.4.7. The `contradicted` claims and `partial` claims where difference may be remnant of an earlier stage became points. Other `partial` claims (#1, #4, #9, #12, #17, #22, #23, #28) and `uncorroborated` claim (#29) depend on external artifacts or app-shell runtime behavior, not shown by this repository’s history.
 
-Os marcos que importam são estes:
+Relevant milestones are:
 
-- `README.md` mudou pela última vez em `c852c54` (2026-07-20, "(feat) LIME2-1269 Enable RDE
-  feature flag and bump frontend module versions (#444)"): o objeto desse commit é o mesmo do
-  snapshot. `spa-assemble-config.json` mudou outras seis vezes depois disso, de `886cd9b`
-  (2026-08-21) a `c8fb59c` (2026-09-19).
-- A cadeia de deploy do CI vem de `758d373` (2025-12-16) e `7d6db6b` (2026-01-08), que criou
-  `deploy.yml` e `run-e2e-tests.yml`.
-- O override de frontend (`openmrs-esm-patient-banner-app.zip`) existiu de `792c607` (2025-05-08)
-  a `3bdf66f` (2025-12-04).
+- `README.md` last changed in `c852c54` (2026-07-20, "(feat) LIME2-1269 Enable RDE
+  feature flag and bump frontend module versions (#444)"): object at this commit matches snapshot. The `spa-assemble-config.json` changed six further times afterward, from `886cd9b` (2026-08-21) to `c8fb59c` (2026-09-19).
+- CI deploy chain originates in `758d373` (2025-12-16) and `7d6db6b` (2026-01-08), creating `deploy.yml` and `run-e2e-tests.yml`.
+- Frontend override (`openmrs-esm-patient-banner-app.zip`) existed from `792c607` (2025-05-08) to `3bdf66f` (2025-12-04).
 
-O clone mostra mensagens, datas, arquivos tocados e identificadores de objeto. O conteúdo das
-versões antigas que diferem do snapshot não está disponível (`ci.yml`, `README.md`,
-`spa-assemble-config.json` e `distro/pom.xml` antigos: `show` e `cat-file` falham). Por isso o
-histórico diz quando cada arquivo mudou, mas não o que mudou dentro dele, e vários resultados se
-apoiam só nas mensagens.
+Clone shows messages, dates, touched files and object identifiers. Old version contents differing from snapshot are unavailable (old `ci.yml`, `README.md`, `spa-assemble-config.json` and `distro/pom.xml`: `show` and `cat-file` fail). Thus history says when each file changed, not changes within it, and several results rely only on messages.
 
-Uma diferença entre o commit e o snapshot apareceu na consulta: no commit existe
-`distro/configs/openmrs/overrides/modules/drools-1.1.0-SNAPSHOT.omod`, que a aquisição tirou do
-snapshot por tamanho (`normalization.json:61`, motivo `max-file-bytes`, 26178920 bytes). A pasta
-`overrides/frontend` não existe no commit.
+A difference between commit and snapshot appeared during query: commit contains `distro/configs/openmrs/overrides/modules/drools-1.1.0-SNAPSHOT.omod`, removed from snapshot by acquisition due to size (`normalization.json:61`, reason `max-file-bytes`, 26178920 bytes). Directory `overrides/frontend` is absent from commit.
 
-## Pontos
+## Points
 
-| # | Ponto | Origem | Pergunta | Commits | Resultado |
+| # | Point | Origin | Question | Commits | Result |
 |---|---|---|---|---|---|
-| 1 | O README descreve deploy automático para dev e UAT pelo CI, e a única chamada a `deploy.yml` está comentada | 3.4.7 #3 | ativo ou abandonado | 758d373 2025-12-16 Add ability to auto deploy LIME-MOSUL on LIME Azure DEV instance (#327); 7d6db6b 2026-01-08 Add ability to auto deploy LIME-MOSUL on LIME Azure UAT instance  (#329); c08eeee 2026-01-10 Allow release to be Triggered manually and also add UAT port to ssh (#337); a590846 2026-02-12 (chore) fix failing builds; 1c1b728 2026-03-21 (chore) Deprecate upload artifact action (#391); 7312d4c 2026-03-21 (fix) Failing ci condition; 90bdc3a 2026-07-03 (chore) Fix nodejs 20 deprecation notice | esclarecido |
-| 2 | O README fala em 41 módulos mais dois Madiro e em Core UI 8.0.1, e a configuração tem 42 módulos e `coreVersion` 10.0.1-pre | 3.4.7 #5, #13 | estágios em conflito | 6abb17e 2026-06-22 LIME2-1241 Fixes to dependency resolutions and migrate to using @madiro/esm-home-app (#437); c852c54 2026-07-20 (feat) LIME2-1269 Enable RDE feature flag and bump frontend module versions (#444); 886cd9b 2026-08-21 (chore) Update openmrs frontend package versions; eb80724 2026-09-03 (chore) Update @madiro scoped packages with openmrs framework 10x; c8fb59c 2026-09-19 (fix) Stop the registration form crashing on the address hierarchy (#468) | inconclusivo |
-| 3 | O mecanismo de override de módulos frontend está no build da distro, mas não há override de frontend, e o comentário diz que ele carregou um banner próprio | 3.4.7 #7, #25 | ativo ou abandonado | 792c607 2025-05-08 Use patient Identifier Report Template in LIME (#159); 2b6b9e6 2025-05-09 Rebase the custom banner (#164); a48c566 2025-05-15 (fix) LIME2-739: Patient ID not fully visible in patient banner (#168); 3bdf66f 2025-12-04 LIME2-1001 Add Patient Identifier Sticker from OMRS product to LIME (#317); 8324e11 2026-02-14 Patient flags based on "Flags in 2025" specification (#355) | esclarecido |
-| 4 | O README diz que o follow-up table é herdado por todos os sites, e os três sites o removem | 3.4.7 #16 | estágios em conflito | 9af9025 2026-03-09 Adds follow up table demo and adds missing demo configurations; c852c54 2026-07-20 (feat) LIME2-1269 Enable RDE feature flag and bump frontend module versions (#444); f71c4f5 2026-09-09 LIME2-1292 Hide the follow-up demo table from the Results tab (#456) | esclarecido |
-| 5 | O README diz que as tarefas são herdadas por todos os sites, e Mosul tira o app de tarefas do import map | 3.4.7 #19 | estágios em conflito | d63ea0e 2026-02-13 (feat) Support for task management (#350); e88d16f 2026-03-24 (fix) Exclude task-list from mosul, bunia and matsapha + CHANGELOG (#394); e36c0c4 2026-04-22 LIME2-1195 Bunia - enable task lists (#406); c852c54 2026-07-20 (feat) LIME2-1269 Enable RDE feature flag and bump frontend module versions (#444); 3862541 2026-08-12 (fix) Re-enable patient task list app for Matsapha | inconclusivo |
-| 6 | O comentário diz que a construção e o envio das imagens da distro estão desativados, e as execuções estão ativas | 3.4.7 #26 | ativo ou abandonado | 272b488 2025-11-17 (BREAKING) Build docker images using Bundled-docker and CLI (#197); 7de2fbe 2026-02-24 Enable building and deploying of Distro images using bundled docker (#364); 185e757 2026-02-26 Fix pushing distro docker images dev tags on snapshot build workflow; c8fb59c 2026-09-19 (fix) Stop the registration form crashing on the address hierarchy (#468) | inconclusivo |
-| 7 | `docs/README.md` põe os módulos frontend em `frontend_config/`, e a lista de módulos está em `frontend_assembly/` | 3.4.7 #27 | estágios em conflito | c60c10b 2024-04-11 Initial setup for distro, iraq and mosul; d29d101 2024-05-16 deletes spa-assemble-config.json overrides; b2e8d52 2024-05-26 Adds spa-assemble-config to pull latest frontend packages; 5e8bc05 2025-05-20 (docs) LIME2-653 LIME Documentation (#145); 9de5ce9 2026-05-14 Docs and readme update (#395) | esclarecido |
+| 1 | README describes automatic CI deploy to dev and UAT, while only call to `deploy.yml` is commented out | 3.4.7 #3 | active or abandoned | 758d373 2025-12-16 Add ability to auto deploy LIME-MOSUL on LIME Azure DEV instance (#327); 7d6db6b 2026-01-08 Add ability to auto deploy LIME-MOSUL on LIME Azure UAT instance  (#329); c08eeee 2026-01-10 Allow release to be Triggered manually and also add UAT port to ssh (#337); a590846 2026-02-12 (chore) fix failing builds; 1c1b728 2026-03-21 (chore) Deprecate upload artifact action (#391); 7312d4c 2026-03-21 (fix) Failing ci condition; 90bdc3a 2026-07-03 (chore) Fix nodejs 20 deprecation notice | clarified |
+| 2 | README discusses 41 modules plus two Madiro modules and Core UI 8.0.1, while configuration has 42 modules and `coreVersion` 10.0.1-pre | 3.4.7 #5, #13 | conflicting stages | 6abb17e 2026-06-22 LIME2-1241 Fixes to dependency resolutions and migrate to using @madiro/esm-home-app (#437); c852c54 2026-07-20 (feat) LIME2-1269 Enable RDE feature flag and bump frontend module versions (#444); 886cd9b 2026-08-21 (chore) Update openmrs frontend package versions; eb80724 2026-09-03 (chore) Update @madiro scoped packages with openmrs framework 10x; c8fb59c 2026-09-19 (fix) Stop the registration form crashing on the address hierarchy (#468) | inconclusive |
+| 3 | Frontend module override mechanism is in distro build, but no frontend override exists, and comment says it loaded a custom banner | 3.4.7 #7, #25 | active or abandoned | 792c607 2025-05-08 Use patient Identifier Report Template in LIME (#159); 2b6b9e6 2025-05-09 Rebase the custom banner (#164); a48c566 2025-05-15 (fix) LIME2-739: Patient ID not fully visible in patient banner (#168); 3bdf66f 2025-12-04 LIME2-1001 Add Patient Identifier Sticker from OMRS product to LIME (#317); 8324e11 2026-02-14 Patient flags based on "Flags in 2025" specification (#355) | clarified |
+| 4 | README says follow-up table is inherited by all sites, while all three sites remove it | 3.4.7 #16 | conflicting stages | 9af9025 2026-03-09 Adds follow up table demo and adds missing demo configurations; c852c54 2026-07-20 (feat) LIME2-1269 Enable RDE feature flag and bump frontend module versions (#444); f71c4f5 2026-09-09 LIME2-1292 Hide the follow-up demo table from the Results tab (#456) | clarified |
+| 5 | README says tasks are inherited by all sites, while Mosul removes task app from import map | 3.4.7 #19 | conflicting stages | d63ea0e 2026-02-13 (feat) Support for task management (#350); e88d16f 2026-03-24 (fix) Exclude task-list from mosul, bunia and matsapha + CHANGELOG (#394); e36c0c4 2026-04-22 LIME2-1195 Bunia - enable task lists (#406); c852c54 2026-07-20 (feat) LIME2-1269 Enable RDE feature flag and bump frontend module versions (#444); 3862541 2026-08-12 (fix) Re-enable patient task list app for Matsapha | inconclusive |
+| 6 | Comment says distro image building and uploading are disabled, while executions are active | 3.4.7 #26 | active or abandoned | 272b488 2025-11-17 (BREAKING) Build docker images using Bundled-docker and CLI (#197); 7de2fbe 2026-02-24 Enable building and deploying of Distro images using bundled docker (#364); 185e757 2026-02-26 Fix pushing distro docker images dev tags on snapshot build workflow; c8fb59c 2026-09-19 (fix) Stop the registration form crashing on the address hierarchy (#468) | inconclusive |
+| 7 | `docs/README.md` places frontend modules in `frontend_config/`, while module list is in `frontend_assembly/` | 3.4.7 #27 | conflicting stages | c60c10b 2024-04-11 Initial setup for distro, iraq and mosul; d29d101 2024-05-16 deletes spa-assemble-config.json overrides; b2e8d52 2024-05-26 Adds spa-assemble-config to pull latest frontend packages; 5e8bc05 2025-05-20 (docs) LIME2-653 LIME Documentation (#145); 9de5ce9 2026-05-14 Docs and readme update (#395) | clarified |
 
-## Observações
+## Observations
 
-**1. O README descreve deploy automático para dev e UAT pelo CI, e a única chamada a `deploy.yml`
-está comentada.** A mensagem de `758d373` (2025-12-16) anuncia "Add ability to auto deploy
-LIME-MOSUL on LIME Azure DEV instance", e o commit altera `ci.yml`. `7d6db6b` (2026-01-08) cria
-`deploy.yml` e `run-e2e-tests.yml` e altera `ci.yml`. Sua mensagem anuncia o deploy em UAT e
-termina com "Uncomment conditions for deployment jobs in CI". Os dois workflows criados ali chegam
-ao snapshot. `deploy.yml` mudou por último em `5aa015c` (2026-01-22). Depois de `7d6db6b`, `ci.yml`
-mudou em cinco commits (`c08eeee`, `a590846`, `1c1b728`, `7312d4c`, `90bdc3a`). As versões
-anteriores de `ci.yml` não estão disponíveis (`cat-file` falha), então não dá para saber qual deles
-comentou a chamada, nem se ela chegou a rodar. Conclusão, delimitada a esses workflows: a cadeia
-que o README descreve foi introduzida, segundo as mensagens, em dezembro de 2025 e janeiro de 2026,
-e a chamada comentada no snapshot é resto dela, não um plano que nunca foi ligado. O histórico não
-diz quando nem por que foi desligada.
+**1. README describes automatic CI deploy to dev and UAT, while only call to `deploy.yml` is commented out.** Message of `758d373` (2025-12-16) announces "Add ability to auto deploy
+LIME-MOSUL on LIME Azure DEV instance", and commit changes `ci.yml`. The `7d6db6b` (2026-01-08) creates `deploy.yml` and `run-e2e-tests.yml` and changes `ci.yml`. Message announces UAT deploy and ends with "Uncomment conditions for deployment jobs in CI". Both workflows created there reach snapshot. The `deploy.yml` last changed in `5aa015c` (2026-01-22). After `7d6db6b`, `ci.yml` changed in five commits (`c08eeee`, `a590846`, `1c1b728`, `7312d4c`, `90bdc3a`). Previous `ci.yml` versions are unavailable (`cat-file` fails), so which commented out call or whether it ever ran cannot be known. Conclusion within these workflows: chain described by README was introduced, according to messages, in December 2025 and January 2026, and commented call in snapshot is its remnant, not a plan never connected. History does not say when or why it was disabled.
 
-**2. O README fala em 41 módulos mais dois Madiro e em Core UI 8.0.1, e a configuração tem 42
-módulos e `coreVersion` 10.0.1-pre.** O `README.md` do snapshot é o objeto de `c852c54`
-(2026-07-20), cuja mensagem anuncia "bump frontend module versions". Depois dele,
-`spa-assemble-config.json` mudou mais seis vezes, de `886cd9b` (2026-08-21) a `c8fb59c`
-(2026-09-19), e a mensagem de `eb80724` (2026-09-03) anuncia "Update @madiro scoped packages with
-openmrs framework 10x". O módulo que o README deixa de fora, `@madiro/esm-home-app`, entra segundo
-a mensagem de `6abb17e` (2026-06-22, "migrate to using @madiro/esm-home-app"). Isso é anterior a
-`c852c54`, mas posterior a `9de5ce9` (2026-05-14, "Docs and readme update (#395)"). As versões
-antigas do README e da configuração não estão disponíveis (`show c852c54:…spa-assemble-config.json`
-e `cat-file 9de5ce9:README.md` falham). Não dá para saber em que commit os números foram escritos
-nem se eles conferiam com a configuração daquele momento. Inconclusivo.
+**2. README discusses 41 modules plus two Madiro modules and Core UI 8.0.1, while configuration has 42 modules and `coreVersion` 10.0.1-pre.** Snapshot `README.md` is object from `c852c54` (2026-07-20), whose message announces "bump frontend module versions". Afterward, `spa-assemble-config.json` changed six more times, from `886cd9b` (2026-08-21) to `c8fb59c` (2026-09-19), and message of `eb80724` (2026-09-03) announces "Update @madiro scoped packages with
+openmrs framework 10x". Module omitted by README, `@madiro/esm-home-app`, enters according to message of `6abb17e` (2026-06-22, "migrate to using @madiro/esm-home-app"). Before `c852c54`, but after `9de5ce9` (2026-05-14, "Docs and readme update (#395)"). Old README and configuration versions are unavailable (`show c852c54:…spa-assemble-config.json` and `cat-file 9de5ce9:README.md` fail). Commit where numbers were written or whether they matched configuration at that moment cannot be known. Inconclusive.
 
-**3. O mecanismo de override de módulos frontend está no build da distro, mas não há override de
-frontend, e o comentário diz que ele carregou um banner próprio.** `792c607` (2025-05-08) cria
-`scripts/apply-overrides.groovy`, altera `distro/pom.xml` e acrescenta
-`distro/configs/openmrs/overrides/frontend/openmrs-esm-patient-banner-app.zip` e um módulo backend
-de override. O corpo da mensagem anuncia "Add patient Banner common-reports module overrides". O ZIP
-do banner é alterado em `2b6b9e6` (2025-05-09, "Rebase the custom banner (#164)") e em `a48c566`
-(2025-05-15), e é apagado em `3bdf66f` (2025-12-04, "Add Patient Identifier Sticker from OMRS
-product to LIME"). No mesmo commit são apagados o `patientdocuments-1.0.0-SNAPSHOT.omod` e o
-`reporting-1.27.0.omod`, e são alterados `spa-assemble-config.json` e `distro/pom.xml`. Nenhum
-outro arquivo é criado em `overrides/frontend` até o snapshot. A pasta `overrides/modules` continua:
-`8324e11` (2026-02-14) acrescenta `drools-1.1.0-SNAPSHOT.omod`, que está no commit do snapshot e
-foi tirado do snapshot só pela aquisição (ver Leitura). Conclusão, delimitada a esses arquivos: o
-override de frontend existiu entre maio e dezembro de 2025 e foi abandonado em `3bdf66f`, quando o
-banner próprio e o módulo de documentos saíram juntos, como o comentário de `distro/pom.xml:641-642`
-relata. O script continua ligado ao build e, no commit, ainda tem um módulo backend para substituir.
-A mudança das etiquetas para o `esm-patient-label-printing-app` é anunciada só pela mensagem de
-`3bdf66f`; o conteúdo da configuração antiga não está disponível.
+**3. Frontend module override mechanism is in distro build, but no frontend override exists, and comment says it loaded a custom banner.** The `792c607` (2025-05-08) creates `scripts/apply-overrides.groovy`, modifies `distro/pom.xml` and adds `distro/configs/openmrs/overrides/frontend/openmrs-esm-patient-banner-app.zip` and an override backend module. Message body announces "Add patient Banner common-reports module overrides". Banner ZIP changes in `2b6b9e6` (2025-05-09, "Rebase the custom banner (#164)") and `a48c566` (2025-05-15), and is deleted in `3bdf66f` (2025-12-04, "Add Patient Identifier Sticker from OMRS
+product to LIME"). Same commit deletes `patientdocuments-1.0.0-SNAPSHOT.omod` and `reporting-1.27.0.omod`, and modifies `spa-assemble-config.json` and `distro/pom.xml`. No other file is created in `overrides/frontend` up to snapshot. Directory `overrides/modules` remains: `8324e11` (2026-02-14) adds `drools-1.1.0-SNAPSHOT.omod`, present in snapshot commit and removed from snapshot only by acquisition (see Overview). Conclusion within these files: frontend override existed between May and December 2025 and was abandoned in `3bdf66f`, when custom banner and document module left together, as comment at `distro/pom.xml:641-642` reports. Script remains connected to build and still has a backend module to replace in commit. Switch of labels to `esm-patient-label-printing-app` is announced only by message of `3bdf66f`; old configuration content is unavailable.
 
-**4. O README diz que o follow-up table é herdado por todos os sites, e os três sites o removem.**
-`9af9025` (2026-03-09, "Adds follow up table demo and adds missing demo configurations") altera só
-a configuração da distro. O README que diz "Enabled at distro level and inherited by all sites"
-não muda depois de `c852c54` (2026-07-20). As três configurações de site são alteradas juntas em
-`f71c4f5` (2026-09-09, "Hide the follow-up demo table from the Results tab"). A mensagem explica:
-a distro põe o widget no slot, "so every site inherits it", e "the widget is only meant to be
-visible on demo/distro", então ele é removido em cada site. Conclusão: a afirmação do README é do
-estágio anterior a `f71c4f5`, em que todos os sites herdavam o widget, e a remoção nos sites veio
-depois da última mudança do README. Nada disso muda o `contradita` da 3.4.7.
+**4. README says follow-up table is inherited by all sites, while all three sites remove it.** The `9af9025` (2026-03-09, "Adds follow up table demo and adds missing demo configurations") changes only distro configuration. README saying "Enabled at distro level and inherited by all sites" has not changed since `c852c54` (2026-07-20). All three site configurations change together in `f71c4f5` (2026-09-09, "Hide the follow-up demo table from the Results tab"). Message explains: distro puts widget in slot, "so every site inherits it", and "the widget is only meant to be
+visible on demo/distro", so removed in each site. Conclusion: README claim belongs to stage before `f71c4f5`, when all sites inherited widget, and site removal came after last README change. None changes 3.4.7 `contradicted`.
 
-**5. O README diz que as tarefas são herdadas por todos os sites, e Mosul tira o app de tarefas do
-import map.** A mensagem de `d63ea0e` (2026-02-13, "Support for task management") anuncia o módulo
-de tarefas, e o commit altera `spa-assemble-config.json`. `e88d16f` (2026-03-24, "Exclude
-task-list from mosul, bunia and matsapha") altera os `pom.xml` dos três sites. Depois, segundo as
-mensagens, o app volta a Bunia em `e36c0c4` (2026-04-22, "Bunia - enable task lists") e a Matsapha
-em `3862541` (2026-08-12, "Re-enable patient task list app for Matsapha"). O `pom.xml` de Mosul não
-tem commit que o reative. Pelas mensagens, houve um estágio, de 2026-02-13 a 2026-03-24, em que
-todos os sites herdavam o app. O texto do README, porém, não pode ser datado. Ele mudou antes,
-dentro e depois desse intervalo (`cf192b2` 2026-03-13, `903783b` 2026-03-24, `9de5ce9` 2026-05-14,
-`c852c54` 2026-07-20), e as versões antigas não estão disponíveis. Não dá para saber se a frase é
-resto daquele estágio. Inconclusivo.
+**5. README says tasks are inherited by all sites, while Mosul removes task app from import map.** Message of `d63ea0e` (2026-02-13, "Support for task management") announces task module, and commit changes `spa-assemble-config.json`. The `e88d16f` (2026-03-24, "Exclude
+task-list from mosul, bunia and matsapha") modifies `pom.xml` files of all three sites. Then, according to messages, app returns to Bunia in `e36c0c4` (2026-04-22, "Bunia - enable task lists") and Matsapha in `3862541` (2026-08-12, "Re-enable patient task list app for Matsapha"). Mosul `pom.xml` has no reactivating commit. Messages indicate a stage from 2026-02-13 to 2026-03-24 when all sites inherited app. README text, however, cannot be dated. Changed before, during and after interval (`cf192b2` 2026-03-13, `903783b` 2026-03-24, `9de5ce9` 2026-05-14, `c852c54` 2026-07-20), and old versions are unavailable. Whether phrase is remnant of that stage cannot be known. Inconclusive.
 
-**6. O comentário diz que a construção e o envio das imagens da distro estão desativados, e as
-execuções estão ativas.** As imagens passam a ser construídas com bundled docker em `272b488`
-(2025-11-17), segundo a mensagem. A mensagem de `7de2fbe` (2026-02-24) anuncia "Enable building and
-deploying of Distro images using bundled docker", e a de `185e757` (2026-02-26) corrige o envio das
-tags. Isso sugere que houve um estágio em que as imagens da distro não eram construídas. Mas
-`distro/pom.xml` mudou em 84 commits, e as versões anteriores não estão disponíveis (`cat-file
-176b378:distro/pom.xml` falha). Não dá para saber quando o comentário foi escrito nem se ele
-descrevia um estágio anterior a `7de2fbe`. Inconclusivo.
+**6. Comment says distro image building and uploading are disabled, while executions are active.** Images begin being built with bundled docker in `272b488` (2025-11-17), according to message. Message of `7de2fbe` (2026-02-24) announces "Enable building and
+deploying of Distro images using bundled docker", and `185e757` (2026-02-26) corrects tag uploading. Suggests a stage when distro images were not built. However, `distro/pom.xml` changed in 84 commits, and previous versions are unavailable (`cat-file
+176b378:distro/pom.xml` fails). When comment was written or whether it described a stage before `7de2fbe` cannot be known. Inconclusive.
 
-**7. `docs/README.md` põe os módulos frontend em `frontend_config/`, e a lista de módulos está em
-`frontend_assembly/`.** `spa-assemble-config.json` está em `distro/configs/openmrs/frontend_assembly/`
-desde o primeiro commit (`c60c10b`). Ele foi apagado em `d29d101` (2024-05-16) e recriado no mesmo
-lugar em `b2e8d52` (2024-05-26). Os únicos JSON criados em pastas `frontend_config/` até o snapshot
-são as configurações de UI (`msf-frontend-config.json` e as de cada site) e a de traduções
-(`6bb0e1a`, 2026-04-02). `docs/README.md` é criado em `5e8bc05` (2025-05-20) e alterado em
-`adda4f4` (2025-05-22) e `9de5ce9` (2026-05-14), sempre num momento em que a lista de módulos já
-estava em `frontend_assembly/`. Conclusão, delimitada aos nomes e locais desses arquivos: a tabela
-não é resto de uma organização anterior do repositório. Os módulos nunca foram definidos em
-`frontend_config/`.
+**7. `docs/README.md` places frontend modules in `frontend_config/`, while module list is in `frontend_assembly/`.** The `spa-assemble-config.json` has resided in `distro/configs/openmrs/frontend_assembly/` since first commit (`c60c10b`). Deleted in `d29d101` (2024-05-16) and recreated at same location in `b2e8d52` (2024-05-26). The only JSON files created in `frontend_config/` directories up to snapshot are UI configurations (`msf-frontend-config.json` and each site’s) and translations configuration (`6bb0e1a`, 2026-04-02). The `docs/README.md` is created in `5e8bc05` (2025-05-20) and changed in `adda4f4` (2025-05-22) and `9de5ce9` (2026-05-14), always when module list already resided in `frontend_assembly/`. Conclusion within names and locations of these files: table is not remnant of an earlier repository organization. Modules were never defined in `frontend_config/`.
 
-## Comandos
+## Commands
 
 ```
 docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR rev-list --count 4de9e4139c74b15c5af0cdc02a97c2e2eadf56de
@@ -168,19 +83,19 @@ docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR ls-tree c08eeee -- .gith
 docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR ls-tree 7d6db6b -- .github/workflows/ci.yml
 docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR ls-tree 758d373 -- .github/workflows/ci.yml
 docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR ls-tree 4de9e4139c74b15c5af0cdc02a97c2e2eadf56de -- .github/workflows/ci.yml
-docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR cat-file -t 7312d4c:.github/workflows/ci.yml   # falha: objeto ausente
-docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR cat-file -t 1c1b728:.github/workflows/ci.yml   # falha: objeto ausente
-docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR cat-file -t a590846:.github/workflows/ci.yml   # falha: objeto ausente
-docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR cat-file -t c08eeee:.github/workflows/ci.yml   # falha: objeto ausente
-docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR cat-file -t 7d6db6b:.github/workflows/ci.yml   # falha: objeto ausente
-docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR cat-file -t 758d373:.github/workflows/ci.yml   # falha: objeto ausente
-docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show -s --name-status --format='%h %ad%n%B' --date=short 90bdc3a   # falha: -s e --name-status incompatíveis
-docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show -s --name-status --format='%h %ad%n%B' --date=short 7312d4c   # falha: -s e --name-status incompatíveis
-docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show -s --name-status --format='%h %ad%n%B' --date=short 1c1b728   # falha: -s e --name-status incompatíveis
-docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show -s --name-status --format='%h %ad%n%B' --date=short a590846   # falha: -s e --name-status incompatíveis
-docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show -s --name-status --format='%h %ad%n%B' --date=short c08eeee   # falha: -s e --name-status incompatíveis
-docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show -s --name-status --format='%h %ad%n%B' --date=short 7d6db6b   # falha: -s e --name-status incompatíveis
-docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show -s --name-status --format='%h %ad%n%B' --date=short 758d373   # falha: -s e --name-status incompatíveis
+docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR cat-file -t 7312d4c:.github/workflows/ci.yml   # failure: missing object
+docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR cat-file -t 1c1b728:.github/workflows/ci.yml   # failure: missing object
+docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR cat-file -t a590846:.github/workflows/ci.yml   # failure: missing object
+docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR cat-file -t c08eeee:.github/workflows/ci.yml   # failure: missing object
+docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR cat-file -t 7d6db6b:.github/workflows/ci.yml   # failure: missing object
+docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR cat-file -t 758d373:.github/workflows/ci.yml   # failure: missing object
+docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show -s --name-status --format='%h %ad%n%B' --date=short 90bdc3a   # failure: -s and --name-status incompatible
+docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show -s --name-status --format='%h %ad%n%B' --date=short 7312d4c   # failure: -s and --name-status incompatible
+docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show -s --name-status --format='%h %ad%n%B' --date=short 1c1b728   # failure: -s and --name-status incompatible
+docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show -s --name-status --format='%h %ad%n%B' --date=short a590846   # failure: -s and --name-status incompatible
+docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show -s --name-status --format='%h %ad%n%B' --date=short c08eeee   # failure: -s and --name-status incompatible
+docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show -s --name-status --format='%h %ad%n%B' --date=short 7d6db6b   # failure: -s and --name-status incompatible
+docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show -s --name-status --format='%h %ad%n%B' --date=short 758d373   # failure: -s and --name-status incompatible
 docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show --name-status --no-renames --format='%h %ad%n%B' --date=short 90bdc3a
 docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show --name-status --no-renames --format='%h %ad%n%B' --date=short 7312d4c
 docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show --name-status --no-renames --format='%h %ad%n%B' --date=short 1c1b728
@@ -194,7 +109,7 @@ docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR rev-list --count 4de9e41
 docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR ls-tree 4de9e4139c74b15c5af0cdc02a97c2e2eadf56de -- README.md
 docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR ls-tree c852c54 -- README.md distro/configs/openmrs/frontend_assembly/spa-assemble-config.json
 docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR ls-tree 4de9e4139c74b15c5af0cdc02a97c2e2eadf56de -- distro/configs/openmrs/frontend_assembly/spa-assemble-config.json
-docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show c852c54:distro/configs/openmrs/frontend_assembly/spa-assemble-config.json   # falha: objeto ausente
+docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show c852c54:distro/configs/openmrs/frontend_assembly/spa-assemble-config.json   # failure: missing object
 docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show --name-status --no-renames --format='%h %ad%n%B' --date=short c852c54
 docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show --name-status --no-renames --format='=== %h %ad %s' --date=short 886cd9b
 docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show --name-status --no-renames --format='=== %h %ad %s' --date=short 23dbe73
@@ -203,7 +118,7 @@ docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show --name-status --no-
 docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show --name-status --no-renames --format='=== %h %ad %s' --date=short 17d1b1f
 docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show --name-status --no-renames --format='=== %h %ad %s' --date=short c8fb59c
 docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR ls-tree 9de5ce9 -- README.md
-docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR cat-file -t 9de5ce9:README.md   # falha: objeto ausente
+docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR cat-file -t 9de5ce9:README.md   # failure: missing object
 docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show --name-status --no-renames --format='%h %ad%n%B' --date=short 9de5ce9
 docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show --name-status --no-renames --format='%h %ad%n%B' --date=short 6abb17e
 docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR log --format='%h %ad %s' --date=short 4de9e4139c74b15c5af0cdc02a97c2e2eadf56de -- scripts/apply-overrides.groovy
@@ -233,7 +148,7 @@ docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR log --format='%h %ad %s'
 docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR rev-list --count 4de9e4139c74b15c5af0cdc02a97c2e2eadf56de -- distro/pom.xml
 docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR ls-tree c8fb59c -- distro/pom.xml
 docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR ls-tree 4de9e4139c74b15c5af0cdc02a97c2e2eadf56de -- distro/pom.xml
-docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR cat-file -t 176b378:distro/pom.xml   # falha: objeto ausente
+docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR cat-file -t 176b378:distro/pom.xml   # failure: missing object
 docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show --name-status --no-renames --format='=== %h %ad%n%B' --date=short 7de2fbe
 docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show --name-status --no-renames --format='=== %h %ad%n%B' --date=short 185e757
 docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR show --name-status --no-renames --format='=== %h %ad%n%B' --date=short 272b488
@@ -241,6 +156,6 @@ docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR log --full-history --nam
 docs/mfe-history-review/tools/hist.sh MSF-OCG__LIME-EMR log --format='%h %ad %s' --date=short 4de9e4139c74b15c5af0cdc02a97c2e2eadf56de -- docs/README.md documentation/README.md
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 1036 (2024-04-11 a 2026-10-06). Pontos: 7 (esclarecido: 4, inconclusivo: 3, resolvido pelo snapshot: 0).
+Commits up to the snapshot: 1036 (2024-04-11 to 2026-10-06). Points: 7 (clarified: 4, inconclusive: 3, resolved by the snapshot: 0).

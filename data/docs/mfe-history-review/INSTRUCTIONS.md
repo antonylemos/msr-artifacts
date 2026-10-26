@@ -1,161 +1,163 @@
-# Método: revisão histórica
+# Method: historical review
 
-Os caminhos começados por `docs/` preservam a organização do projeto de origem (`repo-miner`). Neste pacote, as análises correspondentes estão em `data/docs/`. Os caminhos e hashes registrados nas análises mantêm sua função de proveniência.
+Paths beginning with `docs/` preserve the organization of the source project (`repo-miner`). In this package, the corresponding analyses are in `data/docs/`. The paths and hashes recorded in the analyses retain their provenance role.
 
-Este documento descreve como foi feita a revisão histórica e como ler os arquivos
-`NNN-<owner>__<name>.md` desta pasta. Cada arquivo registra a revisão de um repositório do corpus.
+This document describes how the historical review was conducted and how to read the
+`NNN-<owner>__<name>.md` files in this folder. Each file records the review of one corpus repository.
 
-## Objetivo
+## Objective
 
-Seção 3.4.8 do protocolo (*Historical mining*): usar o histórico de commits **só para resolver
-ambiguidades do snapshot**: se uma dependência relacionada a MFE é usada, quando um mecanismo de
-composição foi introduzido, se uma aplicação foi extraída de outra, se uma configuração está ativa
-ou abandonada, e se artefatos conflitantes pertencem a estágios diferentes. O estudo não constrói
-trajetórias de adoção.
+Protocol section 3.4.8 (*Historical mining*): use commit history **only to resolve ambiguities
+in the snapshot**: whether an MFE-related dependency is used, when a composition mechanism
+was introduced, whether an application was extracted from another, whether a configuration is active
+or abandoned, and whether conflicting artifacts belong to different stages. The study does not construct
+adoption trajectories.
 
-O histórico **não muda os julgamentos sobre o snapshot**: uma dependência sem uso continua `No`.
-Ele acrescenta a explicação (abandonado, planejado e nunca conectado, copiado de outro lugar), que a
-etapa 3.5 do protocolo usa para separar evidência enganosa de evidência de abandono.
+History **does not change judgments about the snapshot**: an unused dependency remains `No`.
+It adds the explanation (abandoned, planned but never connected, copied from elsewhere), which
+protocol stage 3.5 uses to distinguish misleading evidence from evidence of abandonment.
 
-O arquivo tem duas partes com papéis diferentes:
+The file has two parts with different roles:
 
-- **A tabela é o critério:** um ponto por linha, com vocabulário fixo.
-- **O texto é a leitura:** livre, com o que o histórico mostra e o que não mostra.
+- **The table expresses the criteria:** one point per row, with a fixed vocabulary.
+- **The text provides the interpretation:** free-form, covering what history shows and what it does not.
 
-## Regra principal: os dados não podem ser modificados
+## Main rule: data must not be modified
 
-O histórico está nos clones de `data/samples/mfe-sample-001/repos/`, que só podem ser **lidos**.
-Os clones foram feitos com `--filter=blob:none`: um comando que precise de um objeto ausente
-baixaria esse objeto e gravaria no clone. A proteção tem duas partes: detectar e impedir.
+History is in the clones under `data/samples/mfe-sample-001/repos/`, which may only be **read**.
+The clones were created with `--filter=blob:none`: a command requiring a missing object
+would download that object and write to the clone. Protection has two parts: detection and prevention.
 
-1. **Detectar.** Antes de qualquer consulta, compara-se a impressão digital dos clones com a de
-   referência (`tools/fingerprint.sh`, comparado com `tools/fingerprint-before.txt`, ambos em
-   `docs/mfe-history-review/`). Ela cobre o clone inteiro (`.git` e árvore de trabalho): caminho,
-   tipo, permissões, tamanho, data e sha256 de cada arquivo. A comparação é repetida ao terminar.
-   Qualquer diferença interrompe a revisão e é comunicada ao pesquisador.
-2. **Impedir.** As consultas são feitas **só** por
-   `docs/mfe-history-review/tools/hist.sh <owner__name> <subcomando> ...`, a partir da raiz do
-   repositório. O script aceita apenas `log`, `show`, `rev-list`, `ls-tree` e `cat-file`, e só as
-   opções de uma lista fechada (formato, data, `--name-status`, `--name-only`, `--no-renames`,
+1. **Detect.** Before any query, compare the clones' fingerprint with the
+   reference (`tools/fingerprint.sh`, compared with `tools/fingerprint-before.txt`, both in
+   `docs/mfe-history-review/`). It covers the entire clone (`.git` and working tree): path,
+   type, permissions, size, date and sha256 of each file. Repeat the comparison upon completion.
+   Any difference interrupts the review and is reported to the researcher.
+2. **Prevent.** Run queries **only** through
+   `docs/mfe-history-review/tools/hist.sh <owner__name> <subcomando> ...`, from the repository
+   root. The script accepts only `log`, `show`, `rev-list`, `ls-tree` and `cat-file`, and only
+   options from a closed list (format, date, `--name-status`, `--name-only`, `--no-renames`,
    `--full-history`, `--reverse`, `--merges`, `--diff-filter`, `--count`, `-r`, `-t`, `-e`, `-s`);
-   qualquer outra opção é recusada, inclusive `--output`, `--filters`, `--textconv` e diffs.
-   Revisões só como hash ou `hash:caminho`. O git roda sem busca na rede (`--no-lazy-fetch`), sem
-   escritas opcionais, sem manutenção automática, sem configuração global ou de sistema e sem diff
-   externo, e cada comando fica em `docs/mfe-history-review/tools/commands.log`.
-3. Toda consulta é limitada ao commit do snapshot: o `commit` do front matter entra como revisão
-   (ex.: `log <commit> -- <caminho>`). Commits posteriores ao snapshot não entram.
+   all other options are rejected, including `--output`, `--filters`, `--textconv` and diffs.
+   Revisions may only be hashes or `hash:caminho`. Git runs without network fetching (`--no-lazy-fetch`),
+   optional writes, automatic maintenance, global or system configuration, or external diff,
+   and each command is recorded in `docs/mfe-history-review/tools/commands.log`.
+3. Limit every query to the snapshot commit: pass the front matter's `commit` as the revision
+   (e.g., `log <commit> -- <caminho>`). Exclude commits after the snapshot.
 
-Nenhum outro comando git é executado nos clones, e os arquivos dentro deles não são lidos diretamente.
-A proteção é de aplicação, não do sistema de arquivos: o que a garante é usar só o script e comparar
-as impressões digitais.
+The preserved command placeholders `<subcomando>` and `<caminho>` mean `<subcommand>` and `<path>`; `hash:caminho` means `hash:path`.
 
-Os clones mencionados nos caminhos originais estão publicados em [`data/clones/`](../../clones/README.md), com instruções de reconstrução e hashes de integridade.
+No other Git command is run in the clones, and files inside them are not read directly.
+Protection is at the application level, not the filesystem level: it is ensured by using only the script and comparing
+fingerprints.
 
-Os scripts de `tools/` e o registro `commands.log` não fazem parte deste pacote. Os comandos de cada
-repositório continuam registrados na seção "Comandos" do respectivo arquivo.
+The clones mentioned at the original paths are published in [`data/clones/`](../../clones/README.md), with reconstruction instructions and integrity hashes.
 
-**O que o clone permite ver:** mensagens, datas e, com `--name-status`, quais arquivos cada commit
-criou, alterou ou removeu; com `ls-tree`, os caminhos e os identificadores dos objetos de cada
-versão. O conteúdo de uma versão antiga pode ser lido (`show <commit>:<caminho>`) quando o objeto já
-está disponível localmente; objetos ausentes fazem o comando falhar, sem busca e sem gravar nada.
-Nomes de autores não são citados; as referências usam hash curto, data e mensagem.
+The `tools/` scripts and `commands.log` are not part of this package. Each repository's commands
+remain recorded in the "Commands" section of its corresponding file.
 
-## Fontes consultadas (somente leitura)
+**What the clone reveals:** messages, dates and, with `--name-status`, which files each commit
+created, modified or removed; with `ls-tree`, paths and object identifiers for each
+version. An old version's contents can be read (`show <commit>:<caminho>`) when the object is already
+available locally; missing objects make the command fail, without fetching or writing anything.
+Author names are not cited; references use a short hash, date and message.
 
-| O quê | Caminho |
+## Sources consulted (read only)
+
+| What | Path |
 |---|---|
-| Lista de repositórios e commits | `data/acquisitions/mfe-corpus-001/acquisition.csv` |
-| Revisões anteriores | `docs/mfe-dependency-review/`, `docs/mfe-structure-review/`, `docs/mfe-source-review/`, `docs/mfe-composition-review/`, `docs/mfe-build-deploy-review/`, `docs/mfe-documentation-review/` (mesmo nome de arquivo) |
+| Repository and commit list | `data/acquisitions/mfe-corpus-001/acquisition.csv` |
+| Previous reviews | `docs/mfe-dependency-review/`, `docs/mfe-structure-review/`, `docs/mfe-source-review/`, `docs/mfe-composition-review/`, `docs/mfe-build-deploy-review/`, `docs/mfe-documentation-review/` (same filename) |
 | Snapshot | `data/acquisitions/mfe-corpus-001/corpus/<owner>__<name>/files/` |
-| Clone, só por `tools/hist.sh` | `data/samples/mfe-sample-001/repos/<owner>__<name>/` |
+| Clone, only through `tools/hist.sh` | `data/samples/mfe-sample-001/repos/<owner>__<name>/` |
 
-As revisões anteriores, os dados e as configurações consultados são fontes de evidência e não
-são alterados nesta etapa. A validação final cabe ao pesquisador.
+Previous reviews, data and configurations consulted are sources of evidence and are not
+modified in this stage. Final validation is the researcher's responsibility.
 
-## Produto
+## Output
 
-Um arquivo `docs/mfe-history-review/NNN-<owner>__<name>.md` por repositório, com o **mesmo nome**
-do arquivo de classificação.
+One `docs/mfe-history-review/NNN-<owner>__<name>.md` file per repository, with the **same name**
+as its classification file.
 
-Cada arquivo tem esta estrutura:
+Each file has this structure:
 
-1. Front matter com os campos descritos no passo 1.
-2. Título `# NNN — <owner>/<name>`.
-3. Seção "Leitura do repositório": texto livre.
-4. Seção "Pontos": uma tabela com as colunas `#`, `Ponto`, `Origem`, `Pergunta`, `Commits` e `Resultado`.
-5. Seção "Observações": um parágrafo por ponto.
-6. Seção "Comandos": os comandos executados, em bloco de código.
-7. Seção "Resumo".
+1. Front matter with the fields described in step 1.
+2. Title `# NNN — <owner>/<name>`.
+3. "Repository overview" section: free-form text.
+4. "Points" section: a table with the columns `#`, `Point`, `Origin`, `Question`, `Commits` and `Result`.
+5. "Observations" section: one paragraph per point.
+6. "Commands" section: executed commands in a code block.
+7. "Summary" section.
 
-## Procedimento por repositório
+## Procedure per repository
 
-### 1. Cabeçalho do arquivo
+### 1. File header
 
-O front matter registra `id`, `full_name` e `commit`, copiados da classificação; `inputs.clone`;
-`status: draft` enquanto a revisão não foi validada (só o pesquisador promove o status para `final`);
-e a data da revisão.
+The front matter records `id`, `full_name` and `commit`, copied from the classification; `inputs.clone`;
+`status: draft` while the review has not been validated (only the researcher promotes the status to `final`);
+and the review date.
 
-### 2. Levantamento dos pontos ambíguos
+### 2. Gathering ambiguous points
 
-Nas revisões anteriores, coleta-se o que o snapshot deixou em aberto e que o histórico pode esclarecer:
+From previous reviews, collect what the snapshot left unresolved and history may clarify:
 
-- dependências declaradas sem uso ou com uso `Undetermined` (seção 3.4.2 do protocolo);
-- unidades `Undetermined` (3.4.3);
-- construções inativas, comentadas ou `Undetermined` (3.4.4) e relações `Undetermined` (3.4.5);
-- deploy `Undetermined` (3.4.6);
-- afirmações `contradita` ou `parcial` que possam ser intenção, resto de um estágio anterior ou cópia (3.4.7).
+- declared dependencies that are unused or whose usage is `Undetermined` (protocol section 3.4.2);
+- `Undetermined` units (3.4.3);
+- inactive, commented-out or `Undetermined` constructs (3.4.4) and `Undetermined` relationships (3.4.5);
+- `Undetermined` deployment (3.4.6);
+- `contradicted` or `partial` claims that may reflect intention, remnants of an earlier stage or copying (3.4.7).
 
-Antes de consultar o histórico, verifica-se se o próprio snapshot resolve o ponto (ex.: um `.gitignore`
-que explica um arquivo ausente); nesse caso o ponto fica na tabela, como `resolvido pelo snapshot`.
-Afirmações e construções sobre a mesma dúvida viram um ponto só, com todas as origens. Não viram
-ponto: detalhes de infraestrutura que as revisões deixaram fora da tabela (porta, certificado) e
-imprecisões de nome já resolvidas pelo próprio snapshot (ex.: um README que diz "module federation"
-e, linhas depois, nomeia a tecnologia certa).
+Before consulting history, check whether the snapshot itself resolves the point (e.g., a `.gitignore`
+that explains a missing file); in that case, retain the point in the table as `resolved by the snapshot`.
+Claims and constructs about the same uncertainty become a single point, with all origins. The following do not
+become points: infrastructure details that reviews excluded from the table (port, certificate) and
+naming inaccuracies already resolved by the snapshot itself (e.g., a README that says "module federation"
+and, a few lines later, names the correct technology).
 
-### 3. Preenchimento da tabela
+### 3. Filling in the table
 
-**Ordem das linhas:** pela primeira origem do ponto, na ordem das etapas (3.4.2 a 3.4.7) e, dentro da etapa, na ordem em que aparece naquela revisão.
+**Row order:** by the point's first origin, in stage order (3.4.2 through 3.4.7) and, within a stage, in order of appearance in that review.
 
-| Coluna | Valores |
+| Column | Values |
 |---|---|
-| # | Número do ponto. |
-| Ponto | O que é ambíguo, numa frase. |
-| Origem | A revisão e a linha ou relação (ex.: `3.4.2 (package.json:28)`, `3.4.7 #3`). |
-| Pergunta | `uso de dependência`, `introdução da composição`, `extração`, `ativo ou abandonado`, `estágios em conflito`. |
-| Commits | Hash curto, data e mensagem dos commits que sustentam o resultado, separados por `; `, ou `—`. |
-| Resultado | `esclarecido`: o histórico responde à pergunta, delimitada aos artefatos consultados (ex.: "estes arquivos não mudaram desde o primeiro commit"). Saber quando um arquivo ou comentário apareceu não prova, sozinho, uso, abandono ou intenção. `inconclusivo`: o histórico não responde, em geral porque o conteúdo antigo não está disponível. `resolvido pelo snapshot`: o próprio snapshot responde, sem consulta. |
+| # | Point number. |
+| Point | What is ambiguous, in one sentence. |
+| Origin | Review and row or relationship (e.g., `3.4.2 (package.json:28)`, `3.4.7 #3`). |
+| Question | `dependency use`, `introduction of composition`, `extraction`, `active or abandoned`, `conflicting stages`. |
+| Commits | Short hash, date and message of commits supporting the result, separated by `; `, or `—`. |
+| Result | `clarified`: history answers the question, within the limits of the artifacts consulted (e.g., "these files have not changed since the first commit"). Knowing when a file or comment appeared does not by itself prove usage, abandonment or intent. `inconclusive`: history does not answer, usually because old content is unavailable. `resolved by the snapshot`: the snapshot itself answers, without a history query. |
 
-### 4. Textos
+### 4. Texts
 
-**Leitura do repositório.** O contexto mínimo: número de commits, período e os marcos necessários
-aos pontos levantados. O texto diferencia "primeira presença observável" (o artefato já está no primeiro
-commit) de "introdução" (um commit que o cria): o primeiro commit não diz onde o código foi feito
-antes. É escrito para quem não vai abrir o histórico.
+**Repository overview.** The minimum context: commit count, period and milestones needed
+for the points raised. Distinguish "first observable presence" (the artifact is already in the first
+commit) from "introduction" (a commit that creates it): the first commit does not reveal where the code was developed
+beforehand. Write for readers who will not open the history.
 
-**Observações.** Um parágrafo por ponto, na ordem da tabela, começando por `**N. Ponto.**`: o que o
-histórico mostra, o que ele não mostra e a conclusão. Quando só há a mensagem do commit, o texto diz "a
-mensagem anuncia…", sem apresentar o conteúdo da mudança como inspecionado.
+**Observations.** One paragraph per point, in table order, beginning with `**N. Point.**`: what
+history shows, what it does not show and the conclusion. When only the commit message is available, say "the
+message announces…", without presenting the change's content as inspected.
 
-**Comandos.** Os comandos usados para este repositório, com o caminho completo `docs/mfe-history-review/tools/hist.sh`, em bloco de código, incluindo as consultas que falharam por objeto ausente (com a falha anotada).
+**Commands.** Commands used for this repository, with the full path `docs/mfe-history-review/tools/hist.sh`, in a code block, including queries that failed because of a missing object (with the failure annotated).
 
-### 5. Resumo
+### 5. Summary
 
 ```
-Commits até o snapshot: C (AAAA-MM-DD a AAAA-MM-DD). Pontos: N (esclarecido: e, inconclusivo: i, resolvido pelo snapshot: s).
+Commits up to the snapshot: C (YYYY-MM-DD to YYYY-MM-DD). Points: N (clarified: e, inconclusive: i, resolved by the snapshot: s).
 ```
 
-Sem pontos: `Commits até o snapshot: C (AAAA-MM-DD a AAAA-MM-DD). Pontos: 0.`
+Without points: `Commits up to the snapshot: C (YYYY-MM-DD to YYYY-MM-DD). Points: 0.`
 
-Os valores das revisões anteriores não são alterados: o histórico explica, não reclassifica.
+Values from previous reviews are not changed: history explains, it does not reclassify.
 
-## Verificações de consistência
+## Consistency checks
 
-Antes de considerar um arquivo concluído, confere-se que:
+Before considering a file complete, check that:
 
-- o front matter segue o passo 1;
-- todas as consultas foram feitas por `tools/hist.sh`, limitadas ao commit do snapshot;
-- a impressão digital dos clones, depois das consultas, é igual à de antes;
-- os valores usam os vocabulários do passo 3, e há um parágrafo por ponto;
-- todo hash citado aparece na saída de um comando listado em "Comandos";
-- o "Resumo" confere com a tabela;
-- nenhum nome de autor aparece no texto.
+- the front matter follows step 1;
+- all queries went through `tools/hist.sh`, limited to the snapshot commit;
+- the clones' fingerprint after queries matches the one from before;
+- values use the vocabularies from step 3, and there is one paragraph per point;
+- every cited hash appears in the output of a command listed in "Commands";
+- the "Summary" agrees with the table;
+- no author name appears in the text.

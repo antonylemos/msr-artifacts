@@ -16,24 +16,24 @@ annotation:
 
 # 008 — mrmechazilla/host-app
 
-## Leitura do repositório
+## Repository overview
 
-O único `.md` é um README de uma linha, só com o título "# Host Application Documentation" (README.md:1). O título chama o repositório de host, mas não afirma nada verificável sobre a organização das unidades. O `package.json` não tem `description`.
+The only `.md` is a one-line README containing only title "# Host Application Documentation" (README.md:1). The title calls the repository a host but makes no verifiable statement about unit organization. `package.json` has no `description`.
 
-Foram lidos os artefatos que as revisões anteriores citam: angular.json, package.json, public/mf.manifest.json, webpack.config.js, webpack.prod.config.js, src/index.html, src/main.ts, src/app/app.config.ts, src/app/app.routes.ts, src/app/core/models/remote-config.ts e src/app/shared/utils/remote-loader.ts. O único comentário é um bloco que desativa uma versão antiga do carregador de remotes (src/app/shared/utils/remote-loader.ts:1-28). É código comentado, não documentação.
+Artifacts cited by previous reviews were read: angular.json, package.json, public/mf.manifest.json, webpack.config.js, webpack.prod.config.js, src/index.html, src/main.ts, src/app/app.config.ts, src/app/app.routes.ts, src/app/core/models/remote-config.ts and src/app/shared/utils/remote-loader.ts. The only comment is a block disabling an old remote loader version (src/app/shared/utils/remote-loader.ts:1-28). This is commented-out code, not documentation.
 
-O repositório, portanto, não documenta sua arquitetura. Tudo o que se sabe dele vem dos artefatos, já registrado nas revisões anteriores.
+Thus the repository does not document its architecture. Everything known about it comes from artifacts, already recorded in previous reviews.
 
-Nenhuma ocorrência `doc-*` na mineração.
+No `doc-*` occurrences in mining.
 
-## Afirmações
+## Claims
 
-Nenhuma afirmação arquitetural.
+No architectural claims.
 
-## Observações
+## Observations
 
-Sem afirmações.
+No claims.
 
-## Resumo
+## Summary
 
-Afirmações: 0.
+Claims: 0.

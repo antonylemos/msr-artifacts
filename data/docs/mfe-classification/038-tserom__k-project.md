@@ -20,44 +20,44 @@ annotation:
 
 # 038 — tserom/k-project
 
-## Contexto
+## Context
 
-Meta-repositório de workspace: documentação, orquestração Docker e gateway. Ele agrega fisicamente vários repositórios independentes (`README.md:3`), mas os diretórios `apps/` e `vendor/` são **explicitamente ignorados** (`.gitignore`: "根仓库只跟踪工作区元文件；各应用在各自目录内单独 git", ou seja, o repositório raiz só rastreia metarquivos do workspace; cada app tem seu próprio git). Nenhum código das apps (host, sub-apps, backend) está no repositório.
+Workspace meta-repository: documentation, Docker orchestration and gateway. It physically brings together several independent repositories (`README.md:3`), but `apps/` and `vendor/` directories are **explicitly ignored** (`.gitignore`: "根仓库只跟踪工作区元文件；各应用在各自目录内单独 git" [English translation: "The root repository tracks only workspace meta-files; each application has its own Git repository in its directory"]). No app code (host, sub-apps, backend) is in the repository.
 
-A abordagem **declarada** é wujie (无界, micro-frontend baseado em iframe/Web Components) com host `wujie-react`, mas ela não é observável aqui. A branch padrão é `cursor/workspace-meta-docs`.
+The **declared** approach is wujie (无界 [English translation of the name: "boundless"], iframe/Web Components-based micro-frontend) with a `wujie-react` host, but it is not observable here. The default branch is `cursor/workspace-meta-docs`.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | Só docs (`docs/*.md`), `infra/docker/docker-compose.yml`, `infra/gateway/*` (nginx), scripts e arquivos de agentes (`.cursor/`, `.claude/`, `openspec/`); `/apps/` e `/vendor/` no `.gitignore`. Nenhuma unidade frontend no repositório. | ausente |
-| Documentação | `README.md:9-15`: `apps/host` (父应用, host wujie, React 17 + Vite + `wujie-react`), `apps/user-front` e `apps/hello-front` (子应用, sub-apps), `apps/user-backend` (Go); `docs/MICROFRONTEND.md:3-20`: papéis host/sub-apps, entradas `/micro/hello/` e `/micro/user/`, token compartilhado em `localStorage` | moderada |
-| Build/deploy | `infra/docker/docker-compose.yml:63-84`: serviços `inventory-front`, `hello-front`, `user-front` e `host`, cada um com `build.context: ../../apps/<app>` (diretórios ausentes do repositório); unidades separadas por referência | moderada |
-| Configuração (gateway) | `infra/gateway/nginx.docker.conf:42-78`: `location /micro/hello/`, `/micro/user/`, `/micro/inventory/` → upstreams dos sub-apps; `location /` → upstream do host (mesma origem, `k-project.com`). Roteamento de mesma origem, não a composição em si. | ambígua |
-| Composição | O mecanismo declarado (wujie no `apps/host`) não é observável: o código do host não está versionado aqui | ausente |
-| Histórico | `main` (`525adb1`) também só tem metarquivos (docs, `.cursor/`, `Makefile`) | contexto |
+| Structure | Only docs (`docs/*.md`), `infra/docker/docker-compose.yml`, `infra/gateway/*` (nginx), scripts and agent files (`.cursor/`, `.claude/`, `openspec/`); `/apps/` and `/vendor/` in `.gitignore`. No frontend unit in the repository. | absent |
+| Documentation | `README.md:9-15`: `apps/host` (父应用 [English translation: "parent application"], wujie host, React 17 + Vite + `wujie-react`), `apps/user-front` and `apps/hello-front` (子应用 [English translation: "child applications"], sub-apps), `apps/user-backend` (Go); `docs/MICROFRONTEND.md:3-20`: host/sub-app roles, `/micro/hello/` and `/micro/user/` entries, shared token in `localStorage` | moderate |
+| Build/deploy | `infra/docker/docker-compose.yml:63-84`: services `inventory-front`, `hello-front`, `user-front` and `host`, each with `build.context: ../../apps/<app>` (directories absent from the repository); separate units by reference | moderate |
+| Configuration (gateway) | `infra/gateway/nginx.docker.conf:42-78`: `location /micro/hello/`, `/micro/user/`, `/micro/inventory/` → sub-app upstreams; `location /` → host upstream (same origin, `k-project.com`). Same-origin routing, not composition itself. | ambiguous |
+| Composition | The declared mechanism (wujie in `apps/host`) is not observable: host code is not tracked here | absent |
+| History | `main` (`525adb1`) also has only meta-files (docs, `.cursor/`, `Makefile`) | context |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Undetermined | Host e sub-apps são referenciados pelo compose e pelo gateway, mas não pela configuração de composição do wujie, que está no host ausente |
-| Q2 | Yes | Unidades externas com build e serviço próprios (`docker-compose.yml:63-84`) |
-| Q3 | Undetermined | O host que monta os sub-apps é referenciado, mas não observável |
-| Q4 | Undetermined | wujie declarado na documentação; nenhuma configuração ou código de composição no repositório |
-| Q5 | Undetermined | A documentação e a infraestrutura são coerentes com um MFE real, mas o mecanismo não é observável |
+| Q1 | Undetermined | Host and sub-apps are referenced by compose and the gateway, but not by wujie's composition configuration, which is in the absent host |
+| Q2 | Yes | External units with their own build and service (`docker-compose.yml:63-84`) |
+| Q3 | Undetermined | The host mounting the sub-apps is referenced but not observable |
+| Q4 | Undetermined | wujie declared in documentation; no composition configuration or code in the repository |
+| Q5 | Undetermined | Documentation and infrastructure are consistent with a real MFE, but the mechanism is not observable |
 
-## Motivo
+## Rationale
 
-- Nenhuma resposta é No, mas Q1, Q3 e Q4 são Undetermined, o que leva a **Uncertain**.
-- Não é MFE-unit: o repositório não contém nenhuma unidade frontend, só a orquestração e a documentação de um sistema cujo código está em outros repositórios.
-- A inspeção adicional não resolve a dúvida dentro do repositório, porque o código está fora por decisão explícita (`.gitignore`). Pelo protocolo, o caso deve permanecer Uncertain e ser excluído.
+- No answer is No, but Q1, Q3 and Q4 are Undetermined, leading to **Uncertain**.
+- It is not MFE-unit: the repository contains no frontend units, only orchestration and documentation for a system whose code is in other repositories.
+- Additional inspection does not resolve the uncertainty within the repository because code is external by explicit decision (`.gitignore`). Under the protocol, the case must remain Uncertain and be excluded.
 
-## Notas para análise
+## Analysis notes
 
-- **Protocolo (ecossistema multi-repositório):** caso claro de MFE distribuído (seção 5.1 do protocolo) cujo meta-repositório descreve a arquitetura sem conter as unidades.
-- **RQ2:** wujie (无界) é uma abordagem não prevista inicialmente (comum no ecossistema chinês, junto com qiankun do repositório 029).
+- **Protocol (multi-repository ecosystem):** a clear distributed MFE case (protocol section 5.1) whose meta-repository describes the architecture without containing the units.
+- **RQ2:** wujie (无界 [English translation of the name: "boundless"]) is an approach not initially envisaged (common in the Chinese ecosystem, alongside qiankun in repository 029).
 
-## Decisão registrada
+## Recorded decision
 
-Manter **Uncertain**. O repositório documenta uma arquitetura Wujie e a infraestrutura que a serve, mas exclui explicitamente as aplicações e o fornecedor da árvore versionada. Sem o código do host ou das subaplicações, a composição não é verificável neste snapshot.
+Retain **Uncertain**. The repository documents a Wujie architecture and the infrastructure serving it, but explicitly excludes applications and vendor from the tracked tree. Without host or sub-application code, composition is not verifiable in this snapshot.

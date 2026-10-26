@@ -20,69 +20,69 @@ annotation:
 
 # 299 — DATou-love/micro-frontEnd
 
-## Contexto
+## Context
 
-Exemplo mínimo de qiankun: um host Vue 3/Vite (`main-vue3/`) registra duas sub-aplicações; uma delas, Vue 2/Vue CLI (`sub-vue2/`), está no repositório e exporta os lifecycles do qiankun; a outra (`sub-react16`, `//localhost:3000`) é só referenciada pela configuração e não existe no snapshot. Os READMEs das pastas são os boilerplates dos geradores; não há README na raiz. O nome do repositório não é usado como evidência.
+Minimal qiankun example: a Vue 3/Vite host (`main-vue3/`) registers two sub-applications; one, Vue 2/Vue CLI (`sub-vue2/`), is in repository and exports qiankun lifecycles; the other (`sub-react16`, `//localhost:3000`) is only referenced by configuration and absent from snapshot. Folder READMEs are generator boilerplates; no root README. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:300` registra rank 299, ID 1088828444, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:300` records rank 299, ID 1088828444, status `cloned`, branch `main` and the front matter commit, which is HEAD of the clone and `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:300` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:20640` (`terminology`, `unknown`, regra `recent-human-commit` com `activity_incomplete`) e `data/discovery/mfe-round-002/candidates.csv:20646` (`terminology`, `pass`).
+`data/samples/mfe-sample-001/sample.csv:300` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:20640` (`terminology`, `unknown`, rule `recent-human-commit` with `activity_incomplete`) and `data/discovery/mfe-round-002/candidates.csv:20646` (`terminology`, `pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna um hit por rodada, do endpoint `repositories`, com `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns one hit per round, from endpoint `repositories`, with empty `path`:
 
-| Consulta (`q`) | Subconsulta | Consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Effective query | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | `terminology-micro-frontend-repositories#created:2025-11` | `"micro frontend" in:name,description,readme pushed:>=2025-04-01 created:2025-11-01..2025-11-30` | 2026-10-07T22:27:42.863Z / 2026-10-08T15:56:36.768Z |
 
-Metadados do hit: descrição “微前端” (“micro-frontend” em chinês), sem tópicos, linguagem Vue, sem licença, `fork: false`, tamanho 129, criação em 2025-11-03T14:10:37Z, push em 2025-11-03T14:13:02Z.
+Hit metadata: description “微前端” (English translation: “micro-frontend”, in Chinese), no topics, language Vue, no license, `fork: false`, size 129, created at 2025-11-03T14:10:37Z, pushed at 2025-11-03T14:13:02Z.
 
-Não há README na raiz do SHA, e os READMEs de `main-vue3/README.md:1–5` e `sub-vue2/README.md:1–24` não contêm “micro frontend”. A descrição não traz a grafia latina. O único campo pesquisado compatível é o nome do repositório (`micro-frontEnd`), o que é registrado apenas como explicação do acerto, não como evidência arquitetural; o processamento textual da busca não está registrado. Como os READMEs vêm do único commit (2025-11-03), não são posteriores às buscas de outubro de 2026.
+No README at SHA root, and READMEs at `main-vue3/README.md:1–5` and `sub-vue2/README.md:1–24` do not contain “micro frontend”. Description lacks Latin spelling. Only compatible searched field is repository name (`micro-frontEnd`), recorded solely as hit explanation, rather than architectural evidence; search text processing is not recorded. Since READMEs come from the single commit (2025-11-03), they do not postdate October 2026 searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 36 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Dois projetos: `main-vue3/` (`package.json`, `vite.config.ts`, `index.html`, `src/`) e `sub-vue2/` (`package.json`, `vue.config.js`, `public/index.html`, `src/`); `.gitignore:1` exclui `node_modules/`. | forte |
-| Configuração (host) | `main-vue3/package.json:11–15`: `qiankun` ^2.10.16 (resolvido para 2.10.16 em `main-vue3/package-lock.json:1263–1265`). `main-vue3/src/main.ts:10–23`: `registerMicroApps` com `sub-vue2` (`entry: '//localhost:8081'`, `container: '#subapp-viewport'`, `activeRule: '/sub-vue2'`) e `sub-react16` (`//localhost:3000`, `/sub-react16`); `:26–36`: `start({ sandbox: { strictStyleIsolation: true } })`. `main-vue3/vite.config.ts:8–11`: porta 7100. | forte |
-| Código-fonte (host) | `main-vue3/src/App.vue:4–11`: links `/sub-vue2` e `/sub-react16` e o contêiner `<div id="subapp-viewport">`; `:26–32`: oculta o `router-view` próprio nas rotas das sub-apps. | forte |
-| Configuração (sub-app) | `sub-vue2/vue.config.js:5–10`: `port: 8081` e CORS `*`, coincidindo com o `entry` do host; `:12–20`: saída `library: 'subVue2'`, `libraryTarget: 'umd'`, `chunkLoadingGlobal` próprio, como exige o qiankun. `sub-vue2/public/index.html:8`: `<base href="/sub-vue2/">`; `:16–17`: `#subapp-viewport` e `#app`. | forte |
-| Código-fonte (sub-app) | `sub-vue2/src/main.js:19–29`: detecta `window.__POWERED_BY_QIANKUN__`, ajusta `__webpack_public_path__` e só monta sozinho fora do qiankun; `:32–46`: exporta `bootstrap`, `mount(props)` e `unmount`. `sub-vue2/src/router/index.js:10–13`: `mode: 'history'`, `base: '/sub-vue2'`, coerente com o `activeRule`. | forte |
-| Código-fonte (montagem) | `sub-vue2/src/main.js:10–16`: `render` monta em `container.querySelector('#app')`. Com `strictStyleIsolation: true` (`main-vue3/src/main.ts:30`), o qiankun isola o conteúdo da sub-app em shadow DOM; se o `container` recebido for o hospedeiro da shadow root, essa consulta não encontra `#app` e a montagem não apareceria. O comportamento interno da biblioteca não está no snapshot e não foi executado. | ambígua |
-| Composição (unidade externa) | `sub-react16` (`main-vue3/src/main.ts:17–22`) não tem código no repositório; busca por `react` e `3000` fora dos lockfiles só encontra essas linhas e `App.vue:7`, `29`. | contexto |
-| Código-fonte (fronteiras) | Busca por especificadores `../` em `*.ts`, `*.js`, `*.vue` e `*.json` (exceto lockfiles): só `main-vue3/src/router/index.ts:4–5` e `sub-vue2/src/router/index.js:3–4`, internos a cada projeto. Nenhum import atravessa `main-vue3` ↔ `sub-vue2`; o host só alcança a sub-app pela URL de `entry`. | forte |
-| Build/deploy | Builds separados: `main-vue3/package.json:6–10` (`vite`, `vue-tsc -b && vite build`) e `sub-vue2/package.json:5–9` (`vue-cli-service serve/build`); só configuração de desenvolvimento em `localhost`, sem pipeline nem deploy. | moderada |
+| Structure | `git ls-tree -r` at the SHA: 36 entries, all regular `100644` files; zero symlinks and zero gitlinks. Two projects: `main-vue3/` (`package.json`, `vite.config.ts`, `index.html`, `src/`) and `sub-vue2/` (`package.json`, `vue.config.js`, `public/index.html`, `src/`); `.gitignore:1` excludes `node_modules/`. | strong |
+| Configuration (host) | `main-vue3/package.json:11–15`: `qiankun` ^2.10.16 (resolved to 2.10.16 in `main-vue3/package-lock.json:1263–1265`). `main-vue3/src/main.ts:10–23`: `registerMicroApps` with `sub-vue2` (`entry: '//localhost:8081'`, `container: '#subapp-viewport'`, `activeRule: '/sub-vue2'`) and `sub-react16` (`//localhost:3000`, `/sub-react16`); `:26–36`: `start({ sandbox: { strictStyleIsolation: true } })`. `main-vue3/vite.config.ts:8–11`: port 7100. | strong |
+| Source code (host) | `main-vue3/src/App.vue:4–11`: links `/sub-vue2` and `/sub-react16` and container `<div id="subapp-viewport">`; `:26–32`: hides own `router-view` on sub-app routes. | strong |
+| Configuration (sub-app) | `sub-vue2/vue.config.js:5–10`: `port: 8081` and CORS `*`, matching host `entry`; `:12–20`: output `library: 'subVue2'`, `libraryTarget: 'umd'`, its own `chunkLoadingGlobal`, as qiankun requires. `sub-vue2/public/index.html:8`: `<base href="/sub-vue2/">`; `:16–17`: `#subapp-viewport` and `#app`. | strong |
+| Source code (sub-app) | `sub-vue2/src/main.js:19–29`: detects `window.__POWERED_BY_QIANKUN__`, adjusts `__webpack_public_path__` and mounts independently only outside qiankun; `:32–46`: exports `bootstrap`, `mount(props)` and `unmount`. `sub-vue2/src/router/index.js:10–13`: `mode: 'history'`, `base: '/sub-vue2'`, coherent with `activeRule`. | strong |
+| Source code (mounting) | `sub-vue2/src/main.js:10–16`: `render` mounts in `container.querySelector('#app')`. With `strictStyleIsolation: true` (`main-vue3/src/main.ts:30`), qiankun isolates sub-app content in shadow DOM; if received `container` is the shadow root host, this query misses `#app` and mounting would not appear. Library internals are outside snapshot and were not executed. | ambiguous |
+| Composition (external unit) | `sub-react16` (`main-vue3/src/main.ts:17–22`) has no repository code; searching for `react` and `3000` outside lockfiles finds only these lines and `App.vue:7`, `29`. | context |
+| Source code (boundaries) | Search for `../` specifiers in `*.ts`, `*.js`, `*.vue` and `*.json` (except lockfiles): only `main-vue3/src/router/index.ts:4–5` and `sub-vue2/src/router/index.js:3–4`, internal to each project. No import crosses `main-vue3` ↔ `sub-vue2`; host reaches sub-app only through `entry` URL. | strong |
+| Build/deploy | Separate builds: `main-vue3/package.json:6–10` (`vite`, `vue-tsc -b && vite build`) and `sub-vue2/package.json:5–9` (`vue-cli-service serve/build`); only `localhost` development configuration, without pipeline or deployment. | moderate |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso, parcial (`blob:none`). 1 commit (1 em todos os refs), nenhum merge: o próprio SHA `8e52e7d` (2025-11-03T22:12:39+08:00, “主应用vue3，子应用vue2”, “app principal Vue 3, sub-app Vue 2”), autor e committer `zhou_hmeng <zhou_hmeng@cvicse.com>`, adicionando os 36 arquivos em bloco. Não há sequência de desenvolvimento; os metadados não separam autoria intelectual. `git rev-list --objects $SHA --missing=print` não identifica objetos ausentes.
+Non-shallow, partial clone (`blob:none`). 1 commit (1 across all refs), no merges: SHA `8e52e7d` itself (2025-11-03T22:12:39+08:00, “主应用vue3，子应用vue2”, English translation: “main app Vue 3, sub-app Vue 2”), author and committer `zhou_hmeng <zhou_hmeng@cvicse.com>`, adding all 36 files together. No development sequence; metadata does not distinguish intellectual authorship. `git rev-list --objects $SHA --missing=print` identifies no missing objects.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | `main-vue3` e `sub-vue2` no repositório, mais `sub-react16` referenciada pela configuração de composição (`main-vue3/src/main.ts:10–23`). |
-| Q2 | Yes | Entrada e build próprios (`main-vue3/index.html:11`, `vite.config.ts`; `sub-vue2/src/main.js`, `vue.config.js`), porta própria e nenhum import de código-fonte entre os projetos. |
-| Q3 | Yes | O host registra e roteia as sub-apps por `activeRule` e as monta em `#subapp-viewport` (`main-vue3/src/main.ts:10–23`; `App.vue:4–11`). |
-| Q4 | Yes | qiankun configurado nos dois lados: `entry` coincide com a porta da sub-app (`main.ts:13` × `vue.config.js:6`), saída UMD e lifecycles exportados (`vue.config.js:12–20`; `sub-vue2/src/main.js:32–46`), `base` coerente com `activeRule`. Ver ponto de revisão sobre a montagem sob `strictStyleIsolation`. |
-| Q5 | Yes | Q1–Q4 convergem, sujeito ao ponto de revisão. |
+| Q1 | Yes | `main-vue3` and `sub-vue2` in repository, plus `sub-react16` referenced by composition configuration (`main-vue3/src/main.ts:10–23`). |
+| Q2 | Yes | Own entry and build (`main-vue3/index.html:11`, `vite.config.ts`; `sub-vue2/src/main.js`, `vue.config.js`), own port and no source code imports between projects. |
+| Q3 | Yes | Host registers and routes sub-apps through `activeRule` and mounts them in `#subapp-viewport` (`main-vue3/src/main.ts:10–23`; `App.vue:4–11`). |
+| Q4 | Yes | qiankun configured on both sides: `entry` matches sub-app port (`main.ts:13` × `vue.config.js:6`), UMD output and exported lifecycles (`vue.config.js:12–20`; `sub-vue2/src/main.js:32–46`), `base` coherent with `activeRule`. See review point about mounting under `strictStyleIsolation`. |
+| Q5 | Yes | Q1–Q4 converge, subject to review point. |
 
-## Motivo
+## Rationale
 
-- `MFE-implemented` (decisão registrada abaixo). Corresponde a “examples… that actually compose frontend units” e a “monorepos containing a host and its remotes” (aqui, host qiankun e uma sub-app no repositório, mais uma externa referenciada).
-- A cadeia de configuração é completa para `sub-vue2`: registro, porta, contêiner, formato UMD, lifecycles e base de rota coincidem; não há divergência de nome ou endereço como em 097/103/104. É comparável aos casos de cadeia completa (076/084/096/106/109) e ao final 029 (qiankun).
-- Não é code sharing (089/100): a sub-app é uma aplicação inteira com rotas próprias, montada pelo host.
-- `frontend_units: 3` conta as duas unidades presentes e a `sub-react16` referenciada pela configuração (critério de Q1); só duas são observáveis. `approaches: [qiankun]`, `ui_technologies: [vue]`, `build_tools: [vite, webpack]` (Vite no host; Vue CLI/webpack na sub-app, `vue.config.js:12–20`), `repo_type: example`.
+- `MFE-implemented` (recorded decision below). Matches “examples… that actually compose frontend units” and “monorepos containing a host and its remotes” (here, qiankun host and one repository sub-app, plus one referenced external sub-app).
+- Configuration chain is complete for `sub-vue2`: registration, port, container, UMD format, lifecycles and route base match; no name or address mismatch as in 097/103/104. Comparable to complete-chain cases (076/084/096/106/109) and final 029 (qiankun).
+- Not code sharing (089/100): sub-app is a whole application with its own routes, mounted by host.
+- `frontend_units: 3` counts both present units and configuration-referenced `sub-react16` (Q1 criterion); only two are observable. `approaches: [qiankun]`, `ui_technologies: [vue]`, `build_tools: [vite, webpack]` (Vite in host; Vue CLI/webpack in sub-app, `vue.config.js:12–20`), `repo_type: example`.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** qiankun com host Vue 3 e sub-app Vue 2 (versões diferentes de framework), `strictStyleIsolation` ligado e uma terceira sub-app (`sub-react16`) declarada sem código.
-- **RQ1:** a evidência está toda em `main.ts`/`vue.config.js`/`main.js`; READMEs são boilerplate e o acerto da busca não vem de nenhum artefato arquitetural do snapshot.
-- **Protocolo (busca):** sem grafia correspondente em README ou descrição latina; a elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ2:** qiankun with Vue 3 host and Vue 2 sub-app (different framework versions), enabled `strictStyleIsolation` and a third sub-app (`sub-react16`) declared without code.
+- **RQ1:** evidence is entirely in `main.ts`/`vue.config.js`/`main.js`; READMEs are boilerplate and search hit comes from no snapshot architectural artifact.
+- **Protocol (search):** no corresponding spelling in README or Latin description; eligibility changes from `unknown` (001) to `pass` (002).
 
-## Decisão registrada
+## Recorded decision
 
-- **Questão:** a configuração conecta host e sub-app, mas a montagem pode falhar em execução: com `strictStyleIsolation: true` (`main-vue3/src/main.ts:30`), a sub-app procura `#app` com `container.querySelector` (`sub-vue2/src/main.js:16`), o que não alcança conteúdo dentro de uma shadow root. Isso depende do comportamento interno do qiankun 2.10.16 e não é verificável no snapshot sem executar.
-- **Alternativa escolhida:** defeito de execução não altera Q4; o mecanismo está configurado e liga as unidades (carregamento, lifecycles, rota), e existe uma estratégia real de composição. Mantém-se `MFE-implemented`.
-- **Regra nova:** não se propõe.
+- **Question:** configuration connects host and sub-app, but mounting may fail at execution: with `strictStyleIsolation: true` (`main-vue3/src/main.ts:30`), sub-app searches for `#app` through `container.querySelector` (`sub-vue2/src/main.js:16`), which does not reach shadow root content. Depends on qiankun 2.10.16 internals and is unverifiable in snapshot without execution.
+- **Chosen alternative:** execution defect does not change Q4; mechanism is configured and connects units (loading, lifecycles, route), and an actual composition strategy exists. `MFE-implemented` retained.
+- **New rule:** none proposed.

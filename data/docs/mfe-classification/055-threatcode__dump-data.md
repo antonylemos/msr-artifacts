@@ -20,34 +20,34 @@ annotation:
 
 # 055 — threatcode/dump-data
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** production-oriented (frontend legado do RingID em AngularJS 1.8, modernizado com Vite e pnpm workspaces; 58 commits)
+- **Repository type:** production-oriented (legacy RingID frontend in AngularJS 1.8, modernized with Vite and pnpm workspaces; 58 commits)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | Monorepo pnpm com uma única app (`apps/main-app/`, AngularJS) e pacotes de apoio (`packages/{common,resources,scripts,styles,templates}`) (`README.md:21-37`); `newsportal/` e `webapp/` são subpastas da mesma app | contrária |
-| Configuração | `vite.config.js:50-63`: um único input (`main: '/index.html'`); aliases para `apps/main-app/app` e `packages/` (`:88-93`); plugins de template cache e imagemin; sem federação | ausente |
-| Código-fonte | Módulos AngularJS (`app.module.js`, `chat.module.js` etc.) num só bundle | contrária |
-| Documentação (plano) | `ARCHITECTURE.md:242-247` "Micro-Frontend Approach — During migration, consider: … iframes, … module federation"; `MIGRATION-PLAN.md:46,55,99,124-140,196` recomenda migração incremental para React com micro-frontends (Module Federation ou single-spa); `README.md:210-215` roadmap "[ ] Set up micro-frontends"; `TODO.md:279,288`; `MIGRATION.md:111` (plano futuro) | fraca |
+| Structure | pnpm monorepo with a single app (`apps/main-app/`, AngularJS) and supporting packages (`packages/{common,resources,scripts,styles,templates}`) (`README.md:21-37`); `newsportal/` and `webapp/` are subfolders of the same app | contrary |
+| Configuration | `vite.config.js:50-63`: a single input (`main: '/index.html'`); aliases for `apps/main-app/app` and `packages/` (`:88-93`); template cache and imagemin plugins; no federation | absent |
+| Source code | AngularJS modules (`app.module.js`, `chat.module.js`, etc.) in one bundle | contrary |
+| Documentation (plan) | `ARCHITECTURE.md:242-247` "Micro-Frontend Approach — During migration, consider: … iframes, … module federation"; `MIGRATION-PLAN.md:46,55,99,124-140,196` recommends incremental migration to React with micro-frontends (Module Federation or single-spa); `README.md:210-215` roadmap "[ ] Set up micro-frontends"; `TODO.md:279,288`; `MIGRATION.md:111` (future plan) | weak |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend (`vite.config.js:56-58`) |
-| Q2 | No | Os pacotes de `packages/` são importados por alias no mesmo build |
-| Q3 | No | Não há host, shell nem root config compondo unidades |
-| Q4 | No | Nenhum mecanismo de composição; MFE só no plano de migração |
-| Q5 | No | Q1–Q4 convergem; a própria documentação trata MFE como próximo passo ("[ ] Set up micro-frontends") |
+| Q1 | No | A single frontend unit (`vite.config.js:56-58`) |
+| Q2 | No | Packages in `packages/` are imported through aliases in the same build |
+| Q3 | No | No host, shell or root config composing units |
+| Q4 | No | No composition mechanism; MFE only in the migration plan |
+| Q5 | No | Q1–Q4 converge; documentation itself treats MFE as the next step ("[ ] Set up micro-frontends") |
 
-## Motivo
+## Rationale
 
-- É um monolito AngularJS em processo de modernização de build; micro-frontends aparecem só como estratégia recomendada para uma migração futura.
-- Corresponde a "repositories mentioning micro-frontends without implementing them" e a "conventional frontend monoliths". Mesmo padrão dos repositórios 012 e 034.
+- This is an AngularJS monolith undergoing build modernization; micro-frontends appear only as a recommended strategy for a future migration.
+- Matches "repositories mentioning micro-frontends without implementing them" and "conventional frontend monoliths". Same pattern as repositories 012 and 034.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** documentos de plano de migração (`MIGRATION-PLAN.md`) com "Module Federation"/"Single-SPA" em repositórios ainda monolíticos; o roadmap não marcado (`[ ]`) é evidência direta de ausência.
+- **RQ1 (misleading signals):** migration-plan documents (`MIGRATION-PLAN.md`) with "Module Federation"/"Single-SPA" in still-monolithic repositories; the unchecked roadmap (`[ ]`) is direct evidence of absence.

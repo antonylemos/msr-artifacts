@@ -16,60 +16,29 @@ annotation:
 
 # 237 — Axiean/micro-store
 
-## Leitura do repositório
+## Repository overview
 
-Não há `package.json` na raiz nem workspace: o snapshot tem só `README.md`, `docker-compose.yml`
-e os diretórios `cart-app` e `store-app`. Cada um é uma app Next.js com manifesto e
-`package-lock.json` próprios e o mesmo script `build: next build` (cart-app/package.json:7;
-store-app/package.json:7). As duas geram um servidor `standalone` (cart-app/next.config.ts:14;
-store-app/next.config.ts:10). O `cart-app` fica sob `basePath: "/cart"` (cart-app/next.config.ts:4),
-e o `store-app` declara o `rewrites()` que encaminha `/cart/:path*` para
-`http://cart-app:3000/cart/:path*` (store-app/next.config.ts:32-41).
+No root `package.json` or workspace exists: snapshot contains only `README.md`, `docker-compose.yml` and directories `cart-app` and `store-app`. Each is a Next.js app with its own manifest and `package-lock.json` and same script `build: next build` (cart-app/package.json:7; store-app/package.json:7). Both generate a `standalone` server (cart-app/next.config.ts:14; store-app/next.config.ts:10). The `cart-app` resides under `basePath: "/cart"` (cart-app/next.config.ts:4), and `store-app` declares `rewrites()` forwarding `/cart/:path*` to `http://cart-app:3000/cart/:path*` (store-app/next.config.ts:32-41).
 
-Cada app tem um Dockerfile próprio, idêntico nos dois diretórios, em quatro estágios: imagem base
-`node:22-alpine`, instalação das dependências pelo lockfile encontrado, `npm run build` e uma
-imagem final com `NODE_ENV=production` que copia `public`, `.next/standalone` e `.next/static` e
-sobe com `node server.js` na porta 3000 (cart-app/Dockerfile:4-33; store-app/Dockerfile:4-33).
+Each app has its own Dockerfile, identical in both directories, with four stages: base image `node:22-alpine`, dependency installation through detected lockfile, `npm run build` and final image with `NODE_ENV=production`, copying `public`, `.next/standalone` and `.next/static` and starting with `node server.js` on port 3000 (cart-app/Dockerfile:4-33; store-app/Dockerfile:4-33).
 
-O `docker-compose.yml` sobe as duas apps como serviços próprios, cada um com `build` do seu
-diretório: `store-app`, publicado na porta 3000 do host (docker-compose.yml:8-15), e `cart-app`,
-publicado na 3001 e mapeado para a 3000 interna (docker-compose.yml:20-28). O hostname `cart-app`
-do rewrite é o nome desse serviço. O comentário do arquivo diz que ele serve à configuração de
-"development and deployment" (docker-compose.yml:2-3); é uma stack local, com imagens de produção,
-sem registro de imagens, proxy à frente do `store-app` ou manifesto de hospedagem. Não há CI no
-snapshot. O README manda subir tudo com `docker-compose up --build` e acessar a loja em
-`http://localhost:3000` e o carrinho em `http://localhost:3000/cart` (README.md:53, 59-60).
+The `docker-compose.yml` starts both apps as own services, each with `build` from its directory: `store-app`, published on host port 3000 (docker-compose.yml:8-15), and `cart-app`, published on 3001 and mapped to internal 3000 (docker-compose.yml:20-28). Rewrite hostname `cart-app` is this service’s name. File comment says it serves "development and deployment" configuration (docker-compose.yml:2-3); this is a local stack with production images, without image registry, proxy ahead of `store-app` or hosting manifest. No CI exists in snapshot. README instructs starting everything with `docker-compose up --build` and accessing store at `http://localhost:3000` and cart at `http://localhost:3000/cart` (README.md:53, 59-60).
 
-Não há artefato de build ou deploy fora dos frontends. As ocorrências `ops-hosting` são o README
-padrão do create-next-app (cart-app/README.md:21, 30, 32, 34; store-app/README.md:21, 30, 32, 34),
-que sugere a Vercel, sem configuração de hospedagem no snapshot.
+No build or deployment artifact exists outside frontends. The `ops-hosting` occurrences are standard create-next-app README text (cart-app/README.md:21, 30, 32, 34; store-app/README.md:21, 30, 32, 34), suggesting Vercel without snapshot hosting configuration.
 
-## Aplicações
+## Applications
 
-| # | Aplicação | Build | Deploy | Onde é servida | Versionamento | Artefatos |
+| # | Application | Build | Deploy | Where served | Versioning | Artifacts |
 |---|---|---|---|---|---|---|
-| 1 | cart-app | separado | separado | `/cart` pelo store-app (store-app/next.config.ts:36-39; cart-app/next.config.ts:4); `http://cart-app:3000/cart` no compose (store-app/next.config.ts:39); porta 3001 (docker-compose.yml:28) | No | cart-app/package.json:7 (`next build`); cart-app/next.config.ts:4, 14 (`basePath`, `standalone`); cart-app/Dockerfile:22, 25-33 (build e imagem própria); docker-compose.yml:20-28 (serviço `cart-app`) |
-| 2 | store-app | separado | separado | `/` na porta 3000 (docker-compose.yml:15; store-app/Dockerfile:32) | No | store-app/package.json:7 (`next build`); store-app/next.config.ts:10, 32-41 (`standalone`, `rewrites`); store-app/Dockerfile:22, 25-33 (build e imagem própria); docker-compose.yml:8-15 (serviço `store-app`) |
+| 1 | cart-app | separate | separate | `/cart` through store-app (store-app/next.config.ts:36-39; cart-app/next.config.ts:4); `http://cart-app:3000/cart` in compose (store-app/next.config.ts:39); port 3001 (docker-compose.yml:28) | No | cart-app/package.json:7 (`next build`); cart-app/next.config.ts:4, 14 (`basePath`, `standalone`); cart-app/Dockerfile:22, 25-33 (own build and image); docker-compose.yml:20-28 (service `cart-app`) |
+| 2 | store-app | separate | separate | `/` on port 3000 (docker-compose.yml:15; store-app/Dockerfile:32) | No | store-app/package.json:7 (`next build`); store-app/next.config.ts:10, 32-41 (`standalone`, `rewrites`); store-app/Dockerfile:22, 25-33 (own build and image); docker-compose.yml:8-15 (service `store-app`) |
 
-## Observações
+## Observations
 
-**1. cart-app.** Build próprio (cart-app/package.json:7; cart-app/Dockerfile:22), que gera uma
-imagem só dele (cart-app/Dockerfile:25-33). O compose o publica como serviço próprio, construído
-de `./cart-app` (docker-compose.yml:20-23), por isso o deploy é `separado`. O usuário o acessa
-pelo `store-app`, em `/cart` (store-app/next.config.ts:36-39), e também direto pela porta 3001
-(docker-compose.yml:28), que o comentário reserva a desenvolvimento e teste isolados
-(docker-compose.yml:26-27). O endereço do destino está fixo no `next.config.ts` do `store-app`, sem
-variável de ambiente nem build arg, então a ligação entre as duas imagens depende do nome do
-serviço no compose. O campo `version: "0.1.0"` (cart-app/package.json:3) não é usado em nenhuma
-publicação, e a app é `private` (cart-app/package.json:4), então Versionamento é `No`.
+**1. cart-app.** Own build (cart-app/package.json:7; cart-app/Dockerfile:22), generating its own image (cart-app/Dockerfile:25-33). Compose publishes it as own service, built from `./cart-app` (docker-compose.yml:20-23), hence deploy `separate`. User accesses it through `store-app`, at `/cart` (store-app/next.config.ts:36-39), and directly through port 3001 (docker-compose.yml:28), reserved by comment for isolated development and testing (docker-compose.yml:26-27). Destination address is fixed in `next.config.ts` of `store-app`, without environment variable or build arg, so connection between both images depends on compose service name. Field `version: "0.1.0"` (cart-app/package.json:3) is unused in any publication, and app is `private` (cart-app/package.json:4), hence Versioning `No`.
 
-**2. store-app.** Mesma forma que o `cart-app`: build e imagem próprios (store-app/package.json:7;
-store-app/Dockerfile:22, 25-33) e serviço próprio no compose, construído de `./store-app`
-(docker-compose.yml:8-11). É a entrada da loja, em `/` na porta 3000 (docker-compose.yml:15;
-`EXPOSE 3000` em store-app/Dockerfile:32), e embute no seu build o rewrite para o `cart-app`
-(store-app/next.config.ts:32-41). O compose não declara `depends_on` entre os serviços
-(docker-compose.yml:5-29). `version: "0.1.0"` sem uso e app `private` (store-app/package.json:3-4).
+**2. store-app.** Same arrangement as `cart-app`: own build and image (store-app/package.json:7; store-app/Dockerfile:22, 25-33) and own compose service, built from `./store-app` (docker-compose.yml:8-11). Store entry, at `/` on port 3000 (docker-compose.yml:15; `EXPOSE 3000` in store-app/Dockerfile:32), embedding rewrite to `cart-app` in its build (store-app/next.config.ts:32-41). Compose declares no `depends_on` between services (docker-compose.yml:5-29). The `version: "0.1.0"` is unused and app is `private` (store-app/package.json:3-4).
 
-## Resumo
+## Summary
 
-Aplicações: 2. Build (separado: 2). Deploy (separado: 2). Versionamento independente: 0.
+Applications: 2. Build (separate: 2). Deploy (separate: 2). Independent versioning: 0.

@@ -19,315 +19,316 @@ annotation:
 
 # 203 — agsosa/react-next-umd-remote-modules-poc
 
-## Leitura do repositório
+## Repository overview
 
-A composição não usa biblioteca de MFE: a revisão de dependências não encontrou nenhuma tecnologia de integração, e não há observação de tecnologia. São duas aplicações Next.js, `mf-1` e `shell`, cada uma com manifesto, entrada e build próprios (#11, #12). A cadeia usa só um bundle UMD e o navegador:
-- **Configuração:** o Vite do `mf-1` empacota três componentes React num `bundle.js` UMD que publica a global `MF1_RemoteModules` e deixa React e ReactDOM como globais externos (#1). A configuração do `shell` guarda a URL base do `mf-1`, com padrão na porta do servidor de desenvolvimento dele (#2).
-- **Código do host:** um hook genérico injeta o `<script>` e lê o componente da global (#3). Três componentes do shell passam ao hook a URL do bundle e o nome do componente (#5, #7, #9) e o renderizam com props e callbacks do shell (#6, #8, #10).
-- **Relação:** tudo isso resulta na única relação, ativa, `shell → mf-1` (#13).
+Composition uses no MFE library: dependency review found no integration technology, no technology observation. Two Next.js applications, `mf-1` and `shell`, each with own manifest, entry and build (#11, #12). Chain uses only UMD bundle and browser:
+- **Configuration:** `mf-1` Vite packages three React components into UMD `bundle.js`, publishing global `MF1_RemoteModules`, leaving React and ReactDOM as external globals (#1). `shell` configuration stores `mf-1` base URL, defaulting to its development-server port (#2).
+- **Host code:** generic hook injects `<script>` and reads component from global (#3). Three shell components pass bundle URL and component name to hook (#5, #7, #9), rendering with shell props and callbacks (#6, #8, #10).
+- **Relationship:** produces sole active relationship `shell → mf-1` (#13).
 
-Build é separado nas duas aplicações (#14, #15). O bundle remoto sai do mesmo build do `mf-1` e é servido pela pasta `public` dele. Não há artefato de deploy no snapshot.
+Build separate in both applications (#14, #15). Remote bundle comes from same `mf-1` build, served from its `public` folder. No deployment artifact in snapshot.
 
-Um sinal engana: o `postMessage` que a mineração achou no bundle gerado é do axios embutido, não comunicação entre unidades (#4).
+Misleading signal: mined `postMessage` in generated bundle belongs to embedded axios rather than inter-unit communication (#4).
 
-A documentação tem 23 afirmações, todas fracas pelo critério do protocolo. A maioria é corroborada pelas observações acima. Uma não tem corroboração: os endereços na Vercel (#17). Duas são contraditas. Uma é a de que o shell "only needs a `<script>` tag" (#31), quando ele também expõe React em `window` e lê a URL configurada. A outra são as "shared interfaces" (#33), que são duas cópias idênticas. Uma é corroborada em parte: a de que o bundle poderia ser publicado em outro lugar (#37). Os três pontos históricos explicam essas três afirmações (#39, #40, #41), sem ambiguidade aberta no snapshot.
+Documentation has 23 claims, all weak under protocol criterion. Most corroborated by observations above. One uncorroborated: Vercel addresses (#17). Two contradicted: shell "only needs a `<script>` tag" (#31), although it also exposes React on `window` and reads configured URL; "shared interfaces" (#33), actually two identical copies. One partially corroborated: bundle could be published elsewhere (#37). Three historical points explain those claims (#39, #40, #41), with no open snapshot ambiguity.
 
-Ficaram fora da dimensão 2 os blocos citados que não declaram elemento da composição: o cabeçalho `Cache-Control` de `/remote-modules/:path*` em mf-1/next.config.ts:9-23, que é configuração de servidor (está em #14), e os scripts e versões de React dos `package.json`.
+Cited blocks without composition element excluded from dimension 2: `Cache-Control` header for `/remote-modules/:path*` in mf-1/next.config.ts:9-23, server configuration (in #14), and `package.json` scripts/React versions.
 
-## Observações
+## Observations
 
 ### 1. mf-1/vite.mf.ts:27-47
 
-**Observação:** O bloco `build` tem `outDir: "public/remote-modules"`, `input: "src/RemoteModules/RemoteModules.ts"`, `external: ["react", "react-dom"]` e `output` com `entryFileNames: "bundle.js"`, `format: "umd"`, `name: "MF1_RemoteModules"` e `globals` `React` e `ReactDOM`. Os comentários dizem que o shell deve fornecer react/react-dom e que o nome da global deve ser único.
+**Observation:** Block `build` has `outDir: "public/remote-modules"`, `input: "src/RemoteModules/RemoteModules.ts"`, `external: ["react", "react-dom"]` and `output` with `entryFileNames: "bundle.js"`, `format: "umd"`, `name: "MF1_RemoteModules"` and `globals` `React` and `ReactDOM`. Comments say shell must supply react/react-dom and global name must be unique.
 
-**Interpretação:** O `mf-1` está configurado para publicar seus componentes como um script UMD que expõe uma global própria e espera React do host.
+**Interpretation:** `mf-1` configured to publish components as UMD script exposing own global and expecting host React.
 
 ### 2. shell/next.config.js:7-9
 
-**Observação:** `publicRuntimeConfig` define `MF1_BASE_URL: process.env.MF1_BASE_URL || 'http://localhost:3001'`.
+**Observation:** `publicRuntimeConfig` defines `MF1_BASE_URL: process.env.MF1_BASE_URL || 'http://localhost:3001'`.
 
-**Interpretação:** O host declara o endereço do `mf-1`, configurável por ambiente e com padrão na porta do `mf-1` em desenvolvimento.
+**Interpretation:** Host declares `mf-1` address, environment-configurable, defaulting to development `mf-1` port.
 
 ### 3. shell/src/hooks/useRemoteModule.ts:79
 
-**Observação:** O hook `useRemoteModule` cria um `script` com a URL recebida, o anexa ao `head` e, no `onload`, lê `window[moduleName][componentName]`. Antes, expõe `window.React` e `window.ReactDOM`.
+**Observation:** Hook `useRemoteModule` creates `script` with received URL, appends to `head` and, in `onload`, reads `window[moduleName][componentName]`. First exposes `window.React` and `window.ReactDOM`.
 
-**Interpretação:** O host tem um carregador genérico de bundles UMD por `<script>`, que recebe por parâmetro o bundle e o componente.
+**Interpretation:** Host has generic UMD-bundle loader through `<script>`, receiving bundle and component as parameters.
 
 ### 4. mf-1/public/remote-modules/bundle.js:10
 
-**Observação:** O `postMessage(r,"*")` casado pela mineração está no bundle gerado, numa linha com `` `axios@${Math.random()}` ``.
+**Observation:** Mined `postMessage(r,"*")` is in generated bundle, on line containing `` `axios@${Math.random()}` ``.
 
-**Interpretação:** É o polyfill de `setImmediate` do axios, que manda mensagem à própria janela. Não é comunicação entre unidades: é um falso positivo.
+**Interpretation:** Axios `setImmediate` polyfill, messaging own window. Not inter-unit communication: false positive.
 
 ### 5. shell/src/components/RemoteHeader.tsx:18-22; shell/next.config.js:8
 
-**Observação:** `useRemoteModule<HeaderProps>({ url: MF1_BASE_URL + "/remote-modules/bundle.js", moduleName: "MF1_RemoteModules", componentName: "Header" })`.
+**Observation:** `useRemoteModule<HeaderProps>({ url: MF1_BASE_URL + "/remote-modules/bundle.js", moduleName: "MF1_RemoteModules", componentName: "Header" })`.
 
-**Interpretação:** O host aponta para o bundle do `mf-1` e pede o componente `Header`.
+**Interpretation:** Host points to `mf-1` bundle, requesting component `Header`.
 
 ### 6. shell/src/components/RemoteHeader.tsx:37
 
-**Observação:** `<Header appName="Shell App" router={router} onMount={handleMount} />`, com o `Header` obtido pelo hook. O shell passa o próprio `router` do Next.
+**Observation:** `<Header appName="Shell App" router={router} onMount={handleMount} />`, with `Header` obtained by hook. Shell passes own Next `router`.
 
-**Interpretação:** O host renderiza um componente remoto na própria árvore React, com props e callbacks.
+**Interpretation:** Host renders remote component in own React tree with props and callbacks.
 
 ### 7. shell/src/components/RemoteFulfilment.tsx:29-33; shell/next.config.js:8
 
-**Observação:** `useRemoteModule<FulfilmentProps>({ url: MF1_BASE_URL + '/remote-modules/bundle.js', moduleName: 'MF1_RemoteModules', componentName: 'Fulfilment' })`.
+**Observation:** `useRemoteModule<FulfilmentProps>({ url: MF1_BASE_URL + '/remote-modules/bundle.js', moduleName: 'MF1_RemoteModules', componentName: 'Fulfilment' })`.
 
-**Interpretação:** O host aponta para o mesmo bundle do `mf-1` e pede o componente `Fulfilment`.
+**Interpretation:** Host points to same `mf-1` bundle, requesting component `Fulfilment`.
 
 ### 8. shell/src/components/RemoteFulfilment.tsx:65-68
 
-**Observação:** `<Fulfilment onFulfil={onFulfil} onTrack={onTrack} />`, com o componente obtido pelo hook.
+**Observation:** `<Fulfilment onFulfil={onFulfil} onTrack={onTrack} />`, with component obtained by hook.
 
-**Interpretação:** O host renderiza um componente remoto com callbacks próprios.
+**Interpretation:** Host renders remote component with own callbacks.
 
 ### 9. shell/src/components/RemoteFulfilmentDetails.tsx:29-33; shell/next.config.js:8
 
-**Observação:** `useRemoteModule<FulfilmentDetailsProps>({ url: MF1_BASE_URL + '/remote-modules/bundle.js', moduleName: 'MF1_RemoteModules', componentName: 'FulfilmentDetails' })`.
+**Observation:** `useRemoteModule<FulfilmentDetailsProps>({ url: MF1_BASE_URL + '/remote-modules/bundle.js', moduleName: 'MF1_RemoteModules', componentName: 'FulfilmentDetails' })`.
 
-**Interpretação:** O host aponta para o bundle do `mf-1` e pede o componente `FulfilmentDetails`.
+**Interpretation:** Host points to `mf-1` bundle, requesting component `FulfilmentDetails`.
 
 ### 10. shell/src/components/RemoteFulfilmentDetails.tsx:65-68
 
-**Observação:** `<FulfilmentDetailsComponent orderId={orderId} onStatusChange={onStatusChange} />`, com o componente obtido pelo hook.
+**Observation:** `<FulfilmentDetailsComponent orderId={orderId} onStatusChange={onStatusChange} />`, with component obtained by hook.
 
-**Interpretação:** O host renderiza um componente remoto com props e callback próprios.
+**Interpretation:** Host renders remote component with own props and callback.
 
 ### 11. mf-1; mf-1/package.json:8, 11; mf-1/src/pages/_app.tsx:5; mf-1/src/pages/index.tsx:11; mf-1/vite.mf.ts:27-47; mf-1/next.config.ts:5-32
 
-**Observação:** É uma aplicação Next.js (Pages Router) com manifesto, entrada e build próprios. O mesmo build gera, com Vite, o bundle UMD dos componentes remotos.
+**Observation:** Next.js application (Pages Router) with own manifest, entry and build. Same build generates UMD remote component bundle with Vite.
 
-**Interpretação:** É uma unidade frontend com limite próprio, que também fornece componentes a outra.
+**Interpretation:** Frontend unit with own boundary, also supplying components to another.
 
 ### 12. shell; shell/package.json:7; shell/src/pages/_app.tsx:5; shell/src/pages/index.tsx:138; shell/next.config.js:2-18
 
-**Observação:** É uma aplicação Next.js (Pages Router) com manifesto, entrada e build próprios.
+**Observation:** Next.js application (Pages Router) with own manifest, entry and build.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with own boundary.
 
 ### 13. shell/src/hooks/useRemoteModule.ts:79-99; shell/src/components/RemoteHeader.tsx:18-22, 37; shell/src/components/RemoteFulfilment.tsx:29-33, 65-68; shell/src/components/RemoteFulfilmentDetails.tsx:29-33, 65-68; mf-1/vite.mf.ts:28, 33, 35, 37-39; shell/next.config.js:8
 
-**Observação:** O shell carrega `MF1_BASE_URL + "/remote-modules/bundle.js"` por `<script>` e lê `Header`, `Fulfilment` e `FulfilmentDetails` da global `MF1_RemoteModules`. O arquivo e a global correspondem ao build Vite do `mf-1`. Os componentes são usados nas páginas do shell.
+**Observation:** Shell loads `MF1_BASE_URL + "/remote-modules/bundle.js"` through `<script>`, reading `Header`, `Fulfilment` and `FulfilmentDetails` from global `MF1_RemoteModules`. File and global match Vite build of `mf-1`. Components used in shell pages.
 
-**Interpretação:** É uma relação `host → remote` ativa, por mecanismo `script`, em que o destino entra como módulo de componentes na árvore do host.
+**Interpretation:** An active `host → remote` relationship through `script` mechanism, target entering as component module in host tree.
 
 ### 14. mf-1/package.json:8, 11; mf-1/vite.mf.ts:27-47; mf-1/next.config.ts:9-23
 
-**Observação:** O `build` do `mf-1` roda `vite build --config vite.mf.ts` e depois `next build`. O bundle sai em `public/remote-modules`, servido pelo próprio Next, com `Cache-Control` em produção. Não há artefato de deploy, e o nome do bundle é fixo.
+**Observation:** `build` of `mf-1` runs `vite build --config vite.mf.ts`, then `next build`. Bundle output in `public/remote-modules`, served by Next itself with `Cache-Control` in production. No deployment artifact, fixed bundle name.
 
-**Interpretação:** Há fronteira de build própria, sem deploy observado nem versionamento independente. O bundle remoto não é publicado à parte da aplicação.
+**Interpretation:** Own build boundary without observed deployment or independent versioning. Remote bundle not published separately from application.
 
 ### 15. shell/package.json:7; shell/next.config.js:7-9
 
-**Observação:** O `shell` constrói com `next build` no próprio diretório, sem código do `mf-1`, que chega só em runtime pela URL configurada. Não há artefato de deploy.
+**Observation:** `shell` builds with `next build` in own directory, without `mf-1` code, arriving only at runtime through configured URL. No deployment artifact.
 
-**Interpretação:** Há fronteira de build própria, sem deploy observado nem versionamento independente.
+**Interpretation:** Own build boundary without observed deployment or independent versioning.
 
 ### 16. README.md:3
 
-**Observação:** "A proof-of-concept implementation of microfrontends using UMD (Universal Module Definition) format with Next.js and React, enabling remote component sharing between applications".
+**Observation:** "A proof-of-concept implementation of microfrontends using UMD (Universal Module Definition) format with Next.js and React, enabling remote component sharing between applications".
 
-**Interpretação:** Apresenta o projeto como microfrontends que compartilham componentes por bundle UMD. A afirmação é corroborada.
+**Interpretation:** Presents project as microfrontends sharing components through UMD bundle. Claim corroborated.
 
 ### 17. README.md:7-8
 
-**Observação:** "**Shell App**: https://umd-remote-modules-poc-shell.vercel.app/", "**MF1**: https://umd-remote-modules-poc-mf1.vercel.app/".
+**Observation:** "**Shell App**: https://umd-remote-modules-poc-shell.vercel.app/", "**MF1**: https://umd-remote-modules-poc-mf1.vercel.app/".
 
-**Interpretação:** Indica uma publicação separada para cada aplicação. Não há artefato de deploy no snapshot: a afirmação fica sem corroboração.
+**Interpretation:** Indicates separate publication per application. No snapshot deployment artifact: claim uncorroborated.
 
 ### 18. README.md:12
 
-**Observação:** "This solution implements **UMD-based Microfrontends** (not Module Federation)".
+**Observation:** "This solution implements **UMD-based Microfrontends** (not Module Federation)".
 
-**Interpretação:** Nomeia o formato UMD e nega o uso de Module Federation. A afirmação é corroborada.
+**Interpretation:** Names UMD format, denies Module Federation usage. Claim corroborated.
 
 ### 19. README.md:14
 
-**Observação:** "**Shell App**: A Next.js application that consumes remote components from MF1".
+**Observation:** "**Shell App**: A Next.js application that consumes remote components from MF1".
 
-**Interpretação:** Afirma que o shell é o consumidor dos componentes do `mf-1`. A afirmação é corroborada.
+**Interpretation:** Claims shell consumes `mf-1` components. Claim corroborated.
 
 ### 20. README.md:15
 
-**Observação:** "**MF1**: A Next.js application that also uses its own components internally AND exposes them as UMD bundles for remote consumption".
+**Observation:** "**MF1**: A Next.js application that also uses its own components internally AND exposes them as UMD bundles for remote consumption".
 
-**Interpretação:** Afirma que o `mf-1` usa os componentes nas próprias páginas e os expõe a outra aplicação. A afirmação é corroborada.
+**Interpretation:** Claims `mf-1` uses components on own pages, exposing to another application. Claim corroborated.
 
 ### 21. README.md:16
 
-**Observação:** "**Remote Loading**: Components are loaded dynamically via script tags".
+**Observation:** "**Remote Loading**: Components are loaded dynamically via script tags".
 
-**Interpretação:** Nomeia o carregamento por `<script>`. A afirmação é corroborada.
+**Interpretation:** Names loading through `<script>`. Claim corroborated.
 
 ### 22. README.md:24
 
-**Observação:** "MF1 runs as a standalone Next.js application that uses its own components locally".
+**Observation:** "MF1 runs as a standalone Next.js application that uses its own components locally".
 
-**Interpretação:** Afirma que o `mf-1` roda sozinho. A afirmação é corroborada.
+**Interpretation:** Claims `mf-1` runs standalone. Claim corroborated.
 
 ### 23. README.md:26
 
-**Observação:** "MF1 also uses Vite to compile the same React components into a UMD bundle for remote consumption".
+**Observation:** "MF1 also uses Vite to compile the same React components into a UMD bundle for remote consumption".
 
-**Interpretação:** Descreve o build do bundle remoto dentro do `mf-1`. A afirmação é corroborada.
+**Interpretation:** Describes remote bundle build inside `mf-1`. Claim corroborated.
 
 ### 24. README.md:58
 
-**Observação:** "The shell app uses a reusable hook to load and consume remote components".
+**Observation:** "The shell app uses a reusable hook to load and consume remote components".
 
-**Interpretação:** Afirma que o shell consome os componentes remotos por um único hook. A afirmação é corroborada.
+**Interpretation:** Claims shell consumes remote components through a single hook. Claim corroborated.
 
 ### 25. README.md:74
 
-**Observação:** "**Global Access**: Components become available via `window.MF1_RemoteModules`".
+**Observation:** "**Global Access**: Components become available via `window.MF1_RemoteModules`".
 
-**Interpretação:** Descreve o acesso pela global do bundle. A afirmação é corroborada.
+**Interpretation:** Describes access through bundle global. Claim corroborated.
 
 ### 26. README.md:75-76
 
-**Observação:** "Components are treated as normal React components", "React renders them seamlessly into the shell's component tree".
+**Observation:** "Components are treated as normal React components", "React renders them seamlessly into the shell's component tree".
 
-**Interpretação:** Afirma que os componentes remotos entram na árvore do shell como componentes comuns. A afirmação é corroborada.
+**Interpretation:** Claims remote components enter shell tree as ordinary components. Claim corroborated.
 
 ### 27. README.md:86
 
-**Observação:** "Next.js development server + Vite watch mode for exported remote components".
+**Observation:** "Next.js development server + Vite watch mode for exported remote components".
 
-**Interpretação:** Descreve o modo de desenvolvimento do `mf-1`, com o bundle refeito a cada mudança. A afirmação é corroborada.
+**Interpretation:** Describes `mf-1` development mode, rebuilding bundle on each change. Claim corroborated.
 
 ### 28. README.md:100
 
-**Observação:** "**Remote Bundle**: http://localhost:3001/remote-modules/bundle.js (UMD bundle for Shell)".
+**Observation:** "**Remote Bundle**: http://localhost:3001/remote-modules/bundle.js (UMD bundle for Shell)".
 
-**Interpretação:** Afirma que o bundle é servido pelo `mf-1`. A afirmação é corroborada.
+**Interpretation:** Claims bundle served by `mf-1`. Claim corroborated.
 
 ### 29. README.md:104
 
-**Observação:** "router state is passed as props".
+**Observation:** "router state is passed as props".
 
-**Interpretação:** Afirma que o contrato entre shell e remote passa o roteamento por props. A afirmação é corroborada.
+**Interpretation:** Claims shell/remote contract passes routing through props. Claim corroborated.
 
 ### 30. README.md:114-117
 
-**Observação:** "The `useRemoteModule` hook implements: - **Script caching**: Prevents duplicate loads - **Component memoization**: Improves performance - **Error handling**: Graceful fallbacks".
+**Observation:** "The `useRemoteModule` hook implements: - **Script caching**: Prevents duplicate loads - **Component memoization**: Improves performance - **Error handling**: Graceful fallbacks".
 
-**Interpretação:** Descreve recursos do carregador. A afirmação é corroborada.
+**Interpretation:** Describes loader features. Claim corroborated.
 
 ### 31. README.md:124
 
-**Observação:** "**Simple Setup**: No complex module-federation configuration. The shell app only needs a `<script>` tag."
+**Observation:** "**Simple Setup**: No complex module-federation configuration. The shell app only needs a `<script>` tag."
 
-**Interpretação:** Afirma que o host só precisa do `<script>`. O shell também expõe React e ReactDOM em `window` e lê a URL do remote da configuração, o que contradiz a afirmação.
+**Interpretation:** Claims host only needs `<script>`. Shell also exposes React and ReactDOM on `window`, reading remote URL from configuration, contradicting claim.
 
 ### 32. README.md:125
 
-**Observação:** "**Standalone Development**: Each microfrontend can be developed independently".
+**Observation:** "**Standalone Development**: Each microfrontend can be developed independently".
 
-**Interpretação:** Afirma que cada aplicação é desenvolvida sozinha. A afirmação é corroborada.
+**Interpretation:** Claims each application developed standalone. Claim corroborated.
 
 ### 33. README.md:127
 
-**Observação:** "**TypeScript Support**: Full type safety with shared interfaces".
+**Observation:** "**TypeScript Support**: Full type safety with shared interfaces".
 
-**Interpretação:** Afirma interfaces comuns às unidades. Há duas cópias idênticas, uma em cada unidade, sem módulo comum, o que contradiz a afirmação.
+**Interpretation:** Claims interfaces common to units. Two identical copies, one per unit without common module, contradict claim.
 
 ### 34. README.md:132
 
-**Observação:** "**Global Namespace**: Each microfrontend needs unique global names".
+**Observation:** "**Global Namespace**: Each microfrontend needs unique global names".
 
-**Interpretação:** Descreve um requisito do mecanismo por global. A afirmação é corroborada.
+**Interpretation:** Describes global-mechanism requirement. Claim corroborated.
 
 ### 35. README.md:133
 
-**Observação:** "**Dependency Management**: External dependencies must be managed carefully".
+**Observation:** "**Dependency Management**: External dependencies must be managed carefully".
 
-**Interpretação:** Aponta a coordenação das dependências externas ao bundle. A afirmação é corroborada.
+**Interpretation:** Indicates coordination of dependencies external to bundle. Claim corroborated.
 
 ### 36. README.md:134
 
-**Observação:** "**Runtime Loading**: Components are loaded at runtime, not build time. SSR is not compatible."
+**Observation:** "**Runtime Loading**: Components are loaded at runtime, not build time. SSR is not compatible."
 
-**Interpretação:** Afirma que a composição só ocorre no navegador. A afirmação é corroborada.
+**Interpretation:** Claims composition only occurs in browser. Claim corroborated.
 
 ### 37. mf-1/vite.mf.ts:28
 
-**Observação:** "podemos subirlo a cualquier otro lugar" (podemos publicá-lo em qualquer outro lugar).
+**Observation:** "podemos subirlo a cualquier otro lugar" (English translation: "we can publish it anywhere else").
 
-**Interpretação:** Supõe que o bundle possa ser publicado fora do `mf-1`. A URL base é configurável, mas nenhum artefato publica o bundle fora: a afirmação é corroborada em parte.
+**Interpretation:** Supposes bundle can be published outside `mf-1`. Base URL configurable, but no artifact publishes bundle elsewhere: claim partially corroborated.
 
 ### 38. mf-1/vite.mf.ts:35
 
-**Observação:** "App shell debe proveer react/react-dom. Debemos coordinar mismas versiones." (o shell deve fornecer react/react-dom; devemos coordenar as mesmas versões).
+**Observation:** "App shell debe proveer react/react-dom. Debemos coordinar mismas versiones." (English translation: "Shell must supply react/react-dom. We must coordinate the same versions.").
 
-**Interpretação:** Afirma que o host fornece React ao remote e que as versões são coordenadas. A afirmação é corroborada.
+**Interpretation:** Claims host supplies React to remote and versions coordinated. Claim corroborated.
 
 ### 39. 6ff5738 2025-07-28 (shell/src/hooks/useRemoteModule.ts); d7937f8 2025-07-28 (shell/next.config.js); faabb25 2025-07-28 (mf-1/vite.mf.ts); 03aa81d 2025-07-28 (README.md); ed8c864 2025-07-28 (README.md)
 
-**Observação:** O hook, `shell/next.config.js` e `mf-1/vite.mf.ts` chegam à versão do snapshot antes de `03aa81d`, que cria o README, e de `ed8c864`, que lhe dá a versão do snapshot. A versão de `03aa81d` falta no clone.
+**Observation:** Hook, `shell/next.config.js` and `mf-1/vite.mf.ts` reach snapshot version before `03aa81d`, creating README, and `ed8c864`, giving it snapshot version. Version from `03aa81d` absent from clone.
 
-**Interpretação:** A frase "only needs a `<script>` tag" não é resto de um estágio anterior do código: coexiste com o que a contradiz. O ponto está esclarecido.
+**Interpretation:** Sentence "only needs a `<script>` tag" does not remain from earlier code stage: coexists with contradicting code. Point clarified.
 
 ### 40. ff692cd 2025-07-28 (mf-1/src/types/remote-components.d.ts, shell/src/types/mf1-remote-components.d.ts); 397b98c 2025-07-28 (mf-1/src/types/remote-components.d.ts, shell/src/types/mf1-remote-components.d.ts)
 
-**Observação:** Os dois arquivos de tipos nascem no mesmo commit com o mesmo objeto e mudam juntos para o mesmo objeto, que é o do snapshot. Nenhum commit cria arquivo de tipos num lugar comum.
+**Observation:** Both type files originate in same commit with same object, changing together to same snapshot object. No commit creates type file in common location.
 
-**Interpretação:** As interfaces foram duplicadas desde o início e mantidas iguais por cópia, nunca extraídas. O ponto está esclarecido.
+**Interpretation:** Interfaces duplicated from outset, kept identical through copying, never extracted. Point clarified.
 
 ### 41. b50998d 2025-07-28 (mf-1/public/remote-components/bundle.js); 0f9ffc9 2025-07-28 (mf-1/public/remote-modules/bundle.js); 397b98c 2025-07-28 (mf-1/public/remote-components/bundle.js); faabb25 2025-07-28 (mf-1/vite.mf.ts)
 
-**Observação:** O bundle sempre esteve em `mf-1/public`, primeiro em `remote-components/` e depois em `remote-modules/`. Nenhum dos 17 commits cria artefato de publicação. O comentário está na versão de `faabb25`, e as anteriores faltam no clone.
+**Observation:** Bundle always in `mf-1/public`, first in `remote-components/`, then `remote-modules/`. None of 17 commits creates publication artifact. Comment in version `faabb25`, earlier versions absent from clone.
 
-**Interpretação:** A publicação em outro lugar é uma alternativa anotada, não um estágio abandonado. O ponto está esclarecido.
+**Interpretation:** Publication elsewhere is recorded alternative rather than abandoned stage. Point clarified.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.3 (mf-1, Entrada e Build); 3.4.4 (shell/src/hooks/useRemoteModule.ts:79, Observação); 3.4.5 #1 (Configuração); 3.4.6 #1 (Onde é servida, Artefatos); 3.4.7 #1, #8, #10, #13, #16, #19, #20, #23 (Evidência); 3.4.7 #22, #23 (Documento) | 2 configuração | configuração | script | tecnológica | moderada | configura #11; configura #13 |
-| 2 | 3.4.3 (shell, Build); 3.4.4 (shell/src/components/RemoteHeader.tsx:18, Observação); 3.4.5 #1 (Configuração); 3.4.6 #2 (Artefatos); 3.4.7 #16, #22 (Evidência) | 2 configuração | configuração | script | arquitetural | forte | configura #5; configura #7; configura #9; configura #13 |
-| 3 | 3.4.4 (shell/src/hooks/useRemoteModule.ts:79) | 3 código | código-fonte | script | tecnológica | moderada | implementa #13 |
-| 4 | 3.4.4 (mf-1/public/remote-modules/bundle.js:10) | 3 código | código-fonte | — | contexto | fraca | — |
-| 5 | 3.4.4 (shell/src/components/RemoteHeader.tsx:18) | 3 código | código-fonte | script | arquitetural | forte | implementa #13 |
-| 6 | 3.4.4 (shell/src/components/RemoteHeader.tsx:37) | 3 código | código-fonte | script | tecnológica | moderada | implementa #13 |
-| 7 | 3.4.4 (shell/src/components/RemoteFulfilment.tsx:29) | 3 código | código-fonte | script | arquitetural | forte | implementa #13 |
-| 8 | 3.4.4 (shell/src/components/RemoteFulfilment.tsx:65) | 3 código | código-fonte | script | tecnológica | moderada | implementa #13 |
-| 9 | 3.4.4 (shell/src/components/RemoteFulfilmentDetails.tsx:29) | 3 código | código-fonte | script | arquitetural | forte | implementa #13 |
-| 10 | 3.4.4 (shell/src/components/RemoteFulfilmentDetails.tsx:65) | 3 código | código-fonte | script | tecnológica | moderada | implementa #13 |
-| 11 | 3.4.3 (mf-1) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 12 | 3.4.3 (shell) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 13 | 3.4.5 #1 | 5 composição | código-fonte | script | arquitetural | forte | liga #12; liga #11 |
-| 14 | 3.4.6 #1 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #11 |
-| 15 | 3.4.6 #2 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #12 |
-| 16 | 3.4.7 #1 | 7 documentação | documentação | script | arquitetural | fraca | corrobora #11; corrobora #12; corrobora #13; corrobora #1 |
-| 17 | 3.4.7 #2 | 7 documentação | documentação | — | arquitetural | fraca | — |
-| 18 | 3.4.7 #3 | 7 documentação | documentação | script | tecnológica | fraca | corrobora #13 |
-| 19 | 3.4.7 #4 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #12; corrobora #13 |
-| 20 | 3.4.7 #5 | 7 documentação | documentação | script | arquitetural | fraca | corrobora #11; corrobora #1; corrobora mf-1/src/pages/index.tsx:3-4 |
-| 21 | 3.4.7 #6 | 7 documentação | documentação | script | tecnológica | fraca | corrobora #3; corrobora #13 |
-| 22 | 3.4.7 #7 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #11 |
-| 23 | 3.4.7 #8 | 7 documentação | documentação | script | arquitetural | fraca | corrobora #14; corrobora #1 |
-| 24 | 3.4.7 #9 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #5; corrobora #7; corrobora #9 |
-| 25 | 3.4.7 #10 | 7 documentação | documentação | script | tecnológica | fraca | corrobora #1; corrobora #3; corrobora #13 |
-| 26 | 3.4.7 #11 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #6; corrobora #8; corrobora #10; corrobora #13 |
-| 27 | 3.4.7 #12 | 7 documentação | documentação | — | tecnológica | fraca | corrobora mf-1/package.json:6-7, 12 |
-| 28 | 3.4.7 #13 | 7 documentação | documentação | script | arquitetural | fraca | corrobora #14; corrobora #1 |
-| 29 | 3.4.7 #14 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #6 |
-| 30 | 3.4.7 #15 | 7 documentação | documentação | script | tecnológica | fraca | corrobora #3; corrobora shell/src/components/RemoteHeader.tsx:24-31 |
-| 31 | 3.4.7 #16 | 7 documentação | documentação | script | tecnológica | fraca | contradiz #3; contradiz #1; contradiz #2 |
-| 32 | 3.4.7 #17 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #11; corrobora #12 |
-| 33 | 3.4.7 #18 | 7 documentação | documentação | — | arquitetural | fraca | contradiz mf-1/src/types/remote-components.d.ts:3-29; contradiz shell/src/types/mf1-remote-components.d.ts:3-29 |
-| 34 | 3.4.7 #19 | 7 documentação | documentação | script | tecnológica | fraca | corrobora #1; corrobora #3 |
-| 35 | 3.4.7 #20 | 7 documentação | documentação | — | tecnológica | fraca | corrobora #1; corrobora mf-1/package.json:17-18; corrobora shell/package.json:13-14 |
-| 36 | 3.4.7 #21 | 7 documentação | documentação | — | tecnológica | fraca | corrobora #3; corrobora #13; corrobora #15 |
-| 37 | 3.4.7 #22 | 7 documentação | comentário | — | arquitetural | fraca | corrobora em parte #2; corrobora em parte #5 |
-| 38 | 3.4.7 #23 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #3; corrobora #1; corrobora mf-1/package.json:17-18; corrobora shell/package.json:13-14 |
-| 39 | 3.4.8 #1 | 8 histórico | histórico | script | tecnológica | fraca | explica #31 |
-| 40 | 3.4.8 #2 | 8 histórico | histórico | — | arquitetural | fraca | explica #33 |
-| 41 | 3.4.8 #3 | 8 histórico | histórico | — | arquitetural | fraca | explica #37 |
+| 1 | 3.4.3 (mf-1, Entry and Build); 3.4.4 (shell/src/hooks/useRemoteModule.ts:79, Observation); 3.4.5 #1 (Configuration); 3.4.6 #1 (Where served, Artifacts); 3.4.7 #1, #8, #10, #13, #16, #19, #20, #23 (Evidence); 3.4.7 #22, #23 (Document) | 2 configuration | configuration | script | technological | moderate | configures #11; configures #13 |
+| 2 | 3.4.3 (shell, Build); 3.4.4 (shell/src/components/RemoteHeader.tsx:18, Observation); 3.4.5 #1 (Configuration); 3.4.6 #2 (Artifacts); 3.4.7 #16, #22 (Evidence) | 2 configuration | configuration | script | architectural | strong | configures #5; configures #7; configures #9; configures #13 |
+| 3 | 3.4.4 (shell/src/hooks/useRemoteModule.ts:79) | 3 code | source code | script | technological | moderate | implements #13 |
+| 4 | 3.4.4 (mf-1/public/remote-modules/bundle.js:10) | 3 code | source code | — | context | weak | — |
+| 5 | 3.4.4 (shell/src/components/RemoteHeader.tsx:18) | 3 code | source code | script | architectural | strong | implements #13 |
+| 6 | 3.4.4 (shell/src/components/RemoteHeader.tsx:37) | 3 code | source code | script | technological | moderate | implements #13 |
+| 7 | 3.4.4 (shell/src/components/RemoteFulfilment.tsx:29) | 3 code | source code | script | architectural | strong | implements #13 |
+| 8 | 3.4.4 (shell/src/components/RemoteFulfilment.tsx:65) | 3 code | source code | script | technological | moderate | implements #13 |
+| 9 | 3.4.4 (shell/src/components/RemoteFulfilmentDetails.tsx:29) | 3 code | source code | script | architectural | strong | implements #13 |
+| 10 | 3.4.4 (shell/src/components/RemoteFulfilmentDetails.tsx:65) | 3 code | source code | script | technological | moderate | implements #13 |
+| 11 | 3.4.3 (mf-1) | 4 structure | directory | — | architectural | moderate | — |
+| 12 | 3.4.3 (shell) | 4 structure | directory | — | architectural | moderate | — |
+| 13 | 3.4.5 #1 | 5 composition | source code | script | architectural | strong | links #12; links #11 |
+| 14 | 3.4.6 #1 | 6 build-deploy | configuration | — | architectural | moderate | publishes #11 |
+| 15 | 3.4.6 #2 | 6 build-deploy | configuration | — | architectural | moderate | publishes #12 |
+| 16 | 3.4.7 #1 | 7 documentation | documentation | script | architectural | weak | corroborates #11; corroborates #12; corroborates #13; corroborates #1 |
+| 17 | 3.4.7 #2 | 7 documentation | documentation | — | architectural | weak | — |
+| 18 | 3.4.7 #3 | 7 documentation | documentation | script | technological | weak | corroborates #13 |
+| 19 | 3.4.7 #4 | 7 documentation | documentation | — | architectural | weak | corroborates #12; corroborates #13 |
+| 20 | 3.4.7 #5 | 7 documentation | documentation | script | architectural | weak | corroborates #11; corroborates #1; corroborates mf-1/src/pages/index.tsx:3-4 |
+| 21 | 3.4.7 #6 | 7 documentation | documentation | script | technological | weak | corroborates #3; corroborates #13 |
+| 22 | 3.4.7 #7 | 7 documentation | documentation | — | architectural | weak | corroborates #11 |
+| 23 | 3.4.7 #8 | 7 documentation | documentation | script | architectural | weak | corroborates #14; corroborates #1 |
+| 24 | 3.4.7 #9 | 7 documentation | documentation | — | architectural | weak | corroborates #5; corroborates #7; corroborates #9 |
+| 25 | 3.4.7 #10 | 7 documentation | documentation | script | technological | weak | corroborates #1; corroborates #3; corroborates #13 |
+| 26 | 3.4.7 #11 | 7 documentation | documentation | — | architectural | weak | corroborates #6; corroborates #8; corroborates #10; corroborates #13 |
+| 27 | 3.4.7 #12 | 7 documentation | documentation | — | technological | weak | corroborates mf-1/package.json:6-7, 12 |
+| 28 | 3.4.7 #13 | 7 documentation | documentation | script | architectural | weak | corroborates #14; corroborates #1 |
+| 29 | 3.4.7 #14 | 7 documentation | documentation | — | architectural | weak | corroborates #6 |
+| 30 | 3.4.7 #15 | 7 documentation | documentation | script | technological | weak | corroborates #3; corroborates shell/src/components/RemoteHeader.tsx:24-31 |
+| 31 | 3.4.7 #16 | 7 documentation | documentation | script | technological | weak | contradicts #3; contradicts #1; contradicts #2 |
+| 32 | 3.4.7 #17 | 7 documentation | documentation | — | architectural | weak | corroborates #11; corroborates #12 |
+| 33 | 3.4.7 #18 | 7 documentation | documentation | — | architectural | weak | contradicts mf-1/src/types/remote-components.d.ts:3-29; contradicts shell/src/types/mf1-remote-components.d.ts:3-29 |
+| 34 | 3.4.7 #19 | 7 documentation | documentation | script | technological | weak | corroborates #1; corroborates #3 |
+| 35 | 3.4.7 #20 | 7 documentation | documentation | — | technological | weak | corroborates #1; corroborates mf-1/package.json:17-18; corroborates shell/package.json:13-14 |
+| 36 | 3.4.7 #21 | 7 documentation | documentation | — | technological | weak | corroborates #3; corroborates #13; corroborates #15 |
+| 37 | 3.4.7 #22 | 7 documentation | comment | — | architectural | weak | partially corroborates #2; partially corroborates #5 |
+| 38 | 3.4.7 #23 | 7 documentation | comment | — | architectural | weak | corroborates #3; corroborates #1; corroborates mf-1/package.json:17-18; corroborates shell/package.json:13-14 |
+| 39 | 3.4.8 #1 | 8 history | history | script | technological | weak | explains #31 |
+| 40 | 3.4.8 #2 | 8 history | history | — | architectural | weak | explains #33 |
+| 41 | 3.4.8 #3 | 8 history | history | — | architectural | weak | explains #37 |
 
-## Resumo
+## Summary
 
-Observações: 41. Dimensões (tecnologia: 0, configuração: 2, código: 8, estrutura: 2, composição: 1, build-deploy: 2, documentação: 23, histórico: 3). Força (forte: 5, moderada: 9, fraca: 27, ambígua: 0). Evidência (tecnológica: 15, arquitetural: 25, contexto: 1).
+Observations: 41. Dimensions (technology: 0, configuration: 2, code: 8, structure: 2, composition: 1, build-deploy: 2, documentation: 23, history: 3). Strength (strong: 5, moderate: 9, weak: 27, ambiguous: 0). Evidence (technological: 15, architectural: 25, context: 1).
+

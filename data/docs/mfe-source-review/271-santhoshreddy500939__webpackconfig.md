@@ -15,24 +15,24 @@ annotation:
 
 # 271 — santhoshreddy500939/webpackconfig
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-remote-import | Components/Application1/Application1.js:3 | . | dynamic-loading | Yes | `React.lazy(() => import("RemoteApp/microfrontend1"))` carrega o módulo `microfrontend1` do remote externo `RemoteApp`, declarado como `RemoteApp@http://localhost:9001/remoteappbuild.js` em webpack.common.config.js:33-35; `Application1` é importado e renderizado por `App` em index.js:5 e index.js:13, montado em index.js:19-20 (entrada `./index.js` em webpack.common.config.js:7) |
+| src-remote-import | Components/Application1/Application1.js:3 | . | dynamic-loading | Yes | `React.lazy(() => import("RemoteApp/microfrontend1"))` loads module `microfrontend1` of external remote `RemoteApp`, declared as `RemoteApp@http://localhost:9001/remoteappbuild.js` at webpack.common.config.js:33-35; `Application1` is imported and rendered by `App` at index.js:5 and index.js:13, mounted at index.js:19-20 (entry `./index.js` at webpack.common.config.js:7) |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | Components/Application1/Application1.js:11 | . | runtime-composition | Yes | Monta `<RemoteApp />`, componente do remote externo `RemoteApp`, dentro de `Suspense` (Components/Application1/Application1.js:10-12); o componente vem do `React.lazy` em Components/Application1/Application1.js:3. `Application1` é renderizado por `App` em index.js:13 |
+| manual | Components/Application1/Application1.js:11 | . | runtime-composition | Yes | Mounts `<RemoteApp />`, a component of external remote `RemoteApp`, inside `Suspense` (Components/Application1/Application1.js:10-12); the component comes from `React.lazy` at Components/Application1/Application1.js:3. `Application1` is rendered by `App` at index.js:13 |
 
-## Resumo
+## Summary
 
-Construções com composição: 2 (dynamic-loading: 1, runtime-composition: 1).
+Constructs participating in composition: 2 (dynamic-loading: 1, runtime-composition: 1).
 
-## Notas
+## Notes
 
-- O remote `RemoteApp` (http://localhost:9001/remoteappbuild.js, webpack.common.config.js:34) está fora do snapshot.
-- `Application2` (Components/Application2/Application2.js:5) é só um placeholder local (`holder for application2`), sem carga de outra unidade.
-- A busca do passo 4 achou só a ocorrência já minerada em Components/Application1/Application1.js:3; não há custom elements, iframes, scripts injetados nem mecanismos de comunicação.
+- Remote `RemoteApp` (http://localhost:9001/remoteappbuild.js, webpack.common.config.js:34) is outside the snapshot.
+- `Application2` (Components/Application2/Application2.js:5) is only a local placeholder (`holder for application2`), without loading another unit.
+- The step 4 search found only the already mined occurrence at Components/Application1/Application1.js:3; there are no custom elements, iframes, injected scripts or communication mechanisms.

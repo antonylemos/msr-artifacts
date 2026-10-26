@@ -20,41 +20,41 @@ annotation:
 
 # 059 — Efraim0601/union-portal
 
-## Contexto
+## Context
 
-- **Abordagem de implementação:** Native Federation (`@angular-architects/native-federation`, Angular 21, esbuild) com manifesto
-- **Tipo de repositório:** production-oriented (portal de banco "Afriland Union": app de staff e onboarding de clientes da diáspora; deploy em servidor com nginx e Docker; 37 commits)
-- **Commit avaliado:** `b11a3e3` (branch padrão `master`)
+- **Implementation approach:** Native Federation (`@angular-architects/native-federation`, Angular 21, esbuild) with a manifest
+- **Repository type:** production-oriented ("Afriland Union" bank portal: staff app and diaspora customer onboarding; deployment on a server with nginx and Docker; 37 commits)
+- **Assessed commit:** `b11a3e3` (default branch `master`)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Documentação | `README.md:1-30`: "Monorepo Angular CLI 21… host + remotes via module federation"; diagrama `shell (host, :4200) ──loadRemoteModule──► promote (:4201) / diaspora (:4202)`; libs `@union/design-system` e `@union/auth` (SSO por `localStorage`); "reproduz a arquitetura de `portal-client-firstpay`" do banco | moderada |
-| Estrutura | `projects/shell` (host), `projects/promote` e `projects/diaspora` (remotes), cada um com `federation.config.js`, `src/main.ts`, `src/bootstrap.ts`, proxy próprio; libs `projects/design-system` e `projects/auth` | forte |
-| Configuração (host) | `projects/shell/federation.config.js:3-9`: `withNativeFederation({ name: 'shell', shared: shareAll(singleton) })`; `projects/shell/public/federation.manifest.json:1-4`: `promote` → `http://localhost:4201/remoteEntry.json`, `diaspora` → `:4202`; `deploy/federation.manifest.prod.json:1-4`: em produção, `/remotes/promote/remoteEntry.json` e `/remotes/diaspora/remoteEntry.json` | forte |
-| Configuração (remotes) | `projects/promote/federation.config.js:3-10` e `projects/diaspora/federation.config.js:8-9`: `exposes: { './Routes': '…/remote.routes.ts' }` | forte |
-| Código-fonte (composição) | `projects/shell/src/main.ts:1-5`: `initFederation('federation.manifest.json')` antes do bootstrap; `projects/shell/src/app/app.routes.ts:2,11-18`: rotas `promote` e `diaspora` com `loadRemoteModule('<remote>', './Routes')` | forte |
-| Código-fonte | Nenhum import de código-fonte entre `shell`, `promote` e `diaspora`; as libs comuns entram por path mapping e `shareAll` (sustenta a independência das unidades) | ausente |
-| Build/deploy | `Dockerfile:20-22`: três `ng build` separados (`shell`, `promote` com `--base-href /remotes/promote/`, `diaspora` com `/remotes/diaspora/`); `deploy/nginx.conf:29-38`: cada remote servido sob `/remotes/<app>/`; `deploy/server/deploy.sh`: deploy em servidor (builds separados, imagem única) | moderada |
+| Documentation | `README.md:1-30`: "Monorepo Angular CLI 21… host + remotes via module federation"; diagram `shell (host, :4200) ──loadRemoteModule──► promote (:4201) / diaspora (:4202)`; libraries `@union/design-system` and `@union/auth` (SSO through `localStorage`); "reproduz a arquitetura de `portal-client-firstpay`" [English translation: "reproduces the architecture of portal-client-firstpay"] from the bank | moderate |
+| Structure | `projects/shell` (host), `projects/promote` and `projects/diaspora` (remotes), each with `federation.config.js`, `src/main.ts`, `src/bootstrap.ts` and its own proxy; libraries `projects/design-system` and `projects/auth` | strong |
+| Configuration (host) | `projects/shell/federation.config.js:3-9`: `withNativeFederation({ name: 'shell', shared: shareAll(singleton) })`; `projects/shell/public/federation.manifest.json:1-4`: `promote` → `http://localhost:4201/remoteEntry.json`, `diaspora` → `:4202`; `deploy/federation.manifest.prod.json:1-4`: in production, `/remotes/promote/remoteEntry.json` and `/remotes/diaspora/remoteEntry.json` | strong |
+| Configuration (remotes) | `projects/promote/federation.config.js:3-10` and `projects/diaspora/federation.config.js:8-9`: `exposes: { './Routes': '…/remote.routes.ts' }` | strong |
+| Source code (composition) | `projects/shell/src/main.ts:1-5`: `initFederation('federation.manifest.json')` before bootstrap; `projects/shell/src/app/app.routes.ts:2,11-18`: `promote` and `diaspora` routes with `loadRemoteModule('<remote>', './Routes')` | strong |
+| Source code | No source code imports between `shell`, `promote` and `diaspora`; common libraries participate through path mapping and `shareAll` (supports the units' independence) | absent |
+| Build/deploy | `Dockerfile:20-22`: three separate `ng build` commands (`shell`, `promote` with `--base-href /remotes/promote/`, `diaspora` with `/remotes/diaspora/`); `deploy/nginx.conf:29-38`: each remote served under `/remotes/<app>/`; `deploy/server/deploy.sh`: server deployment (separate builds, single image) | moderate |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | `shell`, `promote` e `diaspora` |
-| Q2 | Yes | Entry, `federation.config.js` e build próprios por app (`Dockerfile:20-22`); sem import de código-fonte entre apps |
-| Q3 | Yes | O shell roteia e carrega os remotes (`app.routes.ts:11-18`) |
-| Q4 | Yes | Native Federation configurada (manifesto dev/prod) e usada via `initFederation` + `loadRemoteModule` |
-| Q5 | Yes | Q1–Q4 convergem; ver nota sobre deploy |
+| Q1 | Yes | `shell`, `promote` and `diaspora` |
+| Q2 | Yes | Each app has its own entry, `federation.config.js` and build (`Dockerfile:20-22`); no source code imports between apps |
+| Q3 | Yes | The shell routes to and loads remotes (`app.routes.ts:11-18`) |
+| Q4 | Yes | Native Federation configured (development/production manifest) and used through `initFederation` + `loadRemoteModule` |
+| Q5 | Yes | Q1–Q4 converge; see deployment note |
 
-## Motivo
+## Rationale
 
-- Q1–Q5 são todos Yes, o que satisfaz a regra de MFE-implemented.
-- Corresponde a "monorepos containing a host and its remotes", com composição em runtime por manifesto.
+- Q1–Q5 are all Yes, satisfying the MFE-implemented rule.
+- Matches "monorepos containing a host and its remotes", with manifest-based runtime composition.
 
-## Notas para análise
+## Analysis notes
 
-- **Checklist (critério de deploy do repositório 042):** as três apps são empacotadas na **mesma imagem Docker** e implantadas juntas. Diferente do repositório 042, não há acoplamento de build: cada app tem `ng build` próprio e o shell carrega os remotes em runtime pelo manifesto; um remote pode ser recompilado e substituído em `/remotes/<app>/` sem recompilar o shell. O empacotamento conjunto é uma escolha de deploy, não uma dependência de build. Se a regra de "dependência de deploy" for interpretada como exigência de deploy separado, o caso merece revisão.
-- **RQ2:** Native Federation (variante esbuild/ESM do MF para Angular), primeira ocorrência na amostra.
-- **RQ3:** manifestos distintos por ambiente (`public/federation.manifest.json` dev × `deploy/federation.manifest.prod.json` prod), SSO entre MFEs por `localStorage` compartilhado (`@union/auth`).
+- **Checklist (deployment criterion from repository 042):** all three apps are packaged in the **same Docker image** and deployed together. Unlike repository 042, there is no build coupling: each app has its own `ng build`, and the shell loads remotes at runtime through the manifest; a remote can be rebuilt and replaced in `/remotes/<app>/` without rebuilding the shell. Joint packaging is a deployment choice, not a build dependency. If the "deployment dependency" rule is interpreted as requiring separate deployment, the case deserves review.
+- **RQ2:** Native Federation (esbuild/ESM variant of MF for Angular), first occurrence in the sample.
+- **RQ3:** distinct manifests per environment (`public/federation.manifest.json` development × `deploy/federation.manifest.prod.json` production), SSO between MFEs through shared `localStorage` (`@union/auth`).

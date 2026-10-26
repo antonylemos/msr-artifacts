@@ -20,38 +20,38 @@ annotation:
 
 # 003 — Aprameya-C-V/bitebudget
 
-## Contexto
+## Context
 
-App full-stack com deploy em Vercel/Render: uma SPA React servida por um servidor Express que também faz proxy da API do Gemini.
+Full-stack app deployed on Vercel/Render: a React SPA served by an Express server that also proxies the Gemini API.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Tecnologia | `package.json`: React 19, Vite, Tailwind, Express, `@google/genai`, `motion`; nenhuma dependência de Module Federation, single-spa ou Web Components | ausente |
-| Código-fonte | Busca por `micro-front`, `federation`, `single-spa`, `customElements`, `remoteEntry`, `import(` e `lazy(`: nenhuma ocorrência | ausente |
-| Estrutura | Um único `package.json` na raiz e um único entry point (`src/main.tsx:6`, `createRoot(...).render`) | contrária |
-| Código-fonte (composição interna) | `src/App.tsx:3-7`: os cinco componentes (`ScheduleInput`, `FridgeScanner`, `MealPlanViewer`, `SubstitutionsPanel`, `CookTodo`) são importados estaticamente de `./components`, como num monolito | contrária |
-| Estrutura (backend) | `server.ts:239-247`: Express serve a SPA (Vite middleware em dev, `express.static` em prod) e faz proxy da API do Gemini; `api/index.ts` é o adaptador serverless da Vercel. Não é unidade frontend. | contexto |
-| Build/deploy | `package.json:8`: um único build (`vite build` + `esbuild server.ts`); `vercel.json`: rewrites só para `/api` e fallback SPA para `/index.html` | contrária |
-| Documentação | `README.md:3`: "full-stack AI micro-app"; sem descrição de arquitetura de micro-frontends | contexto |
+| Technology | `package.json`: React 19, Vite, Tailwind, Express, `@google/genai`, `motion`; no Module Federation, single-spa or Web Components dependency | absent |
+| Source code | Search for `micro-front`, `federation`, `single-spa`, `customElements`, `remoteEntry`, `import(` and `lazy(`: no occurrences | absent |
+| Structure | A single `package.json` at the root and a single entry point (`src/main.tsx:6`, `createRoot(...).render`) | contrary |
+| Source code (internal composition) | `src/App.tsx:3-7`: the five components (`ScheduleInput`, `FridgeScanner`, `MealPlanViewer`, `SubstitutionsPanel`, `CookTodo`) are statically imported from `./components`, as in a monolith | contrary |
+| Structure (backend) | `server.ts:239-247`: Express serves the SPA (Vite middleware in development, `express.static` in production) and proxies the Gemini API; `api/index.ts` is the Vercel serverless adapter. It is not a frontend unit. | context |
+| Build/deploy | `package.json:8`: a single build (`vite build` + `esbuild server.ts`); `vercel.json`: rewrites only for `/api` and SPA fallback to `/index.html` | contrary |
+| Documentation | `README.md:3`: "full-stack AI micro-app"; no description of a micro-frontends architecture | context |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend (`src/main.tsx:6`); nenhuma configuração de composição referenciando unidades externas |
-| Q2 | No | Não há unidades a comparar; os componentes compartilham entry, build e deploy e são importados diretamente (`src/App.tsx:3-7`) |
-| Q3 | No | Não há host, shell nem root config carregando unidades |
-| Q4 | No | Nenhum mecanismo de composição configurado nem declarado |
-| Q5 | No | Q1–Q4 convergem |
+| Q1 | No | A single frontend unit (`src/main.tsx:6`); no composition configuration referencing external units |
+| Q2 | No | No units to compare; components share entry, build and deployment and are imported directly (`src/App.tsx:3-7`) |
+| Q3 | No | No host, shell or root config loading units |
+| Q4 | No | No composition mechanism configured or declared |
+| Q5 | No | Q1–Q4 converge |
 
-## Motivo
+## Rationale
 
-- Todas as respostas são No, então o repositório é Non-MFE. A exceção MFE-unit não se aplica: a única unidade não está preparada para ser composta por um host externo (sem `exposes`, lifecycles exportados ou contrato de montagem).
-- Corresponde ao caso "conventional frontend monoliths": uma SPA com componentes internos compostos por import estático.
-- "micro-app" (`README.md:3`) significa app pequeno, não a arquitetura. Mesmo que fosse uma alegação de MFE, documentação não basta sem corroboração em código.
+- All answers are No, so the repository is Non-MFE. The MFE-unit exception does not apply: the single unit is not prepared for composition by an external host (no `exposes`, exported lifecycles or mounting contract).
+- Matches the case "conventional frontend monoliths": a SPA with internal components composed through static imports.
+- "micro-app" (`README.md:3`) means a small app, not the architecture. Even if it were an MFE claim, documentation is insufficient without corroboration in code.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1:** sinal enganoso; o termo "micro-app" é um provável motivo de o repositório ter entrado no pool de candidatos por termos amplos.
+- **RQ1:** misleading signal; the term "micro-app" is a likely reason the repository entered the candidate pool through broad terms.

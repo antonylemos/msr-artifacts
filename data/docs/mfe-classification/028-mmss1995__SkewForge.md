@@ -20,38 +20,38 @@ annotation:
 
 # 028 — mmss1995/SkewForge
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** biblioteca/ferramenta (gateway self-hosted de "version skew protection" para SPAs, com CLI, runtime de cliente, plugins e dashboard)
+- **Repository type:** library/tool (self-hosted "version skew protection" gateway for SPAs, with CLI, client runtime, plugins and dashboard)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Documentação (propósito) | `README.md:3`: "Self-hosted version skew protection. Tabs opened before a deploy keep working after it…"; `:19-29`: resolve o erro de chunk ausente após deploy em SPAs com code splitting | contexto |
-| Estrutura | Monorepo com pacotes `@skewforge/{core,client,server,cli,vite,react,vue}` (`packages/*/package.json:2`), um dashboard administrativo (`apps/dashboard`, `@skewforge/dashboard`) e dois exemplos (`examples/react-app`, `examples/vue-app`) | contrária |
-| Configuração | `examples/react-app/vite.config.ts:5-12`: `react()` + `skewforge()` e split de vendor; `apps/dashboard/vite.config.ts:7-13`: React + Tailwind + proxy para a API admin; nenhuma config de federação, `remotes`, `exposes` ou import map | ausente |
-| Composição | Nenhuma app carrega outra: o dashboard administra o gateway; os exemplos são apps de demonstração isoladas (React e Vue) servidas pelo gateway | ausente |
-| Documentação (MF) | `README.md:49` e `docs/how-it-works.md:39`: o gateway serve `remoteEntry.js` de Module Federation da deployment correta (compatibilidade); `README.md:214`: "[ ] Module Federation mode" no roadmap (compatibilidade/futuro) | fraca |
-| Build/deploy | `Dockerfile`, `docker-compose.yml`, `deploy/nginx.conf`: empacotam o gateway e o dashboard | contrária |
+| Documentation (purpose) | `README.md:3`: "Self-hosted version skew protection. Tabs opened before a deploy keep working after it…"; `:19-29`: resolves missing-chunk errors after deployment in SPAs with code splitting | context |
+| Structure | Monorepo with packages `@skewforge/{core,client,server,cli,vite,react,vue}` (`packages/*/package.json:2`), an administrative dashboard (`apps/dashboard`, `@skewforge/dashboard`) and two examples (`examples/react-app`, `examples/vue-app`) | contrary |
+| Configuration | `examples/react-app/vite.config.ts:5-12`: `react()` + `skewforge()` and vendor splitting; `apps/dashboard/vite.config.ts:7-13`: React + Tailwind + admin API proxy; no federation config, `remotes`, `exposes` or import map | absent |
+| Composition | No app loads another: the dashboard administers the gateway; examples are isolated demonstration apps (React and Vue) served by the gateway | absent |
+| Documentation (MF) | `README.md:49` and `docs/how-it-works.md:39`: the gateway serves Module Federation `remoteEntry.js` from the correct deployment (compatibility); `README.md:214`: "[ ] Module Federation mode" in the roadmap (compatibility/future) | weak |
+| Build/deploy | `Dockerfile`, `docker-compose.yml`, `deploy/nginx.conf`: package the gateway and dashboard | contrary |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | As apps frontend do repositório (`apps/dashboard`, `examples/react-app`, `examples/vue-app`) não formam unidades de uma mesma aplicação; nenhuma config de composição referencia outras unidades |
-| Q2 | No | Não há unidades de uma mesma aplicação a avaliar |
-| Q3 | No | Nenhum host/shell carrega, monta ou roteia as apps; o gateway seleciona versões de deploy da mesma app, não compõe apps distintas |
-| Q4 | No | Nenhum mecanismo de composição configurado |
-| Q5 | No | Q1–Q4 convergem |
+| Q1 | No | The repository's frontend apps (`apps/dashboard`, `examples/react-app`, `examples/vue-app`) do not form units of the same application; no composition config references other units |
+| Q2 | No | No units of the same application to assess |
+| Q3 | No | No host/shell loads, mounts or routes the apps; the gateway selects deployment versions of the same app, rather than composing distinct apps |
+| Q4 | No | No composition mechanism configured |
+| Q5 | No | Q1–Q4 converge |
 
-## Motivo
+## Rationale
 
-- É uma ferramenta de infraestrutura de deploy (versionamento de assets e roteamento por deployment), não uma aplicação composta por micro-frontends.
-- As várias apps frontend do repositório são independentes entre si (dashboard administrativo e exemplos), o que corresponde a "monorepos containing several unrelated frontend applications".
-- Module Federation aparece só como cenário suportado pelo gateway e como item de roadmap, o que corresponde, por analogia, a "MFE frameworks and libraries" e a "repositories mentioning micro-frontends without implementing them".
+- This is deployment infrastructure tooling (asset versioning and deployment-based routing), not an application composed of micro-frontends.
+- The repository's multiple frontend apps are mutually independent (administrative dashboard and examples), matching "monorepos containing several unrelated frontend applications".
+- Module Federation appears only as a scenario supported by the gateway and a roadmap item, corresponding by analogy to "MFE frameworks and libraries" and "repositories mentioning micro-frontends without implementing them".
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** ferramentas de infraestrutura que citam `remoteEntry.js`/Module Federation como caso de uso aparecem nas buscas por tecnologia.
-- **RQ3 (gateway ≠ shell):** o roteamento por requisição seleciona a versão de uma mesma app; não compõe unidades distintas (contraste com o shell por `rewrites` do repositório 013).
+- **RQ1 (misleading signals):** infrastructure tools citing `remoteEntry.js`/Module Federation as a use case appear in technology searches.
+- **RQ3 (gateway ≠ shell):** per-request routing selects a version of the same app; it does not compose distinct units (contrast with repository 013's `rewrites` shell).

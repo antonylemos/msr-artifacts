@@ -15,21 +15,21 @@ annotation:
 
 # 284 — RafaM-dev/hostRepo
 
-## Construções da mineração
+## Mined constructs
 
-Nenhuma ocorrência src-* no matches.csv.
+No src-* occurrences in matches.csv.
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | src/features/episodes_list/ListEpisodes.tsx:96 | . | runtime-composition | Yes | Renderiza `<DetailEpisode />` da unidade externa `mf-remoteDetails` (src/features/episodes_list/ListEpisodes.tsx:96-100), importado em src/features/episodes_list/ListEpisodes.tsx:15 (`import DetailEpisode from "mf-remoteDetails/DetailEpisode"`) e resolvido pelo remote declarado em vite.config.ts:11-13 (`http://localhost:5001/assets/remoteEntry.js`); tipo declarado em src/declare.d.ts:1-4. Ativo: `ListEpisodes` é o element da rota `/episodes` em src/App.tsx:11, e App é renderizado em src/main.tsx:7-13. Props `character`, `open`, `onClose` passadas ao remote (ListEpisodes.tsx:97-99). |
+| manual | src/features/episodes_list/ListEpisodes.tsx:96 | . | runtime-composition | Yes | Renders `<DetailEpisode />` from external unit `mf-remoteDetails` (src/features/episodes_list/ListEpisodes.tsx:96-100), imported at src/features/episodes_list/ListEpisodes.tsx:15 (`import DetailEpisode from "mf-remoteDetails/DetailEpisode"`) and resolved by the remote declared at vite.config.ts:11-13 (`http://localhost:5001/assets/remoteEntry.js`); type declared at src/declare.d.ts:1-4. Active: `ListEpisodes` is the element of route `/episodes` at src/App.tsx:11, and App is rendered at src/main.tsx:7-13. Props `character`, `open`, `onClose` passed to the remote (ListEpisodes.tsx:97-99). |
 
-## Resumo
+## Summary
 
-Construções com composição: 1 (runtime-composition: 1).
+Constructs participating in composition: 1 (runtime-composition: 1).
 
-## Notas
+## Notes
 
-- A unidade alvo `mf-remoteDetails` está fora do snapshot; só aparece em vite.config.ts:12.
-- O carregamento do remote é por import estático de módulo federado (ListEpisodes.tsx:15), que nenhum padrão `src-*` pega; a mineração registra apenas a configuração (`cfg-*`, `rt-remote-entry`).
+- Target unit `mf-remoteDetails` is outside the snapshot; it appears only at vite.config.ts:12.
+- The remote is loaded through a static federated module import (ListEpisodes.tsx:15), captured by no `src-*` pattern; mining records only configuration (`cfg-*`, `rt-remote-entry`).

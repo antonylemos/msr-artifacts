@@ -15,14 +15,15 @@ annotation:
 
 # 008 — mrmechazilla/host-app
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| package.json:14 | dependencies | @angular-architects/module-federation | ^19.0.0 | module-federation | Yes | webpack.config.js:1-3 (`withModuleFederationPlugin` importado do pacote); angular.json:18 (builder `ngx-build-plus:browser`); angular.json:42 e angular.json:88 (`extraWebpackConfig: webpack.config.js` em build e serve); angular.json:63 e angular.json:78 (`webpack.prod.config.js`, que reusa a config em webpack.prod.config.js:1); src/main.ts:2-4 (`loadManifest` do pacote; `main` em angular.json:41); src/app/app.routes.ts:1 e src/app/app.routes.ts:8-12 (`loadRemoteModule` do `users-mfe`, registrado por `provideRouter(routes)` em src/app/app.config.ts:13) |
+| package.json:14 | dependencies | @angular-architects/module-federation | ^19.0.0 | module-federation | Yes | webpack.config.js:1-3 (`withModuleFederationPlugin` imported from the package); angular.json:18 (builder `ngx-build-plus:browser`); angular.json:42 and angular.json:88 (`extraWebpackConfig: webpack.config.js` in build and serve); angular.json:63 and angular.json:78 (`webpack.prod.config.js`, which reuses the configuration in webpack.prod.config.js:1); src/main.ts:2-4 (`loadManifest` from the package; `main` in angular.json:41); src/app/app.routes.ts:1 and src/app/app.routes.ts:8-12 (`loadRemoteModule` of `users-mfe`, registered by `provideRouter(routes)` in src/app/app.config.ts:13) |
 
-## Notas
+## Notes
 
-- Todas as 17 ocorrências estão em `same_package_matches`; `other_package_matches` está vazio. `src/` não tem `package.json` próprio e pertence ao pacote da raiz, apesar de ter `src/index.html`.
-- `src/app/shared/utils/remote-loader.ts:1` e `:14` estão na lista, mas o arquivo inteiro está comentado (`/*` na linha 1, `*/` na linha 28); não foi usado como evidência.
-- Citam o pacote sem usá-lo: `package.json:10` (script `run:all` com `mf-dev-server.js`) e `angular.json:45` (`allowedCommonJsDependencies`). A inspeção corretamente não conta o script como dependência.
+- All 17 occurrences are in `same_package_matches`; `other_package_matches` is empty. `src/` has no `package.json` of its own and belongs to the root package, despite having `src/index.html`.
+- `src/app/shared/utils/remote-loader.ts:1` and `:14` are in the list, but the entire file is commented out (`/*` on line 1, `*/` on line 28); it was not used as evidence.
+- These mention the package without using it: `package.json:10` (script `run:all` with `mf-dev-server.js`) and `angular.json:45` (`allowedCommonJsDependencies`). The inspection correctly does not count the script as a dependency.
+

@@ -15,15 +15,16 @@ annotation:
 
 # 332 — karthik5656/Catalog.App
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| src/frontend/apps/ui-catalog-consumer/package.json:13 | dependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | src/frontend/apps/ui-catalog-consumer/vite.config.ts:5 (`import federation from "@originjs/vite-plugin-federation"`); src/frontend/apps/ui-catalog-consumer/vite.config.ts:16-23 (`federation({ name: "consumerApp", filename: "remoteEntry.js", exposes: { "./App": "./src/App" }, shared })`); src/frontend/apps/ui-catalog-consumer/package.json:8 (build executa `vite build`, que lê a configuração padrão `vite.config.ts`) |
-| src/frontend/apps/ui-catalog-merchant/package.json:13 | dependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | src/frontend/apps/ui-catalog-merchant/vite.config.ts:5 (`import federation from "@originjs/vite-plugin-federation"`); src/frontend/apps/ui-catalog-merchant/vite.config.ts:16-23 (`federation({ name: "consumerApp", filename: "remoteEntry.js", exposes: { "./App": "./src/App" }, shared })`); src/frontend/apps/ui-catalog-merchant/package.json:8 (build executa `vite build`, que lê a configuração padrão `vite.config.ts`) |
-| src/frontend/apps/ui-catalog/package.json:13 | dependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | src/frontend/apps/ui-catalog/vite.config.ts:5 (`import federation from '@originjs/vite-plugin-federation'`); src/frontend/apps/ui-catalog/vite.config.ts:85-89 (`federation({ name: 'app', remotes: federationRemotes, shared })`, com `federationRemotes` montado de `remotes.json` em `:10-17`); src/frontend/apps/ui-catalog/package.json:8 (build executa `tsc -noemit && vite build`, que lê a configuração padrão `vite.config.ts`) |
+| src/frontend/apps/ui-catalog-consumer/package.json:13 | dependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | src/frontend/apps/ui-catalog-consumer/vite.config.ts:5 (`import federation from "@originjs/vite-plugin-federation"`); src/frontend/apps/ui-catalog-consumer/vite.config.ts:16-23 (`federation({ name: "consumerApp", filename: "remoteEntry.js", exposes: { "./App": "./src/App" }, shared })`); src/frontend/apps/ui-catalog-consumer/package.json:8 (the build runs `vite build`, which reads the default configuration `vite.config.ts`) |
+| src/frontend/apps/ui-catalog-merchant/package.json:13 | dependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | src/frontend/apps/ui-catalog-merchant/vite.config.ts:5 (`import federation from "@originjs/vite-plugin-federation"`); src/frontend/apps/ui-catalog-merchant/vite.config.ts:16-23 (`federation({ name: "consumerApp", filename: "remoteEntry.js", exposes: { "./App": "./src/App" }, shared })`); src/frontend/apps/ui-catalog-merchant/package.json:8 (the build runs `vite build`, which reads the default configuration `vite.config.ts`) |
+| src/frontend/apps/ui-catalog/package.json:13 | dependencies | @originjs/vite-plugin-federation | ^1.4.1 | module-federation | Yes | src/frontend/apps/ui-catalog/vite.config.ts:5 (`import federation from '@originjs/vite-plugin-federation'`); src/frontend/apps/ui-catalog/vite.config.ts:85-89 (`federation({ name: 'app', remotes: federationRemotes, shared })`, with `federationRemotes` assembled from `remotes.json` in `:10-17`); src/frontend/apps/ui-catalog/package.json:8 (the build runs `tsc -noemit && vite build`, which reads the default configuration `vite.config.ts`) |
 
-## Notas
+## Notes
 
-- O `grep` por `@originjs/vite-plugin-federation` fora dos lockfiles só encontra os três `package.json:13` e os três `vite.config.ts:5`; não há uso em código de aplicação.
-- Os dois remotos se declaram `name: "consumerApp"` (`ui-catalog-merchant/vite.config.ts:17` e `ui-catalog-consumer/vite.config.ts:17`), como a classificação já registra. Isso não muda o julgamento: em cada um o plugin está importado, invocado e usado pelo build.
+- The `grep` for `@originjs/vite-plugin-federation` outside lockfiles finds only the three `package.json:13` and three `vite.config.ts:5` files; there is no use in application code.
+- Both remotes declare themselves as `name: "consumerApp"` (`ui-catalog-merchant/vite.config.ts:17` and `ui-catalog-consumer/vite.config.ts:17`), as already recorded in the classification. This does not change the judgment: in each one the plugin is imported, invoked and used by the build.
+

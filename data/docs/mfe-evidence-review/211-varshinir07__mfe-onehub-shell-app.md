@@ -19,189 +19,190 @@ annotation:
 
 # 211 — varshinir07/mfe-onehub-shell-app
 
-## Leitura do repositório
+## Repository overview
 
-O snapshot contém só o host React `onehub`, com entrada e build próprios (#12, #17). Uma única configuração Webpack declara dois remotes externos, `subscription` e `ownership`, em URLs localhost, além do compartilhamento de React (#1). Os cinco imports nomeiam módulos desses remotes (#2–#6), e os cinco elementos os inserem no Dashboard sob Suspense (#7–#11). Essa cadeia sustenta as duas relações host → remote ativas (#15, #16), sem inspecionar os provedores ausentes nem confirmar seus builds, deploys ou compartilhamento de bibliotecas.
+Snapshot contains only React host `onehub`, with own entry and build (#12, #17). Single Webpack configuration declares two external remotes, `subscription` and `ownership`, at localhost URLs, plus React sharing (#1). Five imports name modules from these remotes (#2–#6), and five elements insert them in Dashboard under Suspense (#7–#11). Chain supports two active host → remote relationships (#15, #16), without inspecting absent providers or confirming their builds, deployments or library sharing.
 
-Não há dependência a extrair da 3.4.2: o mecanismo é o plugin do próprio Webpack, observado na configuração. As pastas public e src são partes da mesma unidade (#13, #14). O build separado observado é do host e usa modo de desenvolvimento; deploy não foi observado (#17).
+No dependency to extract from 3.4.2: mechanism is Webpack’s own plugin, observed in configuration. Folders public and src belong to same unit (#13, #14). Observed separate build belongs to host and uses development mode; deployment not observed (#17).
 
-O README chama o projeto de remote, em contradição com o papel de host (#18). Os comentários sobre consumo e federação são corroborados (#19–#21), enquanto o compartilhamento singleton é confirmado apenas pelo lado do host (#22). O histórico mostra que o código já nasce como host e que os provedores nunca estiveram neste repositório (#23, #24). A ausência do primeiro blob do README limita a origem do rótulo, sem criar ambiguidade sobre a arquitetura do snapshot.
+README calls project a remote, contradicting host role (#18). Consumption and federation comments corroborated (#19–#21), while singleton sharing confirmed only on host side (#22). History shows code originated as host and providers never belonged to this repository (#23, #24). Absence of first README blob limits origin of label without making snapshot architecture ambiguous.
 
-## Observações
+## Observations
 
 ### 1. src/webpack.config.js:3; src/webpack.config.js:5-102
 
-**Observação:** A configuração usa `ModuleFederationPlugin`, declara o nome `onehub` e mapeia `remote1` para `subscription@http://localhost:3001/remoteEntry.js` e `remote2` para `ownership@http://localhost:3002/remoteEntry.js`. Declara `react` e `react-dom` como `singleton`, com `requiredVersion: '^19.1.0'` e `eager: true`, sem `exposes`.
+**Observation:** Configuration uses `ModuleFederationPlugin`, declaring name `onehub` and mapping `remote1` to `subscription@http://localhost:3001/remoteEntry.js` and `remote2` to `ownership@http://localhost:3002/remoteEntry.js`. Declares `react` and `react-dom` as `singleton`, with `requiredVersion: '^19.1.0'` and `eager: true`, without `exposes`.
 
-**Interpretação:** Declara o host e sua ligação por Module Federation a duas unidades externas. O compartilhamento está configurado pelo host; não demonstra a configuração dos provedores ausentes.
+**Interpretation:** Declares host and Module Federation links to two external units. Sharing configured by host; does not demonstrate absent provider configurations.
 
 ### 2. src/pages/Dashboard.jsx:3
 
-**Observação:** `const ModemAuthorization = React.lazy(() => import('remote1/ModemAuthorization'));`.
+**Observation:** `const ModemAuthorization = React.lazy(() => import('remote1/ModemAuthorization'));`.
 
-**Interpretação:** O host nomeia o módulo `ModemAuthorization` do remote `remote1` e declara sua carga sob demanda por import federado.
+**Interpretation:** Host names module `ModemAuthorization` of remote `remote1`, declaring on-demand loading through federated import.
 
 ### 3. src/pages/Dashboard.jsx:4
 
-**Observação:** `const SecurityPackage = React.lazy(() => import('remote1/SecurityPackage'));`.
+**Observation:** `const SecurityPackage = React.lazy(() => import('remote1/SecurityPackage'));`.
 
-**Interpretação:** O host nomeia o módulo `SecurityPackage` do remote `remote1` e declara sua carga sob demanda por import federado.
+**Interpretation:** Host names module `SecurityPackage` of remote `remote1`, declaring on-demand loading through federated import.
 
 ### 4. src/pages/Dashboard.jsx:6
 
-**Observação:** `const LabourHourHold = React.lazy(() => import('remote2/LabourHourHold'));`.
+**Observation:** `const LabourHourHold = React.lazy(() => import('remote2/LabourHourHold'));`.
 
-**Interpretação:** O host nomeia o módulo `LabourHourHold` do remote `remote2` e declara sua carga sob demanda por import federado.
+**Interpretation:** Host names module `LabourHourHold` of remote `remote2`, declaring on-demand loading through federated import.
 
 ### 5. src/pages/Dashboard.jsx:7
 
-**Observação:** `const MobileService = React.lazy(() => import('remote2/MobileService'));`.
+**Observation:** `const MobileService = React.lazy(() => import('remote2/MobileService'));`.
 
-**Interpretação:** O host nomeia o módulo `MobileService` do remote `remote2` e declara sua carga sob demanda por import federado.
+**Interpretation:** Host names module `MobileService` of remote `remote2`, declaring on-demand loading through federated import.
 
 ### 6. src/pages/Dashboard.jsx:9
 
-**Observação:** `const Card = React.lazy(() => import('remote1/Card'));`.
+**Observation:** `const Card = React.lazy(() => import('remote1/Card'));`.
 
-**Interpretação:** O host nomeia o módulo `Card` do remote `remote1` e declara sua carga sob demanda por import federado.
+**Interpretation:** Host names module `Card` of remote `remote1`, declaring on-demand loading through federated import.
 
 ### 7. src/pages/Dashboard.jsx:16; src/pages/Dashboard.jsx:3; src/pages/Dashboard.jsx:15-26
 
-**Observação:** `<ModemAuthorization />` é renderizado sob `React.Suspense`, com fallback `Loading...`; o componente vem do import da linha 3.
+**Observation:** `<ModemAuthorization />` rendered under `React.Suspense` with fallback `Loading...`; component comes from import at line 3.
 
-**Interpretação:** A renderização insere o componente remoto no painel do host. O elemento isolado usa o componente já carregado, sem declarar por si o destino federado.
+**Interpretation:** Rendering inserts remote component in host dashboard. Element alone uses already loaded component without independently declaring federated target.
 
 ### 8. src/pages/Dashboard.jsx:17; src/pages/Dashboard.jsx:4; src/pages/Dashboard.jsx:15-26
 
-**Observação:** `<SecurityPackage />` é renderizado sob `React.Suspense`, com fallback `Loading...`; o componente vem do import da linha 4.
+**Observation:** `<SecurityPackage />` rendered under `React.Suspense` with fallback `Loading...`; component comes from import at line 4.
 
-**Interpretação:** A renderização insere o componente remoto no painel do host. O elemento isolado usa o componente já carregado, sem declarar por si o destino federado.
+**Interpretation:** Rendering inserts remote component in host dashboard. Element alone uses already loaded component without independently declaring federated target.
 
 ### 9. src/pages/Dashboard.jsx:18; src/pages/Dashboard.jsx:6; src/pages/Dashboard.jsx:15-26
 
-**Observação:** `<LabourHourHold />` é renderizado sob `React.Suspense`, com fallback `Loading...`; o componente vem do import da linha 6.
+**Observation:** `<LabourHourHold />` rendered under `React.Suspense` with fallback `Loading...`; component comes from import at line 6.
 
-**Interpretação:** A renderização insere o componente remoto no painel do host. O elemento isolado usa o componente já carregado, sem declarar por si o destino federado.
+**Interpretation:** Rendering inserts remote component in host dashboard. Element alone uses already loaded component without independently declaring federated target.
 
 ### 10. src/pages/Dashboard.jsx:19; src/pages/Dashboard.jsx:7; src/pages/Dashboard.jsx:15-26
 
-**Observação:** `<MobileService />` é renderizado sob `React.Suspense`, com fallback `Loading...`; o componente vem do import da linha 7.
+**Observation:** `<MobileService />` rendered under `React.Suspense` with fallback `Loading...`; component comes from import at line 7.
 
-**Interpretação:** A renderização insere o componente remoto no painel do host. O elemento isolado usa o componente já carregado, sem declarar por si o destino federado.
+**Interpretation:** Rendering inserts remote component in host dashboard. Element alone uses already loaded component without independently declaring federated target.
 
 ### 11. src/pages/Dashboard.jsx:22-25; src/pages/Dashboard.jsx:9; src/pages/Dashboard.jsx:15-26
 
-**Observação:** `Card` é renderizado sob `React.Suspense`, recebendo `topic="OneHUB"` e `description="Welcome to OneHUB"`; vem do import da linha 9.
+**Observation:** `Card` rendered under `React.Suspense`, receiving `topic="OneHUB"` and `description="Welcome to OneHUB"`; comes from import at line 9.
 
-**Interpretação:** A renderização insere o componente remoto no painel do host. O elemento isolado usa o componente já carregado, sem declarar por si o destino federado.
+**Interpretation:** Rendering inserts remote component in host dashboard. Element alone uses already loaded component without independently declaring federated target.
 
 ### 12. .; package.json:19-20; src/webpack.config.js:10; src/webpack.config.js:68-70; src/index.js:7-12; src/App.js:3-8
 
-**Observação:** A raiz reúne manifesto, entrada React e build Webpack próprios. A entrada renderiza App, que monta Dashboard; o build usa o template public/index.html.
+**Observation:** Root combines own manifest, React entry and Webpack build. Entry renders App, mounting Dashboard; build uses template public/index.html.
 
-**Interpretação:** Confirma o limite da única unidade frontend presente no snapshot, o host. Os dois remotes referenciados não são diretórios inspecionados.
+**Interpretation:** Confirms boundary of only frontend unit present in snapshot, host. Two referenced remotes are not inspected directories.
 
 ### 13. public; public/index.html:31; src/webpack.config.js:68-70
 
-**Observação:** public/index.html contém o elemento root e é o template do HtmlWebpackPlugin da aplicação da raiz.
+**Observation:** public/index.html contains root element and is HtmlWebpackPlugin template of root application.
 
-**Interpretação:** O diretório é parte da unidade da raiz, sem entrada e build de outra aplicação.
+**Interpretation:** Directory belongs to root unit without another application entry/build.
 
 ### 14. src; src/index.js:7-12; src/webpack.config.js:10; package.json:19-20
 
-**Observação:** src contém a entrada e a configuração usadas pelos scripts start e build do manifesto da raiz.
+**Observation:** src contains entry and configuration used by start and build scripts of root manifest.
 
-**Interpretação:** É parte da unidade da raiz. A presença da configuração nessa pasta não estabelece outra unidade frontend.
+**Interpretation:** Part of root unit. Configuration located here does not establish another frontend unit.
 
 ### 15. src/pages/Dashboard.jsx:3-4; src/pages/Dashboard.jsx:9; src/pages/Dashboard.jsx:16-17; src/pages/Dashboard.jsx:22-25; src/webpack.config.js:76; src/App.js:3-8; src/index.js:8-12
 
-**Observação:** O Dashboard importa ModemAuthorization, SecurityPackage e Card de remote1 e os renderiza, passando props ao Card. A configuração resolve remote1 como subscription em localhost:3001. A cadeia da entrada monta App e Dashboard.
+**Observation:** Dashboard imports ModemAuthorization, SecurityPackage and Card from remote1, rendering them and passing props to Card. Configuration resolves remote1 as subscription at localhost:3001. Entry chain mounts App and Dashboard.
 
-**Interpretação:** Relação host → remote ativa entre a unidade da raiz e subscription, externo ao snapshot. O consumo é registrado pelo lado do host; não há fonte do provedor para conferir sua implementação.
+**Interpretation:** Active host → remote relationship between root unit and subscription, external to snapshot. Consumption recorded from host side; no provider source to check implementation.
 
 ### 16. src/pages/Dashboard.jsx:6-7; src/pages/Dashboard.jsx:18-19; src/webpack.config.js:77; src/App.js:3-8; src/index.js:8-12
 
-**Observação:** O Dashboard importa LabourHourHold e MobileService de remote2 e os renderiza. A configuração resolve remote2 como ownership em localhost:3002. A cadeia da entrada monta App e Dashboard.
+**Observation:** Dashboard imports LabourHourHold and MobileService from remote2, rendering them. Configuration resolves remote2 as ownership at localhost:3002. Entry chain mounts App and Dashboard.
 
-**Interpretação:** Relação host → remote ativa entre a unidade da raiz e ownership, externo ao snapshot, observada pelo lado do consumidor.
+**Interpretation:** Active host → remote relationship between root unit and ownership, external to snapshot, observed from consumer side.
 
 ### 17. package.json:20; src/webpack.config.js:5-29; src/webpack.config.js:72-92
 
-**Observação:** O script build chama webpack com configuração própria e modo development. A saída é dist/bundle.js, com publicPath http://localhost:3000/. A revisão registra build separado, deploy não observado e versionamento independente No; os remotes são referenciados por URLs externas ao build.
+**Observation:** Build script calls webpack with own configuration and development mode. Output dist/bundle.js, publicPath http://localhost:3000/. Review records separate build, deployment not observed and independent versioning No; remotes referenced by URLs external to build.
 
-**Interpretação:** Confirma uma fronteira de build do host. A configuração é de desenvolvimento; não estabelece publicação nem independência de deploy dos remotes.
+**Interpretation:** Confirms host build boundary. Development configuration does not establish publication or remote deployment independence.
 
 ### 18. README.md:2
 
-**Observação:** “MFE Remote App for OnehubShell”.
+**Observation:** “MFE Remote App for OnehubShell”.
 
-**Interpretação:** Afirma papel de remote para o projeto. A 3.4.7 registra a afirmação como contradita: a configuração e as duas relações mostram o projeto como host consumidor. O rótulo é um sinal semântico enganoso.
+**Interpretation:** Claims project remote role. Section 3.4.7 records claim contradicted: configuration and two relationships show project as consuming host. Label misleading semantic signal.
 
 ### 19. src/pages/Dashboard.jsx:21
 
-**Observação:** O comentário diz “Using Card from Remote App”.
+**Observation:** Comment says “Using Card from Remote App”.
 
-**Interpretação:** Afirma a origem remota de Card, corroborada pelo import federado, pela renderização e pela relação com subscription. A confirmação se limita ao host.
+**Interpretation:** Claims remote origin of Card, corroborated by federated import, rendering and relationship with subscription. Confirmation limited to host.
 
 ### 20. src/webpack.config.js:71
 
-**Observação:** O comentário diz “Module Federation configuration for micro-frontends”.
+**Observation:** Comment says “Module Federation configuration for micro-frontends”.
 
-**Interpretação:** Nomeia a tecnologia de composição, corroborada pelo plugin configurado e pelas duas relações ativas. A frase sozinha é evidência semântica.
+**Interpretation:** Names composition technology, corroborated by configured plugin and two active relationships. Phrase alone semantic evidence.
 
 ### 21. src/webpack.config.js:75
 
-**Observação:** O comentário apresenta remotes como “Remote apps to consume modules from”.
+**Observation:** Comment presents remotes as “Remote apps to consume modules from”.
 
-**Interpretação:** Afirma consumo de aplicações remotas, corroborado pelos mapeamentos e imports usados nas duas relações. Os provedores não estão no snapshot.
+**Interpretation:** Claims consumption of remote applications, corroborated by mappings and imports used in two relationships. Providers absent from snapshot.
 
 ### 22. src/webpack.config.js:80
 
-**Observação:** O comentário diz “Share React and ReactDOM as singletons to avoid version conflicts”.
+**Observation:** Comment says “Share React and ReactDOM as singletons to avoid version conflicts”.
 
-**Interpretação:** Afirma compartilhamento como singleton. A 3.4.7 registra corroboração parcial: o host configura shared, mas não há artefato dos remotes que confirme o outro lado ou a prevenção de conflitos.
+**Interpretation:** Claims singleton sharing. Section 3.4.7 records partial corroboration: host configures shared, but no remote artifact confirming other side or conflict prevention.
 
 ### 23. 74cbf87 2025-06-05 (README.md); 1ddddc4241157e335c1b6e39372f050aa1705c1d 2025-06-05 (README.md; src/webpack.config.js; src/pages/Dashboard.jsx)
 
-**Observação:** A revisão histórica registra dois commits: o primeiro cria apenas README.md; o segundo altera o README e cria todo o código do host. O blob do primeiro README está ausente. Resultado do ponto: esclarecido.
+**Observation:** Historical review records two commits: first creates only README.md; second changes README and creates all host code. First README blob absent. Point result: clarified.
 
-**Interpretação:** O rótulo de remote e o código de host coexistem na única versão com código; não há estágio anterior implementado como remote neste repositório. A origem textual do rótulo permanece desconhecida, sem mudar o papel do snapshot.
+**Interpretation:** Remote label and host code coexist in only version with code; no previous stage implemented as remote in repository. Textual origin of label unknown without changing snapshot role.
 
 ### 24. 74cbf87 2025-06-05 (README.md); 1ddddc4241157e335c1b6e39372f050aa1705c1d 2025-06-05 (src/webpack.config.js; src/pages/Dashboard.jsx)
 
-**Observação:** As listas de arquivos dos dois commits registram somente o README inicial e os arquivos do host adicionados no snapshot. Não há criação ou remoção de arquivos dos remotes subscription e ownership. Resultado do ponto: esclarecido.
+**Observation:** File lists of both commits record only initial README and host files added in snapshot. No creation/removal of subscription and ownership remote files. Point result: clarified.
 
-**Interpretação:** Os remotes não foram extraídos nem removidos deste repositório. O histórico explica a ausência dos provedores, mas não verifica suas declarações shared; a afirmação sobre compartilhamento continua parcial.
+**Interpretation:** Remotes neither extracted nor removed from repository. History explains provider absence but does not verify shared declarations; sharing claim remains partial.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.3 (., Entrada e Build; src, Marcadores); 3.4.4 (src/pages/Dashboard.jsx:3,4,6,7,9, Observação); 3.4.5 #1, #2 (Configuração); 3.4.6 #1 (Artefatos); 3.4.7 #1, #3, #4, #5 (Evidência) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #12; configura #15; configura #16 |
-| 2 | 3.4.4 (src/pages/Dashboard.jsx:3, src-remote-import) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #15 |
-| 3 | 3.4.4 (src/pages/Dashboard.jsx:4, src-remote-import) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #15 |
-| 4 | 3.4.4 (src/pages/Dashboard.jsx:6, src-remote-import) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #16 |
-| 5 | 3.4.4 (src/pages/Dashboard.jsx:7, src-remote-import) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #16 |
-| 6 | 3.4.4 (src/pages/Dashboard.jsx:9, src-remote-import) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #15 |
-| 7 | 3.4.4 (src/pages/Dashboard.jsx:16, manual) | 3 código | código-fonte | module-federation | arquitetural | moderada | implementa #15 |
-| 8 | 3.4.4 (src/pages/Dashboard.jsx:17, manual) | 3 código | código-fonte | module-federation | arquitetural | moderada | implementa #15 |
-| 9 | 3.4.4 (src/pages/Dashboard.jsx:18, manual) | 3 código | código-fonte | module-federation | arquitetural | moderada | implementa #16 |
-| 10 | 3.4.4 (src/pages/Dashboard.jsx:19, manual) | 3 código | código-fonte | module-federation | arquitetural | moderada | implementa #16 |
-| 11 | 3.4.4 (src/pages/Dashboard.jsx:22, manual) | 3 código | código-fonte | module-federation | arquitetural | moderada | implementa #15 |
-| 12 | 3.4.3 (.) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 13 | 3.4.3 (public) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 14 | 3.4.3 (src) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 15 | 3.4.5 #1 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #12; liga src/webpack.config.js:76 |
-| 16 | 3.4.5 #2 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #12; liga src/webpack.config.js:77 |
-| 17 | 3.4.6 #1 | 6 build-deploy | configuração | module-federation | arquitetural | moderada | publica #12 |
-| 18 | 3.4.7 #1 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #1; contradiz #15; contradiz #16 |
-| 19 | 3.4.7 #2 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #6; corrobora #11; corrobora #15 |
-| 20 | 3.4.7 #3 | 7 documentação | comentário | module-federation | tecnológica | fraca | corrobora #1; corrobora #15; corrobora #16 |
-| 21 | 3.4.7 #4 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #1; corrobora #2; corrobora #3; corrobora #4; corrobora #5; corrobora #6; corrobora #15; corrobora #16 |
-| 22 | 3.4.7 #5 | 7 documentação | comentário | — | tecnológica | fraca | corrobora em parte #1 |
-| 23 | 3.4.8 #1 | 8 histórico | histórico | — | arquitetural | fraca | explica #18; explica #1; explica #15; explica #16 |
-| 24 | 3.4.8 #2 | 8 histórico | histórico | — | arquitetural | fraca | explica #22; explica #1; explica #15; explica #16 |
+| 1 | 3.4.3 (., Entry and Build; src, Markers); 3.4.4 (src/pages/Dashboard.jsx:3,4,6,7,9, Observation); 3.4.5 #1, #2 (Configuration); 3.4.6 #1 (Artifacts); 3.4.7 #1, #3, #4, #5 (Evidence) | 2 configuration | configuration | module-federation | architectural | strong | configures #12; configures #15; configures #16 |
+| 2 | 3.4.4 (src/pages/Dashboard.jsx:3, src-remote-import) | 3 code | source code | module-federation | architectural | strong | implements #15 |
+| 3 | 3.4.4 (src/pages/Dashboard.jsx:4, src-remote-import) | 3 code | source code | module-federation | architectural | strong | implements #15 |
+| 4 | 3.4.4 (src/pages/Dashboard.jsx:6, src-remote-import) | 3 code | source code | module-federation | architectural | strong | implements #16 |
+| 5 | 3.4.4 (src/pages/Dashboard.jsx:7, src-remote-import) | 3 code | source code | module-federation | architectural | strong | implements #16 |
+| 6 | 3.4.4 (src/pages/Dashboard.jsx:9, src-remote-import) | 3 code | source code | module-federation | architectural | strong | implements #15 |
+| 7 | 3.4.4 (src/pages/Dashboard.jsx:16, manual) | 3 code | source code | module-federation | architectural | moderate | implements #15 |
+| 8 | 3.4.4 (src/pages/Dashboard.jsx:17, manual) | 3 code | source code | module-federation | architectural | moderate | implements #15 |
+| 9 | 3.4.4 (src/pages/Dashboard.jsx:18, manual) | 3 code | source code | module-federation | architectural | moderate | implements #16 |
+| 10 | 3.4.4 (src/pages/Dashboard.jsx:19, manual) | 3 code | source code | module-federation | architectural | moderate | implements #16 |
+| 11 | 3.4.4 (src/pages/Dashboard.jsx:22, manual) | 3 code | source code | module-federation | architectural | moderate | implements #15 |
+| 12 | 3.4.3 (.) | 4 structure | directory | — | architectural | moderate | — |
+| 13 | 3.4.3 (public) | 4 structure | directory | — | context | weak | — |
+| 14 | 3.4.3 (src) | 4 structure | directory | — | context | weak | — |
+| 15 | 3.4.5 #1 | 5 composition | source code | module-federation | architectural | strong | links #12; links src/webpack.config.js:76 |
+| 16 | 3.4.5 #2 | 5 composition | source code | module-federation | architectural | strong | links #12; links src/webpack.config.js:77 |
+| 17 | 3.4.6 #1 | 6 build-deploy | configuration | module-federation | architectural | moderate | publishes #12 |
+| 18 | 3.4.7 #1 | 7 documentation | documentation | — | architectural | weak | contradicts #1; contradicts #15; contradicts #16 |
+| 19 | 3.4.7 #2 | 7 documentation | comment | — | architectural | weak | corroborates #6; corroborates #11; corroborates #15 |
+| 20 | 3.4.7 #3 | 7 documentation | comment | module-federation | technological | weak | corroborates #1; corroborates #15; corroborates #16 |
+| 21 | 3.4.7 #4 | 7 documentation | comment | — | architectural | weak | corroborates #1; corroborates #2; corroborates #3; corroborates #4; corroborates #5; corroborates #6; corroborates #15; corroborates #16 |
+| 22 | 3.4.7 #5 | 7 documentation | comment | — | technological | weak | partially corroborates #1 |
+| 23 | 3.4.8 #1 | 8 history | history | — | architectural | weak | explains #18; explains #1; explains #15; explains #16 |
+| 24 | 3.4.8 #2 | 8 history | history | — | architectural | weak | explains #22; explains #1; explains #15; explains #16 |
 
-## Resumo
+## Summary
 
-Observações: 24. Dimensões (tecnologia: 0, configuração: 1, código: 10, estrutura: 3, composição: 2, build-deploy: 1, documentação: 5, histórico: 2). Força (forte: 8, moderada: 7, fraca: 9, ambígua: 0). Evidência (tecnológica: 2, arquitetural: 20, contexto: 2).
+Observations: 24. Dimensions (technology: 0, configuration: 1, code: 10, structure: 3, composition: 2, build-deploy: 1, documentation: 5, history: 2). Strength (strong: 8, moderate: 7, weak: 9, ambiguous: 0). Evidence (technological: 2, architectural: 20, context: 2).
+

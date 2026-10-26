@@ -20,60 +20,60 @@ annotation:
 
 # 337 — h-kod/h-kod
 
-## Contexto
+## Context
 
-Repositório de perfil do GitHub (descrição “Hüseyin — GitHub profil sayfası”): um único `README.md` com apresentação profissional e links. Micro-frontends aparecem só como área de atuação: “🧩 **Frontend Architecture · Micro Frontends · Design Systems**” (`README.md:6`). Não há código. O nome do repositório não é usado como evidência.
+GitHub profile repository (description “Hüseyin — GitHub profil sayfası”; English translation: “Hüseyin — GitHub profile page”): a single `README.md` with professional introduction and links. Micro-frontends appear only as a field of work: “🧩 **Frontend Architecture · Micro Frontends · Design Systems**” (`README.md:6`). There is no code. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:338` registra rank 337, ID 1342216834, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:338` records rank 337, ID 1342216834, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:338` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:35828` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:35833` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:338` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:35828` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:35833` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2026-08` e `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2026-08` and an empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | 2026-10-07T22:41:05.284Z / 2026-10-08T16:01:37.201Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | 2026-10-07T23:11:30.673Z / 2026-10-08T16:10:23.632Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2026-08-01..2026-08-31`.
+The effective queries append `pushed:>=2025-04-01 created:2026-08-01..2026-08-31`.
 
-Metadados do hit:
-- descrição “Hüseyin — GitHub profil sayfası”, sem tópicos, linguagem nula, `fork: false`, tamanho 0;
-- criação em 2026-08-21T20:56:58Z, push em 2026-08-27T17:38:42Z.
+Hit metadata:
+- description “Hüseyin — GitHub profil sayfası” (English translation: “Hüseyin — GitHub profile page”), no topics, null language, `fork: false`, size 0;
+- created at 2026-08-21T20:56:58Z, pushed at 2026-08-27T17:38:42Z.
 
-A grafia “Micro Frontends” está em `README.md:6`. O singular não aparece literalmente; esse hit depende do processamento textual da busca do GitHub, que não está registrado. O README é do único commit (2026-08-21), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+Spelling “Micro Frontends” is in `README.md:6`. The singular does not appear literally; this hit depends on GitHub search text processing, which is not recorded. The README is from the only commit (2026-08-21), before the October 2026 collections. The README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 1 entrada, arquivo regular `100644` (`README.md`, 704 bytes); zero symlinks e zero gitlinks. | contrária |
-| Documentação | `README.md:1–12`: apresentação profissional; `README.md:6` lista “Micro Frontends” entre as áreas de atuação. | fraca |
+| Structure | `git ls-tree -r` at the SHA: 1 entry, regular file `100644` (`README.md`, 704 bytes); zero symlinks and zero gitlinks. | contrary |
+| Documentation | `README.md:1–12`: professional introduction; `README.md:6` lists “Micro Frontends” among fields of work. | weak |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; um único commit, `b9ca403` (2026-08-21, “Add profile README”), com autor “Hüseyin” e committer `h-kod`. Só há o branch `main`. Não houve objeto ausente.
+Non-shallow clone; a single commit, `b9ca403` (2026-08-21, “Add profile README”), with author “Hüseyin” and committer `h-kod`. Only branch `main` exists. There was no missing object.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend; só um README. |
-| Q2 | No | Sem unidades, não há independência a avaliar. |
-| Q3 | No | Não há host, shell ou configuração raiz. |
-| Q4 | No | Nenhum mecanismo de composição; só a menção em `README.md:6`. |
-| Q5 | No | Q1–Q4 são No: repositório de perfil. |
+| Q1 | No | No frontend unit; only a README. |
+| Q2 | No | Without units, there is no independence to assess. |
+| Q3 | No | There is no host, shell or root configuration. |
+| Q4 | No | No composition mechanism; only the mention in `README.md:6`. |
+| Q5 | No | Q1–Q4 are No: profile repository. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “repositories mentioning micro-frontends without implementing them”.
-- Mesmo enquadramento dos finais de perfil 011/064/068/073/077/101/111 e dos rascunhos 285 e 303.
-- **Campos:** `repo_type: other`, `frontend_units: 0`, `unit_organization: none`, `approaches: []`, `ui_technologies: []`, `build_tools: []`.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. It matches “repositories mentioning micro-frontends without implementing them”.
+- Same categorization as profile finals 011/064/068/073/077/101/111 and drafts 285 and 303.
+- **Fields:** `repo_type: other`, `frontend_units: 0`, `unit_organization: none`, `approaches: []`, `ui_technologies: []`, `build_tools: []`.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** área de atuação num README de perfil casa as consultas terminológicas.
-- **Protocolo (busca):** o hit singular não tem grafia literal. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ1 (misleading signals):** field of work in a profile README matches terminology queries.
+- **Protocol (search):** the singular hit has no literal spelling. Eligibility changes from `unknown` (001) to `pass` (002).

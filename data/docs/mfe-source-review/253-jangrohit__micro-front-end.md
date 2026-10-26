@@ -15,26 +15,26 @@ annotation:
 
 # 253 — jangrohit/micro-front-end
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-async-bootstrap | packages/container/src/index.js:1 | packages/container | dynamic-loading | No | packages/container/src/index.js:1 importa o bootstrap da própria unidade (`import("./bootstrap")`). |
-| src-async-bootstrap | packages/marketing/src/index.js:1 | packages/marketing | dynamic-loading | No | packages/marketing/src/index.js:1 importa o bootstrap da própria unidade (`import("./bootstrap")`). |
-| src-mount-export | packages/marketing/src/bootstrap.js:17 | packages/marketing | runtime-composition | Yes | Exporta `mount` (definido em packages/marketing/src/bootstrap.js:5-7, renderiza `App` no elemento recebido), exposto como `./MarketingApp` em packages/marketing/config/webpack.prod.js:22-23 (e webpack.dev.js:18-19) e consumido pelo host em packages/container/src/components/MarketingApp.js:3 e :9. |
-| src-mount-call | packages/container/src/components/MarketingApp.js:9 | packages/container | runtime-composition | Yes | Monta a unidade packages/marketing no `div` do wrapper (`mount(ref.current)`), com `mount` importado de `marketing/MarketingApp` em :3; remote declarado em packages/container/config/webpack.prod.js:21-22; wrapper renderizado em packages/container/src/App.js:19, App iniciado em packages/container/src/bootstrap.js:5 e bootstrap carregado por packages/container/src/index.js:1. O wrapper só passa o elemento, sem callbacks. |
-| src-mount-import | packages/container/src/components/MarketingApp.js:3 | packages/container | runtime-composition | Yes | Importa `mount` do remote `marketing/MarketingApp` (unidade packages/marketing); invocado em packages/container/src/components/MarketingApp.js:9, ativo pela cadeia descrita na linha anterior. |
+| src-async-bootstrap | packages/container/src/index.js:1 | packages/container | dynamic-loading | No | packages/container/src/index.js:1 imports the unit’s own bootstrap (`import("./bootstrap")`). |
+| src-async-bootstrap | packages/marketing/src/index.js:1 | packages/marketing | dynamic-loading | No | packages/marketing/src/index.js:1 imports the unit’s own bootstrap (`import("./bootstrap")`). |
+| src-mount-export | packages/marketing/src/bootstrap.js:17 | packages/marketing | runtime-composition | Yes | Exports `mount` (defined at packages/marketing/src/bootstrap.js:5-7, renders `App` on the received element), exposed as `./MarketingApp` at packages/marketing/config/webpack.prod.js:22-23 (and webpack.dev.js:18-19) and consumed by the host at packages/container/src/components/MarketingApp.js:3 and :9. |
+| src-mount-call | packages/container/src/components/MarketingApp.js:9 | packages/container | runtime-composition | Yes | Mounts unit packages/marketing in the wrapper’s `div` (`mount(ref.current)`), with `mount` imported from `marketing/MarketingApp` at :3; remote declared at packages/container/config/webpack.prod.js:21-22; wrapper rendered at packages/container/src/App.js:19, App started at packages/container/src/bootstrap.js:5 and bootstrap loaded by packages/container/src/index.js:1. The wrapper only passes the element, without callbacks. |
+| src-mount-import | packages/container/src/components/MarketingApp.js:3 | packages/container | runtime-composition | Yes | Imports `mount` from remote `marketing/MarketingApp` (unit packages/marketing); invoked at packages/container/src/components/MarketingApp.js:9, active through the chain described in the preceding row. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-Nenhuma construção adicional.
+No additional constructs.
 
-## Resumo
+## Summary
 
-Construções com composição: 3 (runtime-composition: 3).
+Constructs participating in composition: 3 (runtime-composition: 3).
 
-## Notas
+## Notes
 
-- A busca do passo 4 nos `.js` e `.html` das duas unidades só encontrou as linhas já mineradas e packages/marketing/src/bootstrap.js:12 (`mount(devRoot)`), montagem isolada da própria unidade em desenvolvimento (packages/marketing/src/bootstrap.js:9-13), que não é composição. Não há `import()` de remote, custom element, iframe nem mecanismo de comunicação.
-- `<MarketingApp />` em packages/container/src/App.js:19 renderiza o wrapper local do host, cuja montagem do remote já é a linha src-mount-call; o host não tem tabela de rotas que nomeie unidades, então não há linha `host-relationship`.
-- packages/auth e packages/dashboard são `No` na revisão estrutural e não têm código-fonte no snapshot.
+- The step 4 search in the two units’ `.js` and `.html` files found only the already mined rows and packages/marketing/src/bootstrap.js:12 (`mount(devRoot)`), the unit’s own isolated development mount (packages/marketing/src/bootstrap.js:9-13), which is not composition. There is no remote `import()`, custom element, iframe or communication mechanism.
+- `<MarketingApp />` at packages/container/src/App.js:19 renders the host’s local wrapper, whose remote mount is already the src-mount-call row; the host has no route table naming units, so there is no `host-relationship` row.
+- packages/auth and packages/dashboard are `No` in the structural review and have no source code in the snapshot.

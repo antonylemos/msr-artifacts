@@ -20,66 +20,66 @@ annotation:
 
 # 336 — ib-steffen/code-graph-rag
 
-## Contexto
+## Context
 
-Ferramenta Python (“Code-Graph-RAG”) que constrói um grafo de conhecimento de bases de código e o consulta com LLMs. É distribuída como pacote (`pyproject.toml:1–12`) e CLI `cgr`. O README e o histórico pertencem ao projeto `vitali87/code-graph-rag`: os badges do README apontam para esse repositório (`README.md:8–12`), e os commits são do autor original e de colaboradores. O repositório do titular foi criado em 2026-04-07, depois do último commit alcançável. Não há frontend: o termo da busca resulta da justaposição de “/path/to/frontend \” e “--orchestrator” em linhas consecutivas de um exemplo de linha de comando. O nome do repositório não é usado como evidência.
+Python tool (“Code-Graph-RAG”) building a knowledge graph of codebases and querying it with LLMs. Distributed as a package (`pyproject.toml:1–12`) and CLI `cgr`. README and history belong to project `vitali87/code-graph-rag`: README badges point to that repository (`README.md:8–12`), and commits are by the original author and contributors. The owner repository was created on 2026-04-07, after the last reachable commit. There is no frontend: the search term results from juxtaposition of “/path/to/frontend \” and “--orchestrator” on consecutive lines in a command-line example. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:337` registra rank 336, ID 1204064013, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:337` records rank 336, ID 1204064013, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:337` registra a estratégia `broader` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:27965` (`broader`, `unknown`) e `data/discovery/mfe-round-002/candidates.csv:27971` (`broader`, `pass`).
+`data/samples/mfe-sample-001/sample.csv:337` records strategy `broader` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:27965` (`broader`, `unknown`) and `data/discovery/mfe-round-002/candidates.csv:27971` (`broader`, `pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna um hit por rodada, do endpoint `repositories` e com `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns one hit per round, from endpoint `repositories` and with an empty `path`:
 
-| Consulta (`q`) | Subconsulta | Consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Effective query | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `broader-frontend-orchestration`: `"frontend orchestration" in:name,description,readme` | `broader-frontend-orchestration#created:2026-Q2` | `"frontend orchestration" in:name,description,readme pushed:>=2025-04-01 created:2026-04-01..2026-06-30` | 2026-10-07T23:44:19.637Z / 2026-10-08T16:24:59.268Z |
 
-Metadados do hit (iguais nas duas rodadas): descrição “Code Graph RAG”, sem tópicos, linguagem Python, licença MIT, `fork: false`, tamanho 62990, criação em 2026-04-07T16:51:37Z, push em 2026-04-07T16:55:54Z.
+Hit metadata (identical in both rounds): description “Code Graph RAG”, no topics, language Python, MIT license, `fork: false`, size 62990, created at 2026-04-07T16:51:37Z, pushed at 2026-04-07T16:55:54Z.
 
-**Grafia:** o README do SHA não contém a frase “frontend orchestration”.
-- A sequência mais próxima é `README.md:473` (“--repo-path /path/to/frontend \”) seguida de `README.md:474` (“--orchestrator google:gemini-2.0-flash-thinking-exp-01-21”): “frontend” e “orchestrator” ficam adjacentes depois de barra invertida e quebra de linha.
-- Casar “orchestrator” com “orchestration” dependeria de normalização morfológica da busca do GitHub, que não está registrada.
+**Spelling:** the SHA README does not contain phrase “frontend orchestration”.
+- The nearest sequence is `README.md:473` (“--repo-path /path/to/frontend \”) followed by `README.md:474` (“--orchestrator google:gemini-2.0-flash-thinking-exp-01-21”): “frontend” and “orchestrator” become adjacent after backslash and line break.
+- Matching “orchestrator” to “orchestration” would depend on GitHub search morphological normalization, which is not recorded.
 
-Não se afirma qual trecho a API casou, porque ela não informa linha. As demais ocorrências de “orchestrator” referem-se ao modelo LLM principal (`README.md:163–207`, `:531`, `:653–662`).
+No claim is made about which passage the API matched, because it reports no line. Other “orchestrator” occurrences refer to the main LLM model (`README.md:163–207`, `:531`, `:653–662`).
 
-A última alteração do README é `c19d06f` (2026-03-24), e o SHA (2026-03-24T13:24:10Z) é um commit de versão do bot. Ambos antecedem as coletas de outubro de 2026, e o README do SHA não é posterior às buscas.
+The last README change is `c19d06f` (2026-03-24), and the SHA (2026-03-24T13:24:10Z) is a bot version commit. Both predate the October 2026 collections, and the README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 483 entradas, sendo 480 arquivos regulares `100644` e 3 executáveis `100755` (scripts de shell); zero symlinks e zero gitlinks (`.gitmodules` existe, mas vazio). `codebase_rag/` (359 arquivos Python), `docs/` (MkDocs), `benchmarks/`, `optimize/`, `codec/`, `cgr/`, `scripts/`, workflows. | contrária |
-| Configuração | `pyproject.toml:1–12`: pacote `code-graph-rag` 0.0.166, “The ultimate RAG for your monorepo…”, Python ≥ 3.12, ambiente “Console”. `mkdocs.yml` e `docs/overrides/main.html`: site de documentação, não aplicação. | contrária |
-| Código-fonte | Não há arquivos `.ts`, `.tsx`, `.js`, `.jsx` ou `.vue` no inventário; o único `.html` é `docs/overrides/main.html` (template do MkDocs). | contrária |
-| Documentação | `README.md:470–479`: exemplos de `cgr optimize javascript --repo-path /path/to/frontend`, em que “frontend” é um caminho de exemplo de repositório a analisar. | contexto |
-| Tecnologia / Composição (busca) | `git grep -i` nos Markdown do SHA por `micro.?front` e `federation`: nenhuma ocorrência. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 483 entries, comprising 480 regular files `100644` and 3 executables `100755` (shell scripts); zero symlinks and zero gitlinks (`.gitmodules` exists, but is empty). `codebase_rag/` (359 Python files), `docs/` (MkDocs), `benchmarks/`, `optimize/`, `codec/`, `cgr/`, `scripts/`, workflows. | contrary |
+| Configuration | `pyproject.toml:1–12`: package `code-graph-rag` 0.0.166, “The ultimate RAG for your monorepo…”, Python ≥ 3.12, “Console” environment. `mkdocs.yml` and `docs/overrides/main.html`: documentation site, not an application. | contrary |
+| Source code | There are no `.ts`, `.tsx`, `.js`, `.jsx` or `.vue` files in the inventory; the only `.html` is `docs/overrides/main.html` (MkDocs template). | contrary |
+| Documentation | `README.md:470–479`: examples of `cgr optimize javascript --repo-path /path/to/frontend`, where “frontend” is an example repository path to analyze. | context |
+| Technology / Composition (search) | `git grep -i` in SHA Markdown for `micro.?front` and `federation`: no occurrences. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso e parcial (`blob:none`). São 1.652 commits alcançáveis a partir do SHA (1.659 em todos os refs), 245 merges. Os principais autores são `vitali87`/`Vitali Avagyan <eheva87@gmail.com>` (1.123 + 235), `github-actions[bot]` (142) e `dependabot[bot]` (30), além de colaboradores. A raiz é `9044d16` (2025-06-16), e o SHA é de 2026-03-24, anterior à criação do repositório do titular (2026-04-07). Não há commit do titular. Os branches `dependabot/…` (com commits de 2026-04-07) não foram considerados. Isso indica uma cópia ou importação do projeto original com `fork: false`; o mecanismo não é afirmado. `git rev-list --objects $SHA --missing=print` lista 4.533 objetos ausentes, nenhum na árvore do SHA.
+Non-shallow and partial clone (`blob:none`). There are 1.652 commits reachable from the SHA (1.659 across all refs), 245 merges. Main authors are `vitali87`/`Vitali Avagyan <eheva87@gmail.com>` (1.123 + 235), `github-actions[bot]` (142) and `dependabot[bot]` (30), plus contributors. The root is `9044d16` (2025-06-16), and the SHA is from 2026-03-24, before owner repository creation (2026-04-07). No owner commit. Branches `dependabot/…` (with 2026-04-07 commits) were not considered. This indicates a copy or import of the original project with `fork: false`; the mechanism is not asserted. `git rev-list --objects $SHA --missing=print` lists 4.533 missing objects, none in the SHA tree.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend: ferramenta Python de linha de comando (`pyproject.toml:1–12`; inventário sem código de UI). |
-| Q2 | No | Não há unidades. |
-| Q3 | No | Não há host, shell nem root config. |
-| Q4 | No | Nenhum mecanismo de composição; “orchestrator” é o modelo LLM principal da ferramenta (`README.md:653–662`). |
-| Q5 | No | Q1–Q4 convergem. |
+| Q1 | No | No frontend unit: Python command-line tool (`pyproject.toml:1–12`; inventory without UI code). |
+| Q2 | No | There are no units. |
+| Q3 | No | There is no host, shell or root config. |
+| Q4 | No | No composition mechanism; “orchestrator” is the tool’s main LLM model (`README.md:653–662`). |
+| Q5 | No | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”.
-- Não há menção a micro-frontends: o hit vem de tokens próximos num exemplo de CLI (`README.md:473–474`), como os falsos positivos lexicais de 279, 312 e 320 (rascunhos).
-- A redistribuição de código de terceiros (074/080/102/122) não altera a classe, já que nenhuma alternativa leva a MFE.
-- `repo_type: library` (pacote e CLI), `frontend_units: 0`, `unit_organization: none`, arrays de tecnologia vazios. O site MkDocs de documentação não foi contado como unidade, por ser gerado de Markdown por ferramenta Python sem frontend autoral (diferente do portal Rspress de 248).
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”.
+- No micro-frontends mention: the hit comes from nearby tokens in a CLI example (`README.md:473–474`), as in lexical false positives 279, 312 and 320 (drafts).
+- Third-party code redistribution (074/080/102/122) does not change the class, as no alternative leads to MFE.
+- `repo_type: library` (package and CLI), `frontend_units: 0`, `unit_organization: none`, empty technology arrays. The MkDocs documentation site was not counted as a unit, because a Python tool generates it from Markdown without authored frontend (unlike the Rspress portal in 248).
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos) / Protocolo (busca):** a consulta `"frontend orchestration"` casou um README sem a frase, provavelmente por tokens próximos (“/path/to/frontend \” / “--orchestrator”) e normalização “orchestrator” → “orchestration”. É o quarto caso de ruído da consulta ampla nesta série (279, 312, 320).
-- **Protocolo (famílias/duplicatas):** há várias cópias do mesmo projeto nas rodadas (por exemplo, `yulongwanxue/code-graph-rag`, `Lazur/code-graph-rag`, `mr-teslaa/code-graph-rag` e `anasdeyra/code-graph-rag`; `data/discovery/mfe-round-002/candidates.csv:27715`, `:29009`, `:29419`, `:31376`). Uma deduplicação por histórico idêntico reduziria a revisão manual.
-- **Protocolo:** a elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ1 (misleading signals) / Protocol (search):** query `"frontend orchestration"` matched a README without the phrase, probably through nearby tokens (“/path/to/frontend \” / “--orchestrator”) and normalization “orchestrator” → “orchestration”. Fourth case of broader-query noise in this series (279, 312, 320).
+- **Protocol (families/duplicates):** there are several copies of the same project in the rounds (for example, `yulongwanxue/code-graph-rag`, `Lazur/code-graph-rag`, `mr-teslaa/code-graph-rag` and `anasdeyra/code-graph-rag`; `data/discovery/mfe-round-002/candidates.csv:27715`, `:29009`, `:29419`, `:31376`). Deduplication by identical history would reduce manual review.
+- **Protocol:** eligibility changes from `unknown` (001) to `pass` (002).

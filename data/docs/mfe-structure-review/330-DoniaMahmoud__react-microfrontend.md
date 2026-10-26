@@ -17,23 +17,23 @@ annotation:
 
 ## Workspace
 
-Nenhuma declaração de workspace.
+No workspace declaration.
 
-## Unidades
+## Units
 
-| Diretório | Marcadores | Manifesto | Entrada | Build | Workspace | Deploy | Unidade frontend | Motivo |
+| Directory | Markers | Manifest | Entry | Build | Workspace | Deploy | Frontend unit | Rationale |
 |---|---|---|---|---|---|---|---|---|
-| cart | cart/package.json;cart/webpack.config.js | cart/package.json:1-20 (pacote próprio `cart`) | cart/src/index.js:4 (entrada convencional webpack, `import("./bootstrap")`); cart/src/bootstrap.js:8-13 (monta a UI em `#dev-cart`); cart/webpack.config.js:24-26 (template `./public/index.html`) | cart/webpack.config.js:4-28 (configuração própria, porta 8082); cart/package.json:7 (`webpack serve`) | — | — | Yes | Aplicação JavaScript com entrada e configuração webpack próprias, servida isoladamente. |
-| container | container/package.json;container/webpack.config.js | container/package.json:1-19 (pacote próprio `container`) | container/src/index.js:2 (entrada convencional webpack, `import("./bootstrap")`); container/src/bootstrap.js:6-7 (monta os remotes em `#my-products` e `#my-cart`); container/webpack.config.js:17-19 (template `./public/index.html`) | container/webpack.config.js:4-21 (configuração própria, porta 8080); container/package.json:7 (`webpack serve`) | — | — | Yes | Aplicação JavaScript com entrada e configuração webpack próprias. |
-| products | products/package.json;products/webpack.config.js | products/package.json:1-20 (pacote próprio `products`) | products/src/index.js:4 (entrada convencional webpack, `import("./bootstrap")`); products/src/bootstrap.js:17-25 (monta a UI em `#dev-products`); products/webpack.config.js:25-27 (template `./public/index.html`) | products/webpack.config.js:4-29 (configuração própria, porta 8081); products/package.json:7 (`webpack serve`) | — | — | Yes | Aplicação JavaScript com entrada e configuração webpack próprias, servida isoladamente. |
+| cart | cart/package.json;cart/webpack.config.js | cart/package.json:1-20 (own package `cart`) | cart/src/index.js:4 (conventional webpack entry, `import("./bootstrap")`); cart/src/bootstrap.js:8-13 (mounts the UI at `#dev-cart`); cart/webpack.config.js:24-26 (template `./public/index.html`) | cart/webpack.config.js:4-28 (own configuration, port 8082); cart/package.json:7 (`webpack serve`) | — | — | Yes | JavaScript application with its own entry and webpack configuration, served independently. |
+| container | container/package.json;container/webpack.config.js | container/package.json:1-19 (own package `container`) | container/src/index.js:2 (conventional webpack entry, `import("./bootstrap")`); container/src/bootstrap.js:6-7 (mounts remotes in `#my-products` and `#my-cart`); container/webpack.config.js:17-19 (template `./public/index.html`) | container/webpack.config.js:4-21 (own configuration, port 8080); container/package.json:7 (`webpack serve`) | — | — | Yes | JavaScript application with its own entry and webpack configuration. |
+| products | products/package.json;products/webpack.config.js | products/package.json:1-20 (own package `products`) | products/src/index.js:4 (conventional webpack entry, `import("./bootstrap")`); products/src/bootstrap.js:17-25 (mounts the UI at `#dev-products`); products/webpack.config.js:25-27 (template `./public/index.html`) | products/webpack.config.js:4-29 (own configuration, port 8081); products/package.json:7 (`webpack serve`) | — | — | Yes | JavaScript application with its own entry and webpack configuration, served independently. |
 
-## Resumo
+## Summary
 
-Aplicações frontend no snapshot: 3 (cart, container, products).
+Frontend applications in the snapshot: 3 (cart, container, products).
 
-## Notas
+## Notes
 
-- Nenhum `webpack.config.js` declara `entry`; vale a entrada padrão do webpack, `src/index.js`, presente nos três diretórios.
-- Os três `package.json` só têm o script `start` (`webpack serve`) e os três configs usam `mode: "development"` (`:5`); não há script `build` nem deploy. Conta como build próprio, como nos exemplos equivalentes do piloto.
-- O `artifacts.csv` marca os três `package.json` como `workspace-config`, mas nenhum declara `workspaces` e o `matches.csv` não tem ocorrência `ws-*`, `ops-*` ou `ci-*`.
-- N = 3 coincide com `frontend_units: 3` da classificação.
+- No `webpack.config.js` declares `entry`; webpack’s default entry, `src/index.js`, present in all three directories, applies.
+- The three `package.json` files have only the `start` script (`webpack serve`) and all three configurations use `mode: "development"` (`:5`); there is no `build` script or deployment. It counts as its own build, as in equivalent pilot examples.
+- `artifacts.csv` marks the three `package.json` files as `workspace-config`, but none declares `workspaces` and `matches.csv` has no `ws-*`, `ops-*` or `ci-*` occurrence.
+- N = 3 matches the classification’s `frontend_units: 3`.

@@ -20,61 +20,61 @@ annotation:
 
 # 010 — 4d-depot/HDI_Qodly_Pro_Session_Sharing
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** example/proof of concept (demo "HDI", How Do I, da 4D sobre compartilhamento de sessão entre 4D e Qodly)
-- **Classificação:** Non-MFE (via Q5, com justificativa; pede revisão conjunta)
+- **Repository type:** example/proof of concept (4D "HDI", How Do I, demo about session sharing between 4D and Qodly)
+- **Classification:** Non-MFE (through Q5, with justification; requires joint review)
 
-O repositório é um projeto 4D (banco + linguagem 4D) com uma página Qodly (plataforma low-code web da 4D). Não há `package.json` nem código-fonte JavaScript autoral. Duas estruturas lembram composição de frontends:
+The repository is a 4D project (database + 4D language) with a Qodly page (4D's low-code web platform). There is no `package.json` or project-authored JavaScript source code. Two structures resemble frontend composition:
 
-1. **Web area 4D → página Qodly:** um formulário desktop 4D embute a página Qodly numa web area, compartilhando a sessão por OTP.
-2. **Custom components Qodly:** dois widgets pré-compilados (mapa e rating) da "Qodly Team", distribuídos como remotes de Module Federation e carregados pelo renderer Qodly, que é a plataforma e está fora do repositório.
+1. **4D web area → Qodly page:** a 4D desktop form embeds the Qodly page in a web area, sharing the session through OTP.
+2. **Qodly custom components:** two precompiled widgets (map and rating) from the "Qodly Team", distributed as Module Federation remotes and loaded by the Qodly renderer, which is the platform and is outside the repository.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Tecnologia | Nenhum `package.json`; projeto 4D (`Project/warehouse_locator.4DProject`, `Project/Sources/**/*.4dm`) | ausente |
-| Configuração (composição) | `Project/Sources/Shared/CustomComponents/manifest.json:2-27`: dois componentes, `qodly_map` 0.4.6 e `qodly_rating` 0.3.0, cada um com `scope`, `module: "components"`, `remoteEntryFileName: "components.js"` e `url` em `/$shared/CustomComponents/...`; autor "Qodly Team" (`:6-9`, `:19-22`) | moderada |
-| Build/deploy (artefatos) | `CustomComponents/qodly_*/components.js` + `assets/*__loadShare__*`, `*__mf_v__runtimeInit__*`, `virtualExposes-*.js`, `hostInit-*.js`: saída compilada de Module Federation (Vite), sem fonte no repositório (tecnologia) | moderada |
-| Composição (uso) | `Project/Sources/WebForms/warehouses.WebForm:776` usa `SingleMap` e `:857`/`:896` usa `Rating`; a página Qodly consome os widgets remotos | moderada |
-| Composição (host) | Quem carrega os remotes é o renderer Qodly (`/$lib/renderer/`), parte da plataforma 4D, não do repositório | contexto |
-| Código-fonte (embed desktop) | `Project/Sources/Forms/Home/form.4DForm:88-99`: objeto `webArea` `warehouseDetails`; `ObjectMethods/warehouseDetails.4dm:7-10`: `authentify`, `getOTP` e `WA OPEN URL` para `http://localhost/$lib/renderer/?w=warehouses&$4DSID=<otp>`; `ObjectMethods/warehouseList.4dm:12`: `WA EXECUTE JAVASCRIPT FUNCTION(… "Qodly.setSource" … "warehouseId" …)` | moderada |
-| Código-fonte (sessão) | `Project/Sources/Methods/getOTP.4dm:12` `Session.createOTP(60)`; `Methods/authentify.4dm:5-6` define privilégios da sessão | moderada |
-| Estrutura | Uma página Qodly (`WebForms/warehouses.WebForm`) e um formulário desktop 4D (`Forms/Home`); `WebFolder/index.html` é a página padrão do servidor 4D | ambígua |
-| Build/deploy | Sem CI/CD; tudo é servido pelo mesmo servidor 4D | contrária |
-| Documentação | `README.md:1-3` remete a um post do blog da 4D e explica como abrir o projeto no 4D; nenhuma menção a micro-frontends | ausente |
+| Technology | No `package.json`; 4D project (`Project/warehouse_locator.4DProject`, `Project/Sources/**/*.4dm`) | absent |
+| Configuration (composition) | `Project/Sources/Shared/CustomComponents/manifest.json:2-27`: two components, `qodly_map` 0.4.6 and `qodly_rating` 0.3.0, each with `scope`, `module: "components"`, `remoteEntryFileName: "components.js"` and a `url` under `/$shared/CustomComponents/...`; author "Qodly Team" (`:6-9`, `:19-22`) | moderate |
+| Build/deploy (artifacts) | `CustomComponents/qodly_*/components.js` + `assets/*__loadShare__*`, `*__mf_v__runtimeInit__*`, `virtualExposes-*.js`, `hostInit-*.js`: compiled Module Federation output (Vite), without source in the repository (technology) | moderate |
+| Composition (use) | `Project/Sources/WebForms/warehouses.WebForm:776` uses `SingleMap` and `:857`/`:896` uses `Rating`; the Qodly page consumes remote widgets | moderate |
+| Composition (host) | Remotes are loaded by the Qodly renderer (`/$lib/renderer/`), part of the 4D platform, not the repository | context |
+| Source code (desktop embedding) | `Project/Sources/Forms/Home/form.4DForm:88-99`: `webArea` object `warehouseDetails`; `ObjectMethods/warehouseDetails.4dm:7-10`: `authentify`, `getOTP` and `WA OPEN URL` to `http://localhost/$lib/renderer/?w=warehouses&$4DSID=<otp>`; `ObjectMethods/warehouseList.4dm:12`: `WA EXECUTE JAVASCRIPT FUNCTION(… "Qodly.setSource" … "warehouseId" …)` | moderate |
+| Source code (session) | `Project/Sources/Methods/getOTP.4dm:12` `Session.createOTP(60)`; `Methods/authentify.4dm:5-6` sets session privileges | moderate |
+| Structure | One Qodly page (`WebForms/warehouses.WebForm`) and one 4D desktop form (`Forms/Home`); `WebFolder/index.html` is the default 4D server page | ambiguous |
+| Build/deploy | No CI/CD; everything is served by the same 4D server | contrary |
+| Documentation | `README.md:1-3` points to a 4D blog post and explains how to open the project in 4D; no mention of micro-frontends | absent |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | A página Qodly + os dois remotes (`qodly_map`, `qodly_rating`) referenciados pela config de composição (`CustomComponents/manifest.json:2-27`) |
-| Q2 | Yes | Os widgets têm build e versão próprios (pré-compilados pela Qodly Team, `manifest.json:4,17`); não há import de código-fonte. Ressalva: estão vendorizados e são servidos pelo mesmo servidor, sem deploy separado. |
-| Q3 | Yes | Os widgets são renderizados na mesma página (`warehouses.WebForm:776,857`) pelo renderer Qodly |
-| Q4 | Yes | Remotes MF (`components.js`, `loadShare`, `runtimeInit`) registrados no manifesto e usados na página |
-| Q5 | **No** (override) | Ver justificativa abaixo |
+| Q1 | Yes | The Qodly page + the two remotes (`qodly_map`, `qodly_rating`) referenced by the composition config (`CustomComponents/manifest.json:2-27`) |
+| Q2 | Yes | Widgets have their own build and version (precompiled by the Qodly Team, `manifest.json:4,17`); no source code imports. Caveat: they are vendored and served by the same server, without separate deployment. |
+| Q3 | Yes | Widgets are rendered on the same page (`warehouses.WebForm:776,857`) by the Qodly renderer |
+| Q4 | Yes | MF remotes (`components.js`, `loadShare`, `runtimeInit`) registered in the manifest and used on the page |
+| Q5 | **No** (override) | See rationale below |
 
-## Justificativa do Q5
+## Rationale for Q5
 
-O checklist é satisfeito literalmente em Q1–Q4, mas a evidência não sustenta uma arquitetura de MFE:
+The checklist is literally satisfied for Q1–Q4, but the evidence does not support an MFE architecture:
 
-- **As unidades são widgets, não partes da aplicação.** `qodly_map` e `qodly_rating` são componentes de UI reutilizáveis de terceiros (autor "Qodly Team"), equivalentes a uma biblioteca de componentes. Não decompõem o frontend da aplicação em partes com responsabilidade própria.
-- **O MF é o mecanismo de plugin da plataforma, não uma escolha arquitetural do repositório.** O host é o renderer Qodly, e os remotes são artefatos compilados copiados para o projeto. O repositório não configura federação nenhuma, só consome o mecanismo de extensão da plataforma low-code.
-- **Casos Non-MFE mais próximos:** "component libraries using Web Components" (aqui via MF) e "Module Federation used only for code sharing, not for composing frontend units".
-- **A web area 4D não muda o quadro.** É um app desktop 4D embutindo uma página web num webview, o que cai na decisão em aberto "link-only or iframe composition". O formulário 4D também não é uma unidade frontend web.
+- **The units are widgets, not parts of the application.** `qodly_map` and `qodly_rating` are reusable third-party UI components (author "Qodly Team"), equivalent to a component library. They do not decompose the application's frontend into parts with their own responsibilities.
+- **MF is the platform's plugin mechanism, not an architectural choice of the repository.** The host is the Qodly renderer, and remotes are compiled artifacts copied into the project. The repository does not configure federation; it only consumes the low-code platform's extension mechanism.
+- **Closest Non-MFE cases:** "component libraries using Web Components" (here through MF) and "Module Federation used only for code sharing, not for composing frontend units".
+- **The 4D web area does not change the picture.** It is a 4D desktop app embedding a web page in a webview, which falls under the unresolved decision "link-only or iframe composition". The 4D form is also not a web frontend unit.
 
-## Motivo
+## Rationale
 
-- Q5 é No por override, então o repositório é Non-MFE.
-- O repositório é uma demo de compartilhamento de sessão 4D ↔ Qodly, e os sinais de MF vêm de artefatos da plataforma.
+- Q5 is No by override, so the repository is Non-MFE.
+- The repository is a 4D ↔ Qodly session-sharing demo, and MF signals come from platform artifacts.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** artefatos compilados com nomes de MF (`__loadShare__`, `remoteEntryFileName`) aparecem sem nenhuma config de federação autoral. Uma busca automática por esses termos geraria falso positivo.
+- **RQ1 (misleading signals):** compiled artifacts with MF names (`__loadShare__`, `remoteEntryFileName`) appear without any project-authored federation config. An automatic search for these terms would produce a false positive.
 
-## Ponto para revisão conjunta
+## Point for joint review
 
-- O override de Q5 deve ser revisado em conjunto, pelas regras do checklist.
-- Se o caso se repetir (plataformas low-code ou CMS que usam MF ou Web Components como mecanismo de plugin), vale virar regra explícita, por exemplo: "plugins/extensões carregados pelo mecanismo de uma plataforma externa, sem configuração de composição autoral, são Non-MFE".
-- A web area 4D com OTP depende da decisão em aberto sobre iframe/webview.
+- The Q5 override must be reviewed jointly under the checklist rules.
+- If the case recurs (low-code platforms or CMSs using MF or Web Components as a plugin mechanism), it should become an explicit rule, for example: "plugins/extensions loaded through an external platform's mechanism, without project-authored composition configuration, are Non-MFE".
+- The 4D web area with OTP depends on the unresolved decision about iframe/webview.

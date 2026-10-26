@@ -19,322 +19,322 @@ annotation:
 
 # 316 — Tutul33/mf-workspace
 
-## Leitura do repositório
+## Repository overview
 
-As evidências descrevem um workspace com três unidades Angular: host-app, customer-app e orders-app (#26–#28). A cadeia parte da dependência declarada (#2), passa pelos builders de federação e pelas configurações das unidades (#3–#11), chega às rotas executáveis do host (#17–#19, #24) e às duas relações host → remote ativas (#29–#30). Cada remoto expõe um módulo de rotas; o host o carrega por URL direta com `loadRemoteModule`. As configurações isoladas não declaram consumidores: a ligação entre unidades está no código das rotas. Os builds separados confirmam limites por aplicação, sem deploy ou versão independente observados (#31–#33).
+Evidence describes a workspace with three Angular units: host-app, customer-app and orders-app (#26–#28). The chain starts with declared dependency (#2), passes through federation builders and unit configurations (#3–#11), reaches executable host routes (#17–#19, #24) and two active host → remote relationships (#29–#30). Each remote exposes a route module; the host loads it by direct URL with `loadRemoteModule`. Isolated configurations do not declare consumers: routes code links units. Separate builds confirm application boundaries, without observed deployment or independent version (#31–#33).
 
-Há sinais que precisam de leitura restrita. A raiz coordena o workspace sem UI própria (#25). A dependência `@softarc/native-federation-node` não tem uso direto observado (#1). Os imports de bootstrap e as inicializações locais dos remotos não compõem unidades (#12–#16, #22–#23). O mapa `customerApp` do host aponta à própria porta e não é usado pelas rotas (#20–#21); conforme a 3.4.4 final, não estabelece outra relação. O histórico esclarece a coexistência desse mapa com as rotas diretas desde a introdução dos arquivos, sem evidência de sucessão de versões (#40–#42).
+Some signals require a restricted reading. Root coordinates the workspace without its own UI (#25). Dependency `@softarc/native-federation-node` has no observed direct usage (#1). Bootstrap imports and local remote initialization do not compose units (#12–#16, #22–#23). Host map `customerApp` points to its own port and is unused by routes (#20–#21); according to final 3.4.4 it establishes no other relationship. History clarifies coexistence of this map and direct routes since file introduction, without evidence of successive versions (#40–#42).
 
-O guia documenta o host, os dois remotos e o roteamento federado, corroborados pelos artefatos (#34–#37, #39). Sua árvore tem corroboração parcial no inventário adquirido (#38); o histórico explica que os assets public existem na árvore Git, enquanto saídas, dependências e cache são ignorados (#43). Essa diferença de fontes não altera os valores finais da 3.4. Não há dúvida arquitetural aberta nessas revisões; a evidência é estática e não demonstra execução do exemplo.
+Guide documents host, two remotes and federated routing, corroborated by artifacts (#34–#37, #39). Its tree is partially corroborated in acquired inventory (#38); history explains that public assets exist in Git tree while outputs, dependencies and caches are ignored (#43). This source difference does not alter final 3.4 values. No architectural uncertainty is open in these reviews; static evidence does not demonstrate example execution.
 
-## Observações
+## Observations
 
 ### 1. package.json:30
 
-**Observação:** O manifesto declara `@softarc/native-federation-node` em dependencies, versão `^3.3.4`; a 3.4.2 registra Configurada `No`, sem uso direto observado.
+**Observation:** Manifest declares `@softarc/native-federation-node` in dependencies, version `^3.3.4`; section 3.4.2 records Configured `No`, without direct usage.
 
-**Interpretação:** A declaração isolada sinaliza Native Federation, sem estabelecer sua participação na composição.
+**Interpretation:** Declaration signals Native Federation technology without establishing participation in the observed composition.
 
 ### 2. package.json:36
 
-**Observação:** O manifesto declara `@angular-architects/native-federation` em devDependencies, versão `^20.1.7`; a 3.4.2 registra Configurada `Yes`.
+**Observation:** Manifest declares `@angular-architects/native-federation` in devDependencies, version `^20.1.7`; section 3.4.2 records Configured `Yes`.
 
-**Interpretação:** A presença do pacote é um sinal tecnológico cuja configuração e uso têm observações próprias.
+**Interpretation:** Dependency signals technology subsequently supported by its own configuration and usage observations.
 
 ### 3. angular.json:17-30
 
-**Observação:** O target `build` de host-app usa `@angular-architects/native-federation:build` e encaminha production/development aos alvos `esbuild` do próprio projeto.
+**Observation:** Target `build` of host-app uses `@angular-architects/native-federation:build`, forwarding production/development configurations to its own `esbuild` targets.
 
-**Interpretação:** Configura o mecanismo de federação para o build de uma unidade, sem declarar outra aplicação.
+**Interpretation:** Configuration connects this unit to the federation build mechanism without alone linking another application.
 
 ### 4. angular.json:130-143
 
-**Observação:** O target `build` de customer-app usa `@angular-architects/native-federation:build` e encaminha production/development aos alvos `esbuild` do próprio projeto.
+**Observation:** Target `build` of customer-app uses `@angular-architects/native-federation:build`, forwarding production/development configurations to its own `esbuild` targets.
 
-**Interpretação:** Configura o mecanismo de federação para o build de uma unidade, sem declarar outra aplicação.
+**Interpretation:** Configuration connects this unit to the federation build mechanism without alone linking another application.
 
 ### 5. angular.json:243-256
 
-**Observação:** O target `build` de orders-app usa `@angular-architects/native-federation:build` e encaminha production/development aos alvos `esbuild` do próprio projeto.
+**Observation:** Target `build` of orders-app uses `@angular-architects/native-federation:build`, forwarding production/development configurations to its own `esbuild` targets.
 
-**Interpretação:** Configura o mecanismo de federação para o build de uma unidade, sem declarar outra aplicação.
+**Interpretation:** Configuration connects this unit to the federation build mechanism without alone linking another application.
 
 ### 6. projects/customer-app/federation.config.js:1-34
 
-**Observação:** `withNativeFederation` declara `name: customer-app`, expõe `./CustomerRoutes` como módulo de rotas, usa `shareAll` singleton com versão estrita e mantém `./Component` comentado.
+**Observation:** `withNativeFederation` declares `name: customer-app`, exposes `./CustomerRoutes` as a route module and configures `shareAll` with singleton/strict version options; `./Component` remains commented out.
 
-**Interpretação:** Configura o mecanismo e a interface exposta de uma unidade; sozinha, essa configuração não declara seu consumidor.
+**Interpretation:** Configuration establishes exposed interface and mechanism. It does not name a consumer; host code resolves consumption.
 
 ### 7. projects/orders-app/federation.config.js:1-34
 
-**Observação:** `withNativeFederation` declara `name: orders-app`, expõe `./OrdersRoutes` como módulo de rotas, usa `shareAll` singleton com versão estrita e mantém `./Component` comentado.
+**Observation:** `withNativeFederation` declares `name: orders-app`, exposes `./OrdersRoutes` as a route module and configures `shareAll` with singleton/strict version options; `./Component` remains commented out.
 
-**Interpretação:** Configura o mecanismo e a interface exposta de uma unidade; sozinha, essa configuração não declara seu consumidor.
+**Interpretation:** Configuration establishes exposed interface and mechanism. It does not name a consumer; host code resolves consumption.
 
 ### 8. angular.json:31-39
 
-**Observação:** O target `serve` de host-app usa o builder `@angular-architects/native-federation:build`, com `dev: true`, encaminhando para `host-app:serve-original:development`.
+**Observation:** Target `serve` of host-app uses `@angular-architects/native-federation:build` with `dev: true`, forwarding to `host-app:serve-original:development`.
 
-**Interpretação:** Configura o mecanismo de federação no serviço de desenvolvimento de uma unidade. Não demonstra deploy.
+**Interpretation:** Configuration establishes the development mechanism without showing deployment.
 
 ### 9. angular.json:144-152
 
-**Observação:** O target `serve` de customer-app usa o builder `@angular-architects/native-federation:build`, com `dev: true`, encaminhando para `customer-app:serve-original:development`.
+**Observation:** Target `serve` of customer-app uses `@angular-architects/native-federation:build` with `dev: true`, forwarding to `customer-app:serve-original:development`.
 
-**Interpretação:** Configura o mecanismo de federação no serviço de desenvolvimento de uma unidade. Não demonstra deploy.
+**Interpretation:** Configuration establishes the development mechanism without showing deployment.
 
 ### 10. angular.json:257-265
 
-**Observação:** O target `serve` de orders-app usa o builder `@angular-architects/native-federation:build`, com `dev: true`, encaminhando para `orders-app:serve-original:development`.
+**Observation:** Target `serve` of orders-app uses `@angular-architects/native-federation:build` with `dev: true`, forwarding to `orders-app:serve-original:development`.
 
-**Interpretação:** Configura o mecanismo de federação no serviço de desenvolvimento de uma unidade. Não demonstra deploy.
+**Interpretation:** Configuration establishes the development mechanism without showing deployment.
 
 ### 11. projects/host-app/federation.config.js:1-27
 
-**Observação:** `withNativeFederation` configura `shared` com `shareAll` singleton e versão estrita, `skip` e `ignoreUnusedDeps`; não declara `remotes` nem manifesto.
+**Observation:** Host `withNativeFederation` configures `shared`, `shareAll` with singleton/strict version options, `skip` and `ignoreUnusedDeps`, without `remotes` or manifest.
 
-**Interpretação:** Parametriza Native Federation no host, sem ligar por si só o host aos remotos.
+**Interpretation:** Configuration parameterizes the host; alone it establishes no relationship with another unit.
 
 ### 12. projects/customer-app/src/main.ts:5; projects/customer-app/src/bootstrap.ts:1-6
 
-**Observação:** `import('./bootstrap')` carrega o bootstrap local de customer-app, que chama `bootstrapApplication`.
+**Observation:** Entry uses `import('./bootstrap')`; local bootstrap invokes `bootstrapApplication` for customer-app.
 
-**Interpretação:** É carregamento assíncrono interno à unidade; esse trecho isolado não identifica uma tecnologia de MFE nem liga aplicações.
+**Interpretation:** Asynchronous local bootstrap is an isolated technical signal, without identifying or linking another microfrontend.
 
 ### 13. projects/host-app/src/main.ts:7; projects/host-app/src/bootstrap.ts:1-6
 
-**Observação:** `import('./bootstrap')` carrega o bootstrap local de host-app, que chama `bootstrapApplication`.
+**Observation:** Entry uses `import('./bootstrap')`; local bootstrap invokes `bootstrapApplication` for host-app.
 
-**Interpretação:** É carregamento assíncrono interno à unidade; esse trecho isolado não identifica uma tecnologia de MFE nem liga aplicações.
+**Interpretation:** Asynchronous local bootstrap is an isolated technical signal, without identifying or linking another microfrontend.
 
 ### 14. projects/orders-app/src/main.ts:5; projects/orders-app/src/bootstrap.ts:1-6
 
-**Observação:** `import('./bootstrap')` carrega o bootstrap local de orders-app, que chama `bootstrapApplication`.
+**Observation:** Entry uses `import('./bootstrap')`; local bootstrap invokes `bootstrapApplication` for orders-app.
 
-**Interpretação:** É carregamento assíncrono interno à unidade; esse trecho isolado não identifica uma tecnologia de MFE nem liga aplicações.
+**Interpretation:** Asynchronous local bootstrap is an isolated technical signal, without identifying or linking another microfrontend.
 
 ### 15. projects/customer-app/src/main.ts:1-3
 
-**Observação:** O arquivo importa `initFederation` de `@angular-architects/native-federation` para a chamada local sem argumentos.
+**Observation:** Customer entry imports `initFederation` from `@angular-architects/native-federation` for its local no-argument call.
 
-**Interpretação:** Importa o mecanismo, sem resolver outra aplicação; Composição `No` na origem.
+**Interpretation:** Import identifies mechanism, but resolves no other application; Composition `No` in origin review.
 
 ### 16. projects/customer-app/src/main.ts:3
 
-**Observação:** `initFederation()` é chamado sem manifesto nem remotes.
+**Observation:** Customer entry invokes `initFederation()` without manifest or remote map.
 
-**Interpretação:** Prepara o runtime da própria unidade, sem ligação com outra; Composição `No`.
+**Interpretation:** Initializes its own runtime without another-unit composition; Composition `No`.
 
 ### 17. projects/host-app/src/app/app.routes.ts:2; projects/host-app/src/app/app.routes.ts:8-19
 
-**Observação:** O arquivo importa `loadRemoteModule`, usado nas duas rotas remotas.
+**Observation:** Host routes import `loadRemoteModule`, used by two remote routes.
 
-**Interpretação:** O import prepara o mecanismo de carga usado pela composição, sem ser sozinho uma chamada que nomeia um destino.
+**Interpretation:** Import prepares remote loading; target resolution depends on the calls rather than import alone.
 
 ### 18. projects/host-app/src/app/app.routes.ts:5-11; projects/customer-app/federation.config.js:5-10; angular.json:227; projects/customer-app/src/app/customer/customer-routes.module.ts:5-12; projects/host-app/src/app/app.config.ts:4-10; projects/host-app/src/bootstrap.ts:5
 
-**Observação:** A rota `customers` usa `loadChildren` e `loadRemoteModule` com `http://localhost:4301/remoteEntry.json`, `./CustomerRoutes` e seleção de `CustomerRoutesModule`. O módulo corresponde ao exposto por customer-app; as rotas são registradas por `provideRouter`.
+**Observation:** Route `customers` uses `loadChildren` and `loadRemoteModule` with `http://localhost:4301/remoteEntry.json`, `./CustomerRoutes` and selection `CustomerRoutesModule`. Host registers routes through `provideRouter`.
 
-**Interpretação:** Liga explicitamente o host a uma unidade remota por Native Federation, conforme Composição `Yes`.
+**Interpretation:** Executable route matches the remote’s exposed module, establishing explicit host composition through Native Federation; Composition `Yes`.
 
 ### 19. projects/host-app/src/app/app.routes.ts:13-19; projects/orders-app/federation.config.js:5-10; angular.json:340; projects/orders-app/src/app/orders/orders-routes.module.ts:5-12; projects/host-app/src/app/app.config.ts:4-10; projects/host-app/src/bootstrap.ts:5
 
-**Observação:** A rota `orders` usa `loadChildren` e `loadRemoteModule` com `http://localhost:4302/remoteEntry.json`, `./OrdersRoutes` e seleção de `OrdersRoutesModule`. O módulo corresponde ao exposto por orders-app; as rotas são registradas por `provideRouter`.
+**Observation:** Route `orders` uses `loadChildren` and `loadRemoteModule` with `http://localhost:4302/remoteEntry.json`, `./OrdersRoutes` and selection `OrdersRoutesModule`. Host registers routes through `provideRouter`.
 
-**Interpretação:** Liga explicitamente o host a uma unidade remota por Native Federation, conforme Composição `Yes`.
+**Interpretation:** Executable route matches the remote’s exposed module, establishing explicit host composition through Native Federation; Composition `Yes`.
 
 ### 20. projects/host-app/src/main.ts:1-5
 
-**Observação:** O host importa `initFederation` para a chamada que registra `customerApp` em localhost:4200.
+**Observation:** Host imports `initFederation` for the call registering `customerApp` at localhost:4200.
 
-**Interpretação:** Importa o mecanismo para um mapa que a revisão de origem marcou Composição `No`; não estabelece ligação com outro frontend.
+**Interpretation:** Import identifies mechanism for the map reviewed in origin. It does not establish another-frontend link; Composition `No`.
 
 ### 21. projects/host-app/src/main.ts:3-5; angular.json:114; projects/host-app/src/app/app.routes.ts:8-19
 
-**Observação:** `initFederation` associa `customerApp` a `http://localhost:4200/remoteEntry.json`, porta do próprio host. As rotas usam URLs diretas em 4301 e 4302, sem esse nome.
+**Observation:** `initFederation` associates `customerApp` with `http://localhost:4200/remoteEntry.json`, the host’s own port. Routes use direct URLs at 4301 and 4302 without that name.
 
-**Interpretação:** É configuração executada em código, mas não resolve outra unidade segundo a 3.4.4 (Composição `No`). Não sustenta uma terceira relação.
+**Interpretation:** Executable configuration does not resolve another unit in 3.4.4; Composition `No`. It creates no third relationship.
 
 ### 22. projects/orders-app/src/main.ts:1-3
 
-**Observação:** O arquivo importa `initFederation` para a chamada local sem argumentos.
+**Observation:** Orders entry imports `initFederation` for a local no-argument call.
 
-**Interpretação:** Importa o mecanismo sem resolver outra aplicação; Composição `No`.
+**Interpretation:** Mechanism import does not resolve another application; Composition `No`.
 
 ### 23. projects/orders-app/src/main.ts:3
 
-**Observação:** `initFederation()` é chamado sem manifesto nem remotes.
+**Observation:** Orders entry invokes `initFederation()` without manifest or remotes.
 
-**Interpretação:** Prepara o runtime de orders-app, sem ligação com outra aplicação; Composição `No`.
+**Interpretation:** Initializes its own runtime without other-unit composition; Composition `No`.
 
 ### 24. projects/host-app/src/app/app.routes.ts:4-26; projects/host-app/src/app/app.config.ts:4-10; projects/host-app/src/app/app.html:1-3; projects/customer-app/federation.config.js:5-10; projects/orders-app/federation.config.js:5-10; angular.json:227; angular.json:340
 
-**Observação:** A tabela `routes` reúne `customers` e `orders`, com cargas dos módulos remotos. `provideRouter` registra a tabela; links e `router-outlet` apresentam a navegação.
+**Observation:** Host `routes` includes remote module loads for `customers` and `orders`; `provideRouter` registers the table, with links and `router-outlet` supporting navigation.
 
-**Interpretação:** A tabela de rotas liga caminhos do host aos módulos de customer-app e orders-app, compondo as duas unidades.
+**Interpretation:** Registered paths connect customer/orders units to the host, corroborating composition rather than merely unused declarations.
 
 ### 25. .; package.json:1-10; angular.json:6-18; angular.json:119-131; angular.json:232-244
 
-**Observação:** A raiz tem o manifesto do workspace e `angular.json`, que organiza três projetos. O script build é `ng build`; os targets e as entradas pertencem aos projetos.
+**Observation:** Root manifest and `angular.json` coordinate three projects. Root build script uses `ng build`; entries and targets belong to projects.
 
-**Interpretação:** É raiz de coordenação sem UI própria, marcada Unidade frontend `No`; não constitui uma quarta aplicação.
+**Interpretation:** Root has no own UI entry/build. Frontend unit `No`; it is not a fourth application.
 
 ### 26. projects/customer-app/; angular.json:175; projects/customer-app/src/main.ts:1-6; projects/customer-app/src/bootstrap.ts:1-6; angular.json:130-143; angular.json:172-175
 
-**Observação:** O diretório de customer-app tem entrada `main.ts` que carrega bootstrap, chamada `bootstrapApplication`, target `build` de Native Federation e alvo `esbuild` próprios.
+**Observation:** Directory customer-app has `main.ts` loading bootstrap, `bootstrapApplication`, its own Native Federation `build` and `esbuild` targets.
 
-**Interpretação:** Confirma o limite de uma unidade frontend (Yes), mesmo sem manifesto local; não demonstra sozinho como se liga às demais.
+**Interpretation:** Own entry/build establish frontend unit boundary without requiring a local manifest. Boundary alone does not explain inter-unit links.
 
 ### 27. projects/host-app/; angular.json:62; projects/host-app/src/main.ts:1-8; projects/host-app/src/bootstrap.ts:1-6; angular.json:17-30; angular.json:59-62
 
-**Observação:** O diretório de host-app tem entrada `main.ts` que carrega bootstrap, chamada `bootstrapApplication`, target `build` de Native Federation e alvo `esbuild` próprios.
+**Observation:** Directory host-app has `main.ts` loading bootstrap, `bootstrapApplication`, its own Native Federation `build` and `esbuild` targets.
 
-**Interpretação:** Confirma o limite de uma unidade frontend (Yes), mesmo sem manifesto local; não demonstra sozinho como se liga às demais.
+**Interpretation:** Own entry/build establish frontend unit boundary without requiring a local manifest. Boundary alone does not explain inter-unit links.
 
 ### 28. projects/orders-app/; angular.json:288; projects/orders-app/src/main.ts:1-6; projects/orders-app/src/bootstrap.ts:1-6; angular.json:243-256; angular.json:285-288
 
-**Observação:** O diretório de orders-app tem entrada `main.ts` que carrega bootstrap, chamada `bootstrapApplication`, target `build` de Native Federation e alvo `esbuild` próprios.
+**Observation:** Directory orders-app has `main.ts` loading bootstrap, `bootstrapApplication`, its own Native Federation `build` and `esbuild` targets.
 
-**Interpretação:** Confirma o limite de uma unidade frontend (Yes), mesmo sem manifesto local; não demonstra sozinho como se liga às demais.
+**Interpretation:** Own entry/build establish frontend unit boundary without requiring a local manifest. Boundary alone does not explain inter-unit links.
 
 ### 29. projects/host-app/src/app/app.routes.ts:6-11; projects/customer-app/federation.config.js:5-10; angular.json:227; projects/host-app/src/app/app.config.ts:10; projects/host-app/src/bootstrap.ts:5
 
-**Observação:** O host carrega `./CustomerRoutes` de `http://localhost:4301/remoteEntry.json`, exposto por customer-app. A 3.4.5 registra host → remote, no snapshot `Yes` e Ativa `Yes`.
+**Observation:** Host loads `./CustomerRoutes` from `http://localhost:4301/remoteEntry.json`, exposed by customer-app. Section 3.4.5 records host → remote, In snapshot `Yes`, Active `Yes`.
 
-**Interpretação:** É relação explícita de composição por Native Federation entre duas unidades presentes no snapshot.
+**Interpretation:** Explicit active Native Federation relationship connects units present in the snapshot.
 
 ### 30. projects/host-app/src/app/app.routes.ts:14-19; projects/orders-app/federation.config.js:5-10; angular.json:340; projects/host-app/src/app/app.config.ts:10; projects/host-app/src/bootstrap.ts:5
 
-**Observação:** O host carrega `./OrdersRoutes` de `http://localhost:4302/remoteEntry.json`, exposto por orders-app. A 3.4.5 registra host → remote, no snapshot `Yes` e Ativa `Yes`.
+**Observation:** Host loads `./OrdersRoutes` from `http://localhost:4302/remoteEntry.json`, exposed by orders-app. Section 3.4.5 records host → remote, In snapshot `Yes`, Active `Yes`.
 
-**Interpretação:** É relação explícita de composição por Native Federation entre duas unidades presentes no snapshot.
+**Interpretation:** Explicit active Native Federation relationship connects units present in the snapshot.
 
 ### 31. angular.json:130-143; angular.json:172-175; angular.json:227; package.json:3
 
-**Observação:** customer-app tem targets próprios `build` (Native Federation) e `esbuild` (`@angular/build:application`) e porta de desenvolvimento 4301. A 3.4.6 registra build `separado`, deploy `não observado` e versionamento `No`; só há versão de workspace.
+**Observation:** Unit customer-app has Native Federation target `build` and `esbuild` using `@angular/build:application`, with development port 4301. Section 3.4.6 records build `separate`, deployment `not observed`, versioning `No`; version belongs to workspace.
 
-**Interpretação:** Sustenta separação de build por aplicação. Porta de desenvolvimento não demonstra publicação, e não há deploy nem versionamento independente observado.
+**Interpretation:** Separate build supports unit boundary, without demonstrating independent deployment or versioning.
 
 ### 32. angular.json:17-30; angular.json:59-62; angular.json:114; package.json:3
 
-**Observação:** host-app tem targets próprios `build` (Native Federation) e `esbuild` (`@angular/build:application`) e porta de desenvolvimento 4200. A 3.4.6 registra build `separado`, deploy `não observado` e versionamento `No`; só há versão de workspace.
+**Observation:** Unit host-app has Native Federation target `build` and `esbuild` using `@angular/build:application`, with development port 4200. Section 3.4.6 records build `separate`, deployment `not observed`, versioning `No`; version belongs to workspace.
 
-**Interpretação:** Sustenta separação de build por aplicação. Porta de desenvolvimento não demonstra publicação, e não há deploy nem versionamento independente observado.
+**Interpretation:** Separate build supports unit boundary, without demonstrating independent deployment or versioning.
 
 ### 33. angular.json:243-256; angular.json:285-288; angular.json:340; package.json:3
 
-**Observação:** orders-app tem targets próprios `build` (Native Federation) e `esbuild` (`@angular/build:application`) e porta de desenvolvimento 4302. A 3.4.6 registra build `separado`, deploy `não observado` e versionamento `No`; só há versão de workspace.
+**Observation:** Unit orders-app has Native Federation target `build` and `esbuild` using `@angular/build:application`, with development port 4302. Section 3.4.6 records build `separate`, deployment `not observed`, versioning `No`; version belongs to workspace.
 
-**Interpretação:** Sustenta separação de build por aplicação. Porta de desenvolvimento não demonstra publicação, e não há deploy nem versionamento independente observado.
+**Interpretation:** Separate build supports unit boundary, without demonstrating independent deployment or versioning.
 
 ### 34. README.md:3; angular_20_microfrontend_app_guide.md:3
 
-**Observação:** O guia apresenta “Host + Customer-App + Orders-App” com Angular 20 e `@angular-architects/native-federation`.
+**Observation:** README and guide present “Host + Customer-App + Orders-App” with Angular 20 and `@angular-architects/native-federation`.
 
-**Interpretação:** Descreve o conjunto de três unidades e seu mecanismo; a 3.4.7 registra corroboração pelos artefatos. A afirmação, sozinha, é evidência semântica.
+**Interpretation:** Three units and mechanism are corroborated in 3.4.7. Documentation remains weak semantic evidence.
 
 ### 35. README.md:22; angular_20_microfrontend_app_guide.md:22
 
-**Observação:** O guia chama host-app de “main shell”.
+**Observation:** Guide presents host as “main shell”.
 
-**Interpretação:** Atribui ao host o papel de shell, corroborado pelas rotas e navegação. A afirmação, sozinha, é evidência semântica.
+**Interpretation:** Role corroborated by routes and navigation; semantic claim alone does not establish composition.
 
 ### 36. README.md:23; angular_20_microfrontend_app_guide.md:23
 
-**Observação:** O guia chama customer-app de “remote”.
+**Observation:** Guide presents customer as “remote”.
 
-**Interpretação:** Atribui papel de remoto a customer-app, corroborado pela exposição e consumo. A afirmação, sozinha, é evidência semântica.
+**Interpretation:** Role corroborated by module exposure and host consumption; weak semantic evidence.
 
 ### 37. README.md:24; angular_20_microfrontend_app_guide.md:24
 
-**Observação:** O guia chama orders-app de “remote”.
+**Observation:** Guide presents orders as “remote”.
 
-**Interpretação:** Atribui papel de remoto a orders-app, corroborado pela exposição e consumo. A afirmação, sozinha, é evidência semântica.
+**Interpretation:** Role corroborated by module exposure and host consumption; weak semantic evidence.
 
 ### 38. README.md:213-251
 
-**Observação:** A árvore “MF-WORKSPACE” mostra projects/customer-app, host-app e orders-app, além de public, .angular, dist e node_modules.
+**Observation:** README’s “MF-WORKSPACE” tree lists projects/customer-app, host-app, orders-app, public, .angular, dist and node_modules.
 
-**Interpretação:** Descreve organização das unidades, mas a corroboração é parcial: parte da árvore de trabalho não tem arquivos no inventário adquirido. O ponto histórico #43 explica esse limite. A afirmação, sozinha, é evidência semântica.
+**Interpretation:** Organization partially corroborated: some working-tree paths absent from acquired inventory. Historical point #43 clarifies inventory/Git distinction and ignored outputs.
 
 ### 39. README.md:259; angular_20_microfrontend_app_guide.md:218
 
-**Observação:** O guia afirma “Federated routing”.
+**Observation:** README and guide describe “Federated routing”.
 
-**Interpretação:** Afirma composição por roteamento, corroborada pelas duas relações de carga dos módulos de rotas remotos. A afirmação, sozinha, é evidência semântica.
+**Interpretation:** Claim corroborated by two route-module loading relationships; semantic evidence does not replace executable references.
 
 ### 40. f038259 2025-11-18 (package.json; projects/host-app/src/main.ts; projects/host-app/src/app/app.routes.ts; projects/customer-app/federation.config.js; projects/orders-app/federation.config.js)
 
-**Observação:** A revisão histórica registra que `f038259` já declara `@softarc/native-federation-node`; os arquivos consultados usam `@angular-architects/native-federation` e não mudam depois.
+**Observation:** Historical review records `f038259` already declaring `@softarc/native-federation-node`; consulted files use `@angular-architects/native-federation` and remain unchanged.
 
-**Interpretação:** Esclarece que a declaração sem uso direto acompanha a introdução dos projetos, sem evidenciar remoção de uso anterior ou intenção de abandono. Resultado `esclarecido` na 3.4.8; a observação explica o snapshot sem sustentar sozinha a arquitetura.
+**Interpretation:** Result `clarified` in 3.4.8: unused direct declaration dates to introduction. It does not demonstrate removal or abandonment intent; weak historical explanation.
 
 ### 41. f038259 2025-11-18 (projects/host-app/src/main.ts; projects/host-app/src/app/app.routes.ts)
 
-**Observação:** A revisão histórica registra que o mapa do host para 4200 e as rotas por URLs diretas em 4301/4302 são criados juntos em `f038259` e não mudam depois.
+**Observation:** Historical review records host map at 4200 and direct route URLs at 4301/4302 introduced together in `f038259`, without subsequent changes.
 
-**Interpretação:** Esclarece sua coexistência desde a primeira versão disponível, sem transição observável entre dois arranjos arquiteturais. Resultado `esclarecido` na 3.4.8; a observação explica o snapshot sem sustentar sozinha a arquitetura.
+**Interpretation:** Result `clarified` in 3.4.8: coexistence since first available version, without architectural transition between the two arrangements.
 
 ### 42. f038259 2025-11-18 (projects/customer-app/federation.config.js; projects/orders-app/federation.config.js)
 
-**Observação:** A revisão histórica registra os dois federation.config.js criados em `f038259` com `./Component` já comentado e os módulos de rotas ativos; não mudam depois.
+**Observation:** Historical review records both federation.config.js files introduced in `f038259` with `./Component` already commented out and route modules active, remaining unchanged.
 
-**Interpretação:** Esclarece que não há exposição de componente anteriormente ativa no histórico consultado, sem inferir intenção sobre as alternativas comentadas. Resultado `esclarecido` na 3.4.8; a observação explica o snapshot sem sustentar sozinha a arquitetura.
+**Interpretation:** Result `clarified` in 3.4.8: history does not show an active component exposure or explain intent; it clarifies the snapshot configuration.
 
 ### 43. f038259 2025-11-18 (angular.json; .gitignore; projects/customer-app/public/favicon.ico; projects/host-app/public/favicon.ico; projects/orders-app/public/favicon.ico); eb6d1cc 2025-11-18 (README.md; projects/customer-app/public/favicon.ico; projects/host-app/public/favicon.ico; projects/orders-app/public/favicon.ico); .gitignore:4; .gitignore:10; .gitignore:32; angular.json:68; angular.json:181; angular.json:294
 
-**Observação:** A revisão histórica registra os três favicon.ico introduzidos em `f038259` e ainda presentes na árvore Git do snapshot `eb6d1cc`, embora ausentes do inventário adquirido. O snapshot configura public como assets e ignora saídas, dependências e cache.
+**Observation:** Historical review records three favicon.ico assets introduced in `f038259` and still present in Git tree at `eb6d1cc`, although absent from acquired inventory. Outputs, dependencies and cache directories are ignored.
 
-**Interpretação:** Explica a diferença entre árvore Git e inventário adquirido, sem alterar a corroboração parcial da árvore documentada nem indicar remoção dos assets. Resultado `esclarecido` na 3.4.8; a observação explica o snapshot sem sustentar sozinha a arquitetura.
+**Interpretation:** Result `clarified` in 3.4.8: partial tree corroboration reflects Git/inventory distinction, without evidence of asset removal.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.2 (package.json:30) | 1 tecnologia | manifesto | native-federation | tecnológica | fraca | — |
-| 2 | 3.4.2 (package.json:36) | 1 tecnologia | manifesto | native-federation | tecnológica | fraca | declara #3; declara #4; declara #5; declara #6; declara #7; declara #8; declara #9; declara #10; declara #11; declara #15; declara #16; declara #17; declara #18; declara #19; declara #20; declara #21; declara #22; declara #23 |
-| 3 | 3.4.2 (package.json:36, Evidência); 3.4.3 (., Marcadores); 3.4.3 (projects/host-app, Build); 3.4.6 #2 (Artefatos) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #27; configura #32 |
-| 4 | 3.4.2 (package.json:36, Evidência); 3.4.3 (., Marcadores); 3.4.3 (projects/customer-app, Build); 3.4.6 #1 (Artefatos) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #26; configura #31 |
-| 5 | 3.4.2 (package.json:36, Evidência); 3.4.3 (., Marcadores); 3.4.3 (projects/orders-app, Build); 3.4.6 #3 (Artefatos) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #28; configura #33 |
-| 6 | 3.4.2 (package.json:36, Evidência); 3.4.3 (projects/customer-app, Marcadores); 3.4.4 (projects/customer-app/src/main.ts:3, Observação); 3.4.4 (projects/host-app/src/app/app.routes.ts:8, Observação); 3.4.5 #1 (Configuração); 3.4.7 #3 (Evidência) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #26; configura #18; configura #29 |
-| 7 | 3.4.2 (package.json:36, Evidência); 3.4.3 (projects/orders-app, Marcadores); 3.4.4 (projects/orders-app/src/main.ts:3, Observação); 3.4.4 (projects/host-app/src/app/app.routes.ts:16, Observação); 3.4.5 #2 (Configuração); 3.4.7 #4 (Evidência) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #28; configura #19; configura #30 |
-| 8 | 3.4.3 (., Marcadores: angular.json) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #27; configura #32 |
-| 9 | 3.4.3 (., Marcadores: angular.json) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #26; configura #31 |
-| 10 | 3.4.3 (., Marcadores: angular.json) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #28; configura #33 |
-| 11 | 3.4.3 (projects/host-app, Marcadores) | 2 configuração | configuração | native-federation | tecnológica | moderada | configura #27 |
-| 12 | 3.4.4 (projects/customer-app/src/main.ts:5, src-async-bootstrap) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 13 | 3.4.4 (projects/host-app/src/main.ts:7, src-async-bootstrap) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 14 | 3.4.4 (projects/orders-app/src/main.ts:5, src-async-bootstrap) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 15 | 3.4.4 (projects/customer-app/src/main.ts:1) | 3 código | código-fonte | native-federation | tecnológica | fraca | — |
-| 16 | 3.4.4 (projects/customer-app/src/main.ts:3) | 3 código | código-fonte | native-federation | tecnológica | fraca | — |
-| 17 | 3.4.4 (projects/host-app/src/app/app.routes.ts:2) | 3 código | código-fonte | native-federation | tecnológica | moderada | implementa #29; implementa #30 |
-| 18 | 3.4.4 (projects/host-app/src/app/app.routes.ts:8) | 3 código | código-fonte | native-federation | arquitetural | forte | implementa #29 |
-| 19 | 3.4.4 (projects/host-app/src/app/app.routes.ts:16) | 3 código | código-fonte | native-federation | arquitetural | forte | implementa #30 |
-| 20 | 3.4.4 (projects/host-app/src/main.ts:1) | 3 código | código-fonte | native-federation | tecnológica | fraca | — |
-| 21 | 3.4.4 (projects/host-app/src/main.ts:3) | 3 código | código-fonte | native-federation | tecnológica | fraca | — |
-| 22 | 3.4.4 (projects/orders-app/src/main.ts:1) | 3 código | código-fonte | native-federation | tecnológica | fraca | — |
-| 23 | 3.4.4 (projects/orders-app/src/main.ts:3) | 3 código | código-fonte | native-federation | tecnológica | fraca | — |
-| 24 | 3.4.4 (projects/host-app/src/app/app.routes.ts:4, manual) | 3 código | código-fonte | native-federation | arquitetural | forte | implementa #29; implementa #30 |
-| 25 | 3.4.3 (.) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 26 | 3.4.3 (projects/customer-app) | 4 estrutura | diretório | native-federation | arquitetural | moderada | — |
-| 27 | 3.4.3 (projects/host-app) | 4 estrutura | diretório | native-federation | arquitetural | moderada | — |
-| 28 | 3.4.3 (projects/orders-app) | 4 estrutura | diretório | native-federation | arquitetural | moderada | — |
-| 29 | 3.4.5 #1 | 5 composição | código-fonte | native-federation | arquitetural | forte | liga #27; liga #26 |
-| 30 | 3.4.5 #2 | 5 composição | código-fonte | native-federation | arquitetural | forte | liga #27; liga #28 |
-| 31 | 3.4.6 #1 | 6 build-deploy | configuração | native-federation | arquitetural | moderada | publica #26 |
-| 32 | 3.4.6 #2 | 6 build-deploy | configuração | native-federation | arquitetural | moderada | publica #27 |
-| 33 | 3.4.6 #3 | 6 build-deploy | configuração | native-federation | arquitetural | moderada | publica #28 |
-| 34 | 3.4.7 #1 | 7 documentação | documentação | native-federation | arquitetural | fraca | corrobora #26; corrobora #27; corrobora #28; corrobora #2; corrobora #29; corrobora #30 |
-| 35 | 3.4.7 #2 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #29; corrobora #30; corrobora #24 |
-| 36 | 3.4.7 #3 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #6; corrobora #29 |
-| 37 | 3.4.7 #4 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #7; corrobora #30 |
-| 38 | 3.4.7 #5 | 7 documentação | documentação | — | arquitetural | fraca | corrobora em parte #25; corrobora em parte #26; corrobora em parte #27; corrobora em parte #28; corrobora em parte angular.json:68; corrobora em parte angular.json:181; corrobora em parte angular.json:294; corrobora em parte .gitignore:4; corrobora em parte .gitignore:10; corrobora em parte .gitignore:32 |
-| 39 | 3.4.7 #6 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #29; corrobora #30; corrobora #18; corrobora #19 |
-| 40 | 3.4.8 #1 | 8 histórico | histórico | native-federation | tecnológica | fraca | explica #1 |
-| 41 | 3.4.8 #2 | 8 histórico | histórico | native-federation | tecnológica | fraca | explica #20; explica #21; explica #18; explica #19; explica #29; explica #30 |
-| 42 | 3.4.8 #3 | 8 histórico | histórico | native-federation | tecnológica | fraca | explica #6; explica #7 |
-| 43 | 3.4.8 #4 | 8 histórico | histórico | — | arquitetural | fraca | explica #38 |
+| 1 | 3.4.2 (package.json:30) | 1 technology | manifest | native-federation | technological | weak | — |
+| 2 | 3.4.2 (package.json:36) | 1 technology | manifest | native-federation | technological | weak | declares #3; declares #4; declares #5; declares #6; declares #7; declares #8; declares #9; declares #10; declares #11; declares #15; declares #16; declares #17; declares #18; declares #19; declares #20; declares #21; declares #22; declares #23 |
+| 3 | 3.4.2 (package.json:36, Evidence); 3.4.3 (., Markers); 3.4.3 (projects/host-app, Build); 3.4.6 #2 (Artifacts) | 2 configuration | configuration | native-federation | technological | moderate | configures #27; configures #32 |
+| 4 | 3.4.2 (package.json:36, Evidence); 3.4.3 (., Markers); 3.4.3 (projects/customer-app, Build); 3.4.6 #1 (Artifacts) | 2 configuration | configuration | native-federation | technological | moderate | configures #26; configures #31 |
+| 5 | 3.4.2 (package.json:36, Evidence); 3.4.3 (., Markers); 3.4.3 (projects/orders-app, Build); 3.4.6 #3 (Artifacts) | 2 configuration | configuration | native-federation | technological | moderate | configures #28; configures #33 |
+| 6 | 3.4.2 (package.json:36, Evidence); 3.4.3 (projects/customer-app, Markers); 3.4.4 (projects/customer-app/src/main.ts:3, Observation); 3.4.4 (projects/host-app/src/app/app.routes.ts:8, Observation); 3.4.5 #1 (Configuration); 3.4.7 #3 (Evidence) | 2 configuration | configuration | native-federation | technological | moderate | configures #26; configures #18; configures #29 |
+| 7 | 3.4.2 (package.json:36, Evidence); 3.4.3 (projects/orders-app, Markers); 3.4.4 (projects/orders-app/src/main.ts:3, Observation); 3.4.4 (projects/host-app/src/app/app.routes.ts:16, Observation); 3.4.5 #2 (Configuration); 3.4.7 #4 (Evidence) | 2 configuration | configuration | native-federation | technological | moderate | configures #28; configures #19; configures #30 |
+| 8 | 3.4.3 (., Markers: angular.json) | 2 configuration | configuration | native-federation | technological | moderate | configures #27; configures #32 |
+| 9 | 3.4.3 (., Markers: angular.json) | 2 configuration | configuration | native-federation | technological | moderate | configures #26; configures #31 |
+| 10 | 3.4.3 (., Markers: angular.json) | 2 configuration | configuration | native-federation | technological | moderate | configures #28; configures #33 |
+| 11 | 3.4.3 (projects/host-app, Markers) | 2 configuration | configuration | native-federation | technological | moderate | configures #27 |
+| 12 | 3.4.4 (projects/customer-app/src/main.ts:5, src-async-bootstrap) | 3 code | source code | — | technological | weak | — |
+| 13 | 3.4.4 (projects/host-app/src/main.ts:7, src-async-bootstrap) | 3 code | source code | — | technological | weak | — |
+| 14 | 3.4.4 (projects/orders-app/src/main.ts:5, src-async-bootstrap) | 3 code | source code | — | technological | weak | — |
+| 15 | 3.4.4 (projects/customer-app/src/main.ts:1) | 3 code | source code | native-federation | technological | weak | — |
+| 16 | 3.4.4 (projects/customer-app/src/main.ts:3) | 3 code | source code | native-federation | technological | weak | — |
+| 17 | 3.4.4 (projects/host-app/src/app/app.routes.ts:2) | 3 code | source code | native-federation | technological | moderate | implements #29; implements #30 |
+| 18 | 3.4.4 (projects/host-app/src/app/app.routes.ts:8) | 3 code | source code | native-federation | architectural | strong | implements #29 |
+| 19 | 3.4.4 (projects/host-app/src/app/app.routes.ts:16) | 3 code | source code | native-federation | architectural | strong | implements #30 |
+| 20 | 3.4.4 (projects/host-app/src/main.ts:1) | 3 code | source code | native-federation | technological | weak | — |
+| 21 | 3.4.4 (projects/host-app/src/main.ts:3) | 3 code | source code | native-federation | technological | weak | — |
+| 22 | 3.4.4 (projects/orders-app/src/main.ts:1) | 3 code | source code | native-federation | technological | weak | — |
+| 23 | 3.4.4 (projects/orders-app/src/main.ts:3) | 3 code | source code | native-federation | technological | weak | — |
+| 24 | 3.4.4 (projects/host-app/src/app/app.routes.ts:4, manual) | 3 code | source code | native-federation | architectural | strong | implements #29; implements #30 |
+| 25 | 3.4.3 (.) | 4 structure | directory | — | context | weak | — |
+| 26 | 3.4.3 (projects/customer-app) | 4 structure | directory | native-federation | architectural | moderate | — |
+| 27 | 3.4.3 (projects/host-app) | 4 structure | directory | native-federation | architectural | moderate | — |
+| 28 | 3.4.3 (projects/orders-app) | 4 structure | directory | native-federation | architectural | moderate | — |
+| 29 | 3.4.5 #1 | 5 composition | source code | native-federation | architectural | strong | links #27; links #26 |
+| 30 | 3.4.5 #2 | 5 composition | source code | native-federation | architectural | strong | links #27; links #28 |
+| 31 | 3.4.6 #1 | 6 build-deploy | configuration | native-federation | architectural | moderate | publishes #26 |
+| 32 | 3.4.6 #2 | 6 build-deploy | configuration | native-federation | architectural | moderate | publishes #27 |
+| 33 | 3.4.6 #3 | 6 build-deploy | configuration | native-federation | architectural | moderate | publishes #28 |
+| 34 | 3.4.7 #1 | 7 documentation | documentation | native-federation | architectural | weak | corroborates #26; corroborates #27; corroborates #28; corroborates #2; corroborates #29; corroborates #30 |
+| 35 | 3.4.7 #2 | 7 documentation | documentation | — | architectural | weak | corroborates #29; corroborates #30; corroborates #24 |
+| 36 | 3.4.7 #3 | 7 documentation | documentation | — | architectural | weak | corroborates #6; corroborates #29 |
+| 37 | 3.4.7 #4 | 7 documentation | documentation | — | architectural | weak | corroborates #7; corroborates #30 |
+| 38 | 3.4.7 #5 | 7 documentation | documentation | — | architectural | weak | partially corroborates #25; partially corroborates #26; partially corroborates #27; partially corroborates #28; partially corroborates angular.json:68; partially corroborates angular.json:181; partially corroborates angular.json:294; partially corroborates .gitignore:4; partially corroborates .gitignore:10; partially corroborates .gitignore:32 |
+| 39 | 3.4.7 #6 | 7 documentation | documentation | — | architectural | weak | corroborates #29; corroborates #30; corroborates #18; corroborates #19 |
+| 40 | 3.4.8 #1 | 8 history | history | native-federation | technological | weak | explains #1 |
+| 41 | 3.4.8 #2 | 8 history | history | native-federation | technological | weak | explains #20; explains #21; explains #18; explains #19; explains #29; explains #30 |
+| 42 | 3.4.8 #3 | 8 history | history | native-federation | technological | weak | explains #6; explains #7 |
+| 43 | 3.4.8 #4 | 8 history | history | — | architectural | weak | explains #38 |
 
-## Resumo
+## Summary
 
-Observações: 43. Dimensões (tecnologia: 2, configuração: 9, código: 13, estrutura: 4, composição: 2, build-deploy: 3, documentação: 6, histórico: 4). Força (forte: 5, moderada: 16, fraca: 22, ambígua: 0). Evidência (tecnológica: 24, arquitetural: 18, contexto: 1).
+Observations: 43. Dimensions (technology: 2, configuration: 9, code: 13, structure: 4, composition: 2, build-deploy: 3, documentation: 6, history: 4). Strength (strong: 5, moderate: 16, weak: 22, ambiguous: 0). Evidence (technological: 24, architectural: 18, context: 1).

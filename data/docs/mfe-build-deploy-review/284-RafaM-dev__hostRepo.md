@@ -16,22 +16,22 @@ annotation:
 
 # 284 — RafaM-dev/hostRepo
 
-## Leitura do repositório
+## Repository overview
 
-O repositório tem uma só aplicação React + Vite, o host, na raiz. O remote que ele carrega, `mf-remoteDetails`, não está no snapshot: aparece só como `http://localhost:5001/assets/remoteEntry.js` na configuração do Module Federation (vite.config.ts:11-13; ver a revisão de composição). O build e o deploy desse remote, se existem, estão fora do repositório. O build do host é o padrão do Vite, `tsc -b && vite build` (package.json:8), com o plugin `@originjs/vite-plugin-federation` (vite.config.ts:3, 8-15). O config não define `build.outDir` nem `base`, então a saída é a padrão do Vite; `.gitignore:11` ignora `dist`.
+The repository has a single React + Vite application, host at root. Remote it loads, `mf-remoteDetails`, is absent from snapshot: appears only as `http://localhost:5001/assets/remoteEntry.js` in Module Federation configuration (vite.config.ts:11-13; see composition review). This remote’s build and deploy, if present, are outside repository. Host build is Vite default, `tsc -b && vite build` (package.json:8), with plugin `@originjs/vite-plugin-federation` (vite.config.ts:3, 8-15). Configuration defines neither `build.outDir` nor `base`, so output is Vite default; `.gitignore:11` ignores `dist`.
 
-Os outros scripts são de desenvolvimento: `vite` e `vite preview` (package.json:7, 10). Não há Dockerfile, CI, configuração de hospedagem nem script de publicação, e o `matches.csv` não tem ocorrências `ops-*`, `ci-*` ou `cfg-public-path`. O README só manda rodar `npm run build` e `npm run preview` localmente e cita a porta 5173 do servidor de desenvolvimento (README.md:52, 56-62, 318-322); ele não descreve deploy. O arquivo vazio `remote-root@0.0.0` na raiz não é artefato de build nem de deploy.
+Other scripts are for development: `vite` and `vite preview` (package.json:7, 10). No Dockerfile, CI, hosting configuration or publication script exists, and `matches.csv` has no `ops-*`, `ci-*` or `cfg-public-path` occurrences. README only instructs running `npm run build` and `npm run preview` locally and mentions development server port 5173 (README.md:52, 56-62, 318-322); it does not describe deploy. Empty root file `remote-root@0.0.0` is neither a build nor deployment artifact.
 
-## Aplicações
+## Applications
 
-| # | Aplicação | Build | Deploy | Onde é servida | Versionamento | Artefatos |
+| # | Application | Build | Deploy | Where served | Versioning | Artifacts |
 |---|---|---|---|---|---|---|
-| 1 | . | separado | não observado | — | No | package.json:8 (`tsc -b && vite build`); vite.config.ts:5-17 (config Vite com `react()` e `federation(...)` do host) |
+| 1 | . | separate | not observed | — | No | package.json:8 (`tsc -b && vite build`); vite.config.ts:5-17 (Vite configuration with `react()` and host `federation(...)`) |
 
-## Observações
+## Observations
 
-**1. Raiz (`.`).** Aplicação da raiz, o host. Build separado: tem script e config de build próprios (package.json:8; vite.config.ts:5-17), e o código do remote não está neste repositório. Sem deploy observado: só há os comandos de desenvolvimento `vite` e `vite preview` (package.json:7, 10), e nada no snapshot publica a aplicação. Onde é servida fica `—`: o `vite.config.ts` não fixa porta nem `base`; a porta 5173 aparece só no README (README.md:52), que não é artefato. Sem versionamento: package.json:4 declara `0.0.0`, sem uso em publicação.
+**1. Root (`.`).** Root application, the host. Separate build: own build script and configuration (package.json:8; vite.config.ts:5-17), and remote code is absent from repository. No observed deploy: only development commands `vite` and `vite preview` (package.json:7, 10), and nothing in snapshot publishes application. Where served remains `—`: `vite.config.ts` fixes neither port nor `base`; port 5173 appears only in README (README.md:52), not an artifact. No versioning: package.json:4 declares `0.0.0`, unused in publication.
 
-## Resumo
+## Summary
 
-Aplicações: 1. Build (separado: 1). Deploy (não observado: 1). Versionamento independente: 0.
+Applications: 1. Build (separate: 1). Deploy (not observed: 1). Independent versioning: 0.

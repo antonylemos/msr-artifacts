@@ -19,238 +19,238 @@ annotation:
 
 # 305 — martinkuba/micro-frontend-test
 
-## Leitura do repositório
+## Repository overview
 
-A revisão de dependências não tem linhas, portanto não há observação na dimensão 1. A cadeia começa nas configurações: main-content expõe `./MainContent` (#1), o shell resolve esse remote por URL (#2), importa seu módulo (#4) e o renderiza (#7). Essa cadeia sustenta a relação ativa shell → main-content por Module Federation (#12), com builds separados (#13–#14). O shell tem entrada que monta a UI (#10); a entrada de main-content apenas reexporta o componente, deixando sua execução autônoma indeterminada (#9). O papel de remote está demonstrado sem resolver essa dúvida estrutural. A raiz apenas coordena o workspace (#8).
+Dependency review has no rows, therefore no dimension 1 observation. Chain starts with configurations: main-content exposes `./MainContent` (#1), shell resolves remote through URL (#2), imports module (#4), rendering it (#7). Chain supports active shell → main-content Module Federation relationship (#12), with separate builds (#13–#14). Shell entry mounts UI (#10); main-content entry only reexports component, leaving autonomous execution undetermined (#9). Remote role demonstrated without resolving structural uncertainty. Root only coordinates workspace (#8).
 
-Sidebar preserva configuração federada (#3) e build separado (#15), mas seu import e montagem estão comentados (#5), assim como sua referência no host (#2). A mensagem de carregamento federado da interface (#27) contradiz esse estado. Seu limite como aplicação autônoma também fica indeterminado (#11). Os históricos das entradas dos remotes explicam que elas já só reexportavam componentes na primeira presença observável (#29–#30); o histórico do sidebar não confirma por conteúdo sua ligação anterior ao host (#31), sem deixar dúvida sobre a desconexão no snapshot.
+Sidebar retains federated configuration (#3) and separate build (#15), but import/mounting commented (#5), as is host reference (#2). Interface federated-loading message (#27) contradicts state. Autonomous application boundary also undetermined (#11). Remote entry histories explain only component reexports since first observable presence (#29–#30); sidebar history does not confirm earlier host link through content (#31), without uncertainty about snapshot disconnection.
 
-O README e os textos da interface descrevem host, remote, composição e bundles (#16–#19, #21, #23–#24), mas são afirmações de força fraca. A alegação de execução independente de main-content não tem corroboração (#22). A inicialização local do Faro (#20) é contexto de observabilidade, não comunicação entre unidades; o comentário sobre seu bundle no sidebar (#28) trata de empacotamento. Há três builds separados, sem deploy observado nem versionamento independente (#13–#15). As portas e os servidores locais não demonstram publicação.
+README/interface texts describe host, remote, composition and bundles (#16–#19, #21, #23–#24), but weak claims. Independent main-content execution uncorroborated (#22). Local Faro initialization (#20) observability context rather than inter-unit communication; sidebar bundle comment (#28) addresses packaging. Three separate builds without observed deployment/independent versioning (#13–#15). Local ports/servers demonstrate no publication.
 
-## Observações
+## Observations
 
 ### 1. packages/main-content/webpack.config.js:4-54
 
-**Observação:** a configuração webpack de main-content usa `ModuleFederationPlugin` com nome `mainContent`, arquivo `remoteEntry.js` e exposição de `./MainContent` a partir de `./src/MainContent`. Compartilha React, React DOM e Faro SDK como singletons.
+**Observation:** Main-content webpack configuration uses `ModuleFederationPlugin` with name `mainContent`, file `remoteEntry.js` and exposure of `./MainContent` from `./src/MainContent`. Shares React, React DOM and Faro SDK as singletons.
 
-**Interpretação:** configura Module Federation num produtor de componente com identidade própria. Sem nomear um consumidor, a configuração sozinha é evidência tecnológica moderada.
+**Interpretation:** Configures Module Federation in own-identity component producer. Without named consumer, configuration alone moderate technological evidence.
 
 ### 2. packages/shell/webpack.config.js:5-60
 
-**Observação:** o plugin federado do shell declara `name: 'shell'`, resolve `mainContent` por `mainContent@http://localhost:3001/remoteEntry.js` e compartilha React, React DOM e Faro SDK como singletons. A entrada `sidebar` em `remotes` está comentada.
+**Observation:** Shell federation plugin declares `name: 'shell'`, resolves `mainContent` through `mainContent@http://localhost:3001/remoteEntry.js`, sharing React, React DOM and Faro SDK as singletons. Entry `sidebar` in `remotes` commented.
 
-**Interpretação:** liga explicitamente o host ao remote mainContent por Module Federation, constituindo evidência arquitetural forte. A configuração não estabelece uma ligação ativa com sidebar.
+**Interpretation:** Explicitly links host to remote mainContent through Module Federation, strong architectural evidence. Configuration establishes no active sidebar link.
 
 ### 3. packages/sidebar/webpack.config.js:4-54
 
-**Observação:** o plugin federado de sidebar declara nome `sidebar`, `remoteEntry.js`, exposição de `./Sidebar` a partir de `./src/Sidebar` e compartilhamento singleton de React e React DOM. Faro não está em `shared`.
+**Observation:** Sidebar federation plugin declares name `sidebar`, `remoteEntry.js`, exposure of `./Sidebar` from `./src/Sidebar` and singleton React/React DOM sharing. Faro absent from `shared`.
 
-**Interpretação:** configura um produtor federado, sem declarar consumidor. É evidência tecnológica moderada e não demonstra participação na composição atual.
+**Interpretation:** Configures federated producer without declaring consumer. Moderate technological evidence, demonstrating no current composition participation.
 
 ### 4. packages/shell/src/App.tsx:6; packages/main-content/webpack.config.js:31-42; packages/shell/webpack.config.js:32-43; packages/shell/src/App.tsx:199-203; packages/shell/src/bootstrap.tsx:14-19; packages/shell/src/index.tsx:2
 
-**Observação:** `React.lazy` importa `mainContent/MainContent`; esse identificador corresponde ao remote declarado no shell e ao módulo exposto por main-content. O componente aparece no App montado pelo bootstrap do shell.
+**Observation:** `React.lazy` imports `mainContent/MainContent`; identifier matches shell-declared remote/module exposed by main-content. Component appears in App mounted by shell bootstrap.
 
-**Interpretação:** o import nomeia diretamente o destino federado e integra seu módulo ao host, sustentando composição arquitetural forte.
+**Interpretation:** Import directly names federated target, integrating module into host and supporting strong architectural composition.
 
 ### 5. packages/shell/src/App.tsx:7; packages/shell/src/App.tsx:206-214; packages/shell/webpack.config.js:36
 
-**Observação:** o import dinâmico de `sidebar/Sidebar` está comentado, assim como a montagem de `Sidebar` e a declaração do remote no shell.
+**Observation:** Dynamic import of `sidebar/Sidebar` commented, as are mounting of `Sidebar` and shell remote declaration.
 
-**Interpretação:** a construção preserva a intenção de consumo federado, mas não participa da composição no snapshot. É um sinal tecnológico fraco, não uma ligação ativa.
+**Interpretation:** Construct preserves federated consumption intent without snapshot composition participation. Weak technological signal rather than active link.
 
 ### 6. packages/shell/src/index.tsx:2; packages/shell/src/bootstrap.tsx:1-19
 
-**Observação:** a entrada faz `import('./bootstrap')`, carregando um arquivo local que importa App e monta a UI do shell.
+**Observation:** Entry executes `import('./bootstrap')`, loading local file importing App and mounting shell UI.
 
-**Interpretação:** é uma fronteira assíncrona interna, sem destino externo. A observação registra um padrão tecnológico associado à preparação do carregamento, mas não demonstra sozinha um mecanismo de MFE nem composição entre unidades; mantém a força fraca da construção No.
+**Interpretation:** Internal asynchronous boundary without external target. Technological pattern associated with loading preparation, alone demonstrating neither MFE mechanism nor inter-unit composition; retains weak strength of No construct.
 
 ### 7. packages/shell/src/App.tsx:199-203; packages/shell/src/App.tsx:6
 
-**Observação:** `<MainContent />` é renderizado dentro de `ErrorBoundary` e `Suspense`; a variável foi definida pelo import lazy de `mainContent/MainContent`.
+**Observation:** `<MainContent />` rendered inside `ErrorBoundary` and `Suspense`; variable defined through lazy import of `mainContent/MainContent`.
 
-**Interpretação:** a renderização integra o componente remoto à interface do host. Como a construção principal apenas renderiza o componente fora de uma rota, sua força é moderada; a resolução federada está nas observações próprias.
+**Interpretation:** Rendering integrates remote component into host interface. Main construct only renders outside route, therefore moderate strength; federated resolution in own observations.
 
 ### 8. .; package.json:11; package.json:14-18
 
-**Observação:** o manifesto da raiz lista shell, main-content e sidebar como workspaces, e seu script de build delega a `npm run build --workspaces`. A linha estrutural registra ausência de entrada e build próprios na raiz.
+**Observation:** Root manifest lists shell, main-content and sidebar workspaces; build script delegates to `npm run build --workspaces`. Structural row records no own root entry/build.
 
-**Interpretação:** a raiz coordena pacotes, sem constituir unidade frontend. É contexto fraco, evitando confundir workspace com aplicação.
+**Interpretation:** Root coordinates packages without frontend unit. Weak context, avoiding workspace/application confusion.
 
 ### 9. packages/main-content; packages/main-content/webpack.config.js:8; packages/main-content/src/index.ts:1; packages/main-content/webpack.config.js:30-43; packages/main-content/package.json:7; package.json:16
 
-**Observação:** o diretório tem manifesto, configuração webpack e build próprios; a entrada `src/index.ts` apenas reexporta MainContent. O plugin produz `remoteEntry.js`; a revisão registra ausência de `index.html` e de montagem da UI nesse diretório.
+**Observation:** Directory has own manifest, webpack configuration/build; entry `src/index.ts` only reexports MainContent. Plugin produces `remoteEntry.js`; review records no `index.html` or directory UI mounting.
 
-**Interpretação:** o pacote tem limite de build e função de remote, mas a revisão estrutural mantém Unidade frontend Undetermined: permanecem plausíveis o uso como componente hospedado e uma execução autônoma em outro contexto não demonstrado. A força estrutural é ambígua.
+**Interpretation:** Package has build boundary/remote role, but structure review retains Frontend unit Undetermined: hosted component usage and autonomous execution in undemonstrated external context both plausible. Structural strength ambiguous.
 
 ### 10. packages/shell; packages/shell/webpack.config.js:9; packages/shell/src/index.tsx:2; packages/shell/src/bootstrap.tsx:14-19; packages/shell/webpack.config.js:31-48; packages/shell/package.json:7; package.json:15
 
-**Observação:** o diretório tem manifesto e build webpack próprios, entrada que importa o bootstrap e montagem React de App. `HtmlWebpackPlugin` gera `index.html` a partir de `./public/index.html`.
+**Observation:** Directory has own manifest/webpack build, bootstrap-importing entry and React App mounting. `HtmlWebpackPlugin` generates `index.html` from `./public/index.html`.
 
-**Interpretação:** confirma o limite de uma unidade frontend com UI e build próprios, de força moderada. A ligação com outra unidade é estabelecida separadamente.
+**Interpretation:** Confirms frontend unit boundary with own UI/build, moderate strength. Other-unit link established separately.
 
 ### 11. packages/sidebar; packages/sidebar/webpack.config.js:8; packages/sidebar/src/index.ts:1; packages/sidebar/webpack.config.js:30-42; packages/sidebar/package.json:7; package.json:17
 
-**Observação:** o diretório tem manifesto e build webpack próprios com `remoteEntry.js`; sua entrada apenas reexporta Sidebar. A revisão registra ausência de `index.html` e de código que monte a UI sozinho no diretório.
+**Observation:** Directory has own manifest/webpack build with `remoteEntry.js`; entry only reexports Sidebar. Review records no `index.html` or code mounting UI alone in directory.
 
-**Interpretação:** há um pacote produtor de componente federado, mas sua condição de unidade frontend autônoma fica Undetermined: uso hospedado e execução em contexto externo não demonstrado continuam plausíveis. A ambiguidade estrutural é distinta da desconexão do host.
+**Interpretation:** Federated component producer package, but autonomous frontend unit status Undetermined: hosted usage and execution in undemonstrated external context remain plausible. Structural ambiguity distinct from host disconnection.
 
 ### 12. packages/shell/src/App.tsx:6; packages/shell/src/App.tsx:201; packages/shell/webpack.config.js:34-35; packages/main-content/webpack.config.js:32-36
 
-**Observação:** o shell resolve mainContent por `remoteEntry.js`, importa `mainContent/MainContent` e renderiza o componente; o destino declara esse nome e expõe `./MainContent`.
+**Observation:** Shell resolves mainContent through `remoteEntry.js`, imports `mainContent/MainContent`, rendering component; target declares name, exposing `./MainContent`.
 
-**Interpretação:** a correspondência entre consumidor e produtor demonstra a relação ativa host → remote por Module Federation. É evidência arquitetural forte, sem pressupor montagem autônoma do remote.
+**Interpretation:** Consumer/producer match demonstrates active host → remote Module Federation relationship. Strong architectural evidence without presuming autonomous remote mounting.
 
 ### 13. packages/main-content/webpack.config.js:4-43; packages/main-content/package.json:6-7; package.json:11; packages/main-content/webpack.config.js:44-53; packages/main-content/package.json:3-4
 
-**Observação:** main-content tem comando webpack e saída `dist` próprios com `remoteEntry.js`; o build da raiz pode acioná-lo por workspace. É servido em desenvolvimento por `webpack serve`. A revisão registra Build separado, Deploy não observado e Versionamento No.
+**Observation:** Main-content has own webpack command/output `dist` with `remoteEntry.js`; root build can trigger through workspace. Served in development by `webpack serve`. Review records Build separate, Deploy not observed and Versioning No.
 
-**Interpretação:** há limite de build próprio para o produtor federado, com força arquitetural moderada. Servir localmente não demonstra deploy, publicação ou UI autônoma.
+**Interpretation:** Own federated producer build boundary, moderate architectural strength. Local serving demonstrates neither deployment, publication nor autonomous UI.
 
 ### 14. packages/shell/webpack.config.js:5-48; packages/shell/package.json:6-7; package.json:11; packages/shell/webpack.config.js:49-59; packages/shell/package.json:3-4
 
-**Observação:** o shell tem comando webpack e saída `dist` próprios, com geração de `index.html`, acionáveis pelo build dos workspaces. O servidor é de desenvolvimento. A revisão registra Build separado, Deploy não observado e Versionamento No.
+**Observation:** Shell has own webpack command/output `dist` with `index.html` generation, triggerable through workspace build. Development server. Review records Build separate, Deploy not observed and Versioning No.
 
-**Interpretação:** confirma um artefato de build do host separado dos remotes, evidência arquitetural moderada. Não demonstra deploy independente.
+**Interpretation:** Confirms host build artifact separate from remotes, moderate architectural evidence. Demonstrates no independent deployment.
 
 ### 15. packages/sidebar/webpack.config.js:4-42; packages/sidebar/package.json:6-7; package.json:11; packages/sidebar/webpack.config.js:44-53; packages/sidebar/package.json:3-4
 
-**Observação:** sidebar tem comando webpack e saída `dist` próprios com `remoteEntry.js`, incluídos no build dos workspaces, e servidor de desenvolvimento. A revisão registra Build separado, Deploy não observado e Versionamento No.
+**Observation:** Sidebar has own webpack command/output `dist` with `remoteEntry.js`, included in workspace build, plus development server. Review records Build separate, Deploy not observed and Versioning No.
 
-**Interpretação:** confirma separação do build do pacote, evidência arquitetural moderada, mesmo sem consumo ativo no host. Não estabelece deploy independente nem montagem autônoma da UI.
+**Interpretation:** Confirms package build separation, moderate architectural evidence despite no active host consumption. Establishes neither independent deployment nor autonomous UI mounting.
 
 ### 16. README.md:3
 
-**Observação:** o README apresenta o projeto como uma aplicação simples de micro-frontends para testar Grafana Faro em arquitetura distribuída.
+**Observation:** README presents project as simple microfrontend application to test Grafana Faro in distributed architecture.
 
-**Interpretação:** a caracterização do conjunto é evidência arquitetural semântica fraca, corroborada pela relação ativa entre host e remote.
+**Interpretation:** Group characterization weak semantic architectural evidence, corroborated by active host/remote relationship.
 
 ### 17. README.md:7
 
-**Observação:** o README descreve Shell como aplicação host que carrega micro-frontends remotos.
+**Observation:** README describes Shell as host application loading remote microfrontends.
 
-**Interpretação:** nomeia o papel do host na organização, evidência arquitetural fraca corroborada pela relação com main-content. A frase não enumera sidebar como remote ativo.
+**Interpretation:** Names organizational host role, weak architectural evidence corroborated by main-content relationship. Phrase does not enumerate sidebar as active remote.
 
 ### 18. README.md:8
 
-**Observação:** o README descreve Main Content como micro-frontend remoto com instância própria de Faro.
+**Observation:** README describes Main Content as remote microfrontend with own Faro instance.
 
-**Interpretação:** situa o produtor no conjunto e atribui inicialização local de telemetria, evidência arquitetural fraca corroborada pela composição e pelos fontes citados na revisão. O papel de remote não comprova UI autônoma.
+**Interpretation:** Locates producer within group, attributing local telemetry initialization; weak architectural evidence corroborated by composition/sources cited in review. Remote role does not establish autonomous UI.
 
 ### 19. README.md:10
 
-**Observação:** o README afirma uso de Webpack Module Federation para carregar micro-frontends dinamicamente em runtime.
+**Observation:** README claims Webpack Module Federation used to dynamically load microfrontends at runtime.
 
-**Interpretação:** descreve composição entre unidades por mecanismo explícito, mas continua uma afirmação arquitetural fraca, corroborada pela ligação ativa.
+**Interpretation:** Describes inter-unit composition through explicit mechanism but remains weak architectural claim corroborated by active link.
 
 ### 20. README.md:23
 
-**Observação:** o README afirma que cada micro-frontend inicializa sua própria instância do Faro em `src/faro.ts`.
+**Observation:** README claims each microfrontend initializes own Faro instance in `src/faro.ts`.
 
-**Interpretação:** descreve telemetria local, sem configurar ou ligar unidades. É contexto fraco, corroborado pelos caminhos de inicialização que a revisão documental confrontou, inclusive a implementação preservada no sidebar desligado.
+**Interpretation:** Describes local telemetry without configuring/linking units. Weak context corroborated by initialization paths confronted in documentation review, including implementation retained in disabled sidebar.
 
 ### 21. packages/main-content/src/MainContent.tsx:159-160
 
-**Observação:** o texto da interface diz que o componente é carregado do micro-frontend main-content por Module Federation.
+**Observation:** Interface text says component loaded from main-content microfrontend through Module Federation.
 
-**Interpretação:** afirma o vínculo de origem do componente com o produtor federado, evidência arquitetural fraca corroborada pelo import e render do shell.
+**Interpretation:** Claims originating component/producer link, weak architectural evidence corroborated by shell import/render.
 
 ### 22. packages/main-content/src/MainContent.tsx:160
 
-**Observação:** o texto da interface afirma que o componente executa independentemente.
+**Observation:** Interface text claims component executes independently.
 
-**Interpretação:** é uma alegação arquitetural de independência, de força fraca e sem corroboração na revisão documental. Não resolve o Undetermined estrutural de main-content.
+**Interpretation:** Weak architectural independence claim uncorroborated in documentation review. Does not resolve main-content structural Undetermined.
 
 ### 23. packages/main-content/src/MainContent.tsx:160
 
-**Observação:** o texto da interface afirma que o componente compartilha React com o shell.
+**Observation:** Interface text claims component shares React with shell.
 
-**Interpretação:** descreve uma propriedade entre unidades, evidência arquitetural fraca corroborada pelo uso de React e pelas configurações singleton dos dois lados. O texto não nomeia por si o mecanismo desse compartilhamento.
+**Interpretation:** Describes inter-unit property, weak architectural evidence corroborated by React usage/singleton configurations on both sides. Text alone names no sharing mechanism.
 
 ### 24. packages/main-content/src/MainContent.tsx:218-219
 
-**Observação:** o texto da interface afirma que cada micro-frontend é construído como bundle separado.
+**Observation:** Interface text claims each microfrontend built as separate bundle.
 
-**Interpretação:** afirma limites de build entre unidades, evidência arquitetural fraca corroborada pelos três builds separados. Não afirma deploy independente.
+**Interpretation:** Claims inter-unit build boundaries, weak architectural evidence corroborated by three separate builds. Claims no independent deployment.
 
 ### 25. packages/shell/src/App.tsx:206
 
-**Observação:** o comentário informa que Sidebar está oculto por enquanto.
+**Observation:** Comment says Sidebar hidden for now.
 
-**Interpretação:** é uma afirmação arquitetural fraca sobre a retirada de um participante da interface, corroborada pelo import, render e remote comentados no snapshot.
+**Interpretation:** Weak architectural claim about interface participant withdrawal, corroborated by commented snapshot import/render/remote.
 
 ### 26. packages/shell/src/index.tsx:1
 
-**Observação:** o comentário diz que o import dinâmico garante que as dependências compartilhadas sejam carregadas primeiro.
+**Observation:** Comment says dynamic import ensures shared dependencies loaded first.
 
-**Interpretação:** descreve a finalidade técnica da fronteira assíncrona, evidência tecnológica fraca corroborada estaticamente pelo bootstrap e pelo shared do host. Não situa sozinho outra unidade nem nomeia uma abordagem de MFE.
+**Interpretation:** Describes asynchronous boundary technical purpose, weak technological evidence statically corroborated by bootstrap/host shared. Alone locates no other unit or MFE approach.
 
 ### 27. packages/sidebar/src/Sidebar.tsx:158
 
-**Observação:** o texto de status da interface afirma carregamento por Module Federation.
+**Observation:** Interface status text claims Module Federation loading.
 
-**Interpretação:** é uma afirmação tecnológica fraca de uso do mecanismo, contradita pelo consumo de sidebar comentado no host. A mensagem preservada não comprova carregamento atual.
+**Interpretation:** Weak technological mechanism-usage claim contradicted by commented host sidebar consumption. Retained message does not establish current loading.
 
 ### 28. packages/sidebar/webpack.config.js:40
 
-**Observação:** o comentário afirma que Faro SDK não é compartilhado e que esse micro-frontend tem seu próprio bundle.
+**Observation:** Comment claims Faro SDK not shared and microfrontend has own bundle.
 
-**Interpretação:** descreve uma propriedade de empacotamento do sidebar, evidência arquitetural fraca corroborada pelo shared sem Faro, pelo import local do SDK e pelo build próprio. Não estabelece consumo ativo pelo shell.
+**Interpretation:** Describes sidebar packaging property, weak architectural evidence corroborated by shared without Faro, local SDK import/own build. Establishes no active shell consumption.
 
 ### 29. efec921 2026-01-06 (packages/main-content/src/index.ts); packages/main-content/src/index.ts:1; packages/main-content/webpack.config.js:8
 
-**Observação:** a revisão histórica registra a entrada de main-content em `efec921` apenas reexportando MainContent, sem mudanças posteriores desse arquivo até o snapshot. O resultado do ponto é esclarecido.
+**Observation:** History review records main-content entry in `efec921` only reexporting MainContent, unchanged afterward through snapshot. Point result clarified.
 
-**Interpretação:** explica que a entrada sem montagem já aparece assim na primeira presença observável, sem demonstrar execução independente passada ou atual. É evidência histórica arquitetural fraca e mantém a dúvida estrutural e a alegação sem corroboração.
+**Interpretation:** Explains nonmounting entry present since first observation without demonstrating past/current independent execution. Weak architectural historical evidence retaining structural uncertainty/uncorroborated claim.
 
 ### 30. efec921 2026-01-06 (packages/sidebar/src/index.ts); packages/sidebar/src/index.ts:1; packages/sidebar/webpack.config.js:8
 
-**Observação:** a revisão histórica registra a entrada de sidebar em `efec921` apenas reexportando Sidebar, sem mudanças posteriores desse arquivo até o snapshot. O resultado do ponto é esclarecido.
+**Observation:** History review records sidebar entry in `efec921` only reexporting Sidebar, unchanged afterward through snapshot. Point result clarified.
 
-**Interpretação:** explica a permanência da entrada sem montagem, sem comprovar UI autônoma em outro contexto. É evidência histórica arquitetural fraca, que não altera o Undetermined estrutural.
+**Interpretation:** Explains persistent nonmounting entry without establishing autonomous UI in other context. Weak architectural historical evidence preserving structural Undetermined.
 
 ### 31. eb20348 2026-01-07 (packages/sidebar/src/Sidebar.tsx); 3174dd1 2026-01-07 (package.json; packages/shell/src/App.tsx; packages/shell/webpack.config.js); packages/sidebar/src/Sidebar.tsx:158; packages/shell/src/App.tsx:7; packages/shell/src/App.tsx:206-214; packages/shell/webpack.config.js:36; package.json:7
 
-**Observação:** a revisão histórica encontrou a mensagem de carregamento federado em Sidebar antes de `3174dd1`, cuja mensagem anuncia retirada temporária e cuja listagem altera manifesto, App e configuração do host. Os blobs antigos do App e da configuração consultados estavam ausentes; a ligação anterior não foi confirmada por conteúdo. O ponto permanece inconclusivo.
+**Observation:** History review found federated-loading message in Sidebar before `3174dd1`, whose message announces temporary withdrawal and file list changes manifest, App and host configuration. Queried old App/configuration blobs absent; earlier link not confirmed by content. Point remains inconclusive.
 
-**Interpretação:** a dúvida é sobre a ligação passada e a intenção de retirada, não sobre a desconexão atual, confirmada no snapshot. A força é fraca: o histórico explica a permanência de uma mensagem contradita, sem provar uso anterior nem abandono definitivo.
+**Interpretation:** Uncertainty concerns past link/withdrawal intent rather than current disconnection confirmed in snapshot. Weak strength: history explains retained contradicted message without proving earlier usage or definitive abandonment.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.3 (packages/main-content, Marcadores; Entrada; Build); 3.4.4 (App.tsx:6, Observação); 3.4.5 #1 (Configuração); 3.4.6 #1 (Artefatos); 3.4.7 #3, #6, #8, #9 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #4; configura #9; configura #12 |
-| 2 | 3.4.3 (packages/shell, Marcadores; Entrada; Build); 3.4.4 (App.tsx:6, App.tsx:7, Observação); 3.4.5 #1 (Configuração); 3.4.6 #2 (Artefatos); 3.4.7 #2, #4, #8, #9, #10, #11, #12 (Evidência) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #4; configura #7; configura #10; configura #12 |
-| 3 | 3.4.3 (packages/sidebar, Marcadores; Entrada; Build); 3.4.6 #3 (Artefatos); 3.4.7 #9, #13 (Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #11 |
-| 4 | 3.4.4 (packages/shell/src/App.tsx:6) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #12 |
-| 5 | 3.4.4 (packages/shell/src/App.tsx:7) | 3 código | código-fonte | module-federation | tecnológica | fraca | — |
-| 6 | 3.4.4 (packages/shell/src/index.tsx:2) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 7 | 3.4.4 (fora da mineração, packages/shell/src/App.tsx:201) | 3 código | código-fonte | module-federation | arquitetural | moderada | implementa #12 |
-| 8 | 3.4.3 (.) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 9 | 3.4.3 (packages/main-content) | 4 estrutura | diretório | module-federation | arquitetural | ambígua | — |
-| 10 | 3.4.3 (packages/shell) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 11 | 3.4.3 (packages/sidebar) | 4 estrutura | diretório | module-federation | arquitetural | ambígua | — |
-| 12 | 3.4.5 #1 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #10; liga #9 |
-| 13 | 3.4.6 #1 | 6 build-deploy | configuração | module-federation | arquitetural | moderada | publica #9 |
-| 14 | 3.4.6 #2 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #10 |
-| 15 | 3.4.6 #3 | 6 build-deploy | configuração | module-federation | arquitetural | moderada | publica #11 |
-| 16 | 3.4.7 #1 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #12 |
-| 17 | 3.4.7 #2 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #12 |
-| 18 | 3.4.7 #3 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #12; corrobora packages/main-content/src/MainContent.tsx:108-110; corrobora packages/main-content/src/faro.ts:9-28 |
-| 19 | 3.4.7 #4 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #12 |
-| 20 | 3.4.7 #5 | 7 documentação | documentação | — | contexto | fraca | corrobora packages/shell/src/bootstrap.tsx:3-7; corrobora packages/shell/src/faro.ts:10-32; corrobora packages/main-content/src/MainContent.tsx:108-110; corrobora packages/main-content/src/faro.ts:9-28; corrobora packages/sidebar/src/Sidebar.tsx:87-90; corrobora packages/sidebar/src/faro.ts:8-28 |
-| 21 | 3.4.7 #6 | 7 documentação | comentário | module-federation | arquitetural | fraca | corrobora #12 |
-| 22 | 3.4.7 #7 | 7 documentação | comentário | — | arquitetural | fraca | — |
-| 23 | 3.4.7 #8 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #1; corrobora #2; corrobora packages/main-content/src/MainContent.tsx:1; corrobora packages/shell/src/App.tsx:1 |
-| 24 | 3.4.7 #9 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #13; corrobora #14; corrobora #15 |
-| 25 | 3.4.7 #10 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #5; corrobora #2 |
-| 26 | 3.4.7 #11 | 7 documentação | comentário | — | tecnológica | fraca | corrobora #6; corrobora #2; corrobora packages/shell/src/bootstrap.tsx:1-4; corrobora packages/shell/src/bootstrap.tsx:14-19 |
-| 27 | 3.4.7 #12 | 7 documentação | comentário | module-federation | tecnológica | fraca | contradiz #5; contradiz #2 |
-| 28 | 3.4.7 #13 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #3; corrobora #15; corrobora packages/sidebar/src/faro.ts:1-6; corrobora packages/sidebar/src/faro.ts:15-28 |
-| 29 | 3.4.8 #1 | 8 histórico | histórico | — | arquitetural | fraca | explica #9; explica #22 |
-| 30 | 3.4.8 #2 | 8 histórico | histórico | — | arquitetural | fraca | explica #11 |
-| 31 | 3.4.8 #3 | 8 histórico | histórico | module-federation | arquitetural | fraca | explica #5; explica #27 |
+| 1 | 3.4.3 (packages/main-content, Markers; Entry; Build); 3.4.4 (App.tsx:6, Observation); 3.4.5 #1 (Configuration); 3.4.6 #1 (Artifacts); 3.4.7 #3, #6, #8, #9 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #4; configures #9; configures #12 |
+| 2 | 3.4.3 (packages/shell, Markers; Entry; Build); 3.4.4 (App.tsx:6, App.tsx:7, Observation); 3.4.5 #1 (Configuration); 3.4.6 #2 (Artifacts); 3.4.7 #2, #4, #8, #9, #10, #11, #12 (Evidence) | 2 configuration | configuration | module-federation | architectural | strong | configures #4; configures #7; configures #10; configures #12 |
+| 3 | 3.4.3 (packages/sidebar, Markers; Entry; Build); 3.4.6 #3 (Artifacts); 3.4.7 #9, #13 (Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #11 |
+| 4 | 3.4.4 (packages/shell/src/App.tsx:6) | 3 code | source code | module-federation | architectural | strong | implements #12 |
+| 5 | 3.4.4 (packages/shell/src/App.tsx:7) | 3 code | source code | module-federation | technological | weak | — |
+| 6 | 3.4.4 (packages/shell/src/index.tsx:2) | 3 code | source code | — | technological | weak | — |
+| 7 | 3.4.4 (outside mining, packages/shell/src/App.tsx:201) | 3 code | source code | module-federation | architectural | moderate | implements #12 |
+| 8 | 3.4.3 (.) | 4 structure | directory | — | context | weak | — |
+| 9 | 3.4.3 (packages/main-content) | 4 structure | directory | module-federation | architectural | ambiguous | — |
+| 10 | 3.4.3 (packages/shell) | 4 structure | directory | — | architectural | moderate | — |
+| 11 | 3.4.3 (packages/sidebar) | 4 structure | directory | module-federation | architectural | ambiguous | — |
+| 12 | 3.4.5 #1 | 5 composition | source code | module-federation | architectural | strong | links #10; links #9 |
+| 13 | 3.4.6 #1 | 6 build-deploy | configuration | module-federation | architectural | moderate | publishes #9 |
+| 14 | 3.4.6 #2 | 6 build-deploy | configuration | — | architectural | moderate | publishes #10 |
+| 15 | 3.4.6 #3 | 6 build-deploy | configuration | module-federation | architectural | moderate | publishes #11 |
+| 16 | 3.4.7 #1 | 7 documentation | documentation | — | architectural | weak | corroborates #12 |
+| 17 | 3.4.7 #2 | 7 documentation | documentation | — | architectural | weak | corroborates #12 |
+| 18 | 3.4.7 #3 | 7 documentation | documentation | — | architectural | weak | corroborates #12; corroborates packages/main-content/src/MainContent.tsx:108-110; corroborates packages/main-content/src/faro.ts:9-28 |
+| 19 | 3.4.7 #4 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #12 |
+| 20 | 3.4.7 #5 | 7 documentation | documentation | — | context | weak | corroborates packages/shell/src/bootstrap.tsx:3-7; corroborates packages/shell/src/faro.ts:10-32; corroborates packages/main-content/src/MainContent.tsx:108-110; corroborates packages/main-content/src/faro.ts:9-28; corroborates packages/sidebar/src/Sidebar.tsx:87-90; corroborates packages/sidebar/src/faro.ts:8-28 |
+| 21 | 3.4.7 #6 | 7 documentation | comment | module-federation | architectural | weak | corroborates #12 |
+| 22 | 3.4.7 #7 | 7 documentation | comment | — | architectural | weak | — |
+| 23 | 3.4.7 #8 | 7 documentation | comment | — | architectural | weak | corroborates #1; corroborates #2; corroborates packages/main-content/src/MainContent.tsx:1; corroborates packages/shell/src/App.tsx:1 |
+| 24 | 3.4.7 #9 | 7 documentation | comment | — | architectural | weak | corroborates #13; corroborates #14; corroborates #15 |
+| 25 | 3.4.7 #10 | 7 documentation | comment | — | architectural | weak | corroborates #5; corroborates #2 |
+| 26 | 3.4.7 #11 | 7 documentation | comment | — | technological | weak | corroborates #6; corroborates #2; corroborates packages/shell/src/bootstrap.tsx:1-4; corroborates packages/shell/src/bootstrap.tsx:14-19 |
+| 27 | 3.4.7 #12 | 7 documentation | comment | module-federation | technological | weak | contradicts #5; contradicts #2 |
+| 28 | 3.4.7 #13 | 7 documentation | comment | — | architectural | weak | corroborates #3; corroborates #15; corroborates packages/sidebar/src/faro.ts:1-6; corroborates packages/sidebar/src/faro.ts:15-28 |
+| 29 | 3.4.8 #1 | 8 history | history | — | architectural | weak | explains #9; explains #22 |
+| 30 | 3.4.8 #2 | 8 history | history | — | architectural | weak | explains #11 |
+| 31 | 3.4.8 #3 | 8 history | history | module-federation | architectural | weak | explains #5; explains #27 |
 
-## Resumo
+## Summary
 
-Observações: 31. Dimensões (tecnologia: 0, configuração: 3, código: 4, estrutura: 4, composição: 1, build-deploy: 3, documentação: 13, histórico: 3). Força (forte: 3, moderada: 7, fraca: 19, ambígua: 2). Evidência (tecnológica: 6, arquitetural: 23, contexto: 2).
+Observations: 31. Dimensions (technology: 0, configuration: 3, code: 4, structure: 4, composition: 1, build-deploy: 3, documentation: 13, history: 3). Strength (strong: 3, moderate: 7, weak: 19, ambiguous: 2). Evidence (technological: 6, architectural: 23, context: 2).

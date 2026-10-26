@@ -16,71 +16,33 @@ annotation:
 
 # 229 — ayushpandey241626/microfrontend-demo
 
-## Leitura do repositório
+## Repository overview
 
-Workspace Angular único, com um só `package.json` na raiz e quatro projetos em `projects/`
-declarados no angular.json:5 (host-app, mfe1, mfe2 e login-mfe-app). Cada projeto tem o próprio
-target `build` com `ngx-build-plus:browser` e um `outputPath` próprio: `dist/host-app`,
-`dist/mfe1`, `dist/mfe2` e `dist/login-mfe-app` (angular.json:13-16, 114-117, 215-218, 320-323).
-O `extraWebpackConfig` de cada build aponta para o `webpack.config.js` do projeto, e a
-configuração `production` troca para o `webpack.prod.config.js` (por exemplo angular.json:35, 53),
-que só reexporta o `webpack.config.js` (projects/host-app/webpack.prod.config.js:1, e o mesmo nos
-outros três). O `dist/` é ignorado pelo git (.gitignore:4).
+Single Angular workspace, with one root `package.json` and four projects in `projects/` declared in angular.json:5 (host-app, mfe1, mfe2 and login-mfe-app). Each project has its own target `build` with `ngx-build-plus:browser` and its own `outputPath`: `dist/host-app`, `dist/mfe1`, `dist/mfe2` and `dist/login-mfe-app` (angular.json:13-16, 114-117, 215-218, 320-323). Each build’s `extraWebpackConfig` points to project `webpack.config.js`, and `production` configuration switches to `webpack.prod.config.js` (for example angular.json:35, 53), which only reexports `webpack.config.js` (projects/host-app/webpack.prod.config.js:1, likewise in other three). The `dist/` is ignored by git (.gitignore:4).
 
-Os scripts da raiz são os do gerador do Angular: `start` (`ng serve`), `build` (`ng build`, sem
-nomear projeto), `watch` e `test` (package.json:5-9). O `run:all` (package.json:10) roda o
-servidor de desenvolvimento do pacote `@angular-architects/module-federation`. Cada projeto tem
-alvo `serve` com `ngx-build-plus:dev-server` e porta fixa em `localhost`: 4200, 4201, 4202 e 4203
-(angular.json:63-78, 164-179, 265-280, 370-385). As tarefas do VS Code só disparam `npm start` e
-`npm test` (.vscode/tasks.json:5-25; .vscode/launch.json:5-17).
+Root scripts are Angular generator defaults: `start` (`ng serve`), `build` (`ng build`, without naming project), `watch` and `test` (package.json:5-9). The `run:all` (package.json:10) runs development server from package `@angular-architects/module-federation`. Each project has target `serve` with `ngx-build-plus:dev-server` and fixed port at `localhost`: 4200, 4201, 4202 and 4203 (angular.json:63-78, 164-179, 265-280, 370-385). VS Code tasks only trigger `npm start` and `npm test` (.vscode/tasks.json:5-25; .vscode/launch.json:5-17).
 
-Não há artefato de deploy no snapshot: nenhum workflow de CI, Dockerfile, compose, manifesto ou
-configuração de hospedagem, e o `matches.csv` não tem ocorrência `ops-*`, `ci-*` nem
-`cfg-public-path`. É configuração de desenvolvimento: as URLs dos remotes estão fixas em
-`localhost`, tanto nos `remotes` do host (projects/host-app/webpack.config.js:21-25) quanto nas
-rotas que carregam os módulos remotos (projects/host-app/src/app/app.routes.ts:20, 30, 39), e o
-build de produção usa a mesma configuração webpack, então continua apontando para `localhost`.
-O README só descreve `ng serve` em `http://localhost:4200/` e `ng build` para `dist/`
-(README.md:9-13, 29-37). Nenhum projeto tem versão própria; a única é a `0.0.0` do `package.json`
-da raiz (package.json:3), sem uso em publicação.
+No deployment artifact is present in snapshot: no CI workflow, Dockerfile, compose, manifest or hosting configuration, and `matches.csv` has no `ops-*`, `ci-*` or `cfg-public-path` occurrences. This is development configuration: remote URLs are fixed at `localhost`, both in host `remotes` (projects/host-app/webpack.config.js:21-25) and routes loading remote modules (projects/host-app/src/app/app.routes.ts:20, 30, 39), and production build uses same webpack configuration, thus still points to `localhost`. README only describes `ng serve` at `http://localhost:4200/` and `ng build` to `dist/` (README.md:9-13, 29-37). No project has its own version; the only one is `0.0.0` of root `package.json` (package.json:3), unused in publication.
 
-## Aplicações
+## Applications
 
-| # | Aplicação | Build | Deploy | Onde é servida | Versionamento | Artefatos |
+| # | Application | Build | Deploy | Where served | Versioning | Artifacts |
 |---|---|---|---|---|---|---|
-| 1 | projects/host-app | separado | não observado | `http://localhost:4200` em desenvolvimento (angular.json:76-77) | No | angular.json:13-16 (build `ngx-build-plus:browser`, saída `dist/host-app`); angular.json:35 (`extraWebpackConfig` do projeto); projects/host-app/webpack.config.js:11-36 (configuração própria, `uniqueName: "hostApp"`) |
-| 2 | projects/login-mfe-app | separado | não observado | `http://localhost:4203` em desenvolvimento (angular.json:383-384) | No | angular.json:320-323 (build `ngx-build-plus:browser`, saída `dist/login-mfe-app`); angular.json:342 (`extraWebpackConfig` do projeto); projects/login-mfe-app/webpack.config.js:6-11 (configuração própria, gera o remote `login-mfe-app`) |
-| 3 | projects/mfe1 | separado | não observado | `http://localhost:4201` em desenvolvimento (angular.json:177-178) | No | angular.json:114-117 (build `ngx-build-plus:browser`, saída `dist/mfe1`); angular.json:136 (`extraWebpackConfig` do projeto); projects/mfe1/webpack.config.js:6-11 (configuração própria, gera o remote `mfe1`) |
-| 4 | projects/mfe2 | separado | não observado | `http://localhost:4202` em desenvolvimento (angular.json:278-279) | No | angular.json:215-218 (build `ngx-build-plus:browser`, saída `dist/mfe2`); angular.json:237 (`extraWebpackConfig` do projeto); projects/mfe2/webpack.config.js:6-11 (configuração própria, gera o remote `mfe2`) |
+| 1 | projects/host-app | separate | not observed | `http://localhost:4200` in development (angular.json:76-77) | No | angular.json:13-16 (build `ngx-build-plus:browser`, output `dist/host-app`); angular.json:35 (project `extraWebpackConfig`); projects/host-app/webpack.config.js:11-36 (own configuration, `uniqueName: "hostApp"`) |
+| 2 | projects/login-mfe-app | separate | not observed | `http://localhost:4203` in development (angular.json:383-384) | No | angular.json:320-323 (build `ngx-build-plus:browser`, output `dist/login-mfe-app`); angular.json:342 (project `extraWebpackConfig`); projects/login-mfe-app/webpack.config.js:6-11 (own configuration, generates remote `login-mfe-app`) |
+| 3 | projects/mfe1 | separate | not observed | `http://localhost:4201` in development (angular.json:177-178) | No | angular.json:114-117 (build `ngx-build-plus:browser`, output `dist/mfe1`); angular.json:136 (project `extraWebpackConfig`); projects/mfe1/webpack.config.js:6-11 (own configuration, generates remote `mfe1`) |
+| 4 | projects/mfe2 | separate | not observed | `http://localhost:4202` in development (angular.json:278-279) | No | angular.json:215-218 (build `ngx-build-plus:browser`, output `dist/mfe2`); angular.json:237 (project `extraWebpackConfig`); projects/mfe2/webpack.config.js:6-11 (own configuration, generates remote `mfe2`) |
 
-## Observações
+## Observations
 
-**1. projects/host-app.** Build próprio, com saída em `dist/host-app` (angular.json:13-16). Não
-inclui o código dos remotes: declara-os como `remotes` em `localhost`
-(projects/host-app/webpack.config.js:21-25) e os carrega em tempo de execução pelas rotas
-(projects/host-app/src/app/app.routes.ts:20, 30, 39); por isso `separado`, embora os quatro
-projetos estejam no mesmo workspace. Usa `publicPath: "auto"`
-(projects/host-app/webpack.config.js:14). Só é servido pelo `ng serve` na porta 4200
-(angular.json:76-77), que é o que o README descreve (README.md:9-13). Sem versão própria.
+**1. projects/host-app.** Own build, with output in `dist/host-app` (angular.json:13-16). Does not include remote code: declares them as `remotes` at `localhost` (projects/host-app/webpack.config.js:21-25) and loads them at runtime through routes (projects/host-app/src/app/app.routes.ts:20, 30, 39); hence `separate`, although all four projects share workspace. Uses `publicPath: "auto"` (projects/host-app/webpack.config.js:14). Served only by `ng serve` on port 4200 (angular.json:76-77), as README describes (README.md:9-13). No own version.
 
-**2. projects/login-mfe-app.** Build próprio, com saída em `dist/login-mfe-app`
-(angular.json:320-323), que gera o remote `login-mfe-app` com a exposição `./LoginModule`
-(projects/login-mfe-app/webpack.config.js:6-11). Servido só pelo servidor de desenvolvimento na
-porta 4203 (angular.json:383-384), a mesma do `remoteEntry.js` que o host carrega
-(projects/host-app/src/app/app.routes.ts:39). Sem versão própria.
+**2. projects/login-mfe-app.** Own build, with output in `dist/login-mfe-app` (angular.json:320-323), generating remote `login-mfe-app` with exposure `./LoginModule` (projects/login-mfe-app/webpack.config.js:6-11). Served only by development server on port 4203 (angular.json:383-384), same port as `remoteEntry.js` loaded by host (projects/host-app/src/app/app.routes.ts:39). No own version.
 
-**3. projects/mfe1.** Mesma forma da aplicação 2: build próprio com saída em `dist/mfe1`
-(angular.json:114-117), remote `mfe1` expondo `./ContactsModule`
-(projects/mfe1/webpack.config.js:6-11), servido na porta 4201 (angular.json:177-178), a do
-`remoteEntry.js` carregado pelo host (projects/host-app/src/app/app.routes.ts:20). Sem versão
-própria.
+**3. projects/mfe1.** Same arrangement as application 2: own build with output in `dist/mfe1` (angular.json:114-117), remote `mfe1` exposing `./ContactsModule` (projects/mfe1/webpack.config.js:6-11), served on port 4201 (angular.json:177-178), the port of `remoteEntry.js` loaded by host (projects/host-app/src/app/app.routes.ts:20). No own version.
 
-**4. projects/mfe2.** Mesma forma: build próprio com saída em `dist/mfe2`
-(angular.json:215-218), remote `mfe2` expondo `./AdminModule`
-(projects/mfe2/webpack.config.js:6-11), servido na porta 4202 (angular.json:278-279), a do
-`remoteEntry.js` carregado pelo host (projects/host-app/src/app/app.routes.ts:30). Sem versão
-própria.
+**4. projects/mfe2.** Same arrangement: own build with output in `dist/mfe2` (angular.json:215-218), remote `mfe2` exposing `./AdminModule` (projects/mfe2/webpack.config.js:6-11), served on port 4202 (angular.json:278-279), the port of `remoteEntry.js` loaded by host (projects/host-app/src/app/app.routes.ts:30). No own version.
 
-## Resumo
+## Summary
 
-Aplicações: 4. Build (separado: 4). Deploy (não observado: 4). Versionamento independente: 0.
+Applications: 4. Build (separate: 4). Deploy (not observed: 4). Independent versioning: 0.

@@ -20,67 +20,67 @@ annotation:
 
 # 342 — bank20baht/poc-angular-native-federation-tailwindcss
 
-## Contexto
+## Context
 
-Prova de conceito de Native Federation em Angular 20 com Tailwind CSS 4 e daisyUI (descrição do repositório): um host (`host/`) e um remote (`remote/`), cada um com seu workspace Angular, `federation.config.js`, `package.json` e lockfiles. O foco declarado do histórico é fazer o estilo Tailwind do remote funcionar dentro do host, o que foi resolvido fazendo o Tailwind do host varrer o código-fonte do remote (`host/src/styles.css:4`). O README raiz só tem o título (`README.md:1`). O nome do repositório não é usado como evidência.
+Native Federation proof of concept in Angular 20 with Tailwind CSS 4 and daisyUI (repository description): a host (`host/`) and remote (`remote/`), each with its own Angular workspace, `federation.config.js`, `package.json` and lockfiles. The history’s declared focus is making remote Tailwind styling work inside the host, resolved by making host Tailwind scan remote source code (`host/src/styles.css:4`). The root README has only the title (`README.md:1`). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:343` registra rank 342, ID 1050538328, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:343` records rank 342, ID 1050538328, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:343` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:18434` (`terminology`, `unknown`, regra `recent-human-commit` com `activity_incomplete`) e `data/discovery/mfe-round-002/candidates.csv:18439` (`terminology`, `pass`).
+`data/samples/mfe-sample-001/sample.csv:343` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:18434` (`terminology`, `unknown`, rule `recent-human-commit` with `activity_incomplete`) and `data/discovery/mfe-round-002/candidates.csv:18439` (`terminology`, `pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with an empty `path`:
 
-| Consulta (`q`) | Subconsulta | Consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Effective query | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | `terminology-microfrontend-repositories#created:2025-09` | `microfrontend in:name,description,readme pushed:>=2025-04-01 created:2025-09-01..2025-09-30` | 2026-10-07T19:02:49.821Z / 2026-10-08T15:39:32.098Z |
 | `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | `terminology-microfrontends-repositories#created:2025-09` | `microfrontends in:name,description,readme pushed:>=2025-04-01 created:2025-09-01..2025-09-30` | 2026-10-07T22:09:10.723Z / 2026-10-08T15:48:05.193Z |
 
-Metadados do hit: descrição “POC angular v20 microfrontend with Native Federation Styling with Tailwindcss v4”, sem tópicos, linguagem TypeScript, sem licença, `fork: false`, tamanho 382, criação em 2025-09-04T15:13:04Z, push em 2025-09-18T17:14:52Z.
+Hit metadata: description “POC angular v20 microfrontend with Native Federation Styling with Tailwindcss v4”, no topics, language TypeScript, no license, `fork: false`, size 382, created at 2025-09-04T15:13:04Z, pushed at 2025-09-18T17:14:52Z.
 
-O acerto vem da descrição: o singular “microfrontend” aparece literalmente nela; o README raiz (`README.md:1`, “# Native Federation Angular”) não contém o termo, e o plural “microfrontends” não aparece literalmente, de modo que esse hit depende do processamento textual da busca do GitHub, que não está registrado. O README vem do commit `bb8b5ac` (2025-09-04) e não é posterior às buscas de outubro de 2026.
+The match comes from the description: singular “microfrontend” appears literally there; the root README (`README.md:1`, “# Native Federation Angular”) does not contain the term, and plural “microfrontends” does not appear literally, so that hit depends on GitHub search text processing, which is not recorded. The README comes from commit `bb8b5ac` (2025-09-04) and does not postdate the October 2026 searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 72 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Dois workspaces Angular independentes (`host/`, `remote/`), cada um com `angular.json`, `package.json`, `package-lock.json`, `bun.lock`, `federation.config.js`, `src/main.ts` → `src/bootstrap.ts`. | forte |
-| Configuração (host) | `host/federation.config.js:3–27`: `withNativeFederation` com `shareAll` singleton. `host/src/main.ts:3–5`: `initFederation({ 'remote': 'http://localhost:4201/remoteEntry.json' })` antes do bootstrap. `host/angular.json:17`, `31`, `111`: builder `@angular-architects/native-federation:build`, servidor original na porta 4200. | forte |
-| Configuração (remote) | `remote/federation.config.js:5–10`: `name: 'remote'`, `exposes` `./Component` (`src/app/app.ts`) e `./routes` (`src/app/modules/home/home.routes.ts`); `shareAll` singleton. `remote/angular.json:17`, `108`: mesmo builder, porta 4201, coincidente com a URL do host. | forte |
-| Código-fonte (composição) | `host/src/app/app.routes.ts:7–28`: rota `''` com `loadRemoteModule('remote', './Component')` → `m.App` e rota `flights` com `loadRemoteModule('remote', './routes')` → `m.APP_ROUTES`, ambas com fallback local; `remote/src/app/app.ts:10` exporta `App` e `remote/src/app/modules/home/home.routes.ts:3–14` exporta `APP_ROUTES`. | forte |
-| Build (estilo entre unidades) | `host/src/styles.css:2–5`: `@import "tailwindcss" source(none)` com `@source "./app/**/*.{html,js}"` e `@source "../../remote/src/**/*.{html,js}"`, ou seja, o CSS do host é gerado a partir das classes usadas nos templates do remote (por exemplo, `remote/src/app/app.html:1–10`). O remote tem seu próprio Tailwind (`remote/src/styles.css:2–3`). Histórico: `f61b3c0` (2025-09-13), “can render style from remote but tailwindcss host must scan remote first”. | ambígua |
-| Código-fonte (fronteiras) | Busca por `../` em `*.ts`, `*.css`, `*.html`, `*.json` e `*.js` (exceto lockfiles): única ocorrência `host/src/styles.css:4`, a varredura de CSS acima. Nenhum import de código TypeScript entre `host` e `remote`; o host só alcança o remote por `loadRemoteModule`. `host/src/remote.d.ts:1` declara um módulo `remote/Styles?inline` sem uso no código. | moderada |
+| Structure | `git ls-tree -r` at the SHA: 72 entries, all regular files `100644`; zero symlinks and zero gitlinks. Two independent Angular workspaces (`host/`, `remote/`), each with `angular.json`, `package.json`, `package-lock.json`, `bun.lock`, `federation.config.js`, `src/main.ts` → `src/bootstrap.ts`. | strong |
+| Configuration (host) | `host/federation.config.js:3–27`: `withNativeFederation` with singleton `shareAll`. `host/src/main.ts:3–5`: `initFederation({ 'remote': 'http://localhost:4201/remoteEntry.json' })` before bootstrap. `host/angular.json:17`, `31`, `111`: builder `@angular-architects/native-federation:build`, original server on port 4200. | strong |
+| Configuration (remote) | `remote/federation.config.js:5–10`: `name: 'remote'`, `exposes` `./Component` (`src/app/app.ts`) and `./routes` (`src/app/modules/home/home.routes.ts`); singleton `shareAll`. `remote/angular.json:17`, `108`: same builder, port 4201, matching the host URL. | strong |
+| Source code (composition) | `host/src/app/app.routes.ts:7–28`: route `''` with `loadRemoteModule('remote', './Component')` → `m.App` and route `flights` with `loadRemoteModule('remote', './routes')` → `m.APP_ROUTES`, both with local fallback; `remote/src/app/app.ts:10` exports `App` and `remote/src/app/modules/home/home.routes.ts:3–14` exports `APP_ROUTES`. | strong |
+| Build (cross-unit styling) | `host/src/styles.css:2–5`: `@import "tailwindcss" source(none)` with `@source "./app/**/*.{html,js}"` and `@source "../../remote/src/**/*.{html,js}"`, meaning host CSS is generated from classes used in remote templates (for example, `remote/src/app/app.html:1–10`). The remote has its own Tailwind (`remote/src/styles.css:2–3`). History: `f61b3c0` (2025-09-13), “can render style from remote but tailwindcss host must scan remote first”. | ambiguous |
+| Source code (boundaries) | Search for `../` in `*.ts`, `*.css`, `*.html`, `*.json` and `*.js` (except lockfiles): only occurrence `host/src/styles.css:4`, the CSS scan above. No TypeScript code import between `host` and `remote`; the host reaches the remote only through `loadRemoteModule`. `host/src/remote.d.ts:1` declares a module `remote/Styles?inline` unused in code. | moderate |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso, parcial (`blob:none`). 11 commits alcançáveis a partir do SHA (14 em todos os refs), 1 merge (o próprio SHA, de `feature/tailwindcss@4`), de 2025-09-04 (`bb8b5ac`, “feat: module federation with native federation in angular 20”) a 2025-09-19. Autoria: `Nattapong Promthong <banker.z412@gmail.com>` em todos os commits. Refs remotos `feature/nx`, `feature/tailwindcss`, `feature/tailwindcss@3` e `feature/tailwindcss@4` não foram considerados à parte. A sequência de commits (safelist, scan do remote, Tailwind 3 e 4) documenta o problema de estilo entre unidades. A conta tem outros POCs de MFE nas rodadas (`bank20baht/poc-angular-module-federation`, `poc-angular-native-federation`, `poc-microfrontend-angular`; `data/discovery/mfe-round-002/candidates.csv:18050`, `19064`, `22401`), fora deste snapshot. `git rev-list --objects $SHA --missing=print` identifica 35 objetos históricos ausentes; os arquivos citados do SHA foram lidos.
+Non-shallow, partial clone (`blob:none`). 11 commits reachable from the SHA (14 across all refs), 1 merge (the SHA itself, from `feature/tailwindcss@4`), from 2025-09-04 (`bb8b5ac`, “feat: module federation with native federation in angular 20”) to 2025-09-19. Authorship: `Nattapong Promthong <banker.z412@gmail.com>` in all commits. Remote refs `feature/nx`, `feature/tailwindcss`, `feature/tailwindcss@3` and `feature/tailwindcss@4` were not considered separately. The commit sequence (safelist, remote scan, Tailwind 3 and 4) documents the cross-unit styling issue. The account has other MFE POCs in the rounds (`bank20baht/poc-angular-module-federation`, `poc-angular-native-federation`, `poc-microfrontend-angular`; `data/discovery/mfe-round-002/candidates.csv:18050`, `19064`, `22401`), outside this snapshot. `git rev-list --objects $SHA --missing=print` identifies 35 missing historical objects; cited SHA files were read.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | `host` e `remote`, este referenciado pela configuração de composição (`host/src/main.ts:3–5`). |
-| Q2 | Yes | Entrada, builder, porta e lockfiles próprios por unidade e nenhum import de código-fonte entre elas. Ver ponto de revisão sobre a varredura de CSS (`host/src/styles.css:4`). |
-| Q3 | Yes | O host roteia e carrega o componente e as rotas do remote (`host/src/app/app.routes.ts:7–28`). |
-| Q4 | Yes | Native Federation configurada nos dois lados, com nome, chaves expostas e porta coincidentes, e usada por `initFederation` + `loadRemoteModule`. |
-| Q5 | Yes | Q1–Q4 convergem, sujeito ao ponto de revisão. |
+| Q1 | Yes | `host` and `remote`, the latter referenced by composition configuration (`host/src/main.ts:3–5`). |
+| Q2 | Yes | Own entry point, builder, port and lockfiles per unit and no source code import between them. See review point about CSS scanning (`host/src/styles.css:4`). |
+| Q3 | Yes | The host routes and loads the remote component and routes (`host/src/app/app.routes.ts:7–28`). |
+| Q4 | Yes | Native Federation configured on both sides, with matching name, exposed keys and port, and used through `initFederation` + `loadRemoteModule`. |
+| Q5 | Yes | Q1–Q4 converge, subject to the review point. |
 
-## Motivo
+## Rationale
 
-- `MFE-implemented` (decisão registrada abaixo). Corresponde a “monorepos containing a host and its remotes” e a “examples… that actually compose frontend units”; mesma abordagem do final 059 (Native Federation com host e remotes no monorepo).
-- A cadeia de federação é completa e coerente (contraste com 097/103/104); comparável aos casos de cadeia completa (076/084/096/106/109).
-- O remote expõe um componente de página e um conjunto de rotas montadas pelo host, não utilitários (contraste com 089/100).
-- `frontend_units: 2`, `unit_organization: monorepo`, `approaches: [native-federation]`, `ui_technologies: [angular]`, `build_tools: [esbuild]` (builder `application` por trás do Native Federation, `host/angular.json:57–59`), `repo_type: example`.
+- `MFE-implemented` (decision recorded below). It matches “monorepos containing a host and its remotes” and “examples… that actually compose frontend units”; same approach as final 059 (Native Federation with host and remotes in a monorepo).
+- The federation chain is complete and consistent (contrast with 097/103/104); comparable to complete-chain cases (076/084/096/106/109).
+- The remote exposes a page component and a route set mounted by the host, not utilities (contrast with 089/100).
+- `frontend_units: 2`, `unit_organization: monorepo`, `approaches: [native-federation]`, `ui_technologies: [angular]`, `build_tools: [esbuild]` (builder `application` behind Native Federation, `host/angular.json:57–59`), `repo_type: example`.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** Native Federation em Angular 20 com rotas remotas e fallback local por `catch` em `loadRemoteModule`.
-- **RQ3:** estilo utilitário (Tailwind/daisyUI) gerado pelo host a partir do código-fonte do remote, um acoplamento de build no nível de CSS que o histórico descreve como requisito (“host must scan remote first”).
-- **Protocolo (família):** a conta mantém uma série de POCs de MFE em Angular nas rodadas; só este está na amostra.
+- **RQ2:** Native Federation in Angular 20 with remote routes and local fallback through `catch` in `loadRemoteModule`.
+- **RQ3:** utility styling (Tailwind/daisyUI) generated by the host from remote source code, CSS-level build coupling described in history as a requirement (“host must scan remote first”).
+- **Protocol (family):** the account maintains a series of Angular MFE POCs in the rounds; only this one is in the sample.
 
-## Decisão registrada
+## Recorded decision
 
-- **Questão:** o host gera seu CSS varrendo `../../remote/src/**` (`host/src/styles.css:4`), de modo que classes novas usadas pelo remote só são estilizadas depois de recompilar o host. Não há import de código entre as unidades, que é o critério literal de Q2, mas há dependência de build do host em relação ao código-fonte do remote. Cotejo com a “dependência de deploy” do final 042 (código compilado dentro do bundle; aqui, só a geração de CSS) e com a nota de 128 (varredura de biblioteca compartilhada, não de outra unidade).
-- **Decisão dos pesquisadores:** o acoplamento de CSS em build não pesa em Q2. Mantém-se `MFE-implemented`.
-- **Regra nova:** não se propõe.
+- **Question:** the host generates CSS by scanning `../../remote/src/**` (`host/src/styles.css:4`), so new classes used by the remote are styled only after rebuilding the host. There is no code import between units, the literal Q2 criterion, but host build depends on remote source code. Comparison with final 042’s “deployment dependency” (code compiled inside the bundle; here, CSS generation only) and the note in 128 (shared library scanning, not another unit).
+- **Researchers’ decision:** build-time CSS coupling does not weigh on Q2. `MFE-implemented` retained.
+- **New rule:** none proposed.

@@ -20,41 +20,41 @@ annotation:
 
 # 042 — psca1234psca1234/react-micro-frontend-architecture
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** example/proof of concept (monorepo de estudo "for mastering React, TypeScript, Web Components…", `README.md:3`, com "SENIOR INTERVIEW TIP" nos comentários)
+- **Repository type:** example/proof of concept (study monorepo "for mastering React, TypeScript, Web Components…", `README.md:3`, with "SENIOR INTERVIEW TIP" in comments)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | Monorepo pnpm + Turborepo: `apps/canvas-app` e `apps/editor-app` (cada um com `package.json`, `vite.config.ts`, `src/main.tsx`), `packages/ui-library` (Web Components Lit + bridge React) e `packages/typescript-config` (`README.md:7-17`) (duas apps) | moderada |
-| Configuração | `apps/canvas-app/vite.config.ts:27-56` e `apps/editor-app/vite.config.ts:16-32`: só `@vitejs/plugin-react`, portas 5173/5174; sem federação, `build.lib` ou import map | ausente |
-| Estrutura (dependência entre apps) | `apps/editor-app/package.json:43-49`: `"@abhishek/canvas-app": "workspace:*"` como dependência | contrária |
-| Código-fonte (integração) | `apps/editor-app/src/components/Editor/CanvasBlockNode.tsx:45-48`: `lazy(() => import('@abhishek/canvas-app/src/components/Canvas/Canvas.tsx'))`, ou seja, **import direto do código-fonte** da outra app, resolvido e empacotado no build do editor | contrária |
-| Código-fonte (Web Components) | `packages/ui-library/src/components/ui-card/UiCard.ts` (componente Lit) + `react-bridge/UiCardReact.tsx`: biblioteca de componentes compartilhada | contrária |
-| Documentação | Nome do repositório; `docs/Micro-App Integration.md`, `docs/Web Component & Shadow DOM Bridge Prompt.md`, `docs/Monorepo Orchestration Prompt.md` (prompts de geração) | fraca |
+| Structure | pnpm + Turborepo monorepo: `apps/canvas-app` and `apps/editor-app` (each with `package.json`, `vite.config.ts`, `src/main.tsx`), `packages/ui-library` (Lit Web Components + React bridge) and `packages/typescript-config` (`README.md:7-17`) (two apps) | moderate |
+| Configuration | `apps/canvas-app/vite.config.ts:27-56` and `apps/editor-app/vite.config.ts:16-32`: only `@vitejs/plugin-react`, ports 5173/5174; no federation, `build.lib` or import map | absent |
+| Structure (dependency between apps) | `apps/editor-app/package.json:43-49`: `"@abhishek/canvas-app": "workspace:*"` as a dependency | contrary |
+| Source code (integration) | `apps/editor-app/src/components/Editor/CanvasBlockNode.tsx:45-48`: `lazy(() => import('@abhishek/canvas-app/src/components/Canvas/Canvas.tsx'))`, that is, **direct source code import** from the other app, resolved and bundled in the editor's build | contrary |
+| Source code (Web Components) | `packages/ui-library/src/components/ui-card/UiCard.ts` (Lit component) + `react-bridge/UiCardReact.tsx`: shared component library | contrary |
+| Documentation | Repository name; `docs/Micro-App Integration.md`, `docs/Web Component & Shadow DOM Bridge Prompt.md`, `docs/Monorepo Orchestration Prompt.md` (generation prompts) | weak |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | `canvas-app` e `editor-app` |
-| Q2 | **No** | O `editor-app` importa diretamente o código-fonte do `canvas-app` (`CanvasBlockNode.tsx:48`) via dependência de workspace (`package.json:49`); o canvas é compilado dentro do bundle do editor |
-| Q3 | Yes | O `editor-app` embute o canvas num bloco do editor Lexical |
-| Q4 | No | A "composição" é `React.lazy` + import de código-fonte, ou seja, code splitting dentro de um build, não um mecanismo conectando unidades independentes |
-| Q5 | No | Q2 e Q4 convergem |
+| Q1 | Yes | `canvas-app` and `editor-app` |
+| Q2 | **No** | `editor-app` directly imports `canvas-app` source code (`CanvasBlockNode.tsx:48`) through a workspace dependency (`package.json:49`); canvas is compiled into the editor's bundle |
+| Q3 | Yes | `editor-app` embeds canvas in a Lexical editor block |
+| Q4 | No | "Composition" is `React.lazy` + source code import, that is, code splitting within one build, not a mechanism connecting independent units |
+| Q5 | No | Q2 and Q4 converge |
 
-## Motivo
+## Rationale
 
-- As duas apps existem, mas a integração é por import direto de código-fonte num único build. O critério operacional de Q2 diz explicitamente que as unidades "do not import each other's source code directly".
-- Os Web Components (`packages/ui-library`) formam uma biblioteca de componentes compartilhada, o que corresponde ao caso Non-MFE "component libraries using Web Components".
-- O nome do repositório promete uma arquitetura de micro-frontend que a implementação não realiza.
+- Both apps exist, but integration uses direct source code imports in a single build. The operational Q2 criterion explicitly says units "do not import each other's source code directly".
+- Web Components (`packages/ui-library`) form a shared component library, matching the Non-MFE case "component libraries using Web Components".
+- The repository name promises a micro-frontend architecture that the implementation does not realize.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** monorepo com várias apps + Web Components + "micro-frontend" no nome, mas integração em build-time por import de código-fonte. Também toca a decisão em aberto sobre build-time composition; aqui nem há pacote publicado, só import direto de `src/`.
+- **RQ1 (misleading signals):** monorepo with multiple apps + Web Components + "micro-frontend" in the name, but build-time integration through source code imports. Also touches the unresolved decision about build-time composition; here there is not even a published package, only direct `src/` imports.
 
-## Decisão registrada
+## Recorded decision
 
-- **Decisão dos pesquisadores:** Non-MFE confirmado. Monorepos contam como MFE só quando as unidades são compostas em runtime; aqui há **dependência de deploy**: qualquer mudança no `canvas-app` exige rebuild e redeploy do `editor-app`, porque o canvas é compilado dentro do bundle do editor.
+- **Researchers' decision:** Non-MFE confirmed. Monorepos count as MFE only when units are composed at runtime; here there is **deployment dependency**: any change to `canvas-app` requires rebuilding and redeploying `editor-app`, because canvas is compiled into the editor's bundle.

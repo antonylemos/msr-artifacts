@@ -20,37 +20,37 @@ annotation:
 
 # 047 — naman8033/hack2skill
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** example/proof of concept (projeto de hackathon "Smart Cooking Planner", deploy na Vercel)
-- **Commit avaliado:** `11ea6f0` (único commit)
+- **Repository type:** example/proof of concept ("Smart Cooking Planner" hackathon project, deployed on Vercel)
+- **Assessed commit:** `11ea6f0` (only commit)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Tecnologia | `package.json`: React + Vite; nenhuma dependência de MFE | ausente |
-| Configuração | `vite.config.js:5-7`: só `@vitejs/plugin-react` | ausente |
-| Código-fonte | `src/main.jsx:6`: um único `createRoot`; componentes em `src/components/` importados por `src/App.jsx`; `src/services/geminiService.js` chama a API do Gemini | contrária |
-| Estrutura | Uma única app (um `package.json`, um entry, um `vercel.json`) | contrária |
-| Documentação | `README.md:3`: "production-ready React **micro-app**"; nenhuma menção a micro-frontends | contexto |
+| Technology | `package.json`: React + Vite; no MFE dependency | absent |
+| Configuration | `vite.config.js:5-7`: only `@vitejs/plugin-react` | absent |
+| Source code | `src/main.jsx:6`: a single `createRoot`; components in `src/components/` imported by `src/App.jsx`; `src/services/geminiService.js` calls the Gemini API | contrary |
+| Structure | A single app (one `package.json`, one entry, one `vercel.json`) | contrary |
+| Documentation | `README.md:3`: "production-ready React **micro-app**"; no mention of micro-frontends | context |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend (`src/main.jsx:6`) |
-| Q2 | No | Não há unidades a comparar |
-| Q3 | No | Não há host, shell nem root config |
-| Q4 | No | Nenhum mecanismo de composição |
-| Q5 | No | Q1–Q4 convergem |
+| Q1 | No | A single frontend unit (`src/main.jsx:6`) |
+| Q2 | No | No units to compare |
+| Q3 | No | No host, shell or root config |
+| Q4 | No | No composition mechanism |
+| Q5 | No | Q1–Q4 converge |
 
-## Motivo
+## Rationale
 
-- É uma SPA React monolítica de hackathon.
-- "micro-app" (`README.md:3`) significa app pequeno, não a arquitetura. Mesmo caso do repositório 003 (bitebudget), que usa a mesma expressão.
-- Corresponde a "conventional frontend monoliths".
+- This is a monolithic React hackathon SPA.
+- "micro-app" (`README.md:3`) means a small app, not the architecture. Same case as repository 003 (bitebudget), which uses the same expression.
+- Matches "conventional frontend monoliths".
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** "micro-app" em READMEs de apps pequenos gerados com IA (Gemini) reaparece (003, 047); provavelmente capturado por termos amplos.
+- **RQ1 (misleading signals):** "micro-app" in READMEs for small AI-generated apps (Gemini) recurs (003, 047); probably captured through broad terms.

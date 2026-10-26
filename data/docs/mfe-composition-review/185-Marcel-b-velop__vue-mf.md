@@ -20,103 +20,104 @@ annotation:
 
 # 185 — Marcel-b-velop/vue-mf
 
-## Leitura do repositório
+## Repository overview
 
-Experimento com quatro aplicações Vue 3 + Vite num workspace pnpm, unidas por Module Federation
-(`@originjs/vite-plugin-federation`). `host` é a casca: mantém a navegação e o `<RouterView />`
-(host/src/App.vue:8-9) e declara três remotes, `remote-app1`, `remote-app2` e `remote-lib`
-(host/vite.config.ts:15-19). Ele entra com as unidades de duas formas: componentes globais
-criados por `defineAsyncComponent` em host/src/main.ts:12-14 e registrados em host/src/main.ts:19-21,
-e rotas que importam páginas remotas (host/src/router/index.ts:7-8). A rota `/` mostra o `App1`
-de app-1 (host/src/views/Home.vue:1); `/login` e `/register` mostram os formulários de app-2. O
-`host` também traz `filename: "remoteEntry.js"` e o comentário "Modules to expose"
-(host/vite.config.ts:13-14), mas não expõe nada.
+An experiment with four Vue 3 + Vite applications in a pnpm workspace, joined by Module Federation
+(`@originjs/vite-plugin-federation`). `host` is the shell: it maintains navigation and `<RouterView />`
+(host/src/App.vue:8-9) and declares three remotes, `remote-app1`, `remote-app2` and `remote-lib`
+(host/vite.config.ts:15-19). It enters the units in two ways: global components
+created by `defineAsyncComponent` in host/src/main.ts:12-14 and registered in host/src/main.ts:19-21,
+and routes importing remote pages (host/src/router/index.ts:7-8). Route `/` shows `App1`
+from app-1 (host/src/views/Home.vue:1); `/login` and `/register` show app-2's forms.
+`host` also has `filename: "remoteEntry.js"` and the comment "Modules to expose"
+(host/vite.config.ts:13-14), but exposes nothing.
 
-`lib` funciona como remote de componentes e serviços compartilhados: expõe o diálogo `Confirm`, o
-`apiClient` e os tipos (lib/vite.config.ts:21-25). app-1 também é host de `lib`: carrega o
-`Confirm` (app-1/src/main.ts:11, :16) e importa o `apiClient` estaticamente
-(app-1/src/main.ts:8; app-1/src/composables/api.ts:1). O `<Confirm>` de app-1/src/App.vue:33 não
-tem import local; ele é resolvido pelo componente global do app que monta o `App1`, ou seja, por
-app-1/src/main.ts:16 quando app-1 roda isolada e por host/src/main.ts:21 quando roda dentro do
-host. app-2 declara `remote-lib` (app-2/vite.config.ts:21-23), mas nenhum arquivo de app-2 o
-importa.
+`lib` acts as a remote for shared components and services: it exposes the `Confirm` dialog,
+`apiClient` and types (lib/vite.config.ts:21-25). App-1 is also a host for `lib`: it loads
+`Confirm` (app-1/src/main.ts:11, :16) and imports `apiClient` statically
+(app-1/src/main.ts:8; app-1/src/composables/api.ts:1). The `<Confirm>` in app-1/src/App.vue:33 has
+no local import; it is resolved through the global component of the app mounting `App1`, namely
+app-1/src/main.ts:16 when app-1 runs independently and host/src/main.ts:21 when it runs inside the
+host. App-2 declares `remote-lib` (app-2/vite.config.ts:21-23), but no app-2 file
+imports it.
 
-Ficaram fora das relações ativas: o `App2` de app-2 é registrado como `AppTwo`
-(host/src/main.ts:13, :20) sem nenhum `<AppTwo>` em template (linha `No` da revisão de
-código-fonte); as exposições `./App2` e `./Home` de app-2 (app-2/vite.config.ts:16-17) não têm
-outro consumidor; o evento `auth:logout` só circula dentro de app-2
-(app-2/src/services/authService.ts:57, :99; app-2/src/App.vue:24); e o store
-host/src/stores/authStore.ts:3-17, que também lê e grava `accessToken`, não é importado. A sessão
-liga as unidades pelo `localStorage`: app-2 grava o token (app-2/src/services/authService.ts:67,
-:76) e o `apiClient` de lib o lê em cada requisição (lib/src/services/apiClient.ts:15) e, num 401,
-apaga o token e manda para `/login` (lib/src/services/apiClient.ts:33-35), rota que no host é o
-`LoginForm` de app-2, que por sua vez lê o token em cada requisição
-(app-2/src/services/authService.ts:40). Há também uma API .NET e um IdentityServer em `Api/`, que não são unidades
-frontend.
+Excluded from active relationships: app-2's `App2` is registered as `AppTwo`
+(host/src/main.ts:13, :20) without any `<AppTwo>` in a template (a `No` source code review
+line); app-2's `./App2` and `./Home` exposures (app-2/vite.config.ts:16-17) have no
+other consumer; event `auth:logout` circulates only within app-2
+(app-2/src/services/authService.ts:57, :99; app-2/src/App.vue:24); and store
+host/src/stores/authStore.ts:3-17, also reading and writing `accessToken`, is not imported. The session
+connects units through `localStorage`: app-2 writes the token (app-2/src/services/authService.ts:67,
+:76) and lib's `apiClient` reads it on each request (lib/src/services/apiClient.ts:15) and, on a 401,
+deletes it and redirects to `/login` (lib/src/services/apiClient.ts:33-35), which in the host is
+app-2's `LoginForm`, itself reading the token on every request
+(app-2/src/services/authService.ts:40). There is also a .NET API and IdentityServer in `Api/`, which are not frontend
+units.
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | app-1 | lib | host → remote | origem → destino | module-federation | Yes | Yes | app-1/vite.config.ts:18-20 (remote `remote-lib` em `http://localhost:5177/assets/remoteEntry.js`); lib/vite.config.ts:18-19 (`name: "remote-lib"`, `filename: "remoteEntry.js"`); lib/vite.config.ts:22-23 (expõe `./Confirm` e `./apiClient`); lib/package.json:9 (`vite preview --port 5177`) | app-1/src/main.ts:11; app-1/src/App.vue:33 |
-| 2 | host | app-1 | host → remote | origem → destino | module-federation | Yes | Yes | host/vite.config.ts:16 (remote `remote-app1` em `http://localhost:5174/assets/remoteEntry.js`); app-1/vite.config.ts:12-13 (`name: "remote-app1"`, `filename: "remoteEntry.js"`); app-1/vite.config.ts:16 (expõe `./App1`); app-1/package.json:10 (`vite preview --port 5174`) | host/src/main.ts:12; host/src/router/index.ts:4; host/src/views/Home.vue:1 |
-| 3 | host | lib | host → remote | origem → destino | module-federation | Yes | Yes | host/vite.config.ts:18 (remote `remote-lib` em `http://localhost:5177/assets/remoteEntry.js`); lib/vite.config.ts:18-19 (`name: "remote-lib"`, `filename: "remoteEntry.js"`); lib/vite.config.ts:22 (expõe `./Confirm`); lib/package.json:9 (`vite preview --port 5177`) | host/src/main.ts:14; app-1/src/App.vue:33 |
-| 4 | host | app-2 | host → remote | origem → destino | module-federation | Yes | Yes | host/vite.config.ts:17 (remote `remote-app2` em `http://localhost:5175/assets/remoteEntry.js`); app-2/vite.config.ts:12-13 (`name: "remote-app2"`, `filename: "remoteEntry.js"`); app-2/vite.config.ts:18-19 (expõe `./LoginForm` e `./RegisterForm`); app-2/vite.config.ts:40 (porta 5175) | host/src/router/index.ts:7; host/src/router/index.ts:8; host/src/router/index.ts:4 |
-| 5 | app-2 | lib | communication | bidirecional | other | Yes | Yes | — | app-2/src/services/authService.ts:67 |
-| 6 | app-2 | lib | host → remote | origem → destino | module-federation | Yes | No | app-2/vite.config.ts:21-23 (remote `remote-lib` em `http://localhost:5177/assets/remoteEntry.js`); lib/vite.config.ts:18-19 (`name: "remote-lib"`, `filename: "remoteEntry.js"`) | — |
+| 1 | app-1 | lib | host → remote | source → target | module-federation | Yes | Yes | app-1/vite.config.ts:18-20 (remote `remote-lib` at `http://localhost:5177/assets/remoteEntry.js`); lib/vite.config.ts:18-19 (`name: "remote-lib"`, `filename: "remoteEntry.js"`); lib/vite.config.ts:22-23 (exposes `./Confirm` and `./apiClient`); lib/package.json:9 (`vite preview --port 5177`) | app-1/src/main.ts:11; app-1/src/App.vue:33 |
+| 2 | host | app-1 | host → remote | source → target | module-federation | Yes | Yes | host/vite.config.ts:16 (remote `remote-app1` at `http://localhost:5174/assets/remoteEntry.js`); app-1/vite.config.ts:12-13 (`name: "remote-app1"`, `filename: "remoteEntry.js"`); app-1/vite.config.ts:16 (exposes `./App1`); app-1/package.json:10 (`vite preview --port 5174`) | host/src/main.ts:12; host/src/router/index.ts:4; host/src/views/Home.vue:1 |
+| 3 | host | lib | host → remote | source → target | module-federation | Yes | Yes | host/vite.config.ts:18 (remote `remote-lib` at `http://localhost:5177/assets/remoteEntry.js`); lib/vite.config.ts:18-19 (`name: "remote-lib"`, `filename: "remoteEntry.js"`); lib/vite.config.ts:22 (exposes `./Confirm`); lib/package.json:9 (`vite preview --port 5177`) | host/src/main.ts:14; app-1/src/App.vue:33 |
+| 4 | host | app-2 | host → remote | source → target | module-federation | Yes | Yes | host/vite.config.ts:17 (remote `remote-app2` at `http://localhost:5175/assets/remoteEntry.js`); app-2/vite.config.ts:12-13 (`name: "remote-app2"`, `filename: "remoteEntry.js"`); app-2/vite.config.ts:18-19 (exposes `./LoginForm` and `./RegisterForm`); app-2/vite.config.ts:40 (port 5175) | host/src/router/index.ts:7; host/src/router/index.ts:8; host/src/router/index.ts:4 |
+| 5 | app-2 | lib | communication | bidirectional | other | Yes | Yes | — | app-2/src/services/authService.ts:67 |
+| 6 | app-2 | lib | host → remote | source → target | module-federation | Yes | No | app-2/vite.config.ts:21-23 (remote `remote-lib` at `http://localhost:5177/assets/remoteEntry.js`); lib/vite.config.ts:18-19 (`name: "remote-lib"`, `filename: "remoteEntry.js"`) | — |
 
-## Observações
+## Observations
 
-**1. app-1 → lib.** O remote `remote-lib` de app-1 (app-1/vite.config.ts:19) corresponde à
-unidade lib pelo `name` (lib/vite.config.ts:18), e `./Confirm` é exposto em lib/vite.config.ts:22;
-a porta 5177 do `preview` de lib (lib/package.json:9) só corrobora. app-1 carrega o `Confirm` em
-app-1/src/main.ts:11, registra-o como global em app-1/src/main.ts:16 e o usa em
-app-1/src/App.vue:33 quando roda isolada (app-1/src/main.ts:21). O import estático de
-`remote-lib/apiClient` (app-1/src/main.ts:8; app-1/src/composables/api.ts:1), exposto em
-lib/vite.config.ts:23, é a mesma relação, mas não entrou como linha na revisão de código-fonte,
-por isso aparece só aqui e na Configuração.
+**1. app-1 → lib.** App-1's `remote-lib` remote (app-1/vite.config.ts:19) matches
+unit lib through `name` (lib/vite.config.ts:18), and `./Confirm` is exposed in lib/vite.config.ts:22;
+port 5177 of lib's `preview` (lib/package.json:9) only corroborates. App-1 loads `Confirm` in
+app-1/src/main.ts:11, registers it globally in app-1/src/main.ts:16 and uses it in
+app-1/src/App.vue:33 when running independently (app-1/src/main.ts:21). The static import of
+`remote-lib/apiClient` (app-1/src/main.ts:8; app-1/src/composables/api.ts:1), exposed in
+lib/vite.config.ts:23, is the same relationship but did not enter as a source code review row,
+so appears only here and in Configuration.
 
-**2. host → app-1.** `remote-app1` (host/vite.config.ts:16) corresponde a app-1 pelo `name` e
-pelo `./App1` exposto (app-1/vite.config.ts:12, :16); a porta 5174 do `preview` de app-1
-(app-1/package.json:10) só corrobora, já que app-1 não fixa porta no `server`. O `App1` é carregado
-em host/src/main.ts:12, registrado como `AppOne` (host/src/main.ts:19) e renderizado em
-host/src/views/Home.vue:1, componente da rota `/` da tabela de rotas (host/src/router/index.ts:4-5),
-por isso host/src/router/index.ts:4 também entra aqui. A relação é ativa: `/` é a rota inicial,
-exibida pelo `<RouterView />` de host/src/App.vue:9.
+**2. host → app-1.** `remote-app1` (host/vite.config.ts:16) matches app-1 through `name` and
+the exposed `./App1` (app-1/vite.config.ts:12, :16); port 5174 of app-1's `preview`
+(app-1/package.json:10) only corroborates, since app-1 fixes no `server` port. `App1` is loaded
+in host/src/main.ts:12, registered as `AppOne` (host/src/main.ts:19) and rendered in
+host/src/views/Home.vue:1, the component of route `/` in the route table (host/src/router/index.ts:4-5),
+so host/src/router/index.ts:4 also enters here. The relationship is active: `/` is the initial route,
+displayed by `<RouterView />` in host/src/App.vue:9.
 
-**3. host → lib.** `remote-lib` do host (host/vite.config.ts:18) corresponde a lib pelo `name`
-(lib/vite.config.ts:18). O host carrega o `Confirm` em host/src/main.ts:14 e o registra como
-global em host/src/main.ts:21, mas nenhum template do próprio host usa `<Confirm>`; quem o usa é o
-`App1` de app-1 renderizado dentro do host (app-1/src/App.vue:33), resolvido por esse registro.
-Por isso app-1/src/App.vue:33 entra nesta relação e na 1. A Origem fica `host`, que é quem carrega
-e registra o componente.
+**3. host → lib.** The host's `remote-lib` (host/vite.config.ts:18) matches lib through `name`
+(lib/vite.config.ts:18). The host loads `Confirm` in host/src/main.ts:14 and registers it
+globally in host/src/main.ts:21, but no host template uses `<Confirm>`; its user is
+app-1's `App1` rendered inside the host (app-1/src/App.vue:33), resolved through that registration.
+Hence app-1/src/App.vue:33 enters this relationship and 1. Source remains `host`, which loads
+and registers the component.
 
-**4. host → app-2.** `remote-app2` (host/vite.config.ts:17) corresponde a app-2 pelo `name`
-(app-2/vite.config.ts:12) e pelas exposições `./LoginForm` e `./RegisterForm`
-(app-2/vite.config.ts:18-19), as mesmas importadas nas rotas `/login` e `/register`
-(host/src/router/index.ts:7-8); a porta 5175 (app-2/vite.config.ts:40) só corrobora. A tabela
-`routes` (host/src/router/index.ts:4) é passada ao router em host/src/main.ts:23-28, e `/login` é
-alcançada pelo menu (host/src/components/Navigation.vue:17-19). O `App2` também é carregado
-(host/src/main.ts:13), mas a revisão de código-fonte o marcou `No` por não ser usado; ele não
-muda a linha.
+**4. host → app-2.** `remote-app2` (host/vite.config.ts:17) matches app-2 through `name`
+(app-2/vite.config.ts:12) and exposures `./LoginForm` and `./RegisterForm`
+(app-2/vite.config.ts:18-19), those imported in routes `/login` and `/register`
+(host/src/router/index.ts:7-8); port 5175 (app-2/vite.config.ts:40) only corroborates. Table
+`routes` (host/src/router/index.ts:4) is passed to the router in host/src/main.ts:23-28, and `/login` is
+reached through the menu (host/src/components/Navigation.vue:17-19). `App2` is also loaded
+(host/src/main.ts:13), but the source code review marked it `No` because it is unused; it does not
+change the row.
 
-**5. app-2 ↔ lib.** A troca é por estado compartilhado no `localStorage`, não por eventos, daí
-`other`. app-2 grava `accessToken` no registro e no login (app-2/src/services/authService.ts:67,
-:76) e o apaga no 401 e no logout (:56, :98); o interceptor do `apiClient` de lib lê a chave e
-monta o cabeçalho `Authorization` (lib/src/services/apiClient.ts:15-19). O sentido inverso também
-existe: num 401, o `apiClient` de lib apaga o `accessToken` (lib/src/services/apiClient.ts:34), e
-o interceptor do `authClient` de app-2 lê a mesma chave em cada requisição
-(app-2/src/services/authService.ts:40), daí `bidirecional`. lib usa o cliente no `Confirm`
-(lib/src/components/Confirm.vue:7, :22) e o fornece a app-1. A chave só é a mesma porque, no host, `LoginForm`/`RegisterForm` e o `Confirm` rodam na
-página do host, numa única origem; em execução isolada cada unidade tem sua porta e seu
-`localStorage`. A Configuração fica `—`: nenhuma declaração liga as duas unidades nesse canal.
+**5. app-2 ↔ lib.** The exchange uses shared state in `localStorage`, rather than events, hence
+`other`. App-2 writes `accessToken` on registration and login (app-2/src/services/authService.ts:67,
+:76) and deletes it on 401 and logout (:56, :98); lib's `apiClient` interceptor reads the key and
+assembles the `Authorization` header (lib/src/services/apiClient.ts:15-19). The reverse direction also
+exists: on a 401, lib's `apiClient` deletes `accessToken` (lib/src/services/apiClient.ts:34), and
+app-2's `authClient` interceptor reads the same key on each request
+(app-2/src/services/authService.ts:40), hence `bidirectional`. Lib uses the client in `Confirm`
+(lib/src/components/Confirm.vue:7, :22) and provides it to app-1. The key is the same only because, in the host, `LoginForm`/`RegisterForm` and `Confirm` run on the
+host page under one origin; independently each unit has its own port and
+`localStorage`. Configuration remains `—`: no declaration connects both units through this channel.
 
-**6. app-2 → lib.** app-2 declara `remote-lib` (app-2/vite.config.ts:22), que corresponde a lib
-pelo `name` (lib/vite.config.ts:18), mas nenhum arquivo de app-2 importa `remote-lib/...` (busca
-por `remote-lib` em app-2 só acha app-2/vite.config.ts:22). A relação existe só na configuração,
-por isso `Ativa = No` e Código `—`.
+**6. app-2 → lib.** App-2 declares `remote-lib` (app-2/vite.config.ts:22), matching lib
+through `name` (lib/vite.config.ts:18), but no app-2 file imports `remote-lib/...` (searching
+for `remote-lib` in app-2 finds only app-2/vite.config.ts:22). The relationship exists only in configuration,
+hence `Active = No` and Code `—`.
 
-## Resumo
+## Summary
 
-Relações: 6 (host → remote: 5, communication: 1). Ativas: 5. Destino fora do snapshot: 0.
-Unidades sem relação: nenhuma.
+Relationships: 6 (host → remote: 5, communication: 1). Active: 5. Target outside the snapshot: 0.
+Units without a relationship: none.
+

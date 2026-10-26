@@ -20,80 +20,80 @@ annotation:
 
 # 252 — j4flmao/agent-skills
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** não é projeto de software com aplicação. É uma biblioteca de “agent skills” em Markdown (`SKILL.md` e referências) para assistentes de código, com arquivos de configuração para vários assistentes (`README.md:1–3`; `package.json:2–4`, `:53–65`).
+- **Repository type:** not a software project with an application. It is a library of “agent skills” in Markdown (`SKILL.md` and references) for coding assistants, with configuration files for several assistants (`README.md:1–3`; `package.json:2–4`, `:53–65`).
 
-Micro-frontends aparecem como tema de skills e de documentos de referência, com trechos de código de exemplo dentro de Markdown. O nome do repositório não é usado como evidência.
+Micro-frontends appear as topics of skills and reference documents, with example code snippets inside Markdown. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:253` registra rank 252, ID 1238394528, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:253` records rank 252, ID 1238394528, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:253` registra as estratégias `terminology;technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:30057` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:30063` (`pass`), ambos com `terminology;technology`.
+`data/samples/mfe-sample-001/sample.csv:253` records strategies `terminology;technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:30057` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:30063` (`pass`), both with `terminology;technology`.
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos quatro hits em cada rodada:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same four hits in each round:
 
-| Consulta (`q`) | Endpoint | Subconsulta | `path` | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Endpoint | Subquery | `path` | Collection 001 / 002 (UTC) |
 |---|---|---|---|---|
-| `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | repositories | `…#created:2026-05` | vazio | 2026-10-07T21:51:29.129Z / 2026-10-08T15:42:48.382Z |
-| `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | repositories | `…#created:2026-05` | vazio | 2026-10-07T22:12:58.622Z / 2026-10-08T15:49:57.059Z |
-| `technology-custom-elements-single-spa-code`: `customElements.define registerApplication` | code | sem partição (mesmo id da consulta) | `skills/frontend/angular/architecture/references/angular-micro-frontends.md` | 2026-10-07T22:44:45.930Z / 2026-10-08T16:22:16.158Z |
-| `technology-web-components-microfrontends-repositories`: `"web components" microfrontends in:readme` | repositories | sem partição (mesmo id da consulta) | vazio | 2026-10-07T23:38:33.427Z / 2026-10-08T16:22:32.538Z |
+| `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | repositories | `…#created:2026-05` | empty | 2026-10-07T21:51:29.129Z / 2026-10-08T15:42:48.382Z |
+| `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | repositories | `…#created:2026-05` | empty | 2026-10-07T22:12:58.622Z / 2026-10-08T15:49:57.059Z |
+| `technology-custom-elements-single-spa-code`: `customElements.define registerApplication` | code | no partition (same id as the query) | `skills/frontend/angular/architecture/references/angular-micro-frontends.md` | 2026-10-07T22:44:45.930Z / 2026-10-08T16:22:16.158Z |
+| `technology-web-components-microfrontends-repositories`: `"web components" microfrontends in:readme` | repositories | no partition (same id as the query) | empty | 2026-10-07T23:38:33.427Z / 2026-10-08T16:22:32.538Z |
 
-As subconsultas `#created:2026-05` acrescentam `pushed:>=2025-04-01 created:2026-05-01..2026-05-31`; a de web components acrescenta `pushed:>=2025-04-01`.
+Subqueries `#created:2026-05` append `pushed:>=2025-04-01 created:2026-05-01..2026-05-31`; the web components subquery appends `pushed:>=2025-04-01`.
 
-Metadados do hit: descrição nula, sem tópicos, linguagem Shell, licença MIT, `fork: false`, tamanho 56420, 30 estrelas na rodada 001 e 32 na 002, criação em 2026-05-14T04:47:30Z, push em 2026-10-07T08:57:31Z.
+Hit metadata: null description, no topics, language Shell, MIT license, `fork: false`, size 56420, 30 stars in round 001 and 32 in 002, created at 2026-05-14T04:47:30Z, pushed at 2026-10-07T08:57:31Z.
 
-Correspondências no SHA:
-- **`microfrontend`:** `README.md:132`, dentro do identificador de skill `` `frontend-microfrontend` `` (o hífen separa os termos).
-- **`microfrontends`:** não aparece literalmente no README (busca `grep -i` por `microfrontends`, `micro` e `web.?component`). O hit depende do processamento textual da busca do GitHub, que não está registrado.
-- **`"web components" microfrontends`:** “web components” corresponde a `README.md:133` (`` `frontend-web-components` ``); “microfrontends” segue a observação anterior.
-- **Busca de código:** o arquivo casado contém `customElements.define('products-app', ProductsAppElement)` (`skills/frontend/angular/architecture/references/angular-micro-frontends.md:2534`) e `registerApplication` (`:2543`, `:2545`), ambos dentro de blocos de código Markdown.
+Matches at the SHA:
+- **`microfrontend`:** `README.md:132`, within skill identifier `` `frontend-microfrontend` `` (the hyphen separates the terms).
+- **`microfrontends`:** does not appear literally in the README (`grep -i` search for `microfrontends`, `micro` and `web.?component`). The hit depends on GitHub search text processing, which is not recorded.
+- **`"web components" microfrontends`:** “web components” corresponds to `README.md:133` (`` `frontend-web-components` ``); “microfrontends” follows the previous observation.
+- **Code search:** the matched file contains `customElements.define('products-app', ProductsAppElement)` (`skills/frontend/angular/architecture/references/angular-micro-frontends.md:2534`) and `registerApplication` (`:2543`, `:2545`), both inside Markdown code blocks.
 
-**Datas:** a última alteração do README é `e63c74b` (2026-10-07T15:57:31+07:00, isto é, 08:57:31Z), igual ao `pushed_at` registrado e anterior às coletas. O arquivo do hit de código foi alterado pela última vez em `0ef16b3` (2026-05-27). O SHA avaliado (`5a19d63`, 2026-10-10T10:28:26+07:00) é posterior às buscas, mas não altera nenhum desses arquivos: adiciona regras de governança, `AGENTS.md`, `docs/agent-*`, `scripts/validate-agent-governance.js` e altera bundles JSON e `package.json`. O README do SHA não é posterior às buscas.
+**Dates:** the last README change is `e63c74b` (2026-10-07T15:57:31+07:00, that is, 08:57:31Z), equal to the recorded `pushed_at` and before collections. The code hit file was last changed in `0ef16b3` (2026-05-27). The evaluated SHA (`5a19d63`, 2026-10-10T10:28:26+07:00) postdates the searches, but changes neither file: it adds governance rules, `AGENTS.md`, `docs/agent-*`, `scripts/validate-agent-governance.js` and changes JSON bundles and `package.json`. The README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 4.806 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Por extensão: 4.770 `.md`, 16 `.mdc`, 11 `.json`, 5 `.sh`, 1 `.yml`, 1 `.js`, `.gitignore` e `LICENSE`. Não há `index.html`, configuração de bundler ou `package.json` além do da raiz. | contrária |
-| Configuração | `package.json:2–4`: “Central mega-repository of 399 AI agent skills”; `:53–65`: publica pastas de skills e de configuração de assistentes; `:66–70`: só scripts de validação de Markdown e governança. Nenhuma dependência de UI ou build. | contrária |
-| Código-fonte | Os únicos arquivos executáveis são scripts de suporte: `scripts/validate-agent-governance.js:1–15` (valida arquivos de regras de assistentes) e cinco `.sh` (hooks de `.claude/hooks/scripts/`, `skills/core/project-init/scripts/scaffold.sh`, `skills/devops/chaos-engineering/scripts/pod_killer.sh`). Nenhum é aplicação frontend. | contrária |
-| Documentação (conteúdo MFE) | `skills/frontend/universal/microfrontend/SKILL.md:1–21`: skill “microfrontend” para responder perguntas sobre Module Federation, Web Components e iframes, com seis referências em `skills/frontend/universal/microfrontend/references/`. `skills/frontend/angular/architecture/references/angular-micro-frontends.md:1–30`, `:2502`, `:2534`, `:2539–2545`: guia de micro-frontends em Angular com exemplos de Module Federation, Web Components e single-spa em blocos de código. É conteúdo para assistentes, não configuração de aplicação. | contexto |
-| Tecnologia / Configuração / Composição | Nenhum arquivo de configuração ou código de aplicação no inventário (sem `index.html`, bundler ou `package.json` de unidade); os termos de MFE só aparecem em Markdown. | ausente |
-| Código-fonte (fronteiras) | Não há unidades frontend; a busca de imports relativos entre unidades não se aplica. O único `.js` usa `require("fs")`/`require("path")` (`scripts/validate-agent-governance.js:3–4`). | contexto |
+| Structure | `git ls-tree -r` at the SHA: 4.806 entries, all regular files `100644`; zero symlinks and zero gitlinks. By extension: 4.770 `.md`, 16 `.mdc`, 11 `.json`, 5 `.sh`, 1 `.yml`, 1 `.js`, `.gitignore` and `LICENSE`. There is no `index.html`, bundler configuration or `package.json` beyond the root one. | contrary |
+| Configuration | `package.json:2–4`: “Central mega-repository of 399 AI agent skills”; `:53–65`: publishes skill and assistant configuration folders; `:66–70`: only Markdown and governance validation scripts. No UI or build dependency. | contrary |
+| Source code | The only executable files are support scripts: `scripts/validate-agent-governance.js:1–15` (validates assistant rule files) and five `.sh` (hooks in `.claude/hooks/scripts/`, `skills/core/project-init/scripts/scaffold.sh`, `skills/devops/chaos-engineering/scripts/pod_killer.sh`). None is a frontend application. | contrary |
+| Documentation (MFE content) | `skills/frontend/universal/microfrontend/SKILL.md:1–21`: “microfrontend” skill for answering questions about Module Federation, Web Components and iframes, with six references in `skills/frontend/universal/microfrontend/references/`. `skills/frontend/angular/architecture/references/angular-micro-frontends.md:1–30`, `:2502`, `:2534`, `:2539–2545`: Angular micro-frontends guide with Module Federation, Web Components and single-spa examples in code blocks. This is assistant content, not application configuration. | context |
+| Technology / Configuration / Composition | No application configuration or code file in the inventory (no `index.html`, bundler or unit `package.json`); MFE terms appear only in Markdown. | absent |
+| Source code (boundaries) | There are no frontend units; relative import search between units does not apply. The only `.js` uses `require("fs")`/`require("path")` (`scripts/validate-agent-governance.js:3–4`). | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso e parcial (`blob:none`). São 180 commits (180 em todos os refs), nenhum merge, todos com o e-mail `j4flmao@gmail.com`:
-- 164 como `j4flmao`, com committer `j4flmao`;
-- 14 como “Shiroko” e 2 como “Rias”, com committer `GitHub` (edições pela interface web, como `e63c74b`, “Update README.md”).
+Non-shallow and partial clone (`blob:none`). There are 180 commits (180 across all refs), no merges, all with email `j4flmao@gmail.com`:
+- 164 as `j4flmao`, with committer `j4flmao`;
+- 14 as “Shiroko” and 2 as “Rias”, with committer `GitHub` (web interface edits, such as `e63c74b`, “Update README.md”).
 
-A raiz é `af05a5d` (2026-05-14T11:48:30+07:00, “feat: agent skill suite — planning to deveploment”). Os metadados não separam autoria intelectual de conteúdo gerado.
+The root is `af05a5d` (2026-05-14T11:48:30+07:00, “feat: agent skill suite — planning to deveploment”). Metadata does not distinguish intellectual authorship from generated content.
 
-`git rev-list --objects $SHA --missing=print` lista 26.144 objetos ausentes, nenhum na árvore do SHA (comparação entre os objetos da árvore e a lista de ausentes: zero em comum). `git show --stat` do SHA falha por blob histórico ausente; a inspeção foi repetida com `--no-renames --name-status`. Nenhum blob histórico foi lido.
+`git rev-list --objects $SHA --missing=print` lists 26.144 missing objects, none in the SHA tree (comparison between tree objects and the missing list: zero in common). `git show --stat` of the SHA fails due to a missing historical blob; inspection was repeated with `--no-renames --name-status`. No historical blob was read.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend: o repositório é composto de Markdown de skills e configurações de assistentes (inventário; `package.json:2–4`). |
-| Q2 | No | Não há unidades a avaliar. |
-| Q3 | No | Não há host, shell nem root config. |
-| Q4 | No | Nenhum mecanismo de composição configurado. `customElements.define` e `registerApplication` só aparecem em blocos de código de um guia (`skills/frontend/angular/architecture/references/angular-micro-frontends.md:2534`, `:2543–2545`). |
-| Q5 | No | Q1–Q4 convergem. |
+| Q1 | No | No frontend unit: the repository consists of skill Markdown and assistant configurations (inventory; `package.json:2–4`). |
+| Q2 | No | There are no units to assess. |
+| Q3 | No | There is no host, shell or root config. |
+| Q4 | No | No composition mechanism configured. `customElements.define` and `registerApplication` appear only in a guide’s code blocks (`skills/frontend/angular/architecture/references/angular-micro-frontends.md:2534`, `:2543–2545`). |
+| Q5 | No | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”.
-- Corresponde a “repositories mentioning micro-frontends without implementing them”. Na filtragem do protocolo, caberia em “repositories that are purely documentation without an implementation”.
-- Mesmo padrão de 023: trechos de configuração de micro-frontends existem só como conteúdo em Markdown. Também se aproxima dos casos de conteúdo e gerador (075/081/094/105): material para produzir código em outros projetos, não implementação.
-- `frontend_units: 0`, `unit_organization: none`, `repo_type: other`, arrays de tecnologia vazios.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”.
+- It matches “repositories mentioning micro-frontends without implementing them”. In protocol filtering, it would fit “repositories that are purely documentation without an implementation”.
+- Same pattern as 023: micro-frontend configuration snippets exist only as Markdown content. It also resembles content and generator cases (075/081/094/105): material to produce code in other projects, not implementation.
+- `frontend_units: 0`, `unit_organization: none`, `repo_type: other`, empty technology arrays.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** a busca de código `customElements.define registerApplication` casa exemplos em Markdown (`angular-micro-frontends.md:2534`, `:2543`), como no 023 com `ModuleFederationPlugin` em slides. Bibliotecas de skills ou prompts para assistentes de código são uma fonte recorrente desse falso positivo.
-- **Protocolo (busca):** o README casa as consultas terminológicas só por identificadores de skill hifenizados (`frontend-microfrontend`, `frontend-web-components`, `README.md:132–133`); “microfrontends” não tem grafia literal. A elegibilidade muda de `unknown` (001) para `pass` (002).
-- **Protocolo (snapshot):** o SHA clonado em 2026-10-12 é posterior às coletas de 7 e 8 de outubro, mas não altera os arquivos que geraram os hits.
+- **RQ1 (misleading signals):** code search `customElements.define registerApplication` matches Markdown examples (`angular-micro-frontends.md:2534`, `:2543`), as in 023 with `ModuleFederationPlugin` in slides. Skill or prompt libraries for coding assistants are a recurring source of this false positive.
+- **Protocol (search):** the README matches terminology queries only through hyphenated skill identifiers (`frontend-microfrontend`, `frontend-web-components`, `README.md:132–133`); “microfrontends” has no literal spelling. Eligibility changes from `unknown` (001) to `pass` (002).
+- **Protocol (snapshot):** the SHA cloned on 2026-10-12 postdates the collections on October 7 and 8, but does not change the files generating the hits.

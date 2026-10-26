@@ -20,60 +20,60 @@ annotation:
 
 # 312 — viochris/InsightSQL-LangGraph-Engine-Web
 
-## Contexto
+## Context
 
-Aplicação Python/Streamlit de um agente SQL com LangGraph e Gemini (“InsightSQL”, `README.md:1–12`). Tem um único script `app.py` com funções auxiliares em `function.py` e um banco SQLite de exemplo, publicada no Streamlit Cloud (homepage dos metadados). Não há código JavaScript nem frontend composto. O termo da busca resulta da justaposição de “(Frontend).” e “**Orchestration:**” em linhas consecutivas do README. O nome do repositório não é usado como evidência.
+Python/Streamlit SQL agent application with LangGraph and Gemini (“InsightSQL”, `README.md:1–12`). A single script `app.py` with helper functions in `function.py` and an example SQLite database, published on Streamlit Cloud (metadata homepage). No JavaScript code or composed frontend. Search term results from juxtaposition of “(Frontend).” and “**Orchestration:**” on consecutive README lines. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:313` registra rank 312, ID 1146461909, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:313` records rank 312, ID 1146461909, status `cloned`, branch `main` and the front matter commit, which is HEAD of the clone and `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:313` registra a estratégia `broader` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:24186` (`broader`, `unknown`) e `data/discovery/mfe-round-002/candidates.csv:24193` (`broader`, `pass`).
+`data/samples/mfe-sample-001/sample.csv:313` records strategy `broader` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:24186` (`broader`, `unknown`) and `data/discovery/mfe-round-002/candidates.csv:24193` (`broader`, `pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna um hit por rodada, do endpoint `repositories` e com `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns one hit per round, from endpoint `repositories` and with empty `path`:
 
-| Consulta (`q`) | Subconsulta | Consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Effective query | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `broader-frontend-orchestration`: `"frontend orchestration" in:name,description,readme` | `broader-frontend-orchestration#created:2026-Q1` | `"frontend orchestration" in:name,description,readme pushed:>=2025-04-01 created:2026-01-01..2026-03-31` | 2026-10-07T23:42:21.826Z / 2026-10-08T16:24:22.926Z |
 
-Metadados do hit (iguais nas duas rodadas): descrição sobre o agente SQL com LangGraph e Gemini 2.5, sem os termos buscados; tópicos `database-analysis`, `gemini-api`, `generative-ai`, `glass-box-ai`, `langgraph`, `llm-reasoning`, `python`, `react-architecture`, `sql-agent`, `streamlit`; linguagem Python; licença MIT; `fork: false`; tamanho 296; criação em 2026-01-31T06:03:24Z; push em 2026-01-31T07:30:14Z.
+Hit metadata (same in both rounds): description about SQL agent with LangGraph and Gemini 2.5, without searched terms; topics `database-analysis`, `gemini-api`, `generative-ai`, `glass-box-ai`, `langgraph`, `llm-reasoning`, `python`, `react-architecture`, `sql-agent`, `streamlit`; language Python; license MIT; `fork: false`; size 296; created at 2026-01-31T06:03:24Z; pushed at 2026-01-31T07:30:14Z.
 
-**Grafia:** o README do SHA não contém a frase “frontend orchestration”. A única sequência compatível é o fim de `README.md:38` (“* **Framework:** Streamlit (Frontend).”) seguido de `README.md:39` (“* **Orchestration:** LangGraph (Cyclic ReAct Agent).”): os tokens “Frontend” e “Orchestration” ficam adjacentes depois de pontuação, quebra de linha e marcação. O tópico `react-architecture` refere-se ao padrão ReAct de agentes, não ao React. Não se afirma qual trecho a API casou, porque ela não informa linha.
+**Spelling:** SHA's README does not contain phrase “frontend orchestration”. Only compatible sequence is end of `README.md:38` (“* **Framework:** Streamlit (Frontend).”) followed by `README.md:39` (“* **Orchestration:** LangGraph (Cyclic ReAct Agent).”): tokens “Frontend” and “Orchestration” are adjacent after punctuation, line break and markup. Topic `react-architecture` refers to agent ReAct pattern, rather than React. No claim is made about which passage API matched, as it reports no line.
 
-A última alteração do README é o SHA (2026-01-31T14:30:14+07:00, isto é, 07:30:14Z), igual ao `pushed_at` e anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+README's last change is SHA (2026-01-31T14:30:14+07:00, i.e., 07:30:14Z), matching `pushed_at` and preceding October 2026 collection. The SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 10 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. São `app.py`, `function.py`, `requirements.txt`, `dresses.db` (SQLite), quatro imagens em `assets/`, `README.md` e `LICENSE`. Não há `package.json`, HTML ou código JavaScript. | contrária |
-| Configuração | `requirements.txt`: `streamlit`, `langchain`, `langchain-community`, `langchain-google-genai`, `langchain-core`, `langgraph` e `sqlalchemy`. | contrária |
-| Código-fonte | `app.py:1–33`: importa Streamlit, LangChain e LangGraph (`create_react_agent`, `:15`) e as funções de `function.py` (`:19`), e configura a página (`st.set_page_config`, `:33`). `function.py:3`, `:23`, `:43`, `:64`, `:80`: funções de estado da sessão Streamlit (`init_state`, `change_on_api_key`, `reset_state`, `reset_chat_display`, `change_on_lan`). Uma única aplicação. | contrária |
-| Documentação | `README.md:38–39`: “Framework: Streamlit (Frontend)” e “Orchestration: LangGraph (Cyclic ReAct Agent)”, onde “orchestration” designa a orquestração do agente LLM. | contexto |
-| Tecnologia / Configuração / Composição (busca) | `git grep -i` em `app.py` e `function.py` por `iframe`, `components.v1`, `st.components`, `html(`, `federation`, `single.?spa`, `import.?map`, `customElements` e `micro`: nenhuma ocorrência. A única importação local é `from function import …` (`app.py:19`), na mesma aplicação. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 10 entries, all regular `100644` files; zero symlinks and zero gitlinks. `app.py`, `function.py`, `requirements.txt`, `dresses.db` (SQLite), four images in `assets/`, `README.md` and `LICENSE`. No `package.json`, HTML or JavaScript code. | contrary |
+| Configuration | `requirements.txt`: `streamlit`, `langchain`, `langchain-community`, `langchain-google-genai`, `langchain-core`, `langgraph` and `sqlalchemy`. | contrary |
+| Source code | `app.py:1–33`: imports Streamlit, LangChain and LangGraph (`create_react_agent`, `:15`) and `function.py` functions (`:19`), and configures page (`st.set_page_config`, `:33`). `function.py:3`, `:23`, `:43`, `:64`, `:80`: Streamlit session state functions (`init_state`, `change_on_api_key`, `reset_state`, `reset_chat_display`, `change_on_lan`). A single application. | contrary |
+| Documentation | `README.md:38–39`: “Framework: Streamlit (Frontend)” and “Orchestration: LangGraph (Cyclic ReAct Agent)”, where “orchestration” denotes LLM agent orchestration. | context |
+| Technology / Configuration / Composition (search) | `git grep -i` in `app.py` and `function.py` for `iframe`, `components.v1`, `st.components`, `html(`, `federation`, `single.?spa`, `import.?map`, `customElements` and `micro`: no occurrences. Only local import is `from function import …` (`app.py:19`), within same application. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso e parcial (`blob:none`). São 6 commits (6 em todos os refs), nenhum merge, todos de `Silvio Christian, Joe <140993389+viochris@users.noreply.github.com>` com committer `GitHub` (uploads e edições pela interface web), em 2026-01-31, de `736b5a3` (“Initial commit”) ao SHA (“Update README.md”). `git rev-list --objects $SHA --missing=print` lista 4 objetos ausentes, nenhum na árvore do SHA. Nenhum blob histórico foi lido.
+Non-shallow, partial clone (`blob:none`). 6 commits (6 across all refs), no merges, all by `Silvio Christian, Joe <140993389+viochris@users.noreply.github.com>` with committer `GitHub` (web interface uploads and edits), on 2026-01-31, from `736b5a3` (“Initial commit”) to SHA (“Update README.md”). `git rev-list --objects $SHA --missing=print` lists 4 missing objects, none in SHA tree. No historical blob was read.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única aplicação Streamlit (`app.py:1–33`; `requirements.txt`); nenhuma configuração de composição. |
-| Q2 | No | Não há duas unidades. |
-| Q3 | No | Não há host que carregue unidades. |
-| Q4 | No | Nenhum mecanismo de composição frontend; a “orquestração” do README é o grafo LangGraph do agente (`README.md:39`). |
-| Q5 | No | Q1–Q4 convergem. |
+| Q1 | No | A single Streamlit application (`app.py:1–33`; `requirements.txt`); no composition configuration. |
+| Q2 | No | No two units. |
+| Q3 | No | No host loading units. |
+| Q4 | No | No frontend composition mechanism; README “orchestration” is agent's LangGraph graph (`README.md:39`). |
+| Q5 | No | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “conventional frontend monoliths”: aplicação Python/Streamlit única.
-- Nem é caso de menção a micro-frontends: o hit resulta de tokens adjacentes de linhas distintas (“(Frontend).” / “**Orchestration:**”), como o falso positivo lexical de 279 (rascunho).
-- `frontend_units: 1`, `single-unit`. `ui_technologies: [streamlit]`, o framework de UI observado (`requirements.txt`; `app.py:1`). `build_tools: []`: não há bundler. `repo_type: example` (demonstração de agente com banco SQLite de exemplo, `dresses.db`).
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. Matches “conventional frontend monoliths”: a single Python/Streamlit application.
+- Not even a micro-frontend mention case: hit results from adjacent tokens on different lines (“(Frontend).” / “**Orchestration:**”), like lexical false positive 279 (draft).
+- `frontend_units: 1`, `single-unit`. `ui_technologies: [streamlit]`, observed UI framework (`requirements.txt`; `app.py:1`). `build_tools: []`: no bundler. `repo_type: example` (agent demonstration with example SQLite database, `dresses.db`).
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos) / Protocolo (busca):** a consulta ampla `"frontend orchestration"` casou a justaposição de dois rótulos de lista (`README.md:38–39`) num projeto de agente LLM, em que “orchestration” significa orquestração de agentes. Assim como em 279, a busca de frase parece ignorar pontuação e quebras de linha entre tokens.
-- **Protocolo:** a elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ1 (misleading signals) / Protocol (search):** broad query `"frontend orchestration"` matched juxtaposition of two list labels (`README.md:38–39`) in an LLM agent project, where “orchestration” means agent orchestration. As in 279, phrase search appears to ignore punctuation and line breaks between tokens.
+- **Protocol:** eligibility changes from `unknown` (001) to `pass` (002).

@@ -13,85 +13,35 @@ annotation:
 
 # 096 — victorlmneves/_nuxt-monorepo-mfe-platform
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem 4 commits, sem merges, todos de 2026-05-29. O primeiro, `da1cfb0`
-("first commit"), cria só um `README.md`, cuja versão não está disponível no clone. O segundo,
-`74f5247` ("Initial commit"), cria a raiz do monorepo (`package.json`, `pnpm-workspace.yaml`,
-`turbo.json`, `pnpm-lock.yaml`, `.gitignore`, `.npmrc`, `tsconfig.json`), `packages/shared` inteiro
-(auth, registro e tipos) e os quatro arquivos de `scripts/`, e substitui o README pela versão do
-snapshot (o identificador do objeto `0dd924b` é o mesmo em `74f5247` e no snapshot). O terceiro,
-`8606169` ("Add apps folder and its contents"), acrescenta `apps` como gitlink para o commit
-`cb1c03a`, de outro repositório, que não está no clone. O snapshot, `84ffc24` ("Fix: add apps/ and
-all subfolders as regular files (remove submodule)"), remove o gitlink, altera o `.gitignore` e cria
-os 41 arquivos de `apps/` (o shell e os quatro remotes).
+History up to snapshot has 4 commits, without merges, all from 2026-05-29. First, `da1cfb0` ("first commit"), creates only a `README.md`, whose version is unavailable in clone. Second, `74f5247` ("Initial commit"), creates monorepo root (`package.json`, `pnpm-workspace.yaml`, `turbo.json`, `pnpm-lock.yaml`, `.gitignore`, `.npmrc`, `tsconfig.json`), all of `packages/shared` (auth, registry and types) and four files in `scripts/`, and replaces README with snapshot version (object identifier `0dd924b` is identical in `74f5247` and snapshot). Third, `8606169` ("Add apps folder and its contents"), adds `apps` as gitlink to commit `cb1c03a` from another repository, absent from clone. Snapshot, `84ffc24` ("Fix: add apps/ and
+all subfolders as regular files (remove submodule)"), removes gitlink, changes `.gitignore` and creates 41 files in `apps/` (shell and four remotes).
 
-Assim, todo o código das cinco unidades tem a sua primeira presença observável no próprio commit
-do snapshot: nenhum arquivo de `apps/` tem versão anterior legível, e o conteúdo que o gitlink
-apontava não pode ser lido. Já o README, os arquivos da raiz, `packages/shared` e `scripts/` não
-mudam de `74f5247` até o snapshot (os identificadores dos objetos e das árvores `packages` e
-`scripts` são os mesmos nos dois commits). O `log --name-status` do repositório inteiro foi até o
-primeiro commit sem falha, e nenhum commit cria ou remove arquivo fora dos listados acima.
+Thus, all code of five units has its first observable presence in snapshot commit itself: no `apps/` file has an earlier readable version, and contents pointed to by gitlink cannot be read. README, root files, `packages/shared` and `scripts/` do not change from `74f5247` to snapshot (object identifiers and `packages` and `scripts` tree identifiers are identical in both commits). Repository-wide `log --name-status` reached first commit without failure, and no commit creates or removes a file outside those listed above.
 
-Das revisões anteriores, a 3.4.2 tem uma dependência `Undetermined` (`turbo`), que é um ponto. A
-3.4.3 não tem unidade `Undetermined`, a 3.4.4 não tem construção inativa ou `Undetermined`, a
-3.4.5 não tem relação `Undetermined` e a 3.4.6 não tem deploy `Undetermined`. Das quatro afirmações
-`contradita` da 3.4.7, #13 e #15, sobre o escopo `singleton`, viraram um ponto; #6 (o cabeçalho
-compartilhado) e #16 (o cabeçalho como única coisa compartilhada) são pontos próprios, porque a 3.4.7
-as separa (Observação 16) e a dúvida histórica de cada uma está em artefatos diferentes: o uso do
-`ShellHeader.vue` pelas unidades, numa, e o pacote `@mfe/shared`, na outra.
+Of previous reviews, 3.4.2 has one `Undetermined` dependency (`turbo`), forming one point. 3.4.3 has no `Undetermined` unit, 3.4.4 has no inactive or `Undetermined` construct, 3.4.5 has no `Undetermined` relationship and 3.4.6 has no `Undetermined` deploy. Of four `contradicted` claims in 3.4.7, #13 and #15 about `singleton` scope became one point; #6 (shared header) and #16 (header as only shared thing) are separate points, because 3.4.7 separates them (Observation 16) and each historical uncertainty concerns different artifacts: unit usage of `ShellHeader.vue` in one, and package `@mfe/shared` in the other.
 
-## Pontos
+## Points
 
-| # | Ponto | Origem | Pergunta | Commits | Resultado |
+| # | Point | Origin | Question | Commits | Result |
 |---|---|---|---|---|---|
-| 1 | `turbo` tem `turbo.json`, mas só é chamado pelos scripts do `package.json`, sem workflow de CI ou script que o invoque | 3.4.2 (package.json:34) | uso de dependência | 74f5247 2026-05-29 Initial commit; 84ffc24 2026-05-29 Fix: add apps/ and all subfolders as regular files (remove submodule) | esclarecido |
-| 2 | O README chama o `ShellHeader.vue` de "Shared header", e só o shell o usa | 3.4.7 #6 | estágios em conflito | 74f5247 2026-05-29 Initial commit; 8606169 2026-05-29 Add apps folder and its contents; 84ffc24 2026-05-29 Fix: add apps/ and all subfolders as regular files (remove submodule) | inconclusivo |
-| 3 | O README atribui o isolamento dos remotes Vue 2 e o compartilhamento do Vue 3 com o shell ao escopo `singleton`, e o shell não tem `ModuleFederationPlugin` e inicia os containers com escopo vazio | 3.4.7 #13, #15 | estágios em conflito | 74f5247 2026-05-29 Initial commit; 8606169 2026-05-29 Add apps folder and its contents; 84ffc24 2026-05-29 Fix: add apps/ and all subfolders as regular files (remove submodule) | inconclusivo |
-| 4 | O README diz que o cabeçalho é a única coisa compartilhada, e o pacote `@mfe/shared` e o barramento de eventos são usados pelas cinco unidades | 3.4.7 #16 | estágios em conflito | 74f5247 2026-05-29 Initial commit | esclarecido |
+| 1 | `turbo` has `turbo.json`, but is called only by `package.json` scripts, without a CI workflow or script invoking it | 3.4.2 (package.json:34) | dependency use | 74f5247 2026-05-29 Initial commit; 84ffc24 2026-05-29 Fix: add apps/ and all subfolders as regular files (remove submodule) | clarified |
+| 2 | README calls `ShellHeader.vue` a "Shared header", and only shell uses it | 3.4.7 #6 | conflicting stages | 74f5247 2026-05-29 Initial commit; 8606169 2026-05-29 Add apps folder and its contents; 84ffc24 2026-05-29 Fix: add apps/ and all subfolders as regular files (remove submodule) | inconclusive |
+| 3 | README attributes Vue 2 remote isolation and Vue 3 sharing with shell to `singleton` scope, and shell has no `ModuleFederationPlugin` and initializes containers with empty scope | 3.4.7 #13, #15 | conflicting stages | 74f5247 2026-05-29 Initial commit; 8606169 2026-05-29 Add apps folder and its contents; 84ffc24 2026-05-29 Fix: add apps/ and all subfolders as regular files (remove submodule) | inconclusive |
+| 4 | README says header is the only shared thing, and package `@mfe/shared` and event bus are used by five units | 3.4.7 #16 | conflicting stages | 74f5247 2026-05-29 Initial commit | clarified |
 
-## Observações
+## Observations
 
-**1. O `turbo` sem invocação fora dos scripts.** O `package.json` e o `turbo.json` são criados em
-`74f5247` e não mudam até o snapshot (mesmos identificadores de objeto, `229d4e3` e `e44e060`).
-Nenhum dos quatro commits cria ou remove um workflow de CI, um Dockerfile ou outro script que chame
-`turbo`: o único caminho removido em todo o histórico é o gitlink `apps`, e os
-arquivos de `scripts/` são os mesmos desde `74f5247`. O conteúdo de `apps/` antes do snapshot, no
-gitlink `cb1c03a`, não está disponível, mas as invocações que a 3.4.2 procura estariam na raiz ou em
-`scripts/`. Conclusão, delimitada a esses arquivos: no repositório nunca houve uma invocação do
-`turbo` fora dos scripts do `package.json` que depois tenha sido removida; o `Undetermined` não é
-resto de uma automação abandonada. Isso não muda o `Undetermined` da 3.4.2.
+**1. `turbo` without invocation outside scripts.** The `package.json` and `turbo.json` are created in `74f5247` and do not change up to snapshot (same object identifiers, `229d4e3` and `e44e060`). None of four commits creates or removes a CI workflow, Dockerfile or other script calling `turbo`: the only removed path in all history is gitlink `apps`, and files in `scripts/` are identical since `74f5247`. Contents of `apps/` before snapshot, at gitlink `cb1c03a`, are unavailable, but invocations sought by 3.4.2 would be in root or `scripts/`. Conclusion limited to these files: repository never had a `turbo` invocation outside `package.json` scripts later removed; `Undetermined` is not a remnant of abandoned automation. This does not change `Undetermined` in 3.4.2.
 
-**2. O cabeçalho "compartilhado".** O README com a frase é a versão de `74f5247` e não muda até o
-snapshot. O `ShellHeader.vue` e os `App.vue` dos remotes têm a sua primeira presença observável no
-commit do snapshot, `84ffc24`, que os cria como arquivos comuns; antes disso, `apps` era o gitlink
-`cb1c03a` (`8606169`), e o commit apontado não está no clone (`cat-file` falhou). O histórico mostra
-que o README foi gravado antes de o código das aplicações entrar no repositório como arquivos, no
-mesmo dia, mas não mostra se alguma versão anterior das aplicações usava o cabeçalho em mais de uma
-unidade. A mensagem de `84ffc24` anuncia só a troca do submódulo por arquivos comuns. O README
-também diz que foi construído sobre outro repositório (README.md:5), que não foi consultado.
-Inconclusivo; a afirmação continua `contradita`.
+**2. The "shared" header.** README containing sentence is version at `74f5247` and does not change up to snapshot. The `ShellHeader.vue` and remote `App.vue` files have their first observable presence in snapshot commit `84ffc24`, creating them as regular files; previously, `apps` was gitlink `cb1c03a` (`8606169`), and pointed-to commit is absent from clone (`cat-file` failed). History shows README was recorded before application code entered repository as files, on the same day, but does not show whether an earlier application version used header in more than one unit. Message of `84ffc24` announces only replacement of submodule with regular files. README also says it was built on another repository (README.md:5), which was not consulted. Inconclusive; claim remains `contradicted`.
 
-**3. O escopo `singleton`.** As duas frases estão no README de `74f5247`, sem mudança até o
-snapshot. Os artefatos que as desmentem, os `webpack.config.js` dos remotes (o Vuetify 2 fora do
-`shared`), o `nuxt.config.ts` do shell sem o plugin e o `container.init({})` de `useMfeLoader.ts`,
-têm todos a sua primeira presença observável em `84ffc24`, e um único commit no `log` de cada um. O
-histórico não mostra se o shell teve, numa versão anterior no gitlink `cb1c03a` ou no repositório
-de origem citado em README.md:5, um `ModuleFederationPlugin` com o Vue 3 no escopo compartilhado,
-porque esse conteúdo não está disponível. Inconclusivo; as afirmações continuam `contradita`.
+**3. `singleton` scope.** Both sentences are in README at `74f5247`, unchanged up to snapshot. Artifacts contradicting them, remote `webpack.config.js` files (Vuetify 2 outside `shared`), shell `nuxt.config.ts` without plugin and `container.init({})` in `useMfeLoader.ts`, all have their first observable presence in `84ffc24`, and a single commit in each `log`. History does not show whether shell had, in an earlier version in gitlink `cb1c03a` or source repository cited at README.md:5, a `ModuleFederationPlugin` with Vue 3 in shared scope, because those contents are unavailable. Inconclusive; claims remain `contradicted`.
 
-**4. A "única coisa compartilhada".** O README e o pacote `packages/shared`, com
-`src/auth/index.ts`, `src/registry.ts`, `src/types/index.ts` e `src/index.ts`, entram juntos em
-`74f5247`, e nenhum dos dois muda até o snapshot (o README é o objeto `0dd924b`, e a árvore
-`packages` é `a195189` nos dois commits). A versão de `74f5247` do README, legível, já traz, logo
-abaixo do título "The only shared thing: the header", a seção "Auth state sharing" com o barramento
-de `packages/shared/src/auth` e o contrato `RemoteMount` "defined in `@mfe/shared`". Conclusão,
-delimitada a esses arquivos: no repositório, o título nunca conviveu com uma versão sem o pacote
-compartilhado; a divergência é interna ao README desde a sua primeira presença observável, e não
-resto de um estágio anterior ao pacote. O uso do pacote pelas cinco unidades só é observável no
-snapshot. A afirmação continua `contradita`.
+**4. The "only shared thing".** README and package `packages/shared`, with `src/auth/index.ts`, `src/registry.ts`, `src/types/index.ts` and `src/index.ts`, arrive together in `74f5247`, and neither changes up to snapshot (README is object `0dd924b`, and tree `packages` is `a195189` in both commits). Readable README version at `74f5247` already has, immediately below title "The only shared thing: the header", section "Auth state sharing" with bus from `packages/shared/src/auth` and contract `RemoteMount` "defined in `@mfe/shared`". Conclusion limited to these files: in repository, title never coexisted with a version lacking shared package; discrepancy is internal to README since its first observable presence, rather than a remnant of a stage preceding package. Usage of package by five units is observable only in snapshot. Claim remains `contradicted`.
 
-## Comandos
+## Commands
 
 ```sh
 docs/mfe-history-review/tools/hist.sh victorlmneves___nuxt-monorepo-mfe-platform rev-list --count 84ffc2429b311b3c7565ffd35de4de48dafd5929
@@ -104,13 +54,13 @@ docs/mfe-history-review/tools/hist.sh victorlmneves___nuxt-monorepo-mfe-platform
 docs/mfe-history-review/tools/hist.sh victorlmneves___nuxt-monorepo-mfe-platform ls-tree 84ffc2429b311b3c7565ffd35de4de48dafd5929
 docs/mfe-history-review/tools/hist.sh victorlmneves___nuxt-monorepo-mfe-platform ls-tree 74f5247:packages/shared/src
 docs/mfe-history-review/tools/hist.sh victorlmneves___nuxt-monorepo-mfe-platform ls-tree 84ffc2429b311b3c7565ffd35de4de48dafd5929:packages/shared/src
-docs/mfe-history-review/tools/hist.sh victorlmneves___nuxt-monorepo-mfe-platform show da1cfb0:README.md      # falhou: objeto ausente
+docs/mfe-history-review/tools/hist.sh victorlmneves___nuxt-monorepo-mfe-platform show da1cfb0:README.md      # failed: missing object
 docs/mfe-history-review/tools/hist.sh victorlmneves___nuxt-monorepo-mfe-platform log --format='%h %ad %s' --date=short 84ffc2429b311b3c7565ffd35de4de48dafd5929 -- README.md package.json turbo.json packages scripts
 docs/mfe-history-review/tools/hist.sh victorlmneves___nuxt-monorepo-mfe-platform log --format='%h %ad %s' --date=short 84ffc2429b311b3c7565ffd35de4de48dafd5929 -- apps/shell/components/ShellHeader.vue apps/shell/composables/useMfeLoader.ts apps/shell/nuxt.config.ts apps/mfe-vue2-checkout/webpack.config.js apps/mfe-vue2-admin/webpack.config.js apps/mfe-vue3-profile/webpack.config.js apps/mfe-vue3-dashboard/webpack.config.js
-docs/mfe-history-review/tools/hist.sh victorlmneves___nuxt-monorepo-mfe-platform cat-file -t cb1c03abe02b536d52cdc5aa31d29c616a8558ce      # falhou: objeto ausente (commit do gitlink)
+docs/mfe-history-review/tools/hist.sh victorlmneves___nuxt-monorepo-mfe-platform cat-file -t cb1c03abe02b536d52cdc5aa31d29c616a8558ce      # failed: missing object (gitlink commit)
 docs/mfe-history-review/tools/hist.sh victorlmneves___nuxt-monorepo-mfe-platform show 74f5247:README.md
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 4 (2026-05-29 a 2026-05-29). Pontos: 4 (esclarecido: 2, inconclusivo: 2, resolvido pelo snapshot: 0).
+Commits up to the snapshot: 4 (2026-05-29 to 2026-05-29). Points: 4 (clarified: 2, inconclusive: 2, resolved by the snapshot: 0).

@@ -20,33 +20,33 @@ annotation:
 
 # 053 — elgrhy/elgrhy
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** não é projeto de software (repositório de perfil do GitHub, `<usuário>/<usuário>`)
+- **Repository type:** not a software project (GitHub profile repository, `<user>/<user>`)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | Um único arquivo versionado: `readme.md` (77 linhas) | ausente |
-| Documentação | `readme.md:1-6`: perfil profissional ("Director & System Architect", Rust/AI/Systems Architecture); `:59` "TypeScript (Next.js) → SaaS frontends & orchestration layers"; nenhuma ocorrência de "micro-frontend", "federation" ou "single-spa", nem no histórico | ausente |
-| Tecnologia / Configuração / Código-fonte / Build/deploy | Inexistentes | ausente |
+| Structure | A single tracked file: `readme.md` (77 lines) | absent |
+| Documentation | `readme.md:1-6`: professional profile ("Director & System Architect", Rust/AI/Systems Architecture); `:59` "TypeScript (Next.js) → SaaS frontends & orchestration layers"; no occurrences of "micro-frontend", "federation" or "single-spa", even in history | absent |
+| Technology / Configuration / Source code / Build/deploy | Nonexistent | absent |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend; só `readme.md` |
-| Q2 | No | Não há unidades |
-| Q3 | No | Não há host, shell nem root config |
-| Q4 | No | Nenhum mecanismo de composição |
-| Q5 | No | Q1–Q4 convergem |
+| Q1 | No | No frontend units; only `readme.md` |
+| Q2 | No | No units |
+| Q3 | No | No host, shell or root config |
+| Q4 | No | No composition mechanism |
+| Q5 | No | Q1–Q4 converge |
 
-## Motivo
+## Rationale
 
-- É o README de perfil do GitHub, não um projeto de software. Na filtragem automática do protocolo (seção 3.2), seria eliminado como "clearly not software projects".
-- Nem o termo "micro-frontend" aparece; o repositório provavelmente entrou por termos amplos (ex.: "frontend", "orchestration", `readme.md:59`).
+- This is a GitHub profile README, not a software project. In the protocol's automatic filtering (section 3.2), it would be excluded as "clearly not software projects".
+- Even the term "micro-frontend" is absent; the repository probably entered through broad terms (e.g., "frontend", "orchestration", `readme.md:59`).
 
-## Notas para análise
+## Analysis notes
 
-- **Protocolo (filtragem automática):** mais um repositório de perfil (`owner == name`), como 011 e os marcados pelos pesquisadores (016, 018, 020, 021). Reforça a sugestão de filtrar esse padrão automaticamente.
+- **Protocol (automatic filtering):** another profile repository (`owner == name`), like 011 and those flagged by the researchers (016, 018, 020, 021). Reinforces the suggestion to filter this pattern automatically.

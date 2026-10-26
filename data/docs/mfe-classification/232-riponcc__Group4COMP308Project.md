@@ -20,66 +20,66 @@ annotation:
 
 # 232 — riponcc/Group4COMP308Project
 
-## Contexto
+## Context
 
-“Municipal Issue Management System” (`README.md:1–27`): projeto full-stack de equipe com três microsserviços de backend (auth, gestão de ocorrências e analytics/IA com GraphQL e Socket.io) e três aplicações React/Vite com `@originjs/vite-plugin-federation`:
-- `client/shell-app`, host na porta 3000;
-- `client/user-app`, login e cadastro na porta 3001;
-- `client/issue-app`, gestão de ocorrências e chat de IA na porta 3002.
+“Municipal Issue Management System” (`README.md:1–27`): team full-stack project with three backend microservices (auth, issue management and analytics/AI with GraphQL and Socket.io) and three React/Vite applications with `@originjs/vite-plugin-federation`:
+- `client/shell-app`, host on port 3000;
+- `client/user-app`, login and registration on port 3001;
+- `client/issue-app`, issue management and AI chat on port 3002.
 
-O shell mostra `UserApp` antes do login e `IssueApp` depois, e a troca é sinalizada por eventos `loginSuccess`/`logout` em `window` (`client/shell-app/src/App.jsx:22–72`). O nome do repositório não é usado como evidência.
+The shell shows `UserApp` before login and `IssueApp` afterward, and the switch is signaled through `loginSuccess`/`logout` events on `window` (`client/shell-app/src/App.jsx:22–72`). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:233` registra rank 232, ID 1104733457, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:233` records rank 232, ID 1104733457, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:233` registra a estratégia `technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:21524` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:21530` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:233` records strategy `technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:21524` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:21530` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna o mesmo hit em cada rodada, do endpoint `repositories` e com `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same hit in each round, from endpoint `repositories` and with an empty `path`:
 
-| Consulta (`q`) | Subconsulta / consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery / effective query | Collection 001 / 002 (UTC) |
 |---|---|---|
 | `technology-module-federation-repositories`: `"module federation" in:name,description,readme` | `technology-module-federation-repositories#created:2025-11` / `"module federation" in:name,description,readme pushed:>=2025-04-01 created:2025-11-01..2025-11-30` | 2026-10-07T23:21:09.536Z / 2026-10-08T16:16:19.379Z |
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem JavaScript, `fork: false`, tamanho 432;
-- criação em 2025-11-26T16:01:44Z, push em 2025-12-10T16:04:25Z.
+Hit metadata:
+- null description, no topics, language JavaScript, `fork: false`, size 432;
+- created at 2025-11-26T16:01:44Z, pushed at 2025-12-10T16:04:25Z.
 
-Grafia “Module Federation” em `README.md:3` (“built with microservices architecture and React Module Federation”), `12`, `25`, `41` e `234`. A última alteração do README é `0df228d` (2025-12-10), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+Spelling “Module Federation” in `README.md:3` (“built with microservices architecture and React Module Federation”), `12`, `25`, `41` and `234`. The last README change is `0df228d` (2025-12-10), before the October 2026 collections. The README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 89 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. `client/` tem três projetos Vite independentes, cada um com `package.json`, lockfile, `vite.config.js`, `index.html` e `src/`. `server/` tem três microsserviços Node; há também `architecture-diagram.puml`. | contexto |
-| Configuração (host) | `client/shell-app/vite.config.js:36–50`: `federation({ name: 'shellApp', remotes: { userApp: 'http://localhost:3001/assets/remoteEntry.js', issueApp: 'http://localhost:3002/assets/remoteEntry.js' }, shared: react, react-dom, @apollo/client, graphql })`. As linhas `1–26` são uma versão anterior comentada, só com `userApp`. | forte |
-| Configuração (remotos) | `client/user-app/vite.config.js:10–17`: `name: 'userApp'`, `filename: 'remoteEntry.js'`, `exposes: { './App': './src/App' }`. `client/issue-app/vite.config.js:14–26`: `name: 'issueApp'`, `exposes: { './App': './src/App' }`. Os scripts (`client/user-app/package.json:7`, `10`; `client/issue-app/package.json:7`, `10`) usam as portas 3001/3002 do host. | forte |
-| Código-fonte (composição) | `client/shell-app/src/App.jsx:10–11`: `lazy(() => import("userApp/App"))` e `lazy(() => import("issueApp/App"))`. `:59–70`: renderiza um ou outro conforme o login, dentro de `Suspense`, e passa `currentUser` ao `IssueApp`. `:42–43`: escuta `loginSuccess` e `logout` em `window`. | forte |
-| Código-fonte (fronteiras) | Busca por `../..` em `client`: só `client/issue-app/src/components/ai/AIChatbot.jsx:3` → `../../api/aiClient`, interno ao `issue-app`. Não há imports entre os projetos de `client/`. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 89 entries, all regular files `100644`; zero symlinks and zero gitlinks. `client/` has three independent Vite projects, each with `package.json`, lockfile, `vite.config.js`, `index.html` and `src/`. `server/` has three Node microservices; there is also `architecture-diagram.puml`. | context |
+| Configuration (host) | `client/shell-app/vite.config.js:36–50`: `federation({ name: 'shellApp', remotes: { userApp: 'http://localhost:3001/assets/remoteEntry.js', issueApp: 'http://localhost:3002/assets/remoteEntry.js' }, shared: react, react-dom, @apollo/client, graphql })`. Lines `1–26` are an earlier commented-out version, with only `userApp`. | strong |
+| Configuration (remotes) | `client/user-app/vite.config.js:10–17`: `name: 'userApp'`, `filename: 'remoteEntry.js'`, `exposes: { './App': './src/App' }`. `client/issue-app/vite.config.js:14–26`: `name: 'issueApp'`, `exposes: { './App': './src/App' }`. The scripts (`client/user-app/package.json:7`, `10`; `client/issue-app/package.json:7`, `10`) use the host’s ports 3001/3002. | strong |
+| Source code (composition) | `client/shell-app/src/App.jsx:10–11`: `lazy(() => import("userApp/App"))` and `lazy(() => import("issueApp/App"))`. `:59–70`: renders one or the other according to login, within `Suspense`, and passes `currentUser` to `IssueApp`. `:42–43`: listens for `loginSuccess` and `logout` on `window`. | strong |
+| Source code (boundaries) | Search for `../..` in `client`: only `client/issue-app/src/components/ai/AIChatbot.jsx:3` → `../../api/aiClient`, internal to `issue-app`. There are no imports between the projects in `client/`. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 9 commits, 1 merge (o SHA `59db8c8`, “Merge pull request #1 from riponcc/ahmadsbranch”, 2025-12-10). Nos nove commits de todas as refs há três e-mails de autor (Md Ripon Hossain, com 6 e mais 1 como Ripon, Keta Patel e Ahmad Qaher); isso não demonstra quatro pessoas. O commit `c1ee799`, de Keta Patel, está só em `origin/keta-branch` e fora da ancestralidade do SHA, e não foi usado para atribuir arquivos do snapshot; `origin/ahmadsbranch` está incorporada pelo merge `59db8c8`. A raiz é `934af61` (2025-11-26, auth microservice); depois vêm `9983a55` (user-app), `94eaf5d` (“Added shell app to handle microservices”) e `8c2b4f9` (issue microservice e frontend). Dos branches, `origin/keta-branch` tem 1 commit fora de `main`, e os demais não têm commits além de `main`; nenhum foi considerado. Nenhum blob histórico foi lido. O clone é parcial (`blob:none`) e `git rev-list --objects $SHA --missing=print` encontra 38 objetos históricos ausentes, sem tentativa de buscá-los; os arquivos do snapshot usados estavam disponíveis.
+Non-shallow clone; 9 commits, 1 merge (SHA `59db8c8`, “Merge pull request #1 from riponcc/ahmadsbranch”, 2025-12-10). The nine commits across all refs have three author emails (Md Ripon Hossain, with 6 plus 1 as Ripon, Keta Patel and Ahmad Qaher); this does not demonstrate four people. Commit `c1ee799`, by Keta Patel, is only on `origin/keta-branch` and outside the SHA ancestry, and was not used to attribute snapshot files; `origin/ahmadsbranch` is incorporated through merge `59db8c8`. The root is `934af61` (2025-11-26, auth microservice); followed by `9983a55` (user-app), `94eaf5d` (“Added shell app to handle microservices”) and `8c2b4f9` (issue microservice and frontend). Among branches, `origin/keta-branch` has 1 commit outside `main`, and the others have no commits beyond `main`; none was considered. No historical blob was read. The clone is partial (`blob:none`) and `git rev-list --objects $SHA --missing=print` finds 38 missing historical objects, without attempting to fetch them; the snapshot files used were available.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | Três unidades no repositório, duas referenciadas pela configuração de composição do host (`client/shell-app/vite.config.js:39–42`). |
-| Q2 | Yes | Cada aplicação tem `package.json`, lockfile, `vite.config.js`, scripts e porta próprios, sem imports de código-fonte entre elas. |
-| Q3 | Yes | O shell monta os remotos conforme o estado de autenticação (`client/shell-app/src/App.jsx:59–70`). |
-| Q4 | Yes | Module Federation com `remotes` no host e `exposes` nos remotos, consumido por `import("userApp/App")` e `import("issueApp/App")`. |
-| Q5 | Yes | Q1–Q4 são Yes: shell e dois remotos compostos em runtime. |
+| Q1 | Yes | Three units in the repository, two referenced by the host composition configuration (`client/shell-app/vite.config.js:39–42`). |
+| Q2 | Yes | Each application has its own `package.json`, lockfile, `vite.config.js`, scripts and port, without source code imports between them. |
+| Q3 | Yes | The shell mounts the remotes according to authentication state (`client/shell-app/src/App.jsx:59–70`). |
+| Q4 | Yes | Module Federation with `remotes` in the host and `exposes` in the remotes, consumed through `import("userApp/App")` and `import("issueApp/App")`. |
+| Q5 | Yes | Q1–Q4 are Yes: shell and two remotes composed at runtime. |
 
-## Motivo
+## Rationale
 
-- `MFE-implemented` pela regra Q1–Q5 Yes. Corresponde a “monorepos containing a host and its remotes”. A cadeia está completa no snapshot, como em 076/084/096/106/109.
-- Os remotos expõem aplicações inteiras (login e gestão de ocorrências), não componentes compartilhados (089/100).
-- `approaches: [module-federation]`, `ui_technologies: [react]`, `build_tools: [vite]`, `frontend_units: 3`, `unit_organization: monorepo`, `repo_type: example` (projeto de disciplina: `README.md:259–263` declara o curso COMP308-001 do Centennial College e "course project", base direta melhor do que os e-mails institucionais e as URLs `localhost`).
-- Não há decisão aberta.
+- `MFE-implemented` under the Q1–Q5 Yes rule. It matches “monorepos containing a host and its remotes”. The chain is complete in the snapshot, as in 076/084/096/106/109.
+- The remotes expose entire applications (login and issue management), not shared components (089/100).
+- `approaches: [module-federation]`, `ui_technologies: [react]`, `build_tools: [vite]`, `frontend_units: 3`, `unit_organization: monorepo`, `repo_type: example` (course project: `README.md:259–263` declares course COMP308-001 at Centennial College and "course project", a better direct basis than institutional emails and `localhost` URLs).
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** `@originjs/vite-plugin-federation` com troca de remoto por estado de autenticação e eventos em `window`; backend em microsserviços GraphQL ao lado dos micro-frontends.
-- **Protocolo (busca):** a elegibilidade muda de `unknown` (001) para `pass` (002).
-- **Contribuição da revisão independente (Lupa):** concordância arquitetural com MFE-implemented, Q1–Q5 Yes, três unidades, `monorepo`, React/Vite e `module-federation`; sem decisão aberta (`draft`). O shell configura `userApp` (`localhost:3001`) e `issueApp` (`localhost:3002`) em `remoteEntry.js`, os remotos expõem `./App`, e o shell importa e monta os dois (montagem após autenticação, como o final 033; 052 registra lacuna operacional sem negar o mecanismo). Correções adotadas: a contagem e a autoria acima; os objetos ausentes; e o contrato `currentUser`, que o shell passa a `IssueApp` (`client/shell-app/src/App.jsx:67`), mas que o remoto não consome (`client/issue-app/src/App.jsx:97–98` declara `App` sem props; o usuário vem de `getUser`/`localStorage`, `:64–69`): o produtor efetivo é `client/user-app/src/UserComponent.jsx:50–56`, que grava token e usuário e dispara `loginSuccess` (logout em `:70–75`, e `Header.jsx:32–39`), e o shell escuta esses eventos em `App.jsx:42–43`, de modo que `currentUser` não é contrato de dados consumido pelo remoto. Complementar as ressalvas de execução e as referências das células.
+- **RQ2:** `@originjs/vite-plugin-federation` with remote switching according to authentication state and events on `window`; GraphQL microservice backend alongside the micro-frontends.
+- **Protocol (search):** eligibility changes from `unknown` (001) to `pass` (002).
+- **Independent review contribution (Lupa):** architectural agreement with MFE-implemented, Q1–Q5 Yes, three units, `monorepo`, React/Vite and `module-federation`; no open decision (`draft`). The shell configures `userApp` (`localhost:3001`) and `issueApp` (`localhost:3002`) in `remoteEntry.js`, the remotes expose `./App`, and the shell imports and mounts both (mounting after authentication, as in final 033; 052 records an operational gap without denying the mechanism). Adopted corrections: the count and authorship above; the missing objects; and the `currentUser` contract, which the shell passes to `IssueApp` (`client/shell-app/src/App.jsx:67`), but the remote does not consume (`client/issue-app/src/App.jsx:97–98` declares `App` without props; the user comes from `getUser`/`localStorage`, `:64–69`): the actual producer is `client/user-app/src/UserComponent.jsx:50–56`, which stores token and user and dispatches `loginSuccess` (logout in `:70–75`, and `Header.jsx:32–39`), and the shell listens for these events in `App.jsx:42–43`, so `currentUser` is not a data contract consumed by the remote. Supplement the execution caveats and cell references.

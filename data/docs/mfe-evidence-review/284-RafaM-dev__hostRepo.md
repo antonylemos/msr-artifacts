@@ -19,119 +19,120 @@ annotation:
 
 # 284 — RafaM-dev/hostRepo
 
-## Leitura do repositório
+## Repository overview
 
-O snapshot contém uma aplicação React + Vite na raiz: o host, com entrada e build próprios (#4, #6). A declaração de `@originjs/vite-plugin-federation` é o sinal tecnológico inicial (#1). O plugin configura o host para resolver `mf-remoteDetails` em `http://localhost:5001/assets/remoteEntry.js`, compartilhando `react` e `react-dom` (#2). O código importa `DetailEpisode` desse remote e o renderiza na lista de episódios, passando o personagem selecionado, o estado de abertura e um callback de fechamento (#3). Isso sustenta a relação ativa host → remote (#5). O destino está fora do snapshot: sua implementação, seu build e seu deploy não são observáveis aqui. O build próprio do host confirma o limite de uma unidade, mas não há deploy observado (#6).
+Snapshot contains root React + Vite application: host with own entry/build (#4, #6). Declaration of `@originjs/vite-plugin-federation` initial technological signal (#1). Plugin configures host to resolve `mf-remoteDetails` at `http://localhost:5001/assets/remoteEntry.js`, sharing `react` and `react-dom` (#2). Code imports `DetailEpisode` from remote, rendering in episode list and passing selected character, open state and close callback (#3). Supports active host → remote relationship (#5). Target outside snapshot: implementation/build/deployment unobservable here. Own host build confirms unit boundary without observed deployment (#6).
 
-A declaração da dependência, isolada, é fraca (#1). A configuração que nomeia e resolve a outra unidade e a relação ativa são fortes (#2, #5). A renderização do componente remoto, fora de uma rota que nomeie o destino, é moderada (#3); a rota `/episodes` monta o componente local `ListEpisodes`. A estrutura e o build também são moderados (#4, #6).
+Dependency declaration alone weak (#1). Configuration naming/resolving other unit and active relationship strong (#2, #5). Remote component rendering outside target-naming route moderate (#3); route `/episodes` mounts local component `ListEpisodes`. Structure/build also moderate (#4, #6).
 
-A documentação confirma a organização host/remote, a dependência do remote e o mecanismo de composição (#7–#11), mas as afirmações são sinais semânticos fracos. A escalabilidade alegada não tem corroboração (#12). Há ainda uma divergência concreta: o README nomeia `remote_root`, na porta 5174, enquanto configuração e import usam `mf-remoteDetails`, na porta 5001 (#13). O histórico esclarece que a configuração não mudou desde o primeiro commit observável e que a última alteração do README é posterior à configuração e ao código de composição (#14). Não se observa um estágio anterior de configuração que explique o nome do README; a origem desse texto permanece desconhecida, sem tornar ambígua a composição do snapshot.
+Documentation confirms host/remote organization, remote dependency and composition mechanism (#7–#11), but claims weak semantic signals. Alleged scalability uncorroborated (#12). Concrete divergence: README names `remote_root` at port 5174, configuration/import use `mf-remoteDetails` at port 5001 (#13). History clarifies configuration unchanged since first observable commit; last README change later than configuration/composition code (#14). No earlier configuration stage explaining README name observed; text origin unknown without making snapshot composition ambiguous.
 
-## Observações
+## Observations
 
 ### 1. package.json:26
 
-**Observação:** `@originjs/vite-plugin-federation`, versão `^1.4.1`, está declarado em `devDependencies`.
+**Observation:** `@originjs/vite-plugin-federation`, version `^1.4.1`, declared in `devDependencies`.
 
-**Interpretação:** A dependência sinaliza Module Federation no projeto; sua declaração, sozinha, não estabelece unidades nem uma relação de composição.
+**Interpretation:** Dependency signals Module Federation; declaration alone establishes neither units nor composition relationship.
 
 ### 2. vite.config.ts:3; vite.config.ts:8-15
 
-**Observação:** O arquivo importa `federation` de `@originjs/vite-plugin-federation` e aplica o plugin em `plugins`. O bloco declara `name: "host"`, `filename: "remoteEntry.js"`, o remote `mf-remoteDetails` em `http://localhost:5001/assets/remoteEntry.js` e `shared: ["react", "react-dom"]`. Não declara `exposes`.
+**Observation:** File imports `federation` from `@originjs/vite-plugin-federation`, applying plugin in `plugins`. Block declares `name: "host"`, `filename: "remoteEntry.js"`, remote `mf-remoteDetails` at `http://localhost:5001/assets/remoteEntry.js` and `shared: ["react", "react-dom"]`. No `exposes` declaration.
 
-**Interpretação:** A configuração liga explicitamente o host a outra unidade por Module Federation, indicando seu nome de resolução e endereço. O host compartilha React e React DOM, sem oferecer módulos por `exposes`.
+**Interpretation:** Configuration explicitly links host to another unit through Module Federation, indicating resolution name/address. Host shares React/React DOM without offering modules through `exposes`.
 
 ### 3. src/features/episodes_list/ListEpisodes.tsx:15; src/features/episodes_list/ListEpisodes.tsx:96-100; src/declare.d.ts:1-4; vite.config.ts:11-13; src/App.tsx:4; src/App.tsx:11; src/main.tsx:7-13
 
-**Observação:** `ListEpisodes` importa `DetailEpisode` de `mf-remoteDetails/DetailEpisode` e renderiza `<DetailEpisode />`, passando `character={selectedCharacter}`, `open={!!selectedCharacter}` e `onClose={() => setSelectedCharacter(null)}`. Há declaração de tipo para o mesmo módulo. O nome `mf-remoteDetails` consta no `remotes` do Vite. `App` importa `ListEpisodes` e o monta na rota `/episodes`; `main.tsx` renderiza `App`.
+**Observation:** `ListEpisodes` imports `DetailEpisode` from `mf-remoteDetails/DetailEpisode`, rendering `<DetailEpisode />` and passing `character={selectedCharacter}`, `open={!!selectedCharacter}` and `onClose={() => setSelectedCharacter(null)}`. Type declaration for same module. Name `mf-remoteDetails` in Vite `remotes`. `App` imports `ListEpisodes`, mounting at route `/episodes`; `main.tsx` renders `App`.
 
-**Interpretação:** O host usa o componente de uma unidade externa dentro da lista de episódios, com dados e callback passados por props. A construção implementa a composição em runtime. A renderização ocorre dentro de um componente local; a rota nomeia esse componente local, e não diretamente a unidade remota.
+**Interpretation:** Host uses external unit component within episode list with data/callback through props. Construct implements runtime composition. Rendering inside local component; route names local component rather than directly remote unit.
 
 ### 4. .; index.html:11; src/main.tsx:7-13; vite.config.ts:5-17; package.json:8
 
-**Observação:** A raiz contém `index.html`, `package.json` e `vite.config.ts`. O HTML carrega `/src/main.tsx`, que renderiza `App`. O script `build` executa `tsc -b && vite build`, e o Vite configura os plugins React e federation. A revisão estrutural registra essa raiz como a única aplicação frontend do snapshot, sem declaração de workspace nem artefato de deploy.
+**Observation:** Root contains `index.html`, `package.json` and `vite.config.ts`. HTML loads `/src/main.tsx`, rendering `App`. Script `build` executes `tsc -b && vite build`; Vite configures React/federation plugins. Structural review records root as only snapshot frontend application without workspace declaration/deployment artifact.
 
-**Interpretação:** A raiz delimita uma unidade frontend com entrada e build próprios: o host. A existência dessa unidade não demonstra, sozinha, a ligação com outro frontend.
+**Interpretation:** Root delimits frontend unit with own entry/build: host. Existence alone demonstrates no other frontend link.
 
 ### 5. src/features/episodes_list/ListEpisodes.tsx:15; src/features/episodes_list/ListEpisodes.tsx:96-100; vite.config.ts:11-13; src/App.tsx:11; src/main.tsx:7-13
 
-**Observação:** A origem `.` importa e renderiza `DetailEpisode` de `mf-remoteDetails/DetailEpisode`. O `remotes` resolve `mf-remoteDetails` em `http://localhost:5001/assets/remoteEntry.js`. O componente é usado em `ListEpisodes`, montado na rota `/episodes` do `App` renderizado por `main.tsx`. A revisão de composição registra a relação `host → remote`, direção `origem → destino`, mecanismo `module-federation`, `No snapshot: No` e `Ativa: Yes`.
+**Observation:** Source `.` imports/renders `DetailEpisode` from `mf-remoteDetails/DetailEpisode`. `remotes` resolves `mf-remoteDetails` at `http://localhost:5001/assets/remoteEntry.js`. Component used in `ListEpisodes`, mounted at route `/episodes` of `App` rendered by `main.tsx`. Composition review records relationship `host → remote`, direction `source → target`, mechanism `module-federation`, `In snapshot: No` and `Active: Yes`.
 
-**Interpretação:** Há uma relação ativa de composição do host com um remote externo ao snapshot. O nome e o endereço do destino são observáveis do lado consumidor; a implementação e a exposição do módulo pelo remote não são verificáveis neste repositório.
+**Interpretation:** Active host composition relationship with remote external to snapshot. Target name/address observable consumer-side; remote implementation/module exposure unverifiable in repository.
 
 ### 6. package.json:4; package.json:7-10; vite.config.ts:5-17
 
-**Observação:** O host tem o script `build: "tsc -b && vite build"` e configuração Vite própria com React e federation. Os outros scripts de execução são `dev: "vite"` e `preview: "vite preview"`; o manifesto declara versão `0.0.0`. A revisão de build e deploy registra para `.` build `separado`, deploy `não observado`, local servido `—` e versionamento `No`, sem artefato de publicação no snapshot.
+**Observation:** Host has script `build: "tsc -b && vite build"` and own Vite configuration with React/federation. Other execution scripts `dev: "vite"` and `preview: "vite preview"`; manifest version `0.0.0`. Build/deployment review records for `.` build `separate`, deployment `not observed`, served location `—` and versioning `No`, without snapshot publication artifact.
 
-**Interpretação:** O build confirma o limite próprio do host, separado do código do remote que está fora do repositório. Não há evidência de deploy ou de versionamento independente de publicação do host.
+**Interpretation:** Build confirms host own boundary separate from external remote code. No evidence of deployment or independent host publication versioning.
 
 ### 7. README.md:3
 
-**Observação:** O README afirma que a aplicação implementa uma arquitetura de micro-frontends por meio de Module Federation.
+**Observation:** README claims application implements microfrontend architecture through Module Federation.
 
-**Interpretação:** É uma afirmação sobre a organização arquitetural, corroborada pela dependência configurada e pela relação host → remote. Sozinha, a frase não configura nem implementa essa organização.
+**Interpretation:** Architectural organization claim corroborated by configured dependency/host → remote relationship. Phrase alone configures/implements no organization.
 
 ### 8. README.md:3
 
-**Observação:** O README apresenta esta aplicação como o host principal que integra módulos remotos.
+**Observation:** README presents application as main host integrating remote modules.
 
-**Interpretação:** A documentação atribui ao repositório o papel de host, corroborado pela unidade da raiz, pela configuração e pelo consumo remoto. O snapshot mostra um único remote e um único módulo consumido, embora a frase use o plural.
+**Interpretation:** Documentation assigns repository host role corroborated by root unit, configuration/remote consumption. Snapshot shows single remote/module consumed although phrase plural.
 
 ### 9. README.md:21
 
-**Observação:** O README lista como requisito uma aplicação remota em execução na porta configurada, necessária para Module Federation.
+**Observation:** README lists running remote application at configured port as Module Federation requirement.
 
-**Interpretação:** A afirmação descreve a dependência do host em relação a uma unidade remota disponível em runtime, corroborada pelo import estático, pela configuração e pela relação ativa. Não estabelece deploy do remote.
+**Interpretation:** Claim describes host dependency on runtime-available remote unit, corroborated by static import, configuration/active relationship. Establishes no remote deployment.
 
 ### 10. README.md:75
 
-**Observação:** O README afirma que o projeto usa `@originjs/vite-plugin-federation` para Module Federation.
+**Observation:** README claims project uses `@originjs/vite-plugin-federation` for Module Federation.
 
-**Interpretação:** A afirmação nomeia a tecnologia de composição e é corroborada pela declaração, pelo import e pela aplicação do plugin. Não situa sozinha os limites nem a ligação entre unidades.
+**Interpretation:** Claim names composition technology, corroborated by declaration/import/plugin application. Alone locates neither unit boundaries nor inter-unit link.
 
 ### 11. README.md:299
 
-**Observação:** O README lista o carregamento dinâmico de módulos remotos como característica de Module Federation.
+**Observation:** README lists dynamic remote module loading as Module Federation feature.
 
-**Interpretação:** A afirmação descreve o mecanismo de carga em runtime, corroborado pela resolução do remote e pela renderização de seu componente. A formulação isolada não identifica as unidades envolvidas.
+**Interpretation:** Claim describes runtime loading mechanism corroborated by remote resolution/component rendering. Isolated wording identifies no involved units.
 
 ### 12. README.md:300
 
-**Observação:** O README caracteriza a arquitetura de micro-frontends como escalável.
+**Observation:** README characterizes microfrontend architecture as scalable.
 
-**Interpretação:** É uma propriedade arquitetural alegada sem corroboração na revisão de documentação. Configurar e consumir um remote demonstra composição, mas não confirma nem contradiz a escalabilidade.
+**Interpretation:** Alleged architectural property uncorroborated in documentation review. Configuring/consuming remote demonstrates composition but neither confirms nor contradicts scalability.
 
 ### 13. README.md:346-347
 
-**Observação:** O README afirma que esta aplicação consome módulos do micro-frontend remoto `remote_root`, na porta 5174.
+**Observation:** README claims application consumes modules of remote microfrontend `remote_root` at port 5174.
 
-**Interpretação:** A afirmação situa host e destino, mas é contradita pela configuração e pelo import do snapshot, que usam `mf-remoteDetails` na porta 5001. A leitura arquitetural segue a relação observada, sem transformar o nome do README em outra unidade.
+**Interpretation:** Claim locates host/target but contradicted by snapshot configuration/import using `mf-remoteDetails` at port 5001. Architectural reading follows observed relationship without turning README name into another unit.
 
 ### 14. 8a62219 2025-11-19 (vite.config.ts; README.md); e68ba94 2025-11-19 (vite.config.ts; README.md)
 
-**Observação:** A revisão histórica registra que `vite.config.ts` só é tocado no primeiro commit observável, `8a62219`, e mantém até o snapshot o mesmo objeto, `06a796a`, com `mf-remoteDetails` na porta 5001. O README muda uma única vez, no commit do snapshot, `e68ba94`, posterior à configuração e ao código de composição. A versão antiga do README não pôde ser lida por objeto ausente. O ponto sobre o conflito entre README e configuração tem resultado `esclarecido`.
+**Observation:** History review records `vite.config.ts` touched only in first observable commit, `8a62219`, retaining same object through snapshot, `06a796a`, with `mf-remoteDetails` at port 5001. README changes once in snapshot commit, `e68ba94`, later than configuration/composition code. Old README unreadable due to missing object. README/configuration conflict point result `clarified`.
 
-**Interpretação:** O histórico explica a divergência documental: não houve estágio observável do `vite.config.ts` com `remote_root` na porta 5174. O texto divergente foi gravado ou mantido na versão final do README com a configuração atual já presente. Não se determina se o texto já estava no primeiro README nem sua origem fora desses artefatos; isso não altera a relação do snapshot.
+**Interpretation:** History explains documentary divergence: no observable `vite.config.ts` stage with `remote_root` at port 5174. Divergent text written/retained in final README with current configuration already present. Whether in first README or external origin undetermined; snapshot relationship unchanged.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.2 (package.json:26) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #2 |
-| 2 | 3.4.2 (package.json:26, Evidência); 3.4.3 (., Marcadores, Build); 3.4.4 (src/features/episodes_list/ListEpisodes.tsx:96, Observação); 3.4.5 #1 (Configuração); 3.4.6 #1 (Artefatos); 3.4.7 #1, #2, #3, #4, #5, #7 (Evidência); 3.4.8 #1 (Ponto) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #3; configura #4; configura #5 |
-| 3 | 3.4.4 (src/features/episodes_list/ListEpisodes.tsx:96) | 3 código | código-fonte | module-federation | arquitetural | moderada | implementa #5 |
-| 4 | 3.4.3 (.) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 5 | 3.4.5 #1 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #4; liga vite.config.ts:12 |
-| 6 | 3.4.6 #1 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #4 |
-| 7 | 3.4.7 #1 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #1; corrobora #2; corrobora #5 |
-| 8 | 3.4.7 #2 | 7 documentação | documentação | — | arquitetural | fraca | corrobora #2; corrobora #3; corrobora #4; corrobora #5 |
-| 9 | 3.4.7 #3 | 7 documentação | documentação | module-federation | arquitetural | fraca | corrobora #2; corrobora #3; corrobora #5 |
-| 10 | 3.4.7 #4 | 7 documentação | documentação | module-federation | tecnológica | fraca | corrobora #1; corrobora #2 |
-| 11 | 3.4.7 #5 | 7 documentação | documentação | module-federation | tecnológica | fraca | corrobora #2; corrobora #3; corrobora #5 |
-| 12 | 3.4.7 #6 | 7 documentação | documentação | — | arquitetural | fraca | — |
-| 13 | 3.4.7 #7 | 7 documentação | documentação | — | arquitetural | fraca | contradiz #2; contradiz #3; contradiz #5 |
-| 14 | 3.4.8 #1 | 8 histórico | histórico | module-federation | arquitetural | fraca | explica #2; explica #13 |
+| 1 | 3.4.2 (package.json:26) | 1 technology | manifest | module-federation | technological | weak | declares #2 |
+| 2 | 3.4.2 (package.json:26, Evidence); 3.4.3 (., Markers, Build); 3.4.4 (src/features/episodes_list/ListEpisodes.tsx:96, Observation); 3.4.5 #1 (Configuration); 3.4.6 #1 (Artifacts); 3.4.7 #1, #2, #3, #4, #5, #7 (Evidence); 3.4.8 #1 (Point) | 2 configuration | configuration | module-federation | architectural | strong | configures #3; configures #4; configures #5 |
+| 3 | 3.4.4 (src/features/episodes_list/ListEpisodes.tsx:96) | 3 code | source code | module-federation | architectural | moderate | implements #5 |
+| 4 | 3.4.3 (.) | 4 structure | directory | — | architectural | moderate | — |
+| 5 | 3.4.5 #1 | 5 composition | source code | module-federation | architectural | strong | links #4; links vite.config.ts:12 |
+| 6 | 3.4.6 #1 | 6 build-deploy | configuration | — | architectural | moderate | publishes #4 |
+| 7 | 3.4.7 #1 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #1; corroborates #2; corroborates #5 |
+| 8 | 3.4.7 #2 | 7 documentation | documentation | — | architectural | weak | corroborates #2; corroborates #3; corroborates #4; corroborates #5 |
+| 9 | 3.4.7 #3 | 7 documentation | documentation | module-federation | architectural | weak | corroborates #2; corroborates #3; corroborates #5 |
+| 10 | 3.4.7 #4 | 7 documentation | documentation | module-federation | technological | weak | corroborates #1; corroborates #2 |
+| 11 | 3.4.7 #5 | 7 documentation | documentation | module-federation | technological | weak | corroborates #2; corroborates #3; corroborates #5 |
+| 12 | 3.4.7 #6 | 7 documentation | documentation | — | architectural | weak | — |
+| 13 | 3.4.7 #7 | 7 documentation | documentation | — | architectural | weak | contradicts #2; contradicts #3; contradicts #5 |
+| 14 | 3.4.8 #1 | 8 history | history | module-federation | architectural | weak | explains #2; explains #13 |
 
-## Resumo
+## Summary
 
-Observações: 14. Dimensões (tecnologia: 1, configuração: 1, código: 1, estrutura: 1, composição: 1, build-deploy: 1, documentação: 7, histórico: 1). Força (forte: 2, moderada: 3, fraca: 9, ambígua: 0). Evidência (tecnológica: 3, arquitetural: 11, contexto: 0).
+Observations: 14. Dimensions (technology: 1, configuration: 1, code: 1, structure: 1, composition: 1, build-deploy: 1, documentation: 7, history: 1). Strength (strong: 2, moderate: 3, weak: 9, ambiguous: 0). Evidence (technological: 3, architectural: 11, context: 0).
+

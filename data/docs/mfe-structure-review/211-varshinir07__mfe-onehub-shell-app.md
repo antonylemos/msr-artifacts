@@ -17,22 +17,22 @@ annotation:
 
 ## Workspace
 
-Nenhuma declaração de workspace.
+No workspace declaration.
 
-## Unidades
+## Units
 
-| Diretório | Marcadores | Manifesto | Entrada | Build | Workspace | Deploy | Unidade frontend | Motivo |
+| Directory | Markers | Manifest | Entry | Build | Workspace | Deploy | Frontend unit | Rationale |
 |---|---|---|---|---|---|---|---|---|
-| . | package.json | package.json | src/webpack.config.js:10 (`entry: './src/index.js'`); src/webpack.config.js:68-70 (`HtmlWebpackPlugin` com `template: './public/index.html'`) | src/webpack.config.js:5-102 (config webpack com `ModuleFederationPlugin`); package.json:20 (`webpack --config src/webpack.config.js --mode development`) | — | — | Yes | Única aplicação React do snapshot (o host), com entrada e build próprios |
-| public | public/index.html | — | — | — | — | — | No | Parte da unidade `.`: `public/index.html` é o template usado em src/webpack.config.js:69 |
-| src | src/webpack.config.js | — | — | — | — | — | No | Parte da unidade `.`: a config e a entrada `src/index.js` são do build invocado por package.json:19-20 da raiz |
+| . | package.json | package.json | src/webpack.config.js:10 (`entry: './src/index.js'`); src/webpack.config.js:68-70 (`HtmlWebpackPlugin` with `template: './public/index.html'`) | src/webpack.config.js:5-102 (webpack configuration with `ModuleFederationPlugin`); package.json:20 (`webpack --config src/webpack.config.js --mode development`) | — | — | Yes | The snapshot’s only React application (the host), with its own entry and build |
+| public | public/index.html | — | — | — | — | — | No | Part of unit `.`: `public/index.html` is the template used in src/webpack.config.js:69 |
+| src | src/webpack.config.js | — | — | — | — | — | No | Part of unit `.`: the configuration and `src/index.js` entry belong to the build invoked by the root package.json:19-20 |
 
-## Resumo
+## Summary
 
-Aplicações frontend no snapshot: 1 (.).
+Frontend applications in the snapshot: 1 (.).
 
-## Notas
+## Notes
 
-- A classificação registra `frontend_units: 3`: o host e os remotes `subscription` e `ownership`, que estão fora do snapshot e só aparecem em src/webpack.config.js:76-77 (`localhost:3001` e `localhost:3002`).
-- A marca `workspace-config` de `package.json` no `artifacts.csv` não corresponde a declaração de workspace: o arquivo não tem `workspaces` (package.json:1-51), e o `matches.csv` não tem ocorrências `ws-*`.
-- Nenhuma ocorrência `ops-*` ou `ci-*` no `matches.csv` e nenhum Dockerfile, workflow ou configuração de hospedagem no snapshot.
+- The classification records `frontend_units: 3`: the host and the remotes `subscription` and `ownership`, which are outside the snapshot and appear only in src/webpack.config.js:76-77 (`localhost:3001` and `localhost:3002`).
+- The `workspace-config` marker for `package.json` in `artifacts.csv` does not correspond to a workspace declaration: the file has no `workspaces` (package.json:1-51), and `matches.csv` has no `ws-*` occurrences.
+- No `ops-*` or `ci-*` occurrence in `matches.csv` and no Dockerfile, workflow or hosting configuration in the snapshot.

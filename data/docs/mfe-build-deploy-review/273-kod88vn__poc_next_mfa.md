@@ -16,67 +16,28 @@ annotation:
 
 # 273 — kod88vn/poc_next_mfa
 
-## Leitura do repositório
+## Repository overview
 
-Monorepo npm com `workspaces` `apps/*` e `packages/*` (package.json:4-7), orquestrado pelo
-Turborepo. O `build` da raiz só chama `turbo build` (package.json:9), e a tarefa `build` do
-`turbo.json` roda o build de cada pacote depois dos de suas dependências (`dependsOn: ["^build"]`)
-e guarda como saída `.next/**` e `dist/**` de cada um (turbo.json:6-10). As três apps Next.js têm
-o mesmo script `build: next build` (apps/shell/package.json:6; apps/shop/package.json:6;
-apps/duda/package.json:6), que gera o `.next` de cada uma no seu diretório. A biblioteca
-`packages/ui` não tem script de build (packages/ui/package.json:13-16) e é compilada dentro de
-cada app por `transpilePackages: ['@repo/ui']` (apps/shell/next.config.js:9;
-apps/shop/next.config.js:23; apps/duda/next.config.js:8). O README diz que o pipeline garante que
-`packages/ui` seja construído antes das apps (README.md:84), mas, sem script `build` no pacote, o
-`^build` não tem o que rodar nele. Os três `next.config.js` carregam o `.env` da raiz por
-`load-root-env.js` (ex.: apps/shell/next.config.js:2; load-root-env.js:4-28), só para variáveis
-como `DUDA_ORIGIN` (turbo.json:4).
+npm monorepo with `workspaces` `apps/*` and `packages/*` (package.json:4-7), orchestrated by Turborepo. Root `build` only calls `turbo build` (package.json:9), and task `build` in `turbo.json` runs each package build after its dependencies’ builds (`dependsOn: ["^build"]`) and saves each `.next/**` and `dist/**` as output (turbo.json:6-10). All three Next.js apps have the same script `build: next build` (apps/shell/package.json:6; apps/shop/package.json:6; apps/duda/package.json:6), generating each `.next` in its directory. Library `packages/ui` has no build script (packages/ui/package.json:13-16) and is compiled within each app through `transpilePackages: ['@repo/ui']` (apps/shell/next.config.js:9; apps/shop/next.config.js:23; apps/duda/next.config.js:8). README says pipeline ensures `packages/ui` is built before apps (README.md:84), but without package script `build`, `^build` has nothing to run there. All three `next.config.js` files load root `.env` through `load-root-env.js` (e.g.: apps/shell/next.config.js:2; load-root-env.js:4-28), only for variables such as `DUDA_ORIGIN` (turbo.json:4).
 
-Não há artefato de deploy no snapshot: nenhum Dockerfile, compose, workflow de CI, manifesto de
-hospedagem nem configuração de proxy. O `matches.csv` não tem ocorrências `ops-*`, `ci-*` nem
-`cfg-public-path` (só o cabeçalho). O `.gitignore` ignora `.vercel` (.gitignore:31-32), mas isso
-não é configuração de hospedagem. O que existe é de execução local: cada app sobe com
-`next dev` ou `next start` numa porta fixa — 3000 no shell, 3001 no shop e 3002 na duda
-(apps/shell/package.json:7, 9; apps/shop/package.json:7, 9; apps/duda/package.json:7, 9) — e o
-shell encaminha `/duda` e `/shop` para `http://localhost:3002` e `http://localhost:3001`
-(apps/shell/next.config.js:25-43). As zonas liberam CORS para `http://localhost:3000`, e o
-comentário do shop pede para trocar pela origem real "In a production deployment"
-(apps/shop/next.config.js:26-38; apps/duda/next.config.js:10-19). O README fala em
-"independent deployability" (README.md:3), mas documentação não decide a coluna Deploy.
+No deployment artifact is present in snapshot: no Dockerfile, compose, CI workflow, hosting manifest or proxy configuration. The `matches.csv` has no `ops-*`, `ci-*` or `cfg-public-path` occurrences (only header). The `.gitignore` ignores `.vercel` (.gitignore:31-32), but this is not hosting configuration. What exists is for local execution: each app starts with `next dev` or `next start` on a fixed port — 3000 for shell, 3001 for shop and 3002 for duda (apps/shell/package.json:7, 9; apps/shop/package.json:7, 9; apps/duda/package.json:7, 9) — and shell forwards `/duda` and `/shop` to `http://localhost:3002` and `http://localhost:3001` (apps/shell/next.config.js:25-43). Zones enable CORS for `http://localhost:3000`, and shop comment requests changing to actual origin "In a production deployment" (apps/shop/next.config.js:26-38; apps/duda/next.config.js:10-19). README discusses "independent deployability" (README.md:3), but documentation does not decide Deploy column.
 
-## Aplicações
+## Applications
 
-| # | Aplicação | Build | Deploy | Onde é servida | Versionamento | Artefatos |
+| # | Application | Build | Deploy | Where served | Versioning | Artifacts |
 |---|---|---|---|---|---|---|
-| 1 | apps/duda | separado | não observado | `/duda` pelo shell (apps/shell/next.config.js:28-31); `http://localhost:3002/duda` (apps/duda/next.config.js:6; apps/duda/package.json:7, 9) | No | apps/duda/package.json:6 (`next build`); apps/duda/next.config.js:5-23 (`basePath: '/duda'`, `transpilePackages`); package.json:9 (`turbo build`); turbo.json:6-10 (tarefa `build`, saída `.next/**`) |
-| 2 | apps/shell | separado | não observado | `http://localhost:3000/` (apps/shell/package.json:7, 9) | No | apps/shell/package.json:6 (`next build`); apps/shell/next.config.js:5-44 (`transpilePackages`, `rewrites()` para as zonas); package.json:9 (`turbo build`); turbo.json:6-10 (tarefa `build`, saída `.next/**`) |
-| 3 | apps/shop | separado | não observado | `/shop` e `/shop/:path*` pelo shell (apps/shell/next.config.js:32-41); `http://localhost:3001/shop` (apps/shop/next.config.js:19; apps/shop/package.json:7, 9) | No | apps/shop/package.json:6 (`next build`); apps/shop/next.config.js:5-42 (`basePath: '/shop'`, `transpilePackages`); package.json:9 (`turbo build`); turbo.json:6-10 (tarefa `build`, saída `.next/**`) |
+| 1 | apps/duda | separate | not observed | `/duda` through shell (apps/shell/next.config.js:28-31); `http://localhost:3002/duda` (apps/duda/next.config.js:6; apps/duda/package.json:7, 9) | No | apps/duda/package.json:6 (`next build`); apps/duda/next.config.js:5-23 (`basePath: '/duda'`, `transpilePackages`); package.json:9 (`turbo build`); turbo.json:6-10 (task `build`, output `.next/**`) |
+| 2 | apps/shell | separate | not observed | `http://localhost:3000/` (apps/shell/package.json:7, 9) | No | apps/shell/package.json:6 (`next build`); apps/shell/next.config.js:5-44 (`transpilePackages`, `rewrites()` to zones); package.json:9 (`turbo build`); turbo.json:6-10 (task `build`, output `.next/**`) |
+| 3 | apps/shop | separate | not observed | `/shop` and `/shop/:path*` through shell (apps/shell/next.config.js:32-41); `http://localhost:3001/shop` (apps/shop/next.config.js:19; apps/shop/package.json:7, 9) | No | apps/shop/package.json:6 (`next build`); apps/shop/next.config.js:5-42 (`basePath: '/shop'`, `transpilePackages`); package.json:9 (`turbo build`); turbo.json:6-10 (task `build`, output `.next/**`) |
 
-## Observações
+## Observations
 
-**1. apps/duda.** Build próprio por `next build` (apps/duda/package.json:6), com `basePath: '/duda'`
-(apps/duda/next.config.js:6); o `.next` gerado é só dela, ainda que o `turbo build` da raiz dispare
-os builds das três (package.json:9). O código de `@repo/ui` entra no artefato dela por
-`transpilePackages` (apps/duda/next.config.js:8), o que é código compartilhado, não build conjunto
-com outra aplicação. Nenhum artefato a empacota ou publica: só os scripts `dev`/`start` na porta
-3002 (apps/duda/package.json:7, 9), por isso o deploy é `não observado`. O usuário chega a ela
-pelo rewrite do shell em `/duda` (apps/shell/next.config.js:28-31). `version: "0.0.1"` sem uso em
-publicação, num pacote `private` (apps/duda/package.json:3-4).
+**1. apps/duda.** Own build through `next build` (apps/duda/package.json:6), with `basePath: '/duda'` (apps/duda/next.config.js:6); generated `.next` belongs only to it, although root `turbo build` triggers all three builds (package.json:9). Code from `@repo/ui` enters its artifact through `transpilePackages` (apps/duda/next.config.js:8), shared code rather than joint build with another application. No artifact packages or publishes it: only scripts `dev`/`start` on port 3002 (apps/duda/package.json:7, 9), hence deploy `not observed`. User reaches it through shell rewrite at `/duda` (apps/shell/next.config.js:28-31). The `version: "0.0.1"` is unused in publication, in a `private` package (apps/duda/package.json:3-4).
 
-**2. apps/shell.** Build próprio por `next build` (apps/shell/package.json:6). O `rewrites()` fica
-na configuração dele e aponta para endereços fixos de `localhost` (apps/shell/next.config.js:25-43),
-então o roteamento só funciona com as zonas rodando na mesma máquina, nas portas dos scripts; não
-há variável para trocar esses endereços. Sem artefato de deploy; sobe na porta 3000 por
-`next dev`/`next start` (apps/shell/package.json:7, 9). `version: "0.0.1"` sem uso
-(apps/shell/package.json:3-4).
+**2. apps/shell.** Own build through `next build` (apps/shell/package.json:6). The `rewrites()` resides in its configuration and points to fixed `localhost` addresses (apps/shell/next.config.js:25-43), so routing only works with zones running on same machine, on script ports; no variable replaces these addresses. No deployment artifact; starts on port 3000 through `next dev`/`next start` (apps/shell/package.json:7, 9). The `version: "0.0.1"` is unused (apps/shell/package.json:3-4).
 
-**3. apps/shop.** Build próprio por `next build` (apps/shop/package.json:6), com `basePath: '/shop'`
-(apps/shop/next.config.js:19). Sem artefato de deploy; sobe na porta 3001 (apps/shop/package.json:7,
-9) e é alcançado pelo shell em `/shop` e `/shop/:path*` (apps/shell/next.config.js:32-41). O
-cabeçalho CORS fixo em `http://localhost:3000`, com o comentário sobre trocar em produção
-(apps/shop/next.config.js:26-38), confirma que a configuração é de execução local.
-`version: "0.0.1"` sem uso (apps/shop/package.json:3-4).
+**3. apps/shop.** Own build through `next build` (apps/shop/package.json:6), with `basePath: '/shop'` (apps/shop/next.config.js:19). No deployment artifact; starts on port 3001 (apps/shop/package.json:7, 9) and is reached through shell at `/shop` and `/shop/:path*` (apps/shell/next.config.js:32-41). Fixed CORS header at `http://localhost:3000`, with comment about production replacement (apps/shop/next.config.js:26-38), confirms local execution configuration. The `version: "0.0.1"` is unused (apps/shop/package.json:3-4).
 
-## Resumo
+## Summary
 
-Aplicações: 3. Build (separado: 3). Deploy (não observado: 3). Versionamento independente: 0.
+Applications: 3. Build (separate: 3). Deploy (not observed: 3). Independent versioning: 0.

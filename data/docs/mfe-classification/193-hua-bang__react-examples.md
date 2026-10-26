@@ -20,63 +20,63 @@ annotation:
 
 # 193 — hua-bang/react-examples
 
-## Contexto
+## Context
 
-Repositório de exemplos de React (“A repo about react examples.”, `README.md:1–2`) com três demos independentes: `react-16-demo/` e `react-18-demo/` (Vite, sem relação entre si) e `mf-demo/`. O `mf-demo` é um exemplo de Module Federation 2.0 com Rsbuild: `mf_consumer` consome `provider` de `mf_provider`, que expõe um componente via `mf-manifest.json` (`mf-demo/*/module-federation.config.ts`). O nome do repositório não é usado como evidência.
+React example repository (“A repo about react examples.”, `README.md:1–2`) with three independent demos: `react-16-demo/` and `react-18-demo/` (Vite, unrelated to each other) and `mf-demo/`. `mf-demo` is a Module Federation 2.0 example with Rsbuild: `mf_consumer` consumes `provider` from `mf_provider`, exposing a component through `mf-manifest.json` (`mf-demo/*/module-federation.config.ts`). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:194` registra rank 193, ID 896760362, status `cloned`, branch `master` e o commit do front matter, que é o HEAD do clone e de `origin/master`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:194` records rank 193, ID 896760362, status `cloned`, branch `master` and the front matter commit, which is HEAD of the clone and `origin/master`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:194` registra a estratégia `technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:10963` e `data/discovery/mfe-round-002/candidates.csv:10969`, ambos com `pass`.
+`data/samples/mfe-sample-001/sample.csv:194` records strategy `technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:10963` and `data/discovery/mfe-round-002/candidates.csv:10969`, both `pass`.
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `code`:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `code`:
 
-| Consulta (`q`) | Subconsulta | `path` | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | `path` | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `technology-module-federation-package-code`: `"@module-federation" filename:package.json` | `…#size:500..599` | `mf-demo/mf_consumer/package.json` | 2026-10-07T18:19:32.021Z / 2026-10-08T15:35:23.527Z |
-| idem | idem | `mf-demo/mf_provider/package.json` | 2026-10-07T18:19:47.047Z / 2026-10-08T15:35:28.807Z |
+| same | same | `mf-demo/mf_provider/package.json` | 2026-10-07T18:19:47.047Z / 2026-10-08T15:35:28.807Z |
 
-Os dois arquivos casados têm 505 bytes no SHA, dentro da faixa, e declaram `"@module-federation/rsbuild-plugin": "^0.21.6"` (`mf-demo/mf_consumer/package.json:20`; `mf-demo/mf_provider/package.json:20`). Os metadados do hit de código registram só a descrição “A repo about react examples.”. O acerto não depende do README, que não menciona Module Federation; ele vem do commit-raiz `d5c67bf` (2024-12-01) e não foi alterado depois.
+Both matched files have 505 bytes at the SHA, within the range, and declare `"@module-federation/rsbuild-plugin": "^0.21.6"` (`mf-demo/mf_consumer/package.json:20`; `mf-demo/mf_provider/package.json:20`). Code hit metadata records only description “A repo about react examples.”. The hit does not depend on the README, which does not mention Module Federation; it comes from root commit `d5c67bf` (2024-12-01) and never changed afterward.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 73 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Há `react-16-demo/` e `react-18-demo/` (apps Vite independentes), `mf-demo/mf_consumer/` e `mf-demo/mf_provider/`, cada um com `package.json`, `rsbuild.config.ts`, `module-federation.config.ts` e `src/` com `index.tsx` → `bootstrap.tsx`, além de `react.drawio`. | contexto |
-| Configuração (consumer) | `mf-demo/mf_consumer/module-federation.config.ts:3–13`: `name: 'mf_consumer'`, `remotes: { 'provider': 'rslib_provider@http://localhost:3001/mf-manifest.json' }`, `shareStrategy: 'loaded-first'`, `shared` react/react-dom singleton. `mf-demo/mf_consumer/rsbuild.config.ts:6–8`: `pluginModuleFederation`. | forte |
-| Configuração (provider) | `mf-demo/mf_provider/module-federation.config.ts:3–12`: `name: 'mf_provider'`, `exposes: { '.': './src/components/ProviderComponent.tsx' }`. `mf-demo/mf_provider/rsbuild.config.ts:6–11`: `pluginModuleFederation`, porta 3001, que coincide com a URL do consumer. | forte |
-| Código-fonte (consumo) | `mf-demo/mf_consumer/src/App.tsx:2`, `8`: `import Provider from "provider"` e `<Provider />`. `mf-demo/mf_consumer/@mf-types/provider/*.d.ts` e `@mf-types/index.d.ts:1–22`: tipos do remoto gerados pelo plugin de federação e versionados, o que indica que o consumer já obteve tipos do provider. `tsconfig.json:21–23` mapeia esses tipos. | forte |
-| Configuração (divergência de nome) | O consumer declara a entrada como `rslib_provider@…/mf-manifest.json`, mas o provider se chama `mf_provider`. Não foi verificado se o runtime do MF 2.0 com manifesto aceita a divergência; o tipo gerado em `@mf-types/provider/apis.d.ts:2–3` sugere que a resolução funcionou ao menos para tipos. | ambígua |
-| Código-fonte (fronteiras) | A busca por imports `../../` no SHA não retorna nada. O consumer só referencia o provider pelo módulo federado `provider`. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 73 entries, all regular `100644` files; zero symlinks and zero gitlinks. There are `react-16-demo/` and `react-18-demo/` (independent Vite apps), `mf-demo/mf_consumer/` and `mf-demo/mf_provider/`, each with `package.json`, `rsbuild.config.ts`, `module-federation.config.ts` and `src/` with `index.tsx` → `bootstrap.tsx`, plus `react.drawio`. | context |
+| Configuration (consumer) | `mf-demo/mf_consumer/module-federation.config.ts:3–13`: `name: 'mf_consumer'`, `remotes: { 'provider': 'rslib_provider@http://localhost:3001/mf-manifest.json' }`, `shareStrategy: 'loaded-first'`, singleton react/react-dom `shared`. `mf-demo/mf_consumer/rsbuild.config.ts:6–8`: `pluginModuleFederation`. | strong |
+| Configuration (provider) | `mf-demo/mf_provider/module-federation.config.ts:3–12`: `name: 'mf_provider'`, `exposes: { '.': './src/components/ProviderComponent.tsx' }`. `mf-demo/mf_provider/rsbuild.config.ts:6–11`: `pluginModuleFederation`, port 3001, matching consumer URL. | strong |
+| Source code (consumption) | `mf-demo/mf_consumer/src/App.tsx:2`, `8`: `import Provider from "provider"` and `<Provider />`. `mf-demo/mf_consumer/@mf-types/provider/*.d.ts` and `@mf-types/index.d.ts:1–22`: remote types generated by the federation plugin and versioned, indicating consumer has already obtained provider types. `tsconfig.json:21–23` maps these types. | strong |
+| Configuration (name mismatch) | Consumer declares entry as `rslib_provider@…/mf-manifest.json`, but provider is named `mf_provider`. Whether MF 2.0 runtime with a manifest accepts the mismatch was not verified; generated type in `@mf-types/provider/apis.d.ts:2–3` suggests resolution worked at least for types. | ambiguous |
+| Source code (boundaries) | Searching for `../../` imports at the SHA returns nothing. Consumer references provider only through federated module `provider`. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 12 commits alcançáveis (15 em todos os refs), 3 merges de PR, todos do mesmo titular com dois e-mails: “Jasper” `<huabang001124@gmail.com>` e “huahua” `<huabang001124@gmail.comm>`. A raiz é `d5c67bf` (2024-12-01). O `mf-demo` inteiro entrou em `42a8301` (2025-11-26, “feat: module federation demo”), integrado pelo merge do PR #3, que é o SHA `856dc30`. Os branches `feature-*` remotos correspondem aos PRs e não foram considerados. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 12 reachable commits (15 across all refs), 3 PR merges, all by the same owner with two emails: “Jasper” `<huabang001124@gmail.com>` and “huahua” `<huabang001124@gmail.comm>`. Root is `d5c67bf` (2024-12-01). Entire `mf-demo` entered in `42a8301` (2025-11-26, “feat: module federation demo”), integrated by PR #3 merge, SHA `856dc30`. Remote `feature-*` branches correspond to PRs and were not considered. No historical blob was read and no object was missing.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | Duas unidades no `mf-demo`, referenciadas pela configuração de composição (`mf_consumer/module-federation.config.ts:5–7`; `mf_provider/module-federation.config.ts:5–7`). |
-| Q2 | Yes | Consumer e provider têm entrada, build e servidor próprios (`rsbuild.config.ts` de cada um), sem imports de código-fonte entre eles. |
-| Q3 | Yes | O consumer renderiza o componente remoto na sua página (`mf_consumer/src/App.tsx:8`). |
-| Q4 | Undetermined | Module Federation está configurado nos dois lados e consumido por import federado, e a porta coincide, mas o identificador antes de `@` na URL do consumer (`rslib_provider`, `mf-demo/mf_consumer/module-federation.config.ts:6`) difere do `name` publicado pelo provider (`mf_provider`, `mf-demo/mf_provider/module-federation.config.ts:4`), e nenhum artefato versionado resolve se o runtime conecta os dois (não há `mf-manifest.json` para comparar os nomes). Os tipos remotos (`@mf-types`) foram adicionados num único commit junto com todo o `mf-demo` e não demonstram resolução efetiva. É configuração cujo uso efetivo é incerto. |
-| Q5 | Undetermined | Não há resposta No; Q5 acompanha Q4, e permanece a questão de o remoto expor um único componente de demonstração ser composição ou code sharing (089/100). |
+| Q1 | Yes | Two units in `mf-demo`, referenced by composition configuration (`mf_consumer/module-federation.config.ts:5–7`; `mf_provider/module-federation.config.ts:5–7`). |
+| Q2 | Yes | Consumer and provider have their own entry, build and server (each one's `rsbuild.config.ts`), without source code imports between them. |
+| Q3 | Yes | Consumer renders the remote component on its page (`mf_consumer/src/App.tsx:8`). |
+| Q4 | Undetermined | Module Federation is configured on both sides and consumed through federated import, and port matches, but identifier before `@` in consumer URL (`rslib_provider`, `mf-demo/mf_consumer/module-federation.config.ts:6`) differs from provider's published `name` (`mf_provider`, `mf-demo/mf_provider/module-federation.config.ts:4`), and no versioned artifact resolves whether runtime connects both (no `mf-manifest.json` to compare names). Remote types (`@mf-types`) were added in a single commit together with all `mf-demo` and do not demonstrate effective resolution. Configuration whose effective use is uncertain. |
+| Q5 | Undetermined | No No answer; Q5 follows Q4, and the question remains whether remote exposure of a single demonstration component is composition or code sharing (089/100). |
 
-## Motivo
+## Rationale
 
-- Proposta `MFE-implemented` com `status: review`. Corresponde a “examples… that actually compose frontend units”.
-- **A revisão se justifica por dois pontos:**
-  - **Nome divergente:** o consumer usa `rslib_provider` na entrada do remoto e o provider se chama `mf_provider`. Se isso impedir a conexão, o caso se aproxima de 103 (cadeia inconsistente, `Uncertain`).
-  - **Code sharing:** o módulo exposto é um único componente de saudação (“Hello Module Federation 2.0”), o que evoca a dúvida de 089/100.
-- Os demos `react-16-demo` e `react-18-demo` são aplicações independentes sem relação de composição. Não foram contados, como na leitura de 168. `frontend_units: 2` (consumer e provider), `unit_organization: monorepo`. `ui_technologies: [react]`, `build_tools: [rsbuild]` (como em 029), `approaches: [module-federation]`, `repo_type: example`.
+- Proposed `MFE-implemented` with `status: review`. Matches “examples… that actually compose frontend units”.
+- **Review is justified by two points:**
+  - **Name mismatch:** consumer uses `rslib_provider` in remote entry and provider is named `mf_provider`. If this prevents connection, the case approaches 103 (inconsistent chain, `Uncertain`).
+  - **Code sharing:** exposed module is a single greeting component (“Hello Module Federation 2.0”), evoking the uncertainty in 089/100.
+- Demos `react-16-demo` and `react-18-demo` are independent applications without a composition relationship. Not counted, as in the reading of 168. `frontend_units: 2` (consumer and provider), `unit_organization: monorepo`. `ui_technologies: [react]`, `build_tools: [rsbuild]` (as in 029), `approaches: [module-federation]`, `repo_type: example`.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** Module Federation 2.0 com `@module-federation/rsbuild-plugin`, remoto por `mf-manifest.json`, `shareStrategy: 'loaded-first'` e tipos remotos gerados automaticamente (`@mf-types`).
-- **Protocolo (busca):** entrada só por busca de código nos dois `package.json` do demo, na faixa `size:500..599`. Elegibilidade `pass` nas duas rodadas.
+- **RQ2:** Module Federation 2.0 with `@module-federation/rsbuild-plugin`, remote through `mf-manifest.json`, `shareStrategy: 'loaded-first'` and automatically generated remote types (`@mf-types`).
+- **Protocol (search):** entry only through code search in both demo `package.json`, in range `size:500..599`. Eligibility `pass` in both rounds.
 
-## Decisão registrada
+## Recorded decision
 
-Mantido como `Uncertain`. Embora o consumer importe e renderize o componente federado, o alias do remoto (`rslib_provider`) diverge do nome publicado pelo provider (`mf_provider`) e o snapshot não demonstra que a ligação funciona em runtime. Além disso, a exposição de um único componente demonstrativo não permite distinguir com segurança composição de microfrontends de simples compartilhamento de código.
+Retained as `Uncertain`. Although consumer imports and renders the federated component, remote alias (`rslib_provider`) differs from provider's published name (`mf_provider`) and snapshot does not demonstrate the connection works at runtime. Additionally, exposure of a single demonstration component does not safely distinguish microfrontend composition from simple code sharing.

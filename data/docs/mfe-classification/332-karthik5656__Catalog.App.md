@@ -20,68 +20,68 @@ annotation:
 
 # 332 — karthik5656/Catalog.App
 
-## Contexto
+## Context
 
-Projeto de catálogo com backends .NET (`src/backend/`: Gateway, App, Chat, Rag, por enquanto com o template `WeatherForecast`), documentação de arquitetura e planos (`documents/`) e três frontends React + Vite em `src/frontend/apps/`:
-- `ui-catalog` (shell, porta 3000);
-- `ui-catalog-merchant` (remoto, 3001);
-- `ui-catalog-consumer` (remoto, 3002).
+Catalog project with .NET backends (`src/backend/`: Gateway, App, Chat, Rag, currently with template `WeatherForecast`), architecture documentation and plans (`documents/`) and three React + Vite frontends in `src/frontend/apps/`:
+- `ui-catalog` (shell, port 3000);
+- `ui-catalog-merchant` (remote, 3001);
+- `ui-catalog-consumer` (remote, 3002).
 
-O shell lê `remotes.json`, monta o mapa de `remotes` do `@originjs/vite-plugin-federation` e gera um arquivo com `React.lazy(() => import("<scope>/App"))` por remoto, roteado em `/<route>/*`. Não há README na raiz. O nome do repositório não é usado como evidência.
+The shell reads `remotes.json`, builds the `remotes` map for `@originjs/vite-plugin-federation` and generates a file with `React.lazy(() => import("<scope>/App"))` per remote, routed at `/<route>/*`. There is no root README. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:333` registra rank 332, ID 1350705751, status `cloned`, branch `master` e o commit do front matter, que é o HEAD do clone e de `origin/master`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:333` records rank 332, ID 1350705751, status `cloned`, branch `master` and the front matter commit, which is the HEAD of the clone and of `origin/master`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:333` registra a estratégia `technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:36329` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:36337` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:333` records strategy `technology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:36329` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:36337` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos três hits em cada rodada, todos do endpoint `code`, consulta `technology-vite-federation-package-code` (`"@originjs/vite-plugin-federation" filename:package.json`), subconsulta `…#size:800..899`:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same three hits in each round, all from endpoint `code`, query `technology-vite-federation-package-code` (`"@originjs/vite-plugin-federation" filename:package.json`), subquery `…#size:800..899`:
 
-| `path` | Coleta 001 / 002 (UTC) |
+| `path` | Collection 001 / 002 (UTC) |
 |---|---|
 | `src/frontend/apps/ui-catalog-consumer/package.json` | 2026-10-07T22:04:57.516Z / 2026-10-08T15:47:59.312Z |
 | `src/frontend/apps/ui-catalog/package.json` | 2026-10-07T22:04:57.516Z / 2026-10-08T15:47:59.312Z |
 | `src/frontend/apps/ui-catalog-merchant/package.json` | 2026-10-07T22:05:05.207Z / 2026-10-08T15:48:11.108Z |
 
-Os metadados do hit de código não trazem descrição, tópicos nem datas. A entrada é só por código: os três `package.json` declaram `@originjs/vite-plugin-federation`. Não há README na raiz para avaliar.
+Code hit metadata has no description, topics or dates. Entry is through code only: all three `package.json` declare `@originjs/vite-plugin-federation`. There is no root README to assess.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 152 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Na raiz há `Agents.md`, `documents/` (planos, incluindo `06_shell_mfe.md`), `docker/`, `wireframes/` e workflows de CI. Há quatro soluções .NET em `src/backend/` e três apps Vite em `src/frontend/apps/`, cada uma com `package.json`, `pnpm-lock.yaml`, `vite.config.ts`, `Dockerfile` e `src/`. | contexto |
-| Shell | `src/frontend/apps/ui-catalog/remotes.json:1–16`: `merchantApp` → `http://localhost:3001/assets/remoteEntry.js` e `consumerApp` → `http://localhost:3002/assets/remoteEntry.js`, ambos com `module: "./App"`. `vite.config.ts:10–17`, `85–89`: monta `remotes` a partir do JSON. `:26–51`: plugin que gera `src/remoteApps.generated.tsx` com `React.lazy(() => import("<scope>/App"))` no início do build; o arquivo gerado é ignorado no Git (`.gitignore:15–16`). | forte |
-| Montagem | `src/frontend/apps/ui-catalog/src/App.tsx:3`, `11–31`: uma rota `/<route>/*` por remoto, com `Suspense`. `src/components/ShellLayout.tsx:27–31`: links de navegação. `src/main.tsx:9`: `BrowserRouter` com `basename="/ui-catalog"`. | forte |
-| Remotos | `ui-catalog-merchant/vite.config.ts:16–23` e `ui-catalog-consumer/vite.config.ts:16–23`: `filename: "remoteEntry.js"`, `exposes: { "./App": "./src/App" }`, portas 3001 e 3002. Os `App.tsx` são `Routes` aninhados (`ui-catalog-merchant/src/App.tsx:7–15`; `ui-catalog-consumer/src/App.tsx:5–11`). Ambos avisam o shell em rebuild (`/__fullReload`, `:24–45`). | forte |
-| Inconsistência | Os dois remotos se declaram `name: "consumerApp"` (`ui-catalog-merchant/vite.config.ts:17` e `ui-catalog-consumer/vite.config.ts:17`), enquanto o shell usa o scope `merchantApp` para a porta 3001. O plugin resolve os remotos pela URL; o efeito disso não foi verificado por execução. | ambígua |
-| Código-fonte (fronteiras) | Busca por imports com `../../` em `src/frontend`: nenhum. Cada app só importa os próprios arquivos e pacotes. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 152 entries, all regular files `100644`; zero symlinks and zero gitlinks. At the root are `Agents.md`, `documents/` (plans, including `06_shell_mfe.md`), `docker/`, `wireframes/` and CI workflows. There are four .NET solutions in `src/backend/` and three Vite apps in `src/frontend/apps/`, each with `package.json`, `pnpm-lock.yaml`, `vite.config.ts`, `Dockerfile` and `src/`. | context |
+| Shell | `src/frontend/apps/ui-catalog/remotes.json:1–16`: `merchantApp` → `http://localhost:3001/assets/remoteEntry.js` and `consumerApp` → `http://localhost:3002/assets/remoteEntry.js`, both with `module: "./App"`. `vite.config.ts:10–17`, `85–89`: builds `remotes` from JSON. `:26–51`: plugin generating `src/remoteApps.generated.tsx` with `React.lazy(() => import("<scope>/App"))` at build startup; the generated file is ignored in Git (`.gitignore:15–16`). | strong |
+| Mounting | `src/frontend/apps/ui-catalog/src/App.tsx:3`, `11–31`: one `/<route>/*` route per remote, with `Suspense`. `src/components/ShellLayout.tsx:27–31`: navigation links. `src/main.tsx:9`: `BrowserRouter` with `basename="/ui-catalog"`. | strong |
+| Remotes | `ui-catalog-merchant/vite.config.ts:16–23` and `ui-catalog-consumer/vite.config.ts:16–23`: `filename: "remoteEntry.js"`, `exposes: { "./App": "./src/App" }`, ports 3001 and 3002. The `App.tsx` are nested `Routes` (`ui-catalog-merchant/src/App.tsx:7–15`; `ui-catalog-consumer/src/App.tsx:5–11`). Both notify the shell on rebuild (`/__fullReload`, `:24–45`). | strong |
+| Inconsistency | Both remotes declare `name: "consumerApp"` (`ui-catalog-merchant/vite.config.ts:17` and `ui-catalog-consumer/vite.config.ts:17`), while the shell uses scope `merchantApp` for port 3001. The plugin resolves remotes by URL; the effect was not verified through execution. | ambiguous |
+| Source code (boundaries) | Search for `../../` imports in `src/frontend`: none. Each app imports only its own files and packages. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 10 commits, 1 merge local, todos de `karthik5656`, de 2026-08-29 (`f843c7d`, “initial commit”) a 2026-09-01 (SHA `1982e0f`, que adiciona `Agents.md`). Cinco commits foram criados via PR (`#1`–`#5`) na interface do GitHub, com committer `GitHub`. A configuração de federação chega em `ab5770d` (“MFE Configuration (#5)”). Só há o branch `master`. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 10 commits, 1 local merge, all by `karthik5656`, from 2026-08-29 (`f843c7d`, “initial commit”) to 2026-09-01 (SHA `1982e0f`, adding `Agents.md`). Five commits were created through PRs (`#1`–`#5`) in the GitHub interface, with committer `GitHub`. Federation configuration arrives in `ab5770d` (“MFE Configuration (#5)”). Only branch `master` exists. No historical blob was read and there was no missing object.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | Shell e dois remotos no repositório, referenciados pela configuração de composição (`remotes.json:1–16`, convertido em `remotes` em `vite.config.ts:14–17`). |
-| Q2 | Yes | Cada app tem `package.json`, lockfile, `vite.config.ts`, Dockerfile e porta próprios, sem import de código entre apps. |
-| Q3 | Yes | O shell roteia e monta cada remoto em `/<route>/*` (`App.tsx:11–31`). |
-| Q4 | Yes | `@originjs/vite-plugin-federation` com `remotes` gerados de `remotes.json` e `import("<scope>/App")` gerados no build, coerentes com o `exposes` (`./App`) e as portas dos remotos. |
-| Q5 | Yes | Q1–Q4 são Yes: shell e remotos compostos em runtime, com a cadeia definida no snapshot. |
+| Q1 | Yes | Shell and two remotes in the repository, referenced by composition configuration (`remotes.json:1–16`, converted to `remotes` in `vite.config.ts:14–17`). |
+| Q2 | Yes | Each app has its own `package.json`, lockfile, `vite.config.ts`, Dockerfile and port, without code imports between apps. |
+| Q3 | Yes | The shell routes and mounts each remote at `/<route>/*` (`App.tsx:11–31`). |
+| Q4 | Yes | `@originjs/vite-plugin-federation` with `remotes` generated from `remotes.json` and `import("<scope>/App")` generated during build, consistent with remote `exposes` (`./App`) and ports. |
+| Q5 | Yes | Q1–Q4 are Yes: shell and remotes composed at runtime, with the chain defined in the snapshot. |
 
-## Motivo
+## Rationale
 
-- `MFE-implemented` pela regra Q1–Q5 Yes, no caso “monorepos containing a host and its remotes”.
-- O arquivo de rotas é gerado no build, mas o gerador (`vite.config.ts:26–51`) e sua entrada (`remotes.json`) estão no snapshot, então a cadeia é observável.
-- **Campos:**
+- `MFE-implemented` under the Q1–Q5 Yes rule, in the case “monorepos containing a host and its remotes”.
+- The route file is generated during build, but the generator (`vite.config.ts:26–51`) and its input (`remotes.json`) are in the snapshot, so the chain is observable.
+- **Fields:**
   - `approaches: [module-federation]`, `ui_technologies: [react]`, `build_tools: [vite]`;
   - `frontend_units: 3`, `unit_organization: monorepo`;
-  - `repo_type: production`: projeto com backends, CI, Docker e planos de produto, ainda em estágio inicial.
-- Não há decisão aberta.
+  - `repo_type: production`: project with backends, CI, Docker and product plans, still at an early stage.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** registro declarativo de remotos (`remotes.json`) como fonte única do mapa de federação e das rotas do shell, gerados por plugin Vite, com recarga do shell em rebuild dos remotos (`/__fullReload`).
-- **RQ3:** os dois remotos usam o mesmo `name` (`consumerApp`) nas configs de federação, diferente do scope `merchantApp` usado pelo shell para a porta 3001.
-- **Protocolo (busca):** entrada só por código. Não há README na raiz; a documentação MFE está em `documents/`. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ2:** declarative remote registry (`remotes.json`) as the single source for federation map and shell routes, generated by a Vite plugin, with shell reload on remote rebuild (`/__fullReload`).
+- **RQ3:** both remotes use the same `name` (`consumerApp`) in federation configs, different from scope `merchantApp` used by the shell for port 3001.
+- **Protocol (search):** entry through code only. There is no root README; MFE documentation is in `documents/`. Eligibility changes from `unknown` (001) to `pass` (002).

@@ -20,65 +20,65 @@ annotation:
 
 # 167 — IsaacAlves7/js
 
-## Contexto
+## Context
 
-Repositório de estudos de JavaScript e TypeScript. O conteúdo central é um README de 1.202 linhas, um material didático em português com apresentação do autor e links para outros repositórios de estudo (`README.md:1–10`, `23`). Ele acompanha exercícios soltos em `js/` e `TypeScript/`, exemplos de Deno (`Deno/`) e uma API GraphQL de curso (`graphql-api/`). Micro-frontends aparecem uma única vez, como área de atuação do autor (`README.md:23`). O nome do repositório não é usado como evidência.
+JavaScript and TypeScript study repository. Its central content is a 1,202-line README, Portuguese teaching material presenting the author and links to other study repositories (`README.md:1–10`, `23`). It accompanies standalone exercises in `js/` and `TypeScript/`, Deno examples (`Deno/`) and a course GraphQL API (`graphql-api/`). Micro-frontends appear once, as the author's field of work (`README.md:23`). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:168` registra rank 167, ID 294506410, status `cloned`, branch `master` e o commit do front matter, que é o HEAD do clone e de `origin/master`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:168` records rank 167, ID 294506410, status `cloned`, branch `master` and the front matter commit, which is HEAD of the clone and `origin/master`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, with reading through `${SHA}:caminho` (the original placeholder means SHA:path). No installation, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:168` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:1382` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:1381` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:168` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID is in `data/discovery/mfe-round-001/candidates.csv:1382` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:1381` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2020-09` e `path` vazio:
+A `sqlite3 -readonly` query of the `hits`, `queries` and `subqueries` tables from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2020-09` and empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | 2026-10-07T22:15:56.090Z / 2026-10-08T15:51:39.765Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | 2026-10-07T22:45:38.815Z / 2026-10-08T16:03:26.342Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2020-09-01..2020-09-30`.
+Effective queries append `pushed:>=2025-04-01 created:2020-09-01..2020-09-30`.
 
-Metadados do hit:
-- descrição “📜 It's a repository of JavaScript and TypeScript (JS/TS) programming language and his content.”, sem os termos;
-- 20 tópicos (`javascript`, `reactjs`, `angular`, `vuejs`, `webpack`, `typescript` etc.), nenhum de MFE;
-- linguagem JavaScript, `fork: false`, tamanho 9.661;
-- criação em 2020-09-10T19:41:51Z, push em 2026-05-28T19:36:49Z.
+Hit metadata:
+- description “📜 It's a repository of JavaScript and TypeScript (JS/TS) programming language and his content.”, without the terms;
+- 20 topics (`javascript`, `reactjs`, `angular`, `vuejs`, `webpack`, `typescript` etc.), none about MFE;
+- language JavaScript, `fork: false`, size 9,661;
+- created at 2020-09-10T19:41:51Z, pushed at 2026-05-28T19:36:49Z.
 
-O acerto vem de `README.md:23`, “…trabalhando com arquitetura de micro-frontends…”, com grafia hifenizada e única ocorrência. A busca de frase trata o hífen como separador. A forma singular “micro frontend” não aparece literalmente; esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+The hit comes from `README.md:23`, “…trabalhando com arquitetura de micro-frontends…” (English translation: “…working with micro-frontend architecture…”), hyphenated and the only occurrence. Phrase search treats the hyphen as a separator. The singular form “micro frontend” does not appear literally; that hit depends on GitHub search text processing, which is not recorded.
 
-A última alteração do README é o próprio SHA, `783471e` (2026-05-28), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The README's last change is the SHA itself, `783471e` (2026-05-28), before October 2026 collection. The SHA's README does not postdate searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 50 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Há `README.md`, `.gitignore` e quatro diretórios: `js/` (exercícios numerados, por exemplo “1) Visita na Feira.js”, `heapSort.js`), `TypeScript/` (exemplos de sintaxe com `package.json` só com `ts-node`/`typescript`), `Deno/` (scripts e uma API REST) e `graphql-api/` (API Node/Apollo de curso, `package.json` com repositório `alura-cursos/1922-graphql`). `graphql-api/index.html` tem 0 bytes. Não há aplicação frontend. | contrária |
-| Documentação | `README.md:1–10`: links para outros repositórios de estudo e o título “It's a repository of JavaScript (JS)”. `README.md:23`: apresentação profissional com “arquitetura de micro-frontends”. O restante é material didático. | fraca |
-| Tecnologia / Configuração / Composição (busca) | `git grep -i` no SHA (exceto lockfiles e README) por `federation`, `remoteEntry`, `single-spa` e `registerApplication`: nenhum resultado. No README, `micro.?front` só aparece em `README.md:23`. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 50 entries, all regular `100644` files; zero symlinks and zero gitlinks. There are `README.md`, `.gitignore` and four directories: `js/` (numbered exercises, for example “1) Visita na Feira.js”, English translation: “Visit to the Market.js”; `heapSort.js`), `TypeScript/` (syntax examples with `package.json` containing only `ts-node`/`typescript`), `Deno/` (scripts and a REST API) and `graphql-api/` (course Node/Apollo API, `package.json` with repository `alura-cursos/1922-graphql`). `graphql-api/index.html` has 0 bytes. No frontend application. | contrary |
+| Documentation | `README.md:1–10`: links to other study repositories and title “It's a repository of JavaScript (JS)”. `README.md:23`: professional presentation with “arquitetura de micro-frontends” (English translation: “micro-frontend architecture”). The remainder is teaching material. | weak |
+| Technology / Configuration / Composition (search) | `git grep -i` at the SHA (except lockfiles and README) for `federation`, `remoteEntry`, `single-spa` and `registerApplication`: no results. In the README, `micro.?front` appears only at `README.md:23`. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso. Há 4.001 commits em todos os refs, mas só 2.047 são alcançáveis a partir do SHA, com 1 merge. Todos são do mesmo titular: “Isaac Alves Pinheiro” (2.030), “Isaac Alves” (14) e “IsaacAlves7” (3). A raiz é `254a10f` (2020-09-10, “first commit”). As mensagens mais frequentes são “Update README.md” (2.010), por edição web. Os branches `Ionic`, `TS`, `angular`, `data-structure`, `electron`, `exercises` e `jQuery` não foram considerados. O `git log -S` no README não completou por blob ausente no clone parcial (`b259189e…`), que não foi buscado; o clone ficou inalterado.
+Non-shallow clone. There are 4,001 commits across all refs, but only 2,047 reachable from the SHA, with 1 merge. All by the same owner: “Isaac Alves Pinheiro” (2,030), “Isaac Alves” (14) and “IsaacAlves7” (3). Root is `254a10f` (2020-09-10, “first commit”). Most frequent messages are “Update README.md” (2,010), through web editing. Branches `Ionic`, `TS`, `angular`, `data-structure`, `electron`, `exercises` and `jQuery` were not considered. `git log -S` on the README did not complete because of a missing blob in the partial clone (`b259189e…`), which was not fetched; the clone remained unchanged.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend no snapshot; só exercícios, scripts Deno e uma API Node. Nenhuma configuração de composição. |
-| Q2 | No | Sem unidades frontend, não há entradas ou builds a avaliar. |
-| Q3 | No | Não há host, shell ou configuração raiz. |
-| Q4 | No | Nenhum mecanismo de composição (busca registrada). |
-| Q5 | No | Q1–Q4 são No: repositório de estudos que menciona micro-frontends uma vez como área de atuação. |
+| Q1 | No | No frontend unit in the snapshot; only exercises, Deno scripts and a Node API. No composition configuration. |
+| Q2 | No | Without frontend units, there are no entries or builds to assess. |
+| Q3 | No | No host, shell or root configuration. |
+| Q4 | No | No composition mechanism (recorded search). |
+| Q5 | No | Q1–Q4 are No: study repository mentioning micro-frontends once as a field of work. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “repositories mentioning micro-frontends without implementing them”.
-- É conteúdo e exercício, como 023, e não tem unidade frontend, como os perfis 011/064/068/073/077/101/111. Daí `frontend_units: 0`, `unit_organization: none`, `repo_type: other`, `ui_technologies: []` e `build_tools: []`.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”. Matches “repositories mentioning micro-frontends without implementing them”.
+- Content and exercises, as in 023, without a frontend unit, like profiles 011/064/068/073/077/101/111. Hence `frontend_units: 0`, `unit_organization: none`, `repo_type: other`, `ui_technologies: []` and `build_tools: []`.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** README didático extenso, atualizado com frequência pela web, com uma única menção a micro-frontends na apresentação do autor. O filtro `pushed:>=2025-04-01` é satisfeito pelas edições do README.
-- **Protocolo (busca):** o hit singular `"micro frontend"` não tem grafia literal. A elegibilidade muda de `unknown` (001) para `pass` (002).
-- **Contribuição da revisão independente (Lupa):** concordância integral com Non-MFE, Q1–Q5 No, `other`, zero unidades e `none`; sem decisão aberta (`draft`). O repositório é material de estudo (exercícios JavaScript/TypeScript, scripts e APIs de backend) e `micro-frontends` (`README.md:23`, única ocorrência de `micro.?front`) é autodescrição profissional. Citações de apoio para Q1 a Q5: `README.md:23`, `TypeScript/index.ts:1–7`, `Deno/Deno REST API/index.ts:1–9` e `graphql-api/package.json:5–13`; a ausência de unidades decorre do inventário `git ls-tree` do SHA (`graphql-api/index.html` é um blob vazio, sem linhas). Em `graphql-api/package.json`, `main` aponta a um `index.js` ausente na raiz do pacote, enquanto o script `start` aponta a `api/index.js`, que existe, mas usa `typeDefs` e `resolvers` não definidos nele e não inicia o servidor (`graphql-api/package.json:5–8`; `graphql-api/api/index.js:1–14`). Os badges de `README.md:1` levam a outros branches e repositórios, navegação e não composição no SHA classificado, que é o único commit classificado (não todas as refs). Proveniência do hit plural: o README só tem a forma hifenizada `micro-frontends`; por eliminação de nome e descrição o README é a fonte plausível, e a normalização da busca não está nas bases. A busca histórica `git log -S` falhou por blob promisor ausente (`b259189…`); não se buscou o blob nem se inferiu a data de criação da menção.
+- **RQ1 (misleading signals):** extensive teaching README, frequently updated through the web, with a single micro-frontends mention in the author's presentation. Filter `pushed:>=2025-04-01` is satisfied by README edits.
+- **Protocol (search):** singular hit `"micro frontend"` has no literal spelling. Eligibility changes from `unknown` (001) to `pass` (002).
+- **Independent review contribution (Lupa):** full agreement with Non-MFE, Q1–Q5 No, `other`, zero units and `none`; no open decision (`draft`). The repository is study material (JavaScript/TypeScript exercises, scripts and backend APIs), and `micro-frontends` (`README.md:23`, only `micro.?front` occurrence) is professional self-description. Supporting Q1 through Q5 citations: `README.md:23`, `TypeScript/index.ts:1–7`, `Deno/Deno REST API/index.ts:1–9` and `graphql-api/package.json:5–13`; absence of units follows from the SHA's `git ls-tree` inventory (`graphql-api/index.html` is an empty blob, without lines). In `graphql-api/package.json`, `main` points to an `index.js` absent from the package root, whereas script `start` points to `api/index.js`, which exists, but uses undefined `typeDefs` and `resolvers` and does not start the server (`graphql-api/package.json:5–8`; `graphql-api/api/index.js:1–14`). Badges at `README.md:1` lead to other branches and repositories, navigation rather than composition at the classified SHA, the only classified commit (not all refs). Plural hit provenance: the README has only hyphenated `micro-frontends`; by elimination of name and description the README is the plausible source, and search normalization is not in the databases. Historical `git log -S` search failed because of a missing promisor blob (`b259189…`); the blob was not fetched and the mention's creation date was not inferred.

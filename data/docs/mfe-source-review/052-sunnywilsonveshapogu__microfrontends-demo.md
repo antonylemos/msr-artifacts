@@ -15,30 +15,30 @@ annotation:
 
 # 052 — sunnywilsonveshapogu/microfrontends-demo
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-remote-import | shell/src/App.js:5 | shell | dynamic-loading | Yes | Solicita headerMf/Header em shell/src/App.js:3-9; Header é renderizado em shell/src/App.js:24-26 e App está ligado à entrada em shell/src/bootstrap.js:3-6. |
-| src-remote-import | shell/src/App.js:13 | shell | dynamic-loading | Yes | Solicita productsMf/Products em shell/src/App.js:11-17; Products é renderizado em shell/src/App.js:32-34 e App está ligado à entrada em shell/src/bootstrap.js:3-6. |
-| src-async-bootstrap | header-mf/src/index.js:1 | header-mf | dynamic-loading | No | header-mf/src/index.js:1 carrega o bootstrap da própria unidade. |
-| src-async-bootstrap | products-mf/src/index.js:1 | products-mf | dynamic-loading | No | products-mf/src/index.js:1 carrega o bootstrap da própria unidade. |
-| src-async-bootstrap | shell/src/index.js:1 | shell | dynamic-loading | No | shell/src/index.js:1 carrega o bootstrap local do shell. |
+| src-remote-import | shell/src/App.js:5 | shell | dynamic-loading | Yes | Requests headerMf/Header at shell/src/App.js:3-9; Header is rendered at shell/src/App.js:24-26 and App is connected to the entry at shell/src/bootstrap.js:3-6. |
+| src-remote-import | shell/src/App.js:13 | shell | dynamic-loading | Yes | Requests productsMf/Products at shell/src/App.js:11-17; Products is rendered at shell/src/App.js:32-34 and App is connected to the entry at shell/src/bootstrap.js:3-6. |
+| src-async-bootstrap | header-mf/src/index.js:1 | header-mf | dynamic-loading | No | header-mf/src/index.js:1 loads the unit’s own bootstrap. |
+| src-async-bootstrap | products-mf/src/index.js:1 | products-mf | dynamic-loading | No | products-mf/src/index.js:1 loads the unit’s own bootstrap. |
+| src-async-bootstrap | shell/src/index.js:1 | shell | dynamic-loading | No | shell/src/index.js:1 loads the shell’s local bootstrap. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | shell/src/App.js:25 | shell | runtime-composition | Yes | Renderiza o componente Header de outra unidade dentro de Suspense (shell/src/App.js:24-26); carregado pelo import remoto em shell/src/App.js:5. |
-| manual | shell/src/App.js:33 | shell | runtime-composition | Yes | Renderiza o componente Products de outra unidade dentro de Suspense (shell/src/App.js:32-34); carregado pelo import remoto em shell/src/App.js:13. |
+| manual | shell/src/App.js:25 | shell | runtime-composition | Yes | Renders the Header component from another unit inside Suspense (shell/src/App.js:24-26); loaded through the remote import at shell/src/App.js:5. |
+| manual | shell/src/App.js:33 | shell | runtime-composition | Yes | Renders the Products component from another unit inside Suspense (shell/src/App.js:32-34); loaded through the remote import at shell/src/App.js:13. |
 
-## Resumo
+## Summary
 
-Construções com composição: 4 (dynamic-loading: 2, runtime-composition: 2).
+Constructs participating in composition: 4 (dynamic-loading: 2, runtime-composition: 2).
 
-## Notas
+## Notes
 
-- A revisão estrutural marca as três unidades Undetermined pelos templates HTML ausentes. Elas continuam sendo as unidades das linhas desta etapa; a cadeia de código shell/src/index.js:1 → shell/src/bootstrap.js:3-6 → shell/src/App.js:3-34 está presente e ligada à configuração de build, sem código comentado ou arquivo órfão.
-- Os Yes descrevem construções de composição observáveis e referenciadas pelo código de entrada; não confirmam executabilidade do snapshot. shell/webpack.config.js:40 referencia template ausente, assim como os remotes, conforme registrado na revisão estrutural.
-- Os fallbacks em shell/src/App.js:5-7 e shell/src/App.js:13-15 mostram tratamento de falha dos imports; não constituem novas unidades ou outra carga remota. Não há comunicação por eventos entre unidades encontrada nas buscas.
-- Pelo critério de construções fora da mineração (passo 4 do método), ficam fora da tabela os exports dos componentes expostos: header-mf/src/Header.js:38 e products-mf/src/Products.js:70 (exposição em header-mf/webpack.config.js:25-26 e products-mf/webpack.config.js:25-26).
+- The structural review marks all three units Undetermined because their HTML templates are missing. They remain the units of this stage’s rows; the code chain shell/src/index.js:1 → shell/src/bootstrap.js:3-6 → shell/src/App.js:3-34 is present and connected to the build configuration, without commented code or orphan files.
+- The Yes answers describe observable composition constructs referenced by the entry code; they do not confirm snapshot executability. shell/webpack.config.js:40 references a missing template, as do the remotes, according to the structural review.
+- The fallbacks at shell/src/App.js:5-7 and shell/src/App.js:13-15 show import failure handling; they do not constitute new units or another remote load. No event-based communication between units was found in the searches.
+- Under the criteria for constructs outside mining (method step 4), exports of the exposed components remain outside the table: header-mf/src/Header.js:38 and products-mf/src/Products.js:70 (exposure at header-mf/webpack.config.js:25-26 and products-mf/webpack.config.js:25-26).

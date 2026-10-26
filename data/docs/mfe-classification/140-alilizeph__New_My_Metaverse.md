@@ -20,62 +20,62 @@ annotation:
 
 # 140 — alilizeph/New_My_Metaverse
 
-## Contexto
+## Context
 
-O repositório só tem um `README.md`, com a apresentação de um projeto planejado: API REST Spring Boot 4 e frontend Angular 21 para uma loja de videogames (`README.md:1–7`). As seções “BACKEND COMPOSITION” e “FRONTEND COMPOSITION” estão vazias (`README.md:11–20`). Não há código, configuração nem frontend no snapshot. O nome do repositório não é usado como evidência.
+Repository contains only one `README.md`, introducing a planned project: Spring Boot 4 REST API and Angular 21 frontend for a videogame store (`README.md:1–7`). Sections “BACKEND COMPOSITION” and “FRONTEND COMPOSITION” are empty (`README.md:11–20`). No code, configuration or frontend exists in snapshot. Repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:141` registra rank 140, ID 1150707772, status `cloned` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:141` records rank 140, ID 1150707772, status `cloned` and front-matter commit, which is clone HEAD and `origin/main`. Every clone Git command used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. No installation, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:141` registra a estratégia `broader` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:24468` (`broader`, `unknown`) e `data/discovery/mfe-round-002/candidates.csv:24475` (`broader`, `pass`).
+`data/samples/mfe-sample-001/sample.csv:141` records strategy `broader` and eligibility `pass`. Sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). ID appears in `data/discovery/mfe-round-001/candidates.csv:24468` (`broader`, `unknown`) and `data/discovery/mfe-round-002/candidates.csv:24475` (`broader`, `pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna um hit por rodada, do endpoint `repositories` e com `path` vazio:
+`sqlite3 -readonly` query of tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns one hit per round, at endpoint `repositories` and with empty `path`:
 
-| Consulta (`q`) | Subconsulta | Consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Effective query | Collection 001 / 002 (UTC) |
 |---|---|---|---|
-| `broader-frontend-composition`: `"frontend composition" in:name,description,readme` | `broader-frontend-composition` (sem partição) | `"frontend composition" in:name,description,readme pushed:>=2025-04-01` | 2026-10-07T23:38:47.022Z / 2026-10-08T16:22:36.838Z |
+| `broader-frontend-composition`: `"frontend composition" in:name,description,readme` | `broader-frontend-composition` (without partition) | `"frontend composition" in:name,description,readme pushed:>=2025-04-01` | 2026-10-07T23:38:47.022Z / 2026-10-08T16:22:36.838Z |
 
-Metadados do hit:
-- descrição “New My Metaverse is an API REST with Spring Boot 4 for backend and Angular 21 for frontend.”;
-- sem tópicos, linguagem nula, `fork: false`, tamanho 2;
-- criação em 2026-02-05T15:44:51Z, push em 2026-02-05T16:08:31Z.
+Hit metadata:
+- description “New My Metaverse is an API REST with Spring Boot 4 for backend and Angular 21 for frontend.”;
+- no topics, null language, `fork: false`, size 2;
+- creation at 2026-02-05T15:44:51Z, push at 2026-02-05T16:08:31Z.
 
-A descrição não contém a frase. Por eliminação, o acerto vem de `README.md:18`, “## FRONTEND COMPOSITION”: um título de seção vazio, com a frase literal (maiúsculas).
+Description lacks phrase. By elimination, retrieval comes from `README.md:18`, “## FRONTEND COMPOSITION”: an empty section heading, with literal phrase (uppercase).
 
-A última alteração do README é o próprio SHA, `668aab5` (2026-02-05T17:08:31+01:00), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+Last README change is SHA itself, `668aab5` (2026-02-05T17:08:31+01:00), before October 2026 collections. README at the SHA is not later than searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: uma entrada, `README.md` (`100644`, 650 bytes); zero symlinks e zero gitlinks. Não há manifesto, código-fonte, configuração ou assets. | contrária |
-| Documentação | `README.md:5–7` descreve o projeto (Spring Boot 4 + Angular 21, padrão DTO, loja de games) como trabalho de conclusão de formação. `README.md:11–20`: as seções “BACKEND COMPOSITION”, “Entities and Enums” e “FRONTEND COMPOSITION” estão vazias. | contexto |
-| Tecnologia / Configuração / Composição (busca) | O inventário é só o README; leitura integral: nenhuma menção a micro-frontends, federação, single-spa, iframe ou qualquer mecanismo de composição. “FRONTEND COMPOSITION” (`README.md:18`) é título de seção sem conteúdo. | ausente |
+| Structure | `git ls-tree -r` at the SHA: one entry, `README.md` (`100644`, 650 bytes); zero symlinks and zero gitlinks. No manifest, source code, configuration or assets. | contrary |
+| Documentation | `README.md:5–7` describes project (Spring Boot 4 + Angular 21, DTO pattern, game store) as a training graduation project. `README.md:11–20`: sections “BACKEND COMPOSITION”, “Entities and Enums” and “FRONTEND COMPOSITION” are empty. | context |
+| Technology / Configuration / Composition (search) | Inventory is only README; complete reading: no mention of micro-frontends, federation, single-spa, iframe or any composition mechanism. “FRONTEND COMPOSITION” (`README.md:18`) is a heading without content. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 2 commits, nenhum merge, ambos de BUFFARD Alexandre `<118019350+alilizeph@users.noreply.github.com>` em 2026-02-05. A raiz `c3a0782` (“Initial commit”) adiciona `README.md`, e o SHA `668aab5` (“Update README.md”) o altera (`git log --no-renames --name-status`). Nenhum outro arquivo existiu na história alcançável. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 2 commits, no merge, both by BUFFARD Alexandre `<118019350+alilizeph@users.noreply.github.com>` on 2026-02-05. Root `c3a0782` (“Initial commit”) adds `README.md`, and SHA `668aab5` (“Update README.md”) changes it (`git log --no-renames --name-status`). No other file existed in reachable history. No historical blob was read and no object was missing.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend no repositório; o único arquivo é `README.md`. Não há configuração de composição. |
-| Q2 | No | Sem unidades, não há entradas nem builds. |
-| Q3 | No | Não há host, shell ou configuração raiz. |
-| Q4 | No | Nenhum mecanismo de composição configurado; “FRONTEND COMPOSITION” é título vazio (`README.md:18`). |
-| Q5 | No | Q1–Q4 são No: repositório só com README de projeto planejado. |
+| Q1 | No | No frontend unit in repository; sole file is `README.md`. No composition configuration exists. |
+| Q2 | No | Without units, no entries or builds exist. |
+| Q3 | No | No host, shell or root configuration exists. |
+| Q4 | No | No composition mechanism is configured; “FRONTEND COMPOSITION” is empty heading (`README.md:18`). |
+| Q5 | No | Q1–Q4 are No: repository containing only README of planned project. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Mesmo perfil de 011/064/068/073/077/101/111: repositório sem implementação, só com README, registrado como `repo_type: other`, `frontend_units: 0` e `unit_organization: none`. Na filtragem automática (seção 3.2 do protocolo), caberia em “purely documentation without an implementation”.
-- Diferentemente desses perfis, o README não menciona micro-frontends. O acerto vem só do título genérico “FRONTEND COMPOSITION”, captado pela consulta ampla.
-- `ui_technologies: []` e `build_tools: []`: Angular e Spring Boot são só declarados em texto, sem artefato observado.
-- Não há decisão aberta.
+- `Non-MFE` under rule “at least one question is No”. Same profile as 011/064/068/073/077/101/111: repository without implementation, only README, recorded as `repo_type: other`, `frontend_units: 0` and `unit_organization: none`. In automatic filtering (protocol section 3.2), it would fit “purely documentation without an implementation”.
+- Unlike those profiles, README mentions no micro-frontends. Retrieval comes only from generic heading “FRONTEND COMPOSITION”, captured by broad query.
+- `ui_technologies: []` and `build_tools: []`: Angular and Spring Boot are only declared in text, without observed artifact.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** a consulta ampla `"frontend composition"` casou um título de seção de README sobre a “composição” (estrutura) do frontend, sem relação com composição de unidades.
-- **Protocolo (filtragem):** repositório de tamanho 2 nos metadados e uma única entrada na árvore, que filtros automáticos de “not software projects” eliminariam. A elegibilidade muda de `unknown` (001) para `pass` (002).
-- **Contribuição da revisão independente (Lupa):** concordância integral com Non-MFE, Q1–Q5 No, `other` e zero unidades; sem decisão aberta. O snapshot tem uma única entrada (`README.md`, 650 bytes), sem manifesto, código, configuração nem asset, e o histórico tem dois commits que só tocam o README. O acerto vem do cabeçalho literal "FRONTEND COMPOSITION" em `README.md:18`, que não tem conteúdo sob ele (eliminação entre nome, descrição, tópicos e README); a descrição do hit ("API REST with Spring Boot 4 … Angular 21 for frontend") não contém a expressão consultada. O README é anterior às buscas (2026-02-05). O sinal lexical é ainda mais fraco que o do perfil 011 (título vazio), com o mesmo critério de avaliar o conteúdo implementado do snapshot.
+- **RQ1 (misleading signals):** broad query `"frontend composition"` matched a README section heading about frontend “composition” (structure), unrelated to unit composition.
+- **Protocol (filtering):** repository with metadata size 2 and one tree entry, which automatic “not software projects” filters would eliminate. Eligibility changes from `unknown` (001) to `pass` (002).
+- **Independent-review contribution (Lupa):** complete agreement with Non-MFE, Q1–Q5 No, `other` and zero units; no open decision. Snapshot has one entry (`README.md`, 650 bytes), without manifest, code, configuration or asset, and history has two commits touching only README. Retrieval comes from literal heading "FRONTEND COMPOSITION" in `README.md:18`, without content below (elimination between name, description, topics and README); hit description ("API REST with Spring Boot 4 … Angular 21 for frontend") lacks queried expression. README predates searches (2026-02-05). Lexical signal is even weaker than profile 011 (empty heading), with same criterion of evaluating implemented snapshot content.

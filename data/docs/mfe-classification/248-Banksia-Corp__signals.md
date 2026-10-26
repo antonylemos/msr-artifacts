@@ -20,75 +20,75 @@ annotation:
 
 # 248 — Banksia-Corp/signals
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** biblioteca. `@banksia/signals` é um motor de reatividade fina em TypeScript, publicado como pacote npm/JSR, com adaptadores para React, Lit, SolidJS e DOM vanilla (`README.md:1–3`; `package.json:2–5`, `:10–35`).
+- **Repository type:** library. `@banksia/signals` is a fine-grained reactivity engine in TypeScript, published as an npm/JSR package, with adapters for React, Lit, SolidJS and vanilla DOM (`README.md:1–3`; `package.json:2–5`, `:10–35`).
 
-O repositório tem o código da biblioteca (`src/`), testes, benchmarks e um portal de documentação Rspress gerado a partir de Markdown (`rspress.config.ts:8–16`; `docs/`). “Micro-frontends” aparece só como cenário de uso que a biblioteca diz favorecer. O nome do repositório não é usado como evidência.
+The repository has library code (`src/`), tests, benchmarks and an Rspress documentation portal generated from Markdown (`rspress.config.ts:8–16`; `docs/`). “Micro-frontends” appears only as a use case the library claims to support. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:249` registra rank 248, ID 1342458837, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:249` records rank 248, ID 1342458837, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:249` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:35848` (`terminology`, `unknown`) e `data/discovery/mfe-round-002/candidates.csv:35853` (`terminology`, `pass`).
+`data/samples/mfe-sample-001/sample.csv:249` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:35848` (`terminology`, `unknown`) and `data/discovery/mfe-round-002/candidates.csv:35853` (`terminology`, `pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories` e com `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories` and with an empty `path`:
 
-| Consulta (`q`) | Subconsulta | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Collection 001 / 002 (UTC) |
 |---|---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | `terminology-micro-frontend-repositories#created:2026-08` | 2026-10-07T22:42:03.458Z / 2026-10-08T16:01:57.166Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | `terminology-micro-frontends-repositories#created:2026-08` | 2026-10-07T23:12:12.610Z / 2026-10-08T16:10:36.351Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2026-08-01..2026-08-31`.
+The effective queries append `pushed:>=2025-04-01 created:2026-08-01..2026-08-31`.
 
-Metadados do hit (iguais nas duas rodadas): descrição “Fine-grained reactivity for modern TypeScript.”, sem tópicos, linguagem TypeScript, `fork: false`, tamanho 511, criação em 2026-08-22T05:02:44Z, push em 2026-09-05T06:53:14Z.
+Hit metadata (identical in both rounds): description “Fine-grained reactivity for modern TypeScript.”, no topics, language TypeScript, `fork: false`, size 511, created at 2026-08-22T05:02:44Z, pushed at 2026-09-05T06:53:14Z.
 
-A descrição não contém os termos; o acerto vem do README. As grafias correspondentes são “micro-frontends” em `README.md:58` (“hard to reuse across micro-frontends”) e `README.md:520` (“helpers for native DOM scripting and micro-frontends”). A busca de frase trata o hífen como separador, o que casa literalmente “micro frontends”. A forma singular “micro frontend” não aparece literalmente no README; esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+The description does not contain the terms; the match comes from the README. The matching spellings are “micro-frontends” in `README.md:58` (“hard to reuse across micro-frontends”) and `README.md:520` (“helpers for native DOM scripting and micro-frontends”). Phrase search treats the hyphen as a separator, literally matching “micro frontends”. The singular form “micro frontend” does not appear literally in the README; this hit depends on GitHub search text processing, which is not recorded.
 
-A última alteração do README alcançável é `a830d58` (2026-09-03T19:40:48+10:00). O SHA (merge de 2026-09-05T16:52:31+10:00, isto é, 06:52:31Z) coincide com o `pushed_at` registrado. Ambos antecedem as coletas de outubro de 2026, e o README do SHA não é posterior às buscas.
+The last reachable README change is `a830d58` (2026-09-03T19:40:48+10:00). The SHA (merge on 2026-09-05T16:52:31+10:00, that is, 06:52:31Z) coincides with the recorded `pushed_at`. Both predate the October 2026 collections, and the README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 75 entradas, 74 arquivos regulares `100644` e 1 executável `100755` (`scripts/release-publish.sh`); zero symlinks e zero gitlinks. Um único `package.json` na raiz; `src/` (núcleo em `src/core/*` e adaptadores `src/react.ts`, `src/lit.ts`, `src/solid.ts`, `src/vanilla.ts`, `src/devtools.ts`), `tests/`, `benchmarks/`, `docs/` (Markdown, JSON de navegação e `logo.svg`) e workflows de CI, release e docs. | contrária |
-| Configuração (biblioteca) | `package.json:10–35`: `exports` por subpath (`.`, `./react`, `./lit`, `./solid`, `./vanilla`, `./devtools`) para `dist/`; `:45`: `build: rslib build`; `:74–89`: React, Lit e SolidJS como peer dependencies opcionais. `rslib.config.ts:3–11`: build de biblioteca ESM sem bundle e com `.d.ts`. | contrária |
-| Código-fonte | `src/index.ts:1–22`: “Framework-agnostic, fine-grained Proxy-based reactive state framework” com subpaths de adaptadores; `src/vanilla.ts:1–6`: helpers de bind de DOM sobre `effect`. Nenhuma aplicação, entry HTML ou montagem de UI no código da biblioteca. | contrária |
-| Configuração / Build/deploy (portal) | `rspress.config.ts:8–16`: site Rspress com `root: docs`; `package.json:49–51`: `docs:dev`, `docs:build`, `docs:preview`; `.github/workflows/deploy-docs.yml:42–59`: build do pacote, build do portal e publicação de `doc_build` no GitHub Pages. É o único alvo de aplicação, um site de documentação gerado a partir de Markdown. | contexto |
-| Documentação (menções MFE) | `README.md:58`, `:520`; `docs/framework-adapters/index.md:48`, `:56`; `docs/framework-adapters/vanilla.md:3`; `docs/getting-started/philosophy.md:113`, `:134`: micro-frontends citados como cenário de uso, porque o mesmo modelo de domínio pode alimentar UIs em frameworks diferentes. Nenhuma dessas passagens descreve unidades do repositório. | fraca |
-| Tecnologia / Configuração / Composição (busca) | `git grep -i` no SHA, exceto `pnpm-lock.yaml`, por `micro.?front`, `federation`, `single.?spa`, `remoteEntry`, `import.?map`, `customElements`, `<iframe`, `qiankun`, `wujie` e `registerApplication`: só as menções documentais acima. Nenhum mecanismo de composição configurado. | ausente |
-| Código-fonte (fronteiras) | Busca ativa `git grep -E '\.\./'` em `src`, `tests` e `benchmarks`: só imports de testes e benchmarks para `../src/*` (por exemplo, `tests/signals-adapters.test.ts:2–5`; `benchmarks/reactivity.bench.ts:10`), dentro do mesmo pacote. Não há unidades para cruzar. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 75 entries, 74 regular files `100644` and 1 executable `100755` (`scripts/release-publish.sh`); zero symlinks and zero gitlinks. A single `package.json` at the root; `src/` (core in `src/core/*` and adapters `src/react.ts`, `src/lit.ts`, `src/solid.ts`, `src/vanilla.ts`, `src/devtools.ts`), `tests/`, `benchmarks/`, `docs/` (Markdown, navigation JSON and `logo.svg`) and CI, release and docs workflows. | contrary |
+| Configuration (library) | `package.json:10–35`: subpath `exports` (`.`, `./react`, `./lit`, `./solid`, `./vanilla`, `./devtools`) to `dist/`; `:45`: `build: rslib build`; `:74–89`: React, Lit and SolidJS as optional peer dependencies. `rslib.config.ts:3–11`: unbundled ESM library build with `.d.ts`. | contrary |
+| Source code | `src/index.ts:1–22`: “Framework-agnostic, fine-grained Proxy-based reactive state framework” with adapter subpaths; `src/vanilla.ts:1–6`: DOM binding helpers over `effect`. No application, HTML entry point or UI mounting in library code. | contrary |
+| Configuration / Build/deploy (portal) | `rspress.config.ts:8–16`: Rspress site with `root: docs`; `package.json:49–51`: `docs:dev`, `docs:build`, `docs:preview`; `.github/workflows/deploy-docs.yml:42–59`: package build, portal build and publication of `doc_build` to GitHub Pages. It is the only application target, a documentation site generated from Markdown. | context |
+| Documentation (MFE mentions) | `README.md:58`, `:520`; `docs/framework-adapters/index.md:48`, `:56`; `docs/framework-adapters/vanilla.md:3`; `docs/getting-started/philosophy.md:113`, `:134`: micro-frontends cited as a use case, because the same domain model can feed UIs in different frameworks. None of these passages describes repository units. | weak |
+| Technology / Configuration / Composition (search) | `git grep -i` at the SHA, except `pnpm-lock.yaml`, for `micro.?front`, `federation`, `single.?spa`, `remoteEntry`, `import.?map`, `customElements`, `<iframe`, `qiankun`, `wujie` and `registerApplication`: only the documentation mentions above. No composition mechanism configured. | absent |
+| Source code (boundaries) | Active search `git grep -E '\.\./'` in `src`, `tests` and `benchmarks`: only test and benchmark imports of `../src/*` (for example, `tests/signals-adapters.test.ts:2–5`; `benchmarks/reactivity.bench.ts:10`), within the same package. There are no units to cross. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso e parcial (`blob:none`). São 84 commits alcançáveis a partir do SHA (85 em todos os refs), 37 deles merges de PR. Autores:
-- 75 com o e-mail `luizinho3@gmail.com`: 41 como “Luis Middleton” e 34 como “Luis”, estes com committer `GitHub` (merges pela interface web);
-- 9 de `github-actions[bot]` (versionamento por Changesets).
+Non-shallow and partial clone (`blob:none`). There are 84 commits reachable from the SHA (85 across all refs), 37 of them PR merges. Authors:
+- 75 with email `luizinho3@gmail.com`: 41 as “Luis Middleton” and 34 as “Luis”, the latter with committer `GitHub` (merges through the web interface);
+- 9 by `github-actions[bot]` (Changesets versioning).
 
-A raiz é `e1a5e9e` (2026-08-22T15:24:54+10:00, “feat: initial repository baseline for @banksia/signals”). O SHA `f96ff70` é o merge do PR #60 (`changeset-release/main`). `AGENTS.md:1–3` e os nomes dos branches remotos (por exemplo, `implement_issue_15_plan`, `pull_issue_42_plan`) indicam uso de assistentes de código; os metadados não separam autoria intelectual. Os 29 branches remotos além de `main` não foram considerados.
+The root is `e1a5e9e` (2026-08-22T15:24:54+10:00, “feat: initial repository baseline for @banksia/signals”). SHA `f96ff70` is the merge of PR #60 (`changeset-release/main`). `AGENTS.md:1–3` and remote branch names (for example, `implement_issue_15_plan`, `pull_issue_42_plan`) indicate coding assistant use; metadata does not distinguish intellectual authorship. The 29 remote branches beyond `main` were not considered.
 
-`git rev-list --objects $SHA --missing=print` lista 206 objetos ausentes, todos de histórico. Nenhum blob histórico foi lido, e os arquivos do SHA citados estão presentes. O `git log -- README.md` por caminho funcionou sem buscar blobs.
+`git rev-list --objects $SHA --missing=print` lists 206 missing objects, all historical. No historical blob was read, and the cited SHA files are present. Path-based `git log -- README.md` worked without fetching blobs.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Não há duas unidades frontend. O repositório é uma biblioteca (`package.json:10–35`; `rslib.config.ts:3–11`) com um único site de documentação (`rspress.config.ts:8–16`), e nenhuma configuração de composição referencia unidades externas (busca registrada). |
-| Q2 | No | Não há unidades de uma mesma aplicação a avaliar. |
-| Q3 | No | Não há host, shell nem root config que carregue unidades. |
-| Q4 | No | Nenhum mecanismo de composição configurado; micro-frontends só aparecem como cenário de uso na documentação (`README.md:58`, `:520`). |
-| Q5 | No | Q1–Q4 convergem. |
+| Q1 | No | There are not two frontend units. The repository is a library (`package.json:10–35`; `rslib.config.ts:3–11`) with a single documentation site (`rspress.config.ts:8–16`), and no composition configuration references external units (recorded search). |
+| Q2 | No | There are no units of the same application to assess. |
+| Q3 | No | There is no host, shell or root config loading units. |
+| Q4 | No | No composition mechanism configured; micro-frontends appear only as a use case in documentation (`README.md:58`, `:520`). |
+| Q5 | No | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”.
-- Corresponde a “repositories mentioning micro-frontends without implementing them”. Também se aproxima, por analogia, de “MFE frameworks and libraries”: é uma biblioteca de estado que se apresenta como útil em arquiteturas de micro-frontends, mas não é framework de composição nem compõe unidades.
-- Comparável a 028 (biblioteca/ferramenta que cita MF como cenário suportado) e às bibliotecas 015/148/165. Não se trata de conteúdo didático ou gerador (023/075/081/094/105): é uma biblioteca real com código, testes e releases.
-- `frontend_units: 1` e `single-unit` contam o portal de documentação Rspress, alvo de aplicação publicado em GitHub Pages, seguindo a contagem do site VitePress em 080. A biblioteca e seus adaptadores não são unidades frontend. Com contagem 0, como em 015/148/165, a classe não mudaria.
-- `ui_technologies: []` porque React, Lit e SolidJS são peer dependencies dos adaptadores, não tecnologias com que se constroem unidades do repositório; o portal é Markdown. `build_tools: []`: Rslib é empacotador de biblioteca e Rspress encapsula o bundler do site (como Astro em 146).
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”.
+- It matches “repositories mentioning micro-frontends without implementing them”. By analogy, it also resembles “MFE frameworks and libraries”: a state library presenting itself as useful in micro-frontend architectures, but neither a composition framework nor composing units.
+- Comparable to 028 (library/tool citing MF as a supported use case) and libraries 015/148/165. This is neither teaching content nor a generator (023/075/081/094/105): it is a real library with code, tests and releases.
+- `frontend_units: 1` and `single-unit` count the Rspress documentation portal, an application target published to GitHub Pages, following the VitePress site count in 080. The library and its adapters are not frontend units. With count 0, as in 015/148/165, the class would not change.
+- `ui_technologies: []` because React, Lit and SolidJS are adapter peer dependencies, not technologies used to build repository units; the portal is Markdown. `build_tools: []`: Rslib is a library packager and Rspress encapsulates the site bundler (as Astro does in 146).
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** bibliotecas de estado e reatividade “framework-agnostic” citam micro-frontends como argumento de portabilidade (`README.md:58`; `docs/getting-started/philosophy.md:134`) e entram pelas buscas terminológicas.
-- **Protocolo (busca):** o hit singular “micro frontend” não tem grafia literal no README. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ1 (misleading signals):** “framework-agnostic” state and reactivity libraries cite micro-frontends as a portability argument (`README.md:58`; `docs/getting-started/philosophy.md:134`) and enter through terminology searches.
+- **Protocol (search):** the singular hit “micro frontend” has no literal spelling in the README. Eligibility changes from `unknown` (001) to `pass` (002).

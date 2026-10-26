@@ -19,350 +19,351 @@ annotation:
 
 # 083 — webdevqadeer/frontend-development
 
-## Leitura do repositório
+## Repository overview
 
-Exemplo de marketplace em `react/mv-marketplace/`, um monorepo de npm workspaces (#20) com cinco aplicações Vite, um shell e quatro remotes (#21 a #25), e uma biblioteca de tema que não é unidade (#26). A cadeia de Module Federation está declarada de ponta a ponta:
-- **Dependências:** `@originjs/vite-plugin-federation`, nas cinco aplicações (#1 a #5).
-- **Configuração:** cada remote se declara e expõe `./App` (#6 a #9). O shell nomeia os quatro remotes por URL de `localhost` (#10).
-- **Código:** o shell importa os quatro `<remote>/App` por `React.lazy` (#11 a #14) e os põe numa tabela de rotas (#15 a #19).
-- **Relações:** isso resulta em quatro relações host → remote (#27 a #30).
+Marketplace example in `react/mv-marketplace/`, an npm workspaces monorepo (#20) with five Vite applications, a shell and four remotes (#21 through #25), and a theme library that is not a unit (#26). The Module Federation chain is declared end to end:
+- **Dependencies:** `@originjs/vite-plugin-federation`, in the five applications (#1 through #5).
+- **Configuration:** each remote declares itself and exposes `./App` (#6 through #9). The shell names the four remotes through `localhost` URLs (#10).
+- **Code:** the shell imports the four `<remote>/App` modules through `React.lazy` (#11 through #14) and places them in a route table (#15 through #19).
+- **Relationships:** this results in four host → remote relationships (#27 through #30).
 
-O elo que falha é a entrada do shell. `main.jsx` importa `./App.jsx`, e o snapshot só tem `src/app.jsx`, que é o arquivo que usa o roteador. Num sistema de arquivos sensível à caixa, a cadeia não alcança o roteador. Por isso o limite do shell (#25), as nove construções de código (#11 a #19) e as quatro relações (#27 a #30) ficam ambíguos: não se sabe se a composição está ativa ou se não chega a acontecer. O histórico mostra que essa divergência existe desde o primeiro commit, e não vem de uma renomeação (#44). A relação com o payment tem também um desencontro de nome, `payment_app` no shell e `payment-app` no remote (#8, #30).
+The failing link is the shell entry. `main.jsx` imports `./App.jsx`, and the snapshot only has `src/app.jsx`, the file using the router. On a case-sensitive filesystem, the chain does not reach the router. Thus the shell boundary (#25), nine code constructs (#11 through #19) and four relationships (#27 through #30) remain ambiguous: whether composition is active or never occurs is unknown. History shows this discrepancy has existed since the first commit, rather than coming from a rename (#44). The payment relationship also has a name mismatch, `payment_app` in the shell and `payment-app` in the remote (#8, #30).
 
-Um sinal engana: as cinco configurações declaram um remote `package` em `localhost:5005` (#31 a #35), que um comentário chama de "The remote package" (#42). Nenhuma unidade do snapshot serve esse endereço, e nenhum código o importa. O histórico mostra que havia um diretório `package` no primeiro commit, removido no seguinte, e que as declarações ficaram (#45). A biblioteca `mv-theme` não configura federação e não é importada (#26).
+One signal is misleading: the five configurations declare a `package` remote at `localhost:5005` (#31 through #35), called "The remote package" by a comment (#42). No snapshot unit serves that address, and no code imports it. History shows a `package` directory existed in the first commit, was removed in the next, and the declarations remained (#45). The `mv-theme` library does not configure federation and is not imported (#26).
 
-Os cinco builds são separados (#36 a #40), sem deploy observado. A documentação se resume a três comentários da configuração do admin (#41 a #43).
+The five builds are separate (#36 through #40), without observed deployment. Documentation consists of three admin configuration comments (#41 through #43).
 
-## Observações
+## Observations
 
 ### 1. react/mv-marketplace/apps/admin/package.json:18
 
-**Observação:** `@originjs/vite-plugin-federation` (`^1.4.1`) está declarada em `devDependencies`.
+**Observation:** `@originjs/vite-plugin-federation` (`^1.4.1`) is declared in `devDependencies`.
 
-**Interpretação:** A tecnologia de federação está presente no build do admin.
+**Interpretation:** Federation technology is present in the admin build.
 
 ### 2. react/mv-marketplace/apps/buyer/package.json:18
 
-**Observação:** `@originjs/vite-plugin-federation` (`^1.4.1`) está declarada em `devDependencies`.
+**Observation:** `@originjs/vite-plugin-federation` (`^1.4.1`) is declared in `devDependencies`.
 
-**Interpretação:** A tecnologia de federação está presente no build do buyer.
+**Interpretation:** Federation technology is present in the buyer build.
 
 ### 3. react/mv-marketplace/apps/payment/package.json:18
 
-**Observação:** `@originjs/vite-plugin-federation` (`^1.4.1`) está declarada em `devDependencies`.
+**Observation:** `@originjs/vite-plugin-federation` (`^1.4.1`) is declared in `devDependencies`.
 
-**Interpretação:** A tecnologia de federação está presente no build do payment.
+**Interpretation:** Federation technology is present in the payment build.
 
 ### 4. react/mv-marketplace/apps/seller/package.json:18
 
-**Observação:** `@originjs/vite-plugin-federation` (`^1.4.1`) está declarada em `devDependencies`.
+**Observation:** `@originjs/vite-plugin-federation` (`^1.4.1`) is declared in `devDependencies`.
 
-**Interpretação:** A tecnologia de federação está presente no build do seller.
+**Interpretation:** Federation technology is present in the seller build.
 
 ### 5. react/mv-marketplace/apps/shell/package.json:19
 
-**Observação:** `@originjs/vite-plugin-federation` (`^1.4.1`) está declarada em `devDependencies`.
+**Observation:** `@originjs/vite-plugin-federation` (`^1.4.1`) is declared in `devDependencies`.
 
-**Interpretação:** A tecnologia de federação está presente no build do shell.
+**Interpretation:** Federation technology is present in the shell build.
 
 ### 6. react/mv-marketplace/apps/admin/vite.config.js:1-21
 
-**Observação:** `federation` declara `name: "admin_app"`, `filename: "remoteEntry.js"`, `exposes: { "./App": "./src/App.jsx" }`, `remotes: { package: "http://localhost:5005/assets/remoteEntry.js" }` e `shared: ["react", "react-dom"]`. `preview` na porta 5003.
+**Observation:** `federation` declares `name: "admin_app"`, `filename: "remoteEntry.js"`, `exposes: { "./App": "./src/App.jsx" }`, `remotes: { package: "http://localhost:5005/assets/remoteEntry.js" }` and `shared: ["react", "react-dom"]`. `preview` on port 5003.
 
-**Interpretação:** O admin está configurado como remote e oferece sua tela a um host. Também declara consumir um remote `package`.
+**Interpretation:** Admin is configured as a remote and offers its screen to a host. It also declares consumption of a `package` remote.
 
-**Nota:** A força segue o caso de configuração de uma unidade só. O remote `package` não corresponde a nenhuma unidade do snapshot (#31), então a declaração não liga o admin a outra parte.
+**Note:** Strength follows the single-unit configuration case. The `package` remote matches no snapshot unit (#31), so the declaration does not link admin to another part.
 
 ### 7. react/mv-marketplace/apps/buyer/vite.config.js:1-21
 
-**Observação:** `federation` declara `name: "buyer_app"`, `filename: "remoteEntry.js"`, `exposes: { "./App": "./src/App.jsx" }`, o mesmo remote `package` e `shared: ["react", "react-dom"]`. `preview` na porta 5001.
+**Observation:** `federation` declares `name: "buyer_app"`, `filename: "remoteEntry.js"`, `exposes: { "./App": "./src/App.jsx" }`, the same `package` remote and `shared: ["react", "react-dom"]`. `preview` on port 5001.
 
-**Interpretação:** O buyer está configurado como remote e oferece sua tela a um host.
+**Interpretation:** Buyer is configured as a remote and offers its screen to a host.
 
-**Nota:** Como em #6, o remote `package` não liga a unidade a outra parte (#32).
+**Note:** As in #6, the `package` remote does not link the unit to another part (#32).
 
 ### 8. react/mv-marketplace/apps/payment/vite.config.js:1-19
 
-**Observação:** `federation` declara `name: "payment-app"`, com hífen, `filename: "remoteEntry.js"`, `exposes: { "./App": "./src/App.jsx" }`, o mesmo remote `package` e `shared: ["react", "react-dom"]`. `preview` na porta 5004.
+**Observation:** `federation` declares `name: "payment-app"`, with a hyphen, `filename: "remoteEntry.js"`, `exposes: { "./App": "./src/App.jsx" }`, the same `package` remote and `shared: ["react", "react-dom"]`. `preview` on port 5004.
 
-**Interpretação:** O payment está configurado como remote. O nome difere no separador da chave `payment_app` que o shell usa.
+**Interpretation:** Payment is configured as a remote. The name differs in its separator from the `payment_app` key used by the shell.
 
-**Nota:** Como em #6, o remote `package` não liga a unidade a outra parte (#33).
+**Note:** As in #6, the `package` remote does not link the unit to another part (#33).
 
 ### 9. react/mv-marketplace/apps/seller/vite.config.js:1-19
 
-**Observação:** `federation` declara `name: "seller_app"`, `filename: "remoteEntry.js"`, `exposes: { "./App": "./src/App.jsx" }`, o mesmo remote `package` e `shared: ["react", "react-dom"]`. `preview` na porta 5002.
+**Observation:** `federation` declares `name: "seller_app"`, `filename: "remoteEntry.js"`, `exposes: { "./App": "./src/App.jsx" }`, the same `package` remote and `shared: ["react", "react-dom"]`. `preview` on port 5002.
 
-**Interpretação:** O seller está configurado como remote e oferece sua tela a um host.
+**Interpretation:** Seller is configured as a remote and offers its screen to a host.
 
-**Nota:** Como em #6, o remote `package` não liga a unidade a outra parte (#34).
+**Note:** As in #6, the `package` remote does not link the unit to another part (#34).
 
 ### 10. react/mv-marketplace/apps/shell/vite.config.js:1-35
 
-**Observação:** `federation` declara `name: "shell_app"` e `remotes` `buyer_app`, `seller_app`, `admin_app` e `payment_app` em `http://localhost:5001` a `5004/assets/remoteEntry.js`, mais `package` em `5005`, com `shared: ["react", "react-dom"]`.
+**Observation:** `federation` declares `name: "shell_app"` and `remotes` `buyer_app`, `seller_app`, `admin_app` and `payment_app` at `http://localhost:5001` through `5004/assets/remoteEntry.js`, plus `package` at `5005`, with `shared: ["react", "react-dom"]`.
 
-**Interpretação:** A configuração do host declara os quatro remotes do snapshot e onde encontrá-los, e um quinto sem unidade correspondente.
+**Interpretation:** The host configuration declares the four snapshot remotes and where to find them, and a fifth without a corresponding unit.
 
 ### 11. react/mv-marketplace/apps/shell/src/router.jsx:4
 
-**Observação:** `const Buyer = React.lazy(() => import("buyer_app/App"));`.
+**Observation:** `const Buyer = React.lazy(() => import("buyer_app/App"));`.
 
-**Interpretação:** O shell carrega o módulo exposto pelo buyer, pelo nome dele. Continuam plausíveis duas leituras: a carga acontece, se a entrada do shell chegar ao roteador, ou não acontece, porque `main.jsx` importa um `App.jsx` que não existe com essa caixa.
+**Interpretation:** The shell loads the module exposed by buyer, by name. Two readings remain plausible: loading occurs if the shell entry reaches the router, or does not occur because `main.jsx` imports an `App.jsx` that does not exist with that case.
 
 ### 12. react/mv-marketplace/apps/shell/src/router.jsx:5
 
-**Observação:** `const Seller = React.lazy(() => import("seller_app/App"));`.
+**Observation:** `const Seller = React.lazy(() => import("seller_app/App"));`.
 
-**Interpretação:** O shell carrega o módulo exposto pelo seller. As mesmas duas leituras de #11.
+**Interpretation:** The shell loads the module exposed by seller. The same two readings as #11.
 
 ### 13. react/mv-marketplace/apps/shell/src/router.jsx:6
 
-**Observação:** `const Admin = React.lazy(() => import("admin_app/App"));`.
+**Observation:** `const Admin = React.lazy(() => import("admin_app/App"));`.
 
-**Interpretação:** O shell carrega o módulo exposto pelo admin. As mesmas duas leituras de #11.
+**Interpretation:** The shell loads the module exposed by admin. The same two readings as #11.
 
 ### 14. react/mv-marketplace/apps/shell/src/router.jsx:7
 
-**Observação:** `const Payment = React.lazy(() => import("payment_app/App"));`.
+**Observation:** `const Payment = React.lazy(() => import("payment_app/App"));`.
 
-**Interpretação:** O shell carrega o módulo exposto pelo payment. As mesmas duas leituras de #11.
+**Interpretation:** The shell loads the module exposed by payment. The same two readings as #11.
 
 ### 15. react/mv-marketplace/apps/shell/src/router.jsx:13-18
 
-**Observação:** `<Routes>` com as rotas `/`, `/seller`, `/admin` e `/payment`, dentro de `<BrowserRouter>` e `<Suspense>`. O roteador é usado por `react/mv-marketplace/apps/shell/src/app.jsx:9`, mas `react/mv-marketplace/apps/shell/src/main.jsx:3` importa `./App.jsx`.
+**Observation:** `<Routes>` with routes `/`, `/seller`, `/admin` and `/payment`, inside `<BrowserRouter>` and `<Suspense>`. The router is used by `react/mv-marketplace/apps/shell/src/app.jsx:9`, but `react/mv-marketplace/apps/shell/src/main.jsx:3` imports `./App.jsx`.
 
-**Interpretação:** A tabela de rotas do shell liga um caminho a cada remote. As mesmas duas leituras de #11.
+**Interpretation:** The shell route table links a path to each remote. The same two readings as #11.
 
 ### 16. react/mv-marketplace/apps/shell/src/router.jsx:14
 
-**Observação:** `<Route path="/" element={<Buyer />} />`.
+**Observation:** `<Route path="/" element={<Buyer />} />`.
 
-**Interpretação:** A rota `/` renderiza o componente do buyer. As mesmas duas leituras de #11.
+**Interpretation:** Route `/` renders the buyer component. The same two readings as #11.
 
 ### 17. react/mv-marketplace/apps/shell/src/router.jsx:15
 
-**Observação:** `<Route path="/seller" element={<Seller />} />`.
+**Observation:** `<Route path="/seller" element={<Seller />} />`.
 
-**Interpretação:** A rota `/seller` renderiza o componente do seller. As mesmas duas leituras de #11.
+**Interpretation:** Route `/seller` renders the seller component. The same two readings as #11.
 
 ### 18. react/mv-marketplace/apps/shell/src/router.jsx:16
 
-**Observação:** `<Route path="/admin" element={<Admin />} />`.
+**Observation:** `<Route path="/admin" element={<Admin />} />`.
 
-**Interpretação:** A rota `/admin` renderiza o componente do admin. As mesmas duas leituras de #11.
+**Interpretation:** Route `/admin` renders the admin component. The same two readings as #11.
 
 ### 19. react/mv-marketplace/apps/shell/src/router.jsx:17
 
-**Observação:** `<Route path="/payment" element={<Payment />} />`.
+**Observation:** `<Route path="/payment" element={<Payment />} />`.
 
-**Interpretação:** A rota `/payment` renderiza o componente do payment. As mesmas duas leituras de #11.
+**Interpretation:** Route `/payment` renders the payment component. The same two readings as #11.
 
 ### 20. react/mv-marketplace; react/mv-marketplace/package.json:1-21
 
-**Observação:** É o manifesto coordenador, com `workspaces` para `packages/mvp-theme` e as cinco aplicações e scripts que só disparam os dos workspaces. Não tem entrada de UI nem build de aplicação.
+**Observation:** The coordinating manifest, with `workspaces` for `packages/mvp-theme` and the five applications and scripts that only invoke workspace scripts. It has no UI entry or application build.
 
-**Interpretação:** É a raiz de coordenação do workspace, não uma unidade frontend.
+**Interpretation:** The workspace coordination root rather than a frontend unit.
 
 ### 21. react/mv-marketplace/apps/admin; react/mv-marketplace/apps/admin/package.json:1-28; react/mv-marketplace/apps/admin/index.html:11; react/mv-marketplace/apps/admin/src/main.jsx:1-9; react/mv-marketplace/apps/admin/vite.config.js:5-21
 
-**Observação:** É uma aplicação React com manifesto, `index.html`, entrada com `createRoot` e `vite build` próprios.
+**Observation:** A React application with its own manifest, `index.html`, entry with `createRoot` and `vite build`.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** A frontend unit with its own boundary.
 
 ### 22. react/mv-marketplace/apps/buyer; react/mv-marketplace/apps/buyer/package.json:1-28; react/mv-marketplace/apps/buyer/index.html:11; react/mv-marketplace/apps/buyer/src/main.jsx:1-9; react/mv-marketplace/apps/buyer/vite.config.js:5-21
 
-**Observação:** É uma aplicação React com manifesto, `index.html`, entrada com `createRoot` e `vite build` próprios.
+**Observation:** A React application with its own manifest, `index.html`, entry with `createRoot` and `vite build`.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** A frontend unit with its own boundary.
 
 ### 23. react/mv-marketplace/apps/payment; react/mv-marketplace/apps/payment/package.json:1-28; react/mv-marketplace/apps/payment/index.html:11; react/mv-marketplace/apps/payment/src/main.jsx:1-9; react/mv-marketplace/apps/payment/vite.config.js:5-19
 
-**Observação:** É uma aplicação React com manifesto, `index.html`, entrada com `createRoot` e `vite build` próprios.
+**Observation:** A React application with its own manifest, `index.html`, entry with `createRoot` and `vite build`.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** A frontend unit with its own boundary.
 
 ### 24. react/mv-marketplace/apps/seller; react/mv-marketplace/apps/seller/package.json:1-28; react/mv-marketplace/apps/seller/index.html:11; react/mv-marketplace/apps/seller/src/main.jsx:1-9; react/mv-marketplace/apps/seller/vite.config.js:5-19
 
-**Observação:** É uma aplicação React com manifesto, `index.html`, entrada com `createRoot` e `vite build` próprios.
+**Observation:** A React application with its own manifest, `index.html`, entry with `createRoot` and `vite build`.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** A frontend unit with its own boundary.
 
 ### 25. react/mv-marketplace/apps/shell; react/mv-marketplace/apps/shell/package.json:1-29; react/mv-marketplace/apps/shell/index.html:11; react/mv-marketplace/apps/shell/src/main.jsx:3, 5-9; react/mv-marketplace/apps/shell/src/app.jsx:5-15; react/mv-marketplace/apps/shell/vite.config.js:6-35
 
-**Observação:** Tem manifesto, `index.html`, entrada e `vite build` próprios. A entrada importa `./App.jsx`, e o snapshot só tem `src/app.jsx`.
+**Observation:** It has its own manifest, `index.html`, entry and `vite build`. The entry imports `./App.jsx`, and the snapshot only has `src/app.jsx`.
 
-**Interpretação:** Continuam plausíveis duas leituras: é uma unidade frontend cuja entrada resolve num sistema de arquivos insensível à caixa, ou uma unidade cuja entrada não monta o shell como escrita.
+**Interpretation:** Two readings remain plausible: a frontend unit whose entry resolves on a case-insensitive filesystem, or a unit whose entry does not mount the shell as written.
 
 ### 26. react/mv-marketplace/packages/mvp-theme; react/mv-marketplace/packages/mvp-theme/package.json:1-27; react/mv-marketplace/packages/mvp-theme/vite.config.js:7-24; react/mv-marketplace/packages/mvp-theme/src/index.js:1
 
-**Observação:** É o pacote `mv-theme`, com build de biblioteca ES/UMD a partir de `src/index.js`, que reexporta um Button. Não tem `index.html` nem configuração de federação.
+**Observation:** Package `mv-theme`, with an ES/UMD library build from `src/index.js`, which reexports a Button. It has no `index.html` or federation configuration.
 
-**Interpretação:** É uma biblioteca de componentes, não uma unidade frontend; nenhuma aplicação a importa.
+**Interpretation:** A component library rather than a frontend unit; no application imports it.
 
 ### 27. react/mv-marketplace/apps/shell/src/router.jsx:4, 13, 14; react/mv-marketplace/apps/shell/vite.config.js:12; react/mv-marketplace/apps/buyer/vite.config.js:9-12
 
-**Observação:** O shell importa `buyer_app/App` e o põe na rota `/`. A chave `buyer_app` aponta para `localhost:5001/assets/remoteEntry.js`, e o nome e o `./App` exposto correspondem aos do buyer.
+**Observation:** The shell imports `buyer_app/App` and places it at route `/`. Key `buyer_app` points to `localhost:5001/assets/remoteEntry.js`, and its name and exposed `./App` match buyer.
 
-**Interpretação:** É uma relação host → remote. Continuam plausíveis duas leituras: ativa, se a entrada do shell alcançar o roteador, ou declarada mas não executada, pela divergência de caixa da entrada.
+**Interpretation:** A host → remote relationship. Two readings remain plausible: active if the shell entry reaches the router, or declared but not executed because of the entry case discrepancy.
 
 ### 28. react/mv-marketplace/apps/shell/src/router.jsx:5, 13, 15; react/mv-marketplace/apps/shell/vite.config.js:13; react/mv-marketplace/apps/seller/vite.config.js:9-11
 
-**Observação:** O shell importa `seller_app/App` e o põe na rota `/seller`. A chave aponta para `localhost:5002`, e o nome e o `./App` correspondem aos do seller.
+**Observation:** The shell imports `seller_app/App` and places it at route `/seller`. The key points to `localhost:5002`, and its name and `./App` match seller.
 
-**Interpretação:** É uma relação host → remote, com as mesmas duas leituras de #27.
+**Interpretation:** A host → remote relationship, with the same two readings as #27.
 
 ### 29. react/mv-marketplace/apps/shell/src/router.jsx:6, 13, 16; react/mv-marketplace/apps/shell/vite.config.js:14; react/mv-marketplace/apps/admin/vite.config.js:9-12
 
-**Observação:** O shell importa `admin_app/App` e o põe na rota `/admin`. A chave aponta para `localhost:5003`, e o nome e o `./App` correspondem aos do admin.
+**Observation:** The shell imports `admin_app/App` and places it at route `/admin`. The key points to `localhost:5003`, and its name and `./App` match admin.
 
-**Interpretação:** É uma relação host → remote, com as mesmas duas leituras de #27.
+**Interpretation:** A host → remote relationship, with the same two readings as #27.
 
 ### 30. react/mv-marketplace/apps/shell/src/router.jsx:7, 13, 17; react/mv-marketplace/apps/shell/vite.config.js:15; react/mv-marketplace/apps/payment/vite.config.js:9-11
 
-**Observação:** O shell importa `payment_app/App` e o põe na rota `/payment`. A chave aponta para `localhost:5004`; o remote se declara `payment-app`, com hífen, e expõe `./App` em `remoteEntry.js`.
+**Observation:** The shell imports `payment_app/App` and places it at route `/payment`. The key points to `localhost:5004`; the remote declares itself as `payment-app`, with a hyphen, and exposes `./App` in `remoteEntry.js`.
 
-**Interpretação:** É uma relação host → remote, com as mesmas duas leituras de #27. A diferença de nome não é verificada em execução.
+**Interpretation:** A host → remote relationship, with the same two readings as #27. The name difference is not verified through execution.
 
 ### 31. react/mv-marketplace/apps/admin/vite.config.js:14-16
 
-**Observação:** O admin declara o remote `package` em `http://localhost:5005/assets/remoteEntry.js` e não o importa. Nenhuma configuração do snapshot usa `name: "package"` nem a porta 5005.
+**Observation:** Admin declares the `package` remote at `http://localhost:5005/assets/remoteEntry.js` and does not import it. No snapshot configuration uses `name: "package"` or port 5005.
 
-**Interpretação:** É uma relação só de configuração, para um destino sem unidade correspondente.
+**Interpretation:** A configuration-only relationship to a target without a corresponding unit.
 
 ### 32. react/mv-marketplace/apps/buyer/vite.config.js:14-16
 
-**Observação:** O buyer declara o mesmo remote `package` e não o importa.
+**Observation:** Buyer declares the same `package` remote and does not import it.
 
-**Interpretação:** É uma relação só de configuração, para um destino sem unidade correspondente.
+**Interpretation:** A configuration-only relationship to a target without a corresponding unit.
 
 ### 33. react/mv-marketplace/apps/payment/vite.config.js:12-14
 
-**Observação:** O payment declara o mesmo remote `package` e não o importa.
+**Observation:** Payment declares the same `package` remote and does not import it.
 
-**Interpretação:** É uma relação só de configuração, para um destino sem unidade correspondente.
+**Interpretation:** A configuration-only relationship to a target without a corresponding unit.
 
 ### 34. react/mv-marketplace/apps/seller/vite.config.js:12-14
 
-**Observação:** O seller declara o mesmo remote `package` e não o importa.
+**Observation:** Seller declares the same `package` remote and does not import it.
 
-**Interpretação:** É uma relação só de configuração, para um destino sem unidade correspondente.
+**Interpretation:** A configuration-only relationship to a target without a corresponding unit.
 
 ### 35. react/mv-marketplace/apps/shell/vite.config.js:16
 
-**Observação:** O shell declara o remote `package` junto dos outros quatro, e o roteador não o importa.
+**Observation:** The shell declares the `package` remote alongside the other four, and the router does not import it.
 
-**Interpretação:** É uma relação só de configuração, para um destino sem unidade correspondente.
+**Interpretation:** A configuration-only relationship to a target without a corresponding unit.
 
 ### 36. react/mv-marketplace/apps/admin/vite.config.js:5-21; react/mv-marketplace/apps/admin/package.json:8; react/mv-marketplace/package.json:15
 
-**Observação:** Tem configuração e `vite build` próprios, que geram o `remoteEntry.js` do `admin_app`; a raiz só dispara o build. O único endereço é a porta 5003 do `vite preview`, e nada publica o build.
+**Observation:** It has its own configuration and `vite build`, generating the `remoteEntry.js` of `admin_app`; the root only invokes the build. The only address is port 5003 of `vite preview`, and nothing publishes the build.
 
-**Interpretação:** Há uma fronteira de build própria, sem deploy observado.
+**Interpretation:** There is a separate build boundary, without observed deployment.
 
 ### 37. react/mv-marketplace/apps/buyer/vite.config.js:5-21; react/mv-marketplace/apps/buyer/package.json:8; react/mv-marketplace/package.json:15
 
-**Observação:** Mesmo arranjo de #36, com o `buyer_app` e a porta 5001.
+**Observation:** Same arrangement as #36, with `buyer_app` and port 5001.
 
-**Interpretação:** Há uma fronteira de build própria, sem deploy observado.
+**Interpretation:** There is a separate build boundary, without observed deployment.
 
 ### 38. react/mv-marketplace/apps/payment/vite.config.js:5-19; react/mv-marketplace/apps/payment/package.json:8; react/mv-marketplace/package.json:15
 
-**Observação:** Mesmo arranjo de #36, com o `payment-app` e a porta 5004.
+**Observation:** Same arrangement as #36, with `payment-app` and port 5004.
 
-**Interpretação:** Há uma fronteira de build própria, sem deploy observado.
+**Interpretation:** There is a separate build boundary, without observed deployment.
 
 ### 39. react/mv-marketplace/apps/seller/vite.config.js:5-19; react/mv-marketplace/apps/seller/package.json:8; react/mv-marketplace/package.json:15
 
-**Observação:** Mesmo arranjo de #36, com o `seller_app` e a porta 5002.
+**Observation:** Same arrangement as #36, with `seller_app` and port 5002.
 
-**Interpretação:** Há uma fronteira de build própria, sem deploy observado.
+**Interpretation:** There is a separate build boundary, without observed deployment.
 
 ### 40. react/mv-marketplace/apps/shell/vite.config.js:6-35; react/mv-marketplace/apps/shell/package.json:8; react/mv-marketplace/package.json:15
 
-**Observação:** Tem configuração com saída `dist` e `vite build` próprios; os remotes entram por URL em execução. O único endereço é a porta 5173 do servidor de desenvolvimento, e nada publica o build.
+**Observation:** It has its own configuration with `dist` output and `vite build`; remotes arrive through URLs at runtime. The only address is port 5173 of the development server, and nothing publishes the build.
 
-**Interpretação:** Há uma fronteira de build própria, sem deploy observado.
+**Interpretation:** There is a separate build boundary, without observed deployment.
 
 ### 41. react/mv-marketplace/apps/admin/vite.config.js:12
 
-**Observação:** "Exposing the main app component".
+**Observation:** "Exposing the main app component".
 
-**Interpretação:** Afirma que o admin expõe seu componente principal. A afirmação é corroborada.
+**Interpretation:** Claims admin exposes its main component. The claim is corroborated.
 
 ### 42. react/mv-marketplace/apps/admin/vite.config.js:15
 
-**Observação:** "The remote package".
+**Observation:** "The remote package".
 
-**Interpretação:** Afirma que `package` é um remote. A declaração existe, mas nenhum artefato do snapshot é esse remote, e a afirmação é corroborada em parte.
+**Interpretation:** Claims `package` is a remote. The declaration exists, but no snapshot artifact is that remote, and the claim is partially corroborated.
 
 ### 43. react/mv-marketplace/apps/admin/vite.config.js:17
 
-**Observação:** "Shared libraries".
+**Observation:** "Shared libraries".
 
-**Interpretação:** Afirma que `react` e `react-dom` são compartilhados entre as unidades. A afirmação é corroborada.
+**Interpretation:** Claims `react` and `react-dom` are shared between units. The claim is corroborated.
 
 ### 44. 64fe384 2025-12-14 (React/mv-marketplace/shell-app/src/main.jsx, React/mv-marketplace/shell-app/src/app.jsx); 59eb629 2025-12-16 (react/mv-marketplace/apps/shell/src/main.jsx, react/mv-marketplace/apps/shell/src/app.jsx)
 
-**Observação:** `main.jsx` e `app.jsx` do shell aparecem juntos no primeiro commit e passam para `apps/shell/src/` com os mesmos objetos do snapshot. Nenhuma versão tem um `App.jsx` no shell. O `main.jsx` é o mesmo objeto das outras aplicações, que têm `App.jsx`.
+**Observation:** The shell's `main.jsx` and `app.jsx` appear together in the first commit and move to `apps/shell/src/` with the same objects as the snapshot. No version has an `App.jsx` in the shell. `main.jsx` is the same object as in the other applications, which have `App.jsx`.
 
-**Interpretação:** A divergência de caixa não vem de estágios diferentes nem de renomeação. O histórico não mostra se a cadeia funcionou. O ponto está esclarecido.
+**Interpretation:** The case discrepancy does not come from different stages or a rename. History does not show whether the chain worked. The point is clarified.
 
-### 45. 64fe384 2025-12-14 (React/mv-marketplace/package/); 59eb629 2025-12-16 (remoção de React/mv-marketplace/package/); be25e7c 2025-12-19 (apps/admin/vite.config.js, apps/shell/vite.config.js); f8d2648 2025-12-20 (apps/shell/vite.config.js)
+### 45. 64fe384 2025-12-14 (React/mv-marketplace/package/); 59eb629 2025-12-16 (removal of React/mv-marketplace/package/); be25e7c 2025-12-19 (apps/admin/vite.config.js, apps/shell/vite.config.js); f8d2648 2025-12-20 (apps/shell/vite.config.js)
 
-**Observação:** O primeiro commit tem um diretório `package` com forma de aplicação Vite, e a mensagem anuncia "Shared UI remote". `59eb629` o remove, e nenhum commit o recria. As configurações de buyer, payment e seller têm no snapshot os objetos do primeiro commit.
+**Observation:** The first commit has a `package` directory shaped as a Vite application, and the message announces "Shared UI remote". `59eb629` removes it, and no commit recreates it. Buyer, payment and seller configurations have the first commit objects in the snapshot.
 
-**Interpretação:** O remote `package` aponta para um artefato que existiu e foi removido; as declarações ficaram. O ponto está esclarecido.
+**Interpretation:** The `package` remote points to an artifact that existed and was removed; declarations remained. The point is clarified.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.2 (react/mv-marketplace/apps/admin/package.json:18) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #6 |
-| 2 | 3.4.2 (react/mv-marketplace/apps/buyer/package.json:18) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #7 |
-| 3 | 3.4.2 (react/mv-marketplace/apps/payment/package.json:18) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #8 |
-| 4 | 3.4.2 (react/mv-marketplace/apps/seller/package.json:18) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #9 |
-| 5 | 3.4.2 (react/mv-marketplace/apps/shell/package.json:19) | 1 tecnologia | manifesto | module-federation | tecnológica | fraca | declara #10 |
-| 6 | 3.4.2 (react/mv-marketplace/apps/admin/package.json:18, Evidência); 3.4.3 (react/mv-marketplace/apps/admin, Marcadores e Build); 3.4.4 (react/mv-marketplace/apps/shell/src/router.jsx:6, Observação); 3.4.5 #3, #5 (Configuração); 3.4.6 #1 (Onde é servida e Artefatos); 3.4.7 #1, #2, #3 (Documento e Evidência) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #21; configura #29; configura #31 |
-| 7 | 3.4.2 (react/mv-marketplace/apps/buyer/package.json:18, Evidência); 3.4.3 (react/mv-marketplace/apps/buyer, Marcadores e Build); 3.4.4 (react/mv-marketplace/apps/shell/src/router.jsx:4, Observação); 3.4.5 #1, #6 (Configuração); 3.4.6 #2 (Onde é servida e Artefatos) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #22; configura #27; configura #32 |
-| 8 | 3.4.2 (react/mv-marketplace/apps/payment/package.json:18, Evidência); 3.4.3 (react/mv-marketplace/apps/payment, Marcadores e Build); 3.4.4 (react/mv-marketplace/apps/shell/src/router.jsx:7, Observação); 3.4.5 #4, #7 (Configuração); 3.4.6 #3 (Onde é servida e Artefatos) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #23; configura #30; configura #33 |
-| 9 | 3.4.2 (react/mv-marketplace/apps/seller/package.json:18, Evidência); 3.4.3 (react/mv-marketplace/apps/seller, Marcadores e Build); 3.4.4 (react/mv-marketplace/apps/shell/src/router.jsx:5, Observação); 3.4.5 #2, #8 (Configuração); 3.4.6 #4 (Onde é servida e Artefatos) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #24; configura #28; configura #34 |
-| 10 | 3.4.2 (react/mv-marketplace/apps/shell/package.json:19, Evidência); 3.4.3 (react/mv-marketplace/apps/shell, Marcadores e Build); 3.4.4 (react/mv-marketplace/apps/shell/src/router.jsx:4-7, Observação); 3.4.5 #1-#4, #9 (Configuração); 3.4.6 #1-#5 (Onde é servida e Artefatos); 3.4.7 #3 (Evidência) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #25; configura #27; configura #28; configura #29; configura #30; configura #35 |
-| 11 | 3.4.4 (react/mv-marketplace/apps/shell/src/router.jsx:4) | 3 código | código-fonte | module-federation | arquitetural | ambígua | implementa #27 |
-| 12 | 3.4.4 (react/mv-marketplace/apps/shell/src/router.jsx:5) | 3 código | código-fonte | module-federation | arquitetural | ambígua | implementa #28 |
-| 13 | 3.4.4 (react/mv-marketplace/apps/shell/src/router.jsx:6) | 3 código | código-fonte | module-federation | arquitetural | ambígua | implementa #29 |
-| 14 | 3.4.4 (react/mv-marketplace/apps/shell/src/router.jsx:7) | 3 código | código-fonte | module-federation | arquitetural | ambígua | implementa #30 |
-| 15 | 3.4.4 (react/mv-marketplace/apps/shell/src/router.jsx:13) | 3 código | código-fonte | module-federation | arquitetural | ambígua | implementa #27; implementa #28; implementa #29; implementa #30 |
-| 16 | 3.4.4 (react/mv-marketplace/apps/shell/src/router.jsx:14) | 3 código | código-fonte | module-federation | arquitetural | ambígua | implementa #27 |
-| 17 | 3.4.4 (react/mv-marketplace/apps/shell/src/router.jsx:15) | 3 código | código-fonte | module-federation | arquitetural | ambígua | implementa #28 |
-| 18 | 3.4.4 (react/mv-marketplace/apps/shell/src/router.jsx:16) | 3 código | código-fonte | module-federation | arquitetural | ambígua | implementa #29 |
-| 19 | 3.4.4 (react/mv-marketplace/apps/shell/src/router.jsx:17) | 3 código | código-fonte | module-federation | arquitetural | ambígua | implementa #30 |
-| 20 | 3.4.3 (react/mv-marketplace) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 21 | 3.4.3 (react/mv-marketplace/apps/admin) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 22 | 3.4.3 (react/mv-marketplace/apps/buyer) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 23 | 3.4.3 (react/mv-marketplace/apps/payment) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 24 | 3.4.3 (react/mv-marketplace/apps/seller) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 25 | 3.4.3 (react/mv-marketplace/apps/shell) | 4 estrutura | diretório | — | arquitetural | ambígua | — |
-| 26 | 3.4.3 (react/mv-marketplace/packages/mvp-theme) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 27 | 3.4.5 #1 | 5 composição | código-fonte | module-federation | arquitetural | ambígua | liga #25; liga #22 |
-| 28 | 3.4.5 #2 | 5 composição | código-fonte | module-federation | arquitetural | ambígua | liga #25; liga #24 |
-| 29 | 3.4.5 #3 | 5 composição | código-fonte | module-federation | arquitetural | ambígua | liga #25; liga #21 |
-| 30 | 3.4.5 #4 | 5 composição | código-fonte | module-federation | arquitetural | ambígua | liga #25; liga #23 |
-| 31 | 3.4.5 #5 | 5 composição | configuração | module-federation | arquitetural | moderada | liga #21; liga react/mv-marketplace/apps/admin/vite.config.js:15 |
-| 32 | 3.4.5 #6 | 5 composição | configuração | module-federation | arquitetural | moderada | liga #22; liga react/mv-marketplace/apps/buyer/vite.config.js:15 |
-| 33 | 3.4.5 #7 | 5 composição | configuração | module-federation | arquitetural | moderada | liga #23; liga react/mv-marketplace/apps/payment/vite.config.js:13 |
-| 34 | 3.4.5 #8 | 5 composição | configuração | module-federation | arquitetural | moderada | liga #24; liga react/mv-marketplace/apps/seller/vite.config.js:13 |
-| 35 | 3.4.5 #9 | 5 composição | configuração | module-federation | arquitetural | moderada | liga #25; liga react/mv-marketplace/apps/shell/vite.config.js:16 |
-| 36 | 3.4.6 #1 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #21 |
-| 37 | 3.4.6 #2 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #22 |
-| 38 | 3.4.6 #3 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #23 |
-| 39 | 3.4.6 #4 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #24 |
-| 40 | 3.4.6 #5 | 6 build-deploy | configuração | — | arquitetural | moderada | publica #25 |
-| 41 | 3.4.7 #1 | 7 documentação | comentário | — | tecnológica | fraca | corrobora #6 |
-| 42 | 3.4.7 #2 | 7 documentação | comentário | — | arquitetural | fraca | corrobora em parte #31 |
-| 43 | 3.4.7 #3 | 7 documentação | comentário | — | tecnológica | fraca | corrobora #6; corrobora #10 |
-| 44 | 3.4.8 #1 | 8 histórico | histórico | — | arquitetural | fraca | explica #25; explica #11; explica #12; explica #13; explica #14; explica #15; explica #16; explica #17; explica #18; explica #19; explica #27; explica #28; explica #29; explica #30 |
-| 45 | 3.4.8 #2 | 8 histórico | histórico | module-federation | arquitetural | fraca | explica #31; explica #32; explica #33; explica #34; explica #35; explica #42 |
+| 1 | 3.4.2 (react/mv-marketplace/apps/admin/package.json:18) | 1 technology | manifest | module-federation | technological | weak | declares #6 |
+| 2 | 3.4.2 (react/mv-marketplace/apps/buyer/package.json:18) | 1 technology | manifest | module-federation | technological | weak | declares #7 |
+| 3 | 3.4.2 (react/mv-marketplace/apps/payment/package.json:18) | 1 technology | manifest | module-federation | technological | weak | declares #8 |
+| 4 | 3.4.2 (react/mv-marketplace/apps/seller/package.json:18) | 1 technology | manifest | module-federation | technological | weak | declares #9 |
+| 5 | 3.4.2 (react/mv-marketplace/apps/shell/package.json:19) | 1 technology | manifest | module-federation | technological | weak | declares #10 |
+| 6 | 3.4.2 (react/mv-marketplace/apps/admin/package.json:18, Evidence); 3.4.3 (react/mv-marketplace/apps/admin, Markers and Build); 3.4.4 (react/mv-marketplace/apps/shell/src/router.jsx:6, Observation); 3.4.5 #3, #5 (Configuration); 3.4.6 #1 (Where served and Artifacts); 3.4.7 #1, #2, #3 (Document and Evidence) | 2 configuration | configuration | module-federation | technological | moderate | configures #21; configures #29; configures #31 |
+| 7 | 3.4.2 (react/mv-marketplace/apps/buyer/package.json:18, Evidence); 3.4.3 (react/mv-marketplace/apps/buyer, Markers and Build); 3.4.4 (react/mv-marketplace/apps/shell/src/router.jsx:4, Observation); 3.4.5 #1, #6 (Configuration); 3.4.6 #2 (Where served and Artifacts) | 2 configuration | configuration | module-federation | technological | moderate | configures #22; configures #27; configures #32 |
+| 8 | 3.4.2 (react/mv-marketplace/apps/payment/package.json:18, Evidence); 3.4.3 (react/mv-marketplace/apps/payment, Markers and Build); 3.4.4 (react/mv-marketplace/apps/shell/src/router.jsx:7, Observation); 3.4.5 #4, #7 (Configuration); 3.4.6 #3 (Where served and Artifacts) | 2 configuration | configuration | module-federation | technological | moderate | configures #23; configures #30; configures #33 |
+| 9 | 3.4.2 (react/mv-marketplace/apps/seller/package.json:18, Evidence); 3.4.3 (react/mv-marketplace/apps/seller, Markers and Build); 3.4.4 (react/mv-marketplace/apps/shell/src/router.jsx:5, Observation); 3.4.5 #2, #8 (Configuration); 3.4.6 #4 (Where served and Artifacts) | 2 configuration | configuration | module-federation | technological | moderate | configures #24; configures #28; configures #34 |
+| 10 | 3.4.2 (react/mv-marketplace/apps/shell/package.json:19, Evidence); 3.4.3 (react/mv-marketplace/apps/shell, Markers and Build); 3.4.4 (react/mv-marketplace/apps/shell/src/router.jsx:4-7, Observation); 3.4.5 #1-#4, #9 (Configuration); 3.4.6 #1-#5 (Where served and Artifacts); 3.4.7 #3 (Evidence) | 2 configuration | configuration | module-federation | architectural | strong | configures #25; configures #27; configures #28; configures #29; configures #30; configures #35 |
+| 11 | 3.4.4 (react/mv-marketplace/apps/shell/src/router.jsx:4) | 3 code | source code | module-federation | architectural | ambiguous | implements #27 |
+| 12 | 3.4.4 (react/mv-marketplace/apps/shell/src/router.jsx:5) | 3 code | source code | module-federation | architectural | ambiguous | implements #28 |
+| 13 | 3.4.4 (react/mv-marketplace/apps/shell/src/router.jsx:6) | 3 code | source code | module-federation | architectural | ambiguous | implements #29 |
+| 14 | 3.4.4 (react/mv-marketplace/apps/shell/src/router.jsx:7) | 3 code | source code | module-federation | architectural | ambiguous | implements #30 |
+| 15 | 3.4.4 (react/mv-marketplace/apps/shell/src/router.jsx:13) | 3 code | source code | module-federation | architectural | ambiguous | implements #27; implements #28; implements #29; implements #30 |
+| 16 | 3.4.4 (react/mv-marketplace/apps/shell/src/router.jsx:14) | 3 code | source code | module-federation | architectural | ambiguous | implements #27 |
+| 17 | 3.4.4 (react/mv-marketplace/apps/shell/src/router.jsx:15) | 3 code | source code | module-federation | architectural | ambiguous | implements #28 |
+| 18 | 3.4.4 (react/mv-marketplace/apps/shell/src/router.jsx:16) | 3 code | source code | module-federation | architectural | ambiguous | implements #29 |
+| 19 | 3.4.4 (react/mv-marketplace/apps/shell/src/router.jsx:17) | 3 code | source code | module-federation | architectural | ambiguous | implements #30 |
+| 20 | 3.4.3 (react/mv-marketplace) | 4 structure | directory | — | context | weak | — |
+| 21 | 3.4.3 (react/mv-marketplace/apps/admin) | 4 structure | directory | — | architectural | moderate | — |
+| 22 | 3.4.3 (react/mv-marketplace/apps/buyer) | 4 structure | directory | — | architectural | moderate | — |
+| 23 | 3.4.3 (react/mv-marketplace/apps/payment) | 4 structure | directory | — | architectural | moderate | — |
+| 24 | 3.4.3 (react/mv-marketplace/apps/seller) | 4 structure | directory | — | architectural | moderate | — |
+| 25 | 3.4.3 (react/mv-marketplace/apps/shell) | 4 structure | directory | — | architectural | ambiguous | — |
+| 26 | 3.4.3 (react/mv-marketplace/packages/mvp-theme) | 4 structure | directory | — | context | weak | — |
+| 27 | 3.4.5 #1 | 5 composition | source code | module-federation | architectural | ambiguous | links #25; links #22 |
+| 28 | 3.4.5 #2 | 5 composition | source code | module-federation | architectural | ambiguous | links #25; links #24 |
+| 29 | 3.4.5 #3 | 5 composition | source code | module-federation | architectural | ambiguous | links #25; links #21 |
+| 30 | 3.4.5 #4 | 5 composition | source code | module-federation | architectural | ambiguous | links #25; links #23 |
+| 31 | 3.4.5 #5 | 5 composition | configuration | module-federation | architectural | moderate | links #21; links react/mv-marketplace/apps/admin/vite.config.js:15 |
+| 32 | 3.4.5 #6 | 5 composition | configuration | module-federation | architectural | moderate | links #22; links react/mv-marketplace/apps/buyer/vite.config.js:15 |
+| 33 | 3.4.5 #7 | 5 composition | configuration | module-federation | architectural | moderate | links #23; links react/mv-marketplace/apps/payment/vite.config.js:13 |
+| 34 | 3.4.5 #8 | 5 composition | configuration | module-federation | architectural | moderate | links #24; links react/mv-marketplace/apps/seller/vite.config.js:13 |
+| 35 | 3.4.5 #9 | 5 composition | configuration | module-federation | architectural | moderate | links #25; links react/mv-marketplace/apps/shell/vite.config.js:16 |
+| 36 | 3.4.6 #1 | 6 build-deploy | configuration | — | architectural | moderate | publishes #21 |
+| 37 | 3.4.6 #2 | 6 build-deploy | configuration | — | architectural | moderate | publishes #22 |
+| 38 | 3.4.6 #3 | 6 build-deploy | configuration | — | architectural | moderate | publishes #23 |
+| 39 | 3.4.6 #4 | 6 build-deploy | configuration | — | architectural | moderate | publishes #24 |
+| 40 | 3.4.6 #5 | 6 build-deploy | configuration | — | architectural | moderate | publishes #25 |
+| 41 | 3.4.7 #1 | 7 documentation | comment | — | technological | weak | corroborates #6 |
+| 42 | 3.4.7 #2 | 7 documentation | comment | — | architectural | weak | partially corroborates #31 |
+| 43 | 3.4.7 #3 | 7 documentation | comment | — | technological | weak | corroborates #6; corroborates #10 |
+| 44 | 3.4.8 #1 | 8 history | history | — | architectural | weak | explains #25; explains #11; explains #12; explains #13; explains #14; explains #15; explains #16; explains #17; explains #18; explains #19; explains #27; explains #28; explains #29; explains #30 |
+| 45 | 3.4.8 #2 | 8 history | history | module-federation | architectural | weak | explains #31; explains #32; explains #33; explains #34; explains #35; explains #42 |
 
-## Resumo
+## Summary
 
-Observações: 45. Dimensões (tecnologia: 5, configuração: 5, código: 9, estrutura: 7, composição: 9, build-deploy: 5, documentação: 3, histórico: 2). Força (forte: 1, moderada: 18, fraca: 12, ambígua: 14). Evidência (tecnológica: 11, arquitetural: 32, contexto: 2).
+Observations: 45. Dimensions (technology: 5, configuration: 5, code: 9, structure: 7, composition: 9, build-deploy: 5, documentation: 3, history: 2). Strength (strong: 1, moderate: 18, weak: 12, ambiguous: 14). Evidence (technological: 11, architectural: 32, context: 2).
+

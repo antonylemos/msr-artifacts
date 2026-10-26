@@ -16,31 +16,31 @@ annotation:
 
 # 309 — tonoizer/react-mf-patch-skew-repro
 
-## Leitura do repositório
+## Repository overview
 
-Reprodução mínima de um defeito de Module Federation com Vite (README.md:3), organizada como workspace pnpm com quatro pacotes: `host`, `remote_a`, `remote_b` e `remote_c` (pnpm-workspace.yaml:1-5). Cada pacote tem `package.json` e `vite.config.js` próprios, com `build` (`vite build`) e `preview` (`vite preview`) (ex.: host/package.json:5-8). A raiz só orquestra: `build` dispara o build de cada pacote por filtro, e `build:all` os roda em sequência, dos remotes ao host (package.json:6-7); os scripts `preview:*` servem cada pacote construído na sua porta, de 5000 a 5003 (package.json:8-11). O README manda fazer o mesmo à mão, construindo os pacotes um a um e subindo quatro `vite preview` em `127.0.0.1` antes de rodar o roteiro Playwright (README.md:33-45).
+Minimal reproduction of a Module Federation defect with Vite (README.md:3), organized as pnpm workspace with four packages: `host`, `remote_a`, `remote_b` and `remote_c` (pnpm-workspace.yaml:1-5). Each package has its own `package.json` and `vite.config.js`, with `build` (`vite build`) and `preview` (`vite preview`) (e.g.: host/package.json:5-8). Root only orchestrates: `build` triggers each package build by filter, and `build:all` runs them sequentially, from remotes to host (package.json:6-7); scripts `preview:*` serve each built package on its port, from 5000 to 5003 (package.json:8-11). README instructs doing same manually, building packages one by one and starting four `vite preview` servers at `127.0.0.1` before running Playwright procedure (README.md:33-45).
 
-Tudo o que existe é execução local de um experimento. Cada `vite.config.js` fixa `base` em `http://localhost:<porta>/` e uma porta de `preview` com `strictPort` (host/vite.config.js:14-16; remote_a/vite.config.js:14-16; remote_b/vite.config.js:14-16; remote_c/vite.config.js:14-16), e o build só ajusta `target` e desliga a minificação (host/vite.config.js:38). Os artefatos gerados ficam presos a essas portas de `localhost`. `scripts/capture.mjs` abre o host em `http://localhost:5000/` (scripts/capture.mjs:58) e grava relatórios em `evidence/` (scripts/capture.mjs:6, 124-130); é ferramenta de teste, não deploy. `dist/` é ignorado no git (.gitignore:2). Não há Dockerfile, compose, CI nem configuração de hospedagem, e o `matches.csv` não tem nenhuma ocorrência `ops-*`, `ci-*` ou `cfg-public-path`.
+Everything present is local execution of an experiment. Each `vite.config.js` fixes `base` at `http://localhost:<porta>/` and a `preview` port with `strictPort` (host/vite.config.js:14-16; remote_a/vite.config.js:14-16; remote_b/vite.config.js:14-16; remote_c/vite.config.js:14-16), and build only adjusts `target` and disables minification (host/vite.config.js:38). Generated artifacts are tied to these `localhost` ports. The `scripts/capture.mjs` opens host at `http://localhost:5000/` (scripts/capture.mjs:58) and writes reports in `evidence/` (scripts/capture.mjs:6, 124-130); test tool, not deploy. The `dist/` is ignored in git (.gitignore:2). No Dockerfile, compose, CI or hosting configuration exists, and `matches.csv` has no `ops-*`, `ci-*` or `cfg-public-path` occurrences.
 
-## Aplicações
+## Applications
 
-| # | Aplicação | Build | Deploy | Onde é servida | Versionamento | Artefatos |
+| # | Application | Build | Deploy | Where served | Versioning | Artifacts |
 |---|---|---|---|---|---|---|
-| 1 | host | separado | não observado | `http://localhost:5000/` (host/vite.config.js:15-16) | No | host/vite.config.js:13-39 (configuração própria, `base` fixo); host/package.json:6 (`vite build`); package.json:6-7 (`build`, `build:all`) |
-| 2 | remote_a | separado | não observado | `http://localhost:5001/` (remote_a/vite.config.js:15-16) | No | remote_a/vite.config.js:13-38 (configuração própria, `base` fixo); remote_a/package.json:6 (`vite build`); package.json:6-7 (`build`, `build:all`) |
-| 3 | remote_b | separado | não observado | `http://localhost:5002/` (remote_b/vite.config.js:15-16) | No | remote_b/vite.config.js:13-31 (configuração própria, `base` fixo); remote_b/package.json:6 (`vite build`); package.json:6-7 (`build`, `build:all`) |
-| 4 | remote_c | separado | não observado | `http://localhost:5003/` (remote_c/vite.config.js:15-16) | No | remote_c/vite.config.js:13-31 (configuração própria, `base` fixo); remote_c/package.json:6 (`vite build`); package.json:6-7 (`build`, `build:all`) |
+| 1 | host | separate | not observed | `http://localhost:5000/` (host/vite.config.js:15-16) | No | host/vite.config.js:13-39 (own configuration, fixed `base`); host/package.json:6 (`vite build`); package.json:6-7 (`build`, `build:all`) |
+| 2 | remote_a | separate | not observed | `http://localhost:5001/` (remote_a/vite.config.js:15-16) | No | remote_a/vite.config.js:13-38 (own configuration, fixed `base`); remote_a/package.json:6 (`vite build`); package.json:6-7 (`build`, `build:all`) |
+| 3 | remote_b | separate | not observed | `http://localhost:5002/` (remote_b/vite.config.js:15-16) | No | remote_b/vite.config.js:13-31 (own configuration, fixed `base`); remote_b/package.json:6 (`vite build`); package.json:6-7 (`build`, `build:all`) |
+| 4 | remote_c | separate | not observed | `http://localhost:5003/` (remote_c/vite.config.js:15-16) | No | remote_c/vite.config.js:13-31 (own configuration, fixed `base`); remote_c/package.json:6 (`vite build`); package.json:6-7 (`build`, `build:all`) |
 
-## Observações
+## Observations
 
-**1. host.** Build Vite próprio (host/package.json:6), disparado por último em `build:all` (package.json:7). Os endereços dos remotes ficam fixos em `localhost:5001` e `localhost:5002` na configuração (host/vite.config.js:22-31), e o próprio `base` em `localhost:5000`. Sem deploy observado: `preview:host` (package.json:11) e o `vite preview` do README (README.md:43) só servem localmente. O pacote é `private` e a versão não é usada para publicá-lo.
+**1. host.** Own Vite build (host/package.json:6), triggered last in `build:all` (package.json:7). Remote addresses are fixed at `localhost:5001` and `localhost:5002` in configuration (host/vite.config.js:22-31), and own `base` at `localhost:5000`. No observed deploy: `preview:host` (package.json:11) and README `vite preview` (README.md:43) only serve locally. Package is `private` and version is unused for publication.
 
-**2. remote_a.** Build próprio (remote_a/package.json:6). É remote do host e host de remote_c, cuja entrada fica fixa em `http://localhost:5003/remoteEntry.js` (remote_a/vite.config.js:26-30); por isso `build:all` constrói remote_c antes dele (package.json:7). Servido só por `preview:remote_a` na porta 5001 (package.json:10). Sem deploy observado.
+**2. remote_a.** Own build (remote_a/package.json:6). Remote of host and host of remote_c, whose entry is fixed at `http://localhost:5003/remoteEntry.js` (remote_a/vite.config.js:26-30); hence `build:all` builds remote_c before it (package.json:7). Served only by `preview:remote_a` on port 5001 (package.json:10). No observed deploy.
 
-**3. remote_b.** Build próprio (remote_b/package.json:6), com `base` em `localhost:5002`. Servido só por `preview:remote_b` (package.json:9). Sem deploy observado.
+**3. remote_b.** Own build (remote_b/package.json:6), with `base` at `localhost:5002`. Served only by `preview:remote_b` (package.json:9). No observed deploy.
 
-**4. remote_c.** Build próprio (remote_c/package.json:6), o primeiro em `build:all` (package.json:7), com `base` em `localhost:5003`. Servido só por `preview:remote_c` (package.json:8). Sem deploy observado.
+**4. remote_c.** Own build (remote_c/package.json:6), first in `build:all` (package.json:7), with `base` at `localhost:5003`. Served only by `preview:remote_c` (package.json:8). No observed deploy.
 
-## Resumo
+## Summary
 
-Aplicações: 4. Build (separado: 4). Deploy (não observado: 4). Versionamento independente: 0.
+Applications: 4. Build (separate: 4). Deploy (not observed: 4). Independent versioning: 0.

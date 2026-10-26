@@ -19,368 +19,369 @@ annotation:
 
 # 046 — pgarr/microfrontend-template
 
-## Leitura do repositório
+## Repository overview
 
-É um template com a mesma arquitetura do repositório 017: um container React e três remotes, `auth` e `marketing` em React e `dashboard` em Vue, com o Module Federation nativo do webpack 5. A cadeia é a mesma, duplicada para desenvolvimento e produção:
-- **Configuração:**
-  - cada remote se declara e expõe um módulo (#1, #2, #5 a #8);
-  - o container declara os três remotes (#3, #4). Em produção, eles ficam em `<domínio>/<app>/latest/remoteEntry.js`.
-- **Código:**
-  - os remotes exportam `mount` (#13 a #15);
-  - o container importa cada módulo remoto pelo nome (#20 a #22), monta cada um num elemento próprio (#16 a #18) e decide nas rotas onde cada um aparece (#23).
-- **Relações:** isso resulta nas três relações ativas (#32 a #34).
+Template with same architecture as repository 017: React container/three remotes, React `auth`/`marketing` and Vue `dashboard`, using webpack 5 native Module Federation. Same chain duplicated for development/production:
+- **Configuration:**
+  - each remote declares itself/exposes module (#1, #2, #5 through #8);
+  - container declares three remotes (#3, #4). Production path `<domínio>/<app>/latest/remoteEntry.js`. English explanation: original placeholders mean domain/application.
+- **Code:**
+  - remotes export `mount` (#13 through #15);
+  - container imports each remote module by name (#20 through #22), mounts in own element (#16 through #18), routes deciding placement (#23).
+- **Relationships:** three active relationships result (#32 through #34).
 
-A separação de publicação é a mesma do repositório 017 (#35 a #38). Cada aplicação tem um workflow próprio, que publica num prefixo próprio do bucket e invalida só o seu arquivo de entrada, sem versionamento.
+Publication separation same as repository 017 (#35 through #38). Each application has own workflow publishing to own bucket prefix/invalidating own entry file only, without versioning.
 
-A diferença em relação ao repositório 017 está na documentação. Os comentários do padrão de curso descrevem a montagem isolada e pelo container, e a sincronização de navegação. As dez afirmações são corroboradas (#39 a #48).
+Difference from repository 017 is documentation. Course-pattern comments describe isolated/container mounting/navigation synchronization. Ten claims corroborated (#39 through #48).
 
-Os bootstraps assíncronos (#9 a #12) e o `app.mount` do Vue (#19) são internos a cada unidade. Não há ponto histórico a esclarecer.
+Asynchronous bootstraps (#9 through #12) and Vue `app.mount` (#19) internal to each unit. No historical question to clarify.
 
-## Observações
+## Observations
 
 ### 1. auth/config/webpack.prod.js:1-38
 
-**Observação:** Em produção, `publicPath: '/auth/latest/'`. `ModuleFederationPlugin` declara `name: 'auth'` e `filename: 'remoteEntry.js'`, expõe `./AuthApp` (`./src/bootstrap`) e compartilha as `dependencies`, com `react` singleton.
+**Observation:** Production `publicPath: '/auth/latest/'`. `ModuleFederationPlugin` declares `name: 'auth'` and `filename: 'remoteEntry.js'`, exposing `./AuthApp` (`./src/bootstrap`), sharing `dependencies`, with `react` singleton.
 
-**Interpretação:** O auth está configurado como remote em produção, num caminho próprio.
+**Interpretation:** Auth configured as production remote at own path.
 
 ### 2. auth/config/webpack.dev.js:1-47
 
-**Observação:** Em desenvolvimento, porta 8082. `ModuleFederationPlugin` declara `name: 'auth'` e expõe `./AuthApp`.
+**Observation:** Development port 8082. `ModuleFederationPlugin` declares `name: 'auth'`, exposing `./AuthApp`.
 
-**Interpretação:** O auth está configurado como remote em desenvolvimento.
+**Interpretation:** Auth configured as development remote.
 
 ### 3. container/config/webpack.prod.js:1-41
 
-**Observação:** Em produção, `publicPath: '/container/latest/'`. `ModuleFederationPlugin` declara `name: 'container'` e os remotes `marketing`, `auth` e `dashboard` em `${domain}/<app>/latest/remoteEntry.js`, com `domain` vindo de `PRODUCTION_DOMAIN`.
+**Observation:** Production `publicPath: '/container/latest/'`. `ModuleFederationPlugin` declares `name: 'container'` and remotes `marketing`, `auth` and `dashboard` at `${domain}/<app>/latest/remoteEntry.js`, `domain` from `PRODUCTION_DOMAIN`.
 
-**Interpretação:** A configuração do host declara os três remotes e onde encontrá-los em produção.
+**Interpretation:** Host configuration declares three remotes/production locations.
 
 ### 4. container/config/webpack.dev.js:1-44
 
-**Observação:** Em desenvolvimento, porta 8080. `ModuleFederationPlugin` declara `name: 'container'` e os remotes `marketing@http://localhost:8081`, `auth@http://localhost:8082` e `dashboard@http://localhost:8083/remoteEntry.js`.
+**Observation:** Development port 8080. `ModuleFederationPlugin` declares `name: 'container'` and remotes `marketing@http://localhost:8081`, `auth@http://localhost:8082` and `dashboard@http://localhost:8083/remoteEntry.js`.
 
-**Interpretação:** A configuração do host declara os três remotes e onde encontrá-los em desenvolvimento.
+**Interpretation:** Host configuration declares three remotes/development locations.
 
 ### 5. dashboard/config/webpack.prod.js:1-24
 
-**Observação:** Em produção, `publicPath: '/dashboard/latest/'`. `ModuleFederationPlugin` declara `name: 'dashboard'` e expõe `./DashboardApp` (`./src/bootstrap`).
+**Observation:** Production `publicPath: '/dashboard/latest/'`. `ModuleFederationPlugin` declares `name: 'dashboard'`, exposing `./DashboardApp` (`./src/bootstrap`).
 
-**Interpretação:** O dashboard está configurado como remote em produção, num caminho próprio.
+**Interpretation:** Dashboard configured as production remote at own path.
 
 ### 6. dashboard/config/webpack.dev.js:1-36
 
-**Observação:** Em desenvolvimento, porta 8083 com CORS liberado. `ModuleFederationPlugin` declara `name: 'dashboard'` e expõe `./DashboardApp`.
+**Observation:** Development port 8083 with CORS allowed. `ModuleFederationPlugin` declares `name: 'dashboard'`, exposing `./DashboardApp`.
 
-**Interpretação:** O dashboard está configurado como remote em desenvolvimento.
+**Interpretation:** Dashboard configured as development remote.
 
 ### 7. marketing/config/webpack.prod.js:1-38
 
-**Observação:** Em produção, `publicPath: '/marketing/latest/'`. `ModuleFederationPlugin` declara `name: 'marketing'` e expõe `./MarketingApp` (`./src/bootstrap`).
+**Observation:** Production `publicPath: '/marketing/latest/'`. `ModuleFederationPlugin` declares `name: 'marketing'`, exposing `./MarketingApp` (`./src/bootstrap`).
 
-**Interpretação:** O marketing está configurado como remote em produção, num caminho próprio.
+**Interpretation:** Marketing configured as production remote at own path.
 
 ### 8. marketing/config/webpack.dev.js:1-47
 
-**Observação:** Em desenvolvimento, porta 8081. `ModuleFederationPlugin` declara `name: 'marketing'` e expõe `./MarketingApp`.
+**Observation:** Development port 8081. `ModuleFederationPlugin` declares `name: 'marketing'`, exposing `./MarketingApp`.
 
-**Interpretação:** O marketing está configurado como remote em desenvolvimento.
+**Interpretation:** Marketing configured as development remote.
 
-**Nota:** Os `webpack.common.js` das quatro aplicações, citados na mesma tabela, não têm elemento da composição. Não viraram observação.
+**Note:** Four applications’ `webpack.common.js`, cited in same table, have no composition element. No observation.
 
 ### 9. auth/src/index.js:1
 
-**Observação:** `import('./bootstrap')`.
+**Observation:** `import('./bootstrap')`.
 
-**Interpretação:** É um bootstrap assíncrono interno à unidade.
+**Interpretation:** Asynchronous bootstrap internal to unit.
 
 ### 10. container/src/index.js:1
 
-**Observação:** `import('./bootstrap')`.
+**Observation:** `import('./bootstrap')`.
 
-**Interpretação:** É um bootstrap assíncrono interno à unidade.
+**Interpretation:** Asynchronous bootstrap internal to unit.
 
 ### 11. dashboard/src/index.js:1
 
-**Observação:** `import('./bootstrap')`.
+**Observation:** `import('./bootstrap')`.
 
-**Interpretação:** É um bootstrap assíncrono interno à unidade.
+**Interpretation:** Asynchronous bootstrap internal to unit.
 
 ### 12. marketing/src/index.js:1
 
-**Observação:** `import('./bootstrap')`.
+**Observation:** `import('./bootstrap')`.
 
-**Interpretação:** É um bootstrap assíncrono interno à unidade.
+**Interpretation:** Asynchronous bootstrap internal to unit.
 
 ### 13. auth/src/bootstrap.js:46; auth/src/bootstrap.js:14-31
 
-**Observação:** `export { mount }` no arquivo exposto como `./AuthApp`, com opções de navegação.
+**Observation:** `export { mount }` in file exposed as `./AuthApp`, with navigation options.
 
-**Interpretação:** O auth oferece a função de montagem ao host, com sincronização de navegação.
+**Interpretation:** Auth offers mounting function with navigation synchronization to host.
 
 ### 14. dashboard/src/bootstrap.js:22; dashboard/src/bootstrap.js:5-8
 
-**Observação:** `export { mount }` no arquivo exposto como `./DashboardApp`, com `mount(el)` que cria a aplicação Vue.
+**Observation:** `export { mount }` in file exposed as `./DashboardApp`, with `mount(el)` creating Vue application.
 
-**Interpretação:** O dashboard oferece a função de montagem ao host, sem troca de navegação.
+**Interpretation:** Dashboard offers mounting function to host without navigation exchange.
 
 ### 15. marketing/src/bootstrap.js:46; marketing/src/bootstrap.js:14-31
 
-**Observação:** `export { mount }` no arquivo exposto como `./MarketingApp`, com opções de navegação.
+**Observation:** `export { mount }` in file exposed as `./MarketingApp`, with navigation options.
 
-**Interpretação:** O marketing oferece a função de montagem ao host, com sincronização de navegação.
+**Interpretation:** Marketing offers mounting function with navigation synchronization to host.
 
 ### 16. container/src/components/AuthApp.js:13-29
 
-**Observação:** Chama o `mount` do auth no `ref` do wrapper, com caminho inicial, `onNavigate` e `onSignIn`, e guarda o `onParentNavigate` devolvido.
+**Observation:** Calls auth `mount` in wrapper `ref`, with initial path, `onNavigate` and `onSignIn`, storing returned `onParentNavigate`.
 
-**Interpretação:** O host monta o remote num elemento próprio e sincroniza a navegação com ele.
+**Interpretation:** Host mounts remote in own element, synchronizing navigation.
 
 ### 17. container/src/components/DashboardApp.js:8
 
-**Observação:** Chama o `mount` do dashboard no `ref` do wrapper.
+**Observation:** Calls dashboard `mount` in wrapper `ref`.
 
-**Interpretação:** O host monta o remote Vue num elemento próprio.
+**Interpretation:** Host mounts Vue remote in own element.
 
 ### 18. container/src/components/MarketingApp.js:13-28
 
-**Observação:** Chama o `mount` do marketing no `ref` do wrapper, com `onNavigate`, e guarda o `onParentNavigate`.
+**Observation:** Calls marketing `mount` in wrapper `ref`, with `onNavigate`, storing `onParentNavigate`.
 
-**Interpretação:** O host monta o remote num elemento próprio e sincroniza a navegação com ele.
+**Interpretation:** Host mounts remote in own element, synchronizing navigation.
 
 ### 19. dashboard/src/bootstrap.js:5-8
 
-**Observação:** `app.mount(el)` do Vue, dentro do `mount` exportado.
+**Observation:** Vue `app.mount(el)` within exported `mount`.
 
-**Interpretação:** É uma renderização interna ao dashboard, sem mecanismo de MFE.
+**Interpretation:** Rendering internal to dashboard without MFE mechanism.
 
 ### 20. container/src/components/AuthApp.js:1
 
-**Observação:** Importa `mount` de `auth/AuthApp`.
+**Observation:** Imports `mount` from `auth/AuthApp`.
 
-**Interpretação:** O host importa o módulo exposto pelo remote auth, pelo nome dele.
+**Interpretation:** Host imports auth remote exposed module by name.
 
 ### 21. container/src/components/DashboardApp.js:1
 
-**Observação:** Importa `mount` de `dashboard/DashboardApp`.
+**Observation:** Imports `mount` from `dashboard/DashboardApp`.
 
-**Interpretação:** O host importa o módulo exposto pelo remote dashboard, pelo nome dele.
+**Interpretation:** Host imports dashboard remote exposed module by name.
 
 ### 22. container/src/components/MarketingApp.js:1
 
-**Observação:** Importa `mount` de `marketing/MarketingApp`.
+**Observation:** Imports `mount` from `marketing/MarketingApp`.
 
-**Interpretação:** O host importa o módulo exposto pelo remote marketing, pelo nome dele.
+**Interpretation:** Host imports marketing remote exposed module by name.
 
 ### 23. container/src/App.js:29-37
 
-**Observação:** `Routes` liga `/auth/*` ao `AuthLazy`, `/dashboard` ao `DashboardLazy` (com redirecionamento para `/` sem login) e `/*` ao `MarketingLazy`.
+**Observation:** `Routes` links `/auth/*` to `AuthLazy`, `/dashboard` to `DashboardLazy` (redirecting to `/` without login), `/*` to `MarketingLazy`.
 
-**Interpretação:** O roteamento do host declara onde cada remote aparece.
+**Interpretation:** Host routing declares remote placement.
 
 ### 24. auth; auth/package.json:1-7; auth/src/index.js:1; auth/src/bootstrap.js:20-21; auth/config/webpack.prod.js:1-10; .github/workflows/auth.yml:2-23
 
-**Observação:** Tem manifesto, entrada, build webpack e workflow próprios.
+**Observation:** Own manifest, entry, webpack build and workflow.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with own boundary.
 
 ### 25. auth/config
 
-**Observação:** Contém as configurações webpack do auth.
+**Observation:** Contains auth webpack configurations.
 
-**Interpretação:** É parte do build do auth, e não uma aplicação.
+**Interpretation:** Part of auth build rather than application.
 
 ### 26. container; container/package.json:1-7; container/src/index.js:1; container/src/bootstrap.js:5-6; container/config/webpack.prod.js:1-10; .github/workflows/container.yml:2-25
 
-**Observação:** Tem manifesto, entrada, build webpack e workflow próprios.
+**Observation:** Own manifest, entry, webpack build and workflow.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with own boundary.
 
 ### 27. container/config
 
-**Observação:** Contém as configurações webpack do container.
+**Observation:** Contains container webpack configurations.
 
-**Interpretação:** É parte do build do container, e não uma aplicação.
+**Interpretation:** Part of container build rather than application.
 
 ### 28. dashboard; dashboard/package.json:1-7; dashboard/src/index.js:1; dashboard/src/bootstrap.js:5-8; dashboard/config/webpack.prod.js:1-10; .github/workflows/dashboard.yml:2-23
 
-**Observação:** Tem manifesto, entrada, build webpack e workflow próprios.
+**Observation:** Own manifest, entry, webpack build and workflow.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with own boundary.
 
 ### 29. dashboard/config
 
-**Observação:** Contém as configurações webpack do dashboard.
+**Observation:** Contains dashboard webpack configurations.
 
-**Interpretação:** É parte do build do dashboard, e não uma aplicação.
+**Interpretation:** Part of dashboard build rather than application.
 
 ### 30. marketing; marketing/package.json:1-7; marketing/src/index.js:1; marketing/src/bootstrap.js:20-21; marketing/config/webpack.prod.js:1-10; .github/workflows/marketing.yml:2-23
 
-**Observação:** Tem manifesto, entrada, build webpack e workflow próprios.
+**Observation:** Own manifest, entry, webpack build and workflow.
 
-**Interpretação:** É uma unidade frontend com limite próprio.
+**Interpretation:** Frontend unit with own boundary.
 
 ### 31. marketing/config
 
-**Observação:** Contém as configurações webpack do marketing.
+**Observation:** Contains marketing webpack configurations.
 
-**Interpretação:** É parte do build do marketing, e não uma aplicação.
+**Interpretation:** Part of marketing build rather than application.
 
 ### 32. container/src/components/AuthApp.js:1, 13; container/src/App.js:30-32; container/config/webpack.prod.js:17, 19; auth/config/webpack.prod.js:10-17
 
-**Observação:** O container importa `mount` de `auth/AuthApp` e o chama no wrapper ligado à rota `/auth/*`. O nome, o módulo e o caminho `/auth/latest/` correspondem à configuração do auth.
+**Observation:** Container imports `mount` from `auth/AuthApp`, calling in `/auth/*` route wrapper. Name, module and `/auth/latest/` path match auth configuration.
 
-**Interpretação:** É uma relação host → remote ativa.
+**Interpretation:** Active host → remote relationship.
 
 ### 33. container/src/components/DashboardApp.js:1, 8; container/src/App.js:33-35; container/config/webpack.prod.js:17, 20; dashboard/config/webpack.prod.js:10-17
 
-**Observação:** O container importa `mount` de `dashboard/DashboardApp` e o chama no wrapper ligado à rota `/dashboard`. O nome, o módulo e o caminho correspondem à configuração do dashboard.
+**Observation:** Container imports `mount` from `dashboard/DashboardApp`, calling in `/dashboard` route wrapper. Name, module and path match dashboard configuration.
 
-**Interpretação:** É uma relação host → remote ativa entre um host React e um remote Vue.
+**Interpretation:** Active host → remote relationship between React host/Vue remote.
 
 ### 34. container/src/components/MarketingApp.js:1, 13; container/src/App.js:36; container/config/webpack.prod.js:17-18; marketing/config/webpack.prod.js:10-17
 
-**Observação:** O container importa `mount` de `marketing/MarketingApp` e o chama no wrapper ligado à rota `/*`. O nome, o módulo e o caminho correspondem à configuração do marketing.
+**Observation:** Container imports `mount` from `marketing/MarketingApp`, calling in `/*` route wrapper. Name, module and path match marketing configuration.
 
-**Interpretação:** É uma relação host → remote ativa.
+**Interpretation:** Active host → remote relationship.
 
 ### 35. auth/package.json:6; auth/config/webpack.prod.js:1-10; .github/workflows/auth.yml:2-11, 23, 28
 
-**Observação:** Um workflow próprio dispara quando a pasta do auth muda, constrói na pasta dela, sincroniza o `dist` com `auth/latest` e invalida só o `remoteEntry.js`.
+**Observation:** Own workflow triggered by auth folder changes, building there, synchronizing `dist` with `auth/latest`, invalidating only `remoteEntry.js`.
 
-**Interpretação:** Há fronteiras de build e de deploy próprias, sem versionamento independente.
+**Interpretation:** Own build/deployment boundaries without independent versioning.
 
 ### 36. container/package.json:6; container/config/webpack.prod.js:6-21; .github/workflows/container.yml:2-11, 20-22, 25, 30
 
-**Observação:** Um workflow próprio constrói o container com `PRODUCTION_DOMAIN`, sincroniza com `container/latest` e invalida só o `index.html`.
+**Observation:** Own workflow builds container with `PRODUCTION_DOMAIN`, synchronizing with `container/latest`, invalidating only `index.html`.
 
-**Interpretação:** Há fronteiras de build e de deploy próprias, sem versionamento independente.
+**Interpretation:** Own build/deployment boundaries without independent versioning.
 
 ### 37. dashboard/package.json:6; dashboard/config/webpack.prod.js:1-10; .github/workflows/dashboard.yml:2-11, 23, 28
 
-**Observação:** Um workflow próprio dispara quando a pasta do dashboard muda, sincroniza com `dashboard/latest` e invalida só o `remoteEntry.js`.
+**Observation:** Own workflow triggered by dashboard folder changes, synchronizing with `dashboard/latest`, invalidating only `remoteEntry.js`.
 
-**Interpretação:** Há fronteiras de build e de deploy próprias, sem versionamento independente.
+**Interpretation:** Own build/deployment boundaries without independent versioning.
 
 ### 38. marketing/package.json:6; marketing/config/webpack.prod.js:1-10; .github/workflows/marketing.yml:2-11, 23, 28
 
-**Observação:** Um workflow próprio dispara quando a pasta do marketing muda, sincroniza com `marketing/latest` e invalida só o `remoteEntry.js`.
+**Observation:** Own workflow triggered by marketing folder changes, synchronizing with `marketing/latest`, invalidating only `remoteEntry.js`.
 
-**Interpretação:** Há fronteiras de build e de deploy próprias, sem versionamento independente.
+**Interpretation:** Own build/deployment boundaries without independent versioning.
 
 ### 39. auth/src/bootstrap.js:34-35
 
-**Observação:** "If we are in development and in isolation, call mount immediately".
+**Observation:** "If we are in development and in isolation, call mount immediately".
 
-**Interpretação:** Afirma que o auth monta a si mesmo quando isolado. A afirmação é corroborada.
+**Interpretation:** Claims auth self-mounts in isolation. Claim corroborated.
 
 ### 40. auth/src/bootstrap.js:44-45
 
-**Observação:** "We are running through container and we should export the mount function".
+**Observation:** "We are running through container and we should export the mount function".
 
-**Interpretação:** Afirma que o auth é montado pelo container. A afirmação é corroborada.
+**Interpretation:** Claims container mounts auth. Claim corroborated.
 
 ### 41. container/src/components/AuthApp.js:11
 
-**Observação:** "Mount the microfrontend once".
+**Observation:** "Mount the microfrontend once".
 
-**Interpretação:** Afirma que o container monta o auth uma única vez. A afirmação é corroborada.
+**Interpretation:** Claims container mounts auth once. Claim corroborated.
 
 ### 42. container/src/components/AuthApp.js:24
 
-**Observação:** "Sync navigation from container to child".
+**Observation:** "Sync navigation from container to child".
 
-**Interpretação:** Afirma que a navegação do container é repassada ao auth. A afirmação é corroborada.
+**Interpretation:** Claims container navigation forwarded to auth. Claim corroborated.
 
 ### 43. container/src/components/MarketingApp.js:11
 
-**Observação:** "Mount the microfrontend once".
+**Observation:** "Mount the microfrontend once".
 
-**Interpretação:** Afirma que o container monta o marketing uma única vez. A afirmação é corroborada.
+**Interpretation:** Claims container mounts marketing once. Claim corroborated.
 
 ### 44. container/src/components/MarketingApp.js:23
 
-**Observação:** "Sync navigation from container to child".
+**Observation:** "Sync navigation from container to child".
 
-**Interpretação:** Afirma que a navegação do container é repassada ao marketing. A afirmação é corroborada.
+**Interpretation:** Claims container navigation forwarded to marketing. Claim corroborated.
 
 ### 45. dashboard/src/bootstrap.js:10-11
 
-**Observação:** "If we are in development and in isolation, call mount immediately".
+**Observation:** "If we are in development and in isolation, call mount immediately".
 
-**Interpretação:** Afirma que o dashboard monta a si mesmo quando isolado. A afirmação é corroborada.
+**Interpretation:** Claims dashboard self-mounts in isolation. Claim corroborated.
 
 ### 46. dashboard/src/bootstrap.js:20-21
 
-**Observação:** "We are running through container and we should export the mount function".
+**Observation:** "We are running through container and we should export the mount function".
 
-**Interpretação:** Afirma que o dashboard é montado pelo container. A afirmação é corroborada.
+**Interpretation:** Claims container mounts dashboard. Claim corroborated.
 
 ### 47. marketing/src/bootstrap.js:34-35
 
-**Observação:** "If we are in development and in isolation, call mount immediately".
+**Observation:** "If we are in development and in isolation, call mount immediately".
 
-**Interpretação:** Afirma que o marketing monta a si mesmo quando isolado. A afirmação é corroborada.
+**Interpretation:** Claims marketing self-mounts in isolation. Claim corroborated.
 
 ### 48. marketing/src/bootstrap.js:44-45
 
-**Observação:** "We are running through container and we should export the mount function".
+**Observation:** "We are running through container and we should export the mount function".
 
-**Interpretação:** Afirma que o marketing é montado pelo container. A afirmação é corroborada.
+**Interpretation:** Claims container mounts marketing. Claim corroborated.
 
-## Classificação
+## Classification
 
-| # | Origem | Dimensão | Tipo | Abordagem | Evidência | Força | Relações |
+| # | Origin | Dimension | Type | Approach | Evidence | Strength | Relationships |
 |---|---|---|---|---|---|---|---|
-| 1 | 3.4.3 (auth, Build); 3.4.3 (auth/config, Marcadores); 3.4.4 (auth/src/bootstrap.js:46, Observação); 3.4.5 #1 (Configuração); 3.4.6 #1 (Artefatos) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #24; configura #32 |
-| 2 | 3.4.3 (auth/config, Marcadores) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #24; configura #32 |
-| 3 | 3.4.3 (container, Build); 3.4.3 (container/config, Marcadores); 3.4.5 #1, #2, #3 (Configuração); 3.4.6 #2 (Artefatos) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #26; configura #32; configura #33; configura #34 |
-| 4 | 3.4.3 (container/config, Marcadores); 3.4.5 #1, #2, #3 (Configuração) | 2 configuração | configuração | module-federation | arquitetural | forte | configura #26; configura #32; configura #33; configura #34 |
-| 5 | 3.4.3 (dashboard, Build); 3.4.3 (dashboard/config, Marcadores); 3.4.4 (dashboard/src/bootstrap.js:22, Observação); 3.4.5 #2 (Configuração); 3.4.6 #3 (Artefatos) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #28; configura #33 |
-| 6 | 3.4.3 (dashboard/config, Marcadores) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #28; configura #33 |
-| 7 | 3.4.3 (marketing, Build); 3.4.3 (marketing/config, Marcadores); 3.4.4 (marketing/src/bootstrap.js:46, Observação); 3.4.5 #3 (Configuração); 3.4.6 #4 (Artefatos) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #30; configura #34 |
-| 8 | 3.4.3 (marketing/config, Marcadores) | 2 configuração | configuração | module-federation | tecnológica | moderada | configura #30; configura #34 |
-| 9 | 3.4.4 (auth/src/index.js:1) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 10 | 3.4.4 (container/src/index.js:1) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 11 | 3.4.4 (dashboard/src/index.js:1) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 12 | 3.4.4 (marketing/src/index.js:1) | 3 código | código-fonte | — | tecnológica | fraca | — |
-| 13 | 3.4.4 (auth/src/bootstrap.js:46) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #32 |
-| 14 | 3.4.4 (dashboard/src/bootstrap.js:22) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #33 |
-| 15 | 3.4.4 (marketing/src/bootstrap.js:46) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #34 |
-| 16 | 3.4.4 (container/src/components/AuthApp.js:13) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #32 |
-| 17 | 3.4.4 (container/src/components/DashboardApp.js:8) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #33 |
-| 18 | 3.4.4 (container/src/components/MarketingApp.js:13) | 3 código | código-fonte | module-federation | tecnológica | moderada | implementa #34 |
-| 19 | 3.4.4 (dashboard/src/bootstrap.js:7) | 3 código | código-fonte | — | contexto | fraca | — |
-| 20 | 3.4.4 (container/src/components/AuthApp.js:1) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #32 |
-| 21 | 3.4.4 (container/src/components/DashboardApp.js:1) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #33 |
-| 22 | 3.4.4 (container/src/components/MarketingApp.js:1) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #34 |
-| 23 | 3.4.4 (container/src/App.js:29) | 3 código | código-fonte | module-federation | arquitetural | forte | implementa #32; implementa #33; implementa #34 |
-| 24 | 3.4.3 (auth) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 25 | 3.4.3 (auth/config) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 26 | 3.4.3 (container) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 27 | 3.4.3 (container/config) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 28 | 3.4.3 (dashboard) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 29 | 3.4.3 (dashboard/config) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 30 | 3.4.3 (marketing) | 4 estrutura | diretório | — | arquitetural | moderada | — |
-| 31 | 3.4.3 (marketing/config) | 4 estrutura | diretório | — | contexto | fraca | — |
-| 32 | 3.4.5 #1 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #26; liga #24 |
-| 33 | 3.4.5 #2 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #26; liga #28 |
-| 34 | 3.4.5 #3 | 5 composição | código-fonte | module-federation | arquitetural | forte | liga #26; liga #30 |
-| 35 | 3.4.6 #1 | 6 build-deploy | CI | — | arquitetural | moderada | publica #24 |
-| 36 | 3.4.6 #2 | 6 build-deploy | CI | — | arquitetural | moderada | publica #26 |
-| 37 | 3.4.6 #3 | 6 build-deploy | CI | — | arquitetural | moderada | publica #28 |
-| 38 | 3.4.6 #4 | 6 build-deploy | CI | — | arquitetural | moderada | publica #30 |
-| 39 | 3.4.7 #1 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #24; corrobora auth/src/bootstrap.js:36-42 |
-| 40 | 3.4.7 #2 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #32; corrobora #20; corrobora #16 |
-| 41 | 3.4.7 #3 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #16 |
-| 42 | 3.4.7 #4 | 7 documentação | comentário | — | arquitetural | fraca | corrobora container/src/components/AuthApp.js:21, 25-29 |
-| 43 | 3.4.7 #5 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #18 |
-| 44 | 3.4.7 #6 | 7 documentação | comentário | — | arquitetural | fraca | corrobora container/src/components/MarketingApp.js:24-28 |
-| 45 | 3.4.7 #7 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #28; corrobora dashboard/src/bootstrap.js:12-18 |
-| 46 | 3.4.7 #8 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #33; corrobora #21; corrobora #17 |
-| 47 | 3.4.7 #9 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #30; corrobora marketing/src/bootstrap.js:36-42 |
-| 48 | 3.4.7 #10 | 7 documentação | comentário | — | arquitetural | fraca | corrobora #34; corrobora #22; corrobora #18 |
+| 1 | 3.4.3 (auth, Build); 3.4.3 (auth/config, Markers); 3.4.4 (auth/src/bootstrap.js:46, Observation); 3.4.5 #1 (Configuration); 3.4.6 #1 (Artifacts) | 2 configuration | configuration | module-federation | technological | moderate | configures #24; configures #32 |
+| 2 | 3.4.3 (auth/config, Markers) | 2 configuration | configuration | module-federation | technological | moderate | configures #24; configures #32 |
+| 3 | 3.4.3 (container, Build); 3.4.3 (container/config, Markers); 3.4.5 #1, #2, #3 (Configuration); 3.4.6 #2 (Artifacts) | 2 configuration | configuration | module-federation | architectural | strong | configures #26; configures #32; configures #33; configures #34 |
+| 4 | 3.4.3 (container/config, Markers); 3.4.5 #1, #2, #3 (Configuration) | 2 configuration | configuration | module-federation | architectural | strong | configures #26; configures #32; configures #33; configures #34 |
+| 5 | 3.4.3 (dashboard, Build); 3.4.3 (dashboard/config, Markers); 3.4.4 (dashboard/src/bootstrap.js:22, Observation); 3.4.5 #2 (Configuration); 3.4.6 #3 (Artifacts) | 2 configuration | configuration | module-federation | technological | moderate | configures #28; configures #33 |
+| 6 | 3.4.3 (dashboard/config, Markers) | 2 configuration | configuration | module-federation | technological | moderate | configures #28; configures #33 |
+| 7 | 3.4.3 (marketing, Build); 3.4.3 (marketing/config, Markers); 3.4.4 (marketing/src/bootstrap.js:46, Observation); 3.4.5 #3 (Configuration); 3.4.6 #4 (Artifacts) | 2 configuration | configuration | module-federation | technological | moderate | configures #30; configures #34 |
+| 8 | 3.4.3 (marketing/config, Markers) | 2 configuration | configuration | module-federation | technological | moderate | configures #30; configures #34 |
+| 9 | 3.4.4 (auth/src/index.js:1) | 3 code | source code | — | technological | weak | — |
+| 10 | 3.4.4 (container/src/index.js:1) | 3 code | source code | — | technological | weak | — |
+| 11 | 3.4.4 (dashboard/src/index.js:1) | 3 code | source code | — | technological | weak | — |
+| 12 | 3.4.4 (marketing/src/index.js:1) | 3 code | source code | — | technological | weak | — |
+| 13 | 3.4.4 (auth/src/bootstrap.js:46) | 3 code | source code | module-federation | technological | moderate | implements #32 |
+| 14 | 3.4.4 (dashboard/src/bootstrap.js:22) | 3 code | source code | module-federation | technological | moderate | implements #33 |
+| 15 | 3.4.4 (marketing/src/bootstrap.js:46) | 3 code | source code | module-federation | technological | moderate | implements #34 |
+| 16 | 3.4.4 (container/src/components/AuthApp.js:13) | 3 code | source code | module-federation | technological | moderate | implements #32 |
+| 17 | 3.4.4 (container/src/components/DashboardApp.js:8) | 3 code | source code | module-federation | technological | moderate | implements #33 |
+| 18 | 3.4.4 (container/src/components/MarketingApp.js:13) | 3 code | source code | module-federation | technological | moderate | implements #34 |
+| 19 | 3.4.4 (dashboard/src/bootstrap.js:7) | 3 code | source code | — | context | weak | — |
+| 20 | 3.4.4 (container/src/components/AuthApp.js:1) | 3 code | source code | module-federation | architectural | strong | implements #32 |
+| 21 | 3.4.4 (container/src/components/DashboardApp.js:1) | 3 code | source code | module-federation | architectural | strong | implements #33 |
+| 22 | 3.4.4 (container/src/components/MarketingApp.js:1) | 3 code | source code | module-federation | architectural | strong | implements #34 |
+| 23 | 3.4.4 (container/src/App.js:29) | 3 code | source code | module-federation | architectural | strong | implements #32; implements #33; implements #34 |
+| 24 | 3.4.3 (auth) | 4 structure | directory | — | architectural | moderate | — |
+| 25 | 3.4.3 (auth/config) | 4 structure | directory | — | context | weak | — |
+| 26 | 3.4.3 (container) | 4 structure | directory | — | architectural | moderate | — |
+| 27 | 3.4.3 (container/config) | 4 structure | directory | — | context | weak | — |
+| 28 | 3.4.3 (dashboard) | 4 structure | directory | — | architectural | moderate | — |
+| 29 | 3.4.3 (dashboard/config) | 4 structure | directory | — | context | weak | — |
+| 30 | 3.4.3 (marketing) | 4 structure | directory | — | architectural | moderate | — |
+| 31 | 3.4.3 (marketing/config) | 4 structure | directory | — | context | weak | — |
+| 32 | 3.4.5 #1 | 5 composition | source code | module-federation | architectural | strong | links #26; links #24 |
+| 33 | 3.4.5 #2 | 5 composition | source code | module-federation | architectural | strong | links #26; links #28 |
+| 34 | 3.4.5 #3 | 5 composition | source code | module-federation | architectural | strong | links #26; links #30 |
+| 35 | 3.4.6 #1 | 6 build-deploy | CI | — | architectural | moderate | publishes #24 |
+| 36 | 3.4.6 #2 | 6 build-deploy | CI | — | architectural | moderate | publishes #26 |
+| 37 | 3.4.6 #3 | 6 build-deploy | CI | — | architectural | moderate | publishes #28 |
+| 38 | 3.4.6 #4 | 6 build-deploy | CI | — | architectural | moderate | publishes #30 |
+| 39 | 3.4.7 #1 | 7 documentation | comment | — | architectural | weak | corroborates #24; corroborates auth/src/bootstrap.js:36-42 |
+| 40 | 3.4.7 #2 | 7 documentation | comment | — | architectural | weak | corroborates #32; corroborates #20; corroborates #16 |
+| 41 | 3.4.7 #3 | 7 documentation | comment | — | architectural | weak | corroborates #16 |
+| 42 | 3.4.7 #4 | 7 documentation | comment | — | architectural | weak | corroborates container/src/components/AuthApp.js:21, 25-29 |
+| 43 | 3.4.7 #5 | 7 documentation | comment | — | architectural | weak | corroborates #18 |
+| 44 | 3.4.7 #6 | 7 documentation | comment | — | architectural | weak | corroborates container/src/components/MarketingApp.js:24-28 |
+| 45 | 3.4.7 #7 | 7 documentation | comment | — | architectural | weak | corroborates #28; corroborates dashboard/src/bootstrap.js:12-18 |
+| 46 | 3.4.7 #8 | 7 documentation | comment | — | architectural | weak | corroborates #33; corroborates #21; corroborates #17 |
+| 47 | 3.4.7 #9 | 7 documentation | comment | — | architectural | weak | corroborates #30; corroborates marketing/src/bootstrap.js:36-42 |
+| 48 | 3.4.7 #10 | 7 documentation | comment | — | architectural | weak | corroborates #34; corroborates #22; corroborates #18 |
 
-## Resumo
+## Summary
 
-Observações: 48. Dimensões (tecnologia: 0, configuração: 8, código: 15, estrutura: 8, composição: 3, build-deploy: 4, documentação: 10, histórico: 0). Força (forte: 9, moderada: 20, fraca: 19, ambígua: 0). Evidência (tecnológica: 16, arquitetural: 27, contexto: 5).
+Observations: 48. Dimensions (technology: 0, configuration: 8, code: 15, structure: 8, composition: 3, build-deploy: 4, documentation: 10, history: 0). Strength (strong: 9, moderate: 20, weak: 19, ambiguous: 0). Evidence (technological: 16, architectural: 27, context: 5).
+

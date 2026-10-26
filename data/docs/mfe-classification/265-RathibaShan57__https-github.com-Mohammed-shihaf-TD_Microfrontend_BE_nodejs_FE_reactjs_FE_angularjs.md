@@ -20,63 +20,63 @@ annotation:
 
 # 265 — RathibaShan57/https-github.com-Mohammed-shihaf-TD_Microfrontend_BE_nodejs_FE_reactjs_FE_angularjs
 
-## Contexto
+## Context
 
-No commit fixado, o repositório tem só um `README.md` de uma linha, com um título e nenhum código. O SHA é o commit inicial e também o HEAD do branch padrão. Há 66 outros branches remotos com commits posteriores, que, pelas mensagens, trazem backend e frontends; eles não fazem parte do snapshot e não foram considerados. O nome do repositório não é usado como evidência.
+At the pinned commit, the repository has only a one-line `README.md`, with a title and no code. The SHA is the initial commit and also HEAD of the default branch. There are 66 other remote branches with later commits that, according to messages, contain backend and frontends; they are outside the snapshot and were not considered. The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:266` registra rank 265, ID 1330950323, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:266` records rank 265, ID 1330950323, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:266` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:35174` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:35179` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:266` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:35174` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:35179` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2026-08` e `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2026-08` and an empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | 2026-10-07T21:52:40.073Z / 2026-10-08T15:43:38.417Z |
 | `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | 2026-10-07T22:14:08.671Z / 2026-10-08T15:50:32.588Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2026-08-01..2026-08-31`.
+The effective queries append `pushed:>=2025-04-01 created:2026-08-01..2026-08-31`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem nula, `fork: false`, tamanho 387;
-- criação em 2026-08-11T13:22:35Z, push em 2026-08-11T13:23:34Z.
+Hit metadata:
+- null description, no topics, null language, `fork: false`, size 387;
+- created at 2026-08-11T13:22:35Z, pushed at 2026-08-11T13:23:34Z.
 
-O único texto do README é `README.md:1`, “# TD_Microfrontend_BE_nodejs_FE_reactjs_FE_angularjs” (52 bytes, sem quebra de linha final). A sequência “Microfrontend” aparece ali dentro de um identificador com sublinhados; o plural não aparece. Os campos buscados incluem também o nome, e a parte responsável por cada hit depende do processamento textual da busca do GitHub, que não está registrado.
+The only README text is `README.md:1`, “# TD_Microfrontend_BE_nodejs_FE_reactjs_FE_angularjs” (52 bytes, without a final newline). Sequence “Microfrontend” appears there inside an underscore-separated identifier; the plural does not appear. Searched fields also include the name, and the part responsible for each hit depends on GitHub search text processing, which is not recorded.
 
-O README é o do commit inicial (2026-08-11), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The README is from the initial commit (2026-08-11), before the October 2026 collections. The README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 1 entrada, arquivo regular `100644` (`README.md`, 52 bytes); zero symlinks e zero gitlinks. Não há código, configuração nem dependências. | contrária |
-| Documentação | `README.md:1`: só um título; não descreve unidades nem composição. | ausente |
-| Histórico fora do snapshot | Os commits posteriores existem só em branches não padrão. Pelas mensagens, `5e1f696` traz “minimal real backend+react+angular”, `c37fb83` “genuine iframe-based composition” e outros 64 são variações de versões (“version-label batch build”). A árvore de `c37fb83` tem `backend/`, `frontend-angular/` e `frontend-react/` (listagem do tree, sem leitura de blobs). Nada disso está no commit classificado. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 1 entry, regular file `100644` (`README.md`, 52 bytes); zero symlinks and zero gitlinks. There is no code, configuration or dependencies. | contrary |
+| Documentation | `README.md:1`: only a title; describes neither units nor composition. | absent |
+| History outside the snapshot | Later commits exist only in non-default branches. According to messages, `5e1f696` contains “minimal real backend+react+angular”, `c37fb83` “genuine iframe-based composition” and another 64 are version variations (“version-label batch build”). The tree of `c37fb83` has `backend/`, `frontend-angular/` and `frontend-react/` (tree listing, without reading blobs). None of this is in the classified commit. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 67 commits em todos os refs, nenhum merge, todos com autor “Mohammed-shihaf”, de 2026-08-11T14:40:30+05:30 (SHA `d66eede`, “Initial commit”, criado pela interface do GitHub) a 2026-08-11T18:09:00+05:30 (`afa353d`). Nenhum commit é da conta dona do repositório. `main` e `origin/HEAD` apontam para o SHA. Os 66 branches `origin/microfrontend_BE_nodejs…_FE_reactjs…_FE_angularjs…` não foram considerados. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 67 commits across all refs, no merges, all with author “Mohammed-shihaf”, from 2026-08-11T14:40:30+05:30 (SHA `d66eede`, “Initial commit”, created through the GitHub interface) to 2026-08-11T18:09:00+05:30 (`afa353d`). No commit belongs to the repository owner account. `main` and `origin/HEAD` point to the SHA. The 66 `origin/microfrontend_BE_nodejs…_FE_reactjs…_FE_angularjs…` branches were not considered. No historical blob was read and there was no missing object.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | No SHA não há nenhuma unidade frontend; só um README de uma linha. |
-| Q2 | No | Sem unidades, não há independência a avaliar. |
-| Q3 | No | Não há host, shell ou configuração raiz. |
-| Q4 | No | Nenhum mecanismo de composição no snapshot. |
-| Q5 | No | Q1–Q4 são No: commit inicial vazio no branch padrão. |
+| Q1 | No | At the SHA there is no frontend unit; only a one-line README. |
+| Q2 | No | Without units, there is no independence to assess. |
+| Q3 | No | There is no host, shell or root configuration. |
+| Q4 | No | No composition mechanism in the snapshot. |
+| Q5 | No | Q1–Q4 are No: empty initial commit on the default branch. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”: o termo aparece só no título do README, sem implementação.
-- Equivale aos casos sem implementação no snapshot (perfis 011/064/068/073/077/101/111). O conteúdo dos outros branches fica fora, pela regra de snapshot = commit classificado.
-- **Campos:** `repo_type: other`, `frontend_units: 0`, `unit_organization: none`, `approaches: []`, `ui_technologies: []`, `build_tools: []`.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”: the term appears only in the README title, without implementation.
+- Equivalent to cases without implementation in the snapshot (profiles 011/064/068/073/077/101/111). Other branches’ content is excluded under the snapshot = classified commit rule.
+- **Fields:** `repo_type: other`, `frontend_units: 0`, `unit_organization: none`, `approaches: []`, `ui_technologies: []`, `build_tools: []`.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **Protocolo (snapshot):** o branch padrão parou no commit inicial, enquanto 66 branches têm implementações. Pelas mensagens, uma delas é composição por iframe com backend Node, React e Angular. O snapshot fixado não as captura.
-- **Protocolo (busca):** os hits casam com o identificador do título ou com o nome; o plural não tem grafia literal. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **Protocol (snapshot):** the default branch stopped at the initial commit, while 66 branches have implementations. According to messages, one is iframe composition with Node backend, React and Angular. The pinned snapshot does not capture them.
+- **Protocol (search):** hits match the title identifier or name; the plural has no literal spelling. Eligibility changes from `unknown` (001) to `pass` (002).

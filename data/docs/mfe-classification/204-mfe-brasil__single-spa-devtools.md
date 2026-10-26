@@ -20,23 +20,23 @@ annotation:
 
 # 204 — mfe-brasil/single-spa-devtools
 
-## Contexto
+## Context
 
-“single-spa-devtools” (`README.md:1–8`): ferramentas de desenvolvimento para projetos single-spa, num monorepo Nx/Bun com dois pacotes.
-- `packages/webpack-plugin`: plugin de Webpack para a `root-config` de terceiros. Injeta no primeiro asset `.js` um código que abre um WebSocket local, reporta eventos `single-spa:*` e intercepta `importMapOverrides`.
-- `packages/vscode-extension`: extensão do VS Code que, no SHA, só registra o comando “Hello World” do gerador.
+“single-spa-devtools” (`README.md:1–8`): development tools for single-spa projects, in Nx/Bun monorepo with two packages.
+- `packages/webpack-plugin`: Webpack plugin for third-party `root-config`. Injects code into first `.js` asset to open local WebSocket, report `single-spa:*` events and intercept `importMapOverrides`.
+- `packages/vscode-extension`: VS Code extension that, at SHA, only registers generator’s “Hello World” command.
 
-Não há aplicação frontend nem root-config no repositório. O nome do repositório e o da organização não são usados como evidência.
+No frontend application or root-config exists in repository. Repository and organization names are not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:205` registra rank 204, ID 986682535, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:205` records rank 204, ID 986682535, status `cloned`, branch `main` and front-matter commit, which is clone HEAD and `origin/main`. Every clone Git command used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:205` registra as estratégias `terminology;technology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:14146` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:14152` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:205` records strategies `terminology;technology` and eligibility `pass`. Sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). ID appears in `data/discovery/mfe-round-001/candidates.csv:14146` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:14152` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos cinco hits em cada rodada, do endpoint `repositories` e com `path` vazio:
+`sqlite3 -readonly` query of tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns same five hits in each round, at endpoint `repositories` and with empty `path`:
 
-| Consulta (`q`) | Subconsulta | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Collection 001 / 002 (UTC) |
 |---|---|---|
 | `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | `…#created:2025-05` | 2026-10-07T18:32:57.228Z / 2026-10-08T15:38:02.120Z |
 | `terminology-microfrontends-repositories`: `microfrontends in:name,description,readme` | `…#created:2025-05` | 2026-10-07T22:07:46.490Z / 2026-10-08T15:47:18.495Z |
@@ -44,54 +44,54 @@ Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das du
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | `…#created:2025-05` | 2026-10-07T22:53:32.599Z / 2026-10-08T16:05:43.863Z |
 | `technology-single-spa-repositories`: `"single-spa" in:name,description,readme` | `…#created:2025-Q2` | 2026-10-07T23:33:38.669Z / 2026-10-08T16:20:59.766Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01` e `created:2025-05-01..2025-05-31` (terminologia) ou `created:2025-04-01..2025-06-30` (single-spa).
+Effective queries append `pushed:>=2025-04-01` and `created:2025-05-01..2025-05-31` (terminology) or `created:2025-04-01..2025-06-30` (single-spa).
 
-Metadados do hit:
-- descrição “Tool ecosystem designed to enhance the development of single-spa and microfrontend-based applications”;
-- sem tópicos, linguagem TypeScript, `fork: false`, tamanho 88;
-- criação em 2025-05-20T01:25:46Z, push em 2026-08-08T04:38:57Z.
+Hit metadata:
+- description “Tool ecosystem designed to enhance the development of single-spa and microfrontend-based applications”;
+- no topics, TypeScript language, `fork: false`, size 88;
+- creation at 2025-05-20T01:25:46Z, push at 2026-08-08T04:38:57Z.
 
-Grafias no README:
+README spellings:
 - “single-spa”: `README.md:1`, `5`, `7`;
-- “microfrontend”: `README.md:5` (“single-spa and microfrontend-based applications”), igual à descrição;
+- “microfrontend”: `README.md:5` (“single-spa and microfrontend-based applications”), same as description;
 - “microfrontends”: `README.md:23` (“debugging of microfrontends”);
 - “Micro Frontends”: `README.md:7` (“active MFEs (Micro Frontends)”).
 
-O singular “micro frontend” não aparece literalmente no README nem na descrição; esse hit depende do processamento textual da busca do GitHub, que não está registrado.
+Singular “micro frontend” appears literally in neither README nor description; this hit depends on unrecorded GitHub search text processing.
 
-O README foi alterado pela última vez em `bf9106d` (2025-05-20), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+README was last changed in `bf9106d` (2025-05-20), before October 2026 collections. README at the SHA is not later than searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 33 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Raiz Nx/Bun (`package.json:38–40`, `nx.json`, `bun.lock`) com `packages/webpack-plugin` e `packages/vscode-extension`, mais `.github/` (CI, dependabot, CODEOWNERS) e `.vscode/`. Não há `index.html`, root-config, `registerApplication` nem import map. | contrária |
-| Código-fonte (plugin) | `packages/webpack-plugin/src/index.ts:18–62`: `SingleSpaDevtoolsWebpackPlugin` concatena código ao primeiro asset `.js`. `packages/webpack-plugin/src/injectedCodeSource.ts:4–20`, `22–42`, `63–88`: WebSocket para `ws://127.0.0.1:9764` (`index.ts:5`), patch de `window.importMapOverrides` e escuta dos eventos `single-spa:*`. É ferramenta para projetos de terceiros; não compõe unidades. | contrária |
-| Código-fonte (extensão) | `packages/vscode-extension/src/extension.ts:7–23` e `package.json:14–21`: só o comando `helloWorld` do scaffold. As funções descritas no README (`README.md:12–17`) não existem no SHA. | contrária |
-| Documentação | `packages/webpack-plugin/README.md:14`: “The initial implementation of the plugin only logs a message to the console…”, e o roadmap `:49–52` deixa pendentes o monitoramento do import map e o WebSocket. O código do SHA já injeta o WebSocket, então o README está desatualizado em relação ao código. | contexto |
-| Busca | `git grep -i` no SHA (exceto lockfile e Markdown) por `registerApplication`, `importmap` e `.html`: só `injectedCodeSource.ts` e `global.d.ts:3` (`importMapOverrides`). A busca por imports `../..` em `packages` não retorna nada. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 33 entries, all regular files `100644`; zero symlinks and zero gitlinks. Nx/Bun root (`package.json:38–40`, `nx.json`, `bun.lock`) with `packages/webpack-plugin` and `packages/vscode-extension`, plus `.github/` (CI, dependabot, CODEOWNERS) and `.vscode/`. No `index.html`, root-config, `registerApplication` or import map. | contrary |
+| Source code (plugin) | `packages/webpack-plugin/src/index.ts:18–62`: `SingleSpaDevtoolsWebpackPlugin` concatenates code to first `.js` asset. `packages/webpack-plugin/src/injectedCodeSource.ts:4–20`, `22–42`, `63–88`: WebSocket to `ws://127.0.0.1:9764` (`index.ts:5`), patch of `window.importMapOverrides` and listening to `single-spa:*` events. Tool for third-party projects; it composes no units. | contrary |
+| Source code (extension) | `packages/vscode-extension/src/extension.ts:7–23` and `package.json:14–21`: only scaffold command `helloWorld`. Functions described in README (`README.md:12–17`) do not exist at SHA. | contrary |
+| Documentation | `packages/webpack-plugin/README.md:14`: “The initial implementation of the plugin only logs a message to the console…”, and roadmap `:49–52` leaves import-map monitoring and WebSocket pending. SHA code already injects WebSocket, so README is outdated relative to code. | context |
+| Search | `git grep -i` at the SHA (except lockfile and Markdown) for `registerApplication`, `importmap` and `.html`: only `injectedCodeSource.ts` and `global.d.ts:3` (`importMapOverrides`). Search for imports `../..` in `packages` returns nothing. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 8 commits em todos os refs, nenhum merge. São 7 de Eliseu dos Santos da Silva `<s.eliseu@proton.me>`, de 2025-05-20 (`be9286b`, “Initial commit”) a 2025-05-24 (SHA `315f830`, “chore: update configuration files and scripts…”), e 1 de `dependabot[bot]` em `origin/dependabot/npm_and_yarn/npm_and_yarn-161e398bfc` (`54e8d56`, 2026-08-08, atualização do `nx`). Esse último corresponde ao `pushed_at` e não foi considerado. Nenhum blob histórico foi lido e não houve objeto ausente.
+Non-shallow clone; 8 commits across all refs, no merge. 7 by Eliseu dos Santos da Silva `<s.eliseu@proton.me>`, from 2025-05-20 (`be9286b`, “Initial commit”) to 2025-05-24 (SHA `315f830`, “chore: update configuration files and scripts…”), and 1 by `dependabot[bot]` in `origin/dependabot/npm_and_yarn/npm_and_yarn-161e398bfc` (`54e8d56`, 2026-08-08, `nx` update). Latter corresponds to `pushed_at` and was not considered. No historical blob was read and no object was missing.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend; os pacotes são um plugin de Webpack e uma extensão do VS Code. |
-| Q2 | No | Sem unidades frontend, não há independência a avaliar. |
-| Q3 | No | Não há host, shell ou root-config; o plugin é feito para a root-config de outros projetos (`packages/webpack-plugin/README.md:28–38`). |
-| Q4 | No | Nenhum mecanismo de composição configurado entre unidades do repositório. O código instrumenta single-spa e `import-map-overrides` de terceiros (`injectedCodeSource.ts:13–42`, `63–88`). |
-| Q5 | No | Q1–Q4 são No: ferramenta de desenvolvimento para ecossistemas single-spa. |
+| Q1 | No | No frontend unit; packages are a Webpack plugin and a VS Code extension. |
+| Q2 | No | Without frontend units, no independence requires evaluation. |
+| Q3 | No | No host, shell or root-config; plugin targets root-config of other projects (`packages/webpack-plugin/README.md:28–38`). |
+| Q4 | No | No composition mechanism configured between repository units. Code instruments third-party single-spa and `import-map-overrides` (`injectedCodeSource.ts:13–42`, `63–88`). |
+| Q5 | No | Q1–Q4 are No: development tool for single-spa ecosystems. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “MFE frameworks and libraries (e.g., single-spa itself, federation plugins)”: é ferramenta de apoio ao desenvolvimento de micro-frontends, sem implementá-los.
-- Mesmo enquadramento de 015 e do rascunho 165 (biblioteca/plugin): `repo_type: library`, `frontend_units: 0`, `unit_organization: none`, `approaches: []`. `ui_technologies: []` e `build_tools: []`, pois não há unidades frontend; Webpack aparece como alvo do plugin e como bundler da extensão, não de uma UI.
-- Não há decisão aberta.
+- `Non-MFE` under rule “at least one question is No”. Matches “MFE frameworks and libraries (e.g., single-spa itself, federation plugins)”: tool supporting micro-frontends development, without implementing them.
+- Same classification as 015 and draft 165 (library/plugin): `repo_type: library`, `frontend_units: 0`, `unit_organization: none`, `approaches: []`. `ui_technologies: []` and `build_tools: []`, since no frontend units exist; Webpack appears as plugin target and extension bundler, not UI bundler.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** descrição e README com “single-spa” e “microfrontend” em repositório de tooling. O README da raiz descreve funções que o código não tem (extensão “Hello World”).
-- **Protocolo (busca):** o hit `"micro frontend"` singular não tem grafia literal. A elegibilidade muda de `unknown` (001) para `pass` (002). O `pushed_at` de 2026-08-08 vem de um branch do Dependabot, não do branch padrão.
+- **RQ1 (misleading signals):** description and README with “single-spa” and “microfrontend” in tooling repository. Root README describes functions absent from code (“Hello World” extension).
+- **Protocol (search):** singular hit `"micro frontend"` has no literal spelling. Eligibility changes from `unknown` (001) to `pass` (002). `pushed_at` of 2026-08-08 comes from Dependabot branch, not default branch.

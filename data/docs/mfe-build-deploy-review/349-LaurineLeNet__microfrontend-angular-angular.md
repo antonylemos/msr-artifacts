@@ -16,69 +16,30 @@ annotation:
 
 # 349 — LaurineLeNet/microfrontend-angular-angular
 
-## Leitura do repositório
+## Repository overview
 
-O snapshot tem só três workspaces Angular lado a lado, `athletes`, `ranking` e `shell`, sem
-`package.json` nem workspace na raiz (a raiz tem apenas `.gitignore`, .gitignore:1-2). Cada
-diretório tem seu próprio `package.json` com `ng build` (athletes/package.json:7;
-ranking/package.json:7; shell/package.json:7) e seu próprio `angular.json`, cujo alvo `build` usa
-o builder `@angular-architects/native-federation:build` sobre um alvo `esbuild` com
-`@angular/build:application`, em produção por padrão (athletes/angular.json:16-29, 43-44; o mesmo
-em ranking/angular.json e shell/angular.json). Sem `outputPath`, cada build sai no
-`dist/<projeto>` do próprio diretório. Os três arquivos são iguais fora o nome e a porta de
-desenvolvimento (4201, 4202 e 4200, athletes/angular.json:93;
-ranking/angular.json:93; shell/angular.json:93), que só vale para `ng serve`.
+The snapshot contains only three Angular workspaces side by side, `athletes`, `ranking` and `shell`, without root `package.json` or workspace (root contains only `.gitignore`, .gitignore:1-2). Each directory has its own `package.json` with `ng build` (athletes/package.json:7; ranking/package.json:7; shell/package.json:7) and its own `angular.json`, whose target `build` uses builder `@angular-architects/native-federation:build` over target `esbuild` with `@angular/build:application`, production by default (athletes/angular.json:16-29, 43-44; same in ranking/angular.json and shell/angular.json). Without `outputPath`, each build outputs to `dist/<projeto>` of its directory. All three files are identical except name and development port (4201, 4202 and 4200, athletes/angular.json:93; ranking/angular.json:93; shell/angular.json:93), applying only to `ng serve`.
 
-A publicação é por Cloudflare Workers com assets estáticos: cada diretório tem um `wrangler.jsonc`
-com um worker próprio (`mf-angular-athletes`, `mf-angular-ranking`, `mf-angular-shell`) que serve
-o `./dist/<projeto>/browser` daquele diretório como SPA (athletes/wrangler.jsonc:3, 13-16;
-ranking/wrangler.jsonc:3, 13-16; shell/wrangler.jsonc:3, 13-16), e `wrangler` é dependência de
-desenvolvimento de cada um (athletes/package.json:39; ranking/package.json:39;
-shell/package.json:39). Nenhum script chama `wrangler deploy`, e não há CI, Dockerfile nem
-compose; a publicação seria feita à mão com o wrangler. Há indício de que os workers dos remotes
-estão em uso: o manifesto do shell aponta para `remoteEntry.json` em
-`mf-angular-athletes.lenetlaurine.workers.dev` e `mf-angular-ranking.lenetlaurine.workers.dev`
-(shell/public/federation.manifest.json:2-3), hosts que coincidem com os nomes dos workers. O
-endereço do worker do shell não aparece no snapshot.
+Publication uses Cloudflare Workers with static assets: each directory has a `wrangler.jsonc` with its own worker (`mf-angular-athletes`, `mf-angular-ranking`, `mf-angular-shell`) serving that directory’s `./dist/<projeto>/browser` as SPA (athletes/wrangler.jsonc:3, 13-16; ranking/wrangler.jsonc:3, 13-16; shell/wrangler.jsonc:3, 13-16), and `wrangler` is a development dependency of each (athletes/package.json:39; ranking/package.json:39; shell/package.json:39). No script calls `wrangler deploy`, and no CI, Dockerfile or compose exists; publication would be manual through wrangler. Evidence suggests remote workers are in use: shell manifest points to `remoteEntry.json` at `mf-angular-athletes.lenetlaurine.workers.dev` and `mf-angular-ranking.lenetlaurine.workers.dev` (shell/public/federation.manifest.json:2-3), hosts matching worker names. Shell worker address is absent from snapshot.
 
-As ocorrências `ops-*` do `matches.csv` são os `_headers` dos dois remotes
-(`ops-deployment-file` e `ops-cors`): athletes/public/_headers:1-2 e ranking/public/_headers:1-2
-liberam `Access-Control-Allow-Origin: *` para todos os caminhos, o que permite que o shell, em
-outro worker, busque o `remoteEntry.json` e os módulos. O `public/` entra nos assets do build
-(athletes/angular.json:48-53), e esse formato de `_headers` é o que o Cloudflare lê nos assets
-estáticos. O shell não tem `_headers`. Não há ocorrência `ci-*` nem `cfg-public-path`. Os README
-de cada diretório são os gerados pelo Angular CLI e só descrevem `ng build` (athletes/README.md:29-37).
+The `ops-*` occurrences in `matches.csv` are `_headers` of both remotes (`ops-deployment-file` and `ops-cors`): athletes/public/_headers:1-2 and ranking/public/_headers:1-2 enable `Access-Control-Allow-Origin: *` for all paths, allowing shell in another worker to fetch `remoteEntry.json` and modules. The `public/` enters build assets (athletes/angular.json:48-53), and this `_headers` format is read by Cloudflare for static assets. Shell has no `_headers`. No `ci-*` or `cfg-public-path` occurrence exists. Each directory’s README is Angular CLI-generated and only describes `ng build` (athletes/README.md:29-37).
 
-## Aplicações
+## Applications
 
-| # | Aplicação | Build | Deploy | Onde é servida | Versionamento | Artefatos |
+| # | Application | Build | Deploy | Where served | Versioning | Artifacts |
 |---|---|---|---|---|---|---|
-| 1 | athletes | separado | separado | `https://mf-angular-athletes.lenetlaurine.workers.dev` (shell/public/federation.manifest.json:2; athletes/wrangler.jsonc:3); `http://localhost:4201` em desenvolvimento (athletes/angular.json:93) | No | athletes/angular.json:16-29 (alvo `build` com native federation sobre `esbuild`, athletes/angular.json:43-44); athletes/package.json:7 (`ng build`); athletes/wrangler.jsonc:3-16 (worker `mf-angular-athletes` publicando `./dist/athletes/browser`); athletes/public/_headers:1-2 (CORS `*`) |
-| 2 | ranking | separado | separado | `https://mf-angular-ranking.lenetlaurine.workers.dev` (shell/public/federation.manifest.json:3; ranking/wrangler.jsonc:3); `http://localhost:4202` em desenvolvimento (ranking/angular.json:93) | No | ranking/angular.json:16-29 (alvo `build` com native federation sobre `esbuild`, ranking/angular.json:43-44); ranking/package.json:7 (`ng build`); ranking/wrangler.jsonc:3-16 (worker `mf-angular-ranking` publicando `./dist/ranking/browser`); ranking/public/_headers:1-2 (CORS `*`) |
-| 3 | shell | separado | separado | worker `mf-angular-shell`, sem endereço no snapshot (shell/wrangler.jsonc:3); `http://localhost:4200` em desenvolvimento (shell/angular.json:93) | No | shell/angular.json:16-29 (alvo `build` com native federation sobre `esbuild`, shell/angular.json:43-44); shell/package.json:7 (`ng build`); shell/wrangler.jsonc:3-16 (worker `mf-angular-shell` publicando `./dist/shell/browser`) |
+| 1 | athletes | separate | separate | `https://mf-angular-athletes.lenetlaurine.workers.dev` (shell/public/federation.manifest.json:2; athletes/wrangler.jsonc:3); `http://localhost:4201` in development (athletes/angular.json:93) | No | athletes/angular.json:16-29 (target `build` with native federation over `esbuild`, athletes/angular.json:43-44); athletes/package.json:7 (`ng build`); athletes/wrangler.jsonc:3-16 (worker `mf-angular-athletes` publishing `./dist/athletes/browser`); athletes/public/_headers:1-2 (CORS `*`) |
+| 2 | ranking | separate | separate | `https://mf-angular-ranking.lenetlaurine.workers.dev` (shell/public/federation.manifest.json:3; ranking/wrangler.jsonc:3); `http://localhost:4202` in development (ranking/angular.json:93) | No | ranking/angular.json:16-29 (target `build` with native federation over `esbuild`, ranking/angular.json:43-44); ranking/package.json:7 (`ng build`); ranking/wrangler.jsonc:3-16 (worker `mf-angular-ranking` publishing `./dist/ranking/browser`); ranking/public/_headers:1-2 (CORS `*`) |
+| 3 | shell | separate | separate | worker `mf-angular-shell`, without snapshot address (shell/wrangler.jsonc:3); `http://localhost:4200` in development (shell/angular.json:93) | No | shell/angular.json:16-29 (target `build` with native federation over `esbuild`, shell/angular.json:43-44); shell/package.json:7 (`ng build`); shell/wrangler.jsonc:3-16 (worker `mf-angular-shell` publishing `./dist/shell/browser`) |
 
-## Observações
+## Observations
 
-**1. athletes.** O build é próprio: `ng build` no diretório gera o `dist/athletes` só desta
-aplicação (athletes/package.json:7; athletes/angular.json:16-29). O deploy também: o worker
-`mf-angular-athletes` publica apenas `./dist/athletes/browser` (athletes/wrangler.jsonc:3, 14), e
-o shell consome o remote exatamente nesse host (shell/public/federation.manifest.json:2). Os
-`_headers` com CORS aberto (athletes/public/_headers:1-2) existem para esse consumo entre origens.
-A versão é `0.0.0` num pacote `private` (athletes/package.json:3, 11), sem uso na publicação.
+**1. athletes.** Own build: `ng build` in directory generates `dist/athletes` only for this application (athletes/package.json:7; athletes/angular.json:16-29). Deploy also: worker `mf-angular-athletes` publishes only `./dist/athletes/browser` (athletes/wrangler.jsonc:3, 14), and shell consumes remote at exactly this host (shell/public/federation.manifest.json:2). The `_headers` with open CORS (athletes/public/_headers:1-2) support this cross-origin consumption. Version is `0.0.0` in a `private` package (athletes/package.json:3, 11), unused in publication.
 
-**2. ranking.** Mesmo arranjo de athletes: build próprio (ranking/package.json:7;
-ranking/angular.json:16-29), worker próprio `mf-angular-ranking` publicando
-`./dist/ranking/browser` (ranking/wrangler.jsonc:3, 14), consumido pelo shell nesse host
-(shell/public/federation.manifest.json:3), com CORS aberto (ranking/public/_headers:1-2). Versão
-`0.0.0` em pacote `private` (ranking/package.json:3, 11).
+**2. ranking.** Same arrangement as athletes: own build (ranking/package.json:7; ranking/angular.json:16-29), own worker `mf-angular-ranking` publishing `./dist/ranking/browser` (ranking/wrangler.jsonc:3, 14), consumed by shell at this host (shell/public/federation.manifest.json:3), with open CORS (ranking/public/_headers:1-2). Version `0.0.0` in a `private` package (ranking/package.json:3, 11).
 
-**3. shell.** Build próprio (shell/package.json:7; shell/angular.json:16-29), e o
-`federation.manifest.json` com as URLs dos remotes vai junto, porque o `public/` entra nos assets
-(shell/public/federation.manifest.json:1-4). O deploy é o worker próprio `mf-angular-shell`, que
-publica `./dist/shell/browser` (shell/wrangler.jsonc:3, 14); diferente dos remotes, nada no
-snapshot dá o endereço desse worker, e o shell não tem `_headers`, porque não é carregado por
-outra origem. Versão `0.0.0` em pacote `private` (shell/package.json:3, 11).
+**3. shell.** Own build (shell/package.json:7; shell/angular.json:16-29), and `federation.manifest.json` containing remote URLs accompanies it, because `public/` enters assets (shell/public/federation.manifest.json:1-4). Deploy uses own worker `mf-angular-shell`, publishing `./dist/shell/browser` (shell/wrangler.jsonc:3, 14); unlike remotes, nothing in snapshot gives this worker’s address, and shell has no `_headers`, because not loaded by another origin. Version `0.0.0` in a `private` package (shell/package.json:3, 11).
 
-## Resumo
+## Summary
 
-Aplicações: 3. Build (separado: 3). Deploy (separado: 3). Versionamento independente: 0.
+Applications: 3. Build (separate: 3). Deploy (separate: 3). Independent versioning: 0.

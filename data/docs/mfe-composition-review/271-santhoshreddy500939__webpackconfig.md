@@ -20,23 +20,24 @@ annotation:
 
 # 271 — santhoshreddy500939/webpackconfig
 
-## Leitura do repositório
+## Repository overview
 
-É um projeto de estudo de configuração do webpack com React, com uma única aplicação no snapshot, na raiz. Essa aplicação se declara host Module Federation `hostApp` e aponta um único remote, `RemoteApp`, servido em `http://localhost:9001/remoteappbuild.js` (webpack.common.config.js:31-36). O remote não está no repositório. O host mostra o componente remoto dentro de `Application1`, que carrega `RemoteApp/microfrontend1` com `React.lazy` e o monta dentro de `Suspense` (Components/Application1/Application1.js:3; Components/Application1/Application1.js:10-12). `App` renderiza `Application1` ao lado de componentes locais (index.js:8-17).
+A webpack configuration study project with React, with a single application in the snapshot, at the root. This application declares itself Module Federation host `hostApp` and points to a single remote, `RemoteApp`, served at `http://localhost:9001/remoteappbuild.js` (webpack.common.config.js:31-36). The remote is absent from the repository. The host displays the remote component inside `Application1`, which loads `RemoteApp/microfrontend1` with `React.lazy` and mounts it inside `Suspense` (Components/Application1/Application1.js:3; Components/Application1/Application1.js:10-12). `App` renders `Application1` alongside local components (index.js:8-17).
 
-`Application2` não carrega outra unidade: é só um texto de lugar reservado (Components/Application2/Application2.js:5), o que sugere um segundo remote planejado e não feito. O host não declara `exposes` (webpack.common.config.js:31-36). O `ModuleFederationPlugin` está só na configuração comum, usada pelo build de desenvolvimento via `merge` (webpack.dev.config.js:4-5; package.json:9). A configuração de produção não faz esse `merge` nem declara o plugin (webpack.prod.config.js:4-34; package.json:8), então só o build de desenvolvimento monta a federação.
+`Application2` does not load another unit: it is only placeholder text (Components/Application2/Application2.js:5), suggesting a second remote planned but not implemented. The host declares no `exposes` (webpack.common.config.js:31-36). `ModuleFederationPlugin` is only in the common configuration, used by the development build through `merge` (webpack.dev.config.js:4-5; package.json:9). The production configuration neither performs that `merge` nor declares the plugin (webpack.prod.config.js:4-34; package.json:8), so only the development build assembles federation.
 
-## Relações
+## Relationships
 
-| # | Origem | Destino | Tipo | Direção | Mecanismo | No snapshot | Ativa | Configuração | Código |
+| # | Source | Target | Type | Direction | Mechanism | In snapshot | Active | Configuration | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | . | RemoteApp | host → remote | origem → destino | module-federation | No | Yes | webpack.common.config.js:32 (`name: "hostApp"`); webpack.common.config.js:33-35 (`remotes` com `RemoteApp: "RemoteApp@http://localhost:9001/remoteappbuild.js"`) | Components/Application1/Application1.js:3; Components/Application1/Application1.js:11 |
+| 1 | . | RemoteApp | host → remote | source → target | module-federation | No | Yes | webpack.common.config.js:32 (`name: "hostApp"`); webpack.common.config.js:33-35 (`remotes` with `RemoteApp: "RemoteApp@http://localhost:9001/remoteappbuild.js"`) | Components/Application1/Application1.js:3; Components/Application1/Application1.js:11 |
 
-## Observações
+## Observations
 
-**1. . → RemoteApp.** O host importa `RemoteApp/microfrontend1` (Components/Application1/Application1.js:3), cujo prefixo casa com a chave `RemoteApp` de `remotes` (webpack.common.config.js:34), e monta o componente em Components/Application1/Application1.js:11. Nenhum diretório do snapshot declara `name: "RemoteApp"` nem o arquivo `remoteappbuild.js`, então o destino fica com o nome do artefato e No snapshot = No. Ativa = Yes porque as duas linhas da revisão de código-fonte são `Yes`. A relação existe só no build de desenvolvimento (webpack.dev.config.js:5); a configuração de produção não tem o plugin (webpack.prod.config.js:21-31).
+**1. . → RemoteApp.** The host imports `RemoteApp/microfrontend1` (Components/Application1/Application1.js:3), whose prefix matches key `RemoteApp` in `remotes` (webpack.common.config.js:34), and mounts the component in Components/Application1/Application1.js:11. No snapshot directory declares `name: "RemoteApp"` or file `remoteappbuild.js`, so the target retains the artifact's name and In snapshot = No. Active = Yes because both source code review lines are `Yes`. The relationship exists only in the development build (webpack.dev.config.js:5); the production configuration has no plugin (webpack.prod.config.js:21-31).
 
-## Resumo
+## Summary
 
-Relações: 1 (host → remote: 1). Ativas: 1. Destino fora do snapshot: 1.
-Unidades sem relação: nenhuma.
+Relationships: 1 (host → remote: 1). Active: 1. Target outside the snapshot: 1.
+Units without a relationship: none.
+

@@ -20,68 +20,68 @@ annotation:
 
 # 267 — Surabhi-helium/DA-microfrontend
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** template. É uma cópia gerada, sem alterações, do “Author Kit” da Adobe para sites AEM Edge Delivery com autoria pelo Document Authoring (da.live).
+- **Repository type:** template. An unmodified generated copy of Adobe’s “Author Kit” for AEM Edge Delivery sites authored through Document Authoring (da.live).
 
-O README é o do template (`README.md:1–7`, “Author Kit… Use this template to make a new repo”), e `package.json:2`, `:18–25` aponta para `aemsites/author-kit`. O site é uma única base de código servida pela plataforma AEM: `head.html` carrega `scripts/scripts.js` e `scripts/ak.js`, que decoram a página e carregam blocos (`blocks/*`) da mesma base de código. O termo “microfrontend” só aparece no nome do repositório, que não é usado como evidência arquitetural.
+The README is the template’s (`README.md:1–7`, “Author Kit… Use this template to make a new repo”), and `package.json:2`, `:18–25` points to `aemsites/author-kit`. The site is a single codebase served by the AEM platform: `head.html` loads `scripts/scripts.js` and `scripts/ak.js`, decorating the page and loading blocks (`blocks/*`) from the same codebase. The term “microfrontend” appears only in the repository name, which is not used as architectural evidence.
 
-`data/samples/mfe-sample-001/clones.csv:268` registra rank 267, ID 1296132432, status `cloned`, branch `main` e o commit do front matter, que é o HEAD do clone e de `origin/main`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, execução ou acesso à rede (da.live e aem.live não foram consultados).
+`data/samples/mfe-sample-001/clones.csv:268` records rank 267, ID 1296132432, status `cloned`, branch `main` and the front matter commit, which is the HEAD of the clone and of `origin/main`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, execution or network access (da.live and aem.live were not consulted).
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:268` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:33264` (`terminology`, `unknown`) e `data/discovery/mfe-round-002/candidates.csv:33272` (`terminology`, `pass`).
+`data/samples/mfe-sample-001/sample.csv:268` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:33264` (`terminology`, `unknown`) and `data/discovery/mfe-round-002/candidates.csv:33272` (`terminology`, `pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna um hit por rodada, do endpoint `repositories` e com `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns one hit per round, from endpoint `repositories` and with an empty `path`:
 
-| Consulta (`q`) | Subconsulta | Consulta efetiva | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Subquery | Effective query | Collection 001 / 002 (UTC) |
 |---|---|---|---|
 | `terminology-microfrontend-repositories`: `microfrontend in:name,description,readme` | `terminology-microfrontend-repositories#created:2026-07` | `microfrontend in:name,description,readme pushed:>=2025-04-01 created:2026-07-01..2026-07-31` | 2026-10-07T21:52:05.260Z / 2026-10-08T15:43:18.809Z |
 
-Metadados do hit (iguais nas duas rodadas): descrição nula, sem tópicos, linguagem JavaScript, licença Apache-2.0, `fork: false`, tamanho 178, criação em 2026-07-10T06:28:36Z, push em 2026-07-10T06:28:40Z.
+Hit metadata (identical in both rounds): null description, no topics, language JavaScript, Apache-2.0 license, `fork: false`, size 178, created at 2026-07-10T06:28:36Z, pushed at 2026-07-10T06:28:40Z.
 
-**Grafia:** a descrição é nula e o README (`README.md:1–118`) não contém “microfrontend”, “micro-frontend” nem “micro frontend” (busca `git grep -i 'micro.?front'` no SHA: nenhuma ocorrência). O único lugar com a grafia é o nome do repositório (`DA-microfrontend`), que a consulta cobre por `in:name`. O nome explica a entrada na amostra, mas não é evidência de arquitetura.
+**Spelling:** the description is null and the README (`README.md:1–118`) contains neither “microfrontend”, “micro-frontend” nor “micro frontend” (`git grep -i 'micro.?front'` search at the SHA: no occurrences). The only place with the spelling is the repository name (`DA-microfrontend`), covered by query `in:name`. The name explains sample entry, but is not architectural evidence.
 
-O README só existe no commit único, que é o SHA (2026-07-10T11:58:40+05:30, isto é, 06:28:40Z). Ele coincide com o `pushed_at` e antecede as coletas de outubro de 2026, e o README do SHA não é posterior às buscas.
+The README exists only in the single commit, the SHA (2026-07-10T11:58:40+05:30, that is, 06:28:40Z). It coincides with `pushed_at` and predates the October 2026 collections, and the README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 89 entradas, todas arquivos regulares `100644`; zero symlinks e zero gitlinks. Uma única base de site: `head.html`, `scripts/`, `styles/`, `blocks/` (10 blocos, como header, footer, hero, card, fragment), `tools/` (quick-edit, scheduler, sidekick, da), `deps/` (Lit compilado e RUM), `workers/website/` (Cloudflare Worker de proxy) e testes. | contrária |
-| Configuração / Build | `package.json:6–14`: só lint, testes e `build:lit` (empacota a dependência Lit com esbuild); sem build da aplicação, que é servida sem build pela plataforma AEM (`README.md:14–18`). `workers/website/wrangler.toml:1–9`: worker apontando para `aemsites/author-kit`. | contrária |
-| Código-fonte (carga de blocos) | `head.html:2–4` carrega `styles/styles.css`, `scripts/scripts.js` e `scripts/ak.js`. `scripts/ak.js:60–68`, `:79`, `:345–360`: `loadBlock`/`loadExperience` fazem `import(\`${codeBase}/${type}/${name}/${name}.js\`)` do mesmo `codeBase` do site (`:37`). Os blocos são componentes de página da mesma base de código, não unidades com entry e build próprios. | contrária |
-| Código-fonte (ferramentas da plataforma) | `scripts/scripts.js:42–48`: com `?dapreview` ou `?quick-edit`, carrega `tools/da/da.js` ou `tools/quick-edit/quick-edit.js`. `tools/da/da.js:1–14` importa `scripts/dapreview.js` de `https://da.live` ou de branches `da-live--adobe`; `tools/quick-edit/quick-edit.js:3–19`, `:39–47`: injeta um import map para `da-lit`/`da-y-wrapper` em `da.live` e importa o plugin de edição rápida de `da.live/nx`. São ferramentas de autoria da plataforma Adobe, carregadas em modo de edição ou preview. | ambígua |
-| Código-fonte (fronteiras) | Busca ativa de imports `../../`: blocos e ferramentas importam `scripts/ak.js`, `scripts/utils/*` e `deps/lit` do mesmo site (por exemplo, `blocks/header/header.js:1`; `tools/scheduler/scheduler.js:1–2`; `tools/quick-edit/quick-edit.js:1`). Confirma uma única base de código acoplada, sem unidades independentes. | contrária |
-| Tecnologia / Composição (busca) | `git grep -i` no SHA, exceto o Lit compilado, por `micro.?front`, `federation`, `single.?spa`, `remoteEntry`, `import.?map`, `customElements`, `<iframe`, `qiankun` e `wujie`: o import map de `quick-edit.js:3–14`; `customElements.define` do `aem-scheduler` (`tools/scheduler/scheduler.js:97`), ferramenta interna; um iframe de YouTube (`blocks/youtube/youtube.js:4`); e `@web/dev-server-import-maps`, só no test runner (`package.json:29`). Nenhum mecanismo compondo unidades frontend próprias. | ausente |
-| Documentação | `README.md:79–93`: padrões Page/Section/Block/Auto Block do Edge Delivery; `README.md:59–63`: ferramentas Sidekick e Quick Edit. Nenhuma menção a micro-frontends. | contexto |
+| Structure | `git ls-tree -r` at the SHA: 89 entries, all regular files `100644`; zero symlinks and zero gitlinks. A single site codebase: `head.html`, `scripts/`, `styles/`, `blocks/` (10 blocks, such as header, footer, hero, card, fragment), `tools/` (quick-edit, scheduler, sidekick, da), `deps/` (compiled Lit and RUM), `workers/website/` (proxy Cloudflare Worker) and tests. | contrary |
+| Configuration / Build | `package.json:6–14`: only lint, tests and `build:lit` (bundles the Lit dependency with esbuild); no application build, as the platform AEM serves it without a build (`README.md:14–18`). `workers/website/wrangler.toml:1–9`: worker pointing to `aemsites/author-kit`. | contrary |
+| Source code (block loading) | `head.html:2–4` loads `styles/styles.css`, `scripts/scripts.js` and `scripts/ak.js`. `scripts/ak.js:60–68`, `:79`, `:345–360`: `loadBlock`/`loadExperience` perform `import(\`${codeBase}/${type}/${name}/${name}.js\`)` from the site’s own `codeBase` (`:37`). Blocks are page components from the same codebase, not units with their own entry point and build. | contrary |
+| Source code (platform tools) | `scripts/scripts.js:42–48`: with `?dapreview` or `?quick-edit`, loads `tools/da/da.js` or `tools/quick-edit/quick-edit.js`. `tools/da/da.js:1–14` imports `scripts/dapreview.js` from `https://da.live` or branches `da-live--adobe`; `tools/quick-edit/quick-edit.js:3–19`, `:39–47`: injects an import map for `da-lit`/`da-y-wrapper` on `da.live` and imports the quick-edit plugin from `da.live/nx`. These are Adobe platform authoring tools, loaded in editing or preview mode. | ambiguous |
+| Source code (boundaries) | Active search for `../../` imports: blocks and tools import `scripts/ak.js`, `scripts/utils/*` and `deps/lit` from the same site (for example, `blocks/header/header.js:1`; `tools/scheduler/scheduler.js:1–2`; `tools/quick-edit/quick-edit.js:1`). Confirms a single coupled codebase, without independent units. | contrary |
+| Technology / Composition (search) | `git grep -i` at the SHA, except compiled Lit, for `micro.?front`, `federation`, `single.?spa`, `remoteEntry`, `import.?map`, `customElements`, `<iframe`, `qiankun` and `wujie`: the import map in `quick-edit.js:3–14`; `customElements.define` of `aem-scheduler` (`tools/scheduler/scheduler.js:97`), an internal tool; a YouTube iframe (`blocks/youtube/youtube.js:4`); and `@web/dev-server-import-maps`, only in the test runner (`package.json:29`). No mechanism composing its own frontend units. | absent |
+| Documentation | `README.md:79–93`: Edge Delivery Page/Section/Block/Auto Block patterns; `README.md:59–63`: Sidekick and Quick Edit tools. No micro-frontends mention. | context |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso. Há 1 commit, que é o SHA e a raiz (1 em todos os refs), sem merges: autor `Surabhi-helium <surabhi@iamhelium.com.au>`, committer `GitHub <noreply@github.com>`, 2026-07-10T11:58:40+05:30, “Initial commit”. É o padrão de um repositório criado por “Use this template” (`README.md:7`). O conteúdo é o template `aemsites/author-kit` (`package.json:18–25`; `workers/website/wrangler.toml:6`; `404.html:18`), sem alteração posterior do titular, e a identidade registrada não demonstra autoria do código. `git rev-list --objects $SHA --missing=print` não lista objetos ausentes.
+Non-shallow clone. There is 1 commit, both SHA and root (1 across all refs), without merges: author `Surabhi-helium <surabhi@iamhelium.com.au>`, committer `GitHub <noreply@github.com>`, 2026-07-10T11:58:40+05:30, “Initial commit”. This is the pattern of a repository created through “Use this template” (`README.md:7`). Content is template `aemsites/author-kit` (`package.json:18–25`; `workers/website/wrangler.toml:6`; `404.html:18`), without subsequent owner changes, and recorded identity does not demonstrate code authorship. `git rev-list --objects $SHA --missing=print` lists no missing objects.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única base de site (inventário; `head.html:2–4`). Os blocos são componentes da mesma base, carregados pelo `codeBase` comum (`scripts/ak.js:37`, `:60–68`). As ferramentas da da.live são tooling de autoria da plataforma, não unidades frontend do repositório referenciadas por configuração de composição. |
-| Q2 | No | Não há duas unidades com entry e build próprios. Blocos e ferramentas importam `scripts/ak.js` e utilitários por caminhos relativos (`blocks/header/header.js:1`; `tools/quick-edit/quick-edit.js:1`). |
-| Q3 | No | Não há host que carregue unidades independentes; `ak.js` decora a página e carrega blocos do próprio site (`scripts/ak.js:345–360`). |
-| Q4 | No | Nenhum mecanismo de composição de unidades. O import map e o `import()` remoto de `quick-edit.js:3–19` e `da.js:1–4` carregam ferramentas de edição da plataforma em modo de autoria. |
-| Q5 | No | Q1–Q4 convergem. |
+| Q1 | No | A single site codebase (inventory; `head.html:2–4`). Blocks are components of the same codebase, loaded through common `codeBase` (`scripts/ak.js:37`, `:60–68`). da.live tools are platform authoring tooling, not repository frontend units referenced by composition configuration. |
+| Q2 | No | There are not two units with their own entry point and build. Blocks and tools import `scripts/ak.js` and utilities through relative paths (`blocks/header/header.js:1`; `tools/quick-edit/quick-edit.js:1`). |
+| Q3 | No | There is no host loading independent units; `ak.js` decorates the page and loads blocks from the site itself (`scripts/ak.js:345–360`). |
+| Q4 | No | No unit composition mechanism. The import map and remote `import()` from `quick-edit.js:3–19` and `da.js:1–4` load platform editing tools in authoring mode. |
+| Q5 | No | Q1–Q4 converge. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”.
-- Corresponde a “conventional frontend monoliths”: um site Edge Delivery com blocos de página carregados dinamicamente da mesma base.
-- O carregamento remoto de ferramentas da da.live é tooling de uma plataforma de terceiros (CMS/autoria). Mesmo que fosse lido como composição, cairia na regra de plugins/extensões de plataforma do final 037, com o mesmo resultado.
-- É também uma cópia não modificada de template de terceiros (`aemsites/author-kit`). O tratamento de redistribuições segue aberto em 074/080/102/122, mas não altera a classe.
-- O termo da busca está só no nome do repositório (`DA-microfrontend`); nenhum artefato menciona micro-frontends.
-- `repo_type: template`, `frontend_units: 1`, `single-unit`. `ui_technologies: []`: JavaScript vanilla, com Lit só na ferramenta `aem-scheduler`. `build_tools: []`: o esbuild empacota apenas a dependência Lit (`package.json:14`), e o site é servido sem build.
-- Não há decisão aberta.
+- `Non-MFE` under the rule “at least one question is No”.
+- It matches “conventional frontend monoliths”: an Edge Delivery site with page blocks loaded dynamically from the same codebase.
+- Remote loading of da.live tools is third-party platform tooling (CMS/authoring). Even if read as composition, it would fall under final 037’s platform plugin/extension rule, with the same result.
+- It is also an unmodified copy of a third-party template (`aemsites/author-kit`). Redistribution treatment remains open in 074/080/102/122, but does not change the class.
+- The search term appears only in the repository name (`DA-microfrontend`); no artifact mentions micro-frontends.
+- `repo_type: template`, `frontend_units: 1`, `single-unit`. `ui_technologies: []`: vanilla JavaScript, with Lit only in tool `aem-scheduler`. `build_tools: []`: esbuild bundles only the Lit dependency (`package.json:14`), and the site is served without a build.
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** o hit vem exclusivamente do nome do repositório. O conteúdo é um template oficial da Adobe sem relação com micro-frontends. O carregamento dinâmico de blocos por `import()` e o import map do Quick Edit têm forma técnica parecida com composição em runtime, mas operam dentro de uma base de código ou trazem ferramentas da plataforma.
-- **Protocolo (famílias/duplicatas):** outra instância do mesmo template está nas rodadas (`feffef/da-author-kit`, `data/discovery/mfe-round-002/candidates.csv:21087`), fora da amostra e não inspecionada. Repositórios gerados de template com `fork: false` entram como candidatos distintos.
-- **Protocolo (busca):** a elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ1 (misleading signals):** the hit comes exclusively from the repository name. Content is an official Adobe template unrelated to micro-frontends. Dynamic block loading through `import()` and the Quick Edit import map have a technical form similar to runtime composition, but operate within one codebase or bring platform tools.
+- **Protocol (families/duplicates):** another instance of the same template appears in the rounds (`feffef/da-author-kit`, `data/discovery/mfe-round-002/candidates.csv:21087`), outside the sample and not inspected. Template-generated repositories with `fork: false` enter as distinct candidates.
+- **Protocol (search):** eligibility changes from `unknown` (001) to `pass` (002).

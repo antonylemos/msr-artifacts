@@ -15,16 +15,17 @@ annotation:
 
 # 029 — wtlin1228/micro-frontend-workspace
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| packages/app-mf-1/package.json:17 | devDependencies | @module-federation/rsbuild-plugin | ^0.18.3 | module-federation | Yes | packages/app-mf-1/rsbuild.config.ts:1-11 (configuração padrão do build Rsbuild importa e invoca `pluginModuleFederation`); packages/app-mf-1/module-federation.config.ts:1-13 (`createModuleFederationConfig` configura exposes e shared); packages/app-mf-1/package.json:5-8 (build Rsbuild) |
-| packages/app-mf-2/package.json:17 | devDependencies | @module-federation/rsbuild-plugin | ^0.18.3 | module-federation | Yes | packages/app-mf-2/rsbuild.config.ts:1-11 (configuração padrão do build Rsbuild importa e invoca `pluginModuleFederation`); packages/app-mf-2/module-federation.config.ts:1-13 (`createModuleFederationConfig` configura exposes e shared); packages/app-mf-2/package.json:5-8 (build Rsbuild) |
-| packages/host/package.json:11 | dependencies | @module-federation/enhanced | ^0.18.3 | module-federation | Yes | packages/host/src/app-loaders/module-federation.ts:1-4 e packages/host/src/app-loaders/module-federation.ts:27-43 (importa e invoca `registerRemotes` e `loadRemote` de `@module-federation/enhanced/runtime`); packages/host/src/routes/apps.$baseRoute.tsx:7-24 (rota importa o manager e chama `getRemote`); packages/host/src/routes/apps.$baseRoute.tsx:39-55 (renderiza o componente remoto) |
-| packages/host/package.json:13 | dependencies | qiankun | ^2.10.16 | qiankun | Yes | packages/host/src/app-loaders/qiankun.ts:2-26 (importa e invoca `registerMicroApps` e `start`); packages/host/src/app-loaders/index.ts:2 (reexporta `registerQiankunApps`); packages/host/src/App.tsx:3-11 (componente principal chama o registro em `useEffect`) |
-| packages/host/package.json:19 | devDependencies | @module-federation/rsbuild-plugin | ^0.18.3 | module-federation | Yes | packages/host/rsbuild.config.ts:1-8 (configuração padrão do build Rsbuild importa e invoca `pluginModuleFederation`); packages/host/module-federation.config.ts:1-16 (`createModuleFederationConfig` configura o host); packages/host/package.json:5-8 (build Rsbuild) |
+| packages/app-mf-1/package.json:17 | devDependencies | @module-federation/rsbuild-plugin | ^0.18.3 | module-federation | Yes | packages/app-mf-1/rsbuild.config.ts:1-11 (the default Rsbuild build configuration imports and invokes `pluginModuleFederation`); packages/app-mf-1/module-federation.config.ts:1-13 (`createModuleFederationConfig` configures exposes and shared); packages/app-mf-1/package.json:5-8 (Rsbuild build) |
+| packages/app-mf-2/package.json:17 | devDependencies | @module-federation/rsbuild-plugin | ^0.18.3 | module-federation | Yes | packages/app-mf-2/rsbuild.config.ts:1-11 (the default Rsbuild build configuration imports and invokes `pluginModuleFederation`); packages/app-mf-2/module-federation.config.ts:1-13 (`createModuleFederationConfig` configures exposes and shared); packages/app-mf-2/package.json:5-8 (Rsbuild build) |
+| packages/host/package.json:11 | dependencies | @module-federation/enhanced | ^0.18.3 | module-federation | Yes | packages/host/src/app-loaders/module-federation.ts:1-4 and packages/host/src/app-loaders/module-federation.ts:27-43 (imports and invokes `registerRemotes` and `loadRemote` from `@module-federation/enhanced/runtime`); packages/host/src/routes/apps.$baseRoute.tsx:7-24 (the route imports the manager and calls `getRemote`); packages/host/src/routes/apps.$baseRoute.tsx:39-55 (renders the remote component) |
+| packages/host/package.json:13 | dependencies | qiankun | ^2.10.16 | qiankun | Yes | packages/host/src/app-loaders/qiankun.ts:2-26 (imports and invokes `registerMicroApps` and `start`); packages/host/src/app-loaders/index.ts:2 (re-exports `registerQiankunApps`); packages/host/src/App.tsx:3-11 (the main component calls registration in `useEffect`) |
+| packages/host/package.json:19 | devDependencies | @module-federation/rsbuild-plugin | ^0.18.3 | module-federation | Yes | packages/host/rsbuild.config.ts:1-8 (the default Rsbuild build configuration imports and invokes `pluginModuleFederation`); packages/host/module-federation.config.ts:1-16 (`createModuleFederationConfig` configures the host); packages/host/package.json:5-8 (Rsbuild build) |
 
-## Notas
+## Notes
 
-- O objeto remotes do host está vazio; os registros efetivos são feitos pela API de runtime com APP_CONFIGS (packages/host/src/configs/apps.ts:9-34). Cada resposta usa a importação do pacote correspondente, sem transferir evidência entre o plugin e o runtime.
+- The host remotes object is empty; actual registrations are made through the runtime API with APP_CONFIGS (packages/host/src/configs/apps.ts:9-34). Each answer uses the import of the corresponding package, without transferring evidence between the plugin and runtime.
+

@@ -20,80 +20,80 @@ annotation:
 
 # 365 — raxsj/auth-mfe
 
-## Contexto
+## Context
 
-Cópia, com histórico, da aplicação `@edx/frontend-app-authn` (`package.json:2`), a MFE de autenticação da Open edX: “a micro-frontend application responsible for the login, registration and password reset functionality” (`README.rst:11`). É uma SPA React com `@edx/frontend-platform`. Uma das rotas, `EmbeddableRegistrationPage`, é feita para ser embutida numa página externa: ao concluir o registro, avisa o `window.parent` por `postMessage` (`src/register/components/EmbeddableRegistrationPage.jsx:114–117`).
+Copy, with history, of application `@edx/frontend-app-authn` (`package.json:2`), the Open edX authentication MFE: “a micro-frontend application responsible for the login, registration and password reset functionality” (`README.rst:11`). It is a React SPA with `@edx/frontend-platform`. One route, `EmbeddableRegistrationPage`, is designed for embedding in an external page: after registration, it notifies `window.parent` through `postMessage` (`src/register/components/EmbeddableRegistrationPage.jsx:114–117`).
 
-O branch padrão do repositório é `embeddable-registration-form`. Os dois últimos commits, do titular `rax` e feitos na interface do GitHub, alteram só `src/MainApp.jsx` e comentam o import de `Logistration` e a rota de login com `#`, sintaxe que não é comentário válido em JSX (`src/MainApp.jsx:24`, `46–51`). O nome do repositório não é usado como evidência.
+The repository’s default branch is `embeddable-registration-form`. The last two commits, by owner `rax` through the GitHub interface, change only `src/MainApp.jsx` and comment out the `Logistration` import and login route with `#`, syntax that is not a valid JSX comment (`src/MainApp.jsx:24`, `46–51`). The repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:366` registra rank 365, ID 1016015339, status `cloned`, branch `embeddable-registration-form` e o commit do front matter, que é o HEAD do clone e de `origin/embeddable-registration-form`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:366` records rank 365, ID 1016015339, status `cloned`, branch `embeddable-registration-form` and the front matter commit, which is the HEAD of the clone and of `origin/embeddable-registration-form`. Every Git command in the clone used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. There was no installation, build, execution or network access.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:366` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:16103` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:16107` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:366` records strategy `terminology` and eligibility `pass`. The sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). The ID appears in `data/discovery/mfe-round-001/candidates.csv:16103` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:16107` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2025-07` e `path` vazio:
+A `sqlite3 -readonly` query against tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns the same two hits in each round, from endpoint `repositories`, with subquery `…#created:2025-07` and an empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | 2026-10-07T22:23:25.993Z / 2026-10-08T15:55:00.383Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | 2026-10-07T22:55:12.654Z / 2026-10-08T16:06:06.142Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2025-07-01..2025-07-31`.
+The effective queries append `pushed:>=2025-04-01 created:2025-07-01..2025-07-31`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem JavaScript, `fork: false`, tamanho 21.088;
-- branch padrão `embeddable-registration-form`;
-- criação em 2025-07-08T11:11:16Z, push em 2025-07-08T11:19:14Z.
+Hit metadata:
+- null description, no topics, language JavaScript, `fork: false`, size 21.088;
+- default branch `embeddable-registration-form`;
+- created at 2025-07-08T11:11:16Z, pushed at 2025-07-08T11:19:14Z.
 
-Grafias no `README.rst`:
-- “micro-frontend”: `README.rst:11` e `:53` (“The authentication micro-frontend also requires…”);
+Spellings in `README.rst`:
+- “micro-frontend”: `README.rst:11` and `:53` (“The authentication micro-frontend also requires…”);
 - “micro-frontends”: `README.rst:51` (“All micro-frontends have a shared set of required environment variables…”).
 
-A última alteração do README é `54319c6` (2023-05-04), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+The last README change is `54319c6` (2023-05-04), before the October 2026 collections. The README at the SHA does not postdate the searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 260 entradas, 250 arquivos regulares `100644` e 10 executáveis `100755` (dotfiles, `LICENSE` e alguns arquivos de `src/`); zero symlinks e zero gitlinks. Uma única aplicação (`src/`, `public/`, `webpack.prod.config.js` sobre `@edx/frontend-build`). | contexto |
-| Unidade embutível | `src/MainApp.jsx:42–45`: rota `REGISTER_EMBEDDED_PAGE`, liberada só com o parâmetro `host` (`src/common-components/EmbeddedRegistrationRoute.jsx:13–22`). `EmbeddableRegistrationPage.jsx:114–117`: `window.parent.postMessage({ action: REDIRECT, … }, host)`. A página é feita para ser carregada por uma página hospedeira externa, que não está no repositório. | moderada |
-| Plataforma | `README.rst:11–13`, `29`, `51`: MFE da Open edX, implantada com o Devstack e configurada por variáveis comuns a todas as MFEs da plataforma. | contexto |
-| Alteração do titular | `68ee3f7` e o SHA `8cbfd69` (2025-07-08, “Update MainApp.jsx”, autor `rax`, committer `GitHub`) alteram só `src/MainApp.jsx`, deixando `#import …` e `# <Route …>` (`:24`, `46–51`), que não são comentários válidos em JSX. | contexto |
-| Busca de mecanismos | `git grep` em `src/` por `<iframe`, `federation` e `remoteEntry`: nada. O único vínculo externo é o `postMessage` ao `parent`. | ausente |
+| Structure | `git ls-tree -r` at the SHA: 260 entries, 250 regular files `100644` and 10 executables `100755` (dotfiles, `LICENSE` and some files in `src/`); zero symlinks and zero gitlinks. A single application (`src/`, `public/`, `webpack.prod.config.js` over `@edx/frontend-build`). | context |
+| Embeddable unit | `src/MainApp.jsx:42–45`: route `REGISTER_EMBEDDED_PAGE`, allowed only with parameter `host` (`src/common-components/EmbeddedRegistrationRoute.jsx:13–22`). `EmbeddableRegistrationPage.jsx:114–117`: `window.parent.postMessage({ action: REDIRECT, … }, host)`. The page is designed for loading by an external hosting page, which is not in the repository. | moderate |
+| Platform | `README.rst:11–13`, `29`, `51`: Open edX MFE, deployed with Devstack and configured through variables common to all platform MFEs. | context |
+| Owner change | `68ee3f7` and SHA `8cbfd69` (2025-07-08, “Update MainApp.jsx”, author `rax`, committer `GitHub`) change only `src/MainApp.jsx`, leaving `#import …` and `# <Route …>` (`:24`, `46–51`), which are not valid JSX comments. | context |
+| Mechanism search | `git grep` in `src/` for `<iframe`, `federation` and `remoteEntry`: nothing. The only external connection is `postMessage` to `parent`. | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso:
-- **Histórico do SHA:** 1.049 commits, 137 merges, de 2020-09-28 a 2025-07-08, quase todos de mantenedores e bots da Open edX/2U (Zainab Amir, renovate, Waheed Ahmed, Syed Sajjad Hussain Shah).
-- **Refs:** 1.515 commits em todos os refs, com 38 branches remotos (`master`, `open-release/*`, `2u-main` etc.), não considerados.
-- **Titular:** só os dois commits de `rax` em `src/MainApp.jsx`.
+Non-shallow clone:
+- **SHA history:** 1.049 commits, 137 merges, from 2020-09-28 to 2025-07-08, almost all by Open edX/2U maintainers and bots (Zainab Amir, renovate, Waheed Ahmed, Syed Sajjad Hussain Shah).
+- **Refs:** 1.515 commits across all refs, with 38 remote branches (`master`, `open-release/*`, `2u-main` etc.), not considered.
+- **Owner:** only the two commits by `rax` in `src/MainApp.jsx`.
 
-Nenhum blob histórico foi lido e não houve objeto ausente.
+No historical blob was read and there was no missing object.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend; a página hospedeira que embutiria o registro não está no repositório nem é referenciada por configuração de composição. |
-| Q2 | Yes | A aplicação tem build e implantação próprios (`package.json`, `fedx-scripts`). |
-| Q3 | Undetermined | A página é feita para ser embutida por um host externo (`postMessage` ao `parent`), mas esse host não é observável. |
-| Q4 | Undetermined | O mecanismo seria a incorporação por iframe pela página externa, não configurada aqui. |
-| Q5 | No | MFE da plataforma Open edX, de terceiros, copiada com alterações mínimas, como nos finais 037/010/035. |
+| Q1 | No | A single frontend unit; the hosting page that would embed registration is neither in the repository nor referenced by composition configuration. |
+| Q2 | Yes | The application has its own build and deployment (`package.json`, `fedx-scripts`). |
+| Q3 | Undetermined | The page is designed for embedding by an external host (`postMessage` to `parent`), but this host is not observable. |
+| Q4 | Undetermined | The mechanism would be iframe embedding by the external page, not configured here. |
+| Q5 | No | Third-party Open edX platform MFE, copied with minimal changes, as in finals 037/010/035. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pelo vetor do final 037 (q1 no, q2 yes, q3/q4 undetermined, q5 no). A unidade pertence a um ecossistema de plataforma de terceiros (Open edX) e não a uma decomposição do autor do repositório.
-- Também não seria `MFE-unit` comum: o “host externo” é o site da plataforma, e o mecanismo, iframe com `postMessage`, cai na decisão em aberto sobre iframe.
-- **Comparação:** como 218 (cópia de pacote Open edX) e 348 (cópia da Learning MFE). Diferentemente de 348, aqui não há outra unidade referenciada pela aplicação.
-- **Campos:**
+- `Non-MFE` under the vector of final 037 (q1 no, q2 yes, q3/q4 undetermined, q5 no). The unit belongs to a third-party platform ecosystem (Open edX), rather than a decomposition by the repository author.
+- It would not be an ordinary `MFE-unit` either: the “external host” is the platform website, and the mechanism, iframe with `postMessage`, falls under the open iframe decision.
+- **Comparison:** like 218 (Open edX package copy) and 348 (Learning MFE copy). Unlike 348, here no other unit is referenced by the application.
+- **Fields:**
   - `frontend_units: 1`, `unit_organization: single-unit`, `approaches: []`;
-  - `ui_technologies: [react]`, `build_tools: []` (build encapsulado em `@edx/frontend-build`, como em 218);
-  - `repo_type: production` (aplicação de produção da Open edX).
-- Não há decisão aberta.
+  - `ui_technologies: [react]`, `build_tools: []` (build encapsulated in `@edx/frontend-build`, as in 218);
+  - `repo_type: production` (Open edX production application).
+- There is no open decision.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ2:** registro embutível com `postMessage` ao `parent` restrito ao `host` informado na URL, um padrão de integração da plataforma Open edX/2U.
-- **Protocolo (amostra):** a mesma conta tem `raxsj/brand-digcomp` e `raxsj/edly-io-brand` nas rodadas, fora da amostra e não inspecionados. O branch padrão do repositório não é o principal do upstream.
-- **Protocolo (busca):** as grafias estão literalmente no `README.rst`. A elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ2:** embeddable registration with `postMessage` to `parent` restricted to the `host` provided in the URL, an Open edX/2U platform integration pattern.
+- **Protocol (sample):** the same account has `raxsj/brand-digcomp` and `raxsj/edly-io-brand` in the rounds, outside the sample and not inspected. The repository’s default branch is not the upstream main branch.
+- **Protocol (search):** spellings are literally in `README.rst`. Eligibility changes from `unknown` (001) to `pass` (002).

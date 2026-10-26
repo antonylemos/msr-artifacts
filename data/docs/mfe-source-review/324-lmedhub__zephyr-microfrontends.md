@@ -15,29 +15,29 @@ annotation:
 
 # 324 — lmedhub/zephyr-microfrontends
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-remote-import | frontend/apps/host/src/App.tsx:6 | frontend/apps/host | dynamic-loading | Yes | `React.lazy(() => import("remote_header/Header"))` carrega o `./Header` exposto pela unidade frontend/apps/remote-header (frontend/apps/remote-header/rspack.config.ts:74-78), declarada como remote `remote_header` em frontend/apps/host/rspack.config.ts:85; `App.tsx` é a entrada do build do host (frontend/apps/host/rspack.config.ts:10) |
-| src-remote-import | frontend/apps/host/src/App.tsx:7 | frontend/apps/host | dynamic-loading | Yes | `React.lazy(() => import("remote_footer/Footer"))` carrega o `./Footer` exposto pela unidade frontend/apps/remote-footer (frontend/apps/remote-footer/rspack.config.ts:74-78), remote `remote_footer` em frontend/apps/host/rspack.config.ts:86 |
-| src-remote-import | frontend/apps/host/src/utils/VueShortener.tsx:12 | frontend/apps/host | dynamic-loading | Yes | `await import("url_shortener/Shortener")` carrega o componente Vue `./Shortener` exposto pela unidade frontend/apps/url-shortener (frontend/apps/url-shortener/rspack.config.ts:75-78), remote `url_shortener` em frontend/apps/host/rspack.config.ts:87; o wrapper é importado em frontend/apps/host/src/App.tsx:4 e renderizado em frontend/apps/host/src/App.tsx:17 |
-| src-mount-call | frontend/apps/host/src/utils/VueShortener.tsx:16 | frontend/apps/host | runtime-composition | Yes | `app.mount(containerRef.current)` monta no host React o componente Vue da unidade frontend/apps/url-shortener, criado por `createApp(Shortener.default)` em frontend/apps/host/src/utils/VueShortener.tsx:15 com o `vue` carregado em frontend/apps/host/src/utils/VueShortener.tsx:10 |
+| src-remote-import | frontend/apps/host/src/App.tsx:6 | frontend/apps/host | dynamic-loading | Yes | `React.lazy(() => import("remote_header/Header"))` loads the `./Header` exposed by unit frontend/apps/remote-header (frontend/apps/remote-header/rspack.config.ts:74-78), declared as remote `remote_header` at frontend/apps/host/rspack.config.ts:85; `App.tsx` is the host build entry (frontend/apps/host/rspack.config.ts:10) |
+| src-remote-import | frontend/apps/host/src/App.tsx:7 | frontend/apps/host | dynamic-loading | Yes | `React.lazy(() => import("remote_footer/Footer"))` loads the `./Footer` exposed by unit frontend/apps/remote-footer (frontend/apps/remote-footer/rspack.config.ts:74-78), remote `remote_footer` at frontend/apps/host/rspack.config.ts:86 |
+| src-remote-import | frontend/apps/host/src/utils/VueShortener.tsx:12 | frontend/apps/host | dynamic-loading | Yes | `await import("url_shortener/Shortener")` loads Vue component `./Shortener` exposed by unit frontend/apps/url-shortener (frontend/apps/url-shortener/rspack.config.ts:75-78), remote `url_shortener` at frontend/apps/host/rspack.config.ts:87; the wrapper is imported at frontend/apps/host/src/App.tsx:4 and rendered at frontend/apps/host/src/App.tsx:17 |
+| src-mount-call | frontend/apps/host/src/utils/VueShortener.tsx:16 | frontend/apps/host | runtime-composition | Yes | `app.mount(containerRef.current)` mounts in the React host the Vue component of unit frontend/apps/url-shortener, created by `createApp(Shortener.default)` at frontend/apps/host/src/utils/VueShortener.tsx:15 with `vue` loaded at frontend/apps/host/src/utils/VueShortener.tsx:10 |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| manual | frontend/apps/host/src/App.tsx:13 | frontend/apps/host | runtime-composition | Yes | Renderiza `<RemoteHeader />` da unidade frontend/apps/remote-header dentro de `Suspense` (frontend/apps/host/src/App.tsx:12-14); componente resolvido em frontend/apps/host/src/App.tsx:6 e App montado em frontend/apps/host/src/App.tsx:27-28 |
-| manual | frontend/apps/host/src/App.tsx:21 | frontend/apps/host | runtime-composition | Yes | Renderiza `<RemoteFooter />` da unidade frontend/apps/remote-footer dentro de `Suspense` (frontend/apps/host/src/App.tsx:20-22); componente resolvido em frontend/apps/host/src/App.tsx:7 |
+| manual | frontend/apps/host/src/App.tsx:13 | frontend/apps/host | runtime-composition | Yes | Renders `<RemoteHeader />` from unit frontend/apps/remote-header inside `Suspense` (frontend/apps/host/src/App.tsx:12-14); component resolved at frontend/apps/host/src/App.tsx:6 and App mounted at frontend/apps/host/src/App.tsx:27-28 |
+| manual | frontend/apps/host/src/App.tsx:21 | frontend/apps/host | runtime-composition | Yes | Renders `<RemoteFooter />` from unit frontend/apps/remote-footer inside `Suspense` (frontend/apps/host/src/App.tsx:20-22); component resolved at frontend/apps/host/src/App.tsx:7 |
 
-## Resumo
+## Summary
 
-Construções com composição: 6 (dynamic-loading: 3, runtime-composition: 3).
+Constructs participating in composition: 6 (dynamic-loading: 3, runtime-composition: 3).
 
-## Notas
+## Notes
 
-- `<VueShortener />` (frontend/apps/host/src/App.tsx:17) renderiza o wrapper local do host; a montagem do componente remoto já está na linha frontend/apps/host/src/utils/VueShortener.tsx:16, por isso não vira linha manual.
-- A busca do passo 4 achou também `import("./App")` em frontend/apps/host/src/index.ts:1, interno e fora do build (a entrada é `./src/App.tsx`, frontend/apps/host/rspack.config.ts:10), e `createApp(App)`/`app.mount("#app")` em frontend/apps/url-shortener/src/index.ts:18-19, que monta a própria unidade no modo standalone. Nenhum é construção de composição.
-- Não há custom elements, iframes nem mecanismo de comunicação entre unidades no código das quatro apps.
-- Os remotes são resolvidos por URLs `localhost` fixas (frontend/apps/host/rspack.config.ts:85-87); o `withZephyr()` (frontend/apps/host/rspack.config.ts:7) pode reescrevê-las na publicação, o que não aparece no código.
+- `<VueShortener />` (frontend/apps/host/src/App.tsx:17) renders the host’s local wrapper; remote component mounting is already in the frontend/apps/host/src/utils/VueShortener.tsx:16 row, so it does not become a manual row.
+- The step 4 search also found `import("./App")` at frontend/apps/host/src/index.ts:1, internal and outside the build (entry is `./src/App.tsx`, frontend/apps/host/rspack.config.ts:10), and `createApp(App)`/`app.mount("#app")` at frontend/apps/url-shortener/src/index.ts:18-19, mounting the unit itself in standalone mode. Neither is a composition construct.
+- There are no custom elements, iframes or communication mechanism between units in the four apps’ code.
+- The remotes are resolved through fixed `localhost` URLs (frontend/apps/host/rspack.config.ts:85-87); `withZephyr()` (frontend/apps/host/rspack.config.ts:7) may rewrite them on publication, which does not appear in code.

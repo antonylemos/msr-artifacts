@@ -20,47 +20,47 @@ annotation:
 
 # 008 — mrmechazilla/host-app
 
-## Contexto
+## Context
 
-- **Abordagem de implementação:** Module Federation (`@angular-architects/module-federation`, Angular 19) com manifesto dinâmico
-- **Tipo de repositório:** example/proof of concept (5 commits, remotes em `localhost`, README só com o título)
+- **Implementation approach:** Module Federation (`@angular-architects/module-federation`, Angular 19) with a dynamic manifest
+- **Repository type:** example/proof of concept (5 commits, remotes on `localhost`, README containing only the title)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Tecnologia | `package.json:14`: `@angular-architects/module-federation` ^19; `:18` Angular 19; `:10` script `run:all` com o `mf-dev-server` | fraca |
-| Estrutura | Uma única app Angular no repositório: o host (shell) com `header`, `footer` e `unavailable` | contexto |
-| Configuração (host) | `webpack.config.js:3-12`: `withModuleFederationPlugin` com `name: 'host-mfe'`, `exposes` vazio e `shareAll` singleton; sem `remotes` estáticos (resolvidos pelo manifesto) | moderada |
-| Configuração (manifesto) | `public/mf.manifest.json:2-10`: remote `users-mfe` (`localhost:4202/remoteEntry.js`, `./users`, `usersRoutes`, `type: routes`); `:11-19`: remote `payments-mfe` (`localhost:4203`, `./payments`, `PaymentsModule`, `type: module`) | forte |
-| Código-fonte (bootstrap) | `src/main.ts:2-6`: `loadManifest("mf.manifest.json")` antes de `import('./bootstrap')` | forte |
-| Código-fonte (composição) | `src/app/app.routes.ts:5-14`: rota `''` com `loadChildren` → `loadRemoteModule({ type: 'manifest', remoteName: 'users-mfe', exposedModule: './users' })` → `m.usersRoutes`, com fallback em erro | forte |
-| Código-fonte (layout) | `src/app/app.component.html:1-2`: `<app-header>` do host + `<router-outlet>` onde as rotas do remote são montadas; `header.component.html:8-9` com links `/users` e `/payments` | moderada |
-| Código-fonte | `src/app/core/models/remote-config.ts:1-9` modela tipos de integração (`module`, `routes`, `component`); `src/app/shared/utils/remote-loader.ts:1-28` é um loader genérico com fallback, **inteiro comentado** (em evolução) | ambígua |
-| Composição (lacuna) | `payments-mfe` está no manifesto e no header, mas nenhuma rota do host o carrega; pode ser carregado pelas rotas do próprio `users-mfe`, o que não é observável aqui | ambígua |
-| Build/deploy | Nenhum CI/CD, Dockerfile ou config de hospedagem; `webpack.prod.config.js:1` reusa a config de dev | fraca |
-| Documentação | `README.md:1`: só "# Host Application Documentation" | ausente |
-| Histórico | `2227f83` "add and configure module federation"; `292d70d` "ingest a routing file from remote microfrontend"; `4885b01` "update integration setup for users mfe" | moderada |
+| Technology | `package.json:14`: `@angular-architects/module-federation` ^19; `:18` Angular 19; `:10` `run:all` script with `mf-dev-server` | weak |
+| Structure | A single Angular app in the repository: the host (shell) with `header`, `footer` and `unavailable` | context |
+| Configuration (host) | `webpack.config.js:3-12`: `withModuleFederationPlugin` with `name: 'host-mfe'`, empty `exposes` and singleton `shareAll`; no static `remotes` (resolved through the manifest) | moderate |
+| Configuration (manifest) | `public/mf.manifest.json:2-10`: remote `users-mfe` (`localhost:4202/remoteEntry.js`, `./users`, `usersRoutes`, `type: routes`); `:11-19`: remote `payments-mfe` (`localhost:4203`, `./payments`, `PaymentsModule`, `type: module`) | strong |
+| Source code (bootstrap) | `src/main.ts:2-6`: `loadManifest("mf.manifest.json")` before `import('./bootstrap')` | strong |
+| Source code (composition) | `src/app/app.routes.ts:5-14`: `''` route with `loadChildren` → `loadRemoteModule({ type: 'manifest', remoteName: 'users-mfe', exposedModule: './users' })` → `m.usersRoutes`, with fallback on error | strong |
+| Source code (layout) | `src/app/app.component.html:1-2`: host's `<app-header>` + `<router-outlet>` where remote routes are mounted; `header.component.html:8-9` with `/users` and `/payments` links | moderate |
+| Source code | `src/app/core/models/remote-config.ts:1-9` models integration types (`module`, `routes`, `component`); `src/app/shared/utils/remote-loader.ts:1-28` is a generic loader with fallback, **entirely commented out** (evolving) | ambiguous |
+| Composition (gap) | `payments-mfe` is in the manifest and header, but no host route loads it; it may be loaded by `users-mfe`'s own routes, which is not observable here | ambiguous |
+| Build/deploy | No CI/CD, Dockerfile or hosting config; `webpack.prod.config.js:1` reuses the development config | weak |
+| Documentation | `README.md:1`: only "# Host Application Documentation" | absent |
+| History | `2227f83` "add and configure module federation"; `292d70d` "ingest a routing file from remote microfrontend"; `4885b01` "update integration setup for users mfe" | moderate |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | Yes | O host no repositório + `users-mfe` (e `payments-mfe`) referenciados pela config de composição (`public/mf.manifest.json:2-19`) |
-| Q2 | Yes | O host tem entry e build próprios; os remotes são externos e servidos separadamente (`localhost:4202`/`4203`), o que conta como Yes pelo critério operacional |
-| Q3 | Yes | O host monta as rotas do `users-mfe` no seu `router-outlet` (`app.routes.ts:5-14`, `app.component.html:1-2`) |
-| Q4 | Yes | `loadManifest` (`main.ts:4`) + `loadRemoteModule` em `loadChildren` (`app.routes.ts:8-13`), configurado e em uso para `users-mfe` |
-| Q5 | Yes | Q1–Q4 convergem para `users-mfe`; a lacuna de `payments-mfe` não afeta o resultado |
+| Q1 | Yes | The host in the repository + `users-mfe` (and `payments-mfe`) referenced by the composition config (`public/mf.manifest.json:2-19`) |
+| Q2 | Yes | The host has its own entry and build; remotes are external and served separately (`localhost:4202`/`4203`), which counts as Yes under the operational criterion |
+| Q3 | Yes | The host mounts `users-mfe` routes in its `router-outlet` (`app.routes.ts:5-14`, `app.component.html:1-2`) |
+| Q4 | Yes | `loadManifest` (`main.ts:4`) + `loadRemoteModule` in `loadChildren` (`app.routes.ts:8-13`), configured and in use for `users-mfe` |
+| Q5 | Yes | Q1–Q4 converge for `users-mfe`; the `payments-mfe` gap does not affect the result |
 
-## Motivo
+## Rationale
 
-- Q1–Q5 são todos Yes, o que satisfaz a regra de MFE-implemented.
-- Corresponde ao caso listado "repositories containing only the host, which references external remote units".
-- É o inverso do repositório 001 (`chart-app`, MFE-unit): aqui a composição é observável, porque o host declara e carrega os remotes. A unidade externa conta para Q1 por estar na config de composição.
-- Basta o par host → `users-mfe` para satisfazer o checklist; `payments-mfe` reforça a intenção, mas sua carga não é observável no host.
+- Q1–Q5 are all Yes, satisfying the MFE-implemented rule.
+- Matches the listed case "repositories containing only the host, which references external remote units".
+- This is the inverse of repository 001 (`chart-app`, MFE-unit): composition is observable here because the host declares and loads remotes. The external unit counts for Q1 because it is in the composition config.
+- The host → `users-mfe` pair is sufficient to satisfy the checklist; `payments-mfe` reinforces the intent, but its loading is not observable in the host.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1:** a evidência está toda em configuração (manifesto) e código de roteamento; documentação e deploy estão ausentes.
-- **RQ3:** relação host → remote mediada por manifesto em runtime, com tipos de integração diferentes por remote (`routes` vs `module`), como no repositório 006 (`eager-workspace1`).
-- **Protocolo (corpus):** os remotes `users-mfe` e `payments-mfe` não estão no repositório; a análise de artefatos fica restrita ao lado host.
+- **RQ1:** evidence comes entirely from configuration (manifest) and routing code; documentation and deployment are absent.
+- **RQ3:** host → remote relationship mediated by a manifest at runtime, with different integration types per remote (`routes` vs `module`), as in repository 006 (`eager-workspace1`).
+- **Protocol (corpus):** remotes `users-mfe` and `payments-mfe` are not in the repository; artifact analysis is restricted to the host side.

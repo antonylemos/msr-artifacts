@@ -16,40 +16,40 @@ annotation:
 
 # 009 — pmathulan/frontend-coding-exercises
 
-## Leitura do repositório
+## Repository overview
 
-Repositório de exercícios de uma avaliação técnica, cada um numa pasta com README próprio (README.md:1-11). Os exercícios não formam uma aplicação única. O único conjunto composto é `microfrontend-workspace`, um workspace Angular CLI com `shell`, `mfe1` e a biblioteca `shared`, que compartilham o `package.json` da pasta (microfrontend-workspace/package.json:5-11). Shell e mfe1 têm targets `build` próprios com `ngx-build-plus` e saídas separadas, `dist/shell` e `dist/mfe1` (microfrontend-workspace/angular.json:18-23, 126-131). A biblioteca `shared` é empacotada com `ng-packagr` (microfrontend-workspace/angular.json:228-231) e chega às aplicações por um alias para `./dist/shared` (ver a revisão de composição). Os outros exercícios são aplicações isoladas: `angular-frontend-practical` e `ssr-app`, Angular com SSR (ex.: ssr-app/angular.json:18-20, 38-40), e `react-performance-practical`, em Vite. A pasta `rate-limited-scheduler` é TypeScript sem UI.
+Technical assessment exercise repository, each exercise in a folder with its own README (README.md:1-11). The exercises do not form a single application. The only composed set is `microfrontend-workspace`, an Angular CLI workspace with `shell`, `mfe1` and library `shared`, sharing the folder’s `package.json` (microfrontend-workspace/package.json:5-11). Shell and mfe1 have their own `build` targets with `ngx-build-plus` and separate outputs, `dist/shell` and `dist/mfe1` (microfrontend-workspace/angular.json:18-23, 126-131). Library `shared` is packaged with `ng-packagr` (microfrontend-workspace/angular.json:228-231) and reaches applications through an alias for `./dist/shared` (see the composition review). The other exercises are isolated applications: `angular-frontend-practical` and `ssr-app`, Angular with SSR (for example: ssr-app/angular.json:18-20, 38-40), and `react-performance-practical`, using Vite. Folder `rate-limited-scheduler` is TypeScript without UI.
 
-Nenhuma aplicação tem Dockerfile, CI ou configuração de hospedagem própria. As únicas ocorrências `ops-*` da mineração estão na pasta `spa-helm/`, um chart Helm genérico "for deploying a frontend SPA" (spa-helm/Chart.yaml:1-4). O chart tem Deployment, Service, Ingress e um job que limpa o cache da Cloudflare depois de cada upgrade (spa-helm/templates/deployment.yaml:1-27; spa-helm/templates/service.yaml:1-13; spa-helm/templates/ingress.yaml:1-27; spa-helm/templates/post-upgrade-hook.yaml:1-32), além de rótulos comuns em spa-helm/templates/_helpers.tpl:1-8. Não há ocorrências `ci-*` nem `cfg-public-path`. Os valores são de modelo: imagem `dockerhub-username/spa-image:latest` e host `spa.example.com` (spa-helm/values.yaml:3-5, 17-18). Nada liga o chart a uma pasta: não há Dockerfile que gere a imagem nem README que o mencione.
+No application has its own Dockerfile, CI or hosting configuration. The only mining `ops-*` occurrences are in folder `spa-helm/`, a generic Helm chart "for deploying a frontend SPA" (spa-helm/Chart.yaml:1-4). The chart has Deployment, Service, Ingress and a job clearing Cloudflare cache after each upgrade (spa-helm/templates/deployment.yaml:1-27; spa-helm/templates/service.yaml:1-13; spa-helm/templates/ingress.yaml:1-27; spa-helm/templates/post-upgrade-hook.yaml:1-32), plus common labels at spa-helm/templates/_helpers.tpl:1-8. There are no `ci-*` or `cfg-public-path` occurrences. Values are templates: image `dockerhub-username/spa-image:latest` and host `spa.example.com` (spa-helm/values.yaml:3-5, 17-18). Nothing connects the chart to a folder: no Dockerfile generates the image and no README mentions it.
 
-Os dois exercícios com SSR trazem um script que roda o servidor Node já construído (`serve:ssr:*`, ex.: ssr-app/package.json:10). O README do ssr-app só descreve estratégias genéricas de deploy (ssr-app/README.md:44-57), e cita um `dist/angular-optimized-ssr` que não corresponde à saída `dist/ssr-app` do projeto (ssr-app/README.md:51; ssr-app/angular.json:20).
+The two SSR exercises provide a script running the already built Node server (`serve:ssr:*`, for example: ssr-app/package.json:10). The ssr-app README only describes generic deployment strategies (ssr-app/README.md:44-57) and cites a `dist/angular-optimized-ssr` that does not match project output `dist/ssr-app` (ssr-app/README.md:51; ssr-app/angular.json:20).
 
-## Aplicações
+## Applications
 
-| # | Aplicação | Build | Deploy | Onde é servida | Versionamento | Artefatos |
+| # | Application | Build | Deploy | Where served | Versioning | Artifacts |
 |---|---|---|---|---|---|---|
-| 1 | angular-frontend-practical | separado | Undetermined | — | No | angular-frontend-practical/angular.json:17-22 (target `build`, saída `dist/angular-frontend-practical`); angular-frontend-practical/package.json:7 (`ng build`); spa-helm/Chart.yaml:1-4 (chart genérico sem vínculo com a pasta) |
-| 2 | microfrontend-workspace/projects/mfe1 | separado | Undetermined | `http://localhost:4201` em desenvolvimento (microfrontend-workspace/angular.json:191) | No | microfrontend-workspace/angular.json:125-131 (target `build`, saída `dist/mfe1`); microfrontend-workspace/angular.json:150 (webpack próprio); spa-helm/Chart.yaml:1-4 (chart genérico sem vínculo com a pasta) |
-| 3 | microfrontend-workspace/projects/shell | separado | Undetermined | `http://localhost:4200` em desenvolvimento (microfrontend-workspace/angular.json:83) | No | microfrontend-workspace/angular.json:17-23 (target `build`, saída `dist/shell`); microfrontend-workspace/angular.json:42 (webpack próprio); spa-helm/Chart.yaml:1-4 (chart genérico sem vínculo com a pasta) |
-| 4 | react-performance-practical | separado | Undetermined | — | No | react-performance-practical/vite.config.ts:6-11 (configuração Vite); react-performance-practical/package.json:8 (`tsc -b && vite build`); spa-helm/Chart.yaml:1-4 (chart genérico sem vínculo com a pasta) |
-| 5 | ssr-app | separado | Undetermined | — | No | ssr-app/angular.json:17-22 (target `build`, saída `dist/ssr-app`); ssr-app/package.json:7 (`ng build`); spa-helm/Chart.yaml:1-4 (chart genérico sem vínculo com a pasta) |
+| 1 | angular-frontend-practical | separate | Undetermined | — | No | angular-frontend-practical/angular.json:17-22 (target `build`, output `dist/angular-frontend-practical`); angular-frontend-practical/package.json:7 (`ng build`); spa-helm/Chart.yaml:1-4 (generic chart unconnected to the folder) |
+| 2 | microfrontend-workspace/projects/mfe1 | separate | Undetermined | `http://localhost:4201` in development (microfrontend-workspace/angular.json:191) | No | microfrontend-workspace/angular.json:125-131 (target `build`, output `dist/mfe1`); microfrontend-workspace/angular.json:150 (own webpack); spa-helm/Chart.yaml:1-4 (generic chart unconnected to the folder) |
+| 3 | microfrontend-workspace/projects/shell | separate | Undetermined | `http://localhost:4200` in development (microfrontend-workspace/angular.json:83) | No | microfrontend-workspace/angular.json:17-23 (target `build`, output `dist/shell`); microfrontend-workspace/angular.json:42 (own webpack); spa-helm/Chart.yaml:1-4 (generic chart unconnected to the folder) |
+| 4 | react-performance-practical | separate | Undetermined | — | No | react-performance-practical/vite.config.ts:6-11 (Vite configuration); react-performance-practical/package.json:8 (`tsc -b && vite build`); spa-helm/Chart.yaml:1-4 (generic chart unconnected to the folder) |
+| 5 | ssr-app | separate | Undetermined | — | No | ssr-app/angular.json:17-22 (target `build`, output `dist/ssr-app`); ssr-app/package.json:7 (`ng build`); spa-helm/Chart.yaml:1-4 (generic chart unconnected to the folder) |
 
-## Observações
+## Observations
 
-**1. angular-frontend-practical.** Projeto Angular independente, com manifesto, lockfile e build próprios, e SSR. O Deploy é `Undetermined` só por causa do chart genérico, que poderia servir a qualquer SPA do repositório, ou a nenhuma (ver a Decisão registrada). A versão `0.0.0` não é usada.
+**1. angular-frontend-practical.** Independent Angular project, with its own manifest, lockfile and build, and SSR. Deploy is `Undetermined` only because of the generic chart, which could serve any repository SPA or none (see the Recorded decision). Version `0.0.0` is unused.
 
-**2. microfrontend-workspace/projects/mfe1.** Target e saída próprios dentro do workspace, com a mesma instalação de dependências do shell. É o remote do shell e serve seu `remoteEntry.js` na porta 4201 em desenvolvimento. O `run:all` do workspace sobe os dois servidores de desenvolvimento juntos (microfrontend-workspace/package.json:10). Não há publicação.
+**2. microfrontend-workspace/projects/mfe1.** Own target and output within the workspace, with the same dependency installation as shell. This is shell’s remote and serves its `remoteEntry.js` on port 4201 in development. Workspace `run:all` starts both development servers together (microfrontend-workspace/package.json:10). There is no publication.
 
-**3. microfrontend-workspace/projects/shell.** Mesmo arranjo, porta 4200. O host só aponta para o mfe1 em `localhost` (ver a revisão de composição). Não há configuração de produção dos remotes.
+**3. microfrontend-workspace/projects/shell.** Same arrangement, port 4200. The host only points to mfe1 at `localhost` (see the composition review). There is no production remote configuration.
 
-**4. react-performance-practical.** Projeto Vite independente, com build próprio. A versão `0.0.0` não é usada.
+**4. react-performance-practical.** Independent Vite project with its own build. Version `0.0.0` is unused.
 
-**5. ssr-app.** Projeto Angular com SSR, com build próprio e um script que roda o servidor construído (ssr-app/package.json:10). O README descreve o deploy só em termos genéricos (ssr-app/README.md:44-57).
+**5. ssr-app.** Angular project with SSR, its own build and a script running the built server (ssr-app/package.json:10). README describes deployment only in generic terms (ssr-app/README.md:44-57).
 
-## Resumo
+## Summary
 
-Aplicações: 5. Build (separado: 5). Deploy (Undetermined: 5). Versionamento independente: 0.
+Applications: 5. Build (separate: 5). Deploy (Undetermined: 5). Independent versioning: 0.
 
-## Decisão registrada
+## Recorded decision
 
-O chart `spa-helm/` é um artefato de deploy genérico, sem vínculo com nenhuma pasta (imagem placeholder, sem Dockerfile, sem menção em README). Decisão do pesquisador (2026-10-21): `Undetermined` nas cinco aplicações, porque há um artefato cuja relação com elas não se resolve no snapshot (evidência ambígua), e não ausência de artefato. A mineração passou a cobrir pastas de chart com outros nomes (registrada no documento do projeto original `docs/mfe-config-revisions.md`, que não está incluído neste pacote).
+Chart `spa-helm/` is a generic deployment artifact unconnected to any folder (placeholder image, no Dockerfile, no README mention). Researcher decision (2026-10-21): `Undetermined` for all five applications because an artifact exists whose relationship to them is unresolved in the snapshot (ambiguous evidence), rather than an absent artifact. Mining began covering chart folders with other names (recorded in the original project document `docs/mfe-config-revisions.md`, not included in this package).

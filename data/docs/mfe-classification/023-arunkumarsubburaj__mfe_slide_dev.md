@@ -20,34 +20,34 @@ annotation:
 
 # 023 — arunkumarsubburaj/mfe_slide_dev
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** não é projeto de software com aplicação (apresentação Slidev sobre micro-frontends)
+- **Repository type:** not a software project containing an application (Slidev presentation about micro-frontends)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | O repositório tem 5 arquivos versionados: `.gitignore`, `README.md`, `package.json`, `slides.md` e o lockfile | ausente |
-| Tecnologia | `package.json:2-4` "microfrontend-presentation", "Microfrontend Architecture Presentation with Slidev"; `:10-14`: `@slidev/cli`, temas Slidev e Vue (dependências do Slidev) | contexto |
-| Documentação | `README.md:1-3` "A professional presentation about Microfrontend Architecture built with Slidev"; `slides.md` (1.567 linhas) com seções "What are Microfrontends?" (`:125`), "Live Demo" (`:220`), "Integration Patterns" (`:313`) e trechos de código de Module Federation como conteúdo dos slides | contexto |
-| Configuração / Código-fonte / Composição / Build/deploy | Inexistentes; o código de MF existe só como texto de slide | ausente |
+| Structure | The repository has 5 tracked files: `.gitignore`, `README.md`, `package.json`, `slides.md` and the lockfile | absent |
+| Technology | `package.json:2-4` "microfrontend-presentation", "Microfrontend Architecture Presentation with Slidev"; `:10-14`: `@slidev/cli`, Slidev themes and Vue (Slidev dependencies) | context |
+| Documentation | `README.md:1-3` "A professional presentation about Microfrontend Architecture built with Slidev"; `slides.md` (1,567 lines) with sections "What are Microfrontends?" (`:125`), "Live Demo" (`:220`), "Integration Patterns" (`:313`) and Module Federation code excerpts as slide content | context |
+| Configuration / Source code / Composition / Build/deploy | Nonexistent; MF code exists only as slide text | absent |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend de aplicação; só o deck Slidev (`slides.md`) |
-| Q2 | No | Não há unidades |
-| Q3 | No | Não há host, shell nem root config |
-| Q4 | No | Nenhum mecanismo de composição; trechos de MF são conteúdo de slide |
-| Q5 | No | Q1–Q4 convergem |
+| Q1 | No | No frontend application units; only the Slidev deck (`slides.md`) |
+| Q2 | No | No units |
+| Q3 | No | No host, shell or root config |
+| Q4 | No | No composition mechanism; MF excerpts are slide content |
+| Q5 | No | Q1–Q4 converge |
 
-## Motivo
+## Rationale
 
-- É uma apresentação sobre a arquitetura de micro-frontends, não uma implementação. A "Live Demo" citada nos slides (`slides.md:220-226`) não está no repositório.
-- Corresponde a "repositories mentioning micro-frontends without implementing them". Na filtragem automática do protocolo (seção 3.2), cabe em "repositories that are purely documentation without an implementation".
+- This is a presentation about micro-frontends architecture, not an implementation. The "Live Demo" cited in the slides (`slides.md:220-226`) is not in the repository.
+- Matches "repositories mentioning micro-frontends without implementing them". In the protocol's automatic filtering (section 3.2), it fits "repositories that are purely documentation without an implementation".
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** trechos de configuração de Module Federation dentro de Markdown (`slides.md`) geram falso positivo em buscas por código como `ModuleFederationPlugin`.
+- **RQ1 (misleading signals):** Module Federation configuration excerpts within Markdown (`slides.md`) produce false positives in code searches such as `ModuleFederationPlugin`.

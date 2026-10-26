@@ -15,22 +15,22 @@ annotation:
 
 # 121 — dearjay22/Group2_INFO8985
 
-## Construções da mineração
+## Mined constructs
 
-| Padrão | Arquivo:linha | Unidade | Categoria | Composição | Observação |
+| Pattern | File:line | Unit | Category | Composition | Observation |
 |---|---|---|---|---|---|
-| src-iframe | frontend/shell-app/src/App.js:32 | frontend/shell-app | embedding | Yes | O shell embute o `products-mf` num `<iframe>` (linhas 32-36) quando `window.location.pathname === "/products"` (linhas 4 e 31). O `src` vem de `getApiUrl()` (linhas 6-18), que no Codespaces monta `https://<codespace>-3001.app.github.dev` (linha 14); a porta 3001 é a do serviço `products-mf` (`docker-compose.yml:66-69`, `build: ./frontend/products-mf`, `3001:80`). Ativo: `App` é renderizado pela entrada `frontend/shell-app/src/index.js:4-12`. |
+| src-iframe | frontend/shell-app/src/App.js:32 | frontend/shell-app | embedding | Yes | The shell embeds `products-mf` in an `<iframe>` (lines 32-36) when `window.location.pathname === "/products"` (lines 4 and 31). The `src` comes from `getApiUrl()` (lines 6-18), which in Codespaces assembles `https://<codespace>-3001.app.github.dev` (line 14); port 3001 belongs to service `products-mf` (`docker-compose.yml:66-69`, `build: ./frontend/products-mf`, `3001:80`). Active: `App` is rendered by entry `frontend/shell-app/src/index.js:4-12`. |
 
-## Construções fora da mineração
+## Constructs outside mining
 
-Nenhuma construção adicional.
+No additional constructs.
 
-## Resumo
+## Summary
 
-Construções com composição: 1 (embedding: 1).
+Constructs participating in composition: 1 (embedding: 1).
 
-## Notas
+## Notes
 
-- Fora do Codespaces, `getApiUrl()` não tem `return` (`frontend/shell-app/src/App.js:6-18`) e o `src` do iframe fica `"undefined"`; a URL do `products-mf` só é montada para o host `*.app.github.dev` (linhas 8-15). Não há proxy para o `products-mf` no nginx do shell (`frontend/shell-app/nginx.conf:8-10`, só `try_files`).
-- A busca do passo 4 achou apenas `import('web-vitals')` em `frontend/shell-app/src/reportWebVitals.js:3` e `frontend/products-mf/src/reportWebVitals.js:3`, carga de biblioteca do template do CRA, não de outra unidade; não viram linha.
-- O `products-mf` não tem código de composição nem de comunicação (`postMessage`, eventos): renderiza `App` com dados locais de `products.json` (`frontend/products-mf/src/App.js:2,7-9`). `frontend/products-mf/src/ProductList.js` não é importado por nenhum arquivo.
+- Outside Codespaces, `getApiUrl()` has no `return` (`frontend/shell-app/src/App.js:6-18`) and the iframe `src` becomes `"undefined"`; the `products-mf` URL is assembled only for host `*.app.github.dev` (lines 8-15). There is no `products-mf` proxy in the shell nginx (`frontend/shell-app/nginx.conf:8-10`, only `try_files`).
+- The step 4 search found only `import('web-vitals')` at `frontend/shell-app/src/reportWebVitals.js:3` and `frontend/products-mf/src/reportWebVitals.js:3`, loading a CRA template library rather than another unit; these do not become rows.
+- `products-mf` has no composition or communication code (`postMessage`, events): it renders `App` with local `products.json` data (`frontend/products-mf/src/App.js:2,7-9`). `frontend/products-mf/src/ProductList.js` is not imported by any file.

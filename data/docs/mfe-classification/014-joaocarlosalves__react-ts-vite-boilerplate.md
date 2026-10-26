@@ -20,36 +20,36 @@ annotation:
 
 # 014 — joaocarlosalves/react-ts-vite-boilerplate
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** template (boilerplate React + TypeScript + Vite, "STILL IN PROGRESS", `README.md:3-5`)
+- **Repository type:** template (React + TypeScript + Vite boilerplate, "STILL IN PROGRESS", `README.md:3-5`)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Tecnologia | `package.json:14-22`: React 19, React Router, Jest, Babel, testing-library; nenhuma dependência de MFE | ausente |
-| Configuração | `vite.config.ts:9-17`: só `@vitejs/plugin-react` e cobertura de testes; sem federação, `build.lib` ou entries múltiplas | ausente |
-| Código-fonte | `src/main.tsx:3-16`: um único `createRoot` com `BrowserRouter`; páginas e layout (`src/pages/`, `src/layout/`) importados estaticamente | contrária |
-| Código-fonte | Nenhuma ocorrência de `federation`, `single-spa`, `customElements` ou `remoteEntry` | ausente |
-| Estrutura | Uma única app (um `package.json`, um `index.html`, um entry) | contrária |
-| Documentação | `README.md:24`: "micro frontend" aparece só na bio do autor, entre as competências profissionais | fraca |
+| Technology | `package.json:14-22`: React 19, React Router, Jest, Babel, testing-library; no MFE dependency | absent |
+| Configuration | `vite.config.ts:9-17`: only `@vitejs/plugin-react` and test coverage; no federation, `build.lib` or multiple entries | absent |
+| Source code | `src/main.tsx:3-16`: a single `createRoot` with `BrowserRouter`; pages and layout (`src/pages/`, `src/layout/`) imported statically | contrary |
+| Source code | No occurrences of `federation`, `single-spa`, `customElements` or `remoteEntry` | absent |
+| Structure | A single app (one `package.json`, one `index.html`, one entry) | contrary |
+| Documentation | `README.md:24`: "micro frontend" appears only in the author's bio among professional skills | weak |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Uma única unidade frontend (`src/main.tsx:15`) |
-| Q2 | No | Não há unidades a comparar |
-| Q3 | No | Não há host, shell nem root config |
-| Q4 | No | Nenhum mecanismo de composição |
-| Q5 | No | Q1–Q4 convergem |
+| Q1 | No | A single frontend unit (`src/main.tsx:15`) |
+| Q2 | No | No units to compare |
+| Q3 | No | No host, shell or root config |
+| Q4 | No | No composition mechanism |
+| Q5 | No | Q1–Q4 converge |
 
-## Motivo
+## Rationale
 
-- É um boilerplate de SPA React; nada nele prepara uma unidade para composição, então a exceção MFE-unit não se aplica.
-- Corresponde a "conventional frontend monoliths" e a "repositories mentioning micro-frontends without implementing them": o termo aparece só na bio do autor (`README.md:24`).
+- This is React SPA boilerplate; nothing in it prepares a unit for composition, so the MFE-unit exception does not apply.
+- Matches "conventional frontend monoliths" and "repositories mentioning micro-frontends without implementing them": the term appears only in the author's bio (`README.md:24`).
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** como no repositório 011, o termo vem da autodescrição profissional no README, não do projeto.
+- **RQ1 (misleading signals):** as in repository 011, the term comes from the professional self-description in the README, not the project.

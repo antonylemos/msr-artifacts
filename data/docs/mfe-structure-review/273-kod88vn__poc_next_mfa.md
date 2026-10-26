@@ -17,25 +17,25 @@ annotation:
 
 ## Workspace
 
-`package.json:4-7` com `workspaces` (`apps/*`, `packages/*`), orquestrado por `turbo.json:5-26`.
+`package.json:4-7` with `workspaces` (`apps/*`, `packages/*`), orchestrated by `turbo.json:5-26`.
 
-## Unidades
+## Units
 
-| Diretório | Marcadores | Manifesto | Entrada | Build | Workspace | Deploy | Unidade frontend | Motivo |
+| Directory | Markers | Manifest | Entry | Build | Workspace | Deploy | Frontend unit | Rationale |
 |---|---|---|---|---|---|---|---|---|
-| . | package.json | package.json:1-27 (manifesto da raiz, devDependencies `tsx` e `turbo`) | — | package.json:9 (`turbo build`, só delega aos pacotes do workspace) | — | — | No | Raiz do workspace npm, sem entrada nem configuração de build próprias. |
-| apps/duda | apps/duda/next.config.js;apps/duda/package.json | apps/duda/package.json | apps/duda/app/layout.tsx:15 (`DudaLayout`, App Router); apps/duda/app/page.tsx:9 (página `DudaPage` sob `basePath: '/duda'`) | apps/duda/next.config.js:5-23 (`basePath: '/duda'`, `transpilePackages`); apps/duda/package.json:6 (`next build`) | package.json:5 (`apps/*`) | — | Yes | App Next.js com entrada e build próprios |
-| apps/shell | apps/shell/next.config.js;apps/shell/package.json | apps/shell/package.json | apps/shell/app/layout.tsx:22 (`RootLayout`, App Router); apps/shell/app/page.tsx:46 (página `HomePage`, rota `/`) | apps/shell/next.config.js:5-44 (`rewrites()` para `/shop` e `/duda`); apps/shell/package.json:6 (`next build`) | package.json:5 (`apps/*`) | — | Yes | App Next.js com entrada e build próprios |
-| apps/shop | apps/shop/next.config.js;apps/shop/package.json | apps/shop/package.json | apps/shop/app/layout.tsx:25 (`ShopLayout`, App Router); apps/shop/app/page.tsx:65 (página `ShopPage` sob `basePath: '/shop'`) | apps/shop/next.config.js:5-42 (`basePath: '/shop'`, `transpilePackages`); apps/shop/package.json:6 (`next build`) | package.json:5 (`apps/*`) | — | Yes | App Next.js com entrada e build próprios |
-| packages/ui | packages/ui/package.json | packages/ui/package.json | — (packages/ui/package.json:5-11 `main`/`exports` apontam para `./src/index.ts`, biblioteca) | — (packages/ui/package.json:13-16 só `lint`/`type-check`; compilada pelas apps via `transpilePackages`) | package.json:6 (`packages/*`) | — | No | Biblioteca compartilhada `@repo/ui`, sem entrada de aplicação. |
+| . | package.json | package.json:1-27 (root manifest, devDependencies `tsx` and `turbo`) | — | package.json:9 (`turbo build`, only delegates to workspace packages) | — | — | No | npm workspace root, with neither entry nor build configuration of its own. |
+| apps/duda | apps/duda/next.config.js;apps/duda/package.json | apps/duda/package.json | apps/duda/app/layout.tsx:15 (`DudaLayout`, App Router); apps/duda/app/page.tsx:9 (`DudaPage` page under `basePath: '/duda'`) | apps/duda/next.config.js:5-23 (`basePath: '/duda'`, `transpilePackages`); apps/duda/package.json:6 (`next build`) | package.json:5 (`apps/*`) | — | Yes | Next.js app with its own entry and build |
+| apps/shell | apps/shell/next.config.js;apps/shell/package.json | apps/shell/package.json | apps/shell/app/layout.tsx:22 (`RootLayout`, App Router); apps/shell/app/page.tsx:46 (`HomePage` page, route `/`) | apps/shell/next.config.js:5-44 (`rewrites()` for `/shop` and `/duda`); apps/shell/package.json:6 (`next build`) | package.json:5 (`apps/*`) | — | Yes | Next.js app with its own entry and build |
+| apps/shop | apps/shop/next.config.js;apps/shop/package.json | apps/shop/package.json | apps/shop/app/layout.tsx:25 (`ShopLayout`, App Router); apps/shop/app/page.tsx:65 (`ShopPage` page under `basePath: '/shop'`) | apps/shop/next.config.js:5-42 (`basePath: '/shop'`, `transpilePackages`); apps/shop/package.json:6 (`next build`) | package.json:5 (`apps/*`) | — | Yes | Next.js app with its own entry and build |
+| packages/ui | packages/ui/package.json | packages/ui/package.json | — (packages/ui/package.json:5-11 `main`/`exports` point to `./src/index.ts`, library) | — (packages/ui/package.json:13-16 only `lint`/`type-check`; compiled by the apps through `transpilePackages`) | package.json:6 (`packages/*`) | — | No | Shared library `@repo/ui`, with no application entry. |
 
-## Resumo
+## Summary
 
-Aplicações frontend no snapshot: 3 (apps/duda, apps/shell, apps/shop).
+Frontend applications in the snapshot: 3 (apps/duda, apps/shell, apps/shop).
 
-## Notas
+## Notes
 
-- N = 3 coincide com `frontend_units: 3` da classificação.
-- O `matches.csv` não tem ocorrências `ci-*`; tem 1 `ws-workspaces` (package.json:4), 3 `ws-path-alias` (por exemplo apps/duda/tsconfig.json:24) e 2 `ops-cors` (apps/duda/next.config.js:16 e apps/shop/next.config.js:35); a declaração `workspaces` foi confirmada abrindo `package.json:4-7`.
-- Não há Dockerfile, workflow de CI nem configuração de hospedagem no snapshot; as apps sobem em portas locais fixas (apps/*/package.json:7 e `:9`).
-- Nas apps Next.js a entrada segue a convenção do App Router (`app/layout.tsx` + `page.tsx`), invocada por `next build`.
+- N = 3 matches the classification’s `frontend_units: 3`.
+- `matches.csv` has no `ci-*` occurrences; it has 1 `ws-workspaces` (package.json:4), 3 `ws-path-alias` (for example apps/duda/tsconfig.json:24) and 2 `ops-cors` (apps/duda/next.config.js:16 and apps/shop/next.config.js:35); the `workspaces` declaration was confirmed by opening `package.json:4-7`.
+- There is no Dockerfile, CI workflow or hosting configuration in the snapshot; the apps start on fixed local ports (apps/*/package.json:7 and `:9`).
+- In the Next.js apps, the entry follows the App Router convention (`app/layout.tsx` + `page.tsx`), invoked by `next build`.

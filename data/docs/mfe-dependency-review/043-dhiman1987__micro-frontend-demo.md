@@ -15,15 +15,16 @@ annotation:
 
 # 043 — dhiman1987/micro-frontend-demo
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| app3/package.json:13 | dependencies | @lit/react | ^1.0.7 | web-components | No | sem import ou invocação de `@lit/react` nos arquivos de código e build do snapshot (busca literal, excluindo lockfiles); apenas declaração em app3/package.json:13; app3/src/MyCounterLitElement.jsx:20-23 (chama `createComponent` sem importar a função ou o pacote) |
-| app3/package.json:15 | dependencies | lit | ^3.3.0 | web-components | Undetermined | app3/src/MyCounterLitElement.jsx:1-8 (importa `lit` e `lit/decorators.js`, estende `LitElement`); app3/src/MyCounterLitElement.jsx:16-23 (usa `html`, mas chama `createComponent` sem import); app3/vite.config.js:9-15 e app3/src/main.jsx:1 (build e entrada usam `MyCounterElement`, sem referência à variante Lit) |
+| app3/package.json:13 | dependencies | @lit/react | ^1.0.7 | web-components | No | no import or invocation of `@lit/react` in the snapshot code and build files (literal search, excluding lockfiles); only declared in app3/package.json:13; app3/src/MyCounterLitElement.jsx:20-23 (calls `createComponent` without importing the function or package) |
+| app3/package.json:15 | dependencies | lit | ^3.3.0 | web-components | Undetermined | app3/src/MyCounterLitElement.jsx:1-8 (imports `lit` and `lit/decorators.js`, extends `LitElement`); app3/src/MyCounterLitElement.jsx:16-23 (uses `html`, but calls `createComponent` without an import); app3/vite.config.js:9-15 and app3/src/main.jsx:1 (the build and entry point use `MyCounterElement`, with no reference to the Lit variant) |
 
-## Notas
+## Notes
 
-- As ocorrências same_package_matches e other_package_matches mostram custom elements nativos; não demonstram uso dos pacotes Lit.
-- A variante MyCounterLitElement.jsx não é importada nem referenciada por build ou HTML no snapshot (busca por nome do arquivo e tag my-counter-lit-app). Há código Lit, mas seu uso efetivo não pode ser confirmado; por isso lit recebeu Undetermined.
-- A chamada sem import a createComponent não demonstra invocação de @lit/react; não há import desse pacote em nenhum arquivo de código ou build.
+- The same_package_matches and other_package_matches occurrences show native custom elements; they do not demonstrate use of the Lit packages.
+- The MyCounterLitElement.jsx variant is neither imported nor referenced by build or HTML in the snapshot (search for the filename and my-counter-lit-app tag). There is Lit code, but its actual use cannot be confirmed; therefore lit received Undetermined.
+- The call to createComponent without an import does not demonstrate invocation of @lit/react; there is no import of this package in any code or build file.
+

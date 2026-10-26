@@ -17,24 +17,24 @@ annotation:
 
 ## Workspace
 
-Nenhuma declaração de workspace.
+No workspace declaration.
 
-## Unidades
+## Units
 
-| Diretório | Marcadores | Manifesto | Entrada | Build | Workspace | Deploy | Unidade frontend | Motivo |
+| Directory | Markers | Manifest | Entry | Build | Workspace | Deploy | Frontend unit | Rationale |
 |---|---|---|---|---|---|---|---|---|
-| content-app | content-app/index.html;content-app/package.json;content-app/vite.config.ts | content-app/package.json | content-app/index.html:11 (`<script type="module" src="/src/main.ts">`, entrada do Vite); content-app/src/main.ts:8-22 (`singleSpaVue({ createApp, appOptions: { render() { return h(App) } } })` e lifecycles exportados) | content-app/vite.config.ts:1-7 + content-app/package.json:8 (`"build": "vue-tsc -b && vite build"`) | — | — | Yes | Aplicação Vue single-spa com entrada própria e build Vite próprio. |
-| root-app | root-app/index.html;root-app/package.json;root-app/vite.config.ts | root-app/package.json | root-app/index.html:43 (`<script type="module" src="/src/main.ts">`, entrada do Vite); root-app/src/main.ts:5 (`createApp(App).mount('#app')`) | root-app/vite.config.ts:1-7 + root-app/package.json:8 (`"build": "vue-tsc -b && vite build"`) | — | — | Yes | Host Vue com entrada própria e build Vite próprio. |
-| root-classic | root-classic/package.json;root-classic/webpack.config.js | root-classic/package.json | root-classic/webpack.config.js:7-9 (`singleSpaDefaults({ orgName, projectName: "root-config", ... })`, entrada `src/org-root-config.ts` pela convenção do `webpack-config-single-spa-ts`); root-classic/webpack.config.js:18-20 (`HtmlWebpackPlugin` com `template: "src/index.ejs"`); root-classic/src/org-root-config.ts:9-20 (registra as aplicações, ativa o layout e chama `start()`) | root-classic/webpack.config.js:1-28 + root-classic/package.json:10-11 (`"build": "concurrently npm:build:*"`, `"build:webpack": "webpack --mode=production"`) | — | — | Yes | Root config single-spa com entrada própria e build webpack próprio. |
-| topbar-app | topbar-app/index.html;topbar-app/package.json;topbar-app/vite.config.ts | topbar-app/package.json | topbar-app/index.html:11 (`<script type="module" src="/src/main.ts">`, entrada do Vite); topbar-app/vite.config.ts:10 (`input: 'src/main.ts'`); topbar-app/src/main.ts:8-22 (`singleSpaVue(...)` e lifecycles exportados) | topbar-app/vite.config.ts:8-19 (`rollupOptions` com `format: "system"` e `entryFileNames: 'app.js'`) + topbar-app/package.json:8 (`"build": "vue-tsc -b && vite build"`) | — | — | Yes | Aplicação Vue single-spa com entrada própria e build Vite próprio. |
+| content-app | content-app/index.html;content-app/package.json;content-app/vite.config.ts | content-app/package.json | content-app/index.html:11 (`<script type="module" src="/src/main.ts">`, Vite entry); content-app/src/main.ts:8-22 (`singleSpaVue({ createApp, appOptions: { render() { return h(App) } } })` and exported lifecycles) | content-app/vite.config.ts:1-7 + content-app/package.json:8 (`"build": "vue-tsc -b && vite build"`) | — | — | Yes | single-spa Vue application with its own entry and Vite build. |
+| root-app | root-app/index.html;root-app/package.json;root-app/vite.config.ts | root-app/package.json | root-app/index.html:43 (`<script type="module" src="/src/main.ts">`, Vite entry); root-app/src/main.ts:5 (`createApp(App).mount('#app')`) | root-app/vite.config.ts:1-7 + root-app/package.json:8 (`"build": "vue-tsc -b && vite build"`) | — | — | Yes | Vue host with its own entry and Vite build. |
+| root-classic | root-classic/package.json;root-classic/webpack.config.js | root-classic/package.json | root-classic/webpack.config.js:7-9 (`singleSpaDefaults({ orgName, projectName: "root-config", ... })`, `src/org-root-config.ts` entry by `webpack-config-single-spa-ts` convention); root-classic/webpack.config.js:18-20 (`HtmlWebpackPlugin` with `template: "src/index.ejs"`); root-classic/src/org-root-config.ts:9-20 (registers applications, activates the layout and calls `start()`) | root-classic/webpack.config.js:1-28 + root-classic/package.json:10-11 (`"build": "concurrently npm:build:*"`, `"build:webpack": "webpack --mode=production"`) | — | — | Yes | single-spa root config with its own entry and webpack build. |
+| topbar-app | topbar-app/index.html;topbar-app/package.json;topbar-app/vite.config.ts | topbar-app/package.json | topbar-app/index.html:11 (`<script type="module" src="/src/main.ts">`, Vite entry); topbar-app/vite.config.ts:10 (`input: 'src/main.ts'`); topbar-app/src/main.ts:8-22 (`singleSpaVue(...)` and exported lifecycles) | topbar-app/vite.config.ts:8-19 (`rollupOptions` with `format: "system"` and `entryFileNames: 'app.js'`) + topbar-app/package.json:8 (`"build": "vue-tsc -b && vite build"`) | — | — | Yes | single-spa Vue application with its own entry and Vite build. |
 
-## Resumo
+## Summary
 
-Aplicações frontend no snapshot: 4 (content-app, root-app, root-classic, topbar-app).
+Frontend applications in the snapshot: 4 (content-app, root-app, root-classic, topbar-app).
 
-## Notas
+## Notes
 
-- A contagem coincide com `frontend_units: 4` da classificação (dois hosts alternativos e dois remotos).
-- Não há `package.json` na raiz; os `package.json` e `tsconfig*.json` marcados como `workspace-config` no `artifacts.csv` não declaram `workspaces` nem projetos, e não há ocorrências `ws-*`, `ops-*` ou `ci-*` no `matches.csv`. Não há Dockerfile, CI nem configuração de hospedagem no snapshot; `root-classic/.husky/pre-commit:4` só roda formatação, testes e lint.
-- Nos remotos, `content-app/src/main.ts:6` e `topbar-app/src/main.ts:6` deixam `createApp(App).mount('#app')` comentado: a entrada exporta só os lifecycles e não monta a UI sozinha. A entrada inicia a UI quando um host chama `mount`, como nos remotos single-spa de outras revisões.
-- `root-app/src/modules/Topbar/` tem uma cópia do topbar sem `package.json` nem build e não está no `units.csv`; o import dela está comentado (`root-app/src/App.vue:3` e `7`). Faz parte do `root-app` e não falta como unidade.
+- The count matches the classification’s `frontend_units: 4` (two alternative hosts and two remotes).
+- There is no `package.json` at the root; the `package.json` and `tsconfig*.json` files marked as `workspace-config` in `artifacts.csv` declare neither `workspaces` nor projects, and there are no `ws-*`, `ops-*` or `ci-*` occurrences in `matches.csv`. There is no Dockerfile, CI or hosting configuration in the snapshot; `root-classic/.husky/pre-commit:4` only runs formatting, tests and lint.
+- In the remotes, `content-app/src/main.ts:6` and `topbar-app/src/main.ts:6` leave `createApp(App).mount('#app')` commented out: the entry only exports lifecycles and does not mount the UI on its own. The entry starts the UI when a host calls `mount`, as in the single-spa remotes in other reviews.
+- `root-app/src/modules/Topbar/` has a copy of topbar without `package.json` or build and is not in `units.csv`; its import is commented out (`root-app/src/App.vue:3` and `7`). It is part of `root-app` and is not a missing unit.

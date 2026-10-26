@@ -20,76 +20,76 @@ annotation:
 
 # 218 — Shashank3778/striverra
 
-## Contexto
+## Context
 
-Cópia, com histórico completo, do pacote `@edx/frontend-component-header` da Open edX (`package.json:2–5`, `23–32`): “A generic header for Open edX micro-frontend applications” (`README.rst:11`). É uma biblioteca de componentes React (cabeçalhos desktop, mobile e de aprendizado), publicada em npm e instalada como dependência pelas MFEs da plataforma: “run the following command in your MFE: npm i --save @edx/frontend-component-header” (`README.rst:59–61`).
+Copy, with complete history, of Open edX package `@edx/frontend-component-header` (`package.json:2–5`, `23–32`): “A generic header for Open edX micro-frontend applications” (`README.rst:11`). React component library (desktop, mobile and learning headers), published on npm and installed as dependency by platform MFEs: “run the following command in your MFE: npm i --save @edx/frontend-component-header” (`README.rst:59–61`).
 
-Os pontos de extensão são `PluginSlot` do `@openedx/frontend-plugin-framework` (por exemplo `src/plugin-slots/DesktopHeaderSlot/index.jsx:1–19`). A partir de 2025-11-04, o titular adicionou um tema próprio (“striverra theme header”) e versionou `dist/`. O snapshot é o branch padrão `headermfe`. O nome do repositório não é usado como evidência.
+Extension points are `PluginSlot` from `@openedx/frontend-plugin-framework` (for example `src/plugin-slots/DesktopHeaderSlot/index.jsx:1–19`). From 2025-11-04 onward, owner added own theme (“striverra theme header”) and versioned `dist/`. Snapshot is default branch `headermfe`. Repository name is not used as evidence.
 
-`data/samples/mfe-sample-001/clones.csv:219` registra rank 218, ID 1139783096, status `cloned`, branch `headermfe` e o commit do front matter, que é o HEAD do clone e de `origin/headermfe`. Todo comando Git no clone usou `GIT_NO_LAZY_FETCH=1`, com leitura por `${SHA}:caminho`. Não houve instalação, build, execução ou acesso à rede.
+`data/samples/mfe-sample-001/clones.csv:219` records rank 218, ID 1139783096, status `cloned`, branch `headermfe` and front-matter commit, which is clone HEAD and `origin/headermfe`. Every clone Git command used `GIT_NO_LAZY_FETCH=1`, reading through `${SHA}:caminho`. No installation, build, execution or network access occurred.
 
-## Proveniência na amostra
+## Sample provenance
 
-`data/samples/mfe-sample-001/sample.csv:219` registra a estratégia `terminology` e elegibilidade `pass`. A amostra vem da rodada 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). O ID consta em `data/discovery/mfe-round-001/candidates.csv:23764` (`unknown`) e `data/discovery/mfe-round-002/candidates.csv:23771` (`pass`).
+`data/samples/mfe-sample-001/sample.csv:219` records strategy `terminology` and eligibility `pass`. Sample comes from round 002 (`data/samples/mfe-sample-001/manifest.json:2–5`). ID appears in `data/discovery/mfe-round-001/candidates.csv:23764` (`unknown`) and `data/discovery/mfe-round-002/candidates.csv:23771` (`pass`).
 
-Consulta `sqlite3 -readonly` às tabelas `hits`, `queries` e `subqueries` das duas rodadas, filtrada pelo ID, retorna os mesmos dois hits em cada rodada, do endpoint `repositories`, com subconsulta `…#created:2026-01` e `path` vazio:
+`sqlite3 -readonly` query of tables `hits`, `queries` and `subqueries` from both rounds, filtered by ID, returns same two hits in each round, at endpoint `repositories`, with subquery `…#created:2026-01` and empty `path`:
 
-| Consulta (`q`) | Coleta 001 / 002 (UTC) |
+| Query (`q`) | Collection 001 / 002 (UTC) |
 |---|---|
 | `terminology-micro-frontend-repositories`: `"micro frontend" in:name,description,readme` | 2026-10-07T22:29:52.087Z / 2026-10-08T15:57:22.004Z |
 | `terminology-micro-frontends-repositories`: `"micro frontends" in:name,description,readme` | 2026-10-07T22:59:26.116Z / 2026-10-08T16:07:42.103Z |
 
-As consultas efetivas acrescentam `pushed:>=2025-04-01 created:2026-01-01..2026-01-31`.
+Effective queries append `pushed:>=2025-04-01 created:2026-01-01..2026-01-31`.
 
-Metadados do hit:
-- descrição nula, sem tópicos, linguagem JavaScript, `fork: false`, tamanho 10.177;
-- criação em 2026-01-22T12:10:21Z, push em 2026-01-22T12:53:04Z.
+Hit metadata:
+- null description, no topics, JavaScript language, `fork: false`, size 10.177;
+- creation at 2026-01-22T12:10:21Z, push at 2026-01-22T12:53:04Z.
 
-Grafias no README:
-- “micro-frontend”: `README.rst:11` (“A generic header for Open edX micro-frontend applications”), também em `36`, `59`, `77` e `97`;
+README spellings:
+- “micro-frontend”: `README.rst:11` (“A generic header for Open edX micro-frontend applications”), also in `36`, `59`, `77` and `97`;
 - “micro-frontends”: `README.rst:53` (“intended to be used in micro-frontends like frontend-app-authentication”).
 
-A busca de frase trata o hífen como separador.
+Phrase search treats hyphen as separator.
 
-A última alteração do `README.rst` é `02533b0` (2025-07-04, upstream), anterior às coletas de outubro de 2026. O README do SHA não é posterior às buscas.
+Last change to `README.rst` is `02533b0` (2025-07-04, upstream), before October 2026 collections. README at the SHA is not later than searches.
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | `git ls-tree -r` no SHA: 361 entradas, 360 arquivos regulares `100644` e 1 executável `100755` (`public/index.html`); zero symlinks e zero gitlinks. `src/` tem 142 entradas (componentes e `plugin-slots/`), e `dist/` tem 191 (build versionado pelo titular); há também `example/`, `public/`, `webpack.dev.config.js`, `Makefile` e workflows upstream. | contexto |
-| Configuração | `package.json:2–5`: `"name": "@edx/frontend-component-header"`, `"main": "dist/index.js"`, `files: ["/dist"]` (`:20–22`); `peerDependencies` de `@edx/frontend-platform`, `@openedx/paragon`, `react`, `react-router-dom` (`:66–73`). É pacote npm consumido por MFEs, não unidade implantável própria. Não há `ModuleFederationPlugin`, `remotes`, `registerApplication` ou import map. | contrária |
-| Documentação | `README.rst:11`, `36`, `59–61`, `97`: o componente é instalado e importado pelas MFEs da Open edX, que o integram em build time. | contrária |
-| Código-fonte | `src/plugin-slots/DesktopHeaderSlot/index.jsx:1–19`: `PluginSlot` com ID `org.openedx.frontend.layout.header_desktop.v1`, que permite à plataforma substituir ou estender o cabeçalho. A composição por plugins é feita pela plataforma Open edX, não por este repositório. | contexto |
-| Busca | `git grep -i` por `micro.?front`, `mfe` e `federation` em `README.rst`, `package.json`, `catalog-info.yaml` e `.env.development`: só textos de documentação (`README.rst`; `catalog-info.yaml:8`). | ausente |
+| Structure | `git ls-tree -r` at the SHA: 361 entries, 360 regular files `100644` and 1 executable `100755` (`public/index.html`); zero symlinks and zero gitlinks. `src/` has 142 entries (components and `plugin-slots/`), and `dist/` 191 (owner-versioned build); also `example/`, `public/`, `webpack.dev.config.js`, `Makefile` and upstream workflows. | context |
+| Configuration | `package.json:2–5`: `"name": "@edx/frontend-component-header"`, `"main": "dist/index.js"`, `files: ["/dist"]` (`:20–22`); `peerDependencies` for `@edx/frontend-platform`, `@openedx/paragon`, `react`, `react-router-dom` (`:66–73`). Npm package consumed by MFEs, not own deployable unit. No `ModuleFederationPlugin`, `remotes`, `registerApplication` or import map. | contrary |
+| Documentation | `README.rst:11`, `36`, `59–61`, `97`: component is installed/imported by Open edX MFEs, integrating it at build time. | contrary |
+| Source code | `src/plugin-slots/DesktopHeaderSlot/index.jsx:1–19`: `PluginSlot` with ID `org.openedx.frontend.layout.header_desktop.v1`, allowing platform to replace or extend header. Plugin composition is performed by Open edX platform, not this repository. | context |
+| Search | `git grep -i` for `micro.?front`, `mfe` and `federation` in `README.rst`, `package.json`, `catalog-info.yaml` and `.env.development`: only documentation text (`README.rst`; `catalog-info.yaml:8`). | absent |
 
-## Autoria e histórico
+## Authorship and history
 
-Clone não raso; 642 commits, 63 merges.
-- **Upstream:** a raiz é `afe6705` (2019-09-13, Adam Butterworth, “fix: initial commit”). A maior parte do histórico é da Open edX e bots: `renovate[bot]` 250, Renovate Bot 85, mantenedores da edX/2U e outros.
-- **Titular:** `Shashank3778 <anku3778@gmail.com>` tem 44 commits, de `477de4a` (2025-11-04, “striverra theme header first commit changed the design”) ao SHA `86b6abf` (2026-01-22, “headermfe”). São ajustes de tema, abas, menu de usuário e `dist/`.
+Non-shallow clone; 642 commits, 63 merges.
+- **Upstream:** root is `afe6705` (2019-09-13, Adam Butterworth, “fix: initial commit”). Most history is Open edX and bots: `renovate[bot]` 250, Renovate Bot 85, edX/2U maintainers and others.
+- **Owner:** `Shashank3778 <anku3778@gmail.com>` has 44 commits, from `477de4a` (2025-11-04, “striverra theme header first commit changed the design”) to SHA `86b6abf` (2026-01-22, “headermfe”). Theme, tab, user-menu and `dist/` adjustments.
 
-O repositório é marcado `fork: false`, mas o histórico é o do projeto upstream. Nenhum blob histórico foi lido e não houve objeto ausente.
+Repository is marked `fork: false`, but history belongs to upstream project. No historical blob was read and no object was missing.
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | O repositório é uma biblioteca de componentes, não uma unidade frontend; nenhuma configuração referencia outras unidades. |
-| Q2 | No | Sem unidades frontend em composição, não há independência a avaliar. O pacote é integrado às MFEs como dependência npm. |
-| Q3 | No | Não há host, shell ou configuração raiz neste repositório; quem monta o cabeçalho são as MFEs da plataforma. |
-| Q4 | No | Nenhum mecanismo de composição configurado; os `PluginSlot` são pontos de extensão consumidos pelo framework de plugins de terceiros. |
-| Q5 | No | Q1–Q4 são No: componente compartilhado de um ecossistema de MFEs, sem composição própria. |
+| Q1 | No | Repository is a component library, not frontend unit; no configuration references other units. |
+| Q2 | No | Without composed frontend units, no independence requires evaluation. Package integrates into MFEs as npm dependency. |
+| Q3 | No | No host, shell or root configuration in repository; platform MFEs mount header. |
+| Q4 | No | No configured composition mechanism; `PluginSlot` are extension points consumed by third-party plugin framework. |
+| Q5 | No | Q1–Q4 are No: shared component of an MFE ecosystem, without own composition. |
 
-## Motivo
+## Rationale
 
-- `Non-MFE` pela regra “at least one question is No”. Corresponde a “MFE frameworks and libraries” e, por analogia, a “component libraries”: é uma peça de UI compartilhada pelas MFEs da Open edX, distribuída por npm.
-- O ecossistema hospedeiro é de terceiros (Open edX), como em 102/074/080, mas aqui o repositório nem é uma unidade daquele ecossistema; é uma biblioteca, como 015 e o rascunho 165.
-- `repo_type: library`, `frontend_units: 0`, `unit_organization: none`, `approaches: []`, `ui_technologies: [react]`. `build_tools: []`, pois o build é encapsulado em `fedx-scripts`/`Makefile` (`package.json:10–18`), sem configuração de bundler do autor além do dev server.
-- Não há decisão aberta.
+- `Non-MFE` under rule “at least one question is No”. Matches “MFE frameworks and libraries” and, by analogy, “component libraries”: UI piece shared by Open edX MFEs, distributed through npm.
+- Hosting ecosystem is third-party (Open edX), as in 102/074/080, but repository here is not even a unit of that ecosystem; it is library, as 015 and draft 165.
+- `repo_type: library`, `frontend_units: 0`, `unit_organization: none`, `approaches: []`, `ui_technologies: [react]`. `build_tools: []`, since build is encapsulated in `fedx-scripts`/`Makefile` (`package.json:10–18`), without own bundler configuration beyond dev server.
+- No decision remains open.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** README de biblioteca de cabeçalho para “micro-frontend applications” da Open edX casa as consultas terminológicas; o branch `headermfe` reforça o rótulo.
-- **Protocolo (amostra):** cópia de projeto upstream (`fork: false`) com 642 commits, dos quais 44 do titular; o snapshot é o branch padrão `headermfe`.
-- **Protocolo (busca):** a elegibilidade muda de `unknown` (001) para `pass` (002).
+- **RQ1 (misleading signals):** Open edX header-library README for “micro-frontend applications” matches terminology queries; branch `headermfe` reinforces label.
+- **Protocol (sample):** upstream project copy (`fork: false`) with 642 commits, 44 by owner; snapshot is default branch `headermfe`.
+- **Protocol (search):** eligibility changes from `unknown` (001) to `pass` (002).

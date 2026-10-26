@@ -15,17 +15,18 @@ annotation:
 
 # 006 — Pandian-it/eager-workspace1
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| package.json:37 | devDependencies | @angular-architects/module-federation | ^20.0.0 | module-federation | Yes | projects/shell/webpack.config.js:1-18 (`withModuleFederationPlugin` e `shareAll` importados e invocados); projects/shell/project.json:19-40 (build com `@nx/angular:webpack-browser` referencia essa configuração) |
-| package.json:46 | devDependencies | @nx/angular | 21.3.11 | monorepo-tool | Yes | projects/shell/project.json:19-40 (executor `@nx/angular:webpack-browser` no target `build`); .github/workflows/Push-Event-To-Release.yml:140-145 (pipeline executa `nx build` para os projetos afetados) |
-| package.json:47 | devDependencies | @nx/workspace | 21.3.11 | monorepo-tool | No | sem import, executor ou invocação de `@nx/workspace` nos arquivos de código, configuração e workflows do snapshot (busca literal, excluindo lockfiles); apenas declaração em package.json:47 |
-| package.json:59 | devDependencies | nx | 21.3.11 | monorepo-tool | Yes | .github/workflows/User-Pull-Request.yml:36-54 (job ativo invoca `npx nx show projects` e `npx nx affected --target=build`); nx.json:3-20 (defaults de build e test configurados) |
+| package.json:37 | devDependencies | @angular-architects/module-federation | ^20.0.0 | module-federation | Yes | projects/shell/webpack.config.js:1-18 (`withModuleFederationPlugin` and `shareAll` imported and invoked); projects/shell/project.json:19-40 (build with `@nx/angular:webpack-browser` references this configuration) |
+| package.json:46 | devDependencies | @nx/angular | 21.3.11 | monorepo-tool | Yes | projects/shell/project.json:19-40 (executor `@nx/angular:webpack-browser` in target `build`); .github/workflows/Push-Event-To-Release.yml:140-145 (the pipeline runs `nx build` for affected projects) |
+| package.json:47 | devDependencies | @nx/workspace | 21.3.11 | monorepo-tool | No | no import, executor or invocation of `@nx/workspace` in the snapshot code, configuration and workflow files (literal search, excluding lockfiles); only declared in package.json:47 |
+| package.json:59 | devDependencies | nx | 21.3.11 | monorepo-tool | Yes | .github/workflows/User-Pull-Request.yml:36-54 (an active job invokes `npx nx show projects` and `npx nx affected --target=build`); nx.json:3-20 (build and test defaults configured) |
 
-## Notas
+## Notes
 
-- As ocorrências de tooling são as mesmas para os três pacotes Nx, mas não demonstram uso de `@nx/workspace`. Os comandos dos workflows invocam `nx`, e o executor de build pertence a `@nx/angular`.
-- Os jobs de lint/test em .github/workflows/User-Pull-Request.yml:88-103 estão comentados; não sustentam as respostas.
-- As configurações de federação pertencem aos pacotes em projects/<app>/ e usam a dependência declarada na raiz.
+- The tooling occurrences are the same for the three Nx packages, but do not demonstrate use of `@nx/workspace`. The workflow commands invoke `nx`, and the build executor belongs to `@nx/angular`.
+- The lint/test jobs in .github/workflows/User-Pull-Request.yml:88-103 are commented out; they do not support the answers.
+- The federation configurations belong to the packages in projects/<app>/ and use the dependency declared at the root.
+

@@ -13,35 +13,35 @@ annotation:
 
 # 275 — waelbaraka/GitHub-HelpDesk-DashBoard-main
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot contém um único commit, `ccb8398` (2025-06-22, “Tag and gruop finish”). Os nove arquivos consultados aparecem como adicionados nesse commit: as duas configurações Vite, o layout do host, o loader placeholder, o botão, a página e a entrada App do remoto, a semente do backend e o Readme. É a primeira presença observável desses artefatos no repositório; não permite localizar a introdução da composição em um desenvolvimento anterior à importação inicial.
+History up to snapshot contains a single commit, `ccb8398` (2025-06-22, “Tag and gruop finish”). Nine queried files appear as added in this commit: both Vite configurations, host layout, placeholder loader, button, remote page and App entry, backend seed and Readme. This is first observable presence of these artifacts in repository; it cannot locate composition introduction in development preceding initial import.
 
-No snapshot, a rota fixa do host consome a página remota, enquanto o loader genérico e os imports de retorno ao host estão inativos. A documentação e os comentários descrevem também nomes, rotas e consumos que o código atual não materializa. O próprio snapshot estabelece esses usos e ausências; o histórico foi consultado para saber se as divergências correspondem a estágios anteriores, abandono ou planejamento. Como todos os artefatos já coexistem no único commit, nenhuma dessas origens pôde ser determinada. As mensagens “NO MORE IMPORTS” e “now accepts props” são comentários presentes desde a primeira versão observável, não evidência de uma alteração inspecionável entre versões. Não houve falha por objeto ausente nas consultas realizadas.
+In snapshot, fixed host route consumes remote page, while generic loader and return imports to host are inactive. Documentation and comments also describe names, routes and consumption absent from current code. Snapshot itself establishes these usages and absences; history was consulted to determine whether discrepancies correspond to earlier stages, abandonment or planning. Since all artifacts already coexist in sole commit, none of these origins could be determined. Messages “NO MORE IMPORTS” and “now accepts props” are comments present since first observable version, rather than evidence of inspectable change between versions. No missing object failure occurred in queries performed.
 
-## Pontos
+## Points
 
-| # | Ponto | Origem | Pergunta | Commits | Resultado |
+| # | Point | Origin | Question | Commits | Result |
 |---|---|---|---|---|---|
-| 1 | O loader placeholder sem consumidor e o nome `whatsapp_app` divergente pertencem a um estágio anterior da composição? | 3.4.4 Notas (Frontend/src/modules/moduleLoader.js:1-35); 3.4.5 Leitura; 3.4.7 #1 | ativo ou abandonado | ccb8398, 2025-06-22, Tag and gruop finish | inconclusivo |
-| 2 | O carregamento por metadados de módulos foi implementado antes da rota fixa atual? | 3.4.4 Notas (Frontend/src/components/layouts/DashboardLayout.jsx:405-414); 3.4.5 Leitura; 3.4.7 #14 | estágios em conflito | ccb8398, 2025-06-22, Tag and gruop finish | inconclusivo |
-| 3 | A federação de retorno ao host e o Button sem consumidor foram usados antes da passagem de módulos por props? | 3.4.4 Notas (whatsapp-module-frontend/src/components/Button.jsx:5-7); 3.4.5 Leitura; 3.4.7 #3, #5, #20 | ativo ou abandonado | ccb8398, 2025-06-22, Tag and gruop finish | inconclusivo |
-| 4 | As bibliotecas listadas em shared mas não importadas pelo remoto são remanescentes de outro estágio de uso? | 3.4.7 #6 | uso de dependência | ccb8398, 2025-06-22, Tag and gruop finish | inconclusivo |
-| 5 | A descrição do hook da store para obter o usuário corresponde a um consumo anterior da página remota? | 3.4.7 #16 | estágios em conflito | ccb8398, 2025-06-22, Tag and gruop finish | inconclusivo |
+| 1 | Do unconsumed placeholder loader and mismatched name `whatsapp_app` belong to earlier composition stage? | 3.4.4 Notes (Frontend/src/modules/moduleLoader.js:1-35); 3.4.5 Overview; 3.4.7 #1 | active or abandoned | ccb8398, 2025-06-22, Tag and gruop finish | inconclusive |
+| 2 | Was loading through module metadata implemented before current fixed route? | 3.4.4 Notes (Frontend/src/components/layouts/DashboardLayout.jsx:405-414); 3.4.5 Overview; 3.4.7 #14 | conflicting stages | ccb8398, 2025-06-22, Tag and gruop finish | inconclusive |
+| 3 | Were federation back to host and unconsumed Button used before passing modules through props? | 3.4.4 Notes (whatsapp-module-frontend/src/components/Button.jsx:5-7); 3.4.5 Overview; 3.4.7 #3, #5, #20 | active or abandoned | ccb8398, 2025-06-22, Tag and gruop finish | inconclusive |
+| 4 | Are libraries listed in shared but not imported by remote remnants of another usage stage? | 3.4.7 #6 | dependency use | ccb8398, 2025-06-22, Tag and gruop finish | inconclusive |
+| 5 | Does description of store hook obtaining user correspond to earlier remote page consumption? | 3.4.7 #16 | conflicting stages | ccb8398, 2025-06-22, Tag and gruop finish | inconclusive |
 
-## Observações
+## Observations
 
-**1. Loader placeholder e nome divergente.** O snapshot mostra `loadRemoteComponent` retornando um componente fictício e declarando `whatsapp_app` numa configuração não utilizada (Frontend/src/modules/moduleLoader.js:8-32). As configurações efetivas usam `remote_app` (Frontend/vite.config.js:20; whatsapp-module-frontend/vite.config.js:13). O log registra a adição desses arquivos e do Readme no mesmo commit inicial. Não há versão anterior que mostre o loader funcional ou uma troca de nome. A inatividade atual está estabelecida; abandono, intenção e eventual origem externa permanecem inconclusivos.
+**1. Placeholder loader and mismatched name.** Snapshot shows `loadRemoteComponent` returning fictitious component and declaring `whatsapp_app` in unused configuration (Frontend/src/modules/moduleLoader.js:8-32). Effective configurations use `remote_app` (Frontend/vite.config.js:20; whatsapp-module-frontend/vite.config.js:13). Log records addition of these files and Readme in same initial commit. No earlier version shows working loader or name change. Current inactivity is established; abandonment, intention and possible external origin remain inconclusive.
 
-**2. Rotas por metadados e rota fixa.** O Readme descreve a rota da tabela Module (Readme.md:53), cuja semente existe (Backend/prisma/seed.js:18, 40). No layout, porém, a página remota tem rota fixa (Frontend/src/components/layouts/DashboardLayout.jsx:385), e o carregamento genérico está comentado (:409-411). Layout, semente e Readme foram adicionados em `ccb8398`. O histórico disponível não mostra uma versão em que o mecanismo documentado tenha funcionado, nem permite dizer que a rota fixa o substituiu. A divergência já existe na primeira presença observável.
+**2. Metadata routes and fixed route.** Readme describes route from Module table (Readme.md:53), whose seed exists (Backend/prisma/seed.js:18, 40). In layout, however, remote page has fixed route (Frontend/src/components/layouts/DashboardLayout.jsx:385), and generic loading is commented out (:409-411). Layout, seed and Readme were added in `ccb8398`. Available history shows no version where documented mechanism worked, nor supports saying fixed route replaced it. Discrepancy already exists at first observable presence.
 
-**3. Retorno ao host e Button.** O host expõe API e store, e o remoto declara `platform_host` (Frontend/vite.config.js:25-28; whatsapp-module-frontend/vite.config.js:25-28). Os imports de retorno estão comentados no Button, que aceita props (whatsapp-module-frontend/src/components/Button.jsx:5-10), mas não é o componente consumido pelo host. O layout passa API e hook à página remota (Frontend/src/components/layouts/DashboardLayout.jsx:144, 385). Todos esses arquivos já estão no commit inicial, inclusive os comentários que anunciam a mudança para props. Não é possível comprovar uma migração de imports federados para props, nem uso anterior do botão, apenas a coexistência atual de declarações sem consumo e da passagem por props.
+**3. Return to host and Button.** Host exposes API and store, and remote declares `platform_host` (Frontend/vite.config.js:25-28; whatsapp-module-frontend/vite.config.js:25-28). Return imports are commented out in Button, accepting props (whatsapp-module-frontend/src/components/Button.jsx:5-10), but not component consumed by host. Layout passes API and hook to remote page (Frontend/src/components/layouts/DashboardLayout.jsx:144, 385). All these files already exist in initial commit, including comments announcing transition to props. Neither migration from federated imports to props nor earlier button usage can be proven, only current coexistence of unconsumed declarations and prop passing.
 
-**4. Bibliotecas em shared.** A revisão 3.4.7 #6 distingue quatro bibliotecas usadas pelas duas unidades das quatro sem import ativo no remoto: `react-router-dom`, `axios`, `zustand` e `@tabler/icons-react`. As listas shared estão nas configurações adicionadas no commit inicial. A entrada App do remoto já contém o import de roteamento comentado (whatsapp-module-frontend/src/App.jsx:3-4). Não há estágio anterior observável para estabelecer se essas bibliotecas tiveram uso removido ou se apenas foram listadas preventivamente. A configuração não demonstra compartilhamento efetivo ou ausência de duplicação em runtime; o histórico não acrescenta essa comprovação.
+**4. Libraries in shared.** Review 3.4.7 #6 distinguishes four libraries used by both units from four without active remote import: `react-router-dom`, `axios`, `zustand` and `@tabler/icons-react`. Shared lists are in configurations added in initial commit. Remote App entry already contains commented-out routing import (whatsapp-module-frontend/src/App.jsx:3-4). No earlier observable stage establishes whether these libraries had usage removed or were merely listed preemptively. Configuration demonstrates neither effective sharing nor absence of runtime duplication; history adds no such proof.
 
-**5. Hook de autenticação.** O Readme afirma que a store fornece o usuário (Readme.md:84), mas a página só recebe e desestrutura `useAuthStoreHook`, sem chamá-lo (whatsapp-module-frontend/src/pages/WhatsAppChannelSettingsPage.jsx:7, 196; 3.4.7 #16). Readme, página e layout foram adicionados no mesmo commit. A contradição no snapshot não exige histórico para ser constatada; a pergunta histórica é se houve implementação anterior desse contrato. O único commit não responde. Não se pode atribuir a divergência a remoção de uso, planejamento ou cópia.
+**5. Authentication hook.** Readme states store provides user (Readme.md:84), but page only receives and destructures `useAuthStoreHook` without calling it (whatsapp-module-frontend/src/pages/WhatsAppChannelSettingsPage.jsx:7, 196; 3.4.7 #16). Readme, page and layout were added in same commit. Snapshot contradiction requires no history to establish; historical question is whether this contract had earlier implementation. Sole commit does not answer. Discrepancy cannot be attributed to usage removal, planning or copying.
 
-## Comandos
+## Commands
 
 ```sh
 LC_ALL=C docs/mfe-history-review/tools/fingerprint.sh | cmp - docs/mfe-history-review/tools/fingerprint-before.txt
@@ -50,8 +50,8 @@ docs/mfe-history-review/tools/hist.sh waelbaraka__GitHub-HelpDesk-DashBoard-main
 LC_ALL=C docs/mfe-history-review/tools/fingerprint.sh | cmp - docs/mfe-history-review/tools/fingerprint-before.txt
 ```
 
-As comparações anterior e posterior às consultas terminaram sem diferenças. As consultas ao clone foram feitas exclusivamente por hist.sh, até o commit do snapshot; os conteúdos citados foram lidos no snapshot da aquisição.
+Comparisons before and after queries completed without differences. Clone queries were performed exclusively through hist.sh up to snapshot commit; cited contents were read in acquisition snapshot.
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 1 (2025-06-22 a 2025-06-22). Pontos: 5 (esclarecido: 0, inconclusivo: 5, resolvido pelo snapshot: 0).
+Commits up to the snapshot: 1 (2025-06-22 to 2025-06-22). Points: 5 (clarified: 0, inconclusive: 5, resolved by the snapshot: 0).

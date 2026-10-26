@@ -15,14 +15,15 @@ annotation:
 
 # 348 — hd789789789/frontend-app-learning-old-v2
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| package.json:48 | dependencies | @openedx/frontend-plugin-framework | ^1.7.0 | other-mfe-framework | Yes | src/plugin-slots/HeaderSlot/index.jsx:2 (`import { PluginSlot } from '@openedx/frontend-plugin-framework'`); src/plugin-slots/HeaderSlot/index.jsx:9-10 (`<PluginSlot id="org.openedx.frontend.layout.header_learning.v1"`); src/generic/PageNotFound.jsx:8 e src/generic/PageNotFound.jsx:20 (importa e renderiza `<HeaderSlot />`); src/index.jsx:54 (rota `path="*"` com `<PageNotFound />`, no ponto de entrada da aplicação) |
+| package.json:48 | dependencies | @openedx/frontend-plugin-framework | ^1.7.0 | other-mfe-framework | Yes | src/plugin-slots/HeaderSlot/index.jsx:2 (`import { PluginSlot } from '@openedx/frontend-plugin-framework'`); src/plugin-slots/HeaderSlot/index.jsx:9-10 (`<PluginSlot id="org.openedx.frontend.layout.header_learning.v1"`); src/generic/PageNotFound.jsx:8 and src/generic/PageNotFound.jsx:20 (imports and renders `<HeaderSlot />`); src/index.jsx:54 (route `path="*"` with `<PageNotFound />`, at the application entry point) |
 
-## Notas
+## Notes
 
-- `same_package_matches` e `other_package_matches` estão vazios; toda a evidência veio da busca pelo nome do pacote fora das listas da inspeção.
-- Em `src/plugin-slots/`, 28 arquivos `index.*` de slots importam `PluginSlot` do pacote (por exemplo, `FooterSlot`, `SequenceContainerSlot`, `CourseBreadcrumbsSlot`); o `HeaderSlot` também é usado em `src/tab-page/TabPage.jsx:9` e `src/generic/CourseAccessErrorPage.jsx:7`. Basta uma cadeia até uma rota para o `Yes`.
-- `example.env.config.jsx:2` importa `DIRECT_PLUGIN` e `PLUGIN_OPERATIONS`, mas é um exemplo não referenciado por nenhum build no snapshot; não foi usado como evidência. Os `README.md` de `src/plugin-slots/` e `README.rst:137` só documentam o pacote. `src/setupTest.js:31-32` é mock de teste.
+- `same_package_matches` and `other_package_matches` are empty; all evidence came from searching for the package name outside the inspection lists.
+- In `src/plugin-slots/`, 28 slot `index.*` files import `PluginSlot` from the package (for example, `FooterSlot`, `SequenceContainerSlot`, `CourseBreadcrumbsSlot`); `HeaderSlot` is also used in `src/tab-page/TabPage.jsx:9` and `src/generic/CourseAccessErrorPage.jsx:7`. One chain reaching a route is enough for `Yes`.
+- `example.env.config.jsx:2` imports `DIRECT_PLUGIN` and `PLUGIN_OPERATIONS`, but is an example not referenced by any build in the snapshot; it was not used as evidence. The `README.md` files in `src/plugin-slots/` and `README.rst:137` only document the package. `src/setupTest.js:31-32` is a test mock.
+

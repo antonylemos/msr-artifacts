@@ -17,25 +17,25 @@ annotation:
 
 ## Workspace
 
-`pnpm-workspace.yaml:1-3` declara os pacotes `apps/*` e `packages/*` (pnpm workspaces); `turbo.json:3-13` define as tasks `dev`, `build` e `lint` do Turborepo sobre esse workspace.
+`pnpm-workspace.yaml:1-3` declares the packages `apps/*` and `packages/*` (pnpm workspaces); `turbo.json:3-13` defines Turborepo tasks `dev`, `build` and `lint` over this workspace.
 
-## Unidades
+## Units
 
-| Diretório | Marcadores | Manifesto | Entrada | Build | Workspace | Deploy | Unidade frontend | Motivo |
+| Directory | Markers | Manifest | Entry | Build | Workspace | Deploy | Frontend unit | Rationale |
 |---|---|---|---|---|---|---|---|---|
-| . | package.json | package.json:1-20 (manifesto da raiz, só devDependencies `concurrently` e `turbo`) | — | package.json:8 (`turbo build`, só delega aos pacotes do workspace) | — | — | No | Raiz do workspace pnpm, sem entrada nem configuração de build próprias. |
-| apps/cms | apps/cms/package.json;apps/cms/vite.config.ts | apps/cms/package.json:1-26 (manifesto próprio) | apps/cms/index.html:10-11 (`<div id="app">` e `<script type="module" src="/src/main.ts">`); apps/cms/src/main.ts:3-5 (`createApp(App).mount('#app')`) | apps/cms/vite.config.ts:6-32 (configuração Vite própria, `federation` `cms_app` em :16-23, porta 5002 em :8 e :12); apps/cms/package.json:8 (`vue-tsc -b && vite build`) | pnpm-workspace.yaml:2 (`apps/*`) | — | Yes | Remote Vue 3 com entrada que monta a UI e build Vite próprios. |
-| apps/dashboard | apps/dashboard/package.json;apps/dashboard/vite.config.ts | apps/dashboard/package.json:1-26 (manifesto próprio) | apps/dashboard/index.html:10-11 (`<div id="app">` e `<script type="module" src="/src/main.ts">`); apps/dashboard/src/main.ts:3-5 (`createApp(App).mount('#app')`) | apps/dashboard/vite.config.ts:6-34 (configuração Vite própria, `federation` `dashboard_app` em :18-25, porta 5001 em :8 e :14); apps/dashboard/package.json:8 (`vue-tsc -b && vite build`) | pnpm-workspace.yaml:2 (`apps/*`) | — | Yes | Remote Vue 3 com entrada que monta a UI e build Vite próprios. |
-| apps/kanban | apps/kanban/package.json;apps/kanban/vite.config.ts | apps/kanban/package.json:1-26 (manifesto próprio) | apps/kanban/index.html:10-11 (`<div id="app">` e `<script type="module" src="/src/main.ts">`); apps/kanban/src/main.ts:3-5 (`createApp(App).mount('#app')`) | apps/kanban/vite.config.ts:6-32 (configuração Vite própria, `federation` `kanban_app` em :16-23, porta 5003 em :8 e :12); apps/kanban/package.json:8 (`vue-tsc -b && vite build`) | pnpm-workspace.yaml:2 (`apps/*`) | — | Yes | Remote Vue 3 com entrada que monta a UI e build Vite próprios. |
-| apps/shell | apps/shell/package.json;apps/shell/vite.config.ts | apps/shell/package.json:1-26 (manifesto próprio) | apps/shell/index.html:10-11 (`<div id="app">` e `<script type="module" src="/src/main.ts">`); apps/shell/src/main.ts:3-5 (`createApp(App).mount('#app')`) | apps/shell/vite.config.ts:7-35 (configuração Vite própria, `federation` `shell` com `remotes` em :19-27, porta 5000 em :9 e :13); apps/shell/package.json:8 (`vue-tsc -b && vite build`) | pnpm-workspace.yaml:2 (`apps/*`) | — | Yes | Host Vue 3 com entrada que monta a UI e build Vite próprios. |
-| packages/ui-kit | packages/ui-kit/package.json | packages/ui-kit/package.json:1-21 (manifesto próprio, `@repo/ui-kit`) | — (packages/ui-kit/src/index.ts:1-4 só exporta `MyButton` e `setupMsg`, sem entrada de aplicação) | — (packages/ui-kit/package.json:5-7 só tem o script `lint`) | pnpm-workspace.yaml:3 (`packages/*`) | — | No | Biblioteca compartilhada de componentes, sem entrada de aplicação nem build. |
+| . | package.json | package.json:1-20 (root manifest, only devDependencies `concurrently` and `turbo`) | — | package.json:8 (`turbo build`, only delegates to workspace packages) | — | — | No | pnpm workspace root, with neither entry nor build configuration of its own. |
+| apps/cms | apps/cms/package.json;apps/cms/vite.config.ts | apps/cms/package.json:1-26 (own manifest) | apps/cms/index.html:10-11 (`<div id="app">` and `<script type="module" src="/src/main.ts">`); apps/cms/src/main.ts:3-5 (`createApp(App).mount('#app')`) | apps/cms/vite.config.ts:6-32 (own Vite configuration, `federation` `cms_app` at :16-23, port 5002 at :8 and :12); apps/cms/package.json:8 (`vue-tsc -b && vite build`) | pnpm-workspace.yaml:2 (`apps/*`) | — | Yes | Vue 3 remote with its own UI-mounting entry and Vite build. |
+| apps/dashboard | apps/dashboard/package.json;apps/dashboard/vite.config.ts | apps/dashboard/package.json:1-26 (own manifest) | apps/dashboard/index.html:10-11 (`<div id="app">` and `<script type="module" src="/src/main.ts">`); apps/dashboard/src/main.ts:3-5 (`createApp(App).mount('#app')`) | apps/dashboard/vite.config.ts:6-34 (own Vite configuration, `federation` `dashboard_app` at :18-25, port 5001 at :8 and :14); apps/dashboard/package.json:8 (`vue-tsc -b && vite build`) | pnpm-workspace.yaml:2 (`apps/*`) | — | Yes | Vue 3 remote with its own UI-mounting entry and Vite build. |
+| apps/kanban | apps/kanban/package.json;apps/kanban/vite.config.ts | apps/kanban/package.json:1-26 (own manifest) | apps/kanban/index.html:10-11 (`<div id="app">` and `<script type="module" src="/src/main.ts">`); apps/kanban/src/main.ts:3-5 (`createApp(App).mount('#app')`) | apps/kanban/vite.config.ts:6-32 (own Vite configuration, `federation` `kanban_app` at :16-23, port 5003 at :8 and :12); apps/kanban/package.json:8 (`vue-tsc -b && vite build`) | pnpm-workspace.yaml:2 (`apps/*`) | — | Yes | Vue 3 remote with its own UI-mounting entry and Vite build. |
+| apps/shell | apps/shell/package.json;apps/shell/vite.config.ts | apps/shell/package.json:1-26 (own manifest) | apps/shell/index.html:10-11 (`<div id="app">` and `<script type="module" src="/src/main.ts">`); apps/shell/src/main.ts:3-5 (`createApp(App).mount('#app')`) | apps/shell/vite.config.ts:7-35 (own Vite configuration, `federation` `shell` with `remotes` at :19-27, port 5000 at :9 and :13); apps/shell/package.json:8 (`vue-tsc -b && vite build`) | pnpm-workspace.yaml:2 (`apps/*`) | — | Yes | Vue 3 host with its own UI-mounting entry and Vite build. |
+| packages/ui-kit | packages/ui-kit/package.json | packages/ui-kit/package.json:1-21 (own manifest, `@repo/ui-kit`) | — (packages/ui-kit/src/index.ts:1-4 only exports `MyButton` and `setupMsg`, with no application entry) | — (packages/ui-kit/package.json:5-7 has only the `lint` script) | pnpm-workspace.yaml:3 (`packages/*`) | — | No | Shared component library, with neither application entry nor build. |
 
-## Resumo
+## Summary
 
-Aplicações frontend no snapshot: 4 (apps/cms, apps/dashboard, apps/kanban, apps/shell).
+Frontend applications in the snapshot: 4 (apps/cms, apps/dashboard, apps/kanban, apps/shell).
 
-## Notas
+## Notes
 
-- N = 4 coincide com `frontend_units: 4` da classificação.
-- A única ocorrência `ops-*` do `matches.csv` é `ops-cors` em `apps/dashboard/vite.config.ts:10` (`cors: true` do servidor de desenvolvimento), que não é artefato de deploy. Não há Dockerfile, workflow de CI nem configuração de hospedagem no snapshot.
-- `packages/ui-kit/package.json:4` declara `"main": "index.ts"`, arquivo ausente na raiz do pacote; o shell importa pelo caminho `@repo/ui-kit/src/index.ts` (`apps/shell/src/App.vue:3`). Não muda a resposta da linha, que já é `No`.
+- N = 4 matches the classification’s `frontend_units: 4`.
+- The only `ops-*` occurrence in `matches.csv` is `ops-cors` in `apps/dashboard/vite.config.ts:10` (`cors: true` for the development server), which is not a deployment artifact. There is no Dockerfile, CI workflow or hosting configuration in the snapshot.
+- `packages/ui-kit/package.json:4` declares `"main": "index.ts"`, a file missing at the package root; the shell imports through the path `@repo/ui-kit/src/index.ts` (`apps/shell/src/App.vue:3`). This does not change the row’s answer, which is already `No`.

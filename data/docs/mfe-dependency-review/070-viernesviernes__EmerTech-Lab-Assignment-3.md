@@ -15,10 +15,10 @@ annotation:
 
 # 070 — viernesviernes/EmerTech-Lab-Assignment-3
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| client/auth-app/package.json:15 | dependencies | @originjs/vite-plugin-federation | 1.3.5 | module-federation | Yes | client/auth-app/vite.config.js:3-17 (configuração padrão do Vite importa `federation` e o invoca em plugins com exposes e shared); client/auth-app/package.json:6-11 (build executa `vite build` sem configuração alternativa) |
-| client/community-app/package.json:15 | dependencies | @originjs/vite-plugin-federation | 1.3.5 | module-federation | Yes | client/community-app/vite.config.js:3-17 (configuração padrão do Vite importa `federation` e o invoca em plugins com exposes e shared); client/community-app/package.json:6-11 (build executa `vite build` sem configuração alternativa) |
-| client/shell-app/package.json:14 | dependencies | @originjs/vite-plugin-federation | 1.3.5 | module-federation | Yes | client/shell-app/vite.config.js:3-17 (configuração padrão do Vite importa `federation` e o invoca em plugins com remotes e shared); client/shell-app/package.json:6-10 (build executa `vite build` sem configuração alternativa) |
+| client/auth-app/package.json:15 | dependencies | @originjs/vite-plugin-federation | 1.3.5 | module-federation | Yes | client/auth-app/vite.config.js:3-17 (the default Vite configuration imports `federation` and invokes it in plugins with exposes and shared); client/auth-app/package.json:6-11 (the build runs `vite build` with no alternative configuration) |
+| client/community-app/package.json:15 | dependencies | @originjs/vite-plugin-federation | 1.3.5 | module-federation | Yes | client/community-app/vite.config.js:3-17 (the default Vite configuration imports `federation` and invokes it in plugins with exposes and shared); client/community-app/package.json:6-11 (the build runs `vite build` with no alternative configuration) |
+| client/shell-app/package.json:14 | dependencies | @originjs/vite-plugin-federation | 1.3.5 | module-federation | Yes | client/shell-app/vite.config.js:3-17 (the default Vite configuration imports `federation` and invokes it in plugins with remotes and shared); client/shell-app/package.json:6-10 (the build runs `vite build` with no alternative configuration) |

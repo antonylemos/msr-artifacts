@@ -15,15 +15,16 @@ annotation:
 
 # 142 — lavesan/nx-zephyr-module-federation-example
 
-## Dependências
+## Dependencies
 
-| Manifesto:linha | Seção | Pacote | Versão | Tecnologia | Configurada | Evidência (artefato:linha) |
+| Manifest:line | Section | Package | Version | Technology | Configured | Evidence (artifact:line) |
 |---|---|---|---|---|---|---|
-| package.json:13 | devDependencies | @nx/js | 20.7.2 | monorepo-tool | Yes | nx.json:8-22 (plugin `@nx/js/typescript` registrado, com opções `typecheck` e `build`; carregado em toda execução do nx, como em vercel.json:2 `npx nx build shell`); sem import ou executor `@nx/js` fora do nx.json (grep, excluindo lockfile) |
-| package.json:17 | devDependencies | nx | 20.7.2 | monorepo-tool | Yes | vercel.json:2 (`buildCommand` do deploy do shell invoca `npx nx build shell`); apps/courses/vercel.json:2 e apps/profile/vercel.json:2 (`npx nx build courses`, `npx nx build profile`); apps/shell/project.json:6-20 (targets `build` e `serve` com executor `nx:run-commands`), idem em apps/courses/project.json:6-20 e apps/profile/project.json:6-20 |
+| package.json:13 | devDependencies | @nx/js | 20.7.2 | monorepo-tool | Yes | nx.json:8-22 (plugin `@nx/js/typescript` registered, with options `typecheck` and `build`; loaded on every nx execution, such as in vercel.json:2 `npx nx build shell`); no import or executor `@nx/js` outside nx.json (grep, excluding the lockfile) |
+| package.json:17 | devDependencies | nx | 20.7.2 | monorepo-tool | Yes | vercel.json:2 (`buildCommand` for shell deployment invokes `npx nx build shell`); apps/courses/vercel.json:2 and apps/profile/vercel.json:2 (`npx nx build courses`, `npx nx build profile`); apps/shell/project.json:6-20 (targets `build` and `serve` with executor `nx:run-commands`), same in apps/courses/project.json:6-20 and apps/profile/project.json:6-20 |
 
-## Notas
+## Notes
 
-- As listas da inspeção só trazem `pnpm-workspace.yaml:1`, que não mostra uso de nenhum dos dois pacotes. A evidência (plugin em `nx.json`, executores nos `project.json`, `buildCommand` dos `vercel.json`) apareceu fora das listas.
-- Os scripts de package.json:6-8 invocam `nx run-many`, mas script não conta como uso; `nx` se apoia nos `buildCommand` de deploy da Vercel, no papel dos workflows de CI dos precedentes 006 e 039.
-- `@nx/js`: julgado como em 039 (plugin registrado em `nx.json`, carregado nas execuções do nx). Aqui não há executor `@nx/js:*`; o plugin `@nx/js/typescript` infere targets a partir de `tsconfig*.json` (o `configName: tsconfig.lib.json` de nx.json:17 não existe no snapshot), mas o registro do plugin é a configuração do pacote em uso.
+- The inspection lists contain only `pnpm-workspace.yaml:1`, which does not show use of either package. The evidence (plugin in `nx.json`, executors in `project.json`, `buildCommand` in `vercel.json`) appeared outside the lists.
+- The scripts in package.json:6-8 invoke `nx run-many`, but a script does not count as use; `nx` relies on Vercel deploy `buildCommand` entries, serving the role of CI workflows in precedents 006 and 039.
+- `@nx/js`: judged as in 039 (plugin registered in `nx.json`, loaded during nx executions). Here there is no `@nx/js:*` executor; the `@nx/js/typescript` plugin infers targets from `tsconfig*.json` (the `configName: tsconfig.lib.json` from nx.json:17 does not exist in the snapshot), but plugin registration is the configuration of the package in use.
+

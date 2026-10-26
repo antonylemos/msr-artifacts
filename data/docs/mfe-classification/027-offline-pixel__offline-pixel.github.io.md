@@ -20,36 +20,36 @@ annotation:
 
 # 027 — offline-pixel/offline-pixel.github.io
 
-## Contexto
+## Context
 
-- **Tipo de repositório:** production-oriented (site institucional/marketing de uma consultoria, publicado no GitHub Pages)
-- **Commit avaliado:** `f4ff3e7a` (branch padrão `master`)
+- **Repository type:** production-oriented (consultancy corporate/marketing site, published on GitHub Pages)
+- **Assessed commit:** `f4ff3e7a` (default branch `master`)
 
-## Evidências observadas
+## Observed evidence
 
-| Dimensão | Observação (artefato:linha) | Força |
+| Dimension | Observation (artifact:line) | Strength |
 |---|---|---|
-| Estrutura | 1.738 arquivos versionados: páginas HTML estáticas (`*.html`, `blogs/*/index.html`, `aiml/`, `hire/`, `locations/` etc.), scripts soltos (`scripts/*.js`, `inject-*.js`) e bundles já compilados (`assets/*.js`, `index-*.js`); nenhum `package.json`, `vite.config` ou `webpack.config` | ausente |
-| Tecnologia / Configuração | Nenhuma dependência nem config de MFE; nenhuma ocorrência de `federation`, `remoteEntry` ou `customElements.define` nos bundles (`index-BixGxctp.js`, `index-D9eggxik.js`) | ausente |
-| Build/deploy | `.github/pages.yml` (9 linhas, só cache de `node_modules`); `_config.yml`/`.nojekyll` para GitHub Pages | contrária |
-| Documentação | `readme.md:50` "Full-scale migrations from legacy frameworks to lightning-fast, modern microfrontends."; `readme.md:89` "microfrontends" como serviço oferecido; `blogs/microfrontends-vs-monolith-frontend/index.html` (artigo); os bundles contêm "microfrontend(s)" só como texto de conteúdo | contexto |
+| Structure | 1,738 tracked files: static HTML pages (`*.html`, `blogs/*/index.html`, `aiml/`, `hire/`, `locations/`, etc.), standalone scripts (`scripts/*.js`, `inject-*.js`) and already compiled bundles (`assets/*.js`, `index-*.js`); no `package.json`, `vite.config` or `webpack.config` | absent |
+| Technology / Configuration | No MFE dependency or config; no occurrences of `federation`, `remoteEntry` or `customElements.define` in the bundles (`index-BixGxctp.js`, `index-D9eggxik.js`) | absent |
+| Build/deploy | `.github/pages.yml` (9 lines, only `node_modules` cache); `_config.yml`/`.nojekyll` for GitHub Pages | contrary |
+| Documentation | `readme.md:50` "Full-scale migrations from legacy frameworks to lightning-fast, modern microfrontends."; `readme.md:89` "microfrontends" as an offered service; `blogs/microfrontends-vs-monolith-frontend/index.html` (article); bundles contain "microfrontend(s)" only as content text | context |
 
 ## Checklist
 
-| # | Resposta | Evidência |
+| # | Answer | Evidence |
 |---|---|---|
-| Q1 | No | Nenhuma unidade frontend identificável com entry e build próprios; o repositório é a saída publicada de um site |
-| Q2 | No | Não há unidades a comparar |
-| Q3 | No | Não há host, shell nem root config |
-| Q4 | No | Nenhum mecanismo de composição |
-| Q5 | No | Q1–Q4 convergem |
+| Q1 | No | No identifiable frontend unit with its own entry and build; the repository is a site's published output |
+| Q2 | No | No units to compare |
+| Q3 | No | No host, shell or root config |
+| Q4 | No | No composition mechanism |
+| Q5 | No | Q1–Q4 converge |
 
-## Motivo
+## Rationale
 
-- É o site de marketing de uma consultoria (páginas estáticas, blog, landing pages de contratação) publicado no GitHub Pages, com artefatos compilados e sem fonte das partes dinâmicas.
-- "microfrontends" aparece como serviço oferecido (`readme.md:50,89`) e como tema de um post de blog.
-- Corresponde a "repositories mentioning micro-frontends without implementing them". Na filtragem automática do protocolo (seção 3.2), também caberia em "no accessible source or configuration artifacts" para as partes JS.
+- This is a consultancy's marketing site (static pages, blog, hiring landing pages) published on GitHub Pages, with compiled artifacts and no source for the dynamic parts.
+- "microfrontends" appears as an offered service (`readme.md:50,89`) and as a blog post topic.
+- Matches "repositories mentioning micro-frontends without implementing them". In the protocol's automatic filtering (section 3.2), it would also fit "no accessible source or configuration artifacts" for the JS parts.
 
-## Notas para análise
+## Analysis notes
 
-- **RQ1 (sinais enganosos):** sites de conteúdo/SEO com artigos sobre micro-frontends aparecem pela busca de termos explícitos; o termo está em HTML e em bundles compilados, não em código autoral.
+- **RQ1 (misleading signals):** content/SEO sites with articles about micro-frontends appear through explicit-term searches; the term occurs in HTML and compiled bundles, not project-authored code.

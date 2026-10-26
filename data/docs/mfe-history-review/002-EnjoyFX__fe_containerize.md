@@ -13,17 +13,17 @@ annotation:
 
 # 002 — EnjoyFX/fe_containerize
 
-## Leitura do repositório
+## Repository overview
 
-O histórico até o snapshot tem 19 commits, de 2026-04-05 a 2026-04-11, sem merges. O primeiro commit é `b8b990f` (2026-04-05, "Initial commit: containerized 4-service demo app"), e o do snapshot é `f05a9de` (2026-04-11, "Allow Cloudflare analytics in CSP headers").
+History up to snapshot has 19 commits, from 2026-04-05 to 2026-04-11, without merges. First commit is `b8b990f` (2026-04-05, "Initial commit: containerized 4-service demo app"), and snapshot commit is `f05a9de` (2026-04-11, "Allow Cloudflare analytics in CSP headers").
 
-As revisões anteriores não deixaram ponto ambíguo que o histórico pudesse esclarecer: não há dependência sem uso, unidade ou relação `Undetermined`, construção desativada nem afirmação de documentação `contradita` ou `parcial`. Por isso o histórico não foi consultado além deste contexto.
+Previous reviews left no ambiguous point history could clarify: no unused dependency, `Undetermined` unit or relationship, disabled construct or `contradicted` or `partial` documentation claim exists. Thus history was not consulted beyond this context.
 
-## Pontos
+## Points
 
-Nenhum ponto ambíguo nas revisões anteriores.
+No ambiguous points in previous reviews.
 
-## Comandos
+## Commands
 
 ```
 docs/mfe-history-review/tools/hist.sh EnjoyFX__fe_containerize rev-list --count f05a9de5c996497b2277614bf4cc473456d85b7e
@@ -32,6 +32,6 @@ docs/mfe-history-review/tools/hist.sh EnjoyFX__fe_containerize log --format=%ad 
 docs/mfe-history-review/tools/hist.sh EnjoyFX__fe_containerize log --format='%h %ad %s' --date=short f05a9de5c996497b2277614bf4cc473456d85b7e
 ```
 
-## Resumo
+## Summary
 
-Commits até o snapshot: 19 (2026-04-05 a 2026-04-11). Pontos: 0.
+Commits up to the snapshot: 19 (2026-04-05 to 2026-04-11). Points: 0.
