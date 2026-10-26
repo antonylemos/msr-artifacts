@@ -1,6 +1,6 @@
 # An Exploratory Repository Mining Study to Characterize Micro-Frontend Implementations
 
-This package brings together data and analyses from an exploratory study of GitHub public repositories that could implement micro-frontends. The study aims to empirically characterize how micro-frontend implementations manifest in software repositories through investigating three aspects:
+This package brings together data and analyses from an exploratory study of GitHub public repositories that could implement micro-frontends. The study aims to empirically characterize how micro-frontend implementations manifest in software repositories by investigating three aspects:
 
 1. The repository artifacts and characteristics that provide evidence of micro-frontend implementations.
 2. How such manifestations vary across implementation approaches.
@@ -12,7 +12,7 @@ The study followed five phases:
 
 1. **Candidate repository discovery:** This phase performs automated searches for repositories through a custom TypeScript command-line tool (publicly available [here](https://github.com/antonylemos/repo-miner)) that uses [GitHub's REST API](https://docs.github.com/en/rest) to search for repositories and code and its [GraphQL API](https://docs.github.com/en/graphql) to retrieve metadata for eligibility assessment.
 2. **Candidate repository classification:** This phase forms the study sample by combining manual screening with classification of candidate repositories to determine those that actually contain the implementation of micro-frontends.
-3. 3. **Repository acquisition:** This phase consists of retrieving and normalizing the repositories classified as referring to micro-frontend implementations. 
+3. **Repository acquisition:** This phase consists of retrieving and normalizing the repositories classified as referring to micro-frontend implementations. 
 4. **Artifact mining:** This phase combines automated extraction with manual inspection of the repositories implementing micro-frontends to identify potentially relevant files and textual occurrences.
 5. **Evidence extraction and classification:** This phase consists of extracting evidence from the analyzed artifacts and classifying them into different dimensions: technology and dependency; configuration; source code; structure; composition relationships; build and deployment boundaries; documentation; and repository history.
 
@@ -39,7 +39,7 @@ Analysis files have the same name at every stage (`NNN-<owner>__<name>.md`). Thi
 3. **Sampling.** The [manifest](data/samples/mfe-sample-001/manifest.json) describes random sampling, and [`sample.csv`](data/samples/mfe-sample-001/sample.csv) lists the sample.
 4. **Screening.** [Classifications](data/docs/mfe-classification/) record the decision for each repository and its supporting evidence. This is the first stage with analytical text.
 5. **Corpus acquisition.** [`acquisition.csv`](data/acquisitions/mfe-corpus-001/acquisition.csv) lists corpus repositories and their studied commits. Snapshots in [`corpus/`](data/acquisitions/mfe-corpus-001/corpus/) support checking evidence cited in reviews.
-6. **Mining.** Data in [`data/mining/mfe-mining-001/`](data/mining/mfe-mining-001/) provides artifacts, patterns and units per repository, starting from the [summary](data/mining/mfe-mining-001/summary.csv).
+6. **Mining.** Data in [`data/mining/mfe-mining-001/`](data/mining/mfe-mining-001/) provides artifacts, patterns, and units per repository, starting from the [summary](data/mining/mfe-mining-001/summary.csv).
 7. **Dependency inspection.** Data in [`data/inspections/mfe-dependencies-001/`](data/inspections/mfe-dependencies-001/) provides dependencies by technology, starting from the [summary](data/inspections/mfe-dependencies-001/summary.csv).
 8. **Qualitative reviews.** In each folder, first read `INSTRUCTIONS.md`, describing the review method, then the analysis files. The order is:
    1. [dependencies](data/docs/mfe-dependency-review/INSTRUCTIONS.md): whether each package is configured and in use;
