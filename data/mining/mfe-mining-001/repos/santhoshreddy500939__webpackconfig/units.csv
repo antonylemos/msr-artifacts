@@ -1,0 +1,2 @@
+directory,markers
+.,index.html;package.json;webpack.common.config.js;webpack.dev.config.js;webpack.prod.config.js

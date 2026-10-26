@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "id": "1009817207",
+  "fullName": "EmanuelG0895/MicroFrontendDocker",
+  "commit": "137ba29996f64553efd3401f8ad619646d8a78e5",
+  "acquiredAt": "2026-10-24T00:32:23.939Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 88,
+    "bytes": 545875
+  },
+  "languages": {
+    "YAML": 404719,
+    "TypeScript": 59163,
+    "CSS": 32799,
+    "Other": 19327,
+    "Markdown": 16274,
+    "Shell": 5747,
+    "JSON": 4509,
+    "JavaScript": 2609,
+    "HTML": 728
+  },
+  "contentSha256": "11fe4ca276f370e8152766c2805505e22998850fa0eeae67951eefd7226b00c9"
+}

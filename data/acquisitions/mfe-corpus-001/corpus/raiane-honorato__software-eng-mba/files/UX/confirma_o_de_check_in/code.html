@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Check-in Confirmation - MyGym</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Design System Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-primary": "#ffb2bb",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed-variant": "#910033",
+                    "secondary-fixed": "#eaddff",
+                    "outline-variant": "#e1bec1",
+                    "surface-container-low": "#fcf2e4",
+                    "secondary-fixed-dim": "#d2bcff",
+                    "surface-container-high": "#f0e7d9",
+                    "on-primary-container": "#ffffff",
+                    "on-secondary-fixed-variant": "#513787",
+                    "tertiary-fixed": "#cdf06c",
+                    "surface-bright": "#fff8f1",
+                    "secondary": "#6a4fa0",
+                    "primary-fixed-dim": "#ffb2bb",
+                    "on-primary-fixed": "#400012",
+                    "on-tertiary-fixed": "#161f00",
+                    "tertiary-container": "#658000",
+                    "outline": "#8d7073",
+                    "primary": "#b61b47",
+                    "surface-container": "#f6eddf",
+                    "on-secondary-container": "#523887",
+                    "on-secondary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "background": "#fff8f1",
+                    "primary-container": "#d8385e",
+                    "on-surface-variant": "#594043",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#343027",
+                    "on-surface": "#1f1b13",
+                    "primary-fixed": "#ffd9dd",
+                    "surface-variant": "#eae1d4",
+                    "surface-container-highest": "#eae1d4",
+                    "on-tertiary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "surface-dim": "#e1d9cb",
+                    "secondary-container": "#c4a7ff",
+                    "surface-tint": "#b61c47",
+                    "on-tertiary-container": "#ffffff",
+                    "on-secondary-fixed": "#250159",
+                    "inverse-on-surface": "#f9f0e2",
+                    "surface": "#fff8f1",
+                    "on-tertiary-fixed-variant": "#3b4d00",
+                    "on-background": "#1f1b13",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed-dim": "#b2d353",
+                    "tertiary": "#4f6600",
+                    "surface-container-lowest": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {},
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body text-on-surface antialiased pb-32 selection:bg-tertiary-fixed selection:text-on-tertiary-fixed">
+<!-- Hero Image & Navigation -->
+<!-- Navigation Shell suppressed per rules: Page intent is 'Transactional/Confirmation' -->
+<header class="relative w-full h-72 md:h-96">
+<img class="w-full h-full object-cover rounded-b-[2.5rem]" data-alt="high contrast black and white photography of a modern crossfit gym interior with heavy kettlebells and dramatic natural light spilling across the rubber floor" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxcObAte2TxA8Fm2OQu5Nf350nDgc994QlqlYYcBOtoMYCcJ6ZURPo1Wd3rHEviHj1_NSmcJtkdUOwWXgTzKsl_g7SWL5NIcZz_3jjOJvqkYaT2Z1SC-1A-AC3fztbHs2JfzNij0XIvbRf0eYxk6ouxAekrFck9cx-VxztSYMaX4lkytaXT-iGEcWrUwFR0ctokVOM9jTqfjnSi-0kWneI0RjNGrOZ0t77J6nKbk66gb9LMh12cjbs_lUh772dIAtuHlJf7vwu5hsa"/>
+<!-- Glassmorphism Gradient Overlay for better contrast -->
+<div class="absolute inset-0 bg-gradient-to-b from-inverse-surface/30 via-transparent to-surface/90 rounded-b-[2.5rem]"></div>
+<!-- Back Action -->
+<button class="absolute top-6 left-6 w-12 h-12 flex items-center justify-center rounded-full bg-surface/50 backdrop-blur-xl text-on-surface hover:bg-surface transition-colors shadow-[0_20px_40px_rgba(31,27,19,0.06)] active:scale-95">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+</header>
+<main class="max-w-md mx-auto relative z-10 px-6 -mt-16">
+<!-- Gym Information Card (Layered Depth) -->
+<section class="bg-surface-container-lowest rounded-3xl p-6 shadow-[0_20px_40px_rgba(31,27,19,0.06)] mb-10">
+<h1 class="font-headline font-extrabold text-4xl tracking-tighter uppercase text-on-surface leading-[0.9] mb-4">
+                Iron Forge<br/>Fitness
+            </h1>
+<div class="flex items-start gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-lg mt-0.5" data-icon="location_on">location_on</span>
+<p class="font-body text-sm leading-relaxed">
+                    124 Heavy Iron Ave,<br/>
+                    Strength District, Metropolis
+                </p>
+</div>
+</section>
+<!-- Activity Selection (Asymmetric, Clean Cards) -->
+<section>
+<div class="flex items-baseline justify-between mb-6">
+<h2 class="font-headline font-bold text-2xl tracking-tight text-on-surface">Select Activity</h2>
+<span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Optional</span>
+</div>
+<!-- Bento-style Grid for Options -->
+<div class="grid grid-cols-2 gap-4">
+<!-- Selected State (Performance Chip style) -->
+<button class="flex flex-col items-start p-5 rounded-2xl bg-tertiary-fixed text-on-tertiary-fixed transition-transform active:scale-95 text-left h-28 justify-between shadow-[0_10px_20px_rgba(205,240,108,0.2)]">
+<span class="material-symbols-outlined text-2xl icon-fill" data-icon="fitness_center">fitness_center</span>
+<span class="font-headline font-bold text-base tracking-tight">Musculação</span>
+</button>
+<!-- Unselected State -->
+<button class="flex flex-col items-start p-5 rounded-2xl bg-surface-container-low text-on-surface hover:bg-surface-container-highest transition-colors active:scale-95 text-left h-28 justify-between">
+<span class="material-symbols-outlined text-2xl" data-icon="sports_gymnastics">sports_gymnastics</span>
+<span class="font-headline font-bold text-base tracking-tight text-on-surface-variant">Crossfit</span>
+</button>
+<!-- Unselected State -->
+<button class="flex flex-col items-start p-5 rounded-2xl bg-surface-container-low text-on-surface hover:bg-surface-container-highest transition-colors active:scale-95 text-left h-28 justify-between">
+<span class="material-symbols-outlined text-2xl" data-icon="self_improvement">self_improvement</span>
+<span class="font-headline font-bold text-base tracking-tight text-on-surface-variant">Yoga</span>
+</button>
+<!-- Unselected State -->
+<button class="flex flex-col items-start p-5 rounded-2xl bg-surface-container-low text-on-surface hover:bg-surface-container-highest transition-colors active:scale-95 text-left h-28 justify-between">
+<span class="material-symbols-outlined text-2xl" data-icon="pool">pool</span>
+<span class="font-headline font-bold text-base tracking-tight text-on-surface-variant">Natação</span>
+</button>
+</div>
+</section>
+</main>
+<!-- Fixed Bottom Action (Glassmorphism & Gradient Rule) -->
+<div class="fixed bottom-0 left-0 w-full p-6 bg-gradient-to-t from-surface via-surface/95 to-transparent pt-16 z-50">
+<div class="max-w-md mx-auto">
+<button class="w-full bg-gradient-to-br from-primary to-primary-container text-on-primary py-5 px-6 rounded-full font-headline font-bold text-lg tracking-wide shadow-[0_10px_30px_rgba(182,27,71,0.25)] hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-between">
+<span>Confirm Check-in</span>
+<span class="material-symbols-outlined icon-fill bg-on-primary/20 p-1.5 rounded-full" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</body></html>

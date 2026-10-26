@@ -1,0 +1,16 @@
+pattern,path,line,excerpt
+cfg-federation-plugin,app1/webpack.config.js,2,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,app1/webpack.config.js,28,    new ModuleFederationPlugin({
+cfg-federation-plugin,app2/webpack.config.js,2,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,app2/webpack.config.js,28,    new ModuleFederationPlugin({
+cfg-remotes,app1/webpack.config.js,30,      remotes: {
+cfg-exposes,app2/webpack.config.js,31,      exposes: {
+cfg-shared,app1/webpack.config.js,33,"      shared: { react: { singleton: true }, ""react-dom"": { singleton: true } }"
+cfg-shared,app2/webpack.config.js,34,"      shared: { react: { singleton: true }, ""react-dom"": { singleton: true } }"
+cfg-public-path,app1/webpack.config.js,13,"    publicPath: ""auto"""
+cfg-public-path,app2/webpack.config.js,13,"    publicPath: ""auto"""
+rt-remote-entry,app1/webpack.config.js,31,"        app2: ""app2@http://localhost:3002/remoteEntry.js"""
+rt-remote-entry,app2/webpack.config.js,30,"      filename: ""remoteEntry.js"","
+src-remote-import,app1/src/App.jsx,2,const RemoteApp = React.lazy(() => import('app2/RemoteApp'));
+src-async-bootstrap,app1/src/index.js,1,import('./bootstrap');
+src-async-bootstrap,app2/src/index.js,1,import('./bootstrap');

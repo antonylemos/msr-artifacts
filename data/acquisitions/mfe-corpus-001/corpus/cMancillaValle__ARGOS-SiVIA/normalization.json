@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "id": "1255336417",
+  "fullName": "cMancillaValle/ARGOS-SiVIA",
+  "commit": "4f6ef7f491ec9fc2d3e852f271e0c360549fad65",
+  "acquiredAt": "2026-10-24T00:32:39.168Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "backend/core_ia/athena/new_requirements.txt",
+      "reason": "preset:binaries",
+      "size": 1618
+    },
+    {
+      "path": "frontend-hermes/src/assets/hero.png",
+      "reason": "preset:binaries",
+      "size": 44919
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 142,
+    "bytes": 1255160
+  },
+  "languages": {
+    "Python": 496412,
+    "HTML": 421460,
+    "JSON": 143222,
+    "JavaScript": 74008,
+    "CSS": 37452,
+    "SVG": 27388,
+    "Markdown": 24029,
+    "TypeScript": 21700,
+    "Other": 7145,
+    "Shell": 1250,
+    "YAML": 1094
+  },
+  "contentSha256": "4b30372e1a0fa4f082fb15198d0006888eabbcc26cf2642d44dd17b48228d540"
+}

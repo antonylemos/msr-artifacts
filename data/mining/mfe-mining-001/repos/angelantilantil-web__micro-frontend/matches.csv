@@ -1,0 +1,206 @@
+pattern,path,line,excerpt
+cfg-federation-plugin,accounts-module/webpack.config.js,2,const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+cfg-federation-plugin,accounts-module/webpack.config.js,44,    new ModuleFederationPlugin({
+cfg-federation-plugin,ai-agent-module/webpack.config.js,2,const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+cfg-federation-plugin,ai-agent-module/webpack.config.js,44,    new ModuleFederationPlugin({
+cfg-federation-plugin,business-reports/webpack.config.js,2,const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+cfg-federation-plugin,business-reports/webpack.config.js,44,    new ModuleFederationPlugin({
+cfg-federation-plugin,cards-module/webpack.config.js,2,const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+cfg-federation-plugin,cards-module/webpack.config.js,44,    new ModuleFederationPlugin({
+cfg-federation-plugin,host-app/webpack.config.js,2,const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+cfg-federation-plugin,host-app/webpack.config.js,44,    new ModuleFederationPlugin({
+cfg-federation-plugin,incoming-api-logs/webpack.config.js,2,const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+cfg-federation-plugin,incoming-api-logs/webpack.config.js,44,    new ModuleFederationPlugin({
+cfg-federation-plugin,loans-module/webpack.config.js,2,const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+cfg-federation-plugin,loans-module/webpack.config.js,44,    new ModuleFederationPlugin({
+cfg-federation-plugin,maker-requests/webpack.config.js,2,const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+cfg-federation-plugin,maker-requests/webpack.config.js,44,    new ModuleFederationPlugin({
+cfg-federation-plugin,model-portfolio-configuration/webpack.config.js,2,const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+cfg-federation-plugin,model-portfolio-configuration/webpack.config.js,44,    new ModuleFederationPlugin({
+cfg-federation-plugin,outgoing-api-logs/webpack.config.js,2,const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+cfg-federation-plugin,outgoing-api-logs/webpack.config.js,44,    new ModuleFederationPlugin({
+cfg-federation-plugin,vro-uploads/webpack.config.js,2,const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+cfg-federation-plugin,vro-uploads/webpack.config.js,44,    new ModuleFederationPlugin({
+cfg-remotes,host-app/webpack.config.js,47,      remotes: {
+cfg-exposes,accounts-module/webpack.config.js,47,      exposes: {
+cfg-exposes,ai-agent-module/webpack.config.js,47,      exposes: {
+cfg-exposes,business-reports/webpack.config.js,47,      exposes: {
+cfg-exposes,cards-module/webpack.config.js,47,      exposes: {
+cfg-exposes,incoming-api-logs/webpack.config.js,47,      exposes: {
+cfg-exposes,loans-module/webpack.config.js,47,      exposes: {
+cfg-exposes,maker-requests/webpack.config.js,47,      exposes: {
+cfg-exposes,model-portfolio-configuration/webpack.config.js,47,      exposes: {
+cfg-exposes,outgoing-api-logs/webpack.config.js,47,      exposes: {
+cfg-exposes,vro-uploads/webpack.config.js,47,      exposes: {
+cfg-shared,accounts-module/webpack.config.js,51,      shared: {
+cfg-shared,accounts-module/webpack.config.js,53,"          singleton: true,"
+cfg-shared,accounts-module/webpack.config.js,58,"          singleton: true,"
+cfg-shared,ai-agent-module/webpack.config.js,50,      shared: {
+cfg-shared,ai-agent-module/webpack.config.js,52,"          singleton: true,"
+cfg-shared,ai-agent-module/webpack.config.js,57,"          singleton: true,"
+cfg-shared,business-reports/webpack.config.js,50,      shared: {
+cfg-shared,business-reports/webpack.config.js,52,"          singleton: true,"
+cfg-shared,business-reports/webpack.config.js,57,"          singleton: true,"
+cfg-shared,cards-module/webpack.config.js,51,      shared: {
+cfg-shared,cards-module/webpack.config.js,53,"          singleton: true,"
+cfg-shared,cards-module/webpack.config.js,58,"          singleton: true,"
+cfg-shared,host-app/webpack.config.js,56,      shared: {
+cfg-shared,host-app/webpack.config.js,58,"          singleton: true,"
+cfg-shared,host-app/webpack.config.js,63,"          singleton: true,"
+cfg-shared,incoming-api-logs/webpack.config.js,50,      shared: {
+cfg-shared,incoming-api-logs/webpack.config.js,52,"          singleton: true,"
+cfg-shared,incoming-api-logs/webpack.config.js,57,"          singleton: true,"
+cfg-shared,loans-module/webpack.config.js,51,      shared: {
+cfg-shared,loans-module/webpack.config.js,53,"          singleton: true,"
+cfg-shared,loans-module/webpack.config.js,58,"          singleton: true,"
+cfg-shared,maker-requests/webpack.config.js,50,      shared: {
+cfg-shared,maker-requests/webpack.config.js,52,"          singleton: true,"
+cfg-shared,maker-requests/webpack.config.js,57,"          singleton: true,"
+cfg-shared,model-portfolio-configuration/webpack.config.js,50,      shared: {
+cfg-shared,model-portfolio-configuration/webpack.config.js,52,"          singleton: true,"
+cfg-shared,model-portfolio-configuration/webpack.config.js,57,"          singleton: true,"
+cfg-shared,outgoing-api-logs/webpack.config.js,50,      shared: {
+cfg-shared,outgoing-api-logs/webpack.config.js,52,"          singleton: true,"
+cfg-shared,outgoing-api-logs/webpack.config.js,57,"          singleton: true,"
+cfg-shared,vro-uploads/webpack.config.js,50,      shared: {
+cfg-shared,vro-uploads/webpack.config.js,52,"          singleton: true,"
+cfg-shared,vro-uploads/webpack.config.js,57,"          singleton: true,"
+cfg-public-path,accounts-module/webpack.config.js,11,"    publicPath: 'auto',"
+cfg-public-path,ai-agent-module/webpack.config.js,11,"    publicPath: 'auto',"
+cfg-public-path,business-reports/webpack.config.js,11,"    publicPath: 'auto',"
+cfg-public-path,cards-module/webpack.config.js,11,"    publicPath: 'auto',"
+cfg-public-path,host-app/webpack.config.js,11,"    publicPath: 'auto',"
+cfg-public-path,incoming-api-logs/webpack.config.js,11,"    publicPath: 'auto',"
+cfg-public-path,loans-module/webpack.config.js,11,"    publicPath: 'auto',"
+cfg-public-path,maker-requests/webpack.config.js,11,"    publicPath: 'auto',"
+cfg-public-path,model-portfolio-configuration/webpack.config.js,11,"    publicPath: 'auto',"
+cfg-public-path,outgoing-api-logs/webpack.config.js,11,"    publicPath: 'auto',"
+cfg-public-path,vro-uploads/webpack.config.js,11,"    publicPath: 'auto',"
+rt-remote-entry,accounts-module/webpack.config.js,46,"      filename: 'remoteEntry.js',"
+rt-remote-entry,ai-agent-module/webpack.config.js,46,"      filename: 'remoteEntry.js',"
+rt-remote-entry,business-reports/webpack.config.js,46,"      filename: 'remoteEntry.js',"
+rt-remote-entry,cards-module/webpack.config.js,46,"      filename: 'remoteEntry.js',"
+rt-remote-entry,host-app/webpack.config.js,46,"      filename: 'remoteEntry.js',"
+rt-remote-entry,host-app/webpack.config.js,48,"        businessReports: 'businessReports@http://localhost:3010/remoteEntry.js',"
+rt-remote-entry,host-app/webpack.config.js,49,"        modelPortfolio: 'modelPortfolio@http://localhost:3011/remoteEntry.js',"
+rt-remote-entry,host-app/webpack.config.js,50,"        outgoingApiLogs: 'outgoingApiLogs@http://localhost:3012/remoteEntry.js',"
+rt-remote-entry,host-app/webpack.config.js,51,"        incomingApiLogs: 'incomingApiLogs@http://localhost:3013/remoteEntry.js',"
+rt-remote-entry,host-app/webpack.config.js,52,"        makerRequests: 'makerRequests@http://localhost:3014/remoteEntry.js',"
+rt-remote-entry,host-app/webpack.config.js,53,"        vroUploads: 'vroUploads@http://localhost:3015/remoteEntry.js',"
+rt-remote-entry,host-app/webpack.config.js,54,        aiAgent: 'aiAgent@http://localhost:3016/remoteEntry.js'
+rt-remote-entry,incoming-api-logs/webpack.config.js,46,"      filename: 'remoteEntry.js',"
+rt-remote-entry,loans-module/webpack.config.js,46,"      filename: 'remoteEntry.js',"
+rt-remote-entry,maker-requests/webpack.config.js,46,"      filename: 'remoteEntry.js',"
+rt-remote-entry,model-portfolio-configuration/webpack.config.js,46,"      filename: 'remoteEntry.js',"
+rt-remote-entry,outgoing-api-logs/webpack.config.js,46,"      filename: 'remoteEntry.js',"
+rt-remote-entry,vro-uploads/webpack.config.js,46,"      filename: 'remoteEntry.js',"
+src-remote-import,host-app/src/App.js,30,const BusinessReports = React.lazy(() => import('businessReports/BusinessReportsApp').catch(error => {
+src-remote-import,host-app/src/App.js,34,const ModelPortfolio = React.lazy(() => import('modelPortfolio/ModelPortfolioApp').catch(error => {
+src-remote-import,host-app/src/App.js,38,const OutgoingApiLogs = React.lazy(() => import('outgoingApiLogs/OutgoingApiLogsApp').catch(error => {
+src-remote-import,host-app/src/App.js,42,const IncomingApiLogs = React.lazy(() => import('incomingApiLogs/IncomingApiLogsApp').catch(error => {
+src-remote-import,host-app/src/App.js,46,const MakerRequests = React.lazy(() => import('makerRequests/MakerRequestsApp').catch(error => {
+src-remote-import,host-app/src/App.js,50,const VroUploads = React.lazy(() => import('vroUploads/VroUploadsApp').catch(error => {
+src-remote-import,host-app/src/App.js,54,const AIAgent = React.lazy(() => import('aiAgent/AIAgentApp').catch(error => {
+ops-cors,accounts-module/webpack.config.js,20,"      'Access-Control-Allow-Origin': '*',"
+ops-cors,ai-agent-module/webpack.config.js,20,"      'Access-Control-Allow-Origin': '*',"
+ops-cors,business-reports/webpack.config.js,20,"      'Access-Control-Allow-Origin': '*',"
+ops-cors,cards-module/webpack.config.js,20,"      'Access-Control-Allow-Origin': '*',"
+ops-cors,host-app/webpack.config.js,20,"      'Access-Control-Allow-Origin': '*',"
+ops-cors,incoming-api-logs/webpack.config.js,20,"      'Access-Control-Allow-Origin': '*',"
+ops-cors,loans-module/webpack.config.js,20,"      'Access-Control-Allow-Origin': '*',"
+ops-cors,maker-requests/webpack.config.js,20,"      'Access-Control-Allow-Origin': '*',"
+ops-cors,model-portfolio-configuration/webpack.config.js,20,"      'Access-Control-Allow-Origin': '*',"
+ops-cors,outgoing-api-logs/webpack.config.js,20,"      'Access-Control-Allow-Origin': '*',"
+ops-cors,vro-uploads/webpack.config.js,20,"      'Access-Control-Allow-Origin': '*',"
+doc-mfe-term,DOCUMENTATION.md,1,# HDFC Micro Frontend Project Documentation
+doc-mfe-term,DOCUMENTATION.md,4,This repository implements a micro-frontend architecture for the HDFC Bank UI using `host-app` as the shell and multiple remote modules.
+doc-mfe-term,DOCUMENTATION.md,8,- `accounts-module/` - Accounts management micro-frontend
+doc-mfe-term,DOCUMENTATION.md,9,- `business-reports/` - Business reports micro-frontend
+doc-mfe-term,DOCUMENTATION.md,10,- `cards-module/` - Cards management micro-frontend
+doc-mfe-term,DOCUMENTATION.md,11,- `incoming-api-logs/` - Incoming API logs micro-frontend
+doc-mfe-term,DOCUMENTATION.md,12,- `loans-module/` - Loans management micro-frontend
+doc-mfe-term,DOCUMENTATION.md,13,- `maker-requests/` - Maker-requests workflow micro-frontend
+doc-mfe-term,DOCUMENTATION.md,14,- `model-portfolio-configuration/` - Portfolio configuration micro-frontend
+doc-mfe-term,DOCUMENTATION.md,15,- `outgoing-api-logs/` - Outgoing API logs micro-frontend
+doc-mfe-term,DOCUMENTATION.md,16,- `vro-uploads/` - VRO uploads micro-frontend
+doc-mfe-term,README.md,1,#  Micro Frontend Project
+doc-mfe-term,README.md,3,A micro-frontend architecture project for  Bank with a host shell and several independent remote modules.
+doc-mfe-term,README.md,8,micro-frontend/
+doc-mfe-term,README.md,21,This project uses **Webpack Module Federation** to implement a micro-frontend architecture:
+doc-mfe-term,README.md,132,- Main container shell for micro-frontend routing
+doc-mfe-term,accounts-module/DOCUMENTATION.md,4,"The `accounts-module` is part of the HDFC micro-frontend architecture. It is intended to display account summaries, balances, and account details."
+doc-mfe-term,accounts-module/README.md,3,The `accounts-module` is a remote micro-frontend in the `hdfc-micro-frontend` project.
+doc-mfe-term,ai-agent-module/README.md,3,This module provides a simple demo chatbot experience for the HDFC micro-frontend POC.
+doc-mfe-term,business-reports/DOCUMENTATION.md,4,The `business-reports` module provides dashboard-style reporting information for the HDFC micro-frontend application.
+doc-mfe-term,business-reports/README.md,3,The `business-reports` module is a remote micro-frontend in the HDFC micro-frontend project.
+doc-mfe-term,cards-module/DOCUMENTATION.md,14,- Displays card data as a standalone micro-frontend
+doc-mfe-term,cards-module/DOCUMENTATION.md,26,- The host shell loads this module dynamically as part of the micro-frontend routing.
+doc-mfe-term,cards-module/README.md,3,The `cards-module` is a remote micro-frontend in the HDFC project.
+doc-mfe-term,host-app/DOCUMENTATION.md,4,The `host-app` is the shell application in the HDFC micro-frontend architecture. It loads remote modules and renders the main navigation and layout.
+doc-mfe-term,host-app/DOCUMENTATION.md,13,- Provides navigation to remote micro-frontend modules
+doc-mfe-term,host-app/README.md,3,The `host-app` is the main container application for the HDFC micro-frontend project.
+doc-mfe-term,incoming-api-logs/DOCUMENTATION.md,4,This module is part of the `hdfc-micro-frontend` project and provides an interface for viewing incoming API log records.
+doc-mfe-term,incoming-api-logs/DOCUMENTATION.md,6,It is designed as a remote micro-frontend that can be loaded into the `host-app` using Webpack Module Federation.
+doc-mfe-term,incoming-api-logs/README.md,3,This module is part of the `hdfc-micro-frontend` project and provides the UI for Viewing and filtering incoming API log records.
+doc-mfe-term,loans-module/README.md,3,The `loans-module` is a remote micro-frontend for the HDFC project.
+doc-mfe-term,maker-requests/README.md,3,The `maker-requests` module is a remote micro-frontend for the HDFC project.
+doc-mfe-term,maker-requests/README.md,22,- Loaded by `host-app` as part of the micro-frontend shell.
+doc-mfe-term,model-portfolio-configuration/DOCUMENTATION.md,25,- This module is part of the HDFC micro-frontend ecosystem.
+doc-mfe-term,model-portfolio-configuration/README.md,3,The `model-portfolio-configuration` module is a remote micro-frontend for the HDFC project.
+doc-mfe-term,outgoing-api-logs/README.md,3,The `outgoing-api-logs` module is a remote micro-frontend for the HDFC project.
+doc-mfe-term,vro-uploads/DOCUMENTATION.md,4,The `vro-uploads` module supports upload workflows for VRO documents within the HDFC micro-frontend ecosystem.
+doc-mfe-term,vro-uploads/README.md,3,The `vro-uploads` module is a remote micro-frontend for the HDFC project.
+doc-integration-technology,DOCUMENTATION.md,38,- The host uses Webpack Module Federation to load remote entries from each module.
+doc-integration-technology,README.md,21,This project uses **Webpack Module Federation** to implement a micro-frontend architecture:
+doc-integration-technology,README.md,134,- Dynamic remote module loading via Module Federation
+doc-integration-technology,README.md,156,- **Webpack 5** - Module Federation
+doc-integration-technology,accounts-module/DOCUMENTATION.md,9,- `webpack.config.js` - Remote module configuration for Module Federation
+doc-integration-technology,accounts-module/README.md,12,- `webpack.config.js` - Webpack Module Federation configuration
+doc-integration-technology,accounts-module/README.md,22,- This module is loaded by `host-app` through Module Federation.
+doc-integration-technology,ai-agent-module/README.md,21,This module is built as a Webpack Module Federation remote and is exposed as `AIAgentApp`.
+doc-integration-technology,business-reports/DOCUMENTATION.md,9,- `webpack.config.js` - Remote entry configuration for Module Federation
+doc-integration-technology,business-reports/README.md,11,- `webpack.config.js` - Module Federation configuration
+doc-integration-technology,cards-module/DOCUMENTATION.md,9,- `webpack.config.js` - Module Federation remote configuration
+doc-integration-technology,cards-module/README.md,11,- `webpack.config.js` - Module Federation setup
+doc-integration-technology,host-app/DOCUMENTATION.md,9,- `webpack.config.js` - Host configuration for Module Federation
+doc-integration-technology,host-app/DOCUMENTATION.md,14,- Loads remote modules dynamically using Webpack Module Federation
+doc-integration-technology,host-app/README.md,6,It loads and orchestrates remote modules using Webpack Module Federation.
+doc-integration-technology,host-app/README.md,11,- `webpack.config.js` - Module Federation host configuration
+doc-integration-technology,incoming-api-logs/DOCUMENTATION.md,6,It is designed as a remote micro-frontend that can be loaded into the `host-app` using Webpack Module Federation.
+doc-integration-technology,loans-module/DOCUMENTATION.md,9,- `webpack.config.js` - Module Federation remote configuration
+doc-integration-technology,loans-module/README.md,11,- `webpack.config.js` - Module Federation configuration
+doc-integration-technology,maker-requests/README.md,11,- `webpack.config.js` - Module Federation configuration
+doc-integration-technology,model-portfolio-configuration/DOCUMENTATION.md,9,- `webpack.config.js` - Module Federation remote configuration
+doc-integration-technology,model-portfolio-configuration/DOCUMENTATION.md,26,- The host app loads it dynamically through Module Federation.
+doc-integration-technology,model-portfolio-configuration/README.md,11,- `webpack.config.js` - Module Federation setup
+doc-integration-technology,outgoing-api-logs/DOCUMENTATION.md,9,- `webpack.config.js` - Module Federation remote configuration
+doc-integration-technology,outgoing-api-logs/README.md,11,- `webpack.config.js` - Module Federation configuration
+doc-integration-technology,vro-uploads/DOCUMENTATION.md,9,- `webpack.config.js` - Module Federation remote configuration
+doc-integration-technology,vro-uploads/README.md,11,- `webpack.config.js` - Module Federation configuration
+doc-independence,DOCUMENTATION.md,39,- Each module is independently runnable and documented at its own folder level.
+doc-independence,README.md,3,A micro-frontend architecture project for  Bank with a host shell and several independent remote modules.
+doc-independence,README.md,24,- **Remote Modules**: Standalone applications that can be independently developed and deployed
+doc-independence,accounts-module/README.md,23,- The module structure is designed to support independent development and deployment.
+doc-independence,cards-module/DOCUMENTATION.md,25,- This module is independent and should be served alongside `host-app`.
+doc-independence,loans-module/DOCUMENTATION.md,14,- Uses independent styling and routing for the loan module
+doc-host-remote,DOCUMENTATION.md,4,This repository implements a micro-frontend architecture for the HDFC Bank UI using `host-app` as the shell and multiple remote modules.
+doc-host-remote,DOCUMENTATION.md,35,2. Open the host app URL in your browser to load the remote modules.
+doc-host-remote,DOCUMENTATION.md,38,- The host uses Webpack Module Federation to load remote entries from each module.
+doc-host-remote,README.md,3,A micro-frontend architecture project for  Bank with a host shell and several independent remote modules.
+doc-host-remote,README.md,23,- **host-app**: Main shell application that loads and orchestrates remote modules
+doc-host-remote,README.md,111,Run a host app plus example remotes from the root:
+doc-host-remote,README.md,145,- Remote module loaded by host app
+doc-host-remote,accounts-module/DOCUMENTATION.md,13,- Exposes remote entry for the host shell
+doc-host-remote,accounts-module/DOCUMENTATION.md,26,- The host app loads this module as a federated remote when the user navigates to the Accounts route.
+doc-host-remote,business-reports/DOCUMENTATION.md,14,- Exposes remote component for host-shell consumption
+doc-host-remote,cards-module/DOCUMENTATION.md,13,- Exposes a remote entry to the host shell
+doc-host-remote,host-app/DOCUMENTATION.md,4,The `host-app` is the shell application in the HDFC micro-frontend architecture. It loads remote modules and renders the main navigation and layout.
+doc-host-remote,host-app/DOCUMENTATION.md,27,- The host app uses route-based loading for each remote module.
+doc-host-remote,host-app/README.md,22,- This module acts as the host shell for all remote modules.
+doc-host-remote,incoming-api-logs/DOCUMENTATION.md,6,It is designed as a remote micro-frontend that can be loaded into the `host-app` using Webpack Module Federation.
+doc-host-remote,incoming-api-logs/README.md,28,3. Run the host app so it can load this remote module:
+doc-host-remote,loans-module/DOCUMENTATION.md,13,- Exposes a remote entry for the host shell
+doc-host-remote,maker-requests/DOCUMENTATION.md,13,- Exposes a remote entry to the host shell
+doc-host-remote,model-portfolio-configuration/DOCUMENTATION.md,13,- Provides a remote entry for the host shell
+doc-host-remote,outgoing-api-logs/DOCUMENTATION.md,13,- Exposes a remote entry used by the host shell
+doc-host-remote,vro-uploads/DOCUMENTATION.md,13,- Exposes a remote module entry for the host shell

@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "id": "1063353073",
+  "fullName": "Varshithknaik/mfe-lect",
+  "commit": "deea3350c74ee5de8427c190378733b644ae4b53",
+  "acquiredAt": "2026-10-24T00:32:23.793Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": ".DS_Store",
+      "reason": "preset:binaries",
+      "size": 6148
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 88,
+    "bytes": 3305424
+  },
+  "languages": {
+    "JSON": 3210597,
+    "JavaScript": 72723,
+    "Vue": 18079,
+    "YAML": 2854,
+    "HTML": 692,
+    "Markdown": 439,
+    "Other": 40
+  },
+  "contentSha256": "974bee6534525d8fff409b33b5304d333bd55de7d505e99f8c5134a4173525d9"
+}

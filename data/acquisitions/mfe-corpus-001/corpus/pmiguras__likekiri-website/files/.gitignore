@@ -1,0 +1,20 @@
+# dependencias y builds
+node_modules/
+dist/
+coverage/
+
+# secretos: .env jamás entra al historial
+.env
+.env.*
+!.env.example
+
+# config real del registry (contiene claves HMAC); se versiona solo el example
+config/modules.json
+
+# cliente Prisma generado (se regenera en cada build)
+apps/core/src/generated/
+
+# artefactos locales
+*.local
+*.log
+.DS_Store

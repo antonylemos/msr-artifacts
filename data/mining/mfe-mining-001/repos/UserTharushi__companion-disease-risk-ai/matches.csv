@@ -1,0 +1,181 @@
+pattern,path,line,excerpt
+dep-module-federation,apps/mfe-admin/package.json,26,"    ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+dep-module-federation,apps/mfe-auth/package.json,43,"    ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+dep-module-federation,apps/mfe-pet-profile/package.json,27,"    ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+dep-module-federation,apps/mfe-risk-results/package.json,25,"    ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+dep-module-federation,apps/mfe-symptom-checker/package.json,27,"    ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+dep-module-federation,apps/mfe-vaccination/package.json,25,"    ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+dep-module-federation,apps/mfe-vet-discovery/package.json,25,"    ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+dep-module-federation,apps/shell/package.json,26,"    ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+dep-monorepo-tool,package.json,20,"    ""turbo"": ""^2.0.0"","
+dep-mfe-term,apps/mfe-admin/package.json,2,"  ""name"": ""@companion-ai/mfe-admin"","
+dep-mfe-term,apps/mfe-auth/package.json,2,"  ""name"": ""@companion-ai/mfe-auth"","
+dep-mfe-term,apps/mfe-pet-profile/package.json,2,"  ""name"": ""@companion-ai/mfe-pet-profile"","
+dep-mfe-term,apps/mfe-risk-results/package.json,2,"  ""name"": ""@companion-ai/mfe-risk-results"","
+dep-mfe-term,apps/mfe-symptom-checker/package.json,2,"  ""name"": ""@companion-ai/mfe-symptom-checker"","
+dep-mfe-term,apps/mfe-vaccination/package.json,2,"  ""name"": ""@companion-ai/mfe-vaccination"","
+dep-mfe-term,apps/mfe-vet-discovery/package.json,2,"  ""name"": ""@companion-ai/mfe-vet-discovery"","
+cfg-federation-plugin,apps/mfe-admin/vite.config.ts,8,    federation({
+cfg-federation-plugin,apps/mfe-auth/vite.config.ts,9,    federation({
+cfg-federation-plugin,apps/mfe-pet-profile/vite.config.ts,8,    federation({
+cfg-federation-plugin,apps/mfe-risk-results/vite.config.ts,8,    federation({
+cfg-federation-plugin,apps/mfe-symptom-checker/vite.config.ts,8,    federation({
+cfg-federation-plugin,apps/mfe-vaccination/vite.config.ts,8,    federation({
+cfg-federation-plugin,apps/mfe-vet-discovery/vite.config.ts,8,    federation({
+cfg-federation-plugin,apps/shell/vite.config.ts,9,    federation({
+cfg-remotes,apps/shell/vite.config.ts,11,      remotes: {
+cfg-exposes,apps/mfe-admin/vite.config.ts,11,      exposes: {
+cfg-exposes,apps/mfe-auth/vite.config.ts,12,      exposes: {
+cfg-exposes,apps/mfe-pet-profile/vite.config.ts,11,      exposes: {
+cfg-exposes,apps/mfe-risk-results/vite.config.ts,11,      exposes: {
+cfg-exposes,apps/mfe-symptom-checker/vite.config.ts,11,      exposes: {
+cfg-exposes,apps/mfe-vaccination/vite.config.ts,11,      exposes: {
+cfg-exposes,apps/mfe-vet-discovery/vite.config.ts,11,      exposes: {
+cfg-shared,apps/mfe-admin/vite.config.ts,19,"      shared: [""react"", ""react-dom"", ""react-router-dom"", ""zustand""],"
+cfg-shared,apps/mfe-auth/vite.config.ts,17,"      shared: [""react"", ""react-dom"", ""react-router-dom"", ""zustand""],"
+cfg-shared,apps/mfe-pet-profile/vite.config.ts,17,"      shared: [""react"", ""react-dom"", ""react-router-dom"", ""zustand""],"
+cfg-shared,apps/mfe-risk-results/vite.config.ts,16,"      shared: [""react"", ""react-dom"", ""react-router-dom"", ""zustand""],"
+cfg-shared,apps/mfe-symptom-checker/vite.config.ts,16,"      shared: [""react"", ""react-dom"", ""react-router-dom"", ""zustand""],"
+cfg-shared,apps/mfe-vaccination/vite.config.ts,16,"      shared: [""react"", ""react-dom"", ""react-router-dom"", ""zustand""],"
+cfg-shared,apps/mfe-vet-discovery/vite.config.ts,17,"      shared: [""react"", ""react-dom"", ""react-router-dom"", ""zustand""],"
+cfg-shared,apps/shell/vite.config.ts,20,"      shared: [""react"", ""react-dom"", ""react-router-dom"", ""zustand""],"
+rt-remote-entry,apps/mfe-admin/vite.config.ts,10,"      filename: ""remoteEntry.js"","
+rt-remote-entry,apps/mfe-auth/vite.config.ts,11,"      filename: ""remoteEntry.js"","
+rt-remote-entry,apps/mfe-pet-profile/vite.config.ts,10,"      filename: ""remoteEntry.js"","
+rt-remote-entry,apps/mfe-risk-results/vite.config.ts,10,"      filename: ""remoteEntry.js"","
+rt-remote-entry,apps/mfe-symptom-checker/vite.config.ts,10,"      filename: ""remoteEntry.js"","
+rt-remote-entry,apps/mfe-vaccination/vite.config.ts,10,"      filename: ""remoteEntry.js"","
+rt-remote-entry,apps/mfe-vet-discovery/vite.config.ts,10,"      filename: ""remoteEntry.js"","
+rt-remote-entry,apps/shell/vite.config.ts,12,"        mfeAuth:        ""http://localhost:3001/assets/remoteEntry.js"","
+rt-remote-entry,apps/shell/vite.config.ts,13,"        mfePetProfile:  ""http://localhost:3002/assets/remoteEntry.js"","
+rt-remote-entry,apps/shell/vite.config.ts,14,"        mfeSymptom:     ""http://localhost:3003/assets/remoteEntry.js"","
+rt-remote-entry,apps/shell/vite.config.ts,15,"        mfeRiskResults: ""http://localhost:3004/assets/remoteEntry.js"","
+rt-remote-entry,apps/shell/vite.config.ts,16,"        mfeVetDiscover: ""http://localhost:3005/assets/remoteEntry.js"","
+rt-remote-entry,apps/shell/vite.config.ts,17,"        mfeVaccination: ""http://localhost:3006/assets/remoteEntry.js"","
+rt-remote-entry,apps/shell/vite.config.ts,18,"        mfeAdmin:       ""http://localhost:3007/assets/remoteEntry.js"","
+src-remote-import,apps/shell/src/App.tsx,18,"const PetProfileApp  = lazy(() => import(""mfePetProfile/App""));"
+src-remote-import,apps/shell/src/App.tsx,19,"const SymptomApp     = lazy(() => import(""mfeSymptom/App""));"
+src-remote-import,apps/shell/src/App.tsx,20,"const RiskResultsApp = lazy(() => import(""mfeRiskResults/App""));"
+src-remote-import,apps/shell/src/App.tsx,21,"const VetDiscoverApp = lazy(() => import(""mfeVetDiscover/App""));"
+src-remote-import,apps/shell/src/App.tsx,22,"const VaccinationApp = lazy(() => import(""mfeVaccination/App""));"
+src-remote-import,apps/shell/src/App.tsx,23,"const AdminApp       = lazy(() => import(""mfeAdmin/App""));"
+src-dynamic-script,apps/mfe-auth/dev-dist/sw.js,28,"            const script = document.createElement(""script"");"
+src-cross-unit-communication,apps/mfe-auth/dev-dist/workbox-af90992f.js,777,              void requestPromises.then(() => event.ports[0].postMessage(true));
+ops-deployment-file,apps/mfe-auth/Dockerfile,,
+ops-deployment-file,apps/shell/Dockerfile,,
+ops-deployment-file,backend/services/nodejs/admin-service/Dockerfile,,
+ops-deployment-file,backend/services/nodejs/api-gateway/Dockerfile,,
+ops-deployment-file,backend/services/nodejs/auth-service/Dockerfile,,
+ops-deployment-file,backend/services/nodejs/clinic-service/Dockerfile,,
+ops-deployment-file,backend/services/nodejs/notification-service/Dockerfile,,
+ops-deployment-file,backend/services/nodejs/pet-service/Dockerfile,,
+ops-deployment-file,backend/services/nodejs/vaccination-service/Dockerfile,,
+ops-deployment-file,backend/services/python/agent-service/Dockerfile,,
+ops-deployment-file,backend/services/python/ai-service/Dockerfile,,
+ops-deployment-file,docker-compose.yml,,
+ops-dockerfile,apps/mfe-auth/Dockerfile,1,FROM node:20-alpine
+ops-dockerfile,apps/shell/Dockerfile,1,FROM node:20-alpine
+ops-dockerfile,backend/services/nodejs/admin-service/Dockerfile,1,FROM node:20-alpine AS builder
+ops-dockerfile,backend/services/nodejs/admin-service/Dockerfile,12,FROM node:20-alpine AS runner
+ops-dockerfile,backend/services/nodejs/api-gateway/Dockerfile,1,FROM node:20-alpine AS builder
+ops-dockerfile,backend/services/nodejs/api-gateway/Dockerfile,12,FROM node:20-alpine AS runner
+ops-dockerfile,backend/services/nodejs/auth-service/Dockerfile,1,FROM node:20-alpine AS builder
+ops-dockerfile,backend/services/nodejs/auth-service/Dockerfile,12,FROM node:20-alpine AS runner
+ops-dockerfile,backend/services/nodejs/clinic-service/Dockerfile,1,FROM node:20-alpine AS builder
+ops-dockerfile,backend/services/nodejs/clinic-service/Dockerfile,12,FROM node:20-alpine AS runner
+ops-dockerfile,backend/services/nodejs/notification-service/Dockerfile,1,FROM node:20-alpine AS builder
+ops-dockerfile,backend/services/nodejs/notification-service/Dockerfile,12,FROM node:20-alpine AS runner
+ops-dockerfile,backend/services/nodejs/pet-service/Dockerfile,1,FROM node:20-alpine AS builder
+ops-dockerfile,backend/services/nodejs/pet-service/Dockerfile,12,FROM node:20-alpine AS runner
+ops-dockerfile,backend/services/nodejs/vaccination-service/Dockerfile,1,FROM node:20-alpine AS builder
+ops-dockerfile,backend/services/nodejs/vaccination-service/Dockerfile,12,FROM node:20-alpine AS runner
+ops-dockerfile,backend/services/python/agent-service/Dockerfile,1,FROM python:3.11-slim
+ops-dockerfile,backend/services/python/ai-service/Dockerfile,1,FROM python:3.11-slim
+ops-compose-service,docker-compose.yml,12,    build:
+ops-compose-service,docker-compose.yml,20,    depends_on:
+ops-compose-service,docker-compose.yml,25,    build:
+ops-compose-service,docker-compose.yml,36,    build:
+ops-compose-service,docker-compose.yml,53,    depends_on:
+ops-compose-service,docker-compose.yml,65,    build:
+ops-compose-service,docker-compose.yml,75,    depends_on:
+ops-compose-service,docker-compose.yml,80,    build:
+ops-compose-service,docker-compose.yml,90,    depends_on:
+ops-compose-service,docker-compose.yml,95,    build:
+ops-compose-service,docker-compose.yml,105,    depends_on:
+ops-compose-service,docker-compose.yml,110,    build:
+ops-compose-service,docker-compose.yml,120,    depends_on:
+ops-compose-service,docker-compose.yml,125,    build:
+ops-compose-service,docker-compose.yml,135,    depends_on:
+ops-compose-service,docker-compose.yml,140,    build:
+ops-compose-service,docker-compose.yml,150,    depends_on:
+ops-compose-service,docker-compose.yml,155,    build:
+ops-compose-service,docker-compose.yml,168,    depends_on:
+ops-compose-service,docker-compose.yml,176,    build:
+ops-compose-service,docker-compose.yml,193,    depends_on:
+ops-compose-service,docker-compose.yml,201,    image: neo4j:5.18-community
+ops-compose-service,docker-compose.yml,227,    image: mongo:7.0
+doc-mfe-term,CLAUDE.md,7,"Companion Disease Risk AI — an agentic AI-driven decision support system for companion animal (dogs/cats) early disease risk awareness. Monorepo with React micro-frontends, Node.js microservices, Python ML/agent services, and a Neo4j ontology graph."
+doc-mfe-term,CLAUDE.md,27,npx turbo run dev --filter=@companion-ai/mfe-auth
+doc-mfe-term,CLAUDE.md,56,"**`apps/mfe-auth` (port 3001) is the entire live front end.** Despite the name and the Module Federation scaffolding, it grew into the application monolith: auth flows, onboarding, all three role dashboards (owner/vet/admin), the symptom flow, results + explainability, clinic map and booking, AI cha"
+doc-mfe-term,CLAUDE.md,58,"The other MFEs (`mfe-pet-profile` 3002, `mfe-symptom-checker` 3003, `mfe-risk-results` 3004, `mfe-vet-discovery` 3005, `mfe-vaccination` 3006, `mfe-admin` 3007) and `apps/shell` (3000, the Module Federation host, remotes map in `apps/shell/vite.config.ts`) are **empty scaffolds — roughly 6–7 placeho"
+doc-mfe-term,CLAUDE.md,116,"- The decision-support disclaimer (NFR1) must appear on every prediction result (`apps/mfe-auth/src/components/Disclaimer.tsx`). This is a diagnosis-adjacent system — never present output as a diagnosis anywhere in UI copy, agent phrasing, or docs."
+doc-mfe-term,README.md,7,- Frontend: React + Tailwind + Module Federation micro-frontends + PWA (mobile/web compatible)
+doc-mfe-term,README.md,20,	mfe-auth/
+doc-mfe-term,README.md,21,	mfe-pet-profile/
+doc-mfe-term,README.md,22,	mfe-symptom-checker/
+doc-mfe-term,README.md,23,	mfe-risk-results/
+doc-mfe-term,README.md,24,	mfe-vet-discovery/
+doc-mfe-term,README.md,25,	mfe-vaccination/
+doc-mfe-term,README.md,26,	mfe-admin/
+doc-mfe-term,README.md,80,"- The primary user-facing app is `apps/mfe-auth` (port 3001) — auth, all three role dashboards, symptom→prediction→booking flows. The shell + other MFEs are scaffold."
+doc-mfe-term,docs/INTERIM_REPORT.md,138,| MFE | Micro-Frontend |
+doc-mfe-term,docs/PROGRESS_REPORT.md,26,Turborepo monorepo. The live application is a React (Vite + Tailwind) front-end monolith (`mfe-auth`) backed by Node.js and Python microservices behind an API gateway.
+doc-mfe-term,docs/PROGRESS_REPORT.md,30,| Front-end | `mfe-auth` (3001) | Auth + owner/vet/admin dashboards + symptom/booking flows (PWA) |
+doc-mfe-term,docs/REQUIREMENTS.md,90,- Mobile application supported by a backend server (implemented here as a PWA micro-frontend + microservices monorepo — see CLAUDE.md for architecture).
+doc-mfe-term,docs/VERIFICATION.md,32,npm run build         # turbo: all MFEs + services compile and emit dist/
+doc-mfe-term,docs/VERIFICATION.md,33,npx tsc --noEmit      # (inside apps/mfe-auth) frontend type-check
+doc-integration-technology,CLAUDE.md,56,"**`apps/mfe-auth` (port 3001) is the entire live front end.** Despite the name and the Module Federation scaffolding, it grew into the application monolith: auth flows, onboarding, all three role dashboards (owner/vet/admin), the symptom flow, results + explainability, clinic map and booking, AI cha"
+doc-integration-technology,CLAUDE.md,58,"The other MFEs (`mfe-pet-profile` 3002, `mfe-symptom-checker` 3003, `mfe-risk-results` 3004, `mfe-vet-discovery` 3005, `mfe-vaccination` 3006, `mfe-admin` 3007) and `apps/shell` (3000, the Module Federation host, remotes map in `apps/shell/vite.config.ts`) are **empty scaffolds — roughly 6–7 placeho"
+doc-integration-technology,README.md,7,- Frontend: React + Tailwind + Module Federation micro-frontends + PWA (mobile/web compatible)
+doc-independence,CLAUDE.md,92,"- `agent-service` (port 8002) — LangGraph three-agent pipeline (`app/agents/graph.py`), orchestrated by the graph itself (deterministic edges + `needs_vet` conditional routing): **Disease Risk Prediction Agent** (calls ai-service `/predict` as its tool; local heuristic fallback) → context_loader → *"
+doc-independence,docs/INTERIM_REPORT.md,163,"The digital tools currently available to pet owners do little to close this interpretive gap. Existing applications largely provide static reference content, manual symptom checklists, or simple reminder scheduling. They do not reason over the owner's input, do not stratify risk, and do not take act"
+doc-independence,docs/INTERIM_REPORT.md,172,"2. **Technological deficiency.** Existing digital pet health tools offer static information or manual checklists, lacking autonomous reasoning, real-time analysis, and actionable decision support."
+doc-independence,docs/INTERIM_REPORT.md,189,| **O3** | To implement an Agentic AI framework that autonomously reasons over risk levels and provides action guidance. |
+doc-independence,docs/INTERIM_REPORT.md,199,"**RQ3.** How can an agentic AI layer improve upon a single predictive model by autonomously reasoning over risk, generating explanations, and triggering preventive and referral actions?"
+doc-independence,docs/INTERIM_REPORT.md,243,"- **Methodological contribution.** Demonstrates the practical application of agentic AI to veterinary decision support, moving beyond single-model prediction toward multi-agent reasoning with autonomous action."
+doc-independence,docs/INTERIM_REPORT.md,263,"**Surveys of ML in animal health.** Das et al. [3] review machine learning techniques across animal health, highlighting persistent gaps in early detection and the need for real-time, accessible models. Bouchemla et al. [9] systematically review AI feasibility in veterinary medicine, identifying dia"
+doc-independence,docs/INTERIM_REPORT.md,283,"**Knowledge representation via ontology.** A property graph of diseases, symptoms, vaccines, and weighted relationships supplies domain knowledge the statistical models do not contain, and provides a substrate for explanation independent of model internals."
+doc-independence,docs/INTERIM_REPORT.md,285,"**Agentic AI.** Distinct from a single model invocation, an agentic system decomposes a goal across specialised agents that reason, invoke tools, and act. Orchestration here is graph-based, with deterministic edges and conditional routing, rather than an open-ended autonomous loop — a choice that tr"
+doc-independence,docs/INTERIM_REPORT.md,299,"| Use of AI | Basic rule-based or static logic | Agentic AI with autonomous reasoning, prioritisation, and action triggers |"
+doc-independence,docs/INTERIM_REPORT.md,304,| System intelligence | Static; no autonomous action | Agentic layer generating alerts and recommendations without user prompts |
+doc-independence,docs/INTERIM_REPORT.md,314,"1. **Prediction without action.** Studies [1], [2], [6], [8] demonstrate predictive capability but terminate at the prediction. None autonomously assess urgency, generate preventive-care actions, or route the owner to appropriate care."
+doc-independence,docs/INTERIM_REPORT.md,333,"The literature confirms that machine learning can detect early disease signals in companion animals, and that decision support rather than autonomous diagnosis is the appropriate near-term application. It also confirms that current systems stop at prediction, depend on clinical data unavailable at t"
+doc-independence,docs/INTERIM_REPORT.md,458,| Scheduling | APScheduler | Background autonomous monitoring (FR4.4) |
+doc-independence,docs/INTERIM_REPORT.md,500,"System analysis produced the use case model (Figure 2), identifying four actors — pet owner, veterinarian, administrator, and an autonomous monitoring agent — and sixteen use cases. Analysis of data ownership across these actors identified a requirement not present in the original proposal: veterina"
+doc-independence,docs/INTERIM_REPORT.md,518,"| `agent-service` | 8002 | LangGraph agent pipeline, autonomous monitoring agent |"
+doc-independence,docs/INTERIM_REPORT.md,524,"- **Graph-orchestrated agents.** Agent routing uses deterministic edges with a conditional branch, rather than open-ended autonomy, ensuring reproducible behaviour for evaluation."
+doc-independence,docs/INTERIM_REPORT.md,532,"**Agentic layer.** A LangGraph pipeline orchestrates three agents plus a composer, with a fourth agent running autonomously in the background."
+doc-independence,docs/INTERIM_REPORT.md,627,"The autonomous monitoring agent was verified to scan pets and vaccination records, create risk and vaccination notifications, and correctly suppress duplicates on a second run within the same day."
+doc-independence,docs/INTERIM_REPORT.md,716,"The second reading has a direct design implication: an input vocabulary that labels benign variation as abnormal will bias the severity index upward and contribute to over-triage. This finding therefore corroborates, from an independent direction, the over-triage tendency already identified statisti"
+doc-independence,docs/INTERIM_REPORT.md,765,"**C3 — Fragmented and unreadable feature attribution.** TF-IDF over a rendered sentence decomposes a single owner answer into several overlapping n-grams. One answer — ""drinking less water"" — surfaced as four separate entries (""less"", ""drinking less"", ""less water"", ""water is"") plus template connecti"
+doc-independence,docs/INTERIM_REPORT.md,832,4. An autonomous health-monitoring agent performing continuous evaluation without user prompting.
+doc-independence,docs/INTERIM_REPORT.md,854,| R5 | Synthetic training data undermines claims of clinical validity | High | Medium | Already mitigated by reporting per-class results separately and stating the limitation explicitly; expert review (A4) provides independent evidence |
+doc-independence,docs/INTERIM_REPORT.md,857,| R8 | Time pressure from concurrent academic commitments | Medium | High | Evaluation activities scheduled in parallel where independent; final report drafting begins before evaluation concludes |
+doc-independence,docs/INTERIM_REPORT.md,873,"3. **Genuine agentic behaviour.** A LangGraph pipeline of three agents with conditional routing, plus a fourth autonomous monitoring agent, verified operating in both live and degraded modes."
+doc-independence,docs/INTERIM_REPORT.md,881,"Immediate priorities are extending survey collection from the current 31 responses toward the 100–150 target, and securing expert veterinary review. These provide the independent validation the project currently lacks: the machine learning results reported here derive from public and knowledge-groun"
+doc-independence,docs/PROGRESS_REPORT.md,38,| Python | `agent-service` (8002) | LangGraph agent pipeline + Gemini + autonomous monitoring |
+doc-independence,docs/PROGRESS_REPORT.md,67,"**Cross-cutting:** trilingual EN/SI/TA throughout, installable PWA (mobile-first), autonomous monitoring agent (risk/vaccination alerts)."
+doc-independence,docs/PROGRESS_REPORT.md,107,"**Autonomous monitoring agent (4th agent):** APScheduler background job scans pets, latest predictions, and due/overdue vaccinations, then creates idempotent risk/vaccination notifications (manual trigger `POST /monitor/run` for demos)."
+doc-independence,docs/PROGRESS_REPORT.md,142,1. **Agentic** decision support (multi-agent LangGraph + autonomous monitoring) rather than a single prediction call.
+doc-independence,docs/PROGRESS_REPORT.md,169,9. (Optional) Trigger the monitoring agent (`POST /monitor/run`) to show autonomous risk/vaccination notifications.
+doc-independence,docs/REQUIREMENTS.md,11,"3. Uses an **Agentic AI layer** to autonomously interpret predictions, assess urgency, and trigger actions (risk alerts, vaccination reminders, vet recommendations) without user prompts."
+doc-independence,docs/REQUIREMENTS.md,22,- Implement an Agentic AI framework that autonomously reasons over risk levels and provides action guidance.
+doc-independence,docs/REQUIREMENTS.md,48,"- FR4.1 Autonomously interprets ML risk output — reasons over risk level, pet profile, and detected patterns."
+doc-independence,docs/REQUIREMENTS.md,51,- FR4.4 Autonomous health-monitoring agent that continuously evaluates pet health data and risk patterns.
+doc-independence,docs/REQUIREMENTS.md,99,4. Autonomous health-monitoring agent (continuous evaluation of pet health data).
+doc-independence,docs/VERIFICATION.md,105,# 6. Autonomous monitoring (FR4.3/4.4/5.3 demo)
+doc-independence,docs/ml/README.md,100,  API and the autonomous monitoring agent; persistence failures are non-fatal.
+doc-host-remote,CLAUDE.md,58,"The other MFEs (`mfe-pet-profile` 3002, `mfe-symptom-checker` 3003, `mfe-risk-results` 3004, `mfe-vet-discovery` 3005, `mfe-vaccination` 3006, `mfe-admin` 3007) and `apps/shell` (3000, the Module Federation host, remotes map in `apps/shell/vite.config.ts`) are **empty scaffolds — roughly 6–7 placeho"
+ws-workspaces,package.json,5,"  ""workspaces"": ["
+ws-path-alias,apps/mfe-risk-results/tsconfig.json,5,"    ""paths"": { ""@/*"": [""src/*""] }"
+ws-path-alias,apps/mfe-symptom-checker/tsconfig.json,5,"    ""paths"": { ""@/*"": [""src/*""] }"

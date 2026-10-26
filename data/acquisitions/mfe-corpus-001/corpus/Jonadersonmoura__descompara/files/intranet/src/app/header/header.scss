@@ -1,0 +1,51 @@
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3, 16px) var(--space-4, 24px);
+  background: var(--color-surface, #fff);
+  border-bottom: 1px solid var(--color-border, #d9e2df);
+
+  .brand {
+    font-weight: 700;
+    color: var(--color-primary, #15803d);
+    text-decoration: none;
+    font-size: 1.05rem;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4, 24px);
+  }
+
+  a {
+    color: var(--color-text-muted, #64748b);
+    text-decoration: none;
+    font-size: 0.9rem;
+
+    &.active,
+    &:hover {
+      color: var(--color-primary, #15803d);
+    }
+  }
+
+  .user {
+    font-size: 0.85rem;
+    color: var(--color-text, #1e293b);
+  }
+
+  .link-button {
+    font: inherit;
+    font-size: 0.9rem;
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--color-text-muted, #64748b);
+    cursor: pointer;
+
+    &:hover {
+      color: var(--color-primary, #15803d);
+    }
+  }
+}

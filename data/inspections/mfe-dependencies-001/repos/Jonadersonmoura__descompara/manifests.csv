@@ -1,0 +1,7 @@
+manifest,state
+admin-e2e/package.json,ok
+intranet-e2e/package.json,ok
+libs/shared/types/package.json,ok
+marAberto-e2e/package.json,ok
+package.json,ok
+shell-e2e/package.json,ok

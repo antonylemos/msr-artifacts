@@ -1,0 +1,17 @@
+path,artifact_types,bytes
+README.md,documentation,3411
+package-lock.json,lockfile,709807
+package.json,dependency-manifest;workspace-config,1272
+public/index.html,source;page-entry,1689
+public/manifest.json,runtime-manifest,492
+public/robots.txt,,67
+src/App.css,,564
+src/App.js,source,203
+src/App.test.js,source,246
+src/index.css,,366
+src/index.js,source,535
+src/logo.svg,,2632
+src/pages/Dashboard.jsx,source,1122
+src/reportWebVitals.js,source,362
+src/setupTests.js,source,241
+src/webpack.config.js,build-config;source,3440

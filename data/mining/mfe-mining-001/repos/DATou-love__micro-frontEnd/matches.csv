@@ -1,0 +1,15 @@
+pattern,path,line,excerpt
+dep-qiankun,main-vue3/package.json,12,"    ""qiankun"": ""^2.10.16"","
+lock-mfe-dependency,main-vue3/package-lock.json,11,"        ""qiankun"": ""^2.10.16"","
+lock-mfe-dependency,main-vue3/package-lock.json,1263,"    ""node_modules/qiankun"": {"
+lock-mfe-dependency,main-vue3/package-lock.json,1265,"      ""resolved"": ""https://registry.npmmirror.com/qiankun/-/qiankun-2.10.16.tgz"","
+lock-mfe-dependency,main-vue3/package-lock.json,1272,"        ""single-spa"": ""^5.9.2"""
+lock-mfe-dependency,main-vue3/package-lock.json,1317,"    ""node_modules/single-spa"": {"
+lock-mfe-dependency,main-vue3/package-lock.json,1319,"      ""resolved"": ""https://registry.npmmirror.com/single-spa/-/single-spa-5.9.5.tgz"","
+src-mount-export,sub-vue2/src/main.js,32,export async function bootstrap() {
+src-mount-export,sub-vue2/src/main.js,36,export async function mount(props) {
+src-mount-export,sub-vue2/src/main.js,41,export async function unmount() {
+src-mount-call,sub-vue2/src/main.js,16,  }).$mount(container ? container.querySelector('#app') : '#app')
+src-lifecycles,main-vue3/src/main.ts,3,"import { registerMicroApps, start } from 'qiankun'"
+src-lifecycles,main-vue3/src/main.ts,10,registerMicroApps([
+ops-cors,main-vue3/vite.config.ts,10,"    cors: true, // 允许跨域"

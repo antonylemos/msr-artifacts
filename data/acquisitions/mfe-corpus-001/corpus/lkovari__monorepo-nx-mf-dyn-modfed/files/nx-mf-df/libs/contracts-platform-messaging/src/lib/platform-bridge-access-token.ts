@@ -1,0 +1,2 @@
+export const PLATFORM_BRIDGE_ACCESS_TOKEN =
+  'a3f1c7e9b2d54608f1a6c3e8d7b09425';

@@ -1,0 +1,61 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "communication",
+  "root": "libs/communication",
+  "sourceRoot": "libs/communication/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/rollup:rollup",
+      "dependsOn": ["^build"],
+      "options": {
+        "outputPath": "dist/libs/communication",
+        "tsConfig": "libs/communication/tsconfig.lib.json",
+        "project": "libs/communication/rollup.config.json",
+        "main": "libs/communication/src/index.ts",
+        "external": ["@novx/core"],
+        "sourceMap": true,
+        "assets": [
+          {
+            "input": "libs/communication",
+            "glob": "package.json",
+            "output": "."
+          },
+          {
+            "input": "libs/communication",
+            "glob": "README.md",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "build:types": {
+      "executor": "@nx/js:tsc",
+      "options": {
+        "tsConfig": "libs/communication/tsconfig.lib.json",
+        "outDir": "dist/libs/communication",
+        "outputPath": "dist/libs/communication",
+        "main": "dist/libs/communication/index.js"
+      }
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{workspaceRoot}/coverage/libs/communication"],
+      "options": {
+        "configFile": "libs/communication/vitest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["libs/communication/src/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "docs": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "typedoc --tsconfig libs/communication/tsconfig.lib.json --out docs/libs/communication"
+      }
+    }
+  }
+}

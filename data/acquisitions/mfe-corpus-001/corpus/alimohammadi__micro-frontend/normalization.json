@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "id": "971885751",
+  "fullName": "alimohammadi/micro-frontend",
+  "commit": "7a05f74105f816f60621d9ba9171b269aa8e5cab",
+  "acquiredAt": "2026-10-24T00:32:20.726Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": ".DS_Store",
+      "reason": "preset:binaries",
+      "size": 6148
+    },
+    {
+      "path": "ecomm/products/dist/index.html",
+      "reason": "preset:build-output",
+      "size": 236
+    },
+    {
+      "path": "ecomm/products/dist/main.js",
+      "reason": "preset:build-output",
+      "size": 2883230
+    },
+    {
+      "path": "packages/.DS_Store",
+      "reason": "preset:binaries",
+      "size": 6148
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 46,
+    "bytes": 2548001
+  },
+  "languages": {
+    "JSON": 2523374,
+    "JavaScript": 23377,
+    "HTML": 1206,
+    "Other": 27,
+    "Markdown": 17
+  },
+  "contentSha256": "568fd46715254478cdbc3aedce33a455acf873ac4d9ec4efcbf50de3bcceebe7"
+}

@@ -1,0 +1,7 @@
+directory,markers
+.,package.json
+apps/microfrontend-workspace,apps/microfrontend-workspace/project.json
+customer,customer/module-federation.config.ts;customer/project.json;customer/webpack.config.ts;customer/webpack.prod.config.ts
+orders,orders/module-federation.config.ts;orders/project.json;orders/webpack.config.ts;orders/webpack.prod.config.ts
+products,products/module-federation.config.ts;products/project.json;products/webpack.config.ts;products/webpack.prod.config.ts
+shell,shell/module-federation.config.ts;shell/project.json;shell/webpack.config.ts;shell/webpack.prod.config.ts

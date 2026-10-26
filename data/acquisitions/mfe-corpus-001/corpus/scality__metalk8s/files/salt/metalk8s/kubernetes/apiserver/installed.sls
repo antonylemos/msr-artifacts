@@ -1,0 +1,189 @@
+{%- from "metalk8s/repo/macro.sls" import build_image_name with context %}
+{%- from "metalk8s/map.jinja" import certificates with context %}
+{%- from "metalk8s/map.jinja" import coredns with context %}
+{%- from "metalk8s/map.jinja" import metalk8s with context %}
+{%- from "metalk8s/map.jinja" import networks with context %}
+{%- from "metalk8s/map.jinja" import kube_api with context %}
+
+{%- set encryption_k8s_path = "/etc/kubernetes/encryption.conf" %}
+{%- set authn_config_path = kube_api.authn_config_path %}
+include:
+  - metalk8s.kubernetes.ca.advertised
+  - metalk8s.kubernetes.sa.advertised
+  - metalk8s.addons.nginx-ingress.ca.advertised
+  - .certs
+
+{%- set host = grains['metalk8s']['control_plane_ip'] %}
+{%- set etcd_servers = [] %}
+{#- NOTE: Filter out members with empty name as they are not started yet. #}
+{%- for member in pillar.metalk8s.etcd.members | selectattr('name') %}
+{%-   do etcd_servers.extend(member['client_urls']) %}
+{%- endfor %}
+{%- set etcd_servers = etcd_servers | sort %}
+{%- if 'etcd' in pillar.metalk8s.nodes[grains.id].roles %}
+{%-   do etcd_servers.insert(0, "https://" ~ host ~ ":2379") %}
+{%- endif %}
+{%- set etcd_servers = etcd_servers | unique %}
+
+{%- set feature_gates = [] %}
+{%- for feature, value in pillar.kubernetes.get("apiServer", {}).get("featureGates", {}).items() %}
+{%-   if value is sameas True %}
+{%-     set value = "true" %}
+{%-   elif value is sameas False %}
+{%-     set value = "false" %}
+{%-   endif %}
+{%-   do feature_gates.append(feature ~ "=" ~ value) %}
+{%- endfor %}
+
+{# OIDC is configured via the AuthenticationConfiguration file written by
+   .authnconfig (--oidc-* flags are mutually exclusive with
+   --authentication-config in Kubernetes 1.32+). #}
+
+{%- set pod_name = "kube-apiserver-" ~ grains.id %}
+{%- set last_pod_id = salt.cri.get_pod_id(
+  name=pod_name, state="ready", ignore_not_found=True
+) %}
+
+Create kube-apiserver Pod manifest:
+  metalk8s.static_pod_managed:
+    - name: /etc/kubernetes/manifests/kube-apiserver.yaml
+    - source: salt://metalk8s/kubernetes/files/control-plane-manifest.yaml.j2
+    - config_files:
+        - {{ encryption_k8s_path }}
+        - {{ authn_config_path }}
+        - {{ certificates.server.files.apiserver.path }}
+        - /etc/kubernetes/pki/apiserver.key
+        - {{ certificates.client.files['apiserver-etcd'].path }}
+        - /etc/kubernetes/pki/apiserver-etcd-client.key
+        - {{ certificates.client.files['apiserver-kubelet'].path }}
+        - {{ certificates.client.files['apiserver-kubelet'].key }}
+        - /etc/kubernetes/pki/ca.crt
+        - /etc/kubernetes/pki/etcd/ca.crt
+        - /etc/kubernetes/pki/front-proxy-ca.crt
+        - {{ certificates.client.files['front-proxy'].path }}
+        - /etc/kubernetes/pki/front-proxy-client.key
+        - /etc/kubernetes/pki/sa.key
+        - /etc/kubernetes/pki/sa.pub
+        - /etc/metalk8s/pki/nginx-ingress/ca.crt
+    - context:
+        name: kube-apiserver
+        host: {{ host }}
+        image_name: {{ build_image_name("kube-apiserver") }}
+        port: 6443
+        scheme: HTTPS
+        liveness_path: /livez
+        readiness_path: /readyz
+        command:
+        # kubeadm flags {
+          - kube-apiserver
+          - --advertise-address={{ host }}
+          - --allow-privileged=true
+          - --authorization-mode=Node,RBAC
+          - --client-ca-file=/etc/kubernetes/pki/ca.crt
+          - --enable-admission-plugins=NodeRestriction
+          - --enable-bootstrap-token-auth=true
+          - --etcd-cafile=/etc/kubernetes/pki/etcd/ca.crt
+          - --etcd-certfile={{ certificates.client.files['apiserver-etcd'].path }}
+          - --etcd-keyfile=/etc/kubernetes/pki/apiserver-etcd-client.key
+          - --etcd-servers={{ etcd_servers | join(",") }}
+          - --kubelet-client-certificate={{ certificates.client.files['apiserver-kubelet'].path }}
+          - --kubelet-client-key={{ certificates.client.files['apiserver-kubelet'].key }}
+          - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+          - --proxy-client-cert-file={{ certificates.client.files['front-proxy'].path }}
+          - --proxy-client-key-file=/etc/kubernetes/pki/front-proxy-client.key
+          - --requestheader-allowed-names=front-proxy-client
+          - --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.crt
+          - --requestheader-extra-headers-prefix=X-Remote-Extra-
+          - --requestheader-group-headers=X-Remote-Group
+          - --requestheader-username-headers=X-Remote-User
+          - --secure-port=6443
+          - --service-account-issuer=https://kubernetes.default.svc.{{ coredns.cluster_domain }}
+          - --service-account-key-file=/etc/kubernetes/pki/sa.pub
+          - --service-account-signing-key-file=/etc/kubernetes/pki/sa.key
+          - --service-cluster-ip-range={{ networks.service }}
+          - --tls-cert-file={{ certificates.server.files.apiserver.path }}
+          - --tls-private-key-file=/etc/kubernetes/pki/apiserver.key
+        # }
+          - --bind-address={{ host }}
+          - --encryption-provider-config={{ encryption_k8s_path }}
+          - --cors-allowed-origins=^.*$
+          - --default-not-ready-toleration-seconds={{ pillar.kubernetes.apiServer.config.defaultNotReadyTolerationSeconds }}
+          - --default-unreachable-toleration-seconds={{ pillar.kubernetes.apiServer.config.defaultUnreachableTolerationSeconds }}
+          - --v={{ 2 if metalk8s.debug else 0 }}
+          - --authentication-config={{ authn_config_path }}
+          {% if feature_gates %}
+          - --feature-gates={{ feature_gates | join(",") }}
+          {%- endif %}
+        requested_cpu: 250m
+        volumes:
+          - path: {{ encryption_k8s_path }}
+            type: File
+            name: k8s-encryption
+          - path: {{ authn_config_path }}
+            type: File
+            name: k8s-authn-config
+          {%- if grains['os_family'] == 'RedHat' %}
+          - path: /etc/pki/ca-trust
+            name: etc-pki-ca-trust
+          - path: /etc/pki/tls/certs
+            name: etc-pki-tls-certs
+          {%- endif %}
+          - path: /etc/kubernetes/pki
+            name: k8s-certs
+          - path: /etc/metalk8s/pki
+            name: metalk8s-certs
+          - path: /etc/ssl/certs
+            name: ca-certs
+    - require:
+      - file: Ensure kubernetes CA cert is present
+      - file: Ensure etcd CA cert is present
+      - file: Ensure front-proxy CA cert is present
+      - file: Ensure SA pub key is present
+      - file: Ensure Ingress CA cert is present
+
+{%- if last_pod_id %}
+Restart kubelet to make it pick up the manifest changes:
+  service.running:
+    - name: kubelet
+    - watch:
+      - metalk8s: Create kube-apiserver Pod manifest
+    - unless:
+      # Do not restart kubelet if we see the Pod was updated
+      - fun: cri.wait_pod
+        name: {{ pod_name }}
+        last_id: {{ last_pod_id }}
+        timeout: 120
+        raise_on_timeout: false
+    - require_in:
+      - module: Delay after kube-apiserver Pod deployment
+
+{%- endif %}
+
+# This is a bit ugly but currently we have no easy way to find if the
+# pod has been updated already or not, so we need to wait a bit
+Delay after kube-apiserver Pod deployment:
+  module.run:
+    - test.sleep:
+      - length: 10
+    - onchanges:
+      - metalk8s: Create kube-apiserver Pod manifest
+
+Make sure kube-apiserver container is up and ready:
+  module.run:
+    - cri.wait_container:
+      - name: kube-apiserver
+      - state: running
+      - timeout: 120
+    - require:
+      - module: Delay after kube-apiserver Pod deployment
+    - onchanges:
+      - metalk8s: Create kube-apiserver Pod manifest
+  http.wait_for_successful_query:
+    - name: https://{{ host }}:6443/healthz
+    - verify_ssl: True
+    - ca_bundle: /etc/kubernetes/pki/ca.crt
+    - status: 200
+    - match: 'ok'
+    - request_interval: 1
+    - require:
+      - module: Make sure kube-apiserver container is up and ready

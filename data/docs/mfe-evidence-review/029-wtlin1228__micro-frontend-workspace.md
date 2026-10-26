@@ -37,7 +37,7 @@ Um host React compõe quatro aplicações por dois mecanismos ao mesmo tempo, a 
 
 **Relações:** as duas cadeias resultam em quatro relações ativas (#43 a #46), entre cinco unidades com limites próprios.
 
-Todas as aplicações têm build próprio, mas a saída fica presa a `localhost`, e não há deploy (#47 a #51). A documentação é curta e confere com a implementação, inclusive na combinação dos dois mecanismos (#53). O único ponto histórico, os `remotes` comentados, é resolvido pelo próprio snapshot (#55).
+Todas as aplicações têm build próprio, mas a saída fica presa a `localhost`, e não há deploy observado (#47 a #51). A documentação é curta e confere com a implementação, inclusive na combinação dos dois mecanismos (#53). O único ponto histórico, os `remotes` comentados, é resolvido pelo próprio snapshot (#55).
 
 ## Observações
 

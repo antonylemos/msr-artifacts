@@ -1,0 +1,27 @@
+{%- set version = "@@VERSION" -%}
+{%- set roles = ['bootstrap', 'etcd', 'master', 'node'] -%}
+
+# The mechanics of this file are very similar to those of `salt/top.sls(.in)`.
+# Please refer to the comments in that file for more background.
+
+{%- set version_match = "I@metalk8s:nodes:" ~ grains.id ~ ":version:" ~ version -%}
+
+{%- macro role_match(name) -%}
+I@metalk8s:nodes:{{ grains.id }}:roles:{{ name }}
+{%- endmacro %}
+
+metalk8s-{{ version }}:
+  {{ version_match }}:
+    - match: compound
+    - metalk8s.roles.minion
+
+  # Specific case for ca as we need signing_policy at the very beginning
+  I@metalk8s:ca:minion:{{ grains.id }}:
+    - match: compound
+    - metalk8s.roles.ca
+
+{% for role in roles %}
+  {{ version_match }} and {{ role_match(role) }}:
+    - match: compound
+    - metalk8s.roles.{{ role }}
+{% endfor %}

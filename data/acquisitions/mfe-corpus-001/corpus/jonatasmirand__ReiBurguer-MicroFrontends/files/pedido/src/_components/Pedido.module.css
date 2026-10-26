@@ -1,0 +1,82 @@
+.container {
+    padding: 20px;
+    border-radius: 12px;
+    width: 380px;
+    margin: 0 auto;
+}
+
+.title {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    text-align: center;
+    padding: 10px;
+}
+
+.empty {
+    font-size: 1.1rem;
+    color: #111;    
+}
+
+.list {
+    list-style: none;
+    padding: 0;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    color: #111;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.totalBox {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 2px solid #333;
+    display: flex;
+    justify-content: space-between;
+}
+
+.totalLabel {
+    font-weight: bold;
+}
+
+.totalValue {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* ========================= */
+/* 📱 Mobile (até 480px) */
+/* ========================= */
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+
+    .title {
+        font-size: 2.2rem;
+    }
+
+    .item {
+        font-size: 0.95rem;
+    }
+
+    .totalBox {
+        font-size: 1rem;
+    }
+}
+
+/* ========================= */
+/* 📱 Tablet (481px até 768px) */
+/* ========================= */
+@media (max-width: 768px) {
+    .container {
+        max-width: 90%;
+    }
+
+    .title {
+        font-size: 2.5rem;
+    }
+}

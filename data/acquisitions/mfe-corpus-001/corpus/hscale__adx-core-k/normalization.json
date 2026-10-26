@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "id": "1033705813",
+  "fullName": "hscale/adx-core-k",
+  "commit": "683dec7ebc233c685f97166a135032d5668070c1",
+  "acquiredAt": "2026-10-24T00:26:29.555Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "adx-core/services/user-service/verify_workflows",
+      "reason": "preset:binaries",
+      "size": 482880
+    },
+    {
+      "path": "adx-specs.zip",
+      "reason": "preset:binaries",
+      "size": 184152
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 769,
+    "bytes": 7385944
+  },
+  "languages": {
+    "Rust": 3320652,
+    "Markdown": 1502861,
+    "JSON": 822896,
+    "TypeScript": 767716,
+    "Shell": 316411,
+    "Other": 273352,
+    "SQL": 187629,
+    "YAML": 164445,
+    "TOML": 19672,
+    "JavaScript": 8422,
+    "HTML": 1105,
+    "CSS": 783
+  },
+  "contentSha256": "5f4a3732d53db64c560ac780c120b504c695d087988a1c3291290450b5327adc"
+}

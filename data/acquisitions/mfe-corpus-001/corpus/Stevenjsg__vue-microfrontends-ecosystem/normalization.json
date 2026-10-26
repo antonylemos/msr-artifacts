@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "id": "1106098608",
+  "fullName": "Stevenjsg/vue-microfrontends-ecosystem",
+  "commit": "8501b8bd6e1d2491eb7838ae38b264a826f4c453",
+  "acquiredAt": "2026-10-24T00:32:36.249Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 65,
+    "bytes": 87553
+  },
+  "languages": {
+    "YAML": 54476,
+    "JSON": 8976,
+    "SVG": 7972,
+    "Other": 6132,
+    "TypeScript": 4025,
+    "Vue": 2161,
+    "Markdown": 1768,
+    "HTML": 1411,
+    "CSS": 632
+  },
+  "contentSha256": "6079d953f5816ec48c4c013728ee50353b24f4eba1518b4064444918939e3885"
+}

@@ -1,0 +1,26 @@
+pattern,path,line,excerpt
+cfg-route-rewrites,host-shell/next.config.ts,10,  async rewrites() {
+cfg-zone-path,analytics-dashboard/next.config.ts,5,"  basePath: ""/analytics"","
+cfg-zone-path,analytics-dashboard/next.config.ts,6,"  assetPrefix: ""/analytics-assets"","
+cfg-zone-path,workspace-document/next.config.ts,5,"  basePath: ""/workspace"","
+cfg-zone-path,workspace-document/next.config.ts,7,"  assetPrefix: ""/workspace-assets"","
+src-cross-unit-communication,analytics-dashboard/public/workers/filterWorker.js,7,    self.postMessage(logs);
+src-cross-unit-communication,analytics-dashboard/public/workers/filterWorker.js,23,  self.postMessage(filteredLogs);
+src-cross-unit-communication,analytics-dashboard/src/app/page.tsx,30,          self.postMessage(logs);
+src-cross-unit-communication,analytics-dashboard/src/app/page.tsx,41,        self.postMessage(filtered);
+src-cross-unit-communication,analytics-dashboard/src/app/page.tsx,97,"      workerRef.current.postMessage({ logs: tableLogs, searchTerm });"
+ops-hosting,analytics-dashboard/README.md,21,"This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel."
+ops-hosting,analytics-dashboard/README.md,30,You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+ops-hosting,analytics-dashboard/README.md,32,## Deploy on Vercel
+ops-hosting,analytics-dashboard/README.md,34,The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+ops-hosting,host-shell/README.md,21,"This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel."
+ops-hosting,host-shell/README.md,30,You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+ops-hosting,host-shell/README.md,32,## Deploy on Vercel
+ops-hosting,host-shell/README.md,34,The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+ops-hosting,workspace-document/README.md,21,"This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel."
+ops-hosting,workspace-document/README.md,30,You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+ops-hosting,workspace-document/README.md,32,## Deploy on Vercel
+ops-hosting,workspace-document/README.md,34,The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+ws-path-alias,analytics-dashboard/tsconfig.json,21,"    ""paths"": {"
+ws-path-alias,host-shell/tsconfig.json,21,"    ""paths"": {"
+ws-path-alias,workspace-document/tsconfig.json,21,"    ""paths"": {"

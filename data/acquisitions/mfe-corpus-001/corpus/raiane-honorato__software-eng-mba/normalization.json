@@ -1,0 +1,139 @@
+{
+  "schema": 1,
+  "id": "1247892038",
+  "fullName": "raiane-honorato/software-eng-mba",
+  "commit": "c569ccc6582475495a637d44ceed33c62c0f6e86",
+  "acquiredAt": "2026-10-24T00:26:28.658Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "UX/confirma_o_de_check_in/screen.png",
+      "reason": "preset:binaries",
+      "size": 481524
+    },
+    {
+      "path": "UX/dashboard_check_in_ativo_4/screen.png",
+      "reason": "preset:binaries",
+      "size": 176232
+    },
+    {
+      "path": "UX/dashboard_p_s_treino_2/screen.png",
+      "reason": "preset:binaries",
+      "size": 304722
+    },
+    {
+      "path": "UX/dashboard_p_s_treino_menu_unificado/screen.png",
+      "reason": "preset:binaries",
+      "size": 313317
+    },
+    {
+      "path": "UX/dashboard_vazio_novo_layout_4/screen.png",
+      "reason": "preset:binaries",
+      "size": 237507
+    },
+    {
+      "path": "UX/finaliza_o_de_treino/screen.png",
+      "reason": "preset:binaries",
+      "size": 151707
+    },
+    {
+      "path": "UX/listagem_de_academias/screen.png",
+      "reason": "preset:binaries",
+      "size": 313055
+    },
+    {
+      "path": "UX/logo.png",
+      "reason": "preset:binaries",
+      "size": 57371
+    },
+    {
+      "path": "apps/monolith/assets/adaptive-icon.png",
+      "reason": "preset:binaries",
+      "size": 17547
+    },
+    {
+      "path": "apps/monolith/assets/favicon.png",
+      "reason": "preset:binaries",
+      "size": 1466
+    },
+    {
+      "path": "apps/monolith/assets/icon.png",
+      "reason": "preset:binaries",
+      "size": 22380
+    },
+    {
+      "path": "apps/monolith/assets/logo.png",
+      "reason": "preset:binaries",
+      "size": 55097
+    },
+    {
+      "path": "apps/monolith/assets/splash-icon.png",
+      "reason": "preset:binaries",
+      "size": 17547
+    },
+    {
+      "path": "apps/repack-poc/poc-evidence.png",
+      "reason": "preset:binaries",
+      "size": 645811
+    },
+    {
+      "path": "apps/repack/packages/host/assets/fonts/Inter-Bold.ttf",
+      "reason": "preset:binaries",
+      "size": 344072
+    },
+    {
+      "path": "apps/repack/packages/host/assets/fonts/Inter-ExtraBold.ttf",
+      "reason": "preset:binaries",
+      "size": 344900
+    },
+    {
+      "path": "apps/repack/packages/host/assets/fonts/Inter-Regular.ttf",
+      "reason": "preset:binaries",
+      "size": 342408
+    },
+    {
+      "path": "apps/repack/packages/host/assets/fonts/Inter-SemiBold.ttf",
+      "reason": "preset:binaries",
+      "size": 343632
+    },
+    {
+      "path": "apps/repack/packages/ui/src/assets/logo.png",
+      "reason": "preset:binaries",
+      "size": 55097
+    },
+    {
+      "path": "apps/turborepo/packages/ui/src/assets/logo.png",
+      "reason": "preset:binaries",
+      "size": 55097
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 320,
+    "bytes": 2330452
+  },
+  "languages": {
+    "YAML": 1531431,
+    "Other": 319108,
+    "TypeScript": 211073,
+    "Markdown": 138320,
+    "HTML": 66903,
+    "JSON": 26399,
+    "JavaScript": 21266,
+    "Shell": 10296,
+    "Python": 5656
+  },
+  "contentSha256": "f4f78b60ce27a104e9f305e1d592441cb2ba2cd324f8598e1f7b43039cd262d6"
+}

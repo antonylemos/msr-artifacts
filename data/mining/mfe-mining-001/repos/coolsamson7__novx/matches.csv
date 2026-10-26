@@ -1,0 +1,72 @@
+pattern,path,line,excerpt
+dep-monorepo-tool,package.json,14,"    ""@nrwl/eslint-plugin-nx"": ""^19.8.4"","
+dep-monorepo-tool,package.json,15,"    ""@nx/eslint"": ""22.5.3"","
+dep-monorepo-tool,package.json,16,"    ""@nx/eslint-plugin"": ""22.5.3"","
+dep-monorepo-tool,package.json,17,"    ""@nx/js"": ""22.5.3"","
+dep-monorepo-tool,package.json,18,"    ""@nx/rollup"": ""22.5.3"","
+dep-monorepo-tool,package.json,19,"    ""@nx/vite"": ""22.5.3"","
+dep-monorepo-tool,package.json,20,"    ""@nx/vitest"": ""22.5.3"","
+dep-monorepo-tool,package.json,21,"    ""@nx/webpack"": ""22.5.3"","
+dep-monorepo-tool,package.json,44,"    ""nx"": ""22.5.3"","
+dep-mfe-term,apps/microfrontend/package.json,2,"  ""name"": ""microfrontend"","
+dep-mfe-term,apps/microfrontend/package.json,5,"    ""start"": ""nx serve microfrontend"","
+dep-mfe-term,apps/microfrontend/package.json,6,"    ""build"": ""nx build microfrontend"""
+cfg-federation-plugin,apps/app/webpack.config.js,2,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,apps/app/webpack.config.js,78,    new ModuleFederationPlugin({
+cfg-federation-plugin,apps/microfrontend/webpack.config.js,2,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,apps/microfrontend/webpack.config.js,53,    new ModuleFederationPlugin({
+cfg-remotes,apps/app/webpack.config.js,82,      remotes: {
+cfg-exposes,apps/microfrontend/webpack.config.js,56,      exposes: {
+cfg-shared,apps/app/webpack.config.js,7,"  ""@novx/portal"": { singleton: true, eager: true, requiredVersion: false },"
+cfg-shared,apps/app/webpack.config.js,8,"  ""@novx/core"": { singleton: true, eager: true, requiredVersion: false },"
+cfg-shared,apps/app/webpack.config.js,9,"  ""@novx/communication"": { singleton: true, eager: true, requiredVersion: false },"
+cfg-shared,apps/app/webpack.config.js,10,"  ""@novx/i18n"": { singleton: true, eager: true, requiredVersion: false },"
+cfg-shared,apps/app/webpack.config.js,86,      shared: {
+cfg-shared,apps/app/webpack.config.js,87,"        ""reflect-metadata"": { singleton: true, eager: true },"
+cfg-shared,apps/app/webpack.config.js,88,"        react: { singleton: true, eager: true, requiredVersion: false },"
+cfg-shared,apps/app/webpack.config.js,89,"        ""react-dom"": { singleton: true, eager: true, requiredVersion: false },"
+cfg-shared,apps/app/webpack.config.js,90,"        ""react-router-dom"": { singleton: true, eager: true, requiredVersion: false },"
+cfg-shared,apps/app/webpack.config.js,91,"        ""react/jsx-runtime"": { singleton: true, eager: true, requiredVersion: false },"
+cfg-shared,apps/microfrontend/webpack.config.js,6,"   ""@novx/portal"": { singleton: true, eager: true, requiredVersion: false },"
+cfg-shared,apps/microfrontend/webpack.config.js,7,"   ""@novx/core"": { singleton: true, eager: true, requiredVersion: false },"
+cfg-shared,apps/microfrontend/webpack.config.js,8,"   ""@novx/communication"": { singleton: true, eager: true, requiredVersion: false },"
+cfg-shared,apps/microfrontend/webpack.config.js,9,"   ""@novx/i18n"": { singleton: true, eager: true, requiredVersion: false },"
+cfg-shared,apps/microfrontend/webpack.config.js,60,      shared: {
+cfg-shared,apps/microfrontend/webpack.config.js,61,"        ""reflect-metadata"": { singleton: true, eager: true, requiredVersion: false },"
+cfg-shared,apps/microfrontend/webpack.config.js,62,"        react: { singleton: true,  eager: true, requiredVersion: false },"
+cfg-shared,apps/microfrontend/webpack.config.js,63,"        'react-dom': { singleton: true,  eager: true, requiredVersion: false },"
+cfg-shared,apps/microfrontend/webpack.config.js,64,"        'react-router-dom': { singleton: true,  eager: true, requiredVersion: false },"
+cfg-shared,apps/microfrontend/webpack.config.js,65,"        ""react/jsx-runtime"": { singleton: true,  eager: true, requiredVersion: false },"
+cfg-public-path,apps/app/webpack.config.js,20,"    publicPath: process.env.PUBLIC_URL || ""/"","
+cfg-public-path,apps/microfrontend/webpack.config.js,28,"    publicPath: 'auto',"
+rt-remote-entry,apps/app/webpack.config.js,80,"      filename: ""remoteEntry.js"","
+rt-remote-entry,apps/app/webpack.config.js,83,"        microfrontend: ""microfrontend@http://localhost:3001/remoteEntry.js"","
+rt-remote-entry,apps/microfrontend/webpack.config.js,55,"      filename: 'remoteEntry.js',"
+rt-remote-entry,libs/portal/src/lib/module.ts,48," *     url: ""http://localhost:3001/remoteEntry.js"","
+rt-remote-entry,libs/portal/src/lib/outlet-loader/remote-component-loader.ts,22,  private static remoteEntryCache = new Set<string>();
+rt-remote-entry,libs/portal/src/lib/outlet-loader/remote-component-loader.ts,29,      if (this.remoteEntryCache.has(url)) return;
+rt-remote-entry,libs/portal/src/lib/outlet-loader/remote-component-loader.ts,36,          this.remoteEntryCache.add(url);
+rt-remote-entry,libs/portal/src/lib/outlet-loader/remote-component-loader.ts,66,"      if (url) await this.loadRemoteEntry(scope, `${url}/remoteEntry.js`);"
+rt-manifest-file,apps/app/src/manifest.json,,
+rt-manifest-file,apps/microfrontend/public/manifest.json,,
+src-load-remote,libs/portal/src/lib/outlet-loader/remote-component-loader.ts,11,declare function __webpack_init_sharing__(scope: string): Promise<void>;
+src-load-remote,libs/portal/src/lib/outlet-loader/remote-component-loader.ts,12,declare const __webpack_share_scopes__: { default: unknown };
+src-load-remote,libs/portal/src/lib/outlet-loader/remote-component-loader.ts,46,      await __webpack_init_sharing__('default');
+src-load-remote,libs/portal/src/lib/outlet-loader/remote-component-loader.ts,54,      await remoteContainer.init(__webpack_share_scopes__.default);
+src-load-remote,libs/portal/src/lib/outlet-loader/remote-component-loader.ts,57,"    static async loadRemoteModule(scope: string, module: string, url?: string) {"
+src-load-remote,libs/portal/src/lib/outlet-loader/remote-component-loader.ts,106,      await RemoteComponentLoader.loadRemoteModule(
+src-load-remote,libs/portal/src/lib/outlet-loader/remote-component-loader.ts,137,      outlet.component = await RemoteComponentLoader.loadRemoteModule(
+src-dynamic-script,libs/portal/src/lib/outlet-loader/remote-component-loader.ts,32,        const script = document.createElement('script');
+ops-cors,apps/app/webpack.config.js,119,"    headers: { ""Access-Control-Allow-Origin"": ""*"" },"
+ops-cors,apps/microfrontend/webpack.config.js,23,"      'Access-Control-Allow-Origin': '*',"
+ci-workflow-file,.github/workflows/ci.yml,,
+ci-workflow-file,.github/workflows/docs.yml,,
+ci-monorepo-tooling,.github/workflows/ci.yml,33,      - run: pnpm nx run-many -t lint test build
+doc-mfe-term,README.md,14,- [portal](https://github.com/coolsamson7/novx/tree/main/libs/portal#readme) a react microfrontend framework 
+doc-mfe-term,libs/portal/README.md,5,Portal implements a react portal framework supporting microfrontends vastly simplifying implementation efforts since a number of technical challenges every application has to solve are already part of the framework.
+doc-mfe-term,libs/portal/README.md,17,"While the framework supports enterprise portals with dynamic microfrontends - and server side configuration mechanisms - as one extreme it also covers small local only applications without significant coding and rampup overhead, making it a one-size-fits-all framework."
+doc-mfe-term,libs/portal/README.md,203,"Ok, but we promised microfrontends as well, were are they?"
+doc-mfe-term,libs/portal/README.md,209,"        { name: 'microfrontend', url: 'http://localhost:3001' },"
+doc-mfe-term,libs/portal/README.md,215,server component that is aware of different microfrontends and configurations also including more sophisticated logic to filter
+ws-workspaces,pnpm-workspace.yaml,1,packages:
+ws-path-alias,tsconfig.base.json,13,"    ""paths"": {"

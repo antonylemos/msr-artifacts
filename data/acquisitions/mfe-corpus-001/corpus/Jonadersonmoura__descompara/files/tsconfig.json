@@ -1,0 +1,47 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compileOnSave": false,
+  "files": [],
+  "references": [
+    {
+      "path": "./libs/shared/types"
+    },
+    {
+      "path": "./libs/shared/data-access"
+    },
+    {
+      "path": "./libs/shared/guards"
+    },
+    {
+      "path": "./libs/shared/theme"
+    },
+    {
+      "path": "./libs/shared/ui"
+    },
+    {
+      "path": "./marAberto-e2e"
+    },
+    {
+      "path": "./intranet-e2e"
+    },
+    {
+      "path": "./admin-e2e"
+    },
+    {
+      "path": "./marAberto"
+    },
+    {
+      "path": "./shell-e2e"
+    },
+    {
+      "path": "./intranet"
+    },
+    {
+      "path": "./admin"
+    },
+    {
+      "path": "./shell"
+    }
+  ],
+  "compilerOptions": {}
+}

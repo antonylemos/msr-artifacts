@@ -1,0 +1,6 @@
+directory,markers
+.,angular.json;package.json
+projects/host-app,projects/host-app/webpack.config.js;projects/host-app/webpack.prod.config.js
+projects/login-mfe-app,projects/login-mfe-app/webpack.config.js;projects/login-mfe-app/webpack.prod.config.js
+projects/mfe1,projects/mfe1/webpack.config.js;projects/mfe1/webpack.prod.config.js
+projects/mfe2,projects/mfe2/webpack.config.js;projects/mfe2/webpack.prod.config.js

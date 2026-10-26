@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "id": "1228275100",
+  "fullName": "angelantilantil-web/micro-frontend",
+  "commit": "a5b4cae18e6c3266d737894bba07c24b0959805b",
+  "acquiredAt": "2026-10-24T00:32:34.554Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "ai-agent-backend/__pycache__/app.cpython-314.pyc",
+      "reason": "preset:python",
+      "size": 19870
+    },
+    {
+      "path": "ai-agent-backend/__pycache__/database.cpython-314.pyc",
+      "reason": "preset:python",
+      "size": 606
+    },
+    {
+      "path": "ai-agent-backend/__pycache__/models.cpython-314.pyc",
+      "reason": "preset:python",
+      "size": 819
+    },
+    {
+      "path": "ai-agent-backend/__pycache__/schemas.cpython-314.pyc",
+      "reason": "preset:python",
+      "size": 1102
+    },
+    {
+      "path": "ai-agent-backend/__pycache__/seed_data.cpython-314.pyc",
+      "reason": "preset:python",
+      "size": 1286
+    },
+    {
+      "path": "openapi-mcp-server.zip",
+      "reason": "preset:binaries",
+      "size": 24228
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 122,
+    "bytes": 174385
+  },
+  "languages": {
+    "JavaScript": 84019,
+    "CSS": 37862,
+    "Markdown": 22250,
+    "Python": 12162,
+    "JSON": 6426,
+    "SVG": 4668,
+    "Other": 4191,
+    "HTML": 2807
+  },
+  "contentSha256": "8e30855feed7a6761e699c970f882b51aadcf332123edad3d35bf415e2599508"
+}

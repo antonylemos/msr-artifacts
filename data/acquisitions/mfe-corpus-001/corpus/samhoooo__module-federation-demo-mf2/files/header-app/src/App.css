@@ -1,0 +1,14 @@
+.headerApp {
+  padding: 20px;
+  text-align: center;
+}
+
+.headerApp--dark {
+  background-color: #282c34;
+  color: white;
+}
+
+.headerApp--light {
+  background-color: #f4f4f4;
+  color: #282c34;
+}

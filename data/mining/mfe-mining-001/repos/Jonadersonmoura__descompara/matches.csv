@@ -1,0 +1,191 @@
+pattern,path,line,excerpt
+dep-module-federation,package.json,18,"    ""@module-federation/enhanced"": ""^2.1.0"","
+dep-module-federation,package.json,23,"    ""@nx/module-federation"": ""23.1.0"","
+dep-native-federation,package.json,31,"    ""@softarc/native-federation-orchestrator"": ""^4.2.2"","
+dep-native-federation,package.json,58,"    ""@angular-architects/native-federation"": ""^22.0.6"","
+dep-monorepo-tool,admin-e2e/package.json,5,"  ""nx"": {"
+dep-monorepo-tool,intranet-e2e/package.json,5,"  ""nx"": {"
+dep-monorepo-tool,marAberto-e2e/package.json,5,"  ""nx"": {"
+dep-monorepo-tool,package.json,19,"    ""@nx/devkit"": ""23.1.0"","
+dep-monorepo-tool,package.json,20,"    ""@nx/eslint"": ""23.1.0"","
+dep-monorepo-tool,package.json,21,"    ""@nx/eslint-plugin"": ""23.1.0"","
+dep-monorepo-tool,package.json,22,"    ""@nx/js"": ""23.1.0"","
+dep-monorepo-tool,package.json,23,"    ""@nx/module-federation"": ""23.1.0"","
+dep-monorepo-tool,package.json,24,"    ""@nx/playwright"": ""23.1.0"","
+dep-monorepo-tool,package.json,25,"    ""@nx/vitest"": ""23.1.0"","
+dep-monorepo-tool,package.json,26,"    ""@nx/web"": ""23.1.0"","
+dep-monorepo-tool,package.json,27,"    ""@nx/webpack"": ""23.1.0"","
+dep-monorepo-tool,package.json,44,"    ""nx"": ""23.1.0"","
+dep-monorepo-tool,package.json,65,"    ""@nx/angular"": ""^23.1.0"","
+dep-monorepo-tool,shell-e2e/package.json,5,"  ""nx"": {"
+lock-mfe-dependency,package-lock.json,16,"        ""@angular-architects/native-federation"": ""^22.0.6"","
+lock-mfe-dependency,package-lock.json,38,"        ""@module-federation/enhanced"": ""^2.1.0"","
+lock-mfe-dependency,package-lock.json,51,"        ""@softarc/native-federation-orchestrator"": ""^4.2.2"","
+lock-mfe-dependency,package-lock.json,364,"    ""node_modules/@angular-architects/native-federation"": {"
+lock-mfe-dependency,package-lock.json,366,"      ""resolved"": ""https://registry.npmjs.org/@angular-architects/native-federation/-/native-federation-22.0.6.tgz"","
+lock-mfe-dependency,package-lock.json,374,"        ""@softarc/native-federation"": ""^4.3.2"","
+lock-mfe-dependency,package-lock.json,375,"        ""@softarc/native-federation-orchestrator"": ""^4.5.2"","
+lock-mfe-dependency,package-lock.json,5928,"    ""node_modules/@module-federation/bridge-react-webpack-plugin"": {"
+lock-mfe-dependency,package-lock.json,5930,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/bridge-react-webpack-plugin/-/bridge-react-webpack-plugin-2.8.1.tgz"","
+lock-mfe-dependency,package-lock.json,5935,"        ""@module-federation/sdk"": ""2.8.1"""
+lock-mfe-dependency,package-lock.json,5938,"    ""node_modules/@module-federation/cli"": {"
+lock-mfe-dependency,package-lock.json,5940,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/cli/-/cli-2.8.1.tgz"","
+lock-mfe-dependency,package-lock.json,5945,"        ""@module-federation/dts-plugin"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,5946,"        ""@module-federation/sdk"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,5957,"    ""node_modules/@module-federation/dts-plugin"": {"
+lock-mfe-dependency,package-lock.json,5959,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/dts-plugin/-/dts-plugin-2.8.1.tgz"","
+lock-mfe-dependency,package-lock.json,5964,"        ""@module-federation/error-codes"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,5965,"        ""@module-federation/managers"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,5966,"        ""@module-federation/sdk"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,5967,"        ""@module-federation/third-party-dts-extractor"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,5983,"    ""node_modules/@module-federation/enhanced"": {"
+lock-mfe-dependency,package-lock.json,5985,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/enhanced/-/enhanced-2.8.1.tgz"","
+lock-mfe-dependency,package-lock.json,5990,"        ""@module-federation/bridge-react-webpack-plugin"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,5991,"        ""@module-federation/cli"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,5992,"        ""@module-federation/dts-plugin"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,5993,"        ""@module-federation/error-codes"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,5994,"        ""@module-federation/inject-external-runtime-core-plugin"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,5995,"        ""@module-federation/managers"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,5996,"        ""@module-federation/manifest"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,5997,"        ""@module-federation/rspack"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,5998,"        ""@module-federation/runtime-tools"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,5999,"        ""@module-federation/sdk"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,6000,"        ""@module-federation/webpack-bundler-runtime"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,6024,"    ""node_modules/@module-federation/enhanced/node_modules/@module-federation/rspack"": {"
+lock-mfe-dependency,package-lock.json,6026,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/rspack/-/rspack-2.8.1.tgz"","
+lock-mfe-dependency,package-lock.json,6031,"        ""@module-federation/bridge-react-webpack-plugin"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,6032,"        ""@module-federation/dts-plugin"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,6033,"        ""@module-federation/inject-external-runtime-core-plugin"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,6034,"        ""@module-federation/managers"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,6035,"        ""@module-federation/manifest"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,6036,"        ""@module-federation/runtime-tools"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,6037,"        ""@module-federation/sdk"": ""2.8.1"""
+lock-mfe-dependency,package-lock.json,6053,"    ""node_modules/@module-federation/enhanced/node_modules/@rspack/core"": {"
+lock-mfe-dependency,package-lock.json,6067,"        ""@module-federation/runtime-tools"": ""^0.24.1 || ^2.0.0"","
+lock-mfe-dependency,package-lock.json,6071,"        ""@module-federation/runtime-tools"": {"
+lock-mfe-dependency,package-lock.json,6079,"    ""node_modules/@module-federation/error-codes"": {"
+lock-mfe-dependency,package-lock.json,6081,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/error-codes/-/error-codes-2.8.1.tgz"","
+lock-mfe-dependency,package-lock.json,6086,"    ""node_modules/@module-federation/inject-external-runtime-core-plugin"": {"
+lock-mfe-dependency,package-lock.json,6088,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/inject-external-runtime-core-plugin/-/inject-external-runtime-core-plugin-2.8.1.tgz"","
+lock-mfe-dependency,package-lock.json,6093,"        ""@module-federation/runtime-tools"": ""2.8.1"""
+lock-mfe-dependency,package-lock.json,6096,"    ""node_modules/@module-federation/managers"": {"
+lock-mfe-dependency,package-lock.json,6098,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/managers/-/managers-2.8.1.tgz"","
+lock-mfe-dependency,package-lock.json,6103,"        ""@module-federation/sdk"": ""2.8.1"""
+lock-mfe-dependency,package-lock.json,6106,"    ""node_modules/@module-federation/manifest"": {"
+lock-mfe-dependency,package-lock.json,6108,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/manifest/-/manifest-2.8.1.tgz"","
+lock-mfe-dependency,package-lock.json,6113,"        ""@module-federation/dts-plugin"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,6114,"        ""@module-federation/managers"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,6115,"        ""@module-federation/sdk"": ""2.8.1"""
+lock-mfe-dependency,package-lock.json,6118,"    ""node_modules/@module-federation/runtime"": {"
+lock-mfe-dependency,package-lock.json,6120,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/runtime/-/runtime-2.8.1.tgz"","
+lock-mfe-dependency,package-lock.json,6125,"        ""@module-federation/error-codes"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,6126,"        ""@module-federation/runtime-core"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,6127,"        ""@module-federation/sdk"": ""2.8.1"""
+lock-mfe-dependency,package-lock.json,6130,"    ""node_modules/@module-federation/runtime-core"": {"
+lock-mfe-dependency,package-lock.json,6132,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/runtime-core/-/runtime-core-2.8.1.tgz"","
+lock-mfe-dependency,package-lock.json,6137,"        ""@module-federation/error-codes"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,6138,"        ""@module-federation/sdk"": ""2.8.1"""
+lock-mfe-dependency,package-lock.json,6141,"    ""node_modules/@module-federation/runtime-tools"": {"
+lock-mfe-dependency,package-lock.json,6143,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/runtime-tools/-/runtime-tools-2.8.1.tgz"","
+lock-mfe-dependency,package-lock.json,6148,"        ""@module-federation/runtime"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,6149,"        ""@module-federation/webpack-bundler-runtime"": ""2.8.1"""
+lock-mfe-dependency,package-lock.json,6152,"    ""node_modules/@module-federation/sdk"": {"
+lock-mfe-dependency,package-lock.json,6154,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/sdk/-/sdk-2.8.1.tgz"","
+lock-mfe-dependency,package-lock.json,6159,"    ""node_modules/@module-federation/third-party-dts-extractor"": {"
+lock-mfe-dependency,package-lock.json,6161,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/third-party-dts-extractor/-/third-party-dts-extractor-2.8.1.tgz"","
+lock-mfe-dependency,package-lock.json,6166,"    ""node_modules/@module-federation/webpack-bundler-runtime"": {"
+lock-mfe-dependency,package-lock.json,6168,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/webpack-bundler-runtime/-/webpack-bundler-runtime-2.8.1.tgz"","
+lock-mfe-dependency,package-lock.json,6173,"        ""@module-federation/error-codes"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,6174,"        ""@module-federation/runtime"": ""2.8.1"","
+lock-mfe-dependency,package-lock.json,6175,"        ""@module-federation/sdk"": ""2.8.1"""
+lock-mfe-dependency,package-lock.json,8006,"        ""@module-federation/enhanced"": ""^2.0.0"","
+lock-mfe-dependency,package-lock.json,8007,"        ""@module-federation/node"": ""^2.0.0"""
+lock-mfe-dependency,package-lock.json,8010,"        ""@module-federation/enhanced"": {"
+lock-mfe-dependency,package-lock.json,8013,"        ""@module-federation/node"": {"
+lock-mfe-dependency,package-lock.json,8030,"        ""@module-federation/runtime-tools"": ""^0.24.1 || ^2.0.0"","
+lock-mfe-dependency,package-lock.json,8034,"        ""@module-federation/runtime-tools"": {"
+lock-mfe-dependency,package-lock.json,11340,"    ""node_modules/@softarc/native-federation"": {"
+lock-mfe-dependency,package-lock.json,11342,"      ""resolved"": ""https://registry.npmjs.org/@softarc/native-federation/-/native-federation-4.3.2.tgz"","
+lock-mfe-dependency,package-lock.json,11353,"    ""node_modules/@softarc/native-federation-orchestrator"": {"
+lock-mfe-dependency,package-lock.json,11355,"      ""resolved"": ""https://registry.npmjs.org/@softarc/native-federation-orchestrator/-/native-federation-orchestrator-4.5.2.tgz"","
+lock-mfe-dependency,package-lock.json,11365,"    ""node_modules/@softarc/native-federation/node_modules/chalk"": {"
+cfg-native-federation,admin/federation.config.mjs,1,"import { withNativeFederation, shareAll } from '@angular-architects/native-federation/config';"
+cfg-native-federation,admin/federation.config.mjs,3,export default withNativeFederation({
+cfg-native-federation,admin/project.json,10,"      ""executor"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,admin/project.json,26,"      ""executor"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,intranet/federation.config.mjs,1,"import { withNativeFederation, shareAll } from '@angular-architects/native-federation/config';"
+cfg-native-federation,intranet/federation.config.mjs,3,export default withNativeFederation({
+cfg-native-federation,intranet/project.json,10,"      ""executor"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,intranet/project.json,26,"      ""executor"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,marAberto/federation.config.mjs,1,"import { withNativeFederation, shareAll } from '@angular-architects/native-federation/config';"
+cfg-native-federation,marAberto/federation.config.mjs,3,export default withNativeFederation({
+cfg-native-federation,marAberto/project.json,10,"      ""executor"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,marAberto/project.json,26,"      ""executor"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,shell/federation.config.mjs,1,"import { withNativeFederation, shareAll } from '@angular-architects/native-federation/config';"
+cfg-native-federation,shell/federation.config.mjs,3,export default withNativeFederation({
+cfg-native-federation,shell/project.json,10,"      ""executor"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,shell/project.json,26,"      ""executor"": ""@angular-architects/native-federation:build"","
+cfg-exposes,admin/federation.config.mjs,8,  exposes: {
+cfg-exposes,intranet/federation.config.mjs,8,  exposes: {
+cfg-exposes,marAberto/federation.config.mjs,8,  exposes: {
+cfg-shared,admin/federation.config.mjs,12,  shared: {
+cfg-shared,admin/federation.config.mjs,13,    ...shareAll(
+cfg-shared,admin/federation.config.mjs,14,"      { singleton: true, strictVersion: true, requiredVersion: 'auto', build: 'package' },"
+cfg-shared,admin/federation.config.mjs,19,"          '@angular/core': { singleton: true, strictVersion: true, requiredVersion: 'auto', build: 'package', includeSecondaries: { keepAll: true } },"
+cfg-shared,intranet/federation.config.mjs,12,  shared: {
+cfg-shared,intranet/federation.config.mjs,13,    ...shareAll(
+cfg-shared,intranet/federation.config.mjs,14,"      { singleton: true, strictVersion: true, requiredVersion: 'auto', build: 'package' },"
+cfg-shared,intranet/federation.config.mjs,19,"          '@angular/core': { singleton: true, strictVersion: true, requiredVersion: 'auto', build: 'package', includeSecondaries: { keepAll: true } },"
+cfg-shared,marAberto/federation.config.mjs,12,  shared: {
+cfg-shared,marAberto/federation.config.mjs,13,    ...shareAll(
+cfg-shared,marAberto/federation.config.mjs,14,"      { singleton: true, strictVersion: true, requiredVersion: 'auto', build: 'package' },"
+cfg-shared,marAberto/federation.config.mjs,19,"          '@angular/core': { singleton: true, strictVersion: true, requiredVersion: 'auto', build: 'package', includeSecondaries: { keepAll: true } },"
+cfg-shared,shell/federation.config.mjs,7,  shared: {
+cfg-shared,shell/federation.config.mjs,8,    ...shareAll(
+cfg-shared,shell/federation.config.mjs,9,"      { singleton: true, strictVersion: true, requiredVersion: 'auto', build: 'package' },"
+cfg-shared,shell/federation.config.mjs,14,"          '@angular/core': { singleton: true, strictVersion: true, requiredVersion: 'auto', build: 'package', includeSecondaries: { keepAll: true } },"
+rt-remote-entry,admin/federation.config.mjs,40,    // Opt-in: groups chunks in remoteEntry.json for smaller metadata file
+rt-remote-entry,admin/src/main.ts,3,initFederation({ admin: './remoteEntry.json' })
+rt-remote-entry,intranet/federation.config.mjs,40,    // Opt-in: groups chunks in remoteEntry.json for smaller metadata file
+rt-remote-entry,intranet/src/main.ts,3,initFederation({ intranet: './remoteEntry.json' })
+rt-remote-entry,marAberto/federation.config.mjs,40,    // Opt-in: groups chunks in remoteEntry.json for smaller metadata file
+rt-remote-entry,marAberto/src/main.ts,3,initFederation({ marAberto: './remoteEntry.json' })
+rt-remote-entry,shell/federation.config.mjs,35,    // Opt-in: groups chunks in remoteEntry.json for smaller metadata file
+rt-remote-entry,shell/public/federation.manifest.json,2,"	""admin"": ""http://localhost:4203/remoteEntry.json"","
+rt-remote-entry,shell/public/federation.manifest.json,3,"	""intranet"": ""http://localhost:4202/remoteEntry.json"","
+rt-remote-entry,shell/public/federation.manifest.json,4,"	""marAberto"": ""http://localhost:4201/remoteEntry.json"""
+rt-manifest-file,shell/public/federation.manifest.json,,
+rt-manifest-entry,shell/public/federation.manifest.json,2,"	""admin"": ""http://localhost:4203/remoteEntry.json"","
+rt-manifest-entry,shell/public/federation.manifest.json,3,"	""intranet"": ""http://localhost:4202/remoteEntry.json"","
+rt-manifest-entry,shell/public/federation.manifest.json,4,"	""marAberto"": ""http://localhost:4201/remoteEntry.json"""
+src-async-bootstrap,admin/src/main.ts,5,  .then(() => import('./bootstrap'))
+src-async-bootstrap,intranet/src/main.ts,5,  .then(() => import('./bootstrap'))
+src-async-bootstrap,marAberto/src/main.ts,5,  .then(() => import('./bootstrap'))
+src-async-bootstrap,shell/src/main.ts,5,  .then(() => import('./bootstrap'))
+src-load-remote,admin/src/main.ts,1,import { initFederation } from '@angular-architects/native-federation';
+src-load-remote,admin/src/main.ts,3,initFederation({ admin: './remoteEntry.json' })
+src-load-remote,intranet/src/main.ts,1,import { initFederation } from '@angular-architects/native-federation';
+src-load-remote,intranet/src/main.ts,3,initFederation({ intranet: './remoteEntry.json' })
+src-load-remote,marAberto/src/main.ts,1,import { initFederation } from '@angular-architects/native-federation';
+src-load-remote,marAberto/src/main.ts,3,initFederation({ marAberto: './remoteEntry.json' })
+src-load-remote,shell/src/app/app.routes.ts,2,import { loadRemoteModule } from '@angular-architects/native-federation';
+src-load-remote,shell/src/app/app.routes.ts,8,"      loadRemoteModule('marAberto', './Routes').then((m) => m.remoteRoutes),"
+src-load-remote,shell/src/app/app.routes.ts,13,"      loadRemoteModule('intranet', './Routes').then((m) => m.remoteRoutes),"
+src-load-remote,shell/src/app/app.routes.ts,18,"      loadRemoteModule('admin', './Routes').then((m) => m.remoteRoutes),"
+src-load-remote,shell/src/main.ts,1,import { initFederation } from '@angular-architects/native-federation';
+src-load-remote,shell/src/main.ts,3,initFederation('/federation.manifest.json')
+ci-workflow-file,.github/workflows/ci.yml,,
+ci-monorepo-tooling,.github/workflows/ci.yml,37,      - run: npx nx run-many -t lint test build typecheck e2e
+doc-mfe-term,README.md,3,"POC de um sistema de seguros automotivos construído como microfrontends com **Angular 22** + **Nx**, usando **Module Federation nativo** (`@angular-architects/native-federation`)."
+doc-integration-technology,README.md,3,"POC de um sistema de seguros automotivos construído como microfrontends com **Angular 22** + **Nx**, usando **Module Federation nativo** (`@angular-architects/native-federation`)."
+doc-integration-technology,README.md,31,"Cada `shell`/`marAberto`/`intranet`/`admin` é um projeto Angular independente (`project.json` próprio), gerado com o Nx e ligado por Module Federation. As libs em `libs/shared/*` são os únicos pontos de acoplamento entre eles — importadas via path mapping (`@descompara/shared-ui`, `@descompara/share"
+doc-independence,README.md,5,"O sistema é dividido em 3 ambientes independentes, cada um com sua própria identidade visual (cores, raio de borda, etc.), mas todos reaproveitando os mesmos componentes de UI:"
+doc-independence,README.md,31,"Cada `shell`/`marAberto`/`intranet`/`admin` é um projeto Angular independente (`project.json` próprio), gerado com o Nx e ligado por Module Federation. As libs em `libs/shared/*` são os únicos pontos de acoplamento entre eles — importadas via path mapping (`@descompara/shared-ui`, `@descompara/share"
+doc-host-remote,README.md,13,"Um app **shell** (host, porta 4200) orquestra a navegação entre eles, descobrindo cada remote em runtime via um manifesto de federação — nenhum dos apps precisa saber dos outros em build-time."
+doc-host-remote,README.md,46,"Isso faz o mesmo `ds-card`, `ds-button` etc. renderizarem com aparência diferente em cada ambiente — inclusive quando cada remote roda sozinho (fora do shell)."
+doc-host-remote,README.md,51,"- O shell não importa nada estaticamente: `shell/public/federation.manifest.json` mapeia nome do remote → URL do `remoteEntry.json`, e `shell/src/app/app.routes.ts` carrega cada um em runtime com `loadRemoteModule('marAberto', './Routes')`"
+doc-host-remote,README.md,52,"- `shared: shareAll(...)` no `federation.config.mjs` garante que `@angular/core`, `rxjs` etc. sejam uma instância única compartilhada entre shell e remotes"
+doc-host-remote,README.md,66,O shell e os 3 remotes são servidos **separadamente** — cada um roda seu próprio dev-server e o shell descobre as URLs deles pelo manifesto. Suba os 4 em terminais separados:
+doc-host-remote,README.md,81,Acesse **http://localhost:4200** — a navbar do shell leva para os 3 ambientes. Cada remote também pode ser acessado isoladamente na sua própria porta (útil para desenvolver um ambiente sem subir os outros).
+ws-workspaces,package.json,53,"  ""workspaces"": ["
+ws-path-alias,tsconfig.base.json,22,"    ""paths"": {"

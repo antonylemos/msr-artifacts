@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>root-app</title>
+
+  <!-- Static import map for microfrontends esmodule-->
+  <script type="importmap">
+     {
+    "imports": {
+        "@org/content-app": "http://127.0.0.1:5174/src/main.ts",
+        "@org/header-app": "http://127.0.0.1:5175/src/main.ts"
+    }
+}
+    </script>
+
+  <!-- SystemJS for legacy microfrontends -->
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.14.2/dist/system.min.js"></script>
+
+  <!-- Static import map for microfrontends system-->
+  <!-- <script type="systemjs-importmap">
+     {
+    "imports": {
+        "@org/header-app": "http://127.0.0.1:4173/app.js"
+    }
+}
+    </script> -->
+
+  <!-- Import map overrides for local development -->
+  <script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/import-map-overrides/dist/import-map-overrides.js"></script>
+</head>
+
+<body>
+  <div id="app"></div>
+
+  <!-- Import map overrides UI (toggle with localStorage: overrides-ui=true) -->
+  <import-map-overrides-full show-when-local-storage="overrides-ui" dev-libs></import-map-overrides-full>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>

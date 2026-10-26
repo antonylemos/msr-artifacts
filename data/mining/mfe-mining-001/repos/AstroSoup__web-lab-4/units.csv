@@ -1,0 +1,4 @@
+directory,markers
+frontend/vite/host,frontend/vite/host/package.json;frontend/vite/host/vite.config.js
+frontend/vite/remote-inputs,frontend/vite/remote-inputs/package.json;frontend/vite/remote-inputs/vite.config.js
+frontend/vite/remote-results,frontend/vite/remote-results/package.json;frontend/vite/remote-results/vite.config.js

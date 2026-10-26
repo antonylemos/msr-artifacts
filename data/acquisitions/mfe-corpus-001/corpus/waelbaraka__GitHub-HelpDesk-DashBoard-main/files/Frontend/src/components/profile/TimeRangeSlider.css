@@ -1,0 +1,62 @@
+.time-range-slider-container {
+  width: 100%;
+  padding: 15px 0; /* Add some padding for the thumb labels */
+}
+
+.time-slider {
+  width: 100%;
+  height: 6px;
+  background-color: #e5e7eb; /* bg-gray-200 */
+  border-radius: 3px;
+}
+
+.time-slider-track {
+  top: 0;
+  bottom: 0;
+  background: #d1d5db; /* bg-gray-300 */
+  border-radius: 3px;
+}
+
+/* Style for the track between the thumbs (the selected range) */
+.time-slider-track.time-slider-track-1 {
+  background: #3b82f6; /* bg-blue-500 */
+}
+
+.time-slider-thumb {
+  height: 18px;
+  width: 18px;
+  background-color: #3b82f6; /* bg-blue-600 */
+  border-radius: 50%;
+  cursor: grab;
+  top: -6px; /* Center the thumb on the track */
+  border: 2px solid white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none; /* Remove default browser outline */
+}
+
+.time-slider-thumb:focus {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4); /* Focus ring */
+}
+
+.time-slider-thumb.disabled {
+  cursor: not-allowed;
+  background-color: #9ca3af; /* bg-gray-400 */
+}
+
+.thumb-label {
+  position: absolute;
+  top: -25px; /* Position label above the thumb */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4b5563; /* bg-gray-700 */
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem; /* 12px */
+  white-space: nowrap;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  pointer-events: none; /* So it doesn't interfere with dragging */
+}

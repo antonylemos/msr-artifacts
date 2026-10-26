@@ -1,0 +1,11 @@
+manifest,state
+auth-mfe/package.json,ok
+builds-mfe/package.json,ok
+builds-service/package.json,ok
+catalog-mfe/package.json,ok
+mobile-bff/package.json,ok
+package.json,ok
+parts-service/package.json,ok
+shell/package.json,ok
+users-service/package.json,ok
+web-bff/package.json,ok

@@ -1,0 +1,34 @@
+/* Ensure the menubar spans full width and has a minimalistic height */
+.custom-menubar {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 0.5rem 1rem;
+}
+
+/* Logo container on the left side */
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.app-logo {
+  height: 32px;
+  width: 32px;
+  margin-right: 0.5rem;
+}
+
+.app-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #333333;
+}
+
+/* Adjust menu item font and spacing */
+.custom-menubar .p-menuitem-link {
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+.custom-menubar .p-menuitem-link .pi {
+  margin-right: 0.5rem;
+}

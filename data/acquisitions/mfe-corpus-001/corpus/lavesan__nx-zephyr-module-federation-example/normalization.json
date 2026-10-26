@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "id": "999205690",
+  "fullName": "lavesan/nx-zephyr-module-federation-example",
+  "commit": "766b6a2c04c1ef39201ad05ed1b5970d4cb10436",
+  "acquiredAt": "2026-10-24T00:32:22.303Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 65,
+    "bytes": 242701
+  },
+  "languages": {
+    "YAML": 199632,
+    "TypeScript": 15390,
+    "JSON": 11015,
+    "CSS": 6620,
+    "Markdown": 4571,
+    "SVG": 4126,
+    "Other": 1058,
+    "HTML": 289
+  },
+  "contentSha256": "ecf6d696470f975f0b36fef296174a644ba82f51bbc0f316529612f46ea86f29"
+}

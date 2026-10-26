@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "id": "1294611998",
+  "fullName": "JandrySan/becas-uleam",
+  "commit": "613ce6ac8c615f494d214e3d1e01fa3d08e02267",
+  "acquiredAt": "2026-10-24T00:26:34.643Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "1verificador-vue/public/ULEAM.png",
+      "reason": "preset:binaries",
+      "size": 15141
+    },
+    {
+      "path": "1verificador-vue/src/assets/hero.png",
+      "reason": "preset:binaries",
+      "size": 13057
+    },
+    {
+      "path": "1verificador-vue/verificador/src/assets/hero.png",
+      "reason": "preset:binaries",
+      "size": 13057
+    },
+    {
+      "path": "3seguimiento-angular/.angular/cache/18.2.21/seguimiento-solicitud-angular/.tsbuildinfo",
+      "reason": "preset:build-output",
+      "size": 64568
+    },
+    {
+      "path": "3seguimiento-angular/.angular/cache/18.2.21/seguimiento-solicitud-angular/angular-compiler.db",
+      "reason": "preset:build-output",
+      "size": 1835008
+    },
+    {
+      "path": "3seguimiento-angular/.angular/cache/18.2.21/seguimiento-solicitud-angular/angular-compiler.db-lock",
+      "reason": "preset:build-output",
+      "size": 8128
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 102,
+    "bytes": 514424
+  },
+  "languages": {
+    "YAML": 325112,
+    "TypeScript": 53446,
+    "SVG": 47516,
+    "CSS": 23682,
+    "HTML": 23561,
+    "Vue": 18306,
+    "JSON": 8940,
+    "Markdown": 5696,
+    "SQL": 3613,
+    "JavaScript": 2795,
+    "Other": 1757
+  },
+  "contentSha256": "41c13ca4627db43201bb2684ef991fb5610ddb6459f1e9e9943d4c304bbbf33c"
+}

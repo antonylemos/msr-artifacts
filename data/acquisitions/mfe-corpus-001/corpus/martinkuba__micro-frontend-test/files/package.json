@@ -1,0 +1,38 @@
+{
+  "name": "micro-frontend-test",
+  "version": "1.0.0",
+  "description": "Micro frontend test application using Webpack Module Federation",
+  "private": true,
+  "scripts": {
+    "start": "concurrently \"npm run start:main-content\" \"npm run start:shell\"",
+    "start:shell": "npm start --workspace=packages/shell",
+    "start:main-content": "npm start --workspace=packages/main-content",
+    "start:sidebar": "npm start --workspace=packages/sidebar",
+    "build": "npm run build --workspaces",
+    "clean": "rm -rf dist packages/*/dist"
+  },
+  "workspaces": [
+    "packages/shell",
+    "packages/main-content",
+    "packages/sidebar"
+  ],
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "concurrently": "^8.2.0",
+    "css-loader": "^6.8.1",
+    "html-webpack-plugin": "^5.5.3",
+    "style-loader": "^3.3.3",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.0",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  },
+  "dependencies": {
+    "@grafana/faro-web-sdk": "^2.1.0",
+    "@grafana/faro-web-tracing": "^2.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}

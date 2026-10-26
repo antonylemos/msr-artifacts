@@ -1,0 +1,8 @@
+<config>
+    <globalProperties>
+        <globalProperty>
+            <property>visits.autoCloseVisitType</property>
+            <value>ART,Cervical Cancer,Doxy PEP,Family Planning,HBV/ HCV treatment,HTS,Mental Health,HIV PEP,PrEP,Sayana Press,Social Work,STI,Vaccination,Other</value>
+        </globalProperty>
+    </globalProperties>
+</config>

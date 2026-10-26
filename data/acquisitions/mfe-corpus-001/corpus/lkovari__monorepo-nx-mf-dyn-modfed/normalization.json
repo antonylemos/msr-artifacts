@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "id": "1197367428",
+  "fullName": "lkovari/monorepo-nx-mf-dyn-modfed",
+  "commit": "16f0962945720a521bac32e4a43913af1494b61b",
+  "acquiredAt": "2026-10-24T00:32:38.802Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "nx-mf-df/apps/main-host/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "nx-mf-df/apps/mf_remote_a/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "nx-mf-df/apps/mf_remote_b/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "nx-mf-df/apps/mf_remote_c/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 224,
+    "bytes": 1071834
+  },
+  "languages": {
+    "YAML": 643955,
+    "TypeScript": 271129,
+    "Markdown": 75371,
+    "JSON": 32160,
+    "HTML": 19702,
+    "JavaScript": 15851,
+    "CSS": 5806,
+    "Other": 4192,
+    "SCSS": 3668
+  },
+  "contentSha256": "c75e3e90e05229527b86e8a584fb19be2df29025c462116f2e74b5fc754ebbc9"
+}

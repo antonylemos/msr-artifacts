@@ -1,0 +1,611 @@
+{
+  "version": 1,
+  "cli": {
+    "analytics": false
+  },
+  "projects": {
+    "01-angular": {
+      "projectType": "application",
+      "root": "exemplos/01-componentes/angular",
+      "sourceRoot": "exemplos/01-componentes/angular/src",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "exemplos/01-componentes/angular/src/main.ts",
+            "index": "exemplos/01-componentes/angular/src/index.html",
+            "tsConfig": "exemplos/01-componentes/angular/tsconfig.json",
+            "styles": [
+              "material/estilos.css"
+            ],
+            "outputPath": "exemplos/01-componentes/angular/dist",
+            "assets": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "proxyConfig": "exemplos/01-componentes/angular/proxy.conf.json"
+          },
+          "configurations": {
+            "development": {
+              "buildTarget": "01-angular:build:development"
+            },
+            "production": {
+              "buildTarget": "01-angular:build:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        }
+      }
+    },
+    "02-angular": {
+      "projectType": "application",
+      "root": "exemplos/02-atomic-design/angular",
+      "sourceRoot": "exemplos/02-atomic-design/angular/src",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "exemplos/02-atomic-design/angular/src/main.ts",
+            "index": "exemplos/02-atomic-design/angular/src/index.html",
+            "tsConfig": "exemplos/02-atomic-design/angular/tsconfig.json",
+            "styles": [
+              "material/estilos.css"
+            ],
+            "outputPath": "exemplos/02-atomic-design/angular/dist",
+            "assets": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "proxyConfig": "exemplos/02-atomic-design/angular/proxy.conf.json"
+          },
+          "configurations": {
+            "development": {
+              "buildTarget": "02-angular:build:development"
+            },
+            "production": {
+              "buildTarget": "02-angular:build:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        }
+      }
+    },
+    "03-angular": {
+      "projectType": "application",
+      "root": "exemplos/03-camadas/angular",
+      "sourceRoot": "exemplos/03-camadas/angular/src",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "exemplos/03-camadas/angular/src/main.ts",
+            "index": "exemplos/03-camadas/angular/src/index.html",
+            "tsConfig": "exemplos/03-camadas/angular/tsconfig.json",
+            "styles": [
+              "material/estilos.css"
+            ],
+            "outputPath": "exemplos/03-camadas/angular/dist",
+            "assets": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "proxyConfig": "exemplos/03-camadas/angular/proxy.conf.json"
+          },
+          "configurations": {
+            "development": {
+              "buildTarget": "03-angular:build:development"
+            },
+            "production": {
+              "buildTarget": "03-angular:build:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        }
+      }
+    },
+    "04-angular": {
+      "projectType": "application",
+      "root": "exemplos/04-feature-based/angular",
+      "sourceRoot": "exemplos/04-feature-based/angular/src",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "exemplos/04-feature-based/angular/src/main.ts",
+            "index": "exemplos/04-feature-based/angular/src/index.html",
+            "tsConfig": "exemplos/04-feature-based/angular/tsconfig.json",
+            "styles": [
+              "material/estilos.css"
+            ],
+            "outputPath": "exemplos/04-feature-based/angular/dist",
+            "assets": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "proxyConfig": "exemplos/04-feature-based/angular/proxy.conf.json"
+          },
+          "configurations": {
+            "development": {
+              "buildTarget": "04-angular:build:development"
+            },
+            "production": {
+              "buildTarget": "04-angular:build:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        }
+      }
+    },
+    "05-angular": {
+      "projectType": "application",
+      "root": "exemplos/05-clean-architecture/angular",
+      "sourceRoot": "exemplos/05-clean-architecture/angular/src",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "exemplos/05-clean-architecture/angular/src/main.ts",
+            "index": "exemplos/05-clean-architecture/angular/src/index.html",
+            "tsConfig": "exemplos/05-clean-architecture/angular/tsconfig.json",
+            "styles": [
+              "material/estilos.css"
+            ],
+            "outputPath": "exemplos/05-clean-architecture/angular/dist",
+            "assets": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "proxyConfig": "exemplos/05-clean-architecture/angular/proxy.conf.json"
+          },
+          "configurations": {
+            "development": {
+              "buildTarget": "05-angular:build:development"
+            },
+            "production": {
+              "buildTarget": "05-angular:build:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        }
+      }
+    },
+    "06-angular": {
+      "projectType": "application",
+      "root": "exemplos/06-hexagonal/angular",
+      "sourceRoot": "exemplos/06-hexagonal/angular/src",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "exemplos/06-hexagonal/angular/src/main.ts",
+            "index": "exemplos/06-hexagonal/angular/src/index.html",
+            "tsConfig": "exemplos/06-hexagonal/angular/tsconfig.json",
+            "styles": [
+              "material/estilos.css"
+            ],
+            "outputPath": "exemplos/06-hexagonal/angular/dist",
+            "assets": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "proxyConfig": "exemplos/06-hexagonal/angular/proxy.conf.json"
+          },
+          "configurations": {
+            "development": {
+              "buildTarget": "06-angular:build:development"
+            },
+            "production": {
+              "buildTarget": "06-angular:build:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        }
+      }
+    },
+    "07-angular": {
+      "projectType": "application",
+      "root": "exemplos/07-feature-sliced-design/angular",
+      "sourceRoot": "exemplos/07-feature-sliced-design/angular/src",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "exemplos/07-feature-sliced-design/angular/src/main.ts",
+            "index": "exemplos/07-feature-sliced-design/angular/src/index.html",
+            "tsConfig": "exemplos/07-feature-sliced-design/angular/tsconfig.json",
+            "styles": [
+              "material/estilos.css"
+            ],
+            "outputPath": "exemplos/07-feature-sliced-design/angular/dist",
+            "assets": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "proxyConfig": "exemplos/07-feature-sliced-design/angular/proxy.conf.json"
+          },
+          "configurations": {
+            "development": {
+              "buildTarget": "07-angular:build:development"
+            },
+            "production": {
+              "buildTarget": "07-angular:build:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        }
+      }
+    },
+    "08-angular": {
+      "projectType": "application",
+      "root": "exemplos/08-mvvm/angular",
+      "sourceRoot": "exemplos/08-mvvm/angular/src",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "exemplos/08-mvvm/angular/src/main.ts",
+            "index": "exemplos/08-mvvm/angular/src/index.html",
+            "tsConfig": "exemplos/08-mvvm/angular/tsconfig.json",
+            "styles": [
+              "material/estilos.css"
+            ],
+            "outputPath": "exemplos/08-mvvm/angular/dist",
+            "assets": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "proxyConfig": "exemplos/08-mvvm/angular/proxy.conf.json"
+          },
+          "configurations": {
+            "development": {
+              "buildTarget": "08-angular:build:development"
+            },
+            "production": {
+              "buildTarget": "08-angular:build:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        }
+      }
+    },
+    "09-angular": {
+      "projectType": "application",
+      "root": "exemplos/09-flux/angular",
+      "sourceRoot": "exemplos/09-flux/angular/src",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "exemplos/09-flux/angular/src/main.ts",
+            "index": "exemplos/09-flux/angular/src/index.html",
+            "tsConfig": "exemplos/09-flux/angular/tsconfig.json",
+            "styles": [
+              "material/estilos.css"
+            ],
+            "outputPath": "exemplos/09-flux/angular/dist",
+            "assets": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "proxyConfig": "exemplos/09-flux/angular/proxy.conf.json"
+          },
+          "configurations": {
+            "development": {
+              "buildTarget": "09-angular:build:development"
+            },
+            "production": {
+              "buildTarget": "09-angular:build:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        }
+      }
+    },
+    "11-angular": {
+      "projectType": "application",
+      "root": "exemplos/11-renderizacao/angular",
+      "sourceRoot": "exemplos/11-renderizacao/angular/src",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "exemplos/11-renderizacao/angular/src/main.ts",
+            "index": "exemplos/11-renderizacao/angular/src/index.html",
+            "tsConfig": "exemplos/11-renderizacao/angular/tsconfig.json",
+            "styles": [
+              "material/estilos.css"
+            ],
+            "outputPath": "exemplos/11-renderizacao/angular/dist",
+            "assets": [],
+            "server": "exemplos/11-renderizacao/angular/src/main.server.ts",
+            "outputMode": "server",
+            "ssr": {
+              "entry": "exemplos/11-renderizacao/angular/src/server.ts"
+            }
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "proxyConfig": "exemplos/11-renderizacao/angular/proxy.conf.json"
+          },
+          "configurations": {
+            "development": {
+              "buildTarget": "11-angular:build:development"
+            },
+            "production": {
+              "buildTarget": "11-angular:build:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        }
+      }
+    },
+    "12-angular": {
+      "projectType": "application",
+      "root": "exemplos/12-ilhas/angular",
+      "sourceRoot": "exemplos/12-ilhas/angular/src",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "exemplos/12-ilhas/angular/src/main.ts",
+            "index": "exemplos/12-ilhas/angular/src/index.html",
+            "tsConfig": "exemplos/12-ilhas/angular/tsconfig.json",
+            "styles": [
+              "material/estilos.css"
+            ],
+            "outputPath": "exemplos/12-ilhas/angular/dist",
+            "assets": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "proxyConfig": "exemplos/12-ilhas/angular/proxy.conf.json"
+          },
+          "configurations": {
+            "development": {
+              "buildTarget": "12-angular:build:development"
+            },
+            "production": {
+              "buildTarget": "12-angular:build:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        }
+      }
+    },
+    "13-angular": {
+      "projectType": "application",
+      "root": "exemplos/13-bff/apps/web-angular",
+      "sourceRoot": "exemplos/13-bff/apps/web-angular/src",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "exemplos/13-bff/apps/web-angular/src/main.ts",
+            "index": "exemplos/13-bff/apps/web-angular/src/index.html",
+            "tsConfig": "exemplos/13-bff/apps/web-angular/tsconfig.json",
+            "styles": [
+              "material/estilos.css"
+            ],
+            "outputPath": "exemplos/13-bff/apps/web-angular/dist",
+            "assets": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "proxyConfig": "exemplos/13-bff/apps/web-angular/proxy.conf.json"
+          },
+          "configurations": {
+            "development": {
+              "buildTarget": "13-angular:build:development"
+            },
+            "production": {
+              "buildTarget": "13-angular:build:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        }
+      }
+    },
+    "14-angular": {
+      "projectType": "application",
+      "root": "exemplos/14-escolha-e-evolucao/angular",
+      "sourceRoot": "exemplos/14-escolha-e-evolucao/angular/src",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "exemplos/14-escolha-e-evolucao/angular/src/main.ts",
+            "index": "exemplos/14-escolha-e-evolucao/angular/src/index.html",
+            "tsConfig": "exemplos/14-escolha-e-evolucao/angular/tsconfig.json",
+            "styles": [
+              "material/estilos.css"
+            ],
+            "outputPath": "exemplos/14-escolha-e-evolucao/angular/dist",
+            "assets": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "proxyConfig": "exemplos/14-escolha-e-evolucao/angular/proxy.conf.json"
+          },
+          "configurations": {
+            "development": {
+              "buildTarget": "14-angular:build:development"
+            },
+            "production": {
+              "buildTarget": "14-angular:build:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        }
+      }
+    }
+  }
+}

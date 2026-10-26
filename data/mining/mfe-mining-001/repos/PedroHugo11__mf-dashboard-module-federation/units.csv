@@ -1,0 +1,4 @@
+directory,markers
+mfe-counter,mfe-counter/index.html;mfe-counter/package.json;mfe-counter/vite.config.ts
+mfe-weather,mfe-weather/index.html;mfe-weather/package.json;mfe-weather/vite.config.ts
+shell,shell/index.html;shell/package.json;shell/vite.config.ts

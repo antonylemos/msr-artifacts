@@ -1,0 +1,3 @@
+manifest,state
+main-vue3/package.json,ok
+sub-vue2/package.json,ok

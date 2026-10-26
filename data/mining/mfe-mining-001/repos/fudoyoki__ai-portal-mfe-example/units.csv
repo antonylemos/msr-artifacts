@@ -1,0 +1,7 @@
+directory,markers
+.,package.json
+apps/bff,apps/bff/package.json
+apps/mfe-dashboard,apps/mfe-dashboard/package.json;apps/mfe-dashboard/vite.config.ts
+apps/shell,apps/shell/package.json;apps/shell/vite.config.ts
+packages/shared-types,packages/shared-types/package.json
+packages/ui-kit,packages/ui-kit/package.json

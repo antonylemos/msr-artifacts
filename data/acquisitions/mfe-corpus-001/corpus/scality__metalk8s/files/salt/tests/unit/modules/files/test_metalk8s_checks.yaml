@@ -1,0 +1,732 @@
+bootstrap_file:
+  # 1. Success: Nominal
+  - &bstrapf_nominal
+    cp_cidrs: [10.1.0.0/16]
+    wp_cidrs: [10.2.0.0/16]
+    pods_cidr: 10.233.0.0/16
+    svc_cidr: 10.96.0.0/12
+
+  # 2. Fail: pods intersect fully
+  - <<: *bstrapf_nominal
+    pods_cidr: 10.1.0.0/16
+    expected_raise: |-
+      The following CIDRs must not overlap in bootstrap configuration:
+       - Pods \(10.1.0.0/16\) and Control Plane \(10.1.0.0/16\)
+
+  # 3. Fail: pods intersect partially
+  - <<: *bstrapf_nominal
+    cp_cidrs: [10.0.0.0/16, 10.1.0.0/24]
+    wp_cidrs: [10.2.0.0/16]
+    pods_cidr: 10.1.0.0/16
+    expected_raise: |-
+      The following CIDRs must not overlap in bootstrap configuration:
+       - Pods \(10.1.0.0/16\) and Control Plane \(10.0.0.0/16, 10.1.0.0/24\)
+
+  # 4. Fail: svc intersect fully
+  - <<: *bstrapf_nominal
+    svc_cidr: 10.2.0.0/16
+    expected_raise: |-
+      The following CIDRs must not overlap in bootstrap configuration:
+       - Services \(10.2.0.0/16\) and Workload Plane \(10.2.0.0/16\)
+
+  # 5. Fail: services intersect partially
+  - <<: *bstrapf_nominal
+    cp_cidrs: [10.1.0.0/16]
+    wp_cidrs: [10.0.0.0/16, 10.2.0.0/24]
+    svc_cidr: 10.2.0.0/16
+    expected_raise: |-
+      The following CIDRs must not overlap in bootstrap configuration:
+       - Services \(10.2.0.0/16\) and Workload Plane \(10.0.0.0/16, 10.2.0.0/24\)
+
+  # 6. Fail: pods and services intersect
+  - <<: *bstrapf_nominal
+    svc_cidr: 10.233.0.0/16
+    expected_raise: |-
+      The following CIDRs must not overlap in bootstrap configuration:
+       - Pods \(10.233.0.0/16\) and Services \(10.233.0.0/16\)
+
+  # 7. Fail: all intersect
+  - <<: *bstrapf_nominal
+    cp_cidrs: [10.0.0.0/16]
+    wp_cidrs: [10.0.0.0/16]
+    pods_cidr: 10.0.0.0/16
+    svc_cidr: 10.0.0.0/16
+    expected_raise: >-
+      The following CIDRs must not overlap in bootstrap configuration:
+       - Pods \(10.0.0.0/16\) and Services \(10.0.0.0/16\)
+       - Pods \(10.0.0.0/16\) and Workload Plane \(10.0.0.0/16\)
+       - Pods \(10.0.0.0/16\) and Control Plane \(10.0.0.0/16\)
+       - Services \(10.0.0.0/16\) and Workload Plane \(10.0.0.0/16\)
+       - Services \(10.0.0.0/16\) and Control Plane \(10.0.0.0/16\)
+
+# 4. Fail: svc intersect partially - non obvious
+  - <<: *bstrapf_nominal
+    cp_cidrs: [10.100.0.0/16]
+    expected_raise: |-
+      The following CIDRs must not overlap in bootstrap configuration:
+       - Services \(10.96.0.0/12\) and Control Plane \(10.100.0.0/16\)
+
+node:
+  # 1. Success: Nominal
+  - &node_nominal
+    packages_ret: True
+    services_ret: True
+    ports_ret: True
+    route_exists_ret: True
+    fs_check_ret: True
+
+    pillar:
+      networks:
+        service: 10.96.0.0/12
+    result: True
+
+  # 2. Success: Service CIDR from command-line
+  - <<: *node_nominal
+    pillar: {}
+    service_cidr: 10.96.0.0/12
+
+  # 3. Error: Packages
+  - &node_packages_error
+    <<: *node_nominal
+    packages_ret: "Package abcd got an error because of banana"
+    expect_raise: True
+    result: "Node my_node_1: Package abcd got an error because of banana"
+  - <<: *node_packages_error
+    raises: False
+    expect_raise: False
+
+  # 4. Error: Services
+  - packages_ret: True
+    services_ret: "Service abcd got an error because of penguin"
+    expect_raise: True
+    result: "Node my_node_1: Service abcd got an error because of penguin"
+
+  # 5. Error: Ports
+  - <<: *node_nominal
+    ports_ret: "banana should be listening on 1.2.3.4:12345"
+    expect_raise: True
+    result: "Node my_node_1: banana should be listening on 1.2.3.4:12345"
+
+  # 6. Error: Route for Service CIDR
+  - <<: *node_nominal
+    route_exists_ret: No route exists for banana
+    expect_raise: True
+    # NOTE: We shorten the exception message for ease of use as a regex.
+    result: >-
+      Node my_node_1: Invalid networks:service CIDR - No route exists for
+      banana.
+  - <<: *node_nominal
+    raises: False
+    route_exists_ret: No route exists for banana
+    result: >-
+      Node my_node_1: Invalid networks:service CIDR - No route exists for
+      banana. Please make sure to have either a default route or a dummy
+      interface and route for this range (for details, see
+      https://github.com/kubernetes/kubernetes/issues/57534#issuecomment-527653412).
+
+  # 7. Error: fs_check
+  - <<: *node_nominal
+    fs_check_ret: "Containerd XFS filesystem (/var/lib/containerd) has ftype=2 expected 1"
+    expect_raise: True
+    result: 'Node my_node_1: Containerd XFS filesystem \(/var/lib/containerd\) has ftype=2 expected 1'
+
+  # 8. Error: Combined errors
+  - <<: *node_nominal
+    packages_ret: "Package abcd got an error because of banana"
+    services_ret: "Service abcd got an error because of penguin"
+    ports_ret: "Monkey should be listening on Tree"
+    fs_check_ret: "Filesystem only supports vim please remove emacs"
+    expect_raise: True
+    result: |-
+      Node my_node_1: Package abcd got an error because of banana
+      Service abcd got an error because of penguin
+      Monkey should be listening on Tree
+      Filesystem only supports vim please remove emacs
+  - <<: *node_nominal
+    packages_ret: "Package abcd got an error because of banana"
+    route_exists_ret: "No route exists for penguin"
+    expect_raise: True
+    result: |-
+      Node my_node_1: Package abcd got an error because of banana
+      Invalid networks:service CIDR - No route exists for penguin
+
+packages:
+  # 1. Success: No conflicting packages to check
+  - conflicting_packages: {}
+    result: True
+
+  # 2. Success: Conflicting packages not installed
+  - conflicting_packages:
+      my-not-installed-package: null
+      my-not-installed-package2: null
+    list_pkgs_ret:
+      my-installed-package:
+        - version: 1.2.3
+    result: True
+  # 2. bis
+  - conflicting_packages: my-not-installed-package
+    list_pkgs_ret:
+      my-installed-package:
+        - version: 1.2.3
+    result: True
+  # 2. ter
+  - conflicting_packages:
+     - my-not-installed-package
+     - my-not-installed-package2
+    list_pkgs_ret:
+      my-installed-package:
+        - version: 1.2.3
+    result: True
+
+  # 3. Success: Conflicting packages (from map) not installed
+  - get_map_ret:
+      conflicting_packages:
+        my-not-installed-package: null
+    list_pkgs_ret:
+      my-installed-package:
+        - version: 1.2.3
+    result: True
+
+  # 4. Success: Conflicting packages in specific version not installed
+  - conflicting_packages:
+      my-installed-package:
+        - 1.2.4
+        - 1.2.5
+    list_pkgs_ret:
+      my-installed-package:
+        - version: 1.2.3
+    result: True
+
+  # 5. Error: Conflicting packages installed
+  - conflicting_packages:
+      my-installed-package: null
+      my-not-installed-package: null
+    list_pkgs_ret:
+      my-installed-package:
+        - version: 1.2.3
+    expect_raise: True
+    result: |-
+      Package my-installed-package-1.2.3 conflicts with MetalK8s installation, please remove it.
+  # 5. bis
+  - conflicting_packages: my-installed-package
+    list_pkgs_ret:
+      my-installed-package:
+        - version: 1.2.3
+    expect_raise: True
+    result: |-
+      Package my-installed-package-1.2.3 conflicts with MetalK8s installation, please remove it.
+  # 5. ter
+  - conflicting_packages:
+      - my-not-installed-package
+      - my-installed-package
+    list_pkgs_ret:
+      my-installed-package:
+        - version: 1.2.3
+    expect_raise: True
+    result: |-
+      Package my-installed-package-1.2.3 conflicts with MetalK8s installation, please remove it.
+
+  # 6. Error: Conflicting packages in specific version installed
+  - conflicting_packages:
+      my-installed-package: 1.2.3
+    list_pkgs_ret:
+      my-installed-package:
+        - version: 1.2.3
+    expect_raise: True
+    result: |-
+      Package my-installed-package-1.2.3 conflicts with MetalK8s installation, please remove it.
+  # 6. bis
+  - conflicting_packages:
+      my-installed-package:
+        - 0.1.3
+        - 1.2.4
+        - 1.2.3
+    list_pkgs_ret:
+      my-installed-package:
+        - version: 1.2.3
+    expect_raise: True
+    result: |-
+      Package my-installed-package-1.2.3 conflicts with MetalK8s installation, please remove it.
+  # 6. ter (no raise)
+  - conflicting_packages:
+      my-installed-package:
+        - 0.1.3
+        - 1.2.4
+        - 1.2.3
+    list_pkgs_ret:
+      my-installed-package:
+        - version: 1.2.3
+    raises: False
+    result: |-
+      Package my-installed-package-1.2.3 conflicts with MetalK8s installation, please remove it.
+
+  # 7. Error: Multiple conflicting package installed
+  - conflicting_packages:
+      my-installed-package1: null
+      my-installed-package2:
+        - 5.6.7
+    list_pkgs_ret:
+      my-installed-package1:
+        - version: 1.2.3
+      my-installed-package2:
+        - version: 5.6.7
+    expect_raise: True
+    result: |-
+      Package my-installed-package1-1.2.3 conflicts with MetalK8s installation, please remove it.
+      Package my-installed-package2-5.6.7 conflicts with MetalK8s installation, please remove it.
+
+  # 8. Error: Multiple package of same version installed
+  - conflicting_packages:
+      my-installed-package: null
+    list_pkgs_ret:
+      my-installed-package:
+        - version: 1.2.3
+        - version: 4.5.6
+    expect_raise: True
+    result: |-
+      Package my-installed-package-1.2.3 conflicts with MetalK8s installation, please remove it.
+      Package my-installed-package-4.5.6 conflicts with MetalK8s installation, please remove it.
+  # 8. bis
+  - conflicting_packages:
+      my-installed-package: 4.5.6
+    list_pkgs_ret:
+      my-installed-package:
+        - version: 1.2.3
+        - version: 4.5.6
+    expect_raise: True
+    result: |-
+      Package my-installed-package-4.5.6 conflicts with MetalK8s installation, please remove it.
+
+services:
+  # 1. Success: No conflicting services to check
+  - conflicting_services: []
+    result: True
+
+  # 2. Success: Conflicting services not installed
+  - conflicting_services:
+      - my-not-started-service
+      - my-not-started-service2
+    service_status_ret:
+      my-not-started-service: False
+      my-not-started-service2: False
+    service_disabled_ret:
+      my-not-started-service: True
+      my-not-started-service2: True
+    result: True
+  # 2. bis
+  - conflicting_services: my-not-started-service
+    service_status_ret:
+      my-not-started-service: False
+    service_disabled_ret:
+      my-not-started-service: True
+    result: True
+
+  # 3. Success: Conflicting service (from map) not started
+  - get_map_ret:
+      conflicting_services:
+        - my-not-started-service
+    service_status_ret:
+      my-not-started-service: False
+    service_disabled_ret:
+      my-not-started-service: True
+    result: True
+
+  # 4. Error: Conflicting service started
+  - conflicting_services:
+      - my-started-service
+      - my-not-started-service
+    service_status_ret:
+      my-started-service: True
+      my-not-started-service: False
+    service_disabled_ret:
+      my-started-service: False
+      my-not-started-service: True
+    expect_raise: True
+    result: |-
+      Service my-started-service conflicts with MetalK8s installation, please stop and disable it.
+  # 4. bis
+  - conflicting_services: my-started-service
+    service_status_ret:
+      my-started-service: True
+    service_disabled_ret:
+      my-started-service: True
+    expect_raise: True
+    result: |-
+      Service my-started-service conflicts with MetalK8s installation, please stop and disable it.
+  # 4. ter (no raise)
+  - conflicting_services: my-started-service
+    raises: False
+    service_status_ret:
+      my-started-service: True
+    service_disabled_ret:
+      my-started-service: True
+    result: |-
+      Service my-started-service conflicts with MetalK8s installation, please stop and disable it.
+
+  # 5. Service stopped but still enabled
+  - conflicting_services: my-enabled-service
+    service_status_ret:
+      my-enabled-service: False
+    service_disabled_ret:
+      my-enabled-service: False
+    expect_raise: True
+    result: |-
+      Service my-enabled-service conflicts with MetalK8s installation, please stop and disable it.
+
+ports:
+  # 1. Success: Nominal
+  - listening_process:
+      6443:
+        expected: apiserver
+      127.0.0.1:9099:
+        expected:
+          - calico-node
+      control_plane_ip:4505:
+        expected: salt-master
+    get_listening_ret:
+      "4505":
+        1.1.1.1:
+          pid: 147
+          name: salt-master
+    result: True
+  # 1. bis (Nothing listening)
+  - listening_process:
+      6443: {}
+      127.0.0.1:9099:
+        expected: null
+      control_plane_ip:4505:
+        expected: salt-master
+    result: True
+
+  # 2. Success: Nothing expected
+  - listening_process: {}
+    result: True
+
+  # 3. Success: Process already running
+  - listening_process:
+      6443:
+        expected: apiserver
+      127.0.0.1:9099:
+        expected: calico-node
+    get_listening_ret:
+      "6443":
+        0.0.0.0:
+          pid: 123
+          name: apiserver
+      "9099":
+        127.0.0.1:
+          pid: 345
+          name: calico-node
+    result: True
+  # 3. bis (per role) (and `node` role added by default)
+  - listening_process_per_role:
+      master:
+        6443:
+          expected: apiserver
+      node:
+        127.0.0.1:9099:
+          expected: calico-node
+          mandatory: true
+      bootstrap:
+        1.2.3.4:4505:
+          expected:
+            - null
+            - salt-master
+    roles:
+      - master
+    get_listening_ret:
+      "6443":
+        1.2.3.4:
+          pid: 123
+          name: apiserver
+      "9099":
+        127.0.0.1:
+          pid: 345
+          name: calico-node
+      "4505":
+        1.2.3.4:
+          pid: 678
+          name: salt-master
+    result: True
+  # 3. ter (all roles per default)
+  - get_map_ret:
+      listening_process_per_role:
+        master:
+          6443:
+            expected: apiserver
+        node:
+          127.0.0.1:9099:
+            expected:
+              - calico-node
+        bootstrap:
+          1.2.3.4:4505:
+            expected: salt-master
+    get_listening_ret:
+      "6443":
+        0.0.0.0:
+          pid: 123
+          name: apiserver
+      "9099":
+        127.0.0.1:
+          pid: 345
+          name: calico-node
+      "4505":
+        1.2.3.4:
+          pid: 678
+          name: salt-master
+    result: True
+  # 3. quater (with role from pillar)
+  - listening_process_per_role:
+      master:
+        "6443":
+          expected: apiserver
+      node:
+        127.0.0.1:9099:
+          expected: calico-.*
+      bootstrap:
+        1.2.3.4:4505:
+          expected: salt-master
+    pillar:
+      metalk8s:
+        nodes:
+          my_node_1:
+            roles:
+              - master
+              - node
+    get_listening_ret:
+      "6443":
+        0.0.0.0:
+          pid: 123
+          name: apiserver
+      "9099":
+        127.0.0.1:
+          pid: 345
+          name: calico-node
+      "4505":
+        1.2.3.4:
+          pid: 678
+          name: banana
+    result: True
+
+  # 4. Success: exact matching
+  - listening_process:
+      6443:
+        expected: apiserver
+        mandatory: True
+      127.0.0.1:9099:
+        expected: calico-.*
+        mandatory: True
+    get_listening_ret:
+      "6443":
+        0.0.0.0:
+          pid: 123
+          name: apiserver
+      "9099":
+        127.0.0.1:
+          pid: 345
+          name: calico-node
+      "22":
+        0.0.0.0:
+          pid: 111
+          name: sshd
+    result: True
+
+  # 5. Error: expected process is not listening
+  - listening_process:
+      6443:
+        expected: apiserver
+        description: Kubernetes apiserver
+        mandatory: True
+    expect_raise: True
+    result: |-
+      Kubernetes apiserver should be listening on 6443 but nothing listening.
+  # 4. bis
+  - listening_process:
+      127.0.0.1:9099:
+        expected: calico-node
+        mandatory: True
+    get_listening_process:
+      "9099":
+        1.2.3.4:
+          pid: 111
+          name: another-proc
+    expect_raise: True
+    result: |-
+      calico-node should be listening on 127.0.0.1:9099 but nothing listening.
+
+  # 5. Error: expect nothing listening
+  - listening_process:
+      6443: {}
+    get_listening_ret:
+      "6443":
+        0.0.0.0:
+          pid: 123
+          name: my-invalid-process
+    expect_raise: True
+    result: |-
+      nothing should be listening on 6443 but 'my-invalid-process' \(PID: 123\) listens on 0.0.0.0.
+  # 5. bis (a process listen on :: when we want 127.0.0.1)
+  - listening_process:
+      control_plane_ip:9099:
+        expected: null
+    get_listening_ret:
+      "9099":
+        0.0.0.0:
+          pid: 123
+          name: my-invalid-process
+    raises: False
+    result: |-
+      nothing should be listening on 1.1.1.1:9099 but 'my-invalid-process' (PID: 123) listens on 0.0.0.0.
+
+  # 6. Error: Another unexpected process already listening
+  - listening_process:
+      127.0.0.1:9099:
+        expected: calico-.*
+      6443:
+        expected: apiserver
+        description: Kubernetes apiserver
+    get_listening_ret:
+      "6443":
+        127.0.0.1:
+          pid: 111
+          name: not-apiserver-at-all
+        1.2.3.4:
+          pid: 123
+          name: banana
+      "9099":
+        127.0.0.1:
+          pid: 222
+          name: not-calico-node
+    expect_raise: True
+    result: |-
+      calico-.* or nothing should be listening on 127.0.0.1\:9099 but 'not-calico-node' \(PID: 222\) listens on 127.0.0.1.
+      Kubernetes apiserver should be listening on 6443 but 'not-apiserver-at-all' \(PID: 111\) listens on 127.0.0.1 and 'banana' \(PID: 123\) listens on 1.2.3.4.
+  # 6. bis (listening on another IP)
+  - listening_process:
+      127.0.0.1:9099:
+        expected: calico-node
+      6443:
+        expected: apiserver
+        mandatory: True
+    get_listening_ret:
+      "9099":
+        0.0.0.0:
+          pid: 222
+          name: not-calico-node
+    expect_raise: True
+    result: |-
+      calico-node or nothing should be listening on 127.0.0.1:9099 but 'not-calico-node' \(PID: 222\) listens on 0.0.0.0.
+      apiserver should be listening on 6443 but nothing listening.
+
+  # 7. Error: Invalid listening process object
+  - listening_process: abcd
+    expect_raise: True
+    result: |-
+      Invalid listening process, expected dict but got str.
+
+sysctl:
+  - params:
+      net.ipv4.ip_forward: 1
+    data:
+      net.ipv4.ip_forward: '1'
+    result: ''
+  - params:
+      net.ipv4.ip_forward: '1'
+      kernel.sysrq: '1'
+    data:
+      net.ipv4.ip_forward: '1'
+      kernel.sysrq: '1'
+    result: ''
+  - params:
+      net.ipv4.ip_forward: 1
+    data:
+      net.ipv4.ip_forward: '0'
+    result: 'Incorrect value for .*'
+    raises: True
+
+route_exists:
+  # 1. Success: Nominal (default route)
+  - &route_exists_nominal
+    destination: 10.96.0.0/12
+    routes_ret:
+      - &default_route
+        addr_family: inet
+        destination: "0.0.0.0"
+        flags: UG
+        gateway: "10.10.0.1"
+        interface: eth0
+        netmask: "0.0.0.0"
+
+  # 2. Success: Nominal (dedicated dummy route)
+  - <<: *route_exists_nominal
+    routes_ret:
+      - <<: *default_route
+        interface: dummy0
+        destination: "10.96.0.0"
+        netmask: "255.240.0.0"
+
+  # 3. Error: No route exists
+  - <<: *route_exists_nominal
+    routes_ret: []
+    error: No route exists for 10.96.0.0/12
+
+  # 4. Error: Route found is too small
+  - <<: *route_exists_nominal
+    routes_ret:
+      - <<: *default_route
+        destination: "10.96.0.0"
+        netmask: "255.255.0.0"  # It's a /16 i.s.o. a /12
+    error: >-
+      A route was found for 10.96.0.0, but it does not match the full
+      destination network 10.96.0.0/12
+
+containerd_filesystem:
+  # 1. Success Not XFS
+  - run_all_df_ret:
+      stdout: |-
+        Filesystem Type
+        /dev/sda1 ext4
+      retcode: 0
+    result: True
+  # 2. Success XFS with ftype=1
+  - run_all_df_ret:
+      stdout: |-
+        Filesystem Type
+        /dev/sda1 xfs
+      retcode: 0
+    xfs_info_ret:
+      naming:
+        ftype: "1"
+    result: True
+  # 3. Error: Cannot read fs type
+  - run_all_df_ret:
+      stdout: ""
+      retcode: 1
+      stderr: "Failed because reasons"
+    path_exists: "/var/lib/containerd"
+    result: 'Cannot check filesystem of /var/lib/containerd, \(Failed because reasons\)'
+    expect_raise: True
+  # 4. Error xfs but ftype != 1 no exception
+  - run_all_df_ret:
+      stdout: |-
+        Filesystem Type
+        /dev/sda1 xfs
+      retcode: 0
+    xfs_info_ret:
+      naming:
+        ftype: "2"
+    path_exists: "/var/lib/containerd"
+    result: 'Containerd XFS filesystem (/var/lib/containerd) has ftype=2 expected 1'
+    raises: False
+    expect_raise: False
+  # 5. xfs info data missing
+  - run_all_df_ret:
+      stdout: |-
+        Filesystem Type
+        /dev/sda1 xfs
+      retcode: 0
+    xfs_info_ret:
+      exception: "Error"
+    path_exists: "/"
+    result: 'Error checking ftype value from /, \(Error\)'
+    expect_raise: True

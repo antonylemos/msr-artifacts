@@ -1,0 +1,16 @@
+include:
+  - ...storageclass.deployed
+  - .namespace
+  - .alertmanager-configuration-secret
+  - .grafana-ini-configmap
+  - .dashboards
+  - .service-configuration
+  - .chart
+  - .node-alerts-rules
+  - .kube-alerts-rules
+  - .thanos-query-sd-files
+  - .thanos-chart
+  - .oidc-proxy-rbac
+  - .oidc-proxy-restart-script
+  - .oidc-proxy-prometheus
+  - .oidc-proxy-alertmanager

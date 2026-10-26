@@ -1,0 +1,4 @@
+directory,markers
+shell-ui,shell-ui/package.json;shell-ui/rspack.config.ts
+tools/crd-client-generator-js,tools/crd-client-generator-js/package.json
+ui,ui/package.json;ui/rspack.config.ts

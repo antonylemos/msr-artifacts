@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "id": "1206226526",
+  "fullName": "vigneshwaran-chandrasekaran/microfrontend",
+  "commit": "28c70f8b2b748f07872a8dd1f56240d8a3415c05",
+  "acquiredAt": "2026-10-24T00:26:30.256Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 65,
+    "bytes": 1651263
+  },
+  "languages": {
+    "JSON": 1593023,
+    "JavaScript": 28001,
+    "Markdown": 17953,
+    "TypeScript": 3357,
+    "Other": 3281,
+    "Vue": 2473,
+    "HTML": 2395,
+    "CSS": 780
+  },
+  "contentSha256": "7d2672791b252dfcedf6ef43f0685ba95525151d0ef1fab9cd93116359fd8b40"
+}

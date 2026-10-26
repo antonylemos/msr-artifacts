@@ -1,0 +1,29 @@
+pattern,path,line,excerpt
+cfg-federation-plugin,cart/webpack.config.js,2,"const ModuleFederationPlugin = require(""webpack/lib/container/ModuleFederationPlugin"");"
+cfg-federation-plugin,cart/webpack.config.js,10,    new ModuleFederationPlugin({
+cfg-federation-plugin,container/webpack.config.js,2,"const ModuleFederationPlugin = require(""webpack/lib/container/ModuleFederationPlugin"");"
+cfg-federation-plugin,container/webpack.config.js,10,    new ModuleFederationPlugin({
+cfg-federation-plugin,products/webpack.config.js,2,"const ModuleFederationPlugin = require(""webpack/lib/container/ModuleFederationPlugin"");"
+cfg-federation-plugin,products/webpack.config.js,10,    new ModuleFederationPlugin({
+cfg-remotes,container/webpack.config.js,12,      remotes: {
+cfg-exposes,cart/webpack.config.js,13,      exposes: {
+cfg-exposes,products/webpack.config.js,13,      exposes: {
+cfg-shared,cart/webpack.config.js,16,"      shared: [""faker""],"
+cfg-shared,cart/webpack.config.js,18,      //  shared: {
+cfg-shared,cart/webpack.config.js,20,"      //     singleton: true,"
+cfg-shared,products/webpack.config.js,16,"      shared: [""faker""],"
+cfg-shared,products/webpack.config.js,18,      //  shared: {
+cfg-shared,products/webpack.config.js,20,"      //     singleton: true,"
+rt-remote-entry,cart/webpack.config.js,12,"      filename: ""remoteEntry.js"","
+rt-remote-entry,container/webpack.config.js,13,"        products: ""products@http://localhost:8081/remoteEntry.js"","
+rt-remote-entry,container/webpack.config.js,14,"        cart: ""cart@http://localhost:8082/remoteEntry.js"","
+rt-remote-entry,products/webpack.config.js,12,"      filename: ""remoteEntry.js"","
+src-async-bootstrap,cart/src/index.js,4,"import(""./bootstrap"");"
+src-async-bootstrap,container/src/index.js,2,"import(""./bootstrap"");"
+src-async-bootstrap,products/src/index.js,4,"import(""./bootstrap"");"
+src-mount-export,cart/src/bootstrap.js,15,export { mount };
+src-mount-export,products/src/bootstrap.js,26,export { mount };
+src-mount-call,cart/src/bootstrap.js,11,    mount(el);
+src-mount-call,products/src/bootstrap.js,23,    mount(el);
+src-mount-import,container/src/bootstrap.js,1,"import { mount as mountProducts } from ""products/ProductsIndex"";"
+src-mount-import,container/src/bootstrap.js,2,"import { mount as mountCart } from ""cart/CartShow"";"

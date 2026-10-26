@@ -1,0 +1,8 @@
+manifest,state
+client/issue-app/package.json,ok
+client/shell-app/package.json,ok
+client/user-app/package.json,ok
+server/microservices/analytics-ai-service/package.json,ok
+server/microservices/auth-service/package.json,ok
+server/microservices/issue-management-service/package.json,ok
+server/package.json,ok

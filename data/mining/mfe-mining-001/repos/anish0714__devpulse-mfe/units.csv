@@ -1,0 +1,8 @@
+directory,markers
+.,package.json
+packages/dev-utils-remote,packages/dev-utils-remote/package.json;packages/dev-utils-remote/webpack.config.js
+packages/ocr-remote,packages/ocr-remote/package.json;packages/ocr-remote/webpack.config.js
+packages/pdf-conversion-remote,packages/pdf-conversion-remote/package.json;packages/pdf-conversion-remote/webpack.config.js
+packages/pdf-form-filler-remote,packages/pdf-form-filler-remote/package.json;packages/pdf-form-filler-remote/webpack.config.js
+packages/pdf-manipulation-remote,packages/pdf-manipulation-remote/package.json;packages/pdf-manipulation-remote/webpack.config.js
+packages/shell,packages/shell/package.json;packages/shell/webpack.config.js

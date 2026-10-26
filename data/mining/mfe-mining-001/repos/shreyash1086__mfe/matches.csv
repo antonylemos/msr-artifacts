@@ -1,0 +1,531 @@
+pattern,path,line,excerpt
+cfg-federation-plugin,module-assessment/webpack.config.js,2,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,module-assessment/webpack.config.js,35,    new ModuleFederationPlugin({
+cfg-federation-plugin,module-cloud-console/webpack.config.js,2,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,module-cloud-console/webpack.config.js,34,    new ModuleFederationPlugin({
+cfg-federation-plugin,module-cloud-labs/webpack.config.js,2,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,module-cloud-labs/webpack.config.js,29,    new ModuleFederationPlugin({
+cfg-federation-plugin,module-code-environment/webpack.config.js,2,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,module-code-environment/webpack.config.js,30,    new ModuleFederationPlugin({
+cfg-federation-plugin,module-code-module/webpack.config.js,2,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,module-code-module/webpack.config.js,37,    new ModuleFederationPlugin({
+cfg-federation-plugin,module-content-uploading/webpack.config.js,2,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,module-content-uploading/webpack.config.js,29,    new ModuleFederationPlugin({
+cfg-federation-plugin,module-dashboard/webpack.config.js,2,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,module-dashboard/webpack.config.js,29,    new ModuleFederationPlugin({
+cfg-federation-plugin,module-logging/webpack.config.js,2,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,module-logging/webpack.config.js,30,    new ModuleFederationPlugin({
+cfg-federation-plugin,module-virtual-machine/webpack.config.js,2,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,module-virtual-machine/webpack.config.js,29,    new ModuleFederationPlugin({
+cfg-federation-plugin,shared-design-system/webpack.config.js,2,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,shared-design-system/webpack.config.js,35,    new ModuleFederationPlugin({
+cfg-federation-plugin,shell-app/webpack.config.js,2,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,shell-app/webpack.config.js,30,    new ModuleFederationPlugin({
+cfg-federation-plugin,shell-app/webpack.prod.config.js,14,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,shell-app/webpack.prod.config.js,42,    new ModuleFederationPlugin({
+cfg-remotes,module-assessment/webpack.config.js,38,      remotes: {
+cfg-remotes,module-cloud-console/webpack.config.js,37,      remotes: {
+cfg-remotes,module-cloud-labs/webpack.config.js,32,      remotes: {
+cfg-remotes,module-code-environment/webpack.config.js,33,      remotes: {
+cfg-remotes,module-code-module/webpack.config.js,40,      remotes: {
+cfg-remotes,module-content-uploading/webpack.config.js,32,      remotes: {
+cfg-remotes,module-dashboard/webpack.config.js,32,      remotes: {
+cfg-remotes,module-logging/webpack.config.js,33,      remotes: {
+cfg-remotes,module-virtual-machine/webpack.config.js,32,      remotes: {
+cfg-remotes,shell-app/webpack.config.js,34,      remotes: {
+cfg-remotes,shell-app/webpack.prod.config.js,44,      remotes: {
+cfg-exposes,module-assessment/webpack.config.js,52,      exposes: {
+cfg-exposes,module-cloud-console/webpack.config.js,51,      exposes: {
+cfg-exposes,module-cloud-labs/webpack.config.js,46,      exposes: {
+cfg-exposes,module-code-environment/webpack.config.js,47,      exposes: {
+cfg-exposes,module-code-module/webpack.config.js,54,      exposes: {
+cfg-exposes,module-content-uploading/webpack.config.js,46,      exposes: {
+cfg-exposes,module-dashboard/webpack.config.js,46,      exposes: {
+cfg-exposes,module-logging/webpack.config.js,47,      exposes: {
+cfg-exposes,module-virtual-machine/webpack.config.js,46,      exposes: {
+cfg-exposes,shared-design-system/webpack.config.js,38,      exposes: {
+cfg-shared,module-assessment/webpack.config.js,55,      shared: {
+cfg-shared,module-assessment/webpack.config.js,57,"          singleton: true,"
+cfg-shared,module-assessment/webpack.config.js,61,"          singleton: true,"
+cfg-shared,module-assessment/webpack.config.js,65,"          singleton: true,"
+cfg-shared,module-assessment/webpack.config.js,68,"          singleton: true,"
+cfg-shared,module-assessment/webpack.config.js,71,"          singleton: true,"
+cfg-shared,module-cloud-console/webpack.config.js,54,      shared: {
+cfg-shared,module-cloud-console/webpack.config.js,56,"          singleton: true,"
+cfg-shared,module-cloud-console/webpack.config.js,60,"          singleton: true,"
+cfg-shared,module-cloud-console/webpack.config.js,64,"          singleton: true,"
+cfg-shared,module-cloud-console/webpack.config.js,67,"          singleton: true,"
+cfg-shared,module-cloud-console/webpack.config.js,70,"          singleton: true,"
+cfg-shared,module-cloud-labs/webpack.config.js,49,      shared: {
+cfg-shared,module-cloud-labs/webpack.config.js,51,"          singleton: true,"
+cfg-shared,module-cloud-labs/webpack.config.js,55,"          singleton: true,"
+cfg-shared,module-cloud-labs/webpack.config.js,59,"          singleton: true,"
+cfg-shared,module-cloud-labs/webpack.config.js,62,"          singleton: true,"
+cfg-shared,module-cloud-labs/webpack.config.js,65,"          singleton: true,"
+cfg-shared,module-code-environment/webpack.config.js,50,      shared: {
+cfg-shared,module-code-environment/webpack.config.js,52,"          singleton: true,"
+cfg-shared,module-code-environment/webpack.config.js,56,"          singleton: true,"
+cfg-shared,module-code-environment/webpack.config.js,60,"          singleton: true,"
+cfg-shared,module-code-environment/webpack.config.js,63,"          singleton: true,"
+cfg-shared,module-code-environment/webpack.config.js,66,"          singleton: true,"
+cfg-shared,module-code-module/webpack.config.js,57,      shared: {
+cfg-shared,module-code-module/webpack.config.js,59,"          singleton: true,"
+cfg-shared,module-code-module/webpack.config.js,63,"          singleton: true,"
+cfg-shared,module-code-module/webpack.config.js,67,"          singleton: true,"
+cfg-shared,module-code-module/webpack.config.js,70,"          singleton: true,"
+cfg-shared,module-code-module/webpack.config.js,73,"          singleton: true,"
+cfg-shared,module-code-module/webpack.config.js,76,"          singleton: true,"
+cfg-shared,module-content-uploading/webpack.config.js,49,      shared: {
+cfg-shared,module-content-uploading/webpack.config.js,51,"          singleton: true,"
+cfg-shared,module-content-uploading/webpack.config.js,55,"          singleton: true,"
+cfg-shared,module-content-uploading/webpack.config.js,59,"          singleton: true,"
+cfg-shared,module-content-uploading/webpack.config.js,62,"          singleton: true,"
+cfg-shared,module-content-uploading/webpack.config.js,65,"          singleton: true,"
+cfg-shared,module-dashboard/webpack.config.js,49,      shared: {
+cfg-shared,module-dashboard/webpack.config.js,51,"          singleton: true,"
+cfg-shared,module-dashboard/webpack.config.js,55,"          singleton: true,"
+cfg-shared,module-dashboard/webpack.config.js,59,"          singleton: true,"
+cfg-shared,module-dashboard/webpack.config.js,62,"          singleton: true,"
+cfg-shared,module-dashboard/webpack.config.js,65,"          singleton: true,"
+cfg-shared,module-logging/webpack.config.js,50,      shared: {
+cfg-shared,module-logging/webpack.config.js,52,"          singleton: true,"
+cfg-shared,module-logging/webpack.config.js,56,"          singleton: true,"
+cfg-shared,module-logging/webpack.config.js,60,"          singleton: true,"
+cfg-shared,module-logging/webpack.config.js,63,"          singleton: true,"
+cfg-shared,module-logging/webpack.config.js,66,"          singleton: true,"
+cfg-shared,module-virtual-machine/webpack.config.js,49,      shared: {
+cfg-shared,module-virtual-machine/webpack.config.js,51,"          singleton: true,"
+cfg-shared,module-virtual-machine/webpack.config.js,55,"          singleton: true,"
+cfg-shared,module-virtual-machine/webpack.config.js,59,"          singleton: true,"
+cfg-shared,module-virtual-machine/webpack.config.js,62,"          singleton: true,"
+cfg-shared,module-virtual-machine/webpack.config.js,65,"          singleton: true,"
+cfg-shared,module-virtual-machine/webpack.config.js,68,"          singleton: true,"
+cfg-shared,shared-design-system/webpack.config.js,50,      shared: {
+cfg-shared,shared-design-system/webpack.config.js,52,"          singleton: true,"
+cfg-shared,shared-design-system/webpack.config.js,56,"          singleton: true,"
+cfg-shared,shell-app/webpack.config.js,51,      shared: {
+cfg-shared,shell-app/webpack.config.js,52,"        react: { singleton: true },"
+cfg-shared,shell-app/webpack.config.js,53,"        ""react-dom"": { singleton: true },"
+cfg-shared,shell-app/webpack.config.js,54,"        ""react-router"": { singleton: true },"
+cfg-shared,shell-app/webpack.config.js,55,"        ""react-router-dom"": { singleton: true },"
+cfg-shared,shell-app/webpack.config.js,56,"        ""styled-components"": { singleton: true },"
+cfg-shared,shell-app/webpack.config.js,57,"        ""shared-design-system"": { singleton: true },"
+cfg-shared,shell-app/webpack.prod.config.js,58,      shared: {
+cfg-shared,shell-app/webpack.prod.config.js,59,"        react: { singleton: true },"
+cfg-shared,shell-app/webpack.prod.config.js,60,"        ""react-dom"": { singleton: true },"
+cfg-shared,shell-app/webpack.prod.config.js,61,"        ""react-router"": { singleton: true },"
+cfg-shared,shell-app/webpack.prod.config.js,62,"        ""react-router-dom"": { singleton: true },"
+cfg-shared,shell-app/webpack.prod.config.js,63,"        ""styled-components"": { singleton: true },"
+cfg-shared,shell-app/webpack.prod.config.js,64,"        ""shared-design-system"": { singleton: true },"
+cfg-public-path,module-assessment/webpack.config.js,10,"    publicPath: ""auto"","
+cfg-public-path,module-cloud-console/webpack.config.js,11,"    publicPath: ""auto"","
+cfg-public-path,module-cloud-labs/webpack.config.js,10,"    publicPath: ""auto"","
+cfg-public-path,module-code-environment/webpack.config.js,11,"    publicPath: ""auto"","
+cfg-public-path,module-code-module/webpack.config.js,11,"    publicPath: ""auto"","
+cfg-public-path,module-content-uploading/webpack.config.js,10,"    publicPath: ""auto"","
+cfg-public-path,module-dashboard/webpack.config.js,10,"    publicPath: ""auto"","
+cfg-public-path,module-logging/webpack.config.js,11,"    publicPath: ""auto"","
+cfg-public-path,module-virtual-machine/webpack.config.js,10,"    publicPath: ""auto"","
+cfg-public-path,shared-design-system/webpack.config.js,11,"    publicPath: ""auto"","
+cfg-public-path,shell-app/webpack.config.js,10,"    publicPath: ""auto"","
+cfg-public-path,shell-app/webpack.prod.config.js,22,"    publicPath: ""auto"","
+rt-remote-entry,module-assessment/nginx.conf,24,    # ── remoteEntry.js — NEVER cache ─────────────────────────────────────────
+rt-remote-entry,module-assessment/nginx.conf,25,    location = /remoteEntry.js {
+rt-remote-entry,module-assessment/webpack.config.js,37,"      filename: ""remoteEntry.js"","
+rt-remote-entry,module-assessment/webpack.config.js,43,"                      || ""http://localhost:3010/remoteEntry.js"";"
+rt-remote-entry,module-cloud-console/nginx.conf,8,    # Required so the Shell container can fetch remoteEntry.js from this module.
+rt-remote-entry,module-cloud-console/nginx.conf,27,    # ── remoteEntry.js — NEVER cache ─────────────────────────────────────────
+rt-remote-entry,module-cloud-console/nginx.conf,30,    location = /remoteEntry.js {
+rt-remote-entry,module-cloud-console/webpack.config.js,36,"      filename: ""remoteEntry.js"","
+rt-remote-entry,module-cloud-console/webpack.config.js,42,"                      || ""http://localhost:3010/remoteEntry.js"";"
+rt-remote-entry,module-cloud-labs/nginx.conf,8,    # Required so the Shell container can fetch remoteEntry.js from this module.
+rt-remote-entry,module-cloud-labs/nginx.conf,27,    # ── remoteEntry.js — NEVER cache ─────────────────────────────────────────
+rt-remote-entry,module-cloud-labs/nginx.conf,30,    location = /remoteEntry.js {
+rt-remote-entry,module-cloud-labs/webpack.config.js,31,"      filename: ""remoteEntry.js"", // Entry file exposed to shell"
+rt-remote-entry,module-cloud-labs/webpack.config.js,37,"                      || ""http://localhost:3010/remoteEntry.js"";"
+rt-remote-entry,module-cloud-labs/webpack.config.js,77,"      ""Access-Control-Allow-Origin"": ""*"", // Allow shell to fetch remoteEntry.js"
+rt-remote-entry,module-code-environment/nginx.conf,8,    # Required so the Shell container can fetch remoteEntry.js from this module.
+rt-remote-entry,module-code-environment/nginx.conf,27,    # ── remoteEntry.js — NEVER cache ─────────────────────────────────────────
+rt-remote-entry,module-code-environment/nginx.conf,30,    location = /remoteEntry.js {
+rt-remote-entry,module-code-environment/webpack.config.js,32,"      filename: ""remoteEntry.js"","
+rt-remote-entry,module-code-environment/webpack.config.js,38,"                      || ""http://localhost:3010/remoteEntry.js"";"
+rt-remote-entry,module-code-module/nginx.conf,8,    # Required so the Shell container can fetch remoteEntry.js from this module.
+rt-remote-entry,module-code-module/nginx.conf,27,    # ── remoteEntry.js — NEVER cache ─────────────────────────────────────────
+rt-remote-entry,module-code-module/nginx.conf,30,    location = /remoteEntry.js {
+rt-remote-entry,module-code-module/webpack.config.js,39,"      filename: ""remoteEntry.js"","
+rt-remote-entry,module-code-module/webpack.config.js,45,"                      || ""http://localhost:3010/remoteEntry.js"";"
+rt-remote-entry,module-content-uploading/nginx.conf,24,    # ── remoteEntry.js — NEVER cache ─────────────────────────────────────────
+rt-remote-entry,module-content-uploading/nginx.conf,25,    location = /remoteEntry.js {
+rt-remote-entry,module-content-uploading/webpack.config.js,31,"      filename: ""remoteEntry.js"","
+rt-remote-entry,module-content-uploading/webpack.config.js,37,"                      || ""http://localhost:3010/remoteEntry.js"";"
+rt-remote-entry,module-dashboard/nginx.conf,8,    # Required so the Shell container can fetch remoteEntry.js from this module.
+rt-remote-entry,module-dashboard/nginx.conf,27,    # ── remoteEntry.js — NEVER cache ─────────────────────────────────────────
+rt-remote-entry,module-dashboard/nginx.conf,30,    location = /remoteEntry.js {
+rt-remote-entry,module-dashboard/webpack.config.js,31,"      filename: ""remoteEntry.js"", // Entry file exposed to shell"
+rt-remote-entry,module-dashboard/webpack.config.js,37,"                      || ""http://localhost:3010/remoteEntry.js"";"
+rt-remote-entry,module-logging/nginx.conf,8,    # Required so the Shell container can fetch remoteEntry.js from this module.
+rt-remote-entry,module-logging/nginx.conf,27,    # ── remoteEntry.js — NEVER cache ─────────────────────────────────────────
+rt-remote-entry,module-logging/nginx.conf,30,    location = /remoteEntry.js {
+rt-remote-entry,module-logging/webpack.config.js,32,"      filename: ""remoteEntry.js"","
+rt-remote-entry,module-logging/webpack.config.js,38,"                      || ""http://localhost:3010/remoteEntry.js"";"
+rt-remote-entry,module-virtual-machine/nginx.conf,8,    # Required so the Shell container can fetch remoteEntry.js from this module.
+rt-remote-entry,module-virtual-machine/nginx.conf,27,    # ── remoteEntry.js — NEVER cache ─────────────────────────────────────────
+rt-remote-entry,module-virtual-machine/nginx.conf,30,    location = /remoteEntry.js {
+rt-remote-entry,module-virtual-machine/webpack.config.js,31,"      filename: ""remoteEntry.js"", // Entry file exposed to shell"
+rt-remote-entry,module-virtual-machine/webpack.config.js,37,"                      || ""http://localhost:3010/remoteEntry.js"";"
+rt-remote-entry,nginx/nginx.conf,25,    location = /design-system-remote/remoteEntry.js {
+rt-remote-entry,nginx/nginx.conf,26,      proxy_pass http://mfe-shared-design-system:80/remoteEntry.js;
+rt-remote-entry,nginx/nginx.conf,37,    location = /cloud-labs-remote/remoteEntry.js {
+rt-remote-entry,nginx/nginx.conf,38,      proxy_pass http://mfe-cloud-labs:80/remoteEntry.js;
+rt-remote-entry,nginx/nginx.conf,49,    location = /dashboard-remote/remoteEntry.js {
+rt-remote-entry,nginx/nginx.conf,50,      proxy_pass http://mfe-dashboard:80/remoteEntry.js;
+rt-remote-entry,nginx/nginx.conf,61,    location = /virtual-machine-remote/remoteEntry.js {
+rt-remote-entry,nginx/nginx.conf,62,      proxy_pass http://mfe-virtual-machine:80/remoteEntry.js;
+rt-remote-entry,nginx/nginx.conf,73,    location = /cloud-console-remote/remoteEntry.js {
+rt-remote-entry,nginx/nginx.conf,74,      proxy_pass http://mfe-cloud-console:80/remoteEntry.js;
+rt-remote-entry,nginx/nginx.conf,85,    location = /logging-remote/remoteEntry.js {
+rt-remote-entry,nginx/nginx.conf,86,      proxy_pass http://mfe-logging:80/remoteEntry.js;
+rt-remote-entry,nginx/nginx.conf,97,    location = /code-environment-remote/remoteEntry.js {
+rt-remote-entry,nginx/nginx.conf,98,      proxy_pass http://mfe-code-environment:80/remoteEntry.js;
+rt-remote-entry,nginx/nginx.conf,109,    location = /code-module-remote/remoteEntry.js {
+rt-remote-entry,nginx/nginx.conf,110,      proxy_pass http://mfe-code-module:80/remoteEntry.js;
+rt-remote-entry,nginx/nginx.conf,121,    location = /content-uploading-remote/remoteEntry.js {
+rt-remote-entry,nginx/nginx.conf,122,      proxy_pass http://mfe-content-uploading:80/remoteEntry.js;
+rt-remote-entry,nginx/nginx.conf,133,    location = /assessment-remote/remoteEntry.js {
+rt-remote-entry,nginx/nginx.conf,134,      proxy_pass http://mfe-assessment:80/remoteEntry.js;
+rt-remote-entry,shared-design-system/nginx.conf,8,    # Required so the Shell container can fetch remoteEntry.js from this module.
+rt-remote-entry,shared-design-system/nginx.conf,27,    # ── remoteEntry.js — NEVER cache ─────────────────────────────────────────
+rt-remote-entry,shared-design-system/nginx.conf,30,    location = /remoteEntry.js {
+rt-remote-entry,shared-design-system/webpack.config.js,37,"      filename: ""remoteEntry.js"","
+rt-remote-entry,shell-app/nginx.conf,8,    # Required so the Shell container can fetch remoteEntry.js from this module.
+rt-remote-entry,shell-app/nginx.conf,27,    # ── remoteEntry.js — NEVER cache ─────────────────────────────────────────
+rt-remote-entry,shell-app/nginx.conf,30,    location = /remoteEntry.js {
+rt-remote-entry,shell-app/public/index.html,24,"          design_system:     '/design-system-remote/remoteEntry.js',"
+rt-remote-entry,shell-app/public/index.html,25,"          cloud_labs:        '/cloud-labs-remote/remoteEntry.js',"
+rt-remote-entry,shell-app/public/index.html,26,"          dashboard:         '/dashboard-remote/remoteEntry.js',"
+rt-remote-entry,shell-app/public/index.html,27,"          virtual_machine:   '/virtual-machine-remote/remoteEntry.js',"
+rt-remote-entry,shell-app/public/index.html,28,"          cloud_console:     '/cloud-console-remote/remoteEntry.js',"
+rt-remote-entry,shell-app/public/index.html,29,"          logging:           '/logging-remote/remoteEntry.js',"
+rt-remote-entry,shell-app/public/index.html,30,"          code_environment:  '/code-environment-remote/remoteEntry.js',"
+rt-remote-entry,shell-app/public/index.html,31,"          code_module:       '/code-module-remote/remoteEntry.js',"
+rt-remote-entry,shell-app/public/index.html,32,"          content_uploading: '/content-uploading-remote/remoteEntry.js',"
+rt-remote-entry,shell-app/public/index.html,33,"          assessment:        '/assessment-remote/remoteEntry.js',"
+rt-remote-entry,shell-app/public/index.html,37,"          design_system:     'http://localhost:3010/remoteEntry.js',"
+rt-remote-entry,shell-app/public/index.html,38,"          cloud_labs:        'http://localhost:3001/remoteEntry.js',"
+rt-remote-entry,shell-app/public/index.html,39,"          dashboard:         'http://localhost:3002/remoteEntry.js',"
+rt-remote-entry,shell-app/public/index.html,40,"          virtual_machine:   'http://localhost:3003/remoteEntry.js',"
+rt-remote-entry,shell-app/public/index.html,41,"          cloud_console:     'http://localhost:3004/remoteEntry.js',"
+rt-remote-entry,shell-app/public/index.html,42,"          logging:           'http://localhost:3005/remoteEntry.js',"
+rt-remote-entry,shell-app/public/index.html,43,"          code_environment:  'http://localhost:3006/remoteEntry.js',"
+rt-remote-entry,shell-app/public/index.html,44,"          code_module:       'http://localhost:3007/remoteEntry.js',"
+rt-remote-entry,shell-app/public/index.html,45,"          content_uploading: 'http://localhost:3008/remoteEntry.js',"
+rt-remote-entry,shell-app/public/index.html,46,"          assessment:        'http://localhost:3009/remoteEntry.js',"
+rt-remote-entry,shell-app/src/config/remoteConfig.js,9,"  design_system: ""http://localhost:3010/remoteEntry.js"","
+rt-remote-entry,shell-app/src/config/remoteConfig.js,10,"  cloud_labs: ""http://localhost:3001/remoteEntry.js"","
+rt-remote-entry,shell-app/src/config/remoteConfig.js,11,"  dashboard: ""http://localhost:3002/remoteEntry.js"","
+rt-remote-entry,shell-app/src/config/remoteConfig.js,12,"  virtual_machine: ""http://localhost:3003/remoteEntry.js"","
+rt-remote-entry,shell-app/src/config/remoteConfig.js,13,"  cloud_console: ""http://localhost:3004/remoteEntry.js"","
+rt-remote-entry,shell-app/src/config/remoteConfig.js,14,"  logging: ""http://localhost:3005/remoteEntry.js"","
+rt-remote-entry,shell-app/src/config/remoteConfig.js,15,"  code_environment: ""http://localhost:3006/remoteEntry.js"","
+rt-remote-entry,shell-app/src/config/remoteConfig.js,16,"  code_module: ""http://localhost:3007/remoteEntry.js"","
+rt-remote-entry,shell-app/src/config/remoteConfig.js,17,"  content_uploading: ""http://localhost:3008/remoteEntry.js"","
+rt-remote-entry,shell-app/src/config/remoteConfig.js,18,"  assessment: ""http://localhost:3009/remoteEntry.js"","
+rt-remote-entry,shell-app/webpack.config.js,39,"                      || ""http://localhost:3010/remoteEntry.js"";"
+rt-remote-entry,shell-app/webpack.prod.config.js,49,"                      || ""http://localhost:3010/remoteEntry.js"";"
+rt-manifest-file,module-assessment/public/models/face_landmark_68_model-weights_manifest.json,,
+rt-manifest-file,module-assessment/public/models/tiny_face_detector_model-weights_manifest.json,,
+rt-manifest-file,module-code-module/public/models/face_landmark_68_model-weights_manifest.json,,
+rt-manifest-file,module-code-module/public/models/tiny_face_detector_model-weights_manifest.json,,
+rt-manifest-file,shell-app/public/models/face_landmark_68_model-weights_manifest.json,,
+rt-manifest-file,shell-app/public/models/tiny_face_detector_model-weights_manifest.json,,
+src-remote-import,module-cloud-console/src/bootstrap.js,4,"  import(""react-dom/client"").then(({ createRoot }) => {"
+src-remote-import,module-cloud-labs/src/bootstrap.js,4,"  import(""react-dom/client"").then(({ createRoot }) => {"
+src-remote-import,module-code-environment/src/bootstrap.js,4,"  import(""react-dom/client"").then(({ createRoot }) => {"
+src-remote-import,module-content-uploading/src/bootstrap.js,2,"  import(""react-dom/client"").then(({ createRoot }) => {"
+src-remote-import,module-dashboard/src/bootstrap.js,4,"  import(""react-dom/client"").then(({ createRoot }) => {"
+src-remote-import,module-logging/src/bootstrap.js,4,"  import(""react-dom/client"").then(({ createRoot }) => {"
+src-remote-import,module-virtual-machine/src/bootstrap.js,4,"  import(""react-dom/client"").then(({ createRoot }) => {"
+src-async-bootstrap,module-assessment/src/index.js,1,"import(""./bootstrap"");"
+src-async-bootstrap,module-cloud-console/src/index.js,4,"import(""./bootstrap"");"
+src-async-bootstrap,module-cloud-labs/src/index.js,4,"import(""./bootstrap"");"
+src-async-bootstrap,module-code-environment/src/index.js,4,"import(""./bootstrap"");"
+src-async-bootstrap,module-code-module/src/index.js,1,"import(""./bootstrap"");"
+src-async-bootstrap,module-content-uploading/src/index.js,1,"import(""./bootstrap"");"
+src-async-bootstrap,module-dashboard/src/index.js,4,"import(""./bootstrap"");"
+src-async-bootstrap,module-logging/src/index.js,4,"import(""./bootstrap"");"
+src-async-bootstrap,module-virtual-machine/src/index.js,4,"import(""./bootstrap"");"
+src-async-bootstrap,shared-design-system/src/index.js,1,"import(""./bootstrap"");"
+src-async-bootstrap,shell-app/src/index.js,2,"import(""./bootstrap"");"
+src-load-remote,shell-app/src/remotes/remoteLoader.js,40,"  await __webpack_init_sharing__(""default"");"
+src-load-remote,shell-app/src/remotes/remoteLoader.js,45,    await container.init(__webpack_share_scopes__.default);
+src-load-remote,shell-app/src/remotes/remoteLoader.js,51,export async function loadRemoteModule({
+src-load-remote,shell-app/src/remotes/remoteLoader.js,82,"    loadRemoteModule({ remoteName, remoteUrl, exposedModule })"
+src-dynamic-script,module-assessment/webpack.config.js,44,"          const script = document.createElement(""script"");"
+src-dynamic-script,module-cloud-console/webpack.config.js,43,"          const script = document.createElement(""script"");"
+src-dynamic-script,module-cloud-labs/webpack.config.js,38,"          const script = document.createElement(""script"");"
+src-dynamic-script,module-code-environment/webpack.config.js,39,"          const script = document.createElement(""script"");"
+src-dynamic-script,module-code-module/webpack.config.js,46,"          const script = document.createElement(""script"");"
+src-dynamic-script,module-content-uploading/webpack.config.js,38,"          const script = document.createElement(""script"");"
+src-dynamic-script,module-dashboard/webpack.config.js,38,"          const script = document.createElement(""script"");"
+src-dynamic-script,module-logging/webpack.config.js,39,"          const script = document.createElement(""script"");"
+src-dynamic-script,module-virtual-machine/webpack.config.js,38,"          const script = document.createElement(""script"");"
+src-dynamic-script,shell-app/src/remotes/remoteLoader.js,9,"    const el = document.createElement(""script"");"
+src-dynamic-script,shell-app/webpack.config.js,40,"          const script = document.createElement(""script"");"
+src-dynamic-script,shell-app/webpack.prod.config.js,50,"          const script = document.createElement(""script"");"
+src-iframe,module-assessment/src/pages/KodeEnvSection.jsx,369,                    <iframe
+src-iframe,module-code-module/src/CodeModule.jsx,847,              <iframe
+ops-deployment-file,docker-compose.yml,,
+ops-deployment-file,module-assessment/Dockerfile,,
+ops-deployment-file,module-assessment/nginx.conf,,
+ops-deployment-file,module-cloud-console/Dockerfile,,
+ops-deployment-file,module-cloud-console/nginx.conf,,
+ops-deployment-file,module-cloud-labs/Dockerfile,,
+ops-deployment-file,module-cloud-labs/nginx.conf,,
+ops-deployment-file,module-code-environment/Dockerfile,,
+ops-deployment-file,module-code-environment/nginx.conf,,
+ops-deployment-file,module-code-module/Dockerfile,,
+ops-deployment-file,module-code-module/nginx.conf,,
+ops-deployment-file,module-content-uploading/Dockerfile,,
+ops-deployment-file,module-content-uploading/nginx.conf,,
+ops-deployment-file,module-dashboard/Dockerfile,,
+ops-deployment-file,module-dashboard/nginx.conf,,
+ops-deployment-file,module-logging/Dockerfile,,
+ops-deployment-file,module-logging/nginx.conf,,
+ops-deployment-file,module-virtual-machine/Dockerfile,,
+ops-deployment-file,module-virtual-machine/nginx.conf,,
+ops-deployment-file,nginx/nginx.conf,,
+ops-deployment-file,shared-design-system/Dockerfile,,
+ops-deployment-file,shared-design-system/nginx.conf,,
+ops-deployment-file,shell-app/Dockerfile,,
+ops-deployment-file,shell-app/nginx.conf,,
+ops-dockerfile,module-assessment/Dockerfile,2,FROM node:18-alpine AS builder
+ops-dockerfile,module-assessment/Dockerfile,18,FROM nginx:alpine
+ops-dockerfile,module-cloud-console/Dockerfile,2,FROM node:18-alpine AS builder
+ops-dockerfile,module-cloud-console/Dockerfile,18,FROM nginx:alpine
+ops-dockerfile,module-cloud-labs/Dockerfile,2,FROM node:18-alpine AS builder
+ops-dockerfile,module-cloud-labs/Dockerfile,18,FROM nginx:alpine
+ops-dockerfile,module-code-environment/Dockerfile,2,FROM node:18-alpine AS builder
+ops-dockerfile,module-code-environment/Dockerfile,18,FROM nginx:alpine
+ops-dockerfile,module-code-module/Dockerfile,2,FROM node:18-alpine AS builder
+ops-dockerfile,module-code-module/Dockerfile,18,FROM nginx:alpine
+ops-dockerfile,module-content-uploading/Dockerfile,2,FROM node:18-alpine AS builder
+ops-dockerfile,module-content-uploading/Dockerfile,18,FROM nginx:alpine
+ops-dockerfile,module-dashboard/Dockerfile,2,FROM node:18-alpine AS builder
+ops-dockerfile,module-dashboard/Dockerfile,18,FROM nginx:alpine
+ops-dockerfile,module-logging/Dockerfile,2,FROM node:18-alpine AS builder
+ops-dockerfile,module-logging/Dockerfile,18,FROM nginx:alpine
+ops-dockerfile,module-virtual-machine/Dockerfile,2,FROM node:18-alpine AS builder
+ops-dockerfile,module-virtual-machine/Dockerfile,18,FROM nginx:alpine
+ops-dockerfile,shared-design-system/Dockerfile,2,FROM node:18-alpine AS builder
+ops-dockerfile,shared-design-system/Dockerfile,15,FROM nginx:alpine
+ops-dockerfile,shell-app/Dockerfile,2,FROM node:18-alpine AS builder
+ops-dockerfile,shell-app/Dockerfile,29,FROM nginx:alpine
+ops-compose-service,docker-compose.yml,6,    image: nginx:alpine
+ops-compose-service,docker-compose.yml,12,    depends_on:
+ops-compose-service,docker-compose.yml,30,    build:
+ops-compose-service,docker-compose.yml,42,    build:
+ops-compose-service,docker-compose.yml,50,    depends_on:
+ops-compose-service,docker-compose.yml,55,    build:
+ops-compose-service,docker-compose.yml,63,    depends_on:
+ops-compose-service,docker-compose.yml,68,    build:
+ops-compose-service,docker-compose.yml,76,    depends_on:
+ops-compose-service,docker-compose.yml,81,    build:
+ops-compose-service,docker-compose.yml,89,    depends_on:
+ops-compose-service,docker-compose.yml,94,    build:
+ops-compose-service,docker-compose.yml,102,    depends_on:
+ops-compose-service,docker-compose.yml,107,    build:
+ops-compose-service,docker-compose.yml,115,    depends_on:
+ops-compose-service,docker-compose.yml,120,    build:
+ops-compose-service,docker-compose.yml,128,    depends_on:
+ops-compose-service,docker-compose.yml,133,    build:
+ops-compose-service,docker-compose.yml,141,    depends_on:
+ops-compose-service,docker-compose.yml,146,    build:
+ops-compose-service,docker-compose.yml,154,    depends_on:
+ops-compose-service,docker-compose.yml,160,    build:
+ops-compose-service,docker-compose.yml,168,    depends_on:
+ops-proxy-route,module-assessment/nginx.conf,13,    location / {
+ops-proxy-route,module-assessment/nginx.conf,18,    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff2)$ {
+ops-proxy-route,module-assessment/nginx.conf,25,    location = /remoteEntry.js {
+ops-proxy-route,module-cloud-console/nginx.conf,16,    location / {
+ops-proxy-route,module-cloud-console/nginx.conf,21,    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff2)$ {
+ops-proxy-route,module-cloud-console/nginx.conf,30,    location = /remoteEntry.js {
+ops-proxy-route,module-cloud-labs/nginx.conf,16,    location / {
+ops-proxy-route,module-cloud-labs/nginx.conf,21,    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff2)$ {
+ops-proxy-route,module-cloud-labs/nginx.conf,30,    location = /remoteEntry.js {
+ops-proxy-route,module-code-environment/nginx.conf,16,    location / {
+ops-proxy-route,module-code-environment/nginx.conf,21,    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff2)$ {
+ops-proxy-route,module-code-environment/nginx.conf,30,    location = /remoteEntry.js {
+ops-proxy-route,module-code-module/nginx.conf,16,    location / {
+ops-proxy-route,module-code-module/nginx.conf,21,    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff2)$ {
+ops-proxy-route,module-code-module/nginx.conf,30,    location = /remoteEntry.js {
+ops-proxy-route,module-content-uploading/nginx.conf,13,    location / {
+ops-proxy-route,module-content-uploading/nginx.conf,18,    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff2)$ {
+ops-proxy-route,module-content-uploading/nginx.conf,25,    location = /remoteEntry.js {
+ops-proxy-route,module-dashboard/nginx.conf,16,    location / {
+ops-proxy-route,module-dashboard/nginx.conf,21,    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff2)$ {
+ops-proxy-route,module-dashboard/nginx.conf,30,    location = /remoteEntry.js {
+ops-proxy-route,module-logging/nginx.conf,16,    location / {
+ops-proxy-route,module-logging/nginx.conf,21,    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff2)$ {
+ops-proxy-route,module-logging/nginx.conf,30,    location = /remoteEntry.js {
+ops-proxy-route,module-virtual-machine/nginx.conf,16,    location / {
+ops-proxy-route,module-virtual-machine/nginx.conf,21,    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff2)$ {
+ops-proxy-route,module-virtual-machine/nginx.conf,30,    location = /remoteEntry.js {
+ops-proxy-route,nginx/nginx.conf,18,    location / {
+ops-proxy-route,nginx/nginx.conf,19,      proxy_pass http://mfe-shell:80;
+ops-proxy-route,nginx/nginx.conf,25,    location = /design-system-remote/remoteEntry.js {
+ops-proxy-route,nginx/nginx.conf,26,      proxy_pass http://mfe-shared-design-system:80/remoteEntry.js;
+ops-proxy-route,nginx/nginx.conf,30,    location ~ ^/design-system-remote/.*\.(js|css|woff2?|png|jpg|svg)$ {
+ops-proxy-route,nginx/nginx.conf,32,      proxy_pass http://mfe-shared-design-system:80;
+ops-proxy-route,nginx/nginx.conf,37,    location = /cloud-labs-remote/remoteEntry.js {
+ops-proxy-route,nginx/nginx.conf,38,      proxy_pass http://mfe-cloud-labs:80/remoteEntry.js;
+ops-proxy-route,nginx/nginx.conf,42,    location ~ ^/cloud-labs-remote/.*\.(js|css|woff2?|png|jpg|svg)$ {
+ops-proxy-route,nginx/nginx.conf,44,      proxy_pass http://mfe-cloud-labs:80;
+ops-proxy-route,nginx/nginx.conf,49,    location = /dashboard-remote/remoteEntry.js {
+ops-proxy-route,nginx/nginx.conf,50,      proxy_pass http://mfe-dashboard:80/remoteEntry.js;
+ops-proxy-route,nginx/nginx.conf,54,    location ~ ^/dashboard-remote/.*\.(js|css|woff2?|png|jpg|svg)$ {
+ops-proxy-route,nginx/nginx.conf,56,      proxy_pass http://mfe-dashboard:80;
+ops-proxy-route,nginx/nginx.conf,61,    location = /virtual-machine-remote/remoteEntry.js {
+ops-proxy-route,nginx/nginx.conf,62,      proxy_pass http://mfe-virtual-machine:80/remoteEntry.js;
+ops-proxy-route,nginx/nginx.conf,66,    location ~ ^/virtual-machine-remote/.*\.(js|css|woff2?|png|jpg|svg)$ {
+ops-proxy-route,nginx/nginx.conf,68,      proxy_pass http://mfe-virtual-machine:80;
+ops-proxy-route,nginx/nginx.conf,73,    location = /cloud-console-remote/remoteEntry.js {
+ops-proxy-route,nginx/nginx.conf,74,      proxy_pass http://mfe-cloud-console:80/remoteEntry.js;
+ops-proxy-route,nginx/nginx.conf,78,    location ~ ^/cloud-console-remote/.*\.(js|css|woff2?|png|jpg|svg)$ {
+ops-proxy-route,nginx/nginx.conf,80,      proxy_pass http://mfe-cloud-console:80;
+ops-proxy-route,nginx/nginx.conf,85,    location = /logging-remote/remoteEntry.js {
+ops-proxy-route,nginx/nginx.conf,86,      proxy_pass http://mfe-logging:80/remoteEntry.js;
+ops-proxy-route,nginx/nginx.conf,90,    location ~ ^/logging-remote/.*\.(js|css|woff2?|png|jpg|svg)$ {
+ops-proxy-route,nginx/nginx.conf,92,      proxy_pass http://mfe-logging:80;
+ops-proxy-route,nginx/nginx.conf,97,    location = /code-environment-remote/remoteEntry.js {
+ops-proxy-route,nginx/nginx.conf,98,      proxy_pass http://mfe-code-environment:80/remoteEntry.js;
+ops-proxy-route,nginx/nginx.conf,102,    location ~ ^/code-environment-remote/.*\.(js|css|woff2?|png|jpg|svg)$ {
+ops-proxy-route,nginx/nginx.conf,104,      proxy_pass http://mfe-code-environment:80;
+ops-proxy-route,nginx/nginx.conf,109,    location = /code-module-remote/remoteEntry.js {
+ops-proxy-route,nginx/nginx.conf,110,      proxy_pass http://mfe-code-module:80/remoteEntry.js;
+ops-proxy-route,nginx/nginx.conf,114,    location ~ ^/code-module-remote/.*\.(js|css|woff2?|png|jpg|svg)$ {
+ops-proxy-route,nginx/nginx.conf,116,      proxy_pass http://mfe-code-module:80;
+ops-proxy-route,nginx/nginx.conf,121,    location = /content-uploading-remote/remoteEntry.js {
+ops-proxy-route,nginx/nginx.conf,122,      proxy_pass http://mfe-content-uploading:80/remoteEntry.js;
+ops-proxy-route,nginx/nginx.conf,126,    location ~ ^/content-uploading-remote/.*\.(js|css|woff2?|png|jpg|svg)$ {
+ops-proxy-route,nginx/nginx.conf,128,      proxy_pass http://mfe-content-uploading:80;
+ops-proxy-route,nginx/nginx.conf,133,    location = /assessment-remote/remoteEntry.js {
+ops-proxy-route,nginx/nginx.conf,134,      proxy_pass http://mfe-assessment:80/remoteEntry.js;
+ops-proxy-route,nginx/nginx.conf,138,    location ~ ^/assessment-remote/.*\.(js|css|woff2?|png|jpg|svg)$ {
+ops-proxy-route,nginx/nginx.conf,140,      proxy_pass http://mfe-assessment:80;
+ops-proxy-route,shared-design-system/nginx.conf,16,    location / {
+ops-proxy-route,shared-design-system/nginx.conf,21,    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff2)$ {
+ops-proxy-route,shared-design-system/nginx.conf,30,    location = /remoteEntry.js {
+ops-proxy-route,shell-app/nginx.conf,16,    location / {
+ops-proxy-route,shell-app/nginx.conf,21,    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff2)$ {
+ops-proxy-route,shell-app/nginx.conf,30,    location = /remoteEntry.js {
+ops-cors,module-assessment/nginx.conf,7,    # ── CORS headers ─────────────────────────────────────────────────────────
+ops-cors,module-assessment/nginx.conf,8,    add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,module-assessment/nginx.conf,21,        add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,module-assessment/nginx.conf,27,        add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,module-assessment/webpack.config.js,83,"      ""Access-Control-Allow-Origin"": ""*"","
+ops-cors,module-cloud-console/nginx.conf,7,    # ── CORS headers ─────────────────────────────────────────────────────────
+ops-cors,module-cloud-console/nginx.conf,10,    add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,module-cloud-console/nginx.conf,24,        add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,module-cloud-console/nginx.conf,32,        add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,module-cloud-console/webpack.config.js,86,"      ""Access-Control-Allow-Origin"": ""*"","
+ops-cors,module-cloud-labs/nginx.conf,7,    # ── CORS headers ─────────────────────────────────────────────────────────
+ops-cors,module-cloud-labs/nginx.conf,10,    add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,module-cloud-labs/nginx.conf,24,        add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,module-cloud-labs/nginx.conf,32,        add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,module-cloud-labs/webpack.config.js,77,"      ""Access-Control-Allow-Origin"": ""*"", // Allow shell to fetch remoteEntry.js"
+ops-cors,module-code-environment/nginx.conf,7,    # ── CORS headers ─────────────────────────────────────────────────────────
+ops-cors,module-code-environment/nginx.conf,10,    add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,module-code-environment/nginx.conf,24,        add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,module-code-environment/nginx.conf,32,        add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,module-code-environment/webpack.config.js,82,"      ""Access-Control-Allow-Origin"": ""*"","
+ops-cors,module-code-module/nginx.conf,7,    # ── CORS headers ─────────────────────────────────────────────────────────
+ops-cors,module-code-module/nginx.conf,10,    add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,module-code-module/nginx.conf,24,        add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,module-code-module/nginx.conf,32,        add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,module-code-module/webpack.config.js,88,"      ""Access-Control-Allow-Origin"": ""*"","
+ops-cors,module-content-uploading/nginx.conf,7,    # ── CORS headers ─────────────────────────────────────────────────────────
+ops-cors,module-content-uploading/nginx.conf,8,    add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,module-content-uploading/nginx.conf,21,        add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,module-content-uploading/nginx.conf,27,        add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,module-content-uploading/webpack.config.js,77,"      ""Access-Control-Allow-Origin"": ""*"","
+ops-cors,module-content-uploading/webpack.config.js,86,          delete proxyRes.headers['access-control-allow-origin'];
+ops-cors,module-content-uploading/webpack.config.js,87,          delete proxyRes.headers['Access-Control-Allow-Origin'];
+ops-cors,module-content-uploading/webpack.config.js,96,          delete proxyRes.headers['access-control-allow-origin'];
+ops-cors,module-content-uploading/webpack.config.js,97,          delete proxyRes.headers['Access-Control-Allow-Origin'];
+ops-cors,module-dashboard/nginx.conf,7,    # ── CORS headers ─────────────────────────────────────────────────────────
+ops-cors,module-dashboard/nginx.conf,10,    add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,module-dashboard/nginx.conf,24,        add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,module-dashboard/nginx.conf,32,        add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,module-dashboard/webpack.config.js,78,"      ""Access-Control-Allow-Origin"": ""*"","
+ops-cors,module-logging/nginx.conf,7,    # ── CORS headers ─────────────────────────────────────────────────────────
+ops-cors,module-logging/nginx.conf,10,    add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,module-logging/nginx.conf,24,        add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,module-logging/nginx.conf,32,        add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,module-logging/webpack.config.js,81,"      ""Access-Control-Allow-Origin"": ""*"","
+ops-cors,module-virtual-machine/nginx.conf,7,    # ── CORS headers ─────────────────────────────────────────────────────────
+ops-cors,module-virtual-machine/nginx.conf,10,    add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,module-virtual-machine/nginx.conf,24,        add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,module-virtual-machine/nginx.conf,32,        add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,module-virtual-machine/webpack.config.js,80,"      ""Access-Control-Allow-Origin"": ""*"","
+ops-cors,nginx/nginx.conf,28,      add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,nginx/nginx.conf,33,      add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,nginx/nginx.conf,40,      add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,nginx/nginx.conf,45,      add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,nginx/nginx.conf,52,      add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,nginx/nginx.conf,57,      add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,nginx/nginx.conf,64,      add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,nginx/nginx.conf,69,      add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,nginx/nginx.conf,76,      add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,nginx/nginx.conf,81,      add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,nginx/nginx.conf,88,      add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,nginx/nginx.conf,93,      add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,nginx/nginx.conf,100,      add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,nginx/nginx.conf,105,      add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,nginx/nginx.conf,112,      add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,nginx/nginx.conf,117,      add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,nginx/nginx.conf,124,      add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,nginx/nginx.conf,129,      add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,nginx/nginx.conf,136,      add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,nginx/nginx.conf,141,      add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,shared-design-system/nginx.conf,7,    # ── CORS headers ─────────────────────────────────────────────────────────
+ops-cors,shared-design-system/nginx.conf,10,    add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,shared-design-system/nginx.conf,24,        add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,shared-design-system/nginx.conf,32,        add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,shared-design-system/webpack.config.js,70,"      ""Access-Control-Allow-Origin"": ""*"","
+ops-cors,shell-app/nginx.conf,7,    # ── CORS headers ─────────────────────────────────────────────────────────
+ops-cors,shell-app/nginx.conf,10,    add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,shell-app/nginx.conf,24,        add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,shell-app/nginx.conf,32,        add_header 'Access-Control-Allow-Origin' '*' always;
+ops-cors,shell-app/webpack.config.js,68,"      ""Access-Control-Allow-Origin"": ""*"","
+ops-cors,shell-app/webpack.config.js,77,          delete proxyRes.headers['access-control-allow-origin'];
+ops-cors,shell-app/webpack.config.js,78,          delete proxyRes.headers['Access-Control-Allow-Origin'];
+ops-cors,shell-app/webpack.config.js,87,          delete proxyRes.headers['access-control-allow-origin'];
+ops-cors,shell-app/webpack.config.js,88,          delete proxyRes.headers['Access-Control-Allow-Origin'];
+doc-mfe-term,README.md,1,# Micro-Frontend Architecture
+doc-mfe-term,README.md,4,"A production-ready micro-frontend setup with 3 independent modules, each running in its own Docker container, orchestrated by a Shell host app."
+doc-mfe-term,README.md,11,micro-frontend/
+doc-mfe-term,docs/ARCHITECTURE.md,1,# Micro-Frontend Platform — Architecture Overview
+doc-mfe-term,docs/ARCHITECTURE.md,3,"This repository implements a production-grade micro-frontend platform using Webpack 5 Module Federation, Docker, and nginx. The goal is to keep each micro-frontend independently deployable while the `shell-app` composes remotes at runtime."
+doc-integration-technology,README.md,2,### React + Webpack Module Federation + Docker
+doc-integration-technology,README.md,72,## How Module Federation Works
+doc-integration-technology,README.md,225,├── webpack.config.js     ← Module Federation config (exposes CloudLabsApp)
+doc-integration-technology,docs/ARCHITECTURE.md,3,"This repository implements a production-grade micro-frontend platform using Webpack 5 Module Federation, Docker, and nginx. The goal is to keep each micro-frontend independently deployable while the `shell-app` composes remotes at runtime."
+doc-integration-technology,docs/ARCHITECTURE.md,7,- Runtime Module Federation loader that injects `remoteEntry.js` at runtime (no hardcoded build-time remote URLs).
+doc-runtime-loading,README.md,12,├── shell-app/               ← Host (port 3000) — loads all modules at runtime
+doc-runtime-loading,README.md,30,The Shell **loads** those components at runtime — not at build time.
+doc-runtime-loading,README.md,106,"// Loaded at RUNTIME, not build time"
+doc-runtime-loading,README.md,114,"With `singleton: true`, all modules share ONE React instance negotiated at runtime."
+doc-runtime-loading,docs/ARCHITECTURE.md,3,"This repository implements a production-grade micro-frontend platform using Webpack 5 Module Federation, Docker, and nginx. The goal is to keep each micro-frontend independently deployable while the `shell-app` composes remotes at runtime."
+doc-runtime-loading,docs/ARCHITECTURE.md,7,- Runtime Module Federation loader that injects `remoteEntry.js` at runtime (no hardcoded build-time remote URLs).
+doc-runtime-loading,docs/ARCHITECTURE.md,8,- Centralized runtime remote config (`window.__RUNTIME_REMOTE_CONFIG__`) with sane localhost defaults; can be overridden at runtime (nginx or injected script).
+doc-runtime-loading,docs/ARCHITECTURE.md,33,   - Uses `React.lazy()` with a runtime loader to fetch `remoteEntry.js`.
+doc-independence,README.md,4,"A production-ready micro-frontend setup with 3 independent modules, each running in its own Docker container, orchestrated by a Shell host app."
+doc-independence,README.md,197,- ✅ Deploy independently without redeploying others
+doc-independence,docs/ARCHITECTURE.md,3,"This repository implements a production-grade micro-frontend platform using Webpack 5 Module Federation, Docker, and nginx. The goal is to keep each micro-frontend independently deployable while the `shell-app` composes remotes at runtime."
+doc-independence,docs/ARCHITECTURE.md,57,- Add CI workflows for independent image builds and publishing to registry.
+doc-host-remote,README.md,206,"| Shell shows ""Module Unavailable"" | Remote container not running | Start the module container |"
+doc-host-remote,docs/ARCHITECTURE.md,3,"This repository implements a production-grade micro-frontend platform using Webpack 5 Module Federation, Docker, and nginx. The goal is to keep each micro-frontend independently deployable while the `shell-app` composes remotes at runtime."
+doc-host-remote,docs/ARCHITECTURE.md,9,- Shell now lazy-loads remotes using a robust loader with timeouts and retry support.
+doc-host-remote,docs/ARCHITECTURE.md,16,- The shell reads `window.__RUNTIME_REMOTE_CONFIG__` to determine remote `remoteEntry.js` URLs.
+doc-host-remote,docs/ARCHITECTURE.md,30,## How the shell loads remotes
+doc-host-remote,docs/ARCHITECTURE.md,34,   - Calls the remote container `init()` to populate shared scopes.

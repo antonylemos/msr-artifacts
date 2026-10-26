@@ -1,0 +1,6 @@
+directory,markers
+.,index.html;package.json
+1verificador-vue,1verificador-vue/index.html;1verificador-vue/package.json;1verificador-vue/vite.config.ts
+1verificador-vue/verificador,1verificador-vue/verificador/package.json;1verificador-vue/verificador/vite.config.ts
+2postulacion-react,2postulacion-react/index.html;2postulacion-react/package.json;2postulacion-react/vite.config.ts
+3seguimiento-angular,3seguimiento-angular/angular.json;3seguimiento-angular/package.json

@@ -1,0 +1,76 @@
+import { SolutionUI } from '@scality/module-federation';
+import { FederatedComponent } from '@scality/module-federation';
+import { Fragment } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
+import { useAuth } from '../auth/AuthProvider';
+import { useFirstTimeLogin } from '../auth/FirstTimeLoginProvider';
+import type { FederatedModuleInfo } from '../initFederation/ConfigurationProviders';
+import { useConfigRetriever } from '../initFederation/ConfigurationProviders';
+import { useDeployedApps } from '../initFederation/UIListProvider';
+import { useNotificationCenter } from '../useNotificationCenter';
+import { useNavbar } from './navbarHooks';
+import { ShellAlerts, shellAlerts, ShellHooks, shellHooks } from '../hooks/useShellHooks';
+
+export const NavbarUpdaterComponents = () => {
+  const deployedApps = useDeployedApps();
+  const { retrieveConfiguration } = useConfigRetriever();
+  const navbarManagementProps = useNavbar();
+  const { publish, unPublish } = useNotificationCenter();
+  const componentsToFederate: (FederatedModuleInfo & {
+    app: SolutionUI;
+    remoteEntryPath: string;
+  })[] = deployedApps
+    .flatMap((app) => {
+      const appBuildConfig = retrieveConfiguration<'build'>({
+        configType: 'build',
+        name: app.name,
+      });
+      const remoteEntryPath = appBuildConfig?.spec?.remoteEntryPath;
+      return appBuildConfig?.spec?.navbarUpdaterComponents
+        ? appBuildConfig?.spec?.navbarUpdaterComponents.map((component) => ({
+            ...component,
+            remoteEntryPath,
+            app,
+          }))
+        : [];
+    })
+    .filter((appBuildConfig) => !!appBuildConfig);
+  const { firstTimeLogin } = useFirstTimeLogin();
+  const { userData } = useAuth();
+  return (
+    <>
+      {componentsToFederate.map((component, index) => {
+        return (
+          <Fragment key={index}>
+            <ErrorBoundary
+              FallbackComponent={(props) => {
+                console.error('error while loading navbar updater component', component, props);
+                return <></>;
+              }}
+            >
+              <FederatedComponent
+                key={component.module}
+                url={`${component.app.url}${component.remoteEntryPath}?version=${component.app.version}`}
+                module={component.module}
+                scope={component.scope}
+                app={component.app}
+                props={{
+                  navbarManagementProps,
+                  publishNotification: publish,
+                  unPublishNotification: unPublish,
+                  isFirstTimeLogin: firstTimeLogin,
+                  userData,
+                  shellHooks,
+                  shellAlerts,
+                }}
+                // Headless updaters — they publish links/notifications and render
+                // nothing in place. Must be <></>, not null: see MCPRegistrar.
+                renderOnLoading={<></>}
+              />
+            </ErrorBoundary>
+          </Fragment>
+        );
+      })}
+    </>
+  );
+};

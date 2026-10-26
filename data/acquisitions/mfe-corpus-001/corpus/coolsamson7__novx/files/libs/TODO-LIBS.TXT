@@ -1,0 +1,61 @@
+### TODO
+
+### LATER
+
+- wiki documentation
+
+### NOW
+
+### RAECTIVE
+
+class Bla extends Controller { -> Command("foo")
+    @command()
+    foo() {
+      ...
+    }
+}
+
+class Aspects {
+   @around(methods()...)
+   void lockCommand(invocartion: Invcocation) {
+      ...
+   }
+}
+
+Der erste around müsste execute auf command sageb?
+
+### DONE
+- url geht nicht, wrong port?????
+- integrate error handling?
+- integrate commands?
+- typedescriptor
+- microfrontebd???
+- pnpm
+- remount routes
+- release
+- deploymen manager + {}
+- route manager muss () => bekomnen um die root zu berechen!
+- inherited onRunnign geht nicht
+- inject geht auch nicht. WHAT THE FUCK
+- TEST TypeDescripor
+- feature verschwindet
+- Navigations logik?
+- List
+- Icon
+- lint?
+- Translator.Builder
+- icons
+- microfrontend
+- avatar
+- i18n switch
+- sample app!
+- tools & portal
+- test aop
+- test validation
+- test stream
+- test typedescriptor
+- github pages
+- badge & toplevel README
+- cleanup #1
+- licence none
+- links & readme

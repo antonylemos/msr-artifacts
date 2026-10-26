@@ -1,0 +1,27 @@
+{
+  "name": "profile",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "rsbuild build",
+    "check": "biome check --write",
+    "dev": "rsbuild dev --open",
+    "format": "biome format --write",
+    "preview": "rsbuild preview"
+  },
+  "dependencies": {
+    "@rsbuild/core": "^0.4.5",
+    "@rsbuild/plugin-react": "^0.4.5",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "zephyr-rsbuild-plugin": "workspace:*",
+    "zephyr-rspack-plugin": "^0.0.38"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.1",
+    "typescript": "^5.8.2"
+  }
+}

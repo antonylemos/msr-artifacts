@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "id": "989410278",
+  "fullName": "mojtaba-arvin/django-react-iou-bnpl",
+  "commit": "bf4da7610d2a1343b2f97eab1dfeb6b026e50e19",
+  "acquiredAt": "2026-10-24T00:32:29.307Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "docs/assets/01-shell-home-page.png",
+      "reason": "preset:binaries",
+      "size": 37610
+    },
+    {
+      "path": "docs/assets/02-customer-register-page.png",
+      "reason": "preset:binaries",
+      "size": 43957
+    },
+    {
+      "path": "docs/assets/03-merchant-register-page.png",
+      "reason": "preset:binaries",
+      "size": 43935
+    },
+    {
+      "path": "docs/assets/04-merchant-login-page.png",
+      "reason": "preset:binaries",
+      "size": 37708
+    },
+    {
+      "path": "docs/assets/05-merchant-plans-page.png",
+      "reason": "preset:binaries",
+      "size": 40871
+    },
+    {
+      "path": "docs/assets/06-merchant-create-plan-page.png",
+      "reason": "preset:binaries",
+      "size": 67727
+    },
+    {
+      "path": "docs/assets/07-merchant-plan-details.png",
+      "reason": "preset:binaries",
+      "size": 81915
+    },
+    {
+      "path": "docs/assets/08-customer-installments-page.png",
+      "reason": "preset:binaries",
+      "size": 83651
+    },
+    {
+      "path": "docs/assets/09-customer-pay-now.png",
+      "reason": "preset:binaries",
+      "size": 84884
+    },
+    {
+      "path": "docs/assets/10-merchant-dashboard.png",
+      "reason": "preset:binaries",
+      "size": 52740
+    },
+    {
+      "path": "docs/assets/11-merchant-plans-page.png",
+      "reason": "preset:binaries",
+      "size": 55151
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 278,
+    "bytes": 475543
+  },
+  "languages": {
+    "Python": 238933,
+    "TypeScript": 161673,
+    "Markdown": 21182,
+    "JavaScript": 15602,
+    "JSON": 14405,
+    "YAML": 13467,
+    "Other": 9513,
+    "HTML": 768
+  },
+  "contentSha256": "a08ad0825c9bee7493e6363c33c108bbfd06c1316f998ac36bf173010174a1bc"
+}

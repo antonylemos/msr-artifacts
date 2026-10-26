@@ -1,0 +1,81 @@
+pattern,path,line,excerpt
+dep-module-federation,packages/app-1/package.json,16,"    ""@module-federation/vite"": ""^1.2.2"","
+dep-module-federation,packages/app-2/package.json,16,"    ""@module-federation/vite"": ""^1.2.2"","
+dep-module-federation,packages/host/package.json,18,"    ""@module-federation/runtime"": ""^0.8.9"","
+dep-module-federation,packages/host/package.json,19,"    ""@module-federation/vite"": ""^1.2.2"""
+dep-monorepo-tool,package.json,12,"    ""lerna"": ""^8.1.9"""
+lock-mfe-dependency,package-lock.json,754,"    ""node_modules/@module-federation/error-codes"": {"
+lock-mfe-dependency,package-lock.json,756,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/error-codes/-/error-codes-0.8.10.tgz"","
+lock-mfe-dependency,package-lock.json,761,"    ""node_modules/@module-federation/runtime"": {"
+lock-mfe-dependency,package-lock.json,763,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/runtime/-/runtime-0.8.10.tgz"","
+lock-mfe-dependency,package-lock.json,768,"        ""@module-federation/error-codes"": ""0.8.10"","
+lock-mfe-dependency,package-lock.json,769,"        ""@module-federation/runtime-core"": ""0.6.18"","
+lock-mfe-dependency,package-lock.json,770,"        ""@module-federation/sdk"": ""0.8.10"""
+lock-mfe-dependency,package-lock.json,773,"    ""node_modules/@module-federation/runtime-core"": {"
+lock-mfe-dependency,package-lock.json,775,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/runtime-core/-/runtime-core-0.6.18.tgz"","
+lock-mfe-dependency,package-lock.json,780,"        ""@module-federation/error-codes"": ""0.8.10"","
+lock-mfe-dependency,package-lock.json,781,"        ""@module-federation/sdk"": ""0.8.10"""
+lock-mfe-dependency,package-lock.json,784,"    ""node_modules/@module-federation/sdk"": {"
+lock-mfe-dependency,package-lock.json,786,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/sdk/-/sdk-0.8.10.tgz"","
+lock-mfe-dependency,package-lock.json,794,"    ""node_modules/@module-federation/vite"": {"
+lock-mfe-dependency,package-lock.json,796,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/vite/-/vite-1.2.2.tgz"","
+lock-mfe-dependency,package-lock.json,801,"        ""@module-federation/runtime"": ""^0.8.0"","
+lock-mfe-dependency,package-lock.json,8623,"        ""@module-federation/vite"": ""^1.2.2"","
+lock-mfe-dependency,package-lock.json,8634,"        ""@module-federation/vite"": ""^1.2.2"","
+lock-mfe-dependency,package-lock.json,8646,"        ""@module-federation/runtime"": ""^0.8.9"","
+lock-mfe-dependency,package-lock.json,8647,"        ""@module-federation/vite"": ""^1.2.2"","
+cfg-federation-plugin,packages/app-1/vite.config.js,9,    federation({
+cfg-federation-plugin,packages/app-2/vite.config.js,9,    federation({
+cfg-federation-plugin,packages/host/vite.config.js,10,    federation({
+cfg-exposes,packages/app-1/vite.config.js,12,      exposes: {
+cfg-exposes,packages/app-2/vite.config.js,12,      exposes: {
+cfg-shared,packages/app-1/vite.config.js,15,"      shared: ['vue'],"
+cfg-shared,packages/app-2/vite.config.js,15,"      shared: ['vue'],"
+cfg-shared,packages/host/vite.config.js,13,"      shared: ['vue'], // Ensure shared dependencies are listed"
+rt-remote-entry,packages/app-1/vite.config.js,11,"      filename: 'remoteEntry.js',"
+rt-remote-entry,packages/app-2/vite.config.js,11,"      filename: 'remoteEntry.js',"
+rt-remote-entry,packages/host/src/routeManifest.js,5,"      entry: 'http://localhost:5011/remoteEntry.js',"
+rt-remote-entry,packages/host/src/routeManifest.js,18,"      entry: 'http://localhost:5012/remoteEntry.js',"
+rt-remote-entry,packages/host/vite.config.js,12,"      filename: 'remoteEntry.js', // Entry point for the host's own remote modules"
+src-load-remote,packages/host/src/components/Loader.vue,70,    const remoteModule = await moduleFederation.loadRemote(mfeConfig.module);
+src-load-remote,packages/host/src/components/Loader.vue,96,  if (remote?.module) loadRemote(remote);
+src-load-remote,packages/host/src/plugins/federationPlugin.js,29,    const loadedModule = await _loadRemote(`${module}/entry`);
+src-mount-export,packages/app-1/src/entry.js,6,export const mount = (container) => {
+src-mount-export,packages/app-1/src/entry.js,20,export const unmount = () => {
+src-mount-export,packages/app-2/src/entry.js,6,export const mount = (container) => {
+src-mount-export,packages/app-2/src/entry.js,20,export const unmount = () => {
+src-mount-call,packages/app-1/src/entry.js,13,      app.mount(container);
+src-mount-call,packages/app-2/src/entry.js,13,      app.mount(container);
+ci-workflow-file,.github/workflows/main_vdumpavue3.yml,,
+doc-mfe-term,README.md,1,# Micro Frontend Sample
+doc-mfe-term,README.md,3,"This repository is a sample project designed to demonstrate the Micro Frontend Architecture using Vue 3, Vite, and Module Federation to build modular applications. Each micro frontend runs with its own Vue instance, initialized separately via `entry.js`, rather than sharing the host's Vue instance."
+doc-mfe-term,README.md,5,"Additionally, this project utilizes a Route Manifest to dynamically define and manage routing for different micro frontends. The Route Manifest is responsible for:"
+doc-mfe-term,README.md,7,- Dynamically loading routes from micro frontends
+doc-mfe-term,README.md,10,- Maintaining consistency in route structure across the micro frontends
+doc-mfe-term,README.md,11,"- Delegating rendering responsibilities to `Loader.vue`, which mounts or unmounts micro frontends dynamically"
+doc-mfe-term,README.md,15,- Micro Frontend Architecture with Vue 3
+doc-mfe-term,README.md,17,- Module Federation to dynamically load micro frontends
+doc-mfe-term,README.md,19,- Independent Routing per micro frontend
+doc-mfe-term,README.md,20,- Separate Vue Instances for each micro frontend
+doc-mfe-term,README.md,26,micro-frontend-sample/
+doc-mfe-term,README.md,29,│   ├── app-1/         # Micro frontend 1
+doc-mfe-term,README.md,30,│   ├── app-2/         # Micro frontend 2
+doc-mfe-term,README.md,41,git clone https://github.com/lmlong-huynh/micro-frontend-sample.git
+doc-mfe-term,README.md,42,cd micro-frontend-sample
+doc-mfe-term,README.md,52,Run the development servers for all micro frontends:
+doc-mfe-term,README.md,56,This will start the host app and all micro frontends simultaneously.
+doc-mfe-term,README.md,65,## Micro Frontend Routing
+doc-mfe-term,README.md,66,| Micro Frontend | URL |
+doc-mfe-term,README.md,76,"The Route Manifest is used to dynamically register micro frontend routes in the host application. Instead of directly referencing remote apps, all routes are set to render `Loader.vue`, which is responsible for loading, mounting, and unmounting the micro frontends dynamically."
+doc-mfe-term,README.md,106,  return routeManifest.map((mfe) => ({
+doc-mfe-term,README.md,107,"    path: mfe.route.path,"
+doc-mfe-term,README.md,108,"    name: mfe.route.name,"
+doc-mfe-term,README.md,109,"    meta: mfe.route.meta,"
+doc-mfe-term,README.md,124,"This setup ensures that the host app dynamically loads and mounts micro frontends when navigating, using `Loader.vue` as the single entry point for rendering micro frontends."
+doc-integration-technology,README.md,3,"This repository is a sample project designed to demonstrate the Micro Frontend Architecture using Vue 3, Vite, and Module Federation to build modular applications. Each micro frontend runs with its own Vue instance, initialized separately via `entry.js`, rather than sharing the host's Vue instance."
+doc-integration-technology,README.md,17,- Module Federation to dynamically load micro frontends
+doc-integration-technology,README.md,72,The Host dynamically loads App 1 and App 2 via Module Federation and manages routing through the Route Manifest.
+doc-runtime-loading,README.md,9,- Registering and updating route configurations at runtime
+doc-independence,README.md,19,- Independent Routing per micro frontend
+doc-host-remote,README.md,76,"The Route Manifest is used to dynamically register micro frontend routes in the host application. Instead of directly referencing remote apps, all routes are set to render `Loader.vue`, which is responsible for loading, mounting, and unmounting the micro frontends dynamically."
+ws-workspaces,package.json,4,"  ""workspaces"": ["

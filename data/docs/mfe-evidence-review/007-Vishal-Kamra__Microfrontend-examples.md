@@ -28,7 +28,7 @@ São dois exemplos independentes de Module Federation, ambos com o plugin nativo
 - **Código:** o host importa o módulo remoto pelo nome (#18 a #20) e chama `mount` num elemento próprio (#15, #21, #22). Os remotes exportam `mount` (#12 a #14).
 - **Relações:** isso resulta nas três relações ativas: container → marketing no exemplo React (#32), e Container → Cart e Container → Products no exemplo em JavaScript puro (#33, #34).
 
-Cada aplicação tem build próprio, mas só para o servidor de desenvolvimento, e não há deploy (#35 a #39).
+Cada aplicação tem build próprio, mas só para o servidor de desenvolvimento, e não há deploy observado (#35 a #39).
 
 Sinais que enganam se lidos sozinhos:
 - **Bootstrap assíncrono e montagem local:** os bootstraps assíncronos (#6 a #10) e as montagens no próprio elemento de desenvolvimento (#16, #17) são internos a cada unidade.

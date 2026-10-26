@@ -1,0 +1,8 @@
+manifest,state
+angular-app/package.json,ok
+common-lib-webpack/package.json,ok
+react-app/package.json,ok
+react-vite-app/package.json,ok
+root-config/package.json,ok
+styleguide/package.json,ok
+vue-app/package.json,ok

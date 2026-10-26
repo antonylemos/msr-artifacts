@@ -1,0 +1,17 @@
+{
+  "name": "microfrontend-learning",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Root package — installs all apps and runs them together",
+  "scripts": {
+    "install:all": "npm install --prefix host && npm install --prefix react-mfe-1 && npm install --prefix react-mfe-2 && npm install --prefix vue-mfe && npm install --prefix angular-mfe",
+    "start": "concurrently --names \"HOST,MFE1,MFE2,VUE,ANGULAR\" --prefix-colors \"blue,cyan,green,magenta,red\" \"npm start --prefix host\" \"npm start --prefix react-mfe-1\" \"npm start --prefix react-mfe-2\" \"npm start --prefix vue-mfe\" \"npm start --prefix angular-mfe\"",
+    "build:mfes": "npm run build --prefix react-mfe-1 && npm run build --prefix react-mfe-2 && npm run build --prefix vue-mfe && npm run build --prefix angular-mfe",
+    "build:host": "npm run build --prefix host",
+    "copy:dist": "rm -rf dist && mkdir -p dist/react-mfe-1 dist/react-mfe-2 dist/vue-mfe dist/angular-mfe && cp -r react-mfe-1/dist/. dist/react-mfe-1/ && cp -r react-mfe-2/dist/. dist/react-mfe-2/ && cp -r vue-mfe/dist/. dist/vue-mfe/ && cp -r angular-mfe/dist/angular-mfe/. dist/angular-mfe/ && cp -r host/dist/. dist/",
+    "build:all": "npm run build:mfes && npm run build:host && npm run copy:dist"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}

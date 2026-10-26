@@ -1,0 +1,580 @@
+pattern,path,line,excerpt
+dep-module-federation,shell-ui/package.json,20,"    ""@module-federation/enhanced"": ""^0.21.6"","
+dep-module-federation,shell-ui/package.json,52,"    ""@scality/module-federation"": ""1.6.1"","
+dep-module-federation,ui/package.json,11,"    ""@scality/module-federation"": ""1.6.1"","
+dep-module-federation,ui/package.json,75,"    ""@module-federation/enhanced"": ""^0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,38,"        ""@module-federation/enhanced"": ""^0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4375,"    ""node_modules/@module-federation/bridge-react-webpack-plugin"": {"
+lock-mfe-dependency,shell-ui/package-lock.json,4377,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/bridge-react-webpack-plugin/-/bridge-react-webpack-plugin-0.21.6.tgz"","
+lock-mfe-dependency,shell-ui/package-lock.json,4382,"        ""@module-federation/sdk"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4387,"    ""node_modules/@module-federation/bridge-react-webpack-plugin/node_modules/semver"": {"
+lock-mfe-dependency,shell-ui/package-lock.json,4400,"    ""node_modules/@module-federation/cli"": {"
+lock-mfe-dependency,shell-ui/package-lock.json,4402,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/cli/-/cli-0.21.6.tgz"","
+lock-mfe-dependency,shell-ui/package-lock.json,4407,"        ""@module-federation/dts-plugin"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4408,"        ""@module-federation/sdk"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4420,"    ""node_modules/@module-federation/cli/node_modules/commander"": {"
+lock-mfe-dependency,shell-ui/package-lock.json,4430,"    ""node_modules/@module-federation/data-prefetch"": {"
+lock-mfe-dependency,shell-ui/package-lock.json,4432,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/data-prefetch/-/data-prefetch-0.21.6.tgz"","
+lock-mfe-dependency,shell-ui/package-lock.json,4437,"        ""@module-federation/runtime"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4438,"        ""@module-federation/sdk"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4446,"    ""node_modules/@module-federation/data-prefetch/node_modules/fs-extra"": {"
+lock-mfe-dependency,shell-ui/package-lock.json,4462,"    ""node_modules/@module-federation/dts-plugin"": {"
+lock-mfe-dependency,shell-ui/package-lock.json,4464,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/dts-plugin/-/dts-plugin-0.21.6.tgz"","
+lock-mfe-dependency,shell-ui/package-lock.json,4469,"        ""@module-federation/error-codes"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4470,"        ""@module-federation/managers"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4471,"        ""@module-federation/sdk"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4472,"        ""@module-federation/third-party-dts-extractor"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4496,"    ""node_modules/@module-federation/dts-plugin/node_modules/fs-extra"": {"
+lock-mfe-dependency,shell-ui/package-lock.json,4512,"    ""node_modules/@module-federation/dts-plugin/node_modules/ws"": {"
+lock-mfe-dependency,shell-ui/package-lock.json,4534,"    ""node_modules/@module-federation/enhanced"": {"
+lock-mfe-dependency,shell-ui/package-lock.json,4536,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/enhanced/-/enhanced-0.21.6.tgz"","
+lock-mfe-dependency,shell-ui/package-lock.json,4541,"        ""@module-federation/bridge-react-webpack-plugin"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4542,"        ""@module-federation/cli"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4543,"        ""@module-federation/data-prefetch"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4544,"        ""@module-federation/dts-plugin"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4545,"        ""@module-federation/error-codes"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4546,"        ""@module-federation/inject-external-runtime-core-plugin"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4547,"        ""@module-federation/managers"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4548,"        ""@module-federation/manifest"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4549,"        ""@module-federation/rspack"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4550,"        ""@module-federation/runtime-tools"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4551,"        ""@module-federation/sdk"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4576,"    ""node_modules/@module-federation/enhanced/node_modules/ajv"": {"
+lock-mfe-dependency,shell-ui/package-lock.json,4593,"    ""node_modules/@module-federation/enhanced/node_modules/ajv-keywords"": {"
+lock-mfe-dependency,shell-ui/package-lock.json,4606,"    ""node_modules/@module-federation/enhanced/node_modules/json-schema-traverse"": {"
+lock-mfe-dependency,shell-ui/package-lock.json,4613,"    ""node_modules/@module-federation/enhanced/node_modules/schema-utils"": {"
+lock-mfe-dependency,shell-ui/package-lock.json,4633,"    ""node_modules/@module-federation/error-codes"": {"
+lock-mfe-dependency,shell-ui/package-lock.json,4635,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/error-codes/-/error-codes-0.21.6.tgz"","
+lock-mfe-dependency,shell-ui/package-lock.json,4640,"    ""node_modules/@module-federation/inject-external-runtime-core-plugin"": {"
+lock-mfe-dependency,shell-ui/package-lock.json,4642,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/inject-external-runtime-core-plugin/-/inject-external-runtime-core-plugin-0.21.6.tgz"","
+lock-mfe-dependency,shell-ui/package-lock.json,4647,"        ""@module-federation/runtime-tools"": ""0.21.6"""
+lock-mfe-dependency,shell-ui/package-lock.json,4650,"    ""node_modules/@module-federation/managers"": {"
+lock-mfe-dependency,shell-ui/package-lock.json,4652,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/managers/-/managers-0.21.6.tgz"","
+lock-mfe-dependency,shell-ui/package-lock.json,4657,"        ""@module-federation/sdk"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4662,"    ""node_modules/@module-federation/managers/node_modules/fs-extra"": {"
+lock-mfe-dependency,shell-ui/package-lock.json,4678,"    ""node_modules/@module-federation/manifest"": {"
+lock-mfe-dependency,shell-ui/package-lock.json,4680,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/manifest/-/manifest-0.21.6.tgz"","
+lock-mfe-dependency,shell-ui/package-lock.json,4685,"        ""@module-federation/dts-plugin"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4686,"        ""@module-federation/managers"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4687,"        ""@module-federation/sdk"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4692,"    ""node_modules/@module-federation/rspack"": {"
+lock-mfe-dependency,shell-ui/package-lock.json,4694,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/rspack/-/rspack-0.21.6.tgz"","
+lock-mfe-dependency,shell-ui/package-lock.json,4699,"        ""@module-federation/bridge-react-webpack-plugin"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4700,"        ""@module-federation/dts-plugin"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4701,"        ""@module-federation/inject-external-runtime-core-plugin"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4702,"        ""@module-federation/managers"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4703,"        ""@module-federation/manifest"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4704,"        ""@module-federation/runtime-tools"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4705,"        ""@module-federation/sdk"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4722,"    ""node_modules/@module-federation/runtime"": {"
+lock-mfe-dependency,shell-ui/package-lock.json,4724,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/runtime/-/runtime-0.21.6.tgz"","
+lock-mfe-dependency,shell-ui/package-lock.json,4729,"        ""@module-federation/error-codes"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4730,"        ""@module-federation/runtime-core"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4731,"        ""@module-federation/sdk"": ""0.21.6"""
+lock-mfe-dependency,shell-ui/package-lock.json,4734,"    ""node_modules/@module-federation/runtime-core"": {"
+lock-mfe-dependency,shell-ui/package-lock.json,4736,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/runtime-core/-/runtime-core-0.21.6.tgz"","
+lock-mfe-dependency,shell-ui/package-lock.json,4741,"        ""@module-federation/error-codes"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4742,"        ""@module-federation/sdk"": ""0.21.6"""
+lock-mfe-dependency,shell-ui/package-lock.json,4745,"    ""node_modules/@module-federation/runtime-tools"": {"
+lock-mfe-dependency,shell-ui/package-lock.json,4747,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/runtime-tools/-/runtime-tools-0.21.6.tgz"","
+lock-mfe-dependency,shell-ui/package-lock.json,4752,"        ""@module-federation/runtime"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4753,"        ""@module-federation/webpack-bundler-runtime"": ""0.21.6"""
+lock-mfe-dependency,shell-ui/package-lock.json,4756,"    ""node_modules/@module-federation/sdk"": {"
+lock-mfe-dependency,shell-ui/package-lock.json,4758,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/sdk/-/sdk-0.21.6.tgz"","
+lock-mfe-dependency,shell-ui/package-lock.json,4763,"    ""node_modules/@module-federation/third-party-dts-extractor"": {"
+lock-mfe-dependency,shell-ui/package-lock.json,4765,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/third-party-dts-extractor/-/third-party-dts-extractor-0.21.6.tgz"","
+lock-mfe-dependency,shell-ui/package-lock.json,4775,"    ""node_modules/@module-federation/third-party-dts-extractor/node_modules/fs-extra"": {"
+lock-mfe-dependency,shell-ui/package-lock.json,4791,"    ""node_modules/@module-federation/webpack-bundler-runtime"": {"
+lock-mfe-dependency,shell-ui/package-lock.json,4793,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/webpack-bundler-runtime/-/webpack-bundler-runtime-0.21.6.tgz"","
+lock-mfe-dependency,shell-ui/package-lock.json,4798,"        ""@module-federation/runtime"": ""0.21.6"","
+lock-mfe-dependency,shell-ui/package-lock.json,4799,"        ""@module-federation/sdk"": ""0.21.6"""
+lock-mfe-dependency,shell-ui/package-lock.json,5252,"        ""@module-federation/runtime-tools"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,48,"        ""@module-federation/enhanced"": ""^0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4585,"    ""node_modules/@module-federation/bridge-react-webpack-plugin"": {"
+lock-mfe-dependency,ui/package-lock.json,4590,"        ""@module-federation/sdk"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4595,"    ""node_modules/@module-federation/bridge-react-webpack-plugin/node_modules/semver"": {"
+lock-mfe-dependency,ui/package-lock.json,4606,"    ""node_modules/@module-federation/cli"": {"
+lock-mfe-dependency,ui/package-lock.json,4611,"        ""@module-federation/dts-plugin"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4612,"        ""@module-federation/sdk"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4624,"    ""node_modules/@module-federation/cli/node_modules/commander"": {"
+lock-mfe-dependency,ui/package-lock.json,4632,"    ""node_modules/@module-federation/data-prefetch"": {"
+lock-mfe-dependency,ui/package-lock.json,4637,"        ""@module-federation/runtime"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4638,"        ""@module-federation/sdk"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4646,"    ""node_modules/@module-federation/data-prefetch/node_modules/fs-extra"": {"
+lock-mfe-dependency,ui/package-lock.json,4660,"    ""node_modules/@module-federation/dts-plugin"": {"
+lock-mfe-dependency,ui/package-lock.json,4665,"        ""@module-federation/error-codes"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4666,"        ""@module-federation/managers"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4667,"        ""@module-federation/sdk"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4668,"        ""@module-federation/third-party-dts-extractor"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4692,"    ""node_modules/@module-federation/dts-plugin/node_modules/axios"": {"
+lock-mfe-dependency,ui/package-lock.json,4702,"    ""node_modules/@module-federation/dts-plugin/node_modules/form-data"": {"
+lock-mfe-dependency,ui/package-lock.json,4717,"    ""node_modules/@module-federation/dts-plugin/node_modules/fs-extra"": {"
+lock-mfe-dependency,ui/package-lock.json,4731,"    ""node_modules/@module-federation/dts-plugin/node_modules/isomorphic-ws"": {"
+lock-mfe-dependency,ui/package-lock.json,4739,"    ""node_modules/@module-federation/dts-plugin/node_modules/ws"": {"
+lock-mfe-dependency,ui/package-lock.json,4759,"    ""node_modules/@module-federation/enhanced"": {"
+lock-mfe-dependency,ui/package-lock.json,4764,"        ""@module-federation/bridge-react-webpack-plugin"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4765,"        ""@module-federation/cli"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4766,"        ""@module-federation/data-prefetch"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4767,"        ""@module-federation/dts-plugin"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4768,"        ""@module-federation/error-codes"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4769,"        ""@module-federation/inject-external-runtime-core-plugin"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4770,"        ""@module-federation/managers"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4771,"        ""@module-federation/manifest"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4772,"        ""@module-federation/rspack"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4773,"        ""@module-federation/runtime-tools"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4774,"        ""@module-federation/sdk"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4799,"    ""node_modules/@module-federation/enhanced/node_modules/ajv"": {"
+lock-mfe-dependency,ui/package-lock.json,4814,"    ""node_modules/@module-federation/enhanced/node_modules/ajv-keywords"": {"
+lock-mfe-dependency,ui/package-lock.json,4825,"    ""node_modules/@module-federation/enhanced/node_modules/json-schema-traverse"": {"
+lock-mfe-dependency,ui/package-lock.json,4830,"    ""node_modules/@module-federation/enhanced/node_modules/schema-utils"": {"
+lock-mfe-dependency,ui/package-lock.json,4848,"    ""node_modules/@module-federation/enhanced/node_modules/upath"": {"
+lock-mfe-dependency,ui/package-lock.json,4857,"    ""node_modules/@module-federation/error-codes"": {"
+lock-mfe-dependency,ui/package-lock.json,4862,"    ""node_modules/@module-federation/inject-external-runtime-core-plugin"": {"
+lock-mfe-dependency,ui/package-lock.json,4867,"        ""@module-federation/runtime-tools"": ""0.21.6"""
+lock-mfe-dependency,ui/package-lock.json,4870,"    ""node_modules/@module-federation/managers"": {"
+lock-mfe-dependency,ui/package-lock.json,4875,"        ""@module-federation/sdk"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4880,"    ""node_modules/@module-federation/managers/node_modules/fs-extra"": {"
+lock-mfe-dependency,ui/package-lock.json,4894,"    ""node_modules/@module-federation/manifest"": {"
+lock-mfe-dependency,ui/package-lock.json,4899,"        ""@module-federation/dts-plugin"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4900,"        ""@module-federation/managers"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4901,"        ""@module-federation/sdk"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4906,"    ""node_modules/@module-federation/rspack"": {"
+lock-mfe-dependency,ui/package-lock.json,4911,"        ""@module-federation/bridge-react-webpack-plugin"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4912,"        ""@module-federation/dts-plugin"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4913,"        ""@module-federation/inject-external-runtime-core-plugin"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4914,"        ""@module-federation/managers"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4915,"        ""@module-federation/manifest"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4916,"        ""@module-federation/runtime-tools"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4917,"        ""@module-federation/sdk"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4934,"    ""node_modules/@module-federation/runtime"": {"
+lock-mfe-dependency,ui/package-lock.json,4939,"        ""@module-federation/error-codes"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4940,"        ""@module-federation/runtime-core"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4941,"        ""@module-federation/sdk"": ""0.21.6"""
+lock-mfe-dependency,ui/package-lock.json,4944,"    ""node_modules/@module-federation/runtime-core"": {"
+lock-mfe-dependency,ui/package-lock.json,4949,"        ""@module-federation/error-codes"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4950,"        ""@module-federation/sdk"": ""0.21.6"""
+lock-mfe-dependency,ui/package-lock.json,4953,"    ""node_modules/@module-federation/runtime-tools"": {"
+lock-mfe-dependency,ui/package-lock.json,4958,"        ""@module-federation/runtime"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4959,"        ""@module-federation/webpack-bundler-runtime"": ""0.21.6"""
+lock-mfe-dependency,ui/package-lock.json,4962,"    ""node_modules/@module-federation/sdk"": {"
+lock-mfe-dependency,ui/package-lock.json,4967,"    ""node_modules/@module-federation/third-party-dts-extractor"": {"
+lock-mfe-dependency,ui/package-lock.json,4977,"    ""node_modules/@module-federation/third-party-dts-extractor/node_modules/fs-extra"": {"
+lock-mfe-dependency,ui/package-lock.json,4991,"    ""node_modules/@module-federation/webpack-bundler-runtime"": {"
+lock-mfe-dependency,ui/package-lock.json,4996,"        ""@module-federation/runtime"": ""0.21.6"","
+lock-mfe-dependency,ui/package-lock.json,4997,"        ""@module-federation/sdk"": ""0.21.6"""
+lock-mfe-dependency,ui/package-lock.json,5357,"        ""@module-federation/runtime-tools"": ""0.21.6"","
+cfg-federation-plugin,shell-ui/rspack.config.ts,6,import { ModuleFederationPlugin } from '@module-federation/enhanced/rspack';
+cfg-federation-plugin,shell-ui/rspack.config.ts,130,    new ModuleFederationPlugin({
+cfg-federation-plugin,ui/rspack.config.ts,5,import { ModuleFederationPlugin } from '@module-federation/enhanced/rspack';
+cfg-federation-plugin,ui/rspack.config.ts,118,    new ModuleFederationPlugin({
+cfg-remotes,ui/rspack.config.ts,128,      remotes: !isProduction
+cfg-exposes,shell-ui/rspack.config.ts,133,      exposes: {
+cfg-exposes,ui/rspack.config.ts,121,      exposes: {
+cfg-shared,shell-ui/rspack.config.ts,145,      shared: {
+cfg-shared,shell-ui/rspack.config.ts,154,"          singleton: true,"
+cfg-shared,shell-ui/rspack.config.ts,157,"          singleton: true,"
+cfg-shared,shell-ui/rspack.config.ts,161,"          singleton: true,"
+cfg-shared,shell-ui/rspack.config.ts,166,"          singleton: true,"
+cfg-shared,shell-ui/rspack.config.ts,171,"          singleton: true,"
+cfg-shared,shell-ui/rspack.config.ts,176,"          singleton: true,"
+cfg-shared,shell-ui/rspack.config.ts,180,"          singleton: true,"
+cfg-shared,shell-ui/rspack.config.ts,184,"          singleton: true,"
+cfg-shared,shell-ui/rspack.config.ts,188,"          singleton: true,"
+cfg-shared,shell-ui/rspack.config.ts,192,"          singleton: true,"
+cfg-shared,shell-ui/rspack.config.ts,196,"          singleton: true,"
+cfg-shared,shell-ui/rspack.config.ts,200,"          singleton: true,"
+cfg-shared,shell-ui/rspack.config.ts,204,"          singleton: true,"
+cfg-shared,ui/rspack.config.ts,133,      shared: {
+cfg-shared,ui/rspack.config.ts,136,"          singleton: true,"
+cfg-shared,ui/rspack.config.ts,139,"          singleton: true,"
+cfg-shared,ui/rspack.config.ts,143,"          singleton: true,"
+cfg-shared,ui/rspack.config.ts,147,"          singleton: true,"
+cfg-public-path,shell-ui/rspack.config.ts,54,"    publicPath: '/shell/',"
+cfg-public-path,ui/rspack.config.ts,42,"    publicPath: '/metalk8s/',"
+rt-remote-entry,shell-ui/index-template.html,8,"      window.shellUIRemoteEntryUrl = ""/shell/mf-manifest.json?version=<%=version%>"";"
+rt-remote-entry,shell-ui/rspack.config.ts,132,"      filename: `remoteEntry.js`,"
+rt-remote-entry,shell-ui/src/FederatedApp.spec.tsx,19,"          remoteEntryPath: '/static/js/remoteEntry.js',"
+rt-remote-entry,shell-ui/src/FederatedApp.spec.tsx,132,"  rest.get('http://localhost/static/js/remoteEntry.js', (req, res, ctx) => {"
+rt-remote-entry,shell-ui/src/FederatedApp.tsx,86,        url={`${app.url}${appBuildConfig?.spec.remoteEntryPath}?version=${app.version}`}
+rt-remote-entry,shell-ui/src/initFederation/ConfigurationProviders.spec.tsx,55,"    remoteEntryPath: '/mf-manifest.json',"
+rt-remote-entry,shell-ui/src/initFederation/ConfigurationProviders.tsx,59,    remoteEntryPath: string;
+rt-remote-entry,shell-ui/src/mcp/MCPRegistrar.tsx,197,  const remoteEntryUrl = app.url + buildConfig.spec.remoteEntryPath;
+rt-remote-entry,shell-ui/src/mcp/MCPRegistrar.tsx,210,"        federatedImports={[{ ...mcpToolsModuleInfo, remoteEntryUrl }]}"
+rt-remote-entry,shell-ui/src/navbar/InstanceName.tsx,42,"    remoteEntryUrl: mainApp.url + mainAppConfiguration.spec.remoteEntryPath,"
+rt-remote-entry,shell-ui/src/navbar/NavbarUpdaterComponents.tsx,21,    remoteEntryPath: string;
+rt-remote-entry,shell-ui/src/navbar/NavbarUpdaterComponents.tsx,28,      const remoteEntryPath = appBuildConfig?.spec?.remoteEntryPath;
+rt-remote-entry,shell-ui/src/navbar/NavbarUpdaterComponents.tsx,32,"            remoteEntryPath,"
+rt-remote-entry,shell-ui/src/navbar/NavbarUpdaterComponents.tsx,53,                url={`${component.app.url}${component.remoteEntryPath}?version=${component.app.version}`}
+rt-remote-entry,ui/@mf-types/shell/compiled-types/src/initFederation/ConfigurationProviders.d.ts,53,        remoteEntryPath: string;
+rt-remote-entry,ui/@mf-types/shell/compiled-types/src/navbar/InstanceName.d.ts,6,    remoteEntryUrl: string;
+rt-remote-entry,ui/rspack.config.ts,120,"      filename: `static/js/remoteEntry.${version}.js`,"
+rt-remote-entry,ui/rspack.config.ts,130,"            shell: 'shell@http://localhost:8084/shell/mf-manifest.json',"
+rt-remote-entry,ui/src/containers/Layout.tsx,252,                    url={`${vmView.app.url}/mf-manifest.json`}
+rt-remote-entry,ui/src/setupTests.tsx,161,"            remoteEntryPath: '/remoteEntry.js',"
+src-remote-import,ui/@mf-types/shell/compiled-types/src/FederatedApp.d.ts,12,"}): import(""react/jsx-runtime"").JSX.Element;"
+src-remote-import,ui/@mf-types/shell/compiled-types/src/FederatedApp.d.ts,13,"export default function App(): import(""react/jsx-runtime"").JSX.Element;"
+src-remote-import,ui/@mf-types/shell/compiled-types/src/alerts/AlertProvider.d.ts,12,"}): import(""react/jsx-runtime"").JSX.Element;"
+src-remote-import,ui/@mf-types/shell/compiled-types/src/auth/AuthConfigProvider.d.ts,9,"}): import(""react/jsx-runtime"").JSX.Element;"
+src-remote-import,ui/@mf-types/shell/compiled-types/src/auth/AuthProvider.d.ts,5,"}): import(""react/jsx-runtime"").JSX.Element;"
+src-remote-import,ui/@mf-types/shell/compiled-types/src/auth/FirstTimeLoginProvider.d.ts,7,"}): import(""react/jsx-runtime"").JSX.Element;"
+src-remote-import,ui/@mf-types/shell/compiled-types/src/initFederation/ConfigurationProviders.d.ts,124,"}) => import(""react/jsx-runtime"").JSX.Element;"
+src-remote-import,ui/@mf-types/shell/compiled-types/src/initFederation/ShellConfigProvider.d.ts,54,"}) => import(""react/jsx-runtime"").JSX.Element;"
+src-remote-import,ui/@mf-types/shell/compiled-types/src/initFederation/ShellHistoryProvider.d.ts,4,"}) => import(""react/jsx-runtime"").JSX.Element;"
+src-remote-import,ui/@mf-types/shell/compiled-types/src/initFederation/ShellThemeSelectorProvider.d.ts,16,"}): import(""react/jsx-runtime"").JSX.Element;"
+src-remote-import,ui/@mf-types/shell/compiled-types/src/initFederation/UIListProvider.d.ts,24,"}) => import(""react/jsx-runtime"").JSX.Element;"
+src-remote-import,ui/@mf-types/shell/compiled-types/src/navbar/InstanceName.d.ts,32,"}) => import(""react/jsx-runtime"").JSX.Element;"
+src-remote-import,ui/@mf-types/shell/compiled-types/src/navbar/InstanceName.d.ts,33,"export declare const InstanceName: () => import(""react/jsx-runtime"").JSX.Element;"
+src-remote-import,ui/@mf-types/shell/compiled-types/src/navbar/NavBar.d.ts,6,"}) => import(""react/jsx-runtime"").JSX.Element;"
+src-remote-import,ui/@mf-types/shell/compiled-types/src/navbar/NavBar.d.ts,20,"}) => import(""react/jsx-runtime"").JSX.Element;"
+src-remote-import,ui/@mf-types/shell/compiled-types/src/navbar/NavbarUpdaterComponents.d.ts,1,"export declare const NavbarUpdaterComponents: () => import(""react/jsx-runtime"").JSX.Element;"
+src-remote-import,ui/@mf-types/shell/compiled-types/src/navbar/NotificationCenter.d.ts,1,"declare const NotificationCenter: () => import(""react/jsx-runtime"").JSX.Element;"
+src-remote-import,ui/@mf-types/shell/compiled-types/src/navbar/SleepingNotificationBell.d.ts,1,"export declare const SleepingNotificationBell: () => import(""react/jsx-runtime"").JSX.Element;"
+src-remote-import,ui/@mf-types/shell/compiled-types/src/navbar/index.d.ts,6,"export declare const SolutionsNavbar: ({ children }: SolutionsNavbarProps) => import(""react/jsx-runtime"").JSX.Element;"
+src-remote-import,ui/@mf-types/shell/compiled-types/src/navbar/lang.d.ts,13,"}): import(""react/jsx-runtime"").JSX.Element;"
+src-load-remote,shell-ui/rspack.config.ts,140,"        './moduleFederation/ConfigurationProvider': './src/initFederation/ConfigurationProviders.tsx',"
+src-load-remote,shell-ui/rspack.config.ts,141,"        './moduleFederation/ShellConfigurationProvider': './src/initFederation/ShellConfigProvider.tsx',"
+src-load-remote,shell-ui/rspack.config.ts,142,"        './moduleFederation/UIListProvider': './src/initFederation/UIListProvider.tsx',"
+src-load-remote,shell-ui/src/FederatedApp.tsx,19,"import { ConfigurationProvider, useConfigRetriever, useFederatedRoutes } from './initFederation/ConfigurationProviders';"
+src-load-remote,shell-ui/src/FederatedApp.tsx,20,"import { ShellConfigProvider, useShellConfig } from './initFederation/ShellConfigProvider';"
+src-load-remote,shell-ui/src/FederatedApp.tsx,21,import { ShellHistoryProvider } from './initFederation/ShellHistoryProvider';
+src-load-remote,shell-ui/src/FederatedApp.tsx,22,import { ShellThemeSelectorProvider } from './initFederation/ShellThemeSelectorProvider';
+src-load-remote,shell-ui/src/FederatedApp.tsx,23,import { UIListProvider } from './initFederation/UIListProvider';
+src-load-remote,shell-ui/src/auth/AuthConfigProvider.tsx,3,"import type { OIDCConfig, OAuth2ProxyConfig } from '../initFederation/ConfigurationProviders';"
+src-load-remote,shell-ui/src/auth/AuthProvider.spec.tsx,84,"  '../initFederation/ShellConfigProvider',"
+src-load-remote,shell-ui/src/auth/AuthProvider.tsx,6,"import type { OAuth2ProxyConfig, OIDCConfig } from '../initFederation/ConfigurationProviders';"
+src-load-remote,shell-ui/src/auth/AuthProvider.tsx,7,import { useShellConfig } from '../initFederation/ShellConfigProvider';
+src-load-remote,shell-ui/src/guardian/GuardianContext.tsx,2,import { useShellConfig } from '../initFederation/ShellConfigProvider';
+src-load-remote,shell-ui/src/guardian/GuardianDrawer.tsx,1,import { useShellConfig } from '../initFederation/ShellConfigProvider';
+src-load-remote,shell-ui/src/hooks/useShellHooks.ts,27,} from '../initFederation/ConfigurationProviders';
+src-load-remote,shell-ui/src/hooks/useShellHooks.ts,28,import { useShellConfig } from '../initFederation/ShellConfigProvider';
+src-load-remote,shell-ui/src/hooks/useShellHooks.ts,29,import { useShellThemeSelector } from '../initFederation/ShellThemeSelectorProvider';
+src-load-remote,shell-ui/src/hooks/useShellHooks.ts,30,import { useDeployedApps } from '../initFederation/UIListProvider';
+src-load-remote,shell-ui/src/mcp/MCPRegistrar.test.tsx,6,import type { FederatedModuleInfo } from '../initFederation/ConfigurationProviders';
+src-load-remote,shell-ui/src/mcp/MCPRegistrar.tsx,16,} from '../initFederation/ConfigurationProviders';
+src-load-remote,shell-ui/src/mcp/MCPRegistrar.tsx,17,import { useDeployedApps } from '../initFederation/UIListProvider';
+src-load-remote,shell-ui/src/navbar/InstanceName.spec.tsx,10,import type { RuntimeWebFinger } from '../initFederation/ConfigurationProviders';
+src-load-remote,shell-ui/src/navbar/InstanceName.spec.tsx,14,"jest.mock('../initFederation/ConfigurationProviders', () => ({"
+src-load-remote,shell-ui/src/navbar/InstanceName.spec.tsx,37,"jest.mock('../initFederation/UIListProvider', () => ({"
+src-load-remote,shell-ui/src/navbar/InstanceName.tsx,8,"import { type RuntimeWebFinger, useConfigRetriever } from '../initFederation/ConfigurationProviders';"
+src-load-remote,shell-ui/src/navbar/InstanceName.tsx,9,import { useShellConfig } from '../initFederation/ShellConfigProvider';
+src-load-remote,shell-ui/src/navbar/InstanceName.tsx,10,import { useDeployedApps } from '../initFederation/UIListProvider';
+src-load-remote,shell-ui/src/navbar/NavBar.tsx,22,} from '../initFederation/ConfigurationProviders';
+src-load-remote,shell-ui/src/navbar/NavBar.tsx,23,import { useShellConfig } from '../initFederation/ShellConfigProvider';
+src-load-remote,shell-ui/src/navbar/NavBar.tsx,24,import { useShellThemeSelector } from '../initFederation/ShellThemeSelectorProvider';
+src-load-remote,shell-ui/src/navbar/NavbarUpdaterComponents.tsx,7,import type { FederatedModuleInfo } from '../initFederation/ConfigurationProviders';
+src-load-remote,shell-ui/src/navbar/NavbarUpdaterComponents.tsx,8,import { useConfigRetriever } from '../initFederation/ConfigurationProviders';
+src-load-remote,shell-ui/src/navbar/NavbarUpdaterComponents.tsx,9,import { useDeployedApps } from '../initFederation/UIListProvider';
+src-load-remote,shell-ui/src/navbar/NotificationCenter.spec.tsx,9,import { ShellHistoryProvider } from '../initFederation/ShellHistoryProvider';
+src-load-remote,shell-ui/src/navbar/NotificationCenter.tsx,12,import { useShellHistory } from '../initFederation/ShellHistoryProvider';
+src-load-remote,shell-ui/src/navbar/auth/permissionUtils.ts,4,import { UserGroupsMapping } from '../../initFederation/ShellConfigProvider';
+src-load-remote,shell-ui/src/navbar/index.spec.tsx,15,import { ShellConfigProvider } from '../initFederation/ShellConfigProvider';
+src-load-remote,shell-ui/src/navbar/index.spec.tsx,16,import { ShellHistoryProvider } from '../initFederation/ShellHistoryProvider';
+src-load-remote,shell-ui/src/navbar/index.spec.tsx,17,import { ShellThemeSelectorProvider } from '../initFederation/ShellThemeSelectorProvider';
+src-load-remote,shell-ui/src/navbar/index.tsx,2,import { useShellConfig } from '../initFederation/ShellConfigProvider';
+src-load-remote,shell-ui/src/navbar/index.tsx,3,import { useShellThemeSelector } from '../initFederation/ShellThemeSelectorProvider';
+src-load-remote,shell-ui/src/navbar/navbarHooks.ts,2,import type { ViewDefinition } from '../initFederation/ConfigurationProviders';
+src-load-remote,shell-ui/src/navbar/navbarHooks.ts,3,import '../initFederation/ConfigurationProviders';
+src-load-remote,shell-ui/src/setupTests.ts,83,"      registerRemotes: () => {},"
+src-load-remote,ui/@mf-types/shell/compiled-types/src/auth/AuthConfigProvider.d.ts,2,"import type { OIDCConfig, OAuth2ProxyConfig } from '../initFederation/ConfigurationProviders';"
+src-load-remote,ui/@mf-types/shell/compiled-types/src/hooks/useShellHooks.d.ts,6,"import { useConfig, useConfigRetriever, useDiscoveredViews, useLinkOpener } from '../initFederation/ConfigurationProviders';"
+src-load-remote,ui/@mf-types/shell/compiled-types/src/hooks/useShellHooks.d.ts,7,import { useShellConfig } from '../initFederation/ShellConfigProvider';
+src-load-remote,ui/@mf-types/shell/compiled-types/src/hooks/useShellHooks.d.ts,8,import { useShellThemeSelector } from '../initFederation/ShellThemeSelectorProvider';
+src-load-remote,ui/@mf-types/shell/compiled-types/src/hooks/useShellHooks.d.ts,9,import { useDeployedApps } from '../initFederation/UIListProvider';
+src-load-remote,ui/@mf-types/shell/compiled-types/src/navbar/InstanceName.d.ts,2,import { type RuntimeWebFinger } from '../initFederation/ConfigurationProviders';
+src-load-remote,ui/@mf-types/shell/compiled-types/src/navbar/InstanceName.d.ts,11,"    microAppConfiguration: import(""../initFederation/ConfigurationProviders"").EnrichedBuildtimeWebFinger;"
+src-load-remote,ui/@mf-types/shell/compiled-types/src/navbar/NavBar.d.ts,2,import { ViewDefinition } from '../initFederation/ConfigurationProviders';
+src-load-remote,ui/@mf-types/shell/compiled-types/src/navbar/auth/permissionUtils.d.ts,3,import { UserGroupsMapping } from '../../initFederation/ShellConfigProvider';
+src-load-remote,ui/@mf-types/shell/compiled-types/src/navbar/navbarHooks.d.ts,1,import type { ViewDefinition } from '../initFederation/ConfigurationProviders';
+src-load-remote,ui/@mf-types/shell/compiled-types/src/navbar/navbarHooks.d.ts,2,import '../initFederation/ConfigurationProviders';
+src-load-remote,ui/@mf-types/shell/moduleFederation/ConfigurationProvider.d.ts,1,export * from './../compiled-types/src/initFederation/ConfigurationProviders';
+src-load-remote,ui/@mf-types/shell/moduleFederation/ConfigurationProvider.d.ts,2,export { default } from './../compiled-types/src/initFederation/ConfigurationProviders';
+src-load-remote,ui/@mf-types/shell/moduleFederation/ShellConfigurationProvider.d.ts,1,export * from './../compiled-types/src/initFederation/ShellConfigProvider';
+src-load-remote,ui/@mf-types/shell/moduleFederation/ShellConfigurationProvider.d.ts,2,export { default } from './../compiled-types/src/initFederation/ShellConfigProvider';
+src-load-remote,ui/@mf-types/shell/moduleFederation/UIListProvider.d.ts,1,export * from './../compiled-types/src/initFederation/UIListProvider';
+src-load-remote,ui/@mf-types/shell/moduleFederation/UIListProvider.d.ts,2,export { default } from './../compiled-types/src/initFederation/UIListProvider';
+src-iframe,shell-ui/src/guardian/GuardianDrawer.tsx,37,      <iframe
+src-cross-unit-communication,shell-ui/src/guardian/guardianPostMessageHooks.ts,38,"    iframeRef.current?.contentWindow?.postMessage(message, origin);"
+src-cross-unit-communication,shell-ui/src/guardian/guardianPostMessageHooks.ts,63,"      iframeRef.current?.contentWindow?.postMessage({ type: 'MCP_ACK', id }, origin);"
+src-cross-unit-communication,shell-ui/src/navbar/__TESTS__/testMultipleHooks.tsx,92,"      const event = new CustomEvent(RENDER_HOOK_EVENT, {"
+src-cross-unit-communication,shell-ui/src/navbar/__TESTS__/testMultipleHooks.tsx,97,      window.dispatchEvent(event);
+src-cross-unit-communication,shell-ui/src/navbar/lang.tsx,49,"        new CustomEvent(LANGUAGE_CHANGED_EVENT, {"
+ops-deployment-file,buildchain/static-container-registry/Dockerfile,,
+ops-deployment-file,buildchain/static-container-registry/ci/docker/image-provisioner/Dockerfile,,
+ops-deployment-file,buildchain/static-container-registry/ci/docker/sut/Dockerfile,,
+ops-deployment-file,buildchain/static-container-registry/docker-compose.test.yml,,
+ops-deployment-file,charts/cert-manager/Chart.yaml,,
+ops-deployment-file,charts/dex/Chart.yaml,,
+ops-deployment-file,charts/fluent-bit/Chart.yaml,,
+ops-deployment-file,charts/ingress-nginx/Chart.yaml,,
+ops-deployment-file,charts/kube-prometheus-stack/Chart.yaml,,
+ops-deployment-file,charts/kube-prometheus-stack/charts/crds/Chart.yaml,,
+ops-deployment-file,charts/kube-prometheus-stack/charts/grafana/Chart.yaml,,
+ops-deployment-file,charts/kube-prometheus-stack/charts/kube-state-metrics/Chart.yaml,,
+ops-deployment-file,charts/kube-prometheus-stack/charts/prometheus-node-exporter/Chart.yaml,,
+ops-deployment-file,charts/kube-prometheus-stack/charts/prometheus-windows-exporter/Chart.yaml,,
+ops-deployment-file,charts/loki/Chart.yaml,,
+ops-deployment-file,charts/loki/charts/grafana-agent-operator/Chart.yaml,,
+ops-deployment-file,charts/loki/charts/minio/Chart.yaml,,
+ops-deployment-file,charts/loki/charts/rollout-operator/Chart.yaml,,
+ops-deployment-file,charts/loki/src/helm-test/Dockerfile,,
+ops-deployment-file,charts/node-problem-detector/Chart.yaml,,
+ops-deployment-file,charts/prometheus-adapter/Chart.yaml,,
+ops-deployment-file,charts/thanos/Chart.yaml,,
+ops-deployment-file,charts/thanos/charts/common/Chart.yaml,,
+ops-deployment-file,charts/thanos/charts/minio/Chart.yaml,,
+ops-deployment-file,charts/thanos/charts/minio/charts/common/Chart.yaml,,
+ops-deployment-file,docs/Dockerfile,,
+ops-deployment-file,docs/developer/deploy/index.rst,,
+ops-deployment-file,docs/developer/deploy/upgrade.rst,,
+ops-deployment-file,images/metalk8s-alert-logger/Dockerfile,,
+ops-deployment-file,images/metalk8s-boot-cache/Dockerfile,,
+ops-deployment-file,images/metalk8s-keepalived/Dockerfile,,
+ops-deployment-file,images/metalk8s-ui/Dockerfile,,
+ops-deployment-file,images/metalk8s-ui/conf/nginx.conf,,
+ops-deployment-file,images/metalk8s-utils/Dockerfile,,
+ops-deployment-file,images/salt-master/Dockerfile,,
+ops-deployment-file,operator/Dockerfile,,
+ops-deployment-file,operator/deploy/manifests.yaml,,
+ops-deployment-file,packages/redhat/8/Dockerfile,,
+ops-deployment-file,packages/redhat/9/Dockerfile,,
+ops-deployment-file,shell-ui/Dockerfile,,
+ops-deployment-file,shell-ui/conf/nginx.conf,,
+ops-deployment-file,storage-operator/Dockerfile,,
+ops-deployment-file,storage-operator/deploy/manifests.yaml,,
+ops-deployment-file,tools/get-kubeadm-manifests/Dockerfile,,
+ops-deployment-file,tools/lib-alert-tree/Dockerfile,,
+ops-deployment-file,tools/upgrade-operator-sdk/operator/patches/Dockerfile.patch,,
+ops-deployment-file,tools/upgrade-operator-sdk/storage-operator/patches/Dockerfile.patch,,
+ops-deployment-file,ui/Dockerfile,,
+ops-dockerfile,buildchain/static-container-registry/Dockerfile,1,FROM docker.io/nginx:1.15.12-alpine
+ops-dockerfile,buildchain/static-container-registry/ci/docker/image-provisioner/Dockerfile,1,FROM docker.io/ubuntu:xenial
+ops-dockerfile,buildchain/static-container-registry/ci/docker/sut/Dockerfile,1,FROM docker.io/ubuntu:xenial
+ops-dockerfile,charts/loki/src/helm-test/Dockerfile,2,FROM golang:${GO_VERSION} as build
+ops-dockerfile,charts/loki/src/helm-test/Dockerfile,11,FROM gcr.io/distroless/static:debug
+ops-dockerfile,docs/Dockerfile,6,FROM docker.io/ubuntu:22.04
+ops-dockerfile,images/metalk8s-alert-logger/Dockerfile,5,FROM ${BUILD_IMAGE_NAME}:${BUILD_IMAGE_TAG} AS builder
+ops-dockerfile,images/metalk8s-alert-logger/Dockerfile,22,FROM ${BASE_IMAGE}
+ops-dockerfile,images/metalk8s-boot-cache/Dockerfile,10,FROM scratch
+ops-dockerfile,images/metalk8s-keepalived/Dockerfile,6,FROM ${BASE_IMAGE} AS build-step
+ops-dockerfile,images/metalk8s-keepalived/Dockerfile,21,FROM ${BASE_IMAGE}
+ops-dockerfile,images/metalk8s-ui/Dockerfile,3,FROM nginx:${NGINX_IMAGE_VERSION}
+ops-dockerfile,images/metalk8s-utils/Dockerfile,5,FROM $BASE_IMAGE@sha256:$BASE_IMAGE_SHA256
+ops-dockerfile,images/salt-master/Dockerfile,5,FROM ${BASE_IMAGE}@sha256:${BASE_IMAGE_SHA256}
+ops-dockerfile,operator/Dockerfile,2,FROM golang:1.24 AS builder
+ops-dockerfile,operator/Dockerfile,35,FROM gcr.io/distroless/static:nonroot
+ops-dockerfile,packages/redhat/8/Dockerfile,5,FROM ${BUILD_IMAGE}@sha256:${BUILD_IMAGE_SHA256} as build
+ops-dockerfile,packages/redhat/9/Dockerfile,5,FROM ${BUILD_IMAGE}@sha256:${BUILD_IMAGE_SHA256} as build
+ops-dockerfile,shell-ui/Dockerfile,4,FROM node:${NODE_IMAGE_VERSION} AS build-step
+ops-dockerfile,shell-ui/Dockerfile,22,FROM nginx:${NGINX_IMAGE_VERSION}
+ops-dockerfile,storage-operator/Dockerfile,2,FROM golang:1.24 AS builder
+ops-dockerfile,storage-operator/Dockerfile,29,FROM gcr.io/distroless/static:nonroot
+ops-dockerfile,tools/get-kubeadm-manifests/Dockerfile,1,FROM rockylinux:9
+ops-dockerfile,tools/lib-alert-tree/Dockerfile,2,FROM python:${PYTHON_VERSION}
+ops-dockerfile,ui/Dockerfile,3,FROM node:${NODE_IMAGE_VERSION}
+ops-compose-service,buildchain/static-container-registry/docker-compose.test.yml,5,    build: .
+ops-compose-service,buildchain/static-container-registry/docker-compose.test.yml,14,    depends_on:
+ops-compose-service,buildchain/static-container-registry/docker-compose.test.yml,18,    build: ci/docker/image-provisioner
+ops-compose-service,buildchain/static-container-registry/docker-compose.test.yml,26,    build:
+ops-compose-service,buildchain/static-container-registry/docker-compose.test.yml,30,    depends_on:
+ops-compose-service,charts/dex/Chart.yaml,7,      image: ghcr.io/dexidp/dex:v2.44.0
+ops-compose-service,charts/thanos/Chart.yaml,5,      image: docker.io/bitnami/os-shell:12-debian-12-r50
+ops-compose-service,charts/thanos/Chart.yaml,7,      image: docker.io/bitnami/thanos:0.39.2-debian-12-r2
+ops-compose-service,charts/thanos/charts/minio/Chart.yaml,5,      image: docker.io/bitnami/minio:2025.7.23-debian-12-r2
+ops-compose-service,charts/thanos/charts/minio/Chart.yaml,7,      image: docker.io/bitnami/minio-client:2025.7.21-debian-12-r1
+ops-compose-service,charts/thanos/charts/minio/Chart.yaml,9,      image: docker.io/bitnami/minio-object-browser:2.0.2-debian-12-r2
+ops-compose-service,charts/thanos/charts/minio/Chart.yaml,11,      image: docker.io/bitnami/os-shell:12-debian-12-r50
+ops-compose-service,operator/deploy/manifests.yaml,867,"        image: {{ build_image_name(""metalk8s-operator"") }}"
+ops-compose-service,storage-operator/deploy/manifests.yaml,1028,                          image:
+ops-compose-service,storage-operator/deploy/manifests.yaml,1672,"        image: {{ build_image_name(""storage-operator"") }}"
+ops-proxy-route,images/metalk8s-ui/conf/nginx.conf,26,    location / {
+ops-proxy-route,images/metalk8s-ui/conf/nginx.conf,31,    location /docs {
+ops-proxy-route,images/metalk8s-ui/conf/nginx.conf,36,    location /.well-known/runtime-app-configuration {
+ops-proxy-route,images/metalk8s-ui/conf/nginx.conf,40,    location /config.json {
+ops-proxy-route,images/metalk8s-ui/conf/nginx.conf,45,    location /shell/config.json {
+ops-proxy-route,images/metalk8s-ui/conf/nginx.conf,49,    location /shell/deployed-ui-apps.json {
+ops-proxy-route,images/metalk8s-ui/conf/nginx.conf,54,    location ~ /brand/(.+) {
+ops-proxy-route,shell-ui/conf/nginx.conf,26,    location / {
+ops-hosting,CHANGELOG.md,898,- Add `kubectl top` output as part of `metalk8s`
+ops-hosting,CHANGELOG.md,2426,  completions for the `kubectl` command are now provided when `kubectl` is installed
+ops-hosting,CHANGELOG.md,2619,- The `bash-completion` completions for the `kubectl` command are now included
+ops-hosting,CHANGELOG.md,2745,  - Add kubectl top nodes & pods
+ops-hosting,CHANGELOG.md,2964,- [#2561](https://github.com/scality/metalk8s/issues/2561) - install `kubectl`
+ops-hosting,CHANGELOG.md,3098,  `kubectl`s `-s`/`--server` argument to point to another address.
+ops-hosting,CHANGELOG.md,3109,"  to implement the `metrics.k8s.io` API, to support `kubectl top` and other"
+ops-hosting,charts/cert-manager/README.md,22,$ kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.17.1/cert-manager.crds.yaml
+ops-hosting,charts/cert-manager/README.md,32,$ helm install cert-manager --namespace cert-manager --version v1.17.1 jetstack/cert-manager
+ops-hosting,charts/cert-manager/README.md,68,$ kubectl delete -f https://github.com/cert-manager/cert-manager/releases/download/v1.17.1/cert-manager.crds.yaml
+ops-hosting,charts/cert-manager/README.md,180,This option decides if the CRDs should be installed as part of the Helm installation.
+ops-hosting,charts/cert-manager/README.md,229,"This prevents downtime during voluntary disruptions such as during a Node upgrade. For example, the PodDisruptionBudget will block `kubectl drain` if it is used on the Node where the only remaining cert-manager  "
+ops-hosting,charts/cert-manager/README.md,968,"This prevents downtime during voluntary disruptions such as during a Node upgrade. For example, the PodDisruptionBudget will block `kubectl drain` if it is used on the Node where the only remaining cert-manager  "
+ops-hosting,charts/cert-manager/README.md,1440,"This prevents downtime during voluntary disruptions such as during a Node upgrade. For example, the PodDisruptionBudget will block `kubectl drain` if it is used on the Node where the only remaining cert-manager  "
+ops-hosting,charts/cert-manager/README.md,1742,Timeout for 'kubectl check api' command.
+ops-hosting,charts/cert-manager/README.md,1996,"Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`."
+ops-hosting,charts/cert-manager/README.md,2001,$ helm install my-release -f values.yaml .
+ops-hosting,charts/dex/README.md,13,helm install --generate-name --wait dex/dex
+ops-hosting,charts/dex/README.md,61,kubectl create namespace cert-manager
+ops-hosting,charts/dex/README.md,62,helm install \
+ops-hosting,charts/dex/README.md,71,cat <<EOF | kubectl apply -f -
+ops-hosting,charts/fluent-bit/README.md,29,helm upgrade --install fluent-bit oci://ghcr.io/fluent/helm-charts/fluent-bit --version 0.57.7
+ops-hosting,charts/fluent-bit/README.md,46,helm upgrade --install fluent-bit fluent/fluent-bit --version 0.57.7
+ops-hosting,charts/ingress-nginx/README.md,27,helm install [RELEASE_NAME] ingress-nginx/ingress-nginx
+ops-hosting,charts/ingress-nginx/README.md,34,_See [helm install](https://helm.sh/docs/helm/helm_install/) for command documentation._
+ops-hosting,charts/ingress-nginx/README.md,49,helm upgrade [RELEASE_NAME] [CHART] --install
+ops-hosting,charts/ingress-nginx/README.md,52,_See [helm upgrade](https://helm.sh/docs/helm/helm_upgrade/) for command documentation._
+ops-hosting,charts/ingress-nginx/README.md,85,"Alternatively, if you use the Prometheus Operator, you can enable ServiceMonitor creation using `controller.metrics.serviceMonitor.enabled`. And set `controller.metrics.serviceMonitor.additionalLabels.release=""prometheus""`. ""release=prometheus"" should match the label configured in the prometheus ser"
+ops-hosting,charts/ingress-nginx/changelog/helm-chart-4.10.2.md,8,* Fix helm install on cloud provider admonition block (#11412)
+ops-hosting,charts/ingress-nginx/changelog/helm-chart-4.10.2.md,10,* added info for aws helm install (#11410)
+ops-hosting,charts/ingress-nginx/changelog/helm-chart-4.11.0.md,9,* Fix helm install on cloud provider admonition block (#11394)
+ops-hosting,charts/ingress-nginx/changelog/helm-chart-4.11.0.md,11,* added info for aws helm install (#11390)
+ops-hosting,charts/kube-prometheus-stack/README.md,26,helm install [RELEASE_NAME] oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack
+ops-hosting,charts/kube-prometheus-stack/README.md,31,_See [helm install](https://helm.sh/docs/helm/helm_install/) for command documentation._
+ops-hosting,charts/kube-prometheus-stack/README.md,68,kubectl delete crd alertmanagerconfigs.monitoring.coreos.com
+ops-hosting,charts/kube-prometheus-stack/README.md,69,kubectl delete crd alertmanagers.monitoring.coreos.com
+ops-hosting,charts/kube-prometheus-stack/README.md,70,kubectl delete crd podmonitors.monitoring.coreos.com
+ops-hosting,charts/kube-prometheus-stack/README.md,71,kubectl delete crd probes.monitoring.coreos.com
+ops-hosting,charts/kube-prometheus-stack/README.md,72,kubectl delete crd prometheusagents.monitoring.coreos.com
+ops-hosting,charts/kube-prometheus-stack/README.md,73,kubectl delete crd prometheuses.monitoring.coreos.com
+ops-hosting,charts/kube-prometheus-stack/README.md,74,kubectl delete crd prometheusrules.monitoring.coreos.com
+ops-hosting,charts/kube-prometheus-stack/README.md,75,kubectl delete crd scrapeconfigs.monitoring.coreos.com
+ops-hosting,charts/kube-prometheus-stack/README.md,76,kubectl delete crd servicemonitors.monitoring.coreos.com
+ops-hosting,charts/kube-prometheus-stack/README.md,77,kubectl delete crd thanosrulers.monitoring.coreos.com
+ops-hosting,charts/kube-prometheus-stack/README.md,83,helm upgrade [RELEASE_NAME] [CHART]
+ops-hosting,charts/kube-prometheus-stack/README.md,92,_See [helm upgrade](https://helm.sh/docs/helm/helm_upgrade/) for command documentation._
+ops-hosting,charts/kube-prometheus-stack/README.md,210,helm upgrade prometheus-operator prometheus-community/kube-prometheus-stack -n monitoring --reuse-values --set nameOverride=prometheus-operator
+ops-hosting,charts/kube-prometheus-stack/README.md,224,"    kubectl patch pv/<PersistentVolume name> -p '{""spec"":{""persistentVolumeReclaimPolicy"":""Retain""}}'"
+ops-hosting,charts/kube-prometheus-stack/README.md,233,    kubectl delete pvc/<PersistenceVolumeClaim name> -n monitoring
+ops-hosting,charts/kube-prometheus-stack/README.md,239,    kubectl delete service/prometheus-operator-kubelet -n kube-system
+ops-hosting,charts/kube-prometheus-stack/README.md,247,"    kubectl patch pv/<PersistentVolume name> --type json -p='[{""op"": ""remove"", ""path"": ""/spec/claimRef""}]' -n monitoring"
+ops-hosting,charts/kube-prometheus-stack/README.md,361,kubectl -n kube-system edit cm kube-proxy
+ops-hosting,charts/kube-prometheus-stack/charts/grafana/README.md,20,helm install RELEASE-NAME oci://ghcr.io/grafana-community/helm-charts/grafana
+ops-hosting,charts/kube-prometheus-stack/charts/grafana/README.md,28,helm install RELEASE-NAME grafana-community/grafana
+ops-hosting,charts/kube-prometheus-stack/charts/grafana/README.md,56,You have to add --force to your helm upgrade command as the labels of the chart have changed.
+ops-hosting,charts/kube-prometheus-stack/charts/grafana/README.md,320,`helm install` so that the notifiers init container can list the secrets.
+ops-hosting,charts/kube-prometheus-stack/charts/kube-state-metrics/README.md,17,helm install [RELEASE_NAME] oci://ghcr.io/prometheus-community/charts/kube-state-metrics [flags]
+ops-hosting,charts/kube-prometheus-stack/charts/kube-state-metrics/README.md,22,_See [helm install](https://helm.sh/docs/helm/helm_install/) for command documentation._
+ops-hosting,charts/kube-prometheus-stack/charts/kube-state-metrics/README.md,37,helm upgrade [RELEASE_NAME] oci://ghcr.io/prometheus-community/charts/kube-state-metrics [flags]
+ops-hosting,charts/kube-prometheus-stack/charts/kube-state-metrics/README.md,40,_See [helm upgrade](https://helm.sh/docs/helm/helm_upgrade/) for command documentation._
+ops-hosting,charts/kube-prometheus-stack/charts/prometheus-node-exporter/README.md,19,helm install [RELEASE_NAME] oci://ghcr.io/prometheus-community/charts/prometheus-node-exporter
+ops-hosting,charts/kube-prometheus-stack/charts/prometheus-node-exporter/README.md,24,_See [helm install](https://helm.sh/docs/helm/helm_install/) for command documentation._
+ops-hosting,charts/kube-prometheus-stack/charts/prometheus-node-exporter/README.md,39,helm upgrade [RELEASE_NAME] oci://ghcr.io/prometheus-community/charts/prometheus-node-exporter --install
+ops-hosting,charts/kube-prometheus-stack/charts/prometheus-node-exporter/README.md,42,_See [helm upgrade](https://helm.sh/docs/helm/helm_upgrade/) for command documentation._
+ops-hosting,charts/kube-prometheus-stack/charts/prometheus-node-exporter/README.md,49,kubectl delete daemonset -l app=prometheus-node-exporter
+ops-hosting,charts/kube-prometheus-stack/charts/prometheus-node-exporter/README.md,50,helm upgrade -i prometheus-node-exporter prometheus-community/prometheus-node-exporter
+ops-hosting,charts/kube-prometheus-stack/charts/prometheus-windows-exporter/README.md,19,helm install [RELEASE_NAME] oci://ghcr.io/prometheus-community/charts/prometheus-windows-exporter
+ops-hosting,charts/kube-prometheus-stack/charts/prometheus-windows-exporter/README.md,24,_See [helm install](https://helm.sh/docs/helm/helm_install/) for command documentation._
+ops-hosting,charts/loki/charts/grafana-agent-operator/README.md,39,helm install my-release grafana/grafana-agent-operator
+ops-hosting,charts/loki/charts/minio/README.md,32,"helm install --namespace minio --set rootUser=rootuser,rootPassword=rootpass123 --generate-name minio/minio"
+ops-hosting,charts/loki/charts/minio/README.md,42,"helm install --set resources.requests.memory=512Mi --set replicas=1 --set persistence.enabled=false --set mode=standalone --set rootUser=rootuser,rootPassword=rootpass123 --generate-name minio/minio"
+ops-hosting,charts/loki/charts/minio/README.md,56,helm upgrade -f old_values.yaml my-release minio/minio
+ops-hosting,charts/loki/charts/minio/README.md,65,"You can specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,"
+ops-hosting,charts/loki/charts/minio/README.md,68,helm install --name my-release --set persistence.size=1Ti minio/minio
+ops-hosting,charts/loki/charts/minio/README.md,76,helm install --name my-release -f values.yaml minio/minio
+ops-hosting,charts/loki/charts/minio/README.md,84,helm install --set persistence.enabled=false minio/minio
+ops-hosting,charts/loki/charts/minio/README.md,98,helm install --set persistence.existingClaim=PVC_NAME minio/minio
+ops-hosting,charts/loki/charts/minio/README.md,112,"kubectl annotate namespace default ""net.beta.kubernetes.io/network-policy={\""ingress\"":{\""isolation\"":\""DefaultDeny\""}}"""
+ops-hosting,charts/loki/charts/minio/README.md,131,kubectl create secret generic my-minio-secret --from-literal=rootUser=foobarbaz --from-literal=rootPassword=foobarbazqux
+ops-hosting,charts/loki/charts/minio/README.md,137,helm install --set existingSecret=my-minio-secret minio/minio
+ops-hosting,charts/loki/charts/minio/README.md,154,kubectl create secret generic tls-ssl-minio --from-file=path/to/private.key --from-file=path/to/public.crt
+ops-hosting,charts/loki/charts/minio/README.md,160,"helm install --set tls.enabled=true,tls.certSecret=tls-ssl-minio minio/minio"
+ops-hosting,charts/loki/charts/minio/README.md,167,"For instance, given that TLS is enabled and you need to add trust for MinIO's own CA and for the CA of a Keycloak server, a Kubernetes secret can be created from the certificate files using `kubectl`:"
+ops-hosting,charts/loki/charts/minio/README.md,170,kubectl -n minio create secret generic minio-trusted-certs --from-file=public.crt --from-file=keycloak.crt
+ops-hosting,charts/loki/charts/minio/README.md,176,kubectl -n minio create secret generic minio-trusted-certs --from-file=keycloak.crt
+ops-hosting,charts/loki/charts/minio/README.md,194,"helm install --set buckets[0].name=bucket1,buckets[0].policy=none,buckets[0].purge=false minio/minio"
+ops-hosting,charts/loki/charts/minio/README.md,208,"helm install --set policies[0].name=mypolicy,policies[0].statements[0].resources[0]='arn:aws:s3:::bucket1',policies[0].statements[0].actions[0]='s3:ListBucket',policies[0].statements[0].actions[1]='s3:GetObject' minio/minio"
+ops-hosting,charts/loki/charts/minio/README.md,223,"helm install --set users[0].accessKey=accessKey,users[0].secretKey=secretKey,users[0].policy=none,users[1].accessKey=accessKey2,users[1].secretRef=existingSecret,users[1].secretKey=password,users[1].policy=none minio/minio"
+ops-hosting,charts/loki/charts/minio/README.md,239,"helm install --set svcaccts[0].accessKey=accessKey,svcaccts[0].secretKey=secretKey,svcaccts[0].user=parentUser,svcaccts[1].accessKey=accessKey2,svcaccts[1].secretRef=existingSecret,svcaccts[1].secretKey=password,svcaccts[1].user=parentUser2 minio/minio"
+ops-hosting,charts/loki/charts/rollout-operator/README.md,32,helm install  -n <namespace> <release> grafana/rollout-operator
+ops-hosting,charts/loki/docs/examples/enterprise/README.md,14,`kubectl apply -f enterprise-secrets.yaml`
+ops-hosting,charts/loki/docs/examples/enterprise/README.md,29,   > Alternatively see [batchjob.yaml](batchjob.yaml) for an example that uses a configmap in k8s to retreive the bucket configuration. Note that this requires GEL to be already in place with a `helm install` command beforehand to access the data
+ops-hosting,charts/loki/docs/examples/enterprise/README.md,33,   kubectl create secret generic loki-admin-token \
+ops-hosting,charts/loki/docs/examples/enterprise/README.md,47,`helm upgrade --install --values {PATH_TO_YOUR_OVERRIDES_YAML_FILE} {YOUR_RELEASE_NAME} grafana/loki-simple-scalable --namespace {KUBERNETES_NAMESPACE}`
+ops-hosting,charts/loki/docs/examples/enterprise/README.md,68,kubectl logs -l job-name=loki-provisioner --namespace {KUBERNETES_NAMESPACE}
+ops-hosting,charts/loki/docs/examples/enterprise/README.md,77,   kubectl port-forward svc/loki-gateway 3100:80 --namespace {KUBERNETES_NAMESPACE}
+ops-hosting,charts/loki/docs/examples/oss/README.md,13,`kubectl apply -f loki-secrets.yaml`
+ops-hosting,charts/loki/docs/examples/oss/README.md,20,`helm upgrade --install --values {PATH_TO_YOUR_OVERRIDES_YAML_FILE} {YOUR_RELEASE_NAME} grafana/loki-simple-scalable --namespace {KUBERNETES_NAMESPACE}`
+ops-hosting,charts/loki/scenarios/README.md,45,  helm install --create-namespace loki-release grafana/loki -f ${scenario}-values.yaml
+ops-hosting,charts/loki/scenarios/README.md,54,"The helm diff plugin will compare all manifests that are created in your local development kubernetes cluster and the generated by helm upgrade operation, the output will be printed in your terminal."
+ops-hosting,charts/node-problem-detector/README.md,14,helm install --generate-name oci://ghcr.io/deliveryhero/helm-charts/node-problem-detector
+ops-hosting,charts/node-problem-detector/README.md,20,helm install --generate-name oci://ghcr.io/deliveryhero/helm-charts/node-problem-detector --version 2.4.1
+ops-hosting,charts/node-problem-detector/README.md,26,helm install my-release oci://ghcr.io/deliveryhero/helm-charts/node-problem-detector
+ops-hosting,charts/node-problem-detector/README.md,32,helm install my-release oci://ghcr.io/deliveryhero/helm-charts/node-problem-detector --set values_key1=value1 --set values_key2=value2
+ops-hosting,charts/node-problem-detector/README.md,38,helm install my-release oci://ghcr.io/deliveryhero/helm-charts/node-problem-detector -f values.yaml
+ops-hosting,charts/prometheus-adapter/README.md,21,helm install [RELEASE_NAME] oci://ghcr.io/prometheus-community/charts/prometheus-adapter
+ops-hosting,charts/prometheus-adapter/README.md,26,_See [helm install](https://helm.sh/docs/helm/helm_install/) for command documentation._
+ops-hosting,charts/prometheus-adapter/README.md,41,helm upgrade [RELEASE_NAME] [CHART] --install
+ops-hosting,charts/prometheus-adapter/README.md,44,_See [helm upgrade](https://helm.sh/docs/helm/helm_upgrade/) for command documentation._
+ops-hosting,charts/prometheus-adapter/README.md,60,"Due to a change in deployment labels, the upgrade requires `helm upgrade --force` in order to re-create the deployment."
+ops-hosting,charts/prometheus-adapter/README.md,118,Enabling this option will cause resource metrics to be served at `/apis/metrics.k8s.io/v1beta1`. Resource metrics will allow pod CPU and Memory metrics to be used in [Horizontal Pod Autoscalers](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) as well as the `kubectl top` 
+ops-hosting,charts/thanos/Chart.yaml,26,icon: https://dyltqmyl993wv.cloudfront.net/assets/stacks/thanos/img/thanos-stack-220x234.png
+ops-hosting,charts/thanos/README.md,14,helm install my-release oci://registry-1.docker.io/bitnamicharts/thanos
+ops-hosting,charts/thanos/README.md,45,helm install my-release oci://REGISTRY_NAME/REPOSITORY_NAME/thanos
+ops-hosting,charts/thanos/README.md,319,$ kubectl create namespace monitoring
+ops-hosting,charts/thanos/README.md,320,helm install kube-prometheus \
+ops-hosting,charts/thanos/README.md,324,helm install thanos \
+ops-hosting,charts/thanos/README.md,1694,"Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,"
+ops-hosting,charts/thanos/README.md,1697,helm install my-release --set query.replicaCount=2 oci://REGISTRY_NAME/REPOSITORY_NAME/thanos
+ops-hosting,charts/thanos/README.md,1707,helm install my-release -f values.yaml oci://REGISTRY_NAME/REPOSITORY_NAME/thanos
+ops-hosting,charts/thanos/charts/common/Chart.yaml,9,icon: https://dyltqmyl993wv.cloudfront.net/downloads/logos/bitnami-mark.png
+ops-hosting,charts/thanos/charts/common/README.md,339,"helm install test mychart --set path.to.value00="""",path.to.value01="""""
+ops-hosting,charts/thanos/charts/common/README.md,342,"        export PASSWORD_00=$(kubectl get secret --namespace default secretName -o jsonpath=""{.data.password-00}"" | base64 -d)"
+ops-hosting,charts/thanos/charts/common/README.md,346,"        export PASSWORD_01=$(kubectl get secret --namespace default secretName -o jsonpath=""{.data.password-01}"" | base64 -d)"
+ops-hosting,charts/thanos/charts/minio/Chart.yaml,26,icon: https://dyltqmyl993wv.cloudfront.net/assets/stacks/minio/img/minio-stack-220x234.png
+ops-hosting,charts/thanos/charts/minio/README.md,14,helm install my-release oci://registry-1.docker.io/bitnamicharts/minio
+ops-hosting,charts/thanos/charts/minio/README.md,47,helm install my-release oci://REGISTRY_NAME/REPOSITORY_NAME/minio
+ops-hosting,charts/thanos/charts/minio/README.md,72,kubectl create secret generic SECRET_NAME --from-literal=root-user=USER --from-literal=root-password=PASSWORD --dry-run -o yaml | kubectl apply -f -
+ops-hosting,charts/thanos/charts/minio/README.md,158,kubectl create secret generic ca-tls-secret --from-file=./tls.crt --from-file=./tls.key
+ops-hosting,charts/thanos/charts/minio/README.md,659,"Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,"
+ops-hosting,charts/thanos/charts/minio/README.md,662,helm install my-release \
+ops-hosting,charts/thanos/charts/minio/README.md,675,helm install my-release -f values.yaml oci://REGISTRY_NAME/REPOSITORY_NAME/minio
+ops-hosting,charts/thanos/charts/minio/charts/common/Chart.yaml,9,icon: https://dyltqmyl993wv.cloudfront.net/downloads/logos/bitnami-mark.png
+ops-hosting,charts/thanos/charts/minio/charts/common/README.md,331,"helm install test mychart --set path.to.value00="""",path.to.value01="""""
+ops-hosting,charts/thanos/charts/minio/charts/common/README.md,334,"        export PASSWORD_00=$(kubectl get secret --namespace default secretName -o jsonpath=""{.data.password-00}"" | base64 -d)"
+ops-hosting,charts/thanos/charts/minio/charts/common/README.md,338,"        export PASSWORD_01=$(kubectl get secret --namespace default secretName -o jsonpath=""{.data.password-01}"" | base64 -d)"
+ops-hosting,images/metalk8s-utils/Dockerfile,86,"        ""kubectl-${K8S_VERSION}"" \"
+ops-hosting,images/metalk8s-utils/Dockerfile,129,RUN kubectl completion bash > /etc/bash_completion.d/kubectl
+ops-hosting,operator/README.md,12,- kubectl version v1.11.3+.
+ops-hosting,operator/README.md,45,kubectl apply -k config/samples/
+ops-hosting,operator/README.md,54,kubectl delete -k config/samples/
+ops-hosting,operator/README.md,88,Users can just run 'kubectl apply -f <URL for YAML BUNDLE>' to install
+ops-hosting,operator/README.md,92,kubectl apply -f https://raw.githubusercontent.com/<org>/operator/<tag or branch>/dist/install.yaml
+ops-hosting,operator/deploy/manifests.yaml,856,        kubectl.kubernetes.io/default-container: manager
+ops-hosting,storage-operator/README.md,12,- kubectl version v1.11.3+.
+ops-hosting,storage-operator/README.md,45,kubectl apply -k config/samples/
+ops-hosting,storage-operator/README.md,54,kubectl delete -k config/samples/
+ops-hosting,storage-operator/README.md,88,Users can just run 'kubectl apply -f <URL for YAML BUNDLE>' to install
+ops-hosting,storage-operator/README.md,92,kubectl apply -f https://raw.githubusercontent.com/<org>/storage-operator/<tag or branch>/dist/install.yaml
+ops-hosting,storage-operator/deploy/manifests.yaml,1661,        kubectl.kubernetes.io/default-container: manager
+ops-cors,ui/rspack.config.ts,23,"  'Access-Control-Allow-Origin': '*',"
+ci-workflow-file,.github/workflows/build-devcontainer.yaml,,
+ci-workflow-file,.github/workflows/build-docs.yaml,,
+ci-workflow-file,.github/workflows/build-shell-ui.yaml,,
+ci-workflow-file,.github/workflows/build.yaml,,
+ci-workflow-file,.github/workflows/changie-add-changelog.yaml,,
+ci-workflow-file,.github/workflows/changie-check-changelog.yaml,,
+ci-workflow-file,.github/workflows/check-upgrade-operator-sdk.yaml,,
+ci-workflow-file,.github/workflows/codeql.yaml,,
+ci-workflow-file,.github/workflows/create-dev-branch.yaml,,
+ci-workflow-file,.github/workflows/cron-clean-ovh-cloud.yaml,,
+ci-workflow-file,.github/workflows/crons.yaml,,
+ci-workflow-file,.github/workflows/downgrade-test.yaml,,
+ci-workflow-file,.github/workflows/e2e-tests.yaml,,
+ci-workflow-file,.github/workflows/generate-sbom.yaml,,
+ci-workflow-file,.github/workflows/lifecycle-dev.yaml,,
+ci-workflow-file,.github/workflows/lifecycle-promoted.yaml,,
+ci-workflow-file,.github/workflows/multi-node-test.yaml,,
+ci-workflow-file,.github/workflows/nightly.yaml,,
+ci-workflow-file,.github/workflows/post-merge.yaml,,
+ci-workflow-file,.github/workflows/pre-merge.yaml,,
+ci-workflow-file,.github/workflows/promote.yaml,,
+ci-workflow-file,.github/workflows/publish.yaml,,
+ci-workflow-file,.github/workflows/release.yaml,,
+ci-workflow-file,.github/workflows/renovate.yaml,,
+ci-workflow-file,.github/workflows/review.yml,,
+ci-workflow-file,.github/workflows/single-node-test.yaml,,
+ci-workflow-file,.github/workflows/upgrade-test.yaml,,
+doc-integration-technology,CHANGELOG.md,2290,- Use webpack 5 module federation to provide a framework allowing
+doc-integration-technology,charts/thanos/README.md,737,| `bucketweb.enabled`                                           | Enable/disable Thanos Bucket Web component                                                                                                                                                                                            | `f
+doc-integration-technology,shell-ui/README.md,6,We need to do that because we have this configuration on module federation :
+doc-host-remote,charts/thanos/README.md,1365,| `receive.containerPorts.remote`                             | Remote-write container port                                                                                                                                                                                                       | `19291` 
+ws-path-alias,shell-ui/tsconfig.json,48,"    ""paths"": {"
+ws-path-alias,ui/tsconfig.json,48,"    ""paths"": {"

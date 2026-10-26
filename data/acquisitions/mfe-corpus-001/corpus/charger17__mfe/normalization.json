@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "id": "997062622",
+  "fullName": "charger17/mfe",
+  "commit": "c04d19eb237bd77ce574657d732efe265c0de531",
+  "acquiredAt": "2026-10-24T00:32:25.142Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 47,
+    "bytes": 68788
+  },
+  "languages": {
+    "JavaScript": 39593,
+    "Vue": 18831,
+    "YAML": 5787,
+    "JSON": 3524,
+    "HTML": 989,
+    "Other": 64
+  },
+  "contentSha256": "a16a877e6d2829360e3110b42ccf89dffa73fb497f08e548610ff4a18329269d"
+}

@@ -1,0 +1,5 @@
+manifest,state
+package.json,ok
+packages/main-content/package.json,ok
+packages/shell/package.json,ok
+packages/sidebar/package.json,ok

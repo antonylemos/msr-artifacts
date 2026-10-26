@@ -1,0 +1,42 @@
+{
+  "name": "@novx/core",
+  "version": "0.4.0",
+  "description": "DI and AOP library",
+  "homepage": "https://github.com/coolsamson7/novx",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/coolsamson7/novx"
+  },
+  "bugs": {
+    "url": "https://github.com/coolsamson7/novx/issues"
+  },
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./index.js",
+  "module": "./index.esm.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.esm.js",
+      "require": "./index.js",
+      "default": "./index.esm.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "*.js",
+    "*.esm.js",
+    "*.d.ts",
+    "*.js.map",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "nx build core",
+    "test": "nx test core",
+    "lint": "nx lint core"
+  },
+  "dependencies": {
+    "source-map-js": "^1.2.1"
+  }
+}

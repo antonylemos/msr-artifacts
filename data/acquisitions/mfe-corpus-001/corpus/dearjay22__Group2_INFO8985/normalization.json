@@ -1,0 +1,161 @@
+{
+  "schema": 1,
+  "id": "1108713604",
+  "fullName": "dearjay22/Group2_INFO8985",
+  "commit": "9f8b0b7df3c6bcdb67eee8cb21cebde3ff2ce189",
+  "acquiredAt": "2026-10-24T00:26:33.422Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "backend/api-gateway/target/api-gateway-0.0.1-SNAPSHOT.jar",
+      "reason": "preset:binaries",
+      "size": 55715986
+    },
+    {
+      "path": "backend/api-gateway/target/api-gateway-0.0.1-SNAPSHOT.jar.original",
+      "reason": "preset:binaries",
+      "size": 3035
+    },
+    {
+      "path": "backend/api-gateway/target/classes/com/obsshop/gateway/ApiGatewayApplication.class",
+      "reason": "preset:binaries",
+      "size": 757
+    },
+    {
+      "path": "backend/discovery-service/target/classes/com/obsshop/discovery/DiscoveryServiceApplication.class",
+      "reason": "preset:binaries",
+      "size": 854
+    },
+    {
+      "path": "backend/discovery-service/target/discovery-service-0.0.1-SNAPSHOT.jar",
+      "reason": "preset:binaries",
+      "size": 55398353
+    },
+    {
+      "path": "backend/discovery-service/target/discovery-service-0.0.1-SNAPSHOT.jar.original",
+      "reason": "preset:binaries",
+      "size": 3035
+    },
+    {
+      "path": "backend/order-service/target/classes/com/obsshop/order/OrderServiceApplication.class",
+      "reason": "preset:binaries",
+      "size": 759
+    },
+    {
+      "path": "backend/order-service/target/classes/com/obsshop/order/controller/OrderController.class",
+      "reason": "preset:binaries",
+      "size": 1765
+    },
+    {
+      "path": "backend/order-service/target/classes/com/obsshop/order/model/Order.class",
+      "reason": "preset:binaries",
+      "size": 1567
+    },
+    {
+      "path": "backend/order-service/target/classes/com/obsshop/order/repo/OrderRepository.class",
+      "reason": "preset:binaries",
+      "size": 340
+    },
+    {
+      "path": "backend/order-service/target/order-service-0.0.1-SNAPSHOT.jar",
+      "reason": "preset:binaries",
+      "size": 73394654
+    },
+    {
+      "path": "backend/order-service/target/order-service-0.0.1-SNAPSHOT.jar.original",
+      "reason": "preset:binaries",
+      "size": 5647
+    },
+    {
+      "path": "backend/product-service/target/classes/com/obsshop/product/ProductServiceApplication.class",
+      "reason": "preset:binaries",
+      "size": 765
+    },
+    {
+      "path": "backend/product-service/target/classes/com/obsshop/product/controller/ProductController.class",
+      "reason": "preset:binaries",
+      "size": 1489
+    },
+    {
+      "path": "backend/product-service/target/classes/com/obsshop/product/model/Product.class",
+      "reason": "preset:binaries",
+      "size": 662
+    },
+    {
+      "path": "backend/product-service/target/classes/com/obsshop/product/repo/ProductRepository.class",
+      "reason": "preset:binaries",
+      "size": 350
+    },
+    {
+      "path": "backend/product-service/target/product-service-0.0.1-SNAPSHOT.jar",
+      "reason": "preset:binaries",
+      "size": 73394305
+    },
+    {
+      "path": "backend/product-service/target/product-service-0.0.1-SNAPSHOT.jar.original",
+      "reason": "preset:binaries",
+      "size": 5297
+    },
+    {
+      "path": "frontend/products-mf/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 3870
+    },
+    {
+      "path": "frontend/products-mf/public/logo192.png",
+      "reason": "preset:binaries",
+      "size": 5347
+    },
+    {
+      "path": "frontend/products-mf/public/logo512.png",
+      "reason": "preset:binaries",
+      "size": 9664
+    },
+    {
+      "path": "frontend/shell-app/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 3870
+    },
+    {
+      "path": "frontend/shell-app/public/logo192.png",
+      "reason": "preset:binaries",
+      "size": 5347
+    },
+    {
+      "path": "frontend/shell-app/public/logo512.png",
+      "reason": "preset:binaries",
+      "size": 9664
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 87,
+    "bytes": 1481499
+  },
+  "languages": {
+    "JSON": 1423603,
+    "XML": 9809,
+    "Markdown": 8945,
+    "YAML": 8817,
+    "JavaScript": 7274,
+    "Java": 5291,
+    "SVG": 5264,
+    "Other": 4858,
+    "HTML": 3442,
+    "Shell": 2336,
+    "CSS": 1860
+  },
+  "contentSha256": "6336347048dd0dfe07a2ee40e0b4204c4a09a1db520ba0afebcc92c9c71cbcba"
+}

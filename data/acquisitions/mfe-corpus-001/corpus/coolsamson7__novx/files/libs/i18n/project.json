@@ -1,0 +1,52 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "i18n",
+  "root": "libs/i18n",
+  "sourceRoot": "libs/i18n/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/rollup:rollup",
+      "dependsOn": ["^build"],
+      "options": {
+        "outputPath": "dist/libs/i18n",
+        "tsConfig": "libs/i18n/tsconfig.lib.json",
+        "project": "libs/i18n/rollup.config.json",
+        "main": "libs/i18n/src/index.ts",
+        "external": ["@novx/core"],
+        "sourceMap": true,
+        "assets": [
+          {
+            "input": "libs/i18n",
+            "glob": "package.json",
+            "output": "."
+          },
+          {
+            "input": "libs/i18n",
+            "glob": "README.md",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{workspaceRoot}/coverage/libs/i18n"],
+      "options": {
+        "configFile": "libs/i18n/vitest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["libs/i18n/src/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "docs": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "typedoc --tsconfig libs/i18n/tsconfig.lib.json --out docs/libs/i18n"
+      }
+    }
+  }
+}

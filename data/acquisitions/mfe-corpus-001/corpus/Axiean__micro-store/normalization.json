@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "id": "1031213794",
+  "fullName": "Axiean/micro-store",
+  "commit": "7ed9142db806ba9851416ae0b8bb207d5d10bdca",
+  "acquiredAt": "2026-10-24T00:26:33.835Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "cart-app/src/app/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 25931
+    },
+    {
+      "path": "store-app/src/app/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 25931
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 44,
+    "bytes": 466686
+  },
+  "languages": {
+    "JSON": 429669,
+    "TypeScript": 18703,
+    "SVG": 6628,
+    "Markdown": 6168,
+    "Other": 2551,
+    "YAML": 1043,
+    "CSS": 976,
+    "JavaScript": 948
+  },
+  "contentSha256": "55c730a921954cd0a2c09c0a388355051dd68b72f0c5c6ad38240c588cbcf4ae"
+}

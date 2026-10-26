@@ -1,0 +1,4 @@
+directory,markers
+athletes,athletes/angular.json;athletes/federation.config.js;athletes/package.json
+ranking,ranking/angular.json;ranking/federation.config.js;ranking/package.json
+shell,shell/angular.json;shell/federation.config.js;shell/package.json

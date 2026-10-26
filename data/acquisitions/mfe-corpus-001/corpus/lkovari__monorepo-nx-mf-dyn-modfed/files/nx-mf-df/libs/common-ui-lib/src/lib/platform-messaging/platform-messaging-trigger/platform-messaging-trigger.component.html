@@ -1,0 +1,29 @@
+<div class="flex items-center gap-2 shrink-0">
+  <p-button
+    type="button"
+    icon="pi pi-envelope"
+    [rounded]="true"
+    [text]="true"
+    styleClass="inline-flex h-8 w-8 items-center justify-center border-0 bg-transparent text-slate-100 shadow-none hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent disabled:opacity-40"
+    [disabled]="!messagingReady()"
+    (onClick)="open()"
+    aria-label="Open platform messages"
+  ></p-button>
+</div>
+
+<p-dialog
+  header="Platform message"
+  [modal]="true"
+  [dismissableMask]="true"
+  [visible]="dialogOpen()"
+  (visibleChange)="dialogOpen.set($event)"
+  styleClass="max-w-[min(100vw-2rem,24rem)] max-h-[min(92vh,32rem)] [&_.p-dialog-content]:overflow-y-auto [&_.p-dialog-content]:p-3 [&_.p-dialog-header]:px-3 [&_.p-dialog-header]:pb-2 [&_.p-dialog-header]:pt-3"
+>
+  @if (dialogOpen()) {
+    <lib-message-composer
+      [currentAppId]="participantId()"
+      [bridgeAvailable]="messagingReady()"
+      (dismiss)="onComposerDismiss()"
+    ></lib-message-composer>
+  }
+</p-dialog>

@@ -1,0 +1,4 @@
+directory,markers
+host-app,host-app/package.json;host-app/webpack.dev.js;host-app/webpack.prod.js
+todoForm-app,todoForm-app/package.json;todoForm-app/webpack.dev.js;todoForm-app/webpack.prod.js
+todoList-app,todoList-app/package.json;todoList-app/webpack.dev.js;todoList-app/webpack.prod.js

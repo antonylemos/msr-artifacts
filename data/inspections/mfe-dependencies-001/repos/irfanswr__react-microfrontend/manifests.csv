@@ -1,0 +1,4 @@
+manifest,state
+parent-app/package.json,ok
+react-child-app/package.json,ok
+vue-child-app/package.json,ok

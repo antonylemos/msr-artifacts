@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Example component > renders correctly 1`] = `
+<DocumentFragment>
+  <div>
+    <div>
+      warning test notification
+    </div>
+  </div>
+</DocumentFragment>
+`;

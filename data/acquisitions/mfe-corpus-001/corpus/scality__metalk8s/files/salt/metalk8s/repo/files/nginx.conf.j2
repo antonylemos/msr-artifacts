@@ -1,0 +1,11 @@
+server {
+    listen       {{ listening_address }}:{{ listening_port }};
+    server_name  localhost;
+
+    location / {
+        root   /var/www/repositories;
+        autoindex on;
+    }
+
+    include conf.d/*.inc;
+}

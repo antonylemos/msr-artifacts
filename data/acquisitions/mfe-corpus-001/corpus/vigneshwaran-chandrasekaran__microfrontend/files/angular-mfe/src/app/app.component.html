@@ -1,0 +1,22 @@
+<!--
+  Angular MFE — Fun Facts template
+
+  Angular template syntax used here:
+    {{ currentFact }}   — interpolation: display a component property
+    (click)="nextFact()" — event binding: call a method when button is clicked
+-->
+<div class="angular-mfe">
+  <h2>🅰️ Angular MFE — Fun Facts</h2>
+  <p class="desc">
+    This is the <strong>Angular MFE</strong>, running on port <code>4200</code>.
+    It was built with Angular 16 and loaded by the host via Module Federation.
+  </p>
+
+  <!-- Fact card — {{ currentFact }} is replaced by the component class property -->
+  <div class="fact-card">
+    <p class="fact-text">{{ currentFact }}</p>
+  </div>
+
+  <!-- (click)="nextFact()" calls AppComponent.nextFact() on click -->
+  <button class="next-btn" (click)="nextFact()">Next Fact →</button>
+</div>

@@ -1,0 +1,31 @@
+@if (listener.visibleHistory().length > 0) {
+  <section
+    class="fixed right-4 z-[900] flex w-[min(22rem,calc(100vw-2rem))] flex-col rounded-lg border border-slate-200 bg-white/95 p-3 text-xs shadow-lg bottom-[max(7rem,calc(env(safe-area-inset-bottom,0px)+5.5rem))] max-h-[min(22rem,calc(100svh-8rem))] sm:bottom-[max(6rem,calc(env(safe-area-inset-bottom,0px)+4.5rem))] sm:max-h-[min(24rem,calc(100svh-7rem))]"
+    aria-live="polite"
+  >
+    <div class="mb-2 shrink-0 font-semibold text-slate-700">
+      Platform messages
+      <span class="font-normal text-slate-500">· {{ listener.viewingParticipantId() }}</span>
+    </div>
+    <div
+      class="c-history-scroll min-h-0 flex-1 max-h-[min(12.5rem,calc(100svh-14rem))] py-0.5 sm:max-h-[min(13rem,calc(100svh-12rem))]"
+    >
+      <ul class="space-y-2 pr-1">
+        @for (entry of entries(); track entry.id) {
+          <li class="rounded border border-slate-100 p-2 text-slate-800">
+            <div class="flex flex-wrap gap-x-2 gap-y-1 font-medium">
+              <span>{{ entry.title }}</span>
+              <span class="text-slate-500">{{ entry.occurredAtUtc }}</span>
+            </div>
+            <div class="mt-1 text-[11px] text-slate-600">
+              {{ entry.messageName }} · {{ entry.eventKind }} ·
+              {{ entry.source }} → {{ entry.target ?? 'broadcast' }} ·
+              {{ entry.severity }}
+            </div>
+            <div class="mt-1 whitespace-pre-wrap">{{ entry.body }}</div>
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+}

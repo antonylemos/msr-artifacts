@@ -1,0 +1,290 @@
+{
+  "schema": 1,
+  "id": "1098656325",
+  "fullName": "hd789789789/frontend-app-learning-old-v2",
+  "commit": "d987aed86134f6fa2a2a79d85f72fe44cfc0e5ee",
+  "acquiredAt": "2026-10-24T00:26:35.064Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "src/courseware/course/celebration/assets/claps_280x201.gif",
+      "reason": "preset:binaries",
+      "size": 35659
+    },
+    {
+      "path": "src/courseware/course/celebration/assets/claps_456x328.gif",
+      "reason": "preset:binaries",
+      "size": 63468
+    },
+    {
+      "path": "src/courseware/course/course-exit/assets/celebration_456x328.gif",
+      "reason": "preset:binaries",
+      "size": 480076
+    },
+    {
+      "path": "src/courseware/course/course-exit/assets/celebration_750x540.gif",
+      "reason": "preset:binaries",
+      "size": 665802
+    },
+    {
+      "path": "src/generic/assets/openedx_certificate.png",
+      "reason": "preset:binaries",
+      "size": 8459
+    },
+    {
+      "path": "src/generic/assets/openedx_locked_certificate.png",
+      "reason": "preset:binaries",
+      "size": 6884
+    },
+    {
+      "path": "src/plugin-slots/ContentIFrameLoaderSlot/images/loader-example.png",
+      "reason": "preset:binaries",
+      "size": 81864
+    },
+    {
+      "path": "src/plugin-slots/CourseBreadcrumbsSlot/screenshot_custom.png",
+      "reason": "preset:binaries",
+      "size": 39408
+    },
+    {
+      "path": "src/plugin-slots/CourseBreadcrumbsSlot/screenshot_default.png",
+      "reason": "preset:binaries",
+      "size": 55959
+    },
+    {
+      "path": "src/plugin-slots/CourseBreadcrumbsSlot/screenshot_with_default_breadcrumbs.png",
+      "reason": "preset:binaries",
+      "size": 46833
+    },
+    {
+      "path": "src/plugin-slots/CourseExitPluginSlots/CourseRecommendationsSlot/screenshot_custom.png",
+      "reason": "preset:binaries",
+      "size": 122519
+    },
+    {
+      "path": "src/plugin-slots/CourseHomeSectionOutlineSlot/screenshot_custom.png",
+      "reason": "preset:binaries",
+      "size": 132777
+    },
+    {
+      "path": "src/plugin-slots/CourseHomeSectionOutlineSlot/screenshot_default.png",
+      "reason": "preset:binaries",
+      "size": 102490
+    },
+    {
+      "path": "src/plugin-slots/CourseOutlineMobileSidebarTriggerSlot/screenshot_custom.png",
+      "reason": "preset:binaries",
+      "size": 22557
+    },
+    {
+      "path": "src/plugin-slots/CourseOutlineMobileSidebarTriggerSlot/screenshot_default.png",
+      "reason": "preset:binaries",
+      "size": 21452
+    },
+    {
+      "path": "src/plugin-slots/CourseOutlineSidebarSlot/screenshot_custom.png",
+      "reason": "preset:binaries",
+      "size": 35226
+    },
+    {
+      "path": "src/plugin-slots/CourseOutlineSidebarSlot/screenshot_default.png",
+      "reason": "preset:binaries",
+      "size": 47714
+    },
+    {
+      "path": "src/plugin-slots/CourseOutlineSidebarTriggerSlot/screenshot_custom.png",
+      "reason": "preset:binaries",
+      "size": 39592
+    },
+    {
+      "path": "src/plugin-slots/CourseOutlineSidebarTriggerSlot/screenshot_default.png",
+      "reason": "preset:binaries",
+      "size": 37935
+    },
+    {
+      "path": "src/plugin-slots/CourseOutlineTabNotificationsSlot/images/course-outline-notification-example.png",
+      "reason": "preset:binaries",
+      "size": 138083
+    },
+    {
+      "path": "src/plugin-slots/CourseTabLinksSlot/course-tabs-custom.png",
+      "reason": "preset:binaries",
+      "size": 13454
+    },
+    {
+      "path": "src/plugin-slots/FooterSlot/images/custom_footer.png",
+      "reason": "preset:binaries",
+      "size": 5801
+    },
+    {
+      "path": "src/plugin-slots/FooterSlot/images/default_footer.png",
+      "reason": "preset:binaries",
+      "size": 6289
+    },
+    {
+      "path": "src/plugin-slots/GatedUnitContentMessageSlot/images/gated-unit-message-example.png",
+      "reason": "preset:binaries",
+      "size": 76083
+    },
+    {
+      "path": "src/plugin-slots/HeaderSlot/images/header_custom_component.png",
+      "reason": "preset:binaries",
+      "size": 43158
+    },
+    {
+      "path": "src/plugin-slots/NextUnitTopNavTriggerSlot/screenshot_horizontal_nav_custom.png",
+      "reason": "preset:binaries",
+      "size": 22673
+    },
+    {
+      "path": "src/plugin-slots/NextUnitTopNavTriggerSlot/screenshot_horizontal_nav_default.png",
+      "reason": "preset:binaries",
+      "size": 19917
+    },
+    {
+      "path": "src/plugin-slots/NextUnitTopNavTriggerSlot/screenshot_unit_at_top_custom.png",
+      "reason": "preset:binaries",
+      "size": 13998
+    },
+    {
+      "path": "src/plugin-slots/NextUnitTopNavTriggerSlot/screenshot_unit_at_top_default.png",
+      "reason": "preset:binaries",
+      "size": 16282
+    },
+    {
+      "path": "src/plugin-slots/NotificationTraySlot/images/notification-tray-slot-example.png",
+      "reason": "preset:binaries",
+      "size": 120358
+    },
+    {
+      "path": "src/plugin-slots/NotificationWidgetSlot/images/notification-widget-slot-example.png",
+      "reason": "preset:binaries",
+      "size": 93427
+    },
+    {
+      "path": "src/plugin-slots/NotificationsDiscussionsSidebarSlot/screenshot_custom.png",
+      "reason": "preset:binaries",
+      "size": 38459
+    },
+    {
+      "path": "src/plugin-slots/NotificationsDiscussionsSidebarSlot/screenshot_default.png",
+      "reason": "preset:binaries",
+      "size": 42642
+    },
+    {
+      "path": "src/plugin-slots/NotificationsDiscussionsSidebarTriggerSlot/screenshot_custom.png",
+      "reason": "preset:binaries",
+      "size": 24432
+    },
+    {
+      "path": "src/plugin-slots/NotificationsDiscussionsSidebarTriggerSlot/screenshot_default.png",
+      "reason": "preset:binaries",
+      "size": 21934
+    },
+    {
+      "path": "src/plugin-slots/ProgressCertificateStatusSlot/screenshot_custom.png",
+      "reason": "preset:binaries",
+      "size": 27065
+    },
+    {
+      "path": "src/plugin-slots/ProgressCertificateStatusSlot/screenshot_default.png",
+      "reason": "preset:binaries",
+      "size": 59561
+    },
+    {
+      "path": "src/plugin-slots/ProgressTabCertificateStatusMainBodySlot/images/progress_tab_certificate_status_slot.png",
+      "reason": "preset:binaries",
+      "size": 24215
+    },
+    {
+      "path": "src/plugin-slots/ProgressTabCertificateStatusSidePanelSlot/images/progress_tab_certificate_status_slot.png",
+      "reason": "preset:binaries",
+      "size": 24215
+    },
+    {
+      "path": "src/plugin-slots/ProgressTabCourseGradeSlot/images/progress_tab_course_grade_slot.png",
+      "reason": "preset:binaries",
+      "size": 60463
+    },
+    {
+      "path": "src/plugin-slots/ProgressTabGradeBreakdownSlot/images/progress_tab_grade_breakdown_slot.png",
+      "reason": "preset:binaries",
+      "size": 90250
+    },
+    {
+      "path": "src/plugin-slots/ProgressTabRelatedLinksSlot/images/progress_tab_related_links_slot.png",
+      "reason": "preset:binaries",
+      "size": 28704
+    },
+    {
+      "path": "src/plugin-slots/SequenceContainerSlot/images/post_sequence_container.png",
+      "reason": "preset:binaries",
+      "size": 40762
+    },
+    {
+      "path": "src/plugin-slots/SequenceNavigationSlot/screenshot_custom.png",
+      "reason": "preset:binaries",
+      "size": 726359
+    },
+    {
+      "path": "src/plugin-slots/SequenceNavigationSlot/screenshot_default.png",
+      "reason": "preset:binaries",
+      "size": 617927
+    },
+    {
+      "path": "src/plugin-slots/SequenceNavigationSlot/screenshot_with_default_nav.png",
+      "reason": "preset:binaries",
+      "size": 774279
+    },
+    {
+      "path": "src/plugin-slots/UnitTitleSlot/images/screenshot_custom.png",
+      "reason": "preset:binaries",
+      "size": 52907
+    },
+    {
+      "path": "src/product-tours/newUserCourseHomeTour/course_home_tour_modal_hero.png",
+      "reason": "preset:binaries",
+      "size": 18916
+    },
+    {
+      "path": "src/shared/streak-celebration/assets/Streak_desktop.png",
+      "reason": "preset:binaries",
+      "size": 1813
+    },
+    {
+      "path": "src/shared/streak-celebration/assets/Streak_mobile.png",
+      "reason": "preset:binaries",
+      "size": 1272
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 596,
+    "bytes": 2510700
+  },
+  "languages": {
+    "JavaScript": 1163571,
+    "JSON": 986602,
+    "TypeScript": 186289,
+    "Markdown": 72772,
+    "Other": 53649,
+    "SCSS": 24503,
+    "SVG": 17559,
+    "YAML": 4875,
+    "HTML": 752,
+    "CSS": 128
+  },
+  "contentSha256": "c402bccc9a82056b563937d559e345c4490767cfde658c6eccd9e77b9c2c6e75"
+}

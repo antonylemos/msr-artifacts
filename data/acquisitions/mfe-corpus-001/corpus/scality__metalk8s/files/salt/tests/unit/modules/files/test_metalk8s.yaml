@@ -1,0 +1,533 @@
+get_archives:
+  # 0. Ok - 1 existing ISO passed as argument
+  - archives: /my/path/iso
+    infos: &get_archives_infos_iso
+      version: 2.5.0
+      name: MetalK8s
+      iso: /my/path/iso
+      path: /srv/scality/metalk8s-2.5.0
+    result:
+      metalk8s-2.5.0: *get_archives_infos_iso
+  # 1. Ok - 1 existing ISO from pillar entries
+  - archives: null
+    pillar_archives:
+      - "/my/path/iso"
+    infos: *get_archives_infos_iso
+    result:
+      metalk8s-2.5.0: *get_archives_infos_iso
+  # 2. Ok - 1 existing directory passed as argument
+  - archives: "/my/path"
+    infos: &get_archives_infos_dir
+      <<: *get_archives_infos_iso
+      iso: null
+      path: /my/path
+    result:
+      metalk8s-2.5.0: *get_archives_infos_dir
+  # 3. Nok - 1 ISO and 1 directory with the same version
+  - archives:
+      - "/my/path"
+      - "/my/path/iso"
+    infos:
+      - <<: *get_archives_infos_iso
+        iso: null
+      - *get_archives_infos_iso
+    raises: True
+    result: Two archives have the same version .*
+  # 4. Ok - 2 ISOs with different versions
+  - archives:
+      - "/my/path/iso"
+      - "/my/second/iso"
+    infos:
+      - *get_archives_infos_dir
+      - version: 2.5.1
+        name: MetalK8s
+        iso: /my/second/iso
+        path: /srv/scality/metalk8s-2.5.1
+    result:
+      metalk8s-2.5.0: *get_archives_infos_dir
+      metalk8s-2.5.1:
+        iso: /my/second/iso
+        version: 2.5.1
+        name: MetalK8s
+        path: /srv/scality/metalk8s-2.5.1
+  # 5. Nok - Archive path that does not exist
+  - archives:
+      - "/my/path/does/not/exist"
+    infos: null
+    invalid_path: True
+    raises: True
+    result: Invalid archive path
+  # 6. Ok - No archives
+  - archives: null
+    infos: null
+    result: {}
+  # 7. Nok - Invalid `archives` argument
+  - archives: {"invalid": "archives", "style": "123"}
+    infos: null
+    raises: True
+    result: "Invalid archives: list or string expected, got .*"
+
+get_mounted_archives:
+  # 0. Nothing mounted at all
+  - mounts: {}
+    logs: []
+    result: {}
+  # 1. Nothing mounted under /srv/scality/metalk8s-*
+  - mounts:
+      /mnt/example: &other_mnt
+        alt_device: /example.iso
+    logs: []
+    result: {}
+  # 2. Invalid archive mounted (skipped)
+  - mounts:
+      /srv/scality/metalk8s-broken: &invalid_metalk8s_mnt
+        alt_device: /broken.iso
+        info_raises: KAPUT!
+    logs:
+    - level: INFO
+      contains: >-
+        Skipping /broken.iso (mounted at /srv/scality/metalk8s-broken): not a
+        valid MetalK8s archive - KAPUT!
+    result: {}
+  # 3. Nominal case
+  - mounts:
+      /srv/scality/metalk8s-123.0.0: &valid_metalk8s_mnt
+        alt_device: /srv/scality/releases/metalk8s-123.0.0.iso
+        info_ret:
+          name: MetalK8s
+          version: "123.0.0"
+          iso: /srv/scality/releases/metalk8s-123.0.0.iso
+          path: /srv/scality/metalk8s-123.0.0
+    logs: []
+    result:
+      metalk8s-123.0.0:
+        name: MetalK8s
+        version: "123.0.0"
+        iso: /srv/scality/releases/metalk8s-123.0.0.iso
+        path: /srv/scality/metalk8s-123.0.0
+  # 4. A little bit of everything
+  - mounts:
+      /mnt/example: *other_mnt
+      /srv/scality/metalk8s-broken: *invalid_metalk8s_mnt
+      /srv/scality/metalk8s-123.0.0: *valid_metalk8s_mnt
+      /srv/scality/metalk8s-2.11.7:
+        alt_device: /archives/metalk8s-2.11.7.iso
+        info_ret:
+          name: MetalK8s
+          version: "2.11.7"
+          iso: /archives/metalk8s-2.11.7.iso
+          path: /srv/scality/metalk8s-2.11.7
+    logs:
+    - level: INFO
+      contains: >-
+        Skipping /broken.iso (mounted at /srv/scality/metalk8s-broken): not a
+        valid MetalK8s archive - KAPUT!
+    result:
+      metalk8s-2.11.7:
+        name: MetalK8s
+        version: "2.11.7"
+        iso: /archives/metalk8s-2.11.7.iso
+        path: /srv/scality/metalk8s-2.11.7
+      metalk8s-123.0.0:
+        name: MetalK8s
+        version: "123.0.0"
+        iso: /srv/scality/releases/metalk8s-123.0.0.iso
+        path: /srv/scality/metalk8s-123.0.0
+
+check_pillar_keys:
+  - keys: "my-simple-key"
+    pillar_content: {
+      "my-simple-key": "my-value"
+    }
+    refresh: False
+    result: True
+  - keys: "my-simple-key"
+    pillar_content: {
+      "my-simple-key": "my-value"
+    }
+    result: True
+    refresh_called: True
+  - keys: "my-simple-key"
+    pillar: {
+      "my-simple-key": "my-value"
+    }
+    result: True
+  - keys: "my.complex.key"
+    pillar: {
+      "my": {
+        "complex": {
+          "key": "my-value"
+        }
+      }
+    }
+    result: True
+  - keys:
+      - - "my"
+        - "complex.key"
+        - "with.dot.in.key"
+    pillar: {
+      "my": {
+        "complex.key": {
+          "with.dot.in.key": "my-value"
+        }
+      }
+    }
+    result: True
+  - keys:
+      - "my.first.key"
+      - "my-second-key"
+    pillar: {
+      "my": {
+        "first": {
+          "key": "my-value"
+        }
+      },
+      "my-second-key": "OK"
+    }
+    result: True
+  - keys: "this.key.does.not.exists"
+    pillar: {
+      "my": {
+        "complex": {
+          "key": "my-value"
+        }
+      }
+    }
+    raises: True
+    result: "Unable to get this.key.does.not.exists:\n\tEmpty value for this"
+  - keys: "this.key.does.not.exists"
+    pillar: {
+      "my": {
+        "complex": {
+          "key": "my-value"
+        }
+      }
+    }
+    raise_error: False
+    result: False
+  - keys:
+      - "my.first.key"
+      - "my-second-key"
+      - "my.third.key.does.not.exists"
+    pillar: {
+      "my": {
+        "first": {
+          "key": "my-value"
+        }
+      },
+      "my-second-key": "OK"
+    }
+    raises: True
+    result: "Unable to get my.third.key.does.not.exists:\n\tEmpty value for third"
+  - keys:
+      - "my.first.key"
+      - "does-not.exists"
+      - "my-second-key"
+      - "my.third.key.does.not.exists"
+    pillar: {
+      "my": {
+        "first": {
+          "key": "my-value"
+        }
+      },
+      "my-second-key": "OK"
+    }
+    raises: True
+    result: "Unable to get does-not.exists:\n\tEmpty value for does-not\nUnable to get my.third.key.does.not.exists:\n\tEmpty value for third"
+  - keys:
+      - "my.first.key"
+      - "my-second-key"
+      - - "my"
+        - "third.key"
+        - "does-not-exists"
+    pillar: {
+      "my": {
+        "first": {
+          "key": "my-value"
+        },
+        "third": {
+          "key": {
+            "does-not-exits": "ignored"
+          }
+        }
+      },
+      "my-second-key": "OK"
+    }
+    raises: True
+    result: "Unable to get my.third.key.does-not-exists:\n\tEmpty value for third.key"
+
+format_slots:
+  # Simple format slots (no slots)
+  - data:
+      my: simple
+      data:
+        - content
+        - without
+        - any: slots
+    result:
+      my: simple
+      data:
+        - content
+        - without
+        - any: slots
+
+  # Simple single slot returning string
+  - data: __slot__:salt:my_mod.my_fun()
+    slots_returns:
+      my_mod.my_fun: 'ABC123'
+    result: 'ABC123'
+
+  # Invalid slot ignored (malformed)
+  - data: __slot__:malformed_slot_call
+    result: __slot__:malformed_slot_call
+
+  # Invalid slot ignored (invalid caller)
+  - data: __slot__:my_invalid_caller:slot.call()
+    result: __slot__:my_invalid_caller:slot.call()
+
+  # Multiple slots nested (with some invalid call ignored)
+  - data:
+      mykey:
+        abc: __slot__:salt:my_mod.first_fun()
+        def:
+          - 123
+          - __slot__:salt:my_mod.second_fun(with, some, x=args)
+          - __slot:malformed_slot_call
+      otherkey: __slot__:invalid_caller:slot.call()
+    slots_returns:
+      my_mod.first_fun: 'First fun simple return'
+      my_mod.second_fun:
+        Dict: return
+        For:
+          - second
+          - funct: ion
+    result:
+      mykey:
+        abc: 'First fun simple return'
+        def:
+          - 123
+          - Dict: return
+            For:
+              - second
+              - funct: ion
+          - __slot:malformed_slot_call
+      otherkey: __slot__:invalid_caller:slot.call()
+
+    # Error during slot execution
+    data:
+      my_key:
+        abc:
+          - def
+          - __slot__:salt:my_mod.my_fun()
+    slots_returns:
+      my_mod.my_fun: null
+    raises: True
+    result: "Unable to compute slot '__slot__:salt:my_mod.my_fun\\(\\)'"
+
+manage_static_pod_manifest:
+  # Nominal: pre-cached source
+  - name: &manifest_name /etc/kubernetes/manifests/my-pod.yaml
+    source: &manifest_source salt://my/state/files/my-pod-manifest.yaml.j2
+    pre_cached_source: True
+    result: &manifest_nominal_result_no_changes
+      name: *manifest_name
+      changes: {}
+      comment: >-
+        File /etc/kubernetes/manifests/my-pod.yaml is in the correct state
+      result: True
+  # Nominal: source not in cache
+  - name: *manifest_name
+    source: *manifest_source
+    result: *manifest_nominal_result_no_changes
+  # Nominal: cached hash mismatch
+  - name: *manifest_name
+    source: *manifest_source
+    pre_cached_source: True
+    cached_hash_mismatch: True
+    result: *manifest_nominal_result_no_changes
+  # Nominal: target is a link
+  - name: *manifest_name
+    source: *manifest_source
+    target_links_to: /some/other/path.yaml
+    result: *manifest_nominal_result_no_changes
+  # Nominal: target hash mismatch
+  - name: *manifest_name
+    source: *manifest_source
+    target_hash_mismatch: True
+    result: &manifest_nominal_result_updated
+      <<: *manifest_nominal_result_no_changes
+      changes:
+        diff: Some diff
+      comment: >-
+        File /etc/kubernetes/manifests/my-pod.yaml updated
+  # Nominal: target hash + perms/owner mismatch
+  - name: *manifest_name
+    source: *manifest_source
+    target_hash_mismatch: True
+    target_stats:
+      mode: '0644'
+      user: my-user
+      group: my-group
+    result:
+      <<: *manifest_nominal_result_updated
+      changes:
+        diff: Some diff
+        user: root
+        group: root
+        mode: '0600'
+  # Nominal: new file
+  - name: *manifest_name
+    source: *manifest_source
+    target_exists: False
+    result:
+      <<: *manifest_nominal_result_updated
+      changes:
+        diff: New file
+  # Nominal: obfuscate templates
+  - name: *manifest_name
+    source: *manifest_source
+    obfuscate_templates: True
+    target_hash_mismatch: True
+    result:
+      <<: *manifest_nominal_result_updated
+      changes:
+        diff: <Obfuscated Template>
+  # Nominal: file.get_diff failure
+  - name: *manifest_name
+    source: *manifest_source
+    get_diff_error: Failed to compute diff
+    target_hash_mismatch: True
+    result:
+      <<: *manifest_nominal_result_updated
+      changes:
+        diff: Failed to compute diff
+  # Nominal: test mode
+  - name: *manifest_name
+    source: *manifest_source
+    target_hash_mismatch: True
+    opts:
+      test: True
+    result:
+      <<: *manifest_nominal_result_updated
+      comment: >-
+        File /etc/kubernetes/manifests/my-pod.yaml would be updated
+  # Error: missing source
+  - name: *manifest_name
+    error: Must provide a source
+  # Error: target directory does not exist
+  - name: *manifest_name
+    source: *manifest_source
+    target_dir_exists: False
+    error: Target directory /etc/kubernetes/manifests does not exist
+  # Error: source could not be cached
+  - name: *manifest_name
+    source: *manifest_source
+    cache_file_ret: False
+    error: >-
+      Source file 'salt://my/state/files/my-pod-manifest.yaml.j2' not found
+  # Error: copy error
+  - name: *manifest_name
+    source: *manifest_source
+    target_exists: False
+    atomic_copy_raises: Could not copy!
+    error: >-
+      Failed to commit change: Could not copy!
+
+archive_info_from_product_txt:
+  # 0. Ok - A valid ISO archive
+  - archive: /my/iso
+    is_file: True
+    info:
+      version: 2.8.0
+      name: MetalK8s
+    result:
+      version: 2.8.0
+      name: MetalK8s
+      iso: /my/iso
+      path: /srv/scality/metalk8s-2.8.0
+  # 1. Ok - A valid directory archive
+  - archive: /my/directory
+    is_dir: True
+    info:
+      version: 2.8.0
+      name: MetalK8s
+    result:
+      version: 2.8.0
+      name: MetalK8s
+      iso: null
+      path: /my/directory
+  # 2. Nok - Invalid path
+  - archive: /my/invalid
+    info: null
+    raises: True
+    result: Invalid archive path /my/invalid, should be an iso or a directory.
+  # 3. Nok - Invalid name
+  - archive: /my/iso
+    is_file: True
+    info:
+      version: 2.8.0
+      name: Other
+    raises: True
+    result: Invalid archive '/my/iso', 'NAME' should be 'MetalK8s', found 'Other'.
+  # 4. Nok - Empty version
+  - archive: /my/iso
+    is_file: True
+    info:
+      version: null
+      name: MetalK8s
+    raises: True
+    result: Invalid archive '/my/iso', 'VERSION' must be provided.
+
+configure_archive:
+  # 0. Ok - Nominal add
+  - archive: /my/archive
+    config:
+      archives: []
+    result: Archive '/my/archive' added to bootstrap configuration
+  # 1. Ok - Nominal remove
+  - archive: /my/archive
+    remove: True
+    config:
+      archives:
+        - /my/archive
+    result: Archive '/my/archive' removed from bootstrap configuration
+  # 2. Ok - Add without effect
+  - archive: /my/archive
+    config:
+      archives:
+        - /my/archive
+    result: Archive '/my/archive' already present in bootstrap configuration
+  # 3. Ok - Remove without effect
+  - archive: /my/archive
+    remove: True
+    config:
+      archives: []
+    result: Archive '/my/archive' already absent in bootstrap configuration
+  # 4. Nok - Add invalid archive
+  - archive: /my/archive
+    invalid_path: True
+    raises: True
+    result: Invalid archive path
+  # 5. Ok - Remove invalid archive
+  - archive: /my/archive
+    invalid_path: True
+    remove: True
+    config:
+      archives:
+        - /my/archive
+    result: Archive '/my/archive' removed from bootstrap configuration
+
+backup_node:
+  # 0. Ok - Backup succeed
+  - archives: &backup_node_archives
+      metalk8s-2.10.0:
+        path: /tmp
+    result: Backup successfully generated
+  # 1. Nok - Backup script failed
+  - archives: *backup_node_archives
+    raises: True
+    result: "Failed to run /tmp/backup.sh: Boom!"
+  # 2. Nok - No such archive for this MetalK8s version
+  - archives: {}
+    raises: True
+    result: No MetalK8s archive found for version 2.10.0

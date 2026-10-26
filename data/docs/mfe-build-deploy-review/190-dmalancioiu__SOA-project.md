@@ -1,0 +1,50 @@
+---
+schema: 1
+id: 1134094230
+full_name: dmalancioiu/SOA-project
+commit: a00d6436b4a6c4f28287e7e90ded084c1241fcf1
+inputs:
+  mining:
+    output: data/mining/mfe-mining-001
+    version: "1"
+    config_sha256: 477ce8efa222a5170fdb68af51036d481c9688dda919aab993aa9f3db328fbf2
+annotation:
+  method: manual
+  status: final
+  date: 2026-10-24
+---
+
+# 190 — dmalancioiu/SOA-project
+
+## Leitura do repositório
+
+Projeto acadêmico de uma plataforma de entrega de comida: microsserviços Spring Boot em `backend/`, funções OpenFaaS em `infrastructure/faas/` e quatro aplicações React com webpack em `frontend/`. Não há `package.json` na raiz nem em `frontend/`, nem workspace, nem CI. Cada aplicação tem o mesmo par de scripts, `start` com o servidor de desenvolvimento e `build` com `webpack --mode production` (frontend/shell-app/package.json:7-8; frontend/restaurant-catalog/package.json:7-8; frontend/order-tracking/package.json:7-8; frontend/user-dashboard/package.json:18-19), que lê o `webpack.config.js` do próprio diretório. As quatro configurações usam `publicPath: 'auto'` (frontend/shell-app/webpack.config.js:18; frontend/restaurant-catalog/webpack.config.js:18; frontend/order-tracking/webpack.config.js:18; frontend/user-dashboard/webpack.config.js:19). As ocorrências `ops-cors` são cabeçalhos do servidor de desenvolvimento (`devServer.headers`, frontend/shell-app/webpack.config.js:13-15 e equivalentes).
+
+O empacotamento é Docker. Cada aplicação tem um Dockerfile multi-stage idêntico: um estágio `node:18-alpine` roda `npm ci` e `npm run build`, e um estágio `nginx:alpine` copia o `nginx.conf` da pasta e o `dist` para `/usr/share/nginx/html`, na porta 80 (frontend/shell-app/Dockerfile:2-31 e os equivalentes em frontend/restaurant-catalog, frontend/order-tracking e frontend/user-dashboard). Os quatro `nginx.conf` também são iguais: arquivos estáticos com cache, fallback de `/` para `index.html` e `/health` (frontend/shell-app/nginx.conf:20-35 e equivalentes). O docker-compose.yml da raiz tem um serviço por aplicação, cada um com `build.context` na pasta dela e uma porta publicada: `restaurant-catalog` em 3001, `order-tracking` em 3002, `user-dashboard` em 3003 e `shell-app` em 3000 (docker-compose.yml:301-310, 317-326, 333-342, 349-361). Essas portas são as das URLs fixas dos remotes no host, `http://localhost:300N/remoteEntry.js` (frontend/shell-app/webpack.config.js:51-53), então no perfil Docker o navegador alcança cada `remoteEntry.js` no contêiner do remote. As variáveis `REACT_APP_*` do compose, inclusive as URLs dos remotes passadas ao shell (docker-compose.yml:354-359), são ambiente de tempo de execução de contêineres nginx que só servem arquivos estáticos; o compose não as passa como argumento de build, e o host não lê nenhuma variável para as URLs dos remotes.
+
+À frente fica um serviço `nginx:alpine` na porta 80 com o infrastructure/nginx/nginx.conf montado (docker-compose.yml:372-384). Ele faz proxy de `/` só para o `shell-app:80` e de `/api/` e `/ws/` para o gateway e o serviço de notificações (infrastructure/nginx/nginx.conf:13-15, 37-38, 46-47, 60-61); os remotes não passam por ele. Um ponto limita a reprodutibilidade das imagens: os Dockerfiles rodam `npm ci` (frontend/shell-app/Dockerfile:10 e equivalentes), que exige `package-lock.json`, mas nenhuma pasta frontend tem lockfile no snapshot, e cada `.gitignore` o exclui (frontend/shell-app/.gitignore:3 e equivalentes). Isso afeta se a imagem constrói como está, não o fato de cada aplicação ser empacotada à parte.
+
+Os demais artefatos `ops-*` não cobrem aplicação frontend. Os Dockerfiles de `backend/` são imagens Maven/Temurin dos microsserviços Java (backend/api-gateway/Dockerfile:2, 11 e equivalentes), construídos pelos serviços `user-service` a `api-gateway` do compose da raiz (docker-compose.yml:97-260); backend/api-gateway/docker-compose.yml e backend/notification-service/docker-compose.yml são composes locais desses dois serviços (backend/api-gateway/docker-compose.yml:16-17; backend/notification-service/docker-compose.yml:77-79). Os Dockerfiles de `infrastructure/faas/` são as funções `delivery-analytics`, `auto-close-orders` (Python) e `order-completion` (Node/Express, `CMD ["node", "handler.js"]`, infrastructure/faas/order-completion/Dockerfile:1, 25), listadas no infrastructure/faas/stack.yml:11-13, 35-37, 68-70; o gateway OpenFaaS do compose está comentado (docker-compose.yml:272-296). As ocorrências `ops-hosting` são comandos `kubectl` e `helm` em guias Markdown de backend/notification-service e infrastructure/faas, documentação e não artefato de deploy; nenhuma cita aplicação frontend.
+
+## Aplicações
+
+| # | Aplicação | Build | Deploy | Onde é servida | Versionamento | Artefatos |
+|---|---|---|---|---|---|---|
+| 1 | frontend/order-tracking | separado | separado | porta 3002 (docker-compose.yml:326); `http://localhost:3002/remoteEntry.js` (frontend/shell-app/webpack.config.js:52); porta 3002 em desenvolvimento (frontend/order-tracking/webpack.config.js:10) | No | frontend/order-tracking/package.json:8 (`webpack --mode production`); frontend/order-tracking/webpack.config.js:46-47 (`orderTracking`, `remoteEntry.js`); frontend/order-tracking/Dockerfile:2-31 (build e imagem nginx próprios); frontend/order-tracking/nginx.conf:26-28 (serve o `dist`); docker-compose.yml:317-326 (serviço `order-tracking`) |
+| 2 | frontend/restaurant-catalog | separado | separado | porta 3001 (docker-compose.yml:310); `http://localhost:3001/remoteEntry.js` (frontend/shell-app/webpack.config.js:51); porta 3001 em desenvolvimento (frontend/restaurant-catalog/webpack.config.js:10) | No | frontend/restaurant-catalog/package.json:8 (`webpack --mode production`); frontend/restaurant-catalog/webpack.config.js:45-46 (`restaurantCatalog`, `remoteEntry.js`); frontend/restaurant-catalog/Dockerfile:2-31 (build e imagem nginx próprios); frontend/restaurant-catalog/nginx.conf:26-28 (serve o `dist`); docker-compose.yml:301-310 (serviço `restaurant-catalog`) |
+| 3 | frontend/shell-app | separado | separado | `/` pelo nginx na porta 80 (infrastructure/nginx/nginx.conf:14, 37-38; docker-compose.yml:378); porta 3000 (docker-compose.yml:361); porta 3000 em desenvolvimento (frontend/shell-app/webpack.config.js:10) | No | frontend/shell-app/package.json:8 (`webpack --mode production`); frontend/shell-app/webpack.config.js:48-54 (host com os três remotes); frontend/shell-app/Dockerfile:2-31 (build e imagem nginx próprios); frontend/shell-app/nginx.conf:26-28 (serve o `dist`); docker-compose.yml:349-361 (serviço `shell-app`); infrastructure/nginx/nginx.conf:13-15, 37-38 (proxy de `/`) |
+| 4 | frontend/user-dashboard | separado | separado | porta 3003 (docker-compose.yml:342); `http://localhost:3003/remoteEntry.js` (frontend/shell-app/webpack.config.js:53); porta 3003 em desenvolvimento (frontend/user-dashboard/webpack.config.js:11) | No | frontend/user-dashboard/package.json:19 (`webpack --mode production`); frontend/user-dashboard/webpack.config.js:51-52 (`userDashboard`, `remoteEntry.js`); frontend/user-dashboard/Dockerfile:2-31 (build e imagem nginx próprios); frontend/user-dashboard/nginx.conf:26-28 (serve o `dist`); docker-compose.yml:333-342 (serviço `user-dashboard`) |
+
+## Observações
+
+**1. frontend/order-tracking.** Build webpack próprio, que gera o `remoteEntry.js` da unidade (frontend/order-tracking/webpack.config.js:46-47), e imagem própria montada só da pasta da aplicação (frontend/order-tracking/Dockerfile:7-16, 25; docker-compose.yml:318-320): deploy separado. O contêiner publica a porta 3002 (docker-compose.yml:326), a mesma da URL que o host usa (frontend/shell-app/webpack.config.js:52) e do servidor de desenvolvimento (frontend/order-tracking/webpack.config.js:10). O `version: "1.0.0"` (frontend/order-tracking/package.json:3) não é usado na publicação, e o serviço não tem imagem nomeada nem tag (docker-compose.yml:317-330): Versionamento `No`.
+
+**2. frontend/restaurant-catalog.** Mesmo arranjo: build próprio (frontend/restaurant-catalog/package.json:8; frontend/restaurant-catalog/webpack.config.js:45-46), imagem própria (frontend/restaurant-catalog/Dockerfile:2-31) e serviço `restaurant-catalog` na porta 3001 (docker-compose.yml:301-310), que corresponde a `http://localhost:3001/remoteEntry.js` no host (frontend/shell-app/webpack.config.js:51). Sem versão própria usada na publicação (frontend/restaurant-catalog/package.json:3; docker-compose.yml:301-314).
+
+**3. frontend/shell-app.** O host tem build e imagem próprios (frontend/shell-app/package.json:8; frontend/shell-app/Dockerfile:2-31), e a imagem contém só o `dist` dele: os remotes não entram nela e são buscados em tempo de execução pelas URLs fixas (frontend/shell-app/webpack.config.js:51-53). É a única aplicação atrás do nginx de borda, que faz proxy de `/` para `shell-app:80` (infrastructure/nginx/nginx.conf:13-15, 37-38), além de publicar a porta 3000 direto (docker-compose.yml:361). O compose declara que o shell depende dos três remotes (docker-compose.yml:364-367) e lhe passa as URLs deles em `REACT_APP_*_URL` (docker-compose.yml:357-359), mas essas variáveis não chegam ao bundle, porque as URLs estão fixas no `webpack.config.js`. Sem versionamento observado (frontend/shell-app/package.json:3; docker-compose.yml:349-367).
+
+**4. frontend/user-dashboard.** Build próprio (frontend/user-dashboard/package.json:19; frontend/user-dashboard/webpack.config.js:51-52), imagem própria (frontend/user-dashboard/Dockerfile:2-31) e serviço `user-dashboard` na porta 3003 (docker-compose.yml:333-342), que corresponde a `http://localhost:3003/remoteEntry.js` no host (frontend/shell-app/webpack.config.js:53). Difere das outras só no script `start`, que passa a porta na linha de comando, `webpack serve --port 3003` (frontend/user-dashboard/package.json:18), e no plugin de federação embutido do webpack, que não muda o build. Sem versão própria usada na publicação (frontend/user-dashboard/package.json:3; docker-compose.yml:333-346).
+
+## Resumo
+
+Aplicações: 4. Build (separado: 4). Deploy (separado: 4). Versionamento independente: 0.

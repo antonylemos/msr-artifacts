@@ -1,0 +1,39 @@
+pattern,path,line,excerpt
+dep-module-federation,Frontend/package.json,53,"    ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+dep-module-federation,whatsapp-module-frontend/package.json,28,"    ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+lock-mfe-dependency,Frontend/package-lock.json,50,"        ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+lock-mfe-dependency,Frontend/package-lock.json,2152,"    ""node_modules/@originjs/vite-plugin-federation"": {"
+lock-mfe-dependency,Frontend/package-lock.json,2154,"      ""resolved"": ""https://registry.npmjs.org/@originjs/vite-plugin-federation/-/vite-plugin-federation-1.4.1.tgz"","
+lock-mfe-dependency,Frontend/package-lock.json,2167,"    ""node_modules/@originjs/vite-plugin-federation/node_modules/magic-string"": {"
+lock-mfe-dependency,whatsapp-module-frontend/package-lock.json,26,"        ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+lock-mfe-dependency,whatsapp-module-frontend/package-lock.json,1035,"    ""node_modules/@originjs/vite-plugin-federation"": {"
+lock-mfe-dependency,whatsapp-module-frontend/package-lock.json,1037,"      ""resolved"": ""https://registry.npmjs.org/@originjs/vite-plugin-federation/-/vite-plugin-federation-1.4.1.tgz"","
+cfg-federation-plugin,Frontend/vite.config.js,11,    federation({
+cfg-federation-plugin,whatsapp-module-frontend/vite.config.js,11,    federation({
+cfg-remotes,Frontend/vite.config.js,17,      remotes: {
+cfg-remotes,whatsapp-module-frontend/vite.config.js,25,      remotes: {
+cfg-exposes,Frontend/vite.config.js,25,      exposes: {
+cfg-exposes,whatsapp-module-frontend/vite.config.js,17,      exposes: {
+cfg-shared,Frontend/vite.config.js,31,      shared: [
+cfg-shared,whatsapp-module-frontend/vite.config.js,33,      shared: {
+cfg-shared,whatsapp-module-frontend/vite.config.js,37,"        'react': { singleton: true, eager: true, requiredVersion: '^18.0.0' },"
+cfg-shared,whatsapp-module-frontend/vite.config.js,38,"        'react-dom': { singleton: true, eager: true, requiredVersion: '^18.0.0' },"
+cfg-shared,whatsapp-module-frontend/vite.config.js,39,"        'react-router-dom': { singleton: true, eager: true },"
+cfg-shared,whatsapp-module-frontend/vite.config.js,40,"        'zustand': { singleton: true, eager: true },"
+cfg-shared,whatsapp-module-frontend/vite.config.js,43,"        'axios': { singleton: true },"
+cfg-shared,whatsapp-module-frontend/vite.config.js,44,"        'react-hot-toast': { singleton: true },"
+cfg-shared,whatsapp-module-frontend/vite.config.js,47,"        '@heroicons/react': { singleton: true },"
+cfg-shared,whatsapp-module-frontend/vite.config.js,48,        '@tabler/icons-react': { singleton: true }
+rt-remote-entry,Frontend/src/modules/moduleLoader.js,12,        return 'http://localhost:5001/assets/remoteEntry.js'; // Port of your WA remote
+rt-remote-entry,Frontend/src/modules/moduleLoader.js,14,      return 'https://YOUR_PRODUCTION_CDN/whatsapp_module/remoteEntry.js';
+rt-remote-entry,Frontend/vite.config.js,14,"      filename: 'remoteEntry.js', // Standard filename for dev mode"
+rt-remote-entry,Frontend/vite.config.js,20,"  remote_app: 'http://localhost:5001/assets/remoteEntry.js', // <--- CORRECTED URL"
+rt-remote-entry,whatsapp-module-frontend/vite.config.js,14,"      filename: 'remoteEntry.js',"
+rt-remote-entry,whatsapp-module-frontend/vite.config.js,27,        // The value is the URL to the host's remoteEntry.js file.
+rt-remote-entry,whatsapp-module-frontend/vite.config.js,28,"        platform_host: 'http://localhost:5173/assets/remoteEntry.js',"
+src-remote-import,Frontend/src/components/layouts/DashboardLayout.jsx,144,const RemoteWhatsAppSettingsPage = lazy(() => import('remote_app/WhatsAppChannelSettingsPage')); 
+ops-cors,whatsapp-module-frontend/vite.config.js,55,"    cors: true, // <--- ADD THIS LINE"
+doc-integration-technology,Readme.md,34,This module is designed as a **Module Federation Remote**.
+doc-integration-technology,Readme.md,44,*   **Frontend:** The `platform-host` (main frontend application) dynamically loads UI components from the `whatsapp_app` remote using Module Federation. This is configured via the host's `vite.config.js` (in the `remotes` section) and the remote's `vite.config.js` (in the `exposes` section).
+doc-independence,Readme.md,36,"*   **Frontend Remote (`whatsapp_app`):** A separate Vite/React application that exposes specific UI components (primarily settings pages for now). It runs on its own development server (e.g., `http://localhost:5001`) and is built independently. In production, its assets (`remoteEntry.js`, chunks) a"
+doc-host-remote,Readme.md,44,*   **Frontend:** The `platform-host` (main frontend application) dynamically loads UI components from the `whatsapp_app` remote using Module Federation. This is configured via the host's `vite.config.js` (in the `remotes` section) and the remote's `vite.config.js` (in the `exposes` section).

@@ -1,0 +1,140 @@
+{
+  "schema": 1,
+  "id": "175218500",
+  "fullName": "ral-facilities/scigateway",
+  "commit": "fadb600e1fa4c8a64daefbf8f2541998e559979c",
+  "acquiredAt": "2026-10-24T00:32:31.095Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 22124
+    },
+    {
+      "path": "public/res/images/breadcrumb.png",
+      "reason": "preset:binaries",
+      "size": 15571
+    },
+    {
+      "path": "public/res/images/cart-button.png",
+      "reason": "preset:binaries",
+      "size": 1011
+    },
+    {
+      "path": "public/res/images/cart-download.png",
+      "reason": "preset:binaries",
+      "size": 53090
+    },
+    {
+      "path": "public/res/images/cart.png",
+      "reason": "preset:binaries",
+      "size": 70373
+    },
+    {
+      "path": "public/res/images/downloads-button.png",
+      "reason": "preset:binaries",
+      "size": 6524
+    },
+    {
+      "path": "public/res/images/downloads.png",
+      "reason": "preset:binaries",
+      "size": 37823
+    },
+    {
+      "path": "public/res/images/investigation-meta-data.png",
+      "reason": "preset:binaries",
+      "size": 8363
+    },
+    {
+      "path": "public/res/images/login.png",
+      "reason": "preset:binaries",
+      "size": 11549
+    },
+    {
+      "path": "public/res/images/my-data-grid.png",
+      "reason": "preset:binaries",
+      "size": 46490
+    },
+    {
+      "path": "public/res/images/smartclient.png",
+      "reason": "preset:binaries",
+      "size": 34832
+    },
+    {
+      "path": "public/res/images/tabs.png",
+      "reason": "preset:binaries",
+      "size": 7856
+    },
+    {
+      "path": "public/res/images/tickbox.png",
+      "reason": "preset:binaries",
+      "size": 9905
+    },
+    {
+      "path": "src/images/background-plain.jpg",
+      "reason": "preset:binaries",
+      "size": 608843
+    },
+    {
+      "path": "src/images/background.jpg",
+      "reason": "preset:binaries",
+      "size": 1789526
+    },
+    {
+      "path": "src/images/facility.jpg",
+      "reason": "preset:binaries",
+      "size": 542278
+    },
+    {
+      "path": "src/images/green-swirl1.png",
+      "reason": "preset:binaries",
+      "size": 85078
+    },
+    {
+      "path": "src/images/green-swirl2.png",
+      "reason": "preset:binaries",
+      "size": 23151
+    },
+    {
+      "path": "src/images/stfc-logo-blue-text.png",
+      "reason": "preset:binaries",
+      "size": 38686
+    },
+    {
+      "path": "src/images/stfc-logo-white-text.png",
+      "reason": "preset:binaries",
+      "size": 29535
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 183,
+    "bytes": 4227094
+  },
+  "languages": {
+    "JavaScript": 3083076,
+    "TypeScript": 554747,
+    "Other": 467716,
+    "Markdown": 68832,
+    "JSON": 33274,
+    "SVG": 9405,
+    "YAML": 6762,
+    "Shell": 1302,
+    "HTML": 1189,
+    "CSS": 791
+  },
+  "contentSha256": "8f7613d1ccbc847cfc931b986c8732fd2bd52bea60ab7a5d91e283c937d77c11"
+}

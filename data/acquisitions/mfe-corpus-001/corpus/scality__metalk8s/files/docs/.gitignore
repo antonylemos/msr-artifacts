@@ -1,0 +1,9 @@
+# Ignore images generated from UML diagrams
+*.png
+*.svg
+
+# Don't ignore images to include in docs
+!/installation/img/**/*.png
+!/operation/volume_management/img/**/*.png
+
+/_build/

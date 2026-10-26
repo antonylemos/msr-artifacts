@@ -1,0 +1,4 @@
+@import "tailwindcss";
+
+/* Solo si es necesario para el proyecto específico (como en Shell o Dashboard) */
+@source "../../../packages/ui-kit";

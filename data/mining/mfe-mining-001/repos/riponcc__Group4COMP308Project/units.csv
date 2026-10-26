@@ -1,0 +1,8 @@
+directory,markers
+client/issue-app,client/issue-app/package.json;client/issue-app/vite.config.js
+client/shell-app,client/shell-app/package.json;client/shell-app/vite.config.js
+client/user-app,client/user-app/package.json;client/user-app/vite.config.js
+server,server/package.json
+server/microservices/analytics-ai-service,server/microservices/analytics-ai-service/package.json
+server/microservices/auth-service,server/microservices/auth-service/package.json
+server/microservices/issue-management-service,server/microservices/issue-management-service/package.json

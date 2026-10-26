@@ -1,0 +1,249 @@
+{# Because of the grain lookup below, the bootstrap minion *must* be available
+   before invoking this SLS, otherwise rendering will fail #}
+
+{%- set max_try = 5 %}
+{%- set bootstrap_grains = {} %}
+{%- for _ in range(max_try) %}
+  {%- set res = salt.saltutil.cmd(
+          tgt=pillar.bootstrap_id,
+          fun='grains.get',
+          kwarg={
+              'key': 'metalk8s:control_plane_ip',
+          },
+      )
+  %}
+  {%- set control_plane_ip = res.get(pillar.bootstrap_id, {}).get('ret') %}
+  {%- if control_plane_ip %}
+    {%- do bootstrap_grains.update({'control_plane_ip': control_plane_ip}) %}
+    {%- break %}
+  {%- endif %}
+{%- endfor %}
+{%- if 'control_plane_ip' not in bootstrap_grains %}
+Get metalk8s:control_plane_ip grain:
+  test.fail_without_changes:
+    - comment: >-
+        Unable to get metalk8s:control_plane_ip grain from {{ pillar.bootstrap_id }}
+        after {{ max_try }} tries.
+    - require_in:
+      - salt: Deploy CA role on bootstrap minion
+    - failhard: True
+{%- endif %}
+
+{%- if 'metalk8s' in pillar
+        and 'nodes' in pillar.metalk8s
+        and pillar.bootstrap_id in pillar.metalk8s.nodes
+        and pillar.metalk8s.nodes[pillar.bootstrap_id].version is not none %}
+{% set version = pillar.metalk8s.nodes[pillar.bootstrap_id].version %}
+{% else %}
+{% set _, version = saltenv.split('-', 1) %}
+{% endif %}
+
+{%- set pillar_data = {
+        'bootstrap_id': pillar.bootstrap_id,
+        'is_bootstrap': True,
+        'metalk8s': {
+            'nodes': {
+                '_errors': None,
+                pillar.bootstrap_id: {
+                    'roles': ['bootstrap', 'master', 'etcd', 'ca', 'infra'],
+                    'version': version,
+                },
+            },
+            'volumes': None,
+            'endpoints': {
+                'salt-master': [{
+                    'ip': bootstrap_grains['control_plane_ip'],
+                    'ports': {
+                        'api': 4507,
+                    },
+                }],
+                'repositories': [{
+                    'ip': bootstrap_grains['control_plane_ip'],
+                    'ports': {
+                        'http': 8080,
+                    },
+                }],
+            },
+        },
+    }
+%}
+
+Sync all custom types:
+  salt.runner:
+  - name: saltutil.sync_all
+  - saltenv: {{ saltenv }}
+
+Sync roster extmods:
+  salt.runner:
+  - name: saltutil.sync_roster
+  - saltenv: {{ saltenv }}
+
+Sync auth extmods:
+  salt.runner:
+  - name: metalk8s_saltutil.sync_auth
+  - saltenv: {{ saltenv }}
+
+Sync bootstrap minion:
+  salt.function:
+  - name: saltutil.sync_all
+  - tgt: {{ pillar.bootstrap_id }}
+  - kwarg:
+      saltenv: metalk8s-{{ version }}
+
+Refresh bootstrap minion grains:
+  salt.function:
+  - name: saltutil.refresh_grains
+  - tgt: {{ pillar.bootstrap_id }}
+  - timeout: 120
+  - require:
+    - salt: Sync bootstrap minion
+
+Deploy CA role on bootstrap minion:
+  salt.state:
+  - tgt: {{ pillar.bootstrap_id }}
+  - sls:
+    - metalk8s.roles.ca
+  - saltenv: metalk8s-{{ version }}
+  - pillar: {{ pillar_data | tojson }}
+  - require:
+    - salt: Refresh bootstrap minion grains
+
+Bring bootstrap minion to highstate:
+  salt.state:
+  - tgt: {{ pillar.bootstrap_id }}
+  - highstate: true
+  - pillar: {{ pillar_data | tojson }}
+  - require:
+    - salt: Refresh bootstrap minion grains
+    - salt: Deploy CA role on bootstrap minion
+
+Wait for API server to be available:
+  http.wait_for_successful_query:
+  - name: https://127.0.0.1:7443/readyz?verbose
+  - match: 'poststarthook/rbac/bootstrap-roles ok'
+  - status: 200
+  - verify_ssl: false
+  - request_interval: 5
+  - wait_for: 420
+  - timeout: 10
+  - require:
+    - salt: Bring bootstrap minion to highstate
+
+Deploy kubeconfig to bootstrap:
+  salt.state:
+  - tgt: {{ pillar.bootstrap_id }}
+  - sls:
+    - metalk8s.salt.master.kubeconfig
+  - saltenv: {{ saltenv }}
+  - pillar: {{ pillar_data | tojson }}
+  - require:
+    - http: Wait for API server to be available
+
+Configure bootstrap Node object:
+  salt.runner:
+  - name: state.orchestrate
+  - mods:
+    - metalk8s.kubernetes.mark-control-plane.deployed
+  - saltenv: {{ saltenv }}
+  - pillar: {{ pillar_data | tojson }}
+  - require:
+    - salt: Deploy kubeconfig to bootstrap
+
+Update pillar on bootstrap minion after highstate:
+  salt.function:
+  - name: saltutil.refresh_pillar
+  - tgt: {{ pillar.bootstrap_id }}
+  - kwarg:
+      wait: true
+  - require:
+    - salt: Configure bootstrap Node object
+
+# From this point on, we assume `mine_functions` to function properly. Enforce
+# this.
+Update mine from bootstrap minion:
+  salt.function:
+  - name: mine.update
+  - tgt: {{ pillar.bootstrap_id }}
+  - require:
+    - salt: Update pillar on bootstrap minion after highstate
+    - salt: Configure bootstrap Node object
+
+Deploy core component objects:
+  salt.runner:
+  - name: state.orchestrate
+  - mods:
+    - metalk8s.deployed.core
+  - saltenv: {{ saltenv }}
+  - pillar: {{ pillar_data | tojson }}
+  - require:
+    - http: Wait for API server to be available
+
+Deploy Kubernetes service config objects:
+  salt.runner:
+  - name: state.orchestrate
+  - mods:
+    - metalk8s.service-configuration.deployed
+  - saltenv: {{ saltenv }}
+  - pillar: {{ pillar_data | tojson }}
+  - require:
+    - http: Wait for API server to be available
+
+Deploy Kubernetes objects:
+  salt.runner:
+  - name: state.orchestrate
+  - mods:
+    - metalk8s.deployed
+  - saltenv: {{ saltenv }}
+  - pillar: {{ pillar_data | tojson }}
+  - require:
+    - http: Wait for API server to be available
+    - salt: Deploy Kubernetes service config objects
+    - salt: Deploy core component objects
+
+Store MetalK8s version in annotations:
+  metalk8s_kubernetes.object_updated:
+    - name: "kube-system"
+    - kind: Namespace
+    - apiVersion: v1
+    - patch:
+        metadata:
+          annotations:
+            metalk8s.scality.com/cluster-version: "{{ version }}"
+    - require:
+      - http: Wait for API server to be available
+
+Reconfigure control plane Ingress:
+  salt.runner:
+  - name: state.orchestrate
+  - mods:
+    - metalk8s.orchestrate.update-control-plane-ingress-ip
+  - saltenv: {{ saltenv }}
+  - require:
+    - salt: Deploy Kubernetes objects
+
+{#- Record the version this node completed, as `deploy_node` does for every other
+    node. Without it, the first upgrade trusts nothing but the label, and deploys
+    this node again even when it already runs the destination. #}
+Mark node {{ pillar.bootstrap_id }} as running {{ version }}:
+  metalk8s_kubernetes.object_updated:
+    - name: {{ pillar.bootstrap_id }}
+    - kind: Node
+    - apiVersion: v1
+    - patch:
+        metadata:
+          annotations:
+            metalk8s.scality.com/version-in-progress: null
+            metalk8s.scality.com/version-applied: "{{ version }}"
+    {#- Reconfiguring the Control Plane Ingress just restarted the API server on
+        this node, so give this write a few tries before it fails the whole
+        thing #}
+    - retry:
+        attempts: 5
+        interval: 30
+    {#- Only record the version once the whole bootstrap succeeded. Each of these
+        states ends a branch of this orchestrate. Together they require every
+        other state #}
+    - require:
+      - salt: Update mine from bootstrap minion
+      - salt: Reconfigure control plane Ingress
+      - metalk8s_kubernetes: Store MetalK8s version in annotations

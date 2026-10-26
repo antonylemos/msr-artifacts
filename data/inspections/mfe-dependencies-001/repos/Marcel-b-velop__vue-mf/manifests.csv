@@ -1,0 +1,6 @@
+manifest,state
+app-1/package.json,ok
+app-2/package.json,ok
+host/package.json,ok
+lib/package.json,ok
+package.json,ok

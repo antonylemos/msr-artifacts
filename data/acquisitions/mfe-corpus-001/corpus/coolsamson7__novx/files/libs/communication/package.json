@@ -1,0 +1,47 @@
+{
+  "name": "@novx/communication",
+  "version": "0.3.1",
+  "description": "Communication library",
+  "homepage": "https://github.com/coolsamson7/novx",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/coolsamson7/novx"
+  },
+  "bugs": {
+    "url": "https://github.com/coolsamson7/novx/issues"
+  },
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./index.js",
+  "module": "./index.esm.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.esm.js",
+      "require": "./index.js",
+      "default": "./index.esm.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "*.js",
+    "*.esm.js",
+    "*.d.ts",
+    "*.js.map",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "nx build communication",
+    "test": "nx test communication",
+    "lint": "nx lint communication"
+  },
+  "dependencies": {
+    "@novx/core": "workspace:*",
+    "axios": "^1.13.5"
+  },
+  "devDependencies": {},
+  "publishConfig": {
+    "access": "public"
+  }
+}

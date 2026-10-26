@@ -1,0 +1,11 @@
+directory,markers
+.,package.json
+auth-mfe,auth-mfe/next.config.ts;auth-mfe/package.json
+builds-mfe,builds-mfe/next.config.ts;builds-mfe/package.json
+builds-service,builds-service/package.json
+catalog-mfe,catalog-mfe/next.config.ts;catalog-mfe/package.json
+mobile-bff,mobile-bff/package.json
+parts-service,parts-service/package.json
+shell,shell/next.config.ts;shell/package.json
+users-service,users-service/package.json
+web-bff,web-bff/package.json

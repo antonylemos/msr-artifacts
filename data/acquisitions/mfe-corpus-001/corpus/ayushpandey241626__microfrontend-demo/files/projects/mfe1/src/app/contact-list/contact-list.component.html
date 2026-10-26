@@ -1,0 +1,357 @@
+<p-toast position="top-right"></p-toast>
+<div class="contact-filter-panel">
+  <div class="filter-row">
+    <!-- Group Select -->
+    <div class="filter-item">
+      <label for="groupDrop">Group:</label>
+      <p-select
+        inputId="groupDrop"
+        [options]="groupOptions"
+        [(ngModel)]="selectedGroup"
+        placeholder="Select Group"
+        (onChange)="onGroupChange()"
+      ></p-select>
+    </div>
+
+    <!-- Name Autocomplete -->
+    <div class="filter-item">
+      <label for="nameAuto">Name:</label>
+      <p-autocomplete
+        inputId="nameAuto"
+        [suggestions]="nameSuggestions"
+        (completeMethod)="filterNameSuggestions($event)"
+        [(ngModel)]="nameControl.value"
+        (ngModelChange)="nameControl.setValue($event)"
+        (onSelect)="onSelectNameSuggestion($event)"
+        placeholder="Search by name"
+        [forceSelection]="false"
+        field=""
+      ></p-autocomplete>
+    </div>
+
+    <!-- Tags Multiselect -->
+    <div class="filter-item">
+      <label for="tagMulti">Tags:</label>
+      <p-multiselect
+        inputId="tagMulti"
+        [options]="tagOptions"
+        [(ngModel)]="selectedTags"
+        placeholder="Select Tags"
+        (onChange)="onTagsChange()"
+        display="chip"
+      ></p-multiselect>
+    </div>
+
+    <!-- Date Range Picker -->
+    <div class="filter-item date-range">
+      <label for="dateRange">Date Added:</label>
+      <p-datePicker
+        inputId="dateRange"
+        [(ngModel)]="selectedDateRange"
+        selectionMode="range"
+        dateFormat="yy-mm-dd"
+        [showTime]="true"
+        placeholder="Select Date Range"
+        (onSelect)="onDateRangeSelect()"
+      ></p-datePicker>
+    </div>
+  </div>
+</div>
+
+<!-- Add/Edit Contact Button -->
+<div style="margin-bottom: 1rem">
+  <p-button
+    pButton
+    type="button"
+    [label]="isEditMode ? 'Edit contact' : 'Add a contact'"
+    icon="pi pi-plus"
+    styleClass="p-button-sm"
+    (click)="openAddContactDialog()"
+  />
+</div>
+
+<!-- Add/Edit Contact Dialog -->
+<p-dialog
+  [header]="isEditMode ? 'Edit Contact' : 'Add Contact'"
+  [(visible)]="showAddContactDialog"
+  [modal]="true"
+  [closable]="false"
+  [style]="{ width: '400px' }"
+>
+  <form #addContactForm="ngForm" (ngSubmit)="onAddContactSubmit()">
+    <div class="p-fluid">
+      <div class="p-field">
+        <label for="addName">Name</label>
+        <input
+          id="addName"
+          type="text"
+          pInputText
+          [(ngModel)]="newContact.name"
+          name="name"
+          required
+          #nameCtrl="ngModel"
+        />
+        <div class="form-error" *ngIf="nameCtrl.invalid && nameCtrl.touched">
+          Name is required.
+        </div>
+      </div>
+      <div class="p-field">
+        <label for="addEmail">Email</label>
+        <input
+          id="addEmail"
+          type="email"
+          pInputText
+          [(ngModel)]="newContact.email"
+          name="email"
+          required
+          email
+          pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+          #emailCtrl="ngModel"
+        />
+        <div class="form-error" *ngIf="emailCtrl.invalid && emailCtrl.touched">
+          <span *ngIf="emailCtrl.errors?.['required']">Email is required.</span>
+          <span *ngIf="emailCtrl.errors?.['email']">Invalid email format.</span>
+          <span *ngIf="emailCtrl.errors?.['pattern']"
+            >Email must include a valid domain (e.g., ".com").</span
+          >
+        </div>
+      </div>
+      <div class="p-field">
+        <label for="addPhone">Phone</label>
+        <input
+          id="addPhone"
+          type="text"
+          pInputText
+          [(ngModel)]="newContact.phone"
+          name="phone"
+          maxlength="10"
+          required
+          pattern="^(\+?\d{1,3}[- ]?)?\d{10}$"
+          #phoneCtrl="ngModel"
+        />
+        <div class="form-error" *ngIf="phoneCtrl.invalid && phoneCtrl.touched">
+          <span *ngIf="phoneCtrl.errors?.['required']">Phone is required.</span>
+          <span *ngIf="phoneCtrl.errors?.['pattern']"
+            >Invalid phone number. Enter 10 digits, optionally with country
+            code.</span
+          >
+        </div>
+      </div>
+      <div class="p-field">
+        <label for="addGroup">Group</label>
+        <p-select
+          inputId="addGroup"
+          [options]="filteredGroupOptions()"
+          [(ngModel)]="newContact.group"
+          name="group"
+          placeholder="Select Group"
+          required
+        ></p-select>
+      </div>
+      <div class="p-field">
+        <label for="addTags">Tags</label>
+        <p-multiselect
+          inputId="addTags"
+          [options]="tagOptions"
+          [(ngModel)]="newContact.tags"
+          name="tags"
+          placeholder="Select Tags"
+          display="chip"
+        ></p-multiselect>
+      </div>
+      <div class="p-field">
+        <label for="addDate">Date Added</label>
+        <p-datePicker
+          inputId="addDate"
+          [(ngModel)]="newContact.dateAdded"
+          name="dateAdded"
+          dateFormat="yy-mm-dd"
+          [showTime]="true"
+          required
+        ></p-datePicker>
+      </div>
+    </div>
+    <div class="p-dialog-footer" style="text-align: right">
+      <p-button
+        pButton
+        type="button"
+        label="Cancel"
+        styleClass="p-button-sm"
+        (click)="showAddContactDialog = false"
+      />
+      <p-button
+        pButton
+        type="submit"
+        [label]="isEditMode ? 'Update' : 'Submit'"
+        styleClass="p-button-sm"
+        [disabled]="!addContactForm.form.valid"
+      />
+    </div>
+  </form>
+</p-dialog>
+
+<div class="contact-table-container">
+  <p-table
+    [value]="filteredContacts"
+    paginator="true"
+    [rows]="10"
+    [rowsPerPageOptions]="[5, 10, 20, 50]"
+    [resizableColumns]="true"
+    [columns]="[
+      { field: 'name', header: 'Name' },
+      { field: 'email', header: 'Email' },
+      { field: 'phone', header: 'Phone' },
+      { field: 'group', header: 'Group' },
+      { field: 'tags', header: 'Tags' },
+      { field: 'dateAdded', header: 'Date Added' },
+      { field: 'actions', header: 'Actions' }
+    ]"
+    [sortMode]="'multiple'"
+    dataKey="id"
+  >
+    <ng-template pTemplate="paginatorleft">
+      <span style="color: #555">
+        Total: {{ filteredContacts.length || 0 }} row{{
+          filteredContacts.length === 1 ? "" : "s"
+        }}
+      </span>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th
+          *ngFor="let col of columns"
+          pResizableColumn
+          pSortableColumn="{{ col.field }}"
+          [ngStyle]="col.field === 'actions' ? {'padding-left': '8em'} : null"
+        >
+          {{ col.header }}
+          <p-sortIcon [field]="col.field"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template
+      pTemplate="body"
+      let-rowData
+      let-columns="columns"
+      let-rowIndex="rowIndex"
+    >
+      <tr>
+        <td>
+          {{ rowData.name }}
+        </td>
+        <td>
+          {{ rowData.email }}
+        </td>
+        <td>
+          {{ rowData.phone }}
+        </td>
+        <td>
+          {{ rowData.group }}
+        </td>
+        <td>
+          <ng-container *ngFor="let t of rowData.tags; let i = index">
+            <span class="tag-chip">{{ t }}</span
+            ><ng-container *ngIf="i < rowData.tags.length - 1"
+              >,
+            </ng-container>
+          </ng-container>
+        </td>
+        <td>
+          {{ rowData.dateAdded | date : "yyyy-MM-dd HH:mm" }}
+        </td>
+        <td>
+          <button
+            pButton
+            type="button"
+            icon="pi pi-eye"
+            class="p-button-text p-button-sm p-button-info"
+            pTooltip="View Contact"
+            tooltipPosition="top"
+            (click)="onViewContact(rowData)"
+            style="margin-right: 0.3rem"
+          ></button>
+          <button
+            pButton
+            type="button"
+            icon="pi pi-trash"
+            class="p-button-text p-button-sm p-button-danger"
+            (click)="onDeleteContact(rowData)"
+          ></button>
+          <button
+            pButton
+            type="button"
+            icon="pi pi-pencil"
+            class="p-button-text p-button-sm p-button-warning"
+            pTooltip="Edit Contact"
+            tooltipPosition="top"
+            (click)="onEditContact(rowData)"
+            style="margin-right: 0.3rem"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="7">No contacts found.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<!-- Delete Confirmation Dialog -->
+<p-confirmDialog></p-confirmDialog>
+
+<!-- View Contact Dialog -->
+<p-dialog
+  header="Contact Details"
+  [(visible)]="showViewDialog"
+  [modal]="true"
+  [draggable]="true"
+  [closable]="true"
+  [style]="{ width: '350px', 'border-radius': '12px' }"
+  [contentStyle]="{ padding: '0' }"
+  [baseZIndex]="1100"
+  (onHide)="viewContact = null"
+>
+  <ng-container *ngIf="viewContact">
+    <div class="view-contact-card">
+      <div class="view-contact-header">
+        <span class="pi pi-user" style="font-size: 2rem; color: #3f51b5"></span>
+        <div>
+          <div class="view-contact-name">{{ viewContact.name }}</div>
+          <div class="view-contact-group">{{ viewContact.group }}</div>
+        </div>
+      </div>
+      <div class="view-contact-info">
+        <div>
+          <span class="pi pi-envelope"></span>
+          <span>{{ viewContact.email }}</span>
+        </div>
+        <div>
+          <span class="pi pi-phone"></span>
+          <span>{{ viewContact.phone }}</span>
+        </div>
+        <div>
+          <span class="pi pi-calendar"></span>
+          <span>{{ viewContact.dateAdded | date : "yyyy-MM-dd HH:mm" }}</span>
+        </div>
+        <div *ngIf="viewContact.tags?.length">
+          <span class="pi pi-tags"></span>
+          <span>
+            <ng-container *ngFor="let tag of viewContact.tags; let i = index">
+              <span class="p-chip p-chip-info view-chip">{{ tag }}</span>
+            </ng-container>
+          </span>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</p-dialog>
+
+<style>
+  /* Add this style block at the end of your HTML file */
+  :host ::ng-deep .calendar-popup-fix .p-datepicker {
+    z-index: 9999 !important;
+    min-width: 320px !important;
+  }
+</style>

@@ -1,0 +1,78 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+*.egg-info/
+.turbo/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE / OS
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+coverage/
+.pytest_cache/
+htmlcov/
+.mypy_cache/
+
+# Docker
+*.env.docker
+
+# GCP
+*.json
+!package.json
+!tsconfig*.json
+!turbo.json
+# Keep committed: model metrics + ML validation reports (thesis evidence)
+!docs/ml/*.json
+!backend/services/python/ai-service/app/models/*.json
+service-account-key.json
+
+# Python
+*.pkl
+*.joblib
+model_artifacts/
+# Keep the trained model artifacts so the repo is self-contained (small: ~0.5 MB)
+!backend/services/python/ai-service/app/models/*.joblib
+
+# Vite config temp files
+*.timestamp-*.mjs
+
+# Interim report build artefact (regenerate with scripts/build_interim_docx.py)
+docs/INTERIM_REPORT.build.md
+
+# Scratch API payloads used during manual testing
+tmp/
+
+# Excel lock files
+~$*

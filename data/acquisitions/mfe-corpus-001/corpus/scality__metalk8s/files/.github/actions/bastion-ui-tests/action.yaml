@@ -1,0 +1,51 @@
+name: "Bastion UI tests"
+description: "Run UI tests from the Bastion"
+
+inputs:
+  TEST_FILTERS:
+    description: "The test filter to use"
+    required: false
+    default: "integration"
+  TARGET_URL:
+    description: "The URL to reach the UI"
+    required: false
+    default: "https://192.168.1.254:8443"
+  DEST_DIR:
+    description: "The target directory on worker to store tests results"
+    required: false
+    default: "artifacts/cypress/${{ github.job }}"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Chromium on Bastion
+      uses: ./.github/actions/run-command-ssh
+      with:
+        NODE: bastion
+        COMMAND: |
+           sudo dnf install -y epel-release
+           sudo dnf install -y chromium
+
+    - name: Run UI tests from Bastion
+      uses: ./.github/actions/run-command-ssh
+      with:
+        NODE: bastion
+        COMMAND: |
+          cd metalk8s/ui
+          rm -rf babel.config.js
+          #replace http://localhost in cypress/fixtures/deployed-ui-apps.json by ${{ inputs.TARGET_URL }}
+          sed -i 's|http://localhost|${{ inputs.TARGET_URL }}|g' cypress/fixtures/deployed-ui-apps.json
+          CYPRESS_BASE_URL=\"${{ inputs.TARGET_URL }}\" npm run \"test:${{ inputs.TEST_FILTERS }}\"
+
+    - name: Create dest directory
+      shell: bash
+      run: mkdir -p "${{ inputs.DEST_DIR }}"
+
+    - name: Collect cypress screenshots from Bastion
+      shell: bash
+      env:
+        DEST_DIR: "${{ inputs.DEST_DIR }}"
+      run: |
+        scp -r -F ssh_config "bastion":metalk8s/ui/cypress/screenshots "$DEST_DIR/cypress/" || true
+        scp -r -F ssh_config "bastion":metalk8s/ui/cypress/videos "$DEST_DIR/cypress/" || true
+        scp -r -F ssh_config "bastion":metalk8s/ui/junit "$DEST_DIR" || true

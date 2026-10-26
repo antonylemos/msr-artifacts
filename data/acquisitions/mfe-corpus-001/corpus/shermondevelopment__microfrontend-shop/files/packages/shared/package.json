@@ -1,0 +1,16 @@
+{
+  "name": "@microfrontend/shared",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@microfrontend/types": "0.0.0",
+    "axios": "^1.13.2"
+  },
+  "peerDependencies": {
+    "@tanstack/react-query": "^5.90.12"
+  }
+}

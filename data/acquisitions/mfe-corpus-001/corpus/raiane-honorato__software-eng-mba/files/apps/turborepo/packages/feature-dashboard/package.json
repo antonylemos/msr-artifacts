@@ -1,0 +1,32 @@
+{
+  "name": "@mygym/feature-dashboard",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix"
+  },
+  "dependencies": {
+    "@mygym/theme": "workspace:*",
+    "@mygym/data": "workspace:*",
+    "@mygym/utils": "workspace:*",
+    "@mygym/navigation": "workspace:*",
+    "@mygym/store": "workspace:*",
+    "@mygym/ui": "workspace:*"
+  },
+  "devDependencies": {
+    "@mygym/tsconfig": "workspace:*",
+    "@mygym/eslint-config": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": ">=19.0.0",
+    "react-native": ">=0.81.0",
+    "@react-navigation/bottom-tabs": "^7.15.9",
+    "@react-navigation/native": "^7.2.2",
+    "@react-navigation/native-stack": "^7.14.11",
+    "phosphor-react-native": "^3.0.4",
+    "react-native-safe-area-context": "^5.7.0"
+  }
+}

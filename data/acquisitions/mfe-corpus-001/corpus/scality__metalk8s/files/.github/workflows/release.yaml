@@ -1,0 +1,172 @@
+name: "Release"
+run-name: Release new ${{ inputs.version-type }} from ${{ github.ref_name }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      version-type:
+        description: "Version type"
+        required: true
+        type: choice
+        default: "alpha"
+        options:
+          - "alpha"
+          - "beta"
+          - "GA"
+      what-is-new:
+        description: "What's new: it should be a JSON-formatted list such as [\"feature 1\", \"feature 2\"]"
+        required: false
+        default: "[]"
+        type: string
+
+jobs:
+  prepare-version:
+    runs-on: ubuntu-24.04
+    steps:
+      # ─── Setup: authentication & fail-fast on user inputs ───
+      - uses: actions/create-github-app-token@v3
+        id: app-token
+        with:
+          app-id: ${{ vars.ACTIONS_APP_ID }}
+          private-key: ${{ secrets.ACTIONS_APP_PRIVATE_KEY }}
+
+      - name: Validate what's new
+        run: |
+          # We just check if handle this input using jq will not fail.
+          # If it does, the workflow will fail in a inconsistent way.
+          echo '${{ inputs.what-is-new }}' | jq -r '.[]'
+
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          token: ${{ steps.app-token.outputs.token }}
+
+      # ─── Compose & validate release parameters (fail fast) ───
+      - name: Install semver tool
+        run: |
+          curl --fail -LO https://raw.githubusercontent.com/fsaintjacques/semver-tool/3.4.0/src/semver
+          chmod +x ./semver
+
+      - name: Compose release tag
+        env:
+          VERSION_TYPE: ${{ inputs.version-type }}
+        run: .github/scripts/release-compose-tag.sh
+
+      - name: Validate ${{ env.RELEASE_TAG }} tag
+        run: ./semver validate ${{ env.RELEASE_TAG }}
+
+      - name: Check if version ${{ env.BASE_VERSION }} is on the right branch
+        run: |
+          GIT_REMOTE=$(git remote)
+          BASE_BRANCH=$(git branch -a --list ${GIT_REMOTE}/development/${{ env.SHORT_VERSION }})
+          if ! git merge-base --is-ancestor HEAD ${BASE_BRANCH}; then
+            echo "Version commit is not included in base branch ${BASE_BRANCH}"
+            exit 1
+          fi
+
+      # ─── Install the tools needed to produce the release ───
+      - name: install changie
+        uses: miniscruff/changie-action@v3
+        with:
+          version: latest
+
+      - name: Install buildchain dependencies
+        run: |
+          python3 -m pip install -r buildchain/requirements.txt
+
+      # ─── Create the release branch, commit, and push ───
+      - name: Prepare branch
+        run: git checkout -b ${{ env.RELEASE_BRANCH }}
+
+      - name: Set the new version
+        env:
+          VERSION_TYPE: ${{ inputs.version-type }}
+          RELEASE_TAG: ${{ env.RELEASE_TAG }}
+        run: .github/scripts/release-set-new-version.sh
+
+      - name: Commit with requested version and push
+        run: |
+          git fsck
+          git gc
+          git config --global user.email ${{ github.actor }}@scality.com
+          git config --global user.name ${{ github.actor }}
+          git commit -m "Release ${{ env.RELEASE_TAG }}"
+          git push --set-upstream origin ${{ env.RELEASE_BRANCH }}
+
+      # ─── Create the annotated release tag ───
+      - name: Create and push `${{ env.RELEASE_TAG }}` tag
+        env:
+          RELEASE_TAG: ${{ env.RELEASE_TAG }}
+          PATCH_VERSION: ${{ env.PATCH_VERSION }}
+          SHORT_VERSION: ${{ env.SHORT_VERSION }}
+          WHAT_IS_NEW: ${{ inputs.what-is-new }}
+        run: .github/scripts/release-create-tag.sh
+
+      # ─── Prepare the release-merge branch (destined to be waterfall'd back) ───
+      - name: Prepare branch to merge ${{ env.RELEASE_TAG }} tag
+        env:
+          RELEASE_TAG: ${{ env.RELEASE_TAG }}
+          PATCH_VERSION: ${{ env.PATCH_VERSION }}
+          SHORT_VERSION: ${{ env.SHORT_VERSION }}
+          VERSION_TYPE: ${{ inputs.version-type }}
+        run: .github/scripts/release-prepare-merge-branch.sh
+
+      - name: Look for important messages
+        id: warn_user
+        run: |
+          link="https://github.com/${{ github.repository }}/blob/${{ env.RELEASE_TAG }}/"
+          {
+            echo 'COMMENT<<EOF'
+            echo "# Mentions of ${{ env.RELEASE_TAG }} in ${{ github.ref_name }}"
+            git grep -rHn "${{ env.RELEASE_TAG }}" | sed -E "s;(.*):([0-9]+):.*;$link\1#L\2;" || true
+            echo EOF
+          } >> "$GITHUB_ENV"
+
+      # ─── GA-only: pre-create integration branches so Bert-E doesn't race ───
+      - name: Prepare waterfall integration branches
+        if: inputs.version-type == 'GA'
+        env:
+          RELEASE_TAG: ${{ env.RELEASE_TAG }}
+          SHORT_VERSION: ${{ env.SHORT_VERSION }}
+        run: .github/scripts/release-prepare-waterfall-branches.sh
+
+      # ─── Open the release-merge pull request ───
+      - name: Create pull request
+        uses: actions/github-script@v9
+        env:
+          COMMENT: ${{ env.COMMENT }}
+          RELEASE_TAG: ${{ env.RELEASE_TAG }}
+          SHORT_VERSION: ${{ env.SHORT_VERSION }}
+        with:
+          script: |
+            const pr = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              head: `feature/merge-${process.env.RELEASE_TAG}-tag`,
+              base: `development/${process.env.SHORT_VERSION}`,
+              title: `Merge release tag for ${process.env.RELEASE_TAG}`
+            });
+
+            await github.rest.issues.createComment({
+              issue_number: pr.data.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: process.env.COMMENT
+            });
+
+            await github.rest.issues.addLabels({
+              issue_number: pr.data.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: [
+                {"name": "skip changelog"},
+              ],
+            });
+
+            await github.rest.issues.createComment({
+              issue_number: pr.data.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '/approve'
+            });

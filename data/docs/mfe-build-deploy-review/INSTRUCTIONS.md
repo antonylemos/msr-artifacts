@@ -1,5 +1,7 @@
 # Método: revisão de build e deploy
 
+Os caminhos começados por `docs/` preservam a organização do projeto de origem (`repo-miner`). Neste pacote, as análises correspondentes estão em `data/docs/`. Os caminhos e hashes registrados nas análises mantêm sua função de proveniência.
+
 Este documento descreve como foi feita a revisão de build e deploy e como ler os arquivos
 `NNN-<owner>__<name>.md` desta pasta. Cada arquivo registra a revisão de um repositório do corpus.
 
@@ -38,6 +40,9 @@ Esta etapa não reclassifica o repositório e não altera as revisões anteriore
 | Classificação (id, commit) | `docs/mfe-classification/NNN-<owner>__<name>.md` |
 
 Todo `artefato:linha` é relativo a `files/` do snapshot. A revisão nunca usa `data/samples/` e não modifica nada em `data/`.
+
+As revisões anteriores, os dados e as configurações consultados são fontes de evidência e não
+são alterados nesta etapa. A validação final cabe ao pesquisador.
 
 ## Produto
 

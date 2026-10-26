@@ -1,0 +1,9 @@
+manifest,state
+auth/package.json,ok
+container/package.json,ok
+dashboard/package.json,ok
+marketing/package.json,ok
+packages/auth/package.json,ok
+packages/container/package.json,ok
+packages/dashboard/package.json,ok
+packages/marketing/package.json,ok

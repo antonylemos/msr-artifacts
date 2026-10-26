@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "id": "973277755",
+  "fullName": "Hariharan-s-99/microFrontend",
+  "commit": "902273771afdb4f52006aeed0bcb3cd0e6c33cee",
+  "acquiredAt": "2026-10-24T00:32:35.849Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 51,
+    "bytes": 731557
+  },
+  "languages": {
+    "YAML": 418049,
+    "JSON": 275182,
+    "TypeScript": 18532,
+    "Other": 7827,
+    "CSS": 7548,
+    "JavaScript": 3517,
+    "HTML": 902
+  },
+  "contentSha256": "76061a560b2aa25d90d24c35699b24b52ce7c88219cad60fb8c9d142940b1b6a"
+}

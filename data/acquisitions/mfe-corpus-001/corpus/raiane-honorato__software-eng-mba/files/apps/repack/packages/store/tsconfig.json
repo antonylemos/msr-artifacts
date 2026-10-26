@@ -1,0 +1,8 @@
+{
+  "extends": "@mygym/tsconfig/base.json",
+  "include": ["src", "__tests__"],
+  "compilerOptions": {
+    "outDir": "dist",
+    "types": ["jest"]
+  }
+}

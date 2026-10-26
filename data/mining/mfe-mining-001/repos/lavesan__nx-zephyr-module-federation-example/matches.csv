@@ -1,0 +1,141 @@
+pattern,path,line,excerpt
+dep-module-federation,package.json,2,"  ""name"": ""nx-module-federation-with-zephyr"","
+dep-monorepo-tool,package.json,13,"    ""@nx/js"": ""20.7.2"","
+dep-monorepo-tool,package.json,17,"    ""nx"": ""20.7.2"","
+lock-mfe-dependency,pnpm-lock.yaml,850,  '@module-federation/automatic-vendor-federation@1.2.1':
+lock-mfe-dependency,pnpm-lock.yaml,855,  '@module-federation/error-codes@0.13.1':
+lock-mfe-dependency,pnpm-lock.yaml,858,  '@module-federation/error-codes@0.14.0':
+lock-mfe-dependency,pnpm-lock.yaml,861,  '@module-federation/error-codes@0.8.4':
+lock-mfe-dependency,pnpm-lock.yaml,864,  '@module-federation/runtime-core@0.13.1':
+lock-mfe-dependency,pnpm-lock.yaml,867,  '@module-federation/runtime-core@0.14.0':
+lock-mfe-dependency,pnpm-lock.yaml,870,  '@module-federation/runtime-tools@0.0.8':
+lock-mfe-dependency,pnpm-lock.yaml,873,  '@module-federation/runtime-tools@0.1.6':
+lock-mfe-dependency,pnpm-lock.yaml,876,  '@module-federation/runtime-tools@0.13.1':
+lock-mfe-dependency,pnpm-lock.yaml,879,  '@module-federation/runtime-tools@0.14.0':
+lock-mfe-dependency,pnpm-lock.yaml,882,  '@module-federation/runtime-tools@0.8.4':
+lock-mfe-dependency,pnpm-lock.yaml,885,  '@module-federation/runtime@0.0.8':
+lock-mfe-dependency,pnpm-lock.yaml,888,  '@module-federation/runtime@0.1.6':
+lock-mfe-dependency,pnpm-lock.yaml,891,  '@module-federation/runtime@0.13.1':
+lock-mfe-dependency,pnpm-lock.yaml,894,  '@module-federation/runtime@0.14.0':
+lock-mfe-dependency,pnpm-lock.yaml,897,  '@module-federation/runtime@0.8.4':
+lock-mfe-dependency,pnpm-lock.yaml,900,  '@module-federation/sdk@0.0.8':
+lock-mfe-dependency,pnpm-lock.yaml,903,  '@module-federation/sdk@0.1.6':
+lock-mfe-dependency,pnpm-lock.yaml,906,  '@module-federation/sdk@0.13.1':
+lock-mfe-dependency,pnpm-lock.yaml,909,  '@module-federation/sdk@0.14.0':
+lock-mfe-dependency,pnpm-lock.yaml,912,  '@module-federation/sdk@0.8.4':
+lock-mfe-dependency,pnpm-lock.yaml,915,  '@module-federation/webpack-bundler-runtime@0.0.8':
+lock-mfe-dependency,pnpm-lock.yaml,918,  '@module-federation/webpack-bundler-runtime@0.1.6':
+lock-mfe-dependency,pnpm-lock.yaml,921,  '@module-federation/webpack-bundler-runtime@0.13.1':
+lock-mfe-dependency,pnpm-lock.yaml,924,  '@module-federation/webpack-bundler-runtime@0.14.0':
+lock-mfe-dependency,pnpm-lock.yaml,927,  '@module-federation/webpack-bundler-runtime@0.8.4':
+lock-mfe-dependency,pnpm-lock.yaml,3662,  '@module-federation/automatic-vendor-federation@1.2.1(webpack@5.99.9(@swc/core@1.5.29(@swc/helpers@0.5.17)))':
+lock-mfe-dependency,pnpm-lock.yaml,3667,  '@module-federation/error-codes@0.13.1': {}
+lock-mfe-dependency,pnpm-lock.yaml,3669,  '@module-federation/error-codes@0.14.0': {}
+lock-mfe-dependency,pnpm-lock.yaml,3671,  '@module-federation/error-codes@0.8.4': {}
+lock-mfe-dependency,pnpm-lock.yaml,3673,  '@module-federation/runtime-core@0.13.1':
+lock-mfe-dependency,pnpm-lock.yaml,3675,      '@module-federation/error-codes': 0.13.1
+lock-mfe-dependency,pnpm-lock.yaml,3676,      '@module-federation/sdk': 0.13.1
+lock-mfe-dependency,pnpm-lock.yaml,3678,  '@module-federation/runtime-core@0.14.0':
+lock-mfe-dependency,pnpm-lock.yaml,3680,      '@module-federation/error-codes': 0.14.0
+lock-mfe-dependency,pnpm-lock.yaml,3681,      '@module-federation/sdk': 0.14.0
+lock-mfe-dependency,pnpm-lock.yaml,3683,  '@module-federation/runtime-tools@0.0.8':
+lock-mfe-dependency,pnpm-lock.yaml,3685,      '@module-federation/runtime': 0.0.8
+lock-mfe-dependency,pnpm-lock.yaml,3686,      '@module-federation/webpack-bundler-runtime': 0.0.8
+lock-mfe-dependency,pnpm-lock.yaml,3688,  '@module-federation/runtime-tools@0.1.6':
+lock-mfe-dependency,pnpm-lock.yaml,3690,      '@module-federation/runtime': 0.1.6
+lock-mfe-dependency,pnpm-lock.yaml,3691,      '@module-federation/webpack-bundler-runtime': 0.1.6
+lock-mfe-dependency,pnpm-lock.yaml,3693,  '@module-federation/runtime-tools@0.13.1':
+lock-mfe-dependency,pnpm-lock.yaml,3695,      '@module-federation/runtime': 0.13.1
+lock-mfe-dependency,pnpm-lock.yaml,3696,      '@module-federation/webpack-bundler-runtime': 0.13.1
+lock-mfe-dependency,pnpm-lock.yaml,3698,  '@module-federation/runtime-tools@0.14.0':
+lock-mfe-dependency,pnpm-lock.yaml,3700,      '@module-federation/runtime': 0.14.0
+lock-mfe-dependency,pnpm-lock.yaml,3701,      '@module-federation/webpack-bundler-runtime': 0.14.0
+lock-mfe-dependency,pnpm-lock.yaml,3703,  '@module-federation/runtime-tools@0.8.4':
+lock-mfe-dependency,pnpm-lock.yaml,3705,      '@module-federation/runtime': 0.8.4
+lock-mfe-dependency,pnpm-lock.yaml,3706,      '@module-federation/webpack-bundler-runtime': 0.8.4
+lock-mfe-dependency,pnpm-lock.yaml,3708,  '@module-federation/runtime@0.0.8':
+lock-mfe-dependency,pnpm-lock.yaml,3710,      '@module-federation/sdk': 0.0.8
+lock-mfe-dependency,pnpm-lock.yaml,3712,  '@module-federation/runtime@0.1.6':
+lock-mfe-dependency,pnpm-lock.yaml,3714,      '@module-federation/sdk': 0.1.6
+lock-mfe-dependency,pnpm-lock.yaml,3716,  '@module-federation/runtime@0.13.1':
+lock-mfe-dependency,pnpm-lock.yaml,3718,      '@module-federation/error-codes': 0.13.1
+lock-mfe-dependency,pnpm-lock.yaml,3719,      '@module-federation/runtime-core': 0.13.1
+lock-mfe-dependency,pnpm-lock.yaml,3720,      '@module-federation/sdk': 0.13.1
+lock-mfe-dependency,pnpm-lock.yaml,3722,  '@module-federation/runtime@0.14.0':
+lock-mfe-dependency,pnpm-lock.yaml,3724,      '@module-federation/error-codes': 0.14.0
+lock-mfe-dependency,pnpm-lock.yaml,3725,      '@module-federation/runtime-core': 0.14.0
+lock-mfe-dependency,pnpm-lock.yaml,3726,      '@module-federation/sdk': 0.14.0
+lock-mfe-dependency,pnpm-lock.yaml,3728,  '@module-federation/runtime@0.8.4':
+lock-mfe-dependency,pnpm-lock.yaml,3730,      '@module-federation/error-codes': 0.8.4
+lock-mfe-dependency,pnpm-lock.yaml,3731,      '@module-federation/sdk': 0.8.4
+lock-mfe-dependency,pnpm-lock.yaml,3733,  '@module-federation/sdk@0.0.8': {}
+lock-mfe-dependency,pnpm-lock.yaml,3735,  '@module-federation/sdk@0.1.6': {}
+lock-mfe-dependency,pnpm-lock.yaml,3737,  '@module-federation/sdk@0.13.1': {}
+lock-mfe-dependency,pnpm-lock.yaml,3739,  '@module-federation/sdk@0.14.0': {}
+lock-mfe-dependency,pnpm-lock.yaml,3741,  '@module-federation/sdk@0.8.4':
+lock-mfe-dependency,pnpm-lock.yaml,3745,  '@module-federation/webpack-bundler-runtime@0.0.8':
+lock-mfe-dependency,pnpm-lock.yaml,3747,      '@module-federation/runtime': 0.0.8
+lock-mfe-dependency,pnpm-lock.yaml,3748,      '@module-federation/sdk': 0.0.8
+lock-mfe-dependency,pnpm-lock.yaml,3750,  '@module-federation/webpack-bundler-runtime@0.1.6':
+lock-mfe-dependency,pnpm-lock.yaml,3752,      '@module-federation/runtime': 0.1.6
+lock-mfe-dependency,pnpm-lock.yaml,3753,      '@module-federation/sdk': 0.1.6
+lock-mfe-dependency,pnpm-lock.yaml,3755,  '@module-federation/webpack-bundler-runtime@0.13.1':
+lock-mfe-dependency,pnpm-lock.yaml,3757,      '@module-federation/runtime': 0.13.1
+lock-mfe-dependency,pnpm-lock.yaml,3758,      '@module-federation/sdk': 0.13.1
+lock-mfe-dependency,pnpm-lock.yaml,3760,  '@module-federation/webpack-bundler-runtime@0.14.0':
+lock-mfe-dependency,pnpm-lock.yaml,3762,      '@module-federation/runtime': 0.14.0
+lock-mfe-dependency,pnpm-lock.yaml,3763,      '@module-federation/sdk': 0.14.0
+lock-mfe-dependency,pnpm-lock.yaml,3765,  '@module-federation/webpack-bundler-runtime@0.8.4':
+lock-mfe-dependency,pnpm-lock.yaml,3767,      '@module-federation/runtime': 0.8.4
+lock-mfe-dependency,pnpm-lock.yaml,3768,      '@module-federation/sdk': 0.8.4
+lock-mfe-dependency,pnpm-lock.yaml,4163,      '@module-federation/runtime-tools': 0.0.8
+lock-mfe-dependency,pnpm-lock.yaml,4181,      '@module-federation/runtime-tools': 0.0.8
+lock-mfe-dependency,pnpm-lock.yaml,4199,      '@module-federation/runtime-tools': 0.1.6
+lock-mfe-dependency,pnpm-lock.yaml,4209,      '@module-federation/runtime-tools': 0.8.4
+lock-mfe-dependency,pnpm-lock.yaml,4218,      '@module-federation/runtime-tools': 0.8.4
+lock-mfe-dependency,pnpm-lock.yaml,4227,      '@module-federation/runtime-tools': 0.14.0
+lock-mfe-dependency,pnpm-lock.yaml,4236,      '@module-federation/runtime-tools': 0.13.1
+lock-mfe-dependency,pnpm-lock.yaml,5701,      '@module-federation/automatic-vendor-federation': 1.2.1(webpack@5.99.9(@swc/core@1.5.29(@swc/helpers@0.5.17)))
+lock-mfe-dependency,pnpm-lock.yaml,5718,      '@module-federation/automatic-vendor-federation': 1.2.1(webpack@5.99.9(@swc/core@1.5.29(@swc/helpers@0.5.17)))
+lock-mfe-dependency,pnpm-lock.yaml,5735,      '@module-federation/automatic-vendor-federation': 1.2.1(webpack@5.99.9(@swc/core@1.5.29(@swc/helpers@0.5.17)))
+cfg-remotes,apps/shell/module-federation.config.ts,20,  remotes: {
+cfg-exposes,apps/courses/module-federation.config.ts,7,  exposes: {
+cfg-exposes,apps/profile/module-federation.config.ts,7,  exposes: {
+cfg-exposes,apps/shell/module-federation.config.ts,24,"  exposes: {},"
+cfg-shared,apps/courses/module-federation.config.ts,10,  shared: {
+cfg-shared,apps/courses/module-federation.config.ts,13,"      singleton: true,"
+cfg-shared,apps/courses/module-federation.config.ts,17,"      singleton: true,"
+cfg-shared,apps/profile/module-federation.config.ts,10,  shared: {
+cfg-shared,apps/profile/module-federation.config.ts,13,"      singleton: true,"
+cfg-shared,apps/profile/module-federation.config.ts,17,"      singleton: true,"
+cfg-shared,apps/shell/module-federation.config.ts,25,  shared: {
+cfg-shared,apps/shell/module-federation.config.ts,28,"      singleton: true,"
+cfg-shared,apps/shell/module-federation.config.ts,33,"      singleton: true,"
+rt-remote-entry,apps/courses/module-federation.config.ts,6,"  filename: ""remoteEntry.js"","
+rt-remote-entry,apps/profile/module-federation.config.ts,6,"  filename: ""remoteEntry.js"","
+rt-remote-entry,apps/shell/module-federation.config.ts,19,"  filename: ""remoteEntry.js"","
+rt-remote-entry,apps/shell/module-federation.config.ts,21,"    courses: `courses@${COURSES_URL}/remoteEntry.js`,"
+rt-remote-entry,apps/shell/module-federation.config.ts,22,"    profile: `profile@${PROFILE_URL}/remoteEntry.js`,"
+src-remote-import,apps/shell/src/App.tsx,6,"const Courses = lazy(() => import(""courses/App""));"
+src-remote-import,apps/shell/src/App.tsx,7,"const Profile = lazy(() => import(""profile/App""));"
+src-async-bootstrap,apps/courses/src/index.tsx,1,import('./bootstrap');
+src-async-bootstrap,apps/shell/src/index.tsx,1,"import(""./bootstrap"");"
+ops-deployment-file,apps/courses/vercel.json,,
+ops-deployment-file,apps/profile/vercel.json,,
+ops-deployment-file,vercel.json,,
+ops-hosting,README.md,5,🔗 [Live Demo](https://nx-zephyr-module-federation-shell.vercel.app/)
+ops-hosting,README.md,97,The project is deployed on Vercel with separate deployments for each application:
+ops-hosting,README.md,99,- Shell App: [https://nx-zephyr-module-federation-shell.vercel.app/](https://nx-zephyr-module-federation-shell.vercel.app/)
+doc-mfe-term,README.md,3,"A modern micro-frontend architecture demonstration using Module Federation, built with Nx monorepo and Zephyr. This project showcases how to build scalable, modular web applications using cutting-edge technologies."
+doc-mfe-term,README.md,47,  - Micro-frontend architecture
+doc-mfe-term,README.md,83,The project uses a micro-frontend architecture with Module Federation:
+doc-integration-technology,README.md,1,# Nx Module Federation with Zephyr
+doc-integration-technology,README.md,3,"A modern micro-frontend architecture demonstration using Module Federation, built with Nx monorepo and Zephyr. This project showcases how to build scalable, modular web applications using cutting-edge technologies."
+doc-integration-technology,README.md,9,This monorepo contains three main applications that work together using Module Federation:
+doc-integration-technology,README.md,42,- **Module Federation**
+doc-integration-technology,README.md,52,  - Optimized module federation setup
+doc-integration-technology,README.md,61,  - Module Federation support
+doc-integration-technology,README.md,83,The project uses a micro-frontend architecture with Module Federation:
+doc-host-remote,README.md,100,- Courses App: Remote module integrated with Shell
+doc-host-remote,README.md,101,- Profile App: Remote module integrated with Shell
+ws-workspaces,pnpm-workspace.yaml,1,packages: 

@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "id": "1366618635",
+  "fullName": "tonoizer/react-mf-patch-skew-repro",
+  "commit": "92739d5e61a09a9b31e6b53f0662f6f9e71b5e3a",
+  "acquiredAt": "2026-10-24T00:26:34.307Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "evidence/host-screenshot.png",
+      "reason": "preset:binaries",
+      "size": 4254
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 36,
+    "bytes": 135320
+  },
+  "languages": {
+    "JSON": 60376,
+    "YAML": 49591,
+    "JavaScript": 15403,
+    "Other": 6253,
+    "Markdown": 2808,
+    "HTML": 889
+  },
+  "contentSha256": "434c6b9abb080f4c86c5753ecaf94e332e80c68f7ff6f56bf1357dff34ad2526"
+}

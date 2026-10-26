@@ -1,0 +1,11 @@
+directory,markers
+.,package.json
+apps/admin-mf,apps/admin-mf/module-federation.config.d.ts;apps/admin-mf/module-federation.config.js;apps/admin-mf/module-federation.config.ts;apps/admin-mf/package.json;apps/admin-mf/vite.config.d.ts;apps/admin-mf/vite.config.js;apps/admin-mf/vite.config.ts
+apps/auth-mf,apps/auth-mf/module-federation.config.d.ts;apps/auth-mf/module-federation.config.js;apps/auth-mf/module-federation.config.ts;apps/auth-mf/package.json;apps/auth-mf/vite.config.d.ts;apps/auth-mf/vite.config.js;apps/auth-mf/vite.config.ts
+apps/dashboard-mf,apps/dashboard-mf/module-federation.config.d.ts;apps/dashboard-mf/module-federation.config.js;apps/dashboard-mf/module-federation.config.ts;apps/dashboard-mf/package.json;apps/dashboard-mf/vite.config.d.ts;apps/dashboard-mf/vite.config.js;apps/dashboard-mf/vite.config.ts
+apps/messaging-mf,apps/messaging-mf/module-federation.config.d.ts;apps/messaging-mf/module-federation.config.js;apps/messaging-mf/module-federation.config.ts;apps/messaging-mf/package.json;apps/messaging-mf/vite.config.d.ts;apps/messaging-mf/vite.config.js;apps/messaging-mf/vite.config.ts
+apps/shell,apps/shell/module-federation.config.d.ts;apps/shell/module-federation.config.js;apps/shell/module-federation.config.ts;apps/shell/package.json;apps/shell/vite.config.d.ts;apps/shell/vite.config.js;apps/shell/vite.config.ts
+packages/sdk,packages/sdk/package.json
+packages/shared,packages/shared/package.json
+packages/types,packages/types/package.json
+packages/ui,packages/ui/package.json

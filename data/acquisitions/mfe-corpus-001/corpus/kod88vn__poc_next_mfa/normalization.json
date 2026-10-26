@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "id": "1208265953",
+  "fullName": "kod88vn/poc_next_mfa",
+  "commit": "d20db8260825dc17ad4c68ac6df0595c1c59df23",
+  "acquiredAt": "2026-10-24T00:26:34.108Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 45,
+    "bytes": 237769
+  },
+  "languages": {
+    "JSON": 98660,
+    "TypeScript": 67740,
+    "Other": 52511,
+    "Markdown": 10255,
+    "JavaScript": 8199,
+    "CSS": 404
+  },
+  "contentSha256": "48505dbc28085a96d25e4586263cfbe7f7f94cc9e5d585fd500bcdeef42c6eac"
+}

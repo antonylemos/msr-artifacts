@@ -1,0 +1,4 @@
+manifest,state
+host-app/package.json,ok
+todoForm-app/package.json,ok
+todoList-app/package.json,ok

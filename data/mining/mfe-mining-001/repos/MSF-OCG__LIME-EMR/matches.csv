@@ -1,0 +1,38 @@
+pattern,path,line,excerpt
+ops-deployment-file,scripts/bundled-docker/openfn-web/Dockerfile,,
+ops-deployment-file,scripts/bundled-docker/openfn-worker/Dockerfile,,
+ops-deployment-file,scripts/docker-compose-openfn.yml,,
+ops-deployment-file,scripts/docker-compose-openmrs-override.yml,,
+ops-deployment-file,scripts/docker-compose-traefik.yml,,
+ops-dockerfile,scripts/bundled-docker/openfn-web/Dockerfile,2,FROM openfn/lightning:v2.17.0
+ops-dockerfile,scripts/bundled-docker/openfn-worker/Dockerfile,2,FROM openfn/ws-worker:v1.27.2
+ops-compose-service,scripts/docker-compose-openfn.yml,68,    image: postgres:16.14
+ops-compose-service,scripts/docker-compose-openfn.yml,86,    image: 'openfn/lightning:v2.17.0'
+ops-compose-service,scripts/docker-compose-openfn.yml,92,    depends_on:
+ops-compose-service,scripts/docker-compose-openfn.yml,101,    image: 'openfn/lightning:v2.17.0'
+ops-compose-service,scripts/docker-compose-openfn.yml,113,    depends_on:
+ops-compose-service,scripts/docker-compose-openfn.yml,141,    image: 'openfn/ws-worker:v1.27.2'
+ops-compose-service,scripts/docker-compose-openfn.yml,147,    depends_on:
+ops-compose-service,scripts/docker-compose-openmrs-override.yml,3,    image: openmrs/openmrs-core:2.8.9
+ops-compose-service,scripts/docker-compose-openmrs-override.yml,11,    image: mariadb:10.11.13
+ops-compose-service,scripts/docker-compose-traefik.yml,7,    image: traefik:v2.6
+ops-compose-service,scripts/docker-compose-traefik.yml,28,    depends_on:
+ops-compose-service,scripts/docker-compose-traefik.yml,32,    image: alpine
+ci-workflow-file,.github/workflows/build-all-vm.yml,,
+ci-workflow-file,.github/workflows/build-all.yml,,
+ci-workflow-file,.github/workflows/ci.yml,,
+ci-workflow-file,.github/workflows/cleanup-artifacts.yml,,
+ci-workflow-file,.github/workflows/configuration-build-test.yml,,
+ci-workflow-file,.github/workflows/deploy.yml,,
+ci-workflow-file,.github/workflows/maven-publish.yml,,
+ci-workflow-file,.github/workflows/playwright.yml,,
+ci-workflow-file,.github/workflows/run-e2e-tests.yml,,
+doc-mfe-term,README.md,189,"| **Frontend** | OpenMRS 3 ESM microfrontend architecture (41 modules), plus custom Madiro modules (Nutrition, Mental Health) |"
+doc-mfe-term,README.md,581,"OpenMRS configuration covers the backend modules, frontend microfrontends, and clinical metadata loaded by the [Initializer module](https://github.com/mekomsolutions/openmrs-module-initializer)."
+doc-mfe-term,docs/README.md,36,"| **Frontend** | OpenMRS 3 ESM microfrontend architecture (41 modules), plus custom Madiro modules (Nutrition, Mental Health) |"
+doc-import-map-zones,README.md,1063,**Option C: Remove importmap entries via the build (site-level)**
+doc-import-map-zones,README.md,1065,Add a `gmavenplus-plugin` execution in the site's `pom.xml` that runs the `remove-importmap-entries.groovy` script. This strips the specified modules from the importmap at build time so they are never loaded for that site:
+doc-import-map-zones,README.md,1069,  <id>remove-importmap-entries</id>
+doc-import-map-zones,README.md,1082,      <script>file://${project.basedir}/../../scripts/remove-importmap-entries.groovy</script>
+doc-import-map-zones,README.md,1102,> **Note:** Options A and B are configuration-level overrides -- they hide the app's UI via the site's frontend config JSON. Option C removes the app from the importmap at build time for a single site. Option D is a distro-level change that excludes the app from the build for all sites.
+doc-independence,README.md,952,- **Environment isolation**: Dev and UAT environments run on independent infrastructure with separate databases containing only synthetic test data

@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "id": "1099550821",
+  "fullName": "RafaM-dev/hostRepo",
+  "commit": "e68ba940850001cc7231849cb8a44097f0e12853",
+  "acquiredAt": "2026-10-24T00:32:34.269Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "public/homeImage.png",
+      "reason": "preset:binaries",
+      "size": 2718167
+    },
+    {
+      "path": "public/titleHome.png",
+      "reason": "preset:binaries",
+      "size": 573253
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 39,
+    "bytes": 236888
+  },
+  "languages": {
+    "JSON": 185039,
+    "TypeScript": 25011,
+    "Markdown": 13276,
+    "SVG": 8151,
+    "CSS": 3226,
+    "JavaScript": 1579,
+    "HTML": 353,
+    "Other": 253
+  },
+  "contentSha256": "5cf8f01b84e566f17eeef29c2ed311d69c5384af56909fc6756d5e1b686e21ce"
+}

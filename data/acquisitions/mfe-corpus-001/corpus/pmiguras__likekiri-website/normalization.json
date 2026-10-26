@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "id": "1329274714",
+  "fullName": "pmiguras/likekiri-website",
+  "commit": "4b8c5fd5053751aba70fcd4859a38fd33062c8d3",
+  "acquiredAt": "2026-10-24T00:32:20.357Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "apps/admin-shell/public/apple-touch-icon.png",
+      "reason": "preset:binaries",
+      "size": 36148
+    },
+    {
+      "path": "apps/admin-shell/public/favicon.png",
+      "reason": "preset:binaries",
+      "size": 7955
+    },
+    {
+      "path": "apps/admin-shell/public/logo.webp",
+      "reason": "preset:binaries",
+      "size": 21240
+    },
+    {
+      "path": "apps/admin-shell/public/marca.png",
+      "reason": "preset:binaries",
+      "size": 6413
+    },
+    {
+      "path": "apps/web-shell/public/apple-touch-icon.png",
+      "reason": "preset:binaries",
+      "size": 36148
+    },
+    {
+      "path": "apps/web-shell/public/favicon.png",
+      "reason": "preset:binaries",
+      "size": 7955
+    },
+    {
+      "path": "apps/web-shell/public/fonts/inter-regular.woff2",
+      "reason": "preset:binaries",
+      "size": 48496
+    },
+    {
+      "path": "apps/web-shell/public/fonts/inter-semibold.woff2",
+      "reason": "preset:binaries",
+      "size": 50204
+    },
+    {
+      "path": "apps/web-shell/public/fonts/source-serif-4-display-semibold.woff2",
+      "reason": "preset:binaries",
+      "size": 46236
+    },
+    {
+      "path": "apps/web-shell/public/marca/logo.webp",
+      "reason": "preset:binaries",
+      "size": 21240
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 216,
+    "bytes": 844068
+  },
+  "languages": {
+    "TypeScript": 412826,
+    "JavaScript": 152994,
+    "YAML": 126414,
+    "Markdown": 111285,
+    "Other": 19625,
+    "JSON": 15768,
+    "SQL": 4530,
+    "HTML": 498,
+    "TOML": 128
+  },
+  "contentSha256": "0c198437256127e9d0565b3cf229ff72f0ccb76159a1582a59a43d27d9f87df8"
+}

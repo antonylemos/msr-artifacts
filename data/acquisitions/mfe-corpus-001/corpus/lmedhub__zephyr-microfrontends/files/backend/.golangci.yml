@@ -1,0 +1,22 @@
+linters:
+  enable:
+    - golint
+    - errcheck
+    - staticcheck
+    - unused
+    - gocyclo
+    - gofmt
+    - gosec
+  disable:
+    - revive
+  issues:
+    exclude:
+      - "G101"  # Ignore potential hardcoded credentials
+      - "G102"  # Ignore potential hardcoded secret
+  run:
+    tests: false
+    deadline: 2m
+  output:
+    format: colored-line-number
+    sort: true
+    print-issued-by: true

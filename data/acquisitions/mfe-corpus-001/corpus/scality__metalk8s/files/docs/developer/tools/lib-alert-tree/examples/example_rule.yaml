@@ -1,0 +1,67 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    metalk8s.scality.com/monitor: ""
+  name: example.rules
+  namespace: example
+spec:
+  groups:
+  - name: warning.rules
+    rules:
+    - alert: ExampleDegraded
+      annotations:
+        children: FooBarDegraded{severity='warning'}, QuxNotProgressing{severity='warning'}
+        childrenJsonPath: $[?((@.labels.alertname === 'FooBarDegraded' &&
+          @.labels.severity === 'warning') || (@.labels.alertname === 'QuxNotProgressing' &&
+          @.labels.severity === 'warning'))]
+        summary: The example app is degraded.
+      expr: sum(ALERTS{alertname='FooBarDegraded', alertstate='firing', severity='warning'}
+        or ALERTS{alertname='QuxNotProgressing', alertstate='firing', severity='warning'})
+        >= 1
+      for: 5m
+      labels:
+        severity: warning
+    - alert: FooBarDegraded
+      annotations:
+        children: FooServiceTooManyErrors{severity='warning'}, BarAlmostOutOfSpace{bar=~'baz',
+          severity='warning'}
+        childrenJsonPath: $[?((@.labels.alertname === 'FooServiceTooManyErrors' &&
+          @.labels.severity === 'warning') || (@.labels.alertname === 'BarAlmostOutOfSpace' &&
+          @.labels.severity === 'warning' && @.labels.bar.match(new RegExp('^(?:baz)$'))))]
+        summary: The FooBar service is degraded.
+      expr: sum(ALERTS{alertname='FooServiceTooManyErrors', alertstate='firing', severity='warning'}
+        or ALERTS{alertname='BarAlmostOutOfSpace', alertstate='firing', bar=~'baz',
+        severity='warning'}) >= 1
+      for: 1m
+      labels:
+        severity: warning
+  - name: critical.rules
+    rules:
+    - alert: ExampleAtRisk
+      annotations:
+        children: FooBarAtRisk{severity='critical'}, QuxNotProgressing{severity='critical'}
+        childrenJsonPath: $[?((@.labels.alertname === 'FooBarDegraded' &&
+          @.labels.severity === 'critical') || (@.labels.alertname === 'QuxNotProgressing' &&
+          @.labels.severity === 'critical'))]
+        summary: The example app is at risk.
+      expr: sum(ALERTS{alertname='FooBarAtRisk', alertstate='firing', severity='critical'}
+        or ALERTS{alertname='QuxNotProgressing', alertstate='firing', severity='critical'})
+        >= 1
+      for: 5m
+      labels:
+        severity: critical
+    - alert: FooBarAtRisk
+      annotations:
+        children: FooServiceTooManyErrors{severity='critical'}, BarAlmostOutOfSpace{bar=~'baz',
+          severity='critical'}
+        childrenJsonPath: $[?((@.labels.alertname === 'FooServiceTooManyErrors' &&
+          @.labels.severity === 'critical') || (@.labels.alertname === 'BarAlmostOutOfSpace' &&
+          @.labels.severity === 'critical' && @.labels.bar.match(new RegExp('^(?:baz)$'))))]
+        summary: The FooBar service is at risk.
+      expr: sum(ALERTS{alertname='FooServiceTooManyErrors', alertstate='firing', severity='critical'}
+        or ALERTS{alertname='BarAlmostOutOfSpace', alertstate='firing', bar=~'baz',
+        severity='critical'}) >= 1
+      for: 1m
+      labels:
+        severity: critical

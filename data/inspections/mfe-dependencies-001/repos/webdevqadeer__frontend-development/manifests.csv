@@ -1,0 +1,8 @@
+manifest,state
+react/mv-marketplace/apps/admin/package.json,ok
+react/mv-marketplace/apps/buyer/package.json,ok
+react/mv-marketplace/apps/payment/package.json,ok
+react/mv-marketplace/apps/seller/package.json,ok
+react/mv-marketplace/apps/shell/package.json,ok
+react/mv-marketplace/package.json,ok
+react/mv-marketplace/packages/mvp-theme/package.json,ok

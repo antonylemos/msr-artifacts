@@ -1,0 +1,8 @@
+{
+  "name": "@org/intranet-e2e",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "name": "intranet-e2e"
+  }
+}

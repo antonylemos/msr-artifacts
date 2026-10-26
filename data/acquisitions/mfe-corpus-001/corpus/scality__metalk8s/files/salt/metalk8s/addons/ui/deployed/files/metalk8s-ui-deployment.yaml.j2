@@ -1,0 +1,85 @@
+{%- from "metalk8s/repo/macro.sls" import build_image_name with context -%}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metalk8s-ui
+  namespace: metalk8s-ui
+  labels:
+    app: metalk8s-ui
+    heritage: metalk8s
+    app.kubernetes.io/name: metalk8s-ui
+    app.kubernetes.io/component: ui
+    app.kubernetes.io/part-of: metalk8s
+    app.kubernetes.io/managed-by: salt
+spec:
+  replicas: {{ replicas }}
+  selector:
+    matchLabels:
+      {{ label_selector | yaml(False) | indent(8) }}
+  template:
+    metadata:
+      labels:
+        {{ label_selector | yaml(False) | indent(8) }}
+    spec:
+      affinity:
+        {{ affinity | yaml(False) | indent(8) }}
+      tolerations:
+      - key: "node-role.kubernetes.io/bootstrap"
+        operator: "Exists"
+        effect: "NoSchedule"
+      - key: "node-role.kubernetes.io/infra"
+        operator: "Exists"
+        effect: "NoSchedule"
+      nodeSelector:
+        kubernetes.io/os: linux
+        node-role.kubernetes.io/infra: ''
+      containers:
+        - name: metalk8s-ui
+          image: {{ build_image_name('metalk8s-ui') }}
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              memory: 170Mi
+            requests:
+              cpu: 100m
+              memory: 70Mi
+          ports:
+          - containerPort: 80
+            name: http
+            protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+              scheme: HTTP
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+              scheme: HTTP
+          volumeMounts:
+          - name: metalk8s-ui-volume
+            mountPath: /etc/metalk8s/ui/config
+            readOnly: true
+          - name: shell-ui-volume
+            mountPath: /etc/metalk8s/ui/shell-config
+            readOnly: true
+          - name: deployed-ui-apps-volume
+            mountPath: /etc/metalk8s/ui/deployed-ui-apps
+            readOnly: true
+          - name: workloadplane-shell-ui-config-volume
+            mountPath: /usr/share/nginx/html/wp
+            readOnly: true
+      volumes:
+        - name: metalk8s-ui-volume
+          configMap:
+            name: metalk8s-ui
+        - name: shell-ui-volume
+          configMap:
+            name: shell-ui
+        - name: deployed-ui-apps-volume
+          configMap:
+            name: deployed-ui-apps-generated
+        - name: workloadplane-shell-ui-config-volume
+          configMap:
+            name: workloadplane-shell-ui-config-generated

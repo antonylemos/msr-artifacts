@@ -1,0 +1,10 @@
+{
+  "name": "13-web-bff",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/main.ts",
+    "build": "tsc -p tsconfig.json --noEmit"
+  }
+}

@@ -1,0 +1,343 @@
+pattern,path,line,excerpt
+dep-module-federation,frontend/order-tracking/package.json,27,"    ""@module-federation/enhanced"": ""^0.2.3"","
+dep-module-federation,frontend/restaurant-catalog/package.json,25,"    ""@module-federation/enhanced"": ""^0.2.3"","
+dep-module-federation,frontend/shell-app/package.json,28,"    ""@module-federation/enhanced"": ""^0.2.3"","
+cfg-federation-plugin,frontend/order-tracking/webpack.config.js,2,const { ModuleFederationPlugin } = require('@module-federation/enhanced/webpack');
+cfg-federation-plugin,frontend/order-tracking/webpack.config.js,45,    new ModuleFederationPlugin({
+cfg-federation-plugin,frontend/restaurant-catalog/webpack.config.js,2,const { ModuleFederationPlugin } = require('@module-federation/enhanced/webpack');
+cfg-federation-plugin,frontend/restaurant-catalog/webpack.config.js,44,    new ModuleFederationPlugin({
+cfg-federation-plugin,frontend/shell-app/webpack.config.js,2,const { ModuleFederationPlugin } = require('@module-federation/enhanced/webpack');
+cfg-federation-plugin,frontend/shell-app/webpack.config.js,48,    new ModuleFederationPlugin({
+cfg-federation-plugin,frontend/user-dashboard/webpack.config.js,3,const { ModuleFederationPlugin } = require('webpack').container;
+cfg-federation-plugin,frontend/user-dashboard/webpack.config.js,50,    new ModuleFederationPlugin({
+cfg-remotes,frontend/shell-app/webpack.config.js,50,      remotes: {
+cfg-exposes,frontend/order-tracking/webpack.config.js,48,      exposes: {
+cfg-exposes,frontend/restaurant-catalog/webpack.config.js,47,      exposes: {
+cfg-exposes,frontend/user-dashboard/webpack.config.js,53,      exposes: {
+cfg-shared,frontend/order-tracking/webpack.config.js,51,      shared: {
+cfg-shared,frontend/order-tracking/webpack.config.js,52,"        react: { singleton: true, requiredVersion: '^18.2.0' },"
+cfg-shared,frontend/order-tracking/webpack.config.js,53,"        'react-dom': { singleton: true, requiredVersion: '^18.2.0' },"
+cfg-shared,frontend/order-tracking/webpack.config.js,54,"        'react-router-dom': { singleton: true, requiredVersion: '^6.20.1' },"
+cfg-shared,frontend/order-tracking/webpack.config.js,55,"        '@mui/material': { singleton: true },"
+cfg-shared,frontend/order-tracking/webpack.config.js,56,"        '@emotion/react': { singleton: true },"
+cfg-shared,frontend/order-tracking/webpack.config.js,57,"        '@emotion/styled': { singleton: true },"
+cfg-shared,frontend/restaurant-catalog/webpack.config.js,50,      shared: {
+cfg-shared,frontend/restaurant-catalog/webpack.config.js,51,"        react: { singleton: true, requiredVersion: '^18.2.0' },"
+cfg-shared,frontend/restaurant-catalog/webpack.config.js,52,"        'react-dom': { singleton: true, requiredVersion: '^18.2.0' },"
+cfg-shared,frontend/restaurant-catalog/webpack.config.js,53,"        'react-router-dom': { singleton: true, requiredVersion: '^6.20.1' },"
+cfg-shared,frontend/restaurant-catalog/webpack.config.js,54,"        '@mui/material': { singleton: true },"
+cfg-shared,frontend/restaurant-catalog/webpack.config.js,55,"        '@emotion/react': { singleton: true },"
+cfg-shared,frontend/restaurant-catalog/webpack.config.js,56,"        '@emotion/styled': { singleton: true },"
+cfg-shared,frontend/shell-app/webpack.config.js,55,      shared: {
+cfg-shared,frontend/shell-app/webpack.config.js,56,"        react: { singleton: true, requiredVersion: '^18.2.0' },"
+cfg-shared,frontend/shell-app/webpack.config.js,57,"        'react-dom': { singleton: true, requiredVersion: '^18.2.0' },"
+cfg-shared,frontend/shell-app/webpack.config.js,58,"        'react-router-dom': { singleton: true, requiredVersion: '^6.20.1' },"
+cfg-shared,frontend/shell-app/webpack.config.js,59,"        '@mui/material': { singleton: true },"
+cfg-shared,frontend/shell-app/webpack.config.js,60,"        '@emotion/react': { singleton: true },"
+cfg-shared,frontend/shell-app/webpack.config.js,61,"        '@emotion/styled': { singleton: true },"
+cfg-shared,frontend/user-dashboard/webpack.config.js,56,      shared: {
+cfg-shared,frontend/user-dashboard/webpack.config.js,57,"        react: { singleton: true, requiredVersion: '^18.2.0' },"
+cfg-shared,frontend/user-dashboard/webpack.config.js,58,"        'react-dom': { singleton: true, requiredVersion: '^18.2.0' },"
+cfg-shared,frontend/user-dashboard/webpack.config.js,59,"        'react-router-dom': { singleton: true, requiredVersion: '^6.20.1' },"
+cfg-shared,frontend/user-dashboard/webpack.config.js,60,"        '@mui/material': { singleton: true },"
+cfg-shared,frontend/user-dashboard/webpack.config.js,61,"        '@emotion/react': { singleton: true },"
+cfg-shared,frontend/user-dashboard/webpack.config.js,62,"        '@emotion/styled': { singleton: true },"
+cfg-shared,frontend/user-dashboard/webpack.config.js,64,"        'sockjs-client': { singleton: true },"
+cfg-shared,frontend/user-dashboard/webpack.config.js,65,        '@stomp/stompjs': { singleton: true }
+cfg-public-path,frontend/order-tracking/webpack.config.js,18,"    publicPath: 'auto',"
+cfg-public-path,frontend/restaurant-catalog/webpack.config.js,18,"    publicPath: 'auto',"
+cfg-public-path,frontend/shell-app/webpack.config.js,18,"    publicPath: 'auto',"
+cfg-public-path,frontend/user-dashboard/webpack.config.js,19,"    publicPath: 'auto',"
+rt-remote-entry,frontend/order-tracking/webpack.config.js,47,"      filename: 'remoteEntry.js',"
+rt-remote-entry,frontend/restaurant-catalog/webpack.config.js,46,"      filename: 'remoteEntry.js',"
+rt-remote-entry,frontend/shell-app/webpack.config.js,51,"        restaurantCatalog: 'restaurantCatalog@http://localhost:3001/remoteEntry.js',"
+rt-remote-entry,frontend/shell-app/webpack.config.js,52,"        orderTracking: 'orderTracking@http://localhost:3002/remoteEntry.js',"
+rt-remote-entry,frontend/shell-app/webpack.config.js,53,"        userDashboard: 'userDashboard@http://localhost:3003/remoteEntry.js',"
+rt-remote-entry,frontend/user-dashboard/webpack.config.js,52,"      filename: 'remoteEntry.js',"
+src-remote-import,frontend/shell-app/src/App.js,21,const RestaurantCatalog = lazy(() => import('restaurantCatalog/RestaurantCatalog'));
+src-remote-import,frontend/shell-app/src/App.js,22,const OrderTracking = lazy(() => import('orderTracking/OrderTracking'));
+src-remote-import,frontend/shell-app/src/App.js,23,const UserDashboard = lazy(() => import('userDashboard/UserDashboard'));
+src-async-bootstrap,frontend/order-tracking/src/index.js,1,import('./bootstrap');
+src-async-bootstrap,frontend/restaurant-catalog/src/index.js,1,import('./bootstrap');
+src-async-bootstrap,frontend/shell-app/src/index.js,1,import('./bootstrap');
+src-async-bootstrap,frontend/user-dashboard/src/index.js,1,import('./bootstrap');
+src-cross-unit-communication,frontend/restaurant-catalog/src/components/MenuView.js,56,    window.dispatchEvent(
+src-cross-unit-communication,frontend/restaurant-catalog/src/components/MenuView.js,57,"      new CustomEvent('addToCart', {"
+ops-deployment-file,backend/api-gateway/Dockerfile,,
+ops-deployment-file,backend/api-gateway/docker-compose.yml,,
+ops-deployment-file,backend/delivery-service/Dockerfile,,
+ops-deployment-file,backend/notification-service/Dockerfile,,
+ops-deployment-file,backend/notification-service/docker-compose.yml,,
+ops-deployment-file,backend/order-service/Dockerfile,,
+ops-deployment-file,backend/restaurant-service/Dockerfile,,
+ops-deployment-file,backend/user-service/Dockerfile,,
+ops-deployment-file,docker-compose.yml,,
+ops-deployment-file,frontend/order-tracking/Dockerfile,,
+ops-deployment-file,frontend/order-tracking/nginx.conf,,
+ops-deployment-file,frontend/restaurant-catalog/Dockerfile,,
+ops-deployment-file,frontend/restaurant-catalog/nginx.conf,,
+ops-deployment-file,frontend/shell-app/Dockerfile,,
+ops-deployment-file,frontend/shell-app/nginx.conf,,
+ops-deployment-file,frontend/user-dashboard/Dockerfile,,
+ops-deployment-file,frontend/user-dashboard/nginx.conf,,
+ops-deployment-file,infrastructure/faas/auto-close-orders/Dockerfile,,
+ops-deployment-file,infrastructure/faas/delivery-analytics/Dockerfile,,
+ops-deployment-file,infrastructure/faas/order-completion/Dockerfile,,
+ops-deployment-file,infrastructure/nginx/nginx.conf,,
+ops-dockerfile,backend/api-gateway/Dockerfile,2,FROM maven:3.9.6-eclipse-temurin-17 AS builder
+ops-dockerfile,backend/api-gateway/Dockerfile,11,FROM eclipse-temurin:17-jre-alpine
+ops-dockerfile,backend/delivery-service/Dockerfile,2,FROM maven:3.9.4-eclipse-temurin-17 AS builder
+ops-dockerfile,backend/delivery-service/Dockerfile,13,FROM eclipse-temurin:17-jre-alpine
+ops-dockerfile,backend/notification-service/Dockerfile,4,FROM maven:3.9-eclipse-temurin-17 as builder
+ops-dockerfile,backend/notification-service/Dockerfile,21,FROM eclipse-temurin:17-jre-alpine
+ops-dockerfile,backend/order-service/Dockerfile,2,FROM maven:3.9.4-eclipse-temurin-17 AS builder
+ops-dockerfile,backend/order-service/Dockerfile,13,FROM eclipse-temurin:17-jre-alpine
+ops-dockerfile,backend/restaurant-service/Dockerfile,2,FROM maven:3.9.5-eclipse-temurin-17 AS builder
+ops-dockerfile,backend/restaurant-service/Dockerfile,13,FROM eclipse-temurin:17-jre-alpine
+ops-dockerfile,backend/user-service/Dockerfile,2,FROM maven:3.9.5-eclipse-temurin-17 AS builder
+ops-dockerfile,backend/user-service/Dockerfile,13,FROM eclipse-temurin:17-jre-alpine
+ops-dockerfile,frontend/order-tracking/Dockerfile,2,FROM node:18-alpine as build
+ops-dockerfile,frontend/order-tracking/Dockerfile,19,FROM nginx:alpine
+ops-dockerfile,frontend/restaurant-catalog/Dockerfile,2,FROM node:18-alpine as build
+ops-dockerfile,frontend/restaurant-catalog/Dockerfile,19,FROM nginx:alpine
+ops-dockerfile,frontend/shell-app/Dockerfile,2,FROM node:18-alpine as build
+ops-dockerfile,frontend/shell-app/Dockerfile,19,FROM nginx:alpine
+ops-dockerfile,frontend/user-dashboard/Dockerfile,2,FROM node:18-alpine as build
+ops-dockerfile,frontend/user-dashboard/Dockerfile,19,FROM nginx:alpine
+ops-dockerfile,infrastructure/faas/auto-close-orders/Dockerfile,1,FROM python:3.11-slim
+ops-dockerfile,infrastructure/faas/delivery-analytics/Dockerfile,1,FROM python:3.11-slim
+ops-dockerfile,infrastructure/faas/order-completion/Dockerfile,1,FROM node:18-alpine
+ops-compose-service,backend/api-gateway/docker-compose.yml,5,    image: redis:7-alpine
+ops-compose-service,backend/api-gateway/docker-compose.yml,17,    build: .
+ops-compose-service,backend/api-gateway/docker-compose.yml,28,    depends_on:
+ops-compose-service,backend/notification-service/docker-compose.yml,6,    image: redis:7-alpine
+ops-compose-service,backend/notification-service/docker-compose.yml,21,    image: rabbitmq:3.12-management-alpine
+ops-compose-service,backend/notification-service/docker-compose.yml,39,    image: confluentinc/cp-zookeeper:7.5.0
+ops-compose-service,backend/notification-service/docker-compose.yml,51,    image: confluentinc/cp-kafka:7.5.0
+ops-compose-service,backend/notification-service/docker-compose.yml,53,    depends_on:
+ops-compose-service,backend/notification-service/docker-compose.yml,77,    build:
+ops-compose-service,backend/notification-service/docker-compose.yml,90,    depends_on:
+ops-compose-service,docker-compose.yml,8,    image: mysql:8.0
+ops-compose-service,docker-compose.yml,30,    image: redis:7-alpine
+ops-compose-service,docker-compose.yml,44,    image: rabbitmq:3-management-alpine
+ops-compose-service,docker-compose.yml,62,    image: confluentinc/cp-zookeeper:7.5.0
+ops-compose-service,docker-compose.yml,74,    image: confluentinc/cp-kafka:7.5.0
+ops-compose-service,docker-compose.yml,76,    depends_on:
+ops-compose-service,docker-compose.yml,98,    build:
+ops-compose-service,docker-compose.yml,116,    depends_on:
+ops-compose-service,docker-compose.yml,129,    build:
+ops-compose-service,docker-compose.yml,143,    depends_on:
+ops-compose-service,docker-compose.yml,156,    build:
+ops-compose-service,docker-compose.yml,176,    depends_on:
+ops-compose-service,docker-compose.yml,191,    build:
+ops-compose-service,docker-compose.yml,206,    depends_on:
+ops-compose-service,docker-compose.yml,219,    build:
+ops-compose-service,docker-compose.yml,234,    depends_on:
+ops-compose-service,docker-compose.yml,247,    build:
+ops-compose-service,docker-compose.yml,260,    depends_on:
+ops-compose-service,docker-compose.yml,302,    build:
+ops-compose-service,docker-compose.yml,313,    depends_on:
+ops-compose-service,docker-compose.yml,318,    build:
+ops-compose-service,docker-compose.yml,329,    depends_on:
+ops-compose-service,docker-compose.yml,334,    build:
+ops-compose-service,docker-compose.yml,345,    depends_on:
+ops-compose-service,docker-compose.yml,350,    build:
+ops-compose-service,docker-compose.yml,364,    depends_on:
+ops-compose-service,docker-compose.yml,373,    image: nginx:alpine
+ops-compose-service,docker-compose.yml,379,    depends_on:
+ops-proxy-route,frontend/order-tracking/nginx.conf,20,    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
+ops-proxy-route,frontend/order-tracking/nginx.conf,26,    location / {
+ops-proxy-route,frontend/order-tracking/nginx.conf,31,    location /health {
+ops-proxy-route,frontend/restaurant-catalog/nginx.conf,20,    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
+ops-proxy-route,frontend/restaurant-catalog/nginx.conf,26,    location / {
+ops-proxy-route,frontend/restaurant-catalog/nginx.conf,31,    location /health {
+ops-proxy-route,frontend/shell-app/nginx.conf,20,    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
+ops-proxy-route,frontend/shell-app/nginx.conf,26,    location / {
+ops-proxy-route,frontend/shell-app/nginx.conf,31,    location /health {
+ops-proxy-route,frontend/user-dashboard/nginx.conf,20,    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
+ops-proxy-route,frontend/user-dashboard/nginx.conf,26,    location / {
+ops-proxy-route,frontend/user-dashboard/nginx.conf,31,    location /health {
+ops-proxy-route,infrastructure/nginx/nginx.conf,37,        location / {
+ops-proxy-route,infrastructure/nginx/nginx.conf,38,            proxy_pass http://frontend;
+ops-proxy-route,infrastructure/nginx/nginx.conf,46,        location /api/ {
+ops-proxy-route,infrastructure/nginx/nginx.conf,47,            proxy_pass http://api_backend/;
+ops-proxy-route,infrastructure/nginx/nginx.conf,60,        location /ws/ {
+ops-proxy-route,infrastructure/nginx/nginx.conf,61,            proxy_pass http://websocket_backend/ws/;
+ops-proxy-route,infrastructure/nginx/nginx.conf,76,        location /health {
+ops-hosting,backend/notification-service/DEPLOYMENT_GUIDE.md,210,- kubectl configured
+ops-hosting,backend/notification-service/DEPLOYMENT_GUIDE.md,375,kubectl create namespace notification
+ops-hosting,backend/notification-service/DEPLOYMENT_GUIDE.md,378,kubectl create configmap notification-config \
+ops-hosting,backend/notification-service/DEPLOYMENT_GUIDE.md,387,kubectl create secret generic notification-secrets \
+ops-hosting,backend/notification-service/DEPLOYMENT_GUIDE.md,392,kubectl apply -f notification-service-deployment.yaml -n notification
+ops-hosting,backend/notification-service/DEPLOYMENT_GUIDE.md,393,kubectl apply -f notification-service-service.yaml -n notification
+ops-hosting,backend/notification-service/DEPLOYMENT_GUIDE.md,394,kubectl apply -f notification-hpa.yaml -n notification
+ops-hosting,backend/notification-service/DEPLOYMENT_GUIDE.md,397,kubectl get deployments -n notification
+ops-hosting,backend/notification-service/DEPLOYMENT_GUIDE.md,398,kubectl get pods -n notification
+ops-hosting,backend/notification-service/DEPLOYMENT_GUIDE.md,399,kubectl get svc -n notification
+ops-hosting,backend/notification-service/DEPLOYMENT_GUIDE.md,402,kubectl rollout status deployment/notification-service -n notification
+ops-hosting,backend/notification-service/DEPLOYMENT_GUIDE.md,405,kubectl logs -f deployment/notification-service -n notification
+ops-hosting,backend/notification-service/DEPLOYMENT_GUIDE.md,406,kubectl logs -f deployment/notification-service -n notification --all-containers=true
+ops-hosting,backend/notification-service/DEPLOYMENT_GUIDE.md,409,kubectl port-forward svc/notification-service 8085:80 -n notification
+ops-hosting,backend/notification-service/DEPLOYMENT_GUIDE.md,564,kubectl create secret generic notification-secrets \
+ops-hosting,backend/notification-service/DEPLOYMENT_GUIDE.md,622,kubectl describe pod <pod-name> -n notification
+ops-hosting,backend/notification-service/DEPLOYMENT_GUIDE.md,625,kubectl logs <pod-name> -n notification
+ops-hosting,backend/notification-service/DEPLOYMENT_GUIDE.md,628,kubectl get events -n notification
+ops-hosting,backend/notification-service/DEPLOYMENT_GUIDE.md,635,kubectl run -it --rm debug --image=redis:7-alpine -- \
+ops-hosting,backend/notification-service/DEPLOYMENT_GUIDE.md,639,kubectl run -it --rm debug --image=confluentinc/cp-kafka:7.5.0 -- \
+ops-hosting,backend/notification-service/DEPLOYMENT_GUIDE.md,643,kubectl run -it --rm debug --image=rabbitmq:3.12 -- \
+ops-hosting,backend/notification-service/DEPLOYMENT_GUIDE.md,651,"kubectl describe pod <pod-name> -n notification | grep -A 5 ""Limits"""
+ops-hosting,backend/notification-service/DEPLOYMENT_GUIDE.md,654,kubectl set resources deployment/notification-service \
+ops-hosting,backend/notification-service/DEPLOYMENT_GUIDE.md,684,kubectl rollout history deployment/notification-service -n notification
+ops-hosting,backend/notification-service/DEPLOYMENT_GUIDE.md,687,kubectl rollout undo deployment/notification-service -n notification
+ops-hosting,backend/notification-service/DEPLOYMENT_GUIDE.md,690,kubectl rollout undo deployment/notification-service --to-revision=2 -n notification
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,72,3. **Kubernetes CLI** (kubectl) - for K8s deployments
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,75,"   curl -LO ""https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"""
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,76,   chmod +x kubectl
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,77,   sudo mv kubectl /usr/local/bin/
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,80,   kubectl version --client
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,216,   helm install openfaas openfaas/openfaas \
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,221,   kubectl port-forward -n openfaas svc/gateway 8080:8080
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,392,- Helm installed
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,393,- kubectl configured
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,404,kubectl create namespace openfaas
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,405,kubectl create namespace openfaas-fn
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,408,helm install openfaas openfaas/openfaas \
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,415,kubectl rollout status deployment/gateway -n openfaas
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,422,kubectl create configmap faas-env --from-file=.env -n openfaas-fn
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,425,kubectl create secret generic db-password \
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,430,kubectl apply -f stack.yml -n openfaas-fn
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,433,kubectl get functions -n openfaas-fn
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,434,kubectl get pods -n openfaas-fn
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,437,kubectl logs -n openfaas-fn -l faas_function=delivery-analytics -f
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,469,kubectl apply -f faas-ingress.yml
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,476,kubectl scale deployment delivery-analytics --replicas=3 -n openfaas-fn
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,479,kubectl autoscale deployment delivery-analytics \
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,520,kubectl apply -f https://raw.githubusercontent.com/openfaas/faas-netes/master/yaml/monitoring/prometheus-deploy.yml
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,523,kubectl port-forward -n openfaas svc/prometheus 9090:9090
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,542,kubectl top pods -n openfaas-fn
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,558,kubectl set env deployment/delivery-analytics \
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,574,kubectl logs <pod-name> -n openfaas-fn
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,577,kubectl describe pod <pod-name> -n openfaas-fn
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,580,kubectl get resourcequota -n openfaas-fn
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,596,kubectl get pods -n default | grep mysql
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,599,kubectl run -it --rm debug --image=mysql:8.0 \
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,620,kubectl exec -it <redis-pod> -n default -- redis-cli ping
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,633,kubectl get pod -o jsonpath='{.items[*].spec.containers[*].resources}' -n openfaas-fn
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,636,kubectl set resources deployment/delivery-analytics \
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,662,kubectl scale deployment/delivery-analytics --replicas=3
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,675,kubectl get svc -n openfaas-fn
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,681,kubectl port-forward -n openfaas svc/gateway 8080:8080
+ops-hosting,infrastructure/faas/DEPLOYMENT_GUIDE.md,733,kubectl rollout undo deployment/delivery-analytics -n openfaas-fn
+ops-hosting,infrastructure/faas/IMPLEMENTATION_SUMMARY.md,539,   - `kubectl` - Debug Kubernetes
+ops-hosting,infrastructure/faas/INDEX.md,316,kubectl (for Kubernetes)
+ops-hosting,infrastructure/faas/QUICK_REFERENCE.md,309,kubectl top pods -n openfaas-fn
+ops-hosting,infrastructure/faas/QUICK_REFERENCE.md,310,kubectl top nodes
+ops-hosting,infrastructure/faas/README.md,55,kubectl apply -f https://raw.githubusercontent.com/openfaas/faas-netes/master/namespaces.yml
+ops-hosting,infrastructure/faas/README.md,56,kubectl apply -f https://raw.githubusercontent.com/openfaas/faas-netes/master/yaml/
+ops-hosting,infrastructure/faas/README.md,453,kubectl create namespace openfaas-fn
+ops-hosting,infrastructure/faas/README.md,456,kubectl apply -f stack.yml -n openfaas-fn
+ops-hosting,infrastructure/faas/README.md,459,kubectl get functions -n openfaas-fn
+ops-hosting,infrastructure/faas/README.md,460,kubectl logs -n openfaas-fn -l faas_function=delivery-analytics
+ops-hosting,infrastructure/faas/README.md,577,# Using kubectl (Kubernetes)
+ops-hosting,infrastructure/faas/README.md,578,kubectl logs -n openfaas-fn deployment/delivery-analytics
+ops-hosting,infrastructure/faas/README.md,579,kubectl logs -n openfaas-fn deployment/order-completion
+ops-hosting,infrastructure/faas/README.md,580,kubectl logs -n openfaas-fn deployment/auto-close-orders
+ops-hosting,infrastructure/faas/README.md,598,kubectl get functions -n openfaas-fn
+ops-hosting,infrastructure/faas/README.md,599,kubectl get pods -n openfaas-fn
+ops-hosting,infrastructure/faas/README.md,677,kubectl describe pod -n openfaas-fn deployment/delivery-analytics
+ops-hosting,infrastructure/faas/README.md,682,kubectl scale deployment delivery-analytics --replicas=3 -n openfaas-fn
+ops-cors,frontend/order-tracking/webpack.config.js,14,"      'Access-Control-Allow-Origin': '*',"
+ops-cors,frontend/restaurant-catalog/webpack.config.js,14,"      'Access-Control-Allow-Origin': '*',"
+ops-cors,frontend/shell-app/webpack.config.js,14,"      'Access-Control-Allow-Origin': '*',"
+ops-cors,frontend/user-dashboard/webpack.config.js,15,"      'Access-Control-Allow-Origin': '*',"
+doc-mfe-term,FRONTEND_IMPLEMENTATION.md,1,# Frontend Implementation - Micro Frontend Architecture
+doc-mfe-term,FRONTEND_IMPLEMENTATION.md,3,Complete implementation of all React frontend applications using Module Federation for micro frontend architecture.
+doc-mfe-term,FRONTEND_IMPLEMENTATION.md,45,**Purpose:** Main orchestrator that loads all micro frontends
+doc-mfe-term,FRONTEND_IMPLEMENTATION.md,290,- **Module Federation** - Micro frontend architecture
+doc-mfe-term,FRONTEND_IMPLEMENTATION.md,607,"This implementation provides a complete, production-ready micro frontend architecture for a food delivery platform. The applications are:"
+doc-mfe-term,FRONTEND_IMPLEMENTATION.md,610,- **Scalable** - Easy to add new micro frontends
+doc-mfe-term,README.md,9,- **3 Micro Frontends** (React with Module Federation)
+doc-mfe-term,README.md,30,4. **Main Shell** (3000) - Micro frontend orchestrator
+doc-mfe-term,docs/ARCHITECTURE.md,24,- Scalable micro frontend architecture
+doc-mfe-term,docs/ARCHITECTURE.md,97,### 5. Micro Frontend Architecture
+doc-mfe-term,docs/ARCHITECTURE.md,102,- **Restaurant Catalog MFE**: Restaurant browsing and menu display
+doc-mfe-term,docs/ARCHITECTURE.md,103,- **Order Tracking MFE**: Real-time order status tracking
+doc-mfe-term,docs/ARCHITECTURE.md,104,- **User Dashboard MFE**: User profile and order history
+doc-mfe-term,docs/ARCHITECTURE.md,267,#### 2. Restaurant Catalog MFE (Port 3001)
+doc-mfe-term,docs/ARCHITECTURE.md,276,#### 3. Order Tracking MFE (Port 3002)
+doc-mfe-term,docs/ARCHITECTURE.md,284,#### 4. User Dashboard MFE (Port 3003)
+doc-mfe-term,docs/ARCHITECTURE.md,401,| Module Federation | Module Federation Enhanced | 0.2.3 | Micro frontend |
+doc-mfe-term,docs/ARCHITECTURE.md,775,- `fooddelivery-restaurant-catalog`: Restaurant catalog MFE
+doc-mfe-term,docs/ARCHITECTURE.md,776,- `fooddelivery-order-tracking`: Order tracking MFE
+doc-mfe-term,docs/ARCHITECTURE.md,777,- `fooddelivery-user-dashboard`: User dashboard MFE
+doc-mfe-term,docs/ARCHITECTURE.md,874,"Frontend Services (Shell App, MFEs)"
+doc-mfe-term,docs/ARCHITECTURE.md,1003,- **Micro frontend architecture** using Module Federation
+doc-mfe-term,frontend/QUICKSTART.md,3,Get all 4 React micro frontends running in under 5 minutes!
+doc-mfe-term,frontend/QUICKSTART.md,79,The Shell App will automatically load the other micro frontends!
+doc-mfe-term,frontend/README.md,1,# Frontend - Micro Frontend Architecture
+doc-mfe-term,frontend/README.md,3,This directory contains all frontend applications for the Food Delivery Platform using Module Federation for micro frontend architecture.
+doc-mfe-term,frontend/README.md,17,- **Shell App** loads the 3 remote micro frontends
+doc-mfe-term,frontend/README.md,132,The shell app will automatically load the remote micro frontends.
+doc-mfe-term,frontend/README.md,269,- **Module Federation** - Micro frontend architecture
+doc-mfe-term,frontend/order-tracking/README.md,1,# Order Tracking - Micro Frontend
+doc-mfe-term,frontend/order-tracking/README.md,3,Real-time order tracking micro frontend with WebSocket support.
+doc-mfe-term,frontend/restaurant-catalog/README.md,1,# Restaurant Catalog - Micro Frontend
+doc-mfe-term,frontend/restaurant-catalog/README.md,3,Restaurant catalog micro frontend for browsing restaurants and menus.
+doc-mfe-term,frontend/shell-app/README.md,3,Main orchestrator application for the Food Delivery micro frontend architecture using Module Federation.
+doc-mfe-term,frontend/shell-app/README.md,9,- Module Federation host that loads 3 remote MFEs
+doc-mfe-term,frontend/shell-app/README.md,67,This application uses Module Federation to load remote micro frontends:
+doc-mfe-term,frontend/user-dashboard/README.md,1,# User Dashboard - Micro Frontend
+doc-mfe-term,frontend/user-dashboard/README.md,3,User dashboard micro frontend for managing profile and order history.
+doc-integration-technology,FRONTEND_IMPLEMENTATION.md,3,Complete implementation of all React frontend applications using Module Federation for micro frontend architecture.
+doc-integration-technology,FRONTEND_IMPLEMENTATION.md,7,The Food Delivery Platform frontend consists of 4 independent React applications that work together using Webpack Module Federation:
+doc-integration-technology,FRONTEND_IMPLEMENTATION.md,16,### Module Federation Pattern
+doc-integration-technology,FRONTEND_IMPLEMENTATION.md,84,├── webpack.config.js              # Module Federation host
+doc-integration-technology,FRONTEND_IMPLEMENTATION.md,90,**Module Federation Config:**
+doc-integration-technology,FRONTEND_IMPLEMENTATION.md,142,├── webpack.config.js              # Module Federation remote
+doc-integration-technology,FRONTEND_IMPLEMENTATION.md,148,**Module Federation Config:**
+doc-integration-technology,FRONTEND_IMPLEMENTATION.md,211,├── webpack.config.js              # Module Federation remote
+doc-integration-technology,FRONTEND_IMPLEMENTATION.md,264,├── webpack.config.js              # Module Federation remote
+doc-integration-technology,FRONTEND_IMPLEMENTATION.md,290,- **Module Federation** - Micro frontend architecture
+doc-integration-technology,FRONTEND_IMPLEMENTATION.md,546,### Module Federation Issues
+doc-integration-technology,README.md,9,- **3 Micro Frontends** (React with Module Federation)
+doc-integration-technology,README.md,117,- Module Federation (Webpack 5)
+doc-integration-technology,docs/ARCHITECTURE.md,99,Module Federation-based frontend with separate deployable units:
+doc-integration-technology,docs/ARCHITECTURE.md,249,"**Responsibility**: Module Federation host, routing, authentication"
+doc-integration-technology,docs/ARCHITECTURE.md,254,- Remote module loading (Module Federation)
+doc-integration-technology,docs/ARCHITECTURE.md,258,**Module Federation Configuration**:
+doc-integration-technology,docs/ARCHITECTURE.md,401,| Module Federation | Module Federation Enhanced | 0.2.3 | Micro frontend |
+doc-integration-technology,docs/ARCHITECTURE.md,774,- `fooddelivery-shell-app`: Module Federation host (Shell App)
+doc-integration-technology,docs/ARCHITECTURE.md,1003,- **Micro frontend architecture** using Module Federation
+doc-integration-technology,frontend/QUICKSTART.md,129,### Module Federation Error
+doc-integration-technology,frontend/README.md,3,This directory contains all frontend applications for the Food Delivery Platform using Module Federation for micro frontend architecture.
+doc-integration-technology,frontend/README.md,7,The frontend is split into 4 independent React applications that communicate via Module Federation:
+doc-integration-technology,frontend/README.md,14,## Module Federation
+doc-integration-technology,frontend/README.md,145,│   ├── webpack.config.js     # Module Federation host config
+doc-integration-technology,frontend/README.md,153,│   ├── webpack.config.js     # Module Federation remote config
+doc-integration-technology,frontend/README.md,161,│   ├── webpack.config.js     # Module Federation remote config
+doc-integration-technology,frontend/README.md,169,    ├── webpack.config.js     # Module Federation remote config
+doc-integration-technology,frontend/README.md,269,- **Module Federation** - Micro frontend architecture
+doc-integration-technology,frontend/README.md,318,### Module Federation Errors
+doc-integration-technology,frontend/order-tracking/README.md,13,- Module Federation remote component
+doc-integration-technology,frontend/order-tracking/README.md,66,## Module Federation
+doc-integration-technology,frontend/restaurant-catalog/README.md,13,- Module Federation remote component
+doc-integration-technology,frontend/restaurant-catalog/README.md,65,## Module Federation
+doc-integration-technology,frontend/shell-app/README.md,3,Main orchestrator application for the Food Delivery micro frontend architecture using Module Federation.
+doc-integration-technology,frontend/shell-app/README.md,9,- Module Federation host that loads 3 remote MFEs
+doc-integration-technology,frontend/shell-app/README.md,67,This application uses Module Federation to load remote micro frontends:
+doc-integration-technology,frontend/shell-app/README.md,109,- Module Federation
+doc-integration-technology,frontend/user-dashboard/README.md,13,- Module Federation remote component
+doc-integration-technology,frontend/user-dashboard/README.md,65,## Module Federation
+doc-independence,FRONTEND_IMPLEMENTATION.md,7,The Food Delivery Platform frontend consists of 4 independent React applications that work together using Webpack Module Federation:
+doc-independence,FRONTEND_IMPLEMENTATION.md,609,- **Independent** - Each can be developed and deployed separately
+doc-independence,docs/ARCHITECTURE.md,40,"The system is decomposed into independent, loosely-coupled services, each responsible for a specific business domain:"
+doc-independence,docs/ARCHITECTURE.md,50,- Independent deployment and scaling
+doc-independence,docs/ARCHITECTURE.md,53,- Team autonomy
+doc-independence,docs/ARCHITECTURE.md,86,- Scalability of read and write operations independently
+doc-independence,docs/ARCHITECTURE.md,107,- Independent development and deployment
+doc-independence,docs/ARCHITECTURE.md,110,- Team autonomy
+doc-independence,frontend/README.md,7,The frontend is split into 4 independent React applications that communicate via Module Federation:
+doc-host-remote,frontend/QUICKSTART.md,114,Note: You should access the application through port 3000 (Shell App). The other ports are for the remote modules.
+doc-host-remote,frontend/README.md,17,- **Shell App** loads the 3 remote micro frontends
+doc-host-remote,frontend/README.md,132,The shell app will automatically load the remote micro frontends.
+doc-host-remote,frontend/shell-app/README.md,9,- Module Federation host that loads 3 remote MFEs

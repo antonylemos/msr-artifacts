@@ -1,0 +1,170 @@
+pattern,path,line,excerpt
+dep-mfe-term,openmrs-module-bahmniapps/micro-frontends/package.json,2,"  ""name"": ""openmrs-mfe-host"","
+dep-mfe-term,openmrs-module-bahmniapps/micro-frontends/package.json,4,"  ""description"": ""Hosting microfrontends for openmrs"","
+cfg-federation-plugin,openmrs-module-bahmniapps/micro-frontends/webpack.config.js,3,"const ModuleFederationPlugin = require(""webpack/lib/container/ModuleFederationPlugin"");"
+cfg-federation-plugin,openmrs-module-bahmniapps/micro-frontends/webpack.config.js,34,    new ModuleFederationPlugin({
+cfg-federation-plugin,openmrs-module-bahmniapps/micro-frontends/webpack.config.js,108," * @param {string} name The name of the remote, as given in it's ModuleFederationPlugin configuration"
+cfg-remotes,openmrs-module-bahmniapps/micro-frontends/webpack.config.js,37,      remotes: {
+cfg-exposes,openmrs-module-bahmniapps/micro-frontends/webpack.config.js,40,"      exposes: {},"
+cfg-shared,openmrs-module-bahmniapps/micro-frontends/webpack.config.js,19,"    shared: ""./src/shared.js"","
+cfg-shared,openmrs-module-bahmniapps/micro-frontends/webpack.config.js,41,      shared: {
+cfg-shared,openmrs-module-bahmniapps/micro-frontends/webpack.config.js,43,"          singleton: true,"
+cfg-shared,openmrs-module-bahmniapps/micro-frontends/webpack.config.js,48,"          singleton: true,"
+cfg-shared,openmrs-module-bahmniapps/micro-frontends/webpack.config.js,53,"          singleton: true,"
+cfg-shared,openmrs-module-bahmniapps/micro-frontends/webpack.config.js,58,"          singleton: true,"
+cfg-shared,openmrs-module-bahmniapps/micro-frontends/webpack.config.js,63,"          singleton: true,"
+rt-remote-entry,openmrs-module-bahmniapps/micro-frontends/webpack.config.js,36,"      filename: ""remoteEntry.js"","
+rt-remote-entry,openmrs-module-bahmniapps/micro-frontends/webpack.config.js,116,    remoteUrl.pathname = '/${path}/remoteEntry.js';
+rt-remote-entry,openmrs-module-bahmniapps/micro-frontends/webpack.config.js,136,    // inject this script with the src set to the resolved remoteEntry.js
+src-dynamic-script,openmrs-module-bahmniapps/micro-frontends/webpack.config.js,119,    const script = document.createElement('script')
+src-dynamic-script,openmrs-module-bahmniapps/ui/app/common/util/dynamicResourceLoader.js,6,            var element = document.createElement('script');
+src-iframe,openmrs-module-bahmniapps/ui/app/common/gallery/views/gallery.html,29,"                            <iframe ng-src=""{{image.src}}"" class=""pdf-frame""></iframe>"
+src-iframe,openmrs-module-bahmniapps/ui/app/common/ui-helper/printer.js,8,"                var hiddenFrame = $('<iframe style=""visibility: hidden""></iframe>').appendTo('body')[0];"
+src-iframe,openmrs-module-bahmniapps/ui/app/lib/magnific-popup/jquery.magnific-popup.js,1593,"					'<iframe class=""mfp-iframe"" src=""//about:blank"" frameborder=""0"" allowfullscreen></iframe>'+"
+src-iframe,openmrs-module-bahmniapps/ui/app/registration/views/patientIdentifier.html,93,"            <iframe id=""extension-popup"" height=""95%"" width=""100%""></iframe>"
+src-cross-unit-communication,openmrs-module-bahmniapps/ui/test/unit/adt/controllers/careViewController.spec.js,63,"        $window.dispatchEvent(new KeyboardEvent('keydown', {'key': 'Escape', 'metaKey': true, 'ctrlKey': false}));"
+src-cross-unit-communication,openmrs-module-bahmniapps/ui/test/unit/adt/controllers/careViewController.spec.js,69,"        $window.dispatchEvent(new KeyboardEvent('keydown', {'key': 'Escape', 'metaKey': false, 'ctrlKey': true}));"
+src-cross-unit-communication,openmrs-module-bahmniapps/ui/test/unit/adt/controllers/careViewController.spec.js,75,"        $window.dispatchEvent(new KeyboardEvent('keydown', {'key': 'Escape', 'metaKey': false, 'ctrlKey': false}));"
+src-cross-unit-communication,openmrs-module-bahmniapps/ui/test/unit/adt/controllers/careViewController.spec.js,82,"        $window.dispatchEvent(new KeyboardEvent('keydown', {'key': 'Escape', 'metaKey': false, 'ctrlKey': false}));"
+src-cross-unit-communication,openmrs-module-bahmniapps/ui/test/unit/bedmanagement/controllers/careViewController.spec.js,62,"        $window.dispatchEvent(new KeyboardEvent('keydown', {'key': 'Escape', 'metaKey': true, 'ctrlKey': false}));"
+src-cross-unit-communication,openmrs-module-bahmniapps/ui/test/unit/bedmanagement/controllers/careViewController.spec.js,69,"        $window.dispatchEvent(new KeyboardEvent('keydown', {'key': 'Escape', 'metaKey': false, 'ctrlKey': true}));"
+src-cross-unit-communication,openmrs-module-bahmniapps/ui/test/unit/bedmanagement/controllers/careViewController.spec.js,76,"        $window.dispatchEvent(new KeyboardEvent('keydown', {'key': 'Escape', 'metaKey': false, 'ctrlKey': false}));"
+src-cross-unit-communication,openmrs-module-bahmniapps/ui/test/unit/clinical/common/controllers/visitController.spec.js,171,"            window.dispatchEvent(new KeyboardEvent('keydown', {'key': 'Escape', 'metaKey': true, 'ctrlKey': false}));"
+ops-deployment-file,bahmni-proxy/Dockerfile,,
+ops-deployment-file,default-config/package/docker/Dockerfile,,
+ops-deployment-file,default-config/package/helm/Chart.yaml,,
+ops-deployment-file,default-config/package/helm/templates/deployment.yaml,,
+ops-deployment-file,default-config/package/helm/templates/rbac.yaml,,
+ops-deployment-file,default-config/package/helm/templates/restart-dependencies-script-configmap.yaml,,
+ops-deployment-file,default-config/package/helm/templates/serviceaccount.yaml,,
+ops-deployment-file,default-config/package/helm/templates/volumes/bahmni-config.yaml,,
+ops-deployment-file,default-config/package/helm/values.yaml,,
+ops-deployment-file,docker-compose copy.yml,,
+ops-deployment-file,docker-compose.yml,,
+ops-deployment-file,openmrs-db/Dockerfile,,
+ops-deployment-file,openmrs-module-bahmniapps/package/docker/Dockerfile,,
+ops-deployment-file,openmrs-module-bahmniapps/package/helm/Chart.yaml,,
+ops-deployment-file,openmrs-module-bahmniapps/package/helm/templates/deployment.yaml,,
+ops-deployment-file,openmrs-module-bahmniapps/package/helm/templates/hpa.yaml,,
+ops-deployment-file,openmrs-module-bahmniapps/package/helm/templates/service.yaml,,
+ops-deployment-file,openmrs-module-bahmniapps/package/helm/values.yaml,,
+ops-dockerfile,bahmni-proxy/Dockerfile,1,FROM httpd:2.4-alpine
+ops-dockerfile,default-config/package/docker/Dockerfile,1,FROM alpine:3.20.0
+ops-dockerfile,openmrs-db/Dockerfile,2,FROM mysql:8.0-debian
+ops-dockerfile,openmrs-module-bahmniapps/package/docker/Dockerfile,1,FROM httpd:2.4-alpine
+ops-compose-service,default-config/package/helm/templates/deployment.yaml,51,"          image: ""{{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag }}"""
+ops-compose-service,default-config/package/helm/values.yaml,13,image:
+ops-compose-service,docker-compose copy.yml,19,    build:
+ops-compose-service,docker-compose copy.yml,23,"    image: ""bahmni-proxy-drc:latest"""
+ops-compose-service,docker-compose copy.yml,36,    build:
+ops-compose-service,docker-compose copy.yml,40,"    image: ""bahmni-config-drc:latest"""
+ops-compose-service,docker-compose copy.yml,48,"    image: ""bahmni/openelis:${OPENELIS_IMAGE_TAG:?[ERROR]}"""
+ops-compose-service,docker-compose copy.yml,60,    depends_on:
+ops-compose-service,docker-compose copy.yml,68,"    image: ""${OPENELIS_DB_IMAGE_NAME:?[ERROR]}"""
+ops-compose-service,docker-compose copy.yml,87,"    image: ""bahmni/odoo-16:${ODOO_IMAGE_TAG:?[ERROR]}"""
+ops-compose-service,docker-compose copy.yml,97,    depends_on:
+ops-compose-service,docker-compose copy.yml,110,"    image: ""${ODOO_DB_IMAGE_NAME:?[ERROR]}"""
+ops-compose-service,docker-compose copy.yml,129,"    image: ""bahmni/odoo-connect:${ODOO_CONNECT_IMAGE_TAG:?[ERROR]}"""
+ops-compose-service,docker-compose copy.yml,148,    depends_on:
+ops-compose-service,docker-compose copy.yml,157,"    image: ""bahmni/odoo-10:${ODOO_IMAGE_TAG:?[ERROR]}"""
+ops-compose-service,docker-compose copy.yml,165,    depends_on:
+ops-compose-service,docker-compose copy.yml,178,"    image: ""${ODOO_10_DB_IMAGE_NAME:?[ERROR]}"""
+ops-compose-service,docker-compose copy.yml,196,"    image: ""bahmni/odoo-connect:${ODOO_CONNECT_IMAGE_TAG:?[ERROR]}"""
+ops-compose-service,docker-compose copy.yml,214,    depends_on:
+ops-compose-service,docker-compose copy.yml,222,    image: bahmni/openmrs:${OPENMRS_IMAGE_TAG:?}
+ops-compose-service,docker-compose copy.yml,269,    depends_on:
+ops-compose-service,docker-compose copy.yml,275,    image: ${OPENMRS_DB_IMAGE_NAME:?}
+ops-compose-service,docker-compose copy.yml,291,    image: postgres:${METABASE_POSTGRES_IMAGE_TAG:?}
+ops-compose-service,docker-compose copy.yml,303,    image: bahmni/bahmni-metabase:${METABASE_IMAGE_TAG:?}
+ops-compose-service,docker-compose copy.yml,325,    depends_on:
+ops-compose-service,docker-compose copy.yml,329,    image: postgres:${BAHMNI_MART_DB_IMAGE_TAG:?}
+ops-compose-service,docker-compose copy.yml,341,    image: bahmni/bahmni-mart:${BAHMNI_MART_IMAGE_TAG:?}
+ops-compose-service,docker-compose copy.yml,355,    depends_on:
+ops-compose-service,docker-compose copy.yml,363,    build:
+ops-compose-service,docker-compose copy.yml,367,    image: bahmni-web-drc:latest
+ops-compose-service,docker-compose copy.yml,380,    image: bahmni/implementer-interface:${IMPLEMENTER_INTERFACE_IMAGE_TAG:?}
+ops-compose-service,docker-compose copy.yml,384,    depends_on:
+ops-compose-service,docker-compose copy.yml,390,    image: bahmni/reports:${REPORTS_IMAGE_TAG:?}
+ops-compose-service,docker-compose copy.yml,414,    depends_on:
+ops-compose-service,docker-compose copy.yml,423,    image: ${REPORTS_DB_IMAGE_NAME:?}
+ops-compose-service,docker-compose copy.yml,437,"    image: ""bahmni/patient-documents:${PATIENT_DOCUMENTS_TAG:?}"""
+ops-compose-service,docker-compose copy.yml,446,    depends_on:
+ops-compose-service,docker-compose copy.yml,452,    image: bahmni/appointments:${APPOINTMENTS_IMAGE_TAG:?}
+ops-compose-service,docker-compose copy.yml,459,    image: bahmni/dcm4chee:${DCM4CHEE_IMAGE_TAG:?}
+ops-compose-service,docker-compose copy.yml,478,    image: bahmni/pacs-integration:${PACS_INTEGRATION_IMAGE_TAG:?}
+ops-compose-service,docker-compose copy.yml,495,    image: postgres:9.6
+ops-compose-service,docker-compose copy.yml,513,    image: bahmni/pacs-simulator:${PACS_SIMULATOR_IMAGE_TAG:?}
+ops-compose-service,docker-compose copy.yml,530,    image: bahmni/atomfeed-console:${ATOMFEED_CONSOLE_IMAGE_TAG:?}
+ops-compose-service,docker-compose copy.yml,552,    image: bahmni/sms-service:${SMS_SERVICE_IMAGE_TAG:?}
+ops-compose-service,docker-compose copy.yml,567,    image: bash:5.2.15
+ops-compose-service,docker-compose copy.yml,583,    image: bahmni/microfrontend-ipd:${IPD_TAG:?}
+ops-compose-service,docker-compose copy.yml,593,    image: bahmni/cdss-reference:${CDSS_IMAGE_TAG:?}
+ops-compose-service,docker-compose copy.yml,600,    image: snomedinternational/snowstorm-lite:${SNOWSTORM_LITE_IMAGE_TAG:?}
+ops-compose-service,docker-compose copy.yml,612,    image: alpine
+ops-compose-service,docker-compose.yml,19,    build:
+ops-compose-service,docker-compose.yml,23,"    image: ""bahmni-proxy-drc:latest"""
+ops-compose-service,docker-compose.yml,36,    build:
+ops-compose-service,docker-compose.yml,40,"    image: ""bahmni-config-drc:latest"""
+ops-compose-service,docker-compose.yml,48,"    image: ""bahmni/openelis:${OPENELIS_IMAGE_TAG:?[ERROR]}"""
+ops-compose-service,docker-compose.yml,60,    depends_on:
+ops-compose-service,docker-compose.yml,68,"    image: ""${OPENELIS_DB_IMAGE_NAME:?[ERROR]}"""
+ops-compose-service,docker-compose.yml,87,"    image: ""bahmni/odoo-16:${ODOO_IMAGE_TAG:?[ERROR]}"""
+ops-compose-service,docker-compose.yml,97,    depends_on:
+ops-compose-service,docker-compose.yml,110,"    image: ""${ODOO_DB_IMAGE_NAME:?[ERROR]}"""
+ops-compose-service,docker-compose.yml,129,"    image: ""bahmni/odoo-connect:${ODOO_CONNECT_IMAGE_TAG:?[ERROR]}"""
+ops-compose-service,docker-compose.yml,148,    depends_on:
+ops-compose-service,docker-compose.yml,157,"    image: ""bahmni/odoo-10:${ODOO_IMAGE_TAG:?[ERROR]}"""
+ops-compose-service,docker-compose.yml,165,    depends_on:
+ops-compose-service,docker-compose.yml,178,"    image: ""${ODOO_10_DB_IMAGE_NAME:?[ERROR]}"""
+ops-compose-service,docker-compose.yml,196,"    image: ""bahmni/odoo-connect:${ODOO_CONNECT_IMAGE_TAG:?[ERROR]}"""
+ops-compose-service,docker-compose.yml,214,    depends_on:
+ops-compose-service,docker-compose.yml,222,    image: bahmni/openmrs:${OPENMRS_IMAGE_TAG:?}
+ops-compose-service,docker-compose.yml,269,    depends_on:
+ops-compose-service,docker-compose.yml,276,    build:
+ops-compose-service,docker-compose.yml,279,    image: openmrs-db-drc:latest
+ops-compose-service,docker-compose.yml,295,    image: postgres:${METABASE_POSTGRES_IMAGE_TAG:?}
+ops-compose-service,docker-compose.yml,307,    image: bahmni/bahmni-metabase:${METABASE_IMAGE_TAG:?}
+ops-compose-service,docker-compose.yml,329,    depends_on:
+ops-compose-service,docker-compose.yml,333,    image: postgres:${BAHMNI_MART_DB_IMAGE_TAG:?}
+ops-compose-service,docker-compose.yml,345,    image: bahmni/bahmni-mart:${BAHMNI_MART_IMAGE_TAG:?}
+ops-compose-service,docker-compose.yml,359,    depends_on:
+ops-compose-service,docker-compose.yml,367,    build:
+ops-compose-service,docker-compose.yml,371,    image: bahmni-web-drc:latest
+ops-compose-service,docker-compose.yml,384,    image: bahmni/implementer-interface:${IMPLEMENTER_INTERFACE_IMAGE_TAG:?}
+ops-compose-service,docker-compose.yml,388,    depends_on:
+ops-compose-service,docker-compose.yml,394,    image: bahmni/reports:${REPORTS_IMAGE_TAG:?}
+ops-compose-service,docker-compose.yml,418,    depends_on:
+ops-compose-service,docker-compose.yml,427,    image: ${REPORTS_DB_IMAGE_NAME:?}
+ops-compose-service,docker-compose.yml,441,"    image: ""bahmni/patient-documents:${PATIENT_DOCUMENTS_TAG:?}"""
+ops-compose-service,docker-compose.yml,450,    depends_on:
+ops-compose-service,docker-compose.yml,456,    image: bahmni/appointments:${APPOINTMENTS_IMAGE_TAG:?}
+ops-compose-service,docker-compose.yml,463,    image: bahmni/dcm4chee:${DCM4CHEE_IMAGE_TAG:?}
+ops-compose-service,docker-compose.yml,482,    image: bahmni/pacs-integration:${PACS_INTEGRATION_IMAGE_TAG:?}
+ops-compose-service,docker-compose.yml,499,    image: postgres:9.6
+ops-compose-service,docker-compose.yml,517,    image: bahmni/pacs-simulator:${PACS_SIMULATOR_IMAGE_TAG:?}
+ops-compose-service,docker-compose.yml,534,    image: bahmni/atomfeed-console:${ATOMFEED_CONSOLE_IMAGE_TAG:?}
+ops-compose-service,docker-compose.yml,556,    image: bahmni/sms-service:${SMS_SERVICE_IMAGE_TAG:?}
+ops-compose-service,docker-compose.yml,571,    image: bash:5.2.15
+ops-compose-service,docker-compose.yml,587,    image: bahmni/microfrontend-ipd:${IPD_TAG:?}
+ops-compose-service,docker-compose.yml,597,    image: bahmni/cdss-reference:${CDSS_IMAGE_TAG:?}
+ops-compose-service,docker-compose.yml,604,    image: snomedinternational/snowstorm-lite:${SNOWSTORM_LITE_IMAGE_TAG:?}
+ops-compose-service,docker-compose.yml,616,    image: alpine
+ops-compose-service,openmrs-module-bahmniapps/package/helm/templates/deployment.yaml,53,"          image: ""{{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag | default .Chart.AppVersion }}"""
+ops-compose-service,openmrs-module-bahmniapps/package/helm/values.yaml,12,image:
+doc-mfe-term,README.md,41,Run these commands from within the `micro-frontends` sub-folder
+doc-mfe-term,README.md,44,"3. If build is successful, the `../ui/app/micro-frontends-dist` folder has the set of files which can be used by the angular modules for their build"
+doc-mfe-term,openmrs-module-bahmniapps/README.md,41,Run these commands from within the `micro-frontends` sub-folder
+doc-mfe-term,openmrs-module-bahmniapps/README.md,44,"3. If build is successful, the `../ui/app/micro-frontends-dist` folder has the set of files which can be used by the angular modules for their build"
+doc-mfe-term,openmrs-module-bahmniapps/micro-frontends/README.md,1,# Bahmni Micro-Frontends
+doc-mfe-term,openmrs-module-bahmniapps/micro-frontends/README.md,4,micro-frontends (mfe) available.
+doc-mfe-term,openmrs-module-bahmniapps/micro-frontends/README.md,7,1. [Architecture of Bahmni micro-frontends](https://bahmni.atlassian.net/wiki/spaces/BAH/pages/3210477602/Micro-frontends+MFE+architecture+for+UI)
+doc-mfe-term,openmrs-module-bahmniapps/micro-frontends/README.md,8,2. [How to add/edit/integrate Bahmni micro-frontends](https://bahmni.atlassian.net/wiki/spaces/BAH/pages/3211755555/How+to+implement+micro-frontends)
+doc-mfe-term,openmrs-module-bahmniapps/micro-frontends/README.md,27,The build output is generated into `../ui/app/micro-frontends-dist/`. This is done so that the
+doc-mfe-term,openmrs-module-bahmniapps/micro-frontends/README.md,36,shared.min.js             // Contains shared JS across microfrontends. should be loaded first
+doc-mfe-term,openmrs-module-bahmniapps/micro-frontends/README.md,37,shared.min.css            // Contains shared CSS across microfrontends including the carbon stylesheet. should be loaded first  
+doc-mfe-term,openmrs-module-bahmniapps/micro-frontends/README.md,39,<mfe-name>.min.js         // angular module containing components from a single mfe
+doc-mfe-term,openmrs-module-bahmniapps/micro-frontends/README.md,40,<mfe-name>.min.css        // all the CSS for a given mfe
+doc-mfe-term,openmrs-module-bahmniapps/micro-frontends/README.md,43,"Currently, we have the following micro-frontends"
+doc-mfe-term,openmrs-module-bahmniapps/micro-frontends/README.md,46,2. `ipd.min.js`: The IPD micro-frontend talking to the remote IPD repository
+doc-mfe-term,openmrs-module-bahmniapps/micro-frontends/README.md,48,All the translations residing in `public` are copied as such and made available in the `micro-frontends-dist`.
+doc-mfe-term,openmrs-module-bahmniapps/micro-frontends/README.md,51,"1. For every micro-frontend angular module, don't forget to add an entry in the `ui/test/__mocks__/micro-frontends.js` file for mocking it out"

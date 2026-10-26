@@ -1,0 +1,7 @@
+{
+    "imports": {
+        "@org/header-app": "http://127.0.0.1:5175/src/main.ts",
+        "@org/content-app": "http://127.0.0.1:5173/src/main.ts",
+        "vue": "https://unpkg.com/vue@3.5.26/dist/vue.global.js"
+    }
+}

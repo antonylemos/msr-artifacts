@@ -1,0 +1,269 @@
+pattern,path,line,excerpt
+dep-module-federation,angular-mfe/package.json,21,"    ""@angular-architects/module-federation"": ""^16.0.4"","
+dep-mfe-term,angular-mfe/package.json,2,"  ""name"": ""angular-mfe"","
+dep-mfe-term,angular-mfe/package.json,5,"  ""description"": ""Angular Microfrontend — Fun Facts (port 4200)"","
+dep-mfe-term,host/package.json,5,"  ""description"": ""Host/Container app — loads all microfrontends via Webpack Module Federation"","
+dep-mfe-term,package.json,2,"  ""name"": ""microfrontend-learning"","
+dep-mfe-term,package.json,7,"    ""install:all"": ""npm install --prefix host && npm install --prefix react-mfe-1 && npm install --prefix react-mfe-2 && npm install --prefix vue-mfe && npm install --prefix angular-mfe"","
+dep-mfe-term,package.json,8,"    ""start"": ""concurrently --names \""HOST,MFE1,MFE2,VUE,ANGULAR\"" --prefix-colors \""blue,cyan,green,magenta,red\"" \""npm start --prefix host\"" \""npm start --prefix react-mfe-1\"" \""npm start --prefix react-mfe-2\"" \""npm start --prefix vue-mfe\"" \""npm start --prefix angular-mfe\"""","
+dep-mfe-term,package.json,9,"    ""build:mfes"": ""npm run build --prefix react-mfe-1 && npm run build --prefix react-mfe-2 && npm run build --prefix vue-mfe && npm run build --prefix angular-mfe"","
+dep-mfe-term,package.json,11,"    ""copy:dist"": ""rm -rf dist && mkdir -p dist/react-mfe-1 dist/react-mfe-2 dist/vue-mfe dist/angular-mfe && cp -r react-mfe-1/dist/. dist/react-mfe-1/ && cp -r react-mfe-2/dist/. dist/react-mfe-2/ && cp -r vue-mfe/dist/. dist/vue-mfe/ && cp -r angular-mfe/dist/angular-mfe/. dist/angular-mfe/ && cp "
+dep-mfe-term,package.json,12,"    ""build:all"": ""npm run build:mfes && npm run build:host && npm run copy:dist"""
+dep-mfe-term,react-mfe-1/package.json,2,"  ""name"": ""react-mfe-1"","
+dep-mfe-term,react-mfe-1/package.json,5,"  ""description"": ""React Microfrontend 1 — Counter app (port 3001)"","
+dep-mfe-term,react-mfe-2/package.json,2,"  ""name"": ""react-mfe-2"","
+dep-mfe-term,react-mfe-2/package.json,5,"  ""description"": ""React Microfrontend 2 — User Greeting app (port 3002)"","
+dep-mfe-term,vue-mfe/package.json,2,"  ""name"": ""vue-mfe"","
+dep-mfe-term,vue-mfe/package.json,5,"  ""description"": ""Vue Microfrontend — Theme Switcher (port 3003)"","
+cfg-federation-plugin,angular-mfe/webpack.config.js,7, * withModuleFederationPlugin() is a helper from @angular-architects/module-federation
+cfg-federation-plugin,angular-mfe/webpack.config.js,13,"  withModuleFederationPlugin,"
+cfg-federation-plugin,angular-mfe/webpack.config.js,23,const config = withModuleFederationPlugin({
+cfg-federation-plugin,host/webpack.config.js,3,const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+cfg-federation-plugin,host/webpack.config.js,80,    new ModuleFederationPlugin({
+cfg-federation-plugin,react-mfe-1/webpack.config.js,2,const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+cfg-federation-plugin,react-mfe-1/webpack.config.js,43,    new ModuleFederationPlugin({
+cfg-federation-plugin,react-mfe-2/webpack.config.js,2,const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+cfg-federation-plugin,react-mfe-2/webpack.config.js,42,    new ModuleFederationPlugin({
+cfg-federation-plugin,vue-mfe/webpack.config.js,2,const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+cfg-federation-plugin,vue-mfe/webpack.config.js,58,    new ModuleFederationPlugin({
+cfg-remotes,host/webpack.config.js,34,  const remotes = isProd
+cfg-exposes,angular-mfe/webpack.config.js,26,  exposes: {
+cfg-exposes,react-mfe-1/webpack.config.js,52,      exposes: {
+cfg-exposes,react-mfe-2/webpack.config.js,45,      exposes: {
+cfg-exposes,vue-mfe/webpack.config.js,61,      exposes: {
+cfg-shared,angular-mfe/webpack.config.js,16,"const allShared = shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' });"
+cfg-shared,angular-mfe/webpack.config.js,29,"  shared: allShared,"
+cfg-shared,host/webpack.config.js,83,      shared: {
+cfg-shared,host/webpack.config.js,84,"        react:            { singleton: true, requiredVersion: '^18.2.0' },"
+cfg-shared,host/webpack.config.js,85,"        'react-dom':      { singleton: true, requiredVersion: '^18.2.0' },"
+cfg-shared,host/webpack.config.js,86,"        'react-redux':    { singleton: true, requiredVersion: '^9.0.0' },"
+cfg-shared,host/webpack.config.js,87,"        '@reduxjs/toolkit': { singleton: false, requiredVersion: '^2.0.0' },"
+cfg-shared,react-mfe-1/webpack.config.js,57,      shared: {
+cfg-shared,react-mfe-1/webpack.config.js,58,"        react:            { singleton: true, requiredVersion: '^18.2.0' },"
+cfg-shared,react-mfe-1/webpack.config.js,59,"        'react-dom':      { singleton: true, requiredVersion: '^18.2.0' },"
+cfg-shared,react-mfe-1/webpack.config.js,60,"        'react-redux':    { singleton: true, requiredVersion: '^9.0.0' },"
+cfg-shared,react-mfe-1/webpack.config.js,61,"        '@reduxjs/toolkit': { singleton: false, requiredVersion: '^2.0.0' },"
+cfg-shared,react-mfe-2/webpack.config.js,48,      shared: {
+cfg-shared,react-mfe-2/webpack.config.js,49,"        react:            { singleton: true, requiredVersion: '^18.2.0' },"
+cfg-shared,react-mfe-2/webpack.config.js,50,"        'react-dom':      { singleton: true, requiredVersion: '^18.2.0' },"
+cfg-shared,react-mfe-2/webpack.config.js,51,"        'react-redux':    { singleton: true, requiredVersion: '^9.0.0' },"
+cfg-shared,react-mfe-2/webpack.config.js,52,"        '@reduxjs/toolkit': { singleton: false, requiredVersion: '^2.0.0' },"
+cfg-shared,vue-mfe/webpack.config.js,64,      shared: {
+cfg-shared,vue-mfe/webpack.config.js,65,"        vue: { singleton: true, requiredVersion: '^3.3.0' },"
+cfg-public-path,angular-mfe/webpack.config.js,36,"config.output = { ...config.output, publicPath: isProd ? '/angular-mfe/' : 'auto' };"
+cfg-public-path,react-mfe-1/webpack.config.js,25,"    publicPath: 'auto',  // lets webpack infer the base URL from where remoteEntry.js is served"
+cfg-public-path,react-mfe-2/webpack.config.js,24,"    publicPath: 'auto',"
+cfg-public-path,vue-mfe/webpack.config.js,26,"    publicPath: 'auto',"
+rt-remote-entry,angular-mfe/vercel.json,6,"      ""source"": ""/remoteEntry.js"","
+rt-remote-entry,angular-mfe/webpack.config.js,25,"  filename: 'remoteEntry.js',"
+rt-remote-entry,host/webpack.config.js,18,"//   /react-mfe-1/remoteEntry.js, /vue-mfe/remoteEntry.js, etc."
+rt-remote-entry,host/webpack.config.js,27,"  // (remoteEntry.js ends with `export { get, init }`). A regular script-tag remote"
+rt-remote-entry,host/webpack.config.js,31,    ? `promise import('/angular-mfe/remoteEntry.js')`
+rt-remote-entry,host/webpack.config.js,32,    : `promise import('http://localhost:4200/remoteEntry.js')`;
+rt-remote-entry,host/webpack.config.js,36,"        reactMfe1:  'reactMfe1@/react-mfe-1/remoteEntry.js',"
+rt-remote-entry,host/webpack.config.js,37,"        reactMfe2:  'reactMfe2@/react-mfe-2/remoteEntry.js',"
+rt-remote-entry,host/webpack.config.js,38,"        vueMfe:     'vueMfe@/vue-mfe/remoteEntry.js',"
+rt-remote-entry,host/webpack.config.js,42,"        reactMfe1:  'reactMfe1@http://localhost:3001/remoteEntry.js',"
+rt-remote-entry,host/webpack.config.js,43,"        reactMfe2:  'reactMfe2@http://localhost:3002/remoteEntry.js',"
+rt-remote-entry,host/webpack.config.js,44,"        vueMfe:     'vueMfe@http://localhost:3003/remoteEntry.js',"
+rt-remote-entry,react-mfe-1/vercel.json,6,"      ""source"": ""/remoteEntry.js"","
+rt-remote-entry,react-mfe-1/webpack.config.js,8, *   1. Serves a remoteEntry.js file that the host can download
+rt-remote-entry,react-mfe-1/webpack.config.js,25,"    publicPath: 'auto',  // lets webpack infer the base URL from where remoteEntry.js is served"
+rt-remote-entry,react-mfe-1/webpack.config.js,48,"      filename: 'remoteEntry.js',"
+rt-remote-entry,react-mfe-2/vercel.json,6,"      ""source"": ""/remoteEntry.js"","
+rt-remote-entry,react-mfe-2/webpack.config.js,44,"      filename: 'remoteEntry.js',"
+rt-remote-entry,vue-mfe/vercel.json,6,"      ""source"": ""/remoteEntry.js"","
+rt-remote-entry,vue-mfe/webpack.config.js,60,"      filename: 'remoteEntry.js',"
+src-remote-import,host/src/App.jsx,32,"  { label: 'React MFE 1', key: '/react-mfe-1', loader: () => import('reactMfe1/mount'), icon: <CodeOutlined /> },"
+src-remote-import,host/src/App.jsx,33,"  { label: 'React MFE 2', key: '/react-mfe-2', loader: () => import('reactMfe2/mount'), icon: <CodeOutlined /> },"
+src-remote-import,host/src/App.jsx,34,"  { label: 'Vue MFE',     key: '/vue-mfe',     loader: () => import('vueMfe/mount'),    icon: <AppstoreOutlined /> },"
+src-remote-import,host/src/App.jsx,35,"  { label: 'Angular MFE', key: '/angular-mfe', loader: () => import('angularMfe/mount'), icon: <AppstoreOutlined /> },"
+src-remote-import,host/webpack.config.js,32,    : `promise import('http://localhost:4200/remoteEntry.js')`;
+src-remote-import,react-mfe-1/src/mount.js,3,// The host calls: import('reactMfe1/mount').then(({ default: mount }) => mount(element))
+src-remote-import,react-mfe-1/webpack.config.js,51,      // Host uses it as: import('reactMfe1/mount')
+src-async-bootstrap,host/src/index.js,5,"// By using import('./bootstrap'), we ensure everything is initialized before"
+src-async-bootstrap,host/src/index.js,7,import('./bootstrap');
+src-async-bootstrap,react-mfe-1/src/index.js,3,import('./bootstrap');
+src-async-bootstrap,react-mfe-2/src/index.js,1,import('./bootstrap');
+src-async-bootstrap,vue-mfe/src/index.js,1,import('./bootstrap');
+src-mount-call,host/src/App.jsx,61,        mount(container);
+src-mount-call,react-mfe-1/src/mount.js,3,// The host calls: import('reactMfe1/mount').then(({ default: mount }) => mount(element))
+src-mount-call,react-mfe-1/webpack.config.js,9, *   2. Exposes the ./mount module so the host can call mount(element)
+src-mount-call,vue-mfe/src/mount.js,4,// app.mount(element) renders it into the container element provided by the host.
+src-mount-call,vue-mfe/src/mount.js,10,  app.mount(element);
+src-iframe,host/src/App.jsx,97,    <iframe
+ops-deployment-file,angular-mfe/vercel.json,,
+ops-deployment-file,host/vercel.json,,
+ops-deployment-file,react-mfe-1/vercel.json,,
+ops-deployment-file,react-mfe-2/vercel.json,,
+ops-deployment-file,vercel.json,,
+ops-deployment-file,vue-mfe/vercel.json,,
+ops-hosting,README.md,3,**Live Demo → [https://microfrontend-beta.vercel.app](https://microfrontend-beta.vercel.app)**
+ops-hosting,README.md,24,11. [Live Deployment on Vercel](#11-live-deployment-on-vercel)
+ops-hosting,README.md,283,| `/route-map` | https://route-map-five.vercel.app/ in iframe |
+ops-hosting,README.md,355,Use this when the app is already deployed somewhere (like Vercel or Render).
+ops-hosting,README.md,362,"  { label: 'Route Map', path: '/route-map', url: 'https://route-map-five.vercel.app/' },"
+ops-hosting,README.md,469,## 11. Live Deployment on Vercel
+ops-hosting,README.md,473,**[https://microfrontend-beta.vercel.app](https://microfrontend-beta.vercel.app)**
+ops-hosting,README.md,479,| [/](https://microfrontend-beta.vercel.app/) | Welcome / landing page |
+ops-hosting,README.md,480,| [/react-mfe-1](https://microfrontend-beta.vercel.app/react-mfe-1) | React MFE 1 — Counter app |
+ops-hosting,README.md,481,| [/react-mfe-2](https://microfrontend-beta.vercel.app/react-mfe-2) | React MFE 2 — User Greeting |
+ops-hosting,README.md,482,| [/vue-mfe](https://microfrontend-beta.vercel.app/vue-mfe) | Vue MFE — Theme Switcher |
+ops-hosting,README.md,483,| [/angular-mfe](https://microfrontend-beta.vercel.app/angular-mfe) | Angular MFE — Fun Facts |
+ops-hosting,README.md,484,| [/route-map](https://microfrontend-beta.vercel.app/route-map) | External: Route Map app (iframe) |
+ops-hosting,README.md,485,| [/multibank](https://microfrontend-beta.vercel.app/multibank) | External: Multibank app (iframe) |
+ops-hosting,README.md,490,Vercel project. The build pipeline (in `package.json → build:all`) is:
+ops-hosting,README.md,534,2. Go to [vercel.com](https://vercel.com) → **New Project** → import your repo.
+ops-hosting,README.md,535,3. Leave **Root Directory** as `/` (the root `vercel.json` handles everything).
+ops-cors,angular-mfe/vercel.json,8,"        { ""key"": ""Access-Control-Allow-Origin"", ""value"": ""*"" },"
+ops-cors,angular-mfe/vercel.json,15,"        { ""key"": ""Access-Control-Allow-Origin"", ""value"": ""*"" }"
+ops-cors,host/webpack.config.js,57,"      'Access-Control-Allow-Origin': '*',"
+ops-cors,react-mfe-1/vercel.json,8,"        { ""key"": ""Access-Control-Allow-Origin"", ""value"": ""*"" },"
+ops-cors,react-mfe-1/vercel.json,15,"        { ""key"": ""Access-Control-Allow-Origin"", ""value"": ""*"" }"
+ops-cors,react-mfe-1/webpack.config.js,20,"      'Access-Control-Allow-Origin': '*',"
+ops-cors,react-mfe-2/vercel.json,8,"        { ""key"": ""Access-Control-Allow-Origin"", ""value"": ""*"" },"
+ops-cors,react-mfe-2/vercel.json,15,"        { ""key"": ""Access-Control-Allow-Origin"", ""value"": ""*"" }"
+ops-cors,react-mfe-2/webpack.config.js,19,"      'Access-Control-Allow-Origin': '*',"
+ops-cors,vue-mfe/vercel.json,8,"        { ""key"": ""Access-Control-Allow-Origin"", ""value"": ""*"" },"
+ops-cors,vue-mfe/vercel.json,15,"        { ""key"": ""Access-Control-Allow-Origin"", ""value"": ""*"" }"
+ops-cors,vue-mfe/webpack.config.js,21,"      'Access-Control-Allow-Origin': '*',"
+doc-mfe-term,README.md,1,# Microfrontend Learning Project
+doc-mfe-term,README.md,3,**Live Demo → [https://microfrontend-beta.vercel.app](https://microfrontend-beta.vercel.app)**
+doc-mfe-term,README.md,5,A hands-on example showing how to build a **Microfrontend architecture** with
+doc-mfe-term,README.md,14,1. [What Is a Microfrontend?](#1-what-is-a-microfrontend)
+doc-mfe-term,README.md,29,## 1. What Is a Microfrontend?
+doc-mfe-term,README.md,31,"A **microfrontend** splits a large frontend into smaller, independently"
+doc-mfe-term,README.md,32,"deployable apps (""MFEs""). Each MFE:"
+doc-mfe-term,README.md,50,│  │React MFE │  │   Angular MFE    │  │
+doc-mfe-term,README.md,54,│  │React MFE2│  │    Vue MFE       │  │
+doc-mfe-term,README.md,66,Each MFE was created as a standalone app:
+doc-mfe-term,README.md,67,- `react-mfe-1` and `react-mfe-2` — plain React + Babel + Webpack.
+doc-mfe-term,README.md,68,- `vue-mfe` — Vue 3 + vue-loader + Webpack.
+doc-mfe-term,README.md,69,- `angular-mfe` — Angular CLI 16 + `@angular-architects/module-federation`.
+doc-mfe-term,README.md,72,### Step 2 — Add Webpack Module Federation to each MFE
+doc-mfe-term,README.md,74,Every MFE's `webpack.config.js` was given a `ModuleFederationPlugin` block
+doc-mfe-term,README.md,78,// react-mfe-1/webpack.config.js (simplified)
+doc-mfe-term,README.md,89,### Step 3 — Each MFE exports a `mount(element)` function
+doc-mfe-term,README.md,91,This is the **contract** between every MFE and the host — framework-agnostic:
+doc-mfe-term,README.md,94,// react-mfe-1/src/mount.js
+doc-mfe-term,README.md,102,// vue-mfe/src/mount.js
+doc-mfe-term,README.md,110,// angular-mfe/src/mount.ts
+doc-mfe-term,README.md,117,### Step 4 — Configure the host to consume all MFEs
+doc-mfe-term,README.md,119,`host/webpack.config.js` declares the MFEs as **remotes**:
+doc-mfe-term,README.md,136,`react-router-dom` v6 was added to the host so each MFE (and external app) gets
+doc-mfe-term,README.md,154,microfrontend/
+doc-mfe-term,README.md,158,"│   ├── webpack.config.js ← Declares MFE remotes, historyApiFallback, CORS header"
+doc-mfe-term,README.md,164,"│       └── App.jsx       ← All routes, nav header, MfeContainer, IframeView"
+doc-mfe-term,README.md,166,├── react-mfe-1/          ← React MFE — Counter app              port 3001
+doc-mfe-term,README.md,172,├── react-mfe-2/          ← React MFE — User Greeting            port 3002
+doc-mfe-term,README.md,178,├── vue-mfe/              ← Vue 3 MFE — Theme Switcher           port 3003
+doc-mfe-term,README.md,184,└── angular-mfe/          ← Angular 16 MFE — Fun Facts           port 4200
+doc-mfe-term,README.md,201,| Declaring which MFEs exist and their routes | `App.jsx` → `MFE_NAV` array |
+doc-mfe-term,README.md,202,| Dynamically loading an MFE when its route is visited | `App.jsx` → `<MfeContainer>` |
+doc-mfe-term,README.md,204,| Telling webpack where each MFE's `remoteEntry.js` lives | `webpack.config.js` → `remotes` |
+doc-mfe-term,README.md,206,| Allowing cross-origin requests from MFEs | `webpack.config.js` → CORS header |
+doc-mfe-term,README.md,212,"MFE_NAV        — array of { label, path, loader } for each MFE child app"
+doc-mfe-term,README.md,215,"<MfeContainer> — on mount, calls loader() then calls mount(containerDiv)"
+doc-mfe-term,README.md,225,"  historyApiFallback: true,   // ← allows /react-mfe-1 to work on page refresh"
+doc-mfe-term,README.md,226,"  headers: { 'Access-Control-Allow-Origin': '*' }, // ← allows MFE scripts to load"
+doc-mfe-term,README.md,231,  // ... one entry per MFE
+doc-mfe-term,README.md,245,Browser visits http://localhost:3005/react-mfe-1
+doc-mfe-term,README.md,250,        ▼  (user navigates to /react-mfe-1)
+doc-mfe-term,README.md,251,MfeContainer calls: import('reactMfe1/mount')
+doc-mfe-term,README.md,257,Downloads only the chunks needed for that MFE
+doc-mfe-term,README.md,263,React MFE 1 renders inside the host's <div>
+doc-mfe-term,README.md,266,This is **lazy loading at the module level** — the MFE code is not in the host
+doc-mfe-term,README.md,267,bundle. It is fetched from the MFE's own dev server on demand.
+doc-mfe-term,README.md,279,| `/react-mfe-1` | React MFE 1 (Counter) |
+doc-mfe-term,README.md,280,| `/react-mfe-2` | React MFE 2 (User Greeting) |
+doc-mfe-term,README.md,281,| `/vue-mfe` | Vue MFE (Theme Switcher) |
+doc-mfe-term,README.md,282,| `/angular-mfe` | Angular MFE (Fun Facts) |
+doc-mfe-term,README.md,293,| React MFE 1 | 3001 | React 18 |
+doc-mfe-term,README.md,294,| React MFE 2 | 3002 | React 18 |
+doc-mfe-term,README.md,295,| Vue MFE | 3003 | Vue 3 |
+doc-mfe-term,README.md,296,| Angular MFE | 4200 | Angular 16 |
+doc-mfe-term,README.md,308,| Angular CLI | 16 (for angular-mfe only) |
+doc-mfe-term,README.md,335,cd react-mfe-1  && npm start   # port 3001
+doc-mfe-term,README.md,336,cd react-mfe-2  && npm start   # port 3002
+doc-mfe-term,README.md,337,cd vue-mfe      && npm start   # port 3003
+doc-mfe-term,README.md,338,cd angular-mfe  && npm start   # port 4200
+doc-mfe-term,README.md,342,> MFEs must be started **before** you click their route in the host. If an MFE is
+doc-mfe-term,README.md,374,### Scenario B — Add a new local MFE (React / Vue)
+doc-mfe-term,README.md,376,#### Step 1 — Create the new MFE folder
+doc-mfe-term,README.md,378,Copy `react-mfe-1/` or `vue-mfe/` as a starting point and pick a free port:
+doc-mfe-term,README.md,381,cp -r react-mfe-1 react-mfe-3
+doc-mfe-term,README.md,384,#### Step 2 — Update the new MFE's `webpack.config.js`
+doc-mfe-term,README.md,387,// react-mfe-3/webpack.config.js
+doc-mfe-term,README.md,398,#### Step 3 — Register the new MFE in the host's webpack config
+doc-mfe-term,README.md,414,const MFE_NAV = [
+doc-mfe-term,README.md,415,"  { label: 'React MFE 1', path: '/react-mfe-1', loader: () => import('reactMfe1/mount') },"
+doc-mfe-term,README.md,416,"  { label: 'React MFE 2', path: '/react-mfe-2', loader: () => import('reactMfe2/mount') },"
+doc-mfe-term,README.md,417,"  { label: 'Vue MFE',     path: '/vue-mfe',     loader: () => import('vueMfe/mount')    },"
+doc-mfe-term,README.md,418,"  { label: 'Angular MFE', path: '/angular-mfe', loader: () => import('angularMfe/mount') },"
+doc-mfe-term,README.md,419,  // ↓ Add your new MFE here
+doc-mfe-term,README.md,420,"  { label: 'React MFE 3', path: '/react-mfe-3', loader: () => import('reactMfe3/mount') },"
+doc-mfe-term,README.md,428,"""start"": ""concurrently ... \""npm start --prefix react-mfe-3\"""""
+doc-mfe-term,README.md,434,cd react-mfe-3 && npm install && npm start
+doc-mfe-term,README.md,441,### Scenario C — Add a new Angular MFE
+doc-mfe-term,README.md,446,ng new angular-mfe-2 --routing=false --style=css
+doc-mfe-term,README.md,447,cd angular-mfe-2
+doc-mfe-term,README.md,448,ng add @angular-architects/module-federation --project angular-mfe-2 --port 4201
+doc-mfe-term,README.md,459,| `host/webpack.config.js` | How to declare MFE remotes and share dependencies |
+doc-mfe-term,README.md,460,"| `host/src/App.jsx` | BrowserRouter routing, dynamic MFE loading, iframe embedding |"
+doc-mfe-term,README.md,461,| `react-mfe-1/webpack.config.js` | How an MFE exposes itself via Module Federation |
+doc-mfe-term,README.md,462,| `react-mfe-1/src/mount.js` | The `mount(element)` contract for React |
+doc-mfe-term,README.md,463,| `vue-mfe/src/mount.js` | The `mount(element)` contract for Vue |
+doc-mfe-term,README.md,464,| `angular-mfe/src/mount.ts` | The `mount(element)` contract for Angular |
+doc-mfe-term,README.md,473,**[https://microfrontend-beta.vercel.app](https://microfrontend-beta.vercel.app)**
+doc-mfe-term,README.md,479,| [/](https://microfrontend-beta.vercel.app/) | Welcome / landing page |
+doc-mfe-term,README.md,480,| [/react-mfe-1](https://microfrontend-beta.vercel.app/react-mfe-1) | React MFE 1 — Counter app |
+doc-mfe-term,README.md,481,| [/react-mfe-2](https://microfrontend-beta.vercel.app/react-mfe-2) | React MFE 2 — User Greeting |
+doc-mfe-term,README.md,482,| [/vue-mfe](https://microfrontend-beta.vercel.app/vue-mfe) | Vue MFE — Theme Switcher |
+doc-mfe-term,README.md,483,| [/angular-mfe](https://microfrontend-beta.vercel.app/angular-mfe) | Angular MFE — Fun Facts |
+doc-mfe-term,README.md,484,| [/route-map](https://microfrontend-beta.vercel.app/route-map) | External: Route Map app (iframe) |
+doc-mfe-term,README.md,485,| [/multibank](https://microfrontend-beta.vercel.app/multibank) | External: Multibank app (iframe) |
+doc-mfe-term,README.md,493,1. npm run build  inside react-mfe-1  → react-mfe-1/dist/
+doc-mfe-term,README.md,494,2. npm run build  inside react-mfe-2  → react-mfe-2/dist/
+doc-mfe-term,README.md,495,3. npm run build  inside vue-mfe      → vue-mfe/dist/
+doc-mfe-term,README.md,496,4. npm run build  inside angular-mfe  → angular-mfe/dist/angular-mfe/
+doc-mfe-term,README.md,503,  react-mfe-1/
+doc-mfe-term,README.md,504,    remoteEntry.js    ← fetched at /react-mfe-1/remoteEntry.js
+doc-mfe-term,README.md,505,  react-mfe-2/
+doc-mfe-term,README.md,507,  vue-mfe/
+doc-mfe-term,README.md,509,  angular-mfe/
+doc-mfe-term,README.md,520,"      reactMfe1:  'reactMfe1@/react-mfe-1/remoteEntry.js',"
+doc-mfe-term,README.md,521,"      reactMfe2:  'reactMfe2@/react-mfe-2/remoteEntry.js',"
+doc-mfe-term,README.md,522,"      vueMfe:     'vueMfe@/vue-mfe/remoteEntry.js',"
+doc-mfe-term,README.md,523,"      angularMfe: 'angularMfe@/angular-mfe/remoteEntry.js',"
+doc-mfe-term,README.md,528,Each MFE webpack config also sets `publicPath: 'auto'` so JavaScript chunks
+doc-mfe-term,README.md,542,**MFE not loading in the host?**
+doc-mfe-term,README.md,543,- Confirm that MFE is running on its correct port (see table in §7).
+doc-mfe-term,README.md,553,**Angular MFE fails to start?**
+doc-integration-technology,README.md,6,**Webpack 5 Module Federation**. Six independent apps — one host shell and five
+doc-integration-technology,README.md,18,5. [How Module Federation Works](#5-how-module-federation-works)
+doc-integration-technology,README.md,72,### Step 2 — Add Webpack Module Federation to each MFE
+doc-integration-technology,README.md,164,"│       └── App.jsx       ← All routes, nav header, MfeContainer, IframeView"
+doc-integration-technology,README.md,203,| Embedding external apps as iframes | `App.jsx` → `IFRAME_NAV` + `<IframeView>` |
+doc-integration-technology,README.md,213,"IFRAME_NAV     — array of { label, path, url } for external apps"
+doc-integration-technology,README.md,216,<IframeView>   — renders <iframe src={url}> filling the viewport
+doc-integration-technology,README.md,242,## 5. How Module Federation Works
+doc-integration-technology,README.md,283,| `/route-map` | https://route-map-five.vercel.app/ in iframe |
+doc-integration-technology,README.md,284,| `/multibank` | https://multibank-1.onrender.com/ in iframe |
+doc-integration-technology,README.md,353,### Scenario A — Add an existing external URL (iframe)
+doc-integration-technology,README.md,361,const IFRAME_NAV = [
+doc-integration-technology,README.md,369,"That's it. The `<Header>`, `<IframeView>`, and `<Route>` are all generated"
+doc-integration-technology,README.md,460,"| `host/src/App.jsx` | BrowserRouter routing, dynamic MFE loading, iframe embedding |"
+doc-integration-technology,README.md,461,| `react-mfe-1/webpack.config.js` | How an MFE exposes itself via Module Federation |
+doc-integration-technology,README.md,484,| [/route-map](https://microfrontend-beta.vercel.app/route-map) | External: Route Map app (iframe) |
+doc-integration-technology,README.md,485,| [/multibank](https://microfrontend-beta.vercel.app/multibank) | External: Multibank app (iframe) |
+doc-integration-technology,README.md,562,**External iframe app not showing?**
+doc-runtime-loading,README.md,8,at runtime in a single browser window.
+doc-runtime-loading,README.md,39,A **host / shell app** ties them all together in one browser page at runtime —
+doc-runtime-loading,README.md,253,        ▼  (webpack resolves the remote at runtime)
+doc-runtime-loading,README.md,529,load from the correct subdirectory path at runtime.
+doc-independence,README.md,6,**Webpack 5 Module Federation**. Six independent apps — one host shell and five
+doc-independence,README.md,31,"A **microfrontend** splits a large frontend into smaller, independently"
+doc-independence,README.md,64,### Step 1 — Create each app independently
+doc-host-remote,README.md,119,`host/webpack.config.js` declares the MFEs as **remotes**:
+doc-host-remote,README.md,401,// host/webpack.config.js → inside ModuleFederationPlugin → remotes
+doc-host-remote,README.md,459,| `host/webpack.config.js` | How to declare MFE remotes and share dependencies |

@@ -1,0 +1,7 @@
+directory,markers
+.,package.json
+frontend/analytics-app,frontend/analytics-app/package.json
+frontend/container,frontend/container/package.json
+frontend/data-grid-app,frontend/data-grid-app/package.json
+frontend/settings-app,frontend/settings-app/package.json
+frontend/user-management-app,frontend/user-management-app/package.json

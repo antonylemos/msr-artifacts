@@ -1,0 +1,94 @@
+import mockAxios from 'axios';
+import JWTAuthProvider from './jwtAuthProvider';
+
+describe('jwt auth provider', () => {
+  let jwtAuthProvider: JWTAuthProvider;
+  const testToken =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIiLCJ1c2VySXNBZG1pbiI6ZmFsc2V9.PEuKaAD98doFTLyqcNFpsuv50AQR8ejrbDQ0pwazM7Q';
+
+  beforeEach(() => {
+    vi.spyOn(window.localStorage.__proto__, 'getItem');
+    window.localStorage.__proto__.getItem = vi
+      .fn()
+      .mockImplementation((name) =>
+        name === 'scigateway:token' ? testToken : null
+      );
+    window.localStorage.__proto__.removeItem = vi.fn();
+    window.localStorage.__proto__.setItem = vi.fn();
+
+    jwtAuthProvider = new JWTAuthProvider('http://localhost:8000');
+  });
+
+  afterEach(() => {
+    vi.mocked(mockAxios.post).mockClear();
+  });
+
+  it('should load the token when built', () => {
+    expect(localStorage.getItem).toBeCalledWith('scigateway:token');
+    expect(jwtAuthProvider.isLoggedIn()).toBeTruthy();
+  });
+
+  it('should load a user when given a valid token', () => {
+    expect(jwtAuthProvider.user).not.toBeNull();
+    expect(jwtAuthProvider.user?.username).toBe('user');
+    expect(jwtAuthProvider.user?.isAdmin).toBeFalsy();
+    expect(jwtAuthProvider.isLoggedIn()).toBeTruthy();
+  });
+
+  it('should clear the token when logging out', () => {
+    jwtAuthProvider.logOut();
+
+    expect(localStorage.removeItem).toBeCalledWith('scigateway:token');
+    expect(jwtAuthProvider.isLoggedIn()).toBeFalsy();
+  });
+
+  it('should clear the user info when logging out', () => {
+    jwtAuthProvider.logOut();
+
+    expect(jwtAuthProvider.user).toBeNull();
+    expect(jwtAuthProvider.isLoggedIn()).toBeFalsy();
+  });
+
+  it('should successfully log in if user is already logged in', () => {
+    return jwtAuthProvider.logIn('user', 'password');
+  });
+
+  it('should call the api to authenticate', async () => {
+    vi.mocked(mockAxios.post).mockImplementation(() =>
+      Promise.resolve({
+        data: testToken,
+      })
+    );
+
+    // ensure the token is null
+    jwtAuthProvider.logOut();
+
+    await jwtAuthProvider.logIn('user', 'password');
+
+    expect(localStorage.setItem).toBeCalledWith('scigateway:token', testToken);
+
+    expect(jwtAuthProvider.user).not.toBeNull();
+    expect(jwtAuthProvider.user?.username).toBe('user');
+    expect(jwtAuthProvider.isLoggedIn()).toBeTruthy();
+  });
+
+  it('should log the user out for an invalid login attempt', async () => {
+    vi.mocked(mockAxios.post).mockImplementation(() =>
+      Promise.reject({
+        response: {
+          status: 401,
+        },
+      })
+    );
+
+    // ensure the token is null
+    jwtAuthProvider.logOut();
+
+    await jwtAuthProvider.logIn('user', 'invalid').catch(() => {
+      // catch error
+    });
+
+    expect(localStorage.removeItem).toBeCalledWith('scigateway:token');
+    expect(jwtAuthProvider.isLoggedIn()).toBeFalsy();
+  });
+});

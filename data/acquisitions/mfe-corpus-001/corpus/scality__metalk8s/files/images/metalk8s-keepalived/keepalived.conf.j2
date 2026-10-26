@@ -1,0 +1,36 @@
+global_defs {
+    enable_script_security
+    script_user keepalived keepalived
+}
+
+{%- set healthcheck = input.get("healthcheck") %}
+{%- if healthcheck %}
+
+vrrp_script check_get {
+    script "/etc/keepalived/check-get.sh {{ healthcheck.replace("__NODE_IP__", env["NODE_IP"]) }}"
+    interval 5
+    weight 60
+}
+
+{%- endif %}
+
+{%- for addr in input["addresses"] %}
+
+{%- set is_master = addr.get("node") == env["NODE_NAME"] %}
+
+vrrp_instance VI_{{ loop.index }} {
+    state {{ 'MASTER' if is_master else 'BACKUP' }}
+    interface {{ get_interface_from_ip(addr["ip"]) }}
+    priority {{ '150' if is_master else '100' }}
+    virtual_router_id {{ addr["vr_id"] }}
+    virtual_ipaddress {
+        {{ addr["ip"] }}
+    }
+    {%- if healthcheck %}
+    track_script {
+        check_get
+    }
+    {%- endif %}
+}
+
+{%- endfor %}

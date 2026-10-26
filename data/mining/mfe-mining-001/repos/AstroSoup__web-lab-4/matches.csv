@@ -1,0 +1,155 @@
+pattern,path,line,excerpt
+dep-module-federation,frontend/vite/host/package.json,17,"    ""@module-federation/vite"": ""latest"","
+dep-module-federation,frontend/vite/remote-inputs/package.json,16,"    ""@module-federation/vite"": ""latest"","
+dep-module-federation,frontend/vite/remote-results/package.json,16,"    ""@module-federation/vite"": ""latest"","
+lock-mfe-dependency,frontend/vite/host/package-lock.json,16,"        ""@module-federation/vite"": ""latest"","
+lock-mfe-dependency,frontend/vite/host/package-lock.json,484,"    ""node_modules/@module-federation/error-codes"": {"
+lock-mfe-dependency,frontend/vite/host/package-lock.json,486,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/error-codes/-/error-codes-0.18.4.tgz"","
+lock-mfe-dependency,frontend/vite/host/package-lock.json,491,"    ""node_modules/@module-federation/runtime"": {"
+lock-mfe-dependency,frontend/vite/host/package-lock.json,493,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/runtime/-/runtime-0.18.4.tgz"","
+lock-mfe-dependency,frontend/vite/host/package-lock.json,498,"        ""@module-federation/error-codes"": ""0.18.4"","
+lock-mfe-dependency,frontend/vite/host/package-lock.json,499,"        ""@module-federation/runtime-core"": ""0.18.4"","
+lock-mfe-dependency,frontend/vite/host/package-lock.json,500,"        ""@module-federation/sdk"": ""0.18.4"""
+lock-mfe-dependency,frontend/vite/host/package-lock.json,503,"    ""node_modules/@module-federation/runtime-core"": {"
+lock-mfe-dependency,frontend/vite/host/package-lock.json,505,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/runtime-core/-/runtime-core-0.18.4.tgz"","
+lock-mfe-dependency,frontend/vite/host/package-lock.json,510,"        ""@module-federation/error-codes"": ""0.18.4"","
+lock-mfe-dependency,frontend/vite/host/package-lock.json,511,"        ""@module-federation/sdk"": ""0.18.4"""
+lock-mfe-dependency,frontend/vite/host/package-lock.json,514,"    ""node_modules/@module-federation/sdk"": {"
+lock-mfe-dependency,frontend/vite/host/package-lock.json,516,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/sdk/-/sdk-0.18.4.tgz"","
+lock-mfe-dependency,frontend/vite/host/package-lock.json,521,"    ""node_modules/@module-federation/vite"": {"
+lock-mfe-dependency,frontend/vite/host/package-lock.json,523,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/vite/-/vite-1.9.2.tgz"","
+lock-mfe-dependency,frontend/vite/host/package-lock.json,528,"        ""@module-federation/runtime"": ""^0.18.3"","
+lock-mfe-dependency,frontend/vite/host/package-lock.json,529,"        ""@module-federation/sdk"": ""^0.18.3"","
+lock-mfe-dependency,frontend/vite/host/package-lock.json,1672,"    ""@module-federation/error-codes"": {"
+lock-mfe-dependency,frontend/vite/host/package-lock.json,1674,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/error-codes/-/error-codes-0.18.4.tgz"","
+lock-mfe-dependency,frontend/vite/host/package-lock.json,1678,"    ""@module-federation/runtime"": {"
+lock-mfe-dependency,frontend/vite/host/package-lock.json,1680,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/runtime/-/runtime-0.18.4.tgz"","
+lock-mfe-dependency,frontend/vite/host/package-lock.json,1684,"        ""@module-federation/error-codes"": ""0.18.4"","
+lock-mfe-dependency,frontend/vite/host/package-lock.json,1685,"        ""@module-federation/runtime-core"": ""0.18.4"","
+lock-mfe-dependency,frontend/vite/host/package-lock.json,1686,"        ""@module-federation/sdk"": ""0.18.4"""
+lock-mfe-dependency,frontend/vite/host/package-lock.json,1689,"    ""@module-federation/runtime-core"": {"
+lock-mfe-dependency,frontend/vite/host/package-lock.json,1691,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/runtime-core/-/runtime-core-0.18.4.tgz"","
+lock-mfe-dependency,frontend/vite/host/package-lock.json,1695,"        ""@module-federation/error-codes"": ""0.18.4"","
+lock-mfe-dependency,frontend/vite/host/package-lock.json,1696,"        ""@module-federation/sdk"": ""0.18.4"""
+lock-mfe-dependency,frontend/vite/host/package-lock.json,1699,"    ""@module-federation/sdk"": {"
+lock-mfe-dependency,frontend/vite/host/package-lock.json,1701,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/sdk/-/sdk-0.18.4.tgz"","
+lock-mfe-dependency,frontend/vite/host/package-lock.json,1705,"    ""@module-federation/vite"": {"
+lock-mfe-dependency,frontend/vite/host/package-lock.json,1707,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/vite/-/vite-1.9.2.tgz"","
+lock-mfe-dependency,frontend/vite/host/package-lock.json,1711,"        ""@module-federation/runtime"": ""^0.18.3"","
+lock-mfe-dependency,frontend/vite/host/package-lock.json,1712,"        ""@module-federation/sdk"": ""^0.18.3"","
+lock-mfe-dependency,frontend/vite/remote-inputs/package-lock.json,15,"        ""@module-federation/vite"": ""latest"","
+lock-mfe-dependency,frontend/vite/remote-inputs/package-lock.json,514,"    ""node_modules/@module-federation/error-codes"": {"
+lock-mfe-dependency,frontend/vite/remote-inputs/package-lock.json,516,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/error-codes/-/error-codes-0.18.4.tgz"","
+lock-mfe-dependency,frontend/vite/remote-inputs/package-lock.json,521,"    ""node_modules/@module-federation/runtime"": {"
+lock-mfe-dependency,frontend/vite/remote-inputs/package-lock.json,523,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/runtime/-/runtime-0.18.4.tgz"","
+lock-mfe-dependency,frontend/vite/remote-inputs/package-lock.json,528,"        ""@module-federation/error-codes"": ""0.18.4"","
+lock-mfe-dependency,frontend/vite/remote-inputs/package-lock.json,529,"        ""@module-federation/runtime-core"": ""0.18.4"","
+lock-mfe-dependency,frontend/vite/remote-inputs/package-lock.json,530,"        ""@module-federation/sdk"": ""0.18.4"""
+lock-mfe-dependency,frontend/vite/remote-inputs/package-lock.json,533,"    ""node_modules/@module-federation/runtime-core"": {"
+lock-mfe-dependency,frontend/vite/remote-inputs/package-lock.json,535,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/runtime-core/-/runtime-core-0.18.4.tgz"","
+lock-mfe-dependency,frontend/vite/remote-inputs/package-lock.json,540,"        ""@module-federation/error-codes"": ""0.18.4"","
+lock-mfe-dependency,frontend/vite/remote-inputs/package-lock.json,541,"        ""@module-federation/sdk"": ""0.18.4"""
+lock-mfe-dependency,frontend/vite/remote-inputs/package-lock.json,544,"    ""node_modules/@module-federation/sdk"": {"
+lock-mfe-dependency,frontend/vite/remote-inputs/package-lock.json,546,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/sdk/-/sdk-0.18.4.tgz"","
+lock-mfe-dependency,frontend/vite/remote-inputs/package-lock.json,551,"    ""node_modules/@module-federation/vite"": {"
+lock-mfe-dependency,frontend/vite/remote-inputs/package-lock.json,553,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/vite/-/vite-1.9.2.tgz"","
+lock-mfe-dependency,frontend/vite/remote-inputs/package-lock.json,558,"        ""@module-federation/runtime"": ""^0.18.3"","
+lock-mfe-dependency,frontend/vite/remote-inputs/package-lock.json,559,"        ""@module-federation/sdk"": ""^0.18.3"","
+lock-mfe-dependency,frontend/vite/remote-inputs/package-lock.json,567,"    ""node_modules/@module-federation/vite/node_modules/estree-walker"": {"
+lock-mfe-dependency,frontend/vite/remote-inputs/package-lock.json,574,"    ""node_modules/@module-federation/vite/node_modules/magic-string"": {"
+lock-mfe-dependency,frontend/vite/remote-results/package-lock.json,15,"        ""@module-federation/vite"": ""latest"","
+lock-mfe-dependency,frontend/vite/remote-results/package-lock.json,514,"    ""node_modules/@module-federation/error-codes"": {"
+lock-mfe-dependency,frontend/vite/remote-results/package-lock.json,516,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/error-codes/-/error-codes-0.18.4.tgz"","
+lock-mfe-dependency,frontend/vite/remote-results/package-lock.json,521,"    ""node_modules/@module-federation/runtime"": {"
+lock-mfe-dependency,frontend/vite/remote-results/package-lock.json,523,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/runtime/-/runtime-0.18.4.tgz"","
+lock-mfe-dependency,frontend/vite/remote-results/package-lock.json,528,"        ""@module-federation/error-codes"": ""0.18.4"","
+lock-mfe-dependency,frontend/vite/remote-results/package-lock.json,529,"        ""@module-federation/runtime-core"": ""0.18.4"","
+lock-mfe-dependency,frontend/vite/remote-results/package-lock.json,530,"        ""@module-federation/sdk"": ""0.18.4"""
+lock-mfe-dependency,frontend/vite/remote-results/package-lock.json,533,"    ""node_modules/@module-federation/runtime-core"": {"
+lock-mfe-dependency,frontend/vite/remote-results/package-lock.json,535,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/runtime-core/-/runtime-core-0.18.4.tgz"","
+lock-mfe-dependency,frontend/vite/remote-results/package-lock.json,540,"        ""@module-federation/error-codes"": ""0.18.4"","
+lock-mfe-dependency,frontend/vite/remote-results/package-lock.json,541,"        ""@module-federation/sdk"": ""0.18.4"""
+lock-mfe-dependency,frontend/vite/remote-results/package-lock.json,544,"    ""node_modules/@module-federation/sdk"": {"
+lock-mfe-dependency,frontend/vite/remote-results/package-lock.json,546,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/sdk/-/sdk-0.18.4.tgz"","
+lock-mfe-dependency,frontend/vite/remote-results/package-lock.json,551,"    ""node_modules/@module-federation/vite"": {"
+lock-mfe-dependency,frontend/vite/remote-results/package-lock.json,553,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/vite/-/vite-1.9.2.tgz"","
+lock-mfe-dependency,frontend/vite/remote-results/package-lock.json,558,"        ""@module-federation/runtime"": ""^0.18.3"","
+lock-mfe-dependency,frontend/vite/remote-results/package-lock.json,559,"        ""@module-federation/sdk"": ""^0.18.3"","
+cfg-federation-plugin,frontend/vite/host/vite.config.js,13,      federation({
+cfg-federation-plugin,frontend/vite/remote-inputs/vite.config.js,13,      federation({
+cfg-federation-plugin,frontend/vite/remote-results/vite.config.js,13,      federation({
+cfg-remotes,frontend/vite/host/vite.config.js,22,          remotes: {
+cfg-remotes,frontend/vite/remote-inputs/vite.config.js,19,          remotes: {
+cfg-remotes,frontend/vite/remote-results/vite.config.js,19,          remotes: {
+cfg-exposes,frontend/vite/host/vite.config.js,16,          exposes: {
+cfg-exposes,frontend/vite/remote-inputs/vite.config.js,16,          exposes: {
+cfg-exposes,frontend/vite/remote-results/vite.config.js,16,          exposes: {
+cfg-shared,frontend/vite/host/vite.config.js,34,          shared: {
+cfg-shared,frontend/vite/host/vite.config.js,35,"              vue: {singleton: true},"
+cfg-shared,frontend/vite/host/vite.config.js,36,              pinia: {singleton: true}
+cfg-shared,frontend/vite/remote-inputs/vite.config.js,26,          shared: {
+cfg-shared,frontend/vite/remote-inputs/vite.config.js,27,"              vue: {singleton: true},"
+cfg-shared,frontend/vite/remote-inputs/vite.config.js,28,              pinia: {singleton: true}
+cfg-shared,frontend/vite/remote-results/vite.config.js,26,          shared: {
+cfg-shared,frontend/vite/remote-results/vite.config.js,27,"              vue: {singleton: true},"
+cfg-shared,frontend/vite/remote-results/vite.config.js,28,              pinia: {singleton: true}
+cfg-public-path,frontend/vite/host/vite.config.js,6,"    base: '/',"
+cfg-public-path,frontend/vite/remote-inputs/vite.config.js,6,"    base: '/remote-inputs/',"
+cfg-public-path,frontend/vite/remote-results/vite.config.js,6,"    base: '/remote-results/',"
+rt-remote-entry,frontend/vite/host/vite.config.js,15,"          filename: 'remoteEntry.js',"
+rt-remote-entry,frontend/vite/host/vite.config.js,24,"                  entry: ""https://localhost/remote-inputs/remoteEntry.js"","
+rt-remote-entry,frontend/vite/host/vite.config.js,29,"                  entry: ""https://localhost/remote-results/remoteEntry.js"","
+rt-remote-entry,frontend/vite/remote-inputs/vite.config.js,15,"          filename: ""remoteEntry.js"","
+rt-remote-entry,frontend/vite/remote-inputs/vite.config.js,23,                  entry: 'https://localhost/remoteEntry.js'
+rt-remote-entry,frontend/vite/remote-results/vite.config.js,15,"          filename: ""remoteEntry.js"","
+rt-remote-entry,frontend/vite/remote-results/vite.config.js,23,                  entry: 'https://localhost/remoteEntry.js'
+ops-deployment-file,config/backend/auth/Dockerfile,,
+ops-deployment-file,config/backend/broker/Dockerfile,,
+ops-deployment-file,config/backend/geometry/Dockerfile,,
+ops-deployment-file,config/backend/history/Dockerfile,,
+ops-deployment-file,config/docker-compose.yaml,,
+ops-deployment-file,config/frontend/Dockerfile,,
+ops-deployment-file,config/nginx/Dockerfile,,
+ops-deployment-file,config/nginx/nginx.conf,,
+ops-dockerfile,config/backend/auth/Dockerfile,1,FROM quay.io/wildfly/wildfly:37.0.1.Final-jdk21 as runtime
+ops-dockerfile,config/backend/broker/Dockerfile,1,FROM quay.io/wildfly/wildfly:37.0.1.Final-jdk21 as runtime
+ops-dockerfile,config/backend/geometry/Dockerfile,1,FROM quay.io/wildfly/wildfly:37.0.1.Final-jdk21 as runtime
+ops-dockerfile,config/backend/history/Dockerfile,1,FROM gradle:jdk21 AS builder
+ops-dockerfile,config/backend/history/Dockerfile,7,FROM quay.io/wildfly/wildfly:37.0.1.Final-jdk21 as runtime
+ops-dockerfile,config/nginx/Dockerfile,1,FROM nginx:latest
+ops-compose-service,config/docker-compose.yaml,3,    image: postgres:15
+ops-compose-service,config/docker-compose.yaml,17,    build:
+ops-compose-service,config/docker-compose.yaml,22,    depends_on:
+ops-compose-service,config/docker-compose.yaml,25,    build:
+ops-compose-service,config/docker-compose.yaml,30,    depends_on:
+ops-compose-service,config/docker-compose.yaml,33,    build:
+ops-compose-service,config/docker-compose.yaml,39,    build: 
+ops-compose-service,config/docker-compose.yaml,50,    depends_on:
+ops-compose-service,config/docker-compose.yaml,54,    image: prom/prometheus:latest
+ops-compose-service,config/docker-compose.yaml,64,    image: grafana/grafana:latest
+ops-compose-service,config/docker-compose.yaml,71,    depends_on:
+ops-proxy-route,config/nginx/nginx.conf,28,        location /assets/ {
+ops-proxy-route,config/nginx/nginx.conf,32,        location / {
+ops-proxy-route,config/nginx/nginx.conf,46,        location /assets/ {
+ops-proxy-route,config/nginx/nginx.conf,50,        location / {
+ops-proxy-route,config/nginx/nginx.conf,64,        location /assets/ {
+ops-proxy-route,config/nginx/nginx.conf,68,        location / {
+ops-proxy-route,config/nginx/nginx.conf,90,        location / {
+ops-proxy-route,config/nginx/nginx.conf,91,            proxy_pass http://localhost:3000;
+ops-proxy-route,config/nginx/nginx.conf,95,        location /remote-inputs/ {
+ops-proxy-route,config/nginx/nginx.conf,96,            proxy_pass http://localhost:3001/;
+ops-proxy-route,config/nginx/nginx.conf,100,        location /remote-results/ {
+ops-proxy-route,config/nginx/nginx.conf,101,            proxy_pass http://localhost:3002/;
+ops-proxy-route,config/nginx/nginx.conf,105,        location /auth/ {
+ops-proxy-route,config/nginx/nginx.conf,106,            proxy_pass http://auth:8080;
+ops-proxy-route,config/nginx/nginx.conf,125,        location /geometry/ {
+ops-proxy-route,config/nginx/nginx.conf,126,            proxy_pass http://geometry:8080;
+ops-cors,config/nginx/nginx.conf,22,        add_header Access-Control-Allow-Origin * always;
+ops-cors,config/nginx/nginx.conf,44,        add_header Access-Control-Allow-Origin * always;
+ops-cors,config/nginx/nginx.conf,62,        add_header Access-Control-Allow-Origin * always;
+ops-cors,config/nginx/nginx.conf,80,"        add_header Access-Control-Allow-Origin ""http://localhost:3000"" always;"
+ops-cors,config/nginx/nginx.conf,114,"            add_header Access-Control-Allow-Origin ""http://localhost:3000"" always;"
+ops-cors,config/nginx/nginx.conf,134,"            add_header Access-Control-Allow-Origin ""http://localhost:3000"" always;"
+ops-cors,frontend/vite/host/vite.config.js,9,"        cors: true,"
+ops-cors,frontend/vite/remote-inputs/vite.config.js,9,"      cors: true,"
+ops-cors,frontend/vite/remote-results/vite.config.js,9,"      cors: true,"

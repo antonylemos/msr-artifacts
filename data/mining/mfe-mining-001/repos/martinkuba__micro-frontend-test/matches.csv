@@ -1,0 +1,47 @@
+pattern,path,line,excerpt
+dep-mfe-term,package.json,2,"  ""name"": ""micro-frontend-test"","
+cfg-federation-plugin,packages/main-content/webpack.config.js,2,const { ModuleFederationPlugin } = require('webpack').container;
+cfg-federation-plugin,packages/main-content/webpack.config.js,31,    new ModuleFederationPlugin({
+cfg-federation-plugin,packages/shell/webpack.config.js,3,const { ModuleFederationPlugin } = require('webpack').container;
+cfg-federation-plugin,packages/shell/webpack.config.js,32,    new ModuleFederationPlugin({
+cfg-federation-plugin,packages/sidebar/webpack.config.js,2,const { ModuleFederationPlugin } = require('webpack').container;
+cfg-federation-plugin,packages/sidebar/webpack.config.js,31,    new ModuleFederationPlugin({
+cfg-remotes,packages/shell/webpack.config.js,34,      remotes: {
+cfg-exposes,packages/main-content/webpack.config.js,34,      exposes: {
+cfg-exposes,packages/sidebar/webpack.config.js,34,      exposes: {
+cfg-shared,packages/main-content/webpack.config.js,37,      shared: {
+cfg-shared,packages/main-content/webpack.config.js,38,"        react: { singleton: true, requiredVersion: '^18.2.0' },"
+cfg-shared,packages/main-content/webpack.config.js,39,"        'react-dom': { singleton: true, requiredVersion: '^18.2.0' },"
+cfg-shared,packages/main-content/webpack.config.js,40,"        '@grafana/faro-web-sdk': { singleton: true, requiredVersion: '^2.1.0' },"
+cfg-shared,packages/shell/webpack.config.js,38,      shared: {
+cfg-shared,packages/shell/webpack.config.js,39,"        react: { singleton: true, requiredVersion: '^18.2.0' },"
+cfg-shared,packages/shell/webpack.config.js,40,"        'react-dom': { singleton: true, requiredVersion: '^18.2.0' },"
+cfg-shared,packages/shell/webpack.config.js,41,"        '@grafana/faro-web-sdk': { singleton: true, requiredVersion: '^2.1.0' },"
+cfg-shared,packages/sidebar/webpack.config.js,37,      shared: {
+cfg-shared,packages/sidebar/webpack.config.js,38,"        react: { singleton: true, requiredVersion: '^18.2.0' },"
+cfg-shared,packages/sidebar/webpack.config.js,39,"        'react-dom': { singleton: true, requiredVersion: '^18.2.0' },"
+cfg-public-path,packages/main-content/webpack.config.js,11,"    publicPath: 'http://localhost:3001/',"
+cfg-public-path,packages/shell/webpack.config.js,12,"    publicPath: 'http://localhost:3000/',"
+cfg-public-path,packages/sidebar/webpack.config.js,11,"    publicPath: 'http://localhost:3002/',"
+rt-remote-entry,packages/main-content/webpack.config.js,33,"      filename: 'remoteEntry.js',"
+rt-remote-entry,packages/shell/webpack.config.js,35,"        mainContent: 'mainContent@http://localhost:3001/remoteEntry.js',"
+rt-remote-entry,packages/shell/webpack.config.js,36,"        // sidebar: 'sidebar@http://localhost:3002/remoteEntry.js',"
+rt-remote-entry,packages/sidebar/src/Sidebar.tsx,150,            <div style={styles.infoValue}>sidebar/remoteEntry.js</div>
+rt-remote-entry,packages/sidebar/webpack.config.js,33,"      filename: 'remoteEntry.js',"
+src-remote-import,packages/shell/src/App.tsx,6,const MainContent = React.lazy(() => import('mainContent/MainContent'));
+src-remote-import,packages/shell/src/App.tsx,7,// const Sidebar = React.lazy(() => import('sidebar/Sidebar'));
+src-async-bootstrap,packages/shell/src/index.tsx,2,import('./bootstrap');
+ops-cors,packages/main-content/webpack.config.js,51,"      'Access-Control-Allow-Origin': '*',"
+ops-cors,packages/shell/webpack.config.js,57,"      'Access-Control-Allow-Origin': '*',"
+ops-cors,packages/sidebar/webpack.config.js,51,"      'Access-Control-Allow-Origin': '*',"
+doc-mfe-term,README.md,1,# Micro Frontend Test App
+doc-mfe-term,README.md,3,A simple micro frontend application for testing the [Grafana Faro SDK](https://github.com/grafana/faro-web-sdk) in a distributed architecture.
+doc-mfe-term,README.md,7,- **Shell** (port 3000): Host application that loads remote micro frontends
+doc-mfe-term,README.md,8,- **Main Content** (port 3001): Remote micro frontend with its own Faro instance
+doc-mfe-term,README.md,10,Uses Webpack Module Federation to dynamically load micro frontends at runtime.
+doc-mfe-term,README.md,23,Each micro frontend initializes its own Faro instance in `src/faro.ts`. Update the collector URL and app name as needed.
+doc-integration-technology,README.md,10,Uses Webpack Module Federation to dynamically load micro frontends at runtime.
+doc-runtime-loading,README.md,10,Uses Webpack Module Federation to dynamically load micro frontends at runtime.
+doc-host-remote,README.md,7,- **Shell** (port 3000): Host application that loads remote micro frontends
+ws-workspaces,package.json,14,"  ""workspaces"": ["
+ws-path-alias,tsconfig.json,16,"    ""paths"": {"

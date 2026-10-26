@@ -1,0 +1,6 @@
+directory,markers
+frontend/order-tracking,frontend/order-tracking/package.json;frontend/order-tracking/webpack.config.js
+frontend/restaurant-catalog,frontend/restaurant-catalog/package.json;frontend/restaurant-catalog/webpack.config.js
+frontend/shell-app,frontend/shell-app/package.json;frontend/shell-app/webpack.config.js
+frontend/user-dashboard,frontend/user-dashboard/package.json;frontend/user-dashboard/webpack.config.js
+infrastructure/faas/order-completion,infrastructure/faas/order-completion/package.json

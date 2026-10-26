@@ -1,0 +1,24 @@
+<div class="page">
+  <ds-page-header
+    title="Seguro auto para o seu jeito de dirigir"
+    subtitle="Compare ofertas de várias seguradoras parceiras e contrate em minutos. Mar Aberto — área pública."
+  >
+    <ds-button variant="primary">Simular agora</ds-button>
+    <ds-button variant="ghost" [routerLink]="['login']">Já sou cliente</ds-button>
+  </ds-page-header>
+
+  <section class="grid">
+    @for (oferta of ofertas(); track oferta.id) {
+      <ds-card [title]="oferta.produto">
+        <p class="seguradora">{{ oferta.seguradora }}</p>
+        <ds-badge status="neutral">{{ oferta.categoria }}</ds-badge>
+        <p class="avaliacao">★ {{ oferta.avaliacao.toFixed(1) }} · franquia {{ oferta.franquiaPercentual }}%</p>
+        <p class="preco">
+          a partir de <strong>R$ {{ oferta.precoMensal.toFixed(2) }}</strong
+          >/mês
+        </p>
+        <ds-button variant="secondary">Contratar</ds-button>
+      </ds-card>
+    }
+  </section>
+</div>

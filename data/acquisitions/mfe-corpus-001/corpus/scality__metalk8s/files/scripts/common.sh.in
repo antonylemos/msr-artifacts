@@ -1,0 +1,429 @@
+#!/bin/bash
+
+declare OS OS_FAMILY
+
+declare -A GPGCHECK_YUM_REPOSITORIES=(
+    [metalk8s-epel]=1
+    [metalk8s-kubernetes]=1
+    [metalk8s-docker-ce]=1
+    [metalk8s-saltstack]=1
+    [metalk8s-scality]=0
+)
+
+RPM=${RPM:-$(command -v rpm || true)}
+YUM=${YUM:-$(command -v yum || true)}
+SYSTEMCTL=${SYSTEMCTL:-$(command -v systemctl)}
+PYTHON=${PYTHON:-$(command -v python3 || command -v python || true)}
+LOGFILE_MAX_ROTATIONS=10
+
+# NOTE: We do not use kubectl nor crictl to execute commands in containers,
+# since some commands may restart kube-apiserver and/or containerd and/or kubelet.
+# That's why we use runc directly to execute commands in containers.
+EXEC_CONTAINER_COMMAND=(runc --root=/run/containerd/runc/k8s.io exec)
+
+
+determine_os() {
+    # We rely on /etc/os-release to discover the OS because its present on all
+    # recent Linux distributions
+    if [ -f /etc/os-release ]; then
+        # shellcheck disable=SC1091
+        . /etc/os-release
+        OS=$ID
+        OS_VERSION=$VERSION_ID
+        [[ $OS = rhel ]] && OS=redhat
+        if [[ $OS =~ ^(redhat|rocky|centos)$ ]]; then
+            OS_FAMILY=redhat
+        fi
+        OSMAJORRELEASE=${OS_VERSION%%.*}
+    else
+        die "Impossible to determine the OS"
+    fi
+}
+
+configure_repositories() {
+    case "${OS_FAMILY:-}" in
+        redhat)
+            configure_yum_repositories
+            ;;
+        *)
+            die "OS $OS not supported"
+            ;;
+    esac
+}
+
+configure_yum_repositories() {
+    configure_yum_local_repositories
+
+    "$YUM" clean all
+}
+
+configure_yum_local_repositories() {
+    for repository in "${!GPGCHECK_YUM_REPOSITORIES[@]}"; do
+        configure_yum_local_repository "$repository" \
+            "${GPGCHECK_YUM_REPOSITORIES[$repository]}"
+    done
+}
+
+configure_yum_local_repository() {
+    local -r repo_name=$1 gpgcheck=${2:-0}
+    local -r repo_path="$BASE_DIR/packages/redhat/$OSMAJORRELEASE/$repo_name-el$OSMAJORRELEASE"
+    local gpg_keys
+
+    gpg_keys=$(
+        find "$repo_path" -maxdepth 1 -name "RPM-GPG-KEY-*" \
+            -printf "file://%p "
+    )
+
+    cat > /etc/yum.repos.d/"$repo_name".repo << EOF
+[$repo_name]
+name=$repo_name
+baseurl=file://$repo_path
+enabled=1
+priority=1
+gpgcheck=$gpgcheck
+${gpg_keys:+gpgkey=${gpg_keys%?}}
+EOF
+}
+
+get_packages_list() {
+    "$PYTHON" -c "
+import json
+
+with open('$BASE_DIR/salt/metalk8s/versions.json', 'r') as fd:
+    versions = json.load(fd)
+
+packages = versions.get('packages', {}).get('$OS', {}).get('$OSMAJORRELEASE', {})
+for pkg, pkg_info in packages.items():
+    print('{0}{1}'.format(
+        pkg,
+        ' ' + pkg_info['version']
+        if pkg_info.get('version') and pkg_info['version'][0] in ['>', '<', '=']
+        else '-' + pkg_info['version'] if pkg_info.get('version')
+        else '')
+    )
+"
+}
+
+check_packages_presence() {
+    local -a packages
+    local -a pkg_manager_opts=()
+
+    case "${OS_FAMILY:-}" in
+        redhat)
+            pkg_manager_opts=(
+                "$YUM"
+                install
+                --assumeyes
+                --setopt 'tsflags=test'
+                --setopt 'skip_missing_names_on_install=False'
+                "--allowerasing"
+            )
+            ;;
+        *)
+            die "OS $OS not supported"
+            ;;
+    esac
+
+    if readarray -t packages < <(get_packages_list); then
+        "${pkg_manager_opts[@]}" "${packages[@]}" || \
+            die "some packages or dependencies are missing in the configured" \
+                "repositories"
+    fi
+}
+
+install_packages() {
+    local -ra packages=("$@")
+
+    case "${OS_FAMILY:-}" in
+        redhat)
+            local -a yum_opts=(
+                '--assumeyes'
+                --setopt 'skip_missing_names_on_install=False'
+            )
+            "$YUM" install "${yum_opts[@]}" "${packages[@]}"
+            ;;
+        *)
+            die "OS $OS not supported"
+            ;;
+    esac
+}
+
+disable_salt_minion_service() {
+    ${SYSTEMCTL} disable salt-minion.service 2>/dev/null || true
+}
+
+stop_salt_minion_service() {
+    ${SYSTEMCTL} stop salt-minion.service 2>/dev/null || true
+}
+
+die() {
+    echo 1>&2 "$@"
+    return 1
+}
+
+run_quiet() {
+    local name=$1
+    shift 1
+
+    echo -n "> ${name}..."
+    local start
+    start=$(date +%s%N | cut -c-11)
+    set +e
+    "$@" > >(tee -ia "${LOGFILE}" > "${TMPFILES}/out") 2>&1
+    local RC=$?
+    set -e
+    local end
+    end=$(date +%s%N | cut -c-11)
+
+    local duration
+    duration=$(printf "%.1f" "$(( end - start  ))e-1")
+
+    if [ $RC -eq 0 ]; then
+        echo " done [${duration}s]"
+    else
+        echo " fail [${duration}s]"
+        cat >/dev/stderr << EOM
+
+Failure while running step '${name}'
+
+Command: $@
+
+Output:
+
+<< BEGIN >>
+EOM
+        cat "${TMPFILES}/out" > /dev/stderr
+
+        cat >/dev/stderr << EOM
+<< END >>
+
+This script will now exit
+
+EOM
+
+        exit 1
+    fi
+}
+
+run_verbose() {
+    local name=$1
+    shift 1
+
+    echo "> ${name}..."
+    "$@"
+}
+
+run() {
+    if [ "$VERBOSE" -eq 1 ]; then
+        run_verbose "${@}"
+    else
+        run_quiet "${@}"
+    fi
+}
+
+with_retry() {
+    local retries=$1 delay=$2
+    shift 2
+
+    for ((i = 1; i <= retries; i++)); do
+        echo "> Attempt ${i}/${retries}"
+
+        local rctemp rc
+        rctemp=$(mktemp)
+        echo "$(set +e; "${@}"; echo -n $? > "$rctemp")"
+        rc=$(cat "$rctemp")
+        rm -f "$rctemp"
+
+        if [ "$rc" -eq 0 ]; then
+            echo "Succeed"
+            return 0
+        fi
+
+        echo "Failed"
+        sleep "${delay}"
+    done
+
+    die "Failed to run '$*' after ${retries} retries."
+}
+
+check_package_manager_yum() {
+    test -n "$RPM" || die "rpm not found"
+    test -x "$RPM" || die "rpm at '$RPM' is not executable"
+    test -n "$YUM" || die "yum not found"
+    test -x "$YUM" || die "yum at '$YUM' is not executable"
+}
+
+check_dist_centos() {
+    check_package_manager_yum
+}
+
+check_dist_rocky() {
+    check_package_manager_yum
+}
+
+check_dist_redhat() {
+    check_package_manager_yum
+    command -v subscription-manager || die "subscription-manager not found"
+    subscription-manager status || \
+        echo "Warning: system does not seem to be registered to any" \
+             "subscription management service" >&2
+}
+
+pre_minion_checks() {
+    if declare -f "check_dist_$OS" &> /dev/null; then
+        "check_dist_$OS"
+    else
+        die "OS $OS not supported"
+    fi
+
+    test "$(whoami)" = "root" || die "Script must run as root"
+    test -n "$SYSTEMCTL" || die "systemctl not found"
+    test -x "$SYSTEMCTL" || die "systemctl at '$SYSTEMCTL' is not executable"
+}
+
+get_salt_container() {
+    local -r max_retries=10
+    local salt_container='' attempts=0
+    local -a found_containers=()
+
+    while [[ $attempts -lt $max_retries ]]; do
+        IFS=$'\n' read -r -d '' -a found_containers < <(crictl ps -q \
+            --label io.kubernetes.pod.namespace=kube-system \
+            --label io.kubernetes.container.name=salt-master \
+            --state Running && printf '\0')
+
+        if [[ "${#found_containers[@]}" -eq 1 ]]; then
+            salt_container=${found_containers[0]}
+            break
+        fi
+        echo "Invalid number of candidates: ${#found_containers[@]}" >&2
+        (( attempts++ ))
+        sleep 3
+    done
+
+    if [ -z "$salt_container" ]; then
+        echo "Failed to find a running 'salt-master' container" >&2
+        exit 1
+    fi
+
+    echo "$salt_container"
+}
+
+configure_salt_minion_local_mode() {
+    local -r file_root="$BASE_DIR/salt"
+
+    "$SALT_CALL" --file-root="$file_root" \
+        --local --retcode-passthrough saltutil.sync_all saltenv=base
+    "$SALT_CALL" --file-root="$file_root" \
+        --local --retcode-passthrough saltutil.refresh_grains
+    "$SALT_CALL" --file-root="$file_root" \
+        --local --retcode-passthrough state.sls metalk8s.salt.minion.local \
+        pillar="{'metalk8s': {'archives': '$BASE_DIR'}}" saltenv=base
+}
+
+ensure_archives_mounted() {
+    "${SALT_CALL}" --local --state-output=mixed --retcode-passthrough \
+        state.sls metalk8s.archives.mounted \
+        saltenv=metalk8s-@@VERSION
+}
+
+set_local_grains() {
+    # Grains must be set (in `/etc/salt/grains`) *before* invoking `salt-call`,
+    # otherwise grains set during execution won't be taken into account
+    # properly.
+    "$SALT_CALL" --local --state-output=mixed --retcode-passthrough state.sls \
+        metalk8s.node.grains \
+        saltenv=metalk8s-@@VERSION
+}
+
+check_local_node() {
+    "$SALT_CALL" --local --retcode-passthrough metalk8s_checks.node \
+        saltenv=metalk8s-@@VERSION
+}
+
+get_salt_env() {
+    "$SALT_CALL" --out txt slsutil.renderer \
+        string="metalk8s-{{ pillar.metalk8s.nodes[grains.id].version }}" \
+        | cut -c 8-
+}
+
+get_salt_minion_id() {
+    "$SALT_CALL" --local --out txt grains.get id | cut -c 8-
+}
+
+get_salt_minion_ids() {
+    local salt_container
+
+    salt_container=$(get_salt_container)
+
+    (
+        set -o pipefail
+        retry 5 10 "${EXEC_CONTAINER_COMMAND[@]}" "$salt_container" \
+            salt \* grains.get id --out txt | \
+            cut -d ' ' -f 2
+    )
+}
+
+retry() {
+    local stdout
+    local -i try=0 exit_code=0
+    local -ri retries=$1 sleep_time=$2
+    shift 2
+
+    until stdout=$("$@"); do
+        exit_code=$?
+        (( ++try ))
+        if [ "$try" -gt "$retries" ]; then
+            echo "Failed to run '$*' after $retries retries." >&2
+            return $exit_code
+        fi
+        sleep "$sleep_time"
+    done
+
+    echo "$stdout"
+}
+
+check_minion_id() {
+    # Minion ID is used as the Kubernetes Node name, so it must follow the
+    # RFC1123 (https://tools.ietf.org/html/rfc1123).
+    # This means the name must:
+    #   - contain no more than 253 characters
+    #   - contain only lowercase alphanumeric characters, '-' or '.'
+    #   - start with an alphanumeric character
+    #   - end with an alphanumeric character
+    # NB: It is only needed for bootstrap node, as it will be automatically
+    # done by K8s APIServer for expansion, when applying new node manifests.
+    minion_id=$(get_salt_minion_id)
+
+    if ! [[ $minion_id =~ ^(([0-9a-z][0-9a-z.-]{0,251}[0-9a-z])|[0-9a-z])$ ]]; then
+        echo "Invalid Salt minion ID '$minion_id': The ID must be compliant" \
+             "with RFC1123, which means it must contain no more than 253" \
+             "characters, contain only lowercase alphanumeric characters, '-'" \
+             "or '.' and start and end with an alphanumeric character."
+        return 1
+    fi
+}
+
+rotate_logfile() {
+    # because set -u, we pass an empty string as default value
+    _rotate_logfile ""
+}
+
+_rotate_logfile() {
+    # Rotate logfile if it exists
+    if [ -n "$1" ]; then
+        if [ "$1" -gt "$LOGFILE_MAX_ROTATIONS" ]; then
+            rm -f "$LOGFILE.$1"
+            return
+        fi
+        if [ -f "$LOGFILE.$1" ]; then
+            _rotate_logfile $(($1+1))
+            mv "$LOGFILE.$1" "$LOGFILE.$(($1+1))"
+        fi
+    else
+        if [ -f "$LOGFILE" ]; then
+            _rotate_logfile 1
+            mv "$LOGFILE" "$LOGFILE.1"
+        fi
+    fi
+}

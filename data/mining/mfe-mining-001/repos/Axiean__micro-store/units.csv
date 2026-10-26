@@ -1,0 +1,3 @@
+directory,markers
+cart-app,cart-app/next.config.ts;cart-app/package.json
+store-app,store-app/next.config.ts;store-app/package.json

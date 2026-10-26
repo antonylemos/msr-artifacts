@@ -1,0 +1,10 @@
+manifest,line,section,package,version,technology,same_package_matches,other_package_matches
+package.json,14,devDependencies,@nrwl/eslint-plugin-nx,^19.8.4,monorepo-tool,.github/workflows/ci.yml:33;pnpm-workspace.yaml:1,
+package.json,15,devDependencies,@nx/eslint,22.5.3,monorepo-tool,.github/workflows/ci.yml:33;pnpm-workspace.yaml:1,
+package.json,16,devDependencies,@nx/eslint-plugin,22.5.3,monorepo-tool,.github/workflows/ci.yml:33;pnpm-workspace.yaml:1,
+package.json,17,devDependencies,@nx/js,22.5.3,monorepo-tool,.github/workflows/ci.yml:33;pnpm-workspace.yaml:1,
+package.json,18,devDependencies,@nx/rollup,22.5.3,monorepo-tool,.github/workflows/ci.yml:33;pnpm-workspace.yaml:1,
+package.json,19,devDependencies,@nx/vite,22.5.3,monorepo-tool,.github/workflows/ci.yml:33;pnpm-workspace.yaml:1,
+package.json,20,devDependencies,@nx/vitest,22.5.3,monorepo-tool,.github/workflows/ci.yml:33;pnpm-workspace.yaml:1,
+package.json,21,devDependencies,@nx/webpack,22.5.3,monorepo-tool,.github/workflows/ci.yml:33;pnpm-workspace.yaml:1,
+package.json,44,devDependencies,nx,22.5.3,monorepo-tool,.github/workflows/ci.yml:33;pnpm-workspace.yaml:1,

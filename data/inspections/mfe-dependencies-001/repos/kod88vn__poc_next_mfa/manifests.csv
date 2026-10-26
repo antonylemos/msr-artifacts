@@ -1,0 +1,6 @@
+manifest,state
+apps/duda/package.json,ok
+apps/shell/package.json,ok
+apps/shop/package.json,ok
+package.json,ok
+packages/ui/package.json,ok

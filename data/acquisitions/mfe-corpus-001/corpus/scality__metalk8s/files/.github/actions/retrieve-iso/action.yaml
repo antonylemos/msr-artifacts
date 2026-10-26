@@ -1,0 +1,32 @@
+name: "Retrieve ISO"
+description: "Retrieve MetalK8s ISO and checksum, check it and copy it to bootstrap"
+
+inputs:
+  ARTIFACTS_USER:
+    description: "Username to get artifacts"
+    required: true
+  ARTIFACTS_PASSWORD:
+    description: "Password to get artifacts"
+    required: true
+  ARTIFACTS_URL:
+    description: "Artifacts url"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Retrieve MetalK8s ISO"
+      shell: bash
+      run: >
+        curl --fail -LO -u ${{ inputs.ARTIFACTS_USER }}:${{ inputs.ARTIFACTS_PASSWORD }}
+        ${{ inputs.ARTIFACTS_URL }}/metalk8s.iso
+    - name: "Retrieve checksum"
+      shell: bash
+      run: >
+        curl --fail -LO -u ${{ inputs.ARTIFACTS_USER }}:${{ inputs.ARTIFACTS_PASSWORD }}
+        ${{ inputs.ARTIFACTS_URL }}/SHA256SUM
+    - name: Check the checksum
+      shell: bash
+      run: |
+        sha256sum -c SHA256SUM
+        checkisomd5 metalk8s.iso

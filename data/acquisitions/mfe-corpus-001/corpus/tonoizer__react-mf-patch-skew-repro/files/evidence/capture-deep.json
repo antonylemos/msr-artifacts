@@ -1,0 +1,227 @@
+{
+  "consoleLogs": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "pageErrors": [
+    {
+      "message": "Cannot read properties of null (reading 'useState')",
+      "stack": "TypeError: Cannot read properties of null (reading 'useState')\n    at react_production.useState (http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react__loadShare__.js-_tAHAGCE.js:437:33)\n    at App (http://localhost:5000/assets/main-C7Dk7TXS.js:131:27)\n    at renderWithHooks (http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-DN3TqpyC.js:3523:21)\n    at updateFunctionComponent (http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-DN3TqpyC.js:5152:15)\n    at beginWork (http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-DN3TqpyC.js:5763:14)\n    at performUnitOfWork (http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-DN3TqpyC.js:8529:14)\n    at workLoopSync (http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-DN3TqpyC.js:8427:37)\n    at renderRootSync (http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-DN3TqpyC.js:8411:7)\n    at performWorkOnRoot (http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-DN3TqpyC.js:8086:40)\n    at performWorkOnRootViaSchedulerTask (http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-DN3TqpyC.js:9084:3)"
+    }
+  ],
+  "responses": [
+    {
+      "url": "http://localhost:5000/assets/hostInit-Cu2cBnHR.js",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:5001/remoteEntry.js",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:5002/remoteEntry.js",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:5000/remoteEntry-CIp2PnZJ.js",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:5001/assets/virtual_mf___mfe_internal__remote_a__loadRemote__remote_c_mf_1_App__mf_owner__1__loadRemote__-DVDp3pDH.js",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:5001/assets/_virtual_mf-localSharedImportMap___mfe_internal__remote_a__mf_owner__1-ic0yNiSj.js",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:5001/assets/hostInit-BiJSYX1K.js",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:5002/assets/_virtual_mf-localSharedImportMap___mfe_internal__remote_b__mf_owner__1-BSySd2PR.js",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:5000/assets/_virtual_mf___mfe_internal__host__mf_owner__87201283060228__loadShare__react__loadShare__.js-ClJF0Gso.js",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:5000/assets/_virtual_mf___mfe_internal__host__mf_owner__87201283060228__loadShare__react_mf_1_jsx_mf_2_runtime__loadShare__.js-DZSFR3CO.js",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:5000/assets/_virtual_mf___mfe_internal__host__mf_owner__87201283060228__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-DhCitRCq.js",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:5003/remoteEntry.js",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:5000/assets/_virtual_mf___mfe_internal__host__mf_owner__87201283060228__prebuild__react_mf_1_compiler_mf_2_runtime__prebuild__-CH9KoVB8.js",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:5000/assets/_virtual_mf___mfe_internal__host__mf_owner__87201283060228__prebuild__react_mf_1_jsx_mf_2_dev_mf_2_runtime__prebuild__-Bz5gFgSQ.js",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:5003/assets/_virtual_mf-localSharedImportMap___mfe_internal__remote_c__mf_owner__1-BVVeqD6K.js",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react__loadShare__.js-_tAHAGCE.js",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react_mf_1_jsx_mf_2_runtime__loadShare__.js-DsPZIcwQ.js",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-DN3TqpyC.js",
+      "status": 200
+    }
+  ],
+  "deep": {
+    "mfCache": {
+      "share": {
+        "default:react/jsx-runtime": {
+          "default": {}
+        },
+        "react/jsx-runtime": {
+          "default": {}
+        },
+        "default:react": {
+          "Children": {},
+          "__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE": {
+            "H": null,
+            "A": null,
+            "T": null,
+            "S": null
+          },
+          "__COMPILER_RUNTIME": {},
+          "default": {
+            "Children": {},
+            "__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE": {
+              "H": null,
+              "A": null,
+              "T": null,
+              "S": null
+            },
+            "__COMPILER_RUNTIME": {},
+            "version": "19.2.8"
+          },
+          "version": "19.2.8"
+        },
+        "react": {
+          "Children": {},
+          "__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE": {
+            "H": null,
+            "A": null,
+            "T": null,
+            "S": null
+          },
+          "__COMPILER_RUNTIME": {},
+          "default": {
+            "Children": {},
+            "__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE": {
+              "H": null,
+              "A": null,
+              "T": null,
+              "S": null
+            },
+            "__COMPILER_RUNTIME": {},
+            "version": "19.2.8"
+          },
+          "version": "19.2.8"
+        },
+        "default:react-dom/client": {
+          "default": {
+            "version": "19.2.8"
+          },
+          "version": "19.2.8"
+        },
+        "react-dom/client": {
+          "default": {
+            "version": "19.2.8"
+          },
+          "version": "19.2.8"
+        },
+        "default:react/compiler-runtime": {
+          "default": {}
+        },
+        "react/compiler-runtime": {
+          "default": {}
+        },
+        "default:react/jsx-dev-runtime": {
+          "default": {}
+        },
+        "react/jsx-dev-runtime": {
+          "default": {}
+        }
+      },
+      "remote": {},
+      "providerInit": {}
+    },
+    "cacheOwnKeys": [
+      "share",
+      "remote",
+      "providerInit"
+    ],
+    "symbolProps": {},
+    "FEDERATION": [
+      "__GLOBAL_PLUGIN__",
+      "__INSTANCES__",
+      "moduleInfo",
+      "__SHARE__",
+      "__MANIFEST_LOADING__",
+      "__PRELOADED_MAP__",
+      "__PRELOADED_ASSETS__"
+    ],
+    "FEDERATION_DETAIL": {
+      "__GLOBAL_PLUGIN__": {
+        "keys": []
+      },
+      "__INSTANCES__": {
+        "keys": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ]
+      },
+      "moduleInfo": {
+        "keys": []
+      },
+      "__SHARE__": {
+        "keys": [
+          "host",
+          "remote_a",
+          "remote_b",
+          "remote_c"
+        ]
+      },
+      "__MANIFEST_LOADING__": {
+        "keys": []
+      },
+      "__PRELOADED_MAP__": {
+        "keys": []
+      },
+      "__PRELOADED_ASSETS__": {
+        "keys": []
+      }
+    },
+    "globalMfKeys": [
+      "sharedStorage",
+      "__mf_module_cache__",
+      "__mf_init__virtual:mf:__mfe_internal__remote_a__mf_owner__52435470359465__mf_v__runtimeInit__mf_v__.js__",
+      "__mf_init__virtual:mf:__mfe_internal__remote_b__mf_owner__50049860474021__mf_v__runtimeInit__mf_v__.js__",
+      "__mf_init__virtual:mf:__mfe_internal__host__mf_owner__87201283060228__mf_v__runtimeInit__mf_v__.js__",
+      "__mf_init__virtual:mf:__mfe_internal__remote_c__mf_owner__121642711798377__mf_v__runtimeInit__mf_v__.js__"
+    ],
+    "reactVersionsTried": []
+  }
+}

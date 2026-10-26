@@ -1,0 +1,5 @@
+directory,markers
+src/frontend,src/frontend/package.json
+src/frontend/apps/ui-catalog,src/frontend/apps/ui-catalog/package.json;src/frontend/apps/ui-catalog/vite.config.ts
+src/frontend/apps/ui-catalog-consumer,src/frontend/apps/ui-catalog-consumer/package.json;src/frontend/apps/ui-catalog-consumer/vite.config.ts
+src/frontend/apps/ui-catalog-merchant,src/frontend/apps/ui-catalog-merchant/package.json;src/frontend/apps/ui-catalog-merchant/vite.config.ts

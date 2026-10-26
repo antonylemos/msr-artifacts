@@ -1,0 +1,240 @@
+import logging
+from collections.abc import Mapping
+
+import salt.utils.dictupdate
+import salt.utils.files
+import salt.utils.yaml
+
+log = logging.getLogger(__name__)
+
+
+EXPECTED_APIVERSIONS = [
+    "metalk8s.scality.com/v1alpha2",
+    "metalk8s.scality.com/v1alpha3",
+]
+
+DEFAULT_POD_NETWORK = "10.233.0.0/16"
+DEFAULT_SERVICE_NETWORK = "10.96.0.0/12"
+DEFAULT_MTU = 1460
+
+
+def _load_config(path):
+    log.debug("Loading MetalK8s configuration from %s", path)
+
+    config = None
+    try:
+        with salt.utils.files.fopen(path, "rb") as fd:
+            config = salt.utils.yaml.safe_load(fd) or {}
+    except Exception as exc:  # pylint: disable=broad-except
+        return __utils__["pillar_utils.errors_to_dict"](
+            [f"Failed to load {path}: {exc}"]
+        )
+    if not config:
+        error_tplt = "Invalid BootstrapConfiguration at {}"
+        return __utils__["pillar_utils.errors_to_dict"]([error_tplt.format(path)])
+
+    expected = {"kind": "BootstrapConfiguration"}
+
+    errors = __utils__["pillar_utils.assert_equals"](config, expected) + __utils__[
+        "pillar_utils.assert_keys"
+    ](config, ["archives"])
+
+    if config["apiVersion"] not in EXPECTED_APIVERSIONS:
+        errors.append(
+            f"Expected one of '{', '.join(EXPECTED_APIVERSIONS)}' for apiVersion, "
+            f"got '{config['apiVersion']}'"
+        )
+
+    if errors:
+        return __utils__["pillar_utils.errors_to_dict"](errors)
+
+    return config
+
+
+def _load_networks(config_data):
+    errors = __utils__["pillar_utils.assert_keys"](config_data, ["networks"])
+    if errors:
+        return __utils__["pillar_utils.errors_to_dict"](errors)
+
+    networks_data = config_data["networks"]
+    if not isinstance(networks_data, Mapping):
+        return __utils__["pillar_utils.errors_to_dict"](
+            [
+                f"Invalid network format in config file, mapping expected got {networks_data}"
+            ]
+        )
+    errors = __utils__["pillar_utils.assert_keys"](
+        networks_data, ["controlPlane", "workloadPlane"]
+    )
+    if errors:
+        return __utils__["pillar_utils.errors_to_dict"](errors)
+
+    for net in ["controlPlane", "workloadPlane"]:
+        if config_data["apiVersion"] == "metalk8s.scality.com/v1alpha2":
+            networks_data[net] = {"cidr": [networks_data[net]]}
+
+        elif config_data["apiVersion"] == "metalk8s.scality.com/v1alpha3":
+            if not isinstance(networks_data[net], Mapping):
+                errors.append(
+                    f"Invalid '{net}' network format in config file, "
+                    f"mapping expected got {networks_data[net]}"
+                )
+                continue
+
+            if "cidr" not in networks_data[net]:
+                errors.append(f"Invalid '{net}' network 'cidr' is mandatory")
+
+            if not isinstance(networks_data[net]["cidr"], list):
+                networks_data[net]["cidr"] = [networks_data[net]["cidr"]]
+
+    if errors:
+        return __utils__["pillar_utils.errors_to_dict"](errors)
+
+    if "mtu" not in networks_data["workloadPlane"]:
+        networks_data["workloadPlane"]["mtu"] = DEFAULT_MTU
+
+    return {
+        "control_plane": networks_data["controlPlane"],
+        "workload_plane": networks_data["workloadPlane"],
+        "pod": networks_data.get("pods", DEFAULT_POD_NETWORK),
+        "service": networks_data.get("services", DEFAULT_SERVICE_NETWORK),
+        "portmap": networks_data.get("portmap"),
+        "nodeport": networks_data.get("nodeport"),
+    }
+
+
+def _load_ca(config_data):
+    errors = __utils__["pillar_utils.assert_keys"](config_data, ["ca"])
+    if errors:
+        return __utils__["pillar_utils.errors_to_dict"](errors)
+
+    ca_data = config_data["ca"]
+    if not isinstance(ca_data, Mapping):
+        return __utils__["pillar_utils.errors_to_dict"](
+            [f"Invalid ca format in config file, mapping expected got {ca_data}"]
+        )
+
+    errors = __utils__["pillar_utils.assert_keys"](ca_data, ["minion"])
+    if errors:
+        return __utils__["pillar_utils.errors_to_dict"](errors)
+
+    return {
+        "minion": ca_data["minion"],
+    }
+
+
+def _load_iso_path(config_data):
+    """Load iso path from BootstrapConfiguration"""
+    res = config_data["archives"]
+
+    if isinstance(res, str):
+        res = [res]
+
+    if not isinstance(res, list):
+        return __utils__["pillar_utils.errors_to_dict"](
+            [
+                "Invalid archives format in config file, list or string expected "
+                f"got {res}."
+            ]
+        )
+
+    return res
+
+
+def _load_kubernetes(config_data):
+    """Load Kubernetes information from BootstrapConfiguration"""
+    kubernetes_data = config_data.get("kubernetes", {})
+
+    # CoreDNS affinity default to soft podAntiAffinity on hostname
+    kubernetes_data.setdefault("coreDNS", {}).setdefault("affinity", {}).setdefault(
+        "podAntiAffinity", {}
+    ).setdefault("soft", [{"topologyKey": "kubernetes.io/hostname"}])
+    kubernetes_data["coreDNS"].setdefault("replicas", 2)
+
+    # Default CoreDNS host forwarding to True
+    kubernetes_data["coreDNS"].setdefault("hostForward", True)
+
+    controller_manager_config = kubernetes_data.setdefault(
+        "controllerManager", {}
+    ).setdefault("config", {})
+    controller_manager_config.setdefault("terminatedPodGCThreshold", 500)
+    # Time a node can be unresponsive before being marked NotReady by the
+    # kube-controller-manager (`--node-monitor-grace-period`).
+    controller_manager_config.setdefault("nodeMonitorGracePeriod", "30s")
+    # Period of node status syncing performed by the kube-controller-manager
+    # (`--node-monitor-period`).
+    controller_manager_config.setdefault("nodeMonitorPeriod", "5s")
+
+    # Time the kube-apiserver waits before evicting Pods from a node marked
+    # NotReady / unreachable (`--default-not-ready-toleration-seconds` and
+    # `--default-unreachable-toleration-seconds`).
+    api_server_config = kubernetes_data.setdefault("apiServer", {}).setdefault(
+        "config", {}
+    )
+    api_server_config.setdefault("defaultNotReadyTolerationSeconds", 60)
+    api_server_config.setdefault("defaultUnreachableTolerationSeconds", 60)
+
+    # Frequency at which the kubelet computes and reports node status
+    # (`nodeStatusUpdateFrequency`).
+    kubernetes_data.setdefault("kubelet", {}).setdefault("config", {}).setdefault(
+        "nodeStatusUpdateFrequency", "10s"
+    )
+
+    return kubernetes_data
+
+
+def _load_addons(config_data):
+    addons_data = config_data.get("addons", {})
+
+    addons_data.setdefault("dex", {}).setdefault("enabled", True)
+    addons_data.setdefault("loki", {}).setdefault("enabled", True)
+    addons_data.setdefault("fluent-bit", {}).setdefault("enabled", True)
+
+    return addons_data
+
+
+def _load_salt(config_data):
+    """Load Salt information from BootstrapConfiguration"""
+    salt_data = config_data.get("salt", {})
+
+    return salt_data
+
+
+def ext_pillar(minion_id, pillar, bootstrap_config):  # pylint: disable=unused-argument
+    config = _load_config(bootstrap_config)
+    if config.get("_errors"):
+        metal_data = __utils__["pillar_utils.errors_to_dict"](config["_errors"])
+        result = {
+            "metalk8s": metal_data,
+        }
+
+        for key in ["metalk8s"]:
+            __utils__["pillar_utils.promote_errors"](result, key)
+
+        return result
+
+    else:
+        metal_data = {
+            "archives": _load_iso_path(config),
+            "ca": _load_ca(config),
+            "debug": config.get("debug", False),
+        }
+
+        result = {
+            "networks": _load_networks(config),
+            "metalk8s": metal_data,
+            "proxies": config.get("proxies", {}),
+            "kubernetes": _load_kubernetes(config),
+            "addons": _load_addons(config),
+            "salt": _load_salt(config),
+        }
+
+        if not isinstance(metal_data["archives"], list):
+            # Special case for archives in pillar
+            __utils__["pillar_utils.promote_errors"](metal_data, "archives")
+        for key in ["ca"]:
+            __utils__["pillar_utils.promote_errors"](metal_data, key)
+        for key in ["networks", "metalk8s"]:
+            __utils__["pillar_utils.promote_errors"](result, key)
+
+        return result

@@ -47,7 +47,7 @@ ioBroker é uma plataforma de automação residencial. Um adapter (backend Node.
 | Q2 | Yes (para a unidade) | Build próprio (`src-admin/vite.config.ts`), saída em `admin/custom/` |
 | Q3 | Undetermined | O host (ioBroker Admin) não está no repositório |
 | Q4 | Undetermined | Remote configurado e registrado no `jsonConfig.json`; o consumidor é a plataforma |
-| Q5 | **No** (override) | MF como mecanismo de plugin de plataforma (mesma justificativa dos repositórios 010 e 035) |
+| Q5 | **No** (override) | MF como mecanismo de plugin de plataforma (mesma justificativa dos repos 010 e 035) |
 
 ## Motivo
 

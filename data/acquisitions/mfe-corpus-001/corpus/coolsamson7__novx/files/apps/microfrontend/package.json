@@ -1,0 +1,14 @@
+{
+  "name": "microfrontend",
+  "private": true,
+  "scripts": {
+    "start": "nx serve microfrontend",
+    "build": "nx build microfrontend"
+  },
+  "dependencies": {
+    "@novx/core": "workspace:*",
+    "@novx/portal": "workspace:*",
+    "@novx/communication": "workspace:*",
+    "@novx/i18n": "workspace:*"
+  }
+}

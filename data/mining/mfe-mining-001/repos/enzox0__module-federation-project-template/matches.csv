@@ -1,0 +1,165 @@
+pattern,path,line,excerpt
+dep-module-federation,apps/admin-mf/package.json,14,"    ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+dep-module-federation,apps/auth-mf/package.json,14,"    ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+dep-module-federation,apps/dashboard-mf/package.json,14,"    ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+dep-module-federation,apps/messaging-mf/package.json,14,"    ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+dep-module-federation,apps/shell/package.json,14,"    ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+dep-module-federation,package.json,2,"  ""name"": ""module-federation-app"","
+dep-monorepo-tool,package.json,30,"    ""turbo"": ""^2.0.0"","
+lock-mfe-dependency,pnpm-lock.yaml,68,      '@originjs/vite-plugin-federation':
+lock-mfe-dependency,pnpm-lock.yaml,108,      '@originjs/vite-plugin-federation':
+lock-mfe-dependency,pnpm-lock.yaml,148,      '@originjs/vite-plugin-federation':
+lock-mfe-dependency,pnpm-lock.yaml,188,      '@originjs/vite-plugin-federation':
+lock-mfe-dependency,pnpm-lock.yaml,228,      '@originjs/vite-plugin-federation':
+lock-mfe-dependency,pnpm-lock.yaml,690,  '@originjs/vite-plugin-federation@1.4.1':
+lock-mfe-dependency,pnpm-lock.yaml,2515,  '@originjs/vite-plugin-federation@1.4.1':
+cfg-federation-plugin,apps/admin-mf/vite.config.js,6,"    plugins: [react(), federation(mfConfig)],"
+cfg-federation-plugin,apps/admin-mf/vite.config.ts,7,"  plugins: [react(), federation(mfConfig)],"
+cfg-federation-plugin,apps/auth-mf/vite.config.js,6,"    plugins: [react(), federation(mfConfig)],"
+cfg-federation-plugin,apps/auth-mf/vite.config.ts,7,"  plugins: [react(), federation(mfConfig)],"
+cfg-federation-plugin,apps/dashboard-mf/vite.config.js,6,"    plugins: [react(), federation(mfConfig)],"
+cfg-federation-plugin,apps/dashboard-mf/vite.config.ts,7,"  plugins: [react(), federation(mfConfig)],"
+cfg-federation-plugin,apps/messaging-mf/vite.config.js,6,"    plugins: [react(), federation(mfConfig)],"
+cfg-federation-plugin,apps/messaging-mf/vite.config.ts,7,"  plugins: [react(), federation(mfConfig)],"
+cfg-federation-plugin,apps/shell/vite.config.js,6,"    plugins: [react(), federation(mfConfig)],"
+cfg-federation-plugin,apps/shell/vite.config.ts,7,"  plugins: [react(), federation(mfConfig)],"
+cfg-remotes,apps/shell/module-federation.config.d.ts,4,    remotes: {
+cfg-remotes,apps/shell/module-federation.config.js,4,    remotes: {
+cfg-remotes,apps/shell/module-federation.config.ts,4,  remotes: {
+cfg-exposes,apps/admin-mf/module-federation.config.d.ts,4,    exposes: {
+cfg-exposes,apps/admin-mf/module-federation.config.js,4,    exposes: {
+cfg-exposes,apps/admin-mf/module-federation.config.ts,4,  exposes: {
+cfg-exposes,apps/auth-mf/module-federation.config.d.ts,4,    exposes: {
+cfg-exposes,apps/auth-mf/module-federation.config.js,4,    exposes: {
+cfg-exposes,apps/auth-mf/module-federation.config.ts,4,  exposes: {
+cfg-exposes,apps/dashboard-mf/module-federation.config.d.ts,4,    exposes: {
+cfg-exposes,apps/dashboard-mf/module-federation.config.js,4,    exposes: {
+cfg-exposes,apps/dashboard-mf/module-federation.config.ts,4,  exposes: {
+cfg-exposes,apps/messaging-mf/module-federation.config.d.ts,4,    exposes: {
+cfg-exposes,apps/messaging-mf/module-federation.config.js,4,    exposes: {
+cfg-exposes,apps/messaging-mf/module-federation.config.ts,4,  exposes: {
+cfg-shared,apps/admin-mf/module-federation.config.d.ts,7,    shared: string[];
+cfg-shared,apps/admin-mf/module-federation.config.js,7,"    shared: ['react', 'react-dom', 'react-router-dom'],"
+cfg-shared,apps/admin-mf/module-federation.config.ts,7,"  shared: ['react', 'react-dom', 'react-router-dom'],"
+cfg-shared,apps/auth-mf/module-federation.config.d.ts,7,    shared: string[];
+cfg-shared,apps/auth-mf/module-federation.config.js,7,"    shared: ['react', 'react-dom', 'react-router-dom'],"
+cfg-shared,apps/auth-mf/module-federation.config.ts,7,"  shared: ['react', 'react-dom', 'react-router-dom'],"
+cfg-shared,apps/dashboard-mf/module-federation.config.d.ts,7,    shared: string[];
+cfg-shared,apps/dashboard-mf/module-federation.config.js,7,"    shared: ['react', 'react-dom', 'react-router-dom'],"
+cfg-shared,apps/dashboard-mf/module-federation.config.ts,7,"  shared: ['react', 'react-dom', 'react-router-dom'],"
+cfg-shared,apps/messaging-mf/module-federation.config.d.ts,7,    shared: string[];
+cfg-shared,apps/messaging-mf/module-federation.config.js,7,"    shared: ['react', 'react-dom', 'react-router-dom'],"
+cfg-shared,apps/messaging-mf/module-federation.config.ts,7,"  shared: ['react', 'react-dom', 'react-router-dom'],"
+cfg-shared,apps/shell/module-federation.config.d.ts,10,    shared: string[];
+cfg-shared,apps/shell/module-federation.config.js,10,"    shared: ['react', 'react-dom', 'react-router-dom'],"
+cfg-shared,apps/shell/module-federation.config.ts,10,"  shared: ['react', 'react-dom', 'react-router-dom'],"
+rt-remote-entry,apps/admin-mf/module-federation.config.js,3,"    filename: 'remoteEntry.js',"
+rt-remote-entry,apps/admin-mf/module-federation.config.ts,3,"  filename: 'remoteEntry.js',"
+rt-remote-entry,apps/auth-mf/module-federation.config.js,3,"    filename: 'remoteEntry.js',"
+rt-remote-entry,apps/auth-mf/module-federation.config.ts,3,"  filename: 'remoteEntry.js',"
+rt-remote-entry,apps/dashboard-mf/module-federation.config.js,3,"    filename: 'remoteEntry.js',"
+rt-remote-entry,apps/dashboard-mf/module-federation.config.ts,3,"  filename: 'remoteEntry.js',"
+rt-remote-entry,apps/messaging-mf/module-federation.config.js,3,"    filename: 'remoteEntry.js',"
+rt-remote-entry,apps/messaging-mf/module-federation.config.ts,3,"  filename: 'remoteEntry.js',"
+rt-remote-entry,apps/shell/module-federation.config.js,3,"    filename: 'remoteEntry.js',"
+rt-remote-entry,apps/shell/module-federation.config.js,5,"        authMf: 'http://localhost:3004/assets/remoteEntry.js',"
+rt-remote-entry,apps/shell/module-federation.config.js,6,"        dashboardMf: 'http://localhost:3005/assets/remoteEntry.js',"
+rt-remote-entry,apps/shell/module-federation.config.js,7,"        adminMf: 'http://localhost:3006/assets/remoteEntry.js',"
+rt-remote-entry,apps/shell/module-federation.config.js,8,"        messagingMf: 'http://localhost:3007/assets/remoteEntry.js',"
+rt-remote-entry,apps/shell/module-federation.config.ts,3,"  filename: 'remoteEntry.js',"
+rt-remote-entry,apps/shell/module-federation.config.ts,5,"    authMf: 'http://localhost:3001/dist/assets/remoteEntry.js',"
+rt-remote-entry,apps/shell/module-federation.config.ts,6,"    dashboardMf: 'http://localhost:3002/dist/assets/remoteEntry.js',"
+rt-remote-entry,apps/shell/module-federation.config.ts,7,"    adminMf: 'http://localhost:3003/dist/assets/remoteEntry.js',"
+rt-remote-entry,apps/shell/module-federation.config.ts,8,"    messagingMf: 'http://localhost:3004/dist/assets/remoteEntry.js',"
+rt-remote-entry,apps/shell/src/components/RemoteHealthCheck.tsx,12,"  { name: 'Auth', url: 'http://localhost:3001/dist/assets/remoteEntry.js', port: 3001 },"
+rt-remote-entry,apps/shell/src/components/RemoteHealthCheck.tsx,13,"  { name: 'Dashboard', url: 'http://localhost:3002/dist/assets/remoteEntry.js', port: 3002 },"
+rt-remote-entry,apps/shell/src/components/RemoteHealthCheck.tsx,14,"  { name: 'Admin', url: 'http://localhost:3003/dist/assets/remoteEntry.js', port: 3003 },"
+rt-remote-entry,apps/shell/src/components/RemoteHealthCheck.tsx,15,"  { name: 'Messaging', url: 'http://localhost:3004/dist/assets/remoteEntry.js', port: 3004 },"
+src-remote-import,apps/shell/src/App.tsx,7,const AuthApp = lazy(() => import('authMf/App'));
+src-remote-import,apps/shell/src/App.tsx,8,const AdminApp = lazy(() => import('adminMf/App'));
+src-remote-import,apps/shell/src/App.tsx,9,const DashboardApp = lazy(() => import('dashboardMf/App'));
+src-remote-import,apps/shell/src/App.tsx,10,const MessagingApp = lazy(() => import('messagingMf/App'));
+src-async-bootstrap,apps/shell/src/main.tsx,1,import('./bootstrap');
+ops-deployment-file,apps/admin-mf/Dockerfile,,
+ops-deployment-file,apps/auth-mf/Dockerfile,,
+ops-deployment-file,apps/dashboard-mf/Dockerfile,,
+ops-deployment-file,apps/messaging-mf/Dockerfile,,
+ops-deployment-file,apps/shell/Dockerfile,,
+ops-deployment-file,infrastructure/docker/development/Dockerfile.shell,,
+ops-deployment-file,infrastructure/docker/production/Dockerfile.shell,,
+ops-deployment-file,infrastructure/nginx/nginx.conf,,
+ops-dockerfile,apps/admin-mf/Dockerfile,1,FROM node:20-alpine AS builder
+ops-dockerfile,apps/admin-mf/Dockerfile,9,FROM nginx:alpine
+ops-dockerfile,apps/auth-mf/Dockerfile,1,FROM node:20-alpine AS builder
+ops-dockerfile,apps/auth-mf/Dockerfile,9,FROM nginx:alpine
+ops-dockerfile,apps/dashboard-mf/Dockerfile,1,FROM node:20-alpine AS builder
+ops-dockerfile,apps/dashboard-mf/Dockerfile,9,FROM nginx:alpine
+ops-dockerfile,apps/messaging-mf/Dockerfile,1,FROM node:20-alpine AS builder
+ops-dockerfile,apps/messaging-mf/Dockerfile,9,FROM nginx:alpine
+ops-dockerfile,apps/shell/Dockerfile,1,FROM node:20-alpine AS builder
+ops-dockerfile,apps/shell/Dockerfile,9,FROM nginx:alpine
+ops-dockerfile,infrastructure/docker/development/Dockerfile.shell,1,FROM node:20-alpine
+ops-dockerfile,infrastructure/docker/production/Dockerfile.shell,1,FROM node:20-alpine AS builder
+ops-dockerfile,infrastructure/docker/production/Dockerfile.shell,9,FROM nginx:alpine
+ops-proxy-route,infrastructure/nginx/nginx.conf,13,        location / {
+ops-cors,apps/admin-mf/vite.config.js,15,"        cors: true,"
+ops-cors,apps/admin-mf/vite.config.ts,16,"    cors: true,"
+ops-cors,apps/auth-mf/vite.config.js,15,"        cors: true,"
+ops-cors,apps/auth-mf/vite.config.ts,16,"    cors: true,"
+ops-cors,apps/dashboard-mf/vite.config.js,15,"        cors: true,"
+ops-cors,apps/dashboard-mf/vite.config.ts,16,"    cors: true,"
+ops-cors,apps/messaging-mf/vite.config.js,15,"        cors: true,"
+ops-cors,apps/messaging-mf/vite.config.ts,16,"    cors: true,"
+ops-cors,apps/shell/vite.config.js,15,"        cors: true,"
+ops-cors,apps/shell/vite.config.ts,16,"    cors: true,"
+ci-workflow-file,.github/workflows/cd.yml,,
+ci-workflow-file,.github/workflows/ci.yml,,
+ci-workflow-file,.github/workflows/lint.yml,,
+doc-mfe-term,README.md,3,"A production-ready monorepo template using Module Federation with React, Vite, TypeScript, and Turbo. This template provides a complete microfrontend architecture with shared packages, type safety, and modern development tools."
+doc-mfe-term,README.md,13,- [Working with Microfrontends](#working-with-microfrontends)
+doc-mfe-term,README.md,27,"    subgraph ""Microfrontends - Module Federation Remotes"""
+doc-mfe-term,README.md,98,"This template provides a complete microfrontend architecture using Module Federation, allowing you to:"
+doc-mfe-term,README.md,100,"- **Build independent microfrontends** that can be developed, tested, and deployed separately"
+doc-mfe-term,README.md,102,- **Scale your team** by allowing different teams to own different microfrontends
+doc-mfe-term,README.md,121,│   │                       # - Loads and orchestrates all microfrontends
+doc-mfe-term,README.md,125,│   ├── auth-mf/            # Auth microfrontend (port 3001)
+doc-mfe-term,README.md,129,│   ├── dashboard-mf/       # Dashboard microfrontend (port 3002)
+doc-mfe-term,README.md,133,│   ├── admin-mf/           # Admin microfrontend (port 3003)
+doc-mfe-term,README.md,138,│   └── messaging-mf/       # Messaging microfrontend (port 3004)
+doc-mfe-term,README.md,233,**Important:** Module Federation requires all remote microfrontends to be running before the shell (host) app can load them.
+doc-mfe-term,README.md,257,**Terminal 1 - Auth Microfrontend:**
+doc-mfe-term,README.md,264,**Terminal 2 - Dashboard Microfrontend:**
+doc-mfe-term,README.md,271,**Terminal 3 - Admin Microfrontend:**
+doc-mfe-term,README.md,278,**Terminal 4 - Messaging Microfrontend:**
+doc-mfe-term,README.md,300,3. Navigate through the app to verify all microfrontends load correctly
+doc-mfe-term,README.md,312,**Note:** You can access individual microfrontends directly at their ports for isolated development and testing.
+doc-mfe-term,README.md,314,## Working with Microfrontends
+doc-mfe-term,README.md,316,### Creating a New Microfrontend
+doc-mfe-term,README.md,318,1. **Copy an existing microfrontend as a template:**
+doc-mfe-term,README.md,365,### Modifying an Existing Microfrontend
+doc-mfe-term,README.md,367,1. **Navigate to the microfrontend:**
+doc-mfe-term,README.md,369,   cd apps/auth-mf  # or any other microfrontend
+doc-mfe-term,README.md,376,"4. **Test in isolation** by visiting the microfrontend's direct URL (e.g., http://localhost:3001)"
+doc-mfe-term,README.md,380,### Exposing Components from a Microfrontend
+doc-mfe-term,README.md,547,"# In separate terminals, serve each microfrontend"
+doc-mfe-term,README.md,565,Deploy each microfrontend independently:
+doc-mfe-term,README.md,601,**Cause:** A remote microfrontend is not running or not accessible.
+doc-mfe-term,README.md,681,- **Module Federation**: Runtime code sharing between microfrontends
+doc-mfe-term,README.md,696,2. **Add your business logic** to each microfrontend
+doc-mfe-term,README.md,700,6. **Add authentication** using the auth microfrontend
+doc-integration-technology,README.md,1,# Module Federation App Template
+doc-integration-technology,README.md,3,"A production-ready monorepo template using Module Federation with React, Vite, TypeScript, and Turbo. This template provides a complete microfrontend architecture with shared packages, type safety, and modern development tools."
+doc-integration-technology,README.md,27,"    subgraph ""Microfrontends - Module Federation Remotes"""
+doc-integration-technology,README.md,98,"This template provides a complete microfrontend architecture using Module Federation, allowing you to:"
+doc-integration-technology,README.md,107,- **Module Federation**: Runtime code sharing between applications
+doc-integration-technology,README.md,233,**Important:** Module Federation requires all remote microfrontends to be running before the shell (host) app can load them.
+doc-integration-technology,README.md,676,- Review Module Federation documentation: https://module-federation.io/
+doc-integration-technology,README.md,681,- **Module Federation**: Runtime code sharing between microfrontends
+doc-independence,README.md,100,"- **Build independent microfrontends** that can be developed, tested, and deployed separately"
+doc-independence,README.md,103,- **Deploy independently** without rebuilding the entire application
+doc-independence,README.md,563,#### Strategy 2: Independent Deployment
+doc-independence,README.md,565,Deploy each microfrontend independently:
+doc-host-remote,README.md,233,**Important:** Module Federation requires all remote microfrontends to be running before the shell (host) app can load them.
+doc-host-remote,README.md,567,- Update the shell app's remote URLs to point to production URLs
+ws-workspaces,pnpm-workspace.yaml,1,packages:
+ws-path-alias,tsconfig.base.json,19,"    ""paths"": {"

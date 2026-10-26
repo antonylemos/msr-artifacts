@@ -1,0 +1,3 @@
+directory,markers
+main-vue3,main-vue3/index.html;main-vue3/package.json;main-vue3/vite.config.ts
+sub-vue2,sub-vue2/package.json

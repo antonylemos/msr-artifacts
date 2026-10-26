@@ -1,0 +1,4 @@
+directory,markers
+.,index.html;module-federation.config.ts;package.json;rspack.config.ts
+alert-dashboard,alert-dashboard/index.html;alert-dashboard/module-federation.config.ts;alert-dashboard/package.json;alert-dashboard/rspack.config.ts
+alert-sender,alert-sender/index.html;alert-sender/module-federation.config.ts;alert-sender/package.json;alert-sender/rspack.config.ts

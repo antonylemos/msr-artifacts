@@ -1,0 +1,22 @@
+{
+  "name": "simple-microfrontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Simple micro frontend project to understand module federation structure",
+  "scripts": {
+    "install:all": "cd common_simple && npm install && cd ../core_simple && npm install && cd ../users_simple && npm install",
+    "dev:common": "cd common_simple && npm run dev",
+    "dev:users": "cd users_simple && npm run dev",
+    "dev:core": "cd core_simple && npm run dev",
+    "build:all": "npm run build:common && npm run build:users && npm run build:core",
+    "build:common": "cd common_simple && npm run build",
+    "build:users": "cd users_simple && npm run build",
+    "build:core": "cd core_simple && npm run build"
+  },
+  "keywords": [
+    "micro-frontend",
+    "module-federation",
+    "react",
+    "typescript"
+  ]
+}

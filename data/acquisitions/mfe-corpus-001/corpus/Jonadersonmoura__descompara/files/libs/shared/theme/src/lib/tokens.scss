@@ -1,0 +1,60 @@
+// Shared design tokens. Each app applies a `data-theme` attribute on its
+// root element; components in `@descompara/shared-ui` read these CSS custom
+// properties, so the same component looks different in each ambiente.
+
+:root,
+[data-theme] {
+  --font-family: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.08);
+  --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.12);
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 40px;
+}
+
+// Mar Aberto — público, institucional, convidativo.
+[data-theme='mar-aberto'] {
+  --color-bg: #f0f7ff;
+  --color-surface: #ffffff;
+  --color-primary: #2563eb;
+  --color-primary-contrast: #ffffff;
+  --color-secondary: #06b6d4;
+  --color-text: #0f172a;
+  --color-text-muted: #5b6b82;
+  --color-border: #d9e7fb;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 28px;
+}
+
+// Intranet — corporativo, sóbrio, para gerentes de conta.
+[data-theme='intranet'] {
+  --color-bg: #f3f5f4;
+  --color-surface: #ffffff;
+  --color-primary: #15803d;
+  --color-primary-contrast: #ffffff;
+  --color-secondary: #0f766e;
+  --color-text: #1e293b;
+  --color-text-muted: #64748b;
+  --color-border: #dbe3df;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+
+// Admin — painel de controle, tema escuro, alto contraste.
+[data-theme='admin'] {
+  --color-bg: #0f1115;
+  --color-surface: #181b22;
+  --color-primary: #a855f7;
+  --color-primary-contrast: #ffffff;
+  --color-secondary: #f43f5e;
+  --color-text: #e5e7eb;
+  --color-text-muted: #9aa1ae;
+  --color-border: #2a2e37;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+}

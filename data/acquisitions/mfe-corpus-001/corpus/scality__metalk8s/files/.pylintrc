@@ -1,0 +1,16 @@
+[MAIN]
+
+
+[DESIGN]
+
+max-args=9
+max-positional-arguments=9
+
+[SPELLING]
+
+spelling-dict=en_US
+spelling-private-dict-file=.pylint-dict
+
+[FORMAT]
+
+expected-line-ending-format=LF

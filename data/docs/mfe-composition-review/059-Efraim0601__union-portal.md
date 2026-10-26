@@ -7,11 +7,11 @@ inputs:
   mining:
     output: data/mining/mfe-mining-001
     version: "1"
-    config_sha256: b3f63eb6fb86d8877fda117ccc22eec936a89ff7bf2d414c1dedafc0311f1fb1
+    config_sha256: 477ce8efa222a5170fdb68af51036d481c9688dda919aab993aa9f3db328fbf2
   inspection:
     output: data/inspections/mfe-dependencies-001
     version: "1"
-    config_sha256: 9441822a7a5f9766a0b955feeac5b7c0421a03c2dd7e07da4b4d476e26caebb0
+    config_sha256: 8cb9527ff8cf32adfc90d629a85fdd23c38af7223d7ca1f2c3d4f1e8aa284f1e
 annotation:
   method: manual
   status: final
@@ -22,7 +22,7 @@ annotation:
 
 ## Leitura do repositório
 
-Portal de produção, com textos e comentários em francês, formado por um `shell` Angular e dois remotes, `promote` e `diaspora`, ligados por **Native Federation** (`@angular-architects/native-federation`, build com esbuild). É o único dos 15 repositórios analisados classificado como produção. O shell lê `federation.manifest.json` antes do bootstrap (projects/shell/src/main.ts:3-5) e carrega as rotas expostas de cada remote nas rotas `promote` e `diaspora`; a rota vazia vai para `diaspora/home` (projects/shell/src/app/app.routes.ts:9-20).
+Portal de produção, com textos e comentários em francês, formado por um `shell` Angular e dois remotes, `promote` e `diaspora`, ligados por **Native Federation** (`@angular-architects/native-federation`, build com esbuild). É o único dos 15 repositórios analisados no piloto classificado como produção. O shell lê `federation.manifest.json` antes do bootstrap (projects/shell/src/main.ts:3-5) e carrega as rotas expostas de cada remote nas rotas `promote` e `diaspora`; a rota vazia vai para `diaspora/home` (projects/shell/src/app/app.routes.ts:9-20).
 
 Os builds são separados por unidade, cada um com seu `base-href` (Dockerfile:20-22), mas o deploy é conjunto: uma única imagem nginx reúne os três artefatos, com o shell na raiz e cada remote em `/remotes/<nome>/` (Dockerfile:38-41; deploy/nginx.conf:3-4, 31-32); o restante cai no `index.html` do shell (deploy/nginx.conf:125-130). Na imagem, o manifesto de desenvolvimento, com URLs `localhost`, é substituído pelo de produção (Dockerfile:42-43), que aponta para `/remotes/promote/remoteEntry.json` e `/remotes/diaspora/remoteEntry.json` (deploy/federation.manifest.prod.json:2-3). É esse manifesto que liga o deploy ao carregamento dos remotes; a coluna Configuração registra os dois manifestos, o de desenvolvimento e o de produção.
 

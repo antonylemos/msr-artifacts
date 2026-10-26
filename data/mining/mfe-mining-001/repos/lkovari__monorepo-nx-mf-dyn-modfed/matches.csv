@@ -1,0 +1,338 @@
+pattern,path,line,excerpt
+dep-native-federation,nx-mf-df/package.json,31,"    ""@angular-architects/native-federation"": ""^21.2.3"","
+dep-native-federation,nx-mf-df/package.json,91,"    ""@softarc/native-federation-node"": ""^3.3.4"","
+dep-monorepo-tool,nx-mf-df/package.json,40,"    ""@nx/angular"": ""^22.6.3"","
+dep-monorepo-tool,nx-mf-df/package.json,41,"    ""@nx/devkit"": ""22.6.3"","
+dep-monorepo-tool,nx-mf-df/package.json,42,"    ""@nx/eslint"": ""22.6.3"","
+dep-monorepo-tool,nx-mf-df/package.json,43,"    ""@nx/eslint-plugin"": ""22.6.3"","
+dep-monorepo-tool,nx-mf-df/package.json,44,"    ""@nx/jest"": ""22.6.3"","
+dep-monorepo-tool,nx-mf-df/package.json,45,"    ""@nx/js"": ""22.6.3"","
+dep-monorepo-tool,nx-mf-df/package.json,46,"    ""@nx/playwright"": ""22.6.3"","
+dep-monorepo-tool,nx-mf-df/package.json,47,"    ""@nx/web"": ""22.6.3"","
+dep-monorepo-tool,nx-mf-df/package.json,48,"    ""@nx/workspace"": ""22.6.3"","
+dep-monorepo-tool,nx-mf-df/package.json,71,"    ""nx"": ""22.6.3"","
+dep-mfe-term,nx-mf-df/libs/common-ui-lib/package.json,9,"    ""@lkovari/microfrontend-platform-communication"": ""^0.3.2"","
+dep-mfe-term,nx-mf-df/package.json,89,"    ""@lkovari/microfrontend-platform-communication"": ""^0.3.2"","
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,43,      '@softarc/native-federation-node':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,68,      '@angular-architects/native-federation':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,285,  '@angular-architects/native-federation@21.2.3':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,1974,  '@module-federation/bridge-react-webpack-plugin@2.3.1':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,1977,  '@module-federation/cli@2.3.1':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,1982,  '@module-federation/data-prefetch@2.3.1':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,1993,  '@module-federation/dts-plugin@2.3.1':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,2002,  '@module-federation/enhanced@2.3.1':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,2017,  '@module-federation/error-codes@0.21.6':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,2020,  '@module-federation/error-codes@2.3.1':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,2023,  '@module-federation/inject-external-runtime-core-plugin@2.3.1':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,2026,      '@module-federation/runtime-tools': 2.3.1
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,2028,  '@module-federation/managers@2.3.1':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,2031,  '@module-federation/manifest@2.3.1':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,2034,  '@module-federation/node@2.7.39':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,2042,  '@module-federation/rspack@2.3.1':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,2054,  '@module-federation/runtime-core@0.21.6':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,2057,  '@module-federation/runtime-core@2.3.1':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,2060,  '@module-federation/runtime-tools@0.21.6':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,2063,  '@module-federation/runtime-tools@2.3.1':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,2066,  '@module-federation/runtime@0.21.6':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,2069,  '@module-federation/runtime@2.3.1':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,2072,  '@module-federation/sdk@0.21.6':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,2075,  '@module-federation/sdk@2.3.1':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,2083,  '@module-federation/third-party-dts-extractor@2.3.1':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,2086,  '@module-federation/webpack-bundler-runtime@0.21.6':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,2089,  '@module-federation/webpack-bundler-runtime@2.3.1':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,2502,      '@module-federation/enhanced': ^2.1.0
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,2503,      '@module-federation/node': ^2.7.21
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,3161,  '@softarc/native-federation-node@3.5.5':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,3164,  '@softarc/native-federation-runtime@3.5.5':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,3167,  '@softarc/native-federation@3.5.5':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,8490,  '@angular-architects/native-federation@21.2.3(8d7ac4f562bf07576a366e718ba20578)':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,8496,      '@softarc/native-federation': 3.5.5(typescript@5.9.3)
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,8497,      '@softarc/native-federation-runtime': 3.5.5
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10634,  '@module-federation/bridge-react-webpack-plugin@2.3.1(node-fetch@2.7.0(encoding@0.1.13))':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10636,      '@module-federation/sdk': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10642,  '@module-federation/cli@2.3.1(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10644,      '@module-federation/dts-plugin': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10645,      '@module-federation/sdk': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10657,  '@module-federation/data-prefetch@2.3.1(node-fetch@2.7.0(encoding@0.1.13))':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10659,      '@module-federation/runtime': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10660,      '@module-federation/sdk': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10665,  '@module-federation/dts-plugin@2.3.1(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10667,      '@module-federation/error-codes': 2.3.1
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10668,      '@module-federation/managers': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10669,      '@module-federation/sdk': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10670,      '@module-federation/third-party-dts-extractor': 2.3.1
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10685,  '@module-federation/enhanced@2.3.1(@rspack/core@1.6.8(@swc/helpers@0.5.20))(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)(webpack@5.105.4(@swc/core@1.15.21(@swc/helpers@0.5.20)))':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10687,      '@module-federation/bridge-react-webpack-plugin': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10688,      '@module-federation/cli': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10689,      '@module-federation/data-prefetch': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10690,      '@module-federation/dts-plugin': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10691,      '@module-federation/error-codes': 2.3.1
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10692,      '@module-federation/inject-external-runtime-core-plugin': 2.3.1(@module-federation/runtime-tools@2.3.1(node-fetch@2.7.0(encoding@0.1.13)))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10693,      '@module-federation/managers': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10694,      '@module-federation/manifest': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10695,      '@module-federation/rspack': 2.3.1(@rspack/core@1.6.8(@swc/helpers@0.5.20))(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10696,      '@module-federation/runtime-tools': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10697,      '@module-federation/sdk': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10698,      '@module-federation/webpack-bundler-runtime': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10714,  '@module-federation/error-codes@0.21.6': {}
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10716,  '@module-federation/error-codes@2.3.1': {}
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10718,  '@module-federation/inject-external-runtime-core-plugin@2.3.1(@module-federation/runtime-tools@2.3.1(node-fetch@2.7.0(encoding@0.1.13)))':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10720,      '@module-federation/runtime-tools': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10722,  '@module-federation/managers@2.3.1(node-fetch@2.7.0(encoding@0.1.13))':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10724,      '@module-federation/sdk': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10730,  '@module-federation/manifest@2.3.1(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10732,      '@module-federation/dts-plugin': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10733,      '@module-federation/managers': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10734,      '@module-federation/sdk': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10745,  '@module-federation/node@2.7.39(@rspack/core@1.6.8(@swc/helpers@0.5.20))(typescript@5.9.3)(webpack@5.105.4(@swc/core@1.15.21(@swc/helpers@0.5.20)))':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10747,      '@module-federation/enhanced': 2.3.1(@rspack/core@1.6.8(@swc/helpers@0.5.20))(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)(webpack@5.105.4(@swc/core@1.15.21(@swc/helpers@0.5.20)))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10748,      '@module-federation/runtime': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10749,      '@module-federation/sdk': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10765,  '@module-federation/rspack@2.3.1(@rspack/core@1.6.8(@swc/helpers@0.5.20))(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10767,      '@module-federation/bridge-react-webpack-plugin': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10768,      '@module-federation/dts-plugin': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10769,      '@module-federation/inject-external-runtime-core-plugin': 2.3.1(@module-federation/runtime-tools@2.3.1(node-fetch@2.7.0(encoding@0.1.13)))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10770,      '@module-federation/managers': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10771,      '@module-federation/manifest': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10772,      '@module-federation/runtime-tools': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10773,      '@module-federation/sdk': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10783,  '@module-federation/runtime-core@0.21.6':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10785,      '@module-federation/error-codes': 0.21.6
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10786,      '@module-federation/sdk': 0.21.6
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10788,  '@module-federation/runtime-core@2.3.1(node-fetch@2.7.0(encoding@0.1.13))':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10790,      '@module-federation/error-codes': 2.3.1
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10791,      '@module-federation/sdk': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10795,  '@module-federation/runtime-tools@0.21.6':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10797,      '@module-federation/runtime': 0.21.6
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10798,      '@module-federation/webpack-bundler-runtime': 0.21.6
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10800,  '@module-federation/runtime-tools@2.3.1(node-fetch@2.7.0(encoding@0.1.13))':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10802,      '@module-federation/runtime': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10803,      '@module-federation/webpack-bundler-runtime': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10807,  '@module-federation/runtime@0.21.6':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10809,      '@module-federation/error-codes': 0.21.6
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10810,      '@module-federation/runtime-core': 0.21.6
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10811,      '@module-federation/sdk': 0.21.6
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10813,  '@module-federation/runtime@2.3.1(node-fetch@2.7.0(encoding@0.1.13))':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10815,      '@module-federation/error-codes': 2.3.1
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10816,      '@module-federation/runtime-core': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10817,      '@module-federation/sdk': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10821,  '@module-federation/sdk@0.21.6': {}
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10823,  '@module-federation/sdk@2.3.1(node-fetch@2.7.0(encoding@0.1.13))':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10827,  '@module-federation/third-party-dts-extractor@2.3.1':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10833,  '@module-federation/webpack-bundler-runtime@0.21.6':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10835,      '@module-federation/runtime': 0.21.6
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10836,      '@module-federation/sdk': 0.21.6
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10838,  '@module-federation/webpack-bundler-runtime@2.3.1(node-fetch@2.7.0(encoding@0.1.13))':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10840,      '@module-federation/error-codes': 2.3.1
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10841,      '@module-federation/runtime': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,10842,      '@module-federation/sdk': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,11104,      '@nx/rspack': 22.6.3(@babel/traverse@7.29.0)(@module-federation/enhanced@2.3.1(@rspack/core@1.6.8(@swc/helpers@0.5.20))(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)(webpack@5.105.4(@swc/core@1.15.21(@swc/helpers@0.5.20))))(@module-federation/node@2.7.39(@rspack/core@1.6.8(@swc/helpers@
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,11125,      - '@module-federation/enhanced'
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,11126,      - '@module-federation/node'
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,11285,      '@module-federation/enhanced': 2.3.1(@rspack/core@1.6.8(@swc/helpers@0.5.20))(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)(webpack@5.105.4(@swc/core@1.15.21(@swc/helpers@0.5.20)))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,11286,      '@module-federation/node': 2.7.39(@rspack/core@1.6.8(@swc/helpers@0.5.20))(typescript@5.9.3)(webpack@5.105.4(@swc/core@1.15.21(@swc/helpers@0.5.20)))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,11287,      '@module-federation/sdk': 2.3.1(node-fetch@2.7.0(encoding@0.1.13))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,11367,  '@nx/rspack@22.6.3(@babel/traverse@7.29.0)(@module-federation/enhanced@2.3.1(@rspack/core@1.6.8(@swc/helpers@0.5.20))(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)(webpack@5.105.4(@swc/core@1.15.21(@swc/helpers@0.5.20))))(@module-federation/node@2.7.39(@rspack/core@1.6.8(@swc/helpers@0.5.20
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,11369,      '@module-federation/enhanced': 2.3.1(@rspack/core@1.6.8(@swc/helpers@0.5.20))(node-fetch@2.7.0(encoding@0.1.13))(typescript@5.9.3)(webpack@5.105.4(@swc/core@1.15.21(@swc/helpers@0.5.20)))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,11370,      '@module-federation/node': 2.7.39(@rspack/core@1.6.8(@swc/helpers@0.5.20))(typescript@5.9.3)(webpack@5.105.4(@swc/core@1.15.21(@swc/helpers@0.5.20)))
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,11989,      '@module-federation/runtime-tools': 0.21.6
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,12092,  '@softarc/native-federation-node@3.5.5':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,12094,      '@softarc/native-federation-runtime': 3.5.5
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,12097,  '@softarc/native-federation-runtime@3.5.5':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,12101,  '@softarc/native-federation@3.5.5(typescript@5.9.3)':
+lock-mfe-dependency,nx-mf-df/pnpm-lock.yaml,12103,      '@softarc/native-federation-runtime': 3.5.5
+cfg-native-federation,nx-mf-df/apps/main-host/federation.config.js,1,"const { withNativeFederation, shareAll } = require('@angular-architects/native-federation/config');"
+cfg-native-federation,nx-mf-df/apps/main-host/federation.config.js,3,module.exports = withNativeFederation({
+cfg-native-federation,nx-mf-df/apps/main-host/project.json,10,"      ""executor"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,nx-mf-df/apps/main-host/project.json,24,"      ""executor"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,nx-mf-df/apps/mf_remote_a/federation.config.js,1,"const { withNativeFederation, shareAll } = require('@angular-architects/native-federation/config');"
+cfg-native-federation,nx-mf-df/apps/mf_remote_a/federation.config.js,3,module.exports = withNativeFederation({
+cfg-native-federation,nx-mf-df/apps/mf_remote_a/project.json,10,"      ""executor"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,nx-mf-df/apps/mf_remote_a/project.json,24,"      ""executor"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,nx-mf-df/apps/mf_remote_b/federation.config.js,1,"const { withNativeFederation, shareAll } = require('@angular-architects/native-federation/config');"
+cfg-native-federation,nx-mf-df/apps/mf_remote_b/federation.config.js,3,module.exports = withNativeFederation({
+cfg-native-federation,nx-mf-df/apps/mf_remote_b/project.json,10,"      ""executor"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,nx-mf-df/apps/mf_remote_b/project.json,24,"      ""executor"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,nx-mf-df/apps/mf_remote_c/federation.config.js,1,"const { withNativeFederation, shareAll } = require('@angular-architects/native-federation/config');"
+cfg-native-federation,nx-mf-df/apps/mf_remote_c/federation.config.js,3,module.exports = withNativeFederation({
+cfg-native-federation,nx-mf-df/apps/mf_remote_c/project.json,10,"      ""executor"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,nx-mf-df/apps/mf_remote_c/project.json,24,"      ""executor"": ""@angular-architects/native-federation:build"","
+cfg-exposes,nx-mf-df/apps/mf_remote_a/federation.config.js,8,  exposes: {
+cfg-exposes,nx-mf-df/apps/mf_remote_b/federation.config.js,8,  exposes: {
+cfg-exposes,nx-mf-df/apps/mf_remote_c/federation.config.js,8,  exposes: {
+cfg-shared,nx-mf-df/apps/main-host/federation.config.js,7,  shared: {
+cfg-shared,nx-mf-df/apps/main-host/federation.config.js,8,"    ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),"
+cfg-shared,nx-mf-df/apps/mf_remote_a/federation.config.js,12,  shared: {
+cfg-shared,nx-mf-df/apps/mf_remote_a/federation.config.js,13,"    ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),"
+cfg-shared,nx-mf-df/apps/mf_remote_b/federation.config.js,12,  shared: {
+cfg-shared,nx-mf-df/apps/mf_remote_b/federation.config.js,13,"    ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),"
+cfg-shared,nx-mf-df/apps/mf_remote_c/federation.config.js,12,  shared: {
+cfg-shared,nx-mf-df/apps/mf_remote_c/federation.config.js,13,"    ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),"
+rt-remote-entry,nx-mf-df/apps/main-host/public/federation.manifest.json,2,"	""mf_remote_a"": ""http://localhost:4201/remoteEntry.json"","
+rt-remote-entry,nx-mf-df/apps/main-host/public/federation.manifest.json,3,"	""mf_remote_b"": ""http://localhost:4202/remoteEntry.json"","
+rt-remote-entry,nx-mf-df/apps/main-host/public/federation.manifest.json,4,"	""mf_remote_c"": ""http://localhost:4203/remoteEntry.json"""
+rt-remote-entry,nx-mf-df/scripts/gh-build.mjs,58,"  mf_remote_a: `${base}mf_remote_a/remoteEntry.json`,"
+rt-remote-entry,nx-mf-df/scripts/gh-build.mjs,59,"  mf_remote_b: `${base}mf_remote_b/remoteEntry.json`,"
+rt-remote-entry,nx-mf-df/scripts/gh-build.mjs,60,"  mf_remote_c: `${base}mf_remote_c/remoteEntry.json`,"
+rt-manifest-file,nx-mf-df/apps/main-host/public/federation.manifest.json,,
+rt-manifest-entry,nx-mf-df/apps/main-host/public/federation.manifest.json,2,"	""mf_remote_a"": ""http://localhost:4201/remoteEntry.json"","
+rt-manifest-entry,nx-mf-df/apps/main-host/public/federation.manifest.json,3,"	""mf_remote_b"": ""http://localhost:4202/remoteEntry.json"","
+rt-manifest-entry,nx-mf-df/apps/main-host/public/federation.manifest.json,4,"	""mf_remote_c"": ""http://localhost:4203/remoteEntry.json"""
+src-async-bootstrap,nx-mf-df/apps/main-host/src/main.ts,5,  .then(_ => import('./bootstrap'))
+src-async-bootstrap,nx-mf-df/apps/mf_remote_a/src/main.ts,5,  .then(_ => import('./bootstrap'))
+src-async-bootstrap,nx-mf-df/apps/mf_remote_b/src/main.ts,5,  .then(_ => import('./bootstrap'))
+src-async-bootstrap,nx-mf-df/apps/mf_remote_c/src/main.ts,5,  .then(_ => import('./bootstrap'))
+src-load-remote,nx-mf-df/apps/main-host/src/app/app.routes.ts,2,import { loadRemoteModule } from '@angular-architects/native-federation';
+src-load-remote,nx-mf-df/apps/main-host/src/app/app.routes.ts,14,"            loadRemoteModule('mf_remote_a', './Component').then((m) => m.App),"
+src-load-remote,nx-mf-df/apps/main-host/src/app/app.routes.ts,19,"            loadRemoteModule('mf_remote_b', './Component').then((m) => m.App),"
+src-load-remote,nx-mf-df/apps/main-host/src/app/app.routes.ts,24,"            loadRemoteModule('mf_remote_c', './Component').then((m) => m.App),"
+src-load-remote,nx-mf-df/apps/main-host/src/main.ts,1,import { initFederation } from '@angular-architects/native-federation';
+src-load-remote,nx-mf-df/apps/main-host/src/main.ts,3,initFederation('federation.manifest.json')
+src-load-remote,nx-mf-df/apps/mf_remote_a/src/main.ts,1,import { initFederation } from '@angular-architects/native-federation';
+src-load-remote,nx-mf-df/apps/mf_remote_a/src/main.ts,3,initFederation()
+src-load-remote,nx-mf-df/apps/mf_remote_b/src/main.ts,1,import { initFederation } from '@angular-architects/native-federation';
+src-load-remote,nx-mf-df/apps/mf_remote_b/src/main.ts,3,initFederation()
+src-load-remote,nx-mf-df/apps/mf_remote_c/src/main.ts,1,import { initFederation } from '@angular-architects/native-federation';
+src-load-remote,nx-mf-df/apps/mf_remote_c/src/main.ts,3,initFederation()
+ops-hosting,.github/workflows/deploy-github-pages.yml,47,          path: nx-mf-df/gh-pages-dist
+ops-hosting,README.md,207,| `pnpm gh-deploy` | Push to `gh-pages` branch (`scripts/gh-deploy.mjs`) |
+ci-workflow-file,.github/workflows/deploy-github-pages.yml,,
+doc-mfe-term,CHANGELOG-2026-05-24.md,3,## Upgrade `@lkovari/microfrontend-platform-communication` 0.1.4 → 0.2.1
+doc-mfe-term,CHANGELOG-2026-05-24.md,7,- Bumped `@lkovari/microfrontend-platform-communication` to `^0.2.1` in `nx-mf-df/package.json` and `@nx-mf-df/common-ui-lib` peer dependencies.
+doc-mfe-term,CHANGELOG-2026-05-24.md,12,- **pnpm patch** updated for 0.2.1 (`patches/@lkovari__microfrontend-platform-communication@0.2.1.patch`). The npm tarball ships `.js` files but `package.json` `exports` still point at `.mjs`; Native Federation fails without the patch until upstream fixes exports.
+doc-mfe-term,CHANGELOG-2026-05-31.md,3,## Upgrade `@lkovari/microfrontend-platform-communication` 0.2.1 → 0.3.0
+doc-mfe-term,CHANGELOG-2026-05-31.md,7,- Bumped `@lkovari/microfrontend-platform-communication` to `^0.3.0` in `nx-mf-df/package.json` and `@nx-mf-df/common-ui-lib` peer dependencies.
+doc-mfe-term,CHANGELOG-2026-05-31.md,12,- **pnpm patch** regenerated for 0.3.0 (`patches/@lkovari__microfrontend-platform-communication@0.3.0.patch`); the stale 0.2.1 patch was removed and `nx-mf-df/pnpm-workspace.yaml` `patchedDependencies` repointed to `@0.3.0`. The 0.3.0 tarball still ships `.js` files while `package.json` `exports`/`m
+doc-mfe-term,CHANGELOG-2026-05-31.md,22,- **`mfe-window-bridge.util.ts`**: unchanged — the type guard checks function presence and the new optional `token` parameter is compatible.
+doc-mfe-term,CHANGELOG-2026-05-31.md,71,- **`mfe-window-bridge.util.spec.ts`**: missing/invalid/valid `window.__MFE_BRIDGE__` handles.
+doc-mfe-term,README.md,3,Angular 21 + Nx monorepo proof-of-concept for **native module federation** with **host-mediated cross-microfrontend messaging** on a single in-process platform bus.
+doc-mfe-term,README.md,17,"| **`@lkovari/microfrontend-platform-communication`** | npm package: in-process bus, host bridge, Angular providers |"
+doc-mfe-term,README.md,19,Remotes are loaded with **Native Federation** (`@angular-architects/native-federation`). They expose only their root component into the host; they do **not** bootstrap a separate Angular app inside the federated shell page. Cross-MFE messaging therefore uses the **host’s** shared bus via `window.__M
+doc-mfe-term,README.md,34,"    bridge[""window.__MFE_BRIDGE__\n(MfeBridgeHandle)""]"
+doc-mfe-term,README.md,287,`@lkovari/microfrontend-platform-communication` is pinned at **^0.2.1** in `nx-mf-df/package.json`. A pnpm patch rewrites `package.json` `exports` from `.mjs` to `.js` so Native Federation can resolve the published `dist` files (see `nx-mf-df/patches/`).
+doc-mfe-term,nx-mf-comm-info.md,6,"2. **A jelenlegi monorepo implementáció** — hogyan van ez bekötve a `nx-mf-df` workspace-ben, és pontosan mit használunk az `@lkovari/microfrontend-platform-communication` npm csomagból."
+doc-mfe-term,nx-mf-comm-info.md,28,"- `@lkovari/microfrontend-platform-communication` — `createBus`, `createHostBridge`"
+doc-mfe-term,nx-mf-comm-info.md,110,### 2.2 Az npm csomag: `@lkovari/microfrontend-platform-communication@^0.2.1`
+doc-mfe-term,nx-mf-comm-info.md,116,"| `@lkovari/microfrontend-platform-communication/angular` | `provideBus`, `provideHostBridge`, `BUS_TOKEN`, `HOST_BRIDGE_TOKEN` | `main-host/app.config.ts`, szolgáltatások host ágon |"
+doc-mfe-term,nx-mf-comm-info.md,117,"| `@lkovari/microfrontend-platform-communication/core` | `TopicRegistry`, `Bus`, `Unsubscribe`, `MfeBridgeHandle` | contracts registry, remote bus adapter |"
+doc-mfe-term,nx-mf-comm-info.md,118,"| `@lkovari/microfrontend-platform-communication/contracts` | `MessageBase`, `AckResult`, `Sensitivity`, üzenettípus interfészek | sender, listener, factory-k |"
+doc-mfe-term,nx-mf-comm-info.md,119,"| `@lkovari/microfrontend-platform-communication/schemas` | Zod alapsémák (`EventMessageSchema`, `QueryMessageSchema`, …) | contracts lib: saját payload `.extend()` |"
+doc-mfe-term,nx-mf-comm-info.md,125,"A `nx-mf-df/patches/@lkovari__microfrontend-platform-communication@0.2.1.patch` a csomag `package.json` `exports` mezőjében `.mjs` → `.js` javítást végez, mert a publikált `dist` `.js` fájlokat tartalmaz, de az exportok még `.mjs`-re mutatnak. Patch nélkül a Native Federation build nem találja a fáj"
+doc-mfe-term,nx-mf-comm-info.md,291,"Az `@lkovari/microfrontend-platform-communication` csomag adja a **busz magot**, a **bridge globális handle-t**, a **Zod alapsémákat**, a **topic ACL registry-t**, és az **Angular provider-eket**; a projekt-specifikus üzleti jelentés a `contracts-platform-messaging` és a feature szolgáltatásokban va"
+doc-mfe-term,platform-communication-details.md,1,# @lkovari/microfrontend-platform-communication — integration reference
+doc-mfe-term,platform-communication-details.md,3,"This document is derived from the published package’s source layout (`mfe-platform-communication/`), not from README prose. It is intended for humans and for tooling (for example another AI) that must wire **@lkovari/microfrontend-platform-communication@^0.2.1** into a **modern Angular host** and **"
+doc-mfe-term,platform-communication-details.md,11,| npm name | `@lkovari/microfrontend-platform-communication` |
+doc-mfe-term,platform-communication-details.md,29,npm install @lkovari/microfrontend-platform-communication@^0.2.1 zod
+doc-mfe-term,platform-communication-details.md,42,"| `@lkovari/microfrontend-platform-communication` | Re-exports **contracts**, **schemas**, **core** only (root `src/index.ts`) |"
+doc-mfe-term,platform-communication-details.md,43,"| `@lkovari/microfrontend-platform-communication/contracts` | Type-only contracts (`MessageBase`, message kinds, `AckResult`, …) |"
+doc-mfe-term,platform-communication-details.md,44,"| `@lkovari/microfrontend-platform-communication/schemas` | Zod schemas for messages (`MessageBaseSchema`, `EventMessageSchema`, …) |"
+doc-mfe-term,platform-communication-details.md,45,"| `@lkovari/microfrontend-platform-communication/core` | Framework-agnostic bus, host bridge, registry, state sync, errors |"
+doc-mfe-term,platform-communication-details.md,46,"| `@lkovari/microfrontend-platform-communication/angular` | `provideBus`, `injectBus`, `provideHostBridge`, `BusService`, `HostBridgeService`, tokens |"
+doc-mfe-term,platform-communication-details.md,47,"| `@lkovari/microfrontend-platform-communication/react` | `BusProvider`, `HostBridgeProvider`, hooks |"
+doc-mfe-term,platform-communication-details.md,48,"| `@lkovari/microfrontend-platform-communication/vue` | `createBusPlugin`, `createHostBridgePlugin`, composables |"
+doc-mfe-term,platform-communication-details.md,55,- The library declares **`window.__MFE_BRIDGE__`** via `declare global` in the host-bridge module. Importing symbols from **`@lkovari/microfrontend-platform-communication/core`** (or anything that re-exports that module) pulls in the merged **`Window`** shape for TypeScript. If you only read the han
+doc-mfe-term,platform-communication-details.md,63,`createBus` builds a **`Bus`** instance backed by a browser **`EventTarget`**. Messages are dispatched as `CustomEvent` instances with a fixed internal `type` string (`@lkovari/microfrontend-platform-communication/message`). Subscribers register listeners; delivery is queued (`sync` or `microtask`).
+doc-mfe-term,platform-communication-details.md,69,The tests encode the intended MFE rule explicitly: **two separate `createBus` instances do not deliver to each other**. Remotes that each instantiate their own bus are isolated. **Cross-remote traffic** happens when every party uses **`bridge.getBus()`** from the **same** `MfeBridgeHandle` (single s
+doc-mfe-term,platform-communication-details.md,73,`createHostBridge` assigns **`window.__MFE_BRIDGE__`** to an **`MfeBridgeHandle`** (when `window` exists). That handle exposes:
+doc-mfe-term,platform-communication-details.md,75,- `protocolVersion` — constant `MFE_BRIDGE_PROTOCOL_VERSION` (`1`)
+doc-mfe-term,platform-communication-details.md,91,"**SSR and non-browser runtimes:** When `typeof window === 'undefined'`, `createHostBridge` still returns a full **`MfeBridgeHandle`** (bus, `tryPublish`, `dispose`, state sync) but **does not** read or write `window.__MFE_BRIDGE__`. Remotes that rely on the global handle must run in a browser contex"
+doc-mfe-term,platform-communication-details.md,217,"- Puts **`window.__MFE_BRIDGE__`** with **`appId`**, **`remotes`**, **`getBus()`**, and the rest of **`MfeBridgeHandle`**."
+doc-mfe-term,platform-communication-details.md,235,```204:212:mfe-platform-communication/src/core/bus.ts
+doc-mfe-term,platform-communication-details.md,251,"**Yes.** After resolving **`window.__MFE_BRIDGE__`** to an **`MfeBridgeHandle`**, read **`handle.appId`** (typical **`target`** for “message to shell”) and **`handle.remotes`** (expected remote ids the host configured). Set **`target`** accordingly when publishing. That list is whatever the host pas"
+doc-mfe-term,platform-communication-details.md,253,```9:17:mfe-platform-communication/src/core/host-bridge.ts
+doc-mfe-term,platform-communication-details.md,254,export interface MfeBridgeHandle {
+doc-mfe-term,platform-communication-details.md,255,  readonly protocolVersion: typeof MFE_BRIDGE_PROTOCOL_VERSION;
+doc-mfe-term,platform-communication-details.md,313,From `@lkovari/microfrontend-platform-communication/angular`:
+doc-mfe-term,platform-communication-details.md,318,- `HOST_BRIDGE_TOKEN` — `InjectionToken<MfeBridgeHandle>`
+doc-mfe-term,platform-communication-details.md,348,"import { provideBus, provideHostBridge } from '@lkovari/microfrontend-platform-communication/angular';"
+doc-mfe-term,platform-communication-details.md,372,import { isValidMfeBridgeHandle } from '@lkovari/microfrontend-platform-communication/core';
+doc-mfe-term,platform-communication-details.md,373,import type { Bus } from '@lkovari/microfrontend-platform-communication/core';
+doc-mfe-term,platform-communication-details.md,398,Remotes loaded into the **same** page runtime as the shell should **not** construct an isolated bus for cross-MFE traffic. Instead:
+doc-mfe-term,platform-communication-details.md,430,"- **React** (`@lkovari/microfrontend-platform-communication/react`): **`BusContext`**, **`BusProvider`** (props are `CreateBusOptions` plus `children`), **`HostBridgeProvider`** (`remotes`, optional `stateSync`, `onConflict`, `children`), **`useBus`**, **`useSubscribe(messageName, handler, subscribe"
+doc-mfe-term,platform-communication-details.md,431,"- **Vue** (`@lkovari/microfrontend-platform-communication/vue`): **`BusKey`**, **`HostBridgeKey`** injection keys; **`createBusPlugin(options)`** must install **before** **`createHostBridgePlugin(options)`**; **`useBus()`**, **`useSubscribe(messageName, handler, subscribeOptions?)`** (subscribe on `"
+doc-mfe-term,platform-communication-details.md,455,10. Dispose bridges and buses on teardown in tests or micro-frontend unload if you create them manually.
+doc-mfe-term,platform-communication-details.md,461,Published code is built from **`mfe-platform-communication/`**:
+doc-mfe-term,platform-communication-details.md,476,"| `createBus`, `Bus`, `TopicRegistry`, `createHostBridge`, errors | `@lkovari/microfrontend-platform-communication/core` |"
+doc-mfe-term,platform-communication-details.md,477,"| Message types, `AckResult` | `@lkovari/microfrontend-platform-communication/contracts` |"
+doc-mfe-term,platform-communication-details.md,478,| Zod schemas | `@lkovari/microfrontend-platform-communication/schemas` |
+doc-mfe-term,platform-communication-details.md,479,| All three above | `@lkovari/microfrontend-platform-communication` (root) |
+doc-mfe-term,platform-communication-details.md,480,"| Angular providers, `injectBus`, services | `@lkovari/microfrontend-platform-communication/angular` |"
+doc-mfe-term,platform-communication-details.md,481,| React adapters | `@lkovari/microfrontend-platform-communication/react` |
+doc-mfe-term,platform-communication-details.md,482,| Vue plugins and composables | `@lkovari/microfrontend-platform-communication/vue` |
+doc-mfe-term,platform-communication-details.md,484,"This document, together with **`mfe-platform-communication/test/`**, is sufficient to reproduce correct **Angular host** and **remote** wiring against **@lkovari/microfrontend-platform-communication@^0.2.1** without reading a README."
+doc-integration-technology,CHANGELOG-2026-05-24.md,12,- **pnpm patch** updated for 0.2.1 (`patches/@lkovari__microfrontend-platform-communication@0.2.1.patch`). The npm tarball ships `.js` files but `package.json` `exports` still point at `.mjs`; Native Federation fails without the patch until upstream fixes exports.
+doc-integration-technology,CHANGELOG-2026-05-31.md,12,- **pnpm patch** regenerated for 0.3.0 (`patches/@lkovari__microfrontend-platform-communication@0.3.0.patch`); the stale 0.2.1 patch was removed and `nx-mf-df/pnpm-workspace.yaml` `patchedDependencies` repointed to `@0.3.0`. The 0.3.0 tarball still ships `.js` files while `package.json` `exports`/`m
+doc-integration-technology,README.md,3,Angular 21 + Nx monorepo proof-of-concept for **native module federation** with **host-mediated cross-microfrontend messaging** on a single in-process platform bus.
+doc-integration-technology,README.md,19,Remotes are loaded with **Native Federation** (`@angular-architects/native-federation`). They expose only their root component into the host; they do **not** bootstrap a separate Angular app inside the federated shell page. Cross-MFE messaging therefore uses the **host’s** shared bus via `window.__M
+doc-integration-technology,README.md,213,"Running every app with a single `nx run-many -t serve` on several long-running Native Federation dev servers is awkward in practice. A small Node orchestrator spawns `pnpm exec nx run <project>:serve` per app, waits until remote ports accept TCP, then starts the host."
+doc-integration-technology,README.md,287,`@lkovari/microfrontend-platform-communication` is pinned at **^0.2.1** in `nx-mf-df/package.json`. A pnpm patch rewrites `package.json` `exports` from `.mjs` to `.js` so Native Federation can resolve the published `dist` files (see `nx-mf-df/patches/`).
+doc-integration-technology,nx-mf-comm-info.md,51,"- Ez host-közvetített, de **in-process** megosztott busz; nem iframe postMessage."
+doc-integration-technology,nx-mf-comm-info.md,108,"**Native Federation megkötés:** A remote `app.config.ts` **nem fut**, amikor a remote csak lazy route-ként töltődik be a shellbe — csak a federált komponens és a shell által regisztrált provider-ek. Ezért a demo query handler a **main-host** `app.config`-jában is bootstrap-pel fut, és host oldalon m"
+doc-integration-technology,nx-mf-comm-info.md,125,"A `nx-mf-df/patches/@lkovari__microfrontend-platform-communication@0.2.1.patch` a csomag `package.json` `exports` mezőjében `.mjs` → `.js` javítást végez, mert a publikált `dist` `.js` fájlokat tartalmaz, de az exportok még `.mjs`-re mutatnak. Patch nélkül a Native Federation build nem találja a fáj"
+doc-integration-technology,platform-communication-details.md,202,"## 7. Module Federation names vs bus identity (`source`, `target`, `subscriberId`)"
+doc-integration-technology,platform-communication-details.md,204,There is **no automatic “who am I?”** from Webpack or Module Federation. Federation exposes **build-time** remote names (for example in `remotes` / `exposes`). **The platform bus does not read those.** `appId` and participant ids on the bus are **plain strings** you agree on and pass into `provideBu
+doc-integration-technology,platform-communication-details.md,448,"3. Standardize bus participant strings (**`appId`**, **`defaultSubscriberId`**, **`subscriberId`**, **`source`**, **`target`**) independently of Module Federation remote names; keep **`provideHostBridge({ remotes })`** in sync with each remote’s **`subscribe({ subscriberId })`** (**§7**)."
+doc-runtime-loading,platform-communication-details.md,251,"**Yes.** After resolving **`window.__MFE_BRIDGE__`** to an **`MfeBridgeHandle`**, read **`handle.appId`** (typical **`target`** for “message to shell”) and **`handle.remotes`** (expected remote ids the host configured). Set **`target`** accordingly when publishing. That list is whatever the host pas"
+doc-runtime-loading,platform-communication-details.md,272,"| Discovering ids for targeting | **`window.__MFE_BRIDGE__.appId`** and **`.remotes`**, plus your own docs or dynamic contracts if remotes change at runtime |"
+doc-independence,platform-communication-details.md,448,"3. Standardize bus participant strings (**`appId`**, **`defaultSubscriberId`**, **`subscriberId`**, **`source`**, **`target`**) independently of Module Federation remote names; keep **`provideHostBridge({ remotes })`** in sync with each remote’s **`subscribe({ subscriberId })`** (**§7**)."
+doc-host-remote,CHANGELOG-2026-05-24.md,40,"Manual smoke: platform message composer, demo shell H2R query, federated remote routes."
+doc-host-remote,CHANGELOG-2026-05-31.md,16,"The host now gates `getBus()` / `tryPublish()` behind an access token. Because host and remotes are first-party federated code that cannot share a closure-held random token across the boundary, a shared compile-time constant is used."
+doc-host-remote,CHANGELOG-2026-05-31.md,37,- **`demo-shell-h2r-command-remote-handler.service.ts`** + **`demo-shell-h2r-command-bootstrap.provider.ts`** (new): subscribe to `DEMO_SHELL_H2R_COMMAND` per subscriber and immediately publish an ACK event with `causationId = command.messageId` and `source = subscriberId`. Wired into all four app c
+doc-host-remote,CHANGELOG-2026-05-31.md,54,"Manual smoke: platform message composer (gated bridge), demo shell H2R query/result, and the new demo command → ACK round-trip across federated remote routes."
+doc-host-remote,CHANGELOG-2026-05-31.md,63,"- **`participant-ids.spec.ts`**: route → participant resolution for all remotes, shell, and unknown paths."
+doc-host-remote,CHANGELOG-2026-05-31.md,77,"- **`demo-shell-h2r-query-remote-handler.service.spec.ts`** / **`demo-shell-h2r-command-remote-handler.service.spec.ts`**: subscriber resolution, invalid payloads, command ACK publish."
+doc-host-remote,README.md,14,| **`mf_remote_a` / `b` / `c`** (4201–4203) | Federated remotes loaded into the shell by route |
+doc-host-remote,README.md,19,Remotes are loaded with **Native Federation** (`@angular-architects/native-federation`). They expose only their root component into the host; they do **not** bootstrap a separate Angular app inside the federated shell page. Cross-MFE messaging therefore uses the **host’s** shared bus via `window.__M
+doc-host-remote,README.md,25,One physical bus per browser tab. The host creates it; remotes attach through the global bridge handle. Isolated `createBus()` instances in different bundles do **not** see each other.
+doc-host-remote,README.md,102,| `demo:shell:h2r:query` | `query` | Shell → remote request (demo) |
+doc-host-remote,README.md,103,| `demo:shell:h2r:query:result` | `event` | Remote → shell reply (`causationId` = query `messageId`) |
+doc-host-remote,README.md,109,"**Why:** Demonstrate fire-and-forget **events** across host and remotes with validation, optional targeting, toast + history UI."
+doc-host-remote,README.md,142,"On the integrated shell, the “remote” handler runs in the host process (subscribes as `mf_remote_a`, `mf_remote_b`, and `mf_remote_c`) so the reply dialog works even when remotes are only lazy-loaded routes."
+doc-host-remote,README.md,160,| Query handler | `nx-mf-df/libs/common-ui-lib/src/lib/platform-messaging/services/demo-shell-h2r-query-remote-handler.service.ts` |
+doc-host-remote,README.md,196,"| `pnpm start:all` | `node scripts/start-all.mjs` — remotes first, then host |"
+doc-host-remote,README.md,209,"For local federation, start remotes before the host, or use `pnpm start:all`."
+doc-host-remote,README.md,213,"Running every app with a single `nx run-many -t serve` on several long-running Native Federation dev servers is awkward in practice. A small Node orchestrator spawns `pnpm exec nx run <project>:serve` per app, waits until remote ports accept TCP, then starts the host."
+doc-host-remote,README.md,309,2. Generate `main-host` and three remotes with esbuild + routing
+doc-host-remote,README.md,310,"3. Add `@angular-architects/native-federation`, init host (dynamic-host) and remotes"
+doc-host-remote,nx-mf-comm-info.md,18,"| **Egy busz példány** | Két külön `createBus()` hívás **nem látja egymás üzeneteit**. A host és a remote-ok ugyanahhoz a buszhoz csatlakoznak: a host létrehozza, `createHostBridge`-gel kitölti a `window.__MFE_BRIDGE__` globális objektumot, a remote-ok `bridge.getBus()`-szal olvassák. |"
+doc-host-remote,nx-mf-comm-info.md,22,"| **Angular** | Ugyanaz az elv: hoston `provideBus` + `provideHostBridge`, remote bundle-ben `window.__MFE_BRIDGE__` a shell betöltése után. |"
+doc-host-remote,nx-mf-comm-info.md,34,#### Topológia 1: Host → Remote A
+doc-host-remote,nx-mf-comm-info.md,36,- A host publikál `target: 'remote-a'` értékkel.
+doc-host-remote,nx-mf-comm-info.md,40,#### Topológia 2: Remote A → Host
+doc-host-remote,nx-mf-comm-info.md,42,- A remote publikál `target: 'shell-host'` értékkel.
+doc-host-remote,nx-mf-comm-info.md,44,"- Fontos: ha a host nem ad meg `subscriberId`-t, a default az, ami elkapja a remote felől érkező üzeneteket."
+doc-host-remote,nx-mf-comm-info.md,108,"**Native Federation megkötés:** A remote `app.config.ts` **nem fut**, amikor a remote csak lazy route-ként töltődik be a shellbe — csak a federált komponens és a shell által regisztrált provider-ek. Ezért a demo query handler a **main-host** `app.config`-jában is bootstrap-pel fut, és host oldalon m"
+doc-host-remote,nx-mf-comm-info.md,162,"  - `demo:shell:h2r:query` — query, shell → remote"
+doc-host-remote,nx-mf-comm-info.md,163,"  - `demo:shell:h2r:query:result` — event, remote → shell, `causationId` párosítás"
+doc-host-remote,nx-mf-comm-info.md,167,  - demo query: csak `main-host` publikálhat; csak remote-ok iratkozhatnak fel
+doc-host-remote,nx-mf-comm-info.md,168,  - demo result: csak remote-ok publikálhatnak; csak `main-host` iratkozhat fel
+doc-host-remote,nx-mf-comm-info.md,178,| `MessageSenderService` | Host: `HOST_BRIDGE_TOKEN.tryPublish`. Remote: `RemotePlatformBusService.tryPublish`. Sikeres `platform.message.v1` esetén replay buffer. |
+doc-host-remote,nx-mf-comm-info.md,187,"1. **Host bootstrap:** `provideHostBridge` létrehozza a hidat, `appId` és `remotes` metaadat."
+doc-host-remote,nx-mf-comm-info.md,226,"**Host speciális viselkedés:** Ha van `BUS_TOKEN` (host process), a handler **mindhárom** remote ID-re feliratkozik egyszerre, hogy federált route nélkül is működjön a válasz dialógus."
+doc-host-remote,nx-mf-comm-info.md,239,"**Miért két sor típus:** Egy interakció két nézőpontot tanít: mit küldött a shell, és mit dolgozott fel a „remote” oldal (handler + emberi válasz)."
+doc-host-remote,nx-mf-comm-info.md,277,| Query timeout | Handler nem futott shellben | Host bootstrap + mindhárom remote subscriber a host processben |
+doc-host-remote,platform-communication-details.md,3,"This document is derived from the published package’s source layout (`mfe-platform-communication/`), not from README prose. It is intended for humans and for tooling (for example another AI) that must wire **@lkovari/microfrontend-platform-communication@^0.2.1** into a **modern Angular host** and **"
+doc-host-remote,platform-communication-details.md,67,### 3.2 Host-mediated remotes
+doc-host-remote,platform-communication-details.md,69,The tests encode the intended MFE rule explicitly: **two separate `createBus` instances do not deliver to each other**. Remotes that each instantiate their own bus are isolated. **Cross-remote traffic** happens when every party uses **`bridge.getBus()`** from the **same** `MfeBridgeHandle` (single s
+doc-host-remote,platform-communication-details.md,91,"**SSR and non-browser runtimes:** When `typeof window === 'undefined'`, `createHostBridge` still returns a full **`MfeBridgeHandle`** (bus, `tryPublish`, `dispose`, state sync) but **does not** read or write `window.__MFE_BRIDGE__`. Remotes that rely on the global handle must run in a browser contex"
+doc-host-remote,platform-communication-details.md,196,- Host broadcasts to all remotes: omit `target` on message; each remote subscribes with its own `subscriberId`.
+doc-host-remote,platform-communication-details.md,197,- Host → one remote: set `message.target` to that remote’s `subscriberId`.
+doc-host-remote,platform-communication-details.md,198,- Remote → host: host subscribes with default id (host `appId` / `defaultSubscriberId`); remote publishes with `target: 'shell-host'` (or whatever id the host subscriber uses). Prefer reading **`handle.appId`** from **`window.__MFE_BRIDGE__`** when the shell’s bus id should drive targeting (see **§7
+doc-host-remote,platform-communication-details.md,215,**Host bridge** — `provideHostBridge({ remotes: [...] })`:
+doc-host-remote,platform-communication-details.md,220,**“Registration”** in practice: the host configures **bus + bridge**; each remote attaches to the **same** `Bus` via **`getBus()`** and picks a **`subscriberId`** when calling **`subscribe`** (and publishes **`source`** values your team defines).
+doc-host-remote,platform-communication-details.md,226,### 7.3 How is the recipient chosen (remote B vs remote C vs host)?
+doc-host-remote,platform-communication-details.md,247,"The **recipient** is whoever subscribed with that **`subscriberId`**. The host typically uses **`defaultSubscriberId: 'shell-host'`** (or aligns **`appId`** with the host subscriber); remote B uses **`subscribe(..., { subscriberId: 'remote-b' })`**. To reach only B, **`publish`** with **`target: 're"
+doc-host-remote,platform-communication-details.md,249,### 7.4 Can a remote read host id and remote list for `target`?
+doc-host-remote,platform-communication-details.md,251,"**Yes.** After resolving **`window.__MFE_BRIDGE__`** to an **`MfeBridgeHandle`**, read **`handle.appId`** (typical **`target`** for “message to shell”) and **`handle.remotes`** (expected remote ids the host configured). Set **`target`** accordingly when publishing. That list is whatever the host pas"
+doc-host-remote,platform-communication-details.md,332,"Use one shared **`validators`** map for every `messageName` the shell and remotes may exchange. Host `appId` should match how you intend the host subscriber id to work (often the literal shell id, for example `shell-host`)."
+doc-host-remote,platform-communication-details.md,392,Subscribe with **`{ subscriberId: 'remote-orders' }`** (or your remote id) when you need targeted delivery from the host (see §6 and §7).
+doc-host-remote,platform-communication-details.md,398,Remotes loaded into the **same** page runtime as the shell should **not** construct an isolated bus for cross-MFE traffic. Instead:
+doc-host-remote,platform-communication-details.md,404,"**`subscriberId` contract:** When calling `subscribe`, pass `{ subscriberId: '<remote-id>' }` where `<remote-id>` matches an entry in the host’s `remotes` array and matches what the host uses in `target` for directed messages."
+doc-host-remote,platform-communication-details.md,406,**Validators:** The remote’s runtime uses the **same** `Bus` instance as the host; validation schemas are whatever the host configured when creating the bus. Remotes must send messages that satisfy those schemas (deploy **compatible** contract versions; use `messageVersion` + registry bounds for gov
+doc-host-remote,platform-communication-details.md,408,"If a remote is a **standalone** deployment with no shell (dev server only), you may temporarily `provideBus` locally for local testing, understanding that this bus will not see production shell traffic."
+doc-host-remote,platform-communication-details.md,433,Same **host vs remote** rules: one shared bus per page coordination layer. Non-Angular remotes in the same page still use **`window.__MFE_BRIDGE__`** / **`getBus()`** unless they are children of a React/Vue provider tree that already owns the bus.
+doc-host-remote,platform-communication-details.md,440,"- This library does **not** encrypt payloads, **does not** authenticate `source` strings, and **does not** sandbox remotes. Treat `source` / `subscriberId` as **convention**, not cryptographic proof. Enforce trust boundaries in the shell or backend."
+doc-host-remote,platform-communication-details.md,449,4. **Host:** `provideBus` + `provideHostBridge({ remotes: [...] })` in `ApplicationConfig`.
+doc-host-remote,platform-communication-details.md,450,5. **Host:** subscribe with `subscriberId` matching shell identity; remotes subscribe with their remote ids.
+doc-host-remote,platform-communication-details.md,484,"This document, together with **`mfe-platform-communication/test/`**, is sufficient to reproduce correct **Angular host** and **remote** wiring against **@lkovari/microfrontend-platform-communication@^0.2.1** without reading a README."
+ws-path-alias,nx-mf-df/tsconfig.base.json,17,"    ""paths"": {"

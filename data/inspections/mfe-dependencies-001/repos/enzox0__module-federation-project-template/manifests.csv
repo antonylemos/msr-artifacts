@@ -1,0 +1,11 @@
+manifest,state
+apps/admin-mf/package.json,ok
+apps/auth-mf/package.json,ok
+apps/dashboard-mf/package.json,ok
+apps/messaging-mf/package.json,ok
+apps/shell/package.json,ok
+package.json,ok
+packages/sdk/package.json,ok
+packages/shared/package.json,ok
+packages/types/package.json,ok
+packages/ui/package.json,ok

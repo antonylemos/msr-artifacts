@@ -1,0 +1,40 @@
+.ds-button {
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: var(--space-2, 8px) var(--space-3, 16px);
+  border-radius: var(--radius-sm, 6px);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    filter 0.15s ease,
+    background-color 0.15s ease;
+
+  &--primary {
+    background: var(--color-primary, #2563eb);
+    color: var(--color-primary-contrast, #fff);
+
+    &:hover {
+      filter: brightness(1.08);
+    }
+  }
+
+  &--secondary {
+    background: var(--color-secondary, #06b6d4);
+    color: var(--color-primary-contrast, #fff);
+
+    &:hover {
+      filter: brightness(1.08);
+    }
+  }
+
+  &--ghost {
+    background: transparent;
+    border-color: var(--color-border, #d9e7fb);
+    color: var(--color-text, #0f172a);
+
+    &:hover {
+      background: var(--color-border, #d9e7fb);
+    }
+  }
+}

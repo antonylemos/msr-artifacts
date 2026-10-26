@@ -1,0 +1,20 @@
+{
+  "clinicalForm": "formulir klinis",
+  "clinicalForms": "formulir klinis",
+  "formName": "formulir nama (A - Z)",
+  "forms": "formulir",
+  "homeOverviewCardView": "tampilan kartu ringkasan beranda",
+  "lastCompleted": "terakhir diselesaikan",
+  "never": "tidak pernah",
+  "noFormsToDisplay": "tidak ada formulir untuk ditampilkan",
+  "offlineForms": "formulir offline",
+  "offlineForms__lower": "formulir offline",
+  "offlineFormsOverviewCardAvailableOffline": "kartu ringkasan formulir offline tersedia offline",
+  "offlineFormsTableFormAvailableOffline": "tabel formulir offline tersedia offline",
+  "offlineFormsTableFormNameHeader": "header nama formulir tabel offline",
+  "offlineFormsTitle": "judul formulir offline",
+  "offlinePatientsTableSearchLabel": "label pencarian tabel pasien offline",
+  "offlinePatientsTableSearchPlaceholder": "placeholder pencarian tabel pasien offline",
+  "offlineToggle": "toggle offline",
+  "searchThisList": "cari dalam daftar ini"
+}

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!-- Add admin as provider -->
+    <changeSet id="add_admin_provider-20250808" author="pirupius">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="1">
+                SELECT CASE WHEN EXISTS (SELECT 1 FROM provider WHERE person_id = 1) THEN 0 ELSE 1 END;
+            </sqlCheck>
+        </preConditions>
+        <insert tableName="provider">
+            <column name="person_id" value="1" />
+            <column name="name" value="Super User" />
+            <column name="identifier" value="admin" />
+            <column name="uuid" value="361ebccc-0992-46c5-a99f-ac523bed386e" />
+            <column name="creator" value="1" />
+            <column name="date_created" value="2024-07-11 11:30:00" />
+        </insert>
+    </changeSet>
+
+    <!-- Remove "Bunia: " prefix from role names -->
+    <changeSet id="remove_bunia_prefix_from_roles-20260304" author="pirupius">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="1">
+                SELECT CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END FROM role WHERE role LIKE 'Bunia: %';
+            </sqlCheck>
+        </preConditions>
+        <sql>
+            SET FOREIGN_KEY_CHECKS = 0;
+            UPDATE role_privilege SET role = SUBSTRING(role, 8) WHERE role LIKE 'Bunia: %';
+            UPDATE role_role SET parent_role = SUBSTRING(parent_role, 8) WHERE parent_role LIKE 'Bunia: %';
+            UPDATE role_role SET child_role = SUBSTRING(child_role, 8) WHERE child_role LIKE 'Bunia: %';
+            UPDATE user_role SET role = SUBSTRING(role, 8) WHERE role LIKE 'Bunia: %';
+            UPDATE role SET role = SUBSTRING(role, 8) WHERE role LIKE 'Bunia: %';
+            SET FOREIGN_KEY_CHECKS = 1;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

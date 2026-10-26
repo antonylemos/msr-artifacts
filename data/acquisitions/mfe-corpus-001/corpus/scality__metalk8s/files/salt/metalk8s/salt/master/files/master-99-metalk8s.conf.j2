@@ -1,0 +1,89 @@
+interface: {{ salt_ip }}
+
+log_level: {{ 'debug' if debug else 'info' }}
+
+timeout: {{ timeout }}
+sock_pool_size: 15
+worker_threads: {{ worker_threads}}
+
+peer:
+  .*:
+    - x509.sign_remote_certificate
+
+features:
+  x509_v2: true
+
+# Enable grains caching on salt-master
+grains_cache: True
+enable_fqdns_grains: false
+
+# We use information from the `metalk8s_node` ext_pillar to match in
+# `pillar/top.sls`, hence we need to load them first.
+ext_pillar_first: true
+ext_pillar:
+  - metalk8s: /etc/metalk8s/bootstrap.yaml
+  - metalk8s_endpoints: {{ kubeconfig }}
+  - metalk8s_nodes: {{ kubeconfig }}
+  - metalk8s_private: {}
+  - metalk8s_solutions: {}
+  - metalk8s_etcd: {}
+
+# Set default roster to kubernetes
+roster: kubernetes
+
+# Always include `psutil` in the thin
+thin_extra_mods: psutil
+
+# Globally disable SSH host key checks
+no_host_keys: true
+
+# Enable netapi/salt-api
+netapi_enable_clients:
+  - local
+  - local_async
+  - local_batch
+  - local_subset
+  - runner
+  - runner_async
+
+rest_cherrypy:
+  port: 4507
+  host: {{ salt_ip }}
+  debug: {{ debug }}
+  ssl_crt: {{ salt_api_ssl_crt }}
+  ssl_key: /etc/salt/pki/api/salt-api.key
+  ssl_chain: /etc/kubernetes/pki/ca.crt
+
+external_auth:
+  kubernetes_rbac:
+    ^kubeconfig: {{ kubeconfig }}
+    node-admins%:
+      - '*':
+        - '.*'
+      - '@wheel'
+      - '@runner'
+      - '@jobs'
+    'system:serviceaccount:kube-system:storage-operator-controller-manager':
+      - '*':
+        - 'metalk8s_volumes.device_info'
+        - 'metalk8s_volumes.device_name'
+        - 'state.sls':
+            kwargs:
+              mods: 'metalk8s\.volumes.*'
+      - '@jobs'
+
+# `kubeconfig` file and `context` used by salt to interact with apiserver
+kubernetes.kubeconfig: {{ kubeconfig }}
+{%- if kubecontext is defined and kubecontext %}
+kubernetes.context: {{ kubecontext }}
+{%- endif %}
+
+reactor:
+  - 'salt/beacon/*/metalk8s_watch_certificates_expiry/':
+    - salt://metalk8s/reactor/certs/renew.sls?saltenv={{ saltenv }}
+  - 'salt/beacon/*/metalk8s_watch_kubeconfig_expiry/':
+    - salt://metalk8s/reactor/certs/renew.sls?saltenv={{ saltenv }}
+
+{#- NOTE: This can be removed in `development/135` #}
+# Allow authentication with older salt versions
+minimum_auth_version: 2

@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "id": "969679126",
+  "fullName": "Ba5ik7/seed-mfe-remote",
+  "commit": "3565dd875bd5bd89f14f88b1325e00aeb11cdf96",
+  "acquiredAt": "2026-10-24T00:32:39.019Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "projects/demo/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "projects/seed-mfe-remote/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 33,
+    "bytes": 596013
+  },
+  "languages": {
+    "JSON": 588701,
+    "TypeScript": 3277,
+    "Markdown": 1476,
+    "Other": 901,
+    "JavaScript": 844,
+    "HTML": 603,
+    "SCSS": 211
+  },
+  "contentSha256": "739b597871184390d28ddc4ab543a571a70317448c6aa072fd90ee65816a6e2a"
+}

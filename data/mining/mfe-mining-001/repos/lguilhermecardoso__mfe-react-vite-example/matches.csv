@@ -1,0 +1,111 @@
+pattern,path,line,excerpt
+dep-module-federation,mf-dashboard/package.json,13,"    ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+dep-module-federation,mf-dashboard/package.json,31,"    ""vite-plugin-federation"": ""^0.0.1"""
+dep-module-federation,mf-login/package.json,20,"    ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+dep-module-federation,mf-login/package.json,31,"    ""vite-plugin-federation"": ""^0.0.1"""
+dep-module-federation,mf-navbar/package.json,20,"    ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+dep-module-federation,mf-navbar/package.json,31,"    ""vite-plugin-federation"": ""^0.0.1"""
+dep-module-federation,mf-personagem-detalhe/package.json,13,"    ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+dep-module-federation,mf-personagem-detalhe/package.json,31,"    ""vite-plugin-federation"": ""^0.0.1"""
+dep-module-federation,root-app/package.json,21,"    ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+dep-module-federation,root-app/package.json,33,"    ""vite-plugin-federation"": ""^0.0.1"""
+lock-mfe-dependency,mf-dashboard/package-lock.json,11,"        ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+lock-mfe-dependency,mf-dashboard/package-lock.json,29,"        ""vite-plugin-federation"": ""^0.0.1"""
+lock-mfe-dependency,mf-dashboard/package-lock.json,1048,"    ""node_modules/@originjs/vite-plugin-federation"": {"
+lock-mfe-dependency,mf-dashboard/package-lock.json,1050,"      ""resolved"": ""https://registry.npmjs.org/@originjs/vite-plugin-federation/-/vite-plugin-federation-1.4.1.tgz"","
+lock-mfe-dependency,mf-dashboard/package-lock.json,3910,"    ""node_modules/vite-plugin-federation"": {"
+lock-mfe-dependency,mf-dashboard/package-lock.json,3912,"      ""resolved"": ""https://registry.npmjs.org/vite-plugin-federation/-/vite-plugin-federation-0.0.1.tgz"","
+lock-mfe-dependency,mf-login/package-lock.json,18,"        ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+lock-mfe-dependency,mf-login/package-lock.json,29,"        ""vite-plugin-federation"": ""^0.0.1"""
+lock-mfe-dependency,mf-login/package-lock.json,1048,"    ""node_modules/@originjs/vite-plugin-federation"": {"
+lock-mfe-dependency,mf-login/package-lock.json,1050,"      ""resolved"": ""https://registry.npmjs.org/@originjs/vite-plugin-federation/-/vite-plugin-federation-1.4.1.tgz"","
+lock-mfe-dependency,mf-login/package-lock.json,3913,"    ""node_modules/vite-plugin-federation"": {"
+lock-mfe-dependency,mf-login/package-lock.json,3915,"      ""resolved"": ""https://registry.npmjs.org/vite-plugin-federation/-/vite-plugin-federation-0.0.1.tgz"","
+lock-mfe-dependency,mf-navbar/package-lock.json,18,"        ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+lock-mfe-dependency,mf-navbar/package-lock.json,29,"        ""vite-plugin-federation"": ""^0.0.1"""
+lock-mfe-dependency,mf-navbar/package-lock.json,1048,"    ""node_modules/@originjs/vite-plugin-federation"": {"
+lock-mfe-dependency,mf-navbar/package-lock.json,1050,"      ""resolved"": ""https://registry.npmjs.org/@originjs/vite-plugin-federation/-/vite-plugin-federation-1.4.1.tgz"","
+lock-mfe-dependency,mf-navbar/package-lock.json,1063,"    ""node_modules/@originjs/vite-plugin-federation/node_modules/magic-string"": {"
+lock-mfe-dependency,mf-navbar/package-lock.json,3913,"    ""node_modules/vite-plugin-federation"": {"
+lock-mfe-dependency,mf-navbar/package-lock.json,3915,"      ""resolved"": ""https://registry.npmjs.org/vite-plugin-federation/-/vite-plugin-federation-0.0.1.tgz"","
+lock-mfe-dependency,mf-personagem-detalhe/package-lock.json,11,"        ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+lock-mfe-dependency,mf-personagem-detalhe/package-lock.json,29,"        ""vite-plugin-federation"": ""^0.0.1"""
+lock-mfe-dependency,mf-personagem-detalhe/package-lock.json,1048,"    ""node_modules/@originjs/vite-plugin-federation"": {"
+lock-mfe-dependency,mf-personagem-detalhe/package-lock.json,1050,"      ""resolved"": ""https://registry.npmjs.org/@originjs/vite-plugin-federation/-/vite-plugin-federation-1.4.1.tgz"","
+lock-mfe-dependency,mf-personagem-detalhe/package-lock.json,3910,"    ""node_modules/vite-plugin-federation"": {"
+lock-mfe-dependency,mf-personagem-detalhe/package-lock.json,3912,"      ""resolved"": ""https://registry.npmjs.org/vite-plugin-federation/-/vite-plugin-federation-0.0.1.tgz"","
+lock-mfe-dependency,root-app/package-lock.json,19,"        ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+lock-mfe-dependency,root-app/package-lock.json,31,"        ""vite-plugin-federation"": ""^0.0.1"""
+lock-mfe-dependency,root-app/package-lock.json,1050,"    ""node_modules/@originjs/vite-plugin-federation"": {"
+lock-mfe-dependency,root-app/package-lock.json,1052,"      ""resolved"": ""https://registry.npmjs.org/@originjs/vite-plugin-federation/-/vite-plugin-federation-1.4.1.tgz"","
+lock-mfe-dependency,root-app/package-lock.json,3985,"    ""node_modules/vite-plugin-federation"": {"
+lock-mfe-dependency,root-app/package-lock.json,3987,"      ""resolved"": ""https://registry.npmjs.org/vite-plugin-federation/-/vite-plugin-federation-0.0.1.tgz"","
+cfg-federation-plugin,mf-dashboard/vite.config.ts,10,    federation({
+cfg-federation-plugin,mf-login/vite.config.ts,10,    federation({
+cfg-federation-plugin,mf-navbar/vite.config.ts,10,    federation({
+cfg-federation-plugin,mf-personagem-detalhe/vite.config.ts,10,    federation({
+cfg-federation-plugin,root-app/vite.config.ts,31,      federation({
+cfg-remotes,root-app/vite.config.ts,11,  const remotes = {
+cfg-exposes,mf-dashboard/vite.config.ts,13,      exposes: {
+cfg-exposes,mf-login/vite.config.ts,13,      exposes: {
+cfg-exposes,mf-navbar/vite.config.ts,13,      exposes: {
+cfg-exposes,mf-personagem-detalhe/vite.config.ts,13,      exposes: {
+cfg-shared,mf-dashboard/vite.config.ts,16,"      shared: [""react"", ""react-dom""],"
+cfg-shared,mf-login/vite.config.ts,16,"      shared: [""react"", ""react-dom""],"
+cfg-shared,mf-navbar/vite.config.ts,16,"      shared: [""react"", ""react-dom""],"
+cfg-shared,mf-personagem-detalhe/vite.config.ts,16,"      shared: [""react"", ""react-dom""],"
+cfg-shared,root-app/vite.config.ts,34,"        shared: [""react"", ""react-dom""],"
+cfg-public-path,root-app/vite.config.ts,27,"    base: '/mfe-react-vite-example/',"
+rt-remote-entry,mf-dashboard/vite.config.ts,12,"      filename: ""remoteEntry.js"","
+rt-remote-entry,mf-login/vite.config.ts,12,"      filename: ""remoteEntry.js"","
+rt-remote-entry,mf-navbar/vite.config.ts,12,"      filename: ""remoteEntry.js"","
+rt-remote-entry,mf-personagem-detalhe/vite.config.ts,12,"      filename: ""remoteEntry.js"","
+rt-remote-entry,root-app/vite.config.ts,13,"      ? ""http://localhost:4173/assets/remoteEntry.js"""
+rt-remote-entry,root-app/vite.config.ts,14,"      : ""https://lguilhermecardoso.github.io/mfe-react-vite-example/mf-login/assets/remoteEntry.js"","
+rt-remote-entry,root-app/vite.config.ts,16,"      ? ""http://localhost:4175/assets/remoteEntry.js"""
+rt-remote-entry,root-app/vite.config.ts,17,"      : ""https://lguilhermecardoso.github.io/mfe-react-vite-example/mf-dashboard/assets/remoteEntry.js"","
+rt-remote-entry,root-app/vite.config.ts,19,"      ? ""http://localhost:4176/assets/remoteEntry.js"""
+rt-remote-entry,root-app/vite.config.ts,20,"      : ""https://lguilhermecardoso.github.io/mfe-react-vite-example/mf-personagem-detalhe/assets/remoteEntry.js"","
+rt-remote-entry,root-app/vite.config.ts,22,"      ? ""http://localhost:4174/assets/remoteEntry.js"""
+rt-remote-entry,root-app/vite.config.ts,23,"      : ""https://lguilhermecardoso.github.io/mfe-react-vite-example/mf-navbar/assets/remoteEntry.js"","
+src-remote-import,root-app/src/App.tsx,5,"const Navbar = React.lazy(() => import(""mf_navbar/Navbar""));"
+src-remote-import,root-app/src/App.tsx,6,"const LoginMFE = React.lazy(() => import(""mf_login/Login""));"
+src-remote-import,root-app/src/App.tsx,7,"const DashboardMFE = React.lazy(() => import(""mf_dashboard/Dashboard""));"
+src-remote-import,root-app/src/App.tsx,8,"const PersonagemDetalheMFE = React.lazy(() => import(""mf_personagem_detalhe/PersonagemDetalhe""));"
+ops-hosting,.github/workflows/deploy.yml,23,        uses: peaceiris/actions-gh-pages@v4
+ops-hosting,roadmap.md,82,- [ ] Copiar arquivos finais para branch `gh-pages` no deploy
+ci-workflow-file,.github/workflows/deploy.yml,,
+doc-mfe-term,README.md,1,# MicroFrontend React with Module Federation
+doc-mfe-term,README.md,3,"This project demonstrates a **Microfrontends architecture** using **React**, **Vite**, **Module Federation**, and **TailwindCSS**. The goal is to create a modular, scalable, and maintainable app, composed of multiple independent microfrontends that integrate into the main app (`root-app`)."
+doc-mfe-term,README.md,10,microfrontends-mf/
+doc-mfe-term,README.md,12,├── mf-login/                   # Microfrontend: Login and sign-up screen
+doc-mfe-term,README.md,13,├── mf-dashboard/               # Microfrontend: Main dashboard
+doc-mfe-term,README.md,14,"├── mf-personagem-detalhe/      # Microfrontend: Character detail (e.g., Rick and Morty)"
+doc-mfe-term,README.md,15,└── mf-navbar/                  # Microfrontend: Navbar with navigation and user info
+doc-mfe-term,README.md,33,Each microfrontend is an **independent project** (with its own `package.json`).  
+doc-mfe-term,README.md,50,### 2. Build and preview each microfrontend
+doc-mfe-term,README.md,52,"In separate terminals (one for each MFE), run:"
+doc-mfe-term,README.md,80,"The root-app will run on http://localhost:5000 (or your configured dev port), consuming the microfrontends remotely from their preview servers."
+doc-mfe-term,README.md,90,- Integration between MFEs via Module Federation
+doc-mfe-term,README.md,98,- [x] Integrated login via MFE
+doc-mfe-term,README.md,101,- [x] Character Detail MFE created
+doc-mfe-term,README.md,113,- Follow conventions and keep each microfrontend isolated and well documented.
+doc-mfe-term,roadmap.md,1,# 📝 Roadmap & Checklist - Microfrontend APP
+doc-mfe-term,roadmap.md,16,- [x] Criar microfrontend do Navbar
+doc-mfe-term,roadmap.md,24,- [x] Criar microfrontend do Dashboard
+doc-mfe-term,roadmap.md,35,- [x] Criar microfrontend mf-personagem-detalhe
+doc-mfe-term,roadmap.md,44,## 🟡 **Integração de microfrontends no root-app**
+doc-mfe-term,roadmap.md,46,- [ ] Passar token/usuário para todos MFEs
+doc-mfe-term,roadmap.md,55,- [ ] Compartilhar token entre MFEs quando necessário
+doc-mfe-term,roadmap.md,60,- [ ] Garantir layout responsivo em todos MFEs
+doc-mfe-term,roadmap.md,67,- [ ] Documentar MFEs e integração (README de cada MFE + root-app)
+doc-mfe-term,roadmap.md,73,- [ ] Configurar build dos MFEs e root-app gerando arquivos estáticos
+doc-mfe-term,roadmap.md,74,- [ ] Garantir que os MFEs possam ser servidos via GitHub Pages (import remoto ou copiando arquivos para build final)
+doc-mfe-term,roadmap.md,81,- [ ] Criar workflow de build automático para cada microfrontend e root-app
+doc-mfe-term,roadmap.md,99,"- [ ] Automatizar build e deploy dos MFEs em ambiente externo (CDN, cloud...)"
+doc-integration-technology,README.md,1,# MicroFrontend React with Module Federation
+doc-integration-technology,README.md,3,"This project demonstrates a **Microfrontends architecture** using **React**, **Vite**, **Module Federation**, and **TailwindCSS**. The goal is to create a modular, scalable, and maintainable app, composed of multiple independent microfrontends that integrate into the main app (`root-app`)."
+doc-integration-technology,README.md,24,- [Module Federation](https://webpack.js.org/concepts/module-federation/)
+doc-integration-technology,README.md,90,- Integration between MFEs via Module Federation
+doc-independence,README.md,3,"This project demonstrates a **Microfrontends architecture** using **React**, **Vite**, **Module Federation**, and **TailwindCSS**. The goal is to create a modular, scalable, and maintainable app, composed of multiple independent microfrontends that integrate into the main app (`root-app`)."
+doc-independence,README.md,33,Each microfrontend is an **independent project** (with its own `package.json`).  

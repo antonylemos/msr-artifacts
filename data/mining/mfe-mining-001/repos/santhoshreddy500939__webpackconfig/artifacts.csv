@@ -1,0 +1,15 @@
+path,artifact_types,bytes
+.gitignore,,37
+Components/Application1/Application1.js,source,348
+Components/Application2/Application2.js,source,153
+Components/Header/Header.scss,,38
+Components/Header/header.js,source,227
+Components/Paragraph/paragraph.js,source,117
+README.md,documentation,654
+index.html,source;page-entry,225
+index.js,source,543
+package-lock.json,lockfile,277396
+package.json,dependency-manifest;workspace-config,925
+webpack.common.config.js,build-config;source,1070
+webpack.dev.config.js,build-config;source,623
+webpack.prod.config.js,build-config;source,719

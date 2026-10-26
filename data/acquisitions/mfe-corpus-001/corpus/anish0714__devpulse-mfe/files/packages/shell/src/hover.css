@@ -1,0 +1,30 @@
+.dp-nav-item {
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+.dp-nav-item:hover {
+  background: rgba(131, 154, 141, 0.08);
+  color: #e7f2ec;
+}
+
+.dp-nav-item.dp-nav-item-active:hover {
+  background: rgba(45, 212, 191, 0.18);
+}
+
+.dp-tool-card {
+  transition: border-color 0.12s ease, background-color 0.12s ease;
+}
+
+.dp-tool-card:hover {
+  border-color: #2dd4bf;
+  background: #16201b;
+}
+
+.dp-portfolio-link {
+  transition: border-color 0.12s ease, background-color 0.12s ease;
+}
+
+.dp-portfolio-link:hover {
+  border-color: #2dd4bf;
+  background: #16201b;
+}

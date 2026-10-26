@@ -1,0 +1,152 @@
+repos:
+  - repo: https://github.com/psf/black
+    rev: 26.3.1
+    hooks:
+      - id: black
+        name: Formatting Python
+      - id: black
+        # We want this hook to be part of "pylint" so that if we run
+        # `pre-commit run pylint` we include this hook
+        alias: pylint
+        name: Checking Python formatting
+        args:
+          - --check
+          - --diff
+
+  - repo: https://github.com/pycqa/pylint
+    rev: v4.0.5
+    hooks:
+      - id: pylint
+        name: Lint Python (non-salt)
+        # Linting for non-salt files (buildchain and python not executed
+        # by salt directly)
+        additional_dependencies:
+          - 'pyenchant~=3.3'
+          - 'doit~=0.37.0'
+          - 'docker~=7.1.0'
+          - 'PyYAML~=6.0.3'
+          - 'pytest~=8.4'
+          - 'Click~=8.3'
+          - 'treelib~=1.8'
+        files: >
+          (?x)^(
+              buildchain/dodo\.py|
+              buildchain/buildchain/.*\.py|
+              packages/debian/common/download_packages\.py|
+              salt/metalk8s/volumes/files/sparse_volume_cleanup\.py|
+              tools/lib-alert-tree/.*\.py
+          )$
+      - id: pylint
+        name: Lint Salt
+        # Linting for salt files only in directory "salt/_<module>/<module_name>.py"
+        files: salt/_.*/.*\.py
+        additional_dependencies: ['saltpylint==2024.2.5', 'six==1.17.0']
+        args:
+          - --rcfile=salt/.pylintrc
+      - id: pylint
+        name: Lint Salt Formulas tests
+        files: salt/tests/unit/formulas/.*\.py
+        additional_dependencies:
+          - 'pyenchant~=3.3'
+          - 'salt==3006.27'
+          - pytest
+          - Jinja2
+
+      - id: pylint
+        name: Lint sos report plugin
+        # Linting for sos report plugin files only
+        files: ^packages/common/metalk8s-sosreport/.*\.py$
+        additional_dependencies:
+          - requests
+          - git+https://github.com/sosreport/sos@4.10.2
+        args:
+          - --rcfile=packages/common/metalk8s-sosreport/.pylintrc
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.20.2
+    hooks:
+      - id: mypy
+        # We want this hook to be part of "pylint" so that if we run
+        # `pre-commit run pylint` we include this hook
+        alias: pylint
+        name: Python typing (buildchain)
+        additional_dependencies:
+          - 'types-PyYAML~=6.0.12'
+        # Only check typing for typed files
+        files: >
+          (?x)^(
+              buildchain/dodo.py|
+              buildchain/buildchain/.*|
+              packages/debian/common/download_packages.py
+          )$
+        args:
+          - --strict
+      - id: mypy
+        # We want this hook to be part of "pylint" so that if we run
+        # `pre-commit run pylint` we include this hook
+        alias: pylint
+        name: Python typing (formulas rendering tests)
+        files: ^(salt/tests/unit/formulas/.*\.py)$
+        args: [--strict, --config-file=salt/tests/unit/formulas/mypy.ini]
+        additional_dependencies:
+          - 'pyenchant~=3.3'
+          - 'types-PyYAML~=6.0.12'
+          - 'types-Jinja2~=2.11'
+          - pytest
+
+  - repo: https://github.com/warpnet/salt-lint
+    rev: v0.9.2
+    hooks:
+      - id: salt-lint
+
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.38.0
+    hooks:
+      - id: yamllint
+        files: >
+          (?x)^(
+              salt/metalk8s/defaults.yaml|
+              salt/tests/unit/formulas/.*\.yaml
+          )$
+
+  - repo: https://github.com/jazzband/pip-tools
+    rev: v7.5.3
+    hooks:
+      - id: pip-compile
+        name: Pip compile buildchain
+        files: ^buildchain/requirements\.(in|txt)$
+        args:
+          - --emit-index-url
+          - --emit-trusted-host
+          - --annotate
+          - --allow-unsafe
+          - buildchain/requirements.in
+      - id: pip-compile
+        name: Pip compile docs
+        files: ^docs/requirements\.(in|txt)$
+        args:
+          - --emit-index-url
+          - --emit-trusted-host
+          - --annotate
+          - --allow-unsafe
+          - docs/requirements.in
+      - id: pip-compile
+        name: Pip compile tests
+        files: ^tests/requirements\.(in|txt)$
+        args:
+          - --emit-index-url
+          - --emit-trusted-host
+          - --annotate
+          - --generate-hashes
+          - --allow-unsafe
+          - tests/requirements.in
+      - id: pip-compile
+        name: Pip compile salt tests
+        files: ^salt/tests/requirements\.(in|txt)$
+        args:
+          - --emit-index-url
+          - --emit-trusted-host
+          - --annotate
+          - --generate-hashes
+          - --allow-unsafe
+          - salt/tests/requirements.in

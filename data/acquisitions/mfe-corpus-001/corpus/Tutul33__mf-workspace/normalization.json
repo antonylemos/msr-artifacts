@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "id": "1098942873",
+  "fullName": "Tutul33/mf-workspace",
+  "commit": "eb6d1cc782f44fa05b6a6d83c23edf20487af9db",
+  "acquiredAt": "2026-10-24T00:32:35.387Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "projects/customer-app/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "projects/host-app/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "projects/orders-app/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 62,
+    "bytes": 630253
+  },
+  "languages": {
+    "JSON": 565857,
+    "HTML": 41290,
+    "Markdown": 10608,
+    "TypeScript": 8987,
+    "JavaScript": 2370,
+    "Other": 901,
+    "SCSS": 240
+  },
+  "contentSha256": "2ef9d20707d8dc5ca334ab04a5e61b7dcaa572170eb77142361f8609fc0efbed"
+}

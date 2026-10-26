@@ -1,0 +1,5 @@
+directory,markers
+.,package.json
+packages/main-content,packages/main-content/package.json;packages/main-content/webpack.config.js
+packages/shell,packages/shell/package.json;packages/shell/webpack.config.js
+packages/sidebar,packages/sidebar/package.json;packages/sidebar/webpack.config.js

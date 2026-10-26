@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "id": "1181945275",
+  "fullName": "Lnx117/single_spa_main",
+  "commit": "112c73b7d0bc4739bcab53de03b404ce2fbde05a",
+  "acquiredAt": "2026-10-24T00:26:33.507Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 6,
+    "bytes": 39389
+  },
+  "languages": {
+    "JSON": 35423,
+    "TypeScript": 2795,
+    "Other": 656,
+    "HTML": 515
+  },
+  "contentSha256": "bf66704c569f59138bd53e31de0cdccdabe275cac19524b78ac4d3b614d6ae91"
+}

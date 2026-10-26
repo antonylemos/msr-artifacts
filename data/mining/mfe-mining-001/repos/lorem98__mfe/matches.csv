@@ -1,0 +1,148 @@
+pattern,path,line,excerpt
+cfg-federation-plugin,packages/auth/config/webpack.dev.js,2,"const ModuleFederationPlugin = require(""webpack/lib/container/ModuleFederationPlugin"");"
+cfg-federation-plugin,packages/auth/config/webpack.dev.js,15,    new ModuleFederationPlugin({
+cfg-federation-plugin,packages/auth/config/webpack.prod.js,2,"const ModuleFederationPlugin = require(""webpack/lib/container/ModuleFederationPlugin"");"
+cfg-federation-plugin,packages/auth/config/webpack.prod.js,15,    new ModuleFederationPlugin({
+cfg-federation-plugin,packages/container/config/webpack.dev.js,2,"const ModuleFederationPlugin = require(""webpack/lib/container/ModuleFederationPlugin"");"
+cfg-federation-plugin,packages/container/config/webpack.dev.js,15,    new ModuleFederationPlugin({
+cfg-federation-plugin,packages/container/config/webpack.prod.js,2,"const ModuleFederationPlugin = require(""webpack/lib/container/ModuleFederationPlugin"");"
+cfg-federation-plugin,packages/container/config/webpack.prod.js,15,    new ModuleFederationPlugin({
+cfg-federation-plugin,packages/dashboard/config/webpack.dev.js,3,"const ModuleFederationPlugin = require(""webpack/lib/container/ModuleFederationPlugin"");"
+cfg-federation-plugin,packages/dashboard/config/webpack.dev.js,16,    new ModuleFederationPlugin({
+cfg-federation-plugin,packages/dashboard/config/webpack.prod.js,2,"const ModuleFederationPlugin = require(""webpack/lib/container/ModuleFederationPlugin"");"
+cfg-federation-plugin,packages/dashboard/config/webpack.prod.js,15,    new ModuleFederationPlugin({
+cfg-federation-plugin,packages/marketing/config/webpack.dev.js,3,"const ModuleFederationPlugin = require(""webpack/lib/container/ModuleFederationPlugin"");"
+cfg-federation-plugin,packages/marketing/config/webpack.dev.js,16,    new ModuleFederationPlugin({
+cfg-federation-plugin,packages/marketing/config/webpack.prod.js,2,"const ModuleFederationPlugin = require(""webpack/lib/container/ModuleFederationPlugin"");"
+cfg-federation-plugin,packages/marketing/config/webpack.prod.js,13,    new ModuleFederationPlugin({
+cfg-remotes,packages/container/config/webpack.dev.js,17,      remotes: {
+cfg-remotes,packages/container/config/webpack.prod.js,17,      remotes: {
+cfg-exposes,packages/auth/config/webpack.dev.js,18,      exposes: {
+cfg-exposes,packages/auth/config/webpack.prod.js,18,      exposes: {
+cfg-exposes,packages/dashboard/config/webpack.dev.js,19,      exposes: {
+cfg-exposes,packages/dashboard/config/webpack.prod.js,18,      exposes: {
+cfg-exposes,packages/marketing/config/webpack.dev.js,19,      exposes: {
+cfg-exposes,packages/marketing/config/webpack.prod.js,16,      exposes: {
+cfg-shared,packages/auth/config/webpack.dev.js,22,"      shared: packageJson.dependencies,"
+cfg-shared,packages/auth/config/webpack.prod.js,21,"      shared: packageJson.dependencies,"
+cfg-shared,packages/container/config/webpack.dev.js,22,"      shared: packageJson.dependencies,"
+cfg-shared,packages/container/config/webpack.prod.js,22,"      shared: packageJson.dependencies,"
+cfg-shared,packages/dashboard/config/webpack.dev.js,23,      shared: {
+cfg-shared,packages/dashboard/config/webpack.dev.js,24,        // Vue must be a singleton — only one Vue runtime instance per page.
+cfg-shared,packages/dashboard/config/webpack.dev.js,26,"          singleton: true,"
+cfg-shared,packages/dashboard/config/webpack.prod.js,21,      shared: {
+cfg-shared,packages/dashboard/config/webpack.prod.js,23,"          singleton: true,"
+cfg-shared,packages/marketing/config/webpack.dev.js,22,"      shared: packageJson.dependencies,"
+cfg-shared,packages/marketing/config/webpack.prod.js,19,"      shared: packageJson.dependencies,"
+cfg-public-path,packages/auth/config/webpack.prod.js,12,"    publicPath: ""/auth/latest/"","
+cfg-public-path,packages/container/config/webpack.prod.js,12,"    publicPath: ""/container/latest/"","
+cfg-public-path,packages/dashboard/config/webpack.prod.js,12,"    publicPath: ""/dashboard/latest/"","
+cfg-public-path,packages/marketing/config/webpack.prod.js,10,"    publicPath: ""/marketing/latest/"","
+rt-remote-entry,.github/workflows/marketing.yml,30,"      - run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DISTRIBUTION_ID }} --paths ""/marketing/latest/remoteEntry.js"""
+rt-remote-entry,packages/auth/config/webpack.dev.js,17,"      filename: ""remoteEntry.js"","
+rt-remote-entry,packages/auth/config/webpack.prod.js,17,"      filename: ""remoteEntry.js"","
+rt-remote-entry,packages/container/config/webpack.dev.js,18,"        marketing: ""marketing@http://localhost:8081/remoteEntry.js"","
+rt-remote-entry,packages/container/config/webpack.dev.js,19,"        auth: ""auth@http://localhost:8082/remoteEntry.js"","
+rt-remote-entry,packages/container/config/webpack.dev.js,20,"        dashboard: ""dashboard@http://localhost:8083/remoteEntry.js"","
+rt-remote-entry,packages/container/config/webpack.prod.js,18,"        marketing: `marketing@${domain}/marketing/latest/remoteEntry.js`,"
+rt-remote-entry,packages/container/config/webpack.prod.js,19,"        auth: `auth@${domain}/auth/latest/remoteEntry.js`,"
+rt-remote-entry,packages/container/config/webpack.prod.js,20,"        dashboard: `dashboard@${domain}/dashboard/latest/remoteEntry.js`,"
+rt-remote-entry,packages/dashboard/config/webpack.dev.js,18,"      filename: ""remoteEntry.js"","
+rt-remote-entry,packages/dashboard/config/webpack.prod.js,17,"      filename: ""remoteEntry.js"","
+rt-remote-entry,packages/marketing/config/webpack.dev.js,18,"      filename: ""remoteEntry.js"","
+rt-remote-entry,packages/marketing/config/webpack.prod.js,15,"      filename: ""remoteEntry.js"","
+src-async-bootstrap,packages/auth/src/index.js,4,"import(""./bootstrap"");"
+src-async-bootstrap,packages/container/src/index.js,1,"import(""./bootstrap"");"
+src-async-bootstrap,packages/dashboard/src/index.js,3,"import(""./bootstrap"");"
+src-async-bootstrap,packages/marketing/src/index.js,1,"import(""./bootstrap"");"
+src-mount-export,packages/auth/src/bootstrap.js,57,export { mount };
+src-mount-export,packages/dashboard/src/bootstrap.js,36,export { mount };
+src-mount-export,packages/marketing/src/bootstrap.js,46,export { mount };
+src-mount-call,packages/container/src/components/AuthApp.js,26,"    const { onParentNavigate } = mount(ref.current, {"
+src-mount-call,packages/container/src/components/DashboardApp.js,21,    mount(ref.current);
+src-mount-call,packages/container/src/components/MarketingApp.js,10,"    const { onParentNavigate } = mount(ref.current, {"
+src-mount-call,packages/dashboard/src/bootstrap.js,14,  app.mount(el);
+src-mount-import,packages/auth/config/webpack.dev.js,19,"        // The container imports this as:  import { mount } from ""auth/AuthApp"""
+src-mount-import,packages/container/src/components/AuthApp.js,1,"import { mount } from ""auth/AuthApp"";"
+src-mount-import,packages/container/src/components/DashboardApp.js,1,"import { mount } from ""dashboard/DashboardApp"";"
+src-mount-import,packages/container/src/components/MarketingApp.js,1,"import { mount } from ""marketing/MarketingApp"";"
+src-mount-import,packages/dashboard/config/webpack.dev.js,20,"        // The container imports this as:  import { mount } from ""dashboard/DashboardApp"""
+ops-hosting,.github/workflows/auth.yml,26,      - run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/auth/latest
+ops-hosting,.github/workflows/auth.yml,32,"      - run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DISTRIBUTION_ID }} --paths ""/auth/latest/index.html"""
+ops-hosting,.github/workflows/container.yml,26,      - run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/container/latest
+ops-hosting,.github/workflows/container.yml,32,"      - run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DISTRIBUTION_ID }} --paths ""/container/latest/index.html"""
+ops-hosting,.github/workflows/dashboard.yml,26,      - run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/dashboard/latest
+ops-hosting,.github/workflows/dashboard.yml,32,"      - run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DISTRIBUTION_ID }} --paths ""/dashboard/latest/index.html"""
+ops-hosting,.github/workflows/marketing.yml,24,      - run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/marketing/latest
+ops-hosting,.github/workflows/marketing.yml,30,"      - run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DISTRIBUTION_ID }} --paths ""/marketing/latest/remoteEntry.js"""
+ops-hosting,README.md,453,Serve each `dist/` from an S3 bucket + CloudFront (see [CI/CD](#ci--cd)).
+ops-hosting,README.md,464,4. Invalidates the CloudFront cache for `remoteEntry.js` / `index.html`.
+ops-hosting,README.md,477,| `PRODUCTION_DOMAIN` | CDN base URL (e.g. `https://d123.cloudfront.net`) |
+ops-hosting,README.md,479,| `AWS_ACCESS_KEY_ID` | IAM key with S3 + CloudFront permissions |
+ops-hosting,README.md,481,| `AWS_DISTRIBUTION_ID` | CloudFront distribution ID |
+ci-workflow-file,.github/workflows/auth.yml,,
+ci-workflow-file,.github/workflows/container.yml,,
+ci-workflow-file,.github/workflows/dashboard.yml,,
+ci-workflow-file,.github/workflows/marketing.yml,,
+ci-path-trigger,.github/workflows/auth.yml,7,    paths:
+ci-path-trigger,.github/workflows/container.yml,7,    paths:
+ci-path-trigger,.github/workflows/dashboard.yml,7,    paths:
+ci-path-trigger,.github/workflows/marketing.yml,7,    paths:
+doc-mfe-term,README.md,1,# Micro Frontend PoC — Webpack Module Federation
+doc-mfe-term,README.md,3,A production-style **micro frontend monorepo** that demonstrates how to split a web application into independently deployable packages using **Webpack 5 Module Federation**.
+doc-mfe-term,README.md,15,   - [marketing](#marketing-mfe--react)
+doc-mfe-term,README.md,16,   - [auth](#auth-mfe--react)
+doc-mfe-term,README.md,17,   - [dashboard](#dashboard-mfe--vue-3)
+doc-mfe-term,README.md,72,│  │  ─────────────────▶│  marketing MFE  (React 17)      │    │ │
+doc-mfe-term,README.md,78,│  │  ─────────────────▶│  auth MFE  (React 17)           │    │ │
+doc-mfe-term,README.md,84,│  │  ─────────────────▶│  dashboard MFE  (Vue 3)         │    │ │
+doc-mfe-term,README.md,148,### `marketing` — MFE (React)
+doc-mfe-term,README.md,178,### `auth` — MFE (React)
+doc-mfe-term,README.md,188,On a successful submission the auth MFE:
+doc-mfe-term,README.md,210,### `dashboard` — MFE (Vue 3)
+doc-mfe-term,README.md,304,React shell                           Vue MFE
+doc-mfe-term,README.md,356,│  auth MFE                                │
+doc-mfe-term,README.md,414,### Run a single MFE in isolation
+doc-mfe-term,README.md,427,2. Click **Pricing** — navigates to `/pricing` (Marketing MFE).
+doc-mfe-term,README.md,428,3. Click **Login** in the header — navigates to `/auth/signin` (Auth MFE).
+doc-mfe-term,README.md,430,5. You land on `/dashboard` — the Vue 3 Dashboard MFE with charts and KPIs.
+doc-mfe-term,README.md,487,### Add a new MFE
+doc-mfe-term,README.md,495,### Add a new page to an existing MFE
+doc-integration-technology,README.md,1,# Micro Frontend PoC — Webpack Module Federation
+doc-integration-technology,README.md,3,A production-style **micro frontend monorepo** that demonstrates how to split a web application into independently deployable packages using **Webpack 5 Module Federation**.
+doc-integration-technology,README.md,5,The PoC deliberately spans two JavaScript frameworks (**React 17** and **Vue 3**) to show that Module Federation is framework-agnostic.
+doc-integration-technology,README.md,11,1. [What is Module Federation?](#what-is-module-federation)
+doc-integration-technology,README.md,30,## What is Module Federation?
+doc-integration-technology,README.md,32,"> **Module Federation** is a Webpack 5 feature that lets multiple, independently built JavaScript bundles expose and consume each other's modules **at runtime**, without sharing build pipelines."
+doc-integration-technology,README.md,34,"Before Module Federation, sharing code between separately deployed front-end apps required one of:"
+doc-integration-technology,README.md,39,"| `<iframe>` embedding | Heavy, no shared browser state |"
+doc-integration-technology,README.md,43,Module Federation solves this by making each app a **remote** (producer) and/or a **host** (consumer):
+doc-integration-technology,README.md,92,### Module Federation graph
+doc-integration-technology,README.md,121,- Declares every other package as a Module Federation **remote**.
+doc-integration-technology,README.md,152,A public-facing marketing site.  **Exposes** `./MarketingApp` via Module Federation.
+doc-integration-technology,README.md,182,Handles authentication flows.  **Exposes** `./AuthApp` via Module Federation.
+doc-integration-technology,README.md,214,An analytics dashboard built with **Vue 3** and **Chart.js**.  **Exposes** `./DashboardApp` via Module Federation.  This package is the PoC's most distinctive feature: a Vue app rendered inside a React container with **zero React↔Vue interop library**.
+doc-integration-technology,README.md,295,"This forces Webpack to treat `bootstrap.js` as a separate async chunk.  Without it, Module Federation cannot negotiate shared libraries before your code runs, leading to the classic *""Uncaught Error: Shared module is not available for eager consumption""* error."
+doc-integration-technology,README.md,517,"*Built to demonstrate Webpack 5 Module Federation — React 17 (container, marketing, auth) + Vue 3 (dashboard) on a single page.*"
+doc-runtime-loading,README.md,32,"> **Module Federation** is a Webpack 5 feature that lets multiple, independently built JavaScript bundles expose and consume each other's modules **at runtime**, without sharing build pipelines."
+doc-runtime-loading,README.md,99,                    │  imports at runtime
+doc-runtime-loading,README.md,375,Material-UI (v4) generates class names at runtime.  When two apps use MUI on the same page the classes can collide.  Each app uses `createGenerateClassName` with a unique `productionPrefix`:
+doc-independence,README.md,3,A production-style **micro frontend monorepo** that demonstrates how to split a web application into independently deployable packages using **Webpack 5 Module Federation**.
+doc-independence,README.md,32,"> **Module Federation** is a Webpack 5 feature that lets multiple, independently built JavaScript bundles expose and consume each other's modules **at runtime**, without sharing build pipelines."
+doc-independence,README.md,40,| Monolith | Can't deploy parts independently |
+doc-independence,README.md,54,"Each remote is a **separate webpack build** that can be deployed independently.  When the marketing team pushes a change, only `marketing/remoteEntry.js` is updated — the container and other remotes are unaffected."
+doc-independence,README.md,241,### 1. Independent builds & deployments
+doc-independence,README.md,497,"Edit only the relevant package.  Because each remote is independently deployed, no other package needs to be rebuilt or redeployed."
+doc-host-remote,README.md,43,Module Federation solves this by making each app a **remote** (producer) and/or a **host** (consumer):
+doc-host-remote,README.md,54,"Each remote is a **separate webpack build** that can be deployed independently.  When the marketing team pushes a change, only `marketing/remoteEntry.js` is updated — the container and other remotes are unaffected."
+doc-host-remote,README.md,96,           │   container      │  HOST — consumes all remotes
+doc-host-remote,README.md,247,"The container and every React remote list their `package.json` `dependencies` as `shared` in `ModuleFederationPlugin`.  Webpack ensures **only one copy** of React and ReactDOM is loaded in the browser, regardless of how many remotes declare it."
+doc-host-remote,README.md,273,Every remote can be started **standalone** without the container.  Each `bootstrap.js` detects a dev-specific root element and mounts directly with a browser history:
+doc-host-remote,README.md,316,The container owns a single `<BrowserRouter>` with the real URL.  Each remote uses an **internal MemoryHistory** so it cannot accidentally push to the address bar.  The two histories are kept in sync via callbacks:
+doc-host-remote,README.md,319,container history          remote memory history
+doc-host-remote,README.md,330,      history.push(pathname);           // remote → container
+doc-host-remote,README.md,334,history.listen(onParentNavigate);       // container → remote
+doc-host-remote,README.md,343,"Auth state lives in the **container** (`useState`), not in any remote.  The auth remote communicates upward via a callback prop:"
+doc-host-remote,README.md,412,"> **Order matters** — start the remotes (marketing, auth, dashboard) before the container, otherwise the container's dev server will fail to fetch the remote entry files on first load."
+doc-host-remote,README.md,444,The `PRODUCTION_DOMAIN` env var is interpolated into the container's prod webpack config to point remotes at their CDN paths:
+doc-host-remote,README.md,492,4. Register the remote in the container's `webpack.dev.js` and `webpack.prod.js`.

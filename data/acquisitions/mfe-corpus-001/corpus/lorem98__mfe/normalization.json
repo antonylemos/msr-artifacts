@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "id": "1150753074",
+  "fullName": "lorem98/mfe",
+  "commit": "44eb29500d7b90ac58ec760e35b8e0170d7b6fb4",
+  "acquiredAt": "2026-10-24T00:32:23.620Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 51,
+    "bytes": 1436652
+  },
+  "languages": {
+    "JSON": 1358510,
+    "JavaScript": 42982,
+    "Markdown": 21188,
+    "Vue": 8506,
+    "YAML": 4012,
+    "HTML": 1427,
+    "Other": 27
+  },
+  "contentSha256": "7a9bd8cd898b13e5ae301215adccb78bb2ee2f7843ed7647846fb30b2c260328"
+}

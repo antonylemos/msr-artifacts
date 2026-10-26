@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "id": "1135167821",
+  "fullName": "PedroHugo11/mf-dashboard-module-federation",
+  "commit": "184ec1b1762b6ea93f1f8f8de44118412a9ab6a8",
+  "acquiredAt": "2026-10-24T00:32:21.136Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 48,
+    "bytes": 384471
+  },
+  "languages": {
+    "JSON": 348483,
+    "SVG": 16869,
+    "Markdown": 9580,
+    "TypeScript": 5219,
+    "JavaScript": 1848,
+    "HTML": 1074,
+    "Other": 792,
+    "CSS": 606
+  },
+  "contentSha256": "e34730880e55292db845e26377bcf39c8622d57eff566ff119c5a6b4a9aebe59"
+}

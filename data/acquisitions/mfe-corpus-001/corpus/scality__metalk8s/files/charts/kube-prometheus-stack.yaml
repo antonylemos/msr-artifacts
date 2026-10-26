@@ -1,0 +1,360 @@
+nameOverride: prometheus-operator
+
+kubeTargetVersionOverride: 1.29.8
+
+commonLabels:
+  # This needs to remain 'Tiller' for the render script to work properly
+  #heritage: 'metalk8s'
+  app.kubernetes.io/part-of: 'metalk8s'
+  app.kubernetes.io/managed-by: 'metalk8s'
+  metalk8s.scality.com/monitor: ''
+
+customRules:
+  NodeSystemSaturation:
+    for: "30m"
+
+# NOTE: cannot use this at the moment because kube-state-metrics uses it incorrectly
+# global:
+#   imageRegistry: '__var__(repo.registry_endpoint)'
+
+alertmanager:
+  alertmanagerSpec:
+    # Set the externalUrl to the control plane ingress endpoint so alert
+    # notifications and the Alertmanager UI reference a routable address
+    # instead of the in-cluster service URL. The actual endpoint is resolved
+    # at deploy time via the salt helper.
+    externalUrl: '__var__(salt.metalk8s_network.get_control_plane_ingress_endpoint())'
+
+    image:
+      registry: '__var__(repo.registry_endpoint)'
+      repository: '__image_no_reg__(alertmanager)'
+
+    nodeSelector:
+      node-role.kubernetes.io/infra: ''
+
+    podAntiAffinity: 'soft'
+
+    tolerations:
+      - key: 'node-role.kubernetes.io/bootstrap'
+        operator: 'Exists'
+        effect: 'NoSchedule'
+      - key: 'node-role.kubernetes.io/infra'
+        operator: 'Exists'
+        effect: 'NoSchedule'
+
+    podMetadata:
+      annotations:
+        # Override default checksum as we want to manage it with salt
+        checksum/config: '__slot__:salt:metalk8s_kubernetes.get_object_digest(kind="Secret", apiVersion="v1", namespace="metalk8s-monitoring", name="alertmanager-prometheus-operator-alertmanager", path="data:alertmanager.yaml")'
+
+    replicas: '__var__(alertmanager.spec.deployment.replicas)'
+
+    storage:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: metalk8s
+          accessModes: ['ReadWriteOnce']
+          resources:
+            requests:
+              storage: 1Gi
+          selector:
+            matchLabels:
+              app.kubernetes.io/name: prometheus-operator-alertmanager
+
+  ## Passing the below configuration directives through the helm template
+  ## engine leads to no substitution since the variables passed will be base64
+  ## encoded directly hence we end up with `alertmanager.yaml` being invalid
+
+  ## So let us disable the creation of this secret from the default charts
+  ## and then create a new secret that replaces the
+  ## alertmanager-prometheus-operator-alertmanager secret with new config
+  ## read from a ConfigMap (metalk8s-alertmanager-config)
+
+  # config: '__var_tojson__(alertmanager.spec.notification.config)'
+
+    useExistingSecret: true
+    secrets:
+      - alertmanager-prometheus-operator-alertmanager
+
+prometheusOperator:
+  thanosImage:
+    registry: '__var__(repo.registry_endpoint)'
+    repository: '__image_no_reg__(thanos)'
+
+  prometheusConfigReloader:
+    image:
+      registry: '__var__(repo.registry_endpoint)'
+      repository: '__image_no_reg__(prometheus-config-reloader)'
+
+  tls:
+    enabled: false
+
+  admissionWebhooks:
+    enabled: false
+
+  nodeSelector:
+    node-role.kubernetes.io/infra: ''
+
+  tolerations:
+    - key: 'node-role.kubernetes.io/bootstrap'
+      operator: 'Exists'
+      effect: 'NoSchedule'
+    - key: 'node-role.kubernetes.io/infra'
+      operator: 'Exists'
+      effect: 'NoSchedule'
+
+  image:
+    registry: '__var__(repo.registry_endpoint)'
+    repository: '__image_no_reg__(prometheus-operator)'
+
+prometheus:
+  thanosService:
+    enabled: true
+
+  prometheusSpec:
+    # Enforce EndpointSlice usage since default "Endpoints" are deprecated
+    # and cause warning in the prometheus logs
+    serviceDiscoveryRole: EndpointSlice
+
+    thanos:
+      image: '__full_image__(thanos)'
+      objectStorageConfig: {}
+
+    image:
+      registry: '__var__(repo.registry_endpoint)'
+      repository: '__image_no_reg__(prometheus)'
+
+    tolerations:
+      - key: 'node-role.kubernetes.io/bootstrap'
+        operator: 'Exists'
+        effect: 'NoSchedule'
+      - key: 'node-role.kubernetes.io/infra'
+        operator: 'Exists'
+        effect: 'NoSchedule'
+
+    replicas: '__var__(prometheus.spec.deployment.replicas)'
+
+    nodeSelector:
+      node-role.kubernetes.io/infra: ''
+
+    podMonitorSelector:
+      matchLabels:
+        metalk8s.scality.com/monitor: ''
+
+    serviceMonitorSelector:
+      matchLabels:
+        metalk8s.scality.com/monitor: ''
+
+    probeSelector:
+      matchLabels:
+        metalk8s.scality.com/monitor: ''
+
+    ruleSelector:
+      matchLabels:
+        metalk8s.scality.com/monitor: ''
+
+    podAntiAffinity: 'soft'
+
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: metalk8s
+          accessModes: ['ReadWriteOnce']
+          resources:
+            requests:
+              storage: 10Gi
+          selector:
+            matchLabels:
+              app.kubernetes.io/name: prometheus-operator-prometheus
+
+    ## How long to retain metrics
+    retention: '__var__(prometheus.spec.config.retention_time)'
+
+    ## Maximum size of metrics
+    retentionSize: '__escape__({{ prometheus.spec.config.retention_size | string }})'
+
+    enableAdminAPI: '__var__(prometheus.spec.config.enable_admin_api)'
+
+grafana:
+  serviceMonitor:
+    labels:
+      metalk8s.scality.com/monitor: ''
+
+  adminPassword: admin
+
+  image:
+    registry: '__var__(repo.registry_endpoint)'
+    repository: '__image_no_reg__(grafana)'
+
+  sidecar:
+    image:
+      registry: '__var__(repo.registry_endpoint)'
+      repository: '__image_no_reg__(k8s-sidecar)'
+
+    dashboards:
+      searchNamespace: ALL
+      folderAnnotation: metalk8s.scality.com/grafana-folder-name
+      provider:
+        foldersFromFilesStructure: true
+
+    datasources:
+      # NOTE: We do not deploy default datasource as we want to set UID
+      # and it's not possible using this template
+      defaultDatasourceEnabled: false
+
+  additionalDataSources:
+    - name: Prometheus
+      uid: metalk8s-prometheus
+      type: prometheus
+      access: proxy
+      isDefault: true
+      # Service deployed by Thanos
+      url: http://thanos-query:9090/
+      jsonData:
+        timeInterval: 30s
+
+  nodeSelector:
+    node-role.kubernetes.io/infra: ''
+
+  tolerations:
+    - key: 'node-role.kubernetes.io/bootstrap'
+      operator: 'Exists'
+      effect: 'NoSchedule'
+    - key: 'node-role.kubernetes.io/infra'
+      operator: 'Exists'
+      effect: 'NoSchedule'
+
+  podAnnotations:
+    # Override default checksum as we want to manage it with salt
+    checksum/config: '__slot__:salt:metalk8s_kubernetes.get_object_digest(kind="ConfigMap", apiVersion="v1", namespace="metalk8s-monitoring", name="prometheus-operator-grafana", path="data:grafana.ini")'
+
+  replicas: '__var__(grafana.spec.deployment.replicas)'
+
+  ingress:
+    enabled: true
+    ingressClassName: nginx-control-plane
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
+    path: /grafana(/|$)(.*)
+    hosts:
+      - ''
+
+  # NOTE: This config is managed directly in a salt state
+  createConfigmap: false
+
+  testFramework:
+    enabled: false
+
+
+kube-state-metrics:
+  prometheus:
+    monitor:
+      additionalLabels:
+        metalk8s.scality.com/monitor: ''
+
+  image:
+    registry: '__var__(repo.registry_endpoint)'
+    repository: '__image_no_reg__(kube-state-metrics)'
+
+  metricLabelsAllowlist:
+    - persistentvolumeclaims=[excluded-from-alerts]
+
+  nodeSelector:
+    node-role.kubernetes.io/infra: ''
+
+  tolerations:
+    - key: 'node-role.kubernetes.io/bootstrap'
+      operator: 'Exists'
+      effect: 'NoSchedule'
+    - key: 'node-role.kubernetes.io/infra'
+      operator: 'Exists'
+      effect: 'NoSchedule'
+
+
+prometheus-node-exporter:
+  prometheus:
+    monitor:
+      additionalLabels:
+        metalk8s.scality.com/monitor: ''
+
+  service:
+    listenOnAllInterfaces: false
+
+  image:
+    registry: '__var__(repo.registry_endpoint)'
+    repository: '__image_no_reg__(node-exporter)'
+  extraArgs:
+    - --collector.diskstats.ignored-devices=^(ram|fd)\\d+$
+    - --collector.filesystem.ignored-mount-points=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+|var/lib/containerd/.+)($|/)
+    - --collector.filesystem.ignored-fs-types=^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$
+
+  # NoSchedule/Exists is the subchart default, re-declared here because Helm replaces the list; we only add the node-warden WP-isolation NoExecute taint
+  tolerations:
+    - effect: NoSchedule
+      operator: Exists
+    - key: node.scality.com/workload-plane-unreachable
+      effect: NoExecute
+      operator: Exists
+
+kubeEtcd:
+  service:
+    port: 2381
+    targetPort: 2381
+
+kubeScheduler:
+  service:
+    port: 10259
+    targetPort: 10259
+  serviceMonitor:
+    https: true
+    insecureSkipVerify: true
+
+kubeControllerManager:
+  service:
+    port: 10257
+    targetPort: 10257
+  serviceMonitor:
+    https: true
+    insecureSkipVerify: true
+
+kubelet:
+  serviceMonitor:
+    scrapeTimeout: "__var__(prometheus.spec.config.serviceMonitor.kubelet.scrapeTimeout)"
+
+    # FIXME: still keep around some node-level metrics as a workaround until #4018 is fixed
+    # The values below are the same as default, with the problematic drop being commented out
+    cAdvisorMetricRelabelings:
+      # Drop less useful container CPU metrics.
+      - sourceLabels: [__name__]
+        action: drop
+        regex: 'container_cpu_(cfs_throttled_seconds_total|load_average_10s|system_seconds_total|user_seconds_total)'
+      # Drop less useful container / always zero filesystem metrics.
+      - sourceLabels: [__name__]
+        action: drop
+        regex: 'container_fs_(io_current|io_time_seconds_total|io_time_weighted_seconds_total|reads_merged_total|sector_reads_total|sector_writes_total|writes_merged_total)'
+      # Drop less useful / always zero container memory metrics.
+      - sourceLabels: [__name__]
+        action: drop
+        regex: 'container_memory_(mapped_file|swap)'
+      # Drop less useful container process metrics.
+      - sourceLabels: [__name__]
+        action: drop
+        regex: 'container_(file_descriptors|tasks_state|threads_max)'
+      # Drop container spec metrics that overlap with kube-state-metrics.
+      - sourceLabels: [__name__]
+        action: drop
+        regex: 'container_spec.*'
+      # WORKAROUND - don't drop these yet, otherwise we can't have prometheus-adapter
+      #              expose node metrics
+      # Drop cgroup metrics with no pod.
+      # - sourceLabels: [id, pod]
+      #   action: drop
+      #   regex: '.+;'
+      # END WORKAROUND
+
+nodeExporter:
+  operatingSystems:
+    darwin:
+      enabled: false
+    aix:
+      enabled: false

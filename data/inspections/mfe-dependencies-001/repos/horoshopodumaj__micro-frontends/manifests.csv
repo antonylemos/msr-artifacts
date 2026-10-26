@@ -1,0 +1,4 @@
+manifest,state
+host/package.json,ok
+remote/package.json,ok
+vue-remote/package.json,ok

@@ -1,0 +1,12 @@
+directory,markers
+.,package.json
+apps/angular-monorepo,apps/angular-monorepo/project.json
+apps/angular-monorepo-e2e,apps/angular-monorepo-e2e/project.json
+appshell/host,appshell/host/module-federation.config.ts;appshell/host/project.json;appshell/host/webpack.config.ts;appshell/host/webpack.prod.config.ts
+appshell/host-e2e,appshell/host-e2e/project.json
+appshell/mfe1,appshell/mfe1/module-federation.config.ts;appshell/mfe1/project.json;appshell/mfe1/webpack.config.ts;appshell/mfe1/webpack.prod.config.ts
+appshell/mfe1-e2e,appshell/mfe1-e2e/project.json
+appshell/mfe2,appshell/mfe2/module-federation.config.ts;appshell/mfe2/project.json;appshell/mfe2/webpack.config.ts;appshell/mfe2/webpack.prod.config.ts
+appshell/mfe2-e2e,appshell/mfe2-e2e/project.json
+libs/shared/data,libs/shared/data/project.json
+libs/shared/ui,libs/shared/ui/project.json

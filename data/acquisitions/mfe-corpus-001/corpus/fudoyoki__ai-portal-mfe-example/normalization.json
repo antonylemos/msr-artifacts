@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "id": "1145815182",
+  "fullName": "fudoyoki/ai-portal-mfe-example",
+  "commit": "f1fd5b0a988c45334a49d3992ebc84cb6ea5ae94",
+  "acquiredAt": "2026-10-24T00:32:21.597Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 55,
+    "bytes": 51602
+  },
+  "languages": {
+    "TypeScript": 24805,
+    "Markdown": 9475,
+    "JSON": 7948,
+    "Other": 5049,
+    "YAML": 2785,
+    "HTML": 733,
+    "JavaScript": 632,
+    "CSS": 175
+  },
+  "contentSha256": "e2e4c68f4e076e86c565a350335d8f09de3205c579a2f29ecad29d22d61a22a4"
+}

@@ -1,0 +1,17 @@
+path,artifact_types,bytes
+.gitignore,,44
+README.txt,,564
+app1/package-lock.json,lockfile,177198
+app1/package.json,dependency-manifest;workspace-config,478
+app1/public/index.html,source,139
+app1/src/App.jsx,source,361
+app1/src/bootstrap.js,source,180
+app1/src/index.js,source,23
+app1/webpack.config.js,build-config;source,918
+app2/package-lock.json,lockfile,177198
+app2/package.json,dependency-manifest;workspace-config,478
+app2/public/index.html,source,141
+app2/src/RemoteApp.jsx,source,181
+app2/src/bootstrap.js,source,198
+app2/src/index.js,source,23
+app2/webpack.config.js,build-config;source,935

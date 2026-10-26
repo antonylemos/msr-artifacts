@@ -1,0 +1,360 @@
+{
+  "schema": 1,
+  "id": "1019893852",
+  "fullName": "lguilhermecardoso/mfe-react-vite-example",
+  "commit": "ddf474192c82d47341b22be009915913c9227eca",
+  "acquiredAt": "2026-10-24T00:32:38.285Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "dist/assets/__federation_shared_react-WURrSs1p.js",
+      "reason": "preset:build-output",
+      "size": 136
+    },
+    {
+      "path": "dist/assets/__federation_shared_react-dom-CWagDEjd.js",
+      "reason": "preset:build-output",
+      "size": 136
+    },
+    {
+      "path": "dist/assets/_commonjsHelpers-CqkleIqs.js",
+      "reason": "preset:build-output",
+      "size": 116
+    },
+    {
+      "path": "dist/assets/index-DVv4evQ9.js",
+      "reason": "preset:build-output",
+      "size": 228275
+    },
+    {
+      "path": "dist/assets/index-DqHVrEeL.js",
+      "reason": "preset:build-output",
+      "size": 3892
+    },
+    {
+      "path": "dist/assets/index-c0qeY2gs.js",
+      "reason": "preset:build-output",
+      "size": 7866
+    },
+    {
+      "path": "dist/index.html",
+      "reason": "preset:build-output",
+      "size": 840
+    },
+    {
+      "path": "dist/mf-dashboard/assets/__federation_expose_Dashboard-BUxvmQoc.js",
+      "reason": "preset:build-output",
+      "size": 4007
+    },
+    {
+      "path": "dist/mf-dashboard/assets/__federation_fn_import-yu0FoGgY.js",
+      "reason": "preset:build-output",
+      "size": 4985
+    },
+    {
+      "path": "dist/mf-dashboard/assets/__federation_shared_react-WURrSs1p.js",
+      "reason": "preset:build-output",
+      "size": 136
+    },
+    {
+      "path": "dist/mf-dashboard/assets/__federation_shared_react-dom-CWagDEjd.js",
+      "reason": "preset:build-output",
+      "size": 136
+    },
+    {
+      "path": "dist/mf-dashboard/assets/_commonjsHelpers-CqkleIqs.js",
+      "reason": "preset:build-output",
+      "size": 116
+    },
+    {
+      "path": "dist/mf-dashboard/assets/index-DqHVrEeL.js",
+      "reason": "preset:build-output",
+      "size": 3892
+    },
+    {
+      "path": "dist/mf-dashboard/assets/index-Zg_2Cg3C.js",
+      "reason": "preset:build-output",
+      "size": 174909
+    },
+    {
+      "path": "dist/mf-dashboard/assets/index-c0qeY2gs.js",
+      "reason": "preset:build-output",
+      "size": 7866
+    },
+    {
+      "path": "dist/mf-dashboard/assets/remoteEntry.js",
+      "reason": "preset:build-output",
+      "size": 1593
+    },
+    {
+      "path": "dist/mf-dashboard/index.html",
+      "reason": "preset:build-output",
+      "size": 800
+    },
+    {
+      "path": "dist/mf-dashboard/mf-dashboard.css",
+      "reason": "preset:build-output",
+      "size": 18141
+    },
+    {
+      "path": "dist/mf-dashboard/vite.svg",
+      "reason": "preset:build-output",
+      "size": 1497
+    },
+    {
+      "path": "dist/mf-login/assets/__federation_expose_Login-CxVpXSmL.js",
+      "reason": "preset:build-output",
+      "size": 4718
+    },
+    {
+      "path": "dist/mf-login/assets/__federation_fn_import-yu0FoGgY.js",
+      "reason": "preset:build-output",
+      "size": 4985
+    },
+    {
+      "path": "dist/mf-login/assets/__federation_shared_react-WURrSs1p.js",
+      "reason": "preset:build-output",
+      "size": 136
+    },
+    {
+      "path": "dist/mf-login/assets/__federation_shared_react-dom-CWagDEjd.js",
+      "reason": "preset:build-output",
+      "size": 136
+    },
+    {
+      "path": "dist/mf-login/assets/_commonjsHelpers-CqkleIqs.js",
+      "reason": "preset:build-output",
+      "size": 116
+    },
+    {
+      "path": "dist/mf-login/assets/index-CiCDOd1t.js",
+      "reason": "preset:build-output",
+      "size": 174803
+    },
+    {
+      "path": "dist/mf-login/assets/index-DqHVrEeL.js",
+      "reason": "preset:build-output",
+      "size": 3892
+    },
+    {
+      "path": "dist/mf-login/assets/index-c0qeY2gs.js",
+      "reason": "preset:build-output",
+      "size": 7866
+    },
+    {
+      "path": "dist/mf-login/assets/remoteEntry.js",
+      "reason": "preset:build-output",
+      "size": 1577
+    },
+    {
+      "path": "dist/mf-login/index.html",
+      "reason": "preset:build-output",
+      "size": 792
+    },
+    {
+      "path": "dist/mf-login/mf-login.css",
+      "reason": "preset:build-output",
+      "size": 10649
+    },
+    {
+      "path": "dist/mf-login/vite.svg",
+      "reason": "preset:build-output",
+      "size": 1497
+    },
+    {
+      "path": "dist/mf-navbar/assets/__federation_expose_Navbar-CQWjADZz.js",
+      "reason": "preset:build-output",
+      "size": 3672
+    },
+    {
+      "path": "dist/mf-navbar/assets/__federation_fn_import-yu0FoGgY.js",
+      "reason": "preset:build-output",
+      "size": 4985
+    },
+    {
+      "path": "dist/mf-navbar/assets/__federation_shared_react-WURrSs1p.js",
+      "reason": "preset:build-output",
+      "size": 136
+    },
+    {
+      "path": "dist/mf-navbar/assets/__federation_shared_react-dom-CWagDEjd.js",
+      "reason": "preset:build-output",
+      "size": 136
+    },
+    {
+      "path": "dist/mf-navbar/assets/_commonjsHelpers-CqkleIqs.js",
+      "reason": "preset:build-output",
+      "size": 116
+    },
+    {
+      "path": "dist/mf-navbar/assets/index-CXo-3KvI.js",
+      "reason": "preset:build-output",
+      "size": 174956
+    },
+    {
+      "path": "dist/mf-navbar/assets/index-DqHVrEeL.js",
+      "reason": "preset:build-output",
+      "size": 3892
+    },
+    {
+      "path": "dist/mf-navbar/assets/index-c0qeY2gs.js",
+      "reason": "preset:build-output",
+      "size": 7866
+    },
+    {
+      "path": "dist/mf-navbar/assets/remoteEntry.js",
+      "reason": "preset:build-output",
+      "size": 1581
+    },
+    {
+      "path": "dist/mf-navbar/index.html",
+      "reason": "preset:build-output",
+      "size": 794
+    },
+    {
+      "path": "dist/mf-navbar/mf-navbar.css",
+      "reason": "preset:build-output",
+      "size": 10975
+    },
+    {
+      "path": "dist/mf-navbar/vite.svg",
+      "reason": "preset:build-output",
+      "size": 1497
+    },
+    {
+      "path": "dist/mf-personagem-detalhe/assets/__federation_expose_PersonagemDetalhe-BbhIngwW.js",
+      "reason": "preset:build-output",
+      "size": 4616
+    },
+    {
+      "path": "dist/mf-personagem-detalhe/assets/__federation_fn_import-yu0FoGgY.js",
+      "reason": "preset:build-output",
+      "size": 4985
+    },
+    {
+      "path": "dist/mf-personagem-detalhe/assets/__federation_shared_react-WURrSs1p.js",
+      "reason": "preset:build-output",
+      "size": 136
+    },
+    {
+      "path": "dist/mf-personagem-detalhe/assets/__federation_shared_react-dom-CWagDEjd.js",
+      "reason": "preset:build-output",
+      "size": 136
+    },
+    {
+      "path": "dist/mf-personagem-detalhe/assets/_commonjsHelpers-CqkleIqs.js",
+      "reason": "preset:build-output",
+      "size": 116
+    },
+    {
+      "path": "dist/mf-personagem-detalhe/assets/index-DT7Tp8JP.js",
+      "reason": "preset:build-output",
+      "size": 174885
+    },
+    {
+      "path": "dist/mf-personagem-detalhe/assets/index-DqHVrEeL.js",
+      "reason": "preset:build-output",
+      "size": 3892
+    },
+    {
+      "path": "dist/mf-personagem-detalhe/assets/index-c0qeY2gs.js",
+      "reason": "preset:build-output",
+      "size": 7866
+    },
+    {
+      "path": "dist/mf-personagem-detalhe/assets/remoteEntry.js",
+      "reason": "preset:build-output",
+      "size": 1626
+    },
+    {
+      "path": "dist/mf-personagem-detalhe/index.html",
+      "reason": "preset:build-output",
+      "size": 817
+    },
+    {
+      "path": "dist/mf-personagem-detalhe/mf-personagem-detalhe.css",
+      "reason": "preset:build-output",
+      "size": 18072
+    },
+    {
+      "path": "dist/mf-personagem-detalhe/vite.svg",
+      "reason": "preset:build-output",
+      "size": 1497
+    },
+    {
+      "path": "dist/root-app/assets/__federation_shared_react-WURrSs1p.js",
+      "reason": "preset:build-output",
+      "size": 136
+    },
+    {
+      "path": "dist/root-app/assets/__federation_shared_react-dom-CWagDEjd.js",
+      "reason": "preset:build-output",
+      "size": 136
+    },
+    {
+      "path": "dist/root-app/assets/_commonjsHelpers-CqkleIqs.js",
+      "reason": "preset:build-output",
+      "size": 116
+    },
+    {
+      "path": "dist/root-app/assets/index-DVv4evQ9.js",
+      "reason": "preset:build-output",
+      "size": 228275
+    },
+    {
+      "path": "dist/root-app/assets/index-DqHVrEeL.js",
+      "reason": "preset:build-output",
+      "size": 3892
+    },
+    {
+      "path": "dist/root-app/assets/index-c0qeY2gs.js",
+      "reason": "preset:build-output",
+      "size": 7866
+    },
+    {
+      "path": "dist/root-app/index.html",
+      "reason": "preset:build-output",
+      "size": 840
+    },
+    {
+      "path": "dist/root-app/vite.svg",
+      "reason": "preset:build-output",
+      "size": 1497
+    },
+    {
+      "path": "dist/vite.svg",
+      "reason": "preset:build-output",
+      "size": 1497
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 93,
+    "bytes": 782169
+  },
+  "languages": {
+    "JSON": 704572,
+    "TypeScript": 35194,
+    "Markdown": 18694,
+    "SVG": 15737,
+    "JavaScript": 3087,
+    "HTML": 2330,
+    "Other": 1292,
+    "YAML": 602,
+    "Shell": 573,
+    "CSS": 88
+  },
+  "contentSha256": "3062d425f4d74d84fafde570d9ec4c3891e91cd7ba024bb1519070a5f510d348"
+}

@@ -1,0 +1,43 @@
+{
+  "name": "insurance-platform",
+  "version": "1.0.0",
+  "description": "Module Federation Insurance Platform",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "pnpm run build:packages && concurrently \"pnpm run dev:shell\" \"pnpm run dev:sales\" \"pnpm run dev:underwriter\" \"pnpm run dev:product\"",
+    "dev:shell": "cd apps/shell && pnpm run dev",
+    "dev:sales": "cd apps/sales-portal && pnpm run dev",
+    "dev:underwriter": "cd apps/underwriter-portal && pnpm run dev",
+    "dev:product": "cd apps/product-config && pnpm run dev",
+    "build": "pnpm run build:packages && pnpm run build:apps",
+    "build:packages": "cd packages/shared-types && pnpm run build && cd ../shared-ui && pnpm run build",
+    "build:apps": "concurrently \"pnpm run build:shell\" \"pnpm run build:sales\" \"pnpm run build:underwriter\" \"pnpm run build:product\"",
+    "build:shell": "cd apps/shell && pnpm run build",
+    "build:sales": "cd apps/sales-portal && pnpm run build",
+    "build:underwriter": "cd apps/underwriter-portal && pnpm run build",
+    "build:product": "cd apps/product-config && pnpm run build",
+    "preview": "concurrently \"pnpm run preview:shell\" \"pnpm run preview:sales\" \"pnpm run preview:underwriter\" \"pnpm run preview:product\"",
+    "preview:shell": "cd apps/shell && pnpm run preview",
+    "preview:sales": "cd apps/sales-portal && pnpm run preview",
+    "preview:underwriter": "cd apps/underwriter-portal && pnpm run preview",
+    "preview:product": "cd apps/product-config && pnpm run preview",
+    "install:all": "pnpm install",
+    "clean": "pnpm -r clean && rm -rf node_modules",
+    "yarn:dev": "concurrently \"yarn workspace @insurance/shell dev\" \"yarn workspace @insurance/sales-portal dev\" \"yarn workspace @insurance/underwriter-portal dev\" \"yarn workspace @insurance/product-config dev\"",
+    "yarn:build": "yarn workspaces run build"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "keywords": [
+    "insurance",
+    "module-federation",
+    "microfrontend"
+  ],
+  "author": "",
+  "license": "ISC"
+}

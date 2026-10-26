@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "id": "1350705751",
+  "fullName": "karthik5656/Catalog.App",
+  "commit": "1982e0f3dae5a8508d354f9db91a089ba96d4bd6",
+  "acquiredAt": "2026-10-24T00:32:36.933Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "src/frontend/apps/ui-catalog-consumer/src/assets/hero.png",
+      "reason": "preset:binaries",
+      "size": 13057
+    },
+    {
+      "path": "src/frontend/apps/ui-catalog-merchant/src/assets/hero.png",
+      "reason": "preset:binaries",
+      "size": 13057
+    },
+    {
+      "path": "src/frontend/apps/ui-catalog/src/assets/hero.png",
+      "reason": "preset:binaries",
+      "size": 13057
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 149,
+    "bytes": 478780
+  },
+  "languages": {
+    "YAML": 196853,
+    "Markdown": 107839,
+    "SVG": 104849,
+    "Other": 18639,
+    "CSS": 15180,
+    "TypeScript": 11702,
+    "C#": 10270,
+    "JSON": 9626,
+    "JavaScript": 2520,
+    "HTML": 1088,
+    "SQL": 214
+  },
+  "contentSha256": "3fc0eba28d7db32536234746de5c673954a9bed3c00eb664d5bf7a956c9d9dba"
+}

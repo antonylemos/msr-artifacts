@@ -1,0 +1,8 @@
+[
+  { 
+    "_comment":"Projeto da equipe 2 (Member Manager) ",
+    "tag": "member-manager", 
+    "title": "Members CRUD", 
+    "url": "https://crud-member-manager.vercel.app/main.js" 
+  }
+]

@@ -1,0 +1,3 @@
+directory,markers
+app1,app1/package.json;app1/webpack.config.js
+app2,app2/package.json;app2/webpack.config.js

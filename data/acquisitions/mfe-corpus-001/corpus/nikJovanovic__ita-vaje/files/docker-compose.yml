@@ -1,0 +1,220 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init-databases.sql:/docker-entrypoint-initdb.d/init-databases.sql
+
+  parts-service:
+    build: ./parts-service
+    restart: unless-stopped
+    ports:
+      - "4001:4001"
+      - "50051:50051"
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/catalog_db
+      PORT: 4001
+      GRPC_PORT: 50051
+    depends_on:
+      - postgres
+    healthcheck:
+      test: ["CMD-SHELL", "bun -e 'fetch(\"http://localhost:4001/health\").then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  builds-service:
+    build: ./builds-service
+    restart: unless-stopped
+    ports:
+      - "4002:4002"
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/builds_db
+      PORT: 4002
+      JWT_SECRET: ${JWT_SECRET}
+      PARTS_GRPC_HOST: parts-service:50051
+      PARTS_PROTO_PATH: /proto/parts.proto
+    volumes:
+      - ./parts-service/proto:/proto:ro
+    depends_on:
+      postgres:
+        condition: service_started
+      parts-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "bun -e 'fetch(\"http://localhost:4002/health\").then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    restart: unless-stopped
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  users-service:
+    build: ./users-service
+    restart: unless-stopped
+    ports:
+      - "4003:4003"
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/users_db
+      PORT: 4003
+      JWT_SECRET: ${JWT_SECRET}
+      RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672
+    depends_on:
+      postgres:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "deno eval 'fetch(\"http://localhost:4003/health\").then(r=>Deno.exit(r.ok?0:1)).catch(()=>Deno.exit(1))'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  grpcox:
+    image: gusaul/grpcox:latest
+    restart: unless-stopped
+    ports:
+      - "6969:6969"
+
+  web-bff:
+    build: ./web-bff
+    restart: unless-stopped
+    ports:
+      - "4004:4004"
+    environment:
+      PORT: 4004
+      JWT_SECRET: ${JWT_SECRET}
+      PARTS_GRPC_HOST: parts-service:50051
+      PARTS_PROTO_PATH: /proto/parts.proto
+      BUILDS_SERVICE_URL: http://builds-service:4002
+      USERS_SERVICE_URL: http://users-service:4003
+    volumes:
+      - ./parts-service/proto:/proto:ro
+    depends_on:
+      parts-service:
+        condition: service_healthy
+      builds-service:
+        condition: service_healthy
+      users-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "bun -e 'fetch(\"http://localhost:4004/health\").then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  mobile-bff:
+    build: ./mobile-bff
+    restart: unless-stopped
+    ports:
+      - "4005:4005"
+    environment:
+      PORT: 4005
+      JWT_SECRET: ${JWT_SECRET}
+      PARTS_GRPC_HOST: parts-service:50051
+      PARTS_PROTO_PATH: /proto/parts.proto
+      BUILDS_SERVICE_URL: http://builds-service:4002
+      USERS_SERVICE_URL: http://users-service:4003
+    volumes:
+      - ./parts-service/proto:/proto:ro
+    depends_on:
+      parts-service:
+        condition: service_healthy
+      builds-service:
+        condition: service_healthy
+      users-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "bun -e 'fetch(\"http://localhost:4005/health\").then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  auth-mfe:
+    build: ./auth-mfe
+    restart: unless-stopped
+    ports:
+      - "3003:3003"
+    environment:
+      PORT: 3003
+      HOSTNAME: 0.0.0.0
+      NEXT_PUBLIC_WEB_BFF_URL: http://localhost:4004
+      WEB_BFF_URL: http://web-bff:4004
+    depends_on:
+      - web-bff
+
+  catalog-mfe:
+    build: ./catalog-mfe
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      PORT: 3001
+      HOSTNAME: 0.0.0.0
+      NEXT_PUBLIC_WEB_BFF_URL: http://localhost:4004
+      WEB_BFF_URL: http://web-bff:4004
+    depends_on:
+      - web-bff
+
+  builds-mfe:
+    build: ./builds-mfe
+    restart: unless-stopped
+    ports:
+      - "3002:3002"
+    environment:
+      PORT: 3002
+      HOSTNAME: 0.0.0.0
+      NEXT_PUBLIC_WEB_BFF_URL: http://localhost:4004
+      WEB_BFF_URL: http://web-bff:4004
+    depends_on:
+      - web-bff
+
+  shell:
+    build:
+      context: ./shell
+      args:
+        CATALOG_URL: http://catalog-mfe:3001
+        BUILDS_URL: http://builds-mfe:3002
+        AUTH_URL: http://auth-mfe:3003
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+      CATALOG_URL: http://catalog-mfe:3001
+      BUILDS_URL: http://builds-mfe:3002
+      AUTH_URL: http://auth-mfe:3003
+      NEXT_PUBLIC_WEB_BFF_URL: http://localhost:4004
+      WEB_BFF_URL: http://web-bff:4004
+    depends_on:
+      - catalog-mfe
+      - builds-mfe
+      - auth-mfe
+
+volumes:
+  pgdata:

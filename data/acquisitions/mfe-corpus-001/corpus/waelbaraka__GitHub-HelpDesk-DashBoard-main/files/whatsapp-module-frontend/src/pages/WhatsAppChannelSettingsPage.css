@@ -1,0 +1,14 @@
+/* Converted for TailwindCSS v4 */
+.form-label {
+  @apply block text-xs font-medium text-gray-600 mb-1;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  @apply mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 text-sm p-2.5;
+}
+
+.form-checkbox {
+  @apply h-4 w-4 text-indigo-600 border border-gray-300 rounded focus:ring focus:ring-indigo-500;
+}

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Finalização de Treino - MyGym</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#c4a7ff",
+                        "on-background": "#1f1b13",
+                        "error": "#ba1a1a",
+                        "on-secondary-container": "#523887",
+                        "on-secondary-fixed": "#250159",
+                        "secondary-fixed": "#eaddff",
+                        "on-primary-fixed": "#400012",
+                        "surface": "#fff8f1",
+                        "outline": "#8d7073",
+                        "outline-variant": "#e1bec1",
+                        "surface-container-highest": "#eae1d4",
+                        "surface-bright": "#fff8f1",
+                        "surface-tint": "#b61c47",
+                        "on-secondary-fixed-variant": "#513787",
+                        "tertiary-container": "#658000",
+                        "secondary": "#6a4fa0",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#ffffff",
+                        "primary-fixed-dim": "#ffb2bb",
+                        "on-surface": "#1f1b13",
+                        "inverse-surface": "#343027",
+                        "on-tertiary-fixed": "#161f00",
+                        "surface-container-low": "#fcf2e4",
+                        "surface-variant": "#eae1d4",
+                        "surface-container-high": "#f0e7d9",
+                        "on-tertiary": "#ffffff",
+                        "primary": "#b61b47",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed": "#ffd9dd",
+                        "on-primary-fixed-variant": "#910033",
+                        "surface-dim": "#e1d9cb",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed-dim": "#b2d353",
+                        "primary-container": "#d8385e",
+                        "background": "#fff8f1",
+                        "tertiary": "#4f6600",
+                        "surface-container": "#f6eddf",
+                        "on-tertiary-fixed-variant": "#3b4d00",
+                        "inverse-primary": "#ffb2bb",
+                        "on-surface-variant": "#594043",
+                        "inverse-on-surface": "#f9f0e2",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#d2bcff",
+                        "tertiary-fixed": "#cdf06c",
+                        "on-error": "#ffffff",
+                        "on-tertiary-container": "#ffffff",
+                        "on-primary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Inter", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body min-h-screen flex flex-col antialiased">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full flex justify-between items-center px-6 py-4 z-50 bg-[#fff8f1]/90 backdrop-blur-xl shadow-[0_20px_40px_rgba(31,27,19,0.06)]">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#1f1b13]/70">close</span>
+<h1 class="Inter font-extrabold tracking-tighter uppercase text-xl text-[#b61b47]">Treino Finalizado</h1>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-24 pb-32 px-6 flex flex-col gap-8">
+<!-- Celebration Header -->
+<div class="flex flex-col items-center justify-center text-center mt-4">
+<div class="w-24 h-24 rounded-full bg-tertiary-fixed flex items-center justify-center mb-6 shadow-[0_20px_40px_rgba(31,27,19,0.06)]">
+<span class="material-symbols-outlined text-4xl text-on-surface" style="font-variation-settings: 'FILL' 1;">done_all</span>
+</div>
+<h2 class="font-headline font-extrabold text-4xl tracking-tighter text-on-surface mb-2">MUITO BEM!</h2>
+<p class="text-on-surface-variant text-lg">Mais um treino pra conta.</p>
+</div>
+<!-- Summary Metrics (Bento Style) -->
+<div class="grid grid-cols-2 gap-4">
+<!-- Activity Type -->
+<div class="col-span-2 bg-surface-container-low rounded-xl p-6 flex items-center justify-between shadow-[0_10px_30px_rgba(31,27,19,0.04)]">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">fitness_center</span>
+</div>
+<div>
+<p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant mb-1">ATIVIDADE</p>
+<p class="font-headline font-bold text-xl text-on-surface">Musculação</p>
+</div>
+</div>
+</div>
+<!-- Duration -->
+<div class="bg-surface-container-low rounded-xl p-5 flex flex-col gap-3 shadow-[0_10px_30px_rgba(31,27,19,0.04)]">
+<span class="material-symbols-outlined text-on-surface-variant">timer</span>
+<div>
+<p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant mb-1">DURAÇÃO</p>
+<p class="font-headline font-bold text-2xl tracking-tighter text-on-surface">01:12:30</p>
+</div>
+</div>
+<!-- Calories -->
+<div class="bg-surface-container-low rounded-xl p-5 flex flex-col gap-3 shadow-[0_10px_30px_rgba(31,27,19,0.04)]">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<div>
+<p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant mb-1">CALORIAS</p>
+<p class="font-headline font-bold text-2xl tracking-tighter text-on-surface">450 <span class="text-sm font-medium text-on-surface-variant">kcal</span></p>
+</div>
+</div>
+</div>
+<!-- Rating Section -->
+<section class="mt-4">
+<h3 class="font-headline font-bold text-xl text-on-surface mb-6 text-center">Como foi seu treino?</h3>
+<div class="flex justify-center gap-4">
+<span class="material-symbols-outlined text-4xl text-tertiary-fixed cursor-pointer transition-transform hover:scale-110" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-4xl text-tertiary-fixed cursor-pointer transition-transform hover:scale-110" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-4xl text-tertiary-fixed cursor-pointer transition-transform hover:scale-110" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-4xl text-tertiary-fixed cursor-pointer transition-transform hover:scale-110" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-4xl text-surface-container-highest cursor-pointer transition-transform hover:scale-110">star</span>
+</div>
+</section>
+<!-- Feedback Section -->
+<section class="mt-4">
+<label class="block font-label text-[10px] uppercase tracking-widest text-on-surface-variant mb-3 ml-2" for="feedback">Conte-nos mais...</label>
+<textarea class="w-full bg-surface-container-highest text-on-surface rounded-xl p-4 border-none focus:ring-0 focus:border-b-2 focus:border-b-primary placeholder-on-surface-variant/50 resize-none font-body text-base" id="feedback" placeholder="Sentiu alguma dor? O treino foi leve?" rows="4"></textarea>
+</section>
+</main>
+<!-- Fixed Bottom Action -->
+<div class="fixed bottom-0 left-0 w-full p-6 bg-gradient-to-t from-surface via-surface/90 to-transparent z-40">
+<button class="w-full bg-gradient-to-br from-primary to-primary-container text-on-primary rounded-full py-4 px-8 font-headline font-bold text-lg tracking-tight shadow-[0_20px_40px_rgba(31,27,19,0.06)] active:scale-95 transition-transform flex justify-center items-center gap-2">
+            Enviar e Voltar ao Início
+            <span class="material-symbols-outlined text-xl">arrow_forward</span>
+</button>
+</div>
+</body></html>

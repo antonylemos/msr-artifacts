@@ -1,5 +1,7 @@
 # Método: revisão de relações de composição
 
+Os caminhos começados por `docs/` preservam a organização do projeto de origem (`repo-miner`). Neste pacote, as análises correspondentes estão em `data/docs/`. Os caminhos e hashes registrados nas análises mantêm sua função de proveniência.
+
 Este documento descreve como foi feita a revisão de relações de composição e como ler os arquivos
 `NNN-<owner>__<name>.md` desta pasta. Cada arquivo registra a revisão de um repositório do corpus.
 
@@ -36,6 +38,8 @@ as revisões anteriores.
 | Classificação (id, commit) | `docs/mfe-classification/NNN-<owner>__<name>.md` |
 
 Todo `artefato:linha` é relativo a `files/` do snapshot. A revisão nunca usa `data/samples/` e não modifica nada em `data/`.
+
+As classificações, as revisões anteriores e as configurações em `config/` são consultadas sem alteração.
 
 ## Produto
 

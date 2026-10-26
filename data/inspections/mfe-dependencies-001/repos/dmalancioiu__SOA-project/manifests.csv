@@ -1,0 +1,6 @@
+manifest,state
+frontend/order-tracking/package.json,ok
+frontend/restaurant-catalog/package.json,ok
+frontend/shell-app/package.json,ok
+frontend/user-dashboard/package.json,ok
+infrastructure/faas/order-completion/package.json,ok

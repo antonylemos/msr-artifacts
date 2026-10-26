@@ -1,0 +1,23 @@
+{
+  "name": "mv-marketplace",
+  "private": true,
+  "workspaces": [
+    "packages/mvp-theme",
+    "apps/admin",
+    "apps/buyer",
+    "apps/payment",
+    "apps/seller",
+    "apps/shell"
+  ],
+  "scripts": {
+    "build": "npm run build:theme && npm run build:apps",
+    "build:theme": "npm run build -w mv-theme",
+    "build:apps": "npm run build -w admin && npm run build -w buyer && npm run build -w payment && npm run build -w seller && npm run build -w shell",
+    "dev": "npm run dev:theme && npm run dev:apps",
+    "dev:theme": "npm run dev -w mv-theme",
+    "dev:apps": "npx concurrently \"npm run dev -w admin\" \"npm run dev -w buyer\" \"npm run dev -w payment\" \"npm run dev -w seller\" \"npm run dev -w shell\"",
+    "dev:all": "npm run build && npm run dev"
+  }
+}
+
+

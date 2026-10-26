@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "id": "1088828444",
+  "fullName": "DATou-love/micro-frontEnd",
+  "commit": "8e52e7d4fee1bc193922a8bea0f5ede7a0cb9942",
+  "acquiredAt": "2026-10-24T00:26:34.208Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "sub-vue2/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 4286
+    },
+    {
+      "path": "sub-vue2/src/assets/logo.png",
+      "reason": "preset:binaries",
+      "size": 6849
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 34,
+    "bytes": 517528
+  },
+  "languages": {
+    "JSON": 502941,
+    "Vue": 4776,
+    "JavaScript": 2379,
+    "TypeScript": 2003,
+    "SVG": 1993,
+    "CSS": 1269,
+    "HTML": 908,
+    "Markdown": 762,
+    "Other": 497
+  },
+  "contentSha256": "905d843740dd21c302c6786fd89b6d04766e3c91d8885219af3712b9c9acc4a3"
+}

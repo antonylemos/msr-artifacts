@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "id": "984418769",
+  "fullName": "Alex18gr/react-ng-vite-systemjs-spa-app",
+  "commit": "1fe831db68f3ee26779b7c411b39326eed40198f",
+  "acquiredAt": "2026-10-24T00:32:34.969Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "angular-app/src/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 948
+    },
+    {
+      "path": "styleguide/src/stories/assets/accessibility.png",
+      "reason": "preset:binaries",
+      "size": 42336
+    },
+    {
+      "path": "styleguide/src/stories/assets/addon-library.png",
+      "reason": "preset:binaries",
+      "size": 467366
+    },
+    {
+      "path": "styleguide/src/stories/assets/assets.png",
+      "reason": "preset:binaries",
+      "size": 3899
+    },
+    {
+      "path": "styleguide/src/stories/assets/avif-test-image.avif",
+      "reason": "preset:binaries",
+      "size": 829
+    },
+    {
+      "path": "styleguide/src/stories/assets/context.png",
+      "reason": "preset:binaries",
+      "size": 6119
+    },
+    {
+      "path": "styleguide/src/stories/assets/docs.png",
+      "reason": "preset:binaries",
+      "size": 27875
+    },
+    {
+      "path": "styleguide/src/stories/assets/figma-plugin.png",
+      "reason": "preset:binaries",
+      "size": 44246
+    },
+    {
+      "path": "styleguide/src/stories/assets/share.png",
+      "reason": "preset:binaries",
+      "size": 40767
+    },
+    {
+      "path": "styleguide/src/stories/assets/styling.png",
+      "reason": "preset:binaries",
+      "size": 7237
+    },
+    {
+      "path": "styleguide/src/stories/assets/testing.png",
+      "reason": "preset:binaries",
+      "size": 49313
+    },
+    {
+      "path": "styleguide/src/stories/assets/theming.png",
+      "reason": "preset:binaries",
+      "size": 44374
+    },
+    {
+      "path": "vue-app/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 4286
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 148,
+    "bytes": 3893307
+  },
+  "languages": {
+    "JSON": 3772945,
+    "TypeScript": 40273,
+    "Markdown": 19231,
+    "SVG": 16055,
+    "Other": 13799,
+    "Vue": 12903,
+    "CSS": 7541,
+    "JavaScript": 7403,
+    "HTML": 3157
+  },
+  "contentSha256": "1a071ec482ec30b2dbca1a42a1ab2c05d4da3940ff1b41ec14d5ccfc527f6eaa"
+}

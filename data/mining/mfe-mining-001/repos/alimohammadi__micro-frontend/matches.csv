@@ -1,0 +1,51 @@
+pattern,path,line,excerpt
+cfg-federation-plugin,ecomm/cart/webpack.config.js,2,"const ModuleFederationPlugin = require(""webpack/lib/container/ModuleFederationPlugin"");"
+cfg-federation-plugin,ecomm/cart/webpack.config.js,10,    new ModuleFederationPlugin({
+cfg-federation-plugin,ecomm/container/webpack.config.js,2,"const ModuleFederationPlugin = require(""webpack/lib/container/ModuleFederationPlugin"");"
+cfg-federation-plugin,ecomm/container/webpack.config.js,18,    new ModuleFederationPlugin({
+cfg-federation-plugin,ecomm/products/webpack.config.js,2,"const ModuleFederationPlugin = require(""webpack/lib/container/ModuleFederationPlugin"");"
+cfg-federation-plugin,ecomm/products/webpack.config.js,10,    new ModuleFederationPlugin({
+cfg-federation-plugin,packages/container/config/webpack.dev.js,3,"const ModuleFederationPlugin = require(""webpack/lib/container/ModuleFederationPlugin"");"
+cfg-federation-plugin,packages/container/config/webpack.dev.js,16,    new ModuleFederationPlugin({
+cfg-federation-plugin,packages/container/config/webpack.prod.js,2,"const ModuleFederationPlugin = require(""webpack/lib/container/ModuleFederationPlugin"");"
+cfg-federation-plugin,packages/container/config/webpack.prod.js,15,    new ModuleFederationPlugin({
+cfg-federation-plugin,packages/marketing/config/webpack.dev.js,3,"const ModuleFederationPlugin = require(""webpack/lib/container/ModuleFederationPlugin"");"
+cfg-federation-plugin,packages/marketing/config/webpack.dev.js,17,    new ModuleFederationPlugin({
+cfg-federation-plugin,packages/marketing/config/webpack.prod.js,2,"const ModuleFederationPlugin = require(""webpack/lib/container/ModuleFederationPlugin"");"
+cfg-federation-plugin,packages/marketing/config/webpack.prod.js,12,    new ModuleFederationPlugin({
+cfg-remotes,ecomm/container/webpack.config.js,20,      remotes: {
+cfg-remotes,packages/container/config/webpack.dev.js,18,      remotes: {
+cfg-remotes,packages/container/config/webpack.prod.js,17,      remotes: {
+cfg-exposes,ecomm/cart/webpack.config.js,13,      exposes: {
+cfg-exposes,ecomm/products/webpack.config.js,13,      exposes: {
+cfg-exposes,packages/marketing/config/webpack.dev.js,20,      exposes: {
+cfg-exposes,packages/marketing/config/webpack.prod.js,15,      exposes: {
+cfg-shared,ecomm/cart/webpack.config.js,16,      shared: {
+cfg-shared,ecomm/cart/webpack.config.js,18,"          singleton: true, //load only one single faker no matter what"
+cfg-shared,ecomm/products/webpack.config.js,16,"      shared: [""faker""],"
+cfg-shared,packages/container/config/webpack.dev.js,21,"      shared: packageJson.dependencies,"
+cfg-shared,packages/container/config/webpack.prod.js,20,"      shared: packageJson.dependencies,"
+cfg-shared,packages/marketing/config/webpack.dev.js,23,"      shared: packageJson.dependencies,"
+cfg-shared,packages/marketing/config/webpack.prod.js,18,"      shared: packageJson.dependencies,"
+cfg-public-path,packages/container/config/webpack.prod.js,12,"    publicPath: ""/container/latest/"","
+rt-remote-entry,ecomm/cart/webpack.config.js,12,"      filename: ""remoteEntry.js"","
+rt-remote-entry,ecomm/container/webpack.config.js,21,"        products: ""products@http://localhost:8081/remoteEntry.js"","
+rt-remote-entry,ecomm/container/webpack.config.js,22,"        carts: ""cart@http://localhost:8082/remoteEntry.js"","
+rt-remote-entry,ecomm/products/webpack.config.js,12,"      filename: ""remoteEntry.js"","
+rt-remote-entry,packages/container/config/webpack.dev.js,19,"        marketing: ""marketing@http://localhost:8081/remoteEntry.js"","
+rt-remote-entry,packages/container/config/webpack.prod.js,18,"        marketing: `marketing@${domain}/marketing/remoteEntry.js`,"
+rt-remote-entry,packages/marketing/config/webpack.dev.js,19,"      filename: ""remoteEntry.js"","
+rt-remote-entry,packages/marketing/config/webpack.prod.js,14,"      filename: ""remoteEntry.js"","
+src-async-bootstrap,ecomm/container/src/index.js,1,import('./bootstrap')
+src-async-bootstrap,packages/container/src/index.js,1,import('./bootstrap')
+src-async-bootstrap,packages/marketing/src/index.js,1,"import(""./bootstrap"");"
+src-mount-export,ecomm/cart/src/mount.js,26,export { mount };
+src-mount-export,ecomm/products/src/mount.js,31,export { mount };
+src-mount-export,packages/marketing/src/bootstrap.js,17,export { mount };
+src-mount-call,ecomm/cart/src/mount.js,17,    mount(el);
+src-mount-call,ecomm/products/src/mount.js,22,    mount(el);
+src-mount-call,packages/container/src/components/MarketingApp.js,8,    mount(ref.current);
+src-mount-import,ecomm/container/src/bootstrap.js,1,"import { mount as productsMount } from ""products/ProductsIndex"";"
+src-mount-import,ecomm/container/src/bootstrap.js,3,"import { mount as cartMount } from ""carts/CartShow"";"
+src-mount-import,packages/container/src/components/MarketingApp.js,1,"import { mount } from ""marketing/MarketingApp"";"
+doc-mfe-term,README.md,1,# micro-frontend

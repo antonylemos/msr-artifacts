@@ -1,5 +1,7 @@
 # Método: extração e classificação de evidências
 
+Os caminhos começados por `docs/` preservam a organização do projeto de origem (`repo-miner`). Neste pacote, as análises correspondentes estão em `data/docs/`. Os caminhos e hashes registrados nas análises mantêm sua função de proveniência.
+
 Este documento descreve como foi feita a extração e a classificação de evidências e como ler os
 arquivos `NNN-<owner>__<name>.md` desta pasta. Cada arquivo registra a análise de um repositório do corpus.
 
@@ -36,6 +38,9 @@ O arquivo segue a ordem do protocolo:
 Todas têm o mesmo nome de arquivo. O snapshot (`data/acquisitions/mfe-corpus-001/corpus/<owner>__<name>/files/`)
 é aberto para conferir caminho e linha e para ler os trechos que viram observação, a fim de
 descrevê-los. Os clones de `data/samples/` não são consultados.
+
+As revisões anteriores, os dados e as configurações consultados são fontes de evidência e não
+são alterados nesta etapa. A validação final cabe ao pesquisador.
 
 ## Produto
 

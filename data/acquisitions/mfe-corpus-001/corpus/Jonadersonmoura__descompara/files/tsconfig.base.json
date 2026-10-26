@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "importHelpers": true,
+    "isolatedModules": true,
+    "lib": ["es2022"],
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "es2022",
+    "customConditions": ["@org/source"],
+    "noUncheckedSideEffectImports": false,
+    "types": ["*"],
+    "paths": {
+      "@descompara/shared-types": ["./libs/shared/types/src/index.ts"],
+      "@descompara/shared-ui": ["./libs/shared/ui/src/index.ts"],
+      "@descompara/shared-data-access": [
+        "./libs/shared/data-access/src/index.ts"
+      ],
+      "@descompara/shared-guards": ["./libs/shared/guards/src/index.ts"],
+      "@descompara/shared-theme": ["./libs/shared/theme/src/index.ts"]
+    }
+  }
+}

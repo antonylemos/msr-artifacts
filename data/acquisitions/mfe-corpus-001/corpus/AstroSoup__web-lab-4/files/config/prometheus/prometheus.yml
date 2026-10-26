@@ -1,0 +1,13 @@
+global:
+  scrape_interval: 5s
+  evaluation_interval: 5s
+
+scrape_configs:
+  - job_name: 'auth_scrape'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['auth:8080']
+  - job_name: 'geometry_scrape'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['geometry:8080']

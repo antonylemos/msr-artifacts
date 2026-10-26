@@ -1,0 +1,47 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "microfrontend",
+  "root": "apps/microfrontend",
+  "sourceRoot": "apps/microfrontend/src",
+  "projectType": "application",
+  "targets": {
+    "scan-metadata": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "nx run metadata:scan --moduleFolder=apps/microfrontend --outFile=apps/microfrontend/src/manifest.json"
+      }
+    },
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "options": {
+        "outputPath": "dist/apps/microfrontend",
+        "main": "apps/microfrontend/src/main.tsx",
+        "tsConfig": "apps/microfrontend/tsconfig.app.json",
+        "index": "apps/microfrontend/src/index.html",
+        "webpackConfig": "apps/microfrontend/webpack.config.js"
+      }
+    },
+    "serve": {
+      "executor": "@nx/webpack:dev-server",
+      "options": {
+        "buildTarget": "microfrontend:build",
+        "host": "localhost",
+        "port": 3001
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["apps/microfrontend/**/*.ts", "apps/microfrontend/**/*.tsx"]
+      }
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{workspaceRoot}/coverage/apps/microfrontend"],
+      "options": {
+        "configFile": "apps/microfrontend/vitest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}

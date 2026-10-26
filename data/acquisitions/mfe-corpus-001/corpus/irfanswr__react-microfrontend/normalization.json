@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "id": "1041883313",
+  "fullName": "irfanswr/react-microfrontend",
+  "commit": "00ca0bf8640b7015f760f377f76c971b11fdc95c",
+  "acquiredAt": "2026-10-24T00:32:22.697Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "vue-child-app/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 4286
+    },
+    {
+      "path": "vue-child-app/src/assets/logo.png",
+      "reason": "preset:binaries",
+      "size": 6849
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 36,
+    "bytes": 1653402
+  },
+  "languages": {
+    "JSON": 1639442,
+    "Other": 5785,
+    "JavaScript": 4035,
+    "Vue": 2640,
+    "HTML": 1054,
+    "Markdown": 325,
+    "CSS": 121
+  },
+  "contentSha256": "e84ababf7732929fb8344f7a6f570b7b956bbb681beab51c1bfb31cd2f8aee18"
+}

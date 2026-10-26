@@ -1,0 +1,81 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ name }}
+  namespace: kube-system
+  labels:
+    app: {{ name }}
+    app.kubernetes.io/name: {{ name }}
+    app.kubernetes.io/version: {{ version }}
+    heritage: metalk8s
+    app.kubernetes.io/part-of: metalk8s
+    app.kubernetes.io/managed-by: salt
+    metalk8s.scality.com/version: {{ metalk8s_version }}
+  annotations:
+    metalk8s.scality.com/config-digest: "{{ config_digest }}"
+spec:
+  hostNetwork: true
+  priorityClassName: system-cluster-critical
+  securityContext:
+    runAsUser: 0
+    fsGroup: 0
+    readOnlyRootFilesystem: true
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+  containers:
+    - name: repositories
+      image: {{ image }}
+      ports:
+        - name: http
+          containerPort: {{ container_port }}
+          protocol: TCP
+      livenessProbe:
+        httpGet:
+          host: {{ probe_host }}
+          port: http
+          path: /
+      readinessProbe:
+        httpGet:
+          host: {{ probe_host }}
+          port: http
+          path: /
+      volumeMounts:
+        - name: nginx-configuration
+          mountPath: /etc/nginx/conf.d
+        {%- for env, archive in archives.items() | sort(attribute='0') %}
+        - name: repositories-{{ env | replace('.', '-') }}
+          mountPath: /var/www/repositories/{{ env }}/
+        - name: registry-{{ env | replace('.', '-') }}
+          mountPath: /srv/scality/{{ env }}/images/
+        {%- endfor %}
+        {%- for name, versions in solutions.items() | sort(attribute='0') %}
+          {%- for info in versions | sort(attribute='version') %}
+        - name: registry-{{ info.id | replace('.', '-') }}
+          mountPath: /srv/scality/{{ info.id }}/images/
+          {%- endfor %}
+        {%- endfor %}
+  volumes:
+    - name: nginx-configuration
+      hostPath:
+        path: {{ nginx_confd_path }}
+        type: Directory
+    {%- for env, archive in archives.items() | sort(attribute='0') %}
+    - name: repositories-{{ env | replace('.', '-') }}
+      hostPath:
+        path: {{ archive.path ~ package_path }}
+        type: Directory
+    - name: registry-{{ env | replace('.', '-') }}
+      hostPath:
+        path: {{ archive.path ~ image_path }}
+        type: Directory
+    {%- endfor %}
+    {%- for name, versions in solutions.items() | sort(attribute='0') %}
+      {%- for info in versions | sort(attribute='version') %}
+    - name: registry-{{ info.id | replace('.', '-') }}
+      hostPath:
+        path: /srv/scality/{{ info.id }}/images/
+        type: Directory
+      {%- endfor %}
+    {%- endfor %}

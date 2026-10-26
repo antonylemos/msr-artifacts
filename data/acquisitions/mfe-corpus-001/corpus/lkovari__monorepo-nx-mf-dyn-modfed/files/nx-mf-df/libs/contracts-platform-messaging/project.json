@@ -1,0 +1,31 @@
+{
+  "name": "contracts-platform-messaging",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/contracts-platform-messaging/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/contracts-platform-messaging",
+        "main": "libs/contracts-platform-messaging/src/index.ts",
+        "tsConfig": "libs/contracts-platform-messaging/tsconfig.lib.json",
+        "assets": ["libs/contracts-platform-messaging/*.md"]
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "vitest run",
+        "cwd": "libs/contracts-platform-messaging"
+      },
+      "configurations": {
+        "coverage": {
+          "command": "vitest run --coverage"
+        }
+      }
+    }
+  }
+}

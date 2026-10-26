@@ -1,0 +1,8 @@
+directory,markers
+.,package.json
+apps/product-config,apps/product-config/package.json;apps/product-config/vite.config.ts
+apps/sales-portal,apps/sales-portal/package.json;apps/sales-portal/vite.config.ts
+apps/shell,apps/shell/package.json;apps/shell/vite.config.ts
+apps/underwriter-portal,apps/underwriter-portal/package.json;apps/underwriter-portal/vite.config.ts
+packages/shared-types,packages/shared-types/package.json
+packages/shared-ui,packages/shared-ui/package.json

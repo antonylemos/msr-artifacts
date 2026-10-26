@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "id": "985556796",
+  "fullName": "dvreddy007/mfe-sample",
+  "commit": "d4cef45fce1d97c3d4d80d232dc9e9fbad9cfd1a",
+  "acquiredAt": "2026-10-24T00:26:33.971Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 50,
+    "bytes": 336456
+  },
+  "languages": {
+    "JSON": 303564,
+    "JavaScript": 8878,
+    "SVG": 5979,
+    "Vue": 5227,
+    "Markdown": 5015,
+    "CSS": 3828,
+    "YAML": 2122,
+    "HTML": 1071,
+    "Other": 772
+  },
+  "contentSha256": "dc5e05b927ded9d0a2ad418892d1f5023732747b23aa3495877fd1db41349c1c"
+}

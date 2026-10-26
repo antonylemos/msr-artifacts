@@ -1,0 +1,51 @@
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3, 16px) var(--space-4, 24px);
+  background: var(--color-surface, #181b22);
+  border-bottom: 1px solid var(--color-border, #2a2e37);
+
+  .brand {
+    font-weight: 700;
+    color: var(--color-primary, #a855f7);
+    text-decoration: none;
+    font-size: 1.05rem;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4, 24px);
+  }
+
+  a {
+    color: var(--color-text-muted, #9aa1ae);
+    text-decoration: none;
+    font-size: 0.9rem;
+
+    &.active,
+    &:hover {
+      color: var(--color-primary, #a855f7);
+    }
+  }
+
+  .user {
+    font-size: 0.85rem;
+    color: var(--color-text, #e5e7eb);
+  }
+
+  .link-button {
+    font: inherit;
+    font-size: 0.9rem;
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--color-text-muted, #9aa1ae);
+    cursor: pointer;
+
+    &:hover {
+      color: var(--color-secondary, #f43f5e);
+    }
+  }
+}

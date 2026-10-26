@@ -1,0 +1,11 @@
+{
+  "name": "@microfrontend/footer",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --config vite.config.ts --configLoader runner",
+    "build": "tsc -b && vite build --config vite.config.ts --configLoader runner",
+    "preview": "vite preview --config vite.config.ts --configLoader runner"
+  }
+}

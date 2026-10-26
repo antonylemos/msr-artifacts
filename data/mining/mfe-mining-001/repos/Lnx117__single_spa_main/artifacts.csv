@@ -1,0 +1,7 @@
+path,artifact_types,bytes
+.envtest,,656
+index.html,source;page-entry,515
+package-lock.json,lockfile,35026
+package.json,dependency-manifest;workspace-config,397
+src/main.ts,source,1524
+vite.config.ts,build-config;source,1271

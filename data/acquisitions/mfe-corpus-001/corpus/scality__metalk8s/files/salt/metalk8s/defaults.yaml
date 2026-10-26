@@ -1,0 +1,362 @@
+---
+metalk8s:
+  debug: false
+  downgrade:
+    # Define if the downgrade from this major version is supported.
+    # It should be set to false if manual operations are needed
+    # (e.g. downgrade of etcd), prior to downgrading the cluster.
+    # The downgrade can still be forced setting
+    # `metalk8s.downgrade.bypass_disable` to `True` in the pillar.
+    enabled: true
+
+kubernetes:
+  cluster: kubernetes
+
+  nodes:
+    default_labels:
+      topology.kubernetes.io/region: default
+      topology.kubernetes.io/zone: default
+
+kubeadm_preflight:
+  mandatory:
+    packages:
+      - tar
+      - util-linux            # provides nsenter, mount
+      - iproute               # provides ip
+      - iptables-nft          # provides iptables
+      - socat                 # provides socat
+    ports:
+      - 10250
+      - 10251
+      - 10252
+      - 2379
+      - 2380
+    sysctl_values:
+      net.ipv4.ip_forward: 1
+
+# List of services that conflict with MetalK8s installation
+conflicting_services:
+  - firewalld
+
+repo:
+  conflicting_packages:
+    # List of package that conflict with MetalK8s installation
+    # <package_name>: [<version1>, <version2>]
+    # Is version list is None then we consider all versions as conflicting
+    docker: null
+    docker-ce: null
+    containerd: null
+    runc: null
+
+  config:
+    directory: '/var/lib/metalk8s/repositories/conf.d'
+    default: 'default.conf'
+    registry: '90-registry-config.inc'
+    common_registry: '99-registry-common.inc'
+  local_mode: false
+  relative_path: packages  # relative to ISO root (configured in pillar)
+  port: 8080
+  registry_endpoint: 'metalk8s-registry-from-config.invalid'
+
+networks:
+  listening_process_per_role:
+    bootstrap:
+      control_plane_ip:4505:
+        expected: "/opt/saltstack/"
+        description: Salt master publisher
+      control_plane_ip:4506:
+        expected: "/opt/saltstack/"
+        description: Salt master request server
+      control_plane_ip:4507:
+        expected: "/opt/saltstack/"
+        description: Salt API
+      control_plane_ip:8080:
+        expected: nginx
+        description: MetalK8s repository
+    master:
+      control_plane_ip:6443:
+        expected: kube-apiserver
+        description: Kubernetes apiserver
+      127.0.0.1:7080:
+        expected: nginx
+        description: Apiserver proxy health check
+      127.0.0.1:7443:
+        expected: nginx
+        description: Apiserver proxy
+      ingress_control_plane_ip:8443:
+        expected: kube-proxy
+        description: Control plane nginx ingress
+      control_plane_ip:10257:
+        expected: kube-controller-manager
+        description: Kubernetes controller manager
+      control_plane_ip:10259:
+        expected: kube-scheduler
+        description: Kubernetes scheduler
+    etcd:
+      127.0.0.1:2379:
+        expected: etcd
+        description: Etcd client
+      control_plane_ip:2379:
+        expected: etcd
+        description: Etcd client
+      control_plane_ip:2380:
+        expected: etcd
+        description: Etcd peer
+      127.0.0.1:2381:
+        expected: etcd
+        description: Etcd metrics
+      control_plane_ip:2381:
+        expected: etcd
+        description: Etcd metrics
+    # Apply to all nodes
+    node:
+      127.0.0.1:9099:
+        expected: calico-node
+        description: Calico node
+      control_plane_ip:9100:
+        expected: node_exporter
+        description: Node exporter
+      127.0.0.1:10248:
+        expected: kubelet
+        description: Kubelet health check
+      control_plane_ip:10249:
+        expected: kube-proxy
+        description: Kubernetes proxy metrics
+      control_plane_ip:10250:
+        expected: kubelet
+        description: Kubelet
+      control_plane_ip:10256:
+        expected: kube-proxy
+        description: Kubernetes proxy health check
+
+kubelet:
+  container_engine: "containerd"
+  container_runtime_endpoint: "unix:///var/run/containerd/containerd.sock"
+
+image_cache:
+  # Where the boot cache archives are extracted, and where
+  # `containerd-image-preload` imports them from. Both sides read this:
+  # the states write here, and `metalk8s.image-cache.installed` renders
+  # /etc/sysconfig/containerd-image-preload from it.
+  directory: "/var/lib/image-cache"
+  # Platform passed to `ctr images import`. The archives on the ISO are
+  # built for amd64 only.
+  platform: "linux/amd64"
+
+ca:
+  cert:
+    days_remaining: 90
+    days_valid: 3650
+  signing_policy:
+    days_valid: 365
+
+kube_api:
+  cert:
+    server_signing_policy: kube_apiserver_server_policy
+    client_signing_policy: kube_apiserver_client_policy
+  authn_config_path: /etc/kubernetes/authn_config.yaml
+
+etcd:
+  ca:
+    cert:
+      days_remaining: 90
+      days_valid: 3650
+    signing_policy:
+      days_valid: 365
+  cert:
+    apiserver_client_signing_policy: etcd_client_policy
+    healthcheck_client_signing_policy: etcd_client_policy
+    peer_signing_policy: etcd_server_client_policy
+    server_signing_policy: etcd_server_client_policy
+
+front_proxy:
+  ca:
+    cert:
+      days_remaining: 90
+      days_valid: 3650
+    signing_policy:
+      days_valid: 365
+  cert:
+    client_signing_policy: front_proxy_client_policy
+
+backup_server:
+  ca:
+    cert:
+      days_remaining: 90
+      days_valid: 3650
+    signing_policy:
+      days_valid: 365
+  cert:
+    server_signing_policy: backup_server_policy
+
+dex:
+  ca:
+    cert:
+      days_remaining: 90
+      days_valid: 3650
+    signing_policy:
+      days_valid: 365
+  cert:
+    server_signing_policy: dex_server_policy
+
+nginx-ingress:
+  ca:
+    cert:
+      days_remaining: 90
+      days_valid: 3650
+    signing_policy:
+      days_valid: 365
+  cert:
+    server_signing_policy: ingress_server_policy
+
+coredns:
+  cluster_domain: cluster.local
+  reverse_cidrs: in-addr.arpa ip6.arpa
+
+upgrade: false        # define if we're on an upgrade case
+
+proxies: {}
+
+certificates:
+  beacon:
+    interval: 86400  # once a day
+    notify_days: 45
+  client:
+    days_remaining: 90
+    days_valid: 365
+    files:
+      apiserver-etcd:
+        path: /etc/kubernetes/pki/apiserver-etcd-client.crt
+        renew:
+          sls:
+            - metalk8s.kubernetes.apiserver.certs.etcd-client
+        watched: False
+      apiserver-kubelet:
+        path: /etc/kubernetes/pki/apiserver-kubelet-client.crt
+        key: /etc/kubernetes/pki/apiserver-kubelet-client.key
+        renew:
+          sls:
+            - metalk8s.kubernetes.apiserver.certs.kubelet-client
+        watched: False
+      etcd-healthcheck:
+        path: /etc/kubernetes/pki/etcd/healthcheck-client.crt
+        renew:
+          sls:
+            - metalk8s.kubernetes.etcd
+        watched: False
+      front-proxy:
+        path: /etc/kubernetes/pki/front-proxy-client.crt
+        renew:
+          sls:
+            - metalk8s.kubernetes.apiserver.certs.front-proxy-client
+        watched: False
+      salt-master-etcd:
+        path: /etc/kubernetes/pki/etcd/salt-master-etcd-client.crt
+        renew:
+          sls:
+            - metalk8s.salt.master.certs.etcd-client
+        watched: False
+  kubeconfig:
+    days_remaining: 90
+    days_valid: 365
+    files:
+      super-admin:
+        path: /etc/kubernetes/super-admin.conf
+        renew:
+          sls:
+            - metalk8s.kubernetes.apiserver.kubeconfig
+        watched: False
+      admin:
+        path: /etc/kubernetes/admin.conf
+        renew:
+          sls:
+            - metalk8s.kubernetes.apiserver.kubeconfig
+        watched: False
+      controller-manager:
+        path: /etc/kubernetes/controller-manager.conf
+        renew:
+          sls:
+            - metalk8s.kubernetes.controller-manager.installed
+        watched: False
+      kubelet:
+        path: /etc/kubernetes/kubelet.conf
+        renew:
+          sls:
+            - metalk8s.kubernetes.kubelet.configured
+        watched: False
+      salt-master:
+        path: /etc/salt/master-kubeconfig.conf
+        renew:
+          sls:
+            - metalk8s.salt.master
+        watched: False
+      scheduler:
+        path: /etc/kubernetes/scheduler.conf
+        renew:
+          sls:
+            - metalk8s.kubernetes.scheduler.installed
+        watched: False
+  server:
+    days_remaining: 90
+    days_valid: 365
+    files:
+      apiserver:
+        path: /etc/kubernetes/pki/apiserver.crt
+        renew:
+          sls:
+            - metalk8s.kubernetes.apiserver.installed
+        watched: False
+      backup-server:
+        path: /etc/metalk8s/pki/backup-server/server.crt
+        renew:
+          sls:
+            - metalk8s.backup.certs.server
+          post:
+            orch:
+              - metalk8s.backup.deployed
+        watched: False
+      control-plane-ingress:
+        path: /etc/metalk8s/pki/nginx-ingress/control-plane-server.crt
+        renew:
+          sls:
+            - metalk8s.addons.nginx-ingress-control-plane.certs
+          post:
+            orch:
+              - metalk8s.addons.nginx-ingress-control-plane.deployed
+        watched: False
+      dex:
+        path: /etc/metalk8s/pki/dex/server.crt
+        renew:
+          sls:
+            - metalk8s.addons.dex.certs
+          post:
+            orch:
+              - metalk8s.addons.dex.deployed
+        watched: False
+      etcd:
+        path: /etc/kubernetes/pki/etcd/server.crt
+        renew:
+          sls:
+            - metalk8s.kubernetes.etcd
+        watched: False
+      etcd-peer:
+        path: /etc/kubernetes/pki/etcd/peer.crt
+        renew:
+          sls:
+            - metalk8s.kubernetes.etcd
+        watched: False
+      salt-api:
+        path: /etc/salt/pki/api/salt-api.crt
+        renew:
+          sls:
+            - metalk8s.salt.master.certs.salt-api
+        watched: False
+      workload-plane-ingress:
+        path: /etc/metalk8s/pki/nginx-ingress/workload-plane-server.crt
+        renew:
+          sls:
+            - metalk8s.addons.nginx-ingress.certs
+          post:
+            orch:
+              - metalk8s.addons.nginx-ingress.deployed
+        watched: False

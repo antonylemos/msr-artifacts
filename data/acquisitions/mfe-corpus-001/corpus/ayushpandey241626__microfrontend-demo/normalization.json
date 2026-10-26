@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "id": "994642993",
+  "fullName": "ayushpandey241626/microfrontend-demo",
+  "commit": "ec39a278ec6951feeb8d7ff7688cb4f056be589b",
+  "acquiredAt": "2026-10-24T00:32:27.439Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "projects/host-app/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "projects/login-mfe-app/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "projects/mfe1/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "projects/mfe2/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 100,
+    "bytes": 709237
+  },
+  "languages": {
+    "JSON": 603834,
+    "TypeScript": 72217,
+    "HTML": 17209,
+    "CSS": 8838,
+    "JavaScript": 2583,
+    "SCSS": 2174,
+    "Markdown": 1481,
+    "Other": 901
+  },
+  "contentSha256": "b199cfc6ec28b8cfb74a4792abc3220c1df722212d6339deab0350363d8b36e6"
+}

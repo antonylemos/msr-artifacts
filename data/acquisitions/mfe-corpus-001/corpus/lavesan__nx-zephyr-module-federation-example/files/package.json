@@ -1,0 +1,21 @@
+{
+  "name": "nx-module-federation-with-zephyr",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "build": "nx run-many --target=build --projects=shell,courses,profile",
+    "dev": "nx run-many --target=dev --projects=shell,courses,profile",
+    "check": "nx run-many --target=check --projects=shell,courses,profile"
+  },
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "@nx/js": "20.7.2",
+    "@swc-node/register": "~1.9.1",
+    "@swc/core": "~1.5.7",
+    "@swc/helpers": "~0.5.11",
+    "nx": "20.7.2",
+    "tslib": "^2.3.0",
+    "typescript": "~5.7.2"
+  }
+}

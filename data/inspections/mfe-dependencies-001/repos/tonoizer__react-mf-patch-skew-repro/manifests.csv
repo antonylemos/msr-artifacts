@@ -1,0 +1,6 @@
+manifest,state
+host/package.json,ok
+package.json,ok
+remote_a/package.json,ok
+remote_b/package.json,ok
+remote_c/package.json,ok

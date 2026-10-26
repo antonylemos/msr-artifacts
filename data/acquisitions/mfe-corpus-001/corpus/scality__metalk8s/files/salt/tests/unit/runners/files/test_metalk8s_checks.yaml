@@ -1,0 +1,729 @@
+nodes:
+  # 1. Success: nominal
+  - pillar:
+      metalk8s:
+        nodes:
+          node-1: {}
+          node-2: {}
+    nodes:
+      node-1: &ready_node
+        kind: Node
+        apiVersion: v1
+        metadata:
+          name: node-1
+        # We don't care about spec here
+        spec: {}
+        status: 
+          conditions:
+            - message: Calico is running on this node
+              reason: CalicoIsUp
+              status: "False"
+              type: NetworkUnavailable
+            - message: kubelet has sufficient memory available
+              reason: KubeletHasSufficientMemory
+              status: "False"
+              type: MemoryPressure
+            - message: kubelet has no disk pressure
+              reason: KubeletHasNoDiskPressure
+              status: "False"
+              type: DiskPressure
+            - message: kubelet has sufficient PID available
+              reason: KubeletHasSufficientPID
+              status: "False"
+              type: PIDPressure
+            - message: kubelet is posting ready status
+              reason: KubeletReady
+              status: "True"
+              type: Ready
+      node-2:
+        <<: *ready_node
+        metadata:
+          name: node-2
+    result: True
+
+  # 2. Success: nominal (node list from args)
+  - node_list:
+      - node-1
+      - node-2
+    nodes:
+      node-1: *ready_node
+      node-2:
+        <<: *ready_node
+        metadata:
+          name: node-2
+    result: True
+
+  # 3. Failure: a node is not ready
+  - node_list:
+      - node-1
+      - not-ready-node-1
+    nodes:
+      node-1: *ready_node
+      not-ready-node-1: &not_ready_node
+        <<: *ready_node
+        metadata:
+          name: not-ready-node-1
+        status:
+          conditions:
+            - message: Calico is running on this node
+              reason: CalicoIsUp
+              status: "False"
+              type: NetworkUnavailable
+            - message: kubelet has sufficient memory available
+              reason: KubeletHasSufficientMemory
+              status: "False"
+              type: MemoryPressure
+            - message: kubelet has no disk pressure
+              reason: KubeletHasNoDiskPressure
+              status: "False"
+              type: DiskPressure
+            - message: kubelet has sufficient PID available
+              reason: KubeletHasSufficientPID
+              status: "False"
+              type: PIDPressure
+            - message: kubelet is not ready
+              reason: KubeletNotReady
+              status: "False"
+              type: Ready
+    expect_raise: True
+    result: |-
+      Nodes 'not-ready-node-1' are not ready - KubeletNotReady
+
+  # 4. Failure: multiple nodes are not ready
+  - node_list:
+      - node-1
+      - not-ready-node-1
+      - not-ready-node-2
+    nodes:
+      node-1: *ready_node
+      not-ready-node-1: *not_ready_node
+      not-ready-node-2:
+        <<: *not_ready_node
+        metadata:
+          name: not-ready-node-2
+    expect_raise: True
+    result: |-
+      Nodes 'not-ready-node-1', 'not-ready-node-2' are not ready - KubeletNotReady
+
+  # 5. Failure: multiple nodes are not ready different errors
+  - &multi_node_not_ready
+    node_list:
+      - node-1
+      - not-ready-node-1
+      - error-node
+    nodes:
+      node-1: *ready_node
+      not-ready-node-1: *not_ready_node
+      error-node:
+        <<: *not_ready_node
+        metadata:
+          name: error-node
+        status:
+          conditions:
+            - message: Calico is running on this node
+              reason: CalicoIsUp
+              status: "False"
+              type: NetworkUnavailable
+            - message: kubelet has sufficient memory available
+              reason: KubeletHasSufficientMemory
+              status: "False"
+              type: MemoryPressure
+            - message: kubelet has no disk pressure
+              reason: KubeletHasNoDiskPressure
+              status: "False"
+              type: DiskPressure
+            - message: kubelet has sufficient PID available
+              reason: KubeletHasSufficientPID
+              status: "False"
+              type: PIDPressure
+            - message: kubelet is not ready
+              reason: ErrOrAbCd
+              status: "False"
+              type: Ready
+    expect_raise: True
+    result: |-
+      Nodes 'not-ready-node-1' are not ready - KubeletNotReady
+      Nodes 'error-node' are not ready - ErrOrAbCd
+
+  # 6. Failure: multi node not ready (with no raise)
+  - <<: *multi_node_not_ready
+    raises: False
+    expect_raise: False
+    result:
+      retcode: 1
+      errors:
+        - Nodes 'not-ready-node-1' are not ready - KubeletNotReady
+        - Nodes 'error-node' are not ready - ErrOrAbCd
+
+minions:
+  # 1. Success: nominal
+  - pillar:
+      metalk8s:
+        nodes:
+          node-1: {}
+          node-2: {}
+    ping_ret:
+      node-1: True
+      node-2: True
+    result: True
+
+  # 2. Success: nominal (minion list from args)
+  - minion_list:
+      - node-1
+      - node-2
+    ping_ret:
+      node-1: True
+      node-2: True
+    result: True
+
+  # 3. Failure: one minion not ready
+  - minion_list:
+      - node-1
+      - node-2
+    ping_ret:
+      node-1: True
+      node-2: False
+    expect_raise: True
+    result: |-
+      Salt minions 'node-2' are not ready
+
+  # 4. Failure: multiple minion not ready
+  - minion_list:
+      - node-1
+      - node-2
+      - node-3
+    ping_ret:
+      node-1: True
+      node-2: False
+      node-3: False
+    expect_raise: True
+    result: |-
+      Salt minions 'node-2', 'node-3' are not ready
+
+  # 5. Failure: one minion not ready one do not answer
+  - &not_ready_no_answer
+    minion_list:
+      - node-1
+      - node-2
+      - no-answer-minion
+    ping_ret:
+      node-1: True
+      node-2: False
+    expect_raise: True
+    result: |-
+      Salt minions 'node-2' are not ready
+      Salt minions 'no-answer-minion' did not answered
+
+  # 6. Failure: one minion not ready one do not answer (with no raise)
+  - <<: *not_ready_no_answer
+    raises: False
+    expect_raise: False
+    result:
+      retcode: 1
+      errors:
+        - Salt minions 'node-2' are not ready
+        - Salt minions 'no-answer-minion' did not answered
+
+  # 7. Success: a minion is not ready on the first ping and answers on retry
+  - minion_list:
+      - node-1
+      - node-2
+    ping_rets:
+      - node-1: True
+        node-2: False
+      - node-2: True
+    # Only the minion we have yet to hear from is pinged again
+    expected_targets:
+      - node-1,node-2
+      - node-2
+    result: True
+
+  # 8. Success: a minion does not answer the first ping and answers on retry
+  - minion_list:
+      - node-1
+      - node-2
+    ping_rets:
+      - node-1: True
+      - node-2: True
+    expected_targets:
+      - node-1,node-2
+      - node-2
+    result: True
+
+  # 9. Failure: a minion never answers, every attempt is used
+  - minion_list:
+      - node-1
+      - node-2
+    ping_rets:
+      - node-1: True
+      - {}
+      - {}
+    attempts: 3
+    expect_raise: True
+    expected_targets:
+      - node-1,node-2
+      - node-2
+      - node-2
+    result: |-
+      Salt minions 'node-2' did not answered
+
+upgrade:
+  # 1. Success: nominal (minor upgrade)
+  - pillar:
+      metalk8s:
+        nodes:
+          node-1:
+            version: 1.1.0
+          node-2:
+            version: 1.2.0
+    dest_version: 1.2.0
+    saltenv: metalk8s-1.2.0
+    result: True
+
+  # 1.(bis) Success: nominal (major upgrade)
+  - pillar:
+      metalk8s:
+        nodes:
+          node-1:
+            version: 1.1.0
+          node-2:
+            version: 2.1.0
+    dest_version: 2.2.1
+    saltenv: metalk8s-2.2.1
+    result: True
+
+  # 2. Success: nominal (with dev)
+  - pillar:
+      metalk8s:
+        nodes:
+          node-1:
+            version: 1.1.0-dev
+          node-2:
+            version: 1.1.9
+    dest_version: 1.2.0-dev
+    saltenv: metalk8s-1.2.0-dev
+    result: True
+
+  # 3. Success: node already in good version
+  - pillar:
+      metalk8s:
+        nodes:
+          node-1:
+            version: 1.2.0
+          node-2:
+            version: 1.2.0
+    dest_version: 1.2.0
+    saltenv: metalk8s-1.2.0
+    result: True
+
+  # 4. Success: one node already newer
+  - pillar:
+      metalk8s:
+        nodes:
+          node-1:
+            version: 1.1.0
+          node-2:
+            version: 1.3.0
+    dest_version: 1.2.0
+    saltenv: metalk8s-1.2.0
+    result: True
+
+  # 5.Failure: invalid saltenv
+  - pillar:
+      metalk8s:
+        nodes:
+          node-1:
+            version: 1.1.0
+          node-2:
+            version: 1.2.0
+    dest_version: 1.2.0
+    saltenv: metalk8s-1.1.0
+    expect_raise: True
+    result: |-
+      Invalid saltenv 'metalk8s-1.1.0' consider using 'metalk8s-1.2.0'
+
+  # 5.(bis) Success: resuming the upgrade a node was left in
+  - pillar:
+      metalk8s:
+        nodes:
+          node-1:
+            version: 1.2.0
+            version_in_progress: 1.2.0
+          node-2:
+            version: 1.1.0
+    dest_version: 1.2.0
+    saltenv: metalk8s-1.2.0
+    result: True
+
+  # 5.(ter) Failure: another destination than the interrupted upgrade
+  - pillar:
+      metalk8s:
+        nodes:
+          node-1:
+            version: 1.3.0
+            version_in_progress: 1.3.0
+          node-2:
+            version: 1.1.0
+    dest_version: 1.2.0
+    saltenv: metalk8s-1.2.0
+    expect_raise: True
+    result: |-
+      A version change to 1.3.0 did not complete on node-1. Resume it rather than upgrading to 1.2.0, since moving those nodes to 1.2.0 would be a downgrade. If 1.3.0 is not an option, clear their metalk8s.scality.com/version-in-progress annotation first
+
+  # 6. Success: Upgrade from more than one minor
+  - pillar:
+      metalk8s:
+        nodes:
+          node-1:
+            version: 1.1.0
+          node-2:
+            version: 1.2.0
+          node-3:
+            version: 1.1.1
+    dest_version: 1.3.0
+    saltenv: metalk8s-1.3.0
+    result: True
+
+  # 6.(bis) Failure: Upgrade from more than one major
+  - pillar:
+      metalk8s:
+        nodes:
+          node-1:
+            version: 1.1.0
+          node-2:
+            version: 2.2.0
+          node-3:
+            version: 1.1.1
+    dest_version: 3.1.0
+    saltenv: metalk8s-3.1.0
+    expect_raise: True
+    result: |-
+      Unable to upgrade from more than 1 major version, Node node-1 is in 1.1.0 and you try to upgrade to 3.1.0
+      Unable to upgrade from more than 1 major version, Node node-3 is in 1.1.1 and you try to upgrade to 3.1.0
+
+  # 7.Failure: One node is not ready
+  - pillar:
+      metalk8s:
+        nodes:
+          node-1:
+            version: 1.1.0
+          node-2:
+            version: 1.2.0
+    nodes_ret:
+      retcode: 1
+      errors:
+        - Node node-1 iS nOt ReAdY
+    dest_version: 1.2.0
+    saltenv: metalk8s-1.2.0
+    expect_raise: True
+    result: |-
+      Node node-1 iS nOt ReAdY
+
+  # 8.Failure: One minion is not ready
+  - pillar:
+      metalk8s:
+        nodes:
+          node-1:
+            version: 1.1.0
+          node-2:
+            version: 1.2.0
+    minions_ret:
+      retcode: 1
+      errors:
+        - Minion node-1 iS nOt ReAdY
+    dest_version: 1.2.0
+    saltenv: metalk8s-1.2.0
+    expect_raise: True
+    result: |-
+      Minion node-1 iS nOt ReAdY
+
+  # 9.Failure: multiple errors
+  - &multi_upgrade_check_failures
+    pillar:
+      metalk8s:
+        nodes:
+          node-1:
+            version: 1.1.0
+          node-2:
+            version: 2.1.0
+    nodes_ret:
+      retcode: 1
+      errors:
+        - Node node-1 iS nOt ReAdY
+    minions_ret:
+      retcode: 1
+      errors:
+        - Minion node-1 iS nOt ReAdY
+    dest_version: 3.1.0
+    saltenv: metalk8s-1.2.0
+    expect_raise: True
+    result: |-
+      Invalid saltenv 'metalk8s-1.2.0' consider using 'metalk8s-3.1.0'
+      Unable to upgrade from more than 1 major version, Node node-1 is in 1.1.0 and you try to upgrade to 3.1.0
+      Node node-1 iS nOt ReAdY
+      Minion node-1 iS nOt ReAdY
+
+  # 10. Failure: multiple errors (with no raise)
+  - <<: *multi_upgrade_check_failures
+    raises: False
+    expect_raise: False
+    result:
+      retcode: 1
+      errors:
+        - Invalid saltenv 'metalk8s-1.2.0' consider using 'metalk8s-3.1.0'
+        - Unable to upgrade from more than 1 major version, Node node-1 is in 1.1.0 and you try to upgrade to 3.1.0
+        - Node node-1 iS nOt ReAdY
+        - Minion node-1 iS nOt ReAdY
+
+downgrade:
+  # 1. Success: nominal (minor downgrade)
+  - pillar:
+      metalk8s:
+        downgrade:
+          enabled: True
+        nodes:
+          node-1:
+            version: 1.1.0
+          node-2:
+            version: 1.2.0
+    dest_version: 1.1.0
+    saltenv: metalk8s-1.2.0
+    result: True
+
+  # 1.(bis) Success: nominal (major downgrade)
+  - pillar:
+      metalk8s:
+        downgrade:
+          enabled: True
+        nodes:
+          node-1:
+            version: 1.1.0
+          node-2:
+            version: 2.1.0
+    dest_version: 1.1.0
+    saltenv: metalk8s-2.1.0
+    result: True
+
+  # 2. Success: nominal (with dev)
+  - pillar:
+      metalk8s:
+        downgrade:
+          enabled: True
+        nodes:
+          node-1:
+            version: 1.1.1
+          node-2:
+            version: 1.2.0-dev
+    dest_version: 1.1.0-dev
+    saltenv: metalk8s-1.2.0-dev
+    result: True
+
+  # 3. Success: patch downgrade (with downgrade disabled)
+  - pillar:
+      metalk8s:
+        downgrade:
+          enabled: False
+        nodes:
+          node-1:
+            version: 1.1.0
+          node-2:
+            version: 1.1.1
+    dest_version: 1.1.0
+    saltenv: metalk8s-1.1.1
+    result: True
+
+  # 3.(bis) Success: minor downgrade (with downgrade disabled)
+  - pillar:
+      metalk8s:
+        downgrade:
+          enabled: False
+        nodes:
+          node-1:
+            version: 1.1.1
+          node-2:
+            version: 1.2.1
+    dest_version: 1.1.0
+    saltenv: metalk8s-1.2.1
+    result: True
+
+  # 4. Success: node already in good version
+  - pillar:
+      metalk8s:
+        downgrade:
+          enabled: True
+        nodes:
+          node-1:
+            version: 1.2.0
+          node-2:
+            version: 1.2.0
+    dest_version: 1.2.0
+    saltenv: metalk8s-1.2.0
+    result: True
+
+  # 5. Success: one node already older
+  - pillar:
+      metalk8s:
+        downgrade:
+          enabled: True
+        nodes:
+          node-1:
+            version: 1.1.0
+          node-2:
+            version: 1.3.0
+    dest_version: 1.2.0
+    saltenv: metalk8s-1.3.0
+    result: True
+
+  # 6. Failure: Major downgrade is disabled
+  - &downgrade_disabled
+    pillar:
+      metalk8s:
+        downgrade:
+          enabled: False
+        nodes:
+          node-1:
+            version: 112.1.0
+          node-2:
+            version: 111.2.0
+    dest_version: 111.1.0
+    saltenv: metalk8s-112.1.0
+    expect_raise: True
+    result: |-
+      Downgrade is not supported from 112 to 111 \(see https://github.com/scality/metalk8s/releases/tag/112.0.0 for details\)
+
+  # 7. Success: Major downgrade is disabled (with bypass)
+  - <<: *downgrade_disabled
+    bypass_disable: True
+    expect_raise: False
+    result: True
+
+  # 5.Failure: invalid saltenv
+  - pillar:
+      metalk8s:
+        downgrade:
+          enabled: True
+        nodes:
+          node-1:
+            version: 1.1.0
+          node-2:
+            version: 1.2.0
+    dest_version: 1.1.0
+    saltenv: metalk8s-1.1.0
+    expect_raise: True
+    result: |-
+      Invalid saltenv 'metalk8s-1.1.0' consider using at least 'metalk8s-1.2.0'
+
+  # 6. Success: Downgrade from more than one minor
+  - pillar:
+      metalk8s:
+        downgrade:
+          enabled: True
+        nodes:
+          node-1:
+            version: 1.1.0
+          node-2:
+            version: 1.3.0
+          node-3:
+            version: 1.3.1
+    dest_version: 1.1.0
+    saltenv: metalk8s-1.3.1
+    result: True
+
+  # 6.(bis) Failure: Downgrade from more than one major
+  - pillar:
+      metalk8s:
+        downgrade:
+          enabled: True
+        nodes:
+          node-1:
+            version: 1.2.0
+          node-2:
+            version: 3.1.1
+          node-3:
+            version: 3.1.0
+    dest_version: 1.1.0
+    saltenv: metalk8s-1.3.1
+    expect_raise: True
+    result: |-
+      Unable to downgrade from more than 1 major version, Node node-2 is in 3.1.1 and you try to downgrade to 1.1.0
+      Unable to downgrade from more than 1 major version, Node node-3 is in 3.1.0 and you try to downgrade to 1.1.0
+
+  # 7.Failure: One node is not ready
+  - pillar:
+      metalk8s:
+        downgrade:
+          enabled: True
+        nodes:
+          node-1:
+            version: 1.1.0
+          node-2:
+            version: 1.2.0
+    nodes_ret:
+      retcode: 1
+      errors:
+        - Node node-1 iS nOt ReAdY
+    dest_version: 1.1.0
+    saltenv: metalk8s-1.2.0
+    expect_raise: True
+    result: |-
+      Node node-1 iS nOt ReAdY
+
+  # 8.Failure: One minion is not ready
+  - pillar:
+      metalk8s:
+        downgrade:
+          enabled: True
+        nodes:
+          node-1:
+            version: 1.1.0
+          node-2:
+            version: 1.2.0
+    minions_ret:
+      retcode: 1
+      errors:
+        - Minion node-1 iS nOt ReAdY
+    dest_version: 1.1.0
+    saltenv: metalk8s-1.2.0
+    expect_raise: True
+    result: |-
+      Minion node-1 iS nOt ReAdY
+
+  # 9.Failure: multiple errors
+  - &multi_downgrade_check_failures
+    pillar:
+      metalk8s:
+        downgrade:
+          enabled: True
+        nodes:
+          node-1:
+            version: 1.1.0
+          node-2:
+            version: 3.1.0
+    nodes_ret:
+      retcode: 1
+      errors:
+        - Node node-1 iS nOt ReAdY
+    minions_ret:
+      retcode: 1
+      errors:
+        - Minion node-1 iS nOt ReAdY
+    dest_version: 1.1.0
+    saltenv: metalk8s-1.2.0
+    expect_raise: True
+    result: |-
+      Unable to downgrade from more than 1 major version, Node node-2 is in 3.1.0 and you try to downgrade to 1.1.0
+      Invalid saltenv 'metalk8s-1.2.0' consider using at least 'metalk8s-3.1.0'
+      Node node-1 iS nOt ReAdY
+      Minion node-1 iS nOt ReAdY
+
+  # 10. Failure: multiple errors (with no raise)
+  - <<: *multi_downgrade_check_failures
+    raises: False
+    expect_raise: False
+    result:
+      retcode: 1
+      errors:
+        - Unable to downgrade from more than 1 major version, Node node-2 is in 3.1.0 and you try to downgrade to 1.1.0
+        - Invalid saltenv 'metalk8s-1.2.0' consider using at least 'metalk8s-3.1.0'
+        - Node node-1 iS nOt ReAdY
+        - Minion node-1 iS nOt ReAdY

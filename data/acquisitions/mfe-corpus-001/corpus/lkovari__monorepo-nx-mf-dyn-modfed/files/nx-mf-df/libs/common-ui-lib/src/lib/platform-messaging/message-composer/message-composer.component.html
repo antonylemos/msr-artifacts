@@ -1,0 +1,146 @@
+<form
+  class="flex flex-col gap-2 min-w-[min(100vw-2rem,22rem)] text-sm"
+  [formGroup]="form"
+  (ngSubmit)="submit()"
+>
+  <div class="flex flex-col gap-0.5">
+    <label class="text-xs font-medium text-slate-700" for="composer-kind"
+      >Message kind</label
+    >
+    <p-select
+      formControlName="kind"
+      inputId="composer-kind"
+      class="w-full"
+      [options]="kindOptions()"
+      optionLabel="label"
+      optionValue="value"
+    ></p-select>
+  </div>
+  <div class="flex flex-col gap-0.5">
+    <label class="text-xs font-medium text-slate-700" for="composer-source"
+      >Source</label
+    >
+    <input
+      pInputText
+      class="w-full"
+      id="composer-source"
+      type="text"
+      formControlName="source"
+      autocomplete="off"
+    />
+  </div>
+  <div class="flex flex-col gap-0.5">
+    <span class="text-xs font-medium text-slate-700">Message contract</span>
+    <p class="text-sm text-slate-600">{{ contractLabel() }}</p>
+  </div>
+  <div class="flex flex-col gap-0.5">
+    <label class="text-xs font-medium text-slate-700" for="composer-sensitivity"
+      >Sensitivity</label
+    >
+    <p-select
+      formControlName="sensitivity"
+      inputId="composer-sensitivity"
+      class="w-full"
+      [options]="sensitivityOptions"
+      optionLabel="label"
+      optionValue="value"
+    ></p-select>
+  </div>
+  <div class="flex flex-col gap-0.5">
+    <label class="text-xs font-medium text-slate-700" for="composer-target"
+      >Target</label
+    >
+    <p-select
+      formControlName="target"
+      inputId="composer-target"
+      class="w-full"
+      [options]="targetOptions()"
+      optionLabel="label"
+      optionValue="value"
+    ></p-select>
+  </div>
+
+  @if (selectedKind() === 'event') {
+    <div class="flex flex-col gap-0.5">
+      <label class="text-xs font-medium text-slate-700" for="composer-severity"
+        >Severity</label
+      >
+      <p-select
+        formControlName="severity"
+        inputId="composer-severity"
+        class="w-full"
+        [options]="severityOptions"
+        optionLabel="label"
+        optionValue="value"
+      ></p-select>
+    </div>
+    <div class="flex flex-col gap-0.5">
+      <label class="text-xs font-medium text-slate-700" for="composer-title"
+        >Title</label
+      >
+      <input
+        pInputText
+        class="w-full"
+        id="composer-title"
+        type="text"
+        formControlName="title"
+        autocomplete="off"
+      />
+    </div>
+    <div class="flex flex-col gap-0.5">
+      <label class="text-xs font-medium text-slate-700" for="composer-body"
+        >Body</label
+      >
+      <textarea
+        pTextarea
+        class="w-full min-h-[3rem] max-h-[8rem] resize-y text-sm leading-snug"
+        id="composer-body"
+        formControlName="body"
+      ></textarea>
+    </div>
+  }
+
+  @if (selectedKind() === 'command') {
+    <div class="flex flex-col gap-0.5">
+      <label class="text-xs font-medium text-slate-700" for="composer-action"
+        >Command action</label
+      >
+      <input
+        pInputText
+        class="w-full"
+        id="composer-action"
+        type="text"
+        formControlName="action"
+        autocomplete="off"
+      />
+    </div>
+  }
+
+  @if (selectedKind() === 'query') {
+    <div class="flex flex-col gap-0.5">
+      <label class="text-xs font-medium text-slate-700" for="composer-question"
+        >Question</label
+      >
+      <textarea
+        pTextarea
+        class="w-full min-h-[3rem] max-h-[8rem] resize-y text-sm leading-snug"
+        id="composer-question"
+        formControlName="question"
+      ></textarea>
+    </div>
+  }
+
+  <div class="flex justify-end gap-2 pt-1">
+    <p-button
+      type="button"
+      label="Cancel"
+      severity="secondary"
+      (onClick)="cancel()"
+    ></p-button>
+    <p-button
+      type="submit"
+      label="Send"
+      [disabled]="!canSend()"
+    ></p-button>
+  </div>
+</form>

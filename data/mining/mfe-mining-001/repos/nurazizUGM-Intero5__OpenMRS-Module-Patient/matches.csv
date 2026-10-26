@@ -1,0 +1,115 @@
+pattern,path,line,excerpt
+dep-single-spa,packages/esm-form-entry-app/package.json,59,"    ""single-spa-angular"": ""^9.0.1"","
+dep-single-spa,packages/esm-form-entry-app/package.json,69,"    ""single-spa"": ""6.x"""
+dep-single-spa,packages/esm-patient-chart-app/package.json,53,"    ""single-spa"": ""6.x"","
+dep-single-spa,packages/esm-patient-chart-app/package.json,54,"    ""single-spa-react"": ""6.x"","
+dep-single-spa,packages/esm-patient-common-lib/package.json,39,"    ""single-spa"": ""6.x"""
+dep-monorepo-tool,package.json,75,"    ""turbo"": ""^2.5.2"","
+dep-mfe-term,packages/esm-patient-allergies-app/package.json,5,"  ""description"": ""Patient allergies microfrontend for the OpenMRS SPA"","
+dep-mfe-term,packages/esm-patient-attachments-app/package.json,5,"  ""description"": ""Patient attachments microfrontend for the OpenMRS SPA"","
+dep-mfe-term,packages/esm-patient-banner-app/package.json,5,"  ""description"": ""Patient banner microfrontend for the OpenMRS SPA"","
+dep-mfe-term,packages/esm-patient-chart-app/package.json,5,"  ""description"": ""Patient dashboard microfrontend for the OpenMRS SPA"","
+dep-mfe-term,packages/esm-patient-conditions-app/package.json,5,"  ""description"": ""Patient conditions microfrontend for the OpenMRS SPA"","
+dep-mfe-term,packages/esm-patient-forms-app/package.json,5,"  ""description"": ""Patient forms microfrontend for the OpenMRS SPA"","
+dep-mfe-term,packages/esm-patient-immunizations-app/package.json,5,"  ""description"": ""Patient immunizations microfrontend for the OpenMRS SPA"","
+dep-mfe-term,packages/esm-patient-medications-app/package.json,5,"  ""description"": ""Patient medications microfrontend for the OpenMRS SPA"","
+dep-mfe-term,packages/esm-patient-notes-app/package.json,5,"  ""description"": ""Patient notes microfrontend for the OpenMRS SPA"","
+dep-mfe-term,packages/esm-patient-orders-app/package.json,5,"  ""description"": ""Microfrontend for the OpenMRS SPA providing the order basket for the patient chart"","
+dep-mfe-term,packages/esm-patient-programs-app/package.json,5,"  ""description"": ""Patient programs microfrontend for the OpenMRS SPA"","
+dep-mfe-term,packages/esm-patient-tests-app/package.json,5,"  ""description"": ""Patient test order and results microfrontend for the OpenMRS SPA"","
+dep-mfe-term,packages/esm-patient-vitals-app/package.json,5,"  ""description"": ""Patient vitals microfrontend for the OpenMRS SPA"","
+lock-mfe-dependency,yarn.lock,4136,"    single-spa: ""npm:^6.0.3"""
+lock-mfe-dependency,yarn.lock,4159,    single-spa: 6.x
+lock-mfe-dependency,yarn.lock,4222,    single-spa: 6.x
+lock-mfe-dependency,yarn.lock,4235,    single-spa: 6.x
+lock-mfe-dependency,yarn.lock,4338,"    single-spa-angular: ""npm:^9.0.1"""
+lock-mfe-dependency,yarn.lock,4349,    single-spa: 6.x
+lock-mfe-dependency,yarn.lock,4382,    single-spa: 6.x
+lock-mfe-dependency,yarn.lock,4415,    single-spa: 6.x
+lock-mfe-dependency,yarn.lock,4531,    single-spa: 6.x
+lock-mfe-dependency,yarn.lock,4532,    single-spa-react: 6.x
+lock-mfe-dependency,yarn.lock,4612,    single-spa: 6.x
+lock-mfe-dependency,yarn.lock,4844,"    single-spa-react: ""npm:^6.0.2"""
+lock-mfe-dependency,yarn.lock,4876,    single-spa: 6.x
+lock-mfe-dependency,yarn.lock,10319,"""browserslist-config-single-spa@npm:^1.0.1"":"
+lock-mfe-dependency,yarn.lock,10321,"  resolution: ""browserslist-config-single-spa@npm:1.0.1"""
+lock-mfe-dependency,yarn.lock,22585,"""single-spa-angular@npm:^9.0.1"":"
+lock-mfe-dependency,yarn.lock,22587,"  resolution: ""single-spa-angular@npm:9.0.1"""
+lock-mfe-dependency,yarn.lock,22593,"    single-spa: "">=4.0.0"""
+lock-mfe-dependency,yarn.lock,22599,"""single-spa-react@npm:^6.0.2"":"
+lock-mfe-dependency,yarn.lock,22601,"  resolution: ""single-spa-react@npm:6.0.2"""
+lock-mfe-dependency,yarn.lock,22603,"    browserslist-config-single-spa: ""npm:^1.0.1"""
+lock-mfe-dependency,yarn.lock,22617,"""single-spa@npm:^6.0.3"":"
+lock-mfe-dependency,yarn.lock,22619,"  resolution: ""single-spa@npm:6.0.3"""
+cfg-federation-plugin,packages/esm-form-entry-app/webpack.config.js,2,const { ModuleFederationPlugin } = container;
+cfg-federation-plugin,packages/esm-form-entry-app/webpack.config.js,70,    new ModuleFederationPlugin({
+cfg-exposes,packages/esm-form-entry-app/webpack.config.js,74,      exposes: {
+cfg-shared,packages/esm-form-entry-app/webpack.config.js,77,"      shared: [...Object.keys(peerDependencies), '@openmrs/esm-framework/src/internal'].reduce((obj, depName) => {"
+cfg-shared,packages/esm-form-entry-app/webpack.config.js,80,"          singleton: true,"
+cfg-public-path,packages/esm-form-entry-app/webpack.config.js,57,"    publicPath: 'auto',"
+cfg-custom-webpack,packages/esm-form-entry-app/angular.json,27,"          ""builder"": ""ngx-build-plus:browser"","
+cfg-custom-webpack,packages/esm-form-entry-app/angular.json,52,"            ""extraWebpackConfig"": ""webpack.config.js"","
+cfg-custom-webpack,packages/esm-form-entry-app/angular.json,86,"              ""extraWebpackConfig"": ""webpack.prod.config.js"""
+cfg-custom-webpack,packages/esm-form-entry-app/angular.json,91,"          ""builder"": ""ngx-build-plus:dev-server"","
+cfg-custom-webpack,packages/esm-form-entry-app/angular.json,95,"            ""extraWebpackConfig"": ""webpack.config.js"""
+cfg-custom-webpack,packages/esm-form-entry-app/angular.json,100,"              ""extraWebpackConfig"": ""webpack.prod.config.js"""
+cfg-custom-webpack,packages/esm-form-entry-app/angular.json,105,"          ""builder"": ""ngx-build-plus:extract-i18n"","
+cfg-custom-webpack,packages/esm-form-entry-app/angular.json,108,"            ""extraWebpackConfig"": ""webpack.config.js"""
+src-async-bootstrap,packages/esm-form-entry-app/src/index.ts,66,export const formWidget = () => import('./bootstrap');
+src-load-remote,packages/esm-form-entry-app/src/declarations.d.ts,3,declare const __webpack_share_scopes__;
+src-mount-export,packages/esm-form-entry-app/src/bootstrap.ts,21,export const bootstrap = lifecycles.bootstrap;
+src-mount-export,packages/esm-form-entry-app/src/bootstrap.ts,22,export const mount = lifecycles.mount;
+src-mount-export,packages/esm-form-entry-app/src/bootstrap.ts,23,export const unmount = lifecycles.unmount;
+src-lifecycles,packages/esm-form-entry-app/src/bootstrap.ts,3,"import { singleSpaAngular, getSingleSpaExtraProviders } from 'single-spa-angular';"
+src-lifecycles,packages/esm-form-entry-app/src/bootstrap.ts,12,const lifecycles = singleSpaAngular({
+src-iframe,packages/esm-patient-attachments-app/src/attachments/attachment-preview.component.tsx,56,"            <iframe className={styles.pdfViewer} src={attachmentToPreview.src} title=""PDFViewer"" />"
+src-iframe,packages/esm-patient-forms-app/src/htmlformentry/html-form-entry-wrapper.component.tsx,43,      <iframe ref={iframeRef} src={src} className={styles.wrapper} onLoad={onLoad}></iframe>
+src-cross-unit-communication,packages/esm-form-engine-app/src/form-collapse-toggle/form-collapse-toggle.component.tsx,15,"    window.addEventListener('openmrs:form-view-embedded', handleFormEmbedded);"
+src-cross-unit-communication,packages/esm-form-engine-app/src/form-collapse-toggle/form-collapse-toggle.component.tsx,23,"    const FormCollapseToggleEvent = new CustomEvent('openmrs:form-collapse-toggle', { detail: { value } });"
+src-cross-unit-communication,packages/esm-form-engine-app/src/form-collapse-toggle/form-collapse-toggle.component.tsx,24,    window.dispatchEvent(FormCollapseToggleEvent);
+src-cross-unit-communication,packages/esm-patient-flags-app/src/flags/hooks/usePatientFlags.tsx,56,"    window.addEventListener('single-spa:routing-event', listenToRoutingEvent);"
+ops-deployment-file,e2e/support/bamboo/docker-compose.yml,,
+ops-deployment-file,e2e/support/github/Dockerfile,,
+ops-deployment-file,e2e/support/github/docker-compose.yml,,
+ops-dockerfile,e2e/support/github/Dockerfile,2,FROM --platform=$BUILDPLATFORM node:18-alpine as dev
+ops-dockerfile,e2e/support/github/Dockerfile,15,FROM --platform=$BUILDPLATFORM openmrs/openmrs-reference-application-3-frontend:nightly as frontend
+ops-dockerfile,e2e/support/github/Dockerfile,16,FROM nginx:1.23-alpine
+ops-compose-service,e2e/support/bamboo/docker-compose.yml,6,    build:
+ops-compose-service,e2e/support/bamboo/docker-compose.yml,21,    image: openmrs/openmrs-reference-application-3-gateway:${TAG:-nightly}
+ops-compose-service,e2e/support/bamboo/docker-compose.yml,22,    depends_on:
+ops-compose-service,e2e/support/bamboo/docker-compose.yml,31,    image: openmrs/openmrs-reference-application-3-frontend:${TAG:-nightly}
+ops-compose-service,e2e/support/bamboo/docker-compose.yml,39,    depends_on:
+ops-compose-service,e2e/support/bamboo/docker-compose.yml,45,    image: openmrs/openmrs-reference-application-3-backend:nightly-with-data
+ops-compose-service,e2e/support/bamboo/docker-compose.yml,46,    depends_on:
+ops-compose-service,e2e/support/bamboo/docker-compose.yml,51,    image: openmrs/openmrs-reference-application-3-db:nightly-with-data
+ops-compose-service,e2e/support/github/docker-compose.yml,6,    image: openmrs/openmrs-reference-application-3-gateway:${TAG:-nightly}
+ops-compose-service,e2e/support/github/docker-compose.yml,11,    build:
+ops-compose-service,e2e/support/github/docker-compose.yml,18,    image: openmrs/openmrs-reference-application-3-backend:nightly-with-data
+ops-compose-service,e2e/support/github/docker-compose.yml,19,    depends_on:
+ops-compose-service,e2e/support/github/docker-compose.yml,24,    image: openmrs/openmrs-reference-application-3-db:nightly-with-data
+ops-hosting,packages/esm-form-entry-app/README.md,3,This widget encapsulates the form entry capabilities of the AMPATH form engine. It's essentially a wrapper around an Angular application that renders JSON schemas built using the AMPATH form engine as HTML forms. The user can fill and submit forms and receive success or error notifications upon subm
+ops-hosting,packages/esm-patient-forms-app/README.md,3,"The forms widget. It provides a tabular overview of the clinical forms available for use in the system. Presently, the forms widget is configured to use forms built using the AMPATH form engine. Read the docs [here](https://ampath-forms.vercel.app)."
+ci-workflow-file,.github/workflows/bundle-size.yml,,
+ci-workflow-file,.github/workflows/ci.yml,,
+ci-workflow-file,.github/workflows/e2e.yml,,
+ci-workflow-file,.github/workflows/tx-pull.yml,,
+ci-workflow-file,.github/workflows/tx-push.yml,,
+ci-workflow-file,.github/workflows/update-openmrs-deps.yml,,
+ci-monorepo-tooling,.github/workflows/bundle-size.yml,33,          build-script: 'turbo run build --color --concurrency=5'
+ci-monorepo-tooling,.github/workflows/ci.yml,52,        run: yarn turbo run build --color --concurrency=5
+ci-monorepo-tooling,.github/workflows/ci.yml,90,        run: yarn turbo run build --color --concurrency=5
+ci-monorepo-tooling,.github/workflows/ci.yml,159,        run: yarn turbo run build --color --concurrency=5
+ci-monorepo-tooling,.github/workflows/e2e.yml,66,        run: yarn turbo run build --color --concurrency=5
+doc-mfe-term,README.md,7,The `openmrs-esm-patient-chart` is a frontend module for the OpenMRS SPA. It contains various microfrontends that constitute widgets in a patient dashboard. These widgets include:
+doc-mfe-term,README.md,23,"In addition to these widgets, two other microfrontends exist that encapsulate cross-cutting concerns. These are:"
+doc-mfe-term,README.md,40,"To start a dev server for a specific microfrontend, run:"
+doc-mfe-term,README.md,46,This command uses the [openmrs](https://www.npmjs.com/package/openmrs) tooling to fire up a dev server running `esm-patient-chart` as well as the specified microfrontend.
+doc-mfe-term,README.md,48,There are two approaches for working on multiple microfrontends simultaneously.
+doc-mfe-term,README.md,50,"You could run `yarn start` with as many `sources` arguments as you require. For example, to run the biometrics and vitals microfrontends simultaneously, you'd use:"
+doc-mfe-term,README.md,165,See [Creating a Distribution](http://o3-dev.docs.openmrs.org/#/main/distribution?id=creating-a-distribution) for information about adding microfrontends to a distribution.
+doc-mfe-term,packages/esm-patient-chart-app/README.md,3,"This microfrontend provides the underlying framework on top of which all the individual widgets are run. It sets up the layout of the patient chart and handles routing between the chart summary and widget dashboards. It also sets up core extensions, the workspace, the side and nav menus, visits func"
+doc-import-map-zones,README.md,56,"Alternatively, you could run `yarn serve` from within the individual packages and then use [import map overrides](http://o3-dev.docs.openmrs.org/#/getting_started/setup?id=import-map-overrides)."
+ws-workspaces,package.json,5,"  ""workspaces"": ["
+ws-path-alias,packages/esm-form-entry-app/tsconfig.app.json,11,"    ""paths"": {"
+ws-path-alias,packages/esm-form-entry-app/tsconfig.spec.json,9,"    ""paths"": {"
+ws-path-alias,tsconfig.json,20,"    ""paths"": {"

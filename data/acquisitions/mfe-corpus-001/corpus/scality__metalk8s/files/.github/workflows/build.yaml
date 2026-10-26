@@ -1,0 +1,144 @@
+name: "Build"
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        description: "the git revision to checkout"
+        default: ${{github.ref}}
+        required: false
+        type: string
+      skip-devcontainer:
+        description: "True will skip the build of the devcontainer"
+        default: false
+        required: false
+        type: boolean
+    outputs:
+      artifact-name:
+        description: "artifacts name"
+        value: ${{ jobs.build.outputs.artifact-name }}
+      artifact-link:
+        description: "artifacts link"
+        value: ${{ jobs.build.outputs.artifact-link }}
+    secrets:
+      ARTIFACTS_USER:
+        required: true
+      ARTIFACTS_PASSWORD:
+        required: true
+
+  workflow_dispatch:
+
+jobs:
+  build-devcontainer:
+    uses: ./.github/workflows/build-devcontainer.yaml
+    secrets: inherit
+    with:
+      # NOTE: We check "== true" instead of just checking the value
+      # since by default when the workflow is call with "workflow dispatch"
+      # the input will (sadly) be "" and not use the default value
+      skip: ${{ inputs.skip-devcontainer == true }}
+
+  build:
+    # Use our self hosted runner since the github ones have not enough disk space
+    # (the disk is almost full even before building anything)
+    runs-on: ubuntu-24.04-4core
+    needs:
+      - build-devcontainer
+    container:
+      image: ghcr.io/${{ github.repository }}/devcontainer:${{ github.sha }}
+      # We have to use `root` for the moment
+      # Sees: https://github.com/actions/checkout/issues/1575
+      # Could work with a user with 1001 id but not for docker
+      options: --user root
+      volumes:
+        # This "ugly" workaround is needed for now because we use a container to run the job
+        # so we use docker-in-docker but by default github mount the workspace in the container
+        # not at the same location
+        # - on the host it's on github.workspace => /home/runner/work/metalk8s/metalk8s
+        # - in the container it's on GITHUB_WORKSPACE => /__w/metalk8s/metalk8s
+        # Which means if we want to creata docker with bind mount we need to use the host path
+        # that's why we also mount the workspace in the container at the same location
+        - ${{ github.workspace }}:${{ github.workspace }}
+      credentials:
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    defaults:
+      run:
+        shell: bash
+    outputs:
+      artifact-name: ${{ steps.upload.outputs.name }}
+      artifact-link: ${{ steps.upload.outputs.link }}
+    steps:
+      - name: Login to Docker Hub
+        uses: docker/login-action@v4
+        with:
+          username: ${{ secrets.DOCKERHUB_LOGIN }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.ref }}
+          # NOTE: We fetch depth so that we can put the right `GIT` reference
+          # in the product.txt
+          fetch-depth: 0
+      - name: Set safe directory (since container is root and not user 1001)
+        run: git config --global --add safe.directory ${{ github.workspace }}
+      - name: Build everything
+        run: cd "${{ github.workspace }}" && ./doit.sh -n 4 --verbosity 2 --failure-verbosity 2
+      - name: Prepare artifacts
+        env:
+          DEST_DIR: "artifacts"
+          ARTIFACTS: >-
+            build.log
+            _build/metalk8s.iso
+            _build/SHA256SUM
+            _build/root/product.txt
+        run: |
+          mkdir -p "$DEST_DIR"
+          for artifact in $ARTIFACTS; do
+            cp -r "$artifact" "$DEST_DIR"
+          done
+      - name: Upload artifacts
+        id: upload
+        uses: scality/action-artifacts@v4
+        with:
+          method: upload
+          url: https://artifacts.scality.net
+          user: ${{ secrets.ARTIFACTS_USER }}
+          password: ${{ secrets.ARTIFACTS_PASSWORD }}
+          source: artifacts
+      - name: Cleanup build tree
+        run: cd "${{ github.workspace }}" && ./doit.sh clean && test ! -d _build
+
+  build-shell-ui:
+    uses: ./.github/workflows/build-shell-ui.yaml
+    secrets: inherit
+    with:
+      ref: ${{ inputs.ref }}
+
+  build-docs:
+    needs:
+      - build-devcontainer
+    uses: ./.github/workflows/build-docs.yaml
+    secrets: inherit
+    with:
+      ref: ${{ inputs.ref }}
+      skip-devcontainer: true
+
+  write-final-status:
+    runs-on: ubuntu-24.04
+    needs:
+      - build
+      - build-shell-ui
+      - build-docs
+    if: always()
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Upload final status
+        if: always()
+        uses: scality/actions/upload_final_status@1.17.0
+        with:
+          ARTIFACTS_USER: ${{ secrets.ARTIFACTS_USER }}
+          ARTIFACTS_PASSWORD: ${{ secrets.ARTIFACTS_PASSWORD }}
+          JOBS_RESULTS: ${{ join(needs.*.result) }}

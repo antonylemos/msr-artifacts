@@ -1,0 +1,254 @@
+{
+  "visitReport10": {
+    "name": "Rapport de visites",
+    "type": "visits",
+    "requiredPrivilege": "app:reports",
+    "config": {
+      "forDataAnalysis": true,
+      "patientAttributes": [
+        "phoneNumber"
+      ],
+      "visitAttributes": [
+        "Visit Status",
+        "Admission Status"
+      ],
+      "patientAddresses": [
+        "county_district",
+        "city_village",
+        "state_province"
+      ],
+      "applyDateRangeFor": "visitStopDate",
+      "visitTypesToFilter": [
+        "PHARMACY VISIT",
+        "OPD",
+        "IPD",
+        "EMERGENCY"
+      ]
+    }
+  },
+  "formBuilderReport": {
+    "name": "Rapport de création de formulaire",
+    "type": "formBuilder",
+    "requiredPrivilege": "app:reports",
+    "config": {
+      "patientAttributes": [
+        "caste",
+        "class",
+        "education",
+        "occupation"
+      ],
+      "patientAddresses": [
+        "address3",
+        "city_village"
+      ],
+      "visitAttributes": [
+        "Visit Status"
+      ],
+      "showVisitInfo": true,
+      "showProvider": true,
+      "formNamesToFilter": [
+        "Second Vitals"
+      ],
+      "conceptNameDisplayFormat": "shortNamePreferred",
+      "locationTagsToFilter": [],
+      "programsToFilter": [],
+      "applyDateRangeFor": "obsDate",
+      "visitTypesToFilter": []
+    }
+  },
+  "DiagnosisCountReport": {
+    "name": "Rapport de diagnostic",
+    "type": "MRSGeneric",
+    "requiredPrivilege": "app:reports",
+    "config": {
+      "sqlPath": "/etc/bahmni_config/openmrs/apps/reports/sql/diagnosisCount.sql"
+    }
+  },
+  "diabetes": {
+    "name": "Diabètes",
+    "type": "obsCount",
+    "requiredPrivilege": "app:reports",
+    "config": {
+      "ageGroupName": "All Ages",
+      "conceptNames": [
+        "Diabetes, Intake"
+      ],
+      "visitTypes": [
+        "OPD",
+        "IPD"
+      ],
+      "countOnlyClosedVisits": "false",
+      "countOncePerPatient": "false"
+    }
+  },
+  "OPD/IPDVisitCount": {
+    "name": "Compte de consultations et hospitalisations",
+    "type": "IpdOpdVisitCount",
+    "requiredPrivilege": "app:reports"
+  },
+  "radiology(X-Ray)Count": {
+    "name": "Compte des examens Radiologie(X-Ray)",
+    "type": "ObsCountByConceptClass",
+    "requiredPrivilege": "app:reports",
+    "config": {
+      "conceptClassNames": [
+        "Radiology",
+        "Radiology/Imaging Procedure"
+      ]
+    }
+  },
+  "IPDPatientsReport": {
+    "name": "Rapport des patients en hospitalisation",
+    "type": "ipdPatients",
+    "requiredPrivilege": "app:reports",
+    "config": {
+      "addressAttributes": [
+        "address1",
+        "city_village",
+        "county_district",
+        "state_province"
+      ],
+      "patientAttributes": [
+        "phoneNumber"
+      ],
+      "conceptNames": [
+        "Height (cm)",
+        "Weight (kg)"
+      ],
+      "filterBy": "Date of Discharge"
+    }
+  },
+  "OrderFulfillmentReport": {
+    "name": "Rapport d'exécution des commandes",
+    "type": "OrderFulfillmentReport",
+    "requiredPrivilege": "app:reports",
+    "config": {
+      "type": "OrderFulfillmentReport",
+      "orderTypes": [
+        "Order",
+        "Drug Order"
+      ]
+    }
+  },
+  "SampleGenericProgramReport": {
+    "name": "Exemple de rapport de programme générique",
+    "type": "programs",
+    "requiredPrivilege": "app:reports",
+    "config": {
+      "patientAttributes": [
+        "education",
+        "primaryContact",
+        "secondaryContact",
+        "class",
+        "cluster"
+      ],
+      "patientAddresses": [
+        "city_village",
+        "address3"
+      ],
+      "programAttributes": [],
+      "forDataAnalysis": true,
+      "showAllStates": true,
+      "programNamesToFilter": [
+        "HIV Program",
+        "TB Program"
+      ]
+    }
+  },
+  "pivotReportOfVisits": {
+    "name": "Rapport d'agrégation des visites",
+    "type": "aggregation",
+    "requiredPrivilege": "app:reports",
+    "config": {
+      "report": {
+        "type": "visits",
+        "config": {
+          "forDataAnalysis": true,
+          "patientAttributes": [
+            "caste",
+            "class",
+            "education",
+            "occupation",
+            "primaryContact"
+          ],
+          "visitAttributes": [
+            "Visit Status",
+            "Admission Status"
+          ],
+          "patientAddresses": [
+            "address3",
+            "city_village"
+          ],
+          "applyDateRangeFor": "visitStopDate",
+          "visitTypesToFilter": [
+            "PHARMACY VISIT",
+            "OPD"
+          ]
+        }
+      },
+      "rowGroups": [
+        "Gender"
+      ],
+      "columnGroups": [
+        "Visit Status"
+      ],
+      "distinctGroups": [
+        "Patient Identifier"
+      ]
+    }
+  },
+  "pivotReportForPrograms": {
+    "name": "Rapport pivot du programme VIH",
+    "type": "aggregation",
+    "requiredPrivilege": "app:reports",
+    "config": {
+      "report": {
+        "type": "programs",
+        "config": {
+          "patientAttributes": [
+          ],
+          "patientAddresses": [
+            "city_village",
+            "address3"
+          ],
+          "programAttributes": [],
+          "forDataAnalysis": true,
+          "showAllStates": true,
+          "programNamesToFilter": [
+            "TB Program",
+            "HIV Program"
+          ]
+        }
+      },
+      "columnGroups": [
+        "Program name"
+      ],
+      "rowGroups": [
+        "Gender"
+      ],
+      "distinctGroups": [
+        "Patient Identifier"
+      ],
+      "showTotalRow": true,
+      "showTotalColumn": true
+    }
+  },
+  "OpenELISTestCount": {
+    "name": "Nombre de tests",
+    "type": "ElisGeneric",
+    "requiredPrivilege": "app:reports",
+    "config": {
+      "sqlPath": "/etc/bahmni_config/openmrs/apps/reports/sql/testCount.sql"
+    }
+  },
+  "OdooInvoiceSummary": {
+    "name": "Résumé de la facturation",
+    "type": "ERPGeneric",
+    "requiredPrivilege": "app:reports",
+    "config": {
+      "sqlPath": "/etc/bahmni_config/openmrs/apps/reports/sql/odooInvoiceSummary.sql"
+    }
+  }
+}
+
+

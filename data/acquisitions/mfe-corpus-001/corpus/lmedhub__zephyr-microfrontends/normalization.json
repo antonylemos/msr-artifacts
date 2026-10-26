@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "id": "990877766",
+  "fullName": "lmedhub/zephyr-microfrontends",
+  "commit": "c6e6a9f7d59a3b422002af26c57617d6c486a532",
+  "acquiredAt": "2026-10-24T00:32:36.479Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "backend/url_shortener.db",
+      "reason": "preset:binaries",
+      "size": 24576
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 59,
+    "bytes": 1540101
+  },
+  "languages": {
+    "JSON": 1481108,
+    "Other": 17798,
+    "TypeScript": 14349,
+    "Go": 13724,
+    "Vue": 6830,
+    "CSS": 2287,
+    "Markdown": 1591,
+    "HTML": 1174,
+    "YAML": 987,
+    "SQL": 253
+  },
+  "contentSha256": "bf57a571ad90a06518bdd40a144fd76d0ed0dff9b98a204db3f29d580b212d70"
+}

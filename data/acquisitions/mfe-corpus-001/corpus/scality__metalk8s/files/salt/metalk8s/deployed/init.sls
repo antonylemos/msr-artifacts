@@ -1,0 +1,20 @@
+include:
+  - .core
+  - metalk8s.addons.alert-logger.deployed
+  - metalk8s.addons.prometheus-operator.deployed
+  - metalk8s.addons.cert-manager.deployed
+  - metalk8s.addons.nginx-ingress.deployed
+  - metalk8s.addons.nginx-ingress-control-plane.deployed
+  - metalk8s.addons.volumes.deployed
+  - metalk8s.addons.solutions.deployed
+  - metalk8s.addons.ui-operator.deployed
+  - metalk8s.addons.shell-ui.deployed
+  - metalk8s.addons.ui.deployed
+  - metalk8s.addons.dex.deployed
+  - metalk8s.addons.prometheus-adapter.deployed
+  - metalk8s.addons.node-problem-detector.deployed
+  - metalk8s.addons.node-warden-operator.deployed
+  - metalk8s.addons.logging.deployed
+  - metalk8s.addons.alert-tree.deployed
+  - metalk8s.addons.crl-operator.deployed
+  - metalk8s.addons.disk-management-agent.deployed

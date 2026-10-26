@@ -1,0 +1,7 @@
+manifest,line,section,package,version,technology,same_package_matches,other_package_matches
+apps/mfe-vue2-admin/package.json,13,dependencies,@mfe/shared,workspace:*,mfe-term,,apps/shell/composables/useMfeLoader.ts:13;apps/shell/composables/useMfeLoader.ts:79
+apps/mfe-vue2-checkout/package.json,13,dependencies,@mfe/shared,workspace:*,mfe-term,,apps/shell/composables/useMfeLoader.ts:13;apps/shell/composables/useMfeLoader.ts:79
+apps/mfe-vue3-dashboard/package.json,14,dependencies,@mfe/shared,workspace:*,mfe-term,,apps/shell/composables/useMfeLoader.ts:13;apps/shell/composables/useMfeLoader.ts:79
+apps/mfe-vue3-profile/package.json,14,dependencies,@mfe/shared,workspace:*,mfe-term,,apps/shell/composables/useMfeLoader.ts:13;apps/shell/composables/useMfeLoader.ts:79
+apps/shell/package.json,13,dependencies,@mfe/shared,workspace:*,mfe-term,apps/shell/composables/useMfeLoader.ts:13;apps/shell/composables/useMfeLoader.ts:79,
+package.json,34,devDependencies,turbo,^2.0.0,monorepo-tool,pnpm-workspace.yaml:1,

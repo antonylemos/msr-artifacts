@@ -1,0 +1,5 @@
+manifest,state
+src/frontend/apps/ui-catalog-consumer/package.json,ok
+src/frontend/apps/ui-catalog-merchant/package.json,ok
+src/frontend/apps/ui-catalog/package.json,ok
+src/frontend/package.json,ok

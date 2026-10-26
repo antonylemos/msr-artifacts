@@ -1,0 +1,36 @@
+pattern,path,line,excerpt
+ops-deployment-file,config/nginx/nginx.conf,,
+ops-deployment-file,infra/nginx/nginx.conf,,
+ops-proxy-route,config/nginx/nginx.conf,31,    location = / {
+ops-proxy-route,config/nginx/nginx.conf,35,    location = /dashboard {
+ops-proxy-route,config/nginx/nginx.conf,38,    location /dashboard/ {
+ops-proxy-route,config/nginx/nginx.conf,39,      proxy_pass http://dashboard_upstream;
+ops-proxy-route,config/nginx/nginx.conf,43,    location = /auth {
+ops-proxy-route,config/nginx/nginx.conf,46,    location /auth/ {
+ops-proxy-route,config/nginx/nginx.conf,47,      proxy_pass http://auth_upstream;
+ops-proxy-route,config/nginx/nginx.conf,51,    location = /profile {
+ops-proxy-route,config/nginx/nginx.conf,54,    location /profile/ {
+ops-proxy-route,config/nginx/nginx.conf,55,      proxy_pass http://profile_upstream;
+ops-proxy-route,config/nginx/nginx.conf,59,    location = /study {
+ops-proxy-route,config/nginx/nginx.conf,62,    location /study/ {
+ops-proxy-route,config/nginx/nginx.conf,63,      proxy_pass http://study_upstream;
+ops-proxy-route,config/nginx/nginx.conf,67,    location = /decks {
+ops-proxy-route,config/nginx/nginx.conf,70,    location /decks/ {
+ops-proxy-route,config/nginx/nginx.conf,71,      proxy_pass http://decks_upstream;
+ops-proxy-route,infra/nginx/nginx.conf,29,    location = / {
+ops-proxy-route,infra/nginx/nginx.conf,33,    location = /dashboard {
+ops-proxy-route,infra/nginx/nginx.conf,36,    location /dashboard/ {
+ops-proxy-route,infra/nginx/nginx.conf,37,      proxy_pass http://mindlet_dashboard/;
+ops-proxy-route,infra/nginx/nginx.conf,40,    location = /auth {
+ops-proxy-route,infra/nginx/nginx.conf,43,    location /auth/ {
+ops-proxy-route,infra/nginx/nginx.conf,44,      proxy_pass http://mindlet_auth/;
+ops-proxy-route,infra/nginx/nginx.conf,47,    location = /profile {
+ops-proxy-route,infra/nginx/nginx.conf,50,    location /profile/ {
+ops-proxy-route,infra/nginx/nginx.conf,51,      proxy_pass http://mindlet_profile/;
+ops-proxy-route,infra/nginx/nginx.conf,54,    location = /study {
+ops-proxy-route,infra/nginx/nginx.conf,57,    location /study/ {
+ops-proxy-route,infra/nginx/nginx.conf,58,      proxy_pass http://mindlet_study/;
+ops-proxy-route,infra/nginx/nginx.conf,61,    location = /decks {
+ops-proxy-route,infra/nginx/nginx.conf,64,    location /decks/ {
+ops-proxy-route,infra/nginx/nginx.conf,65,      proxy_pass http://mindlet_decks/;
+doc-mfe-term,README.md,3,"Micro-frontends: **dashboard**, **auth**, **profile**, **study**, **decks** (Next.js 16, `basePath` per zone), plus **`@ross2p/shared`** and **`@ross2p/types`**."

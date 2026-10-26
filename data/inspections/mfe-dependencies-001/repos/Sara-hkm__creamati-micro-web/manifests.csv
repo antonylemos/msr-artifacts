@@ -1,0 +1,7 @@
+manifest,state
+frontend/analytics-app/package.json,ok
+frontend/container/package.json,ok
+frontend/data-grid-app/package.json,ok
+frontend/settings-app/package.json,ok
+frontend/user-management-app/package.json,ok
+package.json,ok

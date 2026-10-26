@@ -1,0 +1,38 @@
+<div class="page">
+  <ds-page-header
+    title="Administração do sistema"
+    subtitle="Cadastro de seguradoras, produtos e preços."
+  >
+    <ds-button variant="primary">Nova seguradora</ds-button>
+  </ds-page-header>
+
+  <section class="bloco">
+    <h2>Seguradoras</h2>
+    <div class="lista">
+      @for (seguradora of seguradoras(); track seguradora.id) {
+        <ds-card [title]="seguradora.nome">
+          <p class="doc">{{ seguradora.cnpj }}</p>
+          <ds-badge [status]="seguradora.ativa ? 'success' : 'neutral'">
+            {{ seguradora.ativa ? 'ativa' : 'inativa' }}
+          </ds-badge>
+        </ds-card>
+      }
+    </div>
+  </section>
+
+  <section class="bloco">
+    <h2>Produtos</h2>
+    <div class="lista">
+      @for (produto of produtos(); track produto.id) {
+        <ds-card [title]="produto.nome">
+          <p class="doc">{{ nomeSeguradora(produto.seguradoraId) }} · {{ produto.categoria }}</p>
+          <ds-badge [status]="produto.ativo ? 'success' : 'neutral'">
+            {{ produto.ativo ? 'ativo' : 'inativo' }}
+          </ds-badge>
+          <p class="preco">R$ {{ produto.precoBase.toFixed(2) }}</p>
+          <ds-button variant="ghost">Editar</ds-button>
+        </ds-card>
+      }
+    </div>
+  </section>
+</div>

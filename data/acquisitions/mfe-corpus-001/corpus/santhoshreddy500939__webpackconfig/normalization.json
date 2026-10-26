@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "id": "1136702019",
+  "fullName": "santhoshreddy500939/webpackconfig",
+  "commit": "e1f97e37c21a6893a8dbf8cd6ea7a7f8c4a9058a",
+  "acquiredAt": "2026-10-24T00:32:31.764Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "assets/Images/webpack.png",
+      "reason": "preset:binaries",
+      "size": 2806
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 14,
+    "bytes": 283075
+  },
+  "languages": {
+    "JSON": 278321,
+    "JavaScript": 3800,
+    "Markdown": 654,
+    "HTML": 225,
+    "SCSS": 38,
+    "Other": 37
+  },
+  "contentSha256": "e1142d667cae9a618083ed0bf243a727a453513aa05167fe20605b279a77fa61"
+}

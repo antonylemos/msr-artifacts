@@ -1,0 +1,3 @@
+directory,markers
+header-app,header-app/package.json;header-app/rspack.config.js
+home-app,home-app/package.json;home-app/rspack.config.js

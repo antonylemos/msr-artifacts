@@ -1,0 +1,180 @@
+pattern,path,line,excerpt
+dep-module-federation,package.json,22,"    ""module-federation"","
+dep-mfe-term,package.json,2,"  ""name"": ""micro-frontend-golden-sample"","
+dep-mfe-term,package.json,4,"  ""description"": ""Golden sample project demonstrating micro-frontend architecture using React + Webpack Module Federation + Material-UI"","
+dep-mfe-term,package.json,18,"    ""micro-frontend"","
+dep-mfe-term,package.json,26,"  ""author"": ""Micro-Frontend Team"","
+rt-manifest-file,frontend/analytics-app/public/manifest.json,,
+rt-manifest-file,frontend/container/public/manifest.json,,
+rt-manifest-file,frontend/data-grid-app/public/manifest.json,,
+rt-manifest-file,frontend/settings-app/public/manifest.json,,
+rt-manifest-file,frontend/user-management-app/public/manifest.json,,
+src-iframe,frontend/container/src/App.tsx,239,                <iframe
+ops-hosting,.github/workflows/deploy-all.yml,74,      uses: peaceiris/actions-gh-pages@v3
+ops-hosting,.github/workflows/deploy-all.yml,112,      uses: peaceiris/actions-gh-pages@v3
+ops-hosting,.github/workflows/deploy-analytics.yml,39,      uses: peaceiris/actions-gh-pages@v3
+ops-hosting,.github/workflows/deploy-container.yml,39,      uses: peaceiris/actions-gh-pages@v3
+ops-hosting,.github/workflows/deploy-data-grid.yml,39,      uses: peaceiris/actions-gh-pages@v3
+ops-hosting,.github/workflows/deploy-settings.yml,39,      uses: peaceiris/actions-gh-pages@v3
+ops-hosting,.github/workflows/deploy-user-management.yml,39,      uses: peaceiris/actions-gh-pages@v3
+ops-hosting,DEPLOYMENT.md,3,This project includes GitHub Actions workflows for automatic deployment of all micro-frontends to Vercel.
+ops-hosting,DEPLOYMENT.md,7,### 1. Create Vercel Projects
+ops-hosting,DEPLOYMENT.md,9,Create separate Vercel projects for each micro-frontend:
+ops-hosting,DEPLOYMENT.md,22,VERCEL_TOKEN=your_vercel_token
+ops-hosting,DEPLOYMENT.md,23,VERCEL_ORG_ID=your_vercel_org_id
+ops-hosting,DEPLOYMENT.md,24,VERCEL_PROJECT_ID_CONTAINER=container_project_id
+ops-hosting,DEPLOYMENT.md,25,VERCEL_PROJECT_ID_USER_MGMT=user_mgmt_project_id
+ops-hosting,DEPLOYMENT.md,26,VERCEL_PROJECT_ID_DATA_GRID=data_grid_project_id
+ops-hosting,DEPLOYMENT.md,27,VERCEL_PROJECT_ID_ANALYTICS=analytics_project_id
+ops-hosting,DEPLOYMENT.md,28,VERCEL_PROJECT_ID_SETTINGS=settings_project_id
+ops-hosting,DEPLOYMENT.md,31,### 3. Get Vercel Credentials
+ops-hosting,DEPLOYMENT.md,33,#### Vercel Token:
+ops-hosting,DEPLOYMENT.md,34,1. Go to [Vercel Dashboard](https://vercel.com/dashboard)
+ops-hosting,DEPLOYMENT.md,39,1. Go to your Vercel team settings
+ops-hosting,DEPLOYMENT.md,43,1. Go to each Vercel project
+ops-hosting,DEPLOYMENT.md,53,"  'user-management': 'https://your-user-mgmt.vercel.app',"
+ops-hosting,DEPLOYMENT.md,54,"  'data-grid': 'https://your-data-grid.vercel.app',"
+ops-hosting,DEPLOYMENT.md,55,"  'analytics': 'https://your-analytics.vercel.app',"
+ops-hosting,DEPLOYMENT.md,56,  'settings': 'https://your-settings.vercel.app'
+ops-hosting,DEPLOYMENT.md,76,- **Container**: `https://your-container.vercel.app`
+ops-hosting,DEPLOYMENT.md,77,- **User Management**: `https://your-user-mgmt.vercel.app`
+ops-hosting,DEPLOYMENT.md,78,- **Data Grid**: `https://your-data-grid.vercel.app`
+ops-hosting,DEPLOYMENT.md,79,- **Analytics**: `https://your-analytics.vercel.app`
+ops-hosting,DEPLOYMENT.md,80,- **Settings**: `https://your-settings.vercel.app`
+ops-hosting,DEPLOYMENT.md,84,### Netlify
+ops-hosting,DEPLOYMENT.md,85,Replace Vercel action with:
+ops-hosting,DEPLOYMENT.md,87,- name: Deploy to Netlify
+ops-hosting,DEPLOYMENT.md,88,  uses: nwtgck/actions-netlify@v2.0
+ops-hosting,DEPLOYMENT.md,95,    NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+ops-hosting,DEPLOYMENT.md,96,    NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+ops-hosting,DEPLOYMENT.md,102,  uses: peaceiris/actions-gh-pages@v3
+ci-workflow-file,.github/workflows/deploy-all.yml,,
+ci-workflow-file,.github/workflows/deploy-analytics.yml,,
+ci-workflow-file,.github/workflows/deploy-container.yml,,
+ci-workflow-file,.github/workflows/deploy-data-grid.yml,,
+ci-workflow-file,.github/workflows/deploy-settings.yml,,
+ci-workflow-file,.github/workflows/deploy-user-management.yml,,
+ci-path-trigger,.github/workflows/deploy-analytics.yml,6,    paths:
+ci-path-trigger,.github/workflows/deploy-analytics.yml,11,    paths:
+ci-path-trigger,.github/workflows/deploy-container.yml,6,    paths:
+ci-path-trigger,.github/workflows/deploy-container.yml,11,    paths:
+ci-path-trigger,.github/workflows/deploy-data-grid.yml,6,    paths:
+ci-path-trigger,.github/workflows/deploy-data-grid.yml,11,    paths:
+ci-path-trigger,.github/workflows/deploy-settings.yml,6,    paths:
+ci-path-trigger,.github/workflows/deploy-settings.yml,11,    paths:
+ci-path-trigger,.github/workflows/deploy-user-management.yml,6,    paths:
+ci-path-trigger,.github/workflows/deploy-user-management.yml,11,    paths:
+doc-mfe-term,DEPLOYMENT.md,3,This project includes GitHub Actions workflows for automatic deployment of all micro-frontends to Vercel.
+doc-mfe-term,DEPLOYMENT.md,9,Create separate Vercel projects for each micro-frontend:
+doc-mfe-term,DEPLOYMENT.md,12,2. **User Management** - User management micro-frontend  
+doc-mfe-term,DEPLOYMENT.md,13,3. **Data Grid** - Data grid micro-frontend
+doc-mfe-term,DEPLOYMENT.md,14,4. **Analytics** - Analytics dashboard micro-frontend
+doc-mfe-term,DEPLOYMENT.md,15,5. **Settings** - Settings panel micro-frontend
+doc-mfe-term,DEPLOYMENT.md,52,const microFrontendUrls = {
+doc-mfe-term,DEPLOYMENT.md,65,- **Action**: Builds and deploys only the changed micro-frontend
+doc-mfe-term,DEPLOYMENT.md,70,"- **Action**: Builds, tests, and deploys all micro-frontends"
+doc-mfe-term,DEPLOYMENT.md,110,1. **CORS Configuration**: Ensure your deployed micro-frontends allow iframe embedding
+doc-mfe-term,DEPLOYMENT.md,113,4. **Monitoring**: Set up monitoring for each deployed micro-frontend
+doc-mfe-term,DEPLOYMENT.md,117,"Check deployment status in the GitHub Actions tab of your repository. Each micro-frontend deploys independently, ensuring faster deployments and better isolation."
+doc-mfe-term,README.md,1,# Golden Sample React Micro-Frontend Architecture
+doc-mfe-term,README.md,3,"A professional micro-frontend architecture demonstrating how to build modular, scalable frontend applications using React and iframe integration."
+doc-mfe-term,README.md,8,- **4 Independent Micro-Frontends**:
+doc-mfe-term,README.md,18,- Each micro-frontend runs independently on its own port
+doc-mfe-term,README.md,19,- Container app embeds micro-frontends using iframes
+doc-mfe-term,README.md,58,- Add Webpack Module Federation for true micro-frontend architecture
+doc-mfe-term,STATUS.md,1,# 🚀 Micro-Frontend Platform - Current Status
+doc-mfe-term,STATUS.md,16,- ✅ **Collapsible Side Menu** with navigation to all micro-frontends
+doc-mfe-term,STATUS.md,17,- ✅ **Main Content Area** with embedded micro-frontends
+doc-mfe-term,STATUS.md,27,#### **Micro-Frontend Integration:**
+doc-mfe-term,STATUS.md,30,- ✅ **Seamless Navigation** between different micro-frontends
+doc-mfe-term,STATUS.md,31,- ✅ **Color-Coded Themes** for each micro-frontend
+doc-mfe-term,STATUS.md,38,4. **Click any menu item** to navigate to that micro-frontend
+doc-mfe-term,STATUS.md,39,5. **Each micro-frontend loads embedded** within the main content area
+doc-mfe-term,STATUS.md,45,- **4 Micro-Frontends**: Each running independently with unique themes
+doc-mfe-term,STATUS.md,55,- ✅ Working navigation between micro-frontends
+doc-mfe-term,STATUS.md,75,"**🎉 The micro-frontend platform with header, footer, and side menu is now fully operational!**"
+doc-mfe-term,implementation-plan-mui-microservices.md,1,# 🚀 Micro-Frontend + Microservices Implementation Plan (MUI + Python)
+doc-mfe-term,implementation-plan-mui-microservices.md,3,This document provides a comprehensive implementation plan for building a full-stack micro-frontend architecture with Material-UI frontend and Python microservices backend.
+doc-mfe-term,implementation-plan-mui-microservices.md,92,- [ ] **Setup remotes** for all 4 micro-frontends
+doc-mfe-term,implementation-plan-mui-microservices.md,106,## 👥 Phase 3: User Management Micro-Frontend
+doc-mfe-term,implementation-plan-mui-microservices.md,136,## 📊 Phase 4: Data Grid Micro-Frontend
+doc-mfe-term,implementation-plan-mui-microservices.md,163,## 📈 Phase 5: Analytics Dashboard Micro-Frontend
+doc-mfe-term,implementation-plan-mui-microservices.md,195,## ⚙️ Phase 6: Settings Panel Micro-Frontend
+doc-mfe-term,implementation-plan-mui-microservices.md,452,"This comprehensive plan creates a production-ready micro-frontend architecture with Material-UI frontend and Python microservices backend, demonstrating modern full-stack development practices."
+doc-mfe-term,implementation-plan.md,1,# 🚀 Micro-Frontend Implementation Plan
+doc-mfe-term,implementation-plan.md,3,This document provides a step-by-step implementation plan for building the micro-frontend golden sample with React and Webpack Module Federation.
+doc-mfe-term,implementation-plan.md,18,  /auth-app          # Authentication micro-frontend
+doc-mfe-term,implementation-plan.md,19,  /dashboard-app     # Dashboard micro-frontend
+doc-mfe-term,implementation-plan.md,20,  /profile-app       # Profile micro-frontend
+doc-mfe-term,implementation-plan.md,271,- [ ] **Navigation works seamlessly** between micro-frontends
+doc-mfe-term,implementation-plan.md,296,- [Micro-Frontend Architecture Patterns](https://micro-frontends.org/)
+doc-mfe-term,micro-web-golden-sample.md,1,# 🏗 Golden Sample – Micro-Web (Micro-Frontend with React)
+doc-mfe-term,micro-web-golden-sample.md,4,It is designed to serve as a reference architecture and hands-on guide for teams looking to implement micro-frontends in a structured way.
+doc-mfe-term,micro-web-golden-sample.md,11,The microservice philosophy has inspired a parallel approach on the frontend called **micro-frontends** (or micro-web).  
+doc-mfe-term,micro-web-golden-sample.md,15,"- **Micro-Web / Micro-Frontends (Frontend)** → Small, independent UI applications composed together at runtime.  "
+doc-mfe-term,micro-web-golden-sample.md,29,- **Remote Apps (Micro-Frontends)**
+doc-mfe-term,micro-web-golden-sample.md,196,  Create a shared `ui-lib` package to ensure consistent styling across all micro-frontends.
+doc-mfe-term,micro-web-golden-sample.md,235,This golden sample demonstrates how to apply the **micro-frontend pattern** using React and Webpack 5’s Module Federation.  
+doc-integration-technology,DEPLOYMENT.md,48,"After deployment, update the iframe URLs in `frontend/container/src/App.tsx`:"
+doc-integration-technology,DEPLOYMENT.md,110,1. **CORS Configuration**: Ensure your deployed micro-frontends allow iframe embedding
+doc-integration-technology,README.md,3,"A professional micro-frontend architecture demonstrating how to build modular, scalable frontend applications using React and iframe integration."
+doc-integration-technology,README.md,19,- Container app embeds micro-frontends using iframes
+doc-integration-technology,README.md,53,# Update container's iframe URLs to production domains
+doc-integration-technology,README.md,58,- Add Webpack Module Federation for true micro-frontend architecture
+doc-integration-technology,STATUS.md,29,- ✅ **Embedded Display** using iframes within the container
+doc-integration-technology,STATUS.md,57,- ✅ Ready for Module Federation integration
+doc-integration-technology,implementation-plan-mui-microservices.md,9,### Frontend (React + MUI + Module Federation)
+doc-integration-technology,implementation-plan-mui-microservices.md,90,### Module Federation Configuration
+doc-integration-technology,implementation-plan-mui-microservices.md,91,- [ ] **Configure webpack.config.js** with Module Federation
+doc-integration-technology,implementation-plan-mui-microservices.md,111,- [ ] **Configure Module Federation** as remote (port 3001)
+doc-integration-technology,implementation-plan-mui-microservices.md,140,- [ ] **Configure Module Federation** (port 3002)
+doc-integration-technology,implementation-plan-mui-microservices.md,167,- [ ] **Configure Module Federation** (port 3003)
+doc-integration-technology,implementation-plan-mui-microservices.md,199,- [ ] **Configure Module Federation** (port 3004)
+doc-integration-technology,implementation-plan-mui-microservices.md,362,- [ ] **Integration tests** for Module Federation
+doc-integration-technology,implementation-plan.md,3,This document provides a step-by-step implementation plan for building the micro-frontend golden sample with React and Webpack Module Federation.
+doc-integration-technology,implementation-plan.md,46,### Webpack Module Federation Setup
+doc-integration-technology,implementation-plan.md,47,- [ ] **Create webpack.config.js** with Module Federation configuration
+doc-integration-technology,implementation-plan.md,78,### Module Federation Configuration
+doc-integration-technology,implementation-plan.md,79,- [ ] **Create webpack.config.js** with Module Federation
+doc-integration-technology,implementation-plan.md,105,### Module Federation Configuration
+doc-integration-technology,implementation-plan.md,106,- [ ] **Create webpack.config.js** with Module Federation
+doc-integration-technology,implementation-plan.md,129,### Module Federation Configuration
+doc-integration-technology,implementation-plan.md,130,- [ ] **Create webpack.config.js** with Module Federation
+doc-integration-technology,implementation-plan.md,295,- [Webpack Module Federation Documentation](https://webpack.js.org/concepts/module-federation/)
+doc-integration-technology,implementation-plan.md,298,- [Single-SPA Framework](https://single-spa.js.org/) (for multi-framework support)
+doc-integration-technology,micro-web-golden-sample.md,3,This document provides a **comprehensive explanation** of how to set up a golden sample project for **micro-web architecture** using **React + Webpack Module Federation**.  
+doc-integration-technology,micro-web-golden-sample.md,73,2. Add `webpack.config.js` with Module Federation:
+doc-integration-technology,micro-web-golden-sample.md,106,2. Add `webpack.config.js` with Module Federation:
+doc-integration-technology,micro-web-golden-sample.md,211,## 10. Alternative: Single-SPA
+doc-integration-technology,micro-web-golden-sample.md,215,- Use Single-SPA as the root orchestrator.
+doc-integration-technology,micro-web-golden-sample.md,219,"Best suited for heterogeneous teams. For React-only teams, Module Federation is simpler and more efficient."
+doc-integration-technology,micro-web-golden-sample.md,235,This golden sample demonstrates how to apply the **micro-frontend pattern** using React and Webpack 5’s Module Federation.  
+doc-runtime-loading,micro-web-golden-sample.md,15,"- **Micro-Web / Micro-Frontends (Frontend)** → Small, independent UI applications composed together at runtime.  "
+doc-independence,DEPLOYMENT.md,117,"Check deployment status in the GitHub Actions tab of your repository. Each micro-frontend deploys independently, ensuring faster deployments and better isolation."
+doc-independence,README.md,8,- **4 Independent Micro-Frontends**:
+doc-independence,README.md,18,- Each micro-frontend runs independently on its own port
+doc-independence,STATUS.md,28,- ✅ **Independent Applications** running on separate ports
+doc-independence,STATUS.md,45,- **4 Micro-Frontends**: Each running independently with unique themes
+doc-independence,STATUS.md,56,- ✅ All applications running independently
+doc-independence,implementation-plan.md,208,- [ ] **Setup CI/CD pipelines** for each app independently
+doc-independence,implementation-plan.md,269,- [ ] **All apps run independently** in development
+doc-independence,implementation-plan.md,274,- [ ] **Production deployment** works with independent CI/CD
+doc-independence,micro-web-golden-sample.md,14,"- **Microservices (Backend)** → Small, independent services communicating via APIs.  "
+doc-independence,micro-web-golden-sample.md,15,"- **Micro-Web / Micro-Frontends (Frontend)** → Small, independent UI applications composed together at runtime.  "
+doc-independence,micro-web-golden-sample.md,17,"The goal is to allow different teams to build, deploy, and scale their parts of the frontend **independently**, while still delivering a seamless user experience."
+doc-independence,micro-web-golden-sample.md,36,This mirrors the backend **service mesh** idea: each frontend module is autonomous but connected through a central container.
+doc-independence,micro-web-golden-sample.md,46,"   - Pros: Independence, clear ownership, independent CI/CD."
+doc-independence,micro-web-golden-sample.md,178,Each app is **deployed independently**.
+doc-independence,micro-web-golden-sample.md,188,- Versioning and rollback are independent.
+doc-independence,micro-web-golden-sample.md,228,- ✅ Independent CI/CD pipelines  
+doc-independence,micro-web-golden-sample.md,240,- Evolve into a full ecosystem of independently deployed micro-web apps.
+doc-host-remote,implementation-plan.md,92,"**Best Practice**: Keep auth logic minimal in remote, delegate to container for global state"
+doc-host-remote,implementation-plan.md,176,"**Best Practice**: Keep state in container, pass data to remotes via props/context"
+doc-host-remote,implementation-plan.md,229,- [ ] **Mock remote modules** for container tests
+doc-host-remote,implementation-plan.md,270,- [ ] **Container successfully loads** all remote apps
+doc-host-remote,implementation-plan.md,287,6. **Deployment Order**: Container should be deployed after remotes
+doc-host-remote,micro-web-golden-sample.md,45,   - Each app (container and remotes) lives in its own repository.
+doc-host-remote,micro-web-golden-sample.md,95,"3. The container acts as the orchestrator, dynamically pulling in remote modules."
+doc-host-remote,micro-web-golden-sample.md,184,The container fetches remote apps from these URLs in production.
+doc-host-remote,micro-web-golden-sample.md,199,  Keep global auth logic in the container. Remotes consume tokens through context or API calls.
+doc-host-remote,micro-web-golden-sample.md,238,- Start with 1 container + 2 remotes.  

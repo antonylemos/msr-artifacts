@@ -1,0 +1,90 @@
+# Bloques de Caddy para likekiri. NO se aplican solos: en la Fase 7 se añaden
+# al final de /etc/caddy/Caddyfile (no hay import en esa instalación, ADR 001),
+# siempre con backup fechado previo + `caddy validate` antes de recargar.
+# Puerto interno del core: 3000 (ADR 001).
+
+likekiri.com, www.likekiri.com {
+	encode zstd gzip
+
+	handle /assets/* {
+		root * /srv/likekiri/public
+		file_server
+		header Cache-Control "public, max-age=31536000, immutable"
+	}
+
+	# Estáticos federados de módulos: /modules/<id>/* → servidor del módulo.
+	handle_path /modules/hello/* {
+		reverse_proxy 127.0.0.1:4001
+	}
+	handle_path /modules/ejemplo-web/* {
+		reverse_proxy 127.0.0.1:4004
+	}
+	handle_path /modules/clientes/* {
+		reverse_proxy 127.0.0.1:4006
+	}
+	handle_path /modules/media/* {
+		reverse_proxy 127.0.0.1:4008
+	}
+	handle_path /modules/chat/* {
+		reverse_proxy 127.0.0.1:4009
+	}
+
+	handle {
+		reverse_proxy 127.0.0.1:3000
+	}
+
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+	}
+
+	log {
+		output file /var/log/caddy/likekiri.access.log
+	}
+}
+
+admin.likekiri.com {
+	encode zstd gzip
+
+	# Estáticos federados de módulos del admin (mismo origen, sin CORS).
+	handle_path /modules/cuentas/* {
+		reverse_proxy 127.0.0.1:4002
+	}
+	handle_path /modules/registry/* {
+		reverse_proxy 127.0.0.1:4003
+	}
+	handle_path /modules/ejemplo-admin/* {
+		reverse_proxy 127.0.0.1:4005
+	}
+	handle_path /modules/sitio/* {
+		reverse_proxy 127.0.0.1:4007
+	}
+	handle_path /modules/clientes/* {
+		reverse_proxy 127.0.0.1:4006
+	}
+	handle_path /modules/media/* {
+		reverse_proxy 127.0.0.1:4008
+	}
+	handle_path /modules/chat/* {
+		reverse_proxy 127.0.0.1:4009
+	}
+	handle_path /modules/ops/* {
+		reverse_proxy 127.0.0.1:4010
+	}
+
+	handle {
+		reverse_proxy 127.0.0.1:3000
+	}
+
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "no-referrer"
+	}
+
+	log {
+		output file /var/log/caddy/likekiri-admin.access.log
+	}
+}

@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "id": "1042592063",
+  "fullName": "Jyotisaini1234/moduleFederation",
+  "commit": "8df0f2a8d23cd31eebd2f54463cd0b665fe1fe29",
+  "acquiredAt": "2026-10-24T00:32:23.071Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 21,
+    "bytes": 485816
+  },
+  "languages": {
+    "JSON": 475664,
+    "TypeScript": 9635,
+    "HTML": 374,
+    "Other": 124,
+    "Markdown": 19
+  },
+  "contentSha256": "541951033499b5387600a739b2e5f92e2b4457cf11879e6bab05f87712ff9a66"
+}

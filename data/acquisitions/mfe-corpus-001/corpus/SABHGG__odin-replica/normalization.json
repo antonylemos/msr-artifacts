@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "id": "1183434052",
+  "fullName": "SABHGG/odin-replica",
+  "commit": "06ce2bd578663f88243854f6eef292686660dfce",
+  "acquiredAt": "2026-10-24T00:32:20.541Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 3870
+    },
+    {
+      "path": "public/logo192.png",
+      "reason": "preset:binaries",
+      "size": 5347
+    },
+    {
+      "path": "public/logo512.png",
+      "reason": "preset:binaries",
+      "size": 9664
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 16,
+    "bytes": 676847
+  },
+  "languages": {
+    "JSON": 660532,
+    "JavaScript": 6763,
+    "Markdown": 3359,
+    "SVG": 2632,
+    "HTML": 1721,
+    "CSS": 1463,
+    "Other": 377
+  },
+  "contentSha256": "db6821ea7e83dc367ab599a9008d23cffbd7415523cd9bac535c5993d7de3863"
+}

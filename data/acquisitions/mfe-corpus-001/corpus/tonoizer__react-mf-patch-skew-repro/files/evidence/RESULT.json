@@ -1,0 +1,70 @@
+{
+  "verdict": "PASS",
+  "summary": "Reproduced React #527 (and related null useState crash) with @module-federation/vite 1.21.6 + runtime 2.9.0 when React family is shared as singletons across patch-skewed 19.2.x installs.",
+  "console_messages": {
+    "natural_host_load": [
+      "Cannot read properties of null (reading 'useState')"
+    ],
+    "forced_remote_a_react_dom_loadShare": "Minified React error #527; visit https://react.dev/errors/527?args[]=19.2.8&args[]=19.2.4 for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
+    "forced_remote_b_react_dom_loadShare": "Minified React error #527; visit https://react.dev/errors/527?args[]=19.2.8&args[]=19.2.6 for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+  },
+  "containers_crashed": {
+    "host": "YES — blank page; TypeError Cannot read properties of null (reading useState). Stack shows host App rendered by remote_c react-dom/client loadShare + remote_c react loadShare.",
+    "remote_a": "Host never mounts remotes (host crashes first). Forcing remote_a react-dom/client loadShare under host share scope throws literal Minified React error #527 (react 19.2.8 vs react-dom 19.2.4).",
+    "remote_b": "Same pattern: forcing remote_b loadShare throws #527 (19.2.8 vs 19.2.6).",
+    "remote_c": "Its loadShare modules participate in the natural host crash (same 19.2.8 label, mismatched module instances / null dispatcher)."
+  },
+  "share_cache_owners": {
+    "note": "Symbol.for(module-federation.shared-cache-owners) not present; used __FEDERATION__.__SHARE__",
+    "react": {
+      "19.2.8": {
+        "from": "host",
+        "loaded": true
+      },
+      "19.2.4": {
+        "from": "remote_a",
+        "loaded": false
+      },
+      "19.2.6": {
+        "from": "remote_b",
+        "loaded": false
+      }
+    },
+    "react-dom/client": {
+      "19.2.8": {
+        "from": "host",
+        "loaded": true
+      },
+      "19.2.4": {
+        "from": "remote_a",
+        "loaded": false
+      },
+      "19.2.6": {
+        "from": "remote_b",
+        "loaded": false
+      }
+    },
+    "full_dump": "evidence/share-owners.json"
+  },
+  "eager_prebuild_proof": "FILE: remote_a/dist/assets/main-B-xYbxqv.js\n----\nimport { a as __mf_1 } from \"./_virtual_mf___mfe_internal__remote_a__mf_owner__52435470359465__loadShare__react_mf_1_jsx_mf_2_runtime__loadShare__.js-Chqeozn1.js\";\nimport \"./_virtual_mf___mfe_internal__remote_a__mf_owner__52435470359465__loadShare__react__loadShare__.js-C_c0hUUj.js\";\nimport { a as __mf_0 } from \"./_virtual_mf___mfe_internal__remote_a__mf_owner__52435470359465__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-BL4_xYsN.js\";\nimport App from \"./App-BGKGc-hT.js\";\nimport \"./vite-preload-helper-Bdthrcwx.js\";\n__mf_0(document.getElementById(\"root\")).render(/* @__PURE__ */ __mf_1(App, {}));\n\nFILE: remote_a react-dom/client loadShare (first 5 lines — static import of shared react + inlined local react-dom)\n----\nimport { g as getDefaultExportFromCjs } from \"./_virtual_mf___mfe_internal__remote_a__mf_owner__52435470359465__loadShare__react_mf_1_jsx_mf_2_runtime__loadShare__.js-Chqeozn1.js\";\nimport { a as __moduleExports$1 } from \"./_virtual_mf___mfe_internal__remote_a__mf_owner__52435470359465__loadShare__react__loadShare__.js-C_c0hUUj.js\";\nfunction _mergeNamespaces(n, m) {\n  for (var i = 0; i < m.length; i++) {\n    const e = m[i];\n\nFILE: remote_b/dist/assets/main-*.js\n----\nimport { a as __mf_1 } from \"./_virtual_mf___mfe_internal__remote_b__mf_owner__50049860474021__loadShare__react_mf_1_jsx_mf_2_runtime__loadShare__.js-DVV1RqEN.js\";\nimport \"./_virtual_mf___mfe_internal__remote_b__mf_owner__50049860474021__loadShare__react__loadShare__.js-BibospzA.js\";\nimport { a as __mf_0 } from \"./_virtual_mf___mfe_internal__remote_b__mf_owner__50049860474021__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-BSwfyNkd.js\";\nimport App from \"./App-DnxfhI16.js\";\n__mf_0(document.getElementById(\"root\")).render(/* @__PURE__ */ __mf_1(App, {}));\n",
+  "path": ".",
+  "versions_verified": {
+    "host_react": "19.2.8",
+    "remote_a_react": "19.2.4",
+    "remote_b_react": "19.2.6",
+    "remote_c_react": "19.2.8",
+    "@module-federation/vite": "1.21.6",
+    "@module-federation/runtime": "2.9.0 (via vite plugin deps)",
+    "vite": "6.3.5"
+  },
+  "deviations": [
+    "Used Vite 6.3.5 classic (not Nitro) as preferred.",
+    "hostInitInjectLocation: entry on all apps including host.",
+    "DTS plugin warned about missing tsconfig.json (non-fatal; builds succeeded).",
+    "minify:false so stacks are readable; React still emits Minified React error #527 string.",
+    "Natural host navigation crashes with null useState before remotes mount; literal #527 proven by importing remote_a/remote_b react-dom/client loadShare chunks under host share scope (same eager __prebuild__ evaluation path).",
+    "pnpm 9.15.9 + Node 22.23.2 (system default Node 20 + global pnpm 11 were incompatible).",
+    "react-dom package itself not in shared list (only react-dom/client) per handoff."
+  ],
+  "rerun": "See README.md"
+}

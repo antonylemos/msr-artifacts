@@ -1,0 +1,58 @@
+pattern,path,line,excerpt
+dep-native-federation,athletes/package.json,14,"    ""@angular-architects/native-federation"": ""^21.2.3"","
+dep-native-federation,athletes/package.json,22,"    ""@softarc/native-federation-node"": ""^3.3.4"","
+dep-native-federation,ranking/package.json,14,"    ""@angular-architects/native-federation"": ""^21.2.3"","
+dep-native-federation,ranking/package.json,22,"    ""@softarc/native-federation-node"": ""^3.3.4"","
+dep-native-federation,shell/package.json,14,"    ""@angular-architects/native-federation"": ""^21.2.3"","
+dep-native-federation,shell/package.json,22,"    ""@softarc/native-federation-node"": ""^3.3.4"","
+cfg-native-federation,athletes/angular.json,17,"          ""builder"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,athletes/angular.json,31,"          ""builder"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,athletes/federation.config.js,1,"const { withNativeFederation, shareAll } = require('@angular-architects/native-federation/config');"
+cfg-native-federation,athletes/federation.config.js,3,module.exports = withNativeFederation({
+cfg-native-federation,ranking/angular.json,17,"          ""builder"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,ranking/angular.json,31,"          ""builder"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,ranking/federation.config.js,1,"const { withNativeFederation, shareAll } = require('@angular-architects/native-federation/config');"
+cfg-native-federation,ranking/federation.config.js,3,module.exports = withNativeFederation({
+cfg-native-federation,shell/angular.json,17,"          ""builder"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,shell/angular.json,31,"          ""builder"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,shell/federation.config.js,1,"const { withNativeFederation, shareAll } = require('@angular-architects/native-federation/config');"
+cfg-native-federation,shell/federation.config.js,3,module.exports = withNativeFederation({
+cfg-exposes,athletes/federation.config.js,6,  exposes: {
+cfg-exposes,ranking/federation.config.js,6,  exposes: {
+cfg-shared,athletes/federation.config.js,11,  shared: {
+cfg-shared,athletes/federation.config.js,12,"    ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),"
+cfg-shared,ranking/federation.config.js,10,  shared: {
+cfg-shared,ranking/federation.config.js,11,"    ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),"
+cfg-shared,shell/federation.config.js,6,  shared: {
+cfg-shared,shell/federation.config.js,7,"    ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),"
+rt-remote-entry,shell/public/federation.manifest.json,2,"  ""athletes"": ""https://mf-angular-athletes.lenetlaurine.workers.dev/remoteEntry.json"","
+rt-remote-entry,shell/public/federation.manifest.json,3,"  ""ranking"": ""https://mf-angular-ranking.lenetlaurine.workers.dev/remoteEntry.json"""
+rt-manifest-file,shell/public/federation.manifest.json,,
+rt-manifest-entry,shell/public/federation.manifest.json,2,"  ""athletes"": ""https://mf-angular-athletes.lenetlaurine.workers.dev/remoteEntry.json"","
+rt-manifest-entry,shell/public/federation.manifest.json,3,"  ""ranking"": ""https://mf-angular-ranking.lenetlaurine.workers.dev/remoteEntry.json"""
+src-async-bootstrap,athletes/src/main.ts,5,  .then((_) => import('./bootstrap'))
+src-async-bootstrap,ranking/src/main.ts,5,  .then((_) => import('./bootstrap'))
+src-async-bootstrap,shell/src/main.ts,5,  .then((_) => import('./bootstrap'))
+src-load-remote,athletes/src/main.ts,1,import { initFederation } from '@angular-architects/native-federation';
+src-load-remote,athletes/src/main.ts,3,initFederation()
+src-load-remote,ranking/src/main.ts,1,import { initFederation } from '@angular-architects/native-federation';
+src-load-remote,ranking/src/main.ts,3,initFederation()
+src-load-remote,shell/src/app/app.routes.ts,1,import { loadRemoteModule } from '@angular-architects/native-federation';
+src-load-remote,shell/src/app/app.routes.ts,13,"      loadRemoteModule('athletes', './Routes').then((m) => m.routes),"
+src-load-remote,shell/src/app/app.routes.ts,18,"      loadRemoteModule('ranking', './Component').then((m) => m.App),"
+src-load-remote,shell/src/app/dashboard/dashboard.ts,10,import { loadRemoteModule } from '@angular-architects/native-federation';
+src-load-remote,shell/src/app/dashboard/dashboard.ts,56,"      loadRemoteModule('athletes', './Component'),"
+src-load-remote,shell/src/app/dashboard/dashboard.ts,57,"      loadRemoteModule('ranking',  './Component'),"
+src-load-remote,shell/src/main.ts,1,import { initFederation } from '@angular-architects/native-federation';
+src-load-remote,shell/src/main.ts,3,initFederation('federation.manifest.json')
+src-cross-unit-communication,athletes/src/app/athlete-detail/athlete-detail.ts,75,  private channel!: BroadcastChannel;
+src-cross-unit-communication,athletes/src/app/athlete-detail/athlete-detail.ts,83,    this.channel = new BroadcastChannel('athletes-positions');
+src-cross-unit-communication,athletes/src/app/race/race.ts,36,  private channel = new BroadcastChannel(CHANNEL_NAME);
+src-cross-unit-communication,athletes/src/app/race/race.ts,46,"        this.channel.postMessage({ name: updated.name, distance: updated.distance, finished: updated.finished });"
+src-cross-unit-communication,athletes/src/app/race/race.ts,55,"    reset.forEach((a) => this.channel.postMessage({ name: a.name, distance: 0, finished: false }));"
+src-cross-unit-communication,ranking/src/app/app.ts,38,  private channel!: BroadcastChannel;
+src-cross-unit-communication,ranking/src/app/app.ts,41,    this.channel = new BroadcastChannel(CHANNEL_NAME);
+ops-deployment-file,athletes/public/_headers,,
+ops-deployment-file,ranking/public/_headers,,
+ops-cors,athletes/public/_headers,2,  Access-Control-Allow-Origin: *
+ops-cors,ranking/public/_headers,2,  Access-Control-Allow-Origin: *

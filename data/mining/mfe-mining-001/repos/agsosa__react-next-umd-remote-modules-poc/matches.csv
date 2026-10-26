@@ -1,0 +1,33 @@
+pattern,path,line,excerpt
+src-dynamic-script,shell/src/hooks/useRemoteModule.ts,79,    const script = document.createElement('script');
+src-cross-unit-communication,mf-1/public/remote-modules/bundle.js,10,"`,ut=typeof window<""u""&&typeof document<""u"",os=!!(typeof SC_DISABLE_SPEEDY==""boolean""?SC_DISABLE_SPEEDY:typeof process<""u""&&re!==void 0&&re.REACT_APP_SC_DISABLE_SPEEDY!==void 0&&re.REACT_APP_SC_DISABLE_SPEEDY!==""""?re.REACT_APP_SC_DISABLE_SPEEDY!==""false""&&re.REACT_APP_SC_DISABLE_SPEEDY:typeof proces"
+ops-hosting,README.md,7,- **Shell App**: https://umd-remote-modules-poc-shell.vercel.app/
+ops-hosting,README.md,8,- **MF1**: https://umd-remote-modules-poc-mf1.vercel.app/
+ops-hosting,mf-1/README.md,25,"This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel."
+ops-hosting,mf-1/README.md,34,You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+ops-hosting,mf-1/README.md,36,## Deploy on Vercel
+ops-hosting,mf-1/README.md,38,The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+ops-hosting,shell/README.md,25,"This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel."
+ops-hosting,shell/README.md,34,You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+ops-hosting,shell/README.md,36,## Deploy on Vercel
+ops-hosting,shell/README.md,38,The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+doc-mfe-term,README.md,1,# UMD-based Microfrontends PoC
+doc-mfe-term,README.md,3,"A proof-of-concept implementation of microfrontends using UMD (Universal Module Definition) format with Next.js and React, enabling remote component sharing between applications, similar to Module Federation."
+doc-mfe-term,README.md,12,"This solution implements **UMD-based Microfrontends** (not Module Federation), where:"
+doc-mfe-term,README.md,121,## ✅ Advantages of UMD based microfrontends
+doc-mfe-term,README.md,125,- **Standalone Development**: Each microfrontend can be developed independently
+doc-mfe-term,README.md,132,- **Global Namespace**: Each microfrontend needs unique global names
+doc-mfe-term,README.md,138,"This architecture provides a clean, maintainable solution for microfrontend development with React and Next.js, offering the benefits of component sharing without the complexity of Module Federation."
+doc-integration-technology,README.md,3,"A proof-of-concept implementation of microfrontends using UMD (Universal Module Definition) format with Next.js and React, enabling remote component sharing between applications, similar to Module Federation."
+doc-integration-technology,README.md,12,"This solution implements **UMD-based Microfrontends** (not Module Federation), where:"
+doc-integration-technology,README.md,138,"This architecture provides a clean, maintainable solution for microfrontend development with React and Next.js, offering the benefits of component sharing without the complexity of Module Federation."
+doc-runtime-loading,README.md,134,"- **Runtime Loading**: Components are loaded at runtime, not build time. SSR is not compatible."
+doc-independence,README.md,125,- **Standalone Development**: Each microfrontend can be developed independently
+doc-host-remote,README.md,7,- **Shell App**: https://umd-remote-modules-poc-shell.vercel.app/
+doc-host-remote,README.md,14,- **Shell App**: A Next.js application that consumes remote components from MF1
+doc-host-remote,README.md,17,- **Dual Usage**: MF1 components work both as local components within MF1 and as remote components in Shell
+doc-host-remote,README.md,56,### 2. Shell App Remote Loading
+doc-host-remote,README.md,58,The shell app uses a reusable hook to load and consume remote components:
+doc-host-remote,README.md,100,- **Remote Bundle**: http://localhost:3001/remote-modules/bundle.js (UMD bundle for Shell)
+ws-path-alias,mf-1/tsconfig.json,16,"    ""paths"": {"
+ws-path-alias,shell/tsconfig.json,16,"    ""paths"": {"

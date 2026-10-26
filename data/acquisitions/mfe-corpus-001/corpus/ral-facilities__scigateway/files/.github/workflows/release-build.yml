@@ -1,0 +1,65 @@
+name: Release Build
+on:
+  push:
+    branches:
+      - main
+      - develop
+    tags:
+      - '*'
+
+jobs:
+  build:
+    name: Release Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version: 24
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn --immutable
+
+      - name: Build
+        run: yarn build
+
+      - name: Determine tag name
+        run: |
+          if [ "${{ github.ref }}" = "refs/heads/main" ]
+          then
+            echo TAG_NAME=snapshot >> $GITHUB_ENV
+          elif [ "${{ github.ref }}" = "refs/heads/develop" ]
+          then
+            echo TAG_NAME=snapshot-develop >> $GITHUB_ENV
+          else
+            echo TAG_NAME=`basename ${{ github.ref }}` >> $GITHUB_ENV
+          fi
+
+      - name: Create tarball
+        run: |
+          mv dist scigateway-$TAG_NAME
+          tar -czf scigateway-$TAG_NAME.tar.gz scigateway-$TAG_NAME
+
+      - name: Update snapshot tag
+        uses: richardsimko/update-tag@aab2434e9a5040687874aa39d1c6377ec0cb0d94 # v1
+        with:
+          tag_name: ${{ env.TAG_NAME }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' }}
+
+      - name: Create/update release
+        uses: softprops/action-gh-release@153bb8e04406b158c6c84fc1615b65b24149a1fe # v2.6.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          files: ./scigateway-${{ env.TAG_NAME }}.tar.gz
+          name: ${{ env.TAG_NAME }}
+          tag_name: ${{ env.TAG_NAME }}
+          prerelease: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' }}
+          draft: false
+          generate_release_notes: true

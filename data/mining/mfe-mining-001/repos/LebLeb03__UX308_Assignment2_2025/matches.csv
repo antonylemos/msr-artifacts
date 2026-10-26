@@ -1,0 +1,27 @@
+pattern,path,line,excerpt
+src-bundle-url,wp-content/themes/resume-kit/assets/js/bootstrap.js,4973,   * Bootstrap (v5.0.1): index.umd.js
+src-custom-element,wp-content/mu-plugins/one-click-child-theme/templates/customElements.js,1,class CopyrightYear extends HTMLElement{
+src-custom-element,wp-content/mu-plugins/one-click-child-theme/templates/customElements.js,7,"customElements.define(""x-year"", CopyrightYear);"
+src-custom-element,wp-content/themes/chatbot/customElements.js,1,class CopyrightYear extends HTMLElement{
+src-custom-element,wp-content/themes/chatbot/customElements.js,7,"customElements.define(""x-year"", CopyrightYear);"
+src-custom-element,wp-content/themes/resume-kit/assets/js/bootstrap.js,290,    if (!document.documentElement.attachShadow) {
+src-iframe,wp-content/plugins/ecommerce-product-catalog/js/colorbox/jquery.colorbox.js,101,                var iframe = document.createElement('iframe');
+src-cross-unit-communication,wp-content/plugins/akismet/_inc/akismet-frontend.js,20,"		window.addEventListener( 'testPassive', null, opts );"
+src-cross-unit-communication,wp-content/themes/pressbook/js/sticky-sidebar.js,612,"            var event = new CustomEvent(eventName, { detail: data });"
+src-cross-unit-communication,wp-content/themes/pressbook/js/sticky-sidebar.js,617,          element.dispatchEvent(event);
+src-cross-unit-communication,wp-content/themes/resume-kit/assets/js/bootstrap.js,201,    element.dispatchEvent(new Event(TRANSITION_END));
+src-cross-unit-communication,wp-content/themes/resume-kit/assets/js/bootstrap.js,671,"        evt = new CustomEvent(event, {"
+src-cross-unit-communication,wp-content/themes/resume-kit/assets/js/bootstrap.js,694,        element.dispatchEvent(evt);
+ops-hosting,.github/workflows/main.yml,29,"      # run npm install, npm run build and publish to gh-pages"
+ops-hosting,.github/workflows/main.yml,30,      - uses: diy-pwa/npm-build-2-gh-pages@v1.11
+ops-hosting,README.md,11,This will continuously deploy on gh-pages using the [diy-pwa/npm-build-2-gh-pages@v1.11](https://github.com/diy-pwa/npm-build-2-gh-pages) plugin. You can also deploy on a cloud provider by running `npm run build`. Your static site will be in the `dist/` folder.
+ci-workflow-file,.github/workflows/main.yml,,
+ci-workflow-file,wp-content/mu-plugins/sqlite-database-integration/.github/workflows/cs.yml,,
+ci-workflow-file,wp-content/mu-plugins/sqlite-database-integration/.github/workflows/phpunit-tests-run.yml,,
+ci-workflow-file,wp-content/mu-plugins/sqlite-database-integration/.github/workflows/phpunit-tests.yml,,
+ci-path-trigger,wp-content/mu-plugins/sqlite-database-integration/.github/workflows/cs.yml,6,    paths:
+ci-path-trigger,wp-content/mu-plugins/sqlite-database-integration/.github/workflows/cs.yml,14,    paths:
+doc-mfe-term,README.md,13,The idea of this is as a consumer of microfrontends. There is an example microfrontend for [paypal standard](https://github.com/diy-pwa/paypal-microfrontend) here.
+doc-integration-technology,wp-content/mu-plugins/one-click-child-theme/README.md,6,"**Tags:** theme, child theme, child theme creator, child theme creator, CSS, stylesheet, custom theme, customize theme, shared hosting, custom elements  "
+doc-integration-technology,wp-content/mu-plugins/one-click-child-theme/README.md,15,Adds a Theme option to any active theme allowing you to make a child theme with custom elements.
+doc-independence,README.md,15,Have fun composing work from autonomous teams.

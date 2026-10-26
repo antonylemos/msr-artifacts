@@ -1,0 +1,24 @@
+pattern,path,line,excerpt
+dep-single-spa,package.json,13,"    ""single-spa"": ""^6.0.3"","
+dep-single-spa,package.json,14,"    ""single-spa-react"": ""^6.0.2"","
+lock-mfe-dependency,package-lock.json,18,"        ""single-spa"": ""^6.0.3"","
+lock-mfe-dependency,package-lock.json,19,"        ""single-spa-react"": ""^6.0.2"","
+lock-mfe-dependency,package-lock.json,5234,"    ""node_modules/browserslist-config-single-spa"": {"
+lock-mfe-dependency,package-lock.json,5236,"      ""resolved"": ""https://registry.npmjs.org/browserslist-config-single-spa/-/browserslist-config-single-spa-1.0.1.tgz"","
+lock-mfe-dependency,package-lock.json,14885,"    ""node_modules/single-spa"": {"
+lock-mfe-dependency,package-lock.json,14887,"      ""resolved"": ""https://registry.npmjs.org/single-spa/-/single-spa-6.0.3.tgz"","
+lock-mfe-dependency,package-lock.json,14891,"    ""node_modules/single-spa-react"": {"
+lock-mfe-dependency,package-lock.json,14893,"      ""resolved"": ""https://registry.npmjs.org/single-spa-react/-/single-spa-react-6.0.2.tgz"","
+lock-mfe-dependency,package-lock.json,14897,"        ""browserslist-config-single-spa"": ""^1.0.1"""
+rt-manifest-file,public/manifest.json,,
+src-mount-export,src/root.app.js,16,export const bootstrap = reactLifecycles.bootstrap;
+src-mount-export,src/root.app.js,17,export const mount = reactLifecycles.mount;
+src-mount-export,src/root.app.js,18,export const unmount = reactLifecycles.unmount;
+src-lifecycles,src/index.js,56,registerApplication(
+src-lifecycles,src/index.js,63,registerApplication(
+src-lifecycles,src/root.app.js,3,import singleSpaReact from 'single-spa-react';
+src-lifecycles,src/root.app.js,6,const reactLifecycles = singleSpaReact({
+src-dynamic-script,src/index.js,72,      const script = document.createElement('script');
+src-cross-unit-communication,src/App.js,18,    window.dispatchEvent(
+src-cross-unit-communication,src/App.js,19,"      new CustomEvent('toggle-leapdocs', {"
+src-cross-unit-communication,src/index.js,47,"globalThis.addEventListener('toggle-leapdocs', (event) => {"

@@ -1,0 +1,14 @@
+{
+  "files": [],
+  "references": [
+    { "path": "packages/ui" },
+    { "path": "packages/shared" },
+    { "path": "packages/types" },
+    { "path": "packages/sdk" },
+    { "path": "apps/shell" },
+    { "path": "apps/auth-mf" },
+    { "path": "apps/dashboard-mf" },
+    { "path": "apps/admin-mf" },
+    { "path": "apps/messaging-mf" }
+  ]
+}

@@ -1,0 +1,209 @@
+pattern,path,line,excerpt
+dep-module-federation,apps/product-config/package.json,23,"    ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+dep-module-federation,apps/sales-portal/package.json,23,"    ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+dep-module-federation,apps/shell/package.json,24,"    ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+dep-module-federation,apps/underwriter-portal/package.json,23,"    ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+dep-module-federation,package.json,38,"    ""module-federation"","
+dep-mfe-term,package.json,39,"    ""microfrontend"""
+lock-mfe-dependency,pnpm-lock.yaml,33,      '@originjs/vite-plugin-federation':
+lock-mfe-dependency,pnpm-lock.yaml,79,      '@originjs/vite-plugin-federation':
+lock-mfe-dependency,pnpm-lock.yaml,128,      '@originjs/vite-plugin-federation':
+lock-mfe-dependency,pnpm-lock.yaml,174,      '@originjs/vite-plugin-federation':
+lock-mfe-dependency,pnpm-lock.yaml,545,  '@originjs/vite-plugin-federation@1.4.1':
+lock-mfe-dependency,pnpm-lock.yaml,1986,  '@originjs/vite-plugin-federation@1.4.1':
+cfg-federation-plugin,apps/product-config/vite.config.ts,8,    federation({
+cfg-federation-plugin,apps/sales-portal/vite.config.ts,8,    federation({
+cfg-federation-plugin,apps/shell/vite.config.ts,8,    federation({
+cfg-federation-plugin,apps/underwriter-portal/vite.config.ts,8,    federation({
+cfg-remotes,apps/shell/vite.config.ts,10,      remotes: {
+cfg-exposes,apps/product-config/vite.config.ts,11,      exposes: {
+cfg-exposes,apps/sales-portal/vite.config.ts,11,      exposes: {
+cfg-exposes,apps/underwriter-portal/vite.config.ts,11,      exposes: {
+cfg-shared,apps/product-config/vite.config.ts,14,"      shared: [""react"", ""react-dom"", ""react-router-dom""],"
+cfg-shared,apps/sales-portal/vite.config.ts,14,"      shared: [""react"", ""react-dom"", ""react-router-dom""],"
+cfg-shared,apps/shell/vite.config.ts,15,"      shared: [""react"", ""react-dom"", ""react-router-dom""],"
+cfg-shared,apps/underwriter-portal/vite.config.ts,14,"      shared: [""react"", ""react-dom"", ""react-router-dom""],"
+rt-remote-entry,apps/product-config/vite.config.ts,10,"      filename: ""remoteEntry.js"","
+rt-remote-entry,apps/sales-portal/vite.config.ts,10,"      filename: ""remoteEntry.js"","
+rt-remote-entry,apps/shell/vite.config.ts,11,"        salesPortal: ""http://localhost:3001/dist/assets/remoteEntry.js"","
+rt-remote-entry,apps/shell/vite.config.ts,12,"        underwriterPortal: ""http://localhost:3002/dist/assets/remoteEntry.js"","
+rt-remote-entry,apps/shell/vite.config.ts,13,"        productConfig: ""http://localhost:3004/dist/assets/remoteEntry.js"","
+rt-remote-entry,apps/underwriter-portal/vite.config.ts,10,"      filename: ""remoteEntry.js"","
+src-remote-import,apps/shell/src/components/ProductConfig.tsx,5,"  import(""productConfig/App"").catch(() => ({"
+src-remote-import,apps/shell/src/components/SalesPortal.tsx,5,"  import(""salesPortal/App"").catch((err) => ({"
+src-remote-import,apps/shell/src/components/UnderwriterPortal.tsx,5,"  import(""underwriterPortal/App"").catch(() => ({"
+ops-hosting,DEPLOYMENT_GUIDE.md,1,# Deployment Guide: Module Federation Insurance Platform on Vercel
+ops-hosting,DEPLOYMENT_GUIDE.md,5,"This guide explains how to deploy the Module Federation Insurance Platform to Vercel. Since this is a microfrontend architecture with multiple independent applications, deployment requires special considerations to maintain the Module Federation functionality in a production environment."
+ops-hosting,DEPLOYMENT_GUIDE.md,11,- Static hosting platforms like Vercel serve pre-built static files
+ops-hosting,DEPLOYMENT_GUIDE.md,28,1. **Vercel Account** with CLI installed
+ops-hosting,DEPLOYMENT_GUIDE.md,35,### Strategy 1: Separate Vercel Projects (Recommended)
+ops-hosting,DEPLOYMENT_GUIDE.md,37,Deploy each microfrontend as an independent Vercel project. This approach provides maximum flexibility and follows microfrontend best practices.
+ops-hosting,DEPLOYMENT_GUIDE.md,41,Shell App:          insurance-platform.vercel.app
+ops-hosting,DEPLOYMENT_GUIDE.md,42,Sales Portal:       insurance-sales.vercel.app
+ops-hosting,DEPLOYMENT_GUIDE.md,43,Underwriter Portal: insurance-underwriter.vercel.app
+ops-hosting,DEPLOYMENT_GUIDE.md,44,Employer Portal:    insurance-employer.vercel.app
+ops-hosting,DEPLOYMENT_GUIDE.md,45,Product Config:     insurance-product.vercel.app
+ops-hosting,DEPLOYMENT_GUIDE.md,46,Service Provider:   insurance-service.vercel.app
+ops-hosting,DEPLOYMENT_GUIDE.md,54,VITE_SALES_PORTAL_URL=https://insurance-sales.vercel.app
+ops-hosting,DEPLOYMENT_GUIDE.md,55,VITE_UNDERWRITER_PORTAL_URL=https://insurance-underwriter.vercel.app
+ops-hosting,DEPLOYMENT_GUIDE.md,56,VITE_EMPLOYER_PORTAL_URL=https://insurance-employer.vercel.app
+ops-hosting,DEPLOYMENT_GUIDE.md,57,VITE_PRODUCT_CONFIG_URL=https://insurance-product.vercel.app
+ops-hosting,DEPLOYMENT_GUIDE.md,58,VITE_SERVICE_PROVIDER_URL=https://insurance-service.vercel.app
+ops-hosting,DEPLOYMENT_GUIDE.md,63,VITE_SHELL_URL=https://insurance-platform.vercel.app
+ops-hosting,DEPLOYMENT_GUIDE.md,136,# Deploy each app as separate Vercel project
+ops-hosting,DEPLOYMENT_GUIDE.md,137,vercel --cwd apps/shell --prod
+ops-hosting,DEPLOYMENT_GUIDE.md,138,vercel --cwd apps/sales-portal --prod
+ops-hosting,DEPLOYMENT_GUIDE.md,139,vercel --cwd apps/underwriter-portal --prod
+ops-hosting,DEPLOYMENT_GUIDE.md,140,vercel --cwd apps/employer-portal --prod
+ops-hosting,DEPLOYMENT_GUIDE.md,141,vercel --cwd apps/product-config --prod
+ops-hosting,DEPLOYMENT_GUIDE.md,142,vercel --cwd apps/service-provider --prod
+ops-hosting,DEPLOYMENT_GUIDE.md,145,**Configure Vercel Projects:**
+ops-hosting,DEPLOYMENT_GUIDE.md,146,Each project needs a `vercel.json` configuration:
+ops-hosting,DEPLOYMENT_GUIDE.md,163,Use Vercel's monorepo support to deploy all applications from a single repository while maintaining separate deployments.
+ops-hosting,DEPLOYMENT_GUIDE.md,165,#### **Step 1: Create Root Vercel Configuration**
+ops-hosting,DEPLOYMENT_GUIDE.md,167,// vercel.json
+ops-hosting,DEPLOYMENT_GUIDE.md,205,Each app directory needs its own `vercel.json`:
+ops-hosting,DEPLOYMENT_GUIDE.md,207,// apps/shell/vercel.json
+ops-hosting,DEPLOYMENT_GUIDE.md,217,Set environment variables at the project level in Vercel dashboard for each deployed project.
+ops-hosting,DEPLOYMENT_GUIDE.md,223,Deploy all applications to a single Vercel project using subdirectories. This approach is simpler but less flexible.
+ops-hosting,DEPLOYMENT_GUIDE.md,227,// vercel.json
+ops-hosting,DEPLOYMENT_GUIDE.md,265,    salesPortal: 'https://insurance-sales.vercel.app/assets/remoteEntry.js'
+ops-hosting,DEPLOYMENT_GUIDE.md,305,- Set environment variables in Vercel dashboard
+ops-hosting,DEPLOYMENT_GUIDE.md,358,# Deploy to Vercel
+ops-hosting,DEPLOYMENT_GUIDE.md,359,vercel --prod
+ops-hosting,DEPLOYMENT_GUIDE.md,369,4. Check Vercel build logs for errors
+ops-hosting,DEPLOYMENT_GUIDE.md,372,This deployment guide provides the foundation for successfully deploying your Module Federation insurance platform to Vercel while maintaining all microfrontend functionality.
+ops-cors,apps/product-config/vite.config.ts,28,"      ""Access-Control-Allow-Origin"": ""*"","
+ops-cors,apps/sales-portal/vite.config.ts,28,"      ""Access-Control-Allow-Origin"": ""*"","
+ops-cors,apps/underwriter-portal/vite.config.ts,28,"      ""Access-Control-Allow-Origin"": ""*"","
+doc-mfe-term,ARCHITECTURE_DOCUMENTATION.md,5,This project implements a **Micro-Frontend Architecture** using **Module Federation** within a **Monorepo** structure. It's designed as a distributed insurance management platform where multiple independent applications work together as a unified system.
+doc-mfe-term,ARCHITECTURE_DOCUMENTATION.md,9,### 🏗️ **Micro-Frontend + Module Federation**
+doc-mfe-term,ARCHITECTURE_DOCUMENTATION.md,11,This is a **Micro-Frontend Architecture** that allows:
+doc-mfe-term,ARCHITECTURE_DOCUMENTATION.md,29,├── apps/                           # Micro-frontend applications
+doc-mfe-term,ARCHITECTURE_DOCUMENTATION.md,45,│   ├── sales-portal/               # Sales micro-frontend (Remote)
+doc-mfe-term,ARCHITECTURE_DOCUMENTATION.md,56,│   ├── underwriter-portal/         # Underwriting micro-frontend (Remote)
+doc-mfe-term,ARCHITECTURE_DOCUMENTATION.md,67,│   └── product-config/             # Product configuration micro-frontend (Remote)
+doc-mfe-term,ARCHITECTURE_DOCUMENTATION.md,132,- No build-time dependencies between micro-frontends
+doc-mfe-term,ARCHITECTURE_DOCUMENTATION.md,195,### 🌐 **Micro-Frontend Deployment Strategy**
+doc-mfe-term,ARCHITECTURE_DOCUMENTATION.md,236,### 1. **Micro-Frontend Pattern**
+doc-mfe-term,ARCHITECTURE_DOCUMENTATION.md,253,- Route-based micro-frontend loading
+doc-mfe-term,ARCHITECTURE_DOCUMENTATION.md,270,- **Micro-Frontends**: Team independence and scalability  
+doc-mfe-term,DEPLOYMENT_GUIDE.md,5,"This guide explains how to deploy the Module Federation Insurance Platform to Vercel. Since this is a microfrontend architecture with multiple independent applications, deployment requires special considerations to maintain the Module Federation functionality in a production environment."
+doc-mfe-term,DEPLOYMENT_GUIDE.md,15,- Microfrontends will be hosted on different domains
+doc-mfe-term,DEPLOYMENT_GUIDE.md,30,3. **Domain Planning** for each microfrontend
+doc-mfe-term,DEPLOYMENT_GUIDE.md,37,Deploy each microfrontend as an independent Vercel project. This approach provides maximum flexibility and follows microfrontend best practices.
+doc-mfe-term,DEPLOYMENT_GUIDE.md,330,- [ ] Verify all microfrontends load correctly
+doc-mfe-term,DEPLOYMENT_GUIDE.md,343,3. **Monitoring**: Set up error tracking for each microfrontend
+doc-mfe-term,DEPLOYMENT_GUIDE.md,372,This deployment guide provides the foundation for successfully deploying your Module Federation insurance platform to Vercel while maintaining all microfrontend functionality.
+doc-mfe-term,NAVIGATION_AND_EMBEDDING.md,199,"**Your current implementation has ZERO redirects** when using the shell app. Users login once at localhost:3000 and can navigate seamlessly between all portals without any page reloads or redirects. Each portal is dynamically loaded via Module Federation and rendered within the shell layout, providi"
+doc-mfe-term,README.md,7,"This platform uses **Module Federation** to create a microfrontend architecture where each business domain (Sales, Underwriting, Employer Services, Product Configuration, and Service Provider) operates as an independent application that can be developed, tested, and deployed separately."
+doc-mfe-term,README.md,164,- **Module Federation Host:** Dynamically loads all microfrontends
+doc-mfe-term,README.md,227,### Creating a New Microfrontend
+doc-mfe-term,README.md,254,**Each microfrontend exposes its App component:**
+doc-mfe-term,README.md,285,| **Module Federation** | Microfrontend architecture | ^1.3.5 |
+doc-mfe-term,README.md,365,   # Work on specific microfrontend
+doc-mfe-term,TODO.md,10,  - Token sharing across microfrontends
+doc-mfe-term,TODO.md,24,  - Create backend services for each microfrontend
+doc-mfe-term,TODO.md,90,  - Integration tests for microfrontend communication
+doc-mfe-term,context.md,5,"This is a comprehensive Module Federation-based insurance platform built with React, TypeScript, and Vite. The platform demonstrates a modern microfrontend architecture where each business domain operates as an independent application while providing a unified user experience."
+doc-mfe-term,context.md,25,**Module Federation Microfrontends:**
+doc-mfe-term,context.md,39,- Module Federation host that dynamically loads microfrontends
+doc-mfe-term,context.md,45,- `App.tsx`: Router configuration with lazy-loaded microfrontends
+doc-mfe-term,context.md,63,- Error boundaries for microfrontend failures
+doc-mfe-term,context.md,239,| **Module Federation** | Microfrontend architecture | ^1.3.5 |
+doc-mfe-term,context.md,427,"1. **Module Federation over other microfrontend approaches**: Runtime integration, shared dependencies, independent deployment"
+doc-mfe-term,context.md,444,- Error boundaries for microfrontend failures
+doc-mfe-term,context.md,450,- Lazy loading of microfrontends
+doc-integration-technology,ARCHITECTURE_DOCUMENTATION.md,5,This project implements a **Micro-Frontend Architecture** using **Module Federation** within a **Monorepo** structure. It's designed as a distributed insurance management platform where multiple independent applications work together as a unified system.
+doc-integration-technology,ARCHITECTURE_DOCUMENTATION.md,9,### 🏗️ **Micro-Frontend + Module Federation**
+doc-integration-technology,ARCHITECTURE_DOCUMENTATION.md,30,│   ├── shell/                      # Host application (Module Federation Host)
+doc-integration-technology,ARCHITECTURE_DOCUMENTATION.md,42,│   │   ├── vite.config.ts          # Vite + Module Federation config
+doc-integration-technology,ARCHITECTURE_DOCUMENTATION.md,53,│   │   ├── vite.config.ts          # Module Federation remote config
+doc-integration-technology,ARCHITECTURE_DOCUMENTATION.md,85,## Module Federation Implementation
+doc-integration-technology,ARCHITECTURE_DOCUMENTATION.md,108,Each portal acts as a **Module Federation Remote**:
+doc-integration-technology,ARCHITECTURE_DOCUMENTATION.md,151,### 🛠️ **Build Tools & Module Federation**
+doc-integration-technology,ARCHITECTURE_DOCUMENTATION.md,153,- **@originjs/vite-plugin-federation**: Module Federation implementation for Vite
+doc-integration-technology,ARCHITECTURE_DOCUMENTATION.md,207,- Module Federation loads remotes from their respective domains
+doc-integration-technology,ARCHITECTURE_DOCUMENTATION.md,241,### 2. **Module Federation Pattern** 
+doc-integration-technology,ARCHITECTURE_DOCUMENTATION.md,271,- **Module Federation**: Runtime composition and deployment flexibility
+doc-integration-technology,DEPLOYMENT_GUIDE.md,1,# Deployment Guide: Module Federation Insurance Platform on Vercel
+doc-integration-technology,DEPLOYMENT_GUIDE.md,5,"This guide explains how to deploy the Module Federation Insurance Platform to Vercel. Since this is a microfrontend architecture with multiple independent applications, deployment requires special considerations to maintain the Module Federation functionality in a production environment."
+doc-integration-technology,DEPLOYMENT_GUIDE.md,9,### 1. **Module Federation & Static Hosting**
+doc-integration-technology,DEPLOYMENT_GUIDE.md,10,- Module Federation requires applications to communicate at runtime
+doc-integration-technology,DEPLOYMENT_GUIDE.md,69,**Update Module Federation Configuration:**
+doc-integration-technology,DEPLOYMENT_GUIDE.md,288,### **Issue 1: Module Federation Loading Errors**
+doc-integration-technology,DEPLOYMENT_GUIDE.md,335,- [ ] Verify Module Federation functionality
+doc-integration-technology,DEPLOYMENT_GUIDE.md,372,This deployment guide provides the foundation for successfully deploying your Module Federation insurance platform to Vercel while maintaining all microfrontend functionality.
+doc-integration-technology,NAVIGATION_AND_EMBEDDING.md,5,"With the current Module Federation setup, **there are NO redirects** when navigating between portals in the shell app. Here's exactly what happens:"
+doc-integration-technology,NAVIGATION_AND_EMBEDDING.md,14,3. **Module Federation dynamically imports** the Sales app from `http://localhost:3001/remoteEntry.js`
+doc-integration-technology,NAVIGATION_AND_EMBEDDING.md,22,└── Sales Portal Content (embedded via Module Federation)
+doc-integration-technology,NAVIGATION_AND_EMBEDDING.md,40,"- **Use Case**: Development, testing, fallback when Module Federation fails"
+doc-integration-technology,NAVIGATION_AND_EMBEDDING.md,44,### 🔧 **Module Federation Configuration**
+doc-integration-technology,NAVIGATION_AND_EMBEDDING.md,182,├── sales.insurance.com        # Sales portal (for Module Federation)
+doc-integration-technology,NAVIGATION_AND_EMBEDDING.md,194,- **Module Federation Health**: Monitor remote loading success rates
+doc-integration-technology,NAVIGATION_AND_EMBEDDING.md,199,"**Your current implementation has ZERO redirects** when using the shell app. Users login once at localhost:3000 and can navigate seamlessly between all portals without any page reloads or redirects. Each portal is dynamically loaded via Module Federation and rendered within the shell layout, providi"
+doc-integration-technology,README.md,1,# Module Federation Insurance Platform
+doc-integration-technology,README.md,3,"A modern, scalable insurance platform built with Module Federation, enabling independent development and deployment of different business domains while providing a unified user experience."
+doc-integration-technology,README.md,7,"This platform uses **Module Federation** to create a microfrontend architecture where each business domain (Sales, Underwriting, Employer Services, Product Configuration, and Service Provider) operates as an independent application that can be developed, tested, and deployed separately."
+doc-integration-technology,README.md,73,│   │   ├── vite.config.ts             # Module Federation host config
+doc-integration-technology,README.md,83,│   │   └── vite.config.ts             # Module Federation remote
+doc-integration-technology,README.md,164,- **Module Federation Host:** Dynamically loads all microfrontends
+doc-integration-technology,README.md,244,   - Update Module Federation name in `vite.config.ts`
+doc-integration-technology,README.md,252,### Module Federation Configuration
+doc-integration-technology,README.md,285,| **Module Federation** | Microfrontend architecture | ^1.3.5 |
+doc-integration-technology,README.md,309,**3. Module Federation loading errors**
+doc-integration-technology,README.md,332,**2. Debug Module Federation:**
+doc-integration-technology,README.md,444,**Built with ❤️ using Module Federation and React**
+doc-integration-technology,TODO.md,3,"This document outlines potential enhancements, features, and improvements for the Module Federation Insurance Platform."
+doc-integration-technology,context.md,5,"This is a comprehensive Module Federation-based insurance platform built with React, TypeScript, and Vite. The platform demonstrates a modern microfrontend architecture where each business domain operates as an independent application while providing a unified user experience."
+doc-integration-technology,context.md,25,**Module Federation Microfrontends:**
+doc-integration-technology,context.md,39,- Module Federation host that dynamically loads microfrontends
+doc-integration-technology,context.md,47,**Module Federation Config**:
+doc-integration-technology,context.md,239,| **Module Federation** | Microfrontend architecture | ^1.3.5 |
+doc-integration-technology,context.md,297,│   ├── vite.config.ts            # Module Federation host
+doc-integration-technology,context.md,307,│   └── vite.config.ts            # Module Federation remote
+doc-integration-technology,context.md,333,## 🔧 Module Federation Configuration
+doc-integration-technology,context.md,427,"1. **Module Federation over other microfrontend approaches**: Runtime integration, shared dependencies, independent deployment"
+doc-integration-technology,context.md,442,### Module Federation Best Practices
+doc-runtime-loading,ARCHITECTURE_DOCUMENTATION.md,14,- Runtime composition of applications
+doc-runtime-loading,ARCHITECTURE_DOCUMENTATION.md,130,### 🔄 **Runtime Integration**
+doc-runtime-loading,ARCHITECTURE_DOCUMENTATION.md,131,- Applications are loaded dynamically at runtime
+doc-runtime-loading,ARCHITECTURE_DOCUMENTATION.md,239,- Runtime composition
+doc-runtime-loading,ARCHITECTURE_DOCUMENTATION.md,242,- Dynamic imports at runtime
+doc-runtime-loading,ARCHITECTURE_DOCUMENTATION.md,271,- **Module Federation**: Runtime composition and deployment flexibility
+doc-runtime-loading,DEPLOYMENT_GUIDE.md,10,- Module Federation requires applications to communicate at runtime
+doc-runtime-loading,context.md,427,"1. **Module Federation over other microfrontend approaches**: Runtime integration, shared dependencies, independent deployment"
+doc-independence,ARCHITECTURE_DOCUMENTATION.md,5,This project implements a **Micro-Frontend Architecture** using **Module Federation** within a **Monorepo** structure. It's designed as a distributed insurance management platform where multiple independent applications work together as a unified system.
+doc-independence,ARCHITECTURE_DOCUMENTATION.md,12,- Independent development and deployment of features
+doc-independence,ARCHITECTURE_DOCUMENTATION.md,133,- Independent deployments possible
+doc-independence,ARCHITECTURE_DOCUMENTATION.md,175,- Independent release cycles
+doc-independence,ARCHITECTURE_DOCUMENTATION.md,205,### 📦 **Independent Deployments**
+doc-independence,ARCHITECTURE_DOCUMENTATION.md,206,- Each application can be deployed independently
+doc-independence,ARCHITECTURE_DOCUMENTATION.md,238,- Independent teams and deployments
+doc-independence,ARCHITECTURE_DOCUMENTATION.md,273,"The result is a scalable, maintainable insurance platform that allows multiple teams to work independently while delivering a cohesive user experience."
+doc-independence,DEPLOYMENT_GUIDE.md,5,"This guide explains how to deploy the Module Federation Insurance Platform to Vercel. Since this is a microfrontend architecture with multiple independent applications, deployment requires special considerations to maintain the Module Federation functionality in a production environment."
+doc-independence,DEPLOYMENT_GUIDE.md,37,Deploy each microfrontend as an independent Vercel project. This approach provides maximum flexibility and follows microfrontend best practices.
+doc-independence,NAVIGATION_AND_EMBEDDING.md,38,- **Behavior**: Portal runs independently
+doc-independence,NAVIGATION_AND_EMBEDDING.md,165,- **Independent Development**: Teams can work on portals separately
+doc-independence,NAVIGATION_AND_EMBEDDING.md,166,- **Independent Deployment**: Deploy individual portals without affecting others
+doc-independence,NAVIGATION_AND_EMBEDDING.md,171,- **Granular Monitoring**: Monitor each portal independently
+doc-independence,NAVIGATION_AND_EMBEDDING.md,193,- **Application Performance**: Monitor each portal independently
+doc-independence,README.md,3,"A modern, scalable insurance platform built with Module Federation, enabling independent development and deployment of different business domains while providing a unified user experience."
+doc-independence,README.md,7,"This platform uses **Module Federation** to create a microfrontend architecture where each business domain (Sales, Underwriting, Employer Services, Product Configuration, and Service Provider) operates as an independent application that can be developed, tested, and deployed separately."
+doc-independence,context.md,5,"This is a comprehensive Module Federation-based insurance platform built with React, TypeScript, and Vite. The platform demonstrates a modern microfrontend architecture where each business domain operates as an independent application while providing a unified user experience."
+doc-independence,context.md,10,├── 📂 apps/                    # 6 independent applications
+doc-independence,context.md,29,"- **Independent Development**: Teams can develop, test, and deploy independently"
+doc-independence,context.md,427,"1. **Module Federation over other microfrontend approaches**: Runtime integration, shared dependencies, independent deployment"
+doc-independence,context.md,446,- Independent development capabilities
+doc-independence,context.md,456,"**This insurance platform represents a modern, scalable approach to insurance software development, enabling teams to work independently while maintaining a cohesive user experience across all business domains.**"
+doc-host-remote,DEPLOYMENT_GUIDE.md,341,1. **Deploy Order**: Always deploy remotes before the shell
+doc-host-remote,README.md,248,   - Add remote reference in `apps/shell/vite.config.ts`
+doc-host-remote,README.md,267,**Shell application consumes all remotes:**
+doc-host-remote,context.md,26,- **Host Application**: Shell app consumes all other applications as remotes
+ws-workspaces,package.json,6,"  ""workspaces"": ["
+ws-workspaces,pnpm-workspace.yaml,1,packages:
+ws-path-alias,apps/product-config/tsconfig.json,19,"    ""paths"": {"
+ws-path-alias,apps/sales-portal/tsconfig.json,19,"    ""paths"": {"
+ws-path-alias,apps/shell/tsconfig.json,19,"    ""paths"": {"
+ws-path-alias,apps/underwriter-portal/tsconfig.json,19,"    ""paths"": {"
+ws-path-alias,packages/shared-ui/tsconfig.json,16,"    ""paths"": {"

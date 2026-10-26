@@ -1,0 +1,6 @@
+directory,markers
+frontend,frontend/index.html;frontend/package.json
+frontend/apps/host,frontend/apps/host/package.json;frontend/apps/host/rspack.config.ts
+frontend/apps/remote-footer,frontend/apps/remote-footer/package.json;frontend/apps/remote-footer/rspack.config.ts
+frontend/apps/remote-header,frontend/apps/remote-header/package.json;frontend/apps/remote-header/rspack.config.ts
+frontend/apps/url-shortener,frontend/apps/url-shortener/package.json;frontend/apps/url-shortener/rspack.config.ts

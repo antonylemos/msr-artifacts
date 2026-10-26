@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "id": "1353825451",
+  "fullName": "anish0714/devpulse-mfe",
+  "commit": "6a2348d162b34030505554ab0ef954577627999a",
+  "acquiredAt": "2026-10-24T00:32:20.150Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 90,
+    "bytes": 363634
+  },
+  "languages": {
+    "JSON": 225938,
+    "TypeScript": 109541,
+    "Markdown": 10583,
+    "JavaScript": 9236,
+    "CSS": 3461,
+    "HTML": 2639,
+    "YAML": 2202,
+    "Other": 34
+  },
+  "contentSha256": "3c8800f541d75d9130c56f2619339154d55f4e39a5164fb2b2c4ed75e6a343e6"
+}

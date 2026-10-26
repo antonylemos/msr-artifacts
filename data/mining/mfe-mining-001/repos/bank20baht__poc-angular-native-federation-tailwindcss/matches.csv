@@ -1,0 +1,55 @@
+pattern,path,line,excerpt
+dep-native-federation,host/package.json,23,"    ""@angular-architects/native-federation"": ""20.1.6"","
+dep-native-federation,host/package.json,31,"    ""@softarc/native-federation-node"": ""^2.0.10"","
+dep-native-federation,remote/package.json,23,"    ""@angular-architects/native-federation"": ""20.1.6"","
+dep-native-federation,remote/package.json,31,"    ""@softarc/native-federation-node"": ""^2.0.10"","
+lock-mfe-dependency,host/package-lock.json,11,"        ""@angular-architects/native-federation"": ""20.1.6"","
+lock-mfe-dependency,host/package-lock.json,19,"        ""@softarc/native-federation-node"": ""^2.0.10"","
+lock-mfe-dependency,host/package-lock.json,279,"    ""node_modules/@angular-architects/native-federation"": {"
+lock-mfe-dependency,host/package-lock.json,281,"      ""resolved"": ""https://registry.npmjs.org/@angular-architects/native-federation/-/native-federation-20.1.6.tgz"","
+lock-mfe-dependency,host/package-lock.json,287,"        ""@softarc/native-federation"": ""3.3.5"","
+lock-mfe-dependency,host/package-lock.json,288,"        ""@softarc/native-federation-runtime"": ""3.3.5"","
+lock-mfe-dependency,host/package-lock.json,5636,"    ""node_modules/@softarc/native-federation"": {"
+lock-mfe-dependency,host/package-lock.json,5638,"      ""resolved"": ""https://registry.npmjs.org/@softarc/native-federation/-/native-federation-3.3.5.tgz"","
+lock-mfe-dependency,host/package-lock.json,5642,"        ""@softarc/native-federation-runtime"": ""3.3.5"","
+lock-mfe-dependency,host/package-lock.json,5649,"    ""node_modules/@softarc/native-federation-node"": {"
+lock-mfe-dependency,host/package-lock.json,5651,"      ""resolved"": ""https://registry.npmjs.org/@softarc/native-federation-node/-/native-federation-node-2.0.28.tgz"","
+lock-mfe-dependency,host/package-lock.json,5654,"    ""node_modules/@softarc/native-federation-runtime"": {"
+lock-mfe-dependency,host/package-lock.json,5656,"      ""resolved"": ""https://registry.npmjs.org/@softarc/native-federation-runtime/-/native-federation-runtime-3.3.5.tgz"","
+lock-mfe-dependency,remote/package-lock.json,11,"        ""@angular-architects/native-federation"": ""20.1.6"","
+lock-mfe-dependency,remote/package-lock.json,19,"        ""@softarc/native-federation-node"": ""^2.0.10"","
+lock-mfe-dependency,remote/package-lock.json,279,"    ""node_modules/@angular-architects/native-federation"": {"
+lock-mfe-dependency,remote/package-lock.json,281,"      ""resolved"": ""https://registry.npmjs.org/@angular-architects/native-federation/-/native-federation-20.1.6.tgz"","
+lock-mfe-dependency,remote/package-lock.json,287,"        ""@softarc/native-federation"": ""3.3.5"","
+lock-mfe-dependency,remote/package-lock.json,288,"        ""@softarc/native-federation-runtime"": ""3.3.5"","
+lock-mfe-dependency,remote/package-lock.json,5636,"    ""node_modules/@softarc/native-federation"": {"
+lock-mfe-dependency,remote/package-lock.json,5638,"      ""resolved"": ""https://registry.npmjs.org/@softarc/native-federation/-/native-federation-3.3.5.tgz"","
+lock-mfe-dependency,remote/package-lock.json,5642,"        ""@softarc/native-federation-runtime"": ""3.3.5"","
+lock-mfe-dependency,remote/package-lock.json,5649,"    ""node_modules/@softarc/native-federation-node"": {"
+lock-mfe-dependency,remote/package-lock.json,5651,"      ""resolved"": ""https://registry.npmjs.org/@softarc/native-federation-node/-/native-federation-node-2.0.28.tgz"","
+lock-mfe-dependency,remote/package-lock.json,5654,"    ""node_modules/@softarc/native-federation-runtime"": {"
+lock-mfe-dependency,remote/package-lock.json,5656,"      ""resolved"": ""https://registry.npmjs.org/@softarc/native-federation-runtime/-/native-federation-runtime-3.3.5.tgz"","
+cfg-native-federation,host/angular.json,17,"					""builder"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,host/angular.json,31,"					""builder"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,host/federation.config.js,1,"const { withNativeFederation, shareAll } = require('@angular-architects/native-federation/config');"
+cfg-native-federation,host/federation.config.js,3,module.exports = withNativeFederation({
+cfg-native-federation,remote/angular.json,17,"          ""builder"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,remote/angular.json,33,"          ""builder"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,remote/federation.config.js,1,"const { withNativeFederation, shareAll } = require('@angular-architects/native-federation/config');"
+cfg-native-federation,remote/federation.config.js,3,module.exports = withNativeFederation({
+cfg-exposes,remote/federation.config.js,7,  exposes: {
+cfg-shared,host/federation.config.js,5,  shared: {
+cfg-shared,host/federation.config.js,6,"    ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),"
+cfg-shared,remote/federation.config.js,12,  shared: {
+cfg-shared,remote/federation.config.js,13,"    ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),"
+rt-remote-entry,host/src/main.ts,4,  'remote': 'http://localhost:4201/remoteEntry.json'
+src-async-bootstrap,host/src/main.ts,7,  .then(_ => import('./bootstrap'))
+src-async-bootstrap,remote/src/main.ts,5,  .then(_ => import('./bootstrap'))
+src-load-remote,host/src/app/app.routes.ts,1,import { loadRemoteModule } from '@angular-architects/native-federation';
+src-load-remote,host/src/app/app.routes.ts,11,"      loadRemoteModule('remote', './Component')"
+src-load-remote,host/src/app/app.routes.ts,22,"      loadRemoteModule('remote', './routes')"
+src-load-remote,host/src/main.ts,1,import { initFederation } from '@angular-architects/native-federation';
+src-load-remote,host/src/main.ts,3,initFederation({
+src-load-remote,remote/src/main.ts,1,import { initFederation } from '@angular-architects/native-federation';
+src-load-remote,remote/src/main.ts,3,initFederation()
+doc-integration-technology,README.md,1,# Native Federation Angular

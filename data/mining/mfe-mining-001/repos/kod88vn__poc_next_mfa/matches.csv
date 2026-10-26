@@ -1,0 +1,26 @@
+pattern,path,line,excerpt
+dep-monorepo-tool,package.json,18,"    ""turbo"": ""^2.3.3"""
+cfg-route-rewrites,apps/shell/next.config.js,25,  async rewrites() {
+cfg-zone-path,apps/duda/next.config.js,6,"  basePath: '/duda',"
+cfg-zone-path,apps/shell/next.config.js,17,"   * Because the shop app is configured with basePath: '/shop', every URL it"
+cfg-zone-path,apps/shop/next.config.js,19,"  basePath: '/shop',"
+src-iframe,apps/duda/lib/duda-landing.ts,387,"    sanitized = sanitized.replace(/<iframe[\s\S]*?<\/iframe>/gi, '');"
+ops-cors,apps/duda/next.config.js,16,"            key: 'Access-Control-Allow-Origin',"
+ops-cors,apps/shop/next.config.js,35,"            key: 'Access-Control-Allow-Origin',"
+doc-mfe-term,README.md,1,# poc_next_mfa — Next.js 16 Multi-Zone Microfrontend POC
+doc-mfe-term,README.md,3,"A production-style Microfrontend architecture using **Next.js 16 Multi-Zones** and **Turborepo**, demonstrating independent deployability, a shared design system, and cross-zone state."
+doc-mfe-term,README.md,13,Cookie: mfe_cart_count             ← Shared by both zones (port-agnostic on localhost)
+doc-mfe-term,README.md,62,| `apps/shop/app/actions.ts` | Server Action — increments `mfe_cart_count` cookie |
+doc-mfe-term,README.md,67,"## How the MFE ""string"" works"
+doc-mfe-term,README.md,72,"4. The shared `mfe_cart_count` cookie is readable by both zones because browser cookies are scoped to the domain (`localhost`), not the port."
+doc-mfe-term,apps/duda/ARCHITECTURE.md,144,Renders the MFE navigation header using `--brand-*` CSS variables. All anchor tags carry explicit `fontWeight` and `lineHeight` to prevent vendor CSS from bleeding onto the header. The inner nav container has a fixed height (`67px`) for layout stability.
+doc-integration-technology,apps/duda/ARCHITECTURE.md,80,"  - Strips `script`, `noscript`, and `iframe` blocks."
+doc-import-map-zones,README.md,1,# poc_next_mfa — Next.js 16 Multi-Zone Microfrontend POC
+doc-import-map-zones,README.md,3,"A production-style Microfrontend architecture using **Next.js 16 Multi-Zones** and **Turborepo**, demonstrating independent deployability, a shared design system, and cross-zone state."
+doc-import-map-zones,README.md,58,"| `apps/shell/next.config.js` | **Rewrite rules** — the multi-zone ""glue"" |"
+doc-independence,README.md,3,"A production-style Microfrontend architecture using **Next.js 16 Multi-Zones** and **Turborepo**, demonstrating independent deployability, a shared design system, and cross-zone state."
+doc-host-remote,apps/duda/ARCHITECTURE.md,157,- Some vendor assets can still fail due to cross-origin browser blocking or remote host rules.
+ws-workspaces,package.json,4,"  ""workspaces"": ["
+ws-path-alias,apps/duda/tsconfig.json,24,"    ""paths"": {"
+ws-path-alias,apps/shell/tsconfig.json,24,"    ""paths"": {"
+ws-path-alias,apps/shop/tsconfig.json,24,"    ""paths"": {"

@@ -1,0 +1,115 @@
+pattern,path,line,excerpt
+dep-mfe-term,package.json,2,"  ""name"": ""devpulse-mfe"","
+cfg-federation-plugin,packages/dev-utils-remote/webpack.config.js,3,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,packages/dev-utils-remote/webpack.config.js,33,      new ModuleFederationPlugin({
+cfg-federation-plugin,packages/ocr-remote/webpack.config.js,3,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,packages/ocr-remote/webpack.config.js,33,      new ModuleFederationPlugin({
+cfg-federation-plugin,packages/pdf-conversion-remote/webpack.config.js,3,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,packages/pdf-conversion-remote/webpack.config.js,33,      new ModuleFederationPlugin({
+cfg-federation-plugin,packages/pdf-form-filler-remote/webpack.config.js,3,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,packages/pdf-form-filler-remote/webpack.config.js,33,      new ModuleFederationPlugin({
+cfg-federation-plugin,packages/pdf-manipulation-remote/webpack.config.js,3,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,packages/pdf-manipulation-remote/webpack.config.js,33,      new ModuleFederationPlugin({
+cfg-federation-plugin,packages/shell/webpack.config.js,3,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,packages/shell/webpack.config.js,50,      new ModuleFederationPlugin({
+cfg-remotes,packages/shell/webpack.config.js,52,        remotes: {
+cfg-exposes,packages/dev-utils-remote/webpack.config.js,36,        exposes: {
+cfg-exposes,packages/ocr-remote/webpack.config.js,36,        exposes: {
+cfg-exposes,packages/pdf-conversion-remote/webpack.config.js,36,        exposes: {
+cfg-exposes,packages/pdf-form-filler-remote/webpack.config.js,36,        exposes: {
+cfg-exposes,packages/pdf-manipulation-remote/webpack.config.js,36,        exposes: {
+cfg-shared,packages/dev-utils-remote/webpack.config.js,39,        shared: {
+cfg-shared,packages/dev-utils-remote/webpack.config.js,40,"          react: { singleton: true, requiredVersion: deps.react },"
+cfg-shared,packages/dev-utils-remote/webpack.config.js,41,"          ""react-dom"": { singleton: true, requiredVersion: deps[""react-dom""] },"
+cfg-shared,packages/ocr-remote/webpack.config.js,39,        shared: {
+cfg-shared,packages/ocr-remote/webpack.config.js,40,"          react: { singleton: true, requiredVersion: deps.react },"
+cfg-shared,packages/ocr-remote/webpack.config.js,41,"          ""react-dom"": { singleton: true, requiredVersion: deps[""react-dom""] },"
+cfg-shared,packages/pdf-conversion-remote/webpack.config.js,39,        shared: {
+cfg-shared,packages/pdf-conversion-remote/webpack.config.js,40,"          react: { singleton: true, requiredVersion: deps.react },"
+cfg-shared,packages/pdf-conversion-remote/webpack.config.js,41,"          ""react-dom"": { singleton: true, requiredVersion: deps[""react-dom""] },"
+cfg-shared,packages/pdf-form-filler-remote/webpack.config.js,39,        shared: {
+cfg-shared,packages/pdf-form-filler-remote/webpack.config.js,40,"          react: { singleton: true, requiredVersion: deps.react },"
+cfg-shared,packages/pdf-form-filler-remote/webpack.config.js,41,"          ""react-dom"": { singleton: true, requiredVersion: deps[""react-dom""] },"
+cfg-shared,packages/pdf-manipulation-remote/webpack.config.js,39,        shared: {
+cfg-shared,packages/pdf-manipulation-remote/webpack.config.js,40,"          react: { singleton: true, requiredVersion: deps.react },"
+cfg-shared,packages/pdf-manipulation-remote/webpack.config.js,41,"          ""react-dom"": { singleton: true, requiredVersion: deps[""react-dom""] },"
+cfg-shared,packages/shell/webpack.config.js,59,        shared: {
+cfg-shared,packages/shell/webpack.config.js,60,"          react: { singleton: true, requiredVersion: deps.react },"
+cfg-shared,packages/shell/webpack.config.js,61,"          ""react-dom"": { singleton: true, requiredVersion: deps[""react-dom""] },"
+cfg-public-path,packages/dev-utils-remote/webpack.config.js,14,"      publicPath: ""auto"","
+cfg-public-path,packages/ocr-remote/webpack.config.js,14,"      publicPath: ""auto"","
+cfg-public-path,packages/pdf-conversion-remote/webpack.config.js,14,"      publicPath: ""auto"","
+cfg-public-path,packages/pdf-form-filler-remote/webpack.config.js,14,"      publicPath: ""auto"","
+cfg-public-path,packages/pdf-manipulation-remote/webpack.config.js,14,"      publicPath: ""auto"","
+cfg-public-path,packages/shell/webpack.config.js,32,"      publicPath: ""auto"","
+rt-remote-entry,packages/dev-utils-remote/webpack.config.js,35,"        filename: ""remoteEntry.js"","
+rt-remote-entry,packages/ocr-remote/webpack.config.js,35,"        filename: ""remoteEntry.js"","
+rt-remote-entry,packages/pdf-conversion-remote/webpack.config.js,35,"        filename: ""remoteEntry.js"","
+rt-remote-entry,packages/pdf-form-filler-remote/webpack.config.js,35,"        filename: ""remoteEntry.js"","
+rt-remote-entry,packages/pdf-manipulation-remote/webpack.config.js,35,"        filename: ""remoteEntry.js"","
+rt-remote-entry,packages/shell/src/App.tsx,43,      ? `${PROD_BASE}/remotes/pdf-conversion/remoteEntry.js`
+rt-remote-entry,packages/shell/src/App.tsx,44,"      : ""http://localhost:3003/remoteEntry.js"","
+rt-remote-entry,packages/shell/src/App.tsx,54,      ? `${PROD_BASE}/remotes/pdf-manipulation/remoteEntry.js`
+rt-remote-entry,packages/shell/src/App.tsx,55,"      : ""http://localhost:3004/remoteEntry.js"","
+rt-remote-entry,packages/shell/src/App.tsx,65,      ? `${PROD_BASE}/remotes/dev-utils/remoteEntry.js`
+rt-remote-entry,packages/shell/src/App.tsx,66,"      : ""http://localhost:3005/remoteEntry.js"","
+rt-remote-entry,packages/shell/src/App.tsx,76,      ? `${PROD_BASE}/remotes/pdf-form-filler/remoteEntry.js`
+rt-remote-entry,packages/shell/src/App.tsx,77,"      : ""http://localhost:3006/remoteEntry.js"","
+rt-remote-entry,packages/shell/src/App.tsx,87,      ? `${PROD_BASE}/remotes/ocr/remoteEntry.js`
+rt-remote-entry,packages/shell/src/App.tsx,88,"      : ""http://localhost:3007/remoteEntry.js"","
+rt-remote-entry,packages/shell/webpack.config.js,12,    ? `${PROD_BASE}/remotes/pdf-conversion/remoteEntry.js`
+rt-remote-entry,packages/shell/webpack.config.js,13,"    : ""http://localhost:3003/remoteEntry.js"";"
+rt-remote-entry,packages/shell/webpack.config.js,15,    ? `${PROD_BASE}/remotes/pdf-manipulation/remoteEntry.js`
+rt-remote-entry,packages/shell/webpack.config.js,16,"    : ""http://localhost:3004/remoteEntry.js"";"
+rt-remote-entry,packages/shell/webpack.config.js,18,    ? `${PROD_BASE}/remotes/dev-utils/remoteEntry.js`
+rt-remote-entry,packages/shell/webpack.config.js,19,"    : ""http://localhost:3005/remoteEntry.js"";"
+rt-remote-entry,packages/shell/webpack.config.js,21,    ? `${PROD_BASE}/remotes/pdf-form-filler/remoteEntry.js`
+rt-remote-entry,packages/shell/webpack.config.js,22,"    : ""http://localhost:3006/remoteEntry.js"";"
+rt-remote-entry,packages/shell/webpack.config.js,24,    ? `${PROD_BASE}/remotes/ocr/remoteEntry.js`
+rt-remote-entry,packages/shell/webpack.config.js,25,"    : ""http://localhost:3007/remoteEntry.js"";"
+src-remote-import,packages/shell/src/App.tsx,7,"const PdfConversionWidget = lazy(() => import(""pdfConversion/Widget""));"
+src-remote-import,packages/shell/src/App.tsx,8,"const PdfManipulationWidget = lazy(() => import(""pdfManipulation/Widget""));"
+src-remote-import,packages/shell/src/App.tsx,9,"const DevUtilsWidget = lazy(() => import(""devUtils/Widget""));"
+src-remote-import,packages/shell/src/App.tsx,10,"const PdfFormFillerWidget = lazy(() => import(""pdfFormFiller/Widget""));"
+src-remote-import,packages/shell/src/App.tsx,11,"const OcrWidget = lazy(() => import(""ocr/Widget""));"
+src-async-bootstrap,packages/dev-utils-remote/src/index.ts,3,"import(""./bootstrap"");"
+src-async-bootstrap,packages/ocr-remote/src/index.ts,3,"import(""./bootstrap"");"
+src-async-bootstrap,packages/pdf-conversion-remote/src/index.ts,3,"import(""./bootstrap"");"
+src-async-bootstrap,packages/pdf-form-filler-remote/src/index.ts,3,"import(""./bootstrap"");"
+src-async-bootstrap,packages/pdf-manipulation-remote/src/index.ts,3,"import(""./bootstrap"");"
+src-async-bootstrap,packages/shell/src/index.ts,3,"import(""./bootstrap"");"
+ops-cors,packages/dev-utils-remote/webpack.config.js,30,"      headers: { ""Access-Control-Allow-Origin"": ""*"" },"
+ops-cors,packages/ocr-remote/webpack.config.js,30,"      headers: { ""Access-Control-Allow-Origin"": ""*"" },"
+ops-cors,packages/pdf-conversion-remote/webpack.config.js,30,"      headers: { ""Access-Control-Allow-Origin"": ""*"" },"
+ops-cors,packages/pdf-form-filler-remote/webpack.config.js,30,"      headers: { ""Access-Control-Allow-Origin"": ""*"" },"
+ops-cors,packages/pdf-manipulation-remote/webpack.config.js,30,"      headers: { ""Access-Control-Allow-Origin"": ""*"" },"
+ci-workflow-file,.github/workflows/ci.yml,,
+ci-workflow-file,.github/workflows/deploy.yml,,
+doc-mfe-term,README.md,1,# DevPulse — Micro-Frontend Toolbox
+doc-mfe-term,README.md,3,"A toolbox of real, browser-based tools (PDF conversion, PDF editing, developer utilities) built as **independently developed, independently deployed** micro-frontends, composed at runtime into one app by a shell host using Webpack 5's [Module Federation](https://webpack.js.org/concepts/module-federa"
+doc-mfe-term,README.md,5,**Live:** https://anish0714.github.io/devpulse-mfe/
+doc-mfe-term,README.md,12,"2. **A demonstration of production-grade micro-frontend architecture** — each tool is its own React app with its own build, its own deploy, and its own CI check, loaded into a shared shell at runtime rather than bundled together at build time."
+doc-mfe-term,README.md,88,Deployed as one GitHub Pages site (`/devpulse-mfe/`) assembled from six independent builds:
+doc-mfe-term,README.md,102,pdfConversion: `pdfConversion@https://anish0714.github.io/devpulse-mfe/remotes/pdf-conversion/remoteEntry.js`
+doc-mfe-term,README.md,103,pdfManipulation: `pdfManipulation@https://anish0714.github.io/devpulse-mfe/remotes/pdf-manipulation/remoteEntry.js`
+doc-mfe-term,README.md,104,devUtils: `devUtils@https://anish0714.github.io/devpulse-mfe/remotes/dev-utils/remoteEntry.js`
+doc-mfe-term,README.md,105,pdfFormFiller: `pdfFormFiller@https://anish0714.github.io/devpulse-mfe/remotes/pdf-form-filler/remoteEntry.js`
+doc-mfe-term,README.md,106,ocr: `ocr@https://anish0714.github.io/devpulse-mfe/remotes/ocr/remoteEntry.js`
+doc-mfe-term,README.md,141,Micro-frontend architecture with genuine runtime composition (not a monorepo pretending to be one); independent build/deploy pipelines per package; browser-only file processing with zero backend; and a standard trunk-based git workflow (feature branch → PR → CI → merge) enforced in practice across e
+doc-integration-technology,README.md,3,"A toolbox of real, browser-based tools (PDF conversion, PDF editing, developer utilities) built as **independently developed, independently deployed** micro-frontends, composed at runtime into one app by a shell host using Webpack 5's [Module Federation](https://webpack.js.org/concepts/module-federa"
+doc-runtime-loading,README.md,3,"A toolbox of real, browser-based tools (PDF conversion, PDF editing, developer utilities) built as **independently developed, independently deployed** micro-frontends, composed at runtime into one app by a shell host using Webpack 5's [Module Federation](https://webpack.js.org/concepts/module-federa"
+doc-runtime-loading,README.md,12,"2. **A demonstration of production-grade micro-frontend architecture** — each tool is its own React app with its own build, its own deploy, and its own CI check, loaded into a shared shell at runtime rather than bundled together at build time."
+doc-runtime-loading,README.md,18,- **True runtime composition** — the shell has zero compile-time dependency on any tool's source; it only knows a URL and an exposed module name. A tool can be rebuilt and redeployed on its own schedule without touching the shell or any other tool.
+doc-runtime-loading,README.md,131,"- **React 19** + **TypeScript**, **Webpack 5** (`ModuleFederationPlugin`) for runtime composition, **npm workspaces** for the monorepo"
+doc-runtime-loading,README.md,141,Micro-frontend architecture with genuine runtime composition (not a monorepo pretending to be one); independent build/deploy pipelines per package; browser-only file processing with zero backend; and a standard trunk-based git workflow (feature branch → PR → CI → merge) enforced in practice across e
+doc-independence,README.md,3,"A toolbox of real, browser-based tools (PDF conversion, PDF editing, developer utilities) built as **independently developed, independently deployed** micro-frontends, composed at runtime into one app by a shell host using Webpack 5's [Module Federation](https://webpack.js.org/concepts/module-federa"
+doc-independence,README.md,64,"This is an npm-workspaces monorepo — one repo for convenience, but each package still builds independently and is wired together only via runtime URLs, the same way it would work across separate repos:"
+doc-independence,README.md,83,"- builds to its own `dist/`, independent of the others"
+doc-independence,README.md,88,Deployed as one GitHub Pages site (`/devpulse-mfe/`) assembled from six independent builds:
+doc-independence,README.md,113,"Two separate GitHub Actions workflows, matching the ""independently built"" story:"
+doc-independence,README.md,141,Micro-frontend architecture with genuine runtime composition (not a monorepo pretending to be one); independent build/deploy pipelines per package; browser-only file processing with zero backend; and a standard trunk-based git workflow (feature branch → PR → CI → merge) enforced in practice across e
+doc-host-remote,README.md,58,"The shell opens on an **Introduction** page that frames the project as a toolbox to use, not just an architecture demo, with cards linking straight into each tool. Every tool lives in a left-hand sidebar; selecting one renders that remote's own widget in the right-hand content pane. The shell itself"
+doc-host-remote,README.md,68,"  shell/                     the host app: left-hand sidebar nav, remote loading,"
+doc-host-remote,README.md,115,"- **[ci.yml](.github/workflows/ci.yml)** runs on every pull request targeting `main`. It lints (type-checks) and builds each package in its own matrix job — `shell`, `pdf-conversion-remote`, `pdf-manipulation-remote`, `dev-utils-remote`, `pdf-form-filler-remote`, `ocr-remote` — so one remote's failu"
+doc-host-remote,README.md,124,npm run dev   # starts shell + all remotes together
+ws-workspaces,package.json,5,"  ""workspaces"": ["

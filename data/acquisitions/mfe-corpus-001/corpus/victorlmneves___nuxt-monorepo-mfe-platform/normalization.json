@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "id": "1253620135",
+  "fullName": "victorlmneves/_nuxt-monorepo-mfe-platform",
+  "commit": "84ffc2429b311b3c7565ffd35de4de48dafd5929",
+  "acquiredAt": "2026-10-24T00:32:20.637Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 59,
+    "bytes": 551030
+  },
+  "languages": {
+    "YAML": 466356,
+    "Vue": 28653,
+    "JavaScript": 20589,
+    "TypeScript": 18500,
+    "JSON": 7781,
+    "Markdown": 4777,
+    "HTML": 1832,
+    "Shell": 951,
+    "Other": 864,
+    "CSS": 727
+  },
+  "contentSha256": "612a55de9b1aca331a9aec7ca9e48bf3cf8d1928a14b5bf26eabadeaac14595e"
+}

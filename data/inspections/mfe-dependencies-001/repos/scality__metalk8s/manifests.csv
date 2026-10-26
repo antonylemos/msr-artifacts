@@ -1,0 +1,4 @@
+manifest,state
+shell-ui/package.json,ok
+tools/crd-client-generator-js/package.json,ok
+ui/package.json,ok

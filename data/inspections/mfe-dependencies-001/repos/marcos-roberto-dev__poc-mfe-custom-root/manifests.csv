@@ -1,0 +1,5 @@
+manifest,state
+content-app/package.json,ok
+root-app/package.json,ok
+root-classic/package.json,ok
+topbar-app/package.json,ok

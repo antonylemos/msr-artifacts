@@ -1,0 +1,12 @@
+manifest,state
+accounts-module/package.json,ok
+ai-agent-module/package.json,ok
+business-reports/package.json,ok
+cards-module/package.json,ok
+host-app/package.json,ok
+incoming-api-logs/package.json,ok
+loans-module/package.json,ok
+maker-requests/package.json,ok
+model-portfolio-configuration/package.json,ok
+outgoing-api-logs/package.json,ok
+vro-uploads/package.json,ok

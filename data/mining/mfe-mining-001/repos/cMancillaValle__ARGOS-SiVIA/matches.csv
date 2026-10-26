@@ -1,0 +1,30 @@
+pattern,path,line,excerpt
+cfg-library-bundle,frontend-hermes/vite.config.ts,11,    lib: {
+cfg-library-bundle,frontend-hermes/vite.config.ts,14,"      formats: ['iife'],"
+src-custom-element,frontend-hermes/src/hermes-widget.tsx,6,class HermesWidget extends HTMLElement {
+src-custom-element,frontend-hermes/src/hermes-widget.tsx,16,    const shadow = this.attachShadow({ mode: 'open' })
+src-custom-element,frontend-hermes/src/hermes-widget.tsx,58,"  customElements.define('hermes-widget', HermesWidget)"
+src-dynamic-script,frontend/js/router.js,54,        const s = document.createElement('script');
+src-dynamic-script,frontend/js/router.js,93,        const s = document.createElement('script');
+src-dynamic-script,frontend/views/mapa_transmilenio.html,604,    const script = document.createElement('script');
+src-html-external-script,frontend/dashboard.html,14,"  <script src=""https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"" integrity=""sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="" crossorigin=""""></script>"
+src-html-external-script,frontend/dashboard.html,15,"  <script src=""https://cdn.tailwindcss.com""></script>"
+src-html-external-script,frontend/index.html,23,"<script src=""https://cdn.tailwindcss.com""></script>"
+src-html-external-script,frontend/login.html,12,"  <script src=""https://cdn.tailwindcss.com""></script>"
+src-cross-unit-communication,frontend-hermes/src/App.tsx,35,"    window.addEventListener('toggle-hermes', handleToggle);"
+src-cross-unit-communication,frontend-hermes/src/App.tsx,36,"    window.addEventListener('close-hermes', handleCloseEvent);"
+src-cross-unit-communication,frontend/components/topbar.html,26,"            onclick=""window.dispatchEvent(new CustomEvent('toggle-hermes'))"""
+src-cross-unit-communication,frontend/dashboard.html,421,        window.dispatchEvent(new CustomEvent('close-hermes'));
+src-cross-unit-communication,frontend/js/router.js,71,    document.dispatchEvent(new CustomEvent('argos:navaway'));
+src-cross-unit-communication,frontend/views/auditoria.html,219,"    document.addEventListener('argos:navaway', () => clearInterval(_autoRefresh), { once: true });"
+src-cross-unit-communication,frontend/views/auditoria.html,288,"    document.addEventListener('argos:navaway', () => clearInterval(_sesAutoRefresh), { once: true });"
+src-cross-unit-communication,frontend/views/dashboard_home.html,458,"  document.addEventListener('argos:navaway', () => clearInterval(_interval), { once: true });"
+src-cross-unit-communication,frontend/views/infra_servidores.html,306,"  document.addEventListener('argos:navaway', () => clearInterval(_pollTimer), { once: true });"
+src-cross-unit-communication,frontend/views/mapa_transmilenio.html,616,"  document.addEventListener('argos:navaway', () => {"
+ops-deployment-file,docker-compose.yml,,
+ops-compose-service,docker-compose.yml,5,    image: python:3.11-slim
+doc-mfe-term,README.md,63,- Micro-frontend independiente construido en **React + TypeScript** con **Vite**
+doc-mfe-term,README.md,70,- Construcción automática del micro-frontend Hermes antes de lanzar el túnel
+doc-mfe-term,README.md,101,├── frontend-hermes/            ← Micro-frontend Hermes IA (React + TypeScript)
+doc-mfe-term,README.md,208,### Micro-Frontend Hermes IA
+doc-mfe-term,README.md,312,"- **Migración completa de la UI a React:** Reemplazar el frontend en HTML/JS vanilla por una aplicación SPA React completa (con tipado TypeScript), ampliando la arquitectura tecnológica del micro-frontend Hermes."

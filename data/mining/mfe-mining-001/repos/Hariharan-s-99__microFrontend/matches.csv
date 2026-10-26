@@ -1,0 +1,298 @@
+pattern,path,line,excerpt
+dep-module-federation,container/package.json,29,"    ""@module-federation/enhanced"": ""^0.8.9"","
+dep-module-federation,home/package.json,29,"    ""@module-federation/enhanced"": ""^0.8.9"","
+dep-module-federation,settings/package.json,28,"    ""@module-federation/enhanced"": ""^0.8.9"","
+lock-mfe-dependency,container/pnpm-lock.yaml,11,      '@module-federation/enhanced':
+lock-mfe-dependency,container/pnpm-lock.yaml,147,  '@module-federation/bridge-react-webpack-plugin@0.8.12':
+lock-mfe-dependency,container/pnpm-lock.yaml,150,  '@module-federation/data-prefetch@0.8.12':
+lock-mfe-dependency,container/pnpm-lock.yaml,156,  '@module-federation/dts-plugin@0.8.12':
+lock-mfe-dependency,container/pnpm-lock.yaml,165,  '@module-federation/enhanced@0.8.12':
+lock-mfe-dependency,container/pnpm-lock.yaml,179,  '@module-federation/error-codes@0.8.12':
+lock-mfe-dependency,container/pnpm-lock.yaml,182,  '@module-federation/error-codes@0.8.4':
+lock-mfe-dependency,container/pnpm-lock.yaml,185,  '@module-federation/inject-external-runtime-core-plugin@0.8.12':
+lock-mfe-dependency,container/pnpm-lock.yaml,188,      '@module-federation/runtime-tools': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,190,  '@module-federation/managers@0.8.12':
+lock-mfe-dependency,container/pnpm-lock.yaml,193,  '@module-federation/manifest@0.8.12':
+lock-mfe-dependency,container/pnpm-lock.yaml,196,  '@module-federation/rspack@0.8.12':
+lock-mfe-dependency,container/pnpm-lock.yaml,208,  '@module-federation/runtime-core@0.6.20':
+lock-mfe-dependency,container/pnpm-lock.yaml,211,  '@module-federation/runtime-tools@0.8.12':
+lock-mfe-dependency,container/pnpm-lock.yaml,214,  '@module-federation/runtime-tools@0.8.4':
+lock-mfe-dependency,container/pnpm-lock.yaml,217,  '@module-federation/runtime@0.8.12':
+lock-mfe-dependency,container/pnpm-lock.yaml,220,  '@module-federation/runtime@0.8.4':
+lock-mfe-dependency,container/pnpm-lock.yaml,223,  '@module-federation/sdk@0.8.12':
+lock-mfe-dependency,container/pnpm-lock.yaml,226,  '@module-federation/sdk@0.8.4':
+lock-mfe-dependency,container/pnpm-lock.yaml,229,  '@module-federation/third-party-dts-extractor@0.8.12':
+lock-mfe-dependency,container/pnpm-lock.yaml,232,  '@module-federation/webpack-bundler-runtime@0.8.12':
+lock-mfe-dependency,container/pnpm-lock.yaml,235,  '@module-federation/webpack-bundler-runtime@0.8.4':
+lock-mfe-dependency,container/pnpm-lock.yaml,2237,  '@module-federation/bridge-react-webpack-plugin@0.8.12':
+lock-mfe-dependency,container/pnpm-lock.yaml,2239,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,2243,  '@module-federation/data-prefetch@0.8.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+lock-mfe-dependency,container/pnpm-lock.yaml,2245,      '@module-federation/runtime': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,2246,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,2251,  '@module-federation/dts-plugin@0.8.12(typescript@5.8.3)':
+lock-mfe-dependency,container/pnpm-lock.yaml,2253,      '@module-federation/error-codes': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,2254,      '@module-federation/managers': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,2255,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,2256,      '@module-federation/third-party-dts-extractor': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,2276,  '@module-federation/enhanced@0.8.12(@rspack/core@1.2.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3)(webpack@5.99.7)':
+lock-mfe-dependency,container/pnpm-lock.yaml,2278,      '@module-federation/bridge-react-webpack-plugin': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,2279,      '@module-federation/data-prefetch': 0.8.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+lock-mfe-dependency,container/pnpm-lock.yaml,2280,      '@module-federation/dts-plugin': 0.8.12(typescript@5.8.3)
+lock-mfe-dependency,container/pnpm-lock.yaml,2281,      '@module-federation/error-codes': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,2282,      '@module-federation/inject-external-runtime-core-plugin': 0.8.12(@module-federation/runtime-tools@0.8.12)
+lock-mfe-dependency,container/pnpm-lock.yaml,2283,      '@module-federation/managers': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,2284,      '@module-federation/manifest': 0.8.12(typescript@5.8.3)
+lock-mfe-dependency,container/pnpm-lock.yaml,2285,      '@module-federation/rspack': 0.8.12(@rspack/core@1.2.8)(typescript@5.8.3)
+lock-mfe-dependency,container/pnpm-lock.yaml,2286,      '@module-federation/runtime-tools': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,2287,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,2302,  '@module-federation/error-codes@0.8.12': {}
+lock-mfe-dependency,container/pnpm-lock.yaml,2304,  '@module-federation/error-codes@0.8.4': {}
+lock-mfe-dependency,container/pnpm-lock.yaml,2306,  '@module-federation/inject-external-runtime-core-plugin@0.8.12(@module-federation/runtime-tools@0.8.12)':
+lock-mfe-dependency,container/pnpm-lock.yaml,2308,      '@module-federation/runtime-tools': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,2310,  '@module-federation/managers@0.8.12':
+lock-mfe-dependency,container/pnpm-lock.yaml,2312,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,2316,  '@module-federation/manifest@0.8.12(typescript@5.8.3)':
+lock-mfe-dependency,container/pnpm-lock.yaml,2318,      '@module-federation/dts-plugin': 0.8.12(typescript@5.8.3)
+lock-mfe-dependency,container/pnpm-lock.yaml,2319,      '@module-federation/managers': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,2320,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,2331,  '@module-federation/rspack@0.8.12(@rspack/core@1.2.8)(typescript@5.8.3)':
+lock-mfe-dependency,container/pnpm-lock.yaml,2333,      '@module-federation/bridge-react-webpack-plugin': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,2334,      '@module-federation/dts-plugin': 0.8.12(typescript@5.8.3)
+lock-mfe-dependency,container/pnpm-lock.yaml,2335,      '@module-federation/inject-external-runtime-core-plugin': 0.8.12(@module-federation/runtime-tools@0.8.12)
+lock-mfe-dependency,container/pnpm-lock.yaml,2336,      '@module-federation/managers': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,2337,      '@module-federation/manifest': 0.8.12(typescript@5.8.3)
+lock-mfe-dependency,container/pnpm-lock.yaml,2338,      '@module-federation/runtime-tools': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,2339,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,2349,  '@module-federation/runtime-core@0.6.20':
+lock-mfe-dependency,container/pnpm-lock.yaml,2351,      '@module-federation/error-codes': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,2352,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,2354,  '@module-federation/runtime-tools@0.8.12':
+lock-mfe-dependency,container/pnpm-lock.yaml,2356,      '@module-federation/runtime': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,2357,      '@module-federation/webpack-bundler-runtime': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,2359,  '@module-federation/runtime-tools@0.8.4':
+lock-mfe-dependency,container/pnpm-lock.yaml,2361,      '@module-federation/runtime': 0.8.4
+lock-mfe-dependency,container/pnpm-lock.yaml,2362,      '@module-federation/webpack-bundler-runtime': 0.8.4
+lock-mfe-dependency,container/pnpm-lock.yaml,2364,  '@module-federation/runtime@0.8.12':
+lock-mfe-dependency,container/pnpm-lock.yaml,2366,      '@module-federation/error-codes': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,2367,      '@module-federation/runtime-core': 0.6.20
+lock-mfe-dependency,container/pnpm-lock.yaml,2368,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,2370,  '@module-federation/runtime@0.8.4':
+lock-mfe-dependency,container/pnpm-lock.yaml,2372,      '@module-federation/error-codes': 0.8.4
+lock-mfe-dependency,container/pnpm-lock.yaml,2373,      '@module-federation/sdk': 0.8.4
+lock-mfe-dependency,container/pnpm-lock.yaml,2375,  '@module-federation/sdk@0.8.12':
+lock-mfe-dependency,container/pnpm-lock.yaml,2379,  '@module-federation/sdk@0.8.4':
+lock-mfe-dependency,container/pnpm-lock.yaml,2383,  '@module-federation/third-party-dts-extractor@0.8.12':
+lock-mfe-dependency,container/pnpm-lock.yaml,2389,  '@module-federation/webpack-bundler-runtime@0.8.12':
+lock-mfe-dependency,container/pnpm-lock.yaml,2391,      '@module-federation/runtime': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,2392,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,container/pnpm-lock.yaml,2394,  '@module-federation/webpack-bundler-runtime@0.8.4':
+lock-mfe-dependency,container/pnpm-lock.yaml,2396,      '@module-federation/runtime': 0.8.4
+lock-mfe-dependency,container/pnpm-lock.yaml,2397,      '@module-federation/sdk': 0.8.4
+lock-mfe-dependency,container/pnpm-lock.yaml,2465,      '@module-federation/runtime-tools': 0.8.4
+lock-mfe-dependency,home/pnpm-lock.yaml,11,      '@module-federation/enhanced':
+lock-mfe-dependency,home/pnpm-lock.yaml,147,  '@module-federation/bridge-react-webpack-plugin@0.8.12':
+lock-mfe-dependency,home/pnpm-lock.yaml,150,  '@module-federation/data-prefetch@0.8.12':
+lock-mfe-dependency,home/pnpm-lock.yaml,156,  '@module-federation/dts-plugin@0.8.12':
+lock-mfe-dependency,home/pnpm-lock.yaml,165,  '@module-federation/enhanced@0.8.12':
+lock-mfe-dependency,home/pnpm-lock.yaml,179,  '@module-federation/error-codes@0.8.12':
+lock-mfe-dependency,home/pnpm-lock.yaml,182,  '@module-federation/error-codes@0.8.4':
+lock-mfe-dependency,home/pnpm-lock.yaml,185,  '@module-federation/inject-external-runtime-core-plugin@0.8.12':
+lock-mfe-dependency,home/pnpm-lock.yaml,188,      '@module-federation/runtime-tools': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,190,  '@module-federation/managers@0.8.12':
+lock-mfe-dependency,home/pnpm-lock.yaml,193,  '@module-federation/manifest@0.8.12':
+lock-mfe-dependency,home/pnpm-lock.yaml,196,  '@module-federation/rspack@0.8.12':
+lock-mfe-dependency,home/pnpm-lock.yaml,208,  '@module-federation/runtime-core@0.6.20':
+lock-mfe-dependency,home/pnpm-lock.yaml,211,  '@module-federation/runtime-tools@0.8.12':
+lock-mfe-dependency,home/pnpm-lock.yaml,214,  '@module-federation/runtime-tools@0.8.4':
+lock-mfe-dependency,home/pnpm-lock.yaml,217,  '@module-federation/runtime@0.8.12':
+lock-mfe-dependency,home/pnpm-lock.yaml,220,  '@module-federation/runtime@0.8.4':
+lock-mfe-dependency,home/pnpm-lock.yaml,223,  '@module-federation/sdk@0.8.12':
+lock-mfe-dependency,home/pnpm-lock.yaml,226,  '@module-federation/sdk@0.8.4':
+lock-mfe-dependency,home/pnpm-lock.yaml,229,  '@module-federation/third-party-dts-extractor@0.8.12':
+lock-mfe-dependency,home/pnpm-lock.yaml,232,  '@module-federation/webpack-bundler-runtime@0.8.12':
+lock-mfe-dependency,home/pnpm-lock.yaml,235,  '@module-federation/webpack-bundler-runtime@0.8.4':
+lock-mfe-dependency,home/pnpm-lock.yaml,2237,  '@module-federation/bridge-react-webpack-plugin@0.8.12':
+lock-mfe-dependency,home/pnpm-lock.yaml,2239,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,2243,  '@module-federation/data-prefetch@0.8.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+lock-mfe-dependency,home/pnpm-lock.yaml,2245,      '@module-federation/runtime': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,2246,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,2251,  '@module-federation/dts-plugin@0.8.12(typescript@5.8.3)':
+lock-mfe-dependency,home/pnpm-lock.yaml,2253,      '@module-federation/error-codes': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,2254,      '@module-federation/managers': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,2255,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,2256,      '@module-federation/third-party-dts-extractor': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,2276,  '@module-federation/enhanced@0.8.12(@rspack/core@1.2.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3)(webpack@5.99.7)':
+lock-mfe-dependency,home/pnpm-lock.yaml,2278,      '@module-federation/bridge-react-webpack-plugin': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,2279,      '@module-federation/data-prefetch': 0.8.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+lock-mfe-dependency,home/pnpm-lock.yaml,2280,      '@module-federation/dts-plugin': 0.8.12(typescript@5.8.3)
+lock-mfe-dependency,home/pnpm-lock.yaml,2281,      '@module-federation/error-codes': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,2282,      '@module-federation/inject-external-runtime-core-plugin': 0.8.12(@module-federation/runtime-tools@0.8.12)
+lock-mfe-dependency,home/pnpm-lock.yaml,2283,      '@module-federation/managers': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,2284,      '@module-federation/manifest': 0.8.12(typescript@5.8.3)
+lock-mfe-dependency,home/pnpm-lock.yaml,2285,      '@module-federation/rspack': 0.8.12(@rspack/core@1.2.8)(typescript@5.8.3)
+lock-mfe-dependency,home/pnpm-lock.yaml,2286,      '@module-federation/runtime-tools': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,2287,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,2302,  '@module-federation/error-codes@0.8.12': {}
+lock-mfe-dependency,home/pnpm-lock.yaml,2304,  '@module-federation/error-codes@0.8.4': {}
+lock-mfe-dependency,home/pnpm-lock.yaml,2306,  '@module-federation/inject-external-runtime-core-plugin@0.8.12(@module-federation/runtime-tools@0.8.12)':
+lock-mfe-dependency,home/pnpm-lock.yaml,2308,      '@module-federation/runtime-tools': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,2310,  '@module-federation/managers@0.8.12':
+lock-mfe-dependency,home/pnpm-lock.yaml,2312,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,2316,  '@module-federation/manifest@0.8.12(typescript@5.8.3)':
+lock-mfe-dependency,home/pnpm-lock.yaml,2318,      '@module-federation/dts-plugin': 0.8.12(typescript@5.8.3)
+lock-mfe-dependency,home/pnpm-lock.yaml,2319,      '@module-federation/managers': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,2320,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,2331,  '@module-federation/rspack@0.8.12(@rspack/core@1.2.8)(typescript@5.8.3)':
+lock-mfe-dependency,home/pnpm-lock.yaml,2333,      '@module-federation/bridge-react-webpack-plugin': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,2334,      '@module-federation/dts-plugin': 0.8.12(typescript@5.8.3)
+lock-mfe-dependency,home/pnpm-lock.yaml,2335,      '@module-federation/inject-external-runtime-core-plugin': 0.8.12(@module-federation/runtime-tools@0.8.12)
+lock-mfe-dependency,home/pnpm-lock.yaml,2336,      '@module-federation/managers': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,2337,      '@module-federation/manifest': 0.8.12(typescript@5.8.3)
+lock-mfe-dependency,home/pnpm-lock.yaml,2338,      '@module-federation/runtime-tools': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,2339,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,2349,  '@module-federation/runtime-core@0.6.20':
+lock-mfe-dependency,home/pnpm-lock.yaml,2351,      '@module-federation/error-codes': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,2352,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,2354,  '@module-federation/runtime-tools@0.8.12':
+lock-mfe-dependency,home/pnpm-lock.yaml,2356,      '@module-federation/runtime': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,2357,      '@module-federation/webpack-bundler-runtime': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,2359,  '@module-federation/runtime-tools@0.8.4':
+lock-mfe-dependency,home/pnpm-lock.yaml,2361,      '@module-federation/runtime': 0.8.4
+lock-mfe-dependency,home/pnpm-lock.yaml,2362,      '@module-federation/webpack-bundler-runtime': 0.8.4
+lock-mfe-dependency,home/pnpm-lock.yaml,2364,  '@module-federation/runtime@0.8.12':
+lock-mfe-dependency,home/pnpm-lock.yaml,2366,      '@module-federation/error-codes': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,2367,      '@module-federation/runtime-core': 0.6.20
+lock-mfe-dependency,home/pnpm-lock.yaml,2368,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,2370,  '@module-federation/runtime@0.8.4':
+lock-mfe-dependency,home/pnpm-lock.yaml,2372,      '@module-federation/error-codes': 0.8.4
+lock-mfe-dependency,home/pnpm-lock.yaml,2373,      '@module-federation/sdk': 0.8.4
+lock-mfe-dependency,home/pnpm-lock.yaml,2375,  '@module-federation/sdk@0.8.12':
+lock-mfe-dependency,home/pnpm-lock.yaml,2379,  '@module-federation/sdk@0.8.4':
+lock-mfe-dependency,home/pnpm-lock.yaml,2383,  '@module-federation/third-party-dts-extractor@0.8.12':
+lock-mfe-dependency,home/pnpm-lock.yaml,2389,  '@module-federation/webpack-bundler-runtime@0.8.12':
+lock-mfe-dependency,home/pnpm-lock.yaml,2391,      '@module-federation/runtime': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,2392,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,home/pnpm-lock.yaml,2394,  '@module-federation/webpack-bundler-runtime@0.8.4':
+lock-mfe-dependency,home/pnpm-lock.yaml,2396,      '@module-federation/runtime': 0.8.4
+lock-mfe-dependency,home/pnpm-lock.yaml,2397,      '@module-federation/sdk': 0.8.4
+lock-mfe-dependency,home/pnpm-lock.yaml,2465,      '@module-federation/runtime-tools': 0.8.4
+lock-mfe-dependency,settings/pnpm-lock.yaml,11,      '@module-federation/enhanced':
+lock-mfe-dependency,settings/pnpm-lock.yaml,144,  '@module-federation/bridge-react-webpack-plugin@0.8.12':
+lock-mfe-dependency,settings/pnpm-lock.yaml,147,  '@module-federation/data-prefetch@0.8.12':
+lock-mfe-dependency,settings/pnpm-lock.yaml,153,  '@module-federation/dts-plugin@0.8.12':
+lock-mfe-dependency,settings/pnpm-lock.yaml,162,  '@module-federation/enhanced@0.8.12':
+lock-mfe-dependency,settings/pnpm-lock.yaml,176,  '@module-federation/error-codes@0.8.12':
+lock-mfe-dependency,settings/pnpm-lock.yaml,179,  '@module-federation/error-codes@0.8.4':
+lock-mfe-dependency,settings/pnpm-lock.yaml,182,  '@module-federation/inject-external-runtime-core-plugin@0.8.12':
+lock-mfe-dependency,settings/pnpm-lock.yaml,185,      '@module-federation/runtime-tools': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,187,  '@module-federation/managers@0.8.12':
+lock-mfe-dependency,settings/pnpm-lock.yaml,190,  '@module-federation/manifest@0.8.12':
+lock-mfe-dependency,settings/pnpm-lock.yaml,193,  '@module-federation/rspack@0.8.12':
+lock-mfe-dependency,settings/pnpm-lock.yaml,205,  '@module-federation/runtime-core@0.6.20':
+lock-mfe-dependency,settings/pnpm-lock.yaml,208,  '@module-federation/runtime-tools@0.8.12':
+lock-mfe-dependency,settings/pnpm-lock.yaml,211,  '@module-federation/runtime-tools@0.8.4':
+lock-mfe-dependency,settings/pnpm-lock.yaml,214,  '@module-federation/runtime@0.8.12':
+lock-mfe-dependency,settings/pnpm-lock.yaml,217,  '@module-federation/runtime@0.8.4':
+lock-mfe-dependency,settings/pnpm-lock.yaml,220,  '@module-federation/sdk@0.8.12':
+lock-mfe-dependency,settings/pnpm-lock.yaml,223,  '@module-federation/sdk@0.8.4':
+lock-mfe-dependency,settings/pnpm-lock.yaml,226,  '@module-federation/third-party-dts-extractor@0.8.12':
+lock-mfe-dependency,settings/pnpm-lock.yaml,229,  '@module-federation/webpack-bundler-runtime@0.8.12':
+lock-mfe-dependency,settings/pnpm-lock.yaml,232,  '@module-federation/webpack-bundler-runtime@0.8.4':
+lock-mfe-dependency,settings/pnpm-lock.yaml,2216,  '@module-federation/bridge-react-webpack-plugin@0.8.12':
+lock-mfe-dependency,settings/pnpm-lock.yaml,2218,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,2222,  '@module-federation/data-prefetch@0.8.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+lock-mfe-dependency,settings/pnpm-lock.yaml,2224,      '@module-federation/runtime': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,2225,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,2230,  '@module-federation/dts-plugin@0.8.12(typescript@5.8.3)':
+lock-mfe-dependency,settings/pnpm-lock.yaml,2232,      '@module-federation/error-codes': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,2233,      '@module-federation/managers': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,2234,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,2235,      '@module-federation/third-party-dts-extractor': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,2255,  '@module-federation/enhanced@0.8.12(@rspack/core@1.2.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3)(webpack@5.99.7)':
+lock-mfe-dependency,settings/pnpm-lock.yaml,2257,      '@module-federation/bridge-react-webpack-plugin': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,2258,      '@module-federation/data-prefetch': 0.8.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+lock-mfe-dependency,settings/pnpm-lock.yaml,2259,      '@module-federation/dts-plugin': 0.8.12(typescript@5.8.3)
+lock-mfe-dependency,settings/pnpm-lock.yaml,2260,      '@module-federation/error-codes': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,2261,      '@module-federation/inject-external-runtime-core-plugin': 0.8.12(@module-federation/runtime-tools@0.8.12)
+lock-mfe-dependency,settings/pnpm-lock.yaml,2262,      '@module-federation/managers': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,2263,      '@module-federation/manifest': 0.8.12(typescript@5.8.3)
+lock-mfe-dependency,settings/pnpm-lock.yaml,2264,      '@module-federation/rspack': 0.8.12(@rspack/core@1.2.8)(typescript@5.8.3)
+lock-mfe-dependency,settings/pnpm-lock.yaml,2265,      '@module-federation/runtime-tools': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,2266,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,2281,  '@module-federation/error-codes@0.8.12': {}
+lock-mfe-dependency,settings/pnpm-lock.yaml,2283,  '@module-federation/error-codes@0.8.4': {}
+lock-mfe-dependency,settings/pnpm-lock.yaml,2285,  '@module-federation/inject-external-runtime-core-plugin@0.8.12(@module-federation/runtime-tools@0.8.12)':
+lock-mfe-dependency,settings/pnpm-lock.yaml,2287,      '@module-federation/runtime-tools': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,2289,  '@module-federation/managers@0.8.12':
+lock-mfe-dependency,settings/pnpm-lock.yaml,2291,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,2295,  '@module-federation/manifest@0.8.12(typescript@5.8.3)':
+lock-mfe-dependency,settings/pnpm-lock.yaml,2297,      '@module-federation/dts-plugin': 0.8.12(typescript@5.8.3)
+lock-mfe-dependency,settings/pnpm-lock.yaml,2298,      '@module-federation/managers': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,2299,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,2310,  '@module-federation/rspack@0.8.12(@rspack/core@1.2.8)(typescript@5.8.3)':
+lock-mfe-dependency,settings/pnpm-lock.yaml,2312,      '@module-federation/bridge-react-webpack-plugin': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,2313,      '@module-federation/dts-plugin': 0.8.12(typescript@5.8.3)
+lock-mfe-dependency,settings/pnpm-lock.yaml,2314,      '@module-federation/inject-external-runtime-core-plugin': 0.8.12(@module-federation/runtime-tools@0.8.12)
+lock-mfe-dependency,settings/pnpm-lock.yaml,2315,      '@module-federation/managers': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,2316,      '@module-federation/manifest': 0.8.12(typescript@5.8.3)
+lock-mfe-dependency,settings/pnpm-lock.yaml,2317,      '@module-federation/runtime-tools': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,2318,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,2328,  '@module-federation/runtime-core@0.6.20':
+lock-mfe-dependency,settings/pnpm-lock.yaml,2330,      '@module-federation/error-codes': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,2331,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,2333,  '@module-federation/runtime-tools@0.8.12':
+lock-mfe-dependency,settings/pnpm-lock.yaml,2335,      '@module-federation/runtime': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,2336,      '@module-federation/webpack-bundler-runtime': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,2338,  '@module-federation/runtime-tools@0.8.4':
+lock-mfe-dependency,settings/pnpm-lock.yaml,2340,      '@module-federation/runtime': 0.8.4
+lock-mfe-dependency,settings/pnpm-lock.yaml,2341,      '@module-federation/webpack-bundler-runtime': 0.8.4
+lock-mfe-dependency,settings/pnpm-lock.yaml,2343,  '@module-federation/runtime@0.8.12':
+lock-mfe-dependency,settings/pnpm-lock.yaml,2345,      '@module-federation/error-codes': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,2346,      '@module-federation/runtime-core': 0.6.20
+lock-mfe-dependency,settings/pnpm-lock.yaml,2347,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,2349,  '@module-federation/runtime@0.8.4':
+lock-mfe-dependency,settings/pnpm-lock.yaml,2351,      '@module-federation/error-codes': 0.8.4
+lock-mfe-dependency,settings/pnpm-lock.yaml,2352,      '@module-federation/sdk': 0.8.4
+lock-mfe-dependency,settings/pnpm-lock.yaml,2354,  '@module-federation/sdk@0.8.12':
+lock-mfe-dependency,settings/pnpm-lock.yaml,2358,  '@module-federation/sdk@0.8.4':
+lock-mfe-dependency,settings/pnpm-lock.yaml,2362,  '@module-federation/third-party-dts-extractor@0.8.12':
+lock-mfe-dependency,settings/pnpm-lock.yaml,2368,  '@module-federation/webpack-bundler-runtime@0.8.12':
+lock-mfe-dependency,settings/pnpm-lock.yaml,2370,      '@module-federation/runtime': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,2371,      '@module-federation/sdk': 0.8.12
+lock-mfe-dependency,settings/pnpm-lock.yaml,2373,  '@module-federation/webpack-bundler-runtime@0.8.4':
+lock-mfe-dependency,settings/pnpm-lock.yaml,2375,      '@module-federation/runtime': 0.8.4
+lock-mfe-dependency,settings/pnpm-lock.yaml,2376,      '@module-federation/sdk': 0.8.4
+lock-mfe-dependency,settings/pnpm-lock.yaml,2446,      '@module-federation/runtime-tools': 0.8.4
+cfg-federation-plugin,container/rspack.config.ts,5,"import { ModuleFederationPlugin } from ""@module-federation/enhanced/rspack"";"
+cfg-federation-plugin,container/rspack.config.ts,94,"    new ModuleFederationPlugin(mfConfig),"
+cfg-federation-plugin,home/rspack.config.ts,5,"import { ModuleFederationPlugin } from ""@module-federation/enhanced/rspack"";"
+cfg-federation-plugin,home/rspack.config.ts,94,"    new ModuleFederationPlugin(mfConfig),"
+cfg-federation-plugin,settings/rspack.config.ts,5,"import { ModuleFederationPlugin } from ""@module-federation/enhanced/rspack"";"
+cfg-federation-plugin,settings/rspack.config.ts,93,"    new ModuleFederationPlugin(mfConfig),"
+cfg-remotes,container/module-federation.config.ts,3,  remotes: {
+cfg-exposes,home/module-federation.config.ts,4,  exposes: {
+cfg-exposes,settings/module-federation.config.ts,4,  exposes: {
+cfg-shared,container/module-federation.config.ts,7,"  shared: [],"
+cfg-shared,home/module-federation.config.ts,7,"  shared: [],"
+cfg-shared,settings/module-federation.config.ts,7,"  shared: [],"
+cfg-public-path,advancedWebpack/webpack.config.js,10,"    publicPath: ""/"","
+cfg-public-path,container/rspack.config.ts,33,"    publicPath: ""http://localhost:8080/"","
+cfg-public-path,home/rspack.config.ts,33,"    publicPath: ""http://localhost:8081/"","
+cfg-public-path,settings/rspack.config.ts,32,"    publicPath: ""http://localhost:8082/"","
+rt-remote-entry,container/module-federation.config.ts,4,"    settings: ""settings@http://localhost:8082/remoteEntry.js"","
+rt-remote-entry,container/module-federation.config.ts,5,"    home: ""home@http://localhost:8081/remoteEntry.js"","
+rt-remote-entry,home/module-federation.config.ts,3,"  filename: ""remoteEntry.js"","
+rt-remote-entry,settings/module-federation.config.ts,3,"  filename: ""remoteEntry.js"","
+src-async-bootstrap,home/src/index.ts,1,"import(""./bootstrap"");"
+src-async-bootstrap,settings/src/index.ts,1,"import(""./bootstrap"");"
+src-mount-export,container/global.d.ts,3,    export { mount }
+src-mount-export,container/global.d.ts,8,    export { mount }
+src-mount-export,home/src/bootstrap.tsx,12,export { mount };
+src-mount-export,settings/src/bootstrap.tsx,12,export { mount };
+src-mount-call,container/src/Home.tsx,8,"    mount(elementRef.current, {});"
+src-mount-call,container/src/Settings.tsx,7,"    mount(elementRef.current, {});"
+src-mount-import,container/src/Home.tsx,1,"import { mount } from ""home/app"";"
+src-mount-import,container/src/Settings.tsx,1,"import { mount } from ""settings/app"";"
+ws-path-alias,container/tsconfig.json,15,"    ""paths"": {"
+ws-path-alias,home/tsconfig.json,15,"    ""paths"": {"
+ws-path-alias,settings/tsconfig.json,15,"    ""paths"": {"

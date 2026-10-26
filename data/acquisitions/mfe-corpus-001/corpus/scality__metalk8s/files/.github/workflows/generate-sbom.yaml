@@ -1,0 +1,140 @@
+name: "Generate sbom"
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "the git revision to checkout"
+        required: false
+        type: string
+      artifacts-url:
+        description: >-
+          URL from which to retrieve an OS image and all metalk8s artifacts
+          (defaults to the current workflow run artifacts)
+        type: string
+        required: false
+        default: ""
+  workflow_call:
+    inputs:
+      ref:
+        description: "the git revision to checkout"
+        default: ${{ github.ref }}
+        required: false
+        type: string
+      artifacts-url:
+        description: >-
+          URL from which to retrieve an OS image and all metalk8s artifacts
+          (defaults to the current workflow run artifacts)
+        type: string
+        required: false
+        default: ""
+
+jobs:
+  generate-sbom:
+    runs-on: ubuntu-24.04
+    env:
+      BASE_PATH: ${{ github.workspace }}/metalk8s_sbom
+      SBOM_PATH: ${{ github.workspace }}/artifacts/sbom
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.ref }}
+
+      - name: Cleanup some unused ressources
+        run: |-
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /usr/share/dotnet
+
+      - name: Create directories
+        shell: bash
+        run: |
+          mkdir -p ${{ env.BASE_PATH }}/iso
+          mkdir -p ${{ env.SBOM_PATH }}
+
+      - name: Get artifacts URL
+        if: ${{ ! inputs.artifacts-url }}
+        uses: scality/action-artifacts@v4
+        id: artifacts
+        with:
+          method: setup
+          url: https://artifacts.scality.net
+          user: ${{ secrets.ARTIFACTS_USER }}
+          password: ${{ secrets.ARTIFACTS_PASSWORD }}
+
+      - name: Donwload artifacts
+        shell: bash
+        env:
+          ARTIFACTS_URL: ${{ inputs.artifacts-url || steps.artifacts.outputs.link }}
+          ARTIFACTS_USER: ${{ secrets.ARTIFACTS_USER }}
+          ARTIFACTS_PASSWORD: ${{ secrets.ARTIFACTS_PASSWORD }}
+        run: |
+          echo "Downloading metalk8s.iso from $ARTIFACTS_URL"
+          curl -sSfL -o ${{ env.BASE_PATH }}/iso/metalk8s.iso -u $ARTIFACTS_USER:$ARTIFACTS_PASSWORD $ARTIFACTS_URL/metalk8s.iso
+
+      - name: Retrieve product.txt from artifacts
+        run: >
+          curl --fail -LO -u ${{ secrets.ARTIFACTS_USER }}:${{ secrets.ARTIFACTS_PASSWORD }}
+          ${{ inputs.artifacts-url || steps.artifacts.outputs.link }}/product.txt
+
+      - name: Get full MetalK8s version
+        run: |
+          source product.txt
+          echo "METALK8S_VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Generate sbom for extracted ISO
+        uses: scality/sbom@v2
+        with:
+          target: ${{ env.BASE_PATH }}/iso/metalk8s.iso
+          target_type: iso
+          output_dir: ${{ env.SBOM_PATH }}
+          version: ${{ env.METALK8S_VERSION }}
+          vuln: true
+          vuln_output_format: cyclonedx-json, html
+          merge: true
+          merge_hierarchical: true
+
+      - name: Upload sbom to Dependency-Track
+        uses: scality/sbom-upload@v1
+        with:
+          url: ${{ vars.DEPENDENCY_TRACK_HOSTNAME }}
+          api-key: ${{ secrets.DEPENDENCY_TRACK_APIKEY }}
+          hierarchy-input-dir: ${{ env.SBOM_PATH }}
+          generate-hierarchy: true
+          hierarchy-upload: true
+          delete-on-version-suffix-match: true
+          delete-version-suffix-pattern: 'dev'
+
+      - name: Generate archive
+        shell: bash
+        run: |
+          cd ${{ env.SBOM_PATH }}
+          tar -czf sbom_metalk8s.tar.gz *.json *.html
+
+      - name: Clean up
+        shell: bash
+        run: |
+          rm -rf ${{ env.BASE_PATH }}/iso
+          find ${{ env.SBOM_PATH }} -mindepth 1 \
+            -not -name 'sbom_metalk8s.tar.gz' \
+            -not -name '*_merged_sbom_vuln.html' \
+            -exec rm -rf {} +
+            
+      - name: Generate Job result
+        if: always()
+        uses: ./.github/actions/generate-job-result
+        with:
+          name: generate-sbom
+          ARTIFACTS_USER: ${{ secrets.ARTIFACTS_USER }}
+          ARTIFACTS_PASSWORD: ${{ secrets.ARTIFACTS_PASSWORD }}
+          GIT_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifacts
+        if: always()
+        uses: scality/action-artifacts@v4
+        with:
+          method: upload
+          url: https://artifacts.scality.net
+          user: ${{ secrets.ARTIFACTS_USER }}
+          password: ${{ secrets.ARTIFACTS_PASSWORD }}
+          source: artifacts

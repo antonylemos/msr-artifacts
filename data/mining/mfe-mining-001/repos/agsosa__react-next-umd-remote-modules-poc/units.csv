@@ -1,0 +1,3 @@
+directory,markers
+mf-1,mf-1/next.config.ts;mf-1/package.json
+shell,shell/next.config.js;shell/package.json

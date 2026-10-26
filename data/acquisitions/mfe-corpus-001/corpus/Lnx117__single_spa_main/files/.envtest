@@ -1,0 +1,11 @@
+# URL микрофронтендов.
+# В dev-режиме каждый микрофронт — отдельный Vite dev-сервер на своём порту.
+# main.ts делает import() по этим URL, чтобы загрузить lifecycle-хуки
+# (bootstrap, mount, unmount) каждого микрофронта.
+# А потом уже можно использовать билды по типу  VITE_MENU_URL=https://test-cdn.breez.ru/bt/menu/index.js
+
+# Навигационное меню
+VITE_MENU=http://localhost:9083/src/index.ts
+
+# Основной контент страниц
+VITE_BASE=http://localhost:9081/src/index.ts

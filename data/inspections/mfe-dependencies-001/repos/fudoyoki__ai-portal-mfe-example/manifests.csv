@@ -1,0 +1,7 @@
+manifest,state
+apps/bff/package.json,ok
+apps/mfe-dashboard/package.json,ok
+apps/shell/package.json,ok
+package.json,ok
+packages/shared-types/package.json,ok
+packages/ui-kit/package.json,ok

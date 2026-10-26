@@ -1,0 +1,188 @@
+list_dependents:
+  # 3 dependents - all of them in allowed_versions
+  - repoquery_output: |
+      kubelet 1.15.11-0
+      kubernetes-cni 0.7.5-0
+    allowed_versions:
+      kubelet: 1.15.11-0
+      kubernetes-cni: 0.7.5-0
+      kubectl: 1.15.11-0
+    fromrepo: "metalk8s-kubernetes"
+    result:
+      kubelet: 1.15.11-0
+      kubernetes-cni: 0.7.5-0
+
+  # 3 dependents - only one in allowed_versions
+  - repoquery_output: |
+      my_unknown_package 1.2.3
+      my_second_unknown_package 4.5.6
+      kubelet 1.15.11-0
+    allowed_versions:
+      kubelet: 1.15.11-0
+      kubernetes-cni: 0.7.5-0
+      kubectl: 1.15.11-0
+    result:
+      kubelet: 1.15.11-0
+
+  # 1 dependents - not in the allowed_versions
+  - repoquery_output: |
+      kubelet 1.15.10-0
+    allowed_versions:
+      kubelet: 1.15.11-0
+    result: {}
+
+  # 3 dependents - empty allowed_versions
+  - repoquery_output: |
+      kubelet 1.15.11-0
+      kubernetes-cni 0.7.5-0
+    result: {}
+
+  # 0 dependents - empty allowed_versions
+  - repoquery_output: ""
+    result: {}
+
+  # 0 dependents - few allowed_versions
+  - repoquery_output: ""
+    allowed_versions:
+      kubelet: 1.15.11-0
+      kubernetes-cni: 0.7.5-0
+      kubectl: 1.15.11-0
+    result: {}
+
+  # Error when retrieving dependents
+  - repoquery_output: null
+    result: null
+
+list_pkg_dependents:
+  # No version specified
+  - result:
+      my_package: null
+
+  # version specified - no dependents
+  - version: "3.11.12"
+    result:
+      my_package: "3.11.12"
+
+  # version specified - no dependents - in pkgs_info
+  - version: "3.11.12"
+    pkgs_info:
+      my_package:
+        version: "3.11.12"
+    result:
+      my_package: "3.11.12"
+
+  # version specified - no dependents - version not in pkgs_info
+  - version: "3.11.13"
+    pkgs_info:
+      my_package:
+        version: "3.11.12"
+    result: null
+
+  # version specified - no dependents - package not in pkgs_info
+  - name: "my_unknown_package"
+    version: "3.11.12"
+    pkgs_info:
+      my_package:
+        version: "3.11.12"
+    result: null
+
+  # version specified - 2 dependents not installed
+  - version: "3.11.12"
+    list_dependents:
+      my_second_package: "1.11.12"
+      my_third_package: "2.14.15"
+    result:
+      my_package: "3.11.12"
+
+  # version specified - 2 dependents 1 installed in another version
+  - version: "3.11.12"
+    list_dependents:
+      my_second_package: "1.11.12"
+      package_not_yet_installed: "2.14.15"
+    rpm_qa_outputs:
+      my_package: |
+        my_package-3.11.10.el9
+      my_second_package: |
+        my_second_package-1.11.12.el9
+      package_not_yet_installed: ""
+    result:
+      my_package: "3.11.12"
+      my_second_package: "1.11.12"
+
+  # version specified - error when checking if package installed
+  - version: "3.11.12"
+    rpm_qa_outputs:
+      my_package: null
+    result: null
+
+  # Salt special case (check issue #2523)
+  - name: "salt-minion"
+    version: "3000.3"
+    rpm_qa_outputs:
+      salt-minion: |
+        salt-minion-2018.3.4-1.el9.noarch
+      salt: |
+        salt-2018.3.4-1.el9.noarch
+    result:
+      salt-minion: "3000.3"
+      salt: "3000.3"
+
+check_pkg_availability:
+  # check 0 package
+  - pkgs_info: {}
+
+  # check 1 package availabe
+  - pkgs_info:
+      my_package:
+        version: "3.11.12"
+    exclude:
+      - my-excluded-package
+      - my-second-excluded-package-1.2.3
+
+  # check 3 package available
+  - pkgs_info:
+      my_first_package:
+        version: "3.11.12"
+      my_second_package:
+        version: null
+      my_third_package:
+        version: "3.10.5-0.el9"
+    exclude: "my-excluded-package,my-second-excluded-package-1.2.3"
+
+  # check 1 package not available - error when retrieving it
+  - pkgs_info:
+      nonexistent_pkg: {}
+    yum_install_retcode: 1
+    raise_msg: |-
+      Check availability of package nonexistent_pkg failed:
+      Some output
+      Oh ! No ! An ErRoR
+
+  # check 1 package not available with version - error when retrieving it
+  - pkgs_info:
+      nonexistent_pkg:
+        version: "3.11.12"
+    yum_install_retcode: 1
+    raise_msg: |-
+      Check availability of package nonexistent_pkg-3.11.12 failed:
+      Some output
+      Oh ! No ! An ErRoR
+
+  # check 3 package (2 available, 1 not available) - error when retrieving it
+  - pkgs_info:
+      my_first_package:
+        version: "3.11.12"
+      nonexistent_pkg: {}
+      my_second_package:
+        version: null
+    yum_install_retcode:
+      nonexistent_pkg: 1
+    raise_msg: |-
+      Check availability of package nonexistent_pkg failed:
+      Some output
+      Oh ! No ! An ErRoR
+
+  # check 1 package with a version constraint
+  - pkgs_info:
+      my_package:
+        version: "< 3.11.12"

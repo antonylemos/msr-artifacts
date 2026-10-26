@@ -1,0 +1,61 @@
+pattern,path,line,excerpt
+dep-mfe-term,package.json,20,"    ""dev"": ""PUBLIC_PATH=/learning/ MFE_CONFIG_API_URL='http://localhost:8000/api/mfe_config/v1' fedx-scripts webpack-dev-server --progress --host apps.local.openedx.io"","
+src-html-external-script,public/index.html,10,"      <script src=""https://www.edx.org/optimizelyjs/<%= htmlWebpackPlugin.options.OPTIMIZELY_PROJECT_ID %>.js""></script>"
+src-iframe,src/course-home/discussion-tab/DiscussionTab.jsx,22,    <iframe
+src-iframe,src/course-home/outline-tab/LmsHtmlFragment.jsx,48,    <iframe
+src-iframe,src/courseware/course/content-tools/notes-visibility/NotesVisibility.test.jsx,72,    const frame = document.createElement('iframe');
+src-iframe,src/courseware/course/new-sidebar/sidebars/discussions-notifications/discussions/DiscussionsWidget.tsx,26,    <iframe
+src-iframe,src/courseware/course/sequence/Unit/ContentIFrame.jsx,77,          <iframe title={title} {...contentIFrameProps} data-testid={testIDs.contentIFrame} />
+src-iframe,src/courseware/course/sequence/Unit/ContentIFrame.jsx,93,                  <iframe
+src-iframe,src/courseware/course/sidebar/sidebars/discussions/DiscussionsSidebar.jsx,40,      <iframe
+src-cross-unit-communication,src/course-home/courseware-search/hooks.test.jsx,139,          global.dispatchEvent(new Event('resize'));
+src-cross-unit-communication,src/course-home/discussion-tab/DiscussionTab.test.jsx,62,"    window.postMessage({ ...messageEvent, payload: { height: 1234 } }, '*');"
+src-cross-unit-communication,src/course-home/outline-tab/LmsHtmlFragment.jsx,23,"          window.parent.postMessage({type: 'lmshtmlfragment.resize'}, '*');"
+src-cross-unit-communication,src/courseware/course/content-tools/notes-visibility/NotesVisibility.jsx,13,"  iframe.contentWindow.postMessage('tools.toggleNotes', getConfig().LMS_BASE_URL);"
+src-cross-unit-communication,src/courseware/course/sequence/Unit/hooks/useIFrameBehavior.ts,55,"      frame?.contentWindow?.postMessage({ hashName: hash }, `${getConfig().LMS_BASE_URL}`);"
+src-cross-unit-communication,src/courseware/course/sequence/Unit/hooks/useIFrameBehavior.ts,115,    iframeElement?.contentWindow?.postMessage(
+src-cross-unit-communication,src/courseware/course/sequence/Unit/hooks/useModalIFrameData.js,13,"    rootFrame.contentWindow.postMessage({ type: 'plugin.modal-close' }, '*');"
+src-cross-unit-communication,src/courseware/course/sidebar/sidebars/course-outline/CourseOutlineTray.test.jsx,106,    window.dispatchEvent(new Event('resize'));
+src-cross-unit-communication,src/generic/hooks.test.jsx,14,"    window.postMessage({ test: 'test' }, '*');"
+src-cross-unit-communication,src/generic/hooks.test.jsx,37,    window.postMessage({
+src-cross-unit-communication,src/setupTest.js,67,  const onShowModal = new CustomEvent('show_modal');
+src-cross-unit-communication,src/setupTest.js,68,  this.dispatchEvent(onShowModal);
+src-cross-unit-communication,src/setupTest.js,71,  const onClose = new CustomEvent('close');
+src-cross-unit-communication,src/setupTest.js,72,  this.dispatchEvent(onClose);
+src-cross-unit-communication,src/setupTest.js,132,"  window.postMessage(message, '*');"
+ci-workflow-file,.github/workflows/add-depr-ticket-to-depr-board.yml,,
+ci-workflow-file,.github/workflows/add-issue-to-btr-project.yml,,
+ci-workflow-file,.github/workflows/add-remove-label-on-comment.yml,,
+ci-workflow-file,.github/workflows/commitlint.yml,,
+ci-workflow-file,.github/workflows/lockfileversion-check.yml,,
+ci-workflow-file,.github/workflows/self-assign-issue.yml,,
+ci-workflow-file,.github/workflows/update-browserslist-db.yml,,
+ci-workflow-file,.github/workflows/validate.yml,,
+doc-mfe-term,docs/decisions/0002-courseware-page-decisions.md,22,"We determined, as part of our project discovery, that in order to deliver value to users sooner, we would iframe in content of units.  This allowed us to avoid rebuilding the UI for unit/component xblocks in the micro-frontend, which is a daunting task.  It also allows existing custom xblocks to con"
+doc-mfe-term,docs/decisions/0002-courseware-page-decisions.md,24,A future iteration of the project may go back and pull the unit rendering into the MFE.
+doc-mfe-term,docs/decisions/0002-courseware-page-decisions.md,51,"We don't want our Course.jsx component to be intimately aware - for example - that it's data is loaded via two separate APIs that are then merged together.  That's not useful information - it just needs to know where it's data is and if it's loaded.  Furthermore, this layer of abstraction lets us no"
+doc-mfe-term,docs/decisions/0003-course-home-decisions.md,5,"It was added to the MFE as a proof of concept for the Engagement theme's Always Available squad, as they were intending to do some work in the legacy course home page in the LMS, and we wanted to understand whether it would be more easily done in this application."
+doc-mfe-term,docs/decisions/0006-thunk-and-api-naming.md,7,This micro-frontend follows a pattern of naming API functions with a prefix for their HTTP verb.
+doc-mfe-term,docs/decisions/0008-liberal-courseware-path-handling.md,24,all Learning MFE units should be served from it.
+doc-mfe-term,docs/decisions/0008-liberal-courseware-path-handling.md,37,"Futhermore, we hypothesize that being able to build a Learning MFE courseware link"
+doc-mfe-term,src/generic/README.md,3,This module is a place for code that is not specific to the frontend-app-learning micro-frontend.  It is intended to be reusable and we expect we can extract it to a reusable code repository like Paragon or frontend-platform in the future.
+doc-mfe-term,src/generic/README.md,7,"Code that is specific to the frontend-app-learning micro-frontend, but is shared by multiple top level components belongs in the shared module."
+doc-mfe-term,src/shared/README.md,3,This module is a place for shared code that is specific to the frontend-app-learning micro-frontend.
+doc-integration-technology,docs/decisions/0002-courseware-page-decisions.md,16,"- The xblock endpoint (http://localhost:18000/xblock/:block_id) which renders HTML for an xBlock by ID, used to render Unit contents.  This HTML is loaded into the application via an iFrame."
+doc-integration-technology,docs/decisions/0002-courseware-page-decisions.md,22,"We determined, as part of our project discovery, that in order to deliver value to users sooner, we would iframe in content of units.  This allowed us to avoid rebuilding the UI for unit/component xblocks in the micro-frontend, which is a daunting task.  It also allows existing custom xblocks to con"
+doc-integration-technology,docs/decisions/0002-courseware-page-decisions.md,40,"Similarly, if the URL doesn't contain a unit ID, we use the `position` field of the sequence to determine which unit we want to display from that sequence.  If the position isn't specified in the sequence, we choose the first unit of the sequence.  After determining which unit to display, we update "
+doc-integration-technology,docs/decisions/0009-courseware-api-direction.md,21,4. Unit: `/xblock/{unitBlockUsageKey}` (rendered in an iframe)
+doc-integration-technology,docs/decisions/0009-courseware-api-direction.md,48,"The idea would be to insulate each layer from the layers above and below it. Sequence rendering shouldn't be affected by whether or not it's in a two level hierarchy (Course → Section → Sequence), or a flat one (Course → Sequence). Learning Context Navigation should be able to reference Sequences wi"
+doc-integration-technology,src/plugin-slots/ContentIFrameErrorSlot/README.md,1,# Content iFrame Error Slot
+doc-integration-technology,src/plugin-slots/ContentIFrameErrorSlot/README.md,3,### Slot ID: `org.openedx.frontend.learning.content_iframe_error.v1`
+doc-integration-technology,src/plugin-slots/ContentIFrameErrorSlot/README.md,9,This slot is used to replace/modify the content iframe error page.
+doc-integration-technology,src/plugin-slots/ContentIFrameErrorSlot/README.md,20,    'org.openedx.frontend.learning.content_iframe_error.v1': {
+doc-integration-technology,src/plugin-slots/ContentIFrameLoaderSlot/README.md,1,# Content IFrame Loader Slot
+doc-integration-technology,src/plugin-slots/ContentIFrameLoaderSlot/README.md,3,### Slot ID: `org.openedx.frontend.learning.content_iframe_loader.v1`
+doc-integration-technology,src/plugin-slots/ContentIFrameLoaderSlot/README.md,6,* `content_iframe_loader_slot`
+doc-integration-technology,src/plugin-slots/ContentIFrameLoaderSlot/README.md,14,"This slot is used to customize the loading indicator displayed while course content is being loaded in an iframe. It appears when content is loading but hasn't fully rendered yet, providing a customizable loading experience for learners."
+doc-integration-technology,src/plugin-slots/ContentIFrameLoaderSlot/README.md,22,![Content Iframe Loader Example](./images/loader-example.png)
+doc-integration-technology,src/plugin-slots/ContentIFrameLoaderSlot/README.md,30,    'org.openedx.frontend.learning.content_iframe_loader.v1': {
+doc-integration-technology,src/plugin-slots/ContentIFrameLoaderSlot/README.md,36,"            id: 'custom_iframe_loader',"
+doc-integration-technology,src/plugin-slots/README.md,5,* [`org.openedx.frontend.learning.content_iframe_loader.v1`](./ContentIFrameLoaderSlot/)
+ws-path-alias,tsconfig.json,6,"      ""paths"": {"

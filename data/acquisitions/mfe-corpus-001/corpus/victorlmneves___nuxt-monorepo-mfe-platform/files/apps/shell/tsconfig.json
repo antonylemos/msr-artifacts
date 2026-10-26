@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./*"],
+      "@mfe/shared": ["../../packages/shared/src/index.ts"],
+      "@mfe/shared/*": ["../../packages/shared/src/*"]
+    }
+  },
+  "include": ["./**/*", "../../packages/shared/src/**/*"],
+  "exclude": ["node_modules", ".output", ".nuxt"]
+}

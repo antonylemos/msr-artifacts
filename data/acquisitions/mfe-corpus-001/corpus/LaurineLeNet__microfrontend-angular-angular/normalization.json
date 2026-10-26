@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "id": "1238664148",
+  "fullName": "LaurineLeNet/microfrontend-angular-angular",
+  "commit": "342c92dff482f1ee0a4bcc05f9302361a7354352",
+  "acquiredAt": "2026-10-24T00:32:37.941Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "athletes/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "ranking/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "shell/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 94,
+    "bytes": 919470
+  },
+  "languages": {
+    "Other": 857618,
+    "JSON": 23953,
+    "TypeScript": 13982,
+    "CSS": 11016,
+    "HTML": 6322,
+    "Markdown": 4379,
+    "JavaScript": 2200
+  },
+  "contentSha256": "58aa3495c08e9a1b262a08f548ea7837d17926c1727876099a24a671fd917e71"
+}

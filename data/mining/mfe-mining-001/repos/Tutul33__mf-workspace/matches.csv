@@ -1,0 +1,71 @@
+pattern,path,line,excerpt
+dep-native-federation,package.json,30,"    ""@softarc/native-federation-node"": ""^3.3.4"","
+dep-native-federation,package.json,36,"    ""@angular-architects/native-federation"": ""^20.1.7"","
+lock-mfe-dependency,package-lock.json,18,"        ""@softarc/native-federation-node"": ""^3.3.4"","
+lock-mfe-dependency,package-lock.json,24,"        ""@angular-architects/native-federation"": ""^20.1.7"","
+lock-mfe-dependency,package-lock.json,262,"    ""node_modules/@angular-architects/native-federation"": {"
+lock-mfe-dependency,package-lock.json,264,"      ""resolved"": ""https://registry.npmjs.org/@angular-architects/native-federation/-/native-federation-20.1.7.tgz"","
+lock-mfe-dependency,package-lock.json,271,"        ""@softarc/native-federation"": ""3.3.6"","
+lock-mfe-dependency,package-lock.json,272,"        ""@softarc/native-federation-runtime"": ""3.3.6"","
+lock-mfe-dependency,package-lock.json,279,"    ""node_modules/@angular-architects/native-federation/node_modules/mrmime"": {"
+lock-mfe-dependency,package-lock.json,5375,"    ""node_modules/@softarc/native-federation"": {"
+lock-mfe-dependency,package-lock.json,5377,"      ""resolved"": ""https://registry.npmjs.org/@softarc/native-federation/-/native-federation-3.3.6.tgz"","
+lock-mfe-dependency,package-lock.json,5382,"        ""@softarc/native-federation-runtime"": ""3.3.6"","
+lock-mfe-dependency,package-lock.json,5389,"    ""node_modules/@softarc/native-federation-node"": {"
+lock-mfe-dependency,package-lock.json,5391,"      ""resolved"": ""https://registry.npmjs.org/@softarc/native-federation-node/-/native-federation-node-3.3.6.tgz"","
+lock-mfe-dependency,package-lock.json,5395,"    ""node_modules/@softarc/native-federation-runtime"": {"
+lock-mfe-dependency,package-lock.json,5397,"      ""resolved"": ""https://registry.npmjs.org/@softarc/native-federation-runtime/-/native-federation-runtime-3.3.6.tgz"","
+lock-mfe-dependency,package-lock.json,5404,"    ""node_modules/@softarc/native-federation/node_modules/ansi-styles"": {"
+lock-mfe-dependency,package-lock.json,5420,"    ""node_modules/@softarc/native-federation/node_modules/chalk"": {"
+cfg-native-federation,angular.json,18,"					""builder"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,angular.json,32,"					""builder"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,angular.json,131,"					""builder"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,angular.json,145,"					""builder"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,angular.json,244,"					""builder"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,angular.json,258,"					""builder"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,projects/customer-app/federation.config.js,1,"const { withNativeFederation, shareAll } = require('@angular-architects/native-federation/config');"
+cfg-native-federation,projects/customer-app/federation.config.js,3,module.exports = withNativeFederation({
+cfg-native-federation,projects/host-app/federation.config.js,1,"const { withNativeFederation, shareAll } = require('@angular-architects/native-federation/config');"
+cfg-native-federation,projects/host-app/federation.config.js,3,module.exports = withNativeFederation({
+cfg-native-federation,projects/orders-app/federation.config.js,1,"const { withNativeFederation, shareAll } = require('@angular-architects/native-federation/config');"
+cfg-native-federation,projects/orders-app/federation.config.js,3,module.exports = withNativeFederation({
+cfg-exposes,projects/customer-app/federation.config.js,7,  exposes: {
+cfg-exposes,projects/orders-app/federation.config.js,7,  exposes: {
+cfg-shared,projects/customer-app/federation.config.js,12,  shared: {
+cfg-shared,projects/customer-app/federation.config.js,13,"    ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),"
+cfg-shared,projects/host-app/federation.config.js,5,  shared: {
+cfg-shared,projects/host-app/federation.config.js,6,"    ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),"
+cfg-shared,projects/orders-app/federation.config.js,12,  shared: {
+cfg-shared,projects/orders-app/federation.config.js,13,"    ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),"
+rt-remote-entry,projects/host-app/src/app/app.routes.ts,9,"        remoteEntry: 'http://localhost:4301/remoteEntry.json',"
+rt-remote-entry,projects/host-app/src/app/app.routes.ts,17,"        remoteEntry: 'http://localhost:4302/remoteEntry.json',"
+rt-remote-entry,projects/host-app/src/main.ts,4,  'customerApp': 'http://localhost:4200/remoteEntry.json'
+src-async-bootstrap,projects/customer-app/src/main.ts,5,  .then(_ => import('./bootstrap'))
+src-async-bootstrap,projects/host-app/src/main.ts,7,  .then(_ => import('./bootstrap'))
+src-async-bootstrap,projects/orders-app/src/main.ts,5,  .then(_ => import('./bootstrap'))
+src-load-remote,projects/customer-app/src/main.ts,1,import { initFederation } from '@angular-architects/native-federation';
+src-load-remote,projects/customer-app/src/main.ts,3,initFederation()
+src-load-remote,projects/host-app/src/app/app.routes.ts,2,import { loadRemoteModule } from '@angular-architects/native-federation';
+src-load-remote,projects/host-app/src/app/app.routes.ts,8,      loadRemoteModule({
+src-load-remote,projects/host-app/src/app/app.routes.ts,16,      loadRemoteModule({
+src-load-remote,projects/host-app/src/main.ts,1,import { initFederation } from '@angular-architects/native-federation';
+src-load-remote,projects/host-app/src/main.ts,3,initFederation({
+src-load-remote,projects/orders-app/src/main.ts,1,import { initFederation } from '@angular-architects/native-federation';
+src-load-remote,projects/orders-app/src/main.ts,3,initFederation()
+doc-mfe-term,README.md,1,# Angular 20 + Native Federation (Microfrontend) — Step-by-Step Guide
+doc-mfe-term,README.md,3,This guide explains how to build a **Host + Customer-App + Orders-App** microfrontend setup using **Angular 20** and **@angular-architects/native-federation**.
+doc-mfe-term,README.md,246,├── angular_20_microfrontend_app_guide.md
+doc-mfe-term,README.md,255,# ✅ Microfrontend setup working with Angular 20 + Native Federation
+doc-mfe-term,README.md,258,- Two remote microfrontends
+doc-mfe-term,README.md,267,✔ Tailwind + Material setup for MFEs
+doc-mfe-term,angular_20_microfrontend_app_guide.md,1,# Angular 20 + Native Federation (Microfrontend) — Step-by-Step Guide
+doc-mfe-term,angular_20_microfrontend_app_guide.md,3,This guide explains how to build a **Host + Customer-App + Orders-App** microfrontend setup using **Angular 20** and **@angular-architects/native-federation**.
+doc-mfe-term,angular_20_microfrontend_app_guide.md,214,# ✅ Microfrontend setup working with Angular 20 + Native Federation
+doc-mfe-term,angular_20_microfrontend_app_guide.md,217,- Two remote microfrontends
+doc-mfe-term,angular_20_microfrontend_app_guide.md,226,✔ Tailwind + Material setup for MFEs
+doc-integration-technology,README.md,1,# Angular 20 + Native Federation (Microfrontend) — Step-by-Step Guide
+doc-integration-technology,README.md,28,## 🚀 Step 3: Install Native Federation
+doc-integration-technology,README.md,255,# ✅ Microfrontend setup working with Angular 20 + Native Federation
+doc-integration-technology,angular_20_microfrontend_app_guide.md,1,# Angular 20 + Native Federation (Microfrontend) — Step-by-Step Guide
+doc-integration-technology,angular_20_microfrontend_app_guide.md,28,## 🚀 Step 3: Install Native Federation
+doc-integration-technology,angular_20_microfrontend_app_guide.md,214,# ✅ Microfrontend setup working with Angular 20 + Native Federation

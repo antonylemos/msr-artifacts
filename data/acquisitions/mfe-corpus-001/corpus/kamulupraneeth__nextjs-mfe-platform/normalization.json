@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "id": "1254311775",
+  "fullName": "kamulupraneeth/nextjs-mfe-platform",
+  "commit": "750571ab7142f074b39122b82f94eaf5dc4181fa",
+  "acquiredAt": "2026-10-24T00:26:37.049Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "README.md",
+      "reason": "preset:binaries",
+      "size": 1866
+    },
+    {
+      "path": "analytics-dashboard/src/app/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 25931
+    },
+    {
+      "path": "host-shell/src/app/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 25931
+    },
+    {
+      "path": "workspace-document/src/app/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 25931
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 63,
+    "bytes": 795878
+  },
+  "languages": {
+    "JSON": 741377,
+    "TypeScript": 33840,
+    "SVG": 9942,
+    "Markdown": 5364,
+    "JavaScript": 2451,
+    "CSS": 1464,
+    "Other": 1440
+  },
+  "contentSha256": "9d007eb5c34177d07bba17ef37d1b194e79498a26054ec8ac020b2da95ea1862"
+}

@@ -1,0 +1,8 @@
+manifest,state
+ecomm/cart/package.json,ok
+ecomm/container/package.json,ok
+ecomm/products/package.json,ok
+packages/auth/package.json,ok
+packages/container/package.json,ok
+packages/dashboard/package.json,ok
+packages/marketing/package.json,ok

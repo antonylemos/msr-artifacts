@@ -1,0 +1,12 @@
+manifest,state
+module-assessment/package.json,ok
+module-cloud-console/package.json,ok
+module-cloud-labs/package.json,ok
+module-code-environment/package.json,ok
+module-code-module/package.json,ok
+module-content-uploading/package.json,ok
+module-dashboard/package.json,ok
+module-logging/package.json,ok
+module-virtual-machine/package.json,ok
+shared-design-system/package.json,ok
+shell-app/package.json,ok

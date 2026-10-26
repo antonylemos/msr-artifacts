@@ -1,0 +1,338 @@
+get_listening_processes:
+  - result: {}
+  - net_conns_ret:
+      # `::` will be replaced with `0.0.0.0`
+      - laddr: ["::", 6443]
+        pid: 111
+      # `::1` will be replaced with `127.0.0.1`
+      - laddr: ["::1", 456]
+        pid: 123
+      - laddr: ["1.2.3.4", 123]
+        pid: 222
+      - laddr: ["2.3.4.5", 123]
+        pid: 333
+      # Ignored as status != LISTEN
+      - laddr: ["127.0.0.1", 12345]
+        status: ESTABILISHED
+        pid: 456
+    process_ret:
+      111: apiserver
+      123: likely-something
+      222: my-process
+      333: my-second-process
+      456: do-we-care
+    result:
+      "123":
+        1.2.3.4:
+          pid: 222
+          name: my-process
+        2.3.4.5:
+          pid: 333
+          name: my-second-process
+      "6443":
+        0.0.0.0:
+          pid: 111
+          name: apiserver
+      "456":
+        127.0.0.1:
+          pid: 123
+          name: likely-something
+
+routes:
+  # 0. Default route
+  - ip_route_output: |-
+      default via 10.200.0.1 dev eth0
+    result:
+      - &default_route
+        addr_family: inet
+        destination: 0.0.0.0
+        flags: UG
+        gateway: 10.200.0.1
+        interface: eth0
+        netmask: 0.0.0.0
+  # 1. A simple route
+  - ip_route_output: |-
+      10.200.0.0/16 dev eth0 proto kernel scope link src 10.200.2.41
+    result:
+      - &simple_route
+        addr_family: inet
+        destination: 10.200.0.0
+        flags: U
+        gateway: 0.0.0.0
+        interface: eth0
+        netmask: 255.255.0.0
+  # 2. A blackhole route
+  - ip_route_output: |-
+      blackhole 10.233.162.0/26 proto bird
+    result: []
+  # 3. Multiple routes
+  - ip_route_output: |-
+      default via 10.200.0.1 dev eth0
+      10.200.0.0/16 dev eth0 proto kernel scope link src 10.200.2.41
+      blackhole 10.233.162.0/26 proto bird
+    result:
+      - *default_route
+      - *simple_route
+  # 4. No routes
+  - ip_route_output: ''
+    result: []
+  # 5. Unsupported type or format
+  - ip_route_output: |-
+      banana route via foo
+      this is not a valid input
+      10.200.0.0/16 dev eth0 proto kernel scope link src 10.200.2.41
+    result:
+      - *simple_route
+
+get_portmap_ips:
+  # 1. Nominal (no CIDRs, using workload plane IP)
+  - result:
+      - 10.10.10.10
+      - 127.0.0.1
+  - wp_cidrs:
+      - 10.10.10.0/16
+    as_cidr: True
+    result:
+      - 10.10.10.0/16
+      - 127.0.0.1/32
+  # 1. + some pools
+  - vip_pools: &vip_pools
+      my-first-pool:
+        addresses:
+          - 20.20.20.20
+          - 20.20.20.21
+      my-second-pool:
+        addresses:
+          - 30.30.30.30
+    result:
+      - 10.10.10.10
+      - 127.0.0.1
+      - 20.20.20.20
+      - 20.20.20.21
+      - 30.30.30.30
+  - wp_cidrs:
+      - 10.10.10.0/16
+    vip_pools: *vip_pools
+    as_cidr: True
+    result:
+      - 10.10.10.0/16
+      - 127.0.0.1/32
+      - 20.20.20.20/32
+      - 20.20.20.21/32
+      - 30.30.30.30/32
+
+  # 2. Define CIDR in config
+  - portmap_cidrs: 10.20.0.0/16
+    ip_addrs:
+      10.20.0.0/16:
+        - 10.20.0.20
+    result:
+      - 10.20.0.20
+      - 127.0.0.1
+  - portmap_cidrs: 10.20.0.0/16
+    as_cidr: True
+    result:
+      - 10.20.0.0/16
+      - 127.0.0.1/32
+  # 2. + some pools
+  - portmap_cidrs: 10.20.0.0/16
+    ip_addrs:
+      10.20.0.0/16:
+        - 10.20.0.20
+    vip_pools: *vip_pools
+    result:
+      - 10.20.0.20
+      - 127.0.0.1
+      - 20.20.20.20
+      - 20.20.20.21
+      - 30.30.30.30
+  - portmap_cidrs: 10.20.0.0/16
+    vip_pools: *vip_pools
+    as_cidr: True
+    result:
+      - 10.20.0.0/16
+      - 127.0.0.1/32
+      - 20.20.20.20/32
+      - 20.20.20.21/32
+      - 30.30.30.30/32
+
+  # 3. Multiple IPs in a single CIDR
+  - portmap_cidrs:
+      - 10.20.0.0/16
+    ip_addrs:
+      10.20.0.0/16:
+        - 10.20.0.20
+        - 10.20.0.21
+    result:
+      - 10.20.0.20
+      - 10.20.0.21
+      - 127.0.0.1
+
+  # 4. Multiple CIDRs (only an IP in one CIDR)
+  - portmap_cidrs:
+      - 10.20.0.0/16
+      - 10.30.0.0/16
+    ip_addrs:
+      10.20.0.0/16:
+        - 10.20.0.10
+      10.30.0.0/16: []
+    result:
+      - 10.20.0.10
+      - 127.0.0.1
+
+  # 5. Multiple CIDRs (one IP per CIDR)
+  - portmap_cidrs:
+      - 10.20.0.0/16
+      - 10.30.0.0/16
+    ip_addrs:
+      10.20.0.0/16:
+        - 10.20.0.10
+      10.30.0.0/16:
+        - 10.30.0.10
+    result:
+      - 10.20.0.10
+      - 10.30.0.10
+      - 127.0.0.1
+
+  # 6. Multiple IPs in multiple CIDRs
+  - portmap_cidrs:
+      - 10.20.0.0/16
+      - 10.30.0.0/16
+      - 10.40.0.0/16
+      - 10.50.0.0/16
+    ip_addrs:
+      10.20.0.0/16:
+        - 10.20.0.10
+        - 10.20.0.21
+      10.30.0.0/16: []
+      10.40.0.0/16:
+        - 10.40.0.10
+      10.50.0.0/16:
+        - 10.50.0.10
+        - 10.50.0.21
+    result:
+      - 10.20.0.10
+      - 10.20.0.21
+      - 10.40.0.10
+      - 10.50.0.10
+      - 10.50.0.21
+      - 127.0.0.1
+
+  # 7. CIDRs overlap
+  - portmap_cidrs:
+      - 10.20.10.0/24
+      - 10.20.0.0/16
+    ip_addrs:
+      10.20.10.0/24:
+        - 10.20.10.10
+      10.20.0.0/16:
+        - 10.20.0.10
+        - 10.20.10.10
+    result:
+      - 10.20.0.10
+      - 10.20.10.10
+      - 127.0.0.1
+
+get_nodeport_cidrs:
+  # 1. Nominal (no CIDRs, using workload plane CIDR)
+  - wp_cidrs:
+      - 10.10.10.0/16
+    result:
+      - 10.10.10.0/16
+      - 127.0.0.1/32
+
+  # 2. Define CIDR in config
+  - nodeport_cidrs: 10.20.0.0/16
+    result:
+      - 10.20.0.0/16
+      - 127.0.0.1/32
+
+  # 4. Multiple CIDRs
+  - nodeport_cidrs:
+      - 10.20.0.0/16
+      - 10.30.0.0/16
+    result:
+      - 10.20.0.0/16
+      - 10.30.0.0/16
+      - 127.0.0.1/32
+
+get_control_plane_ingress_external_ips:
+  # 1. Nominal single node (using bootstrap IP)
+  - cp_ingress_ip_ret: 1.1.1.1
+    mine_ret:
+      bootstrap: 1.1.1.1
+    result:
+      - 1.1.1.1
+
+  # 2. Nominal single node (using non-bootstrap IP)
+  - cp_ingress_ip_ret: 1.1.1.4
+    mine_ret:
+      bootstrap: 1.1.1.1
+    result:
+      - 1.1.1.4
+      - 1.1.1.1
+
+  # 3. Nominal multi node (using bootstrap IP)
+  - cp_ingress_ip_ret: 1.1.1.1
+    master_nodes_ret:
+      - bootstrap
+      - node-1
+      - node-2
+    mine_ret:
+      bootstrap: 1.1.1.1
+      node-1: 1.1.1.2
+      node-2: 1.1.1.3
+    result:
+      - 1.1.1.1
+      - 1.1.1.2
+      - 1.1.1.3
+
+  # 4. Nominal multi node (using non-node IP)
+  - cp_ingress_ip_ret: 1.1.1.4
+    master_nodes_ret:
+      - bootstrap
+      - node-1
+      - node-2
+    mine_ret:
+      bootstrap: 1.1.1.1
+      node-1: 1.1.1.2
+      node-2: 1.1.1.3
+    result:
+      - 1.1.1.4
+      - 1.1.1.1
+      - 1.1.1.2
+      - 1.1.1.3
+
+  # 5. Nominal multi node (using non-bootstrap node IP)
+  - cp_ingress_ip_ret: 1.1.1.2
+    master_nodes_ret:
+      - bootstrap
+      - node-1
+      - node-2
+    mine_ret:
+      bootstrap: 1.1.1.1
+      node-1: 1.1.1.2
+      node-2: 1.1.1.3
+    result:
+      - 1.1.1.2
+      - 1.1.1.1
+      - 1.1.1.3
+
+  # 6. Multi node, one master node not yet in mine
+  - cp_ingress_ip_ret: 1.1.1.4
+    master_nodes_ret:
+      - bootstrap
+      - node-1
+      - node-2
+    mine_ret:
+      bootstrap: 1.1.1.1
+      node-2: 1.1.1.3
+    result:
+      - 1.1.1.4
+      - 1.1.1.1
+      - 1.1.1.3
+
+  # 7. Error unable to get from mine
+  - mine_ret: "ErROr"
+    raises: true
+    result: "Unable to get master Control Plane IPs: ErROr"

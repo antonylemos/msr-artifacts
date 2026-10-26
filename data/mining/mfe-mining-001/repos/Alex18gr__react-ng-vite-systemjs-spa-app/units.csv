@@ -1,0 +1,8 @@
+directory,markers
+angular-app,angular-app/angular.json;angular-app/package.json
+common-lib-webpack,common-lib-webpack/index.html;common-lib-webpack/package.json;common-lib-webpack/webpack.config.js
+react-app,react-app/package.json;react-app/webpack.config.js
+react-vite-app,react-vite-app/index.html;react-vite-app/package.json;react-vite-app/vite.config.ts
+root-config,root-config/package.json;root-config/webpack.config.js
+styleguide,styleguide/index.html;styleguide/package.json;styleguide/vite.config.ts
+vue-app,vue-app/index.html;vue-app/package.json;vue-app/vite.config.ts

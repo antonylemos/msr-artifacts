@@ -1,0 +1,8 @@
+directory,markers
+react/mv-marketplace,react/mv-marketplace/package.json
+react/mv-marketplace/apps/admin,react/mv-marketplace/apps/admin/package.json;react/mv-marketplace/apps/admin/vite.config.js
+react/mv-marketplace/apps/buyer,react/mv-marketplace/apps/buyer/package.json;react/mv-marketplace/apps/buyer/vite.config.js
+react/mv-marketplace/apps/payment,react/mv-marketplace/apps/payment/package.json;react/mv-marketplace/apps/payment/vite.config.js
+react/mv-marketplace/apps/seller,react/mv-marketplace/apps/seller/package.json;react/mv-marketplace/apps/seller/vite.config.js
+react/mv-marketplace/apps/shell,react/mv-marketplace/apps/shell/package.json;react/mv-marketplace/apps/shell/vite.config.js
+react/mv-marketplace/packages/mvp-theme,react/mv-marketplace/packages/mvp-theme/package.json;react/mv-marketplace/packages/mvp-theme/vite.config.js

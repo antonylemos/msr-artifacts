@@ -1,0 +1,7 @@
+directory,markers
+.,package.json
+angular-mfe,angular-mfe/angular.json;angular-mfe/package.json;angular-mfe/webpack.config.js
+host,host/package.json;host/webpack.config.js
+react-mfe-1,react-mfe-1/package.json;react-mfe-1/webpack.config.js
+react-mfe-2,react-mfe-2/package.json;react-mfe-2/webpack.config.js
+vue-mfe,vue-mfe/package.json;vue-mfe/webpack.config.js

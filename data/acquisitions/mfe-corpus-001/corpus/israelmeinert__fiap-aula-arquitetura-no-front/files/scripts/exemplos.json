@@ -1,0 +1,86 @@
+[
+  {
+    "numero": "01",
+    "pasta": "01-componentes",
+    "titulo": "Componentes",
+    "slides": "12–16"
+  },
+  {
+    "numero": "02",
+    "pasta": "02-atomic-design",
+    "titulo": "Atomic Design",
+    "slides": "17–21"
+  },
+  {
+    "numero": "03",
+    "pasta": "03-camadas",
+    "titulo": "Camadas",
+    "slides": "22–27"
+  },
+  {
+    "numero": "04",
+    "pasta": "04-feature-based",
+    "titulo": "Funcionalidades e monólito modular",
+    "slides": "28–33"
+  },
+  {
+    "numero": "05",
+    "pasta": "05-clean-architecture",
+    "titulo": "Clean Architecture",
+    "slides": "34–43"
+  },
+  {
+    "numero": "06",
+    "pasta": "06-hexagonal",
+    "titulo": "Hexagonal",
+    "slides": "44–49"
+  },
+  {
+    "numero": "07",
+    "pasta": "07-feature-sliced-design",
+    "titulo": "Feature-Sliced Design",
+    "slides": "50–55"
+  },
+  {
+    "numero": "08",
+    "pasta": "08-mvvm",
+    "titulo": "MVVM",
+    "slides": "56–60"
+  },
+  {
+    "numero": "09",
+    "pasta": "09-flux",
+    "titulo": "Flux e estado",
+    "slides": "61–66"
+  },
+  {
+    "numero": "10",
+    "pasta": "10-micro-frontends",
+    "titulo": "Micro-frontends",
+    "slides": "67–72"
+  },
+  {
+    "numero": "11",
+    "pasta": "11-renderizacao",
+    "titulo": "CSR, SSR e SSG",
+    "slides": "73–77"
+  },
+  {
+    "numero": "12",
+    "pasta": "12-ilhas",
+    "titulo": "Ilhas e carregamento seletivo",
+    "slides": "78–81"
+  },
+  {
+    "numero": "13",
+    "pasta": "13-bff",
+    "titulo": "Backend for Frontend",
+    "slides": "82–88"
+  },
+  {
+    "numero": "14",
+    "pasta": "14-escolha-e-evolucao",
+    "titulo": "Escolha e evolução",
+    "slides": "89–94"
+  }
+]

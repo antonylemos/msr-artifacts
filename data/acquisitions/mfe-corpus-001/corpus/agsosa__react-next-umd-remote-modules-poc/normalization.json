@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "id": "1027727587",
+  "fullName": "agsosa/react-next-umd-remote-modules-poc",
+  "commit": "130ddb6f8b73b85ec0065160bc49a764c80d49ba",
+  "acquiredAt": "2026-10-24T00:26:33.618Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "mf-1/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 25931
+    },
+    {
+      "path": "shell/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 25931
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 48,
+    "bytes": 678336
+  },
+  "languages": {
+    "JSON": 457171,
+    "JavaScript": 124418,
+    "TypeScript": 78187,
+    "Markdown": 8359,
+    "CSS": 7990,
+    "Other": 2211
+  },
+  "contentSha256": "3bba59aedd0dcb98264a0c2d076eb757c4c7804d86f7bd703933e87bd58e7d9a"
+}

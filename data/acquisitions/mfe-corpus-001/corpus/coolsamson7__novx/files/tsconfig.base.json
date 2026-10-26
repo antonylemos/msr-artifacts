@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "resolveJsonModule": true,
+
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "noUnusedLocals": false,
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "@novx/core": ["libs/core/src/index.ts"],
+      "@novx/i18n": ["libs/i18n/src/index.ts"],
+      "@novx/ui": ["libs/ui/src/index.ts"],
+      "@novx/communication": ["libs/communication/src/index.ts"],
+      "@novx/portal": ["libs/portal/src/index.ts"]
+    },
+    "sourceMap": true,
+    "inlineSources": true,
+    "importHelpers": true,
+    "isolatedModules": true,
+    "lib": ["es2022", "dom"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "target": "es2022"
+  }
+}

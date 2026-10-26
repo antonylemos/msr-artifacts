@@ -1,0 +1,79 @@
+name: E2E Tests
+
+on:
+  workflow_call:
+    inputs:
+      artifacts-url:
+        description: "Artifacts URL"
+        required: true
+        type: string
+      nodes-count:
+        description: "Number of extra node to spawn for multi-node"
+        required: false
+        type: number
+        default: 1
+      install-solution:
+        description: "Whether or not the tests solution should be installed"
+        required: false
+        type: boolean
+        default: false
+      generate-snapshots:
+        description: "Whether or not snapshots should be generated at the end"
+        required: false
+        type: boolean
+        default: false
+    secrets:
+      ARTIFACTS_USER:
+        required: true
+      ARTIFACTS_PASSWORD:
+        required: true
+      OVH_AUTH_URL:
+        required: true
+      OVH_USERNAME:
+        required: true
+      OVH_PASSWORD:
+        required: true
+      OVH_REGION:
+        required: true
+
+  workflow_dispatch:
+    inputs:
+      artifacts-url:
+        description: "Artifacts URL"
+        required: true
+        type: string
+      nodes-count:
+        description: "Number of extra node to spawn for multi-node"
+        required: false
+        type: number
+        default: 1
+      install-solution:
+        description: "Whether or not the tests solution should be installed"
+        required: false
+        type: boolean
+        default: false
+      generate-snapshots:
+        description: "Whether or not snapshots should be generated at the end"
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  single-node-e2e:
+    uses: ./.github/workflows/single-node-test.yaml
+    secrets: inherit
+    with:
+      artifacts-url: ${{ inputs.artifacts-url }}
+      install-solution: ${{ inputs.install-solution }}
+      generate-snapshots: ${{ inputs.generate-snapshots }}
+      enable-debug-when-failure: true
+
+  multi-node-e2e:
+    uses: ./.github/workflows/multi-node-test.yaml
+    secrets: inherit
+    with:
+      artifacts-url: ${{ inputs.artifacts-url }}
+      nodes-count: ${{ fromJson(inputs.nodes-count) }}
+      install-solution: ${{ inputs.install-solution }}
+      generate-snapshots: ${{ inputs.generate-snapshots }}
+      enable-debug-when-failure: true

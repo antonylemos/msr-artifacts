@@ -1,0 +1,10 @@
+manifest,state
+apps/app/package.json,ok
+apps/microfrontend/package.json,ok
+libs/communication/package.json,ok
+libs/core/package.json,ok
+libs/i18n/package.json,ok
+libs/portal/package.json,ok
+package.json,ok
+tools/metadata/package.json,ok
+ui/package.json,ok

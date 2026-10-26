@@ -1,0 +1,55 @@
+pattern,path,line,excerpt
+dep-module-federation,mfe-counter/package.json,13,"    ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+dep-module-federation,mfe-weather/package.json,13,"    ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+dep-module-federation,shell/package.json,13,"    ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+dep-mfe-term,mfe-counter/package.json,2,"  ""name"": ""mfe-counter"","
+dep-mfe-term,mfe-weather/package.json,2,"  ""name"": ""mfe-weather"","
+lock-mfe-dependency,mfe-counter/package-lock.json,11,"        ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+lock-mfe-dependency,mfe-counter/package-lock.json,1012,"    ""node_modules/@originjs/vite-plugin-federation"": {"
+lock-mfe-dependency,mfe-counter/package-lock.json,1014,"      ""resolved"": ""https://registry.npmjs.org/@originjs/vite-plugin-federation/-/vite-plugin-federation-1.4.1.tgz"","
+lock-mfe-dependency,mfe-weather/package-lock.json,11,"        ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+lock-mfe-dependency,mfe-weather/package-lock.json,1012,"    ""node_modules/@originjs/vite-plugin-federation"": {"
+lock-mfe-dependency,mfe-weather/package-lock.json,1014,"      ""resolved"": ""https://registry.npmjs.org/@originjs/vite-plugin-federation/-/vite-plugin-federation-1.4.1.tgz"","
+lock-mfe-dependency,shell/package-lock.json,11,"        ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+lock-mfe-dependency,shell/package-lock.json,1012,"    ""node_modules/@originjs/vite-plugin-federation"": {"
+lock-mfe-dependency,shell/package-lock.json,1014,"      ""resolved"": ""https://registry.npmjs.org/@originjs/vite-plugin-federation/-/vite-plugin-federation-1.4.1.tgz"","
+cfg-federation-plugin,mfe-counter/vite.config.ts,14,    federation({
+cfg-federation-plugin,mfe-weather/vite.config.ts,14,    federation({
+cfg-federation-plugin,shell/vite.config.ts,14,    federation({
+cfg-remotes,shell/vite.config.ts,15,      remotes: {
+cfg-exposes,mfe-counter/vite.config.ts,17,      exposes: {
+cfg-exposes,mfe-weather/vite.config.ts,17,      exposes: {
+cfg-shared,mfe-counter/vite.config.ts,20,"      shared: [""react"", ""react-dom""],"
+cfg-shared,mfe-weather/vite.config.ts,20,"      shared: [""react"", ""react-dom""],"
+cfg-shared,shell/vite.config.ts,19,"      shared: [""react"", ""react-dom""],"
+rt-remote-entry,mfe-counter/vite.config.ts,16,"      filename: ""remoteEntry.js"","
+rt-remote-entry,mfe-weather/vite.config.ts,16,"      filename: ""remoteEntry.js"","
+rt-remote-entry,shell/vite.config.ts,16,"        weather: ""http://localhost:4173/assets/remoteEntry.js"","
+rt-remote-entry,shell/vite.config.ts,17,"        counter: ""http://localhost:4174/assets/remoteEntry.js"","
+src-remote-import,shell/src/App.tsx,3,"const WeatherWidget = React.lazy(() => import(""weather/Widget""));"
+src-remote-import,shell/src/App.tsx,4,"const CounterWidget = React.lazy(() => import(""counter/Widget""));"
+doc-mfe-term,README.md,1,# Microfrontend Dashboard — Module Federation + Vite
+doc-mfe-term,README.md,3,"This project is a **Proof of Concept (POC)** created to demonstrate the usage of **Microfrontends with Module Federation** using **Vite, React and TypeScript**."
+doc-mfe-term,README.md,14,"  Responsible for layout, orchestration and dynamically loading the microfrontends."
+doc-mfe-term,README.md,16,- **Weather Microfrontend**  
+doc-mfe-term,README.md,19,- **Counter Microfrontend**  
+doc-mfe-term,README.md,22,Each microfrontend:
+doc-mfe-term,README.md,39,"This project is **not focused on the final product**, but on validating core microfrontend concepts, such as:"
+doc-mfe-term,README.md,41,- Microfrontend architecture using a Shell (Host)
+doc-mfe-term,README.md,56,cd mfe-weather
+doc-mfe-term,README.md,59,cd mfe-counter
+doc-mfe-term,README.md,65,### 2️⃣ Build and preview the Microfrontends
+doc-mfe-term,README.md,67,cd mfe-weather
+doc-mfe-term,README.md,71,cd mfe-counter
+doc-integration-technology,README.md,1,# Microfrontend Dashboard — Module Federation + Vite
+doc-integration-technology,README.md,3,"This project is a **Proof of Concept (POC)** created to demonstrate the usage of **Microfrontends with Module Federation** using **Vite, React and TypeScript**."
+doc-integration-technology,README.md,25,- Is loaded at runtime via Module Federation
+doc-integration-technology,README.md,32,- **Module Federation**  
+doc-runtime-loading,README.md,5,"The goal is to validate the architectural concept in practice, focusing on **application decoupling**, **independent builds**, and **runtime loading of remote front-end applications**."
+doc-runtime-loading,README.md,25,- Is loaded at runtime via Module Federation
+doc-runtime-loading,README.md,42,- Runtime loading of remote applications
+doc-independence,README.md,5,"The goal is to validate the architectural concept in practice, focusing on **application decoupling**, **independent builds**, and **runtime loading of remote front-end applications**."
+doc-independence,README.md,11,The application is composed of three independent front-end applications:
+doc-independence,README.md,20,"  Another standalone widget, independently built and consumed by the Shell."
+doc-independence,README.md,24,- Can be developed and deployed independently
+doc-independence,README.md,43,- Independent builds and deployments

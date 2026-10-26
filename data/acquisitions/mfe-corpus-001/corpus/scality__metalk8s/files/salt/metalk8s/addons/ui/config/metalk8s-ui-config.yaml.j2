@@ -1,0 +1,32 @@
+#!jinja|yaml
+
+# Defaults for configuration of MetalK8s UI
+apiVersion: addons.metalk8s.scality.com/v1alpha2
+kind: UIConfig
+spec:
+  # Deployment configuration
+  deployment:
+    replicas: 2
+    affinity:
+      podAntiAffinity:
+        soft:
+          - topologyKey: kubernetes.io/hostname
+        #   - topologyKey: my.second.important/topologyKey
+        #     weight: 42
+        # hard:
+        #   - topologyKey: kubernetes.io/hostname
+
+{%- if pillar.addons.dex.enabled %}
+  # Authentication configuration
+  auth:
+    kind: "OIDC"
+    providerUrl: "/oidc"
+    redirectUrl: "{{ salt.metalk8s_network.get_control_plane_ingress_endpoint() }}/"
+    clientId: "metalk8s-ui"
+    responseType: "code"
+    scopes: "openid profile email groups offline_access audience:server:client_id:oidc-auth-client"
+{%- endif %}
+
+  # UI configuration
+  title: Metalk8s Platform
+  basePath: /

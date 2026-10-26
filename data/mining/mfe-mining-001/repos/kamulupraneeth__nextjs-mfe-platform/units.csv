@@ -1,0 +1,4 @@
+directory,markers
+analytics-dashboard,analytics-dashboard/next.config.ts;analytics-dashboard/package.json
+host-shell,host-shell/next.config.ts;host-shell/package.json
+workspace-document,workspace-document/next.config.ts;workspace-document/package.json

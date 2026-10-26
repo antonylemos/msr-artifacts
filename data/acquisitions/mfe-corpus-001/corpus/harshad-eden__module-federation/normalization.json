@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "id": "1015183048",
+  "fullName": "harshad-eden/module-federation",
+  "commit": "dde74e678a749ccbf3951e173bf980649034c5d4",
+  "acquiredAt": "2026-10-24T00:32:25.381Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 84,
+    "bytes": 300303
+  },
+  "languages": {
+    "YAML": 110267,
+    "TypeScript": 92610,
+    "Markdown": 66288,
+    "JSON": 10974,
+    "JavaScript": 8280,
+    "CSS": 6364,
+    "Other": 3996,
+    "HTML": 1524
+  },
+  "contentSha256": "0e883b616c355374210c1f75a82379227717e66372310490dc2eca03dbc58466"
+}

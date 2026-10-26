@@ -1,0 +1,113 @@
+.title {
+    text-align: center;
+    font-size: 4rem;
+    font-weight: 700;
+    color: #fff;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.subTitle {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.cardapio {
+    text-align: center;
+    padding: 2rem;
+    font-size: 4rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.pratos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    justify-items: center;
+}
+
+/* Card */
+.cards {
+    width: 300px;
+    background: #fff;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    transition: 0.2s ease;
+}
+
+.cards:hover {
+    transform: scale(1.03);
+}
+
+/* Imagens iguais */
+.cards img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.cards h3 {
+    color: #000;
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+
+.cards p {
+    font-size: 0.95rem;
+    color: #555;
+    margin: 8px 0 15px 0;
+    min-height: 50px;
+}
+
+/* Preço + botão lado a lado */
+.cardFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+/* Preço */
+.cardFooter strong {
+    font-size: 1.2rem;
+    color: #000;
+}
+
+/* Botão */
+.cardFooter button {
+    background: #ff5722;
+    color: #fff;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s ease;
+    font-weight: bold;
+}
+
+.cardFooter button:hover {
+    background: #e64a19;
+}
+
+/* Responsivo para telas menores */
+@media (max-width: 900px) {
+    .pratos {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .pratos {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,220 @@
+pattern,path,line,excerpt
+dep-native-federation,sticky-notes/package.json,26,"    ""@angular-architects/native-federation"": ""^21.0.4"","
+dep-native-federation,sticky-notes/package.json,34,"    ""@softarc/native-federation-node"": ""^3.3.4"","
+dep-native-federation,tea-tracker/package.json,26,"    ""@angular-architects/native-federation"": ""^21.0.4"","
+dep-native-federation,tea-tracker/package.json,34,"    ""@softarc/native-federation-node"": ""^3.3.4"","
+dep-native-federation,test-base/package.json,26,"    ""@angular-architects/native-federation"": ""^21.0.4"","
+dep-native-federation,test-base/package.json,34,"    ""@softarc/native-federation-node"": ""^3.3.4"","
+lock-mfe-dependency,sticky-notes/package-lock.json,11,"        ""@angular-architects/native-federation"": ""^21.0.4"","
+lock-mfe-dependency,sticky-notes/package-lock.json,19,"        ""@softarc/native-federation-node"": ""^3.3.4"","
+lock-mfe-dependency,sticky-notes/package-lock.json,264,"    ""node_modules/@angular-architects/native-federation"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,266,"      ""resolved"": ""https://registry.npmjs.org/@angular-architects/native-federation/-/native-federation-21.0.4.tgz"","
+lock-mfe-dependency,sticky-notes/package-lock.json,272,"        ""@softarc/native-federation"": ""^3.5.0"","
+lock-mfe-dependency,sticky-notes/package-lock.json,273,"        ""@softarc/native-federation-runtime"": ""^3.5.0"","
+lock-mfe-dependency,sticky-notes/package-lock.json,280,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/aix-ppc64"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,296,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/android-arm"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,312,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/android-arm64"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,328,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/android-x64"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,344,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/darwin-arm64"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,360,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/darwin-x64"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,376,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/freebsd-arm64"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,392,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/freebsd-x64"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,408,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/linux-arm"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,424,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/linux-arm64"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,440,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/linux-ia32"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,456,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/linux-loong64"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,472,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/linux-mips64el"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,488,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/linux-ppc64"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,504,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/linux-riscv64"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,520,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/linux-s390x"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,536,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/linux-x64"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,552,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/netbsd-arm64"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,568,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/netbsd-x64"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,584,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/openbsd-arm64"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,600,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/openbsd-x64"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,616,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/openharmony-arm64"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,632,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/sunos-x64"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,648,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/win32-arm64"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,664,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/win32-ia32"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,680,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/win32-x64"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,696,"    ""node_modules/@angular-architects/native-federation/node_modules/esbuild"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,737,"    ""node_modules/@angular-architects/native-federation/node_modules/mrmime"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,6552,"    ""node_modules/@softarc/native-federation"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,6554,"      ""resolved"": ""https://registry.npmjs.org/@softarc/native-federation/-/native-federation-3.5.0.tgz"","
+lock-mfe-dependency,sticky-notes/package-lock.json,6558,"        ""@softarc/native-federation-runtime"": ""^3.5.0"","
+lock-mfe-dependency,sticky-notes/package-lock.json,6565,"    ""node_modules/@softarc/native-federation-node"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,6567,"      ""resolved"": ""https://registry.npmjs.org/@softarc/native-federation-node/-/native-federation-node-3.5.0.tgz"","
+lock-mfe-dependency,sticky-notes/package-lock.json,6571,"        ""@softarc/native-federation-runtime"": ""^3.5.0"","
+lock-mfe-dependency,sticky-notes/package-lock.json,6575,"    ""node_modules/@softarc/native-federation-runtime"": {"
+lock-mfe-dependency,sticky-notes/package-lock.json,6577,"      ""resolved"": ""https://registry.npmjs.org/@softarc/native-federation-runtime/-/native-federation-runtime-3.5.0.tgz"","
+lock-mfe-dependency,tea-tracker/package-lock.json,11,"        ""@angular-architects/native-federation"": ""^21.0.4"","
+lock-mfe-dependency,tea-tracker/package-lock.json,19,"        ""@softarc/native-federation-node"": ""^3.3.4"","
+lock-mfe-dependency,tea-tracker/package-lock.json,264,"    ""node_modules/@angular-architects/native-federation"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,266,"      ""resolved"": ""https://registry.npmjs.org/@angular-architects/native-federation/-/native-federation-21.0.4.tgz"","
+lock-mfe-dependency,tea-tracker/package-lock.json,272,"        ""@softarc/native-federation"": ""^3.5.0"","
+lock-mfe-dependency,tea-tracker/package-lock.json,273,"        ""@softarc/native-federation-runtime"": ""^3.5.0"","
+lock-mfe-dependency,tea-tracker/package-lock.json,280,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/aix-ppc64"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,296,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/android-arm"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,312,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/android-arm64"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,328,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/android-x64"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,344,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/darwin-arm64"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,360,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/darwin-x64"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,376,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/freebsd-arm64"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,392,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/freebsd-x64"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,408,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/linux-arm"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,424,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/linux-arm64"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,440,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/linux-ia32"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,456,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/linux-loong64"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,472,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/linux-mips64el"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,488,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/linux-ppc64"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,504,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/linux-riscv64"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,520,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/linux-s390x"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,536,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/linux-x64"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,552,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/netbsd-arm64"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,568,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/netbsd-x64"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,584,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/openbsd-arm64"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,600,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/openbsd-x64"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,616,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/openharmony-arm64"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,632,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/sunos-x64"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,648,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/win32-arm64"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,664,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/win32-ia32"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,680,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/win32-x64"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,696,"    ""node_modules/@angular-architects/native-federation/node_modules/esbuild"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,737,"    ""node_modules/@angular-architects/native-federation/node_modules/mrmime"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,6552,"    ""node_modules/@softarc/native-federation"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,6554,"      ""resolved"": ""https://registry.npmjs.org/@softarc/native-federation/-/native-federation-3.5.0.tgz"","
+lock-mfe-dependency,tea-tracker/package-lock.json,6558,"        ""@softarc/native-federation-runtime"": ""^3.5.0"","
+lock-mfe-dependency,tea-tracker/package-lock.json,6565,"    ""node_modules/@softarc/native-federation-node"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,6567,"      ""resolved"": ""https://registry.npmjs.org/@softarc/native-federation-node/-/native-federation-node-3.5.0.tgz"","
+lock-mfe-dependency,tea-tracker/package-lock.json,6571,"        ""@softarc/native-federation-runtime"": ""^3.5.0"","
+lock-mfe-dependency,tea-tracker/package-lock.json,6575,"    ""node_modules/@softarc/native-federation-runtime"": {"
+lock-mfe-dependency,tea-tracker/package-lock.json,6577,"      ""resolved"": ""https://registry.npmjs.org/@softarc/native-federation-runtime/-/native-federation-runtime-3.5.0.tgz"","
+lock-mfe-dependency,test-base/package-lock.json,11,"        ""@angular-architects/native-federation"": ""^21.0.4"","
+lock-mfe-dependency,test-base/package-lock.json,19,"        ""@softarc/native-federation-node"": ""^3.3.4"","
+lock-mfe-dependency,test-base/package-lock.json,264,"    ""node_modules/@angular-architects/native-federation"": {"
+lock-mfe-dependency,test-base/package-lock.json,266,"      ""resolved"": ""https://registry.npmjs.org/@angular-architects/native-federation/-/native-federation-21.0.4.tgz"","
+lock-mfe-dependency,test-base/package-lock.json,272,"        ""@softarc/native-federation"": ""^3.5.0"","
+lock-mfe-dependency,test-base/package-lock.json,273,"        ""@softarc/native-federation-runtime"": ""^3.5.0"","
+lock-mfe-dependency,test-base/package-lock.json,280,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/aix-ppc64"": {"
+lock-mfe-dependency,test-base/package-lock.json,296,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/android-arm"": {"
+lock-mfe-dependency,test-base/package-lock.json,312,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/android-arm64"": {"
+lock-mfe-dependency,test-base/package-lock.json,328,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/android-x64"": {"
+lock-mfe-dependency,test-base/package-lock.json,344,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/darwin-arm64"": {"
+lock-mfe-dependency,test-base/package-lock.json,360,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/darwin-x64"": {"
+lock-mfe-dependency,test-base/package-lock.json,376,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/freebsd-arm64"": {"
+lock-mfe-dependency,test-base/package-lock.json,392,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/freebsd-x64"": {"
+lock-mfe-dependency,test-base/package-lock.json,408,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/linux-arm"": {"
+lock-mfe-dependency,test-base/package-lock.json,424,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/linux-arm64"": {"
+lock-mfe-dependency,test-base/package-lock.json,440,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/linux-ia32"": {"
+lock-mfe-dependency,test-base/package-lock.json,456,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/linux-loong64"": {"
+lock-mfe-dependency,test-base/package-lock.json,472,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/linux-mips64el"": {"
+lock-mfe-dependency,test-base/package-lock.json,488,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/linux-ppc64"": {"
+lock-mfe-dependency,test-base/package-lock.json,504,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/linux-riscv64"": {"
+lock-mfe-dependency,test-base/package-lock.json,520,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/linux-s390x"": {"
+lock-mfe-dependency,test-base/package-lock.json,536,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/linux-x64"": {"
+lock-mfe-dependency,test-base/package-lock.json,552,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/netbsd-arm64"": {"
+lock-mfe-dependency,test-base/package-lock.json,568,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/netbsd-x64"": {"
+lock-mfe-dependency,test-base/package-lock.json,584,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/openbsd-arm64"": {"
+lock-mfe-dependency,test-base/package-lock.json,600,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/openbsd-x64"": {"
+lock-mfe-dependency,test-base/package-lock.json,616,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/openharmony-arm64"": {"
+lock-mfe-dependency,test-base/package-lock.json,632,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/sunos-x64"": {"
+lock-mfe-dependency,test-base/package-lock.json,648,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/win32-arm64"": {"
+lock-mfe-dependency,test-base/package-lock.json,664,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/win32-ia32"": {"
+lock-mfe-dependency,test-base/package-lock.json,680,"    ""node_modules/@angular-architects/native-federation/node_modules/@esbuild/win32-x64"": {"
+lock-mfe-dependency,test-base/package-lock.json,696,"    ""node_modules/@angular-architects/native-federation/node_modules/esbuild"": {"
+lock-mfe-dependency,test-base/package-lock.json,737,"    ""node_modules/@angular-architects/native-federation/node_modules/mrmime"": {"
+lock-mfe-dependency,test-base/package-lock.json,6552,"    ""node_modules/@softarc/native-federation"": {"
+lock-mfe-dependency,test-base/package-lock.json,6554,"      ""resolved"": ""https://registry.npmjs.org/@softarc/native-federation/-/native-federation-3.5.0.tgz"","
+lock-mfe-dependency,test-base/package-lock.json,6558,"        ""@softarc/native-federation-runtime"": ""^3.5.0"","
+lock-mfe-dependency,test-base/package-lock.json,6565,"    ""node_modules/@softarc/native-federation-node"": {"
+lock-mfe-dependency,test-base/package-lock.json,6567,"      ""resolved"": ""https://registry.npmjs.org/@softarc/native-federation-node/-/native-federation-node-3.5.0.tgz"","
+lock-mfe-dependency,test-base/package-lock.json,6571,"        ""@softarc/native-federation-runtime"": ""^3.5.0"","
+lock-mfe-dependency,test-base/package-lock.json,6575,"    ""node_modules/@softarc/native-federation-runtime"": {"
+lock-mfe-dependency,test-base/package-lock.json,6577,"      ""resolved"": ""https://registry.npmjs.org/@softarc/native-federation-runtime/-/native-federation-runtime-3.5.0.tgz"","
+cfg-native-federation,sticky-notes/angular.json,17,"					""builder"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,sticky-notes/angular.json,31,"					""builder"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,sticky-notes/federation.config.js,1,"const { withNativeFederation, shareAll } = require('@angular-architects/native-federation/config');"
+cfg-native-federation,sticky-notes/federation.config.js,3,module.exports = withNativeFederation({
+cfg-native-federation,tea-tracker/angular.json,17,"					""builder"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,tea-tracker/angular.json,31,"					""builder"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,tea-tracker/federation.config.js,1,"const { withNativeFederation, shareAll } = require('@angular-architects/native-federation/config');"
+cfg-native-federation,tea-tracker/federation.config.js,3,module.exports = withNativeFederation({
+cfg-native-federation,test-base/angular.json,17,"					""builder"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,test-base/angular.json,31,"					""builder"": ""@angular-architects/native-federation:build"","
+cfg-native-federation,test-base/federation.config.js,1,"const { withNativeFederation, shareAll } = require('@angular-architects/native-federation/config');"
+cfg-native-federation,test-base/federation.config.js,3,module.exports = withNativeFederation({
+cfg-exposes,sticky-notes/federation.config.js,6,  exposes: {
+cfg-exposes,tea-tracker/federation.config.js,6,  exposes: {
+cfg-shared,sticky-notes/federation.config.js,10,  shared: {
+cfg-shared,sticky-notes/federation.config.js,11,"    ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),"
+cfg-shared,tea-tracker/federation.config.js,10,  shared: {
+cfg-shared,tea-tracker/federation.config.js,11,"    ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),"
+cfg-shared,test-base/federation.config.js,6,  shared: {
+cfg-shared,test-base/federation.config.js,7,"    ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),"
+rt-remote-entry,test-base/public/federation.manifest.json,2,"	""tea-tracker"": ""http://localhost:4222/remoteEntry.json"","
+rt-remote-entry,test-base/public/federation.manifest.json,3,"	""sticky-notes"": ""http://localhost:4333/remoteEntry.json"""
+rt-manifest-file,test-base/public/federation.manifest.json,,
+rt-manifest-entry,test-base/public/federation.manifest.json,2,"	""tea-tracker"": ""http://localhost:4222/remoteEntry.json"","
+rt-manifest-entry,test-base/public/federation.manifest.json,3,"	""sticky-notes"": ""http://localhost:4333/remoteEntry.json"""
+src-async-bootstrap,sticky-notes/src/main.ts,5,  .then(_ => import('./bootstrap'))
+src-async-bootstrap,tea-tracker/src/main.ts,5,  .then(_ => import('./bootstrap'))
+src-async-bootstrap,test-base/src/main.ts,5,  .then(_ => import('./bootstrap'))
+src-load-remote,sticky-notes/src/main.ts,1,import { initFederation } from '@angular-architects/native-federation';
+src-load-remote,sticky-notes/src/main.ts,3,initFederation()
+src-load-remote,tea-tracker/src/main.ts,1,import { initFederation } from '@angular-architects/native-federation';
+src-load-remote,tea-tracker/src/main.ts,3,initFederation()
+src-load-remote,test-base/src/app/app.routes.ts,3,import {loadRemoteModule} from '@angular-architects/native-federation';
+src-load-remote,test-base/src/app/app.routes.ts,14,"    loadComponent: () => loadRemoteModule('tea-tracker', './App').then((m) => m.App),"
+src-load-remote,test-base/src/app/app.routes.ts,18,"    loadComponent: () => loadRemoteModule('sticky-notes', './App').then((m) => m.App),"
+src-load-remote,test-base/src/main.ts,1,import { initFederation } from '@angular-architects/native-federation';
+src-load-remote,test-base/src/main.ts,3,initFederation('federation.manifest.json')
+doc-mfe-term,README.md,1,# Micro frontends in Angular
+doc-mfe-term,README.md,5,- [What are Micro Frontends?](#what-are-micro-frontends)
+doc-mfe-term,README.md,6,- [Why Use Micro Frontends?](#why-are-micro-frontends-useful)
+doc-mfe-term,README.md,9,- [Part 1: Creating Your First Micro Frontend](#part-1-creating-your-first-micro-frontend)
+doc-mfe-term,README.md,15,## What are micro frontends?
+doc-mfe-term,README.md,17,Micro frontends are essentially the frontend equivalent of microservices.
+doc-mfe-term,README.md,24,"(or micro frontend) is owned by a separate team, has its own codebase, and can be "
+doc-mfe-term,README.md,25,deployed independently. The parent app (or container) gathers all these micro frontends
+doc-mfe-term,README.md,30,"In a micro frontend architecture, you have:"
+doc-mfe-term,README.md,32,- **Base App (Container/Shell)**: The main application that hosts and orchestrates all micro frontends
+doc-mfe-term,README.md,33,"- **Micro Frontends (Remote Apps)**: Individual, self-contained applications that each handle a specific feature or domain"
+doc-mfe-term,README.md,37,- A **tea tracker** micro frontend for tracking your tea drinking habits
+doc-mfe-term,README.md,38,- A **sticky notes** micro frontend for taking quick notes
+doc-mfe-term,README.md,40,## Why are micro frontends useful?
+doc-mfe-term,README.md,47,"team could only redeploy that micro frontend, without having to redeploy the whole "
+doc-mfe-term,README.md,49,- ***Team autonomy*** - Large teams can own separate micro frontends. They each have their
+doc-mfe-term,README.md,51,- ***Lazy Loading*** - Only load the micro frontends the user actually needs.
+doc-mfe-term,README.md,52,"- ***Scalability*** - For a growing frontend codebase, micro frontends allow scaling "
+doc-mfe-term,README.md,84,1. **Create the first micro frontend** (Tea Tracker)
+doc-mfe-term,README.md,86,3. **Connect everything together** and add a second micro frontend (Sticky Notes)
+doc-mfe-term,README.md,88,"By the end, you'll have a working digital desktop with two independently deployable micro frontends!"
+doc-mfe-term,README.md,91,## Part 1: Creating Your First Micro Frontend
+doc-mfe-term,README.md,93,"In this section, we'll create the Tea Tracker micro frontend - a standalone Angular application that tracks your tea consumption."
+doc-mfe-term,README.md,143,Native Federation is the technology that enables micro frontends. 
+doc-mfe-term,README.md,148,"Native Federation is Angular's recommended solution for micro frontends. It uses JavaScript's native module system to load remote applications dynamically. Think of it as a way for one Angular app to ""import"" another Angular app while both are running in the browser."
+doc-mfe-term,README.md,173,"**Important:** Choose ""remote"" because this micro frontend will be loaded BY another application (the base app we'll create later)."
+doc-mfe-term,README.md,272,- **`name: 'tea-tracker'`**: The identifier for this micro frontend
+doc-mfe-term,README.md,288,Now we'll create the main application - our digital desktop - that will host all micro frontends.
+doc-mfe-term,README.md,329,Add whatever code you desire. To add your micro frontends to this app we will use routing
+doc-mfe-term,README.md,357,    - Uses `loadRemoteModule()` to dynamically load the remote micro frontend
+doc-mfe-term,README.md,364,The manifest file tells the base app where to find each micro frontend.
+doc-mfe-term,README.md,404,    - Discovers available micro frontends
+doc-mfe-term,README.md,413,You need BOTH applications running simultaneously. This is crucial for micro frontends to work.
+doc-mfe-term,README.md,440,"I can see my home page, from my base app and I can see the two separate micro frontends"
+doc-mfe-term,README.md,446,- The micro frontend loaded seamlessly into the base app
+doc-integration-technology,README.md,141,### Step 2: Add Native Federation
+doc-integration-technology,README.md,143,Native Federation is the technology that enables micro frontends. 
+doc-integration-technology,README.md,146,#### What is Native Federation?
+doc-integration-technology,README.md,148,"Native Federation is Angular's recommended solution for micro frontends. It uses JavaScript's native module system to load remote applications dynamically. Think of it as a way for one Angular app to ""import"" another Angular app while both are running in the browser."
+doc-integration-technology,README.md,305,### Step 2: Add Native Federation
+doc-integration-technology,README.md,307,"Just like before, add Native Federation, but this time with different settings:"
+doc-integration-technology,README.md,383,"- **Value** (`""http://localhost:4222/remoteEntry.json""`): The URL where Native Federation can find this remote app"
+doc-integration-technology,README.md,385,    - `/remoteEntry.json`: A special file Native Federation generates that describes what the remote app exposes
+doc-runtime-loading,README.md,144,It allows multiple Angular applications to share code and components at runtime.
+doc-independence,README.md,19,"smaller, independently developed and deployed pieces, each responsible for "
+doc-independence,README.md,25,deployed independently. The parent app (or container) gathers all these micro frontends
+doc-independence,README.md,45,- ***Independent Deployment*** - You can update a single feature without redeploying 
+doc-independence,README.md,49,- ***Team autonomy*** - Large teams can own separate micro frontends. They each have their
+doc-independence,README.md,88,"By the end, you'll have a working digital desktop with two independently deployable micro frontends!"
+doc-host-remote,README.md,318,"**Important:** Choose ""dynamic-host"" (NOT ""remote"") because this app will LOAD other apps."

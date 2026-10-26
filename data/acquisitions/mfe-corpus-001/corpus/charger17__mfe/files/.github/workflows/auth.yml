@@ -1,0 +1,53 @@
+name: deploy-auth
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/auth/**"
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: packages/auth
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set NPM registry
+        run: npm config set registry https://registry.npmjs.org
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
+      - name: Check S3 bucket value
+        run: |
+          if [ -z "${{ secrets.AWS_S3_BUCKET_NAME }}" ]; then
+            echo "❌ AWS_S3_BUCKET_NAME secret is empty"
+            exit 1
+          else
+            echo "✅ Bucket: ${{ secrets.AWS_S3_BUCKET_NAME }}"
+          fi
+
+      - name: Upload to S3
+        run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/auth/latest
+
+      - name: Invalidate CloudFront cache
+        run: aws cloudfront create-invalidation --distribution-id "${{ secrets.AWS_DISTRIBUTION_ID }}" --paths "/auth/latest/remoteEntry.js"
+

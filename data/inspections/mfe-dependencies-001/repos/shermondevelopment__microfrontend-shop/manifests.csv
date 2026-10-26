@@ -1,0 +1,11 @@
+manifest,state
+apps/footer/package.json,ok
+apps/header/package.json,ok
+apps/host/package.json,ok
+apps/products/package.json,ok
+package.json,ok
+packages/config/eslint-config/package.json,ok
+packages/config/tailwind-config/package.json,ok
+packages/shared/package.json,ok
+packages/types/package.json,ok
+packages/ui/package.json,ok

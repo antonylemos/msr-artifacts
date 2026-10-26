@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "ESNext",
+    "lib": ["ES2015", "DOM"],
+    //   "noImplicitAny": true,
+    "strict": false,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "declaration": true,
+    "declarationDir": "./dist",
+    // "emitDeclarationOnly": true,
+    "moduleResolution": "node",
+    "outDir": "./dist",
+    "rootDir": ".",
+    "types": ["systemjs"]
+  },
+  "include": ["src/**/*"]
+}

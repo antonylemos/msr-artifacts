@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "id": "1363110249",
+  "fullName": "Residencias-Faculdade/MicroFrontend",
+  "commit": "5726e54de24e6b6a1ff1fd004b82db909314640c",
+  "acquiredAt": "2026-10-24T00:32:22.457Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 23,
+    "bytes": 117685
+  },
+  "languages": {
+    "JSON": 64473,
+    "TypeScript": 33345,
+    "Markdown": 9286,
+    "CSS": 4220,
+    "Other": 2672,
+    "YAML": 2170,
+    "HTML": 1519
+  },
+  "contentSha256": "da31e9a22038a70350250c177db52c6e77690788920332950ec248c2ec206ed1"
+}

@@ -1,0 +1,6 @@
+manifest,state
+apps/courses/package.json,ok
+apps/profile/package.json,ok
+apps/shell/package.json,ok
+package.json,ok
+packages/zephyr-rsbuild-plugin/package.json,ok

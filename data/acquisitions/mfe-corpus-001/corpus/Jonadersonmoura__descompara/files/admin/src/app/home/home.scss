@@ -1,0 +1,33 @@
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-4) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.bloco {
+  h2 {
+    margin: 0 0 var(--space-3);
+    font-size: 1.1rem;
+    color: var(--color-text);
+  }
+}
+
+.lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-3);
+}
+
+.doc {
+  margin: 0 0 var(--space-2);
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.preco {
+  margin: var(--space-3) 0;
+  font-weight: 700;
+}

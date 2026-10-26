@@ -1,0 +1,86 @@
+{%- set liveness_path = liveness_path | d("/healthz") %}
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    metalk8s.scality.com/config-digest: "{{ config_digest }}"
+  creationTimestamp: null
+  name: {{ name }}
+  namespace: "kube-system"
+  labels:
+    component: {{ name }}
+    tier: "control-plane"
+    metalk8s.scality.com/version: {{ metalk8s_version }}
+spec:
+  containers:
+    - name: {{ name }}
+      image: {{ image_name }}
+      imagePullPolicy: IfNotPresent
+      command:
+      {%- for part in command %}
+        - {{ part }}
+      {%- endfor %}
+      livenessProbe:
+        failureThreshold: 8
+        httpGet:
+          host: {{ host }}
+          path: {{ liveness_path }}
+          port: {{ port }}
+          scheme: {{ scheme }}
+        initialDelaySeconds: 15
+        periodSeconds: 10
+        timeoutSeconds: 15
+      startupProbe:
+        failureThreshold: 24
+        httpGet:
+          host: {{ host }}
+          path: {{ liveness_path }}
+          port: {{ port }}
+          scheme: {{ scheme }}
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        timeoutSeconds: 15
+    {%- if readiness_path is defined and readiness_path %}
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          host: {{ host }}
+          path: {{ readiness_path }}
+          port: {{ port }}
+          scheme: {{ scheme }}
+        periodSeconds: 1
+        timeoutSeconds: 15
+    {%- endif %}
+{%- if ports is defined and ports %}
+      ports:
+      {{ ports | yaml(False) | indent(6, False) }}
+{%- endif %}
+      resources:
+        requests:
+          cpu: {{ requested_cpu }}
+      volumeMounts:
+        {%- for volume in volumes %}
+        - mountPath: {{ volume.path }}
+          name: {{ volume.name }}
+          readOnly: true
+        {%- endfor %}
+{%- if sidecars is defined and sidecars %}
+    {{ sidecars | yaml(False) | indent(4, False) }}
+{%- endif %}
+  priority: 2000001000
+  priorityClassName: "system-node-critical"
+  securityContext:
+    seccompProfile:
+      type: RuntimeDefault
+  hostNetwork: true
+  volumes:
+    {%- for volume in volumes %}
+    - hostPath:
+        path: {{ volume.path }}
+        type: {{ volume.get("type", "Directory") }}
+      name: {{ volume.name }}
+    {%- endfor %}
+{%- if extra_volumes is defined and extra_volumes %}
+    {{ extra_volumes | yaml(False) | indent(4, False) }}
+{%- endif %}
+status: {}

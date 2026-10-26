@@ -1,0 +1,4 @@
+directory,markers
+sticky-notes,sticky-notes/angular.json;sticky-notes/federation.config.js;sticky-notes/package.json
+tea-tracker,tea-tracker/angular.json;tea-tracker/federation.config.js;tea-tracker/package.json
+test-base,test-base/angular.json;test-base/federation.config.js;test-base/package.json

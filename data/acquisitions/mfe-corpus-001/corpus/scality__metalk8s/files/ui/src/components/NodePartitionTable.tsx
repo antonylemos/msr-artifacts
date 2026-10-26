@@ -1,0 +1,128 @@
+import { useCallback } from 'react';
+import { useQuery } from 'react-query';
+import { spacing } from '@scality/core-ui';
+
+import { Table } from '@scality/core-ui/dist/next';
+import {
+  NODE_FILESYSTEM_ALMOST_OUTOF_FILES,
+  NODE_FILESYSTEM_ALMOST_OUTOF_SPACE,
+  NODE_FILESYSTEM_FILES_FILLINGUP,
+  NODE_FILESYSTEM_SPACE_FILLINGUP,
+  PORT_NODE_EXPORTER,
+} from '../constants';
+import { useAlerts } from '../containers/AlertProvider';
+import { getNodePartitionsTableData } from '../services/NodeVolumesUtils';
+import { queryNodeFSSize, queryNodeFSUsage } from '../services/prometheus/fetchMetrics';
+import CircleStatus from './CircleStatus';
+import { UsageProgressBar } from './UsageProgressBar';
+
+const NodePartitionTable = ({ instanceIP }: { instanceIP: string }) => {
+  const columns = [
+    {
+      Header: 'Health',
+      accessor: 'health',
+      cellStyle: {
+        textAlign: 'center',
+        width: 'unset',
+        minWidth: '5rem',
+        maxWidth: '5.5rem',
+        paddingRight: spacing.r16,
+        flex: 0.5,
+      },
+      Cell: ({ value }) => {
+        return <CircleStatus status={value} />;
+      },
+    },
+    {
+      Header: 'Partition path',
+      accessor: 'partitionPath',
+      cellStyle: {
+        textAlign: 'left',
+        width: 'unset',
+        minWidth: '4rem',
+        flex: 0.75,
+      },
+    },
+    {
+      Header: 'Usage',
+      dropAt: 400,
+      accessor: 'usage',
+      cellStyle: {
+        minWidth: '4.5rem',
+        textAlign: 'left',
+        width: 'unset',
+        flex: 0.5,
+      },
+      Cell: ({ value }) => {
+        return <UsageProgressBar percentage={value} />;
+      },
+    },
+    {
+      Header: 'Size',
+      dropAt: 340,
+      accessor: 'size',
+      cellStyle: {
+        minWidth: '3.5rem',
+        textAlign: 'right',
+        flex: 0.5,
+        width: 'unset',
+        marginRight: spacing.r16,
+      },
+      Cell: ({ value }) => value,
+    },
+  ];
+  const alertList = useAlerts({
+    alertname: [
+      NODE_FILESYSTEM_SPACE_FILLINGUP,
+      NODE_FILESYSTEM_ALMOST_OUTOF_SPACE,
+      NODE_FILESYSTEM_FILES_FILLINGUP,
+      NODE_FILESYSTEM_ALMOST_OUTOF_FILES,
+    ],
+    instance: `${instanceIP}:${PORT_NODE_EXPORTER}`,
+  });
+  const alertNF = alertList && alertList.alerts;
+  const { data: nodeFSResult, status } = useQuery(
+    ['nodeDevices', instanceIP],
+    useCallback(
+      () =>
+        Promise.all([queryNodeFSUsage(instanceIP), queryNodeFSSize(instanceIP)]).then(
+          ([nodeFSUsageResult, nodeFSSizeResult]) => {
+            if (
+              nodeFSUsageResult.status === 'success' &&
+              nodeFSSizeResult.status === 'success' &&
+              nodeFSUsageResult.data.resultType === 'vector' &&
+              nodeFSSizeResult.data.resultType === 'vector'
+            ) {
+              return {
+                nodeFSUsage: nodeFSUsageResult.data.result,
+                nodeFSSize: nodeFSSizeResult.data.result,
+              };
+            }
+          },
+        ),
+      [instanceIP],
+    ),
+  );
+  let partitions = [];
+  if (status === 'success')
+    partitions = getNodePartitionsTableData(nodeFSResult.nodeFSUsage, nodeFSResult.nodeFSSize, alertNF);
+  return (
+    <Table
+      revealDroppedColumns
+      status={status}
+      columns={columns}
+      data={partitions}
+      defaultSortingKey={'health'}
+      entityName={{
+        en: {
+          singular: 'system partition',
+          plural: 'system partitions',
+        },
+      }}
+    >
+      <Table.SingleSelectableContent rowHeight="h40" separationLineVariant="backgroundLevel2" />
+    </Table>
+  );
+};
+
+export default NodePartitionTable;

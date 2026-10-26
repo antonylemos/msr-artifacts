@@ -1,0 +1,1954 @@
+{
+  "schema": 1,
+  "selection": "100 repositories listed in data/acquisitions/mfe-corpus-001/acquisition.csv",
+  "format": "tar.gz with complete working tree and .git; oversized archives split into numbered binary parts",
+  "partBytes": 26214400,
+  "verification": "Every regular archive member matched its source SHA-256; symlinks matched; HEAD matched the acquisition commit. Archive parts concatenated in listed order reproduce archiveSha256.",
+  "repositories": [
+    {
+      "origin": "data/samples/mfe-sample-001/repos/EnjoyFX__fe_containerize",
+      "fullName": "EnjoyFX/fe_containerize",
+      "commit": "f05a9de5c996497b2277614bf4cc473456d85b7e",
+      "archive": "EnjoyFX__fe_containerize.tar.gz",
+      "archiveBytes": 150199,
+      "archiveSha256": "03c9d9c40eb3da41856d35c0d89f43b8110eeb44f8bd5e975e584f9067aa5de3",
+      "files": 127,
+      "uncompressedBytes": 251127,
+      "treeSha256": "873f6e52aae627fd3794a553601c75c33c02eb2b55231651875cc5dbf586bd54",
+      "parts": [
+        {
+          "path": "data/clones/EnjoyFX__fe_containerize.tar.gz",
+          "bytes": 150199,
+          "sha256": "03c9d9c40eb3da41856d35c0d89f43b8110eeb44f8bd5e975e584f9067aa5de3"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/Pandian-it__eager-workspace1",
+      "fullName": "Pandian-it/eager-workspace1",
+      "commit": "9ad83c2d39d410bab0e82efdebca145ebb04adbc",
+      "archive": "Pandian-it__eager-workspace1.tar.gz",
+      "archiveBytes": 605942,
+      "archiveSha256": "62ab8b99464f5ea9bbfaa36f897969ab37603e9e8c8ee93188738b1f7c21ac05",
+      "files": 169,
+      "uncompressedBytes": 1492259,
+      "treeSha256": "2669cb44593eb3f9fdfb1e5038af2d223746fff8124138bd49368aa2178b4443",
+      "parts": [
+        {
+          "path": "data/clones/Pandian-it__eager-workspace1.tar.gz",
+          "bytes": 605942,
+          "sha256": "62ab8b99464f5ea9bbfaa36f897969ab37603e9e8c8ee93188738b1f7c21ac05"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/Vishal-Kamra__Microfrontend-examples",
+      "fullName": "Vishal-Kamra/Microfrontend-examples",
+      "commit": "eeb848822ba0bad3549c04a36f5c9dfb72ae7fe8",
+      "archive": "Vishal-Kamra__Microfrontend-examples.tar.gz",
+      "archiveBytes": 654198,
+      "archiveSha256": "da90bdcee481122a1a33b36be2a3b2017371a3b4b65f214d08321dcc3dc9c9a7",
+      "files": 76,
+      "uncompressedBytes": 2163058,
+      "treeSha256": "a74c1306df135f3d838c6ef6f7bb22e90f709050f7f90612d27b4daf6afcf50e",
+      "parts": [
+        {
+          "path": "data/clones/Vishal-Kamra__Microfrontend-examples.tar.gz",
+          "bytes": 654198,
+          "sha256": "da90bdcee481122a1a33b36be2a3b2017371a3b4b65f214d08321dcc3dc9c9a7"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/mrmechazilla__host-app",
+      "fullName": "mrmechazilla/host-app",
+      "commit": "38ab4eb46b2edf72c07604bbbe2b0ff744c8f3b8",
+      "archive": "mrmechazilla__host-app.tar.gz",
+      "archiveBytes": 301685,
+      "archiveSha256": "1db0f89537c0f53da1fc67d16c2a4a3ac72014ef6fdf16c76579c37b0433f5f8",
+      "files": 72,
+      "uncompressedBytes": 791581,
+      "treeSha256": "3559691cecf5577bf2e7e252790e1db758f78a9c0b7939a470bbf0c0c468b82e",
+      "parts": [
+        {
+          "path": "data/clones/mrmechazilla__host-app.tar.gz",
+          "bytes": 301685,
+          "sha256": "1db0f89537c0f53da1fc67d16c2a4a3ac72014ef6fdf16c76579c37b0433f5f8"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/pmathulan__frontend-coding-exercises",
+      "fullName": "pmathulan/frontend-coding-exercises",
+      "commit": "89a3c271484ece4e37f719db9093c9157721a240",
+      "archive": "pmathulan__frontend-coding-exercises.tar.gz",
+      "archiveBytes": 730032,
+      "archiveSha256": "6b1fd688c75d03f65376250894fce44a3c59d032f53527a5b8669a944deb56d4",
+      "files": 246,
+      "uncompressedBytes": 2302765,
+      "treeSha256": "da34679072b27603d25731a466b2026247a82936a8efc255b49d13522a9917ed",
+      "parts": [
+        {
+          "path": "data/clones/pmathulan__frontend-coding-exercises.tar.gz",
+          "bytes": 730032,
+          "sha256": "6b1fd688c75d03f65376250894fce44a3c59d032f53527a5b8669a944deb56d4"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/nikJovanovic__ita-vaje",
+      "fullName": "nikJovanovic/ita-vaje",
+      "commit": "842a007f3e2690f8a521f951fc899c4af560e931",
+      "archive": "nikJovanovic__ita-vaje.tar.gz",
+      "archiveBytes": 703585,
+      "archiveSha256": "1f110c4226751602f224ebbbd03318cf2a8134485ef44215937c05286975f2ca",
+      "files": 341,
+      "uncompressedBytes": 1592171,
+      "treeSha256": "cbd9159e55e7411cd36625bbc7df3fbe5000419194e2134e7144a08d39e18760",
+      "parts": [
+        {
+          "path": "data/clones/nikJovanovic__ita-vaje.tar.gz",
+          "bytes": 703585,
+          "sha256": "1f110c4226751602f224ebbbd03318cf2a8134485ef44215937c05286975f2ca"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/a-kelen__mfe",
+      "fullName": "a-kelen/mfe",
+      "commit": "80e4481f9b927142d2c57f4c2787da93ad01b54e",
+      "archive": "a-kelen__mfe.tar.gz",
+      "archiveBytes": 565332,
+      "archiveSha256": "d83d27353e18a7d3fef458caba2da266d307a474f3f200841244b556f459837d",
+      "files": 122,
+      "uncompressedBytes": 1816072,
+      "treeSha256": "eb207106c6db6594164b0dde582c22bc56b93649e16de1c9b7ea6a1cd1c6d3e9",
+      "parts": [
+        {
+          "path": "data/clones/a-kelen__mfe.tar.gz",
+          "bytes": 565332,
+          "sha256": "d83d27353e18a7d3fef458caba2da266d307a474f3f200841244b556f459837d"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/raiane-honorato__software-eng-mba",
+      "fullName": "raiane-honorato/software-eng-mba",
+      "commit": "c569ccc6582475495a637d44ceed33c62c0f6e86",
+      "archive": "raiane-honorato__software-eng-mba.tar.gz",
+      "archiveBytes": 8048205,
+      "archiveSha256": "67e47e6bf41d41fc2fa1c091186fcd97ff820f25eafc897b2fa4ce70e0fae6f3",
+      "files": 373,
+      "uncompressedBytes": 10507972,
+      "treeSha256": "aa3561b42de224763ac58e46d8a03ab024e1803c8795b28cc6850f9bb4ded237",
+      "parts": [
+        {
+          "path": "data/clones/raiane-honorato__software-eng-mba.tar.gz",
+          "bytes": 8048205,
+          "sha256": "67e47e6bf41d41fc2fa1c091186fcd97ff820f25eafc897b2fa4ce70e0fae6f3"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/wtlin1228__micro-frontend-workspace",
+      "fullName": "wtlin1228/micro-frontend-workspace",
+      "commit": "9b81d2c5b6156084e0e9a4a3ecfdd89494d0b692",
+      "archive": "wtlin1228__micro-frontend-workspace.tar.gz",
+      "archiveBytes": 165363,
+      "archiveSha256": "df612c6cda4c4a7ec132dffa1d402e99c94dab05f980d6ef531d43f7909f6776",
+      "files": 143,
+      "uncompressedBytes": 343699,
+      "treeSha256": "d443feb60710e2d0ffb00b76e5fc209313e3b3a433f16204f408393604821966",
+      "parts": [
+        {
+          "path": "data/clones/wtlin1228__micro-frontend-workspace.tar.gz",
+          "bytes": 165363,
+          "sha256": "df612c6cda4c4a7ec132dffa1d402e99c94dab05f980d6ef531d43f7909f6776"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/abhikukreti__music-library-project",
+      "fullName": "abhikukreti/music-library-project",
+      "commit": "4fdce67023d92745fe1212c84509efe1054a8a49",
+      "archive": "abhikukreti__music-library-project.tar.gz",
+      "archiveBytes": 173527,
+      "archiveSha256": "3997390e6ecd439c01094e92cbe6da5af25a20ed71a95af8fdae931bd8d4bb09",
+      "files": 82,
+      "uncompressedBytes": 380856,
+      "treeSha256": "71d5e7bf8188bf010827b0ebf0ca08a575a87c8867b504f0b213c8997c16ed28",
+      "parts": [
+        {
+          "path": "data/clones/abhikukreti__music-library-project.tar.gz",
+          "bytes": 173527,
+          "sha256": "3997390e6ecd439c01094e92cbe6da5af25a20ed71a95af8fdae931bd8d4bb09"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/coolsamson7__novx",
+      "fullName": "coolsamson7/novx",
+      "commit": "128ba9a0f9f373210c09948a19bd1b59d9c7673f",
+      "archive": "coolsamson7__novx.tar.gz",
+      "archiveBytes": 5271054,
+      "archiveSha256": "367c3b9d2e1f417d060c4cc09500f5fd068c2148176d2d1c6860e505f16d1700",
+      "files": 387,
+      "uncompressedBytes": 6259102,
+      "treeSha256": "a693957f4d3798d5fb4a86f1c1e362cd7c55ead18be383e9247d5f64dc27841b",
+      "parts": [
+        {
+          "path": "data/clones/coolsamson7__novx.tar.gz",
+          "bytes": 5271054,
+          "sha256": "367c3b9d2e1f417d060c4cc09500f5fd068c2148176d2d1c6860e505f16d1700"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/AlanOlimpio__list",
+      "fullName": "AlanOlimpio/list",
+      "commit": "6ff9bfa3a94bb5920f60aabacc8f56298cbf4326",
+      "archive": "AlanOlimpio__list.tar.gz",
+      "archiveBytes": 261090,
+      "archiveSha256": "f59192c0d37b7f7dfa154bbb0b203c192c03406c6a656655dca791de5f073ad4",
+      "files": 53,
+      "uncompressedBytes": 444289,
+      "treeSha256": "8d3a87e13b3398a21201e19aa5f1b3b229ecf37aa8271e3b2f799168654c01c0",
+      "parts": [
+        {
+          "path": "data/clones/AlanOlimpio__list.tar.gz",
+          "bytes": 261090,
+          "sha256": "f59192c0d37b7f7dfa154bbb0b203c192c03406c6a656655dca791de5f073ad4"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/dhiman1987__micro-frontend-demo",
+      "fullName": "dhiman1987/micro-frontend-demo",
+      "commit": "cae01436907388ad75de4a33cfc2c7a5ae256406",
+      "archive": "dhiman1987__micro-frontend-demo.tar.gz",
+      "archiveBytes": 78259,
+      "archiveSha256": "13c6d02ffb4d8e4e7152a375f55601ff040e6eb59b6c13f1802a289c95a5be8f",
+      "files": 54,
+      "uncompressedBytes": 179796,
+      "treeSha256": "904f62bcab4597101a2fc0037d87ca09479ba52d31b55da88cd96513ec5ad439",
+      "parts": [
+        {
+          "path": "data/clones/dhiman1987__micro-frontend-demo.tar.gz",
+          "bytes": 78259,
+          "sha256": "13c6d02ffb4d8e4e7152a375f55601ff040e6eb59b6c13f1802a289c95a5be8f"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/mrgleam__mf-tanstack-demo",
+      "fullName": "mrgleam/mf-tanstack-demo",
+      "commit": "a7175973b0594cecfd32126b0bb65e71c627a6c3",
+      "archive": "mrgleam__mf-tanstack-demo.tar.gz",
+      "archiveBytes": 87775,
+      "archiveSha256": "6aed116a1c91091aab4a04fcef12718baff3de8f13abcb7de64997a0748f36e7",
+      "files": 61,
+      "uncompressedBytes": 234464,
+      "treeSha256": "948745eded33720d4ce5cd49505e1c3092d4f8f67d69a162da7a983d4efbbd7a",
+      "parts": [
+        {
+          "path": "data/clones/mrgleam__mf-tanstack-demo.tar.gz",
+          "bytes": 87775,
+          "sha256": "6aed116a1c91091aab4a04fcef12718baff3de8f13abcb7de64997a0748f36e7"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/pgarr__microfrontend-template",
+      "fullName": "pgarr/microfrontend-template",
+      "commit": "8869e1289ab5b8e758cb6a465425997296b6ca32",
+      "archive": "pgarr__microfrontend-template.tar.gz",
+      "archiveBytes": 560092,
+      "archiveSha256": "d16faaec0dc9306fa7ef8c5dc5770d84724a55421364aae653e22a8943f29676",
+      "files": 83,
+      "uncompressedBytes": 1867679,
+      "treeSha256": "a96546047e63e5e7c1a444c6691dca3e04e6f3cf02d68072d2054636c81683ce",
+      "parts": [
+        {
+          "path": "data/clones/pgarr__microfrontend-template.tar.gz",
+          "bytes": 560092,
+          "sha256": "d16faaec0dc9306fa7ef8c5dc5770d84724a55421364aae653e22a8943f29676"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/LebLeb03__UX308_Assignment2_2025",
+      "fullName": "LebLeb03/UX308_Assignment2_2025",
+      "commit": "c09cbbe990a83a84c0e22c6b794472cf61fc6bf7",
+      "archive": "LebLeb03__UX308_Assignment2_2025.tar.gz",
+      "archiveBytes": 41504525,
+      "archiveSha256": "8eaa6fc14a75fb9367e3421c529273a2a43a1100f023424dd6604fce0340f65b",
+      "files": 1416,
+      "uncompressedBytes": 51065526,
+      "treeSha256": "eac982873fb007353e17b5b8fe65d4c76b01aed24d8469150e1df98a7d719bf4",
+      "parts": [
+        {
+          "path": "data/clones/LebLeb03__UX308_Assignment2_2025.tar.gz.part-00001",
+          "bytes": 26214400,
+          "sha256": "5aa32b186930d8531b2e870c25954a8349c2f7c32abc7dbcce37d1540804c81b"
+        },
+        {
+          "path": "data/clones/LebLeb03__UX308_Assignment2_2025.tar.gz.part-00002",
+          "bytes": 15290125,
+          "sha256": "9734960847bbb396cf0f916799f02cf795166fe7b8ee95fcb27824e3217c68f2"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/sunnywilsonveshapogu__microfrontends-demo",
+      "fullName": "sunnywilsonveshapogu/microfrontends-demo",
+      "commit": "f56f903190312e938d0ad5a9a146ad4dbe333589",
+      "archive": "sunnywilsonveshapogu__microfrontends-demo.tar.gz",
+      "archiveBytes": 214735,
+      "archiveSha256": "eb381def014764156c5fb72dc51ed16367281798731a9fa7bbf63cf1d8d79bcf",
+      "files": 55,
+      "uncompressedBytes": 659629,
+      "treeSha256": "dc3de36497e0e31f1d229b6cb8dd80ff80104c4bf85ff0844afe786e6b6ccfa4",
+      "parts": [
+        {
+          "path": "data/clones/sunnywilsonveshapogu__microfrontends-demo.tar.gz",
+          "bytes": 214735,
+          "sha256": "eb381def014764156c5fb72dc51ed16367281798731a9fa7bbf63cf1d8d79bcf"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/Efraim0601__union-portal",
+      "fullName": "Efraim0601/union-portal",
+      "commit": "b11a3e3aa55aff8195e0cde0026ccbd45245266d",
+      "archive": "Efraim0601__union-portal.tar.gz",
+      "archiveBytes": 30804598,
+      "archiveSha256": "1ced58182351c99c8b072b3468a4e68c61bd8de8a37a7ee9dfe60f801301c1cf",
+      "files": 195,
+      "uncompressedBytes": 65044060,
+      "treeSha256": "d3aeae246c9d2fda05f735b38fea89e705b545793180c269cb542d013e61c132",
+      "parts": [
+        {
+          "path": "data/clones/Efraim0601__union-portal.tar.gz.part-00001",
+          "bytes": 26214400,
+          "sha256": "90c8c75475086e03e8398cd3246d648339d8ddfe8029ed4daf6d03cf039d5657"
+        },
+        {
+          "path": "data/clones/Efraim0601__union-portal.tar.gz.part-00002",
+          "bytes": 4590198,
+          "sha256": "4ae8ace1ecf71d722d87025569d51f2de659c9304f56028853325b79f0d1af4d"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/hscale__adx-core-k",
+      "fullName": "hscale/adx-core-k",
+      "commit": "683dec7ebc233c685f97166a135032d5668070c1",
+      "archive": "hscale__adx-core-k.tar.gz",
+      "archiveBytes": 4125620,
+      "archiveSha256": "8641dabc9f51d83327d6346bc2847cb310f32387f66608d0961ffd2aa4e86152",
+      "files": 804,
+      "uncompressedBytes": 10388266,
+      "treeSha256": "bdf2cee0c5b88cee737cf8b6bfea629b982b60dcc2b32fca4e9b017ba3220f8c",
+      "parts": [
+        {
+          "path": "data/clones/hscale__adx-core-k.tar.gz",
+          "bytes": 4125620,
+          "sha256": "8641dabc9f51d83327d6346bc2847cb310f32387f66608d0961ffd2aa4e86152"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/viernesviernes__EmerTech-Lab-Assignment-3",
+      "fullName": "viernesviernes/EmerTech-Lab-Assignment-3",
+      "commit": "98845d1a3f9c1b41df04512b4472ee2d21085b6b",
+      "archive": "viernesviernes__EmerTech-Lab-Assignment-3.tar.gz",
+      "archiveBytes": 605584,
+      "archiveSha256": "7b07517be91108408f1d0dac3f125340c76175b9d4848a2dc409d077185a654b",
+      "files": 116,
+      "uncompressedBytes": 1394665,
+      "treeSha256": "444c99d45ba9d25865981a07976d19bd12ef7765581b4f0bacbca1b068bef201",
+      "parts": [
+        {
+          "path": "data/clones/viernesviernes__EmerTech-Lab-Assignment-3.tar.gz",
+          "bytes": 605584,
+          "sha256": "7b07517be91108408f1d0dac3f125340c76175b9d4848a2dc409d077185a654b"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/MSF-OCG__LIME-EMR",
+      "fullName": "MSF-OCG/LIME-EMR",
+      "commit": "4de9e4139c74b15c5af0cdc02a97c2e2eadf56de",
+      "archive": "MSF-OCG__LIME-EMR.tar.gz",
+      "archiveBytes": 83043472,
+      "archiveSha256": "d7fcb6ce9f32dc3ea47a1fdd30063fcd5631c2c5b041367ed2542c1a274cdc65",
+      "files": 521,
+      "uncompressedBytes": 108909374,
+      "treeSha256": "30a8b775ebda1118eda52bf8f47f90b71427fd2119c07c07d2d2ab2c3f8a0507",
+      "parts": [
+        {
+          "path": "data/clones/MSF-OCG__LIME-EMR.tar.gz.part-00001",
+          "bytes": 26214400,
+          "sha256": "6a84bc8c4bac34ea7830ce4c8304ba7ffb397676c5b4d7042782bb9f363732b2"
+        },
+        {
+          "path": "data/clones/MSF-OCG__LIME-EMR.tar.gz.part-00002",
+          "bytes": 26214400,
+          "sha256": "eb245c811a4affce964f3e6a68af3bcf07bef22e23afd143e9cbf3aa660f11bd"
+        },
+        {
+          "path": "data/clones/MSF-OCG__LIME-EMR.tar.gz.part-00003",
+          "bytes": 26214400,
+          "sha256": "e2ec7f8eaf7b78f2c9aedbbff05bd334496672e0b0f80c01e61ae865f5601fc4"
+        },
+        {
+          "path": "data/clones/MSF-OCG__LIME-EMR.tar.gz.part-00004",
+          "bytes": 4400272,
+          "sha256": "80d81880228a5a6719e11d928984d29c929f599188e78caa08c4876215c470bf"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/anish0714__devpulse-mfe",
+      "fullName": "anish0714/devpulse-mfe",
+      "commit": "6a2348d162b34030505554ab0ef954577627999a",
+      "archive": "anish0714__devpulse-mfe.tar.gz",
+      "archiveBytes": 231603,
+      "archiveSha256": "bf6d9f2ae06f7c9d2eafe3fcee87ac2875ee47c99ed8f323e32cbcd117e8cf41",
+      "files": 127,
+      "uncompressedBytes": 533121,
+      "treeSha256": "543de1158411e9d0e944a1bb0e24a3d3d74212c4be77c3fc6f0ce1eeb3471963",
+      "parts": [
+        {
+          "path": "data/clones/anish0714__devpulse-mfe.tar.gz",
+          "bytes": 231603,
+          "sha256": "bf6d9f2ae06f7c9d2eafe3fcee87ac2875ee47c99ed8f323e32cbcd117e8cf41"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/vigneshwaran-chandrasekaran__microfrontend",
+      "fullName": "vigneshwaran-chandrasekaran/microfrontend",
+      "commit": "28c70f8b2b748f07872a8dd1f56240d8a3415c05",
+      "archive": "vigneshwaran-chandrasekaran__microfrontend.tar.gz",
+      "archiveBytes": 585358,
+      "archiveSha256": "582562181890226c93595761470068a6758ef5691e34d8eea358a9fb0b857372",
+      "files": 98,
+      "uncompressedBytes": 1875730,
+      "treeSha256": "c6f95d5b807e6c38a09ad8198a6809c92c00e8a4b44f1c3979d3257a684a0650",
+      "parts": [
+        {
+          "path": "data/clones/vigneshwaran-chandrasekaran__microfrontend.tar.gz",
+          "bytes": 585358,
+          "sha256": "582562181890226c93595761470068a6758ef5691e34d8eea358a9fb0b857372"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/webdevqadeer__frontend-development",
+      "fullName": "webdevqadeer/frontend-development",
+      "commit": "f8d264873c9182d4f3a0628f18f7618b019a2f79",
+      "archive": "webdevqadeer__frontend-development.tar.gz",
+      "archiveBytes": 74579646,
+      "archiveSha256": "8cc7dcf928cbf0a211f2204a3373c674a9ce2bd5ba4118df3559a831a414d618",
+      "files": 4666,
+      "uncompressedBytes": 175087825,
+      "treeSha256": "17692028bbf6d4ab402c0c1b5ae61fce2304e4410ab061049ae03417db4eba31",
+      "parts": [
+        {
+          "path": "data/clones/webdevqadeer__frontend-development.tar.gz.part-00001",
+          "bytes": 26214400,
+          "sha256": "5d783790173f010ff559d8d160309ffb33790a40fbdc8b3472648bf2ea14ca68"
+        },
+        {
+          "path": "data/clones/webdevqadeer__frontend-development.tar.gz.part-00002",
+          "bytes": 26214400,
+          "sha256": "8dbdf3244946c269d177c454f1e1a9354038ad6a6f95825b5cd580067a366260"
+        },
+        {
+          "path": "data/clones/webdevqadeer__frontend-development.tar.gz.part-00003",
+          "bytes": 22150846,
+          "sha256": "ea3d2af6160332fde6b18299c4aeaae5a8fcf633a18fad78adfdc84005097a2d"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/pmiguras__likekiri-website",
+      "fullName": "pmiguras/likekiri-website",
+      "commit": "4b8c5fd5053751aba70fcd4859a38fd33062c8d3",
+      "archive": "pmiguras__likekiri-website.tar.gz",
+      "archiveBytes": 1156724,
+      "archiveSha256": "700e25b09f6099337a4f0a6380abf7d9af02bb674c549daac32e44caf0fcde17",
+      "files": 261,
+      "uncompressedBytes": 1806445,
+      "treeSha256": "537e156a00c549f89f268f2575e6a32375ef8829f8eb386bc9e2e68ac2f17e6d",
+      "parts": [
+        {
+          "path": "data/clones/pmiguras__likekiri-website.tar.gz",
+          "bytes": 1156724,
+          "sha256": "700e25b09f6099337a4f0a6380abf7d9af02bb674c549daac32e44caf0fcde17"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/SABHGG__odin-replica",
+      "fullName": "SABHGG/odin-replica",
+      "commit": "06ce2bd578663f88243854f6eef292686660dfce",
+      "archive": "SABHGG__odin-replica.tar.gz",
+      "archiveBytes": 379236,
+      "archiveSha256": "6df6e7ef55dd1aff8ec675b68ceae544ca06367fdfd1427188aeeffb29b25aad",
+      "files": 52,
+      "uncompressedBytes": 910644,
+      "treeSha256": "4dfa9c2385e0114cc2627e67d59ecf7c38150361ea0201c9b24b4218ba172c9a",
+      "parts": [
+        {
+          "path": "data/clones/SABHGG__odin-replica.tar.gz",
+          "bytes": 379236,
+          "sha256": "6df6e7ef55dd1aff8ec675b68ceae544ca06367fdfd1427188aeeffb29b25aad"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/victorlmneves___nuxt-monorepo-mfe-platform",
+      "fullName": "victorlmneves/_nuxt-monorepo-mfe-platform",
+      "commit": "84ffc2429b311b3c7565ffd35de4de48dafd5929",
+      "archive": "victorlmneves___nuxt-monorepo-mfe-platform.tar.gz",
+      "archiveBytes": 364990,
+      "archiveSha256": "f43a90cb8c9f8d91eaa8fa71e44689d544f21263651c4a1a65e81bcf45147fdc",
+      "files": 92,
+      "uncompressedBytes": 775682,
+      "treeSha256": "8fb20e90f0b013d73b693f5a680c26e80c2b84ecbfe32634e53eb2d9d87fa340",
+      "parts": [
+        {
+          "path": "data/clones/victorlmneves___nuxt-monorepo-mfe-platform.tar.gz",
+          "bytes": 364990,
+          "sha256": "f43a90cb8c9f8d91eaa8fa71e44689d544f21263651c4a1a65e81bcf45147fdc"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/pierrekasongo__bahmni-drc",
+      "fullName": "pierrekasongo/bahmni-drc",
+      "commit": "80390077a0a2375568289d01bcde52a082dc28e0",
+      "archive": "pierrekasongo__bahmni-drc.tar.gz",
+      "archiveBytes": 189422050,
+      "archiveSha256": "a516b0165093c6b8bdb79d996cec025e80d6dda32bbd05c38c624059644257cc",
+      "files": 4568,
+      "uncompressedBytes": 258991781,
+      "treeSha256": "fdefdb9299a2efd6b808e564d84c68c483881d169dc1438994fd03283d527521",
+      "parts": [
+        {
+          "path": "data/clones/pierrekasongo__bahmni-drc.tar.gz.part-00001",
+          "bytes": 26214400,
+          "sha256": "50bf249f8eb7daf7dd2da7d6efdbb44eeb69e6a77c42491ea90c619669ae3945"
+        },
+        {
+          "path": "data/clones/pierrekasongo__bahmni-drc.tar.gz.part-00002",
+          "bytes": 26214400,
+          "sha256": "f909e6f387adbc64e772b0eb6989896b59d2e10e4119902853cb63b0786df311"
+        },
+        {
+          "path": "data/clones/pierrekasongo__bahmni-drc.tar.gz.part-00003",
+          "bytes": 26214400,
+          "sha256": "61cce04e0e59b7cd220d242dbdecd1f7be7ddb5e296b6c7953279f9307ef786e"
+        },
+        {
+          "path": "data/clones/pierrekasongo__bahmni-drc.tar.gz.part-00004",
+          "bytes": 26214400,
+          "sha256": "d8df9a132919ec76cede1127f29eb59b76ad24bb56c36ae068065662737e4d11"
+        },
+        {
+          "path": "data/clones/pierrekasongo__bahmni-drc.tar.gz.part-00005",
+          "bytes": 26214400,
+          "sha256": "75aedf3115334cea58887b91a2384927adcadfd07b408157d6cae9abcca448ce"
+        },
+        {
+          "path": "data/clones/pierrekasongo__bahmni-drc.tar.gz.part-00006",
+          "bytes": 26214400,
+          "sha256": "76b85f4634377933afb0b07ffe37cad1852a6b86c1d8d9b9e115bc44adad3420"
+        },
+        {
+          "path": "data/clones/pierrekasongo__bahmni-drc.tar.gz.part-00007",
+          "bytes": 26214400,
+          "sha256": "306fbcfa6c84b8d881de422aa2bc0d54bea8e14dbbab98d42aee9b895159eb4c"
+        },
+        {
+          "path": "data/clones/pierrekasongo__bahmni-drc.tar.gz.part-00008",
+          "bytes": 5921250,
+          "sha256": "3d7218bfa48cc869c3a40084bd44ac5f76f222b4405a6c53960c2c2312904a12"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/alimohammadi__micro-frontend",
+      "fullName": "alimohammadi/micro-frontend",
+      "commit": "7a05f74105f816f60621d9ba9171b269aa8e5cab",
+      "archive": "alimohammadi__micro-frontend.tar.gz",
+      "archiveBytes": 1750109,
+      "archiveSha256": "6b85d95de01aa85d5ea78c3d92d7febd7e98983743ff3dc77b20decc30aed2b1",
+      "files": 83,
+      "uncompressedBytes": 6122327,
+      "treeSha256": "588e39578e9d290e797feaf876e58e31811d7bd8c49e6d11735f58143b61a292",
+      "parts": [
+        {
+          "path": "data/clones/alimohammadi__micro-frontend.tar.gz",
+          "bytes": 1750109,
+          "sha256": "6b85d95de01aa85d5ea78c3d92d7febd7e98983743ff3dc77b20decc30aed2b1"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/ramdev90__nx-module-federation",
+      "fullName": "ramdev90/nx-module-federation",
+      "commit": "cf42f3f1506bfe6f25a263d0763cd09cac7e84f7",
+      "archive": "ramdev90__nx-module-federation.tar.gz",
+      "archiveBytes": 473881,
+      "archiveSha256": "0061d2cc8f1ce2499f098cc1a9924a301eeefb707cc23ff7f280976efa6c309a",
+      "files": 136,
+      "uncompressedBytes": 1352825,
+      "treeSha256": "94a67831091cf77bf097745ecbd050cbccec787f3cbaf8ebb077b38134fc071d",
+      "parts": [
+        {
+          "path": "data/clones/ramdev90__nx-module-federation.tar.gz",
+          "bytes": 473881,
+          "sha256": "0061d2cc8f1ce2499f098cc1a9924a301eeefb707cc23ff7f280976efa6c309a"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/dearjay22__Group2_INFO8985",
+      "fullName": "dearjay22/Group2_INFO8985",
+      "commit": "9f8b0b7df3c6bcdb67eee8cb21cebde3ff2ce189",
+      "archive": "dearjay22__Group2_INFO8985.tar.gz",
+      "archiveBytes": 353486956,
+      "archiveSha256": "f960fb80b6c85fbd22bfac604401d6f3bc5eff8f98dbfbd7029cc20f76efd3d3",
+      "files": 144,
+      "uncompressedBytes": 382414623,
+      "treeSha256": "8949284b7772db44808a4abe6bbe15fcd2fe784af7b80229338a6cd7cd9f029c",
+      "parts": [
+        {
+          "path": "data/clones/dearjay22__Group2_INFO8985.tar.gz.part-00001",
+          "bytes": 26214400,
+          "sha256": "34fad848d020097d88d62bcb3e763bb039012330fc55adec3caf08e1bdce2656"
+        },
+        {
+          "path": "data/clones/dearjay22__Group2_INFO8985.tar.gz.part-00002",
+          "bytes": 26214400,
+          "sha256": "e3c9a55d010e409951706495d39fff13c9a8c3915242635b80c1a4ea749589ad"
+        },
+        {
+          "path": "data/clones/dearjay22__Group2_INFO8985.tar.gz.part-00003",
+          "bytes": 26214400,
+          "sha256": "916340fd2187d8bd220b6df3e9e3a7e66f02c818dccc62845eafd2434b672b31"
+        },
+        {
+          "path": "data/clones/dearjay22__Group2_INFO8985.tar.gz.part-00004",
+          "bytes": 26214400,
+          "sha256": "b1349314f8168471c03b390a936a1b3978f4f51e78ded2a67dda79595f581b5f"
+        },
+        {
+          "path": "data/clones/dearjay22__Group2_INFO8985.tar.gz.part-00005",
+          "bytes": 26214400,
+          "sha256": "3a5c5833d004fcadfc6d294603704db987f4740050de85fad6f052569f3a65c7"
+        },
+        {
+          "path": "data/clones/dearjay22__Group2_INFO8985.tar.gz.part-00006",
+          "bytes": 26214400,
+          "sha256": "9dade19131b840470ab4a4ea07b69ae616c29676457030bbbd23ea4a1e18abad"
+        },
+        {
+          "path": "data/clones/dearjay22__Group2_INFO8985.tar.gz.part-00007",
+          "bytes": 26214400,
+          "sha256": "984e413abf43a77b1be2b017036e0ba3ed08bf8af774bb0790328fea1766df0a"
+        },
+        {
+          "path": "data/clones/dearjay22__Group2_INFO8985.tar.gz.part-00008",
+          "bytes": 26214400,
+          "sha256": "d781dc2a580f7f8c3b4a938237c03afce10e85d7d564c141edb1c648708b72be"
+        },
+        {
+          "path": "data/clones/dearjay22__Group2_INFO8985.tar.gz.part-00009",
+          "bytes": 26214400,
+          "sha256": "0bb949d254d1411676cdff4a5fcad02028f499e73c59540929318bca0454bf85"
+        },
+        {
+          "path": "data/clones/dearjay22__Group2_INFO8985.tar.gz.part-00010",
+          "bytes": 26214400,
+          "sha256": "03ef8cdc482809c03f9f835ad6712def65790addf3880f8c772797387d5db7de"
+        },
+        {
+          "path": "data/clones/dearjay22__Group2_INFO8985.tar.gz.part-00011",
+          "bytes": 26214400,
+          "sha256": "686d8e0ea137f312ce00da7c80badd4b149031848e2146224bc5214baed10be0"
+        },
+        {
+          "path": "data/clones/dearjay22__Group2_INFO8985.tar.gz.part-00012",
+          "bytes": 26214400,
+          "sha256": "91ae2a9562a92c2326199471969d64e8743e00fbb0d175f86dece12865f650ba"
+        },
+        {
+          "path": "data/clones/dearjay22__Group2_INFO8985.tar.gz.part-00013",
+          "bytes": 26214400,
+          "sha256": "b5aa5df0298cd24c60e9ea64f9dc80358b951a0c60514a8ca359397c83e62b62"
+        },
+        {
+          "path": "data/clones/dearjay22__Group2_INFO8985.tar.gz.part-00014",
+          "bytes": 12699756,
+          "sha256": "d847c59a874acd34c6363fd5218b3b66d13c6e80fbf95241ea1669c8c144d517"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/PedroHugo11__mf-dashboard-module-federation",
+      "fullName": "PedroHugo11/mf-dashboard-module-federation",
+      "commit": "184ec1b1762b6ea93f1f8f8de44118412a9ab6a8",
+      "archive": "PedroHugo11__mf-dashboard-module-federation.tar.gz",
+      "archiveBytes": 152384,
+      "archiveSha256": "408bb887175bd9cc19fcba9dde4ac8af0d2128ee16e9a8e259a2747213a587da",
+      "files": 81,
+      "uncompressedBytes": 460127,
+      "treeSha256": "dd7fe57def9309b83be95973dade7fe8e95c339486cf9a638a4ca25356fed107",
+      "parts": [
+        {
+          "path": "data/clones/PedroHugo11__mf-dashboard-module-federation.tar.gz",
+          "bytes": 152384,
+          "sha256": "408bb887175bd9cc19fcba9dde4ac8af0d2128ee16e9a8e259a2747213a587da"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/fudoyoki__ai-portal-mfe-example",
+      "fullName": "fudoyoki/ai-portal-mfe-example",
+      "commit": "f1fd5b0a988c45334a49d3992ebc84cb6ea5ae94",
+      "archive": "fudoyoki__ai-portal-mfe-example.tar.gz",
+      "archiveBytes": 59879,
+      "archiveSha256": "bad669ef9a34c5df0efffc74da0adb7f14f96b1715f20285c555b9fc7be6aa3b",
+      "files": 88,
+      "uncompressedBytes": 117731,
+      "treeSha256": "c586fa2ef22dab23a459f9d34857974dc86febcdfc5e949ce98eb2421966f2de",
+      "parts": [
+        {
+          "path": "data/clones/fudoyoki__ai-portal-mfe-example.tar.gz",
+          "bytes": 59879,
+          "sha256": "bad669ef9a34c5df0efffc74da0adb7f14f96b1715f20285c555b9fc7be6aa3b"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/swtbhsmn__micro-frontend-demo",
+      "fullName": "swtbhsmn/micro-frontend-demo",
+      "commit": "9cb91cec30b991952a8bb405e8362b064256a26e",
+      "archive": "swtbhsmn__micro-frontend-demo.tar.gz",
+      "archiveBytes": 155651,
+      "archiveSha256": "336fa31c33a853cdf60a08781948b987158e52449b999b888273adff2319c7a3",
+      "files": 52,
+      "uncompressedBytes": 458840,
+      "treeSha256": "73165f673020141318edeaa5d7db392d2048db1be2b02ebd9b1a260c40f48cea",
+      "parts": [
+        {
+          "path": "data/clones/swtbhsmn__micro-frontend-demo.tar.gz",
+          "bytes": 155651,
+          "sha256": "336fa31c33a853cdf60a08781948b987158e52449b999b888273adff2319c7a3"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/andreea-lipan__cozy-desk-micro-frontends",
+      "fullName": "andreea-lipan/cozy-desk-micro-frontends",
+      "commit": "7050669405cfdce6e0bf593fdfdb4d94ef5ad5dc",
+      "archive": "andreea-lipan__cozy-desk-micro-frontends.tar.gz",
+      "archiveBytes": 3415427,
+      "archiveSha256": "4d16db889806428ea6be7eda6704ac9fe4c11f4bf3fdda7ca1d590cd4c92085b",
+      "files": 129,
+      "uncompressedBytes": 5125336,
+      "treeSha256": "70755088ee840286c5b1be6cad311da56de89eae147222461f8efada4daacd97",
+      "parts": [
+        {
+          "path": "data/clones/andreea-lipan__cozy-desk-micro-frontends.tar.gz",
+          "bytes": 3415427,
+          "sha256": "4d16db889806428ea6be7eda6704ac9fe4c11f4bf3fdda7ca1d590cd4c92085b"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/lavesan__nx-zephyr-module-federation-example",
+      "fullName": "lavesan/nx-zephyr-module-federation-example",
+      "commit": "766b6a2c04c1ef39201ad05ed1b5970d4cb10436",
+      "archive": "lavesan__nx-zephyr-module-federation-example.tar.gz",
+      "archiveBytes": 179489,
+      "archiveSha256": "1525fef503a5d606b365fade553aa413be286f019d5192c47d6d38b573f1c0a4",
+      "files": 98,
+      "uncompressedBytes": 369426,
+      "treeSha256": "32288c804508ebf3a825dcd5ec75279f334d57ace70a2512ff9e44ea33b3f3bc",
+      "parts": [
+        {
+          "path": "data/clones/lavesan__nx-zephyr-module-federation-example.tar.gz",
+          "bytes": 179489,
+          "sha256": "1525fef503a5d606b365fade553aa413be286f019d5192c47d6d38b573f1c0a4"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/Residencias-Faculdade__MicroFrontend",
+      "fullName": "Residencias-Faculdade/MicroFrontend",
+      "commit": "5726e54de24e6b6a1ff1fd004b82db909314640c",
+      "archive": "Residencias-Faculdade__MicroFrontend.tar.gz",
+      "archiveBytes": 84881,
+      "archiveSha256": "8551953e42a8958dc2822d42870034692057b456e135ec81a9ac9dc451e74777",
+      "files": 56,
+      "uncompressedBytes": 189666,
+      "treeSha256": "8fcd9aef147e5decb8daa171ea26b205dd7e51a46cbc55119662f833c5794093",
+      "parts": [
+        {
+          "path": "data/clones/Residencias-Faculdade__MicroFrontend.tar.gz",
+          "bytes": 84881,
+          "sha256": "8551953e42a8958dc2822d42870034692057b456e135ec81a9ac9dc451e74777"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/irfanswr__react-microfrontend",
+      "fullName": "irfanswr/react-microfrontend",
+      "commit": "00ca0bf8640b7015f760f377f76c971b11fdc95c",
+      "archive": "irfanswr__react-microfrontend.tar.gz",
+      "archiveBytes": 715041,
+      "archiveSha256": "89739fb014be2dc006d9b9746763ab2ee6271bd7f2a6d7effb1552ff168359e0",
+      "files": 71,
+      "uncompressedBytes": 1981135,
+      "treeSha256": "e91d32213f31c8fe2d33019bbdbbee70d2bb184f663ac5dc7fbc8b2a6c5a07ae",
+      "parts": [
+        {
+          "path": "data/clones/irfanswr__react-microfrontend.tar.gz",
+          "bytes": 715041,
+          "sha256": "89739fb014be2dc006d9b9746763ab2ee6271bd7f2a6d7effb1552ff168359e0"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/horoshopodumaj__micro-frontends",
+      "fullName": "horoshopodumaj/micro-frontends",
+      "commit": "e1e0a52e4ce5b444ad774b3db87bfaf30cbacf05",
+      "archive": "horoshopodumaj__micro-frontends.tar.gz",
+      "archiveBytes": 303231,
+      "archiveSha256": "b4ac5dea34c7cfe673b063852b8c592bbbb726538afa7841079d3cc611d49bc1",
+      "files": 79,
+      "uncompressedBytes": 947634,
+      "treeSha256": "da1e17e7ca07c205b14fbe315495d9959165d8dbd387ac2815690e05241e665e",
+      "parts": [
+        {
+          "path": "data/clones/horoshopodumaj__micro-frontends.tar.gz",
+          "bytes": 303231,
+          "sha256": "b4ac5dea34c7cfe673b063852b8c592bbbb726538afa7841079d3cc611d49bc1"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/Jyotisaini1234__moduleFederation",
+      "fullName": "Jyotisaini1234/moduleFederation",
+      "commit": "8df0f2a8d23cd31eebd2f54463cd0b665fe1fe29",
+      "archive": "Jyotisaini1234__moduleFederation.tar.gz",
+      "archiveBytes": 587283,
+      "archiveSha256": "8e3581978c001157337c29abd93c31909c36b9347472e3950b5f2966c15a9728",
+      "files": 54,
+      "uncompressedBytes": 1000494,
+      "treeSha256": "4573af53983d4ae8536ff0ea6271e129172588efaa531c247544cdd63219470b",
+      "parts": [
+        {
+          "path": "data/clones/Jyotisaini1234__moduleFederation.tar.gz",
+          "bytes": 587283,
+          "sha256": "8e3581978c001157337c29abd93c31909c36b9347472e3950b5f2966c15a9728"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/lorem98__mfe",
+      "fullName": "lorem98/mfe",
+      "commit": "44eb29500d7b90ac58ec760e35b8e0170d7b6fb4",
+      "archive": "lorem98__mfe.tar.gz",
+      "archiveBytes": 512225,
+      "archiveSha256": "8ffeb65c625e708d40801466efc35e9acef04cf05ab1789df2241f4e21519208",
+      "files": 84,
+      "uncompressedBytes": 1658155,
+      "treeSha256": "8f504e453dfc68c079a5814479d7e5451877b35c85294b0aef858b64bad6e8ae",
+      "parts": [
+        {
+          "path": "data/clones/lorem98__mfe.tar.gz",
+          "bytes": 512225,
+          "sha256": "8ffeb65c625e708d40801466efc35e9acef04cf05ab1789df2241f4e21519208"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/Lnx117__single_spa_main",
+      "fullName": "Lnx117/single_spa_main",
+      "commit": "112c73b7d0bc4739bcab53de03b404ce2fbde05a",
+      "archive": "Lnx117__single_spa_main.tar.gz",
+      "archiveBytes": 34333,
+      "archiveSha256": "64bcfeeb107e17614881c7a18cb9cc32345b4424125e0139aed4372e56792ddd",
+      "files": 39,
+      "uncompressedBytes": 81995,
+      "treeSha256": "86cc9c15e07c441ff6ec3c8a591d6d9c274cd92c2e343939069863252a59f457",
+      "parts": [
+        {
+          "path": "data/clones/Lnx117__single_spa_main.tar.gz",
+          "bytes": 34333,
+          "sha256": "64bcfeeb107e17614881c7a18cb9cc32345b4424125e0139aed4372e56792ddd"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/Varshithknaik__mfe-lect",
+      "fullName": "Varshithknaik/mfe-lect",
+      "commit": "deea3350c74ee5de8427c190378733b644ae4b53",
+      "archive": "Varshithknaik__mfe-lect.tar.gz",
+      "archiveBytes": 950042,
+      "archiveSha256": "5feea5db8ef16a107b24be4d7a8c8a993ce5fd4b8f7a3cf315b550fac01582fa",
+      "files": 122,
+      "uncompressedBytes": 3530141,
+      "treeSha256": "995962391bd608aee78aaf9b1117d0eb849e9fc8c51af3e5f1307b1499ba4da8",
+      "parts": [
+        {
+          "path": "data/clones/Varshithknaik__mfe-lect.tar.gz",
+          "bytes": 950042,
+          "sha256": "5feea5db8ef16a107b24be4d7a8c8a993ce5fd4b8f7a3cf315b550fac01582fa"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/EmanuelG0895__MicroFrontendDocker",
+      "fullName": "EmanuelG0895/MicroFrontendDocker",
+      "commit": "137ba29996f64553efd3401f8ad619646d8a78e5",
+      "archive": "EmanuelG0895__MicroFrontendDocker.tar.gz",
+      "archiveBytes": 319353,
+      "archiveSha256": "6f6b0ea70cebf3a7655c123e1c8dae7f5618916438d1a156add8567b9c7bc38c",
+      "files": 121,
+      "uncompressedBytes": 700369,
+      "treeSha256": "4c1147614b93c6326dcdf98a51a708b1c11a5765e328aa562da55a06ce48a04f",
+      "parts": [
+        {
+          "path": "data/clones/EmanuelG0895__MicroFrontendDocker.tar.gz",
+          "bytes": 319353,
+          "sha256": "6f6b0ea70cebf3a7655c123e1c8dae7f5618916438d1a156add8567b9c7bc38c"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/Marcel-b-velop__vue-mf",
+      "fullName": "Marcel-b-velop/vue-mf",
+      "commit": "ed270d34b0542cb1a0ce26aafc2aeba4bca994e1",
+      "archive": "Marcel-b-velop__vue-mf.tar.gz",
+      "archiveBytes": 7043422,
+      "archiveSha256": "b6f7987496b45f370951a25b3c172c49e49c7b54e53a1779d75aa8cdc432af30",
+      "files": 174,
+      "uncompressedBytes": 8625648,
+      "treeSha256": "3ba1f33c87e165b38d8cf0eebaa4f22a6f4fab38b22c0731f4e678a8a9ec02cc",
+      "parts": [
+        {
+          "path": "data/clones/Marcel-b-velop__vue-mf.tar.gz",
+          "bytes": 7043422,
+          "sha256": "b6f7987496b45f370951a25b3c172c49e49c7b54e53a1779d75aa8cdc432af30"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/dmalancioiu__SOA-project",
+      "fullName": "dmalancioiu/SOA-project",
+      "commit": "a00d6436b4a6c4f28287e7e90ded084c1241fcf1",
+      "archive": "dmalancioiu__SOA-project.tar.gz",
+      "archiveBytes": 536453,
+      "archiveSha256": "cbd7b97316a03fac712bf61a62e538a79955a97ce947fe3b39cd280dadcb07ed",
+      "files": 453,
+      "uncompressedBytes": 1271131,
+      "treeSha256": "a12b1ec78bdff014e2d83bd2a50e27a710ac481eab4f4b2e2d86933dad74bcc4",
+      "parts": [
+        {
+          "path": "data/clones/dmalancioiu__SOA-project.tar.gz",
+          "bytes": 536453,
+          "sha256": "cbd7b97316a03fac712bf61a62e538a79955a97ce947fe3b39cd280dadcb07ed"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/charger17__mfe",
+      "fullName": "charger17/mfe",
+      "commit": "c04d19eb237bd77ce574657d732efe265c0de531",
+      "archive": "charger17__mfe.tar.gz",
+      "archiveBytes": 101527,
+      "archiveSha256": "a3058fd51eb6162f9b929b895195d99f88b419111ff62dffe435156196aec327",
+      "files": 80,
+      "uncompressedBytes": 180306,
+      "treeSha256": "5bed6e27a3162ddb0248a557b90e2b91dc7de086361d8846ecd9e3574f7f5754",
+      "parts": [
+        {
+          "path": "data/clones/charger17__mfe.tar.gz",
+          "bytes": 101527,
+          "sha256": "a3058fd51eb6162f9b929b895195d99f88b419111ff62dffe435156196aec327"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/harshad-eden__module-federation",
+      "fullName": "harshad-eden/module-federation",
+      "commit": "dde74e678a749ccbf3951e173bf980649034c5d4",
+      "archive": "harshad-eden__module-federation.tar.gz",
+      "archiveBytes": 182140,
+      "archiveSha256": "09207c2d28014cad6a6ee267e9672bfd9e7103580ec85cab077a8882d07a2575",
+      "files": 117,
+      "uncompressedBytes": 429046,
+      "treeSha256": "5bacc3a0bea647865a5e5ef20b0b26d9cd5c45ac19b6349fb2ef20476ece2166",
+      "parts": [
+        {
+          "path": "data/clones/harshad-eden__module-federation.tar.gz",
+          "bytes": 182140,
+          "sha256": "09207c2d28014cad6a6ee267e9672bfd9e7103580ec85cab077a8882d07a2575"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/agsosa__react-next-umd-remote-modules-poc",
+      "fullName": "agsosa/react-next-umd-remote-modules-poc",
+      "commit": "130ddb6f8b73b85ec0065160bc49a764c80d49ba",
+      "archive": "agsosa__react-next-umd-remote-modules-poc.tar.gz",
+      "archiveBytes": 359258,
+      "archiveSha256": "0bba00675ddfd58a6bbe190342f1a9333d1949dc7f7596eaf6cea853aa7d0b54",
+      "files": 83,
+      "uncompressedBytes": 920791,
+      "treeSha256": "ef792cf512ca042700953ca08f621ea0bbc9736cd8d117ad4228ece3da6e89e1",
+      "parts": [
+        {
+          "path": "data/clones/agsosa__react-next-umd-remote-modules-poc.tar.gz",
+          "bytes": 359258,
+          "sha256": "0bba00675ddfd58a6bbe190342f1a9333d1949dc7f7596eaf6cea853aa7d0b54"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/enzox0__module-federation-project-template",
+      "fullName": "enzox0/module-federation-project-template",
+      "commit": "b3c96cb653137038838f32097018cf8f8182b9f2",
+      "archive": "enzox0__module-federation-project-template.tar.gz",
+      "archiveBytes": 207191,
+      "archiveSha256": "23dc02a89a3d1338be978e4ae72d27bb6fd0375ae0a57d60c4b8877a990406a3",
+      "files": 207,
+      "uncompressedBytes": 384870,
+      "treeSha256": "6dfaf5ec5c5d22fcfd8cca76e85bd905608a01e75d4cdc16ea6c7dd870b3f956",
+      "parts": [
+        {
+          "path": "data/clones/enzox0__module-federation-project-template.tar.gz",
+          "bytes": 207191,
+          "sha256": "23dc02a89a3d1338be978e4ae72d27bb6fd0375ae0a57d60c4b8877a990406a3"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/jonatasmirand__ReiBurguer-MicroFrontends",
+      "fullName": "jonatasmirand/ReiBurguer-MicroFrontends",
+      "commit": "268d79ae1ff2579a9c9877adba0e1b87cfac1dff",
+      "archive": "jonatasmirand__ReiBurguer-MicroFrontends.tar.gz",
+      "archiveBytes": 877121,
+      "archiveSha256": "2fa45c80f57e7aac912c664a249b30a6da76829644304aa64d4062aea551a14b",
+      "files": 87,
+      "uncompressedBytes": 1562278,
+      "treeSha256": "b6d0adfd0db993862f127dbb5b5455bf0b516b540cbb1baa18e8b6259ca373c3",
+      "parts": [
+        {
+          "path": "data/clones/jonatasmirand__ReiBurguer-MicroFrontends.tar.gz",
+          "bytes": 877121,
+          "sha256": "2fa45c80f57e7aac912c664a249b30a6da76829644304aa64d4062aea551a14b"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/varshinir07__mfe-onehub-shell-app",
+      "fullName": "varshinir07/mfe-onehub-shell-app",
+      "commit": "1ddddc4241157e335c1b6e39372f050aa1705c1d",
+      "archive": "varshinir07__mfe-onehub-shell-app.tar.gz",
+      "archiveBytes": 399408,
+      "archiveSha256": "1d31fdcbca22694c69bbff50ae15f3119f15ce7a9e3882283281df4e5b0ed423",
+      "files": 52,
+      "uncompressedBytes": 970693,
+      "treeSha256": "c1bf1dbe95d2324d08fd1b2c32ec08e3ba2ce2ca00e2d167a91f55ab532eb4f2",
+      "parts": [
+        {
+          "path": "data/clones/varshinir07__mfe-onehub-shell-app.tar.gz",
+          "bytes": 399408,
+          "sha256": "1d31fdcbca22694c69bbff50ae15f3119f15ce7a9e3882283281df4e5b0ed423"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/fi-x64__mfe",
+      "fullName": "fi-x64/mfe",
+      "commit": "fa4088ae3313734c98a027db5fccfee4db34a46d",
+      "archive": "fi-x64__mfe.tar.gz",
+      "archiveBytes": 516504,
+      "archiveSha256": "b83b724b416b594e061ae81c150bc4123bd8a93f5f0969828452b0ddd5e2f1f6",
+      "files": 62,
+      "uncompressedBytes": 1725154,
+      "treeSha256": "e1aa2bf708c3e00d286faace4cc505c260e26ec22b754dea81ce3e2120591043",
+      "parts": [
+        {
+          "path": "data/clones/fi-x64__mfe.tar.gz",
+          "bytes": 516504,
+          "sha256": "b83b724b416b594e061ae81c150bc4123bd8a93f5f0969828452b0ddd5e2f1f6"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/ross2p__mindlet-app",
+      "fullName": "ross2p/mindlet-app",
+      "commit": "868bf9c81af85085a6befc5921bea6c01211228d",
+      "archive": "ross2p__mindlet-app.tar.gz",
+      "archiveBytes": 874562,
+      "archiveSha256": "4555c598b62d03d95bc374ffd5cf2ae885a67832df3380004b9a9b8220a4e6df",
+      "files": 88,
+      "uncompressedBytes": 2297687,
+      "treeSha256": "461314daaf5a0e7e77fc5022cd4b176710fea5a9e24a57976997b65addc32a34",
+      "parts": [
+        {
+          "path": "data/clones/ross2p__mindlet-app.tar.gz",
+          "bytes": 874562,
+          "sha256": "4555c598b62d03d95bc374ffd5cf2ae885a67832df3380004b9a9b8220a4e6df"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/Christian-Encalada__examen-microfrontend",
+      "fullName": "Christian-Encalada/examen-microfrontend",
+      "commit": "9456a399b086d78c65d167e0d08db5d2b8d31bb8",
+      "archive": "Christian-Encalada__examen-microfrontend.tar.gz",
+      "archiveBytes": 229492,
+      "archiveSha256": "6df1b69071828ae565a26a8f36cba37dbdf2e3c37ec7ac6c4b32c58edaa8a87d",
+      "files": 75,
+      "uncompressedBytes": 738865,
+      "treeSha256": "f5882307315905bcc74c4c2c158f665632ed1c39bee30df885e8fef412a94d47",
+      "parts": [
+        {
+          "path": "data/clones/Christian-Encalada__examen-microfrontend.tar.gz",
+          "bytes": 229492,
+          "sha256": "6df1b69071828ae565a26a8f36cba37dbdf2e3c37ec7ac6c4b32c58edaa8a87d"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/ayushpandey241626__microfrontend-demo",
+      "fullName": "ayushpandey241626/microfrontend-demo",
+      "commit": "ec39a278ec6951feeb8d7ff7688cb4f056be589b",
+      "archive": "ayushpandey241626__microfrontend-demo.tar.gz",
+      "archiveBytes": 389309,
+      "archiveSha256": "feb5780f6e1231def2f48456bf1e66d14011c5a2381d725f3000a61f0ae68364",
+      "files": 137,
+      "uncompressedBytes": 1008107,
+      "treeSha256": "4bde6bd06d1876a8c9f279bb5928e32b0fbbf04a53834d8a1ceb20d50446d4d3",
+      "parts": [
+        {
+          "path": "data/clones/ayushpandey241626__microfrontend-demo.tar.gz",
+          "bytes": 389309,
+          "sha256": "feb5780f6e1231def2f48456bf1e66d14011c5a2381d725f3000a61f0ae68364"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/riponcc__Group4COMP308Project",
+      "fullName": "riponcc/Group4COMP308Project",
+      "commit": "59db8c8172c1e0efde31fe32c5135226a41cd044",
+      "archive": "riponcc__Group4COMP308Project.tar.gz",
+      "archiveBytes": 514010,
+      "archiveSha256": "4161981475a0c0005380ac1eba803c7e6a44640ae9f2083113db8cabf87bf1e1",
+      "files": 122,
+      "uncompressedBytes": 1426320,
+      "treeSha256": "4d6d0bc73cc4b65f38189577d9d4dbfca953cae515e92114996958f0607e1cd6",
+      "parts": [
+        {
+          "path": "data/clones/riponcc__Group4COMP308Project.tar.gz",
+          "bytes": 514010,
+          "sha256": "4161981475a0c0005380ac1eba803c7e6a44640ae9f2083113db8cabf87bf1e1"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/sharif7761__Micro-frontend-project-with-react-js",
+      "fullName": "sharif7761/Micro-frontend-project-with-react-js",
+      "commit": "cb2083fd77ddcb4d6493af653e0ce523ba0be010",
+      "archive": "sharif7761__Micro-frontend-project-with-react-js.tar.gz",
+      "archiveBytes": 128716,
+      "archiveSha256": "8babf218768e6d0fd7ecebc626dcd832d516e7efe2d23696b24fad1dd7ec5bb7",
+      "files": 67,
+      "uncompressedBytes": 363828,
+      "treeSha256": "595d9717348670faad7c9e301bcada6f98e62d6d5c2353cef1499b81602cc985",
+      "parts": [
+        {
+          "path": "data/clones/sharif7761__Micro-frontend-project-with-react-js.tar.gz",
+          "bytes": 128716,
+          "sha256": "8babf218768e6d0fd7ecebc626dcd832d516e7efe2d23696b24fad1dd7ec5bb7"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/mojtaba-arvin__django-react-iou-bnpl",
+      "fullName": "mojtaba-arvin/django-react-iou-bnpl",
+      "commit": "bf4da7610d2a1343b2f97eab1dfeb6b026e50e19",
+      "archive": "mojtaba-arvin__django-react-iou-bnpl.tar.gz",
+      "archiveBytes": 1595386,
+      "archiveSha256": "efede04f7136d46dfadceba2fc56e968943bc14a666b5892b0d4cb7ce91c2746",
+      "files": 324,
+      "uncompressedBytes": 2061044,
+      "treeSha256": "3509a6dd6a529703cac57596287ed3dba3883fc4ccbd96e028b8e5fe1e7fcb46",
+      "parts": [
+        {
+          "path": "data/clones/mojtaba-arvin__django-react-iou-bnpl.tar.gz",
+          "bytes": 1595386,
+          "sha256": "efede04f7136d46dfadceba2fc56e968943bc14a666b5892b0d4cb7ce91c2746"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/Axiean__micro-store",
+      "fullName": "Axiean/micro-store",
+      "commit": "7ed9142db806ba9851416ae0b8bb207d5d10bdca",
+      "archive": "Axiean__micro-store.tar.gz",
+      "archiveBytes": 228848,
+      "archiveSha256": "55928b953d894ae730d08b96f2148832233010a1bf85039c74ff07459badcf3c",
+      "files": 79,
+      "uncompressedBytes": 638204,
+      "treeSha256": "439f3782a46cb66978c0abc33bcf1be7fc0d94fdc572dfc44a2b188c79edb069",
+      "parts": [
+        {
+          "path": "data/clones/Axiean__micro-store.tar.gz",
+          "bytes": 228848,
+          "sha256": "55928b953d894ae730d08b96f2148832233010a1bf85039c74ff07459badcf3c"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/dvreddy007__mfe-sample",
+      "fullName": "dvreddy007/mfe-sample",
+      "commit": "d4cef45fce1d97c3d4d80d232dc9e9fbad9cfd1a",
+      "archive": "dvreddy007__mfe-sample.tar.gz",
+      "archiveBytes": 185541,
+      "archiveSha256": "8773cb4285b0b276290b1358ffe331f9f5904618b96cd67124ea5c69bd9a1e33",
+      "files": 83,
+      "uncompressedBytes": 460466,
+      "treeSha256": "155778089c5e38e73574cb05994f921809f99582176473f75e2672682c03b442",
+      "parts": [
+        {
+          "path": "data/clones/dvreddy007__mfe-sample.tar.gz",
+          "bytes": 185541,
+          "sha256": "8773cb4285b0b276290b1358ffe331f9f5904618b96cd67124ea5c69bd9a1e33"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/shermondevelopment__microfrontend-shop",
+      "fullName": "shermondevelopment/microfrontend-shop",
+      "commit": "913349b85c59bff3b982808ac6d931b62f1d73bc",
+      "archive": "shermondevelopment__microfrontend-shop.tar.gz",
+      "archiveBytes": 416233,
+      "archiveSha256": "9cb64660597dfd6465b133b0440e6175f462728a68edb5af695644f753eae5d6",
+      "files": 135,
+      "uncompressedBytes": 844280,
+      "treeSha256": "e4515ad905c3af3bc86aa629159ef4977b18d9cf06f0c80d01e88f073b44494c",
+      "parts": [
+        {
+          "path": "data/clones/shermondevelopment__microfrontend-shop.tar.gz",
+          "bytes": 416233,
+          "sha256": "9cb64660597dfd6465b133b0440e6175f462728a68edb5af695644f753eae5d6"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/jangrohit__micro-front-end",
+      "fullName": "jangrohit/micro-front-end",
+      "commit": "c6c0dbc9fb78b8baab20e74394647ca40b521355",
+      "archive": "jangrohit__micro-front-end.tar.gz",
+      "archiveBytes": 528550,
+      "archiveSha256": "7eb5e44dfb5679fae76917eacece38a0aeb31d9a0c411e58c624231c1d321198",
+      "files": 63,
+      "uncompressedBytes": 1718872,
+      "treeSha256": "be1e895bfd43baf24cffaaa5ba0055675c148aaab8e2b3142db900612f9733d7",
+      "parts": [
+        {
+          "path": "data/clones/jangrohit__micro-front-end.tar.gz",
+          "bytes": 528550,
+          "sha256": "7eb5e44dfb5679fae76917eacece38a0aeb31d9a0c411e58c624231c1d321198"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/marcos-roberto-dev__poc-mfe-custom-root",
+      "fullName": "marcos-roberto-dev/poc-mfe-custom-root",
+      "commit": "6ae6565dc49a391729b62588c5fccf37d2be104b",
+      "archive": "marcos-roberto-dev__poc-mfe-custom-root.tar.gz",
+      "archiveBytes": 304029,
+      "archiveSha256": "8251e68ef1a21fe7d053305d18e00caf3dc825f5512fcda1e938b1258db083a4",
+      "files": 105,
+      "uncompressedBytes": 794378,
+      "treeSha256": "f02d315262e800616aa0a2a82d42a25eccde9df58d2cfe6d2b757cd879263b86",
+      "parts": [
+        {
+          "path": "data/clones/marcos-roberto-dev__poc-mfe-custom-root.tar.gz",
+          "bytes": 304029,
+          "sha256": "8251e68ef1a21fe7d053305d18e00caf3dc825f5512fcda1e938b1258db083a4"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/ral-facilities__scigateway",
+      "fullName": "ral-facilities/scigateway",
+      "commit": "fadb600e1fa4c8a64daefbf8f2541998e559979c",
+      "archive": "ral-facilities__scigateway.tar.gz",
+      "archiveBytes": 11815570,
+      "archiveSha256": "ab979eb39362d022d46a630b6ae0910bacf6017754b5dfd8812c3f7fa541839e",
+      "files": 238,
+      "uncompressedBytes": 15052708,
+      "treeSha256": "b7d89971a4c21ae14e309a087a864e23da01cd8d9ac2cc0699349065a261178f",
+      "parts": [
+        {
+          "path": "data/clones/ral-facilities__scigateway.tar.gz",
+          "bytes": 11815570,
+          "sha256": "ab979eb39362d022d46a630b6ae0910bacf6017754b5dfd8812c3f7fa541839e"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/shreyash1086__mfe",
+      "fullName": "shreyash1086/mfe",
+      "commit": "b0fdd18d2ef6beb846fa0a534b9458669405fe6b",
+      "archive": "shreyash1086__mfe.tar.gz",
+      "archiveBytes": 7217644,
+      "archiveSha256": "f52b841cc2f945b09f5c7759b605e6f7ead635d3544acf38bf7b03fb7a3a3997",
+      "files": 312,
+      "uncompressedBytes": 9151830,
+      "treeSha256": "0ae0b2220062df6985bcbb9106930b4113f2e65f5ccfba7e50c6914e20e574f1",
+      "parts": [
+        {
+          "path": "data/clones/shreyash1086__mfe.tar.gz",
+          "bytes": 7217644,
+          "sha256": "f52b841cc2f945b09f5c7759b605e6f7ead635d3544acf38bf7b03fb7a3a3997"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/santhoshreddy500939__webpackconfig",
+      "fullName": "santhoshreddy500939/webpackconfig",
+      "commit": "e1f97e37c21a6893a8dbf8cd6ea7a7f8c4a9058a",
+      "archive": "santhoshreddy500939__webpackconfig.tar.gz",
+      "archiveBytes": 158316,
+      "archiveSha256": "e27ca50e2539ac56fb1eb11753fe3b29edefe18aad22e38a69b030176ae3275d",
+      "files": 48,
+      "uncompressedBytes": 394342,
+      "treeSha256": "67a18c773c97f2e65ab0e9bea1cc432435dc921154c3986a36ed05784cf01032",
+      "parts": [
+        {
+          "path": "data/clones/santhoshreddy500939__webpackconfig.tar.gz",
+          "bytes": 158316,
+          "sha256": "e27ca50e2539ac56fb1eb11753fe3b29edefe18aad22e38a69b030176ae3275d"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/scality__metalk8s",
+      "fullName": "scality/metalk8s",
+      "commit": "f19004e899c78360d3a43d5f60047b140f29c909",
+      "archive": "scality__metalk8s.tar.gz",
+      "archiveBytes": 29159013,
+      "archiveSha256": "f127d47aed2b6473383d8ff2dc06a8086bb60bada4fd4316e31c4a81f1c48a47",
+      "files": 3120,
+      "uncompressedBytes": 57567583,
+      "treeSha256": "387ed569975f4c85e14e9303551feec0cfc7e96ee32fe9c61493d7a8d43e6815",
+      "parts": [
+        {
+          "path": "data/clones/scality__metalk8s.tar.gz.part-00001",
+          "bytes": 26214400,
+          "sha256": "3f0768fce0afacfe5c3ea53bcb73332ccf848364bc8d36c3f1dfb6c133b08537"
+        },
+        {
+          "path": "data/clones/scality__metalk8s.tar.gz.part-00002",
+          "bytes": 2944613,
+          "sha256": "26391c1823f3dabdf4934492e08cc2df4bd7b3b6ee1d614c49a3cc01aa14b0ad"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/kod88vn__poc_next_mfa",
+      "fullName": "kod88vn/poc_next_mfa",
+      "commit": "d20db8260825dc17ad4c68ac6df0595c1c59df23",
+      "archive": "kod88vn__poc_next_mfa.tar.gz",
+      "archiveBytes": 154480,
+      "archiveSha256": "d9c0b49e55e538a81c6f875373dc5e5098380dc2ae471e46d2c479e2ee1b5268",
+      "files": 78,
+      "uncompressedBytes": 341678,
+      "treeSha256": "21fd2270a497ae128896d483a0b22687f6ee19657594e06cb86fb85ab8aa2d0d",
+      "parts": [
+        {
+          "path": "data/clones/kod88vn__poc_next_mfa.tar.gz",
+          "bytes": 154480,
+          "sha256": "d9c0b49e55e538a81c6f875373dc5e5098380dc2ae471e46d2c479e2ee1b5268"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/waelbaraka__GitHub-HelpDesk-DashBoard-main",
+      "fullName": "waelbaraka/GitHub-HelpDesk-DashBoard-main",
+      "commit": "ccb8398a4d53178974be0fc2b7483cba5d769013",
+      "archive": "waelbaraka__GitHub-HelpDesk-DashBoard-main.tar.gz",
+      "archiveBytes": 1283251,
+      "archiveSha256": "c77218f0043fe59ca9fdb205204ac4743ab8715109299672f7e5c570c931826a",
+      "files": 320,
+      "uncompressedBytes": 3214873,
+      "treeSha256": "2acffc9d569e290d90527727e051e51ba7f84a956bb0873557e2512a9510c01c",
+      "parts": [
+        {
+          "path": "data/clones/waelbaraka__GitHub-HelpDesk-DashBoard-main.tar.gz",
+          "bytes": 1283251,
+          "sha256": "c77218f0043fe59ca9fdb205204ac4743ab8715109299672f7e5c570c931826a"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/israelmeinert__fiap-aula-arquitetura-no-front",
+      "fullName": "israelmeinert/fiap-aula-arquitetura-no-front",
+      "commit": "e1c6fb92488afd39e2c1d704ee1243ed52d862b6",
+      "archive": "israelmeinert__fiap-aula-arquitetura-no-front.tar.gz",
+      "archiveBytes": 618002,
+      "archiveSha256": "9928c3fdcd4c9ed071584e9ae82dccd598bd6238296e63d7cb0af1bdedb2cae4",
+      "files": 438,
+      "uncompressedBytes": 2127033,
+      "treeSha256": "b36fc5be6244a930bff5e4c7eb6be4943ac4ac68eccbc25f83fcf05905895b08",
+      "parts": [
+        {
+          "path": "data/clones/israelmeinert__fiap-aula-arquitetura-no-front.tar.gz",
+          "bytes": 618002,
+          "sha256": "9928c3fdcd4c9ed071584e9ae82dccd598bd6238296e63d7cb0af1bdedb2cae4"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/RafaM-dev__hostRepo",
+      "fullName": "RafaM-dev/hostRepo",
+      "commit": "e68ba940850001cc7231849cb8a44097f0e12853",
+      "archive": "RafaM-dev__hostRepo.tar.gz",
+      "archiveBytes": 6717171,
+      "archiveSha256": "edbd74d43bba5072673a0fffa929839fdb936e3c93c52fe2d9a08ce3e3f277dd",
+      "files": 74,
+      "uncompressedBytes": 6917610,
+      "treeSha256": "bdb20dccafb315e42a3f236a24458bc537f0a201c572f3b4ea8485970ca98c32",
+      "parts": [
+        {
+          "path": "data/clones/RafaM-dev__hostRepo.tar.gz",
+          "bytes": 6717171,
+          "sha256": "edbd74d43bba5072673a0fffa929839fdb936e3c93c52fe2d9a08ce3e3f277dd"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/jaideepsinghchauhan__Angular-MFE",
+      "fullName": "jaideepsinghchauhan/Angular-MFE",
+      "commit": "7648339ce74e8c78f86680e8ef8011e1010cc3e3",
+      "archive": "jaideepsinghchauhan__Angular-MFE.tar.gz",
+      "archiveBytes": 539766,
+      "archiveSha256": "1611d64a1a64e038f7760a5ebef86bc84d888753c80fae9347c09f4492686175",
+      "files": 174,
+      "uncompressedBytes": 1454966,
+      "treeSha256": "8bc6f8c3d4f712abaa6dc4cbd70ed60d058e3135c4a81f9504077a4aa2f75347",
+      "parts": [
+        {
+          "path": "data/clones/jaideepsinghchauhan__Angular-MFE.tar.gz",
+          "bytes": 539766,
+          "sha256": "1611d64a1a64e038f7760a5ebef86bc84d888753c80fae9347c09f4492686175"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/angelantilantil-web__micro-frontend",
+      "fullName": "angelantilantil-web/micro-frontend",
+      "commit": "a5b4cae18e6c3266d737894bba07c24b0959805b",
+      "archive": "angelantilantil-web__micro-frontend.tar.gz",
+      "archiveBytes": 202336,
+      "archiveSha256": "c6533ade0676b3aae0963de80b9c5a71a984dbbc97045a2d052c85218d92f40e",
+      "files": 161,
+      "uncompressedBytes": 375913,
+      "treeSha256": "19133a741fcc8a811eee62e7d72021669ce0c0a6195b27c27893f3ca55e49dc8",
+      "parts": [
+        {
+          "path": "data/clones/angelantilantil-web__micro-frontend.tar.gz",
+          "bytes": 202336,
+          "sha256": "c6533ade0676b3aae0963de80b9c5a71a984dbbc97045a2d052c85218d92f40e"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/DATou-love__micro-frontEnd",
+      "fullName": "DATou-love/micro-frontEnd",
+      "commit": "8e52e7d4fee1bc193922a8bea0f5ede7a0cb9942",
+      "archive": "DATou-love__micro-frontEnd.tar.gz",
+      "archiveBytes": 281429,
+      "archiveSha256": "86600983264fa725dbff1669d6a804bc0c033b0ad1f2fee212fd8c55a68c6ff0",
+      "files": 69,
+      "uncompressedBytes": 697066,
+      "treeSha256": "f66f671891ebca3029c8442e44311c0dcf34c532d45694ad90bdcc7ca72c437b",
+      "parts": [
+        {
+          "path": "data/clones/DATou-love__micro-frontEnd.tar.gz",
+          "bytes": 281429,
+          "sha256": "86600983264fa725dbff1669d6a804bc0c033b0ad1f2fee212fd8c55a68c6ff0"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/martinkuba__micro-frontend-test",
+      "fullName": "martinkuba/micro-frontend-test",
+      "commit": "f629b5bec52818c0c0c1cdc115bcd3d712ebbb93",
+      "archive": "martinkuba__micro-frontend-test.tar.gz",
+      "archiveBytes": 137949,
+      "archiveSha256": "f9b1e6978ab6e51ae28a252e34b92a8e5e36ec9abe1500e1763758e879100b8f",
+      "files": 56,
+      "uncompressedBytes": 323795,
+      "treeSha256": "44ebdf1d8e47fc088853d171ff24ecfc5b028b390aac8a634bf12a9c223885bf",
+      "parts": [
+        {
+          "path": "data/clones/martinkuba__micro-frontend-test.tar.gz",
+          "bytes": 137949,
+          "sha256": "f9b1e6978ab6e51ae28a252e34b92a8e5e36ec9abe1500e1763758e879100b8f"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/tonoizer__react-mf-patch-skew-repro",
+      "fullName": "tonoizer/react-mf-patch-skew-repro",
+      "commit": "92739d5e61a09a9b31e6b53f0662f6f9e71b5e3a",
+      "archive": "tonoizer__react-mf-patch-skew-repro.tar.gz",
+      "archiveBytes": 78392,
+      "archiveSha256": "0fa81818a5a13ec864f4cdac30e54ffad7d75d24dabfa5bf1673e0f35d537b90",
+      "files": 70,
+      "uncompressedBytes": 208173,
+      "treeSha256": "fc49687faf9fe40a0d82acd4bd9aa8ed48c847e37323616ff80dbef2e8554424",
+      "parts": [
+        {
+          "path": "data/clones/tonoizer__react-mf-patch-skew-repro.tar.gz",
+          "bytes": 78392,
+          "sha256": "0fa81818a5a13ec864f4cdac30e54ffad7d75d24dabfa5bf1673e0f35d537b90"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/Alex18gr__react-ng-vite-systemjs-spa-app",
+      "fullName": "Alex18gr/react-ng-vite-systemjs-spa-app",
+      "commit": "1fe831db68f3ee26779b7c411b39326eed40198f",
+      "archive": "Alex18gr__react-ng-vite-systemjs-spa-app.tar.gz",
+      "archiveBytes": 3002431,
+      "archiveSha256": "7eaa0bacef50ebad8a45bea04b977e32a7310ae94c5149b5ccb07a05c8c0a393",
+      "files": 194,
+      "uncompressedBytes": 5997725,
+      "treeSha256": "68a6fae704ddc63327e759a4aa079ee0741d4b74832fa479860590183993b340",
+      "parts": [
+        {
+          "path": "data/clones/Alex18gr__react-ng-vite-systemjs-spa-app.tar.gz",
+          "bytes": 3002431,
+          "sha256": "7eaa0bacef50ebad8a45bea04b977e32a7310ae94c5149b5ccb07a05c8c0a393"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/Sara-hkm__creamati-micro-web",
+      "fullName": "Sara-hkm/creamati-micro-web",
+      "commit": "541f8edc7615e399cbbf0fe3f1ae33abe14c4796",
+      "archive": "Sara-hkm__creamati-micro-web.tar.gz",
+      "archiveBytes": 7537019,
+      "archiveSha256": "474e2029f026e676253b9c22cfecb866881f08a3b831291316d363bae63f0d24",
+      "files": 9759,
+      "uncompressedBytes": 23101784,
+      "treeSha256": "aa924e0abbe63d4bebecd19219456bb8a2c9506df13450ad8ed4fa7336d389c5",
+      "parts": [
+        {
+          "path": "data/clones/Sara-hkm__creamati-micro-web.tar.gz",
+          "bytes": 7537019,
+          "sha256": "474e2029f026e676253b9c22cfecb866881f08a3b831291316d363bae63f0d24"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/Tutul33__mf-workspace",
+      "fullName": "Tutul33/mf-workspace",
+      "commit": "eb6d1cc782f44fa05b6a6d83c23edf20487af9db",
+      "archive": "Tutul33__mf-workspace.tar.gz",
+      "archiveBytes": 315517,
+      "archiveSha256": "5010f9f26a2d49ca05acec6542a5293e6e8ca84a45283781fe3eb2d968e1beb6",
+      "files": 98,
+      "uncompressedBytes": 859809,
+      "treeSha256": "6b5ea26064447563df6a69a39d8c86246fb4e15b476c5cf73a0d9f1113f76cc4",
+      "parts": [
+        {
+          "path": "data/clones/Tutul33__mf-workspace.tar.gz",
+          "bytes": 315517,
+          "sha256": "5010f9f26a2d49ca05acec6542a5293e6e8ca84a45283781fe3eb2d968e1beb6"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/farzanemadani__todo-app-using-mfe",
+      "fullName": "farzanemadani/todo-app-using-mfe",
+      "commit": "21fc4773aa4d577351ce2000de48b52a73db8378",
+      "archive": "farzanemadani__todo-app-using-mfe.tar.gz",
+      "archiveBytes": 31643,
+      "archiveSha256": "7fdd0a270d57bf6e8150210cd39b0d62a6ae39ec018305b14baa1de132d857a7",
+      "files": 62,
+      "uncompressedBytes": 72966,
+      "treeSha256": "3a322665b0968fdc8353492a992e004b004da966799384a2a3b269cf018258ab",
+      "parts": [
+        {
+          "path": "data/clones/farzanemadani__todo-app-using-mfe.tar.gz",
+          "bytes": 31643,
+          "sha256": "7fdd0a270d57bf6e8150210cd39b0d62a6ae39ec018305b14baa1de132d857a7"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/Hariharan-s-99__microFrontend",
+      "fullName": "Hariharan-s-99/microFrontend",
+      "commit": "902273771afdb4f52006aeed0bcb3cd0e6c33cee",
+      "archive": "Hariharan-s-99__microFrontend.tar.gz",
+      "archiveBytes": 392332,
+      "archiveSha256": "fac2ec0cb7aa8e84b05ed5f6f5831ec22ddf53672380ac6ee93d86bda7dcbfa8",
+      "files": 84,
+      "uncompressedBytes": 910744,
+      "treeSha256": "62365b2ecc3037f5c710a08166a81c9437ce19c5898fb084e18fdb99e63feccf",
+      "parts": [
+        {
+          "path": "data/clones/Hariharan-s-99__microFrontend.tar.gz",
+          "bytes": 392332,
+          "sha256": "fac2ec0cb7aa8e84b05ed5f6f5831ec22ddf53672380ac6ee93d86bda7dcbfa8"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/JandrySan__becas-uleam",
+      "fullName": "JandrySan/becas-uleam",
+      "commit": "613ce6ac8c615f494d214e3d1e01fa3d08e02267",
+      "archive": "JandrySan__becas-uleam.tar.gz",
+      "archiveBytes": 2798107,
+      "archiveSha256": "ae6ae96c6a23f000dc249b5aa7c918012deab403a901d6b3f437782203372407",
+      "files": 141,
+      "uncompressedBytes": 3899722,
+      "treeSha256": "0f73bc01e77bb426ca256072857f6dc13ae92289700a265367e712087df8a54b",
+      "parts": [
+        {
+          "path": "data/clones/JandrySan__becas-uleam.tar.gz",
+          "bytes": 2798107,
+          "sha256": "ae6ae96c6a23f000dc249b5aa7c918012deab403a901d6b3f437782203372407"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/Stevenjsg__vue-microfrontends-ecosystem",
+      "fullName": "Stevenjsg/vue-microfrontends-ecosystem",
+      "commit": "8501b8bd6e1d2491eb7838ae38b264a826f4c453",
+      "archive": "Stevenjsg__vue-microfrontends-ecosystem.tar.gz",
+      "archiveBytes": 79552,
+      "archiveSha256": "5e4c2db4c06e36b3832454d76cd3c346fe42fd6ce3d5a6dfd2e4bc438986a91a",
+      "files": 98,
+      "uncompressedBytes": 164313,
+      "treeSha256": "43d6c24b1b058c2f70ca1f9041f310aa189134f0441e141efa75fdd999378ad3",
+      "parts": [
+        {
+          "path": "data/clones/Stevenjsg__vue-microfrontends-ecosystem.tar.gz",
+          "bytes": 79552,
+          "sha256": "5e4c2db4c06e36b3832454d76cd3c346fe42fd6ce3d5a6dfd2e4bc438986a91a"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/lmedhub__zephyr-microfrontends",
+      "fullName": "lmedhub/zephyr-microfrontends",
+      "commit": "c6e6a9f7d59a3b422002af26c57617d6c486a532",
+      "archive": "lmedhub__zephyr-microfrontends.tar.gz",
+      "archiveBytes": 608791,
+      "archiveSha256": "6b2d5b5ac0b4a5f5128f2f27f8b17e70db1547d576a0e883b1014312a854afa1",
+      "files": 93,
+      "uncompressedBytes": 1778882,
+      "treeSha256": "4fa53904c6ae02c5b4b7621049256bfc6013aef510089cc8546e1895469b1755",
+      "parts": [
+        {
+          "path": "data/clones/lmedhub__zephyr-microfrontends.tar.gz",
+          "bytes": 608791,
+          "sha256": "6b2d5b5ac0b4a5f5128f2f27f8b17e70db1547d576a0e883b1014312a854afa1"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/samhoooo__module-federation-demo-mf2",
+      "fullName": "samhoooo/module-federation-demo-mf2",
+      "commit": "0a621b661bc717fb3433ec3c5dbbcfb027d0a94a",
+      "archive": "samhoooo__module-federation-demo-mf2.tar.gz",
+      "archiveBytes": 83975,
+      "archiveSha256": "97f2d69f26cc6061f5c97ae7c848557a7f2e193e5dcdff930edd5671f2232505",
+      "files": 62,
+      "uncompressedBytes": 236748,
+      "treeSha256": "673c8a59442804d712d14506c25b3ad99b0ffb1c4d35f4851cfeb6b6a3155a2d",
+      "parts": [
+        {
+          "path": "data/clones/samhoooo__module-federation-demo-mf2.tar.gz",
+          "bytes": 83975,
+          "sha256": "97f2d69f26cc6061f5c97ae7c848557a7f2e193e5dcdff930edd5671f2232505"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/DoniaMahmoud__react-microfrontend",
+      "fullName": "DoniaMahmoud/react-microfrontend",
+      "commit": "adc0ef9de42ce63b3082f8297d0146b59ac0d612",
+      "archive": "DoniaMahmoud__react-microfrontend.tar.gz",
+      "archiveBytes": 211315,
+      "archiveSha256": "fd52a9d18952ff5091fe2e055ebf2da83814084d15471f676eda9191929c2c0a",
+      "files": 53,
+      "uncompressedBytes": 620501,
+      "treeSha256": "ba51e8f19381204d31d1d3978b6060e414eda768e750fcfa5482cf75480a94a8",
+      "parts": [
+        {
+          "path": "data/clones/DoniaMahmoud__react-microfrontend.tar.gz",
+          "bytes": 211315,
+          "sha256": "fd52a9d18952ff5091fe2e055ebf2da83814084d15471f676eda9191929c2c0a"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/karthik5656__Catalog.App",
+      "fullName": "karthik5656/Catalog.App",
+      "commit": "1982e0f3dae5a8508d354f9db91a089ba96d4bd6",
+      "archive": "karthik5656__Catalog.App.tar.gz",
+      "archiveBytes": 347654,
+      "archiveSha256": "f72afede1db6763eae45e57588a21c188294270bb848cb4b1bc2f585ccd7b494",
+      "files": 185,
+      "uncompressedBytes": 709333,
+      "treeSha256": "e4567063f53e097b1f064ba819f5d6a6c7c9b07b04973b1907b307b668a752ac",
+      "parts": [
+        {
+          "path": "data/clones/karthik5656__Catalog.App.tar.gz",
+          "bytes": 347654,
+          "sha256": "f72afede1db6763eae45e57588a21c188294270bb848cb4b1bc2f585ccd7b494"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/AstroSoup__web-lab-4",
+      "fullName": "AstroSoup/web-lab-4",
+      "commit": "2214561f8c9cb333f1849a0f1d04ec7ab36220cb",
+      "archive": "AstroSoup__web-lab-4.tar.gz",
+      "archiveBytes": 6654185,
+      "archiveSha256": "d8ed5c7ec5c0664e7bb099060216f35f573b3fb31fd688abfb381943bacfe3ca",
+      "files": 185,
+      "uncompressedBytes": 6979846,
+      "treeSha256": "5f805d84499fb639187b6559cb69793c23d26b8f486c6c743f8ea74cf71b34b3",
+      "parts": [
+        {
+          "path": "data/clones/AstroSoup__web-lab-4.tar.gz",
+          "bytes": 6654185,
+          "sha256": "d8ed5c7ec5c0664e7bb099060216f35f573b3fb31fd688abfb381943bacfe3ca"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/bank20baht__poc-angular-native-federation-tailwindcss",
+      "fullName": "bank20baht/poc-angular-native-federation-tailwindcss",
+      "commit": "d2f9722e77b754318c831138d54aebbfd093ee1e",
+      "archive": "bank20baht__poc-angular-native-federation-tailwindcss.tar.gz",
+      "archiveBytes": 695074,
+      "archiveSha256": "b77f176131c935200c6c4be46d0ea36db243d277d915b5e1bd68405893e33333",
+      "files": 105,
+      "uncompressedBytes": 2006104,
+      "treeSha256": "762c01a7cb72f79e86613fefcaaf632250ff33527246e457397e3d4663359aaa",
+      "parts": [
+        {
+          "path": "data/clones/bank20baht__poc-angular-native-federation-tailwindcss.tar.gz",
+          "bytes": 695074,
+          "sha256": "b77f176131c935200c6c4be46d0ea36db243d277d915b5e1bd68405893e33333"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/Jonadersonmoura__descompara",
+      "fullName": "Jonadersonmoura/descompara",
+      "commit": "3dd51466a7d9eece3bcb46e0663ad5ad614daf32",
+      "archive": "Jonadersonmoura__descompara.tar.gz",
+      "archiveBytes": 749030,
+      "archiveSha256": "bb504e81e8b893b7a7a30233a01ea6bcdf287c3b47fe6c52cc02f7c4b4194e66",
+      "files": 306,
+      "uncompressedBytes": 1997817,
+      "treeSha256": "79d134fc18404e9cb75612894e0466f6c72c927e41801cbf21188512e8e55a91",
+      "parts": [
+        {
+          "path": "data/clones/Jonadersonmoura__descompara.tar.gz",
+          "bytes": 749030,
+          "sha256": "bb504e81e8b893b7a7a30233a01ea6bcdf287c3b47fe6c52cc02f7c4b4194e66"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/hd789789789__frontend-app-learning-old-v2",
+      "fullName": "hd789789789/frontend-app-learning-old-v2",
+      "commit": "d987aed86134f6fa2a2a79d85f72fe44cfc0e5ee",
+      "archive": "hd789789789__frontend-app-learning-old-v2.tar.gz",
+      "archiveBytes": 12485354,
+      "archiveSha256": "875985c1682c526693f753988e53215133aba1e851323660183060c9ddb41c4d",
+      "files": 681,
+      "uncompressedBytes": 15297867,
+      "treeSha256": "3a7cc7d76206d02d3c7c43d75928e14651f16b6f954236d3717e776074fddbc6",
+      "parts": [
+        {
+          "path": "data/clones/hd789789789__frontend-app-learning-old-v2.tar.gz",
+          "bytes": 12485354,
+          "sha256": "875985c1682c526693f753988e53215133aba1e851323660183060c9ddb41c4d"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/LaurineLeNet__microfrontend-angular-angular",
+      "fullName": "LaurineLeNet/microfrontend-angular-angular",
+      "commit": "342c92dff482f1ee0a4bcc05f9302361a7354352",
+      "archive": "LaurineLeNet__microfrontend-angular-angular.tar.gz",
+      "archiveBytes": 523131,
+      "archiveSha256": "63f4236f366b5d5c1934c49e95659f641adfae1914f2701adf4ad510f647714a",
+      "files": 130,
+      "uncompressedBytes": 1144880,
+      "treeSha256": "95eb297ffa2d5cfbc27b7d82ba28467cef6b9fa992ce26e71927eaec78f6b109",
+      "parts": [
+        {
+          "path": "data/clones/LaurineLeNet__microfrontend-angular-angular.tar.gz",
+          "bytes": 523131,
+          "sha256": "63f4236f366b5d5c1934c49e95659f641adfae1914f2701adf4ad510f647714a"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/lguilhermecardoso__mfe-react-vite-example",
+      "fullName": "lguilhermecardoso/mfe-react-vite-example",
+      "commit": "ddf474192c82d47341b22be009915913c9227eca",
+      "archive": "lguilhermecardoso__mfe-react-vite-example.tar.gz",
+      "archiveBytes": 890276,
+      "archiveSha256": "31555f8aa2b4e96f02a021475b0fedae8f79477980579f7784f68b322156f6f7",
+      "files": 190,
+      "uncompressedBytes": 2423031,
+      "treeSha256": "35fdc9b3ba2147c8e70bcd929124aaaff2255be3f678709aa4b1f9f3f527cc95",
+      "parts": [
+        {
+          "path": "data/clones/lguilhermecardoso__mfe-react-vite-example.tar.gz",
+          "bytes": 890276,
+          "sha256": "31555f8aa2b4e96f02a021475b0fedae8f79477980579f7784f68b322156f6f7"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/UserTharushi__companion-disease-risk-ai",
+      "fullName": "UserTharushi/companion-disease-risk-ai",
+      "commit": "373de0e6083b86b2707913da037735130c8f5503",
+      "archive": "UserTharushi__companion-disease-risk-ai.tar.gz",
+      "archiveBytes": 33035948,
+      "archiveSha256": "c279fc80667d22dd3b6c79d381d64b5dbfaa4de33d1114eb855ca5e785dcb690",
+      "files": 387,
+      "uncompressedBytes": 35509598,
+      "treeSha256": "dfc118efebbc162146e9851c0b8e65538c202381a0e3a00822b1808f3f370e5e",
+      "parts": [
+        {
+          "path": "data/clones/UserTharushi__companion-disease-risk-ai.tar.gz.part-00001",
+          "bytes": 26214400,
+          "sha256": "432c76245ee7fbe44ad969b1071218d3a3494d60e1638294c1da546fc12753e6"
+        },
+        {
+          "path": "data/clones/UserTharushi__companion-disease-risk-ai.tar.gz.part-00002",
+          "bytes": 6821548,
+          "sha256": "f73bf35b58272c04de0ea19b485676c96c099e2a5a0612fa21eda31471a12815"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/nurazizUGM-Intero5__OpenMRS-Module-Patient",
+      "fullName": "nurazizUGM-Intero5/OpenMRS-Module-Patient",
+      "commit": "c490ce752bac4d0772f28778fe81434dd6c57a00",
+      "archive": "nurazizUGM-Intero5__OpenMRS-Module-Patient.tar.gz",
+      "archiveBytes": 8592578,
+      "archiveSha256": "b81a49c4028104a85c967c29a19b5cbc810b430946fed80848c9cd23eba37bda",
+      "files": 1684,
+      "uncompressedBytes": 16152708,
+      "treeSha256": "4e8967eb75b4249ff02cc7720965b23ebde53a816573e1b2a9e88fba4fd2dd27",
+      "parts": [
+        {
+          "path": "data/clones/nurazizUGM-Intero5__OpenMRS-Module-Patient.tar.gz",
+          "bytes": 8592578,
+          "sha256": "b81a49c4028104a85c967c29a19b5cbc810b430946fed80848c9cd23eba37bda"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/lkovari__monorepo-nx-mf-dyn-modfed",
+      "fullName": "lkovari/monorepo-nx-mf-dyn-modfed",
+      "commit": "16f0962945720a521bac32e4a43913af1494b61b",
+      "archive": "lkovari__monorepo-nx-mf-dyn-modfed.tar.gz",
+      "archiveBytes": 724890,
+      "archiveSha256": "32604afc8b7e081ce740749c63448f301395758a0e7f169d9f6cfeced033990e",
+      "files": 261,
+      "uncompressedBytes": 1596256,
+      "treeSha256": "c283075747b39bf51878728af3b0b3ccdf74bc11af1e90c800362449021918e0",
+      "parts": [
+        {
+          "path": "data/clones/lkovari__monorepo-nx-mf-dyn-modfed.tar.gz",
+          "bytes": 724890,
+          "sha256": "32604afc8b7e081ce740749c63448f301395758a0e7f169d9f6cfeced033990e"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/Ba5ik7__seed-mfe-remote",
+      "fullName": "Ba5ik7/seed-mfe-remote",
+      "commit": "3565dd875bd5bd89f14f88b1325e00aeb11cdf96",
+      "archive": "Ba5ik7__seed-mfe-remote.tar.gz",
+      "archiveBytes": 295808,
+      "archiveSha256": "ce2eaf2c16a54b6debd343897a8fc728412b937a3172e37765c82b2bec4ca140",
+      "files": 68,
+      "uncompressedBytes": 802710,
+      "treeSha256": "af14ea4a1e4b8781ce2890f2eb93e2800b93f3f225804ecd03492ab9b275d2bd",
+      "parts": [
+        {
+          "path": "data/clones/Ba5ik7__seed-mfe-remote.tar.gz",
+          "bytes": 295808,
+          "sha256": "ce2eaf2c16a54b6debd343897a8fc728412b937a3172e37765c82b2bec4ca140"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/cMancillaValle__ARGOS-SiVIA",
+      "fullName": "cMancillaValle/ARGOS-SiVIA",
+      "commit": "4f6ef7f491ec9fc2d3e852f271e0c360549fad65",
+      "archive": "cMancillaValle__ARGOS-SiVIA.tar.gz",
+      "archiveBytes": 727100,
+      "archiveSha256": "4e93ce72897323c2d0b6c18f692a3690b404068dd3c206ec4e2d3b65c6af8893",
+      "files": 177,
+      "uncompressedBytes": 1733770,
+      "treeSha256": "6c0cfd7106b6ae52cf9af934ccd15a3f5f5d515ac389da8cbe900562f063281b",
+      "parts": [
+        {
+          "path": "data/clones/cMancillaValle__ARGOS-SiVIA.tar.gz",
+          "bytes": 727100,
+          "sha256": "4e93ce72897323c2d0b6c18f692a3690b404068dd3c206ec4e2d3b65c6af8893"
+        }
+      ]
+    },
+    {
+      "origin": "data/samples/mfe-sample-001/repos/kamulupraneeth__nextjs-mfe-platform",
+      "fullName": "kamulupraneeth/nextjs-mfe-platform",
+      "commit": "750571ab7142f074b39122b82f94eaf5dc4181fa",
+      "archive": "kamulupraneeth__nextjs-mfe-platform.tar.gz",
+      "archiveBytes": 337857,
+      "archiveSha256": "be37fa54e7fa638d4ce0a45d469186c0d6a75a00dab8873db955981b04ac0775",
+      "files": 100,
+      "uncompressedBytes": 1020964,
+      "treeSha256": "c29d4729bc36d3c9ec311301b833dd968be0a09fc11b8c869c50e7e185109d8b",
+      "parts": [
+        {
+          "path": "data/clones/kamulupraneeth__nextjs-mfe-platform.tar.gz",
+          "bytes": 337857,
+          "sha256": "be37fa54e7fa638d4ce0a45d469186c0d6a75a00dab8873db955981b04ac0775"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,226 @@
+name: Lifecycle promoted
+
+on:
+  workflow_call:
+    inputs:
+      artifacts-url:
+        description: "Artifacts URL"
+        required: true
+        type: string
+      promoted-version:
+        description: "The promoted version to use (as source for upgrade and destination for downgrade)"
+        required: true
+        type: string
+      type:
+        description: "The type of upgrade ran"
+        required: false
+        type: string
+        default: "unknown"
+
+      enable-debug-when-failure:
+        description: "Whether or not debug when failure should be enabled or not"
+        required: false
+        type: boolean
+        default: false
+
+env:
+  # In development/134 we changed the default OS to rocky-9
+  # This logic can be removed in `development/135.0`
+  OS: ${{ startsWith(inputs.promoted-version, '133.') && 'rocky-8' || 'rocky-9' }}
+
+jobs:
+  snapshot-upgrade:
+    # We need to use those specific gcloud runner so that we have
+    # known runner IPs
+    runs-on: [self-hosted, ubuntu, large, jammy, gcloud]
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: "single node"
+            nodes-count: 0
+          - name: "3 nodes"
+            nodes-count: 2
+    env:
+      NAME: snapshot-upgrade-${{ inputs.type }}-${{ matrix.name }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Install deps
+        run: |
+          # Wait for apt/dpkg locks to be released (e.g. unattended-upgrades at startup).
+          # DPkg::Lock::Timeout makes apt retry internally instead of failing immediately,
+          # which avoids the TOCTOU race of checking locks externally then calling apt-get.
+          sudo apt-get -o DPkg::Lock::Timeout=600 update && \
+          sudo apt-get -o DPkg::Lock::Timeout=600 install -y isomd5sum
+
+     ## Spawn {{{
+      - name: Export environment variables for accessing the cloud
+        uses: ./.github/actions/export-cloud-env
+        with:
+          # Pass all "cloud access" secrets, the action will know which ones to export
+          OVH_AUTH_URL: ${{ secrets.OVH_AUTH_URL }}
+          OVH_USERNAME: ${{ secrets.OVH_USERNAME }}
+          OVH_PASSWORD: ${{ secrets.OVH_PASSWORD }}
+          OVH_REGION: ${{ secrets.OVH_REGION }}
+      - name: Spawn cluster with Terraform
+        uses: ./.github/actions/spawn-cluster
+        with:
+          # Parameters
+          OS: ${{ env.OS }}
+          NAME: ${{ env.NAME }}
+          NODES_COUNT: ${{ matrix.nodes-count }}
+          RESTORE_ENV: ${{ inputs.promoted-version }}-${{ env.OS }}-${{ matrix.name }}
+          # Secrets
+          GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
+          ARTIFACTS_USER: ${{ secrets.ARTIFACTS_USER }}
+          ARTIFACTS_PASSWORD: ${{ secrets.ARTIFACTS_PASSWORD }}
+          AUTHORIZED_CIDRS: ${{ vars.AUTHORIZED_CIDRS }}
+      - name: Save Terraform context
+        if: always()
+        uses: ./.github/actions/save-terraform-context
+        with:
+          NAME: ${{ env.NAME }}
+          ARTIFACTS_USER: ${{ secrets.ARTIFACTS_USER }}
+          ARTIFACTS_PASSWORD: ${{ secrets.ARTIFACTS_PASSWORD }}
+      - name: Copy SSH config to current directory
+        run: cp terraform-snapshot/terraform/ssh_config ./
+      ## }}}
+
+      ## Restart kubelet on every nodes {{{
+      - name: Restart kubelet on every nodes
+        uses: ./.github/actions/run-command-ssh-all-nodes
+        with:
+          NODES_COUNT: "${{ matrix.nodes-count }}"
+          COMMAND: "sudo systemctl enable --now kubelet"
+      ## }}}
+
+      ## Retrieve new version ISO {{{
+      - name: Get MetalK8s ISO
+        uses: ./.github/actions/retrieve-iso
+        with:
+          ARTIFACTS_USER: ${{ secrets.ARTIFACTS_USER }}
+          ARTIFACTS_PASSWORD: ${{ secrets.ARTIFACTS_PASSWORD }}
+          ARTIFACTS_URL: ${{ inputs.artifacts-url }}
+      - name: Retrieve product.txt from artifacts
+        run: >
+          curl --fail -LO -u ${{ secrets.ARTIFACTS_USER }}:${{ secrets.ARTIFACTS_PASSWORD }}
+          ${{ inputs.artifacts-url }}/product.txt
+      - name: Save current version in environment
+        run: |
+          source product.txt
+          echo "METALK8S_VERSION=$VERSION" >> $GITHUB_ENV
+      - name: Copy MetalK8s ISO to the Bootstrap node
+        uses: ./.github/actions/copy-file-ssh
+        with:
+          SOURCE_FILE: "metalk8s.iso"
+          DESTINATION_FILE: "metalk8s-${{ env.METALK8S_VERSION }}.iso"
+      ## }}}
+
+      # Wait for everything to be Ready {{{
+      - name: Wait for a stable cluster
+        uses: ./.github/actions/run-script-ssh
+        with:
+          SCRIPT: .github/scripts/stabilize_snapshot.py
+          RUN_WITH: sudo python3 -u
+      ## }}}
+
+      ## Run upgrade {{{
+      - name: Add new ISO to the cluster
+        uses: ./.github/actions/add-archive
+        with:
+          archive: "metalk8s-${{ env.METALK8S_VERSION }}.iso"
+      - name: Run the upgrade
+        uses: ./.github/actions/run-upgrade
+        with:
+          version: ${{ env.METALK8S_VERSION }}
+      - name: Wait for pods to stabilize after upgrade
+        uses: ./.github/actions/wait-pod-stable
+        with:
+          # NOTE: We increase stabilization time after upgrade it may take some
+          # time to stabilize (e.g.: Rolling update of some DaemonSet that may take
+          # some times, especially in multi node context)
+          STABILIZATION_TIME: "240"
+      ## }}}
+
+      ## Remove previous ISO {{{
+      - name: Remove previous ISO from the cluster
+        uses: ./.github/actions/remove-archive
+        with:
+          version: ${{ inputs.promoted-version }}
+      ## }}}
+
+      ## Tests {{{
+      - name: Prepare bastion to run tests
+        uses: ./.github/actions/prepare-bastion
+      - name: Wait for pods to stabilize before tests
+        uses: ./.github/actions/wait-pod-stable
+      - name: Run tests from Bastion
+        uses: ./.github/actions/bastion-tests
+      ## }}}
+
+      ## Test certificate expiration {{{
+      - name: Run certificates expiration tests
+        uses: ./.github/actions/certificates-tests
+      - name: Wait for pods to stabilize after certificates expiration tests
+        uses: ./.github/actions/wait-pod-stable
+      - name: Run tests from Bastion after certificates expiration tests
+        uses: ./.github/actions/bastion-tests
+      ## }}}
+
+      ## Collect logs {{
+      - name: Generate and Collect sosreport
+        if: always()
+        uses: ./.github/actions/sosreport-logs
+        with:
+          NODES_COUNT: "${{ matrix.nodes-count }}"
+      ## }}
+
+      ## Generate job result {{
+      - name: Generate Job result
+        if: always()
+        uses: ./.github/actions/generate-job-result
+        with:
+          name: ${{ env.NAME }}
+          ARTIFACTS_USER: ${{ secrets.ARTIFACTS_USER }}
+          ARTIFACTS_PASSWORD: ${{ secrets.ARTIFACTS_PASSWORD }}
+          GIT_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      ## }}
+
+      ## Upload artifacts {{
+      - name: Upload artifacts
+        if: always()
+        uses: scality/action-artifacts@v4
+        with:
+          method: upload
+          url: https://artifacts.scality.net
+          user: ${{ secrets.ARTIFACTS_USER }}
+          password: ${{ secrets.ARTIFACTS_PASSWORD }}
+          source: artifacts
+      ## }}
+      - name: debug
+        if: inputs.enable-debug-when-failure && failure()
+        run: sleep 3600
+
+      ## Destroy {{{
+      - name: Destroy cluster with Terraform
+        if: always()
+        uses: ./.github/actions/destroy-cluster
+        with:
+          # Parameters
+          NAME: ${{ env.NAME }}
+          # Secrets
+          GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
+      # }}}
+
+  promoted-downgrade:
+    uses: ./.github/workflows/downgrade-test.yaml
+    # NOTE: Downgrade is not supported from 134 to 133 (see CHANGELOG.md)
+    # Should be removed in `development/135.0`
+    if: ${{ ! startsWith(inputs.promoted-version, '133.') }}
+    secrets: inherit
+    with:
+      from-artifacts-url: ${{ inputs.artifacts-url }}
+      to-artifacts-url: https://artifacts.scality.net/builds/github:scality:metalk8s:promoted-${{ inputs.promoted-version }}
+      type: ${{ inputs.type }}
+      enable-debug-when-failure: ${{ inputs.enable-debug-when-failure }}

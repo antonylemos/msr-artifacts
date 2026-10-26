@@ -1,0 +1,129 @@
+pattern,path,line,excerpt
+dep-mfe-term,auth-mfe/package.json,2,"  ""name"": ""auth-mfe"","
+dep-mfe-term,builds-mfe/package.json,2,"  ""name"": ""builds-mfe"","
+dep-mfe-term,catalog-mfe/package.json,2,"  ""name"": ""catalog-mfe"","
+cfg-route-rewrites,shell/next.config.ts,6,  async rewrites() {
+cfg-zone-path,auth-mfe/next.config.ts,6,"  assetPrefix: ""/auth-static"","
+cfg-zone-path,builds-mfe/next.config.ts,6,"  assetPrefix: ""/builds-static"","
+cfg-zone-path,catalog-mfe/next.config.ts,6,"  assetPrefix: ""/catalog-static"","
+src-html-external-script,users-service/src/identity/api/openapi.ts,188,"  <script src=""https://unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js""></script>"
+ops-deployment-file,auth-mfe/Dockerfile,,
+ops-deployment-file,builds-mfe/Dockerfile,,
+ops-deployment-file,builds-service/Dockerfile,,
+ops-deployment-file,catalog-mfe/Dockerfile,,
+ops-deployment-file,docker-compose.yml,,
+ops-deployment-file,mobile-bff/Dockerfile,,
+ops-deployment-file,parts-service/Dockerfile,,
+ops-deployment-file,shell/Dockerfile,,
+ops-deployment-file,users-service/Dockerfile,,
+ops-deployment-file,web-bff/Dockerfile,,
+ops-dockerfile,auth-mfe/Dockerfile,1,FROM oven/bun:1 AS deps
+ops-dockerfile,auth-mfe/Dockerfile,6,FROM oven/bun:1 AS builder
+ops-dockerfile,auth-mfe/Dockerfile,12,FROM oven/bun:1 AS runner
+ops-dockerfile,builds-mfe/Dockerfile,1,FROM oven/bun:1 AS deps
+ops-dockerfile,builds-mfe/Dockerfile,6,FROM oven/bun:1 AS builder
+ops-dockerfile,builds-mfe/Dockerfile,12,FROM oven/bun:1 AS runner
+ops-dockerfile,builds-service/Dockerfile,1,FROM oven/bun:1 AS base
+ops-dockerfile,builds-service/Dockerfile,4,FROM base AS deps
+ops-dockerfile,builds-service/Dockerfile,8,FROM base AS build
+ops-dockerfile,builds-service/Dockerfile,13,FROM base AS runner
+ops-dockerfile,catalog-mfe/Dockerfile,1,FROM oven/bun:1 AS deps
+ops-dockerfile,catalog-mfe/Dockerfile,6,FROM oven/bun:1 AS builder
+ops-dockerfile,catalog-mfe/Dockerfile,12,FROM oven/bun:1 AS runner
+ops-dockerfile,mobile-bff/Dockerfile,1,FROM oven/bun:1 AS base
+ops-dockerfile,mobile-bff/Dockerfile,4,FROM base AS deps
+ops-dockerfile,mobile-bff/Dockerfile,8,FROM base AS build
+ops-dockerfile,mobile-bff/Dockerfile,13,FROM base AS runner
+ops-dockerfile,parts-service/Dockerfile,1,FROM oven/bun:1 AS base
+ops-dockerfile,parts-service/Dockerfile,4,FROM base AS deps
+ops-dockerfile,parts-service/Dockerfile,8,FROM base AS build
+ops-dockerfile,parts-service/Dockerfile,13,FROM base AS runner
+ops-dockerfile,shell/Dockerfile,1,FROM oven/bun:1 AS deps
+ops-dockerfile,shell/Dockerfile,6,FROM oven/bun:1 AS builder
+ops-dockerfile,shell/Dockerfile,18,FROM oven/bun:1 AS runner
+ops-dockerfile,users-service/Dockerfile,1,FROM denoland/deno:latest AS base
+ops-dockerfile,web-bff/Dockerfile,1,FROM oven/bun:1 AS base
+ops-dockerfile,web-bff/Dockerfile,4,FROM base AS deps
+ops-dockerfile,web-bff/Dockerfile,8,FROM base AS build
+ops-dockerfile,web-bff/Dockerfile,13,FROM base AS runner
+ops-compose-service,docker-compose.yml,3,    image: postgres:17-alpine
+ops-compose-service,docker-compose.yml,15,    build: ./parts-service
+ops-compose-service,docker-compose.yml,24,    depends_on:
+ops-compose-service,docker-compose.yml,34,    build: ./builds-service
+ops-compose-service,docker-compose.yml,46,    depends_on:
+ops-compose-service,docker-compose.yml,59,    image: rabbitmq:3-management-alpine
+ops-compose-service,docker-compose.yml,74,    build: ./users-service
+ops-compose-service,docker-compose.yml,83,    depends_on:
+ops-compose-service,docker-compose.yml,96,    image: gusaul/grpcox:latest
+ops-compose-service,docker-compose.yml,102,    build: ./web-bff
+ops-compose-service,docker-compose.yml,115,    depends_on:
+ops-compose-service,docker-compose.yml,130,    build: ./mobile-bff
+ops-compose-service,docker-compose.yml,143,    depends_on:
+ops-compose-service,docker-compose.yml,158,    build: ./auth-mfe
+ops-compose-service,docker-compose.yml,167,    depends_on:
+ops-compose-service,docker-compose.yml,171,    build: ./catalog-mfe
+ops-compose-service,docker-compose.yml,180,    depends_on:
+ops-compose-service,docker-compose.yml,184,    build: ./builds-mfe
+ops-compose-service,docker-compose.yml,193,    depends_on:
+ops-compose-service,docker-compose.yml,197,    build:
+ops-compose-service,docker-compose.yml,214,    depends_on:
+ci-workflow-file,.github/workflows/auth-mfe.yml,,
+ci-workflow-file,.github/workflows/builds-mfe.yml,,
+ci-workflow-file,.github/workflows/builds-service.yml,,
+ci-workflow-file,.github/workflows/catalog-mfe.yml,,
+ci-workflow-file,.github/workflows/mobile-bff.yml,,
+ci-workflow-file,.github/workflows/parts-service.yml,,
+ci-workflow-file,.github/workflows/shell.yml,,
+ci-workflow-file,.github/workflows/users-service.yml,,
+ci-workflow-file,.github/workflows/web-bff.yml,,
+ci-path-trigger,.github/workflows/auth-mfe.yml,5,    paths:
+ci-path-trigger,.github/workflows/builds-mfe.yml,5,    paths:
+ci-path-trigger,.github/workflows/builds-service.yml,5,    paths:
+ci-path-trigger,.github/workflows/catalog-mfe.yml,5,    paths:
+ci-path-trigger,.github/workflows/mobile-bff.yml,5,    paths:
+ci-path-trigger,.github/workflows/parts-service.yml,5,    paths:
+ci-path-trigger,.github/workflows/shell.yml,5,    paths:
+ci-path-trigger,.github/workflows/users-service.yml,5,    paths:
+ci-path-trigger,.github/workflows/users-service.yml,9,    paths:
+ci-path-trigger,.github/workflows/web-bff.yml,5,    paths:
+doc-mfe-term,CLAUDE.md,11,3 backend microservices (each a different framework) + 2 BFFs (one per client type) + 4-zone Next.js micro-frontend. Each backend service owns its own PostgreSQL database. No service may query another service's database directly. **BFFs and MFEs have no database** — they compose upstream calls.
+doc-mfe-term,CLAUDE.md,23,### Micro-frontends (Next.js Multi-Zones)
+doc-mfe-term,CLAUDE.md,28,| `catalog-mfe` | 3001 | `/catalog-static` | `/catalog/*` |
+doc-mfe-term,CLAUDE.md,29,| `builds-mfe` | 3002 | `/builds-static` | `/builds/*` |
+doc-mfe-term,CLAUDE.md,30,| `auth-mfe` | 3003 | `/auth-static` | `/auth/*` |
+doc-mfe-term,CLAUDE.md,32,All zones are independent Next.js 16 apps. Each uses shadcn/ui with the shared preset `b1t3ILnrM` for consistent design tokens. Cross-zone navigation uses plain `<a>` tags (never `next/link`). Shared auth = `jwt` cookie on the shared origin; each zone has both server-side (`src/lib/auth.ts` via `coo
+doc-mfe-term,CLAUDE.md,72,"| Runtimes | Bun (parts, builds, web-bff, mobile-bff, shell, catalog-mfe, builds-mfe, auth-mfe), Deno (users) |"
+doc-mfe-term,README.md,11,"3. **Micro-Frontends (Next.js Multi-Zones)** — one shell + 3 feature zones stitched together by path rewrites. Each zone is its own Next.js app, own Dockerfile, own CI pipeline."
+doc-mfe-term,README.md,24,│ catalog-   │ │ builds-mfe │ │ auth-mfe   │
+doc-mfe-term,README.md,25,│ mfe :3001  │ │ :3002      │ │ :3003      │
+doc-mfe-term,README.md,46,"`mobile-bff` (Elysia, :4005) sits alongside `web-bff` for a hypothetical mobile client with slim responses — not wired into the micro-frontend zones."
+doc-mfe-term,README.md,60,### Micro-frontends (Next.js Multi-Zones)
+doc-mfe-term,README.md,65,"| **catalog-mfe** | [catalog-mfe/](catalog-mfe/) | 3001 | `/catalog-static` | `/catalog`, `/catalog/:id` |"
+doc-mfe-term,README.md,66,"| **builds-mfe** | [builds-mfe/](builds-mfe/) | 3002 | `/builds-static` | `/builds`, `/builds/new`, `/builds/:id` |"
+doc-mfe-term,README.md,67,"| **auth-mfe** | [auth-mfe/](auth-mfe/) | 3003 | `/auth-static` | `/auth/login`, `/auth/register`, `/auth/me` |"
+doc-mfe-term,README.md,102,├── shell/              # MFE shell (Next.js) — rewrites to zones
+doc-mfe-term,README.md,103,├── catalog-mfe/        # MFE zone: browse components
+doc-mfe-term,README.md,104,├── builds-mfe/         # MFE zone: manage builds
+doc-mfe-term,README.md,105,├── auth-mfe/           # MFE zone: register / login / profile
+doc-mfe-term,README.md,106,├── docker-compose.yml  # PostgreSQL + all services + all MFE zones
+doc-mfe-term,auth-mfe/README.md,1,# auth-mfe
+doc-mfe-term,auth-mfe/README.md,3,"Next.js micro-frontend zone that owns `/auth/login`, `/auth/register`, `/auth/me`. On successful login/register it sets a JWT in the `jwt` cookie on the shared origin — every other zone reads that cookie (server-side via `cookies()`, client-side via `document.cookie`)."
+doc-mfe-term,builds-mfe/README.md,1,# builds-mfe
+doc-mfe-term,builds-mfe/README.md,3,"Next.js micro-frontend zone that owns `/builds`, `/builds/new`, `/builds/:id`. Lists and manages PC builds. Create + delete require a JWT cookie (set by auth-mfe)."
+doc-mfe-term,catalog-mfe/README.md,1,# catalog-mfe
+doc-mfe-term,catalog-mfe/README.md,3,Next.js micro-frontend zone that owns `/catalog` and `/catalog/:id`. Fetches from [web-bff](../web-bff/) and renders rich component cards + fan-out related components.
+doc-mfe-term,shell/README.md,3,"Next.js 16 app that serves as the **main zone** of the micro-frontend architecture. Hosts the landing page, shared header/footer, and forwards path-prefixed requests to the other zones via `rewrites` in [next.config.ts](next.config.ts)."
+doc-mfe-term,shell/README.md,19,| `CATALOG_URL` | `http://localhost:3001` | catalog-mfe origin |
+doc-mfe-term,shell/README.md,20,| `BUILDS_URL` | `http://localhost:3002` | builds-mfe origin |
+doc-mfe-term,shell/README.md,21,| `AUTH_URL` | `http://localhost:3003` | auth-mfe origin |
+doc-import-map-zones,CLAUDE.md,23,### Micro-frontends (Next.js Multi-Zones)
+doc-import-map-zones,CLAUDE.md,74,"| Frontend | Next.js 16 Multi-Zones, React 19, Tailwind v4, shadcn/ui (preset `b1t3ILnrM`) |"
+doc-import-map-zones,README.md,11,"3. **Micro-Frontends (Next.js Multi-Zones)** — one shell + 3 feature zones stitched together by path rewrites. Each zone is its own Next.js app, own Dockerfile, own CI pipeline."
+doc-import-map-zones,README.md,60,### Micro-frontends (Next.js Multi-Zones)
+doc-independence,CLAUDE.md,32,All zones are independent Next.js 16 apps. Each uses shadcn/ui with the shared preset `b1t3ILnrM` for consistent design tokens. Cross-zone navigation uses plain `<a>` tags (never `next/link`). Shared auth = `jwt` cookie on the shared origin; each zone has both server-side (`src/lib/auth.ts` via `coo
+doc-independence,CLAUDE.md,117,- Do not create shared packages/libs between services — fully independent
+doc-independence,README.md,69,All zones share the [shadcn/ui](https://ui.shadcn.com) preset `b1t3ILnrM` so they look like one app despite being deployed independently. Cross-zone auth = JWT in a shared-origin cookie.
+ws-path-alias,auth-mfe/tsconfig.json,21,"    ""paths"": {"
+ws-path-alias,builds-mfe/tsconfig.json,21,"    ""paths"": {"
+ws-path-alias,catalog-mfe/tsconfig.json,21,"    ""paths"": {"
+ws-path-alias,shell/tsconfig.json,21,"    ""paths"": {"

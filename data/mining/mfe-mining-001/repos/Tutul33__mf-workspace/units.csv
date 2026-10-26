@@ -1,0 +1,5 @@
+directory,markers
+.,angular.json;package.json
+projects/customer-app,projects/customer-app/federation.config.js
+projects/host-app,projects/host-app/federation.config.js
+projects/orders-app,projects/orders-app/federation.config.js

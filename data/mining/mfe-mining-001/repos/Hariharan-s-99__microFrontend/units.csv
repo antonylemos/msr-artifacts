@@ -1,0 +1,5 @@
+directory,markers
+advancedWebpack,advancedWebpack/package.json;advancedWebpack/webpack.config.js
+container,container/index.html;container/module-federation.config.ts;container/package.json;container/rspack.config.ts
+home,home/index.html;home/module-federation.config.ts;home/package.json;home/rspack.config.ts
+settings,settings/index.html;settings/module-federation.config.ts;settings/package.json;settings/rspack.config.ts

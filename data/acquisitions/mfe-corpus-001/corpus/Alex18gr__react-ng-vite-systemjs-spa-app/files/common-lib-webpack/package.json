@@ -1,0 +1,38 @@
+{
+  "name": "@myapp/common-lib-webpack",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "types": "./dist/src/index.d.ts",
+  "scripts": {
+    "serve": "webpack serve --mode development",
+    "build": "webpack --mode production",
+    "build:dev": "webpack --mode development",
+    "build:prod": "webpack --mode production",
+    "build:watch": "webpack --mode production --watch",
+    "build:dev:watch": "tsc && webpack --mode development --watch --progress --devtool source-map",
+    "build:serve:dev": "concurrently \"npm run build:dev:watch -- --watch\" \"npm run serve\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "@types/systemjs": "^6.15.3",
+    "@types/webpack": "^5.28.5",
+    "clean-webpack-plugin": "^4.0.0",
+    "concurrently": "^9.1.2",
+    "copy-webpack-plugin": "^13.0.0",
+    "declaration-bundler-webpack-plugin": "^1.0.3",
+    "ts-loader": "^9.5.2",
+    "typescript": "^5.8.3",
+    "webpack": "^5.99.7",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^4.15.2",
+    "wepack-cli": "^0.0.1-security"
+  },
+  "dependencies": {
+    "rxjs": "^7.8.2"
+  }
+}

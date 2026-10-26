@@ -1,0 +1,5 @@
+directory,markers
+content-app,content-app/index.html;content-app/package.json;content-app/vite.config.ts
+root-app,root-app/index.html;root-app/package.json;root-app/vite.config.ts
+root-classic,root-classic/package.json;root-classic/webpack.config.js
+topbar-app,topbar-app/index.html;topbar-app/package.json;topbar-app/vite.config.ts

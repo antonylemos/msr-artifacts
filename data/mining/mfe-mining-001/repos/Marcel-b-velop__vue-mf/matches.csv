@@ -1,0 +1,91 @@
+pattern,path,line,excerpt
+dep-module-federation,app-1/package.json,14,"    ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+dep-module-federation,app-2/package.json,14,"    ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+dep-module-federation,host/package.json,24,"    ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+dep-module-federation,lib/package.json,20,"    ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+lock-mfe-dependency,app-1/pnpm-lock.yaml,11,      '@originjs/vite-plugin-federation':
+lock-mfe-dependency,app-1/pnpm-lock.yaml,249,  '@originjs/vite-plugin-federation@1.4.1':
+lock-mfe-dependency,app-1/pnpm-lock.yaml,1027,  '@originjs/vite-plugin-federation@1.4.1':
+lock-mfe-dependency,host/pnpm-lock.yaml,11,      '@originjs/vite-plugin-federation':
+lock-mfe-dependency,host/pnpm-lock.yaml,252,  '@originjs/vite-plugin-federation@1.4.1':
+lock-mfe-dependency,host/pnpm-lock.yaml,1033,  '@originjs/vite-plugin-federation@1.4.1':
+lock-mfe-dependency,lib/pnpm-lock.yaml,11,      '@originjs/vite-plugin-federation':
+lock-mfe-dependency,lib/pnpm-lock.yaml,252,  '@originjs/vite-plugin-federation@1.4.1':
+lock-mfe-dependency,lib/pnpm-lock.yaml,1123,  '@originjs/vite-plugin-federation@1.4.1':
+lock-mfe-dependency,pnpm-lock.yaml,17,      '@originjs/vite-plugin-federation':
+lock-mfe-dependency,pnpm-lock.yaml,72,      '@originjs/vite-plugin-federation':
+lock-mfe-dependency,pnpm-lock.yaml,152,      '@originjs/vite-plugin-federation':
+lock-mfe-dependency,pnpm-lock.yaml,179,      '@originjs/vite-plugin-federation':
+lock-mfe-dependency,pnpm-lock.yaml,451,  '@originjs/vite-plugin-federation@1.4.1':
+lock-mfe-dependency,pnpm-lock.yaml,1793,  '@originjs/vite-plugin-federation@1.4.1':
+cfg-federation-plugin,app-1/vite.config.ts,11,    federation({
+cfg-federation-plugin,app-2/vite.config.ts,11,    federation({
+cfg-federation-plugin,host/vite.config.ts,11,    federation({
+cfg-federation-plugin,lib/vite.config.ts,17,    federation({
+cfg-remotes,app-1/vite.config.ts,18,      remotes: {
+cfg-remotes,app-2/vite.config.ts,21,      remotes: {
+cfg-remotes,host/vite.config.ts,15,      remotes: {
+cfg-exposes,app-1/vite.config.ts,15,      exposes: {
+cfg-exposes,app-2/vite.config.ts,15,      exposes: {
+cfg-exposes,lib/vite.config.ts,21,      exposes: {
+cfg-shared,app-1/vite.config.ts,21,      shared: {
+cfg-shared,app-2/vite.config.ts,24,      shared: {
+cfg-shared,host/vite.config.ts,20,      shared: {
+cfg-shared,lib/vite.config.ts,26,      shared: {
+rt-remote-entry,app-1/vite.config.ts,13,"      filename: ""remoteEntry.js"","
+rt-remote-entry,app-1/vite.config.ts,19,"        ""remote-lib"": ""http://localhost:5177/assets/remoteEntry.js"","
+rt-remote-entry,app-2/vite.config.ts,13,"      filename: ""remoteEntry.js"","
+rt-remote-entry,app-2/vite.config.ts,22,"        ""remote-lib"": ""http://localhost:5177/assets/remoteEntry.js"","
+rt-remote-entry,host/vite.config.ts,13,"      filename: ""remoteEntry.js"","
+rt-remote-entry,host/vite.config.ts,16,"        ""remote-app1"": ""http://localhost:5174/assets/remoteEntry.js"","
+rt-remote-entry,host/vite.config.ts,17,"        ""remote-app2"": ""http://localhost:5175/assets/remoteEntry.js"","
+rt-remote-entry,host/vite.config.ts,18,"        ""remote-lib"": ""http://localhost:5177/assets/remoteEntry.js"","
+rt-remote-entry,lib/vite.config.ts,19,"      filename: ""remoteEntry.js"","
+src-remote-import,app-1/src/main.ts,11,"const confirmD = defineAsyncComponent(() => import(""remote-lib/Confirm""));"
+src-remote-import,host/src/main.ts,12,"const remoteApp1 = defineAsyncComponent(() => import(""remote-app1/App1""));"
+src-remote-import,host/src/main.ts,13,"const remoteApp2 = defineAsyncComponent(() => import(""remote-app2/App2""));"
+src-remote-import,host/src/main.ts,14,"const confirmD = defineAsyncComponent(() => import(""remote-lib/Confirm""));"
+src-remote-import,host/src/router/index.ts,7,"  { path: '/login', component: () => import('remote-app2/LoginForm') },"
+src-remote-import,host/src/router/index.ts,8,"  { path: '/register', component: () => import('remote-app2/RegisterForm') }"
+src-mount-import,lib/src/App.test.ts,2,"import { mount } from ""@vue/test-utils"";"
+src-mount-import,lib/src/components/Confirm.test.ts,2,"import { mount } from ""@vue/test-utils"";"
+src-custom-element,lib/playwright-report/trace/assets/defaultSettingsView-BEpdCv1S.js,115,"`)}function XT(n){const e=[{regex:/\b[\d,.]+[bkmBKM]+\b/,replacement:""[\\d,.]+[bkmBKM]+""},{regex:/\b\d+[hmsp]+\b/,replacement:""\\d+[hmsp]+""},{regex:/\b[\d,.]+[hmsp]+\b/,replacement:""[\\d,.]+[hmsp]+""},{regex:/\b\d+,\d+\b/,replacement:""\\d+,\\d+""},{regex:/\b\d+\.\d{2,}\b/,replacement:""\\d+\\.\\d+""},{r"
+src-custom-element,lib/playwright-report/trace/sw.bundle.js,1,"var Qs=Object.defineProperty;var zs=(s,t,e)=>t in s?Qs(s,t,{enumerable:!0,configurable:!0,writable:!0,value:e}):s[t]=e;var L=(s,t,e)=>zs(s,typeof t!=""symbol""?t+"""":t,e);function er(s,t){const e=new Array(t.length).fill(0);return new Array(t.length).fill(0).map((n,r)=>(i,a)=>{e[r]=i/a*t[r]*1e3,s(e.red"
+src-dynamic-script,lib/playwright-report/index.html,58,"`).replace(Nm,"""")}function zd(t,e){return e=Ld(e),Ld(t)===e}function Hu(){}function Rt(t,e,n,a,l,s){switch(n){case""children"":typeof a==""string""?e===""body""||e===""textarea""&&a===""""||Ua(t,a):(typeof a==""number""||typeof a==""bigint"")&&e!==""body""&&Ua(t,""""+a);break;case""className"":Yi(t,""class"",a);break;cas"
+src-dynamic-script,lib/playwright-report/trace/assets/defaultSettingsView-BEpdCv1S.js,50,"`).replace(e1,"""")}function Gm(t,r){return r=Vm(r),Vm(t)===r}function uo(){}function ke(t,r,a,c,h,g){switch(a){case""children"":typeof c==""string""?r===""body""||r===""textarea""&&c===""""||Ts(t,c):(typeof c==""number""||typeof c==""bigint"")&&r!==""body""&&Ts(t,""""+c);break;case""className"":gl(t,""class"",c);break;cas"
+src-iframe,lib/playwright-report/trace/snapshot.html,5,"    <iframe src=""about:blank"" style=""position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;border:none;""></iframe>"
+src-cross-unit-communication,app-2/src/App.vue,24,"window.addEventListener(""auth:logout"", () => {"
+src-cross-unit-communication,app-2/src/services/authService.ts,57,"      window.dispatchEvent(new CustomEvent(""auth:logout""));"
+src-cross-unit-communication,app-2/src/services/authService.ts,99,"    window.dispatchEvent(new CustomEvent(""auth:logout""));"
+src-cross-unit-communication,lib/playwright-report/index.html,18," */var d1;function gA(){if(d1)return Ai;d1=1;var u=Symbol.for(""react.transitional.element""),i=Symbol.for(""react.fragment"");function c(f,r,o){var d=null;if(o!==void 0&&(d=""""+o),r.key!==void 0&&(d=""""+r.key),""key""in r){o={};for(var y in r)y!==""key""&&(o[y]=r[y])}else o=r;return r=o.ref,{$$typeof:u,type:"
+src-cross-unit-communication,lib/playwright-report/index.html,26," */var c2;function d5(){if(c2)return ht;c2=1;var u=Symbol.for(""react.transitional.element""),i=Symbol.for(""react.portal""),c=Symbol.for(""react.fragment""),f=Symbol.for(""react.strict_mode""),r=Symbol.for(""react.profiler""),o=Symbol.for(""react.consumer""),d=Symbol.for(""react.context""),y=Symbol.for(""react.fo"
+src-cross-unit-communication,lib/playwright-report/index.html,34," */var f2;function h5(){return f2||(f2=1,(function(u){function i(M,_){var $=M.length;M.push(_);t:for(;0<$;){var dt=$-1>>>1,b=M[dt];if(0<r(b,_))M[dt]=_,M[$]=b,$=dt;else break t}}function c(M){return M.length===0?null:M[0]}function f(M){if(M.length===0)return null;var _=M[0],$=M.pop();if($!==_){M[0]=$"
+src-cross-unit-communication,lib/playwright-report/index.html,57,"`+n.stack}}function Re(t){switch(typeof t){case""bigint"":case""boolean"":case""number"":case""string"":case""undefined"":return t;case""object"":return t;default:return""""}}function Br(t){var e=t.type;return(t=t.nodeName)&&t.toLowerCase()===""input""&&(e===""checkbox""||e===""radio"")}function ug(t){var e=Br(t)?""chec"
+src-cross-unit-communication,lib/playwright-report/index.html,58,"`).replace(Nm,"""")}function zd(t,e){return e=Ld(e),Ld(t)===e}function Hu(){}function Rt(t,e,n,a,l,s){switch(n){case""children"":typeof a==""string""?e===""body""||e===""textarea""&&a===""""||Ua(t,a):(typeof a==""number""||typeof a==""bigint"")&&e!==""body""&&Ua(t,""""+a);break;case""className"":Yi(t,""class"",a);break;cas"
+src-cross-unit-communication,lib/playwright-report/trace/assets/codeMirrorModule-Bucv2d7q.js,20,"`),p(i))}else return;l.type==""cut""&&(r.state.cutIncoming=+new Date)}}ye(i,""cut"",o),ye(i,""copy"",o),ye(e.scroller,""paste"",function(l){if(!(tr(e,l)||Ze(r,l))){if(!i.dispatchEvent){r.state.pasteIncoming=+new Date,n.focus();return}var a=new Event(""paste"");a.clipboardData=l.clipboardData,i.dispatchEvent(a"
+src-cross-unit-communication,lib/playwright-report/trace/assets/defaultSettingsView-BEpdCv1S.js,18," */var vy;function U1(){if(vy)return de;vy=1;var n=Symbol.for(""react.transitional.element""),e=Symbol.for(""react.portal""),i=Symbol.for(""react.fragment""),s=Symbol.for(""react.strict_mode""),l=Symbol.for(""react.profiler""),o=Symbol.for(""react.consumer""),u=Symbol.for(""react.context""),f=Symbol.for(""react.fo"
+src-cross-unit-communication,lib/playwright-report/trace/assets/defaultSettingsView-BEpdCv1S.js,26," */var _y;function G1(){return _y||(_y=1,(function(n){function e(z,Q){var se=z.length;z.push(Q);e:for(;0<se;){var we=se-1>>>1,N=z[we];if(0<l(N,Q))z[we]=Q,z[se]=N,se=we;else break e}}function i(z){return z.length===0?null:z[0]}function s(z){if(z.length===0)return null;var Q=z[0],se=z.pop();if(se!==Q)"
+src-cross-unit-communication,lib/playwright-report/trace/assets/defaultSettingsView-BEpdCv1S.js,49,"`+a.stack}}function Xt(t){switch(typeof t){case""bigint"":case""boolean"":case""number"":case""string"":case""undefined"":return t;case""object"":return t;default:return""""}}function qd(t){var r=t.type;return(t=t.nodeName)&&t.toLowerCase()===""input""&&(r===""checkbox""||r===""radio"")}function NS(t){var r=qd(t)?""chec"
+src-cross-unit-communication,lib/playwright-report/trace/assets/defaultSettingsView-BEpdCv1S.js,50,"`).replace(e1,"""")}function Gm(t,r){return r=Vm(r),Vm(t)===r}function uo(){}function ke(t,r,a,c,h,g){switch(a){case""children"":typeof c==""string""?r===""body""||r===""textarea""&&c===""""||Ts(t,c):(typeof c==""number""||typeof c==""bigint"")&&r!==""body""&&Ts(t,""""+c);break;case""className"":gl(t,""class"",c);break;cas"
+src-cross-unit-communication,lib/playwright-report/trace/assets/defaultSettingsView-BEpdCv1S.js,59,"              rgb(0 0 0 / 25%) 0px 6px 12px`},e_=({diff:n,noTargetBlank:e,hideDetails:i})=>{const[s,l]=H.useState(n.diff?""diff"":""actual""),[o,u]=H.useState(!1),[f,d]=H.useState(null),[p,m]=H.useState(""Expected""),[y,v]=H.useState(null),[S,E]=H.useState(null),[x,T]=cs();H.useEffect(()=>{(async()=>{var "
+src-cross-unit-communication,lib/playwright-report/trace/assets/defaultSettingsView-BEpdCv1S.js,121,"    })()`);return new s(this,i)}async viewportRatio(e){return await new Promise(i=>{const s=new IntersectionObserver(l=>{i(l[0].intersectionRatio),s.disconnect()});s.observe(e),this.utils.builtins.requestAnimationFrame(()=>{})})}getElementBorderWidth(e){if(e.nodeType!==Node.ELEMENT_NODE||!e.ownerDoc"
+src-cross-unit-communication,lib/playwright-report/trace/assets/defaultSettingsView-BEpdCv1S.js,124,"`)}finally{Qh(),pc(),this._evaluator.end()}}createStacklessError(e){if(this._browserName===""firefox""){const s=new Error(""Error: ""+e);return s.stack="""",s}const i=new Error(e);return delete i.stack,i}createHighlight(){return new ih(this)}maskSelectors(e,i){this._highlight&&this.hideHighlight(),this._h"
+src-cross-unit-communication,lib/playwright-report/trace/assets/defaultSettingsView-BEpdCv1S.js,266,"`,i)+1}return{type:e,offset:this.offset,indent:this.indent,source:this.source}}startBlockValue(e){switch(this.type){case""alias"":case""scalar"":case""single-quoted-scalar"":case""double-quoted-scalar"":return this.flowScalar(this.type);case""block-scalar-header"":return{type:""block-scalar"",offset:this.offset"
+src-cross-unit-communication,lib/playwright-report/trace/sw.bundle.js,3,"`))this._appendEvent(e)}actions(){return[...this._actionMap.values()]}_pageEntry(t){let e=this._pageEntries.get(t);return e||(e={pageId:t,screencastFrames:[]},this._pageEntries.set(t,e),this._contextEntry.pages.push(e)),e}_appendEvent(t){if(!t)return;const e=this._modernize(JSON.parse(t));for(const "
+ops-cors,app-1/vite.config.ts,37,"    cors: true,"
+ops-cors,app-1/vite.config.ts,39,"      ""Access-Control-Allow-Origin"": ""*"","
+ops-cors,app-2/vite.config.ts,41,"    cors: true,"
+ops-cors,app-2/vite.config.ts,43,"      ""Access-Control-Allow-Origin"": ""*"","
+ops-cors,host/vite.config.ts,43,"    cors: true,"
+ops-cors,host/vite.config.ts,45,"      ""Access-Control-Allow-Origin"": ""*"","
+ops-cors,lib/vite.config.ts,52,"    cors: true,"
+ops-cors,lib/vite.config.ts,54,"      ""Access-Control-Allow-Origin"": ""*"","
+ci-workflow-file,.github/workflows/node.js.yml,,
+doc-integration-technology,README.md,1,# Vue Module Federation
+doc-integration-technology,app-2/README.md,12,- **Module Federation**: Kann als Remote-Modul in andere Apps geladen werden
+doc-integration-technology,app-2/README.md,30,# Build für Module Federation
+doc-integration-technology,app-2/README.md,33,# Watch-Modus für Module Federation
+doc-integration-technology,app-2/README.md,36,# Preview-Server (für Module Federation)
+doc-integration-technology,app-2/README.md,40,## Module Federation
+doc-host-remote,README.md,5,"Eine Anwendung mit mehreren Seiten, einem Header, Footer und einer Navigationsleiste. Die einzelnen Seiten sollen als Remote Module geladen werden. Der Host hält die Navigationsleiste, Header und den Footer."
+ws-workspaces,pnpm-workspace.yaml,1,packages:

@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "id": "1117824036",
+  "fullName": "jonatasmirand/ReiBurguer-MicroFrontends",
+  "commit": "268d79ae1ff2579a9c9877adba0e1b87cfac1dff",
+  "acquiredAt": "2026-10-24T00:32:25.937Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "cardapio/public/assets/All_in_burguer.webp",
+      "reason": "preset:binaries",
+      "size": 111384
+    },
+    {
+      "path": "cardapio/public/assets/BaconBurguer.webp",
+      "reason": "preset:binaries",
+      "size": 19338
+    },
+    {
+      "path": "cardapio/public/assets/ChesseBurguer.webp",
+      "reason": "preset:binaries",
+      "size": 55644
+    },
+    {
+      "path": "cardapio/public/assets/Combo.webp",
+      "reason": "preset:binaries",
+      "size": 29786
+    },
+    {
+      "path": "cardapio/public/assets/batata e refri.webp",
+      "reason": "preset:binaries",
+      "size": 16180
+    },
+    {
+      "path": "cardapio/public/assets/burguer-chicken.webp",
+      "reason": "preset:binaries",
+      "size": 23224
+    },
+    {
+      "path": "container/public/assets/ReiBurguer.webp",
+      "reason": "preset:binaries",
+      "size": 23286
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 47,
+    "bytes": 879066
+  },
+  "languages": {
+    "JSON": 855737,
+    "JavaScript": 11629,
+    "CSS": 5479,
+    "Markdown": 4781,
+    "Other": 1440
+  },
+  "contentSha256": "62089fb276b6033d2eb6edd92276dbe77fd647507e6d30c7ba0f3f74f462b3e9"
+}

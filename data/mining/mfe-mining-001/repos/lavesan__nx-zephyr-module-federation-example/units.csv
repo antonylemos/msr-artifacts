@@ -1,0 +1,6 @@
+directory,markers
+.,package.json
+apps/courses,apps/courses/module-federation.config.ts;apps/courses/package.json;apps/courses/project.json;apps/courses/rsbuild.config.ts
+apps/profile,apps/profile/module-federation.config.ts;apps/profile/package.json;apps/profile/project.json;apps/profile/rsbuild.config.ts
+apps/shell,apps/shell/module-federation.config.ts;apps/shell/package.json;apps/shell/project.json;apps/shell/rsbuild.config.ts
+packages/zephyr-rsbuild-plugin,packages/zephyr-rsbuild-plugin/package.json

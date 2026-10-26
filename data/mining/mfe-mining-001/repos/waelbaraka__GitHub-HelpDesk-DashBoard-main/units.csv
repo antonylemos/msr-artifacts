@@ -1,0 +1,4 @@
+directory,markers
+Backend,Backend/package.json
+Frontend,Frontend/index.html;Frontend/package.json;Frontend/vite.config.js
+whatsapp-module-frontend,whatsapp-module-frontend/index.html;whatsapp-module-frontend/package.json;whatsapp-module-frontend/vite.config.js

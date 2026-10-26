@@ -1,0 +1,160 @@
+name: Publish
+
+on:
+  workflow_call:
+    inputs:
+      artifacts-url:
+        description: "Artifacts URL"
+        required: false
+        type: string
+        default: ""
+      is_production:
+        description: "Whether or not it's a released image"
+        required: false
+        type: boolean
+        default: false
+    secrets:
+      ARTIFACTS_USER:
+        required: true
+      ARTIFACTS_PASSWORD:
+        required: true
+
+env:
+  REGISTRY_HOST: ghcr.io
+  REGISTRY_PROJECT: "${{ github.repository }}"
+  IS_STABLE: "false"
+  IS_LATEST: "false"
+
+jobs:
+  publish-shell-ui:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          # NOTE: We explicitly set the refs otherwise the tag
+          # annotations content is not fetched
+          # See: https://github.com/actions/checkout/issues/882
+          ref: ${{ github.ref }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      # Retrieve Shell UI image from the build, load it and compute version
+      - name: Retrieve artifacts url
+        if: inputs.artifacts-url == ''
+        uses: scality/action-artifacts@v4
+        id: artifacts
+        with:
+          method: get
+          workflow-name: Post-merge
+          url: https://artifacts.scality.net
+          user: ${{ secrets.ARTIFACTS_USER }}
+          password: ${{ secrets.ARTIFACTS_PASSWORD }}
+      - name: Retrieve shell-ui image from artifacts
+        run: >
+          curl --fail -LO -u ${{ secrets.ARTIFACTS_USER }}:${{ secrets.ARTIFACTS_PASSWORD }}
+          ${{ inputs.artifacts-url || steps.artifacts.outputs.link }}/images/shell-ui.tar.gz
+      - name: Retrieve shell archive from artifacts
+        run: >
+          curl --fail -LO -u ${{ secrets.ARTIFACTS_USER }}:${{ secrets.ARTIFACTS_PASSWORD }}
+          ${{ inputs.artifacts-url || steps.artifacts.outputs.link }}/images/shell.tar
+      - name: Retrieve shell SBOM from artifacts
+        run: >
+          curl --fail -LO -u ${{ secrets.ARTIFACTS_USER }}:${{ secrets.ARTIFACTS_PASSWORD }}
+          ${{ inputs.artifacts-url || steps.artifacts.outputs.link }}/images/shell.tar.sbom.spdx.json
+      - name: Load shell-ui image
+        run: docker load < shell-ui.tar.gz
+      - name: Retrieve product.txt from artifacts
+        run: >
+          curl --fail -LO -u ${{ secrets.ARTIFACTS_USER }}:${{ secrets.ARTIFACTS_PASSWORD }}
+          ${{ inputs.artifacts-url || steps.artifacts.outputs.link }}/product.txt
+      - name: Compute shell-ui image version and GIT revision
+        run: |
+          source product.txt
+          echo "SHELL_UI_VERSION=$VERSION" >> $GITHUB_ENV
+          echo "SHELL_UI_SHORT_VERSION=$SHORT_VERSION" >> $GITHUB_ENV
+          echo "SHELL_UI_REF=$GIT" >> $GITHUB_ENV
+
+      # "Compute" if it's the latest version and if it's a stable one
+      - name: Set is_latest environment variable
+        run: |
+          LATEST_DEV_VERSION=$(
+            git ls-remote | \
+            awk -F/ '$3 == "development" { print $4 }' | sort -V | tail -n 1
+          )
+          if [ "${{ env.SHELL_UI_SHORT_VERSION }}" = "$LATEST_DEV_VERSION" ]; then
+            echo "IS_LATEST=true" >> $GITHUB_ENV
+          else
+            echo "IS_LATEST=false" >> $GITHUB_ENV
+          fi
+      - name: Set is_stable environment variable
+        # NOTE: It cannot be stable if it's not on production
+        # We consider stable version, tags with no suffix and we also consider that
+        # current version we try to publish is already tagged
+        if: inputs.is_production
+        run: |
+          LATEST_STABLE_RELEASE=$(
+            git ls-remote --tags | \
+            awk -F/ '$3 ~ /^[0-9]+\.[0-9]+\.[0-9]+$/ { print $3 }' | sort -V | tail -n 1
+          )
+          if [ "${{ env.SHELL_UI_VERSION }}" = "$LATEST_STABLE_RELEASE" ]; then
+            echo "IS_STABLE=true" >> $GITHUB_ENV
+          else
+            echo "IS_STABLE=false" >> $GITHUB_ENV
+          fi
+
+      # Tag shell-ui image before upload to registry
+      - name: Tag shell-ui image with current version
+        run: >
+          docker tag "shell-ui:v${{ env.SHELL_UI_VERSION }}"
+          "${{ env.REGISTRY_HOST }}/${{ env.REGISTRY_PROJECT }}/shell-ui:v${{ env.SHELL_UI_VERSION }}"
+      - name: Tag shell-ui image with commit short revision
+        run: >
+          docker tag "shell-ui:v${{ env.SHELL_UI_VERSION }}"
+          "${{ env.REGISTRY_HOST }}/${{ env.REGISTRY_PROJECT }}/shell-ui:v${{ env.SHELL_UI_VERSION }}-${{ env.SHELL_UI_REF }}"
+      - name: Tag shell-ui image as latest
+        if: fromJSON(env.IS_LATEST)
+        run: >
+          docker tag "shell-ui:v${{ env.SHELL_UI_VERSION }}"
+          "${{ env.REGISTRY_HOST }}/${{ env.REGISTRY_PROJECT }}/shell-ui:latest"
+      - name: Tag shell-ui image as stable
+        if: fromJSON(env.IS_STABLE)
+        run: >
+          docker tag "shell-ui:v${{ env.SHELL_UI_VERSION }}"
+          "${{ env.REGISTRY_HOST }}/${{ env.REGISTRY_PROJECT }}/shell-ui:stable"
+
+      # Push image to the registry
+      - name: Login to the registry
+        uses: docker/login-action@v4
+        with:
+          registry: ${{ env.REGISTRY_HOST }}
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Push shell-ui images to the registry
+        run: >
+          docker push --all-tags
+          "${{ env.REGISTRY_HOST }}/${{ env.REGISTRY_PROJECT }}/shell-ui"
+
+      - name: Get tag message
+        if: inputs.is_production
+        id: get_tag_message
+        run: |-
+          echo "message<<EOF" >> $GITHUB_OUTPUT
+          git tag -l --format='%(contents)' "${{ env.SHELL_UI_VERSION }}" | tail -n +4 | tee -a $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - uses: softprops/action-gh-release@v2
+        if: inputs.is_production
+        with:
+          name: Metalk8s ${{ env.SHELL_UI_VERSION }}
+          tag_name: ${{ env.SHELL_UI_VERSION }}
+          body: ${{ steps.get_tag_message.outputs.message }}
+          # We consider pre-releases if the tag contains a hyphen
+          # e.g. 1.2.3-alpha.0
+          prerelease: ${{ contains(env.SHELL_UI_VERSION, '-') }}
+          draft: false
+          files: |
+            shell.tar
+            shell.tar.sbom.spdx.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

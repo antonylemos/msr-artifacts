@@ -1,0 +1,73 @@
+name: "Build docs"
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        description: "the git revision to checkout"
+        default: ${{ github.ref }}
+        required: false
+        type: string
+      skip-devcontainer:
+        description: "True will skip the build of the devcontainer"
+        default: false
+        required: false
+        type: boolean
+    secrets:
+      ARTIFACTS_USER:
+        required: true
+      ARTIFACTS_PASSWORD:
+        required: true
+
+jobs:
+  build-devcontainer:
+    uses: ./.github/workflows/build-devcontainer.yaml
+    secrets: inherit
+    with:
+      # NOTE: We check "== true" instead of just checking the value
+      # since by default when the workflow is call with "workflow dispatch"
+      # the input will (sadly) be "" and not use the default value
+      skip: ${{ inputs.skip-devcontainer == true }}
+
+  docs:
+    runs-on: ubuntu-latest
+    needs:
+      - build-devcontainer
+    container:
+      image: ghcr.io/${{ github.repository }}/devcontainer:${{ github.sha }}
+      # We have to use `root` for the moment
+      # Sees: https://github.com/actions/checkout/issues/1575
+      # Could work with a user with 1001 id but not for docker
+      options: --user root
+      credentials:
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.ref }}
+      - name: Set safe directory (since container is root and not user 1001)
+        run: git config --global --add safe.directory $GITHUB_WORKSPACE
+      - name: Build documentation for ReadTheDocs
+        env:
+          # Fake that we are building in a ReadTheDocs environment
+          READTHEDOCS: "True"
+        run: tox --workdir /tmp/tox -e docs -- html
+      - name: Copy generated docs for ReadTheDocs
+        run: mkdir -p artifacts/docs/readthedocs && cp -r docs/_build/* artifacts/docs/readthedocs/
+      - name: Build documentation with Scality theme
+        run: rm -rf docs/_build && tox --workdir /tmp/tox -e docs -- html
+      - name: Copy generated docs with Scality theme
+        run: cp -r docs/_build/* artifacts/docs/ && cp CHANGELOG.md artifacts/docs/
+      - name: Upload artifacts
+        uses: scality/action-artifacts@v4
+        with:
+          method: upload
+          url: https://artifacts.scality.net
+          user: ${{ secrets.ARTIFACTS_USER }}
+          password: ${{ secrets.ARTIFACTS_PASSWORD }}
+          source: artifacts

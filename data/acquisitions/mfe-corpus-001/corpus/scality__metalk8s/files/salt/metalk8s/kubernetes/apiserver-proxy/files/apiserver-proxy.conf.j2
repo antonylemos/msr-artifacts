@@ -1,0 +1,75 @@
+error_log stderr notice;
+
+worker_processes 2;
+worker_rlimit_nofile 130048;
+worker_shutdown_timeout 10s;
+
+events {
+  multi_accept on;
+  use epoll;
+  worker_connections 16384;
+}
+
+{%- if pillar.get('apiserver_ip') %}
+{%-     set apiservers = [pillar.apiserver_ip] %}
+{%- else %}
+{%-     set masters = salt['metalk8s.minions_by_role']('master') %}
+{%-     if not masters %}
+            {{ raise("No master nodes in pillar 'metalk8s:nodes', "
+                     ~ "can't deploy apiserver-proxy") }}
+{%-     else %}
+{%-         set master_ips = salt['mine.get'](
+                tgt=masters | join(','),
+                fun='control_plane_ip',
+                tgt_type='list',
+            )
+%}
+{%-         if not master_ips and grains.id in masters %}
+{# In case we're bootstrapping, the Mine wouldn't be available #}
+{%-             set apiservers = [grains['metalk8s']['control_plane_ip']] %}
+{%-         else %}
+{%-             set apiservers = master_ips.values() | sort %}
+{%-         endif %}
+{%-     endif %}
+{%- endif %}
+
+stream {
+  upstream apiserver {
+    least_conn;
+{%- for apiserver in apiservers %}
+{%-     if apiserver == grains['metalk8s']['control_plane_ip'] %}
+{%-         set weight = 100 %}
+{%-      else %}
+{%-         set weight = 1 %}
+{%-      endif %}
+    server {{ apiserver }}:6443 weight={{ weight }};
+{%- endfor %}
+  }
+
+  server {
+    listen        127.0.0.1:7443;
+    proxy_pass    apiserver;
+    proxy_timeout 10m;
+    proxy_connect_timeout 1s;
+  }
+}
+
+http {
+  aio threads;
+  aio_write on;
+  tcp_nopush on;
+  tcp_nodelay on;
+
+  keepalive_timeout 10m;
+  keepalive_requests 100;
+  reset_timedout_connection on;
+  autoindex off;
+
+  server {
+    listen 127.0.0.1:7080;
+    location /healthz {
+      access_log off;
+      return 200 'ok';
+    }
+  }
+}

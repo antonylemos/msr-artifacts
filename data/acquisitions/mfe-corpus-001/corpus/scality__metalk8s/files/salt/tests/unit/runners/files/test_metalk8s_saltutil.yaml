@@ -1,0 +1,186 @@
+accept_minion:
+  # 1. Success: nominal
+  - wheel_ret:
+      success: True
+      return:
+        minions:
+          - my-minion
+    result: True
+
+  # 2. Success: already accepted
+  - up_ret:
+      - my-minion
+    result: True
+
+  # 3. Error: Invalid result
+  - wheel_ret: "An erRor Oo"
+    raises: True
+    result: >-
+      Accept of minion 'my-minion' key failed: An erRor Oo
+
+  # 4. Error: success false
+  - wheel_ret:
+      success: False
+    raises: True
+    result: >-
+      Accept of minion 'my-minion' key failed: .*
+
+  # 5. Error: not accepted
+  - wheel_ret:
+      success: True
+      return: {}
+    raises: True
+    result: >-
+      Minion 'my-minion' key has not been accepted
+
+wait_minions:
+  # 1. Success: nominal
+  - result: >-
+      All minions matching "*" responded and finished startup state: my-minion
+
+  # 2. Success: nominal multiple minions
+  - ping_ret:
+      minion-1: True
+      minion-2: True
+    is_running_ret:
+      minion-1: []
+      minion-2: []
+    result: >-
+      All minions matching "*" responded and finished startup state: minion-1, minion-2
+
+  # 3. Success: multiple retries for ping
+  - ping_ret:
+      - False
+      - False
+      - True
+    result: >-
+      All minions matching "*" responded and finished startup state: my-minion
+
+  # 4. Success: multiple retries for is_running
+  - is_running_ret:
+      - &running_state
+        - fun: state.sls
+          pid: 123
+          jid: 20211108155442158347
+          tgt: "salt-call"
+      - *running_state
+      - []
+    result: >-
+      All minions matching "*" responded and finished startup state: my-minion
+
+  # 5. Success: multiple retries for both
+  - ping_ret:
+      - False
+      - False
+      - True
+    is_running_ret:
+      - *running_state
+      - *running_state
+      - []
+    result: >-
+      All minions matching "*" responded and finished startup state: my-minion
+
+  # 6. Success: retries on a specific minion
+  - ping_ret:
+      - minion-1: True
+        minion-2: False
+      - minion-1: False
+        minion-2: True
+      - minion-1: False
+        minion-2: False
+      - minion-1: True
+        minion-2: True
+    is_running_ret:
+      - minion-1: []
+        minion-2: *running_state
+      - minion-1: *running_state
+        minion-2: []
+      - minion-1: *running_state
+        minion-2: *running_state
+      - minion-1: []
+        minion-2: []
+    result: >-
+      All minions matching "*" responded and finished startup state: minion-1, minion-2
+
+  # 7. Failure: exception when pinging
+  - ping_ret: null
+    raises: True
+    result: >-
+      Minion failed to respond after 10 retries: *
+
+  # 8. Failure: exception when checking running state
+  - is_running_ret: null
+    raises: True
+    result: >-
+      An ErrOr Occurred
+
+  # 9. Failure: minion does not answer to ping
+  - ping_ret: False
+    raises: True
+    result: >-
+      Minion failed to respond after 10 retries: my-minion
+
+  # 10. Failure: minion always have a running state
+  - is_running_ret:
+      my-minion: *running_state
+    raises: True
+    result: >-
+      Minion still have running state after 10 retries: my-minion
+
+  # 11. Failure: A minion does not answer to ping
+  - ping_ret:
+      minion-1: True
+      minion-2: False
+    raises: True
+    result: >-
+      Minions failed to respond after 10 retries: minion-2
+
+  # 12. Failure: A minion always have a running state
+  - is_running_ret:
+      minion-1: []
+      minion-2: *running_state
+    raises: True
+    result: >-
+      Minions still have running state after 10 retries: minion-2
+
+  # 13. Success: minion answers on the very last (10th) attempt
+  # Guards against an off-by-one in the retry loop: with the default
+  # `retry=10` all 10 ping attempts must be used, so a list of 9 failures
+  # followed by a success is fully consumed and the wait succeeds.
+  - ping_ret:
+      - False
+      - False
+      - False
+      - False
+      - False
+      - False
+      - False
+      - False
+      - False
+      - True
+    result: >-
+      All minions matching "*" responded and finished startup state: my-minion
+
+  # 14. Success: expected salt version matches (with a release suffix)
+  - expected_salt_version: "3006.27"
+    version_ret: "3006.27-0"
+    result: >-
+      All minions matching "*" responded and finished startup state: my-minion
+
+  # 15. Success: minion reaches the expected salt version after retries
+  # (detached salt-minion upgrade completing in the background: old version,
+  # then minion down while dnf runs, then exact new version)
+  - expected_salt_version: "3006.27"
+    version_ret:
+      - "3006.26-0"
+      - False
+      - "3006.27"
+    result: >-
+      All minions matching "*" responded and finished startup state: my-minion
+
+  # 16. Failure: minion never reaches the expected salt version
+  - expected_salt_version: "3006.27"
+    version_ret: "3006.26-0"
+    raises: True
+    result: >-
+      Minion failed to respond after 10 retries: my-minion

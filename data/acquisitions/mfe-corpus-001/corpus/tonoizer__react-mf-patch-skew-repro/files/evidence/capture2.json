@@ -1,0 +1,168 @@
+{
+  "failed": [],
+  "consoleLogs": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "loc": {
+        "url": "http://localhost:5000/favicon.ico",
+        "line": 0,
+        "column": 0,
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "pageErrors": [
+    {
+      "message": "Cannot read properties of null (reading 'useState')",
+      "stack": "TypeError: Cannot read properties of null (reading 'useState')\n    at react_production.useState (http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react__loadShare__.js-_tAHAGCE.js:437:33)\n    at App (http://localhost:5000/assets/main-C7Dk7TXS.js:131:27)\n    at renderWithHooks (http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-DN3TqpyC.js:3523:21)\n    at updateFunctionComponent (http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-DN3TqpyC.js:5152:15)\n    at beginWork (http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-DN3TqpyC.js:5763:14)\n    at performUnitOfWork (http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-DN3TqpyC.js:8529:14)\n    at workLoopSync (http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-DN3TqpyC.js:8427:37)\n    at renderRootSync (http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-DN3TqpyC.js:8411:7)\n    at performWorkOnRoot (http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-DN3TqpyC.js:8086:40)\n    at performWorkOnRootViaSchedulerTask (http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-DN3TqpyC.js:9084:3)"
+    }
+  ],
+  "result": {
+    "body": "",
+    "share": {
+      "default:react/jsx-runtime": {
+        "Fragment": {},
+        "default": {},
+        "jsx": {},
+        "jsxs": {}
+      },
+      "react/jsx-runtime": {
+        "Fragment": {},
+        "default": {},
+        "jsx": {},
+        "jsxs": {}
+      },
+      "default:react": {
+        "Activity": {},
+        "Children": {},
+        "Component": {},
+        "Fragment": {},
+        "Profiler": {},
+        "PureComponent": {},
+        "StrictMode": {},
+        "Suspense": {},
+        "__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE": {},
+        "__COMPILER_RUNTIME": {},
+        "cache": {},
+        "cacheSignal": {},
+        "cloneElement": {},
+        "createContext": {},
+        "createElement": {},
+        "createRef": {},
+        "default": {
+          "version": "19.2.8"
+        },
+        "forwardRef": {},
+        "isValidElement": {},
+        "lazy": {},
+        "memo": {},
+        "startTransition": {},
+        "unstable_useCacheRefresh": {},
+        "use": {},
+        "useActionState": {},
+        "useCallback": {},
+        "useContext": {},
+        "useDebugValue": {},
+        "useDeferredValue": {},
+        "useEffect": {},
+        "useEffectEvent": {},
+        "useId": {},
+        "useImperativeHandle": {},
+        "useInsertionEffect": {},
+        "useLayoutEffect": {},
+        "useMemo": {},
+        "useOptimistic": {},
+        "useReducer": {},
+        "useRef": {},
+        "useState": {},
+        "useSyncExternalStore": {},
+        "useTransition": {},
+        "version": {}
+      },
+      "react": {
+        "Activity": {},
+        "Children": {},
+        "Component": {},
+        "Fragment": {},
+        "Profiler": {},
+        "PureComponent": {},
+        "StrictMode": {},
+        "Suspense": {},
+        "__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE": {},
+        "__COMPILER_RUNTIME": {},
+        "cache": {},
+        "cacheSignal": {},
+        "cloneElement": {},
+        "createContext": {},
+        "createElement": {},
+        "createRef": {},
+        "default": {
+          "version": "19.2.8"
+        },
+        "forwardRef": {},
+        "isValidElement": {},
+        "lazy": {},
+        "memo": {},
+        "startTransition": {},
+        "unstable_useCacheRefresh": {},
+        "use": {},
+        "useActionState": {},
+        "useCallback": {},
+        "useContext": {},
+        "useDebugValue": {},
+        "useDeferredValue": {},
+        "useEffect": {},
+        "useEffectEvent": {},
+        "useId": {},
+        "useImperativeHandle": {},
+        "useInsertionEffect": {},
+        "useLayoutEffect": {},
+        "useMemo": {},
+        "useOptimistic": {},
+        "useReducer": {},
+        "useRef": {},
+        "useState": {},
+        "useSyncExternalStore": {},
+        "useTransition": {},
+        "version": {}
+      },
+      "default:react-dom/client": {
+        "createRoot": {},
+        "default": {
+          "version": "19.2.8"
+        },
+        "hydrateRoot": {},
+        "version": {}
+      },
+      "react-dom/client": {
+        "createRoot": {},
+        "default": {
+          "version": "19.2.8"
+        },
+        "hydrateRoot": {},
+        "version": {}
+      },
+      "default:react/compiler-runtime": {
+        "c": {},
+        "default": {}
+      },
+      "react/compiler-runtime": {
+        "c": {},
+        "default": {}
+      },
+      "default:react/jsx-dev-runtime": {
+        "Fragment": {},
+        "default": {},
+        "jsxDEV": {}
+      },
+      "react/jsx-dev-runtime": {
+        "Fragment": {},
+        "default": {},
+        "jsxDEV": {}
+      }
+    },
+    "owners": null
+  }
+}

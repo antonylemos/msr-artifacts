@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "id": "1133729895",
+  "fullName": "fi-x64/mfe",
+  "commit": "fa4088ae3313734c98a027db5fccfee4db34a46d",
+  "acquiredAt": "2026-10-24T00:32:26.831Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 29,
+    "bytes": 1562663
+  },
+  "languages": {
+    "JSON": 1540705,
+    "JavaScript": 19756,
+    "YAML": 1973,
+    "HTML": 197,
+    "Other": 32
+  },
+  "contentSha256": "e826ed8e210135342350584afa4c2d778e1774a8c5084da5ae9eda8b3ff1a8e7"
+}

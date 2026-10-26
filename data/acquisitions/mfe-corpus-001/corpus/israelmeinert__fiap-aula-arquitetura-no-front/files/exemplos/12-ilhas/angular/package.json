@@ -1,0 +1,10 @@
+{
+  "name": "12-angular",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "ng serve 12-angular --host 127.0.0.1 --port 4200 --no-hmr",
+    "build": "ng build 12-angular"
+  }
+}

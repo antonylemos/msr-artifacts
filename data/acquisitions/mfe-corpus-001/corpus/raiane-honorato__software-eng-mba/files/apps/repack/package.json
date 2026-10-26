@@ -1,0 +1,14 @@
+{
+  "name": "mygym-repack",
+  "private": true,
+  "packageManager": "pnpm@10.33.0",
+  "scripts": {
+    "start": "mprocs"
+  },
+  "devDependencies": {
+    "mprocs": "^0.9.6"
+  },
+  "engines": {
+    "node": ">= 22.11.0"
+  }
+}

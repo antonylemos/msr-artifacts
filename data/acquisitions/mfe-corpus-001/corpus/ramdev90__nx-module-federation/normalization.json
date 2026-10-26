@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "id": "1178836362",
+  "fullName": "ramdev90/nx-module-federation",
+  "commit": "cf42f3f1506bfe6f25a263d0763cd09cac7e84f7",
+  "acquiredAt": "2026-10-24T00:32:20.846Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "README.md",
+      "reason": "preset:binaries",
+      "size": 4993
+    },
+    {
+      "path": "apps/microfrontend-workspace/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "customer/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "orders/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "products/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "shell/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 97,
+    "bytes": 1023022
+  },
+  "languages": {
+    "JSON": 841571,
+    "TypeScript": 173743,
+    "JavaScript": 4297,
+    "HTML": 2046,
+    "Other": 965,
+    "CSS": 400
+  },
+  "contentSha256": "08fcc693742f0c6ea8b4d631f93ec7da5490bdff479e3e1eec78a0be83a0d026"
+}

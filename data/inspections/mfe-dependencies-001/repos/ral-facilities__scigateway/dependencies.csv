@@ -1,0 +1,2 @@
+manifest,line,section,package,version,technology,same_package_matches,other_package_matches
+package.json,50,dependencies,single-spa,6.0.3,single-spa,server/e2e-plugin/main.js:9;src/state/actions/loadMicroFrontends.tsx:31,

@@ -1,0 +1,182 @@
+pattern,path,line,excerpt
+dep-module-federation,apps/admin-shell/package.json,14,"    ""@module-federation/runtime"": ""2.8.2"","
+dep-module-federation,apps/web-shell/package.json,13,"    ""@module-federation/runtime"": ""2.8.2"","
+dep-module-federation,modules/chat/package.json,19,"    ""@module-federation/vite"": ""1.20.5"","
+dep-module-federation,modules/clientes/package.json,18,"    ""@module-federation/vite"": ""1.20.5"","
+dep-module-federation,modules/cuentas/package.json,18,"    ""@module-federation/vite"": ""1.20.5"","
+dep-module-federation,modules/ejemplo-admin/package.json,18,"    ""@module-federation/vite"": ""1.20.5"","
+dep-module-federation,modules/ejemplo-web/package.json,18,"    ""@module-federation/vite"": ""1.20.5"","
+dep-module-federation,modules/hello/package.json,17,"    ""@module-federation/vite"": ""1.20.5"","
+dep-module-federation,modules/media/package.json,19,"    ""@module-federation/vite"": ""1.20.5"","
+dep-module-federation,modules/ops/package.json,10,"    ""@module-federation/vite"": ""1.20.5"", ""@types/react"": ""^19.2.0"", ""@types/react-dom"": ""^19.2.0"","
+dep-module-federation,modules/registry/package.json,18,"    ""@module-federation/vite"": ""1.20.5"","
+dep-module-federation,modules/sitio/package.json,18,"    ""@module-federation/vite"": ""1.20.5"","
+lock-mfe-dependency,pnpm-lock.yaml,19,      '@module-federation/runtime':
+lock-mfe-dependency,pnpm-lock.yaml,105,      '@module-federation/runtime':
+lock-mfe-dependency,pnpm-lock.yaml,149,      '@module-federation/vite':
+lock-mfe-dependency,pnpm-lock.yaml,180,      '@module-federation/vite':
+lock-mfe-dependency,pnpm-lock.yaml,211,      '@module-federation/vite':
+lock-mfe-dependency,pnpm-lock.yaml,242,      '@module-federation/vite':
+lock-mfe-dependency,pnpm-lock.yaml,273,      '@module-federation/vite':
+lock-mfe-dependency,pnpm-lock.yaml,304,      '@module-federation/vite':
+lock-mfe-dependency,pnpm-lock.yaml,338,      '@module-federation/vite':
+lock-mfe-dependency,pnpm-lock.yaml,369,      '@module-federation/vite':
+lock-mfe-dependency,pnpm-lock.yaml,400,      '@module-federation/vite':
+lock-mfe-dependency,pnpm-lock.yaml,431,      '@module-federation/vite':
+lock-mfe-dependency,pnpm-lock.yaml,825,  '@module-federation/dts-plugin@2.8.2':
+lock-mfe-dependency,pnpm-lock.yaml,834,  '@module-federation/error-codes@2.8.2':
+lock-mfe-dependency,pnpm-lock.yaml,837,  '@module-federation/managers@2.8.2':
+lock-mfe-dependency,pnpm-lock.yaml,840,  '@module-federation/runtime-core@2.8.2':
+lock-mfe-dependency,pnpm-lock.yaml,843,  '@module-federation/runtime@2.8.2':
+lock-mfe-dependency,pnpm-lock.yaml,846,  '@module-federation/sdk@2.8.2':
+lock-mfe-dependency,pnpm-lock.yaml,849,  '@module-federation/third-party-dts-extractor@2.8.2':
+lock-mfe-dependency,pnpm-lock.yaml,852,  '@module-federation/vite@1.20.5':
+lock-mfe-dependency,pnpm-lock.yaml,2475,  '@module-federation/dts-plugin@2.8.2(typescript@5.9.3)':
+lock-mfe-dependency,pnpm-lock.yaml,2477,      '@module-federation/error-codes': 2.8.2
+lock-mfe-dependency,pnpm-lock.yaml,2478,      '@module-federation/managers': 2.8.2
+lock-mfe-dependency,pnpm-lock.yaml,2479,      '@module-federation/sdk': 2.8.2
+lock-mfe-dependency,pnpm-lock.yaml,2480,      '@module-federation/third-party-dts-extractor': 2.8.2
+lock-mfe-dependency,pnpm-lock.yaml,2490,  '@module-federation/error-codes@2.8.2': {}
+lock-mfe-dependency,pnpm-lock.yaml,2492,  '@module-federation/managers@2.8.2':
+lock-mfe-dependency,pnpm-lock.yaml,2494,      '@module-federation/sdk': 2.8.2
+lock-mfe-dependency,pnpm-lock.yaml,2496,  '@module-federation/runtime-core@2.8.2':
+lock-mfe-dependency,pnpm-lock.yaml,2498,      '@module-federation/error-codes': 2.8.2
+lock-mfe-dependency,pnpm-lock.yaml,2499,      '@module-federation/sdk': 2.8.2
+lock-mfe-dependency,pnpm-lock.yaml,2501,  '@module-federation/runtime@2.8.2':
+lock-mfe-dependency,pnpm-lock.yaml,2503,      '@module-federation/error-codes': 2.8.2
+lock-mfe-dependency,pnpm-lock.yaml,2504,      '@module-federation/runtime-core': 2.8.2
+lock-mfe-dependency,pnpm-lock.yaml,2505,      '@module-federation/sdk': 2.8.2
+lock-mfe-dependency,pnpm-lock.yaml,2507,  '@module-federation/sdk@2.8.2': {}
+lock-mfe-dependency,pnpm-lock.yaml,2509,  '@module-federation/third-party-dts-extractor@2.8.2': {}
+lock-mfe-dependency,pnpm-lock.yaml,2511,  '@module-federation/vite@1.20.5(typescript@5.9.3)(vite@8.2.1(@types/node@22.20.1)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.11))':
+lock-mfe-dependency,pnpm-lock.yaml,2513,      '@module-federation/dts-plugin': 2.8.2(typescript@5.9.3)
+lock-mfe-dependency,pnpm-lock.yaml,2514,      '@module-federation/runtime': 2.8.2
+lock-mfe-dependency,pnpm-lock.yaml,2515,      '@module-federation/sdk': 2.8.2
+cfg-federation-plugin,modules/chat/vite.config.ts,8,    federation({
+cfg-federation-plugin,modules/clientes/vite.config.ts,22,          federation({
+cfg-federation-plugin,modules/cuentas/vite.config.ts,8,    federation({
+cfg-federation-plugin,modules/ejemplo-admin/vite.config.ts,10,    federation({
+cfg-federation-plugin,modules/ejemplo-web/vite.config.ts,11,    federation({
+cfg-federation-plugin,modules/hello/vite.config.ts,10,    federation({
+cfg-federation-plugin,modules/media/vite.config.ts,8,    federation({
+cfg-federation-plugin,modules/ops/vite.config.ts,8,    federation({
+cfg-federation-plugin,modules/registry/vite.config.ts,8,    federation({
+cfg-federation-plugin,modules/sitio/vite.config.ts,8,    federation({
+cfg-exposes,modules/chat/vite.config.ts,11,      exposes: {
+cfg-exposes,modules/clientes/vite.config.ts,25,            exposes: {
+cfg-exposes,modules/cuentas/vite.config.ts,11,      exposes: {
+cfg-exposes,modules/ejemplo-admin/vite.config.ts,13,      exposes: {
+cfg-exposes,modules/ejemplo-web/vite.config.ts,14,      exposes: {
+cfg-exposes,modules/hello/vite.config.ts,13,      exposes: {
+cfg-exposes,modules/media/vite.config.ts,11,      exposes: {
+cfg-exposes,modules/ops/vite.config.ts,11,"      exposes: { './OpsAdminPage': './src/OpsAdminPage.tsx' },"
+cfg-exposes,modules/registry/vite.config.ts,11,      exposes: {
+cfg-exposes,modules/sitio/vite.config.ts,11,      exposes: {
+cfg-shared,modules/chat/vite.config.ts,15,"      shared: { react: { singleton: true }, 'react-dom': { singleton: true } },"
+cfg-shared,modules/clientes/vite.config.ts,32,            shared: {
+cfg-shared,modules/clientes/vite.config.ts,33,"              react: { singleton: true },"
+cfg-shared,modules/clientes/vite.config.ts,34,"              'react-dom': { singleton: true },"
+cfg-shared,modules/cuentas/vite.config.ts,16,      shared: {
+cfg-shared,modules/cuentas/vite.config.ts,17,"        react: { singleton: true },"
+cfg-shared,modules/cuentas/vite.config.ts,18,"        'react-dom': { singleton: true },"
+cfg-shared,modules/ejemplo-admin/vite.config.ts,17,      shared: {
+cfg-shared,modules/ejemplo-admin/vite.config.ts,18,"        react: { singleton: true },"
+cfg-shared,modules/ejemplo-admin/vite.config.ts,19,"        'react-dom': { singleton: true },"
+cfg-shared,modules/ejemplo-web/vite.config.ts,17,      shared: {
+cfg-shared,modules/ejemplo-web/vite.config.ts,18,"        react: { singleton: true },"
+cfg-shared,modules/ejemplo-web/vite.config.ts,19,"        'react-dom': { singleton: true },"
+cfg-shared,modules/hello/vite.config.ts,17,      shared: {
+cfg-shared,modules/hello/vite.config.ts,18,"        react: { singleton: true },"
+cfg-shared,modules/hello/vite.config.ts,19,"        'react-dom': { singleton: true },"
+cfg-shared,modules/media/vite.config.ts,14,      shared: {
+cfg-shared,modules/media/vite.config.ts,15,"        react: { singleton: true },"
+cfg-shared,modules/media/vite.config.ts,16,"        'react-dom': { singleton: true },"
+cfg-shared,modules/ops/vite.config.ts,12,"      shared: { react: { singleton: true }, 'react-dom': { singleton: true } },"
+cfg-shared,modules/registry/vite.config.ts,14,      shared: {
+cfg-shared,modules/registry/vite.config.ts,15,"        react: { singleton: true },"
+cfg-shared,modules/registry/vite.config.ts,16,"        'react-dom': { singleton: true },"
+cfg-shared,modules/sitio/vite.config.ts,14,      shared: {
+cfg-shared,modules/sitio/vite.config.ts,15,"        react: { singleton: true },"
+cfg-shared,modules/sitio/vite.config.ts,16,"        'react-dom': { singleton: true },"
+cfg-public-path,apps/admin-shell/vite.config.ts,7,"  base: '/admin-assets/',"
+cfg-public-path,apps/web-shell/vite.config.ts,10,"  base: '/assets/',"
+rt-remote-entry,apps/admin-shell/src/api.ts,13,  remoteEntry: string;
+rt-remote-entry,apps/admin-shell/src/federation.ts,34,"  const remote = { name: route.moduleId, entry: route.remoteEntry, type: 'module' };"
+rt-remote-entry,apps/core/src/registry/registry.service.ts,30,  remoteEntry: string;
+rt-remote-entry,apps/core/src/registry/registry.service.ts,39,  remoteEntry: string;
+rt-remote-entry,apps/core/src/registry/registry.service.ts,82,  remoteEntry: string;
+rt-remote-entry,apps/core/src/registry/registry.service.ts,200,"          remoteEntry: compiled.remoteEntry,"
+rt-remote-entry,apps/core/src/registry/registry.service.ts,222,"      remoteEntry: compiled.remoteEntry,"
+rt-remote-entry,apps/core/src/registry/registry.service.ts,347,  webWidgets(): Array<{ moduleId: string; component: string; remoteEntry: string }> {
+rt-remote-entry,apps/core/src/registry/registry.service.ts,353,"        remoteEntry: compiled.remoteEntry,"
+rt-remote-entry,apps/core/src/registry/registry.service.ts,483,"          remoteEntry: mod.manifest.remoteEntry,"
+rt-remote-entry,apps/core/src/shell/shell.service.ts,15,  remoteEntry: string;
+rt-remote-entry,apps/core/src/shell/shell.service.ts,24,  remoteEntry: string;
+rt-remote-entry,apps/core/src/shell/shell.service.ts,141,"              remoteEntry: match.remoteEntry,"
+rt-remote-entry,apps/core/test/registry.test.ts,72,"    remoteEntry: `${origin}/remoteEntry.js`,"
+rt-remote-entry,apps/web-shell/src/entry-server.tsx,21,  remoteEntry: string;
+rt-remote-entry,apps/web-shell/src/entry-server.tsx,33,  remoteEntry: string;
+rt-remote-entry,apps/web-shell/src/entry-server.tsx,58,          data-remote={w.remoteEntry}
+rt-remote-entry,apps/web-shell/src/entry-server.tsx,62,"          <link rel=""modulepreload"" href={w.remoteEntry} />"
+rt-remote-entry,apps/web-shell/src/entry-server.tsx,80,"    'data-remote': island.remoteEntry,"
+rt-remote-entry,apps/web-shell/src/entry-server.tsx,89,"      <link rel=""modulepreload"" href={island.remoteEntry} />"
+rt-remote-entry,apps/web-shell/src/islands.ts,18,  remoteEntry: string;
+rt-remote-entry,apps/web-shell/src/islands.ts,28,    const remoteEntry = el.dataset['remote'] ?? '';
+rt-remote-entry,apps/web-shell/src/islands.ts,29,    if (slash <= 0 || remoteEntry === '') return;
+rt-remote-entry,apps/web-shell/src/islands.ts,40,"      remoteEntry,"
+rt-remote-entry,apps/web-shell/src/islands.ts,84,"        { name: spec.moduleId, entry: spec.remoteEntry, type: 'module' as const },"
+rt-remote-entry,modules/chat/server.mjs,36,const REMOTE_ENTRY = process.env.MODULE_REMOTE_ENTRY ?? `http://127.0.0.1:${PORT}/remoteEntry.js`;
+rt-remote-entry,modules/chat/server.mjs,492,"  remoteEntry: REMOTE_ENTRY,"
+rt-remote-entry,modules/chat/vite.config.ts,10,"      filename: 'remoteEntry.js',"
+rt-remote-entry,modules/clientes/server.mjs,39,  process.env.MODULE_REMOTE_ENTRY ?? `http://127.0.0.1:${PORT}/remoteEntry.js`;
+rt-remote-entry,modules/clientes/server.mjs,1004,"  remoteEntry: REMOTE_ENTRY,"
+rt-remote-entry,modules/clientes/vite.config.ts,6,//  - cliente (federado): remoteEntry.js con las islas y páginas de admin.
+rt-remote-entry,modules/clientes/vite.config.ts,24,"            filename: 'remoteEntry.js',"
+rt-remote-entry,modules/cuentas/server.mjs,21,  process.env.MODULE_REMOTE_ENTRY ?? `http://127.0.0.1:${PORT}/remoteEntry.js`;
+rt-remote-entry,modules/cuentas/server.mjs,38,"  remoteEntry: REMOTE_ENTRY,"
+rt-remote-entry,modules/cuentas/vite.config.ts,10,"      filename: 'remoteEntry.js',"
+rt-remote-entry,modules/ejemplo-admin/server.mjs,22,  process.env.MODULE_REMOTE_ENTRY ?? `http://127.0.0.1:${PORT}/remoteEntry.js`;
+rt-remote-entry,modules/ejemplo-admin/server.mjs,39,"  remoteEntry: REMOTE_ENTRY,"
+rt-remote-entry,modules/ejemplo-admin/vite.config.ts,12,"      filename: 'remoteEntry.js',"
+rt-remote-entry,modules/ejemplo-web/server.mjs,22,  process.env.MODULE_REMOTE_ENTRY ?? `http://127.0.0.1:${PORT}/remoteEntry.js`;
+rt-remote-entry,modules/ejemplo-web/server.mjs,39,"  remoteEntry: REMOTE_ENTRY,"
+rt-remote-entry,modules/ejemplo-web/vite.config.ts,13,"      filename: 'remoteEntry.js',"
+rt-remote-entry,modules/hello/server.mjs,21,const REMOTE_ENTRY = process.env.HELLO_REMOTE_ENTRY ?? `http://127.0.0.1:${PORT}/remoteEntry.js`;
+rt-remote-entry,modules/hello/server.mjs,38,"  remoteEntry: REMOTE_ENTRY,"
+rt-remote-entry,modules/hello/vite.config.ts,5,// Build federado: expone los componentes vía remoteEntry.js. Los shells los
+rt-remote-entry,modules/hello/vite.config.ts,12,"      filename: 'remoteEntry.js',"
+rt-remote-entry,modules/hello/vite.config.ts,28,      // Entrada nominal: lo que importa del build es remoteEntry.js.
+rt-remote-entry,modules/media/server.mjs,27,  process.env.MODULE_REMOTE_ENTRY ?? `http://127.0.0.1:${PORT}/remoteEntry.js`;
+rt-remote-entry,modules/media/server.mjs,427,"  remoteEntry: REMOTE_ENTRY,"
+rt-remote-entry,modules/media/vite.config.ts,10,"      filename: 'remoteEntry.js',"
+rt-remote-entry,modules/ops/server.mjs,30,const REMOTE_ENTRY = process.env.MODULE_REMOTE_ENTRY ?? `http://127.0.0.1:${PORT}/remoteEntry.js`;
+rt-remote-entry,modules/ops/server.mjs,265,"  remoteEntry: REMOTE_ENTRY,"
+rt-remote-entry,modules/ops/vite.config.ts,10,"      filename: 'remoteEntry.js',"
+rt-remote-entry,modules/registry/server.mjs,21,  process.env.MODULE_REMOTE_ENTRY ?? `http://127.0.0.1:${PORT}/remoteEntry.js`;
+rt-remote-entry,modules/registry/server.mjs,38,"  remoteEntry: REMOTE_ENTRY,"
+rt-remote-entry,modules/registry/vite.config.ts,10,"      filename: 'remoteEntry.js',"
+rt-remote-entry,modules/sitio/server.mjs,21,  process.env.MODULE_REMOTE_ENTRY ?? `http://127.0.0.1:${PORT}/remoteEntry.js`;
+rt-remote-entry,modules/sitio/server.mjs,38,"  remoteEntry: REMOTE_ENTRY,"
+rt-remote-entry,modules/sitio/vite.config.ts,10,"      filename: 'remoteEntry.js',"
+rt-remote-entry,packages/contract/src/manifest.ts,100,"  remoteEntry: z.url(),"
+rt-remote-entry,packages/contract/src/validate.ts,4,  /** Orígenes (scheme://host[:puerto]) permitidos para remoteEntry. */
+rt-remote-entry,packages/contract/src/validate.ts,111,  const remoteOrigin = toOrigin(manifest.remoteEntry);
+rt-remote-entry,packages/contract/src/validate.ts,114,"      `remoteEntry: el origen ""${remoteOrigin ?? 'inválido'}"" no está en la lista blanca`,"
+rt-remote-entry,packages/contract/test/contract.test.ts,15,"    remoteEntry: 'https://cdn.likekiri.com/hello/remoteEntry.js',"
+rt-remote-entry,packages/contract/test/contract.test.ts,156,"  test('rechaza remoteEntry en un origen no permitido', () => {"
+rt-remote-entry,packages/contract/test/contract.test.ts,158,"      { ...baseManifest(), remoteEntry: 'https://evil.example.com/remoteEntry.js' },"
+src-load-remote,apps/admin-shell/src/federation.ts,1,"import { init, loadRemote, registerRemotes } from '@module-federation/runtime';"
+src-load-remote,apps/admin-shell/src/federation.ts,40,    registerRemotes([remote]);
+ops-deployment-file,infra/docker-compose.yml,,
+ops-compose-service,infra/docker-compose.yml,6,    image: postgres:17-alpine
+ops-hosting,modules/clientes/INTEGRACION-APPS.md,119,Deploy: `firebase deploy --only functions:syncClienteLikekiri`.
+doc-mfe-term,CLAUDE.md,28,  cargador de micro-frontends. SIN pantallas de negocio: el sidebar se
+doc-mfe-term,README.md,160,"  admin-shell/      SPA de admin: login, aceptar invitación, cargador de micro-frontends"
+doc-mfe-term,docs/adr/005-admin-por-modulos-y-submenus.md,20,cargador de micro-frontends. **El sidebar se construye 100% desde
+doc-integration-technology,README.md,79,   Module Federation (React/ReactDOM compartidos como singleton) y monta o
+doc-integration-technology,docs/adr/002-stack-y-versiones.md,9,"Module Federation, argon2, zod) pero no las versiones. Todas las versiones se"
+doc-integration-technology,docs/adr/002-stack-y-versiones.md,29,### Module Federation: @module-federation/vite 1.20.5
+doc-integration-technology,docs/adr/002-stack-y-versiones.md,32,"oficial del equipo de Module Federation declara peer `vite ^5–^8`, compatible"
+doc-integration-technology,docs/como-integrar-un-modulo.md,17,  cargada por Module Federation cuando el usuario navega a tu ruta. El menú y
+doc-integration-technology,modules/ejemplo-web/README.md,11,"  emite un placeholder; el navegador carga `remoteEntry.js` (Module Federation,"
+ws-workspaces,pnpm-workspace.yaml,1,packages:

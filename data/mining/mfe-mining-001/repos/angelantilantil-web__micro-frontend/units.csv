@@ -1,0 +1,12 @@
+directory,markers
+accounts-module,accounts-module/package.json;accounts-module/webpack.config.js
+ai-agent-module,ai-agent-module/package.json;ai-agent-module/webpack.config.js
+business-reports,business-reports/package.json;business-reports/webpack.config.js
+cards-module,cards-module/package.json;cards-module/webpack.config.js
+host-app,host-app/package.json;host-app/webpack.config.js
+incoming-api-logs,incoming-api-logs/package.json;incoming-api-logs/webpack.config.js
+loans-module,loans-module/package.json;loans-module/webpack.config.js
+maker-requests,maker-requests/package.json;maker-requests/webpack.config.js
+model-portfolio-configuration,model-portfolio-configuration/package.json;model-portfolio-configuration/webpack.config.js
+outgoing-api-logs,outgoing-api-logs/package.json;outgoing-api-logs/webpack.config.js
+vro-uploads,vro-uploads/package.json;vro-uploads/webpack.config.js

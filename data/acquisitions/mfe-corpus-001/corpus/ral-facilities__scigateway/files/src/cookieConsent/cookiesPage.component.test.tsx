@@ -1,0 +1,117 @@
+import { StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { TOptionsBase } from 'i18next';
+import Cookies from 'js-cookie';
+import React from 'react';
+import { BrowserRouter } from 'react-router';
+import configureStore, { MockStore } from 'redux-mock-store';
+import { authState, initialState } from '../state/reducers/scigateway.reducer';
+import { StateType } from '../state/state.types';
+import { buildTheme } from '../theming';
+import CookiesPage from './cookiesPage.component';
+
+vi.mock('react-i18next', async (importOriginal) => ({
+  ...(await importOriginal()),
+  useTranslation: () => {
+    return {
+      t: (key: string, options: TOptionsBase) =>
+        options?.returnObjects ? [1, 2, 3].map((x) => `${key} ${x}`) : key,
+    };
+  },
+}));
+
+describe('Cookies page component', () => {
+  let mockStore;
+  let state: StateType;
+  let store: MockStore;
+
+  beforeEach(() => {
+    mockStore = configureStore();
+    state = {
+      scigateway: { ...initialState, authorisation: { ...authState } },
+    };
+    store = mockStore(state);
+
+    Cookies.set = vi.fn();
+    Cookies.remove = vi.fn();
+  });
+
+  const theme = buildTheme(false);
+
+  function Wrapper({ children }: { children: React.ReactNode }): JSX.Element {
+    return (
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <BrowserRouter>{children}</BrowserRouter>
+        </ThemeProvider>
+      </StyledEngineProvider>
+    );
+  }
+
+  it('should render correctly', () => {
+    const { asFragment } = render(<CookiesPage store={store} />, {
+      wrapper: Wrapper,
+    });
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('should save preferences when save preferences button clicked', async () => {
+    const user = userEvent.setup();
+
+    render(<CookiesPage store={store} />, {
+      wrapper: Wrapper,
+    });
+
+    await user.click(
+      screen.getByRole('checkbox', { name: 'analytics-cookies-title' })
+    );
+    await user.click(
+      screen.getByRole('button', { name: 'save-preferences-button' })
+    );
+
+    expect(Cookies.set).toHaveBeenCalled();
+    const mockCookies = vi.mocked(Cookies.set).mock;
+    const callArguments = mockCookies.calls[0];
+    expect(callArguments[0]).toEqual('cookie-consent');
+    expect(callArguments[1]).toEqual(JSON.stringify({ analytics: true }));
+
+    expect(window.location.pathname).toEqual('/');
+  });
+
+  it('should remove cookies when user revokes consent', async () => {
+    const user = userEvent.setup();
+    Cookies.get = vi
+      .fn()
+      .mockImplementationOnce((name) =>
+        name === 'cookie-consent' ? JSON.stringify({ analytics: true }) : null
+      );
+
+    render(<CookiesPage store={store} />, {
+      wrapper: Wrapper,
+    });
+
+    const analyticsSwitch = screen.getByRole('checkbox', {
+      name: 'analytics-cookies-title',
+    });
+    expect(analyticsSwitch).toBeChecked();
+
+    await user.click(analyticsSwitch);
+    await user.click(
+      screen.getByRole('button', { name: 'save-preferences-button' })
+    );
+
+    expect(Cookies.set).toHaveBeenCalled();
+    const mockCookiesSet = vi.mocked(Cookies.set).mock;
+    const setCallArguments = mockCookiesSet.calls[0];
+    expect(setCallArguments[0]).toEqual('cookie-consent');
+    expect(setCallArguments[1]).toEqual(JSON.stringify({ analytics: false }));
+
+    expect(Cookies.remove).toHaveBeenCalledTimes(2);
+    const mockCookiesRemove = vi.mocked(Cookies.remove).mock;
+    expect(mockCookiesRemove.calls[0][0]).toEqual('_ga');
+    expect(mockCookiesRemove.calls[1][0]).toEqual('_gid');
+
+    expect(window.location.pathname).toEqual('/');
+  });
+});

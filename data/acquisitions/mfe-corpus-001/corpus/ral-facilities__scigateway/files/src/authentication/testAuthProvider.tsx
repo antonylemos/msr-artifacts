@@ -1,0 +1,90 @@
+import {
+  MaintenanceState,
+  ScheduledMaintenanceState,
+} from '../state/scigateway.types';
+import { AuthProvider, User } from '../state/state.types';
+
+export default class TestAuthProvider implements AuthProvider {
+  private token: string | null;
+  public redirectUrl: string | null;
+  public user: User | null = null;
+  public mnemonic: string | undefined;
+  public authUrl: string | undefined;
+  public autoLogin?: () => Promise<void>;
+
+  public constructor(token: string | null) {
+    this.token = token;
+    this.redirectUrl = null;
+  }
+
+  public isLoggedIn(): boolean {
+    return this.token !== null;
+  }
+
+  public isAdmin(): boolean {
+    return true;
+  }
+
+  public logOut(): void {
+    this.token = null;
+  }
+
+  public logIn(username: string, password: string): Promise<void> {
+    if (username === 'username' && password === 'password') {
+      this.token = 'validLoginToken';
+      this.user = { username, isAdmin: true, avatarUrl: '' };
+      return Promise.resolve();
+    } else if (
+      username === 'username_with_avatar_url' &&
+      password === 'password'
+    ) {
+      this.token = 'validLoginToken';
+      this.user = { username, isAdmin: true, avatarUrl: 'test_url' };
+      return Promise.resolve();
+    }
+
+    this.logOut();
+    return Promise.reject('test auth provider');
+  }
+
+  public verifyLogIn(): Promise<void> {
+    return this.refresh();
+  }
+
+  public refresh(): Promise<void> {
+    return Promise.reject('test auth provider');
+  }
+
+  public fetchScheduledMaintenanceState(): Promise<ScheduledMaintenanceState> {
+    return Promise.resolve({
+      show: false,
+      message: 'test',
+      severity: 'warning',
+    });
+  }
+
+  public fetchMaintenanceState(): Promise<MaintenanceState> {
+    return Promise.resolve({
+      show: false,
+      message: 'test',
+    });
+  }
+
+  public setScheduledMaintenanceState(
+    _scheduledMaintenanceState: ScheduledMaintenanceState
+  ): Promise<string | void> {
+    return Promise.resolve('test');
+  }
+
+  public setMaintenanceState(
+    _maintenanceState: MaintenanceState
+  ): Promise<string | void> {
+    return Promise.resolve('test');
+  }
+}
+
+export class NonAdminTestAuthProvider extends TestAuthProvider {
+  isAdmin(): boolean {
+    return false;
+  }
+}

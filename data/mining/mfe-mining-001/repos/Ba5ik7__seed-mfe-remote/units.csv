@@ -1,0 +1,4 @@
+directory,markers
+.,angular.json;package.json
+projects/demo,projects/demo/webpack.config.js;projects/demo/webpack.prod.config.js
+projects/seed-mfe-remote,projects/seed-mfe-remote/webpack.config.js;projects/seed-mfe-remote/webpack.prod.config.js

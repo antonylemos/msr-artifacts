@@ -1,0 +1,83 @@
+pattern,path,line,excerpt
+dep-module-federation,host/package.json,15,"    ""@module-federation/vite"": ""1.21.6"","
+dep-module-federation,remote_a/package.json,15,"    ""@module-federation/vite"": ""1.21.6"","
+dep-module-federation,remote_b/package.json,15,"    ""@module-federation/vite"": ""1.21.6"","
+dep-module-federation,remote_c/package.json,15,"    ""@module-federation/vite"": ""1.21.6"","
+lock-mfe-dependency,pnpm-lock.yaml,24,      '@module-federation/vite':
+lock-mfe-dependency,pnpm-lock.yaml,43,      '@module-federation/vite':
+lock-mfe-dependency,pnpm-lock.yaml,62,      '@module-federation/vite':
+lock-mfe-dependency,pnpm-lock.yaml,81,      '@module-federation/vite':
+lock-mfe-dependency,pnpm-lock.yaml,348,  '@module-federation/dts-plugin@2.9.0':
+lock-mfe-dependency,pnpm-lock.yaml,357,  '@module-federation/error-codes@2.9.0':
+lock-mfe-dependency,pnpm-lock.yaml,360,  '@module-federation/managers@2.9.0':
+lock-mfe-dependency,pnpm-lock.yaml,363,  '@module-federation/runtime-core@2.9.0':
+lock-mfe-dependency,pnpm-lock.yaml,366,  '@module-federation/runtime@2.9.0':
+lock-mfe-dependency,pnpm-lock.yaml,369,  '@module-federation/sdk@2.9.0':
+lock-mfe-dependency,pnpm-lock.yaml,372,  '@module-federation/third-party-dts-extractor@2.9.0':
+lock-mfe-dependency,pnpm-lock.yaml,375,  '@module-federation/vite@1.21.6':
+lock-mfe-dependency,pnpm-lock.yaml,1093,  '@module-federation/dts-plugin@2.9.0(typescript@7.0.2)':
+lock-mfe-dependency,pnpm-lock.yaml,1095,      '@module-federation/error-codes': 2.9.0
+lock-mfe-dependency,pnpm-lock.yaml,1096,      '@module-federation/managers': 2.9.0
+lock-mfe-dependency,pnpm-lock.yaml,1097,      '@module-federation/sdk': 2.9.0
+lock-mfe-dependency,pnpm-lock.yaml,1098,      '@module-federation/third-party-dts-extractor': 2.9.0
+lock-mfe-dependency,pnpm-lock.yaml,1108,  '@module-federation/error-codes@2.9.0': {}
+lock-mfe-dependency,pnpm-lock.yaml,1110,  '@module-federation/managers@2.9.0':
+lock-mfe-dependency,pnpm-lock.yaml,1112,      '@module-federation/sdk': 2.9.0
+lock-mfe-dependency,pnpm-lock.yaml,1114,  '@module-federation/runtime-core@2.9.0':
+lock-mfe-dependency,pnpm-lock.yaml,1116,      '@module-federation/error-codes': 2.9.0
+lock-mfe-dependency,pnpm-lock.yaml,1117,      '@module-federation/sdk': 2.9.0
+lock-mfe-dependency,pnpm-lock.yaml,1119,  '@module-federation/runtime@2.9.0':
+lock-mfe-dependency,pnpm-lock.yaml,1121,      '@module-federation/error-codes': 2.9.0
+lock-mfe-dependency,pnpm-lock.yaml,1122,      '@module-federation/runtime-core': 2.9.0
+lock-mfe-dependency,pnpm-lock.yaml,1123,      '@module-federation/sdk': 2.9.0
+lock-mfe-dependency,pnpm-lock.yaml,1125,  '@module-federation/sdk@2.9.0': {}
+lock-mfe-dependency,pnpm-lock.yaml,1127,  '@module-federation/third-party-dts-extractor@2.9.0': {}
+lock-mfe-dependency,pnpm-lock.yaml,1129,  '@module-federation/vite@1.21.6(typescript@7.0.2)(vite@6.3.5)':
+lock-mfe-dependency,pnpm-lock.yaml,1131,      '@module-federation/dts-plugin': 2.9.0(typescript@7.0.2)
+lock-mfe-dependency,pnpm-lock.yaml,1132,      '@module-federation/runtime': 2.9.0
+lock-mfe-dependency,pnpm-lock.yaml,1133,      '@module-federation/sdk': 2.9.0
+cfg-federation-plugin,host/vite.config.js,19,    federation({
+cfg-federation-plugin,remote_a/vite.config.js,19,    federation({
+cfg-federation-plugin,remote_b/vite.config.js,19,    federation({
+cfg-federation-plugin,remote_c/vite.config.js,19,    federation({
+cfg-remotes,host/vite.config.js,21,      remotes: {
+cfg-remotes,remote_a/vite.config.js,25,      remotes: {
+cfg-exposes,remote_a/vite.config.js,22,      exposes: {
+cfg-exposes,remote_b/vite.config.js,22,      exposes: {
+cfg-exposes,remote_c/vite.config.js,22,      exposes: {
+cfg-shared,host/vite.config.js,5,const shared = {
+cfg-shared,host/vite.config.js,6,"  react: { singleton: true, strictVersion: false, requiredVersion: '^19.2.4' },"
+cfg-shared,host/vite.config.js,7,"  'react/jsx-runtime': { singleton: true, strictVersion: false, requiredVersion: '^19.2.4' },"
+cfg-shared,host/vite.config.js,8,"  'react/jsx-dev-runtime': { singleton: true, strictVersion: false, requiredVersion: '^19.2.4' },"
+cfg-shared,host/vite.config.js,9,"  'react/compiler-runtime': { singleton: true, strictVersion: false, requiredVersion: '^19.2.4' },"
+cfg-shared,host/vite.config.js,10,"  'react-dom/client': { singleton: true, strictVersion: false, requiredVersion: '^19.2.4' },"
+cfg-shared,remote_a/vite.config.js,5,const shared = {
+cfg-shared,remote_a/vite.config.js,6,"  react: { singleton: true, strictVersion: false, requiredVersion: '^19.2.4' },"
+cfg-shared,remote_a/vite.config.js,7,"  'react/jsx-runtime': { singleton: true, strictVersion: false, requiredVersion: '^19.2.4' },"
+cfg-shared,remote_a/vite.config.js,8,"  'react/jsx-dev-runtime': { singleton: true, strictVersion: false, requiredVersion: '^19.2.4' },"
+cfg-shared,remote_a/vite.config.js,9,"  'react/compiler-runtime': { singleton: true, strictVersion: false, requiredVersion: '^19.2.4' },"
+cfg-shared,remote_a/vite.config.js,10,"  'react-dom/client': { singleton: true, strictVersion: false, requiredVersion: '^19.2.4' },"
+cfg-shared,remote_b/vite.config.js,5,const shared = {
+cfg-shared,remote_b/vite.config.js,6,"  react: { singleton: true, strictVersion: false, requiredVersion: '^19.2.4' },"
+cfg-shared,remote_b/vite.config.js,7,"  'react/jsx-runtime': { singleton: true, strictVersion: false, requiredVersion: '^19.2.4' },"
+cfg-shared,remote_b/vite.config.js,8,"  'react/jsx-dev-runtime': { singleton: true, strictVersion: false, requiredVersion: '^19.2.4' },"
+cfg-shared,remote_b/vite.config.js,9,"  'react/compiler-runtime': { singleton: true, strictVersion: false, requiredVersion: '^19.2.4' },"
+cfg-shared,remote_b/vite.config.js,10,"  'react-dom/client': { singleton: true, strictVersion: false, requiredVersion: '^19.2.4' },"
+cfg-shared,remote_c/vite.config.js,5,const shared = {
+cfg-shared,remote_c/vite.config.js,6,"  react: { singleton: true, strictVersion: false, requiredVersion: '^19.2.4' },"
+cfg-shared,remote_c/vite.config.js,7,"  'react/jsx-runtime': { singleton: true, strictVersion: false, requiredVersion: '^19.2.4' },"
+cfg-shared,remote_c/vite.config.js,8,"  'react/jsx-dev-runtime': { singleton: true, strictVersion: false, requiredVersion: '^19.2.4' },"
+cfg-shared,remote_c/vite.config.js,9,"  'react/compiler-runtime': { singleton: true, strictVersion: false, requiredVersion: '^19.2.4' },"
+cfg-shared,remote_c/vite.config.js,10,"  'react-dom/client': { singleton: true, strictVersion: false, requiredVersion: '^19.2.4' },"
+rt-remote-entry,host/vite.config.js,25,"          entry: 'http://localhost:5001/remoteEntry.js',"
+rt-remote-entry,host/vite.config.js,30,"          entry: 'http://localhost:5002/remoteEntry.js',"
+rt-remote-entry,remote_a/vite.config.js,21,"      filename: 'remoteEntry.js',"
+rt-remote-entry,remote_a/vite.config.js,29,"          entry: 'http://localhost:5003/remoteEntry.js',"
+rt-remote-entry,remote_b/vite.config.js,21,"      filename: 'remoteEntry.js',"
+rt-remote-entry,remote_c/vite.config.js,21,"      filename: 'remoteEntry.js',"
+src-remote-import,host/src/App.jsx,3,const RemoteA = lazy(() => import('remote_a/App'));
+src-remote-import,host/src/App.jsx,4,const RemoteB = lazy(() => import('remote_b/App'));
+src-remote-import,remote_a/src/App.jsx,3,const RemoteC = lazy(() => import('remote_c/App'));
+doc-host-remote,README.md,11,"| `host` | 19.2.8 | remotes: `remote_a`, `remote_b` |"
+doc-host-remote,README.md,12,| `remote_a` | 19.2.4 | exposes `./App`; also remotes `remote_c` (nested host) |
+ws-workspaces,pnpm-workspace.yaml,1,packages:

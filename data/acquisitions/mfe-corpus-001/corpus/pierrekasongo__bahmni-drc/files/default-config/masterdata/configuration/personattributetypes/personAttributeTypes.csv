@@ -1,0 +1,8 @@
+Uuid,Void/Retire,Name,Description,Format,Foreign uuid,Searchable,Edit privilege,_order:1000
+,TRUE,givenNameLocal,,,,,,
+,,phoneNumber,Téléphone,java.lang.String,,yes,,
+,,alternatePhoneNumber,Téléphone alternatif,java.lang.String,,yes,,
+,,degree,Niveau d'étude,java.lang.String,,yes,,
+,,profession,Profession,java.lang.String,,,,
+,,marital_status,Etat civil,java.lang.String,,,,
+,,birth_place,Lieu de naissance,java.lang.String,,,,

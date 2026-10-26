@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "id": "1254401059",
+  "fullName": "shermondevelopment/microfrontend-shop",
+  "commit": "913349b85c59bff3b982808ac6d931b62f1d73bc",
+  "acquiredAt": "2026-10-24T00:32:29.675Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 102,
+    "bytes": 568327
+  },
+  "languages": {
+    "JSON": 423856,
+    "SVG": 80676,
+    "TypeScript": 40917,
+    "Markdown": 9489,
+    "YAML": 7494,
+    "JavaScript": 3982,
+    "HTML": 1260,
+    "Other": 417,
+    "CSS": 236
+  },
+  "contentSha256": "478eeb5b6c213b3cb6fee573e725d0948ea131da57fcfa97598e3482657b65d0"
+}

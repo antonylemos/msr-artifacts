@@ -1,0 +1,10 @@
+{
+  "name": "06-angular",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "ng serve 06-angular --host 127.0.0.1 --port 4200",
+    "build": "ng build 06-angular"
+  }
+}

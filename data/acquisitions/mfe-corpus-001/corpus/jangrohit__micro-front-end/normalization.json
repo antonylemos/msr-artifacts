@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "id": "1176812762",
+  "fullName": "jangrohit/micro-front-end",
+  "commit": "c6c0dbc9fb78b8baab20e74394647ca40b521355",
+  "acquiredAt": "2026-10-24T00:32:30.084Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 30,
+    "bytes": 1532292
+  },
+  "languages": {
+    "JSON": 1502170,
+    "JavaScript": 20384,
+    "Markdown": 6748,
+    "YAML": 2453,
+    "HTML": 510,
+    "Other": 27
+  },
+  "contentSha256": "6e66f453de4836383c69c14103936371bf05cac277783d1707145bc4104309d2"
+}

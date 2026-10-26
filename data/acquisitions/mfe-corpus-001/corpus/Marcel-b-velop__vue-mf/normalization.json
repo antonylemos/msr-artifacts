@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "id": "1101991974",
+  "fullName": "Marcel-b-velop/vue-mf",
+  "commit": "ed270d34b0542cb1a0ce26aafc2aeba4bca994e1",
+  "acquiredAt": "2026-10-24T00:32:24.198Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": ".DS_Store",
+      "reason": "preset:binaries",
+      "size": 6148
+    },
+    {
+      "path": "Api/.DS_Store",
+      "reason": "preset:binaries",
+      "size": 6148
+    },
+    {
+      "path": "Api/Api/.DS_Store",
+      "reason": "preset:binaries",
+      "size": 6148
+    },
+    {
+      "path": "lib/debug-screenshot.png",
+      "reason": "preset:binaries",
+      "size": 6752
+    },
+    {
+      "path": "lib/playwright-report/data/63e620953316eb4fd1f3a5bca1392b32fa1b0192.zip",
+      "reason": "preset:binaries",
+      "size": 722158
+    },
+    {
+      "path": "lib/playwright-report/trace/codicon.DCmgc-ay.ttf",
+      "reason": "preset:binaries",
+      "size": 80340
+    },
+    {
+      "path": "lib/test-results/confirm-dialog-Confirm-Dia-3f8ff-n-wenn-Cancel-geklickt-wird-chromium/trace.zip",
+      "reason": "preset:binaries",
+      "size": 830160
+    },
+    {
+      "path": "lib/test-results/confirm-dialog-Confirm-Dia-6f331-onfirm-Button-geklickt-wird-chromium/trace.zip",
+      "reason": "preset:binaries",
+      "size": 748319
+    },
+    {
+      "path": "lib/test-results/confirm-dialog-Confirm-Dia-b5545-ßen-wenn-Save-geklickt-wird-chromium/trace.zip",
+      "reason": "preset:binaries",
+      "size": 821655
+    },
+    {
+      "path": "lib/test-results/debug-Debug-Seite-prüfen-chromium/trace.zip",
+      "reason": "preset:binaries",
+      "size": 722158
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 131,
+    "bytes": 2165299
+  },
+  "languages": {
+    "JavaScript": 1067390,
+    "HTML": 524644,
+    "YAML": 257084,
+    "CSS": 182493,
+    "Other": 40525,
+    "TypeScript": 31797,
+    "Vue": 16073,
+    "JSON": 14171,
+    "SVG": 12510,
+    "C#": 9524,
+    "Markdown": 8538,
+    "XML": 550
+  },
+  "contentSha256": "1813dfbc6ba0b1f80317e3630831ffa4a9c3d8937c3fb7020c72c71b31fe17a5"
+}

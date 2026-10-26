@@ -1,0 +1,3 @@
+directory,markers
+openmrs-module-bahmniapps/micro-frontends,openmrs-module-bahmniapps/micro-frontends/package.json;openmrs-module-bahmniapps/micro-frontends/webpack.config.js
+openmrs-module-bahmniapps/ui,openmrs-module-bahmniapps/ui/package.json

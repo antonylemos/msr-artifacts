@@ -1,0 +1,4 @@
+manifest,state
+alert-dashboard/package.json,ok
+alert-sender/package.json,ok
+package.json,ok

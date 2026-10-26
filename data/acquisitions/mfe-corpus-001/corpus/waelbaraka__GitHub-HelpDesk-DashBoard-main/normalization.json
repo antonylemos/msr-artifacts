@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "id": "1006453202",
+  "fullName": "waelbaraka/GitHub-HelpDesk-DashBoard-main",
+  "commit": "ccb8398a4d53178974be0fc2b7483cba5d769013",
+  "acquiredAt": "2026-10-24T00:32:33.885Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 287,
+    "bytes": 2475136
+  },
+  "languages": {
+    "JavaScript": 1540227,
+    "JSON": 797376,
+    "Markdown": 90793,
+    "Other": 13293,
+    "SQL": 11585,
+    "SVG": 11246,
+    "CSS": 9768,
+    "HTML": 722,
+    "TOML": 126
+  },
+  "contentSha256": "f8db0fd2f48320ec0f8ebfcb2927c0289cdb44916a0bd44fb809b63ca6d69eb9"
+}

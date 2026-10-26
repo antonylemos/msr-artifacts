@@ -1,0 +1,87 @@
+image:
+  repository: '__image__(dex)'
+
+nodeSelector:
+  node-role.kubernetes.io/infra: ''
+
+tolerations:
+  - key: "node-role.kubernetes.io/bootstrap"
+    operator: "Exists"
+    effect: "NoSchedule"
+  - key: "node-role.kubernetes.io/infra"
+    operator: "Exists"
+    effect: "NoSchedule"
+
+replicaCount: '__var__(dex.spec.deployment.replicas)'
+
+strategy:
+  rollingUpdate:
+    maxUnavailable: 1
+  type: RollingUpdate
+
+
+# NOTE: We use `__var_quoted__` as `affinity` is rendered as YAML
+# so result will be quoted
+affinity: '__var_quoted__(salt.metalk8s_service_configuration.get_pod_affinity(
+  dex.spec.deployment.affinity,
+  {"app.kubernetes.io/instance": "dex", "app.kubernetes.io/name": "dex"},
+  "metalk8s-auth"))'
+
+# grpc support
+grpc:
+  enabled: false
+
+# https termination by dex itself
+https:
+  enabled: true
+
+service:
+  clusterIP: '__var__(salt.metalk8s_network.get_oidc_service_ip())'
+
+ingress:
+  enabled: true
+  className: "nginx-control-plane"
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+  hosts:
+    - host: ""
+      paths:
+      - path: /oidc
+        pathType: Prefix
+
+volumes:
+  - name: https-tls
+    secret:
+      defaultMode: 420
+      secretName: dex-web-server-tls
+  - name: dex-login
+    configMap:
+      name: dex-login
+  - name: nginx-ingress-ca-cert
+    configMap:
+      name: nginx-ingress-ca-cert
+
+volumeMounts:
+  - name: https-tls
+    mountPath: /etc/dex/tls/https/server
+  - name: dex-login
+    mountPath: /srv/dex/web/themes/scality
+  - name: nginx-ingress-ca-cert
+    mountPath: /etc/ssl/certs/nginx-ingress-ca.crt
+    subPath: ca.crt
+
+podAnnotations:
+  # Override default checksum as we want to manage it with salt
+  checksum/config: '__slot__:salt:metalk8s_kubernetes.get_object_digest(kind="Secret", apiVersion="v1", namespace="metalk8s-auth", name="dex", path="data:config.yaml")'
+
+# Explicitly set namespace from env since it's needed for Dex in K8s 1.21
+# Sees: https://github.com/dexidp/dex/issues/2082
+env:
+  KUBERNETES_POD_NAMESPACE: metalk8s-auth
+
+# NOTE: Ignore these values, the configuration is computed from
+#       - salt/metalk8s/addons/dex/config/dex.yaml
+#       - salt/metalk8s/addons/dex/deployed/service-configuration.sls
+configSecret:
+  create: false
+  name: dex

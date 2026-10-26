@@ -1,0 +1,135 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'adx-core-production'
+    environment: 'production'
+
+rule_files:
+  - "rules/*.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093
+
+scrape_configs:
+  # Prometheus itself
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Backend Microservices
+  - job_name: 'api-gateway'
+    static_configs:
+      - targets: ['api-gateway:8080']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+    scrape_timeout: 5s
+
+  - job_name: 'auth-service'
+    static_configs:
+      - targets: ['auth-service:8081']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+
+  - job_name: 'user-service'
+    static_configs:
+      - targets: ['user-service:8082']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+
+  - job_name: 'file-service'
+    static_configs:
+      - targets: ['file-service:8083']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+
+  - job_name: 'workflow-service'
+    static_configs:
+      - targets: ['workflow-service:8084']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+
+  - job_name: 'tenant-service'
+    static_configs:
+      - targets: ['tenant-service:8085']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+
+  # BFF Services
+  - job_name: 'auth-bff'
+    static_configs:
+      - targets: ['auth-bff:4001']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+
+  - job_name: 'tenant-bff'
+    static_configs:
+      - targets: ['tenant-bff:4002']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+
+  # Infrastructure Services
+  - job_name: 'temporal'
+    static_configs:
+      - targets: ['temporal:7233']
+    metrics_path: '/metrics'
+    scrape_interval: 30s
+
+  - job_name: 'postgresql'
+    static_configs:
+      - targets: ['postgres-exporter:9187']
+    scrape_interval: 30s
+
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis-exporter:9121']
+    scrape_interval: 30s
+
+  # Node Exporter for system metrics
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+    scrape_interval: 30s
+
+  # Docker metrics
+  - job_name: 'docker'
+    static_configs:
+      - targets: ['cadvisor:8080']
+    scrape_interval: 30s
+
+  # Frontend Applications (via nginx metrics)
+  - job_name: 'nginx'
+    static_configs:
+      - targets: ['nginx:9113']
+    metrics_path: '/metrics'
+    scrape_interval: 30s
+
+  # Custom application metrics
+  - job_name: 'workflow-metrics'
+    static_configs:
+      - targets: ['workflow-service:8084']
+    metrics_path: '/workflow-metrics'
+    scrape_interval: 15s
+
+  - job_name: 'tenant-metrics'
+    static_configs:
+      - targets: ['tenant-service:8085']
+    metrics_path: '/tenant-metrics'
+    scrape_interval: 30s
+
+  # Health check endpoints
+  - job_name: 'health-checks'
+    static_configs:
+      - targets: 
+        - 'api-gateway:8080'
+        - 'auth-service:8081'
+        - 'user-service:8082'
+        - 'file-service:8083'
+        - 'workflow-service:8084'
+        - 'tenant-service:8085'
+    metrics_path: '/health'
+    scrape_interval: 5s
+    scrape_timeout: 3s

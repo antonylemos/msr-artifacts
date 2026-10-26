@@ -1,0 +1,2 @@
+// Loaded asynchronously
+import("./bootstrap");

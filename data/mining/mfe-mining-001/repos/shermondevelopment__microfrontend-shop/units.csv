@@ -1,0 +1,11 @@
+directory,markers
+.,package.json
+apps/footer,apps/footer/package.json;apps/footer/vite.config.ts
+apps/header,apps/header/package.json;apps/header/vite.config.ts
+apps/host,apps/host/package.json;apps/host/vite.config.ts
+apps/products,apps/products/package.json;apps/products/vite.config.ts
+packages/config/eslint-config,packages/config/eslint-config/package.json
+packages/config/tailwind-config,packages/config/tailwind-config/package.json
+packages/shared,packages/shared/package.json
+packages/types,packages/types/package.json
+packages/ui,packages/ui/package.json

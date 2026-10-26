@@ -1,0 +1,1001 @@
+pattern,path,line,excerpt
+dep-module-federation,adx-core/apps/auth/package.json,41,"    ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+dep-module-federation,adx-core/apps/file/package.json,26,"    ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+dep-module-federation,adx-core/apps/module/package.json,39,"    ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+dep-module-federation,adx-core/apps/shell/package.json,40,"    ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+dep-module-federation,adx-core/apps/tenant/package.json,36,"    ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+dep-module-federation,adx-core/apps/user/package.json,26,"    ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+dep-module-federation,adx-core/apps/workflow/package.json,26,"    ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+dep-mfe-term,adx-core/apps/auth/package.json,4,"  ""description"": ""ADX Core Authentication Micro-Frontend"","
+dep-mfe-term,adx-core/apps/file/package.json,4,"  ""description"": ""ADX Core File Management Micro-Frontend"","
+dep-mfe-term,adx-core/apps/module/package.json,4,"  ""description"": ""ADX Core Module Management Micro-Frontend"","
+dep-mfe-term,adx-core/apps/tenant/package.json,4,"  ""description"": ""ADX Core Tenant Management Micro-Frontend"","
+dep-mfe-term,adx-core/apps/user/package.json,4,"  ""description"": ""ADX Core User Management Micro-Frontend"","
+dep-mfe-term,adx-core/apps/workflow/package.json,4,"  ""description"": ""ADX Core Workflow Management Micro-Frontend"","
+dep-mfe-term,adx-core/packages/bff-client/package.json,4,"  ""description"": ""BFF client for ADX Core micro-frontends"","
+dep-mfe-term,adx-core/packages/design-system/package.json,4,"  ""description"": ""Shared design system for ADX Core micro-frontends"","
+dep-mfe-term,adx-core/packages/event-bus/package.json,4,"  ""description"": ""Event bus for ADX Core micro-frontend communication"","
+dep-mfe-term,adx-core/packages/i18n/package.json,4,"  ""description"": ""Internationalization for ADX Core micro-frontends"","
+dep-mfe-term,adx-core/packages/shared-context/package.json,4,"  ""description"": ""Shared context providers for ADX Core micro-frontends"","
+dep-mfe-term,tools/kiro-github-task-sync/package.json,27,"    ""test:e2e:microfrontends"": ""playwright test tests/e2e/specs/cross-microfrontend.spec.ts"","
+lock-mfe-dependency,package-lock.json,51,"        ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+lock-mfe-dependency,package-lock.json,99,"        ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+lock-mfe-dependency,package-lock.json,136,"        ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+lock-mfe-dependency,package-lock.json,253,"        ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+lock-mfe-dependency,package-lock.json,293,"        ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+lock-mfe-dependency,package-lock.json,327,"        ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+lock-mfe-dependency,package-lock.json,370,"        ""@originjs/vite-plugin-federation"": ""^1.3.5"","
+lock-mfe-dependency,package-lock.json,2299,"    ""node_modules/@originjs/vite-plugin-federation"": {"
+lock-mfe-dependency,package-lock.json,2301,"      ""resolved"": ""https://registry.npmjs.org/@originjs/vite-plugin-federation/-/vite-plugin-federation-1.4.1.tgz"","
+lock-mfe-dependency,package-lock.json,2314,"    ""node_modules/@originjs/vite-plugin-federation/node_modules/magic-string"": {"
+lock-mfe-dependency,yarn.lock,886,"""@originjs/vite-plugin-federation@^1.3.5"":"
+lock-mfe-dependency,yarn.lock,888,"  resolved ""https://registry.npmjs.org/@originjs/vite-plugin-federation/-/vite-plugin-federation-1.4.1.tgz"""
+cfg-federation-plugin,adx-core/apps/auth/vite.config.ts,8,    federation({
+cfg-federation-plugin,adx-core/apps/file/vite.config.ts,8,    federation({
+cfg-federation-plugin,adx-core/apps/module/vite.config.ts,8,    federation({
+cfg-federation-plugin,adx-core/apps/shell/vite.config.ts,9,    federation({
+cfg-federation-plugin,adx-core/apps/tenant/vite.config.ts,8,    federation({
+cfg-federation-plugin,adx-core/apps/user/vite.config.ts,8,    federation({
+cfg-federation-plugin,adx-core/apps/workflow/vite.config.ts,8,    federation({
+cfg-remotes,adx-core/apps/shell/vite.config.ts,11,      remotes: {
+cfg-exposes,adx-core/apps/auth/vite.config.ts,11,      exposes: {
+cfg-exposes,adx-core/apps/file/vite.config.ts,11,      exposes: {
+cfg-exposes,adx-core/apps/module/vite.config.ts,11,      exposes: {
+cfg-exposes,adx-core/apps/tenant/vite.config.ts,11,      exposes: {
+cfg-exposes,adx-core/apps/user/vite.config.ts,11,      exposes: {
+cfg-exposes,adx-core/apps/workflow/vite.config.ts,11,      exposes: {
+cfg-shared,adx-core/apps/auth/vite.config.ts,19,      shared: {
+cfg-shared,adx-core/apps/auth/vite.config.ts,20,"        react: { singleton: true },"
+cfg-shared,adx-core/apps/auth/vite.config.ts,21,"        'react-dom': { singleton: true },"
+cfg-shared,adx-core/apps/auth/vite.config.ts,22,"        '@tanstack/react-query': { singleton: true },"
+cfg-shared,adx-core/apps/auth/vite.config.ts,23,"        '@adx-core/design-system': { singleton: true },"
+cfg-shared,adx-core/apps/auth/vite.config.ts,24,"        '@adx-core/shared-context': { singleton: true },"
+cfg-shared,adx-core/apps/auth/vite.config.ts,25,"        '@adx-core/event-bus': { singleton: true },"
+cfg-shared,adx-core/apps/auth/vite.config.ts,26,"        '@adx-core/bff-client': { singleton: true },"
+cfg-shared,adx-core/apps/file/vite.config.ts,17,      shared: {
+cfg-shared,adx-core/apps/file/vite.config.ts,18,"        react: { singleton: true },"
+cfg-shared,adx-core/apps/file/vite.config.ts,19,"        'react-dom': { singleton: true },"
+cfg-shared,adx-core/apps/file/vite.config.ts,20,"        '@tanstack/react-query': { singleton: true },"
+cfg-shared,adx-core/apps/file/vite.config.ts,21,"        '@adx-core/design-system': { singleton: true },"
+cfg-shared,adx-core/apps/file/vite.config.ts,22,"        '@adx-core/shared-context': { singleton: true },"
+cfg-shared,adx-core/apps/file/vite.config.ts,23,"        '@adx-core/event-bus': { singleton: true },"
+cfg-shared,adx-core/apps/file/vite.config.ts,24,"        '@adx-core/bff-client': { singleton: true },"
+cfg-shared,adx-core/apps/module/vite.config.ts,19,      shared: {
+cfg-shared,adx-core/apps/module/vite.config.ts,20,"        react: { singleton: true },"
+cfg-shared,adx-core/apps/module/vite.config.ts,21,"        'react-dom': { singleton: true },"
+cfg-shared,adx-core/apps/module/vite.config.ts,22,"        '@tanstack/react-query': { singleton: true },"
+cfg-shared,adx-core/apps/module/vite.config.ts,23,"        '@adx-core/design-system': { singleton: true },"
+cfg-shared,adx-core/apps/module/vite.config.ts,24,"        '@adx-core/shared-context': { singleton: true },"
+cfg-shared,adx-core/apps/module/vite.config.ts,25,"        '@adx-core/event-bus': { singleton: true },"
+cfg-shared,adx-core/apps/module/vite.config.ts,26,"        '@adx-core/bff-client': { singleton: true },"
+cfg-shared,adx-core/apps/shell/vite.config.ts,19,      shared: {
+cfg-shared,adx-core/apps/shell/vite.config.ts,21,"          singleton: true,"
+cfg-shared,adx-core/apps/shell/vite.config.ts,25,"          singleton: true,"
+cfg-shared,adx-core/apps/shell/vite.config.ts,29,"          singleton: true,"
+cfg-shared,adx-core/apps/shell/vite.config.ts,33,"          singleton: true,"
+cfg-shared,adx-core/apps/shell/vite.config.ts,37,"          singleton: true,"
+cfg-shared,adx-core/apps/shell/vite.config.ts,41,"          singleton: true,"
+cfg-shared,adx-core/apps/shell/vite.config.ts,44,"          singleton: true,"
+cfg-shared,adx-core/apps/shell/vite.config.ts,47,"          singleton: true,"
+cfg-shared,adx-core/apps/shell/vite.config.ts,50,"          singleton: true,"
+cfg-shared,adx-core/apps/tenant/vite.config.ts,18,      shared: {
+cfg-shared,adx-core/apps/tenant/vite.config.ts,19,"        react: { singleton: true },"
+cfg-shared,adx-core/apps/tenant/vite.config.ts,20,"        'react-dom': { singleton: true },"
+cfg-shared,adx-core/apps/tenant/vite.config.ts,21,"        '@tanstack/react-query': { singleton: true },"
+cfg-shared,adx-core/apps/tenant/vite.config.ts,22,"        '@adx-core/design-system': { singleton: true },"
+cfg-shared,adx-core/apps/tenant/vite.config.ts,23,"        '@adx-core/shared-context': { singleton: true },"
+cfg-shared,adx-core/apps/tenant/vite.config.ts,24,"        '@adx-core/event-bus': { singleton: true },"
+cfg-shared,adx-core/apps/tenant/vite.config.ts,25,"        '@adx-core/bff-client': { singleton: true },"
+cfg-shared,adx-core/apps/user/vite.config.ts,17,      shared: {
+cfg-shared,adx-core/apps/user/vite.config.ts,18,"        react: { singleton: true },"
+cfg-shared,adx-core/apps/user/vite.config.ts,19,"        'react-dom': { singleton: true },"
+cfg-shared,adx-core/apps/user/vite.config.ts,20,"        '@tanstack/react-query': { singleton: true },"
+cfg-shared,adx-core/apps/user/vite.config.ts,21,"        '@adx-core/design-system': { singleton: true },"
+cfg-shared,adx-core/apps/user/vite.config.ts,22,"        '@adx-core/shared-context': { singleton: true },"
+cfg-shared,adx-core/apps/user/vite.config.ts,23,"        '@adx-core/event-bus': { singleton: true },"
+cfg-shared,adx-core/apps/user/vite.config.ts,24,"        '@adx-core/bff-client': { singleton: true },"
+cfg-shared,adx-core/apps/workflow/vite.config.ts,17,      shared: {
+cfg-shared,adx-core/apps/workflow/vite.config.ts,18,"        react: { singleton: true },"
+cfg-shared,adx-core/apps/workflow/vite.config.ts,19,"        'react-dom': { singleton: true },"
+cfg-shared,adx-core/apps/workflow/vite.config.ts,20,"        '@tanstack/react-query': { singleton: true },"
+cfg-shared,adx-core/apps/workflow/vite.config.ts,21,"        '@adx-core/design-system': { singleton: true },"
+cfg-shared,adx-core/apps/workflow/vite.config.ts,22,"        '@adx-core/shared-context': { singleton: true },"
+cfg-shared,adx-core/apps/workflow/vite.config.ts,23,"        '@adx-core/event-bus': { singleton: true },"
+cfg-shared,adx-core/apps/workflow/vite.config.ts,24,"        '@adx-core/bff-client': { singleton: true },"
+rt-remote-entry,.github/workflows/deploy-microfrontends.yml,138,        # Verify Module Federation remoteEntry.js exists (except for shell)
+rt-remote-entry,.github/workflows/deploy-microfrontends.yml,139,"        if [ ""${{ matrix.app }}"" != ""shell"" ] && [ ! -f ""$BUILD_DIR/assets/remoteEntry.js"" ]; then"
+rt-remote-entry,.github/workflows/deploy-microfrontends.yml,140,"          echo ""remoteEntry.js not found for micro-frontend ${{ matrix.app }}"""
+rt-remote-entry,.github/workflows/deploy-microfrontends.yml,167,        # Set special cache headers for remoteEntry.js (Module Federation)
+rt-remote-entry,.github/workflows/deploy-microfrontends.yml,169,"          aws s3 cp $BUILD_DIR/assets/remoteEntry.js $S3_PATH/assets/remoteEntry.js --cache-control ""no-cache"""
+rt-remote-entry,.github/workflows/deploy-microfrontends.yml,229,        # Check if remoteEntry.js is accessible (for micro-frontends)
+rt-remote-entry,.github/workflows/deploy-microfrontends.yml,231,"          REMOTE_ENTRY_URL=""${URL}assets/remoteEntry.js"""
+rt-remote-entry,.github/workflows/deploy-microfrontends.yml,234,"            echo ""remoteEntry.js not accessible: HTTP $REMOTE_STATUS"""
+rt-remote-entry,.github/workflows/deploy-microfrontends.yml,262,"          echo ""- **Remote Entry**: https://${{ vars.CLOUDFRONT_DOMAIN }}/${{ github.event.inputs.environment || 'staging' }}/apps/${{ matrix.app }}/assets/remoteEntry.js"" >> reports/deployment-${{ matrix.app }}.md"
+rt-remote-entry,adx-core/apps/auth/vite.config.ts,10,"      filename: 'remoteEntry.js',"
+rt-remote-entry,adx-core/apps/file/vite.config.ts,10,"      filename: 'remoteEntry.js',"
+rt-remote-entry,adx-core/apps/module/vite.config.ts,10,"      filename: 'remoteEntry.js',"
+rt-remote-entry,adx-core/apps/shell/vite.config.ts,12,"        auth_app: 'http://localhost:3001/assets/remoteEntry.js',"
+rt-remote-entry,adx-core/apps/shell/vite.config.ts,13,"        tenant_app: 'http://localhost:3002/assets/remoteEntry.js',"
+rt-remote-entry,adx-core/apps/shell/vite.config.ts,14,"        file_app: 'http://localhost:3003/assets/remoteEntry.js',"
+rt-remote-entry,adx-core/apps/shell/vite.config.ts,15,"        user_app: 'http://localhost:3004/assets/remoteEntry.js',"
+rt-remote-entry,adx-core/apps/shell/vite.config.ts,16,"        workflow_app: 'http://localhost:3005/assets/remoteEntry.js',"
+rt-remote-entry,adx-core/apps/shell/vite.config.ts,17,"        module_app: 'http://localhost:3006/assets/remoteEntry.js',"
+rt-remote-entry,adx-core/apps/tenant/vite.config.ts,10,"      filename: 'remoteEntry.js',"
+rt-remote-entry,adx-core/apps/user/vite.config.ts,10,"      filename: 'remoteEntry.js',"
+rt-remote-entry,adx-core/apps/workflow/vite.config.ts,10,"      filename: 'remoteEntry.js',"
+rt-remote-entry,tests/e2e/micro-frontend-integration.spec.ts,164,"    await page.route('**/assets/remoteEntry.js', async route => {"
+rt-remote-entry,tests/e2e/specs/cross-microfrontend.spec.ts,296,"    await page.route('**/assets/remoteEntry.js', route => route.abort());"
+rt-remote-entry,tests/e2e/specs/cross-microfrontend.spec.ts,311,    await page.unroute('**/assets/remoteEntry.js');
+src-remote-import,adx-core/apps/shell/src/App.tsx,16,const AuthApp = React.lazy(() => import('auth_app/App'));
+src-remote-import,adx-core/apps/shell/src/App.tsx,17,const TenantApp = React.lazy(() => import('tenant_app/App'));
+src-remote-import,adx-core/apps/shell/src/App.tsx,18,const FileApp = React.lazy(() => import('file_app/App'));
+src-remote-import,adx-core/apps/shell/src/App.tsx,19,const UserApp = React.lazy(() => import('user_app/App'));
+src-remote-import,adx-core/apps/shell/src/App.tsx,20,const WorkflowApp = React.lazy(() => import('workflow_app/App'));
+src-remote-import,adx-core/apps/shell/src/App.tsx,21,const ModuleApp = React.lazy(() => import('module_app/App'));
+src-cross-unit-communication,adx-core/packages/event-bus/src/EventBus.tsx,49,"      window.dispatchEvent(new CustomEvent(`adx:${eventType}`, {"
+src-cross-unit-communication,adx-core/packages/i18n/src/hooks.ts,19,"    window.dispatchEvent(new CustomEvent('adx-language-changed', {"
+src-cross-unit-communication,adx-core/packages/shared-context/src/tenant-store.ts,77,"          window.dispatchEvent(new CustomEvent('tenant:switched', {"
+src-cross-unit-communication,adx-core/packages/shared-context/src/theme-store.ts,33,"        window.dispatchEvent(new CustomEvent('theme:changed', {"
+src-cross-unit-communication,adx-core/packages/shared-context/src/theme-store.ts,142,"  window.addEventListener('theme:changed', (event: CustomEvent) => {"
+src-cross-unit-communication,adx-core/packages/shared-context/src/theme-store.ts,162,"    window.addEventListener('theme:changed', handleThemeChange as EventListener);"
+src-cross-unit-communication,tests/desktop/tauri-integration.test.ts,129,"        const event = new CustomEvent('tauri://deep-link', {"
+src-cross-unit-communication,tests/desktop/tauri-integration.test.ts,132,        window.dispatchEvent(event);
+src-cross-unit-communication,tests/mobile/android-integration.test.ts,89,      element.dispatchEvent(touchEvent);
+src-cross-unit-communication,tests/mobile/android-integration.test.ts,189,        window.dispatchEvent(new Event('orientationchange'));
+src-cross-unit-communication,tests/mobile/android-integration.test.ts,240,      window.dispatchEvent(new Event('pagehide'));
+src-cross-unit-communication,tests/mobile/android-integration.test.ts,241,      document.dispatchEvent(new Event('visibilitychange'));
+src-cross-unit-communication,tests/mobile/android-integration.test.ts,256,      window.dispatchEvent(new Event('pageshow'));
+src-cross-unit-communication,tests/mobile/android-integration.test.ts,257,      document.dispatchEvent(new Event('visibilitychange'));
+src-cross-unit-communication,tests/mobile/ios-integration.test.ts,170,      window.dispatchEvent(new Event('pagehide'));
+src-cross-unit-communication,tests/mobile/ios-integration.test.ts,171,      document.dispatchEvent(new Event('visibilitychange'));
+src-cross-unit-communication,tests/mobile/ios-integration.test.ts,186,      window.dispatchEvent(new Event('pageshow'));
+src-cross-unit-communication,tests/mobile/ios-integration.test.ts,187,      document.dispatchEvent(new Event('visibilitychange'));
+src-cross-unit-communication,tests/mobile/ios-integration.test.ts,231,          window.dispatchEvent(event);
+ops-deployment-file,adx-core/infrastructure/docker/Dockerfile.db-migrator,,
+ops-deployment-file,adx-core/infrastructure/docker/docker-compose.database.yml,,
+ops-deployment-file,adx-core/infrastructure/docker/docker-compose.dev.yml,,
+ops-deployment-file,adx-core/infrastructure/docker/docker-compose.prod.yml,,
+ops-deployment-file,adx-core/infrastructure/docker/docker-compose.temporal.yml,,
+ops-deployment-file,adx-core/infrastructure/production/docker-compose.prod.yml,,
+ops-deployment-file,adx-core/infrastructure/production/nginx/nginx.conf,,
+ops-dockerfile,adx-core/infrastructure/docker/Dockerfile.db-migrator,2,FROM rust:1.75-slim as builder
+ops-dockerfile,adx-core/infrastructure/docker/Dockerfile.db-migrator,37,FROM debian:bookworm-slim
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.database.yml,6,    image: postgres:15-alpine
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.database.yml,31,    image: redis:7-alpine
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.database.yml,50,    image: postgres:15-alpine
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.database.yml,76,    image: dpage/pgadmin4:latest
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.database.yml,89,    depends_on:
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.database.yml,98,    build:
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.database.yml,107,    depends_on:
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.dev.yml,6,    image: postgres:12
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.dev.yml,26,    image: redis:7-alpine
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.dev.yml,40,    image: temporalio/auto-setup:latest
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.dev.yml,42,    depends_on:
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.dev.yml,68,    image: temporalio/admin-tools:1.21.4 # match your Temporal server version
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.dev.yml,72,    depends_on:
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.dev.yml,79,    image: temporalio/ui:latest
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.dev.yml,81,    depends_on:
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.dev.yml,92,    image: jaegertracing/all-in-one:latest
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.dev.yml,102,    image: prom/prometheus:latest
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.dev.yml,119,    image: grafana/grafana:latest
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.dev.yml,128,    depends_on:
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,6,    image: temporalio/auto-setup:1.22.0
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,21,    depends_on:
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,40,    image: temporalio/ui:2.21.0
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,46,    depends_on:
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,58,    image: postgres:15-alpine
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,83,    image: redis:7-alpine
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,102,    image: adx-core/api-gateway:${VERSION}
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,112,    depends_on:
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,135,    image: adx-core/auth-service:${VERSION}
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,145,    depends_on:
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,161,    image: adx-core/user-service:${VERSION}
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,169,    depends_on:
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,185,    image: adx-core/file-service:${VERSION}
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,197,    depends_on:
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,213,    image: adx-core/workflow-service:${VERSION}
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,221,    depends_on:
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,237,    image: adx-core/tenant-service:${VERSION}
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,245,    depends_on:
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,262,    image: adx-core/auth-bff:${VERSION}
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,271,    depends_on:
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,286,    image: adx-core/tenant-bff:${VERSION}
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,295,    depends_on:
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,311,    image: prom/prometheus:v2.45.0
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,334,    image: grafana/grafana:10.0.0
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,344,    depends_on:
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,356,    image: grafana/loki:2.8.0
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,373,    image: grafana/promtail:2.8.0
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,389,    image: prom/alertmanager:v0.25.0
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,410,    image: nginx:1.25-alpine
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.prod.yml,417,    depends_on:
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.temporal.yml,11,    image: postgres:13
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.temporal.yml,27,    depends_on:
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.temporal.yml,40,    image: temporalio/auto-setup:1.22.0
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.temporal.yml,57,    depends_on:
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.temporal.yml,63,    image: temporalio/ui:2.21.0
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.temporal.yml,77,    depends_on:
+ops-compose-service,adx-core/infrastructure/docker/docker-compose.temporal.yml,82,    image: temporalio/admin-tools:1.22.0
+ops-compose-service,adx-core/infrastructure/production/docker-compose.prod.yml,20,    image: postgres:14-alpine
+ops-compose-service,adx-core/infrastructure/production/docker-compose.prod.yml,41,    image: redis:7-alpine
+ops-compose-service,adx-core/infrastructure/production/docker-compose.prod.yml,59,    image: temporalio/auto-setup:1.22.0
+ops-compose-service,adx-core/infrastructure/production/docker-compose.prod.yml,61,    depends_on:
+ops-compose-service,adx-core/infrastructure/production/docker-compose.prod.yml,85,    build:
+ops-compose-service,adx-core/infrastructure/production/docker-compose.prod.yml,89,    depends_on:
+ops-compose-service,adx-core/infrastructure/production/docker-compose.prod.yml,112,    build:
+ops-compose-service,adx-core/infrastructure/production/docker-compose.prod.yml,116,    depends_on:
+ops-compose-service,adx-core/infrastructure/production/docker-compose.prod.yml,139,    build:
+ops-compose-service,adx-core/infrastructure/production/docker-compose.prod.yml,143,    depends_on:
+ops-compose-service,adx-core/infrastructure/production/docker-compose.prod.yml,165,    build:
+ops-compose-service,adx-core/infrastructure/production/docker-compose.prod.yml,169,    depends_on:
+ops-compose-service,adx-core/infrastructure/production/docker-compose.prod.yml,196,    build:
+ops-compose-service,adx-core/infrastructure/production/docker-compose.prod.yml,200,    depends_on:
+ops-compose-service,adx-core/infrastructure/production/docker-compose.prod.yml,222,    build:
+ops-compose-service,adx-core/infrastructure/production/docker-compose.prod.yml,226,    depends_on:
+ops-compose-service,adx-core/infrastructure/production/docker-compose.prod.yml,249,    image: prom/prometheus:latest
+ops-compose-service,adx-core/infrastructure/production/docker-compose.prod.yml,269,    image: grafana/grafana:latest
+ops-compose-service,adx-core/infrastructure/production/docker-compose.prod.yml,287,    image: grafana/loki:latest
+ops-compose-service,adx-core/infrastructure/production/docker-compose.prod.yml,299,    image: grafana/promtail:latest
+ops-compose-service,adx-core/infrastructure/production/docker-compose.prod.yml,312,    image: nginx:alpine
+ops-compose-service,adx-core/infrastructure/production/docker-compose.prod.yml,314,    depends_on:
+ops-proxy-route,adx-core/infrastructure/production/nginx/nginx.conf,115,        location /health {
+ops-proxy-route,adx-core/infrastructure/production/nginx/nginx.conf,122,        location /api/ {
+ops-proxy-route,adx-core/infrastructure/production/nginx/nginx.conf,125,            proxy_pass http://api_gateway;
+ops-proxy-route,adx-core/infrastructure/production/nginx/nginx.conf,142,        location /auth/ {
+ops-proxy-route,adx-core/infrastructure/production/nginx/nginx.conf,145,            proxy_pass http://auth_service/;
+ops-proxy-route,adx-core/infrastructure/production/nginx/nginx.conf,159,        location /api/v1/files/upload {
+ops-proxy-route,adx-core/infrastructure/production/nginx/nginx.conf,162,            proxy_pass http://file_service;
+ops-proxy-route,adx-core/infrastructure/production/nginx/nginx.conf,180,        location /api/v1/workflows/ {
+ops-proxy-route,adx-core/infrastructure/production/nginx/nginx.conf,181,            proxy_pass http://workflow_service;
+ops-proxy-route,adx-core/infrastructure/production/nginx/nginx.conf,196,        location /metrics {
+ops-proxy-route,adx-core/infrastructure/production/nginx/nginx.conf,202,            proxy_pass http://api_gateway;
+ops-proxy-route,adx-core/infrastructure/production/nginx/nginx.conf,229,        location / {
+ops-proxy-route,adx-core/infrastructure/production/nginx/nginx.conf,230,            proxy_pass http://grafana:3000;
+ops-proxy-route,adx-core/infrastructure/production/nginx/nginx.conf,238,        location /prometheus/ {
+ops-proxy-route,adx-core/infrastructure/production/nginx/nginx.conf,239,            proxy_pass http://prometheus:9090/;
+ops-proxy-route,adx-core/infrastructure/production/nginx/nginx.conf,247,        location /temporal/ {
+ops-proxy-route,adx-core/infrastructure/production/nginx/nginx.conf,248,            proxy_pass http://temporal:8088/;
+ops-hosting,.github/workflows/automated-rollback.yml,135,    - name: Set up kubectl
+ops-hosting,.github/workflows/automated-rollback.yml,136,      uses: azure/setup-kubectl@v3
+ops-hosting,.github/workflows/automated-rollback.yml,140,    - name: Configure kubectl
+ops-hosting,.github/workflows/automated-rollback.yml,144,        kubectl config current-context
+ops-hosting,.github/workflows/automated-rollback.yml,156,"        export CLOUDFRONT_DISTRIBUTION_ID=""${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}"""
+ops-hosting,.github/workflows/deploy-microfrontends.yml,162,"        aws s3 sync $BUILD_DIR $S3_PATH --delete --cache-control ""public, max-age=31536000"" --exclude ""*.html"""
+ops-hosting,.github/workflows/deploy-microfrontends.yml,165,"        aws s3 sync $BUILD_DIR $S3_PATH --delete --cache-control ""no-cache"" --include ""*.html"""
+ops-hosting,.github/workflows/deploy-microfrontends.yml,172,    - name: Invalidate CloudFront cache
+ops-hosting,.github/workflows/deploy-microfrontends.yml,176,          aws cloudfront create-invalidation \
+ops-hosting,.github/workflows/deploy-microfrontends.yml,177,            --distribution-id ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }} \
+ops-hosting,.github/workflows/deploy-microfrontends.yml,181,          aws cloudfront create-invalidation \
+ops-hosting,.github/workflows/deploy-microfrontends.yml,182,            --distribution-id ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }} \
+ops-hosting,.github/workflows/deploy-microfrontends.yml,215,"          URL=""https://${{ vars.CLOUDFRONT_DOMAIN }}/${{ github.event.inputs.environment || 'staging' }}/"""
+ops-hosting,.github/workflows/deploy-microfrontends.yml,217,"          URL=""https://${{ vars.CLOUDFRONT_DOMAIN }}/${{ github.event.inputs.environment || 'staging' }}/apps/${{ matrix.app }}/"""
+ops-hosting,.github/workflows/deploy-microfrontends.yml,259,"          echo ""- **App URL**: https://${{ vars.CLOUDFRONT_DOMAIN }}/${{ github.event.inputs.environment || 'staging' }}/"" >> reports/deployment-${{ matrix.app }}.md"
+ops-hosting,.github/workflows/deploy-microfrontends.yml,261,"          echo ""- **App URL**: https://${{ vars.CLOUDFRONT_DOMAIN }}/${{ github.event.inputs.environment || 'staging' }}/apps/${{ matrix.app }}/"" >> reports/deployment-${{ matrix.app }}.md"
+ops-hosting,.github/workflows/deploy-microfrontends.yml,262,"          echo ""- **Remote Entry**: https://${{ vars.CLOUDFRONT_DOMAIN }}/${{ github.event.inputs.environment || 'staging' }}/apps/${{ matrix.app }}/assets/remoteEntry.js"" >> reports/deployment-${{ matrix.app }}.md"
+ops-hosting,.github/workflows/deploy-microfrontends.yml,275,        - ✅ CloudFront cache invalidated
+ops-hosting,.github/workflows/deploy-microfrontends.yml,309,"        BASE_URL=""https://${{ vars.CLOUDFRONT_DOMAIN }}/${{ github.event.inputs.environment || 'staging' }}"""
+ops-hosting,.github/workflows/deploy-microfrontends.yml,312,        BASE_URL: https://${{ vars.CLOUDFRONT_DOMAIN }}/${{ github.event.inputs.environment || 'staging' }}
+ops-hosting,.github/workflows/deploy-microfrontends.yml,369,          Base URL: https://${{ vars.CLOUDFRONT_DOMAIN }}/${{ github.event.inputs.environment || 'staging' }}
+ops-hosting,.github/workflows/deploy-microservices.yml,278,    - name: Set up kubectl
+ops-hosting,.github/workflows/deploy-microservices.yml,279,      uses: azure/setup-kubectl@v3
+ops-hosting,.github/workflows/deploy-microservices.yml,283,    - name: Configure kubectl
+ops-hosting,.github/workflows/deploy-microservices.yml,287,        kubectl config current-context
+ops-hosting,.github/workflows/deploy-microservices.yml,292,        kubectl create namespace adx-core-${{ github.event.inputs.environment || 'staging' }} --dry-run=client -o yaml | kubectl apply -f -
+ops-hosting,.github/workflows/deploy-microservices.yml,300,"            kubectl apply -f ""$manifest"""
+ops-hosting,.github/workflows/deploy-microservices.yml,311,            kubectl wait --for=condition=available --timeout=300s deployment/$service_name -n adx-core-${{ github.event.inputs.environment || 'staging' }}
+ops-hosting,.github/workflows/deploy-microservices.yml,321,        services=$(kubectl get services -n $namespace -o jsonpath='{.items[*].metadata.name}')
+ops-hosting,.github/workflows/deploy-microservices.yml,327,          kubectl port-forward service/$service 8080:80 -n $namespace &
+ops-hosting,.github/workflows/deploy-microservices.yml,338,            kubectl logs -l app=$service -n $namespace --tail=50
+ops-hosting,.github/workflows/deploy-production.yml,249,      - name: Configure kubectl
+ops-hosting,.github/workflows/deploy-production.yml,258,          kubectl set image deployment/${{ matrix.service }} \
+ops-hosting,.github/workflows/deploy-production.yml,263,          kubectl rollout status deployment/${{ matrix.service }} -n adx-core --timeout=300s
+ops-hosting,.github/workflows/deploy-production.yml,266,          kubectl get pods -l app=${{ matrix.service }} -n adx-core
+ops-hosting,.github/workflows/deploy-production.yml,274,          SERVICE_IP=$(kubectl get service ${{ matrix.service }} -n adx-core -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+ops-hosting,.github/workflows/deploy-production.yml,275,          SERVICE_PORT=$(kubectl get service ${{ matrix.service }} -n adx-core -o jsonpath='{.spec.ports[0].port}')
+ops-hosting,.github/workflows/deploy-production.yml,291,      - name: Configure kubectl
+ops-hosting,.github/workflows/deploy-production.yml,299,          kubectl set image deployment/${{ matrix.service }} \
+ops-hosting,.github/workflows/deploy-production.yml,303,          kubectl rollout status deployment/${{ matrix.service }} -n adx-core --timeout=300s
+ops-hosting,.github/workflows/deploy-production.yml,329,          aws s3 sync ./dist/ s3://adx-core-frontend-${{ github.event.inputs.environment || 'production' }}/${{ matrix.app }}/ --delete
+ops-hosting,.github/workflows/deploy-production.yml,331,      - name: Invalidate CloudFront
+ops-hosting,.github/workflows/deploy-production.yml,333,          aws cloudfront create-invalidation \
+ops-hosting,.github/workflows/deploy-production.yml,334,            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+ops-hosting,adx-core/docs/deployment/README.md,46,kubectl apply -f infrastructure/kubernetes/
+ops-hosting,adx-core/docs/deployment/README.md,49,kubectl get pods -n adx-core
+ops-hosting,adx-core/docs/deployment/README.md,50,kubectl get services -n adx-core
+ops-hosting,adx-core/docs/deployment/README.md,79,kubectl apply -f infrastructure/kubernetes/staging/
+ops-hosting,adx-core/docs/deployment/README.md,82,kubectl create configmap adx-core-config \
+ops-hosting,adx-core/docs/deployment/README.md,94,kubectl apply -f infrastructure/kubernetes/production/
+ops-hosting,adx-core/docs/deployment/README.md,97,kubectl get pods -n adx-core-production
+ops-hosting,adx-core/docs/deployment/README.md,98,kubectl logs -f deployment/api-gateway -n adx-core-production
+ops-hosting,adx-core/docs/deployment/README.md,239,          kubectl set image deployment/api-gateway \
+ops-hosting,adx-core/docs/deployment/README.md,243,          kubectl rollout status deployment/api-gateway \
+ops-hosting,adx-core/docs/deployment/README.md,259,kubectl apply -f infrastructure/kubernetes/production/
+ops-hosting,adx-core/docs/deployment/README.md,271,kubectl apply -f infrastructure/kubernetes/production/green/
+ops-hosting,adx-core/docs/deployment/README.md,277,kubectl patch service api-gateway \
+ops-hosting,adx-core/docs/deployment/README.md,285,kubectl delete -f infrastructure/kubernetes/production/blue/
+ops-hosting,adx-core/docs/deployment/README.md,291,kubectl rollout undo deployment/api-gateway -n adx-core-production
+ops-hosting,adx-core/docs/deployment/README.md,294,kubectl rollout undo deployment/api-gateway \
+ops-hosting,adx-core/docs/deployment/README.md,298,kubectl rollout status deployment/api-gateway -n adx-core-production
+ops-hosting,adx-core/docs/deployment/README.md,391,kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.8.0/cert-manager.yaml
+ops-hosting,adx-core/docs/deployment/README.md,394,kubectl apply -f - <<EOF
+ops-hosting,adx-core/docs/deployment/README.md,508,kubectl apply -f infrastructure/kubernetes/production/
+ops-hosting,adx-core/docs/deployment/README.md,521,kubectl get pods -n adx-core-production
+ops-hosting,adx-core/docs/deployment/README.md,524,kubectl logs -f pod/api-gateway-xxx -n adx-core-production
+ops-hosting,adx-core/docs/deployment/README.md,527,kubectl get events -n adx-core-production --sort-by='.lastTimestamp'
+ops-hosting,adx-core/docs/deployment/README.md,530,kubectl top pods -n adx-core-production
+ops-hosting,adx-core/docs/deployment/README.md,536,kubectl exec -it pod/api-gateway-xxx -n adx-core-production -- \
+ops-hosting,adx-core/docs/deployment/README.md,540,kubectl logs -f pod/postgres-xxx -n adx-core-production
+ops-hosting,adx-core/docs/deployment/README.md,543,kubectl get configmap adx-core-config -o yaml -n adx-core-production
+ops-hosting,adx-core/docs/deployment/README.md,549,kubectl exec -it pod/temporal-xxx -n adx-core-production -- \
+ops-hosting,adx-core/docs/deployment/README.md,553,kubectl exec -it pod/temporal-xxx -n adx-core-production -- \
+ops-hosting,adx-core/docs/deployment/README.md,557,kubectl exec -it pod/temporal-xxx -n adx-core-production -- \
+ops-hosting,adx-core/docs/developer-guide/module-federation.md,1358,          aws s3 sync apps/shell/dist/ s3://adx-core-shell-production/
+ops-hosting,adx-core/docs/developer-guide/module-federation.md,1359,"          aws cloudfront create-invalidation --distribution-id ${{ secrets.SHELL_CLOUDFRONT_ID }} --paths ""/*"""
+ops-hosting,adx-core/docs/developer-guide/module-federation.md,1380,          aws s3 sync apps/auth/dist/ s3://adx-core-auth-production/
+ops-hosting,adx-core/docs/developer-guide/module-federation.md,1381,"          aws cloudfront create-invalidation --distribution-id ${{ secrets.AUTH_CLOUDFRONT_ID }} --paths ""/*"""
+ops-hosting,adx-core/docs/developer-guide/module-federation.md,1421,aws s3 sync dist/ s3://adx-core-$APP_NAME-$ENVIRONMENT-green/
+ops-hosting,adx-core/docs/developer-guide/module-federation.md,1423,# Update green CloudFront distribution
+ops-hosting,adx-core/docs/developer-guide/module-federation.md,1424,aws cloudfront create-invalidation \
+ops-hosting,adx-core/docs/developer-guide/module-federation.md,1425,"  --distribution-id $(aws ssm get-parameter --name ""/adx-core/$ENVIRONMENT/cloudfront/$APP_NAME-green"" --query 'Parameter.Value' --output text) \"
+ops-hosting,adx-core/docs/developer-guide/team-autonomy.md,449,          kubectl set image deployment/auth-service \
+ops-hosting,adx-core/docs/developer-guide/team-autonomy.md,461,          aws s3 sync dist/ s3://adx-core-auth-frontend/
+ops-hosting,adx-core/docs/developer-guide/team-autonomy.md,462,"          aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths ""/*"""
+ops-hosting,adx-core/docs/developer-guide/team-autonomy.md,473,          kubectl set image deployment/auth-bff \
+ops-hosting,adx-core/docs/developer-guide/team-autonomy.md,526,kubectl get pods -n adx-core-production | grep auth
+ops-hosting,adx-core/docs/developer-guide/team-autonomy.md,529,kubectl logs -f deployment/auth-service -n adx-core-production
+ops-hosting,adx-core/docs/developer-guide/team-autonomy.md,535,kubectl rollout undo deployment/auth-service -n adx-core-production
+ops-hosting,adx-core/docs/launch/go-live-checklist.md,369,   kubectl patch service api-gateway \
+ops-hosting,adx-core/docs/launch/go-live-checklist.md,377,   aws cloudfront update-distribution \
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,70,kubectl apply -f adx-core/infrastructure/kubernetes/namespace.yaml
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,73,kubectl create secret generic database-secret \
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,77,kubectl create secret generic redis-secret \
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,81,kubectl create secret generic jwt-secret \
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,86,kubectl apply -f adx-core/infrastructure/kubernetes/microservices-deployment.yaml
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,89,kubectl get pods -n adx-core
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,90,kubectl get services -n adx-core
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,145,    kubectl set image deployment/$service $service=adx-core/$service:$VERSION -n adx-core
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,146,    kubectl rollout status deployment/$service -n adx-core
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,149,    kubectl get pods -l app=$service -n adx-core
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,160,    kubectl set image deployment/$service $service=adx-core/$service:$VERSION -n adx-core
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,161,    kubectl rollout status deployment/$service -n adx-core
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,171,aws s3 sync apps/shell/dist/ s3://adx-core-frontend/shell/
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,172,aws s3 sync apps/auth/dist/ s3://adx-core-frontend/auth/
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,173,aws s3 sync apps/tenant/dist/ s3://adx-core-frontend/tenant/
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,174,aws s3 sync apps/file/dist/ s3://adx-core-frontend/file/
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,175,aws s3 sync apps/user/dist/ s3://adx-core-frontend/user/
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,176,aws s3 sync apps/workflow/dist/ s3://adx-core-frontend/workflow/
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,179,"aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths ""/*"""
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,187,kubectl apply -f adx-core/infrastructure/monitoring/prometheus-deployment.yaml
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,262,kubectl get hpa -n adx-core
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,265,kubectl scale deployment api-gateway --replicas=5 -n adx-core
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,268,"kubectl patch hpa api-gateway-hpa -n adx-core -p '{""spec"":{""maxReplicas"":15}}'"
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,274,kubectl patch deployment api-gateway -n adx-core -p '{
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,294,kubectl apply -f adx-core/infrastructure/kubernetes/postgres-replica.yaml
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,297,"kubectl set env deployment/user-service POSTGRES_READ_URL=""postgresql://readonly@postgres-replica:5432/adx_core"" -n adx-core"
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,320,kubectl rollout restart deployment/api-gateway -n adx-core
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,323,kubectl apply -f adx-core/infrastructure/kubernetes/microservices-deployment.yaml
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,329,kubectl config use-context backup-cluster
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,353,kubectl apply -f adx-core/infrastructure/kubernetes/network-policies.yaml
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,362,kubectl apply -f adx-core/infrastructure/kubernetes/rbac.yaml
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,365,"kubectl create secret generic jwt-secret-new --from-literal=secret=""new-secret"" -n adx-core"
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,366,"kubectl patch deployment api-gateway -n adx-core -p '{""spec"":{""template"":{""spec"":{""containers"":[{""name"":""api-gateway"",""env"":[{""name"":""JWT_SECRET"",""valueFrom"":{""secretKeyRef"":{""name"":""jwt-secret-new"",""key"":""secret""}}}]}]}}}}'"
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,374,1. Check logs: `kubectl logs deployment/service-name -n adx-core`
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,375,2. Verify environment variables: `kubectl describe deployment/service-name -n adx-core`
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,376,3. Check resource limits: `kubectl top pods -n adx-core`
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,377,4. Verify dependencies: `kubectl get services -n adx-core`
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,380,1. Test connectivity: `kubectl exec -it deployment/api-gateway -n adx-core -- nc -zv postgresql 5432`
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,381,2. Check credentials: `kubectl get secret database-secret -n adx-core -o yaml`
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,382,"3. Verify SSL configuration: `kubectl exec -it deployment/postgresql -n adx-core -- psql -c ""SHOW ssl;""`"
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,385,1. Check memory metrics: `kubectl top pods -n adx-core`
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,386,2. Analyze heap dumps: `kubectl exec -it pod-name -n adx-core -- jstack 1`
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,387,"3. Update resource limits: `kubectl patch deployment service-name -n adx-core -p '{""spec"":{""template"":{""spec"":{""containers"":[{""name"":""service-name"",""resources"":{""limits"":{""memory"":""2Gi""}}}]}}}}'`"
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,391,"2. Verify task queues: `kubectl logs deployment/workflow-service -n adx-core | grep ""task_queue""`"
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,392,3. Check workflow definitions: `kubectl exec -it deployment/workflow-service -n adx-core -- ls /app/workflows/`
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,399,kubectl set image deployment/api-gateway api-gateway=adx-core/api-gateway:v2.1.0 -n adx-core
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,402,kubectl rollout status deployment/api-gateway -n adx-core
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,405,kubectl rollout undo deployment/api-gateway -n adx-core
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,411,"kubectl exec -it deployment/postgresql -n adx-core -- psql -d adx_core -c ""VACUUM ANALYZE;"""
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,414,"kubectl exec -it deployment/postgresql -n adx-core -- psql -d adx_core -c ""ANALYZE;"""
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,417,kubectl exec -it deployment/postgresql -n adx-core -- psql -d adx_core -f /scripts/index-analysis.sql
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,423,kubectl create secret tls adx-core-tls --cert=cert.pem --key=key.pem -n adx-core
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,426,"kubectl patch ingress adx-core-ingress -n adx-core -p '{""spec"":{""tls"":[{""secretName"":""adx-core-tls"",""hosts"":[""api.adxcore.com""]}]}}'"
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,434,"kubectl exec -it deployment/postgresql -n adx-core -- psql -d adx_core -c ""SELECT query, mean_time, calls FROM pg_stat_statements ORDER BY mean_time DESC LIMIT 10;"""
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,437,"kubectl exec -it deployment/postgresql -n adx-core -- psql -d adx_core -c ""CREATE INDEX CONCURRENTLY idx_users_tenant_id ON users(tenant_id);"""
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,443,kubectl exec -it deployment/redis -n adx-core -- redis-cli info stats
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,446,kubectl exec -it deployment/redis -n adx-core -- redis-cli config set maxmemory-policy allkeys-lru
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,452,kubectl exec -it deployment/api-gateway -n adx-core -- curl http://localhost:8080/debug/pprof/profile
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,455,"kubectl patch deployment auth-bff -n adx-core -p '{""spec"":{""template"":{""spec"":{""containers"":[{""name"":""auth-bff"",""env"":[{""name"":""NODE_OPTIONS"",""value"":""--max-old-space-size=1024""}]}]}}}}'"
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,466,kubectl exec -it deployment/api-gateway -n adx-core -- /app/scripts/compliance-report.sh
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,472,"kubectl patch configmap loki-config -n adx-core -p '{""data"":{""loki.yaml"":""retention_period: 2160h""}}'"
+ops-hosting,adx-core/docs/operations/production-deployment-guide.md,475,kubectl exec -it deployment/loki -n adx-core -- /app/scripts/archive-logs.sh
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,53,kubectl get pods -n adx-core | grep -v Running
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,56,kubectl logs deployment/failed-service -n adx-core --tail=100
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,59,kubectl rollout restart deployment/failed-service -n adx-core
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,62,kubectl rollout status deployment/failed-service -n adx-core
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,83,kubectl exec -it deployment/postgresql -n adx-core -- pg_isready
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,86,"kubectl exec -it deployment/postgresql -n adx-core -- psql -d adx_core -c ""SELECT pg_database_size('adx_core');"""
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,92,kubectl exec -it deployment/postgresql -n adx-core -- psql -d adx_core -f /scripts/data-integrity-check.sql
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,95,kubectl rollout restart deployment/api-gateway -n adx-core
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,96,kubectl rollout restart deployment/auth-service -n adx-core
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,105,"kubectl exec -it deployment/postgresql -n adx-core -- psql -d adx_core -c ""SELECT MAX(created_at) FROM audit_log;"""
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,121,kubectl config use-context disaster-recovery-cluster
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,130,kubectl apply -f adx-core/infrastructure/kubernetes/microservices-deployment.yaml
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,150,kubectl config use-context secondary-region-cluster
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,176,kubectl scale deployment --all --replicas=0 -n adx-core
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,179,kubectl exec -it deployment/postgresql -n adx-core -- createdb adx_core_recovery
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,185,kubectl exec -it deployment/postgresql -n adx-core -- psql -d adx_core_recovery -f /scripts/data-verification.sql
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,188,"kubectl set env deployment/api-gateway DATABASE_URL=""postgresql://user:pass@postgresql:5432/adx_core_recovery"" -n adx-core"
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,191,kubectl scale deployment --all --replicas=2 -n adx-core
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,203,"kubectl exec -it deployment/postgresql -n adx-core -- psql -d adx_core -c ""SELECT pg_promote();"""
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,206,kubectl apply -f adx-core/infrastructure/kubernetes/cross-region-config.yaml
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,214,kubectl rollout history deployment/api-gateway -n adx-core
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,217,kubectl rollout undo deployment/api-gateway -n adx-core
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,220,kubectl rollout undo deployment/api-gateway --to-revision=3 -n adx-core
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,223,kubectl rollout status deployment/api-gateway -n adx-core
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,229,kubectl apply -f adx-core/infrastructure/kubernetes/emergency-services.yaml
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,232,"kubectl patch service api-gateway -n adx-core -p '{""spec"":{""selector"":{""app"":""api-gateway-emergency""}}}'"
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,235,kubectl create configmap maintenance-mode --from-literal=enabled=true -n adx-core
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,246,kubectl apply -f adx-core/infrastructure/kubernetes/
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,249,kubectl apply -f adx-core/infrastructure/kubernetes/persistent-volumes.yaml
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,252,kubectl get nodes
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,253,kubectl get pods --all-namespaces
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,259,kubectl apply -f adx-core/infrastructure/kubernetes/network-policies.yaml
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,265,kubectl exec -it deployment/api-gateway -n adx-core -- nc -zv external-service.com 443
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,306,kubectl create configmap service-mode --from-literal=mode=readonly -n adx-core
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,309,kubectl set env deployment/api-gateway FEATURE_ANALYTICS=false -n adx-core
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,310,kubectl set env deployment/api-gateway FEATURE_REPORTING=false -n adx-core
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,313,kubectl scale deployment/workflow-service --replicas=1 -n adx-core
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,314,kubectl scale deployment/file-service --replicas=1 -n adx-core
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,320,"kubectl patch configmap nginx-config -n adx-core -p '{""data"":{""rate-limit"":""10r/s""}}'"
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,323,kubectl set env deployment/api-gateway REJECT_NON_ESSENTIAL=true -n adx-core
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,326,kubectl set env deployment/api-gateway PRIORITY_AUTH_USERS=true -n adx-core
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,355,kubectl apply -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/manifests/crd.yaml
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,358,kubectl apply -f adx-core/infrastructure/chaos/pod-failure-test.yaml
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,361,kubectl apply -f adx-core/infrastructure/chaos/network-partition-test.yaml
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,364,kubectl logs -f deployment/api-gateway -n adx-core
+ops-hosting,adx-core/docs/operations/runbooks/disaster-recovery.md,463,"kubectl exec -it deployment/prometheus -n adx-core -- promtool query instant 'up{job=""api-gateway""}'"
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,53,"kubectl logs deployment/security-monitor -n adx-core | grep ""SECURITY_ALERT"""
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,56,"kubectl exec -it deployment/auth-service -n adx-core -- grep ""authentication_failed"" /var/log/auth.log"
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,59,kubectl exec -it deployment/api-gateway -n adx-core -- netstat -an | grep ESTABLISHED
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,65,kubectl exec -it deployment/api-gateway -n adx-core -- find /app -type f -exec sha256sum {} \; > current-checksums.txt
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,69,"kubectl logs deployment/api-gateway -n adx-core | grep -E ""(401|403|500)"" | tail -100"
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,72,"kubectl get pods -n adx-core -o jsonpath='{range .items[*]}{.metadata.name}{""\t""}{.spec.securityContext.runAsUser}{""\n""}{end}'"
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,100,kubectl label pod compromised-pod-name quarantine=true -n adx-core
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,101,"kubectl patch networkpolicy default-deny -n adx-core -p '{""spec"":{""podSelector"":{""matchLabels"":{""quarantine"":""true""}}}}'"
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,104,"kubectl create configmap blocked-ips --from-literal=ips=""192.168.1.100,10.0.0.50"" -n adx-core"
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,105,"kubectl patch deployment api-gateway -n adx-core -p '{""spec"":{""template"":{""spec"":{""containers"":[{""name"":""api-gateway"",""env"":[{""name"":""BLOCKED_IPS"",""valueFrom"":{""configMapKeyRef"":{""name"":""blocked-ips"",""key"":""ips""}}}]}]}}}}'"
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,108,"kubectl exec -it deployment/auth-service -n adx-core -- psql -d adx_core -c ""UPDATE users SET status = 'suspended' WHERE id IN ('user1', 'user2');"""
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,114,kubectl scale deployment/compromised-service --replicas=0 -n adx-core
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,117,kubectl create configmap maintenance-mode --from-literal=enabled=true -n adx-core
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,118,kubectl set env deployment/api-gateway MAINTENANCE_MODE=true -n adx-core
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,121,"kubectl patch service api-gateway -n adx-core -p '{""spec"":{""selector"":{""app"":""api-gateway-safe""}}}'"
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,127,kubectl exec -it compromised-pod -n adx-core -- tar -czf /tmp/forensic-snapshot-$(date +%Y%m%d-%H%M%S).tar.gz /var/log /tmp /app
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,130,kubectl cp adx-core/compromised-pod:/tmp/forensic-snapshot-*.tar.gz ./evidence/
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,133,kubectl exec -it compromised-pod -n adx-core -- gcore -o /tmp/memory-dump $(pgrep main-process)
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,136,kubectl logs compromised-pod -n adx-core --previous > evidence/compromised-pod-logs.txt
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,164,kubectl apply -f isolation-policy.yaml
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,172,kubectl exec -it deployment/security-scanner -n adx-core -- clamscan -r /app /var/log
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,175,kubectl exec -it compromised-pod -n adx-core -- rm -f /tmp/malicious-file.sh
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,178,kubectl exec -it deployment/security-scanner -n adx-core -- freshclam
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,184,kubectl set image deployment/api-gateway api-gateway=adx-core/api-gateway:latest-secure -n adx-core
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,185,kubectl set image deployment/auth-service auth-service=adx-core/auth-service:latest-secure -n adx-core
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,188,kubectl apply -f adx-core/infrastructure/kubernetes/security-patches.yaml
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,191,kubectl apply -f adx-core/infrastructure/kubernetes/pod-security-policies.yaml
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,197,"kubectl create secret generic jwt-secret-new --from-literal=secret=""$(openssl rand -base64 32)"" -n adx-core"
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,198,"kubectl patch deployment api-gateway -n adx-core -p '{""spec"":{""template"":{""spec"":{""containers"":[{""name"":""api-gateway"",""env"":[{""name"":""JWT_SECRET"",""valueFrom"":{""secretKeyRef"":{""name"":""jwt-secret-new"",""key"":""secret""}}}]}]}}}}'"
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,202,"kubectl exec -it deployment/postgresql -n adx-core -- psql -c ""ALTER USER adx_core_user PASSWORD '$NEW_DB_PASSWORD';"""
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,203,"kubectl patch secret database-secret -n adx-core -p '{""data"":{""password"":""'$(echo -n $NEW_DB_PASSWORD | base64)'""}}'"
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,206,"kubectl create secret generic api-keys-new --from-literal=s3-key=""$(aws iam create-access-key --user-name adx-core-s3 --query 'AccessKey.AccessKeyId' --output text)"" -n adx-core"
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,209,"kubectl exec -it deployment/auth-service -n adx-core -- psql -d adx_core -c ""UPDATE users SET password_reset_required = true WHERE last_login < NOW() - INTERVAL '30 days';"""
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,218,kubectl apply -f adx-core/infrastructure/kubernetes/microservices-deployment.yaml
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,221,kubectl exec -it deployment/api-gateway -n adx-core -- /app/scripts/integrity-check.sh
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,328,kubectl exec -it compromised-pod -n adx-core -- dd if=/dev/sda of=/tmp/forensic-image.dd bs=4096
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,331,kubectl exec -it compromised-pod -n adx-core -- sha256sum /tmp/forensic-image.dd > /tmp/forensic-image.sha256
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,334,kubectl exec -it forensic-workstation -n adx-core -- sleuthkit-tools /tmp/forensic-image.dd
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,337,kubectl exec -it forensic-workstation -n adx-core -- volatility -f /tmp/memory-dump.raw --profile=LinuxUbuntu2004x64 linux_bash
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,343,kubectl exec -it deployment/log-analyzer -n adx-core -- python3 /scripts/correlate-events.py \
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,349,kubectl exec -it deployment/log-analyzer -n adx-core -- python3 /scripts/generate-timeline.py \
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,354,"kubectl exec -it deployment/log-analyzer -n adx-core -- grep -E ""(injection|xss|csrf|traversal)"" /var/log/security.log"
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,360,kubectl exec -it deployment/network-analyzer -n adx-core -- tcpdump -r /tmp/network-capture.pcap -nn
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,363,kubectl exec -it deployment/network-analyzer -n adx-core -- python3 /scripts/detect-exfiltration.py \
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,368,kubectl exec -it deployment/network-analyzer -n adx-core -- python3 /scripts/detect-c2.py \
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,410,kubectl apply -f adx-core/infrastructure/monitoring/enhanced-security-monitoring.yaml
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,413,kubectl apply -f adx-core/infrastructure/kubernetes/updated-security-policies.yaml
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,416,kubectl apply -f adx-core/infrastructure/security/intrusion-detection.yaml
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,431,kubectl exec -it deployment/compliance-reporter -n adx-core -- python3 /scripts/generate-compliance-report.py \
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,452,kubectl apply -f adx-core/infrastructure/testing/simulated-security-incident.yaml
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,465,kubectl apply -f adx-core/infrastructure/testing/penetration-test.yaml
+ops-hosting,adx-core/docs/operations/runbooks/security-incident-response.md,471,kubectl exec -it deployment/security-tester -n adx-core -- python3 /scripts/test-detection.py \
+ops-hosting,adx-core/docs/operations/runbooks/service-deployment.md,78,aws s3 sync apps/shell/dist/ s3://adx-core-frontend/shell/
+ops-hosting,adx-core/docs/operations/runbooks/service-deployment.md,79,aws s3 sync apps/auth/dist/ s3://adx-core-frontend/auth/
+ops-hosting,adx-core/docs/operations/runbooks/service-deployment.md,80,aws s3 sync apps/tenant/dist/ s3://adx-core-frontend/tenant/
+ops-hosting,adx-core/docs/operations/runbooks/service-deployment.md,81,aws s3 sync apps/file/dist/ s3://adx-core-frontend/file/
+ops-hosting,adx-core/docs/operations/runbooks/service-deployment.md,82,aws s3 sync apps/user/dist/ s3://adx-core-frontend/user/
+ops-hosting,adx-core/docs/operations/runbooks/service-deployment.md,83,aws s3 sync apps/workflow/dist/ s3://adx-core-frontend/workflow/
+ops-hosting,adx-core/docs/operations/runbooks/service-deployment.md,86,"aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION_ID} --paths ""/*"""
+ops-hosting,adx-core/docs/temporal-workflow-versioning-strategy.md,197,kubectl apply -f deployment-v2.yaml
+ops-hosting,adx-core/docs/temporal-workflow-versioning-strategy.md,200,"kubectl patch service workflow-service -p '{""spec"":{""selector"":{""version"":""v2""}}}'"
+ops-hosting,adx-core/docs/temporal-workflow-versioning-strategy.md,204,"kubectl patch service workflow-service -p '{""spec"":{""selector"":{""version"":""v1""}}}'"
+ops-hosting,adx-core/docs/temporal-workflow-versioning-strategy.md,398,"kubectl patch deployment workflow-service -p '{""spec"":{""replicas"":0}}'"
+ops-hosting,adx-core/docs/temporal-workflow-versioning-strategy.md,401,timeout 300 kubectl wait --for=condition=available=false deployment/workflow-service
+ops-hosting,adx-core/docs/temporal-workflow-versioning-strategy.md,404,kubectl set image deployment/workflow-service workflow-service=adx-core/workflow-service:$OLD_VERSION
+ops-hosting,adx-core/docs/temporal-workflow-versioning-strategy.md,407,"kubectl patch deployment workflow-service -p '{""spec"":{""replicas"":3}}'"
+ops-hosting,adx-core/docs/temporal-workflow-versioning-strategy.md,410,kubectl wait --for=condition=available deployment/workflow-service
+ops-hosting,tests/README.md,218,CLOUDFRONT_DISTRIBUTION_ID=... # CloudFront distribution
+ops-cors,adx-core/apps/auth/vite.config.ts,37,"    cors: true,"
+ops-cors,adx-core/apps/auth/vite.config.ts,42,"    cors: true,"
+ops-cors,adx-core/apps/file/vite.config.ts,28,"  server: { port: 3003, cors: true, host: true },"
+ops-cors,adx-core/apps/module/vite.config.ts,37,"    cors: true,"
+ops-cors,adx-core/apps/module/vite.config.ts,42,"    cors: true,"
+ops-cors,adx-core/apps/shell/vite.config.ts,62,"    cors: true,"
+ops-cors,adx-core/apps/tenant/vite.config.ts,36,"    cors: true,"
+ops-cors,adx-core/apps/tenant/vite.config.ts,41,"    cors: true,"
+ops-cors,adx-core/apps/user/vite.config.ts,28,"  server: { port: 3004, cors: true, host: true },"
+ops-cors,adx-core/apps/workflow/vite.config.ts,28,"  server: { port: 3005, cors: true, host: true },"
+ci-workflow-file,.github/workflows/automated-rollback.yml,,
+ci-workflow-file,.github/workflows/ci.yml,,
+ci-workflow-file,.github/workflows/comprehensive-tests.yml,,
+ci-workflow-file,.github/workflows/deploy-microfrontends.yml,,
+ci-workflow-file,.github/workflows/deploy-microservices.yml,,
+ci-workflow-file,.github/workflows/deploy-production.yml,,
+ci-workflow-file,.github/workflows/mobile-tests.yml,,
+ci-workflow-file,.github/workflows/tauri-desktop-tests.yml,,
+ci-path-trigger,.github/workflows/deploy-microfrontends.yml,6,    paths:
+ci-path-trigger,.github/workflows/deploy-microservices.yml,6,    paths:
+ci-path-trigger,.github/workflows/deploy-production.yml,6,    paths:
+ci-path-trigger,.github/workflows/mobile-tests.yml,6,    paths:
+ci-path-trigger,.github/workflows/tauri-desktop-tests.yml,6,    paths:
+ci-path-trigger,.github/workflows/tauri-desktop-tests.yml,13,    paths:
+doc-mfe-term,FINAL_TESTING_REPORT.md,48,  - **Integration Tests**: Micro-frontend communication
+doc-mfe-term,FINAL_TESTING_REPORT.md,123,- Micro-frontend independence validated
+doc-mfe-term,KIRO_HOOK_DOCUMENTATION.md,193,- Maps micro-frontend boundaries
+doc-mfe-term,PROJECT_REPORT.md,16,- **Architecture**: Temporal-first microservices with micro-frontend architecture
+doc-mfe-term,PROJECT_REPORT.md,40,- [x] Micro-frontend architecture with Module Federation
+doc-mfe-term,PROJECT_REPORT.md,75,"- **Micro-Frontends**: Domain-specific apps (Auth, Tenant, File, User, Workflow)"
+doc-mfe-term,PROJECT_REPORT.md,149,### 3. Micro-Frontend Architecture
+doc-mfe-term,PROJECT_REPORT.md,150,**Decision**: Domain-aligned micro-frontends with Module Federation.
+doc-mfe-term,PROJECT_REPORT.md,183,- [ ] Implement Auth Micro-Frontend
+doc-mfe-term,PROJECT_REPORT.md,202,- ⚠️ Micro-frontend coordination
+doc-mfe-term,README.md,17,- **Frontend Microservices**: Domain-aligned micro-frontends with Module Federation
+doc-mfe-term,README.md,30,### Frontend (Micro-Frontend Architecture)
+doc-mfe-term,README.md,32,"- **Micro-Frontends**: Domain-specific apps (Auth, Tenant, File, User, Workflow)"
+doc-mfe-term,README.md,181,# Start all micro-frontends
+doc-mfe-term,README.md,184,# Start individual micro-frontends
+doc-mfe-term,README.md,186,npm run dev:auth         # Auth micro-frontend
+doc-mfe-term,README.md,187,npm run dev:tenant       # Tenant micro-frontend
+doc-mfe-term,README.md,190,npm run build:all        # All micro-frontends
+doc-mfe-term,TESTING_INFRASTRUCTURE_COMPLETE.md,45,- **Micro-frontend integration tests** - Module Federation loading and communication
+doc-mfe-term,TESTING_INFRASTRUCTURE_COMPLETE.md,52,- **Mock implementations** - Micro-frontend and shared package mocks
+doc-mfe-term,TESTING_INFRASTRUCTURE_COMPLETE.md,133,- **Module Federation testing** - Micro-frontend loading and communication
+doc-mfe-term,TESTING_INFRASTRUCTURE_COMPLETE.md,146,- **Integration test coverage** - Cross-micro-frontend communication
+doc-mfe-term,TEST_EXECUTION_SUMMARY.md,33,- **Purpose**: Comprehensive TypeScript/React micro-frontend testing
+doc-mfe-term,TEST_EXECUTION_SUMMARY.md,36,  - Micro-frontend unit and integration tests
+doc-mfe-term,TEST_EXECUTION_SUMMARY.md,37,  - Cross micro-frontend communication tests
+doc-mfe-term,TEST_EXECUTION_SUMMARY.md,199,- Cross micro-frontend communication
+doc-mfe-term,adx-core-final-sync-manager-summary.md,46,- **✅ Auth Micro-Frontend:** Independent deployment (port 3001)
+doc-mfe-term,adx-core-final-sync-manager-summary.md,47,- **✅ Tenant Micro-Frontend:** Independent deployment (port 3002)
+doc-mfe-term,adx-core-final-sync-manager-summary.md,48,- **✅ File Micro-Frontend:** Independent deployment (port 3003)
+doc-mfe-term,adx-core-final-sync-manager-summary.md,49,- **✅ User Micro-Frontend:** Independent deployment (port 3004)
+doc-mfe-term,adx-core-final-sync-manager-summary.md,50,- **✅ Workflow Micro-Frontend:** Independent deployment (port 3005)
+doc-mfe-term,adx-core-final-sync-manager-summary.md,51,- **✅ Module Micro-Frontend:** Independent deployment (port 3006)
+doc-mfe-term,adx-core-final-sync-manager-summary.md,70,- **✅ Module Federation:** Complete micro-frontend independence
+doc-mfe-term,adx-core-final-sync-manager-summary.md,72,- **✅ Shared Design System:** Consistent UI/UX across all micro-frontends
+doc-mfe-term,adx-core-final-sync-manager-summary.md,73,- **✅ Event Bus Communication:** Cross-micro-frontend coordination
+doc-mfe-term,adx-core-final-sync-manager-summary.md,95,- **Frontend:** 6 tasks (micro-frontend architecture)
+doc-mfe-term,adx-core-final-sync-manager-summary.md,110,- **✅ Scalable Architecture:** Independent scaling of all services and micro-frontends
+doc-mfe-term,adx-core-final-sync-manager-summary.md,123,- **Independent Deployments:** Each service and micro-frontend deployable independently
+doc-mfe-term,adx-core-final-sync-manager-summary.md,134,"- **✅ Frontend Loading:** < 2 seconds initial, < 500ms micro-frontend switches"
+doc-mfe-term,adx-core-parallelization-sync-summary.md,33,"| **Frontend** | 4 | Micro-frontends, Module Federation |"
+doc-mfe-term,adx-core-parallelization-sync-summary.md,73,- **6 teams simultaneously:** Micro-frontends + BFF services
+doc-mfe-term,adx-core-parallelization-sync-summary.md,128,- Domain-aligned micro-frontends
+doc-mfe-term,adx-core-sync-status-report.md,34,- **Frontend**: 4 tasks (9.3%) - Micro-frontend architecture
+doc-mfe-term,adx-core-sync-status-report.md,59,- **Phase 7**: 2 tasks (0% complete) - User and File Micro-Frontends
+doc-mfe-term,adx-core-sync-status-report.md,109,- **Frontend Microservices**: Module Federation for micro-frontends
+doc-mfe-term,adx-core-sync-status-report.md,143,- **Micro-Frontends**: 📋 Domain-aligned apps planned
+doc-mfe-term,adx-core-sync-status-report.md,167,2. **Frontend Planning**: Begin micro-frontend architecture planning
+doc-mfe-term,adx-core-task-sync-analysis-report.md,63,| Phase 7 | 2 | Micro-Frontends Complete |
+doc-mfe-term,adx-core-task-sync-analysis-report.md,86,- Micro-frontend architecture mirrors backend service boundaries
+doc-mfe-term,adx-core-task-sync-analysis-report.md,97,1. **Task 29**: Module Micro-Frontend Setup
+doc-mfe-term,adx-core-task-sync-analysis-report.md,126,2. **Focus on Module System**: Complete Task 29 for full micro-frontend capability
+doc-mfe-term,adx-core-task-sync-execution-summary.md,32,- **Individual micro-frontends** (Tasks 24-29) properly tracked as pending
+doc-mfe-term,adx-core-task-sync-execution-summary.md,70,- Task 24: Auth Micro-Frontend Setup → Issue #75 ✅ (duplicate handling)
+doc-mfe-term,adx-core-task-sync-execution-summary.md,71,- Task 25: Tenant Micro-Frontend Setup → Issue #76 ✅ (duplicate handling)
+doc-mfe-term,adx-core-task-sync-execution-summary.md,74,**Frontend Micro-Frontends (6 tasks)**
+doc-mfe-term,adx-core-task-sync-execution-summary.md,75,- Task 24: Auth Micro-Frontend Setup → Issue #75 📋 (reopened due to duplicate)
+doc-mfe-term,adx-core-task-sync-execution-summary.md,76,- Task 25: Tenant Micro-Frontend Setup → Issue #76 📋 (reopened due to duplicate)
+doc-mfe-term,adx-core-task-sync-execution-summary.md,77,- Task 26: User Micro-Frontend Setup → Issue #77 📋
+doc-mfe-term,adx-core-task-sync-execution-summary.md,78,- Task 27: File Micro-Frontend Setup → Issue #78 📋
+doc-mfe-term,adx-core-task-sync-execution-summary.md,79,- Task 28: Workflow Micro-Frontend Setup → Issue #79 📋
+doc-mfe-term,adx-core-task-sync-execution-summary.md,80,- Task 29: Module Micro-Frontend Setup → Issue #80 📋
+doc-mfe-term,adx-core-task-sync-execution-summary.md,119,- **Frontend Microservices**: 0% complete (all 6 micro-frontends pending)
+doc-mfe-term,adx-core-task-sync-execution-summary.md,174,"1. **Frontend Microservices**: 6 micro-frontends pending (Auth, Tenant, User, File, Workflow, Module)"
+doc-mfe-term,adx-core-task-sync-execution-summary.md,188,2. **Begin Phase 6-7 Development**: Focus on individual micro-frontends
+doc-mfe-term,adx-core-task-sync-final-report.md,166,- Micro-frontend setup tasks aligned with backend service boundaries
+doc-mfe-term,adx-core-task-sync-final-summary.md,71,"1. **Frontend Microservices**: 6 micro-frontends pending (Auth, Tenant, User, File, Workflow, Module)"
+doc-mfe-term,adx-core-task-sync-manager-report.md,59,"- Auth Micro-Frontend Setup (Tasks 24, 24 - duplicate detected)"
+doc-mfe-term,adx-core-task-sync-manager-report.md,60,"- Tenant Micro-Frontend Setup (Tasks 25, 25 - duplicate detected)"
+doc-mfe-term,adx-core-task-sync-manager-report.md,61,- User Micro-Frontend Setup (Task 26)
+doc-mfe-term,adx-core-task-sync-manager-report.md,62,- File Micro-Frontend Setup (Task 27)
+doc-mfe-term,adx-core-task-sync-manager-report.md,63,- Workflow Micro-Frontend Setup (Task 28)
+doc-mfe-term,adx-core-task-sync-manager-report.md,64,- Module Micro-Frontend Setup (Task 29)
+doc-mfe-term,adx-core-task-sync-manager-report.md,143,- 6 micro-frontends pending implementation
+doc-mfe-term,adx-core-task-sync-manager-report.md,175,"- **Frontend Microservices**: 6 micro-frontends pending, but foundation solid"
+doc-mfe-term,adx-core-task-sync-manager-report.md,197,- **Frontend Team**: Focus on micro-frontends (Tasks 24-29)
+doc-mfe-term,adx-core-task-sync-manager-summary.md,39,"- Tasks 22-43: Micro-frontends, BFF services, AI integration, testing, deployment"
+doc-mfe-term,adx-core-task-sync-manager-summary.md,159,- **Frontend Team**: Plan Phase 6 (Micro-frontends)
+doc-mfe-term,adx-core/INFRASTRUCTURE_SETUP.md,56,# Start micro-frontends
+doc-mfe-term,adx-core/INFRASTRUCTURE_SETUP.md,144,Each micro-frontend needs environment configuration. Example for auth micro-app:
+doc-mfe-term,adx-core/README.md,11,"4. **""Each team owns a complete vertical slice: backend service + micro-frontend + optional BFF.""**"
+doc-mfe-term,adx-core/bff-services/auth-bff/README.md,3,Backend-for-Frontend service for authentication and user management in ADX Core. This service acts as a Temporal workflow client and provides optimized APIs for the Auth micro-frontend.
+doc-mfe-term,adx-core/bff-services/file-bff/README.md,3,"The File Backend-for-Frontend (BFF) service for ADX Core, implemented in Rust with Axum. This service acts as a Temporal workflow client and provides optimized APIs for file management micro-frontends."
+doc-mfe-term,adx-core/bff-services/module-bff/README.md,3,Backend-for-Frontend service for the Module Management system in ADX Core. This service acts as a Temporal workflow client and provides optimized APIs for the Module micro-frontend.
+doc-mfe-term,adx-core/docs/README.md,36,- **[Micro-Frontend Apps](./user-guide/micro-frontends.md)** - Using individual applications
+doc-mfe-term,adx-core/docs/README.md,47,- **[Module Federation](./developer-guide/module-federation.md)** - Micro-frontend development
+doc-mfe-term,adx-core/docs/README.md,77,2. **[Creating Your First Micro-Frontend](./developer-guide/first-microfrontend.md)**
+doc-mfe-term,adx-core/docs/README.md,104,- **Independent deployment** of micro-frontends
+doc-mfe-term,adx-core/docs/README.md,131,- Independent micro-frontend deployment
+doc-mfe-term,adx-core/docs/api/README.md,17,- **BFF Services**: Optional optimization layer for micro-frontends
+doc-mfe-term,adx-core/docs/api/README.md,18,- **Frontend Services**: Module Federation-based micro-frontends
+doc-mfe-term,adx-core/docs/deployment/README.md,11,- **Frontend Services**: 6 React micro-frontends with Module Federation
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1,# Module Federation and Micro-Frontend Development Guide
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,5,"ADX CORE uses Module Federation to implement a micro-frontend architecture where each domain-specific application can be developed, tested, and deployed independently while maintaining a cohesive user experience. This guide covers the setup, development patterns, and best practices for working with "
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,33,1. **Shell Application (Host)**: Main application that loads and orchestrates micro-frontends
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,34,2. **Remote Applications**: Independent micro-frontends for specific domains
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,36,4. **Event Bus**: Communication mechanism between micro-frontends
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,153,import { MicroFrontendLoader } from './components/MicroFrontendLoader';
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,157,// Dynamic imports for micro-frontends
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,194,                        <Suspense fallback={<MicroFrontendLoader />}>
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,200,"                                <ErrorBoundary fallback={<MicroFrontendError app=""Auth"" />}>"
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,208,"                                <ErrorBoundary fallback={<MicroFrontendError app=""Tenant"" />}>"
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,216,"                                <ErrorBoundary fallback={<MicroFrontendError app=""File"" />}>"
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,224,"                                <ErrorBoundary fallback={<MicroFrontendError app=""User"" />}>"
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,232,"                                <ErrorBoundary fallback={<MicroFrontendError app=""Workflow"" />}>"
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,240,"                                <ErrorBoundary fallback={<MicroFrontendError app=""Module"" />}>"
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,289,"    console.error('Micro-frontend error:', error, errorInfo);"
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,293,"      window.analytics.track('Micro-Frontend Error', {"
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,315,              This micro-frontend encountered an error. Please try refreshing the page.
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,350,// Micro-frontend specific error component
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,351,export const MicroFrontendError: React.FC<{ app: string }> = ({ app }) => (
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,352,"  <div className=""micro-frontend-error p-8 text-center"">"
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,359,        The {app} micro-frontend is currently unavailable. Please try again later.
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,465,  // Emit auth events for other micro-frontends
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,557,"  // When loaded as micro-frontend, just render the App component"
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,637,"      source: 'micro-frontend',"
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,736,export interface MicroFrontendEvents {
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,817,  const typedEmit = <K extends keyof MicroFrontendEvents>(
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,819,    data: MicroFrontendEvents[K]
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,824,  const typedSubscribe = <K extends keyof MicroFrontendEvents>(
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,826,    handler: (event: { type: K; data: MicroFrontendEvents[K]; timestamp: number }) => void
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,835,### Cross-Micro-Frontend State Synchronization
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,839,export const useCrossMicroFrontendSync = () => {
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,844,  // Sync user data across micro-frontends
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,847,      // Update local user context when user logs in from another micro-frontend
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,857,  // Sync tenant data across micro-frontends
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,860,      // Update local tenant context when tenant switches from another micro-frontend
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,901,# 1. Start all micro-frontends in development mode
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,913,# 2. Start individual micro-frontend for focused development
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1039,### Unit Testing for Micro-Frontends
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1148,### Integration Testing Across Micro-Frontends
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1151,// tests/integration/cross-microfrontend.test.ts
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1154,"test.describe('Cross Micro-Frontend Integration', () => {"
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1155,"  test('should handle user login across all micro-frontends', async ({ page }) => {"
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1159,    // Login through auth micro-frontend
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1168,    // Navigate to different micro-frontends and verify user context
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1179,"  test('should handle tenant switching across micro-frontends', async ({ page }) => {"
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1194,    // Verify tenant context updated across micro-frontends
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1203,"  test('should handle micro-frontend failures gracefully', async ({ page }) => {"
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1204,    // Simulate micro-frontend failure by blocking network requests
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1210,"    await expect(page.locator('[data-testid=""micro-frontend-error""]')).toBeVisible();"
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1213,    // Verify other micro-frontends still work
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1227,"  test('should load micro-frontends within performance budget', async ({ page }) => {"
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1239,    // Measure micro-frontend switching time
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1245,    // Verify micro-frontend switch is under 500ms
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1250,    // Navigate to each micro-frontend and measure resource sizes
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1270,    // Verify each micro-frontend is under 500KB
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1292,# .github/workflows/deploy-microfrontends.yml
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1293,name: Deploy Micro-Frontends
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1375,      - name: Build auth micro-frontend
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1383,  # Similar jobs for other micro-frontends...
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1397,### Blue-Green Deployment for Micro-Frontends
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1401,# scripts/deploy-microfrontend-blue-green.sh
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1415,# Build the micro-frontend
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1480,   - Implement error boundaries for each micro-frontend
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1481,   - Provide fallback UI for failed micro-frontends
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1485,   - Lazy load micro-frontends only when needed
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1488,   - Use code splitting within micro-frontends
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1491,   - Use event bus for loose coupling between micro-frontends
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1492,   - Avoid direct imports between micro-frontends
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1496,   - Test micro-frontends in isolation
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1497,   - Test integration between micro-frontends
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1504,   - Deploy micro-frontends independently
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1510,   - Track micro-frontend loading times and errors
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1511,   - Monitor cross-micro-frontend communication
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1512,   - Set up alerts for failed micro-frontend loads
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1522,   - Set performance budgets for each micro-frontend
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1531,#### Micro-Frontend Won't Load
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1533,// Debug micro-frontend loading issues
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1534,"const debugMicroFrontendLoading = async (remoteName: string, remoteUrl: string) => {"
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1559,"debugMicroFrontendLoading('auth_app', 'http://localhost:3001/assets/remoteEntry.js');"
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1606,// Monitor micro-frontend performance
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1607,const monitorMicroFrontendPerformance = () => {
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1608,  // Track micro-frontend loading times
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1612,        console.log(`Micro-frontend load time: ${entry.name} - ${entry.duration}ms`);
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1616,"          window.analytics.track('Micro-Frontend Load Time', {"
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1649,"Module Federation enables ADX CORE to achieve true micro-frontend architecture with independent development, deployment, and scaling. By following these guidelines and best practices, teams can build maintainable, performant, and reliable micro-frontends that work together seamlessly."
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1654,- **Independent Deployment**: Deploy micro-frontends without affecting others
+doc-mfe-term,adx-core/docs/developer-guide/module-federation.md,1655,- **Fault Isolation**: Failures in one micro-frontend don't affect others
+doc-mfe-term,adx-core/docs/developer-guide/team-autonomy.md,72,├── React micro-frontend development
+doc-mfe-term,adx-core/docs/developer-guide/team-autonomy.md,352,├── frontend-app/             # React micro-frontend
+doc-mfe-term,adx-core/docs/developer-guide/team-autonomy.md,620,  // Navigate to auth micro-frontend
+doc-mfe-term,adx-core/docs/developer-guide/team-autonomy.md,631,  // Verify event propagation to other micro-frontends
+doc-mfe-term,adx-core/docs/developer-guide/team-autonomy.md,686,- **Avoid Tight Frontend Coupling**: Use event bus for micro-frontend communication
+doc-mfe-term,adx-core/docs/launch/go-live-checklist.md,42,- [ ] CDN configured for static assets and micro-frontends
+doc-mfe-term,adx-core/docs/launch/go-live-checklist.md,69,- [ ] CSP headers configured for micro-frontends
+doc-mfe-term,adx-core/docs/launch/go-live-checklist.md,96,- [ ] All 6 micro-frontends built and deployed
+doc-mfe-term,adx-core/docs/launch/go-live-checklist.md,269,  - [ ] Monitor micro-frontend performance
+doc-mfe-term,adx-core/docs/operations/production-deployment-guide.md,9,- **Frontend**: 6 micro-frontends using Module Federation
+doc-mfe-term,adx-core/docs/operations/production-deployment-guide.md,167,# Build and deploy micro-frontends
+doc-mfe-term,adx-core/docs/operations/production-readiness-checklist.md,110,- [ ] All 6 micro-frontends built and deployed
+doc-mfe-term,adx-core/docs/operations/runbooks/service-deployment.md,72,#### Build and Deploy Micro-Frontends
+doc-mfe-term,adx-core/docs/operations/runbooks/service-deployment.md,74,# Build all micro-frontends
+doc-mfe-term,adx-core/docs/user-guide/README.md,12,4. [Micro-Frontend Applications](#micro-frontend-applications)
+doc-mfe-term,adx-core/docs/user-guide/README.md,42,"The ADX CORE interface is built with micro-frontends, providing a seamless experience across different functional areas:"
+doc-mfe-term,adx-core/docs/user-guide/README.md,57,The main navigation bar provides access to all micro-frontend applications:
+doc-mfe-term,adx-core/docs/user-guide/README.md,108,## Micro-Frontend Applications
+doc-mfe-term,adx-core/docs/user-guide/README.md,301,   - All micro-frontends update automatically
+doc-mfe-term,final-github-sync-execution-summary.md,45,- **✅ 7 Micro-Frontends:** Independent deployment with Module Federation
+doc-mfe-term,final-github-sync-execution-summary.md,78,- **Frontend:** 6 tasks (micro-frontend architecture)
+doc-mfe-term,final-github-sync-execution-summary.md,93,- **Scalable Architecture:** Independent scaling of all services and micro-frontends
+doc-mfe-term,final-github-sync-execution-summary.md,106,- **Independent Deployments:** Each service and micro-frontend deployable independently
+doc-mfe-term,github-sync-execution-summary.md,89,3. **Parallel Frontend Development** (Tasks 23-27) - Micro-frontends
+doc-mfe-term,github-sync-final-report.md,37,"- **Micro-Frontends**: 4 tasks (9.3%) - Module Federation, Shell app"
+doc-mfe-term,manager-summary-task-sync.md,94,- Module Federation micro-frontends
+doc-mfe-term,manager-summary-task-sync.md,145,2. **Frontend Architecture Planning** - Micro-frontend strategy
+doc-mfe-term,manager-task-33-completion-summary.md,65,- **Frontend Microservices:** ✅ 100% Complete (All micro-frontends implemented)
+doc-mfe-term,manager-task-33-completion-summary.md,96,   - Simplified API contracts for micro-frontends
+doc-mfe-term,task-10-status-change-summary.md,73,- **Frontend**: 4 tasks (9.3%) - Micro-frontend architecture
+doc-mfe-term,task-22-completion-sync-report.md,10,"- **Requirements**: 8.1, 15.1 (Module Federation and micro-frontend integration)"
+doc-mfe-term,task-22-completion-sync-report.md,19,- ✅ Add error boundaries and fallback components for micro-frontend failures
+doc-mfe-term,task-22-completion-sync-report.md,46,"  - Remaining: Tasks 23-25 (Design System, Auth/Tenant Micro-frontends)"
+doc-mfe-term,task-22-completion-sync-report.md,53,1. **Module Federation Host Ready**: Shell application configured as the host for all micro-frontends
+doc-mfe-term,task-22-completion-sync-report.md,55,3. **Routing Foundation**: Global routing system ready for micro-frontend integration
+doc-mfe-term,task-22-completion-sync-report.md,56,4. **Error Handling**: Proper error boundaries for micro-frontend isolation
+doc-mfe-term,task-22-completion-sync-report.md,67,2. **Tasks 24-25**: Auth and Tenant Micro-frontends
+doc-mfe-term,task-22-completion-sync-report.md,89,- `requirement:15.1` - Micro-frontend integration requirement
+doc-mfe-term,task-22-completion-sync-report.md,94,- **Frontend Architecture Foundation**: Complete shell application ready for micro-frontend development
+doc-mfe-term,task-22-completion-sync-report.md,95,- **Team Autonomy Enablement**: Infrastructure supports independent micro-frontend development
+doc-mfe-term,task-22-completion-sync-report.md,97,- **Shared Context Management**: Robust state management across micro-frontends
+doc-mfe-term,task-22-completion-sync-report.md,100,- **Parallel Development Ready**: Teams can now develop micro-frontends independently
+doc-mfe-term,task-22-completion-sync-report.md,102,- **Error Isolation**: Error boundaries prevent micro-frontend failures from affecting the entire app
+doc-mfe-term,task-22-completion-sync-report.md,120,"Task 22 completion marks a crucial milestone in the ADX Core frontend microservices architecture. The shell application foundation is now complete, enabling parallel development of micro-frontends and supporting the team autonomy model."
+doc-mfe-term,task-33-completion-sync-summary.md,83,- **Frontend Microservices:** ✅ 100% Complete (All micro-frontends implemented)
+doc-mfe-term,task-33-completion-sync-summary.md,133,- **Complete Frontend Optimization:** All micro-frontends have dedicated BFF services
+doc-mfe-term,task-sync-analysis-report.md,22,- Build operational runbooks and documentation for each service and micro-frontend
+doc-mfe-term,task-sync-analysis-report.md,24,- Set up independent scaling and deployment for each service and micro-frontend
+doc-mfe-term,task-sync-analysis-report.md,52,- Independent micro-frontend scaling
+doc-mfe-term,tests/README.md,3,"This directory contains comprehensive cross-platform testing infrastructure for ADX Core, covering desktop applications, mobile applications, and web-based micro-frontends."
+doc-mfe-term,tests/README.md,23,│       └── cross-microfrontend.spec.ts
+doc-mfe-term,tests/README.md,152,- `.github/workflows/deploy-microfrontends.yml` - Frontend deployment
+doc-integration-technology,DEV-SETUP.md,219,2. **Check Module Federation**: Ensure all micro-apps are running on correct ports
+doc-integration-technology,DEV-SETUP.md,244,- **Frontend Microservices**: Module Federation for independent micro-apps
+doc-integration-technology,FINAL_TESTING_REPORT.md,122,- Module Federation configuration ready
+doc-integration-technology,PROJECT_REPORT.md,40,- [x] Micro-frontend architecture with Module Federation
+doc-integration-technology,PROJECT_REPORT.md,74,"- **Shell Application**: React 18+ with TypeScript, Vite Module Federation"
+doc-integration-technology,PROJECT_REPORT.md,150,**Decision**: Domain-aligned micro-frontends with Module Federation.
+doc-integration-technology,PROJECT_REPORT.md,182,- [ ] Create Shell Application with Module Federation
+doc-integration-technology,README.md,17,- **Frontend Microservices**: Domain-aligned micro-frontends with Module Federation
+doc-integration-technology,README.md,31,"- **Shell Application**: React 18+ with TypeScript, Vite Module Federation"
+doc-integration-technology,TESTING_INFRASTRUCTURE_COMPLETE.md,45,- **Micro-frontend integration tests** - Module Federation loading and communication
+doc-integration-technology,TESTING_INFRASTRUCTURE_COMPLETE.md,133,- **Module Federation testing** - Micro-frontend loading and communication
+doc-integration-technology,TEST_EXECUTION_SUMMARY.md,96,- Module Federation testing for frontend
+doc-integration-technology,TEST_EXECUTION_SUMMARY.md,198,- Module Federation testing
+doc-integration-technology,adx-core-final-sync-manager-summary.md,44,### Frontend Microservices (Module Federation)
+doc-integration-technology,adx-core-final-sync-manager-summary.md,45,- **✅ Shell Application:** Module Federation host (port 3000)
+doc-integration-technology,adx-core-final-sync-manager-summary.md,70,- **✅ Module Federation:** Complete micro-frontend independence
+doc-integration-technology,adx-core-parallelization-sync-summary.md,33,"| **Frontend** | 4 | Micro-frontends, Module Federation |"
+doc-integration-technology,adx-core-parallelization-sync-summary.md,127,- Module Federation architecture planned
+doc-integration-technology,adx-core-sync-status-report.md,109,- **Frontend Microservices**: Module Federation for micro-frontends
+doc-integration-technology,adx-core-sync-status-report.md,142,- **Shell Application**: 📋 Module Federation host planned
+doc-integration-technology,adx-core-task-sync-analysis-report.md,85,- Module Federation implementation complete
+doc-integration-technology,adx-core-task-sync-analysis.md,152,1. **Frontend Microservices:** Begin Module Federation implementation
+doc-integration-technology,adx-core-task-sync-final-report.md,165,- Module Federation tasks properly labeled with `component:frontend`
+doc-integration-technology,adx-core-task-sync-manager-report.md,53,22. Shell Application Setup (Module Federation Host)
+doc-integration-technology,adx-core-task-sync-manager-report.md,142,- Module Federation foundation ready
+doc-integration-technology,adx-core/INFRASTRUCTURE_SETUP.md,53,# Start Shell application (Module Federation host)
+doc-integration-technology,adx-core/INFRASTRUCTURE_SETUP.md,151,# Module Federation
+doc-integration-technology,adx-core/README.md,3,"ADX CORE is a temporal-first, multi-tenant SaaS platform built with microservices architecture for both backend and frontend. The platform uses Temporal.io workflows as the PRIMARY orchestration mechanism, with domain-aligned microservices, Module Federation-based frontend microservices, and optiona"
+doc-integration-technology,adx-core/docs/README.md,47,- **[Module Federation](./developer-guide/module-federation.md)** - Micro-frontend development
+doc-integration-technology,adx-core/docs/README.md,103,The frontend uses Module Federation for:
+doc-integration-technology,adx-core/docs/README.md,130,### 🎯 Module Federation Frontend
+doc-integration-technology,adx-core/docs/README.md,194,- Module Federation frontend microservices
+doc-integration-technology,adx-core/docs/api/README.md,18,- **Frontend Services**: Module Federation-based micro-frontends
+doc-integration-technology,adx-core/docs/deployment/README.md,11,- **Frontend Services**: 6 React micro-frontends with Module Federation
+doc-integration-technology,adx-core/docs/developer-guide/module-federation.md,1,# Module Federation and Micro-Frontend Development Guide
+doc-integration-technology,adx-core/docs/developer-guide/module-federation.md,5,"ADX CORE uses Module Federation to implement a micro-frontend architecture where each domain-specific application can be developed, tested, and deployed independently while maintaining a cohesive user experience. This guide covers the setup, development patterns, and best practices for working with "
+doc-integration-technology,adx-core/docs/developer-guide/module-federation.md,9,### Module Federation Structure
+doc-integration-technology,adx-core/docs/developer-guide/module-federation.md,519,const isStandalone = !window.__POWERED_BY_QIANKUN__ && !window.__MICRO_APP_ENVIRONMENT__;
+doc-integration-technology,adx-core/docs/developer-guide/module-federation.md,1226,"test.describe('Module Federation Performance', () => {"
+doc-integration-technology,adx-core/docs/developer-guide/module-federation.md,1649,"Module Federation enables ADX CORE to achieve true micro-frontend architecture with independent development, deployment, and scaling. By following these guidelines and best practices, teams can build maintainable, performant, and reliable micro-frontends that work together seamlessly."
+doc-integration-technology,adx-core/docs/developer-guide/team-autonomy.md,17,│ Frontend Micro-App (React + Module Federation)             │
+doc-integration-technology,adx-core/docs/developer-guide/team-autonomy.md,73,├── Module Federation integration
+doc-integration-technology,adx-core/docs/developer-guide/team-autonomy.md,180,- Build Tool: Vite with Module Federation
+doc-integration-technology,adx-core/docs/launch/go-live-checklist.md,5,This comprehensive checklist ensures a successful production launch of ADX CORE with its Temporal-first microservices architecture and Module Federation frontend. Follow this checklist systematically to minimize risks and ensure operational readiness.
+doc-integration-technology,adx-core/docs/launch/go-live-checklist.md,103,- [ ] Module Federation configuration validated
+doc-integration-technology,adx-core/docs/launch/go-live-checklist.md,134,- [ ] Module Federation integration tested
+doc-integration-technology,adx-core/docs/launch/go-live-checklist.md,466,This comprehensive launch checklist ensures ADX CORE's successful transition to production with its advanced Temporal-first microservices architecture and Module Federation frontend. The staged approach minimizes risk while the detailed monitoring and rollback procedures ensure rapid response to any
+doc-integration-technology,adx-core/docs/operations/production-deployment-guide.md,9,- **Frontend**: 6 micro-frontends using Module Federation
+doc-integration-technology,adx-core/docs/operations/production-readiness-checklist.md,111,- [ ] Module Federation working correctly
+doc-integration-technology,adx-core/services/module-service/docs/developer-portal.md,44,- **Frontend Components**: React components with Module Federation
+doc-integration-technology,adx-core/services/module-service/docs/developer-portal.md,517,### Module Federation Setup
+doc-integration-technology,adx-core/services/module-service/docs/developer-portal.md,519,Your module's frontend components are automatically integrated using Module Federation. The build process handles the configuration.
+doc-integration-technology,adx-core/services/module-service/docs/developer-portal.md,878,1. Check Module Federation configuration
+doc-integration-technology,final-github-sync-execution-summary.md,45,- **✅ 7 Micro-Frontends:** Independent deployment with Module Federation
+doc-integration-technology,github-sync-execution-summary.md,88,2. **Start Frontend Foundation** (Task 22) - Module Federation setup
+doc-integration-technology,github-sync-execution-summary.md,96,- 📋 **Frontend Microservices**: Module Federation pending
+doc-integration-technology,github-sync-final-report.md,37,"- **Micro-Frontends**: 4 tasks (9.3%) - Module Federation, Shell app"
+doc-integration-technology,manager-summary-task-sync.md,94,- Module Federation micro-frontends
+doc-integration-technology,task-22-completion-sync-report.md,6,### Task 22: Shell Application Setup (Module Federation Host)
+doc-integration-technology,task-22-completion-sync-report.md,10,"- **Requirements**: 8.1, 15.1 (Module Federation and micro-frontend integration)"
+doc-integration-technology,task-22-completion-sync-report.md,15,- ✅ Set up Vite with Module Federation plugin as host configuration
+doc-integration-technology,task-22-completion-sync-report.md,53,1. **Module Federation Host Ready**: Shell application configured as the host for all micro-frontends
+doc-integration-technology,task-22-completion-sync-report.md,69,   - Implement Module Federation remotes
+doc-integration-technology,task-22-completion-sync-report.md,75,- **Close Issue**: Task 22 - Shell Application Setup (Module Federation Host)
+doc-integration-technology,task-22-completion-sync-report.md,86,- `component:module-federation` - Module Federation
+doc-integration-technology,task-22-completion-sync-report.md,88,- `requirement:8.1` - Module Federation requirement
+doc-integration-technology,task-22-completion-sync-report.md,96,- **Module Federation Success**: Proven Module Federation setup for scalable frontend architecture
+doc-integration-technology,task-sync-analysis-report.md,51,- Module Federation deployment strategies
+doc-independence,DEV-SETUP.md,244,- **Frontend Microservices**: Module Federation for independent micro-apps
+doc-independence,FINAL_TESTING_REPORT.md,116,- Independent service compilation and testing
+doc-independence,GITHUB_SYNC_README.md,71,"  - _Requirements: 3.1 (Temporal-first backend microservices), 13.1 (Team autonomy)_"
+doc-independence,HOOK_INTEGRATION_SUMMARY.md,103,- **Team Autonomy**: Supports vertical slice ownership model
+doc-independence,HOOK_INTEGRATION_SUMMARY.md,120,- **Testable**: All components can be tested independently
+doc-independence,KIRO_HOOK_DOCUMENTATION.md,195,- Tracks team autonomy requirements
+doc-independence,PROJECT_REPORT.md,153,- Team autonomy and independent deployments
+doc-independence,README.md,12,- **Scalability**: Horizontal scaling of workflow workers independent of HTTP services
+doc-independence,TESTING_INFRASTRUCTURE_COMPLETE.md,132,- **Microservices testing** - Independent service validation
+doc-independence,TEST_EXECUTION_SUMMARY.md,93,- Independent service testing
+doc-independence,TEST_EXECUTION_SUMMARY.md,193,- Independent service testing
+doc-independence,adx-core-final-sync-manager-summary.md,46,- **✅ Auth Micro-Frontend:** Independent deployment (port 3001)
+doc-independence,adx-core-final-sync-manager-summary.md,47,- **✅ Tenant Micro-Frontend:** Independent deployment (port 3002)
+doc-independence,adx-core-final-sync-manager-summary.md,48,- **✅ File Micro-Frontend:** Independent deployment (port 3003)
+doc-independence,adx-core-final-sync-manager-summary.md,49,- **✅ User Micro-Frontend:** Independent deployment (port 3004)
+doc-independence,adx-core-final-sync-manager-summary.md,50,- **✅ Workflow Micro-Frontend:** Independent deployment (port 3005)
+doc-independence,adx-core-final-sync-manager-summary.md,51,- **✅ Module Micro-Frontend:** Independent deployment (port 3006)
+doc-independence,adx-core-final-sync-manager-summary.md,71,- **✅ Team Autonomy:** Vertical slice ownership (backend + frontend + BFF)
+doc-independence,adx-core-final-sync-manager-summary.md,110,- **✅ Scalable Architecture:** Independent scaling of all services and micro-frontends
+doc-independence,adx-core-final-sync-manager-summary.md,111,- **✅ Team Autonomy:** Clear ownership boundaries with minimal dependencies
+doc-independence,adx-core-final-sync-manager-summary.md,123,- **Independent Deployments:** Each service and micro-frontend deployable independently
+doc-independence,adx-core-final-sync-manager-summary.md,136,- **✅ System Availability:** > 99.9% with independent service availability
+doc-independence,adx-core-final-sync-manager-summary.md,141,- **✅ Service Independence:** Complete isolation and independent deployability
+doc-independence,adx-core-final-sync-manager-summary.md,142,- **✅ Team Autonomy:** Clear vertical slice ownership
+doc-independence,adx-core-final-sync-manager-summary.md,167,5. **Team Scaling:** Architecture supports independent team scaling
+doc-independence,adx-core-final-sync-manager-summary.md,188,- **Team Autonomy:** Complete vertical slice ownership model
+doc-independence,adx-core-final-sync-manager-summary.md,193,"The platform is now ready for production deployment and commercial launch, with a foundation that supports massive scale, team autonomy, and continuous innovation."
+doc-independence,adx-core-parallelization-sync-summary.md,129,- Team autonomy with vertical slices
+doc-independence,adx-core-parallelization-sync-summary.md,172,- **Team autonomy** boundaries clearly defined
+doc-independence,adx-core-sync-status-report.md,107,- **Team Autonomy**: Vertical slice ownership model
+doc-independence,adx-core-sync-status-report.md,108,- **Independent Deployment**: Each service deployable independently
+doc-independence,adx-core-sync-status-report.md,176,- ✅ **Team Autonomy**: Vertical slice model ready
+doc-independence,adx-core-task-sync-analysis-report.md,87,- Team autonomy through vertical slice ownership
+doc-independence,adx-core-task-sync-analysis-report.md,137,3. **Team Autonomy**: Vertical slice ownership model successfully implemented
+doc-independence,adx-core-task-sync-analysis.md,118,4. ✅ **Microservices:** Clear service boundaries with independent deployment
+doc-independence,adx-core-task-sync-analysis.md,119,5. ✅ **Team Autonomy:** Vertical slice ownership model established
+doc-independence,adx-core-task-sync-execution-summary.md,161,- **Team autonomy context** for vertical slice ownership
+doc-independence,adx-core-task-sync-execution-summary.md,170,5. **Team Autonomy**: Clear vertical slice ownership established
+doc-independence,adx-core-task-sync-execution-summary.md,218,**Team Autonomy**: ✅ **VERTICAL SLICES ESTABLISHED**  
+doc-independence,adx-core-task-sync-final-summary.md,68,5. **Team Autonomy**: Clear vertical slice ownership established
+doc-independence,adx-core-task-sync-final-summary.md,134,**Team Autonomy**: ✅ **VERTICAL SLICES ESTABLISHED**  
+doc-independence,adx-core-task-sync-manager-report.md,135,- Independent service deployability achieved
+doc-independence,adx-core-task-sync-manager-report.md,223,**Team autonomy support**: ✅ **Clear vertical slice ownership established**
+doc-independence,adx-core-task-sync-manager-summary.md,56,- Independent service deployability achieved
+doc-independence,adx-core-task-sync-manager-summary.md,121,- **Team autonomy** requirements marked
+doc-independence,adx-core-task-sync-manager-summary.md,135,- Team autonomy patterns implemented
+doc-independence,adx-core-task-sync-manager-summary.md,187,- ✅ Team autonomy patterns: Established
+doc-independence,adx-core-task-sync-manager-summary.md,194,"The ADX Core project has successfully established a solid foundation with 30% completion. The Temporal-first microservices architecture is operational, multi-tenant isolation is complete, and authentication/tenant services are fully functional. The project is well-positioned to continue with user an"
+doc-independence,adx-core/README.md,9,"2. **""Frontend micro-apps mirror backend service boundaries for team autonomy.""**"
+doc-independence,adx-core/docs/README.md,5,"Welcome to the comprehensive documentation for ADX CORE, a Temporal-first, multi-tenant SaaS platform built with microservices architecture. This documentation covers everything from API usage to deployment procedures, team autonomy guidelines, and production launch procedures."
+doc-independence,adx-core/docs/README.md,46,- **[Team Autonomy](./developer-guide/team-autonomy.md)** - Vertical slice ownership model
+doc-independence,adx-core/docs/README.md,104,- **Independent deployment** of micro-frontends
+doc-independence,adx-core/docs/README.md,105,- **Team autonomy** with vertical slice ownership
+doc-independence,adx-core/docs/README.md,131,- Independent micro-frontend deployment
+doc-independence,adx-core/docs/README.md,137,- Team autonomy through vertical slices
+doc-independence,adx-core/docs/README.md,138,- Independent CI/CD pipelines
+doc-independence,adx-core/docs/README.md,198,- Team autonomy and vertical slice ownership
+doc-independence,adx-core/docs/developer-guide/module-federation.md,5,"ADX CORE uses Module Federation to implement a micro-frontend architecture where each domain-specific application can be developed, tested, and deployed independently while maintaining a cohesive user experience. This guide covers the setup, development patterns, and best practices for working with "
+doc-independence,adx-core/docs/developer-guide/module-federation.md,34,2. **Remote Applications**: Independent micro-frontends for specific domains
+doc-independence,adx-core/docs/developer-guide/module-federation.md,1289,### Independent Deployment Pipeline
+doc-independence,adx-core/docs/developer-guide/module-federation.md,1504,   - Deploy micro-frontends independently
+doc-independence,adx-core/docs/developer-guide/module-federation.md,1649,"Module Federation enables ADX CORE to achieve true micro-frontend architecture with independent development, deployment, and scaling. By following these guidelines and best practices, teams can build maintainable, performant, and reliable micro-frontends that work together seamlessly."
+doc-independence,adx-core/docs/developer-guide/module-federation.md,1652,- **Team Autonomy**: Each team can work independently on their domain
+doc-independence,adx-core/docs/developer-guide/module-federation.md,1654,- **Independent Deployment**: Deploy micro-frontends without affecting others
+doc-independence,adx-core/docs/developer-guide/module-federation.md,1659,- [Team Autonomy Guide](./team-autonomy.md)
+doc-independence,adx-core/docs/developer-guide/team-autonomy.md,1,# Team Autonomy and Vertical Slice Ownership
+doc-independence,adx-core/docs/developer-guide/team-autonomy.md,5,"ADX CORE is designed around the principle of team autonomy through vertical slice ownership. Each team owns a complete domain-aligned slice of functionality, including backend service, frontend micro-app, and optional BFF service. This approach enables independent development, deployment, and scalin"
+doc-independence,adx-core/docs/developer-guide/team-autonomy.md,96,- **Deployment**: Manage independent deployment pipelines
+doc-independence,adx-core/docs/developer-guide/team-autonomy.md,111,### Independent Development Cycle
+doc-independence,adx-core/docs/developer-guide/team-autonomy.md,113,Each team follows an independent development cycle:
+doc-independence,adx-core/docs/developer-guide/team-autonomy.md,140,│    ├── Independent CI/CD pipeline execution                │
+doc-independence,adx-core/docs/developer-guide/team-autonomy.md,416,### Independent Deployment Pipelines
+doc-independence,adx-core/docs/developer-guide/team-autonomy.md,418,Each team maintains independent CI/CD pipelines:
+doc-independence,adx-core/docs/developer-guide/team-autonomy.md,655,### Team Autonomy Best Practices
+doc-independence,adx-core/docs/developer-guide/team-autonomy.md,703,### Team Autonomy Metrics
+doc-independence,adx-core/docs/developer-guide/team-autonomy.md,739,"Team autonomy through vertical slice ownership enables ADX CORE to scale both technically and organizationally. By giving teams complete ownership of their domain, from frontend to backend, we achieve:"
+doc-independence,adx-core/docs/developer-guide/team-autonomy.md,749,"For more information on implementing team autonomy in your organization, see:"
+doc-independence,adx-core/docs/operations/production-deployment-guide.md,11,- **Deployment**: Kubernetes with independent scaling and docker-compose fallback
+doc-independence,adx-core/docs/user-guide/README.md,287,- Independent user management
+doc-independence,adx-core/infrastructure/production/README.md,333,Each service can be scaled independently:
+doc-independence,final-github-sync-execution-summary.md,45,- **✅ 7 Micro-Frontends:** Independent deployment with Module Federation
+doc-independence,final-github-sync-execution-summary.md,46,- **✅ Team Autonomy:** Complete vertical slice ownership
+doc-independence,final-github-sync-execution-summary.md,93,- **Scalable Architecture:** Independent scaling of all services and micro-frontends
+doc-independence,final-github-sync-execution-summary.md,94,- **Team Autonomy:** Clear ownership boundaries with minimal cross-team dependencies
+doc-independence,final-github-sync-execution-summary.md,106,- **Independent Deployments:** Each service and micro-frontend deployable independently
+doc-independence,final-github-sync-execution-summary.md,166,5. **Team Scaling:** Architecture supports independent team growth and scaling
+doc-independence,final-github-sync-execution-summary.md,173,5. **Team Autonomy:** Demonstrate successful vertical slice ownership model
+doc-independence,final-github-sync-execution-summary.md,186,- Team autonomy model eliminates organizational bottlenecks
+doc-independence,final-github-sync-execution-summary.md,195,👥 **Team Autonomy:** Complete vertical slice ownership model proven and operational  
+doc-independence,final-sync-status.md,149,- Tracks team autonomy and vertical slice ownership
+doc-independence,github-sync-action-summary.md,44,- Follow the microservices team autonomy model
+doc-independence,github-sync-action-summary.md,112,- Microservices team autonomy
+doc-independence,github-sync-execution-summary.md,14,- **Microservices Foundation**: Clear domain boundaries with independent deployment capability
+doc-independence,github-sync-execution-summary.md,95,- ✅ **Microservices**: Independent service boundaries
+doc-independence,github-sync-execution-summary.md,97,- 📋 **Team Autonomy**: Vertical slice ownership model
+doc-independence,github-sync-execution-summary.md,108,- **Team Autonomy Ready**: Clear service boundaries for independent teams
+doc-independence,github-sync-execution-summary.md,145,"The architecture demonstrates enterprise-grade reliability, scalability, and team autonomy capabilities, positioning ADX Core for accelerated development and deployment."
+doc-independence,github-sync-final-report.md,202,- Tracks team autonomy and vertical slice ownership
+doc-independence,github-sync-instructions.md,119,4. **Team Autonomy:** Prepare for vertical slice ownership model
+doc-independence,github-sync-summary.md,34,- **13.1:** Team autonomy and vertical ownership
+doc-independence,github-sync-summary.md,52,- `requirement:13.1` - Links to team autonomy requirement
+doc-independence,github-sync-summary.md,73,- Follow the microservices team autonomy model
+doc-independence,github-sync-summary.md,82,"- **Requirements:** 3.1 (Temporal-first backend microservices), 13.1 (Team autonomy and vertical ownership)"
+doc-independence,github-task-sync-analysis.md,33,- **13.1:** Team autonomy and vertical ownership
+doc-independence,github-task-sync-analysis.md,51,- `requirement:13.1` - Links to team autonomy requirement
+doc-independence,github-task-sync-analysis.md,74,- Follow the microservices team autonomy model
+doc-independence,github-task-sync-analysis.md,92,"- **Requirements:** 3.1 (Temporal-first backend microservices), 13.1 (Team autonomy and vertical ownership)"
+doc-independence,manager-summary-task-sync.md,43,- Independent deployment and scaling capability
+doc-independence,manager-summary-task-sync.md,44,- Team autonomy through vertical slice ownership
+doc-independence,manager-summary-task-sync.md,124,- **Architecture Foundation:** Solid base for team autonomy ✅
+doc-independence,manager-summary-task-sync.md,154,- **Team Readiness:** Clear patterns for autonomous development
+doc-independence,manager-sync-summary.md,85,### Team Autonomy Model ✅
+doc-independence,manager-task-33-completion-summary.md,36,- **Team Autonomy:** Frontend teams have full control over data optimization
+doc-independence,manager-task-33-completion-summary.md,101,   - Independent scaling of optimization layer
+doc-independence,manager-task-33-completion-summary.md,115,- **Team Autonomy:** Complete vertical slice ownership enabled
+doc-independence,manager-task-33-completion-summary.md,134,2. **Team Scaling:** BFF architecture supports independent team scaling
+doc-independence,manager-task-33-completion-summary.md,168,- **Team Autonomy Enabled:** Complete vertical slice ownership model operational
+doc-independence,manager-task-9-completion-summary.md,123,- ✅ Microservices autonomy
+doc-independence,source-control-sync-report.md,50,"✅ **Microservices Structure:** Independent, scalable services  "
+doc-independence,source-control-sync-report.md,66,✅ **Team Autonomy:** Vertical slice ownership model  
+doc-independence,source-control-sync-report.md,112,✅ **Team Autonomy:** Clear ownership boundaries established  
+doc-independence,task-1-completion-report.md,18,"| **Requirements** | 3.1 (Temporal-first backend microservices), 13.1 (Team autonomy and vertical ownership) |"
+doc-independence,task-1-completion-report.md,98,2. **Team Autonomy Enabled**: Clear service boundaries support independent team development
+doc-independence,task-1-completion-report.md,101,5. **Scalability Prepared**: Architecture supports horizontal scaling and independent deployment
+doc-independence,task-10-status-change-summary.md,93,- **Team Autonomy**: Auth team owns complete vertical slice
+doc-independence,task-10-status-change-summary.md,133,### Team Autonomy Model
+doc-independence,task-15-completion-analysis.md,49,- ✅ **Microservices:** User service autonomy maintained
+doc-independence,task-15-completion-sync-summary.md,27,✅ **Microservices Pattern** - User service maintains autonomy with workflow integration
+doc-independence,task-15-completion-sync-summary.md,69,- **Scalability:** User workflows can scale independently of HTTP services
+doc-independence,task-15-completion-sync-summary.md,105,### Team Autonomy ✅
+doc-independence,task-15-completion-sync-summary.md,107,- Independent deployment capability
+doc-independence,task-22-completion-sync-report.md,95,- **Team Autonomy Enablement**: Infrastructure supports independent micro-frontend development
+doc-independence,task-22-completion-sync-report.md,100,- **Parallel Development Ready**: Teams can now develop micro-frontends independently
+doc-independence,task-22-completion-sync-report.md,120,"Task 22 completion marks a crucial milestone in the ADX Core frontend microservices architecture. The shell application foundation is now complete, enabling parallel development of micro-frontends and supporting the team autonomy model."
+doc-independence,task-33-completion-sync-summary.md,40,- **Microservices:** Independent BFF services for user and workflow domains
+doc-independence,task-33-completion-sync-summary.md,41,- **Team Autonomy:** Enables frontend teams to optimize data aggregation
+doc-independence,task-33-completion-sync-summary.md,136,- **Team Autonomy:** Frontend teams have full control over data optimization
+doc-independence,task-5-completion-sync-summary.md,97,- ✅ Team autonomy patterns supported
+doc-independence,task-sync-analysis-report.md,24,- Set up independent scaling and deployment for each service and micro-frontend
+doc-independence,task-sync-analysis-report.md,44,- Independent service deployment and scaling
+doc-independence,task-sync-analysis-report.md,52,- Independent micro-frontend scaling
+doc-independence,task-sync-analysis-report.md,81,- Independent scaling and deployment setup
+doc-independence,task-sync-analysis-report.md,148,- **Microservices Ready:** Independent service deployment and monitoring
+doc-host-remote,adx-core/docs/developer-guide/module-federation.md,917,# 3. Start shell app with specific remote URLs
+doc-host-remote,adx-core/docs/developer-guide/module-federation.md,935,"    ""build:all"": ""npm run build:shell && npm run build:remotes"","
+doc-host-remote,adx-core/docs/developer-guide/module-federation.md,945,"    ""test:all"": ""concurrently \""npm run test:shell\"" \""npm run test:remotes\"""","
+doc-host-remote,adx-core/docs/developer-guide/module-federation.md,956,"    ""type-check:all"": ""concurrently \""npm run type-check:shell\"" \""npm run type-check:remotes\"""","
+doc-host-remote,adx-core/docs/developer-guide/module-federation.md,967,// apps/shell/src/config/remotes.ts
+doc-host-remote,adx-core/docs/developer-guide/module-federation.md,1390,      - name: Update remote URLs in shell application
+ws-workspaces,package.json,5,"  ""workspaces"": ["
+ws-path-alias,adx-core/apps/auth/tsconfig.json,19,"    ""paths"": {"
+ws-path-alias,adx-core/apps/module/tsconfig.json,25,"    ""paths"": {"
+ws-path-alias,adx-core/apps/shell/tsconfig.json,19,"    ""paths"": {"
+ws-path-alias,adx-core/packages/event-bus/tsconfig.json,20,"    ""paths"": {"
+ws-path-alias,adx-core/packages/shared-context/tsconfig.json,20,"    ""paths"": {"

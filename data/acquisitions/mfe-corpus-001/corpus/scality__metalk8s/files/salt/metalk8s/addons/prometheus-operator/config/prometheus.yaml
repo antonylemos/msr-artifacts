@@ -1,0 +1,84 @@
+#!yaml
+
+# Configuration of the Prometheus service
+apiVersion: addons.metalk8s.scality.com
+kind: PrometheusConfig
+spec:
+  # Configure the Prometheus Deployment
+  deployment:
+    replicas: 1
+  config:
+    retention_time: "10d"
+    retention_size: "0" # "0" to disable size-based retention
+    enable_admin_api: false
+    enable_oidc_authentication: false
+    oidc:
+      issuer: "" # OIDC provider URL
+      audience: "" # Expected audience claim in the token
+      groupsClaim: "" # JWT claim name that carries user groups/roles
+      authorizedGroups: [] # Groups/roles allowed to access Prometheus
+      caSecret:
+        namespace: "" # Namespace of the secret containing the CA certificate (must be labeled with metalk8s.scality.com/oidc-ca: "true")
+        name: "" # Name of the secret containing the CA certificate
+    serviceMonitor:
+      kubelet:
+        scrapeTimeout: 10s
+  rules:
+    kube_apps:
+      kube_job_not_completed:
+        warning:
+          hours: 24 # Hours of job active before we trigger alert
+      kube_cronjob_owned_job_failed:
+        warning:
+          minutes: 5 # Minutes of job active before we trigger alert
+      kube_job_failed:
+        warning:
+          minutes: 5 # Minutes of job active before we trigger alert
+    node_exporter:
+      node_filesystem_space_filling_up:
+        warning:
+          hours: 24 # Hours before there is no space left
+          threshold: 40 # Min space left to trigger prediction
+        critical:
+          hours: 4
+          threshold: 20
+      node_filesystem_almost_out_of_space:
+        warning:
+          available: 20 # Percentage of free space left
+        critical:
+          available: 12
+      node_filesystem_files_filling_up:
+        warning:
+          hours: 24 # Hours before there is no inode left
+          threshold: 40 # Min space left to trigger prediction
+        critical:
+          hours: 4
+          threshold: 20
+      node_filesystem_almost_out_of_files:
+        warning:
+          available: 15 # Percentage of free inodes left
+        critical:
+          available: 8
+      node_network_receive_errors:
+        warning:
+          error_rate: 0.01 # Rate of receive errors for the last 2m
+      node_network_transmit_errors:
+        warning:
+          error_rate: 0.01 # Rate of transmit errors for the last 2m
+      node_high_number_conntrack_entries_used:
+        warning:
+          threshold: 0.75
+      node_clock_skew_detected:
+        warning:
+          threshold:
+            high: 0.05
+            low: -0.05
+      node_clock_not_synchronising:
+        warning:
+          threshold: 0
+      node_raid_degraded:
+        critical:
+          threshold: 1
+      node_raid_disk_failure:
+        warning:
+          threshold: 1

@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "id": "1408068032",
+  "fullName": "israelmeinert/fiap-aula-arquitetura-no-front",
+  "commit": "e1c6fb92488afd39e2c1d704ee1243ed52d862b6",
+  "acquiredAt": "2026-10-24T00:32:34.178Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 405,
+    "bytes": 1718998
+  },
+  "languages": {
+    "HTML": 940576,
+    "JSON": 429676,
+    "Markdown": 215054,
+    "TypeScript": 115809,
+    "JavaScript": 15953,
+    "CSS": 1130,
+    "Astro": 593,
+    "Other": 207
+  },
+  "contentSha256": "98c66698789f0d9558ffef157565099b71cfbd3521710b1921f29f6578d35181"
+}

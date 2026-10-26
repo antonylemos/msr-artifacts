@@ -1,0 +1,41 @@
+pattern,path,line,excerpt
+src-custom-element,src/main.ts,218,// O outro projeto precisa servir url com CORS * e registrar customElements.define(tag)
+src-dynamic-script,src/main.ts,225,    const script = document.createElement('script');
+src-cross-unit-communication,public/silent-check-sso.html,3,"parent.postMessage(location.href, location.origin)</script></body></html>"
+ops-deployment-file,Dockerfile,,
+ops-deployment-file,Dockerfile.keycloak,,
+ops-deployment-file,docker-compose.yml,,
+ops-deployment-file,nginx.conf,,
+ops-dockerfile,Dockerfile,2,FROM node:22-alpine AS build
+ops-dockerfile,Dockerfile,12,FROM nginx:alpine AS runtime
+ops-dockerfile,Dockerfile.keycloak,1,FROM quay.io/keycloak/keycloak:26.2 AS builder
+ops-dockerfile,Dockerfile.keycloak,5,FROM quay.io/keycloak/keycloak:26.2
+ops-compose-service,docker-compose.yml,5,    build:
+ops-compose-service,docker-compose.yml,12,    depends_on:
+ops-compose-service,docker-compose.yml,20,    build:
+ops-compose-service,docker-compose.yml,27,    depends_on:
+ops-compose-service,docker-compose.yml,35,    image: quay.io/keycloak/keycloak:26.2
+ops-proxy-route,nginx.conf,9,    location / {
+ops-proxy-route,nginx.conf,14,    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
+ops-proxy-route,nginx.conf,22,    location = /index.html {
+ops-hosting,README.md,56,| Prod (Vercel/Railway) | `VITE_KEYCLOAK_URL=https://keycloak.seudominio.com` + senha forte + adicionar `https://sua-shell.vercel.app/*` em `realm.json:30` e refazer `npm run build` |
+ops-hosting,README.md,182,1. Deploye o frontend e anote `https://seu-front.vercel.app/main.js` (200 + CORS *).
+ops-cors,docker-compose.yml,18,  # Precisa expor main.js com CORS * e registrar customElements.define('posts-crud')
+ops-cors,nginx.conf,13,"    # Assets versionados (js/css/img) - cache 1 ano imutável, com CORS para permitir se outro app buscar"
+ops-cors,nginx.conf,17,"        add_header Access-Control-Allow-Origin ""*"";"
+doc-mfe-term,README.md,1,# atividadengx — Biblioteca Shell para Micro Frontends via Web Components
+doc-mfe-term,README.md,30,"`src/main.ts:52-78` inicializa `Keycloak` (`login-required`, `pkceMethod:'S256'`, `checkLoginIframe:false`), agenda `updateToken(30)` a cada 20s e carrega `public/microfrontends.json:1` para injetar `<script type=""module"" src=""url"">` e montar `<tag></tag>` dentro de `#microfrontends`. `src/style.css"
+doc-mfe-term,README.md,60,`public/microfrontends.json` é o **único ponto de configuração da casca**:
+doc-mfe-term,README.md,68,`src/main.ts:122` faz `fetch` e para cada entrada cria `button.sidebar-btn` + `div#wrapper-tag` com `header` e mount `<tag></tag>`. Array vazio `[]` mostra `0 micro frontends disponíveis` sem erro.
+doc-mfe-term,README.md,125,"Multi-stage igual a `Dockerfile:1` da casca (`node:22-alpine` -> `nginx:alpine`, copia `dist/.../browser`). Se Angular com `outputHashing: all`, script pós-build copia `main-*.js` -> `main.js` estável (ver `Requisitos-Microfrontend.md:72`)."
+doc-mfe-term,README.md,172,**Vanilla:** `class UsersCrud extends HTMLElement { ... }` com `attachShadow` (ver `CONEXAO-MICROFRONTEND.md`).
+doc-mfe-term,README.md,183,2. Adicione em `public/microfrontends.json`:
+doc-mfe-term,README.md,212,- Contrato detalhado: `CONEXAO-MICROFRONTEND.md`
+doc-mfe-term,README.md,213,- Tutorial Angular 21 passo a passo: `Requisitos-Microfrontend.md`
+doc-mfe-term,README.md,215,- `npm run dev` precisa dos frontends rodando nas URLs do `microfrontends.json`; `npm run build` bakeia `VITE_*` do `.env`.
+doc-integration-technology,README.md,1,# atividadengx — Biblioteca Shell para Micro Frontends via Web Components
+doc-integration-technology,README.md,3,"> **Use como biblioteca:** importe a casca como orquestradora e plugue qualquer frontend que exponha um `Custom Element`. Sem rebuild da casca, sem acoplamento entre times."
+doc-integration-technology,README.md,30,"`src/main.ts:52-78` inicializa `Keycloak` (`login-required`, `pkceMethod:'S256'`, `checkLoginIframe:false`), agenda `updateToken(30)` a cada 20s e carrega `public/microfrontends.json:1` para injetar `<script type=""module"" src=""url"">` e montar `<tag></tag>` dentro de `#microfrontends`. `src/style.css"
+doc-integration-technology,README.md,91,### B.1. Contrato Web Component (obrigatório)
+doc-integration-technology,README.md,142,"await keycloak.init({ onLoad:'check-sso', silentCheckSsoRedirectUri:`${location.origin}/silent-check-sso.html`, pkceMethod:'S256', checkLoginIframe:false });"
+ws-path-alias,tsconfig.json,11,"    ""paths"": {"

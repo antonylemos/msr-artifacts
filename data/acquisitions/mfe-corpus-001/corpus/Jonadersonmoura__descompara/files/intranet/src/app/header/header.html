@@ -1,0 +1,12 @@
+<header class="site-header">
+  <a class="brand" routerLink=".">Intranet · Descompara Seguros</a>
+  <nav>
+    <a routerLink="." routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Painel</a>
+    @if (auth.isAuthenticated()) {
+      <span class="user">{{ auth.currentUser().nome }}</span>
+      <button type="button" class="link-button" (click)="sair()">Sair</button>
+    } @else {
+      <a routerLink="login" routerLinkActive="active">Entrar</a>
+    }
+  </nav>
+</header>

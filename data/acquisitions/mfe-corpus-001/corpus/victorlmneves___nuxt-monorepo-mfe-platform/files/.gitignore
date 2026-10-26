@@ -1,0 +1,50 @@
+# Node modules (root and all subfolders)
+node_modules/
+**/node_modules/
+
+# Nuxt and build outputs (all apps/packages)
+.output/
+**/.output/
+.nuxt/
+**/.nuxt/
+dist/
+**/dist/
+build/
+**/build/
+
+# Logs
+logs/
+**/logs/
+*.log
+**/*.log
+
+# Environment files
+.env
+.env.*
+**/.env
+**/.env.*
+
+# TurboRepo
+.turbo/
+**/.turbo/
+
+# pnpm
+pnpm-lock.yaml
+pnpm-debug.log
+
+# Mac system files
+.DS_Store
+
+# VS Code settings
+.vscode/
+
+# IDEs
+.idea/
+.history/
+.swp
+.swo
+
+# Misc
+*.local
+*.cache
+**/*.cache

@@ -1,0 +1,96 @@
+import { LineTimeSerieChart, useMetricsTimeSpan, useChartId } from '@scality/core-ui/dist/next';
+import { useChartLegendRegistration } from '../hooks/useChartLegendRegistration';
+
+import { useCallback } from 'react';
+import { useNodeAddressesSelector, useNodes, useShowQuantileChart, useSymetricalChartSeries } from '../hooks';
+import {
+  getNodesThroughputOutpassingThresholdQuery,
+  getNodesThroughputReadQuantileQuery,
+  getNodesThroughputReadQuery,
+  getNodesThroughputWriteOutpassingThresholdQuery,
+  getNodesThroughputWriteQuantileQuery,
+  getNodesThroughputWriteQuery,
+} from '../services/platformlibrary/metrics';
+import { getMultipleSymmetricalSeries } from '../services/graphUtils';
+import SymmetricalQuantileChart from './SymmetricalQuantileChart';
+import { HEIGHT_SYMMETRICAL_CHART, UNIT_RANGE_BS, YAXIS_TITLE_READ_WRITE } from '../constants';
+
+const DashboardChartThroughput = () => {
+  const { isShowQuantileChart } = useShowQuantileChart();
+  return (
+    <>
+      {isShowQuantileChart ? (
+        <SymmetricalQuantileChart
+          getAboveQuantileQuery={getNodesThroughputWriteQuantileQuery}
+          getBelowQuantileQuery={getNodesThroughputReadQuantileQuery}
+          getAboveQuantileHoverQuery={getNodesThroughputWriteOutpassingThresholdQuery}
+          getBelowQuantileHoverQuery={getNodesThroughputOutpassingThresholdQuery}
+          metricPrefixAbove={'write'}
+          metricPrefixBelow={'read'}
+          title={'Disk Throughput'}
+          yAxisTitle={YAXIS_TITLE_READ_WRITE}
+        />
+      ) : (
+        <DashboardChartThroughputWithoutQuantile />
+      )}
+    </>
+  );
+};
+
+const DashboardChartThroughputWithoutQuantile = () => {
+  const chartId = useChartId();
+  const nodes = useNodes();
+  const nodeAddresses = useNodeAddressesSelector(nodes);
+
+  const { interval, duration } = useMetricsTimeSpan();
+  const { isLoading, series, startingTimeStamp } = useSymetricalChartSeries({
+    getAboveQueries: (timeSpanProps) => [getNodesThroughputWriteQuery(timeSpanProps)],
+    getBelowQueries: (timeSpanProps) => [getNodesThroughputReadQuery(timeSpanProps)],
+    transformPrometheusDataToSeries: useCallback(
+      ([prometheusResultAbove], [prometheusResultBelow]) => {
+        if (!prometheusResultAbove || !prometheusResultBelow) {
+          return {
+            above: [],
+            below: [],
+          };
+        }
+
+        const allSeries = getMultipleSymmetricalSeries(
+          prometheusResultAbove,
+          prometheusResultBelow,
+          'write',
+          'read',
+          nodeAddresses,
+        );
+
+        return allSeries;
+      },
+      //Expect warning because of complex dependency
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [JSON.stringify(nodeAddresses)],
+    ),
+  });
+
+  useChartLegendRegistration({ chartId, series, isSymmetrical: true });
+
+  return (
+    <LineTimeSerieChart
+      series={{
+        above: series.above,
+        below: series.below,
+      }}
+      height={HEIGHT_SYMMETRICAL_CHART}
+      unitRange={UNIT_RANGE_BS}
+      interval={interval}
+      duration={duration}
+      title="Disk Throughput"
+      startingTimeStamp={startingTimeStamp}
+      yAxisType={'symmetrical'}
+      yAxisTitle={YAXIS_TITLE_READ_WRITE}
+      isLoading={isLoading}
+      syncId="dashboard"
+    />
+  );
+};
+
+export default DashboardChartThroughput;

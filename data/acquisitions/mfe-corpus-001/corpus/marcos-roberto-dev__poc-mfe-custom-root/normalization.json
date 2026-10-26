@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "id": "1131085284",
+  "fullName": "marcos-roberto-dev/poc-mfe-custom-root",
+  "commit": "6ae6565dc49a391729b62588c5fccf37d2be104b",
+  "acquiredAt": "2026-10-24T00:32:30.541Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 72,
+    "bytes": 621198
+  },
+  "languages": {
+    "JSON": 589611,
+    "Vue": 8458,
+    "SVG": 6475,
+    "TypeScript": 6040,
+    "Other": 4411,
+    "HTML": 2616,
+    "Markdown": 1597,
+    "CSS": 1221,
+    "JavaScript": 769
+  },
+  "contentSha256": "496aa401f922088f82dfb3672c67cb85c542b058a6f0c50f5eb184c27009c99c"
+}

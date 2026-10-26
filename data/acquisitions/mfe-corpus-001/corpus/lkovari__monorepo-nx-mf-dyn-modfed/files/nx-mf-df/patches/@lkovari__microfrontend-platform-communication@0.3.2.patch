@@ -1,0 +1,55 @@
+diff --git a/package.json b/package.json
+index 62e449469c4636735b72d9b757e8c33ab60ffd56..adcaf7ffe5f11b53438f8925cb7ad1c9c50ca5e9 100644
+--- a/package.json
++++ b/package.json
+@@ -12,42 +12,42 @@
+     "LICENSE"
+   ],
+   "main": "./dist/index.cjs",
+-  "module": "./dist/index.mjs",
++  "module": "./dist/index.js",
+   "types": "./dist/index.d.ts",
+   "exports": {
+     ".": {
+       "types": "./dist/index.d.ts",
+-      "import": "./dist/index.mjs",
++      "import": "./dist/index.js",
+       "require": "./dist/index.cjs"
+     },
+     "./contracts": {
+       "types": "./dist/contracts/index.d.ts",
+-      "import": "./dist/contracts/index.mjs",
++      "import": "./dist/contracts/index.js",
+       "require": "./dist/contracts/index.cjs"
+     },
+     "./schemas": {
+       "types": "./dist/schemas/index.d.ts",
+-      "import": "./dist/schemas/index.mjs",
++      "import": "./dist/schemas/index.js",
+       "require": "./dist/schemas/index.cjs"
+     },
+     "./core": {
+       "types": "./dist/core/index.d.ts",
+-      "import": "./dist/core/index.mjs",
++      "import": "./dist/core/index.js",
+       "require": "./dist/core/index.cjs"
+     },
+     "./angular": {
+       "types": "./dist/angular/index.d.ts",
+-      "import": "./dist/angular/index.mjs",
++      "import": "./dist/angular/index.js",
+       "require": "./dist/angular/index.cjs"
+     },
+     "./react": {
+       "types": "./dist/react/index.d.ts",
+-      "import": "./dist/react/index.mjs",
++      "import": "./dist/react/index.js",
+       "require": "./dist/react/index.cjs"
+     },
+     "./vue": {
+       "types": "./dist/vue/index.d.ts",
+-      "import": "./dist/vue/index.mjs",
++      "import": "./dist/vue/index.js",
+       "require": "./dist/vue/index.cjs"
+     }
+   },

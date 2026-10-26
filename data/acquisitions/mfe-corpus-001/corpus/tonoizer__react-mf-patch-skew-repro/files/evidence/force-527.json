@@ -1,0 +1,26 @@
+{
+  "forceResult": {
+    "ok": false,
+    "message": "Minified React error #527; visit https://react.dev/errors/527?args[]=19.2.8&args[]=19.2.4 for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
+    "stack": "Error: Minified React error #527; visit https://react.dev/errors/527?args[]=19.2.8&args[]=19.2.4 for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n    at http://localhost:5001/assets/_virtual_mf___mfe_internal__remote_a__mf_owner__52435470359465__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-BL4_xYsN.js:11882:9",
+    "name": "Error"
+  },
+  "pageErrors": [
+    {
+      "message": "Cannot read properties of null (reading 'useState')",
+      "stack": "TypeError: Cannot read properties of null (reading 'useState')\n    at react_production.useState (http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react__loadShare__.js-_tAHAGCE.js:437:33)\n    at App (http://localhost:5000/assets/main-C7Dk7TXS.js:131:27)\n    at renderWithHooks (http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-DN3TqpyC.js:3523:21)\n    at updateFunctionComponent (http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-DN3TqpyC.js:5152:15)\n    at beginWork (http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-DN3TqpyC.js:5763:14)\n    at performUnitOfWork (http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-DN3TqpyC.js:8529:14)\n    at workLoopSync (http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-DN3TqpyC.js:8427:37)\n    at renderRootSync (http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-DN3TqpyC.js:8411:7)\n    at performWorkOnRoot (http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-DN3TqpyC.js:8086:40)\n    at performWorkOnRootViaSchedulerTask (http://localhost:5003/assets/_virtual_mf___mfe_internal__remote_c__mf_owner__121642711798377__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-DN3TqpyC.js:9084:3)"
+    }
+  ],
+  "consoleErrors": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "allConsole": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ]
+}

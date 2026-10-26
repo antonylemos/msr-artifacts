@@ -29,7 +29,7 @@ Isso resulta em três relações ativas (#23 a #25).
 
 A estrutura mostra quatro unidades (#19 a #22), três delas páginas estáticas sem build. Por isso, build e deploy quase não trazem evidência:
 - **Build:** só a app3 tem build próprio (#29).
-- **Deploy:** nenhuma aplicação tem deploy. O README afirma "independently deployed apps", sem artefato que o sustente (#30).
+- **Deploy:** nenhum deploy foi observado para as aplicações. O README afirma "independently deployed apps", sem artefato que o sustente (#30).
 
 Sinais que enganam se lidos sozinhos:
 - **Dependências Lit:** `lit` e `@lit/react` estão declaradas (#1, #2), mas a variante Lit do contador (#18) não é alcançada por nenhum ponto de entrada. O histórico mostra que ela foi acrescentada e nunca conectada (#37).

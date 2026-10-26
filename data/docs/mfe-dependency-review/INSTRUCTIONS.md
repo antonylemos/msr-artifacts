@@ -1,5 +1,7 @@
 # Método: revisão manual de dependências
 
+Os caminhos começados por `docs/` preservam a organização do projeto de origem (`repo-miner`). Neste pacote, as análises correspondentes estão em `data/docs/`. Os caminhos e hashes registrados nas análises mantêm sua função de proveniência.
+
 Este documento descreve como foi feita a revisão manual de dependências e como ler os arquivos
 `NNN-<owner>__<name>.md` desta pasta. Cada arquivo registra a revisão de um repositório do corpus,
 e a ordem dos passos abaixo é a ordem em que a revisão é conduzida: ler os arquivos do snapshot
@@ -24,14 +26,16 @@ está configurado e em uso?
 | Versão e hash da inspeção            | `data/inspections/mfe-dependencies-001/manifest.json` (`version`, `configSha256`) |
 | Arquivos do snapshot                 | `data/acquisitions/mfe-corpus-001/corpus/<owner>__<name>/files/`                  |
 | Classificação (id, commit, contexto) | `docs/mfe-classification/NNN-<owner>__<name>.md`                                  |
+| Critério do Q4 | `docs/mfe-classification-checklist.md` |
 
-O critério do Q4 da classificação está definido em um documento de critérios que não faz parte
-deste pacote (o inventário em `data/inventory.json` registra a ausência).
+O checklist citado é uma referência metodológica do projeto de origem e não foi reproduzido neste pacote.
 
 Todo `artefato:linha` é relativo a `files/` do snapshot. A revisão nunca usa o clone em
 `data/samples/`: o snapshot é a árvore do commit classificado, e o clone pode estar em outro estado.
 
 A revisão não modifica nada em `data/` e não reexecuta `mine` nem `inspect-dependencies`.
+
+As classificações, as revisões anteriores e as configurações em `config/` são consultadas sem alteração.
 
 ## Produto
 

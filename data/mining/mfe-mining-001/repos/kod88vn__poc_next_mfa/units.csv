@@ -1,0 +1,6 @@
+directory,markers
+.,package.json
+apps/duda,apps/duda/next.config.js;apps/duda/package.json
+apps/shell,apps/shell/next.config.js;apps/shell/package.json
+apps/shop,apps/shop/next.config.js;apps/shop/package.json
+packages/ui,packages/ui/package.json

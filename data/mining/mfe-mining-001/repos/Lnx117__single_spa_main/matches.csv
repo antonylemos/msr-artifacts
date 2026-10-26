@@ -1,0 +1,11 @@
+pattern,path,line,excerpt
+dep-single-spa,package.json,16,"    ""single-spa"": ""^6.0.3"""
+dep-single-spa,package.json,20,"    ""vite-plugin-single-spa"": ""^1.1.0"""
+lock-mfe-dependency,package-lock.json,12,"        ""single-spa"": ""^6.0.3"""
+lock-mfe-dependency,package-lock.json,16,"        ""vite-plugin-single-spa"": ""^1.1.0"""
+lock-mfe-dependency,package-lock.json,1006,"    ""node_modules/single-spa"": {"
+lock-mfe-dependency,package-lock.json,1008,"      ""resolved"": ""https://registry.npmjs.org/single-spa/-/single-spa-6.0.3.tgz"","
+lock-mfe-dependency,package-lock.json,1114,"    ""node_modules/vite-plugin-single-spa"": {"
+lock-mfe-dependency,package-lock.json,1116,"      ""resolved"": ""https://registry.npmjs.org/vite-plugin-single-spa/-/vite-plugin-single-spa-1.1.0.tgz"","
+src-lifecycles,src/main.ts,13,registerApplication({
+src-lifecycles,src/main.ts,21,registerApplication({

@@ -1,0 +1,141 @@
+pattern,path,line,excerpt
+dep-monorepo-tool,package.json,34,"    ""turbo"": ""^2.0.0"","
+dep-mfe-term,apps/mfe-vue2-admin/package.json,2,"  ""name"": ""mfe-vue2-admin"","
+dep-mfe-term,apps/mfe-vue2-admin/package.json,13,"    ""@mfe/shared"": ""workspace:*"""
+dep-mfe-term,apps/mfe-vue2-checkout/package.json,2,"  ""name"": ""mfe-vue2-checkout"","
+dep-mfe-term,apps/mfe-vue2-checkout/package.json,13,"    ""@mfe/shared"": ""workspace:*"""
+dep-mfe-term,apps/mfe-vue3-dashboard/package.json,2,"  ""name"": ""mfe-vue3-dashboard"","
+dep-mfe-term,apps/mfe-vue3-dashboard/package.json,14,"    ""@mfe/shared"": ""workspace:*"""
+dep-mfe-term,apps/mfe-vue3-profile/package.json,2,"  ""name"": ""mfe-vue3-profile"","
+dep-mfe-term,apps/mfe-vue3-profile/package.json,14,"    ""@mfe/shared"": ""workspace:*"""
+dep-mfe-term,apps/shell/package.json,13,"    ""@mfe/shared"": ""workspace:*"","
+dep-mfe-term,package.json,2,"  ""name"": ""mfe-platform"","
+dep-mfe-term,package.json,15,"    ""dev:checkout"": ""pnpm --filter mfe-vue2-checkout dev"","
+dep-mfe-term,package.json,16,"    ""dev:admin"": ""pnpm --filter mfe-vue2-admin dev"","
+dep-mfe-term,package.json,17,"    ""dev:profile"": ""pnpm --filter mfe-vue3-profile dev"","
+dep-mfe-term,package.json,18,"    ""dev:dashboard"": ""pnpm --filter mfe-vue3-dashboard dev"","
+dep-mfe-term,package.json,26,"    ""dev:remote:checkout"": ""node ./scripts/dev-remote-server.js --dir ./apps/mfe-vue2-checkout/dist  --port 3001"","
+dep-mfe-term,package.json,27,"    ""dev:remote:admin"": ""node ./scripts/dev-remote-server.js --dir ./apps/mfe-vue2-admin/dist     --port 3002"","
+dep-mfe-term,package.json,28,"    ""dev:remote:profile"": ""node ./scripts/dev-remote-server.js --dir ./apps/mfe-vue3-profile/dist   --port 3003"","
+dep-mfe-term,package.json,29,"    ""dev:remote:dashboard"": ""node ./scripts/dev-remote-server.js --dir ./apps/mfe-vue3-dashboard/dist --port 3004"","
+dep-mfe-term,packages/shared/package.json,2,"  ""name"": ""@mfe/shared"","
+cfg-federation-plugin,apps/mfe-vue2-admin/webpack.config.js,1,const { ModuleFederationPlugin } = require('webpack').container
+cfg-federation-plugin,apps/mfe-vue2-admin/webpack.config.js,64,    new ModuleFederationPlugin({
+cfg-federation-plugin,apps/mfe-vue2-checkout/webpack.config.js,1,const { ModuleFederationPlugin } = require('webpack').container
+cfg-federation-plugin,apps/mfe-vue2-checkout/webpack.config.js,66,    new ModuleFederationPlugin({
+cfg-federation-plugin,apps/mfe-vue3-dashboard/webpack.config.js,1,const { ModuleFederationPlugin } = require('webpack').container
+cfg-federation-plugin,apps/mfe-vue3-dashboard/webpack.config.js,53,    new ModuleFederationPlugin({
+cfg-federation-plugin,apps/mfe-vue3-profile/webpack.config.js,1,const { ModuleFederationPlugin } = require('webpack').container
+cfg-federation-plugin,apps/mfe-vue3-profile/webpack.config.js,53,    new ModuleFederationPlugin({
+cfg-exposes,apps/mfe-vue2-admin/webpack.config.js,67,"      exposes: { './App': './src/bootstrap.js' },"
+cfg-exposes,apps/mfe-vue2-checkout/webpack.config.js,69,"      exposes: { './App': './src/bootstrap.js' },"
+cfg-exposes,apps/mfe-vue3-dashboard/webpack.config.js,56,"      exposes: { './App': './src/bootstrap.js' },"
+cfg-exposes,apps/mfe-vue3-profile/webpack.config.js,56,"      exposes: { './App': './src/bootstrap.js' },"
+cfg-shared,apps/mfe-vue2-admin/webpack.config.js,68,      shared: {
+cfg-shared,apps/mfe-vue2-admin/webpack.config.js,69,"        vue: { singleton: true, requiredVersion: '^2.7.0' },"
+cfg-shared,apps/mfe-vue2-checkout/webpack.config.js,70,      shared: {
+cfg-shared,apps/mfe-vue2-checkout/webpack.config.js,71,"        vue: { singleton: true, requiredVersion: '^2.7.0' },"
+cfg-shared,apps/mfe-vue3-dashboard/webpack.config.js,57,      shared: {
+cfg-shared,apps/mfe-vue3-dashboard/webpack.config.js,58,"        vue: { singleton: true, requiredVersion: '^3.5.0' },"
+cfg-shared,apps/mfe-vue3-dashboard/webpack.config.js,59,"        vuetify: { singleton: true, requiredVersion: '^3.7.0' },"
+cfg-shared,apps/mfe-vue3-profile/webpack.config.js,57,      shared: {
+cfg-shared,apps/mfe-vue3-profile/webpack.config.js,58,"        vue: { singleton: true, requiredVersion: '^3.5.0' },"
+cfg-shared,apps/mfe-vue3-profile/webpack.config.js,59,"        vuetify: { singleton: true, requiredVersion: '^3.7.0' },"
+cfg-public-path,apps/mfe-vue2-admin/webpack.config.js,14,"    publicPath: 'http://localhost:3002/',"
+cfg-public-path,apps/mfe-vue2-checkout/webpack.config.js,14,"    publicPath: 'http://localhost:3001/',"
+cfg-public-path,apps/mfe-vue3-dashboard/webpack.config.js,13,"    publicPath: 'http://localhost:3004/',"
+cfg-public-path,apps/mfe-vue3-profile/webpack.config.js,13,"    publicPath: 'http://localhost:3003/',"
+rt-remote-entry,apps/mfe-vue2-admin/webpack.config.js,55,"      excludeChunks: ['remoteEntry'],"
+rt-remote-entry,apps/mfe-vue2-admin/webpack.config.js,66,"      filename: 'remoteEntry.js',"
+rt-remote-entry,apps/mfe-vue2-checkout/webpack.config.js,57,"      excludeChunks: ['remoteEntry'],"
+rt-remote-entry,apps/mfe-vue2-checkout/webpack.config.js,68,"      filename: 'remoteEntry.js',"
+rt-remote-entry,apps/mfe-vue3-dashboard/webpack.config.js,50,"      excludeChunks: ['remoteEntry'],"
+rt-remote-entry,apps/mfe-vue3-dashboard/webpack.config.js,55,"      filename: 'remoteEntry.js',"
+rt-remote-entry,apps/mfe-vue3-profile/webpack.config.js,50,"      excludeChunks: ['remoteEntry'],"
+rt-remote-entry,apps/mfe-vue3-profile/webpack.config.js,55,"      filename: 'remoteEntry.js',"
+rt-remote-entry,apps/shell/composables/useMfeLoader.ts,17,  // 1. Inject remoteEntry.js as a plain script tag
+rt-remote-entry,packages/shared/src/registry.ts,9,  return `http://localhost:${localPort}/remoteEntry.js`
+rt-remote-entry,packages/shared/src/types/index.ts,17,  remoteUrl: string       // URL to remoteEntry.js
+rt-remote-entry,scripts/health-check.js,4, * Polls all MFE remoteEntry.js URLs until they respond (or times out).
+rt-remote-entry,scripts/health-check.js,15,"  { name: 'mfe-vue2-checkout', url: process.env.CHECKOUT_REMOTE_URL || 'http://localhost:3001/remoteEntry.js' },"
+rt-remote-entry,scripts/health-check.js,16,"  { name: 'mfe-vue2-admin',    url: process.env.ADMIN_REMOTE_URL    || 'http://localhost:3002/remoteEntry.js' },"
+rt-remote-entry,scripts/health-check.js,17,"  { name: 'mfe-vue3-profile',  url: process.env.PROFILE_REMOTE_URL  || 'http://localhost:3003/remoteEntry.js' },"
+rt-remote-entry,scripts/health-check.js,18,"  { name: 'mfe-vue3-dashboard',url: process.env.DASHBOARD_REMOTE_URL|| 'http://localhost:3004/remoteEntry.js' },"
+src-async-bootstrap,apps/mfe-vue2-admin/src/index.js,1,import('./bootstrap').then(({ mount }) => {
+src-async-bootstrap,apps/mfe-vue2-checkout/src/index.js,5,import('./bootstrap').then(({ mount }) => {
+src-async-bootstrap,apps/mfe-vue3-dashboard/src/index.js,1,import('./bootstrap').then(({ mount }) => {
+src-async-bootstrap,apps/mfe-vue3-profile/src/index.js,1,import('./bootstrap').then(({ mount }) => {
+src-load-remote,apps/shell/composables/useMfeLoader.ts,13,async function loadRemoteModule(descriptor: MfeDescriptor): Promise<RemoteMount> {
+src-load-remote,apps/shell/composables/useMfeLoader.ts,79,      const remote = await loadRemoteModule(descriptor)
+src-mount-export,apps/mfe-vue2-admin/src/bootstrap.js,24,"export function mount(el, props) {"
+src-mount-export,apps/mfe-vue2-admin/src/bootstrap.js,41,export function unmount(el) {
+src-mount-export,apps/mfe-vue2-checkout/src/bootstrap.js,32,"export function mount(el, props) {"
+src-mount-export,apps/mfe-vue2-checkout/src/bootstrap.js,49,export function unmount(el) {
+src-mount-export,apps/mfe-vue3-dashboard/src/bootstrap.js,26,"export function mount(el, props) {"
+src-mount-export,apps/mfe-vue3-dashboard/src/bootstrap.js,36,export function unmount(el) {
+src-mount-export,apps/mfe-vue3-profile/src/bootstrap.js,28,"export function mount(el, props) {"
+src-mount-export,apps/mfe-vue3-profile/src/bootstrap.js,43,export function unmount(el) {
+src-mount-call,apps/mfe-vue2-admin/src/bootstrap.js,24,"export function mount(el, props) {"
+src-mount-call,apps/mfe-vue2-admin/src/bootstrap.js,30,  logoutUnsub = onAuthLogout(() => unmount(el))
+src-mount-call,apps/mfe-vue2-admin/src/bootstrap.js,38,  }).$mount(el)
+src-mount-call,apps/mfe-vue2-admin/src/bootstrap.js,41,export function unmount(el) {
+src-mount-call,apps/mfe-vue2-admin/src/index.js,4,"    mount(el, {"
+src-mount-call,apps/mfe-vue2-checkout/src/bootstrap.js,32,"export function mount(el, props) {"
+src-mount-call,apps/mfe-vue2-checkout/src/bootstrap.js,38,  logoutUnsub = onAuthLogout(() => unmount(el))
+src-mount-call,apps/mfe-vue2-checkout/src/bootstrap.js,46,  }).$mount(el)
+src-mount-call,apps/mfe-vue2-checkout/src/bootstrap.js,49,export function unmount(el) {
+src-mount-call,apps/mfe-vue2-checkout/src/index.js,8,"    mount(el, {"
+src-mount-call,apps/mfe-vue3-dashboard/src/bootstrap.js,26,"export function mount(el, props) {"
+src-mount-call,apps/mfe-vue3-dashboard/src/bootstrap.js,30,  logoutUnsub = onAuthLogout(() => unmount(el))
+src-mount-call,apps/mfe-vue3-dashboard/src/bootstrap.js,33,  app.mount(el)
+src-mount-call,apps/mfe-vue3-dashboard/src/bootstrap.js,36,export function unmount(el) {
+src-mount-call,apps/mfe-vue3-dashboard/src/index.js,4,"    mount(el, {"
+src-mount-call,apps/mfe-vue3-profile/src/bootstrap.js,28,"export function mount(el, props) {"
+src-mount-call,apps/mfe-vue3-profile/src/bootstrap.js,36,  logoutUnsub = onAuthLogout(() => unmount(el))
+src-mount-call,apps/mfe-vue3-profile/src/bootstrap.js,40,  app.mount(el)
+src-mount-call,apps/mfe-vue3-profile/src/bootstrap.js,43,export function unmount(el) {
+src-mount-call,apps/mfe-vue3-profile/src/index.js,4,"    mount(el, {"
+src-mount-call,apps/shell/composables/useMfeLoader.ts,80,"      remote.mount(el, props)"
+src-mount-call,apps/shell/composables/useMfeLoader.ts,91,    if (remote) remote.unmount(el)
+src-mount-call,packages/shared/src/types/index.ts,26,"  mount(el: HTMLElement, props: RemoteMountProps): void"
+src-mount-call,packages/shared/src/types/index.ts,27,  unmount(el: HTMLElement): void
+src-dynamic-script,apps/shell/composables/useMfeLoader.ts,57,    const script = document.createElement('script')
+src-cross-unit-communication,packages/shared/src/auth/index.ts,14,"    window.dispatchEvent(new CustomEvent<UserState>(AUTH_CHANGED, { detail: user }))"
+src-cross-unit-communication,packages/shared/src/auth/index.ts,22,    window.dispatchEvent(new CustomEvent(AUTH_LOGOUT))
+ops-cors,apps/mfe-vue2-admin/webpack.config.js,77,"    headers: { 'Access-Control-Allow-Origin': '*' },"
+ops-cors,apps/mfe-vue2-checkout/webpack.config.js,79,"    headers: { 'Access-Control-Allow-Origin': '*' },"
+ops-cors,apps/mfe-vue3-dashboard/webpack.config.js,67,"    headers: { 'Access-Control-Allow-Origin': '*' },"
+ops-cors,apps/mfe-vue3-profile/webpack.config.js,67,"    headers: { 'Access-Control-Allow-Origin': '*' },"
+doc-mfe-term,README.md,1,# MFE Platform
+doc-mfe-term,README.md,3,"Micro-frontend monorepo supporting **Vue 2 + Vuetify 2** and **Vue 3 + Vuetify 3** remotes side-by-side, orchestrated by a **Nuxt 3 shell**."
+doc-mfe-term,README.md,12,mfe-platform/
+doc-mfe-term,README.md,17,│   │   │   ├── index.vue       ← Homepage / MFE selector grid
+doc-mfe-term,README.md,18,│   │   │   └── app/[...mfe].vue ← Dynamic MFE container
+doc-mfe-term,README.md,25,│   ├── mfe-vue2-checkout/      ← Vue 2 + Vuetify 2 (port 3001)
+doc-mfe-term,README.md,26,│   ├── mfe-vue2-admin/         ← Vue 2 + Vuetify 2 (port 3002)
+doc-mfe-term,README.md,27,│   ├── mfe-vue3-profile/       ← Vue 3 + Vuetify 3 (port 3003)
+doc-mfe-term,README.md,28,│   └── mfe-vue3-dashboard/     ← Vue 3 + Vuetify 3 (port 3004)
+doc-mfe-term,README.md,31,"    └── shared/                 ← @mfe/shared: types, auth bus, MFE registry"
+doc-mfe-term,README.md,33,"            ├── types/          ← UserState, MfeDescriptor, RemoteMount"
+doc-mfe-term,README.md,35,            └── registry.ts     ← List of all MFEs shown on the homepage
+doc-mfe-term,README.md,56,- Shell logs in → calls `broadcastLogin(user)` → stores user in `sessionStorage` + fires `mfe:auth-changed`
+doc-mfe-term,README.md,57,- Each remote subscribes to `mfe:auth-changed` on mount and updates its internal user ref
+doc-mfe-term,README.md,58,"- On logout, shell fires `mfe:auth-logout` → remotes unmount themselves"
+doc-mfe-term,README.md,62,"Every remote must export `{ mount(el, props), unmount(el) }` from its `bootstrap.js`. This is the `RemoteMount` interface defined in `@mfe/shared`. The shell's `useMfeLoader` composable calls this interface — it never knows whether it's talking to a Vue 2 or Vue 3 app."
+doc-mfe-term,README.md,107,## Adding a new MFE
+doc-mfe-term,README.md,109,1. Copy `apps/mfe-vue3-profile` (for Vue 3) or `apps/mfe-vue2-checkout` (for Vue 2).
+doc-mfe-term,README.md,143,| mfe-vue2-checkout | 3001 | Vue 2 + Vuetify 2  |
+doc-mfe-term,README.md,144,| mfe-vue2-admin    | 3002 | Vue 2 + Vuetify 2  |
+doc-mfe-term,README.md,145,| mfe-vue3-profile  | 3003 | Vue 3 + Vuetify 3  |
+doc-mfe-term,README.md,146,| mfe-vue3-dashboard| 3004 | Vue 3 + Vuetify 3  |
+doc-integration-technology,README.md,5,"Built on top of [nuxt-mf-monorepo](https://github.com/victorlmneves/nuxt-mf-monorepo) with Webpack Module Federation, Turborepo and pnpm workspaces."
+doc-integration-technology,README.md,44,"Each Vue 2 remote is a **plain Webpack 5 app** — no Nuxt. This is necessary because Nuxt 3 only supports Vue 3. Each remote brings its own isolated Vue 2 + Vuetify 2 instance via Module Federation's `singleton` scope, completely isolated from the shell's Vue 3."
+doc-host-remote,README.md,3,"Micro-frontend monorepo supporting **Vue 2 + Vuetify 2** and **Vue 3 + Vuetify 3** remotes side-by-side, orchestrated by a **Nuxt 3 shell**."
+doc-host-remote,README.md,44,"Each Vue 2 remote is a **plain Webpack 5 app** — no Nuxt. This is necessary because Nuxt 3 only supports Vue 3. Each remote brings its own isolated Vue 2 + Vuetify 2 instance via Module Federation's `singleton` scope, completely isolated from the shell's Vue 3."
+doc-host-remote,README.md,46,Vue 3 remotes are also standalone Webpack apps (simpler than Nuxt for remotes) and share Vue 3 with the shell via MF's singleton scope.
+doc-host-remote,README.md,50,`ShellHeader.vue` lives in the shell and is rendered by every page. Remotes do **not** render their own header — the shell injects it above the remote's mount point. Remotes only receive `user` and `onLogout` as props.
+doc-host-remote,README.md,58,"- On logout, shell fires `mfe:auth-logout` → remotes unmount themselves"
+doc-host-remote,README.md,62,"Every remote must export `{ mount(el, props), unmount(el) }` from its `bootstrap.js`. This is the `RemoteMount` interface defined in `@mfe/shared`. The shell's `useMfeLoader` composable calls this interface — it never knows whether it's talking to a Vue 2 or Vue 3 app."
+ws-workspaces,pnpm-workspace.yaml,1,packages:
+ws-path-alias,apps/shell/tsconfig.json,5,"    ""paths"": {"
+ws-path-alias,tsconfig.json,9,"    ""paths"": {"

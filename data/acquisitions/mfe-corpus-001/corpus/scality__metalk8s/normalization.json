@@ -1,0 +1,1918 @@
+{
+  "schema": 1,
+  "id": "124905930",
+  "fullName": "scality/metalk8s",
+  "commit": "f19004e899c78360d3a43d5f60047b140f29c909",
+  "acquiredAt": "2026-10-24T00:32:33.646Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "artwork/generated/metalk8s-logo-wide-black-400.png",
+      "reason": "preset:binaries",
+      "size": 5159
+    },
+    {
+      "path": "artwork/generated/metalk8s-logo-wide-black.pdf",
+      "reason": "preset:binaries",
+      "size": 3388
+    },
+    {
+      "path": "artwork/generated/metalk8s-logo-wide-white-200.png",
+      "reason": "preset:binaries",
+      "size": 2903
+    },
+    {
+      "path": "charts/kube-prometheus-stack/charts/crds/files/crds.bz2",
+      "reason": "preset:binaries",
+      "size": 199495
+    },
+    {
+      "path": "docs/developer/architecture/img/GlobalHealthCpnt.png",
+      "reason": "preset:binaries",
+      "size": 28690
+    },
+    {
+      "path": "docs/developer/architecture/img/alertes.jpg",
+      "reason": "preset:binaries",
+      "size": 140225
+    },
+    {
+      "path": "docs/developer/architecture/img/metalk8s-overview.jpg",
+      "reason": "preset:binaries",
+      "size": 301090
+    },
+    {
+      "path": "docs/developer/architecture/img/navdeck.jpg",
+      "reason": "preset:binaries",
+      "size": 82285
+    },
+    {
+      "path": "docs/developer/architecture/img/nodes-page-options.jpg",
+      "reason": "preset:binaries",
+      "size": 128905
+    },
+    {
+      "path": "docs/developer/architecture/img/nodes-view.jpg",
+      "reason": "preset:binaries",
+      "size": 264160
+    },
+    {
+      "path": "docs/developer/architecture/img/overview.jpg",
+      "reason": "preset:binaries",
+      "size": 62714
+    },
+    {
+      "path": "docs/developer/architecture/img/useAlertHistoryDesign.png",
+      "reason": "preset:binaries",
+      "size": 709004
+    },
+    {
+      "path": "docs/developer/architecture/img/volumes-view.jpg",
+      "reason": "preset:binaries",
+      "size": 68267
+    },
+    {
+      "path": "docs/developer/tools/lib-alert-tree/examples/example_output.png",
+      "reason": "preset:binaries",
+      "size": 20979
+    },
+    {
+      "path": "docs/installation/img/bootstrap-remove-taints.png",
+      "reason": "preset:binaries",
+      "size": 12735
+    },
+    {
+      "path": "docs/installation/img/bootstrap-single-node-arch.png",
+      "reason": "preset:binaries",
+      "size": 6083
+    },
+    {
+      "path": "docs/installation/img/compact-arch.png",
+      "reason": "preset:binaries",
+      "size": 14208
+    },
+    {
+      "path": "docs/installation/img/custom-arch.png",
+      "reason": "preset:binaries",
+      "size": 13661
+    },
+    {
+      "path": "docs/installation/img/extended-arch.png",
+      "reason": "preset:binaries",
+      "size": 20080
+    },
+    {
+      "path": "docs/installation/img/standard-arch.png",
+      "reason": "preset:binaries",
+      "size": 16534
+    },
+    {
+      "path": "docs/installation/img/ui/click-create-node.png",
+      "reason": "preset:binaries",
+      "size": 16889
+    },
+    {
+      "path": "docs/installation/img/ui/click-node-deploy.png",
+      "reason": "preset:binaries",
+      "size": 11085
+    },
+    {
+      "path": "docs/installation/img/ui/click-node-list.png",
+      "reason": "preset:binaries",
+      "size": 36480
+    },
+    {
+      "path": "docs/installation/img/ui/deployment-progress.png",
+      "reason": "preset:binaries",
+      "size": 23463
+    },
+    {
+      "path": "docs/installation/img/ui/login.png",
+      "reason": "preset:binaries",
+      "size": 125285
+    },
+    {
+      "path": "docs/installation/img/ui/monitoring.png",
+      "reason": "preset:binaries",
+      "size": 111217
+    },
+    {
+      "path": "docs/installation/img/ui/notification-node-created.png",
+      "reason": "preset:binaries",
+      "size": 17189
+    },
+    {
+      "path": "docs/operation/volume_management/img/node_list.png",
+      "reason": "preset:binaries",
+      "size": 128729
+    },
+    {
+      "path": "docs/operation/volume_management/img/volume_creation.png",
+      "reason": "preset:binaries",
+      "size": 91621
+    },
+    {
+      "path": "docs/operation/volume_management/img/volume_delete_confirmation.png",
+      "reason": "preset:binaries",
+      "size": 40847
+    },
+    {
+      "path": "docs/operation/volume_management/img/volume_list.png",
+      "reason": "preset:binaries",
+      "size": 137784
+    },
+    {
+      "path": "docs/operation/volume_management/img/volume_overview_delete.png",
+      "reason": "preset:binaries",
+      "size": 203815
+    },
+    {
+      "path": "docs/operation/volume_management/img/volume_tab.png",
+      "reason": "preset:binaries",
+      "size": 163747
+    },
+    {
+      "path": "shell-ui/public/brand/assets/fonts/lato/Lato-Bold.woff",
+      "reason": "preset:binaries",
+      "size": 309728
+    },
+    {
+      "path": "shell-ui/public/brand/assets/fonts/lato/Lato-Bold.woff2",
+      "reason": "preset:binaries",
+      "size": 184912
+    },
+    {
+      "path": "shell-ui/public/brand/assets/fonts/lato/Lato-Regular.woff",
+      "reason": "preset:binaries",
+      "size": 309192
+    },
+    {
+      "path": "shell-ui/public/brand/assets/fonts/lato/Lato-Regular.woff2",
+      "reason": "preset:binaries",
+      "size": 182708
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/UnsuccessfulResult.component.d.ts",
+      "reason": "preset:node",
+      "size": 2280
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/accordion/Accordion.component.d.ts",
+      "reason": "preset:node",
+      "size": 372
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/banner/Banner.component.d.ts",
+      "reason": "preset:node",
+      "size": 349
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/box/Box.d.ts",
+      "reason": "preset:node",
+      "size": 575
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/breadcrumb/Breadcrumb.component.d.ts",
+      "reason": "preset:node",
+      "size": 220
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/button/Button.component.d.ts",
+      "reason": "preset:node",
+      "size": 1397
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/buttonv2/Buttonv2.component.d.ts",
+      "reason": "preset:node",
+      "size": 1604
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/buttonv2/CopyButton.component.d.ts",
+      "reason": "preset:node",
+      "size": 629
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/card/Card.component.d.ts",
+      "reason": "preset:node",
+      "size": 1486
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/charts/MetricsTimeSpanProvider.d.ts",
+      "reason": "preset:node",
+      "size": 492
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/charts/barchart/Barchart.d.ts",
+      "reason": "preset:node",
+      "size": 1892
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/charts/barchart/Barchart.utils.d.ts",
+      "reason": "preset:node",
+      "size": 3684
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/charts/barchart/BarchartTooltip.d.ts",
+      "reason": "preset:node",
+      "size": 696
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/charts/common/ChartTooltip.d.ts",
+      "reason": "preset:node",
+      "size": 2080
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/charts/common/SharedComponents.d.ts",
+      "reason": "preset:node",
+      "size": 1765
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/charts/common/chartUtils.d.ts",
+      "reason": "preset:node",
+      "size": 5892
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/charts/globalhealthbar/GlobalHealthBar.d.ts",
+      "reason": "preset:node",
+      "size": 354
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/charts/globalhealthbar/GlobalHealthBar.hooks.d.ts",
+      "reason": "preset:node",
+      "size": 550
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/charts/globalhealthbar/GlobalHealthBar.utils.d.ts",
+      "reason": "preset:node",
+      "size": 2939
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/charts/globalhealthbar/GlobalHealthBarTooltip.d.ts",
+      "reason": "preset:node",
+      "size": 656
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/charts/globalhealthbar/HealthBarXAxis.d.ts",
+      "reason": "preset:node",
+      "size": 281
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/charts/index.d.ts",
+      "reason": "preset:node",
+      "size": 1312
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/charts/legend/ChartLegend.d.ts",
+      "reason": "preset:node",
+      "size": 831
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/charts/legend/ChartLegendWrapper.d.ts",
+      "reason": "preset:node",
+      "size": 1164
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/charts/linetimeseries/LineTimeSerieChart.d.ts",
+      "reason": "preset:node",
+      "size": 2072
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/charts/linetimeseries/LineTimeSerieChart.utils.d.ts",
+      "reason": "preset:node",
+      "size": 512
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/charts/sparkline/Sparkline.d.ts",
+      "reason": "preset:node",
+      "size": 913
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/charts/types.d.ts",
+      "reason": "preset:node",
+      "size": 764
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/checkbox/Checkbox.component.d.ts",
+      "reason": "preset:node",
+      "size": 646
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/circularprogressbar/CircularProgressBar.component.d.ts",
+      "reason": "preset:node",
+      "size": 444
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/circularprogressbar/CircularProgressBar.component.style.d.ts",
+      "reason": "preset:node",
+      "size": 793
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/constants.d.ts",
+      "reason": "preset:node",
+      "size": 1707
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/constrainedtext/Constrainedtext.component.d.ts",
+      "reason": "preset:node",
+      "size": 657
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/coreuithemeprovider/CoreUiThemeProvider.d.ts",
+      "reason": "preset:node",
+      "size": 311
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/date/FormattedDateTime.d.ts",
+      "reason": "preset:node",
+      "size": 3602
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/date/FormattedDateTime.spec.d.ts",
+      "reason": "preset:node",
+      "size": 63
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/date/dateDiffer.d.ts",
+      "reason": "preset:node",
+      "size": 168
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/date/dateDiffer.spec.d.ts",
+      "reason": "preset:node",
+      "size": 56
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/dropdown/Dropdown.component.d.ts",
+      "reason": "preset:node",
+      "size": 596
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/dropzone/Dropzone.d.ts",
+      "reason": "preset:node",
+      "size": 549
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/emptystate/Emptystate.component.d.ts",
+      "reason": "preset:node",
+      "size": 911
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/emptytable/Emptytable.component.d.ts",
+      "reason": "preset:node",
+      "size": 235
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/error-pages/ErrorPage401.component.d.ts",
+      "reason": "preset:node",
+      "size": 352
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/error-pages/ErrorPage404.component.d.ts",
+      "reason": "preset:node",
+      "size": 313
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/error-pages/ErrorPage500.component.d.ts",
+      "reason": "preset:node",
+      "size": 434
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/error-pages/ErrorPageAuth.component.d.ts",
+      "reason": "preset:node",
+      "size": 258
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/error-pages/ErrorPageStyle.d.ts",
+      "reason": "preset:node",
+      "size": 866
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/form/Form.component.d.ts",
+      "reason": "preset:node",
+      "size": 2098
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/healthselectorv2/HealthSelector.component.d.ts",
+      "reason": "preset:node",
+      "size": 2011
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/icon/CustomsIcons.d.ts",
+      "reason": "preset:node",
+      "size": 440
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/icon/Icon.component.d.ts",
+      "reason": "preset:node",
+      "size": 4065
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/iconhelper/IconHelper.d.ts",
+      "reason": "preset:node",
+      "size": 439
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/infomessage/InfoMessage.component.d.ts",
+      "reason": "preset:node",
+      "size": 311
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/infomessage/InfoMessageUtils.d.ts",
+      "reason": "preset:node",
+      "size": 352
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/inlineinput/InlineInput.d.ts",
+      "reason": "preset:node",
+      "size": 597
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/inputlist/InputButtons.d.ts",
+      "reason": "preset:node",
+      "size": 736
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/inputlist/InputList.component.d.ts",
+      "reason": "preset:node",
+      "size": 640
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/inputv2/inputv2.d.ts",
+      "reason": "preset:node",
+      "size": 994
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/lateralnavbarlayout/LateralNavbarLayout.component.d.ts",
+      "reason": "preset:node",
+      "size": 351
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/layout/Layout.component.d.ts",
+      "reason": "preset:node",
+      "size": 462
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/layout/v2/AppContainer.d.ts",
+      "reason": "preset:node",
+      "size": 1241
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/layout/v2/index.d.ts",
+      "reason": "preset:node",
+      "size": 308
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/layout/v2/panels.d.ts",
+      "reason": "preset:node",
+      "size": 560
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/loader/Loader.component.d.ts",
+      "reason": "preset:node",
+      "size": 356
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/modal/Modal.component.d.ts",
+      "reason": "preset:node",
+      "size": 432
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/navbar/Navbar.component.d.ts",
+      "reason": "preset:node",
+      "size": 651
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/notifications/Notification.component.d.ts",
+      "reason": "preset:node",
+      "size": 437
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/notifications/Notifications.component.d.ts",
+      "reason": "preset:node",
+      "size": 661
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/prettybytes/PrettyBytes.component.d.ts",
+      "reason": "preset:node",
+      "size": 278
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/progressbar/ProgressBar.component.d.ts",
+      "reason": "preset:node",
+      "size": 707
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/scrollbarwrapper/ScrollbarWrapper.component.d.ts",
+      "reason": "preset:node",
+      "size": 231
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/searchinput/SearchInput.component.d.ts",
+      "reason": "preset:node",
+      "size": 696
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/selectv2/SelectStyle.d.ts",
+      "reason": "preset:node",
+      "size": 240
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/selectv2/Selectv2.component.d.ts",
+      "reason": "preset:node",
+      "size": 1761
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/sidebar/Sidebar.component.d.ts",
+      "reason": "preset:node",
+      "size": 571
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/statusicon/StatusIcon.component.d.ts",
+      "reason": "preset:node",
+      "size": 322
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/statuswrapper/Statuswrapper.component.d.ts",
+      "reason": "preset:node",
+      "size": 289
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/steppers/Stepper.component.d.ts",
+      "reason": "preset:node",
+      "size": 389
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/steppers/Steppers.component.d.ts",
+      "reason": "preset:node",
+      "size": 464
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/tablev2/MultiSelectableContent.d.ts",
+      "reason": "preset:node",
+      "size": 1170
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/tablev2/Search.d.ts",
+      "reason": "preset:node",
+      "size": 717
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/tablev2/SearchWithQueryParams.d.ts",
+      "reason": "preset:node",
+      "size": 369
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/tablev2/SingleSelectableContent.d.ts",
+      "reason": "preset:node",
+      "size": 1024
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/tablev2/TableCommon.d.ts",
+      "reason": "preset:node",
+      "size": 2116
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/tablev2/TableSync.d.ts",
+      "reason": "preset:node",
+      "size": 392
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/tablev2/TableUtils.d.ts",
+      "reason": "preset:node",
+      "size": 1218
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/tablev2/Tablestyle.d.ts",
+      "reason": "preset:node",
+      "size": 2140
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/tablev2/Tablev2.component.d.ts",
+      "reason": "preset:node",
+      "size": 4873
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/tablev2/react-table-config.d.ts",
+      "reason": "preset:node",
+      "size": 2308
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/tablev2/useCheckbox.d.ts",
+      "reason": "preset:node",
+      "size": 175
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/tablev2/useSyncedScroll.d.ts",
+      "reason": "preset:node",
+      "size": 354
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/tabsv2/ScrollButton.d.ts",
+      "reason": "preset:node",
+      "size": 304
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/tabsv2/StyledTabs.d.ts",
+      "reason": "preset:node",
+      "size": 1139
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/tabsv2/Tab.d.ts",
+      "reason": "preset:node",
+      "size": 434
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/tabsv2/Tabsv2.component.d.ts",
+      "reason": "preset:node",
+      "size": 799
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/tabsv2/useScrollingTabs.d.ts",
+      "reason": "preset:node",
+      "size": 720
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/text/Text.component.d.ts",
+      "reason": "preset:node",
+      "size": 2220
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/textarea/TextArea.component.d.ts",
+      "reason": "preset:node",
+      "size": 637
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/textbadge/TextBadge.component.d.ts",
+      "reason": "preset:node",
+      "size": 454
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/toast/DurationBasedProgressBar.d.ts",
+      "reason": "preset:node",
+      "size": 220
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/toast/Toast.component.d.ts",
+      "reason": "preset:node",
+      "size": 823
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/toast/ToastPositionHelpers.d.ts",
+      "reason": "preset:node",
+      "size": 284
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/toast/ToastProvider.d.ts",
+      "reason": "preset:node",
+      "size": 586
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/toast/useMutationsHandler.d.ts",
+      "reason": "preset:node",
+      "size": 3102
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/toast/useToastParameters.d.ts",
+      "reason": "preset:node",
+      "size": 268
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/toggle/Toggle.component.d.ts",
+      "reason": "preset:node",
+      "size": 480
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/components/tooltip/Tooltip.component.d.ts",
+      "reason": "preset:node",
+      "size": 1129
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/hooks.d.ts",
+      "reason": "preset:node",
+      "size": 148
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/icons/branding-logo.d.ts",
+      "reason": "preset:node",
+      "size": 127
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/icons/branding.d.ts",
+      "reason": "preset:node",
+      "size": 122
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/icons/scality-loading.d.ts",
+      "reason": "preset:node",
+      "size": 141
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/index.d.ts",
+      "reason": "preset:node",
+      "size": 3883
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/next.d.ts",
+      "reason": "preset:node",
+      "size": 1405
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/organisms/attachments/AttachmentConfirmationModal.d.ts",
+      "reason": "preset:node",
+      "size": 1270
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/organisms/attachments/AttachmentTable.d.ts",
+      "reason": "preset:node",
+      "size": 2240
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/organisms/attachments/AttachmentTypes.d.ts",
+      "reason": "preset:node",
+      "size": 543
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/spacing.d.ts",
+      "reason": "preset:node",
+      "size": 1153
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/style/theme.d.ts",
+      "reason": "preset:node",
+      "size": 5114
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/testUtils.d.ts",
+      "reason": "preset:node",
+      "size": 272
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/dist/utils.d.ts",
+      "reason": "preset:node",
+      "size": 543
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/package.json",
+      "reason": "preset:node",
+      "size": 4060
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/src/lib/components/steppers/Stepper.component.d.ts",
+      "reason": "preset:node",
+      "size": 1925
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@scality/core-ui/types/styled.d.ts",
+      "reason": "preset:node",
+      "size": 177
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@types/react/canary.d.ts",
+      "reason": "preset:node",
+      "size": 5982
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@types/react/experimental.d.ts",
+      "reason": "preset:node",
+      "size": 5327
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@types/react/global.d.ts",
+      "reason": "preset:node",
+      "size": 7374
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@types/react/index.d.ts",
+      "reason": "preset:node",
+      "size": 193934
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@types/react/jsx-dev-runtime.d.ts",
+      "reason": "preset:node",
+      "size": 1412
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@types/react/jsx-runtime.d.ts",
+      "reason": "preset:node",
+      "size": 1204
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@types/react/package.json",
+      "reason": "preset:node",
+      "size": 6010
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@types/react/ts5.0/canary.d.ts",
+      "reason": "preset:node",
+      "size": 5982
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@types/react/ts5.0/experimental.d.ts",
+      "reason": "preset:node",
+      "size": 5327
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@types/react/ts5.0/global.d.ts",
+      "reason": "preset:node",
+      "size": 7374
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@types/react/ts5.0/index.d.ts",
+      "reason": "preset:node",
+      "size": 193134
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@types/react/ts5.0/jsx-dev-runtime.d.ts",
+      "reason": "preset:node",
+      "size": 1366
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/@types/react/ts5.0/jsx-runtime.d.ts",
+      "reason": "preset:node",
+      "size": 1158
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/oidc-client-ts/dist/esm/package.json",
+      "reason": "preset:node",
+      "size": 45
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/oidc-client-ts/dist/types/oidc-client-ts.d.ts",
+      "reason": "preset:node",
+      "size": 86931
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/oidc-client-ts/package.json",
+      "reason": "preset:node",
+      "size": 1988
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/broadcastQueryClient-experimental/package.json",
+      "reason": "preset:node",
+      "size": 218
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/core/package.json",
+      "reason": "preset:node",
+      "size": 131
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/createAsyncStoragePersistor-experimental/package.json",
+      "reason": "preset:node",
+      "size": 239
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/createWebStoragePersistor-experimental/package.json",
+      "reason": "preset:node",
+      "size": 233
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/devtools/development/package.json",
+      "reason": "preset:node",
+      "size": 152
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/devtools/package.json",
+      "reason": "preset:node",
+      "size": 116
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/hydration/package.json",
+      "reason": "preset:node",
+      "size": 146
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/package.json",
+      "reason": "preset:node",
+      "size": 5812
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/persistQueryClient-experimental/package.json",
+      "reason": "preset:node",
+      "size": 212
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/react/package.json",
+      "reason": "preset:node",
+      "size": 134
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/broadcastQueryClient-experimental/index.d.ts",
+      "reason": "preset:node",
+      "size": 270
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/core/focusManager.d.ts",
+      "reason": "preset:node",
+      "size": 467
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/core/hydration.d.ts",
+      "reason": "preset:node",
+      "size": 1268
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/core/index.d.ts",
+      "reason": "preset:node",
+      "size": 1008
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/core/infiniteQueryBehavior.d.ts",
+      "reason": "preset:node",
+      "size": 875
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/core/infiniteQueryObserver.d.ts",
+      "reason": "preset:node",
+      "size": 1768
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/core/logger.d.ts",
+      "reason": "preset:node",
+      "size": 266
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/core/mutation.d.ts",
+      "reason": "preset:node",
+      "size": 2615
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/core/mutationCache.d.ts",
+      "reason": "preset:node",
+      "size": 1687
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/core/mutationObserver.d.ts",
+      "reason": "preset:node",
+      "size": 1386
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/core/notifyManager.d.ts",
+      "reason": "preset:node",
+      "size": 1100
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/core/onlineManager.d.ts",
+      "reason": "preset:node",
+      "size": 465
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/core/queriesObserver.d.ts",
+      "reason": "preset:node",
+      "size": 1008
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/core/query.d.ts",
+      "reason": "preset:node",
+      "size": 4453
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/core/queryCache.d.ts",
+      "reason": "preset:node",
+      "size": 2741
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/core/queryClient.d.ts",
+      "reason": "preset:node",
+      "size": 7543
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/core/queryObserver.d.ts",
+      "reason": "preset:node",
+      "size": 3391
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/core/retryer.d.ts",
+      "reason": "preset:node",
+      "size": 1556
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/core/subscribable.d.ts",
+      "reason": "preset:node",
+      "size": 331
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/core/types.d.ts",
+      "reason": "preset:node",
+      "size": 20267
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/core/utils.d.ts",
+      "reason": "preset:node",
+      "size": 4852
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/createAsyncStoragePersistor-experimental/index.d.ts",
+      "reason": "preset:node",
+      "size": 1081
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/createWebStoragePersistor-experimental/index.d.ts",
+      "reason": "preset:node",
+      "size": 880
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/devtools/Explorer.d.ts",
+      "reason": "preset:node",
+      "size": 1474
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/devtools/Logo.d.ts",
+      "reason": "preset:node",
+      "size": 55
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/devtools/devtools.d.ts",
+      "reason": "preset:node",
+      "size": 2509
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/devtools/index.d.ts",
+      "reason": "preset:node",
+      "size": 28
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/devtools/styledComponents.d.ts",
+      "reason": "preset:node",
+      "size": 15981
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/devtools/theme.d.ts",
+      "reason": "preset:node",
+      "size": 1097
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/devtools/useLocalStorage.d.ts",
+      "reason": "preset:node",
+      "size": 146
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/devtools/useMediaQuery.d.ts",
+      "reason": "preset:node",
+      "size": 75
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/devtools/utils.d.ts",
+      "reason": "preset:node",
+      "size": 1569
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/hydration/index.d.ts",
+      "reason": "preset:node",
+      "size": 271
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/index.d.ts",
+      "reason": "preset:node",
+      "size": 49
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/persistQueryClient-experimental/index.d.ts",
+      "reason": "preset:node",
+      "size": 1393
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/react/Hydrate.d.ts",
+      "reason": "preset:node",
+      "size": 292
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/react/QueryClientProvider.d.ts",
+      "reason": "preset:node",
+      "size": 423
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/react/QueryErrorResetBoundary.d.ts",
+      "reason": "preset:node",
+      "size": 473
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/react/index.d.ts",
+      "reason": "preset:node",
+      "size": 763
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/react/logger.d.ts",
+      "reason": "preset:node",
+      "size": 78
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/react/reactBatchedUpdates.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/react/setBatchUpdatesFn.d.ts",
+      "reason": "preset:node",
+      "size": 11
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/react/setLogger.d.ts",
+      "reason": "preset:node",
+      "size": 11
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/react/types.d.ts",
+      "reason": "preset:node",
+      "size": 3257
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/react/useBaseQuery.d.ts",
+      "reason": "preset:node",
+      "size": 413
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/react/useInfiniteQuery.d.ts",
+      "reason": "preset:node",
+      "size": 1089
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/react/useIsFetching.d.ts",
+      "reason": "preset:node",
+      "size": 251
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/react/useIsMutating.d.ts",
+      "reason": "preset:node",
+      "size": 260
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/react/useMutation.d.ts",
+      "reason": "preset:node",
+      "size": 1291
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/react/useQueries.d.ts",
+      "reason": "preset:node",
+      "size": 3268
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/react/useQuery.d.ts",
+      "reason": "preset:node",
+      "size": 959
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/react/utils.d.ts",
+      "reason": "preset:node",
+      "size": 174
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/ts3.8/index.d.ts",
+      "reason": "preset:node",
+      "size": 86
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-query/types/ts3.8/useQueries.d.ts",
+      "reason": "preset:node",
+      "size": 204
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-router/dist/development/dom-export.d.ts",
+      "reason": "preset:node",
+      "size": 1339
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-router/dist/development/index-react-server-client-BQ6FxdA_.d.ts",
+      "reason": "preset:node",
+      "size": 121038
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-router/dist/development/index-react-server-client.d.ts",
+      "reason": "preset:node",
+      "size": 537
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-router/dist/development/index-react-server.d.ts",
+      "reason": "preset:node",
+      "size": 83257
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-router/dist/development/index.d.ts",
+      "reason": "preset:node",
+      "size": 68082
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-router/dist/development/lib/types/internal.d.ts",
+      "reason": "preset:node",
+      "size": 7493
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-router/dist/development/register-DiOIlEq5.d.ts",
+      "reason": "preset:node",
+      "size": 870
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-router/dist/development/routeModules-C3oqzPpI.d.ts",
+      "reason": "preset:node",
+      "size": 84298
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-router/dist/production/dom-export.d.ts",
+      "reason": "preset:node",
+      "size": 1339
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-router/dist/production/index-react-server-client-BQ6FxdA_.d.ts",
+      "reason": "preset:node",
+      "size": 121038
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-router/dist/production/index-react-server-client.d.ts",
+      "reason": "preset:node",
+      "size": 537
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-router/dist/production/index-react-server.d.ts",
+      "reason": "preset:node",
+      "size": 83257
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-router/dist/production/index.d.ts",
+      "reason": "preset:node",
+      "size": 68082
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-router/dist/production/lib/types/internal.d.ts",
+      "reason": "preset:node",
+      "size": 7493
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-router/dist/production/register-DiOIlEq5.d.ts",
+      "reason": "preset:node",
+      "size": 870
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-router/dist/production/routeModules-C3oqzPpI.d.ts",
+      "reason": "preset:node",
+      "size": 84298
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/react-router/package.json",
+      "reason": "preset:node",
+      "size": 4438
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/index.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/locales/index.d.ts",
+      "reason": "preset:node",
+      "size": 40
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/locales/package.json",
+      "reason": "preset:node",
+      "size": 104
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/mini/index.d.ts",
+      "reason": "preset:node",
+      "size": 37
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/mini/package.json",
+      "reason": "preset:node",
+      "size": 104
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/package.json",
+      "reason": "preset:node",
+      "size": 3796
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v3/ZodError.d.ts",
+      "reason": "preset:node",
+      "size": 6412
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v3/errors.d.ts",
+      "reason": "preset:node",
+      "size": 238
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v3/external.d.ts",
+      "reason": "preset:node",
+      "size": 205
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v3/helpers/enumUtil.d.ts",
+      "reason": "preset:node",
+      "size": 609
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v3/helpers/errorUtil.d.ts",
+      "reason": "preset:node",
+      "size": 276
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v3/helpers/parseUtil.d.ts",
+      "reason": "preset:node",
+      "size": 2755
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v3/helpers/partialUtil.d.ts",
+      "reason": "preset:node",
+      "size": 827
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v3/helpers/typeAliases.d.ts",
+      "reason": "preset:node",
+      "size": 135
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v3/helpers/util.d.ts",
+      "reason": "preset:node",
+      "size": 3387
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v3/index.d.ts",
+      "reason": "preset:node",
+      "size": 99
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v3/locales/en.d.ts",
+      "reason": "preset:node",
+      "size": 113
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v3/package.json",
+      "reason": "preset:node",
+      "size": 104
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v3/standard-schema.d.ts",
+      "reason": "preset:node",
+      "size": 2843
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v3/types.d.ts",
+      "reason": "preset:node",
+      "size": 52027
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4-mini/index.d.ts",
+      "reason": "preset:node",
+      "size": 37
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4-mini/package.json",
+      "reason": "preset:node",
+      "size": 104
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/classic/checks.d.ts",
+      "reason": "preset:node",
+      "size": 701
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/classic/coerce.d.ts",
+      "reason": "preset:node",
+      "size": 1147
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/classic/compat.d.ts",
+      "reason": "preset:node",
+      "size": 2199
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/classic/errors.d.ts",
+      "reason": "preset:node",
+      "size": 1620
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/classic/external.d.ts",
+      "reason": "preset:node",
+      "size": 911
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/classic/from-json-schema.d.ts",
+      "reason": "preset:node",
+      "size": 531
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/classic/index.d.ts",
+      "reason": "preset:node",
+      "size": 99
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/classic/iso.d.ts",
+      "reason": "preset:node",
+      "size": 1135
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/classic/package.json",
+      "reason": "preset:node",
+      "size": 104
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/classic/parse.d.ts",
+      "reason": "preset:node",
+      "size": 2509
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/classic/schemas.d.ts",
+      "reason": "preset:node",
+      "size": 46085
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/core/api.d.ts",
+      "reason": "preset:node",
+      "size": 31834
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/core/checks.d.ts",
+      "reason": "preset:node",
+      "size": 12810
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/core/core.d.ts",
+      "reason": "preset:node",
+      "size": 1874
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/core/doc.d.ts",
+      "reason": "preset:node",
+      "size": 348
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/core/errors.d.ts",
+      "reason": "preset:node",
+      "size": 8539
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/core/index.d.ts",
+      "reason": "preset:node",
+      "size": 594
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/core/json-schema-generator.d.ts",
+      "reason": "preset:node",
+      "size": 2719
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/core/json-schema-processors.d.ts",
+      "reason": "preset:node",
+      "size": 3381
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/core/json-schema.d.ts",
+      "reason": "preset:node",
+      "size": 2764
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/core/package.json",
+      "reason": "preset:node",
+      "size": 104
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/core/parse.d.ts",
+      "reason": "preset:node",
+      "size": 3829
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/core/regexes.d.ts",
+      "reason": "preset:node",
+      "size": 3457
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/core/registries.d.ts",
+      "reason": "preset:node",
+      "size": 1631
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/core/schemas.d.ts",
+      "reason": "preset:node",
+      "size": 50837
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/core/standard-schema.d.ts",
+      "reason": "preset:node",
+      "size": 6321
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/core/to-json-schema.d.ts",
+      "reason": "preset:node",
+      "size": 5504
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/core/util.d.ts",
+      "reason": "preset:node",
+      "size": 11829
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/core/versions.d.ts",
+      "reason": "preset:node",
+      "size": 109
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/index.d.ts",
+      "reason": "preset:node",
+      "size": 92
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/ar.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/az.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/be.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/bg.d.ts",
+      "reason": "preset:node",
+      "size": 177
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/ca.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/cs.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/da.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/de.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/en.d.ts",
+      "reason": "preset:node",
+      "size": 177
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/eo.d.ts",
+      "reason": "preset:node",
+      "size": 177
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/es.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/fa.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/fi.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/fr-CA.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/fr.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/he.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/hu.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/id.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/index.d.ts",
+      "reason": "preset:node",
+      "size": 1944
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/is.d.ts",
+      "reason": "preset:node",
+      "size": 177
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/it.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/ja.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/ka.d.ts",
+      "reason": "preset:node",
+      "size": 177
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/kh.d.ts",
+      "reason": "preset:node",
+      "size": 158
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/km.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/ko.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/lt.d.ts",
+      "reason": "preset:node",
+      "size": 177
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/mk.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/ms.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/nl.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/no.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/ota.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/package.json",
+      "reason": "preset:node",
+      "size": 104
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/pl.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/ps.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/pt.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/ru.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/sl.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/sv.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/ta.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/th.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/tr.d.ts",
+      "reason": "preset:node",
+      "size": 177
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/ua.d.ts",
+      "reason": "preset:node",
+      "size": 158
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/uk.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/ur.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/vi.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/yo.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/zh-CN.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/locales/zh-TW.d.ts",
+      "reason": "preset:node",
+      "size": 121
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/mini/checks.d.ts",
+      "reason": "preset:node",
+      "size": 676
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/mini/coerce.d.ts",
+      "reason": "preset:node",
+      "size": 640
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/mini/external.d.ts",
+      "reason": "preset:node",
+      "size": 716
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/mini/index.d.ts",
+      "reason": "preset:node",
+      "size": 81
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/mini/iso.d.ts",
+      "reason": "preset:node",
+      "size": 1255
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/mini/package.json",
+      "reason": "preset:node",
+      "size": 104
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/mini/parse.d.ts",
+      "reason": "preset:node",
+      "size": 182
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/mini/schemas.d.ts",
+      "reason": "preset:node",
+      "size": 31097
+    },
+    {
+      "path": "ui/@mf-types/shell/node_modules/zod/v4/package.json",
+      "reason": "preset:node",
+      "size": 104
+    },
+    {
+      "path": "ui/public/brand/assets/fonts/lato/Lato-Bold.woff",
+      "reason": "preset:binaries",
+      "size": 309728
+    },
+    {
+      "path": "ui/public/brand/assets/fonts/lato/Lato-Bold.woff2",
+      "reason": "preset:binaries",
+      "size": 184912
+    },
+    {
+      "path": "ui/public/brand/assets/fonts/lato/Lato-Regular.woff",
+      "reason": "preset:binaries",
+      "size": 309192
+    },
+    {
+      "path": "ui/public/brand/assets/fonts/lato/Lato-Regular.woff2",
+      "reason": "preset:binaries",
+      "size": 182708
+    },
+    {
+      "path": "ui/public/brand/assets/login/favicon.png",
+      "reason": "preset:binaries",
+      "size": 222
+    },
+    {
+      "path": "ui/public/brand/assets/login/logo-light.png",
+      "reason": "preset:binaries",
+      "size": 10789
+    },
+    {
+      "path": "ui/public/brand/assets/login/logo.png",
+      "reason": "preset:binaries",
+      "size": 1651
+    }
+  ],
+  "submodules": [],
+  "symlinks": [
+    {
+      "path": "tests/versions.py",
+      "target": "../buildchain/buildchain/versions.py"
+    }
+  ],
+  "kept": {
+    "files": 2711,
+    "bytes": 28166449
+  },
+  "languages": {
+    "YAML": 10507862,
+    "Other": 8785133,
+    "JSON": 4415637,
+    "Python": 1329076,
+    "Markdown": 1322544,
+    "TypeScript": 1284759,
+    "Go": 299723,
+    "Shell": 72912,
+    "SVG": 57197,
+    "JavaScript": 42168,
+    "HTML": 41120,
+    "CSS": 6410,
+    "TOML": 1908
+  },
+  "contentSha256": "3d2b8a6b038ca832f3190073a6e8a3ad96cdc493d83e4764c2fdde63144b0f51"
+}

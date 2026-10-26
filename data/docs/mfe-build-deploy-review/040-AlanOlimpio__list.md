@@ -7,7 +7,7 @@ inputs:
   mining:
     output: data/mining/mfe-mining-001
     version: "1"
-    config_sha256: b3f63eb6fb86d8877fda117ccc22eec936a89ff7bf2d414c1dedafc0311f1fb1
+    config_sha256: 477ce8efa222a5170fdb68af51036d481c9688dda919aab993aa9f3db328fbf2
 annotation:
   method: manual
   status: final
@@ -30,7 +30,7 @@ O deploy é na Vercel, configurado no repositório. O `vercel.json` usa `@vercel
 
 ## Observações
 
-**1. ..** Aplicação da raiz. Build e deploy próprios: a configuração da Vercel publica só esta aplicação. O consumidor dela, se houver, e o remote `RegisterApp` estão em outros repositórios, e o remote tem domínio próprio (webpack.config.js:53-54), o que é compatível com publicações independentes. O endereço desta aplicação não aparece no snapshot. A versão `1.0.0` (package.json:3) não é usada na publicação.
+**1. Raiz (`.`).** Aplicação da raiz. Build e deploy próprios: a configuração da Vercel publica só esta aplicação. O consumidor dela, se houver, e o remote `RegisterApp` estão em outros repositórios, e o remote tem domínio próprio (webpack.config.js:53-54), o que é compatível com publicações independentes. O endereço desta aplicação não aparece no snapshot. A versão `1.0.0` (package.json:3) não é usada na publicação.
 
 ## Resumo
 

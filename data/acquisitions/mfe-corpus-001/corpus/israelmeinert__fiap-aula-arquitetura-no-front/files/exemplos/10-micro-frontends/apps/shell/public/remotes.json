@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "catalogo": "http://127.0.0.1:4301/microfrontend.js",
+  "checkout": "http://127.0.0.1:4302/microfrontend.js"
+}

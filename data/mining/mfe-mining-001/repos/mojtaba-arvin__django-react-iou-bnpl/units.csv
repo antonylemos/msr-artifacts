@@ -1,0 +1,6 @@
+directory,markers
+frontend,frontend/package.json
+frontend/customer-app,frontend/customer-app/package.json;frontend/customer-app/webpack.config.js
+frontend/merchant-app,frontend/merchant-app/package.json;frontend/merchant-app/webpack.config.js
+frontend/shared,frontend/shared/package.json
+frontend/shell,frontend/shell/package.json;frontend/shell/webpack.config.js

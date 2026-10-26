@@ -1,0 +1,22 @@
+{
+  "name": "@mygym/utils",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@mygym/tsconfig": "workspace:*",
+    "@mygym/eslint-config": "workspace:*",
+    "@mygym/jest-config": "workspace:*"
+  },
+  "peerDependencies": {
+    "phosphor-react-native": ">=3.0.0",
+    "react": ">=19.0.0",
+    "react-native": ">=0.81.0"
+  }
+}

@@ -1,0 +1,90 @@
+pattern,path,line,excerpt
+dep-module-federation,frontend/package.json,40,"    ""@module-federation/typescript"": ""^3.1.3"","
+dep-module-federation,frontend/package.json,70,"    ""@module-federation/typescript"": ""Webpack requires ModuleFederationPlugin to dynamically provide/consume modules at runtime."","
+dep-module-federation,frontend/package.json,71,"    ""axios"": ""@module-federation/typescript requires axios"","
+cfg-federation-plugin,frontend/customer-app/webpack.config.js,3,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,frontend/customer-app/webpack.config.js,81,            new ModuleFederationPlugin({
+cfg-federation-plugin,frontend/merchant-app/webpack.config.js,3,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,frontend/merchant-app/webpack.config.js,81,            new ModuleFederationPlugin({
+cfg-federation-plugin,frontend/shell/webpack.config.js,3,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,frontend/shell/webpack.config.js,59,    new ModuleFederationPlugin({
+cfg-remotes,frontend/shell/webpack.config.js,61,      remotes: {
+cfg-exposes,frontend/customer-app/webpack.config.js,85,              exposes: {
+cfg-exposes,frontend/merchant-app/webpack.config.js,85,              exposes: {
+cfg-shared,frontend/customer-app/webpack.config.js,89,              shared: {
+cfg-shared,frontend/customer-app/webpack.config.js,91,"                  singleton: true,"
+cfg-shared,frontend/customer-app/webpack.config.js,96,"                  singleton: true,"
+cfg-shared,frontend/customer-app/webpack.config.js,101,"                  singleton: true,"
+cfg-shared,frontend/customer-app/webpack.config.js,106,"                  singleton: true,"
+cfg-shared,frontend/customer-app/webpack.config.js,111,"                  singleton: true,"
+cfg-shared,frontend/merchant-app/webpack.config.js,89,              shared: {
+cfg-shared,frontend/merchant-app/webpack.config.js,91,"                  singleton: true,"
+cfg-shared,frontend/merchant-app/webpack.config.js,96,"                  singleton: true,"
+cfg-shared,frontend/merchant-app/webpack.config.js,101,"                  singleton: true,"
+cfg-shared,frontend/merchant-app/webpack.config.js,106,"                  singleton: true,"
+cfg-shared,frontend/merchant-app/webpack.config.js,111,"                  singleton: true,"
+cfg-shared,frontend/shell/webpack.config.js,65,      shared: {
+cfg-shared,frontend/shell/webpack.config.js,67,"          singleton: true,"
+cfg-shared,frontend/shell/webpack.config.js,73,"          singleton: true,"
+cfg-shared,frontend/shell/webpack.config.js,79,"          singleton: true,"
+cfg-shared,frontend/shell/webpack.config.js,84,"          singleton: true,"
+cfg-shared,frontend/shell/webpack.config.js,89,"          singleton: true,"
+cfg-public-path,frontend/customer-app/webpack.config.js,26,"      publicPath: isStandalone ? ""http://localhost:3001/"" : ""auto"","
+cfg-public-path,frontend/customer-app/webpack.config.js,126,"        publicPath: ""/"","
+cfg-public-path,frontend/merchant-app/webpack.config.js,26,"      publicPath: isStandalone ? ""http://localhost:3002/"" : ""auto"","
+cfg-public-path,frontend/merchant-app/webpack.config.js,126,"        publicPath: ""/"","
+cfg-public-path,frontend/shell/webpack.config.js,20,"      publicPath: ""/"","
+cfg-public-path,frontend/shell/webpack.config.js,30,"    publicPath: ""/"", // to get correct path of ""/main.js"" in the index.html"
+rt-remote-entry,frontend/customer-app/webpack.config.js,83,"              filename: ""remoteEntry.js"","
+rt-remote-entry,frontend/merchant-app/webpack.config.js,83,"              filename: ""remoteEntry.js"","
+rt-remote-entry,frontend/shell/webpack.config.js,62,"        customer_app: ""customer_app@http://localhost:3001/remoteEntry.js"","
+rt-remote-entry,frontend/shell/webpack.config.js,63,"        merchant_app: ""merchant_app@http://localhost:3002/remoteEntry.js"","
+src-remote-import,frontend/shell/src/infrastructure/shell/remote-modules/customer-app.adapter.ts,10,  const module = await import('customer_app/createAdminAppConfig');
+src-remote-import,frontend/shell/src/infrastructure/shell/remote-modules/merchant-app.adapter.ts,10,  const module = await import('merchant_app/createAdminAppConfig');
+ops-deployment-file,backend/Dockerfile.dev,,
+ops-deployment-file,docker-compose.dev.yml,,
+ops-deployment-file,frontend/Dockerfile.dev,,
+ops-dockerfile,backend/Dockerfile.dev,2,FROM python:3.13-alpine AS base
+ops-dockerfile,backend/Dockerfile.dev,23,FROM base AS dev
+ops-dockerfile,frontend/Dockerfile.dev,3,FROM node:20-alpine AS base
+ops-dockerfile,frontend/Dockerfile.dev,24,FROM base AS dev
+ops-compose-service,docker-compose.dev.yml,6,    image: mojtabaarvin/bnpl-backend:dev-latest
+ops-compose-service,docker-compose.dev.yml,22,    depends_on:
+ops-compose-service,docker-compose.dev.yml,31,    build:
+ops-compose-service,docker-compose.dev.yml,52,    depends_on:
+ops-compose-service,docker-compose.dev.yml,61,    image: redis:7-alpine
+ops-compose-service,docker-compose.dev.yml,86,    image: postgres:15
+ops-compose-service,docker-compose.dev.yml,106,    build:
+ops-compose-service,docker-compose.dev.yml,118,    depends_on:
+ops-compose-service,docker-compose.dev.yml,127,    build:
+ops-compose-service,docker-compose.dev.yml,139,    depends_on:
+ops-compose-service,docker-compose.dev.yml,150,    build:
+ops-cors,frontend/customer-app/webpack.config.js,129,"        ""Access-Control-Allow-Origin"": ""*"","
+ops-cors,frontend/merchant-app/webpack.config.js,129,"        ""Access-Control-Allow-Origin"": ""*"","
+ops-cors,frontend/shell/webpack.config.js,23,"      ""Access-Control-Allow-Origin"": ""*"","
+ci-workflow-file,.github/workflows/backend-docker-publish.yml,,
+ci-workflow-file,.github/workflows/backend-tests.yml,,
+ci-path-trigger,.github/workflows/backend-docker-publish.yml,7,    paths:
+ci-path-trigger,.github/workflows/backend-docker-publish.yml,13,    paths:
+ci-path-trigger,.github/workflows/backend-tests.yml,13,    paths:
+ci-path-trigger,.github/workflows/backend-tests.yml,18,    paths:
+doc-mfe-term,README.md,6,![Microfrontend](https://img.shields.io/badge/architecture-microfrontend-orange)
+doc-mfe-term,README.md,10,"A full-stack **Buy Now, Pay Later (BNPL)** system based on an **I.O.U-based installment loan model**, built with **Django** and **React.js** with **TypeScript**, using **Micro-Frontend** architecture."
+doc-mfe-term,README.md,391,"| **Micro-Frontend** | Webpack 5, Module Federation         | Runtime dynamic module loading     |"
+doc-integration-technology,README.md,42,"- **Micro‑Frontend (Module Federation)** – Runtime loading of independent React apps, enabling parallel development and isolated deployments."
+doc-integration-technology,README.md,391,"| **Micro-Frontend** | Webpack 5, Module Federation         | Runtime dynamic module loading     |"
+doc-runtime-loading,README.md,42,"- **Micro‑Frontend (Module Federation)** – Runtime loading of independent React apps, enabling parallel development and isolated deployments."
+doc-independence,README.md,42,"- **Micro‑Frontend (Module Federation)** – Runtime loading of independent React apps, enabling parallel development and isolated deployments."
+doc-host-remote,README.md,224,"Once inside the container, execute the following commands to install the necessary packages and run the development script. (The script will launch with the parallel flag to start remote services and the shell application.)"
+doc-host-remote,README.md,243,"For new **environment** variables, they must be defined with the webpack **DefinePlugin** for both shell and remote apps."
+ws-workspaces,frontend/package.json,5,"  ""workspaces"": ["
+ws-workspaces,frontend/pnpm-workspace.yaml,1,packages:
+ws-path-alias,frontend/customer-app/tsconfig.build.json,12,"    ""paths"": {"
+ws-path-alias,frontend/customer-app/tsconfig.json,12,"    ""paths"": {"
+ws-path-alias,frontend/merchant-app/tsconfig.build.json,12,"    ""paths"": {"
+ws-path-alias,frontend/merchant-app/tsconfig.json,12,"    ""paths"": {"
+ws-path-alias,frontend/shared/tsconfig.build.json,12,"    ""paths"": {"
+ws-path-alias,frontend/shared/tsconfig.json,12,"    ""paths"": {"
+ws-path-alias,frontend/shell/tsconfig.build.json,12,"    ""paths"": {"
+ws-path-alias,frontend/shell/tsconfig.json,12,"    ""paths"": {"
+ws-path-alias,frontend/tsconfig.root.json,12,"    ""paths"": {"

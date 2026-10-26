@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "id": "1091389540",
+  "fullName": "ross2p/mindlet-app",
+  "commit": "868bf9c81af85085a6befc5921bea6c01211228d",
+  "acquiredAt": "2026-10-24T00:26:33.735Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": ".DS_Store",
+      "reason": "preset:binaries",
+      "size": 6148
+    }
+  ],
+  "submodules": [
+    {
+      "path": "apps/auth",
+      "commit": "77949708a9ff75fc110ebddc02a5959ea18702ca"
+    },
+    {
+      "path": "apps/dashboard",
+      "commit": "93f2ebff60d7fadd4857abc7b532c52d9aef8aaf"
+    },
+    {
+      "path": "apps/decks",
+      "commit": "d06349a393af8a2f870c85e13484b66bdc6f7d7c"
+    },
+    {
+      "path": "apps/profile",
+      "commit": "fd1a6b2def72b0bcd6705039963f12e0dce53043"
+    },
+    {
+      "path": "apps/study",
+      "commit": "447e1ae0a3f97ed0a352dda7f2e2d8d545846c8d"
+    },
+    {
+      "path": "libs/shared",
+      "commit": "3e39b5c45fc999d95cc02fc23c95b8e19cd7b78d"
+    },
+    {
+      "path": "libs/types",
+      "commit": "32abf4b396770f8343329d7423189133a98aa10b"
+    }
+  ],
+  "symlinks": [],
+  "kept": {
+    "files": 54,
+    "bytes": 1814672
+  },
+  "languages": {
+    "Other": 1654234,
+    "Python": 86902,
+    "Markdown": 66149,
+    "Shell": 3381,
+    "YAML": 3202,
+    "JSON": 804
+  },
+  "contentSha256": "57b1ba771d950edf2b72657802eb09c675d627ec62d99ccfbb7e0ec501bc3103"
+}

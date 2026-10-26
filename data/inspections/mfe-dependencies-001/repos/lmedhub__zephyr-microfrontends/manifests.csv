@@ -1,0 +1,6 @@
+manifest,state
+frontend/apps/host/package.json,ok
+frontend/apps/remote-footer/package.json,ok
+frontend/apps/remote-header/package.json,ok
+frontend/apps/url-shortener/package.json,ok
+frontend/package.json,ok

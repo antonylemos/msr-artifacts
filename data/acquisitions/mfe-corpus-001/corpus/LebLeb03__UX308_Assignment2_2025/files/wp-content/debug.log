@@ -1,0 +1,98 @@
+[15-Mar-2025 03:45:31 UTC] PHP Warning:  Undefined property: WP_Ajax_Upgrader_Skin::$api in /workspaces/UX308Lab6Take2/.wordpress/wp-admin/includes/class-theme-upgrader.php on line 160
+[15-Mar-2025 04:02:11 UTC] PHP Fatal error:  Out of memory (allocated 35651584) (tried to allocate 36864 bytes) in /workspaces/UX308Lab6Take2/.wordpress/wp-admin/includes/admin.php on line 91
+[15-Mar-2025 04:02:20 UTC] PHP Fatal error:  Out of memory (allocated 33554432) (tried to allocate 2097152 bytes) in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/class-ic-sitewide-bar.php on line 19
+[15-Mar-2025 04:02:20 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function ic_products_count() in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php:117
+Stack trace:
+#0 /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php(551): IC_EPC_Tracking->setup_data()
+#1 /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php(481): IC_EPC_Tracking->send_paused_checkin(Array, true)
+#2 [internal function]: IC_EPC_Tracking->fatal()
+#3 {main}
+  thrown in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php on line 117
+[15-Mar-2025 04:02:21 UTC] PHP Fatal error:  Out of memory (allocated 31457280) (tried to allocate 2097152 bytes) in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/extensions.php on line 958
+[15-Mar-2025 04:02:21 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function ic_products_count() in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php:117
+Stack trace:
+#0 /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php(551): IC_EPC_Tracking->setup_data()
+#1 /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php(481): IC_EPC_Tracking->send_paused_checkin(Array, true)
+#2 [internal function]: IC_EPC_Tracking->fatal()
+#3 {main}
+  thrown in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php on line 117
+[15-Mar-2025 04:02:25 UTC] PHP Fatal error:  Out of memory (allocated 31457280) (tried to allocate 2097152 bytes) in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/class-ic-sitewide-bar.php on line 19
+[15-Mar-2025 04:02:25 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function ic_products_count() in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php:117
+Stack trace:
+#0 /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php(551): IC_EPC_Tracking->setup_data()
+#1 /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php(481): IC_EPC_Tracking->send_paused_checkin(Array, true)
+#2 [internal function]: IC_EPC_Tracking->fatal()
+#3 {main}
+  thrown in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php on line 117
+[15-Mar-2025 04:02:26 UTC] PHP Fatal error:  Out of memory (allocated 29360128) (tried to allocate 2097152 bytes) in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/class-ic-sitewide-bar.php on line 19
+[15-Mar-2025 04:02:26 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function ic_products_count() in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php:117
+Stack trace:
+#0 /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php(551): IC_EPC_Tracking->setup_data()
+#1 /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php(481): IC_EPC_Tracking->send_paused_checkin(Array, true)
+#2 [internal function]: IC_EPC_Tracking->fatal()
+#3 {main}
+  thrown in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php on line 117
+[15-Mar-2025 04:02:31 UTC] PHP Fatal error:  Out of memory (allocated 29360128) (tried to allocate 2097152 bytes) in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/extensions.php on line 958
+[15-Mar-2025 04:02:31 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function ic_products_count() in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php:117
+Stack trace:
+#0 /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php(551): IC_EPC_Tracking->setup_data()
+#1 /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php(481): IC_EPC_Tracking->send_paused_checkin(Array, true)
+#2 [internal function]: IC_EPC_Tracking->fatal()
+#3 {main}
+  thrown in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php on line 117
+[15-Mar-2025 04:02:31 UTC] PHP Fatal error:  Out of memory (allocated 29360128) (tried to allocate 2097152 bytes) in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/extensions.php on line 1016
+[15-Mar-2025 04:02:31 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function ic_products_count() in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php:117
+Stack trace:
+#0 /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php(551): IC_EPC_Tracking->setup_data()
+#1 /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php(481): IC_EPC_Tracking->send_paused_checkin(Array, true)
+#2 [internal function]: IC_EPC_Tracking->fatal()
+#3 {main}
+  thrown in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php on line 117
+[15-Mar-2025 04:02:38 UTC] PHP Fatal error:  Out of memory (allocated 29360128) (tried to allocate 2097152 bytes) in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/class-ic-sitewide-bar.php on line 27
+[15-Mar-2025 04:02:38 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function ic_products_count() in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php:117
+Stack trace:
+#0 /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php(551): IC_EPC_Tracking->setup_data()
+#1 /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php(481): IC_EPC_Tracking->send_paused_checkin(Array, true)
+#2 [internal function]: IC_EPC_Tracking->fatal()
+#3 {main}
+  thrown in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php on line 117
+[15-Mar-2025 04:02:41 UTC] PHP Fatal error:  Out of memory (allocated 29360128) (tried to allocate 2097152 bytes) in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/extensions.php on line 958
+[15-Mar-2025 04:02:41 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function ic_products_count() in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php:117
+Stack trace:
+#0 /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php(551): IC_EPC_Tracking->setup_data()
+#1 /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php(481): IC_EPC_Tracking->send_paused_checkin(Array, true)
+#2 [internal function]: IC_EPC_Tracking->fatal()
+#3 {main}
+  thrown in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php on line 117
+[15-Mar-2025 04:02:41 UTC] PHP Fatal error:  Out of memory (allocated 29360128) (tried to allocate 2097152 bytes) in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/extensions.php on line 1016
+[15-Mar-2025 04:02:41 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function ic_products_count() in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php:117
+Stack trace:
+#0 /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php(551): IC_EPC_Tracking->setup_data()
+#1 /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php(481): IC_EPC_Tracking->send_paused_checkin(Array, true)
+#2 [internal function]: IC_EPC_Tracking->fatal()
+#3 {main}
+  thrown in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php on line 117
+[15-Mar-2025 04:02:43 UTC] PHP Fatal error:  Out of memory (allocated 29360128) (tried to allocate 2097152 bytes) in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/extensions.php on line 233
+[15-Mar-2025 04:02:43 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function ic_products_count() in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php:117
+Stack trace:
+#0 /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php(551): IC_EPC_Tracking->setup_data()
+#1 /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php(481): IC_EPC_Tracking->send_paused_checkin(Array, true)
+#2 [internal function]: IC_EPC_Tracking->fatal()
+#3 {main}
+  thrown in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php on line 117
+[15-Mar-2025 04:03:01 UTC] PHP Fatal error:  Out of memory (allocated 29360128) (tried to allocate 2097152 bytes) in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/class-ic-sitewide-bar.php on line 27
+[15-Mar-2025 04:03:01 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function ic_products_count() in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php:117
+Stack trace:
+#0 /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php(551): IC_EPC_Tracking->setup_data()
+#1 /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php(481): IC_EPC_Tracking->send_paused_checkin(Array, true)
+#2 [internal function]: IC_EPC_Tracking->fatal()
+#3 {main}
+  thrown in /workspaces/UX308Lab6Take2/.wordpress/wp-content/plugins/ecommerce-product-catalog/includes/tracking.php on line 117
+[28-Mar-2025 00:09:31 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /workspaces/UX308_Assignment2_2025/.wordpress/wp-content/mu-plugins/one-click-child-theme/one-click-child-theme.php:419) in /workspaces/UX308_Assignment2_2025/.wordpress/wp-includes/pluggable.php on line 1435
+[28-Mar-2025 00:09:31 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /workspaces/UX308_Assignment2_2025/.wordpress/wp-content/mu-plugins/one-click-child-theme/one-click-child-theme.php:419) in /workspaces/UX308_Assignment2_2025/.wordpress/wp-includes/pluggable.php on line 1438
+[28-Mar-2025 00:10:04 UTC] PHP Warning:  Undefined property: WP_Ajax_Upgrader_Skin::$api in /workspaces/UX308_Assignment2_2025/.wordpress/wp-admin/includes/class-theme-upgrader.php on line 160
+[28-Mar-2025 00:12:37 UTC] PHP Warning:  Undefined array key "code" in /workspaces/UX308_Assignment2_2025/.wordpress/wp-content/mu-plugins/one-click-child-theme/one-click-child-theme.php on line 475
+[28-Mar-2025 00:12:37 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /workspaces/UX308_Assignment2_2025/.wordpress/wp-content/mu-plugins/one-click-child-theme/one-click-child-theme.php:475) in /workspaces/UX308_Assignment2_2025/.wordpress/wp-includes/pluggable.php on line 1435
+[28-Mar-2025 00:12:37 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /workspaces/UX308_Assignment2_2025/.wordpress/wp-content/mu-plugins/one-click-child-theme/one-click-child-theme.php:475) in /workspaces/UX308_Assignment2_2025/.wordpress/wp-includes/pluggable.php on line 1438
+[28-Mar-2025 00:13:40 UTC] PHP Warning:  Undefined variable $parent_theme_name in /workspaces/UX308_Assignment2_2025/.wordpress/wp-content/mu-plugins/one-click-child-theme/templates/create_child_form.php on line 18
+[28-Mar-2025 00:14:15 UTC] PHP Warning:  Undefined variable $parent_theme_name in /workspaces/UX308_Assignment2_2025/.wordpress/wp-content/mu-plugins/one-click-child-theme/templates/create_child_form.php on line 18

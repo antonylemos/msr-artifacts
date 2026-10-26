@@ -1,0 +1,78 @@
+name: "Build shell-ui"
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        description: "the git revision to checkout"
+        default: ${{ github.ref }}
+        required: false
+        type: string
+    secrets:
+      ARTIFACTS_USER:
+        required: true
+      ARTIFACTS_PASSWORD:
+        required: true
+
+jobs:
+  shell-ui:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.ref }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Compute shell-ui version
+        run: |
+          source VERSION
+          echo "SHELL_UI_VERSION=$VERSION_MAJOR.$VERSION_MINOR.$VERSION_PATCH$VERSION_SUFFIX" >> $GITHUB_ENV
+      - name: Build shell-ui container image
+        run: docker build . --tag shell-ui:v$SHELL_UI_VERSION
+        working-directory: shell-ui
+      - name: Extract shell folder from shell-ui container
+        run: |
+          docker create --name shell-ui shell-ui:v$SHELL_UI_VERSION
+          docker cp shell-ui:/usr/share/nginx/html/shell .
+          docker rm shell-ui
+          tar cvf shell.tar shell
+      - name: Save shell-ui container image
+        run: >
+          docker save shell-ui:v$SHELL_UI_VERSION |
+          gzip > shell-ui.tar.gz
+      - name: Install syft tool to build the sbom
+        run: |
+          SYFT_VERSION="1.19.0"
+          SYFT_INSTALLER="syft_${SYFT_VERSION}_linux_amd64.deb"
+          SYFT_CHECKSUM="f3667d6abfa97a1e5614882f81e0a0b090f0047e0df7025b568fa87b6d95ac58"
+          wget https://github.com/anchore/syft/releases/download/v${SYFT_VERSION}/${SYFT_INSTALLER}
+          ACTUAL_CHECKSUM=$(sha256sum ${SYFT_INSTALLER} | cut -d ' ' -f1)
+          if [ "$ACTUAL_CHECKSUM" != "$SYFT_CHECKSUM" ]; then
+            echo "ERROR: Checksum verification failed for ${SYFT_INSTALLER}"
+            echo "Expected: ${SYFT_CHECKSUM}"
+            echo "Got:      ${ACTUAL_CHECKSUM}"
+            exit 1
+          fi
+          sudo dpkg -i ${SYFT_INSTALLER}
+      - name: "build Software Bill of materials (SBOM)"
+        run: |
+          set -x
+          cd shell-ui
+          syft scan dir:./ --source-name=shell-ui --source-version "$SHELL_UI_VERSION" --output cyclonedx-json=../shell.tar.sbom.spdx.json
+
+      - name: Prepare artifacts
+        run: |
+          mkdir -p "artifacts/images"
+          mv shell-ui.tar.gz artifacts/images/
+          mv shell.tar artifacts/images/
+          mv shell.tar.sbom.spdx.json artifacts/images/
+
+      - name: Upload artifacts
+        uses: scality/action-artifacts@v4
+        with:
+          method: upload
+          url: https://artifacts.scality.net
+          user: ${{ secrets.ARTIFACTS_USER }}
+          password: ${{ secrets.ARTIFACTS_PASSWORD }}
+          source: artifacts

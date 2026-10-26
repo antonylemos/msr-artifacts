@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "id": "1330154796",
+  "fullName": "samhoooo/module-federation-demo-mf2",
+  "commit": "0a621b661bc717fb3433ec3c5dbbcfb027d0a94a",
+  "acquiredAt": "2026-10-24T00:32:36.595Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 29,
+    "bytes": 175472
+  },
+  "languages": {
+    "JSON": 164510,
+    "JavaScript": 4755,
+    "TypeScript": 4044,
+    "Markdown": 1175,
+    "HTML": 474,
+    "CSS": 463,
+    "Other": 51
+  },
+  "contentSha256": "cf6961e90b4fb5d1616f382cf6c09a73c7a8a8dfc067a52d735a4e23052be064"
+}

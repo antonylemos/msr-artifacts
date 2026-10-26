@@ -1,0 +1,37 @@
+<div class="page">
+  <ds-page-header
+    title="Painel do gerente de contas"
+    [subtitle]="'Olá, ' + usuario().nome + ' — acompanhe as apólices da sua carteira.'"
+  >
+    <ds-button variant="primary">Nova apólice</ds-button>
+  </ds-page-header>
+
+  <ds-card title="Resumo">
+    <p>{{ totalAtivas() }} apólice(s) ativa(s) de {{ apolices().length }} no total.</p>
+  </ds-card>
+
+  <section class="lista">
+    @for (apolice of apolices(); track apolice.id) {
+      <ds-card [title]="apolice.clienteNome">
+        <p class="placa">Placa {{ apolice.placa }}</p>
+        <ds-badge [status]="badgeStatus(apolice.status)">{{ apolice.status }}</ds-badge>
+        <p class="premio">R$ {{ apolice.premioMensal.toFixed(2) }}/mês</p>
+        <ds-button variant="ghost">Ver detalhes</ds-button>
+      </ds-card>
+    }
+  </section>
+
+  <section class="ofertas">
+    <h2>Ofertas para oferecer aos clientes</h2>
+    <div class="lista">
+      @for (oferta of ofertas(); track oferta.id) {
+        <ds-card [title]="oferta.produto">
+          <p class="placa">{{ oferta.seguradora }}</p>
+          <ds-badge status="neutral">{{ oferta.categoria }}</ds-badge>
+          <p class="premio">R$ {{ oferta.precoMensal.toFixed(2) }}/mês · ★ {{ oferta.avaliacao.toFixed(1) }}</p>
+          <ds-button variant="ghost">Enviar ao cliente</ds-button>
+        </ds-card>
+      }
+    </div>
+  </section>
+</div>

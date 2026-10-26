@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "version": "1",
-  "configSha256": "9441822a7a5f9766a0b955feeac5b7c0421a03c2dd7e07da4b4d476e26caebb0",
+  "configSha256": "8cb9527ff8cf32adfc90d629a85fdd23c38af7223d7ca1f2c3d4f1e8aa284f1e",
   "config": {
     "mining": "data/mining/mfe-mining-001",
     "version": "1",
@@ -12,7 +12,9 @@
           "^@module-federation/",
           "^@originjs/vite-plugin-federation$",
           "^@angular-architects/module-federation",
-          "^webpack-module-federation"
+          "^webpack-module-federation",
+          "^vite-plugin-federation$",
+          "^@scality/module-federation$"
         ],
         "patterns": [
           "cfg-federation-plugin",
@@ -40,7 +42,7 @@
       {
         "id": "single-spa",
         "packages": [
-          "^single-spa",
+          "single-spa",
           "^@single-spa/"
         ],
         "patterns": [
@@ -58,6 +60,18 @@
         ]
       },
       {
+        "id": "import-maps",
+        "packages": [
+          "^systemjs",
+          "^@types/systemjs$",
+          "^import-map-overrides$"
+        ],
+        "patterns": [
+          "src-import-map",
+          "rt-import-map-entry"
+        ]
+      },
+      {
         "id": "web-components",
         "packages": [
           "^lit$",
@@ -65,7 +79,8 @@
           "^@stencil/core$",
           "^@webcomponents/",
           "^@angular/elements$",
-          "^vue-custom-element$"
+          "^vue-custom-element$",
+          "^@angular-extensions/elements$"
         ],
         "patterns": [
           "src-custom-element"
@@ -82,7 +97,9 @@
           "^@luigi-project/",
           "^@podium/",
           "^frint",
-          "^open-components$"
+          "^open-components$",
+          "^@openmrs/esm-framework$",
+          "^@openedx/frontend-plugin-framework$"
         ],
         "patterns": [
           "src-mount-export"
@@ -118,6 +135,6 @@
   },
   "mining": {
     "directory": "data/mining/mfe-mining-001",
-    "manifestSha256": "de14736ee21b417ec97461f017b11ccb7c0057f328dbc1bd3c555f6730cb0b49"
+    "manifestSha256": "cf38db4c9b8647154893d6c57c89c20fc8580fcaf981228b5e81bd7ae06d9d50"
   }
 }

@@ -1,0 +1,4 @@
+directory,markers
+parent-app,parent-app/package.json;parent-app/webpack.config.js
+react-child-app,react-child-app/package.json;react-child-app/webpack.config.js
+vue-child-app,vue-child-app/package.json

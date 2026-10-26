@@ -1,0 +1,429 @@
+pattern,path,line,excerpt
+dep-module-federation,apps/repack-poc/host/package.json,13,"    ""@module-federation/enhanced"": ""^2.6.0"","
+dep-module-federation,apps/repack-poc/remote/package.json,13,"    ""@module-federation/enhanced"": ""^2.6.0"","
+dep-module-federation,apps/repack/packages/check-in/package.json,13,"    ""@module-federation/enhanced"": ""^2.6.0"","
+dep-module-federation,apps/repack/packages/dashboard/package.json,13,"    ""@module-federation/enhanced"": ""^2.6.0"","
+dep-module-federation,apps/repack/packages/host/package.json,13,"    ""@module-federation/enhanced"": ""^2.6.0"","
+dep-monorepo-tool,apps/turborepo/package.json,12,"    ""turbo"": ""^2.9.5"","
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,11,      '@module-federation/enhanced':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,38,        version: 5.2.5(@babel/core@7.29.7)(@module-federation/enhanced@2.6.0(@rspack/core@1.7.12(@swc/helpers@0.5.23))(typescript@5.9.3)(webpack@5.107.2))(@rspack/core@1.7.12(@swc/helpers@0.5.23))(react-native@0.84.1(@babel/core@7.29.7)(@react-native-community/cli@20.1.0(typescript@5.9.3))(@react-na
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,762,      '@module-federation/enhanced': '>=0.6.10'
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,767,      '@module-federation/enhanced':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,1081,  '@module-federation/bridge-react-webpack-plugin@2.6.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,1084,  '@module-federation/cli@2.6.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,1089,  '@module-federation/dts-plugin@2.6.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,1098,  '@module-federation/enhanced@2.6.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,1113,  '@module-federation/error-codes@0.22.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,1116,  '@module-federation/error-codes@2.6.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,1119,  '@module-federation/inject-external-runtime-core-plugin@2.6.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,1122,      '@module-federation/runtime-tools': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,1124,  '@module-federation/managers@2.6.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,1127,  '@module-federation/manifest@2.6.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,1130,  '@module-federation/rspack@2.6.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,1142,  '@module-federation/runtime-core@0.22.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,1145,  '@module-federation/runtime-core@2.6.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,1148,  '@module-federation/runtime-tools@0.22.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,1151,  '@module-federation/runtime-tools@2.6.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,1154,  '@module-federation/runtime@0.22.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,1157,  '@module-federation/runtime@2.6.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,1160,  '@module-federation/sdk@0.22.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,1163,  '@module-federation/sdk@2.6.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,1171,  '@module-federation/third-party-dts-extractor@2.6.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,1174,  '@module-federation/webpack-bundler-runtime@0.22.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,1177,  '@module-federation/webpack-bundler-runtime@2.6.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,5485,  '@callstack/repack@5.2.5(@babel/core@7.29.7)(@module-federation/enhanced@2.6.0(@rspack/core@1.7.12(@swc/helpers@0.5.23))(typescript@5.9.3)(webpack@5.107.2))(@rspack/core@1.7.12(@swc/helpers@0.5.23))(react-native@0.84.1(@babel/core@7.29.7)(@react-native-community/cli@20.1.0(typescript@5.9.3))(@reac
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,5514,      '@module-federation/enhanced': 2.6.0(@rspack/core@1.7.12(@swc/helpers@0.5.23))(typescript@5.9.3)(webpack@5.107.2)
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,5979,  '@module-federation/bridge-react-webpack-plugin@2.6.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,5981,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,5987,  '@module-federation/cli@2.6.0(typescript@5.9.3)':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,5989,      '@module-federation/dts-plugin': 2.6.0(typescript@5.9.3)
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,5990,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6000,  '@module-federation/dts-plugin@2.6.0(typescript@5.9.3)':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6002,      '@module-federation/error-codes': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6003,      '@module-federation/managers': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6004,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6005,      '@module-federation/third-party-dts-extractor': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6018,  '@module-federation/enhanced@2.6.0(@rspack/core@1.7.12(@swc/helpers@0.5.23))(typescript@5.9.3)(webpack@5.107.2)':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6020,      '@module-federation/bridge-react-webpack-plugin': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6021,      '@module-federation/cli': 2.6.0(typescript@5.9.3)
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6022,      '@module-federation/dts-plugin': 2.6.0(typescript@5.9.3)
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6023,      '@module-federation/error-codes': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6024,      '@module-federation/inject-external-runtime-core-plugin': 2.6.0(@module-federation/runtime-tools@2.6.0)
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6025,      '@module-federation/managers': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6026,      '@module-federation/manifest': 2.6.0(typescript@5.9.3)
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6027,      '@module-federation/rspack': 2.6.0(@rspack/core@1.7.12(@swc/helpers@0.5.23))(typescript@5.9.3)
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6028,      '@module-federation/runtime-tools': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6029,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6030,      '@module-federation/webpack-bundler-runtime': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6043,  '@module-federation/error-codes@0.22.0': {}
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6045,  '@module-federation/error-codes@2.6.0': {}
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6047,  '@module-federation/inject-external-runtime-core-plugin@2.6.0(@module-federation/runtime-tools@2.6.0)':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6049,      '@module-federation/runtime-tools': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6051,  '@module-federation/managers@2.6.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6053,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6058,  '@module-federation/manifest@2.6.0(typescript@5.9.3)':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6060,      '@module-federation/dts-plugin': 2.6.0(typescript@5.9.3)
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6061,      '@module-federation/managers': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6062,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6071,  '@module-federation/rspack@2.6.0(@rspack/core@1.7.12(@swc/helpers@0.5.23))(typescript@5.9.3)':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6073,      '@module-federation/bridge-react-webpack-plugin': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6074,      '@module-federation/dts-plugin': 2.6.0(typescript@5.9.3)
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6075,      '@module-federation/inject-external-runtime-core-plugin': 2.6.0(@module-federation/runtime-tools@2.6.0)
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6076,      '@module-federation/managers': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6077,      '@module-federation/manifest': 2.6.0(typescript@5.9.3)
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6078,      '@module-federation/runtime-tools': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6079,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6088,  '@module-federation/runtime-core@0.22.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6090,      '@module-federation/error-codes': 0.22.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6091,      '@module-federation/sdk': 0.22.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6093,  '@module-federation/runtime-core@2.6.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6095,      '@module-federation/error-codes': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6096,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6100,  '@module-federation/runtime-tools@0.22.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6102,      '@module-federation/runtime': 0.22.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6103,      '@module-federation/webpack-bundler-runtime': 0.22.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6105,  '@module-federation/runtime-tools@2.6.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6107,      '@module-federation/runtime': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6108,      '@module-federation/webpack-bundler-runtime': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6112,  '@module-federation/runtime@0.22.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6114,      '@module-federation/error-codes': 0.22.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6115,      '@module-federation/runtime-core': 0.22.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6116,      '@module-federation/sdk': 0.22.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6118,  '@module-federation/runtime@2.6.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6120,      '@module-federation/error-codes': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6121,      '@module-federation/runtime-core': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6122,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6126,  '@module-federation/sdk@0.22.0': {}
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6128,  '@module-federation/sdk@2.6.0': {}
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6130,  '@module-federation/third-party-dts-extractor@2.6.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6135,  '@module-federation/webpack-bundler-runtime@0.22.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6137,      '@module-federation/runtime': 0.22.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6138,      '@module-federation/sdk': 0.22.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6140,  '@module-federation/webpack-bundler-runtime@2.6.0':
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6142,      '@module-federation/error-codes': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6143,      '@module-federation/runtime': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6144,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack-poc/host/pnpm-lock.yaml,6521,      '@module-federation/runtime-tools': 0.22.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,11,      '@module-federation/enhanced':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,38,        version: 5.2.5(@babel/core@7.29.7)(@module-federation/enhanced@2.6.0(@rspack/core@1.7.12(@swc/helpers@0.5.23))(typescript@5.9.3)(webpack@5.107.2))(@rspack/core@1.7.12(@swc/helpers@0.5.23))(react-native@0.84.1(@babel/core@7.29.7)(@react-native-community/cli@20.1.0(typescript@5.9.3))(@react-na
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,762,      '@module-federation/enhanced': '>=0.6.10'
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,767,      '@module-federation/enhanced':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,1081,  '@module-federation/bridge-react-webpack-plugin@2.6.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,1084,  '@module-federation/cli@2.6.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,1089,  '@module-federation/dts-plugin@2.6.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,1098,  '@module-federation/enhanced@2.6.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,1113,  '@module-federation/error-codes@0.22.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,1116,  '@module-federation/error-codes@2.6.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,1119,  '@module-federation/inject-external-runtime-core-plugin@2.6.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,1122,      '@module-federation/runtime-tools': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,1124,  '@module-federation/managers@2.6.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,1127,  '@module-federation/manifest@2.6.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,1130,  '@module-federation/rspack@2.6.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,1142,  '@module-federation/runtime-core@0.22.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,1145,  '@module-federation/runtime-core@2.6.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,1148,  '@module-federation/runtime-tools@0.22.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,1151,  '@module-federation/runtime-tools@2.6.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,1154,  '@module-federation/runtime@0.22.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,1157,  '@module-federation/runtime@2.6.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,1160,  '@module-federation/sdk@0.22.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,1163,  '@module-federation/sdk@2.6.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,1171,  '@module-federation/third-party-dts-extractor@2.6.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,1174,  '@module-federation/webpack-bundler-runtime@0.22.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,1177,  '@module-federation/webpack-bundler-runtime@2.6.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,5485,  '@callstack/repack@5.2.5(@babel/core@7.29.7)(@module-federation/enhanced@2.6.0(@rspack/core@1.7.12(@swc/helpers@0.5.23))(typescript@5.9.3)(webpack@5.107.2))(@rspack/core@1.7.12(@swc/helpers@0.5.23))(react-native@0.84.1(@babel/core@7.29.7)(@react-native-community/cli@20.1.0(typescript@5.9.3))(@reac
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,5514,      '@module-federation/enhanced': 2.6.0(@rspack/core@1.7.12(@swc/helpers@0.5.23))(typescript@5.9.3)(webpack@5.107.2)
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,5979,  '@module-federation/bridge-react-webpack-plugin@2.6.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,5981,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,5987,  '@module-federation/cli@2.6.0(typescript@5.9.3)':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,5989,      '@module-federation/dts-plugin': 2.6.0(typescript@5.9.3)
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,5990,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6000,  '@module-federation/dts-plugin@2.6.0(typescript@5.9.3)':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6002,      '@module-federation/error-codes': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6003,      '@module-federation/managers': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6004,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6005,      '@module-federation/third-party-dts-extractor': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6018,  '@module-federation/enhanced@2.6.0(@rspack/core@1.7.12(@swc/helpers@0.5.23))(typescript@5.9.3)(webpack@5.107.2)':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6020,      '@module-federation/bridge-react-webpack-plugin': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6021,      '@module-federation/cli': 2.6.0(typescript@5.9.3)
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6022,      '@module-federation/dts-plugin': 2.6.0(typescript@5.9.3)
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6023,      '@module-federation/error-codes': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6024,      '@module-federation/inject-external-runtime-core-plugin': 2.6.0(@module-federation/runtime-tools@2.6.0)
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6025,      '@module-federation/managers': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6026,      '@module-federation/manifest': 2.6.0(typescript@5.9.3)
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6027,      '@module-federation/rspack': 2.6.0(@rspack/core@1.7.12(@swc/helpers@0.5.23))(typescript@5.9.3)
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6028,      '@module-federation/runtime-tools': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6029,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6030,      '@module-federation/webpack-bundler-runtime': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6043,  '@module-federation/error-codes@0.22.0': {}
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6045,  '@module-federation/error-codes@2.6.0': {}
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6047,  '@module-federation/inject-external-runtime-core-plugin@2.6.0(@module-federation/runtime-tools@2.6.0)':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6049,      '@module-federation/runtime-tools': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6051,  '@module-federation/managers@2.6.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6053,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6058,  '@module-federation/manifest@2.6.0(typescript@5.9.3)':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6060,      '@module-federation/dts-plugin': 2.6.0(typescript@5.9.3)
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6061,      '@module-federation/managers': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6062,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6071,  '@module-federation/rspack@2.6.0(@rspack/core@1.7.12(@swc/helpers@0.5.23))(typescript@5.9.3)':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6073,      '@module-federation/bridge-react-webpack-plugin': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6074,      '@module-federation/dts-plugin': 2.6.0(typescript@5.9.3)
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6075,      '@module-federation/inject-external-runtime-core-plugin': 2.6.0(@module-federation/runtime-tools@2.6.0)
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6076,      '@module-federation/managers': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6077,      '@module-federation/manifest': 2.6.0(typescript@5.9.3)
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6078,      '@module-federation/runtime-tools': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6079,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6088,  '@module-federation/runtime-core@0.22.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6090,      '@module-federation/error-codes': 0.22.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6091,      '@module-federation/sdk': 0.22.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6093,  '@module-federation/runtime-core@2.6.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6095,      '@module-federation/error-codes': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6096,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6100,  '@module-federation/runtime-tools@0.22.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6102,      '@module-federation/runtime': 0.22.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6103,      '@module-federation/webpack-bundler-runtime': 0.22.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6105,  '@module-federation/runtime-tools@2.6.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6107,      '@module-federation/runtime': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6108,      '@module-federation/webpack-bundler-runtime': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6112,  '@module-federation/runtime@0.22.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6114,      '@module-federation/error-codes': 0.22.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6115,      '@module-federation/runtime-core': 0.22.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6116,      '@module-federation/sdk': 0.22.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6118,  '@module-federation/runtime@2.6.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6120,      '@module-federation/error-codes': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6121,      '@module-federation/runtime-core': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6122,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6126,  '@module-federation/sdk@0.22.0': {}
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6128,  '@module-federation/sdk@2.6.0': {}
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6130,  '@module-federation/third-party-dts-extractor@2.6.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6135,  '@module-federation/webpack-bundler-runtime@0.22.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6137,      '@module-federation/runtime': 0.22.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6138,      '@module-federation/sdk': 0.22.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6140,  '@module-federation/webpack-bundler-runtime@2.6.0':
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6142,      '@module-federation/error-codes': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6143,      '@module-federation/runtime': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6144,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack-poc/remote/pnpm-lock.yaml,6521,      '@module-federation/runtime-tools': 0.22.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,47,      '@module-federation/enhanced':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,116,        version: 5.2.5(@babel/core@7.29.7)(@module-federation/enhanced@2.6.0(@rspack/core@1.7.12(@swc/helpers@0.5.23))(typescript@5.9.3)(webpack@5.108.2))(@rspack/core@1.7.12(@swc/helpers@0.5.23))(react-native@0.84.1(@babel/core@7.29.7)(@react-native-community/cli@20.1.0(typescript@5.9.3))(@react-na
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,171,      '@module-federation/enhanced':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,234,        version: 5.2.5(@babel/core@7.29.7)(@module-federation/enhanced@2.6.0(@rspack/core@1.7.12(@swc/helpers@0.5.23))(typescript@5.9.3)(webpack@5.108.2))(@rspack/core@1.7.12(@swc/helpers@0.5.23))(react-native@0.84.1(@babel/core@7.29.7)(@react-native-community/cli@20.1.0(typescript@5.9.3))(@react-na
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,323,      '@module-federation/enhanced':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,395,        version: 5.2.5(@babel/core@7.29.7)(@module-federation/enhanced@2.6.0(@rspack/core@1.7.12(@swc/helpers@0.5.23))(typescript@5.9.3)(webpack@5.108.2))(@rspack/core@1.7.12(@swc/helpers@0.5.23))(react-native@0.84.1(@babel/core@7.29.7)(@react-native-community/cli@20.1.0(typescript@5.9.3))(@react-na
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,1266,      '@module-federation/enhanced': '>=0.6.10'
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,1271,      '@module-federation/enhanced':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,1756,  '@module-federation/bridge-react-webpack-plugin@2.6.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,1759,  '@module-federation/cli@2.6.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,1764,  '@module-federation/dts-plugin@2.6.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,1773,  '@module-federation/enhanced@2.6.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,1788,  '@module-federation/error-codes@0.22.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,1791,  '@module-federation/error-codes@2.6.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,1794,  '@module-federation/inject-external-runtime-core-plugin@2.6.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,1797,      '@module-federation/runtime-tools': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,1799,  '@module-federation/managers@2.6.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,1802,  '@module-federation/manifest@2.6.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,1805,  '@module-federation/rspack@2.6.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,1817,  '@module-federation/runtime-core@0.22.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,1820,  '@module-federation/runtime-core@2.6.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,1823,  '@module-federation/runtime-tools@0.22.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,1826,  '@module-federation/runtime-tools@2.6.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,1829,  '@module-federation/runtime@0.22.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,1832,  '@module-federation/runtime@2.6.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,1835,  '@module-federation/sdk@0.22.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,1838,  '@module-federation/sdk@2.6.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,1846,  '@module-federation/third-party-dts-extractor@2.6.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,1849,  '@module-federation/webpack-bundler-runtime@0.22.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,1852,  '@module-federation/webpack-bundler-runtime@2.6.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,7228,  '@callstack/repack@5.2.5(@babel/core@7.29.7)(@module-federation/enhanced@2.6.0(@rspack/core@1.7.12(@swc/helpers@0.5.23))(typescript@5.9.3)(webpack@5.108.2))(@rspack/core@1.7.12(@swc/helpers@0.5.23))(react-native@0.84.1(@babel/core@7.29.7)(@react-native-community/cli@20.1.0(typescript@5.9.3))(@reac
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,7257,      '@module-federation/enhanced': 2.6.0(@rspack/core@1.7.12(@swc/helpers@0.5.23))(typescript@5.9.3)(webpack@5.108.2)
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8117,  '@module-federation/bridge-react-webpack-plugin@2.6.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8119,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8125,  '@module-federation/cli@2.6.0(typescript@5.9.3)':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8127,      '@module-federation/dts-plugin': 2.6.0(typescript@5.9.3)
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8128,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8138,  '@module-federation/dts-plugin@2.6.0(typescript@5.9.3)':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8140,      '@module-federation/error-codes': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8141,      '@module-federation/managers': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8142,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8143,      '@module-federation/third-party-dts-extractor': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8156,  '@module-federation/enhanced@2.6.0(@rspack/core@1.7.12(@swc/helpers@0.5.23))(typescript@5.9.3)(webpack@5.108.2)':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8158,      '@module-federation/bridge-react-webpack-plugin': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8159,      '@module-federation/cli': 2.6.0(typescript@5.9.3)
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8160,      '@module-federation/dts-plugin': 2.6.0(typescript@5.9.3)
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8161,      '@module-federation/error-codes': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8162,      '@module-federation/inject-external-runtime-core-plugin': 2.6.0(@module-federation/runtime-tools@2.6.0)
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8163,      '@module-federation/managers': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8164,      '@module-federation/manifest': 2.6.0(typescript@5.9.3)
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8165,      '@module-federation/rspack': 2.6.0(@rspack/core@1.7.12(@swc/helpers@0.5.23))(typescript@5.9.3)
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8166,      '@module-federation/runtime-tools': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8167,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8168,      '@module-federation/webpack-bundler-runtime': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8181,  '@module-federation/error-codes@0.22.0': {}
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8183,  '@module-federation/error-codes@2.6.0': {}
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8185,  '@module-federation/inject-external-runtime-core-plugin@2.6.0(@module-federation/runtime-tools@2.6.0)':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8187,      '@module-federation/runtime-tools': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8189,  '@module-federation/managers@2.6.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8191,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8196,  '@module-federation/manifest@2.6.0(typescript@5.9.3)':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8198,      '@module-federation/dts-plugin': 2.6.0(typescript@5.9.3)
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8199,      '@module-federation/managers': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8200,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8209,  '@module-federation/rspack@2.6.0(@rspack/core@1.7.12(@swc/helpers@0.5.23))(typescript@5.9.3)':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8211,      '@module-federation/bridge-react-webpack-plugin': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8212,      '@module-federation/dts-plugin': 2.6.0(typescript@5.9.3)
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8213,      '@module-federation/inject-external-runtime-core-plugin': 2.6.0(@module-federation/runtime-tools@2.6.0)
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8214,      '@module-federation/managers': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8215,      '@module-federation/manifest': 2.6.0(typescript@5.9.3)
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8216,      '@module-federation/runtime-tools': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8217,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8226,  '@module-federation/runtime-core@0.22.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8228,      '@module-federation/error-codes': 0.22.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8229,      '@module-federation/sdk': 0.22.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8231,  '@module-federation/runtime-core@2.6.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8233,      '@module-federation/error-codes': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8234,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8238,  '@module-federation/runtime-tools@0.22.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8240,      '@module-federation/runtime': 0.22.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8241,      '@module-federation/webpack-bundler-runtime': 0.22.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8243,  '@module-federation/runtime-tools@2.6.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8245,      '@module-federation/runtime': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8246,      '@module-federation/webpack-bundler-runtime': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8250,  '@module-federation/runtime@0.22.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8252,      '@module-federation/error-codes': 0.22.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8253,      '@module-federation/runtime-core': 0.22.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8254,      '@module-federation/sdk': 0.22.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8256,  '@module-federation/runtime@2.6.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8258,      '@module-federation/error-codes': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8259,      '@module-federation/runtime-core': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8260,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8264,  '@module-federation/sdk@0.22.0': {}
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8266,  '@module-federation/sdk@2.6.0': {}
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8268,  '@module-federation/third-party-dts-extractor@2.6.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8273,  '@module-federation/webpack-bundler-runtime@0.22.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8275,      '@module-federation/runtime': 0.22.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8276,      '@module-federation/sdk': 0.22.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8278,  '@module-federation/webpack-bundler-runtime@2.6.0':
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8280,      '@module-federation/error-codes': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8281,      '@module-federation/runtime': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8282,      '@module-federation/sdk': 2.6.0
+lock-mfe-dependency,apps/repack/pnpm-lock.yaml,8786,      '@module-federation/runtime-tools': 0.22.0
+cfg-federation-plugin,apps/repack-poc/host/rspack.config.mjs,41,      new Repack.plugins.ModuleFederationPluginV2({
+cfg-federation-plugin,apps/repack-poc/remote/rspack.config.mjs,37,    new Repack.plugins.ModuleFederationPluginV2({
+cfg-federation-plugin,apps/repack/packages/check-in/rspack.config.mjs,39,    new Repack.plugins.ModuleFederationPluginV2({
+cfg-federation-plugin,apps/repack/packages/dashboard/rspack.config.mjs,39,    new Repack.plugins.ModuleFederationPluginV2({
+cfg-federation-plugin,apps/repack/packages/host/rspack.config.mjs,45,      new Repack.plugins.ModuleFederationPluginV2({
+cfg-remotes,apps/repack-poc/host/rspack.config.mjs,44,        remotes: {
+cfg-remotes,apps/repack/packages/host/rspack.config.mjs,49,        remotes: {
+cfg-exposes,apps/repack-poc/remote/rspack.config.mjs,40,"      exposes: { './HelloScreen': './src/HelloScreen.tsx' },"
+cfg-exposes,apps/repack/packages/check-in/rspack.config.mjs,46,"      exposes: { './CheckInStack': './src/navigation/CheckInStack' },"
+cfg-exposes,apps/repack/packages/dashboard/rspack.config.mjs,44,"      exposes: { './DashboardStack': './src/navigation/DashboardStack' },"
+cfg-shared,apps/repack-poc/host/rspack.config.mjs,47,        shared: {
+cfg-shared,apps/repack-poc/host/rspack.config.mjs,48,"          react: { singleton: true, eager: true },"
+cfg-shared,apps/repack-poc/host/rspack.config.mjs,49,"          'react-native': { singleton: true, eager: true },"
+cfg-shared,apps/repack-poc/remote/rspack.config.mjs,41,      shared: {
+cfg-shared,apps/repack-poc/remote/rspack.config.mjs,42,"        react: { singleton: true, eager: false },"
+cfg-shared,apps/repack-poc/remote/rspack.config.mjs,43,"        'react-native': { singleton: true, eager: false },"
+cfg-shared,apps/repack/packages/check-in/rspack.config.mjs,11, * expõe o CheckInStack (exposes) e consome os singletons do host (eager: false).
+cfg-shared,apps/repack/packages/check-in/rspack.config.mjs,47,      // Consome os singletons do host; não embute cópia própria (eager: false).
+cfg-shared,apps/repack/packages/check-in/rspack.config.mjs,48,"      shared: sharedDeps({ eager: false }),"
+cfg-shared,apps/repack/packages/dashboard/rspack.config.mjs,11, * expõe o DashboardStack (exposes) e consome os singletons do host (eager: false).
+cfg-shared,apps/repack/packages/dashboard/rspack.config.mjs,45,      // Consome os singletons do host; não embute cópia própria (eager: false).
+cfg-shared,apps/repack/packages/dashboard/rspack.config.mjs,46,"      shared: sharedDeps({ eager: false }),"
+cfg-shared,apps/repack/packages/host/rspack.config.mjs,53,"        // Host é o fornecedor eager dos singletons (react, navigation, store, ...)."
+cfg-shared,apps/repack/packages/host/rspack.config.mjs,54,"        shared: sharedDeps({ eager: true }),"
+rt-remote-entry,apps/repack-poc/host/rspack.config.mjs,45,"          remote: `remote@http://localhost:9001/${platform}/mf-manifest.json`,"
+rt-remote-entry,apps/repack/packages/host/rspack.config.mjs,50,"          checkin: `checkin@http://localhost:9001/${platform}/mf-manifest.json`,"
+rt-remote-entry,apps/repack/packages/host/rspack.config.mjs,51,"          dashboard: `dashboard@http://localhost:9002/${platform}/mf-manifest.json`,"
+src-remote-import,apps/repack-poc/host/App.tsx,26,const HelloScreen = React.lazy(() => import('remote/HelloScreen'));
+src-remote-import,apps/repack/packages/host/src/screens/CheckInTab.tsx,12,"  import('checkin/CheckInStack').then((m) => ({ default: m.CheckInStack })),"
+src-remote-import,apps/repack/packages/host/src/screens/DashboardTab.tsx,9,"  import('dashboard/DashboardStack').then((m) => ({ default: m.DashboardStack })),"
+src-html-external-script,UX/confirma_o_de_check_in/code.html,15,"<script src=""https://cdn.tailwindcss.com?plugins=forms,container-queries""></script>"
+src-html-external-script,UX/dashboard_check_in_ativo_4/code.html,7,"<script src=""https://cdn.tailwindcss.com?plugins=forms,container-queries""></script>"
+src-html-external-script,UX/dashboard_p_s_treino_2/code.html,7,"<script src=""https://cdn.tailwindcss.com?plugins=forms,container-queries""></script>"
+src-html-external-script,UX/dashboard_p_s_treino_menu_unificado/code.html,7,"<script src=""https://cdn.tailwindcss.com?plugins=forms,container-queries""></script>"
+src-html-external-script,UX/finaliza_o_de_treino/code.html,7,"<script src=""https://cdn.tailwindcss.com?plugins=forms,container-queries""></script>"
+src-html-external-script,UX/listagem_de_academias/code.html,7,"<script src=""https://cdn.tailwindcss.com?plugins=forms,container-queries""></script>"
+doc-mfe-term,README.md,1,# TCC — MyGym: Micro Frontends em React Native
+doc-mfe-term,README.md,3,**Título:** Abordagens de Micro Frontend em React Native: Modularização em Build-time versus Federação em Runtime
+doc-mfe-term,apps/monolith/README.md,3,"> **Contexto do TCC:** Esta é a primeira versão de três PoCs que compõem o trabalho *""Abordagens de Micro Frontend em React Native: Modularização em Build-time versus Federação em Runtime""*. O monolito serve de **baseline** — uma implementação sem modularização formal, usada como referência para com"
+doc-mfe-term,apps/repack/ARCHITECTURE.md,3,"> Documento de referência para o capítulo comparativo do TCC _""Abordagens de Micro Frontend em React Native: Modularização em Build-time versus Federação em Runtime""_. Descreve as decisões arquiteturais da versão Re.Pack, o grafo de dependências e os trade-offs em relação ao monolito e à versão Turb"
+doc-mfe-term,apps/repack/README.md,3,"> **Contexto do TCC:** terceira das três PoCs do trabalho *""Abordagens de Micro Frontend em React Native: Modularização em Build-time versus Federação em Runtime""*. Enquanto a versão Turborepo demonstra **modularização em build-time** (um bundle único), esta demonstra **federação em runtime**: o app"
+doc-mfe-term,apps/turborepo/ARCHITECTURE.md,3,"> Documento de referência para o capítulo comparativo do TCC *""Abordagens de Micro Frontend em React Native: Modularização em Build-time versus Federação em Runtime""*. Descreve as decisões arquiteturais da versão Turborepo, o grafo de dependências e os trade-offs em relação ao monolito e à versão Re"
+doc-mfe-term,apps/turborepo/README.md,3,"> **Contexto do TCC:** Esta é a segunda versão de três PoCs que compõem o trabalho *""Abordagens de Micro Frontend em React Native: Modularização em Build-time versus Federação em Runtime""*. O objetivo é demonstrar **modularização em build-time** usando Turborepo como orquestrador de monorepo, e cont"
+doc-integration-technology,README.md,33,"| **Re.Pack** | **runtime** | Re.Pack + Module Federation | Host + mini-apps em **bundles separados, carregados pela rede em runtime**; deploy independente / OTA | `apps/repack/` |"
+doc-integration-technology,README.md,37,"- **Re.Pack** — modularização **em tempo de runtime** (Module Federation). Um **host** (a casca instalável) baixa os mini-apps `check-in` e `dashboard` como bundles independentes, pela rede, quando o usuário abre cada aba. A separação **persiste em produção**, como fronteira de rede — habilitando de"
+doc-integration-technology,README.md,64,"> **Por que o Re.Pack larga o Expo:** Module Federation pressupõe controle total do bundler (Rspack), incompatível com o fluxo gerenciado do Expo. É uma diferença de toolchain **inerente ao regime runtime** — o código de domínio permanece idêntico."
+doc-integration-technology,README.md,96,"- **O overhead fixo da federação domina em app pequeno.** O download sob demanda por aba é dominado pelo container do Module Federation (~615 KB), não pelo código de domínio (32–88 KB)."
+doc-integration-technology,apps/repack-poc/README.md,1,# repack-poc — Spike de Module Federation em runtime
+doc-integration-technology,apps/repack-poc/README.md,3,"Prova de conceito da **PoC 3 (Re.Pack)** do TCC. Objetivo estreito: provar que **um app host carrega, em runtime, um componente que veio de outro bundle pela rede** — o mecanismo de Module Federation v2 em React Native bare (sem Expo)."
+doc-integration-technology,apps/repack-poc/README.md,86,"6. **Checkpoint antes da federação:** rodar o host com `run-ios`/`run-android` *antes* de mexer em MF, pra isolar ""RN bare roda"" de ""federação roda"". Se quebrar aqui, é ambiente nativo, não Module Federation."
+doc-integration-technology,apps/repack/ARCHITECTURE.md,1,# Arquitetura — MyGym Re.Pack (Module Federation)
+doc-integration-technology,apps/repack/ARCHITECTURE.md,11,"O app entregue ao usuário é um **host** — a única casca instalável — que carrega os módulos de domínio (`check-in`, `dashboard`) como **bundles separados, baixados pela rede em runtime** via Module Federation. A separação entre módulos não existe só em desenvolvimento: ela **persiste em produção**, "
+doc-integration-technology,apps/repack/ARCHITECTURE.md,179,"Module Federation pressupõe controle total do bundler (Rspack via Re.Pack), incompatível com o fluxo gerenciado do Expo. Decisão: bare RN CLI. É uma diferença de toolchain **inerente ao regime runtime** (MF só existe no Rspack) — não uma escolha arbitrária. O código de domínio é mantido idêntico."
+doc-integration-technology,apps/repack/ARCHITECTURE.md,190,### Rspack + Module Federation V2
+doc-integration-technology,apps/repack/ARCHITECTURE.md,201,"**Fonte única de versões via `pnpm catalog`**, não o SDK do showcase. Mas o Module Federation **não lê `catalog:`** (ele veria o texto literal e desligaria a verificação de versão). Então o helper faz a ponte: **lê a versão instalada** de cada lib (do `package.json` em `node_modules`) e a entrega ao"
+doc-integration-technology,apps/repack/ARCHITECTURE.md,400,| Custo de onboarding               | Baixo    | Médio (workspaces)              | Alto (Module Federation)                                                                             |
+doc-integration-technology,apps/repack/README.md,1,# MyGym — Versão Re.Pack (Module Federation)
+doc-integration-technology,apps/repack/README.md,9,## O que é Re.Pack + Module Federation?
+doc-integration-technology,apps/repack/README.md,12,"- **Module Federation (MF)** é a técnica que permite um app **carregar módulos de outro app em runtime, pela rede**, como se fossem locais."
+doc-integration-technology,apps/repack/README.md,16,"> **Sem Expo:** Module Federation pressupõe controle total do bundler (Rspack), incompatível com o fluxo gerenciado do Expo. Por isso esta versão roda em **React Native CLI puro (bare)**. É uma diferença de toolchain inerente ao regime runtime — o **código de domínio** (telas, componentes, store, re"
+doc-integration-technology,apps/turborepo/ARCHITECTURE.md,13,"Isso contrasta diretamente com a versão Re.Pack, onde a separação é mantida em runtime via Module Federation: múltiplos bundles JS carregados dinamicamente."
+doc-integration-technology,apps/turborepo/ARCHITECTURE.md,131,"Re.Pack com Module Federation gera **múltiplos bundles**, um por remote. Cada bundle tem seu próprio grafo de módulos. `@mygym/store` seria importado e executado separadamente em cada remote — duas stores, estado não compartilhado."
+doc-integration-technology,apps/turborepo/ARCHITECTURE.md,269,| Custo de onboarding | Médio — requer entender workspaces | Alto — requer entender Module Federation |
+doc-integration-technology,apps/turborepo/README.md,3,"> **Contexto do TCC:** Esta é a segunda versão de três PoCs que compõem o trabalho *""Abordagens de Micro Frontend em React Native: Modularização em Build-time versus Federação em Runtime""*. O objetivo é demonstrar **modularização em build-time** usando Turborepo como orquestrador de monorepo, e cont"
+doc-integration-technology,apps/turborepo/README.md,411,"> **Contraste com Re.Pack:** em Module Federation, o singleton do Zustand precisa ser declarado explicitamente como `shared: { zustand: { singleton: true } }`. Em Turborepo, o hoisting garante o singleton por construção — é estruturalmente impossível ter duplicatas enquanto não houver conflito de ve"
+doc-independence,README.md,33,"| **Re.Pack** | **runtime** | Re.Pack + Module Federation | Host + mini-apps em **bundles separados, carregados pela rede em runtime**; deploy independente / OTA | `apps/repack/` |"
+doc-independence,README.md,37,"- **Re.Pack** — modularização **em tempo de runtime** (Module Federation). Um **host** (a casca instalável) baixa os mini-apps `check-in` e `dashboard` como bundles independentes, pela rede, quando o usuário abre cada aba. A separação **persiste em produção**, como fronteira de rede — habilitando de"
+doc-independence,README.md,85,"- **Viabilidade de OTA / deploy independente** — só o Re.Pack. Sustentada pelo modo standalone de cada mini-app e pelo **teste de resiliência** (derrubar um remote → `ErrorBoundary` isola o erro numa aba, sem crashar o app)."
+doc-independence,README.md,105,"- O **Re.Pack** entrega binário menor, deploy independente e OTA — mas ao custo de configuração alta e novas classes de bug. Só compensa **acima de um limiar de escala/organização** (times/repos independentes, necessidade real de OTA) que o MyGym, por desenho, não atinge."
+doc-independence,README.md,107,"Não há ""melhor abordagem"" absoluta; há a abordagem adequada ao tamanho do time, à necessidade de deploy independente e à tolerância a complexidade."
+doc-independence,apps/repack/ARCHITECTURE.md,27,"1. **Deploy independente importa?** Quero atualizar este código via OTA, sem release na loja?"
+doc-independence,apps/repack/ARCHITECTURE.md,33,"Eixo ortogonal: **infraestrutura que precisa ser singleton** (framework, design system, tipos, contrato de estado) é **sempre** shared — independente das três perguntas. Não se OTA-iza o React; ele é o chão."
+doc-independence,apps/repack/ARCHITECTURE.md,56,1. **Deploy independente?** Não. O `store` é o **contrato** entre check-in e dashboard. Mudar o shape de `CompletedCheckIn` quebra o contrato: ambos os consumidores recompilam de qualquer jeito. OTA não salva de mudança de contrato.
+doc-independence,apps/repack/ARCHITECTURE.md,60,"Três ""não"" → **shared singleton**. O showcase fez `auth` ser remote por dois motivos que o MyGym **não** tem: (a) o alvo real são times/repos independentes (o `news` vive em outro repo e **não consegue** dar `import` num pacote local, mas **consegue** consumir `auth` como remote); (b) o objetivo did"
+doc-independence,apps/repack/ARCHITECTURE.md,62,"**Achado:** _compartilhar estado em runtime via remote é possível, mas para um app de monorepo único o estado-contrato é melhor servido como shared singleton — o remote só se justifica quando há fronteira de repositório ou deploy independente do próprio estado._"
+doc-independence,apps/repack/ARCHITECTURE.md,64,"> **Distinção ortogonal:** ""ser shared"" ≠ ""ficar no monorepo"". Distribuição (build-time: package local ou publicado no npm) e unificação de instância (runtime: shared singleton) são eixos independentes. Num cenário com repo de catálogo separado, `ui`/`theme`/`data` virariam _published packages_, e o"
+doc-independence,apps/repack/ARCHITECTURE.md,252,"Ou seja, para uma lib de view nativa são necessárias **as duas** coisas, em camadas independentes:"
+doc-independence,apps/repack/ARCHITECTURE.md,286,"| Deploy independente / OTA | Existe e é demonstrável, mas **subutilizado** — não há times nem repos separados que o justifiquem. Ganho ""no papel"".                           |"
+doc-independence,apps/repack/ARCHITECTURE.md,290,| Carga cognitiva           | Alta para 1 dev; o payoff só vem com times/repos independentes e OTA real.                                                                      |
+doc-independence,apps/repack/ARCHITECTURE.md,292,"**Conclusão honesta:** para um app único que só precisa de organização de times, o **Turborepo já entrega ganho suficiente sem a complexidade do Re.Pack**. O Re.Pack brilha quando os módulos são **mini-apps que se sustentariam sozinhos** e se quer **deploy independente / OTA** — exatamente o cenário"
+doc-independence,apps/repack/ARCHITECTURE.md,324,"**Build isolado por mini-app** (N=10, wall clock, produção Android) — o análogo runtime da granularidade do Turborepo: cada mini-app builda independentemente (rebuildar check-in não toca host/dashboard)."
+doc-independence,apps/repack/ARCHITECTURE.md,381,| Deploy independente / OTA   | Não                   | Não                                 | **Sim** (estrutural)                    |
+doc-independence,apps/repack/ARCHITECTURE.md,405,"**Síntese:** o monolito é o mais simples e suficiente para um app pequeno; o Turborepo adiciona fronteiras enforçadas e cache de pipeline com custo moderado, valendo a partir de dois ou mais desenvolvedores em paralelo; o Re.Pack entrega binário menor, deploy independente e OTA, mas ao custo de conf"
+doc-independence,apps/repack/README.md,3,"> **Contexto do TCC:** terceira das três PoCs do trabalho *""Abordagens de Micro Frontend em React Native: Modularização em Build-time versus Federação em Runtime""*. Enquanto a versão Turborepo demonstra **modularização em build-time** (um bundle único), esta demonstra **federação em runtime**: o app"
+doc-independence,apps/turborepo/README.md,169,| `@mygym/ui` | Time de design system — independente de domínio |
+doc-host-remote,README.md,86,"- **Carga cognitiva** — cresce do monolito ao Re.Pack. O runtime adiciona peças (manifesto MF, ScriptManager, `shared`/`eager`, `Suspense`/`ErrorBoundary` por remote) e **classes novas de bug** inexistentes no build-time (singleton de estado fragmentado, colisão de view nativa, download duplicado de"
+doc-host-remote,apps/repack-poc/README.md,5,"Critério de sucesso: o host renderiza **""Hello from Remote!""**, vindo de um bundle servido em `localhost:9001`. Derrubar o remote e recarregar deve mostrar o fallback do `ErrorBoundary`, não um crash — é isso que prova que o carregamento é em runtime."
+doc-host-remote,apps/repack-poc/README.md,7,"> **Status: spike concluída ✅** — evidência em [`poc-evidence.png`](./poc-evidence.png): o host renderizando ""Hello from Remote!"" no simulador iOS, com o DevTools mostrando o `GET http://localhost:9001/ios/mf-manifest.json` → 200. Detalhe interessante: no Network tab só aparece o **manifest** (vem p"
+doc-host-remote,apps/repack-poc/README.md,15,## Host e remote — os papéis
+doc-host-remote,apps/repack-poc/README.md,19,| `host/` | Consumidor (shell) | 8081 | App que roda no simulador. Importa a tela do remote via `React.lazy` e a renderiza. **Fornece** react/react-native. |
+doc-host-remote,apps/repack-poc/README.md,28,"  filename: 'remote.container.bundle',"
+doc-host-remote,apps/repack-poc/README.md,37,**`host/rspack.config.mjs`** — consome o remote pelo manifest:
+doc-host-remote,apps/repack-poc/README.md,58,"- **`eager`: `true` no host, `false` no remote.** O host carrega react/react-native de imediato (fornecedor); o remote os consome do host em vez de empacotar os seus. Garante uma única instância (`singleton`)."
+doc-host-remote,apps/repack-poc/README.md,61,- **`host/App.tsx`** usa o trio `React.lazy` + `Suspense` + `ErrorBoundary`. O `ErrorBoundary` não é opcional: é ele que evita a tela branca quando o remote está fora do ar.
+doc-host-remote,apps/repack-poc/README.md,68,"1. **Dois apps RN bare**, dentro de `apps/repack-poc/` (`host` e `remote`) — base padrão do RN CLI."
+doc-host-remote,apps/repack-poc/README.md,82,"4. **Configurar a federação** nos dois `rspack.config.mjs` — `exposes` no remote, `remotes` no host, com o contraste de `eager` (ver seção ""Configs principais"")."
+doc-host-remote,apps/repack-poc/README.md,84,"5. **Escrever o mínimo de código:** `remote/src/HelloScreen.tsx` (a tela exposta, com `export default`) e o `host/App.tsx` com o trio `lazy` + `Suspense` + `ErrorBoundary`."
+doc-host-remote,apps/repack/ARCHITECTURE.md,129,- `@react-navigation/*` é **shared singleton** — host e remotes compartilham a mesma instância de navegação ao aninhar;
+doc-host-remote,apps/repack/ARCHITECTURE.md,136,"No Turborepo, o `RootNavigator` recebia os stacks como **props** (injeção em build-time). No Re.Pack, o host **lazy-importa** os stacks de cada remote (injeção em runtime):"
+doc-host-remote,apps/repack/ARCHITECTURE.md,192,Re.Pack substitui o Metro pelo Rspack. `ModuleFederationPluginV2` (que estende `@module-federation/enhanced`) declara a federação. O host tem `remotes` (consome) + `shared` eager; cada mini-app tem `exposes` (publica) + `shared` não-eager.
+doc-host-remote,apps/repack/ARCHITECTURE.md,212,"| `@react-navigation/native`, `native-stack`, `bottom-tabs` | **Navegação**              | Uma única instância de navegação para a navegação cruzada entre abas funcionar (aninhar host + remotes no mesmo `NavigationContainer`).                 |"
+doc-host-remote,apps/repack/ARCHITECTURE.md,218,"| `phosphor-react-native`                                   | **Lib comum pesada**       | Usada por host + ambos os remotes. Não registra view nativa (é JS sobre svg), mas sem singleton cada remote baixa a lib de ícones inteira (ver abaixo). |"
+doc-host-remote,apps/repack/ARCHITECTURE.md,230,"Os remotes entregam **só JS**; rodam dentro do runtime nativo do host, que é o único binário instalado. Para entender o que isso exige, é preciso ver que uma lib nativa (ex.: `react-native-linear-gradient`) tem **duas metades**:"
+doc-host-remote,apps/repack/ARCHITECTURE.md,237,"**Metade nativa → basta estar no binário do host.** Código nativo não se federa nem se OTA-iza — não pode ser baixado. Ele precisa já ter sido compilado no host, e por isso o `host/package.json` declara toda dependência nativa que qualquer remote use (o `pod install`/autolink compila no binário). O "
+doc-host-remote,apps/repack/ARCHITECTURE.md,239,> Falha se faltar: `native module not found` / `Unimplemented component`. E: adicionar uma lib nativa nova num remote **exige rebuild + release do host** (não dá OTA) — um limite concreto do runtime.
+doc-host-remote,apps/repack/ARCHITECTURE.md,250,"O RN aborta: `Tried to register two views with the same name BVLinearGradient`. Repare que o **nativo estar único não impede isso** — a duplicação é na camada JS. O container do check-in quebra ao avaliar, e o `React.lazy` recebe `undefined` (foi o bug real caçado durante a construção). O fix é `sha"
+doc-host-remote,apps/repack/ARCHITECTURE.md,267,"Foi o caso do `phosphor-react-native` (biblioteca de ícones), usado pelo host e pelos dois remotes. Fora do `shared`, ele **não quebrava nada** — diferente do `linear-gradient`, phosphor é JS sobre `react-native-svg` e não registra view nativa. Só **desperdiçava download**: o usuário baixava phospho"
+doc-host-remote,apps/repack/ARCHITECTURE.md,289,"| Classe nova de bugs       | Singleton fragmentado, colisão de view nativa, incompatibilidade host-velho × remote-novo — riscos que **não existem** no build-time.           |"
+doc-host-remote,apps/repack/ARCHITECTURE.md,308,"_Como o número é obtido:_ o host, para carregar um remote, busca o `mf-manifest.json` dele — o índice que lista os arquivos JS necessários: o **container** (`metaData.remoteEntry`) e os **chunks do módulo exposto** (`exposes[].assets.js`). O total é a **soma do tamanho de cada arquivo**, medido baix"
+doc-host-remote,apps/repack/ARCHITECTURE.md,319,"- **Container (~615 KB) vs domínio (32–88 KB):** o container é o **encanamento fixo** do MF (registra o remote, resolve os `shared`) — por isso ~igual nos dois remotes. O domínio é o **código das telas**, que varia."
+doc-host-remote,apps/repack/ARCHITECTURE.md,360,3. Adicionar ao `remotes` do host + uma tela-invólucro (`lazy` + `Suspense` + `ErrorBoundary`) + uma aba.
+doc-host-remote,apps/repack/ARCHITECTURE.md,361,4. Declarar no host qualquer módulo nativo novo que o remote use.
+doc-host-remote,apps/repack/ARCHITECTURE.md,402,| Classes novas de bug              | —        | Singleton em conflito de versão | Singleton fragmentado · colisão de view nativa · download duplicado de lib pesada · skew host×remote |
+doc-host-remote,apps/repack/README.md,14,"Na prática: em vez de um binário monolítico, o MyGym vira um **host** (a casca instalável) que baixa dois **mini-apps** (remotes) sob demanda."
+doc-host-remote,apps/repack/README.md,25,"        shared singletons (fornecidos pelo host, consumidos pelos remotes)"
+doc-host-remote,apps/repack/README.md,81,O host é o único binário; ele carrega o nativo de **todos** os remotes e embarca as fontes.
+doc-host-remote,apps/repack/README.md,104,"As portas (check-in:9001, dashboard:9002, host:8081) estão fixadas nos scripts `start` de cada pacote e batem com o `remotes` do host."
+doc-host-remote,apps/repack/README.md,126,"2. Ao entrar numa aba, um spinner rápido → o host **baixa o container do remote pela rede** (lazy) → a tela real."
+doc-host-remote,apps/turborepo/ARCHITECTURE.md,263,| Bundle final | Um único JS | Múltiplos JS (host + remotes) |
+ws-workspaces,apps/repack/pnpm-workspace.yaml,1,packages:
+ws-workspaces,apps/turborepo/pnpm-workspace.yaml,1,packages:

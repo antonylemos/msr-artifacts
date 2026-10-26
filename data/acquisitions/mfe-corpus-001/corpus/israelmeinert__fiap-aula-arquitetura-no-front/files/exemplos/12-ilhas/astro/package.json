@@ -1,0 +1,16 @@
+{
+  "name": "12-astro",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --host 127.0.0.1 --port 4321 --ignore-lock",
+    "build": "astro build"
+  },
+  "dependencies": {
+    "astro": "7.3.6",
+    "@astrojs/react": "7.0.1",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  }
+}

@@ -1,5 +1,7 @@
 # Método: revisão de código-fonte
 
+Os caminhos começados por `docs/` preservam a organização do projeto de origem (`repo-miner`). Neste pacote, as análises correspondentes estão em `data/docs/`. Os caminhos e hashes registrados nas análises mantêm sua função de proveniência.
+
 Este documento descreve como foi feita a revisão de código-fonte e como ler os arquivos
 `NNN-<owner>__<name>.md` desta pasta. Cada arquivo registra a revisão de um repositório do corpus,
 e os passos abaixo seguem a ordem da revisão: ler os arquivos do snapshot vem antes de qualquer julgamento.
@@ -31,6 +33,8 @@ repositório e não altera os arquivos de `../mfe-classification/`.
 Todo `artefato:linha` é relativo a `files/` do snapshot. A revisão nunca usa o clone em `data/samples/`.
 
 A revisão não modifica nada em `data/` e não reexecuta `mine` nem `inspect-dependencies`.
+
+As classificações, as revisões anteriores e as configurações em `config/` são consultadas sem alteração.
 
 ## Produto
 

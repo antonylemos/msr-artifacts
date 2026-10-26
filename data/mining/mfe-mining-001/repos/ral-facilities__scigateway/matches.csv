@@ -1,0 +1,76 @@
+pattern,path,line,excerpt
+dep-single-spa,package.json,50,"    ""single-spa"": ""6.0.3"","
+dep-mfe-term,package.json,63,"    ""serve:plugins"": ""node micro-frontend-tools/serve-plugins.js"","
+lock-mfe-dependency,yarn.lock,8051,"    single-spa: ""npm:6.0.3"""
+lock-mfe-dependency,yarn.lock,8317,"""single-spa@npm:6.0.3"":"
+lock-mfe-dependency,yarn.lock,8319,"  resolution: ""single-spa@npm:6.0.3"""
+rt-manifest-file,public/manifest.json,,
+src-remote-import,vite.config.ts,28,  await import('vitest/config').then((vitestConfig) => {
+src-lifecycles,server/e2e-plugin/main.js,9," */var Ce;function ot(){if(Ce)return V;Ce=1;var e=N,t=Symbol.for(""react.element""),n=Symbol.for(""react.fragment""),o=Object.prototype.hasOwnProperty,r=e.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner,a={key:!0,ref:!0,__self:!0,__source:!0};function i(c,l,u){var p,y={},f=null,v=nu"
+src-lifecycles,src/state/actions/loadMicroFrontends.tsx,31,  singleSpa.registerApplication(
+src-dynamic-script,src/cookieConsent/cookieConsent.component.test.tsx,104,    const expectedUrlScript = document.createElement('script');
+src-dynamic-script,src/cookieConsent/cookieConsent.component.test.tsx,108,    const expectedGtagScript = document.createElement('script');
+src-dynamic-script,src/cookieConsent/cookieConsent.component.tsx,54,      const urlScript = document.createElement('script');
+src-dynamic-script,src/cookieConsent/cookieConsent.component.tsx,58,      const gtagScript = document.createElement('script');
+src-dynamic-script,src/state/actions/loadMicroFrontends.tsx,9,    const script = document.createElement('script');
+src-html-external-script,index.html,18,"  <script crossorigin src=""https://unpkg.com/react@18/umd/react.production.min.js""></script>"
+src-html-external-script,index.html,23,"  <script crossorigin src=""https://unpkg.com/react-dom@18/umd/react-dom.production.min.js""></script>"
+src-iframe,src/accessibilityPage/contactUs.component.tsx,45,          <iframe
+src-cross-unit-communication,server/e2e-plugin/main.js,20,"Please change the parent <Route path=""${s}""> to <Route path=""${s===""/""?""*"":`${s}/*`}"">.`)}let y=W(),f;if(t){let s=typeof t==""string""?H(t):t;C(u===""/""||s.pathname?.startsWith(u),`When overriding the location using \`<Routes location>\` or \`useRoutes(routes, location)\`, the location pathname must be"
+src-cross-unit-communication,src/App.test.tsx,110,      document.dispatchEvent(
+src-cross-unit-communication,src/App.test.tsx,111,"        new CustomEvent('scigateway', {"
+src-cross-unit-communication,src/authentication/baseAPIAuthProvider.tsx,35,      document.dispatchEvent(
+src-cross-unit-communication,src/authentication/baseAPIAuthProvider.tsx,36,"        new CustomEvent('scigateway', {"
+src-cross-unit-communication,src/authentication/baseAPIAuthProvider.tsx,63,      document.dispatchEvent(
+src-cross-unit-communication,src/authentication/baseAPIAuthProvider.tsx,64,"        new CustomEvent('scigateway', {"
+src-cross-unit-communication,src/authentication/baseAPIAuthProvider.tsx,160,    document.dispatchEvent(
+src-cross-unit-communication,src/authentication/baseAPIAuthProvider.tsx,161,"      new CustomEvent('scigateway', {"
+src-cross-unit-communication,src/authentication/baseAPIAuthProvider.tsx,192,    document.dispatchEvent(
+src-cross-unit-communication,src/authentication/baseAPIAuthProvider.tsx,193,"      new CustomEvent('scigateway', {"
+src-cross-unit-communication,src/authentication/baseAuthProvider.tsx,61,    document.dispatchEvent(
+src-cross-unit-communication,src/authentication/baseAuthProvider.tsx,62,"      new CustomEvent('scigateway', { detail: { type: BroadcastSignOutType } })"
+src-cross-unit-communication,src/authentication/icatAuthProvider.tsx,17,      document.dispatchEvent(
+src-cross-unit-communication,src/authentication/icatAuthProvider.tsx,18,"        new CustomEvent('scigateway', {"
+src-cross-unit-communication,src/state/actions/loadMicroFrontends.tsx,67,          document.dispatchEvent(
+src-cross-unit-communication,src/state/actions/loadMicroFrontends.tsx,68,"            new CustomEvent('scigateway', {"
+src-cross-unit-communication,src/state/actions/scigateway.actions.test.tsx,457,"        inputHandler(new CustomEvent('test', { detail: registerRouteAction }));"
+src-cross-unit-communication,src/state/actions/scigateway.actions.tsx,465,  document.dispatchEvent(
+src-cross-unit-communication,src/state/actions/scigateway.actions.tsx,466,"    new CustomEvent('scigateway', {"
+src-cross-unit-communication,src/state/middleware/scigateway.middleware.test.tsx,369,"    handler(new CustomEvent('test', { detail: registerRouteAction }));"
+src-cross-unit-communication,src/state/middleware/scigateway.middleware.test.tsx,379,"    handler(new CustomEvent('test', { detail: registerRouteAction }));"
+src-cross-unit-communication,src/state/middleware/scigateway.middleware.test.tsx,407,"    handler(new CustomEvent('test', { detail: { type: InvalidateTokenType } }));"
+src-cross-unit-communication,src/state/middleware/scigateway.middleware.test.tsx,424,"      new CustomEvent('test', {"
+src-cross-unit-communication,src/state/middleware/scigateway.middleware.test.tsx,459,"      new CustomEvent('test', {"
+src-cross-unit-communication,src/state/middleware/scigateway.middleware.test.tsx,495,"      new CustomEvent('test', {"
+src-cross-unit-communication,src/state/middleware/scigateway.middleware.test.tsx,529,"      new CustomEvent('test', {"
+src-cross-unit-communication,src/state/middleware/scigateway.middleware.test.tsx,553,"      new CustomEvent('test', {"
+src-cross-unit-communication,src/state/middleware/scigateway.middleware.test.tsx,572,"      handler(new CustomEvent('test', { detail: notificationAction }));"
+src-cross-unit-communication,src/state/middleware/scigateway.middleware.test.tsx,590,"      handler(new CustomEvent('test', { detail: notificationAction }));"
+src-cross-unit-communication,src/state/middleware/scigateway.middleware.test.tsx,609,"      handler(new CustomEvent('test', { detail: notificationAction }));"
+src-cross-unit-communication,src/state/middleware/scigateway.middleware.test.tsx,628,"      handler(new CustomEvent('test', { detail: notificationAction }));"
+src-cross-unit-communication,src/state/middleware/scigateway.middleware.test.tsx,647,"      handler(new CustomEvent('test', { detail: notificationAction }));"
+src-cross-unit-communication,src/state/middleware/scigateway.middleware.test.tsx,666,"      handler(new CustomEvent('test', { detail: notificationAction }));"
+src-cross-unit-communication,src/state/middleware/scigateway.middleware.test.tsx,687,"    handler(new CustomEvent('test', { detail: requestPluginRerenderAction }));"
+src-cross-unit-communication,src/state/middleware/scigateway.middleware.test.tsx,700,"    handler(new CustomEvent('test', { detail: broadcastSignOutAction }));"
+src-cross-unit-communication,src/state/middleware/scigateway.middleware.test.tsx,708,"    handler(new CustomEvent('test', { detail: action }));"
+src-cross-unit-communication,src/state/middleware/scigateway.middleware.test.tsx,725,"    handler(new CustomEvent('test', { detail: undefined }));"
+src-cross-unit-communication,src/state/middleware/scigateway.middleware.test.tsx,742,"    handler(new CustomEvent('test', { detail: { actionWithoutType: true } }));"
+src-cross-unit-communication,src/state/middleware/scigateway.middleware.tsx,34,  document.dispatchEvent(
+src-cross-unit-communication,src/state/middleware/scigateway.middleware.tsx,35,"    new CustomEvent(microFrontendMessageId, { detail: action })"
+src-cross-unit-communication,src/state/middleware/scigateway.middleware.tsx,193,              document.dispatchEvent(
+src-cross-unit-communication,src/state/middleware/scigateway.middleware.tsx,194,"                new CustomEvent(microFrontendMessageId, {"
+src-cross-unit-communication,src/state/middleware/scigateway.middleware.tsx,205,                document.dispatchEvent(
+src-cross-unit-communication,src/state/middleware/scigateway.middleware.tsx,206,"                  new CustomEvent(microFrontendMessageId, {"
+src-cross-unit-communication,src/state/middleware/scigateway.middleware.tsx,302,          document.dispatchEvent(
+src-cross-unit-communication,src/state/middleware/scigateway.middleware.tsx,303,"            new CustomEvent(microFrontendMessageId, {"
+ops-deployment-file,Dockerfile,,
+ops-deployment-file,server/keycloak/docker-compose.yml,,
+ops-dockerfile,Dockerfile,4,FROM node:24.14.1-alpine@sha256:8510330d3eb72c804231a834b1a8ebb55cb3796c3e4431297a24d246b8add4d5 AS builder
+ops-dockerfile,Dockerfile,26,FROM httpd:2.4.67-alpine@sha256:0136c2d4462f3b8ecc92bea70efdfef4d06523999ae8d7aa533969dea6db4576
+ops-compose-service,server/keycloak/docker-compose.yml,3,    image: quay.io/keycloak/keycloak:26.5.6
+ci-workflow-file,.github/workflows/ci-build.yml,,
+ci-workflow-file,.github/workflows/docker-release-build.yml,,
+ci-workflow-file,.github/workflows/release-build.yml,,
+ci-workflow-file,Jenkinsfile,,
+doc-mfe-term,README.md,5,SciGateway is a ReactJs based parent application within a micro-front end architecture. It provides **access to large facilities science**.
+doc-mfe-term,demos/sprint2/plugin_route_registration.md,14,Clicking a link will drop you on <baseUrl>/<link-taken-from-the-register-event>: it's up to the microfrontend to do something useful with that.

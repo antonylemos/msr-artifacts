@@ -1,0 +1,5 @@
+packages:
+  - 'host'
+  - 'remote_a'
+  - 'remote_b'
+  - 'remote_c'

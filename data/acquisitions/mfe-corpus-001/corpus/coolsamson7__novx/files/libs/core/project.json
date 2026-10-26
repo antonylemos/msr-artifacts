@@ -1,0 +1,50 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "core",
+  "root": "libs/core",
+  "sourceRoot": "libs/core/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/rollup:rollup",
+      "options": {
+        "outputPath": "dist/libs/core",
+        "tsConfig": "libs/core/tsconfig.lib.json",
+        "project": "libs/core/rollup.config.json",
+        "main": "libs/core/src/index.ts",
+        "sourceMap": true,
+        "assets": [
+          {
+            "input": "libs/core",
+            "glob": "package.json",
+            "output": "."
+          },
+          {
+            "input": "libs/core",
+            "glob": "README.md",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{workspaceRoot}/coverage/libs/core"],
+      "options": {
+        "configFile": "libs/core/vitest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["libs/core/src/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "docs": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "typedoc --tsconfig libs/core/tsconfig.lib.json --out docs/libs/core"
+      }
+    }
+  }
+}

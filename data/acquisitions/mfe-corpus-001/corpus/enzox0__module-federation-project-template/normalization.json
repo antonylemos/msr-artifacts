@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "id": "1253360837",
+  "fullName": "enzox0/module-federation-project-template",
+  "commit": "b3c96cb653137038838f32097018cf8f8182b9f2",
+  "acquiredAt": "2026-10-24T00:32:25.652Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 174,
+    "bytes": 199887
+  },
+  "languages": {
+    "YAML": 125431,
+    "TypeScript": 26687,
+    "Markdown": 23193,
+    "JSON": 10719,
+    "JavaScript": 6529,
+    "Other": 3042,
+    "HTML": 3030,
+    "CSS": 1063,
+    "Shell": 193
+  },
+  "contentSha256": "2eb39bc0902d9bac3e7ebc165b79202208044d6108bb581db9a11abc22068bc6"
+}

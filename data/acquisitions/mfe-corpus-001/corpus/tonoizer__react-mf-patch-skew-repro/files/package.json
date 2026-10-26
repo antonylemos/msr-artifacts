@@ -1,0 +1,17 @@
+{
+  "name": "react-skew-repro",
+  "private": true,
+  "packageManager": "pnpm@9.15.9",
+  "scripts": {
+    "build": "pnpm -r --filter \"./host\" --filter \"./remote_*\" run build",
+    "build:all": "pnpm --filter remote_c build && pnpm --filter remote_b build && pnpm --filter remote_a build && pnpm --filter host build",
+    "preview:remote_c": "pnpm --filter remote_c preview -- --host 0.0.0.0 --port 5003",
+    "preview:remote_b": "pnpm --filter remote_b preview -- --host 0.0.0.0 --port 5002",
+    "preview:remote_a": "pnpm --filter remote_a preview -- --host 0.0.0.0 --port 5001",
+    "preview:host": "pnpm --filter host preview -- --host 0.0.0.0 --port 5000",
+    "capture": "node ./scripts/capture.mjs"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.63.0"
+  }
+}

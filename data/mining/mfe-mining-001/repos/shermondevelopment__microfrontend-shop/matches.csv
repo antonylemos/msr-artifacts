@@ -1,0 +1,170 @@
+pattern,path,line,excerpt
+dep-module-federation,package.json,48,"    ""@module-federation/vite"": ""^1.16.0"","
+dep-mfe-term,apps/footer/package.json,2,"  ""name"": ""@microfrontend/footer"","
+dep-mfe-term,apps/header/package.json,2,"  ""name"": ""@microfrontend/header"","
+dep-mfe-term,apps/host/package.json,2,"  ""name"": ""@microfrontend/host"","
+dep-mfe-term,apps/products/package.json,2,"  ""name"": ""@microfrontend/products"","
+dep-mfe-term,package.json,2,"  ""name"": ""microfrontend-challange"","
+dep-mfe-term,package.json,23,"    ""build:eslint-config"": ""npm run build --workspace @microfrontend/eslint-config"","
+dep-mfe-term,packages/config/eslint-config/package.json,2,"  ""name"": ""@microfrontend/eslint-config"","
+dep-mfe-term,packages/config/tailwind-config/package.json,2,"  ""name"": ""@microfrontend/tailwind-config"","
+dep-mfe-term,packages/shared/package.json,2,"  ""name"": ""@microfrontend/shared"","
+dep-mfe-term,packages/shared/package.json,10,"    ""@microfrontend/types"": ""0.0.0"","
+dep-mfe-term,packages/types/package.json,2,"  ""name"": ""@microfrontend/types"","
+dep-mfe-term,packages/ui/package.json,2,"  ""name"": ""@microfrontend/ui"","
+lock-mfe-dependency,package-lock.json,27,"        ""@module-federation/vite"": ""^1.16.0"","
+lock-mfe-dependency,package-lock.json,1200,"    ""node_modules/@module-federation/error-codes"": {"
+lock-mfe-dependency,package-lock.json,1202,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/error-codes/-/error-codes-2.5.1.tgz"","
+lock-mfe-dependency,package-lock.json,1207,"    ""node_modules/@module-federation/managers"": {"
+lock-mfe-dependency,package-lock.json,1209,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/managers/-/managers-2.5.1.tgz"","
+lock-mfe-dependency,package-lock.json,1214,"        ""@module-federation/sdk"": ""2.5.1"","
+lock-mfe-dependency,package-lock.json,1218,"    ""node_modules/@module-federation/runtime"": {"
+lock-mfe-dependency,package-lock.json,1220,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/runtime/-/runtime-2.5.1.tgz"","
+lock-mfe-dependency,package-lock.json,1225,"        ""@module-federation/error-codes"": ""2.5.1"","
+lock-mfe-dependency,package-lock.json,1226,"        ""@module-federation/runtime-core"": ""2.5.1"","
+lock-mfe-dependency,package-lock.json,1227,"        ""@module-federation/sdk"": ""2.5.1"""
+lock-mfe-dependency,package-lock.json,1230,"    ""node_modules/@module-federation/runtime-core"": {"
+lock-mfe-dependency,package-lock.json,1232,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/runtime-core/-/runtime-core-2.5.1.tgz"","
+lock-mfe-dependency,package-lock.json,1237,"        ""@module-federation/error-codes"": ""2.5.1"","
+lock-mfe-dependency,package-lock.json,1238,"        ""@module-federation/sdk"": ""2.5.1"""
+lock-mfe-dependency,package-lock.json,1241,"    ""node_modules/@module-federation/sdk"": {"
+lock-mfe-dependency,package-lock.json,1243,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/sdk/-/sdk-2.5.1.tgz"","
+lock-mfe-dependency,package-lock.json,1256,"    ""node_modules/@module-federation/third-party-dts-extractor"": {"
+lock-mfe-dependency,package-lock.json,1258,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/third-party-dts-extractor/-/third-party-dts-extractor-2.5.1.tgz"","
+lock-mfe-dependency,package-lock.json,1267,"    ""node_modules/@module-federation/third-party-dts-extractor/node_modules/resolve"": {"
+lock-mfe-dependency,package-lock.json,1285,"    ""node_modules/@module-federation/vite"": {"
+lock-mfe-dependency,package-lock.json,1287,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/vite/-/vite-1.16.8.tgz"","
+lock-mfe-dependency,package-lock.json,1292,"        ""@module-federation/dts-plugin"": ""2.5.1"","
+lock-mfe-dependency,package-lock.json,1293,"        ""@module-federation/runtime"": ""2.5.1"","
+lock-mfe-dependency,package-lock.json,1294,"        ""@module-federation/sdk"": ""2.5.1"""
+lock-mfe-dependency,package-lock.json,1303,"    ""node_modules/@module-federation/vite/node_modules/@module-federation/dts-plugin"": {"
+lock-mfe-dependency,package-lock.json,1305,"      ""resolved"": ""https://registry.npmjs.org/@module-federation/dts-plugin/-/dts-plugin-2.5.1.tgz"","
+lock-mfe-dependency,package-lock.json,1310,"        ""@module-federation/error-codes"": ""2.5.1"","
+lock-mfe-dependency,package-lock.json,1311,"        ""@module-federation/managers"": ""2.5.1"","
+lock-mfe-dependency,package-lock.json,1312,"        ""@module-federation/sdk"": ""2.5.1"","
+lock-mfe-dependency,package-lock.json,1313,"        ""@module-federation/third-party-dts-extractor"": ""2.5.1"","
+lock-mfe-dependency,package-lock.json,1331,"    ""node_modules/@module-federation/vite/node_modules/typescript"": {"
+lock-mfe-dependency,package-lock.json,1346,"    ""node_modules/@module-federation/vite/node_modules/undici"": {"
+cfg-federation-plugin,apps/footer/vite.config.ts,13,    federation({
+cfg-federation-plugin,apps/header/vite.config.ts,13,    federation({
+cfg-federation-plugin,apps/host/vite.config.ts,22,      federation({
+cfg-federation-plugin,apps/products/vite.config.ts,13,    federation({
+cfg-remotes,apps/host/vite.config.ts,25,        remotes: {
+cfg-exposes,apps/footer/vite.config.ts,17,      exposes: {
+cfg-exposes,apps/header/vite.config.ts,17,      exposes: {
+cfg-exposes,apps/products/vite.config.ts,17,      exposes: {
+cfg-shared,apps/footer/vite.config.ts,20,"      shared: ['react', 'react-dom'],"
+cfg-shared,apps/header/vite.config.ts,20,      shared: {
+cfg-shared,apps/header/vite.config.ts,22,"          singleton: true,"
+cfg-shared,apps/header/vite.config.ts,25,"          singleton: true,"
+cfg-shared,apps/header/vite.config.ts,28,"          singleton: true,"
+cfg-shared,apps/header/vite.config.ts,31,"          singleton: true,"
+cfg-shared,apps/header/vite.config.ts,34,"          singleton: true,"
+cfg-shared,apps/host/vite.config.ts,48,        shared: {
+cfg-shared,apps/host/vite.config.ts,50,"            singleton: true,"
+cfg-shared,apps/host/vite.config.ts,53,"            singleton: true,"
+cfg-shared,apps/host/vite.config.ts,56,"            singleton: true,"
+cfg-shared,apps/host/vite.config.ts,59,"            singleton: true,"
+cfg-shared,apps/host/vite.config.ts,62,"            singleton: true,"
+cfg-shared,apps/products/vite.config.ts,20,      shared: {
+cfg-shared,apps/products/vite.config.ts,22,"          singleton: true,"
+cfg-shared,apps/products/vite.config.ts,25,"          singleton: true,"
+cfg-shared,apps/products/vite.config.ts,28,"          singleton: true,"
+cfg-shared,apps/products/vite.config.ts,31,"          singleton: true,"
+cfg-shared,apps/products/vite.config.ts,34,"          singleton: true,"
+rt-remote-entry,apps/footer/vite.config.ts,16,"      filename: 'remoteEntry.js',"
+rt-remote-entry,apps/header/vite.config.ts,16,"      filename: ""remoteEntry.js"","
+rt-remote-entry,apps/host/vite.config.ts,12,  const headerRemote = env.VITE_HEADER_REMOTE_URL ?? 'http://localhost:3001/remoteEntry.js';
+rt-remote-entry,apps/host/vite.config.ts,13,  const footerRemote = env.VITE_FOOTER_REMOTE_URL ?? 'http://localhost:3002/remoteEntry.js';
+rt-remote-entry,apps/host/vite.config.ts,15,    env.VITE_PRODUCTS_REMOTE_URL ?? 'http://localhost:3003/remoteEntry.js';
+rt-remote-entry,apps/products/vite.config.ts,16,"      filename: ""remoteEntry.js"","
+src-remote-import,apps/host/src/App.tsx,5,const Header = lazy(() => import('header/Header'));
+src-remote-import,apps/host/src/App.tsx,6,const Footer = lazy(() => import('footer/Footer'));
+src-remote-import,apps/host/src/App.tsx,7,const ProductsList = lazy(() => import('products/ProductsList'));
+ops-hosting,.github/workflows/ci-cd.yml,86,    name: Deploy changed apps to CloudFront
+ops-hosting,.github/workflows/ci-cd.yml,125,      - name: Deploy to S3 and invalidate CloudFront
+ops-hosting,.github/workflows/ci-cd.yml,132,"              DISTRIBUTION_ID=""${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_HEADER }}"""
+ops-hosting,.github/workflows/ci-cd.yml,137,"              DISTRIBUTION_ID=""${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_FOOTER }}"""
+ops-hosting,.github/workflows/ci-cd.yml,142,"              DISTRIBUTION_ID=""${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_PRODUCTS }}"""
+ops-hosting,.github/workflows/ci-cd.yml,147,"              DISTRIBUTION_ID=""${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_HOST }}"""
+ops-hosting,.github/workflows/ci-cd.yml,151,"          aws s3 sync ""$DIST_DIR"" ""s3://$BUCKET"" --delete"
+ops-hosting,.github/workflows/ci-cd.yml,152,"          aws cloudfront create-invalidation --distribution-id ""$DISTRIBUTION_ID"" --paths ""/*"""
+ops-hosting,.github/workflows/ci-cd.yml,182,    name: Manual Rollback to CloudFront
+ops-hosting,.github/workflows/ci-cd.yml,221,      - name: Deploy rollback to S3 and invalidate CloudFront
+ops-hosting,.github/workflows/ci-cd.yml,228,"              DISTRIBUTION_ID=""${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_HEADER }}"""
+ops-hosting,.github/workflows/ci-cd.yml,233,"              DISTRIBUTION_ID=""${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_FOOTER }}"""
+ops-hosting,.github/workflows/ci-cd.yml,238,"              DISTRIBUTION_ID=""${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_PRODUCTS }}"""
+ops-hosting,.github/workflows/ci-cd.yml,243,"              DISTRIBUTION_ID=""${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_HOST }}"""
+ops-hosting,.github/workflows/ci-cd.yml,247,"          aws s3 sync ""$DIST_DIR"" ""s3://$BUCKET"" --delete"
+ops-hosting,.github/workflows/ci-cd.yml,248,"          aws cloudfront create-invalidation --distribution-id ""$DISTRIBUTION_ID"" --paths ""/*"""
+ops-hosting,README.md,144,"A aplicação está distribuída em múltiplos microfrontends, cada um hospedado de forma independente via **AWS S3 + CloudFront**."
+ops-hosting,README.md,149,  https://d6kooi9qoycog.cloudfront.net
+ops-hosting,README.md,156,  https://do4w2f9yum2t1.cloudfront.net
+ops-hosting,README.md,159,  https://dpprlnwt0shjp.cloudfront.net
+ops-hosting,README.md,162,  https://d1h65an7ioo3f5.cloudfront.net
+ops-cors,apps/footer/vite.config.ts,33,"    cors: true,"
+ops-cors,apps/footer/vite.config.ts,35,"      'Access-Control-Allow-Origin': '*',"
+ops-cors,apps/footer/vite.config.ts,42,"    cors: true,"
+ops-cors,apps/footer/vite.config.ts,44,"      'Access-Control-Allow-Origin': '*',"
+ops-cors,apps/header/vite.config.ts,49,"    cors: true,"
+ops-cors,apps/header/vite.config.ts,51,"      ""Access-Control-Allow-Origin"": ""*"","
+ops-cors,apps/header/vite.config.ts,58,"    cors: true,"
+ops-cors,apps/header/vite.config.ts,60,"      ""Access-Control-Allow-Origin"": ""*"","
+ops-cors,apps/host/vite.config.ts,76,"      cors: true,"
+ops-cors,apps/host/vite.config.ts,78,"        'Access-Control-Allow-Origin': '*',"
+ops-cors,apps/host/vite.config.ts,85,"      cors: true,"
+ops-cors,apps/host/vite.config.ts,87,"        'Access-Control-Allow-Origin': '*',"
+ops-cors,apps/products/vite.config.ts,49,"    cors: true,"
+ops-cors,apps/products/vite.config.ts,51,"      ""Access-Control-Allow-Origin"": ""*"","
+ops-cors,apps/products/vite.config.ts,58,"    cors: true,"
+ops-cors,apps/products/vite.config.ts,60,"      ""Access-Control-Allow-Origin"": ""*"","
+ci-workflow-file,.github/workflows/ci-cd.yml,,
+doc-mfe-term,CHANGELOG.md,1,# [1.1.0](https://github.com/shermondevelopment/microfrontend-shop/compare/v1.0.0...v1.1.0) (2026-08-27)
+doc-mfe-term,CHANGELOG.md,6,* **release:** remove notes from release commit message ([a053acf](https://github.com/shermondevelopment/microfrontend-shop/commit/a053acf7e060b2541730b04b3c71b4269b1a5158))
+doc-mfe-term,CHANGELOG.md,11,* update color scheme to enhance UI consistency ([d2ec4ba](https://github.com/shermondevelopment/microfrontend-shop/commit/d2ec4badeaac481893752c5515fec6586e1eabd8))
+doc-mfe-term,CHANGELOG.md,18,* adjust shared ([a42760e](https://github.com/shermondevelopment/microfrontend-shop/commit/a42760ef54200b4dd23b56bc5b6d5ed02d5dcf23))
+doc-mfe-term,CHANGELOG.md,19,* change icon ([49c3a97](https://github.com/shermondevelopment/microfrontend-shop/commit/49c3a9764476f6d208c916be5947306ccea469a5))
+doc-mfe-term,CHANGELOG.md,20,* host ([3bc97c9](https://github.com/shermondevelopment/microfrontend-shop/commit/3bc97c91762843968c77b714e388d71fb37696bf))
+doc-mfe-term,CHANGELOG.md,21,* import logo ([bc9780f](https://github.com/shermondevelopment/microfrontend-shop/commit/bc9780fed3be092354d4fd138dcba790db2f888e))
+doc-mfe-term,CHANGELOG.md,22,* products ([58ac0a4](https://github.com/shermondevelopment/microfrontend-shop/commit/58ac0a43241f1e8258087ceb44c287127da7d5ef))
+doc-mfe-term,CHANGELOG.md,23,* update color ([d93034c](https://github.com/shermondevelopment/microfrontend-shop/commit/d93034c2a4d036c2ead20e3272d00abccc558430))
+doc-mfe-term,CHANGELOG.md,24,* update test script to run tests across workspaces ([7015aa1](https://github.com/shermondevelopment/microfrontend-shop/commit/7015aa1d4a58fc2c19ac82a755a390f8ccac4e6f))
+doc-mfe-term,CHANGELOG.md,25,* update title ([8fd4d4b](https://github.com/shermondevelopment/microfrontend-shop/commit/8fd4d4b71daf127f2927ae8ebb0c1c495945fd2e))
+doc-mfe-term,CHANGELOG.md,26,* update title ([c2c521b](https://github.com/shermondevelopment/microfrontend-shop/commit/c2c521b870639631c639ef1e15af1eac9b2152a7))
+doc-mfe-term,CHANGELOG.md,31,* add cart query and types for cart functionality ([1345edc](https://github.com/shermondevelopment/microfrontend-shop/commit/1345edc75c952e4269a7f882f50eb50ae3f2ba85))
+doc-mfe-term,CHANGELOG.md,32,* add cart query and types for cart functionality ([0835023](https://github.com/shermondevelopment/microfrontend-shop/commit/0835023e621919052ce25a14b9d6cc228b6d614f))
+doc-mfe-term,CHANGELOG.md,33,* add ESLint configuration and refactor code style across multiple apps ([033837e](https://github.com/shermondevelopment/microfrontend-shop/commit/033837ecda3aeed09736bdc8f0431ee7129ab01d))
+doc-mfe-term,CHANGELOG.md,34,* add ESLint configuration and refactor code style across multiple apps ([712716d](https://github.com/shermondevelopment/microfrontend-shop/commit/712716d128bff0f9c0bdc953d74883c3f52d6eac))
+doc-mfe-term,CHANGELOG.md,35,* add ESLint configuration package to package-lock.json ([1a54903](https://github.com/shermondevelopment/microfrontend-shop/commit/1a54903eaeb9b73822ca316cad8ce84e075a0479))
+doc-mfe-term,CHANGELOG.md,36,* add footer microfrontend with Vite and React configuration ([d351fca](https://github.com/shermondevelopment/microfrontend-shop/commit/d351fca9f1cd5e9c777936e893bca5b4ed75f1b8))
+doc-mfe-term,CHANGELOG.md,37,* add FooterSkeleton component and update App to use it as fallback ([0bbf836](https://github.com/shermondevelopment/microfrontend-shop/commit/0bbf836c97f0f340de62c9064cf9c792b4ac9dcf))
+doc-mfe-term,CHANGELOG.md,38,* add HeaderSkeleton component and update App to use it ([d834d69](https://github.com/shermondevelopment/microfrontend-shop/commit/d834d6941e2bc452b79d77876991a3de905842c0))
+doc-mfe-term,CHANGELOG.md,39,* add module federation support for header app ([b948dc2](https://github.com/shermondevelopment/microfrontend-shop/commit/b948dc2b2313afc17ddc06c2c4da834ae6e2676d))
+doc-mfe-term,CHANGELOG.md,40,* add product list component with api integration react query ([b24df83](https://github.com/shermondevelopment/microfrontend-shop/commit/b24df832415027ee4ae984329bf1a8edb611ee8f))
+doc-mfe-term,CHANGELOG.md,41,* add ProductCardSkeleton component and update ProductsList for loading state ([9bfde56](https://github.com/shermondevelopment/microfrontend-shop/commit/9bfde561787a0ffc9d708718a6a0128470f7c371))
+doc-mfe-term,CHANGELOG.md,42,* add ProductSkeleton component and update loading states in ProductsList and App ([6b8fb9a](https://github.com/shermondevelopment/microfrontend-shop/commit/6b8fb9acee61e78eae42fce21243b22a0edf3018))
+doc-mfe-term,CHANGELOG.md,43,* add RemoteErrorBoundary component for error handling in remote modules ([c567c61](https://github.com/shermondevelopment/microfrontend-shop/commit/c567c618ad3e6d4f9087296ed3c9589c8048ea9b))
+doc-mfe-term,CHANGELOG.md,44,* add remove product functionality to cart and update cart quantity display ([8bcdacc](https://github.com/shermondevelopment/microfrontend-shop/commit/8bcdacca3fe8a32350bbfe9f0ebe97fef5347ace))
+doc-mfe-term,CHANGELOG.md,45,* add removeAllProduct functionality to cart and update CartList component ([7bdbadd](https://github.com/shermondevelopment/microfrontend-shop/commit/7bdbaddbae5e148de486755bcc4853425e3067d3))
+doc-mfe-term,CHANGELOG.md,46,* add semantic-release for automated versioning and changelog generation ([99c4bba](https://github.com/shermondevelopment/microfrontend-shop/commit/99c4bbaae7aec8c8781ee7c90e43f5775c5516ae))
+doc-mfe-term,CHANGELOG.md,47,* creating style header ([7aaee8d](https://github.com/shermondevelopment/microfrontend-shop/commit/7aaee8d08b560ea772e06034f4d315dda96eaf1a))
+doc-mfe-term,CHANGELOG.md,48,* implement cart modal and cart list components ([ce3fb44](https://github.com/shermondevelopment/microfrontend-shop/commit/ce3fb440b8a1ebae71cf08a1a1fe003f03994c5e))
+doc-mfe-term,CHANGELOG.md,49,* implement ProductCard component and update ProductsList to use it ([c1f52e3](https://github.com/shermondevelopment/microfrontend-shop/commit/c1f52e3d8c62c72c3ad4e02b2a172ad3c93b4876))
+doc-mfe-term,CHANGELOG.md,50,* initialize host application with React and Vite configuration ([1121d29](https://github.com/shermondevelopment/microfrontend-shop/commit/1121d297144656769c08cdd85fabc55999dafae3))
+doc-mfe-term,README.md,1,# Microfrontend Challenge
+doc-mfe-term,README.md,3,"Aplicação de e-commerce construída com arquitetura de microfrontends usando **Module Federation** (Vite), **React**, **TypeScript** e **TailwindCSS**."
+doc-mfe-term,README.md,13,microfrontend-challange/
+doc-mfe-term,README.md,16,│   ├── header/        # Microfrontend do cabeçalho (porta 3001)
+doc-mfe-term,README.md,17,│   ├── footer/        # Microfrontend do rodapé (porta 3002)
+doc-mfe-term,README.md,18,│   └── products/      # Microfrontend da listagem de produtos (porta 3003)
+doc-mfe-term,README.md,142,## ☁️ Deploy dos Microfrontends
+doc-mfe-term,README.md,144,"A aplicação está distribuída em múltiplos microfrontends, cada um hospedado de forma independente via **AWS S3 + CloudFront**."
+doc-mfe-term,README.md,153,### 🔌 Microfrontends (Remotes)
+doc-mfe-term,README.md,171,- [Zustand](https://zustand-demo.pmnd.rs/) — estado do carrinho compartilhado entre microfrontends
+doc-integration-technology,CHANGELOG.md,39,* add module federation support for header app ([b948dc2](https://github.com/shermondevelopment/microfrontend-shop/commit/b948dc2b2313afc17ddc06c2c4da834ae6e2676d))
+doc-integration-technology,README.md,3,"Aplicação de e-commerce construída com arquitetura de microfrontends usando **Module Federation** (Vite), **React**, **TypeScript** e **TailwindCSS**."
+doc-independence,README.md,144,"A aplicação está distribuída em múltiplos microfrontends, cada um hospedado de forma independente via **AWS S3 + CloudFront**."
+doc-host-remote,README.md,15,│   ├── host/          # App principal — orquestra os remotes (porta 3000)
+doc-host-remote,README.md,35,"| `host`     | 3000  | —                  | Shell da aplicação, carrega os remotes         |"
+doc-host-remote,README.md,74,"> **Importante:** para o `host` funcionar corretamente, os três remotes devem estar rodando antes."
+ws-workspaces,package.json,4,"  ""workspaces"": ["

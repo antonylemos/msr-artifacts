@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "id": "1104733457",
+  "fullName": "riponcc/Group4COMP308Project",
+  "commit": "59db8c8172c1e0efde31fe32c5135226a41cd044",
+  "acquiredAt": "2026-10-24T00:32:28.292Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "server/microservices/analytics-ai-service/graph/chat_memory.db",
+      "reason": "preset:binaries",
+      "size": 32768
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 88,
+    "bytes": 1148714
+  },
+  "languages": {
+    "JSON": 990103,
+    "JavaScript": 117691,
+    "SVG": 16869,
+    "Markdown": 10848,
+    "CSS": 8032,
+    "Other": 4098,
+    "HTML": 1073
+  },
+  "contentSha256": "55fc49143f4a28a895e22e805e308a21525eca71bfc03674941f0f069b003a7c"
+}

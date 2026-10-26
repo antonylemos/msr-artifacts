@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "id": "1050538328",
+  "fullName": "bank20baht/poc-angular-native-federation-tailwindcss",
+  "commit": "d2f9722e77b754318c831138d54aebbfd093ee1e",
+  "acquiredAt": "2026-10-24T00:26:34.766Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "host/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "remote/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 70,
+    "bytes": 1739837
+  },
+  "languages": {
+    "JSON": 1179677,
+    "Other": 545765,
+    "TypeScript": 8204,
+    "Markdown": 2963,
+    "JavaScript": 1453,
+    "HTML": 1444,
+    "CSS": 331
+  },
+  "contentSha256": "2a6661d36fbc51f1ecc5f88ccc76dd33a831428f70aa69134113e647de00bec4"
+}

@@ -7,11 +7,11 @@ inputs:
   mining:
     output: data/mining/mfe-mining-001
     version: "1"
-    config_sha256: b3f63eb6fb86d8877fda117ccc22eec936a89ff7bf2d414c1dedafc0311f1fb1
+    config_sha256: 477ce8efa222a5170fdb68af51036d481c9688dda919aab993aa9f3db328fbf2
   inspection:
     output: data/inspections/mfe-dependencies-001
     version: "1"
-    config_sha256: 9441822a7a5f9766a0b955feeac5b7c0421a03c2dd7e07da4b4d476e26caebb0
+    config_sha256: 8cb9527ff8cf32adfc90d629a85fdd23c38af7223d7ca1f2c3d4f1e8aa284f1e
 annotation:
   method: manual
   status: final

@@ -1,0 +1,19 @@
+pattern,path,line,excerpt
+cfg-federation-plugin,src/webpack.config.js,3,const { ModuleFederationPlugin } = require('webpack').container;
+cfg-federation-plugin,src/webpack.config.js,72,        new ModuleFederationPlugin({
+cfg-remotes,src/webpack.config.js,74,            remotes: {
+cfg-shared,src/webpack.config.js,79,            shared: {
+cfg-shared,src/webpack.config.js,80,                // Share React and ReactDOM as singletons to avoid version conflicts
+cfg-shared,src/webpack.config.js,82,"                    singleton: true,"
+cfg-shared,src/webpack.config.js,87,"                    singleton: true,"
+cfg-public-path,src/webpack.config.js,26,"        publicPath: 'http://localhost:3000/', // Public URL for assets"
+rt-remote-entry,src/webpack.config.js,76,"                remote1: 'subscription@http://localhost:3001/remoteEntry.js',"
+rt-remote-entry,src/webpack.config.js,77,"                remote2: 'ownership@http://localhost:3002/remoteEntry.js',"
+rt-manifest-file,public/manifest.json,,
+src-remote-import,src/pages/Dashboard.jsx,3,const ModemAuthorization = React.lazy(() => import('remote1/ModemAuthorization'));
+src-remote-import,src/pages/Dashboard.jsx,4,const SecurityPackage = React.lazy(() => import('remote1/SecurityPackage'));
+src-remote-import,src/pages/Dashboard.jsx,6,const LabourHourHold = React.lazy(() => import('remote2/LabourHourHold'));
+src-remote-import,src/pages/Dashboard.jsx,7,const MobileService = React.lazy(() => import('remote2/MobileService'));
+src-remote-import,src/pages/Dashboard.jsx,9,const Card = React.lazy(() => import('remote1/Card'));
+doc-mfe-term,README.md,1,# mfe-onehub-shell
+doc-mfe-term,README.md,2,MFE Remote App for OnehubShell

@@ -1,0 +1,4 @@
+directory,markers
+cardapio,cardapio/next.config.js;cardapio/next.config.mjs;cardapio/package.json
+container,container/next.config.mjs;container/package.json
+pedido,pedido/next.config.mjs;pedido/package.json

@@ -1,0 +1,161 @@
+name: "spawn-cluster"
+description: "Spawn a cluster using Terraform"
+
+inputs:
+  # Access credentials
+  GIT_ACCESS_TOKEN:
+    description: "A Github PAT"
+    required: true
+  ARTIFACTS_USER:
+    description: "Scality Artifacts username"
+    required: true
+  ARTIFACTS_PASSWORD:
+    description: "Scality Artifacts password"
+    required: true
+
+  # Tooling configuration
+  TERRAFORM_VERSION:
+    description: "Terraform version to use"
+    required: false
+    default: "1.11.4"
+  TERRAFORM_SNAPSHOT_TAG:
+    description: "Tag to checkout for the scality/terraform-snapshot repository"
+    required: false
+    default: "0.18.0"
+
+  # Cloud configuration
+  CLOUD:
+    description: "Name of the remote cloud to use (available: ovh)"
+    required: false
+    default: "ovh"
+
+  # Spawn configuration
+  NAME:
+    description: "Name of the deployment (used in artifacts and the VM names prefix)"
+    required: true
+
+  OS:
+    description: "Name of the OS to spawn"
+    required: false
+    default: rocky-9
+  NODES_COUNT:
+    description: "Number of nodes to spawn in addition to bootstrap and bastion"
+    required: false
+    default: "0"
+  RESTORE_ENV:
+    description: "The name of the snapshoted environment that will be use to spawn"
+    required: false
+    default: ""
+
+  AUTHORIZED_CIDRS:
+    description: "List of CIDRs to allow SSH and ICMP ingress from"
+    required: false
+    default: '["0.0.0.0/0"]'
+
+  args:
+    description: Specific arguments to add to the apply command
+    required: false
+    default: ""
+  skip-prepare:
+    description: Skip the preparation of the worker
+    required: false
+    default: "false"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Prepare SSH keypair
+      if: inputs.skip-prepare == 'false'
+      shell: bash
+      run: |
+        mkdir -p ~/.ssh
+        rm -rf ~/.ssh/terraform*
+        ssh-keygen -t rsa -b 4096 -N '' -f ~/.ssh/terraform
+        # copy ssh keys now in order to allow us to connect to the machine if needed
+        mkdir -p "artifacts/terraform-context/${{ inputs.NAME }}/"
+        cp ~/.ssh/terraform* "artifacts/terraform-context/${{ inputs.NAME }}/"
+    - name: Upload SSH keypair
+      if: inputs.skip-prepare == 'false'
+      uses: scality/action-artifacts@v4
+      with:
+        method: upload
+        url: https://artifacts.scality.net
+        user: ${{inputs.ARTIFACTS_USER}}
+        password: ${{inputs.ARTIFACTS_PASSWORD}}
+        source: artifacts/
+    - name: Checkout scality/terraform-snapshot
+      if: inputs.skip-prepare == 'false'
+      uses: actions/checkout@v6
+      with:
+        repository: scality/terraform-snapshot
+        path: terraform-snapshot
+        token: ${{ inputs.GIT_ACCESS_TOKEN }}
+        ref: ${{ inputs.TERRAFORM_SNAPSHOT_TAG }}
+    - name: Install tools
+      if: inputs.skip-prepare == 'false'
+      shell: bash
+      run: |
+        # Wait for apt/dpkg locks to be released (e.g. unattended-upgrades at startup).
+        # DPkg::Lock::Timeout makes apt retry internally instead of failing immediately,
+        # which avoids the TOCTOU race of checking locks externally then calling apt-get.
+        sudo apt-get -o DPkg::Lock::Timeout=600 update && \
+        sudo apt-get -o DPkg::Lock::Timeout=600 install -y unzip
+    - name: Install node
+      if: inputs.skip-prepare == 'false'
+      uses: actions/setup-node@v6
+      with:
+        node-version: "14"
+    - name: Install Terraform
+      if: inputs.skip-prepare == 'false'
+      uses: hashicorp/setup-terraform@v4
+      with:
+        terraform_version: ${{ inputs.TERRAFORM_VERSION }}
+        terraform_wrapper: false
+    - name: Initialize Terraform
+      if: inputs.skip-prepare == 'false'
+      working-directory: terraform-snapshot/terraform/
+      shell: bash
+      run: terraform init
+    - name: Validate terraform
+      working-directory: terraform-snapshot/terraform/
+      shell: bash
+      run: terraform validate
+    - name: Spawn cluster with Terraform
+      working-directory: terraform-snapshot/terraform/
+      shell: bash
+      env:
+        TF_VAR_prefix: ${{ github.workflow }}-${{ github.run_number }}-${{ inputs.NAME }}
+        TF_VAR_os: "${{ inputs.OS }}"
+        TF_VAR_nodes_count: "${{ inputs.NODES_COUNT }}"
+        TF_VAR_restore_env: "${{ inputs.RESTORE_ENV }}"
+        TF_VAR_ingress_remote_ip_prefix: "${{ inputs.AUTHORIZED_CIDRS }}"
+        TF_VAR_flavors_map: '{ ovh = { default = "d2-8", bastion = "b3-16" } }'
+        MAX_RETRIES: "3"
+        TFVARS_DIR: "${{ github.workspace }}/.github/spawn/tfvars"
+      run: |
+        declare -a TF_OPTS=(
+          "-auto-approve"
+          "-var-file $TFVARS_DIR/common.tfvars"
+          "-var-file $TFVARS_DIR/${{ inputs.CLOUD }}.tfvars"
+        )
+        for try in $(seq 1 ${MAX_RETRIES}); do
+          if terraform apply ${TF_OPTS[@]} ${{ inputs.args }}; then
+            break
+          elif [ $try -lt $MAX_RETRIES ]; then
+            sleep 150
+          else
+            echo "Error: unable to spawn openstack virtual infra after" \
+                 "$MAX_RETRIES tries" >&2
+            exit 1
+          fi
+        done
+    - name: Save node IPs in output
+      id: output_ips
+      working-directory: terraform-snapshot/terraform
+      shell: bash
+      run: terraform output -json ips
+
+outputs:
+  ips:
+    description: JSON string representing all access IPs for the spawned machines
+    value: ${{ steps.output_ips.outputs.stdout }}

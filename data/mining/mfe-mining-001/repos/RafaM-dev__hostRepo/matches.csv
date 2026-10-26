@@ -1,0 +1,25 @@
+pattern,path,line,excerpt
+dep-module-federation,package.json,26,"    ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+lock-mfe-dependency,package-lock.json,24,"        ""@originjs/vite-plugin-federation"": ""^1.4.1"","
+lock-mfe-dependency,package-lock.json,1471,"    ""node_modules/@originjs/vite-plugin-federation"": {"
+lock-mfe-dependency,package-lock.json,1473,"      ""resolved"": ""https://registry.npmjs.org/@originjs/vite-plugin-federation/-/vite-plugin-federation-1.4.1.tgz"","
+cfg-federation-plugin,vite.config.ts,8,    federation({
+cfg-remotes,vite.config.ts,11,      remotes: {
+cfg-shared,vite.config.ts,14,"      shared: [""react"", ""react-dom""],"
+rt-remote-entry,vite.config.ts,10,"      filename: ""remoteEntry.js"","
+rt-remote-entry,vite.config.ts,12,"        ""mf-remoteDetails"": ""http://localhost:5001/assets/remoteEntry.js"","
+doc-mfe-term,README.md,3,"Una aplicación moderna de React construida con TypeScript, Vite y Tailwind CSS, que implementa arquitectura de micro-frontends mediante Module Federation. Esta aplicación actúa como el **host principal** que integra módulos remotos y proporciona un explorador completo de personajes de Rick and Morty"
+doc-mfe-term,README.md,40,**IMPORTANTE:** Esta aplicación requiere que el micro-frontend remoto esté corriendo primero.
+doc-mfe-term,README.md,73,### Arquitectura de Micro-Frontends
+doc-mfe-term,README.md,103,         │   (Micro-frontend)   │
+doc-mfe-term,README.md,300,- Arquitectura escalable de micro-frontends
+doc-mfe-term,README.md,347,- **remote_root**: Micro-frontend remoto (puerto 5174)
+doc-integration-technology,README.md,3,"Una aplicación moderna de React construida con TypeScript, Vite y Tailwind CSS, que implementa arquitectura de micro-frontends mediante Module Federation. Esta aplicación actúa como el **host principal** que integra módulos remotos y proporciona un explorador completo de personajes de Rick and Morty"
+doc-integration-technology,README.md,21,- **Aplicación Remote** corriendo en el puerto configurado (requerido para Module Federation)
+doc-integration-technology,README.md,75,Este proyecto implementa una arquitectura de **Module Federation** utilizando `@originjs/vite-plugin-federation`:
+doc-integration-technology,README.md,91,│  │  │   Module Federation       │  │   │
+doc-integration-technology,README.md,161,"  ""@originjs/vite-plugin-federation"": ""^1.3.6"",  // Module Federation"
+doc-integration-technology,README.md,275,└── vite.config.ts                  # Configuración Vite + Module Federation
+doc-integration-technology,README.md,298,### 4. Module Federation
+doc-integration-technology,README.md,328,## 🔗 Module Federation
+doc-integration-technology,README.md,332,La configuración de Module Federation se encuentra en `vite.config.ts`:

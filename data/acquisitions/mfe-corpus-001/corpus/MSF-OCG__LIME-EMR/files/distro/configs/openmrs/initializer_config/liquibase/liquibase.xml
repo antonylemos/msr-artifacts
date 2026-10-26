@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!-- Add admin as provider -->
+    <changeSet id="add_admin_provider-20250808" author="pirupius">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="1">
+                SELECT CASE WHEN EXISTS (SELECT 1 FROM provider WHERE person_id = 1) THEN 0 ELSE 1 END;
+            </sqlCheck>
+        </preConditions>
+        <insert tableName="provider">
+            <column name="person_id" value="1" />
+            <column name="name" value="Super User" />
+            <column name="identifier" value="admin" />
+            <column name="uuid" value="361ebccc-0992-46c5-a99f-ac523bed386e" />
+            <column name="creator" value="1" />
+            <column name="date_created" value="2024-07-11 11:30:00" />
+        </insert>
+    </changeSet>
+
+    <!--
+        Backfill tasks_task.system_task_id for databases that ran the tasks
+        module's pre-2.1.0 changelog only partway (i.e. before its own
+        "tasks-2025-12-17-add-system-task-fk-to-task" changeset ran).
+        tasks 2.1.0 squashed its migration history into fresh changeset IDs,
+        so on an upgrade (not a fresh install) its "tasks-create-task-table"
+        changeset is skipped via its own tableExists precondition, and the
+        later "tasks-task-system-task-index" changeset then fails with
+        "Key column 'system_task_id' doesn't exist in table". This restores
+        the exact column/FK that tasks 1.0.0's own changeset would have
+        added, guarded the same way, so it is a no-op wherever the column
+        already exists (e.g. on a fresh install).
+    -->
+    <changeSet id="tasks-backfill-system-task-id-20260712" author="pirupius">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="tasks_task"/>
+                <tableExists tableName="tasks_systemtask"/>
+                <not>
+                    <columnExists tableName="tasks_task" columnName="system_task_id"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>
+            Add system_task_id foreign key to tasks_task table (backfill for tasks 2.1.0 upgrade)
+        </comment>
+        <addColumn tableName="tasks_task">
+            <column name="system_task_id" type="int"/>
+        </addColumn>
+        <addForeignKeyConstraint constraintName="tasks_task_system_task_fk" baseTableName="tasks_task" baseColumnNames="system_task_id" referencedTableName="tasks_systemtask" referencedColumnNames="tasks_systemtask_id"/>
+    </changeSet>
+
+    <!--
+        Start the core Auto Close Visits Task on boot. OpenMRS ships it with
+        start_on_startup = false and the scheduler only schedules tasks flagged
+        start_on_startup, so without this the task never runs and visits of the
+        types listed in each site's visits.autoCloseVisitType stay open. Starting
+        it by hand from the legacy admin UI does not survive a restart.
+        Once enabled it runs daily at 23:59:59 and closes open visits of those
+        types that started before that day.
+    -->
+    <changeSet id="enable-auto-close-visits-task-20260911" author="pirupius">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="1">
+                SELECT COUNT(*) FROM scheduler_task_config
+                WHERE schedulable_class = 'org.openmrs.scheduler.tasks.AutoCloseVisitsTask'
+                AND start_on_startup = 0;
+            </sqlCheck>
+        </preConditions>
+        <comment>
+            Start the Auto Close Visits Task on startup
+        </comment>
+        <update tableName="scheduler_task_config">
+            <column name="start_on_startup" valueBoolean="true"/>
+            <where>schedulable_class = 'org.openmrs.scheduler.tasks.AutoCloseVisitsTask'</where>
+        </update>
+    </changeSet>
+
+</databaseChangeLog>

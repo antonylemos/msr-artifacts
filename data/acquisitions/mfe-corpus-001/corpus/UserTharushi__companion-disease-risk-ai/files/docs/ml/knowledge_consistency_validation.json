@@ -1,0 +1,228 @@
+{
+  "method": "knowledge-consistency (ontology INDICATES vs Model A prediction)",
+  "ontology_source": "ontology/neo4j/schema.cypher",
+  "randomised_n_per_disease": 150,
+  "seed": 11,
+  "summary": {
+    "n_diseases_tested": 11,
+    "canonical_top1_agreement_rate": 0.7273,
+    "canonical_top3_agreement_rate": 0.9091,
+    "mean_randomised_top1_agreement": 0.7018,
+    "mean_randomised_top3_agreement": 0.88,
+    "mean_sign_coverage_in_form": 0.9291
+  },
+  "per_disease": [
+    {
+      "disease": "Cancer",
+      "declared_signs": [
+        "lump or swelling",
+        "weight loss",
+        "pale gums"
+      ],
+      "sign_coverage_in_form": 0.67,
+      "canonical_prediction_top3": [
+        "Cancer",
+        "Mobility Problems",
+        "Skin Irritations"
+      ],
+      "canonical_top1_agree": true,
+      "canonical_top3_agree": true,
+      "randomised_top1_agreement": 0.92,
+      "randomised_top3_agreement": 0.92,
+      "most_common_disagreement": "Diabetes Mellitus"
+    },
+    {
+      "disease": "Chronic Kidney Disease",
+      "declared_signs": [
+        "increased urination",
+        "increased thirst",
+        "loss of appetite",
+        "dehydration",
+        "weight loss"
+      ],
+      "sign_coverage_in_form": 0.8,
+      "canonical_prediction_top3": [
+        "Chronic Kidney Disease",
+        "Diabetes Mellitus",
+        "Liver Disease"
+      ],
+      "canonical_top1_agree": true,
+      "canonical_top3_agree": true,
+      "randomised_top1_agreement": 0.46,
+      "randomised_top3_agreement": 0.9667,
+      "most_common_disagreement": "Diabetes Mellitus"
+    },
+    {
+      "disease": "Diabetes Mellitus",
+      "declared_signs": [
+        "increased thirst",
+        "increased urination",
+        "weight loss"
+      ],
+      "sign_coverage_in_form": 1.0,
+      "canonical_prediction_top3": [
+        "Diabetes Mellitus",
+        "Chronic Kidney Disease",
+        "Liver Disease"
+      ],
+      "canonical_top1_agree": true,
+      "canonical_top3_agree": true,
+      "randomised_top1_agreement": 1.0,
+      "randomised_top3_agreement": 1.0,
+      "most_common_disagreement": null
+    },
+    {
+      "disease": "Digestive Issues",
+      "declared_signs": [
+        "vomiting",
+        "diarrhoea",
+        "loss of appetite"
+      ],
+      "sign_coverage_in_form": 1.0,
+      "canonical_prediction_top3": [
+        "Digestive Issues",
+        "Liver Disease",
+        "Pancreatitis"
+      ],
+      "canonical_top1_agree": true,
+      "canonical_top3_agree": true,
+      "randomised_top1_agreement": 0.96,
+      "randomised_top3_agreement": 1.0,
+      "most_common_disagreement": "Chronic Kidney Disease"
+    },
+    {
+      "disease": "Ear Infections",
+      "declared_signs": [
+        "ear scratching",
+        "head shaking"
+      ],
+      "sign_coverage_in_form": 1.0,
+      "canonical_prediction_top3": [
+        "Ear Infections",
+        "Parasites",
+        "Skin Irritations"
+      ],
+      "canonical_top1_agree": true,
+      "canonical_top3_agree": true,
+      "randomised_top1_agreement": 1.0,
+      "randomised_top3_agreement": 1.0,
+      "most_common_disagreement": null
+    },
+    {
+      "disease": "Heart Disease",
+      "declared_signs": [
+        "coughing",
+        "difficulty breathing",
+        "fainting",
+        "reduced activity",
+        "swollen abdomen"
+      ],
+      "sign_coverage_in_form": 1.0,
+      "canonical_prediction_top3": [
+        "Heart Disease",
+        "Pancreatitis",
+        "Liver Disease"
+      ],
+      "canonical_top1_agree": true,
+      "canonical_top3_agree": true,
+      "randomised_top1_agreement": 0.9933,
+      "randomised_top3_agreement": 1.0,
+      "most_common_disagreement": "Pancreatitis"
+    },
+    {
+      "disease": "Liver Disease",
+      "declared_signs": [
+        "jaundice",
+        "swollen abdomen",
+        "vomiting"
+      ],
+      "sign_coverage_in_form": 1.0,
+      "canonical_prediction_top3": [
+        "Liver Disease",
+        "Pancreatitis",
+        "Digestive Issues"
+      ],
+      "canonical_top1_agree": true,
+      "canonical_top3_agree": true,
+      "randomised_top1_agreement": 0.9667,
+      "randomised_top3_agreement": 1.0,
+      "most_common_disagreement": "Digestive Issues"
+    },
+    {
+      "disease": "Mobility Problems",
+      "declared_signs": [
+        "lameness",
+        "reduced activity"
+      ],
+      "sign_coverage_in_form": 1.0,
+      "canonical_prediction_top3": [
+        "Heart Disease",
+        "Mobility Problems",
+        "Liver Disease"
+      ],
+      "canonical_top1_agree": false,
+      "canonical_top3_agree": true,
+      "randomised_top1_agreement": 0.42,
+      "randomised_top3_agreement": 0.9067,
+      "most_common_disagreement": "Heart Disease"
+    },
+    {
+      "disease": "Pancreatitis",
+      "declared_signs": [
+        "vomiting",
+        "swollen abdomen",
+        "loss of appetite"
+      ],
+      "sign_coverage_in_form": 1.0,
+      "canonical_prediction_top3": [
+        "Digestive Issues",
+        "Liver Disease",
+        "Pancreatitis"
+      ],
+      "canonical_top1_agree": false,
+      "canonical_top3_agree": true,
+      "randomised_top1_agreement": 0.0,
+      "randomised_top3_agreement": 0.8867,
+      "most_common_disagreement": "Digestive Issues"
+    },
+    {
+      "disease": "Parasites",
+      "declared_signs": [
+        "lethargy",
+        "weight loss",
+        "diarrhoea",
+        "pale gums"
+      ],
+      "sign_coverage_in_form": 0.75,
+      "canonical_prediction_top3": [
+        "Liver Disease",
+        "Pancreatitis",
+        "Cancer"
+      ],
+      "canonical_top1_agree": false,
+      "canonical_top3_agree": false,
+      "randomised_top1_agreement": 0.0,
+      "randomised_top3_agreement": 0.0,
+      "most_common_disagreement": "Liver Disease"
+    },
+    {
+      "disease": "Skin Irritations",
+      "declared_signs": [
+        "skin lesions",
+        "excessive scratching",
+        "hair loss"
+      ],
+      "sign_coverage_in_form": 1.0,
+      "canonical_prediction_top3": [
+        "Skin Irritations",
+        "Parasites",
+        "Liver Disease"
+      ],
+      "canonical_top1_agree": true,
+      "canonical_top3_agree": true,
+      "randomised_top1_agreement": 1.0,
+      "randomised_top3_agreement": 1.0,
+      "most_common_disagreement": null
+    }
+  ]
+}

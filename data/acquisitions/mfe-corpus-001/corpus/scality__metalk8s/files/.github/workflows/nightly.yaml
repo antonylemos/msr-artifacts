@@ -1,0 +1,252 @@
+name: Nightly
+run-name: "Nightly tests for ${{ github.ref_name }}"
+
+on:
+  workflow_dispatch:
+    inputs:
+      artifacts-url:
+        description: Artifacts URL to use (fallback to the latest post-merge build on this branch)
+        type: string
+        required: false
+
+      enable-debug-when-failure:
+        description: "Whether or not debug when failure should be enabled or not"
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  retrieve-info:
+    runs-on: ubuntu-24.04
+    outputs:
+      artifacts-link: ${{ inputs.artifacts-url || steps.artifacts.outputs.link }}
+      version_major: ${{ steps.get-version.outputs.version_major }}
+      version_minor: ${{ steps.get-version.outputs.version_minor }}
+      version_patch: ${{ steps.get-version.outputs.version_patch }}
+      version_suffix: ${{ steps.get-version.outputs.version_suffix }}
+      version_full: ${{ steps.get-version.outputs.version_full }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Retrieve artifacts url
+        uses: scality/action-artifacts@v4
+        id: artifacts
+        if: inputs.artifacts-url == ''
+        with:
+          method: get
+          workflow-name: Post-merge
+          url: https://artifacts.scality.net
+          user: ${{ secrets.ARTIFACTS_USER }}
+          password: ${{ secrets.ARTIFACTS_PASSWORD }}
+      - name: Retrieve current version
+        id: get-version
+        run: |
+          source VERSION
+          echo "version_major=$VERSION_MAJOR" >> $GITHUB_OUTPUT
+          echo "version_minor=$VERSION_MINOR" >> $GITHUB_OUTPUT
+          echo "version_patch=$VERSION_PATCH" >> $GITHUB_OUTPUT
+          echo "version_suffix=$VERSION_SUFFIX" >> $GITHUB_OUTPUT
+          echo "version_full=$VERSION_MAJOR.$VERSION_MINOR.$VERSION_PATCH-$VERSION_SUFFIX" >> $GITHUB_OUTPUT
+
+  compute-lifecycle-promoted-matrix:
+    runs-on: ubuntu-24.04
+    needs:
+      - retrieve-info
+    env:
+      VERSION_MAJOR: ${{ needs.retrieve-info.outputs.version_major }}
+      VERSION_MINOR: ${{ needs.retrieve-info.outputs.version_minor }}
+      VERSION_PATCH: ${{ needs.retrieve-info.outputs.version_patch }}
+    outputs:
+      # Every element of the matrix will have
+      # - `type` which is the type of lifecycle (major, minor, patch)
+      # - `version` the promoted version
+      lifecycle-matrix: ${{ steps.get-matrix.outputs.matrix }}
+      artifacts-link: ${{ needs.retrieve-info.outputs.artifacts-link }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Fetch tags
+        run: git fetch --tags
+      - name: Get previous patch version
+        run: |
+          if [ "$VERSION_PATCH" != "0" ]; then
+            echo "previous_patch=$VERSION_MAJOR.$VERSION_MINOR.$(( VERSION_PATCH - 1))" >> $GITHUB_ENV
+          else
+            echo "previous_patch=" >> $GITHUB_ENV
+          fi
+      - name: Get previous minor version
+        run: |
+          echo "previous_minor=$(git tag --sort=taggerdate --list "$VERSION_MAJOR.$(( VERSION_MINOR - 1 )).*" | grep -v '\-' | tail -1)" >> $GITHUB_ENV
+      - name: Get previous major version
+        run: |
+          echo "previous_major=$(git tag --sort=taggerdate --list "$((VERSION_MAJOR - 1 )).*" | grep -v '\-' | tail -1)" >> $GITHUB_ENV
+      - name: Compute matrix
+        id: get-matrix
+        run: |
+          matrix="["
+          for type in patch minor major; do
+            var_name="previous_${type}"
+            if [ -n "${!var_name}" ]; then
+              if [ "${#matrix}" -gt "1" ]; then
+                matrix+=","
+              fi
+              matrix+="{\"type\": \"$type\", \"version\": \"${!var_name}\"}"
+            fi
+          done
+          matrix+="]"
+          echo "matrix=$matrix" >> $GITHUB_OUTPUT
+
+  compute-lifecycle-dev-matrix:
+    runs-on: ubuntu-24.04
+    needs:
+      - retrieve-info
+    env:
+      VERSION_MAJOR: ${{ needs.retrieve-info.outputs.version_major }}
+      VERSION_MINOR: ${{ needs.retrieve-info.outputs.version_minor }}
+    outputs:
+      # Every element of the matrix will have
+      # - `type` which is the type of lifecycle (major, minor)
+      # - `branch` the dev branch name
+      lifecycle-matrix: ${{ steps.get-matrix.outputs.matrix }}
+      artifacts-link: ${{ needs.retrieve-info.outputs.artifacts-link }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Get previous minor version
+        run: |
+          if [ "$VERSION_MINOR" != "0" ]; then
+            echo "previous_minor=development/$VERSION_MAJOR.$(( VERSION_MINOR - 1))" >> $GITHUB_ENV
+          else
+            echo "previous_minor=" >> $GITHUB_ENV
+          fi
+      - name: Get previous major version
+        run: |
+          echo "previous_major=$(git branch --remote --sort=creatordate --list --format="%(refname:lstrip=-2)" "origin/development/$(( VERSION_MAJOR - 1 )).*" | tail -1)" >> $GITHUB_ENV
+      - name: Compute matrix
+        id: get-matrix
+        run: |
+          matrix="["
+          for type in minor major; do
+            var_name="previous_${type}"
+            if [ -n "${!var_name}" ]; then
+              if [ "${#matrix}" -gt "1" ]; then
+                matrix+=","
+              fi
+              matrix+="{\"type\": \"$type\", \"branch\": \"${!var_name}\"}"
+            fi
+          done
+          matrix+="]"
+          echo "matrix=$matrix" >> $GITHUB_OUTPUT
+
+  lifecycle-promoted:
+    uses: ./.github/workflows/lifecycle-promoted.yaml
+    secrets: inherit
+    needs:
+      - compute-lifecycle-promoted-matrix
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.compute-lifecycle-promoted-matrix.outputs.lifecycle-matrix) }}
+    with:
+      artifacts-url: ${{ needs.compute-lifecycle-promoted-matrix.outputs.artifacts-link }}
+      type: ${{ matrix.type }}
+      promoted-version: ${{ matrix.version }}
+      enable-debug-when-failure: ${{ inputs.enable-debug-when-failure }}
+
+  lifecycle-dev:
+    uses: ./.github/workflows/lifecycle-dev.yaml
+    secrets: inherit
+    needs:
+      - compute-lifecycle-dev-matrix
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.compute-lifecycle-dev-matrix.outputs.lifecycle-matrix) }}
+    with:
+      artifacts-url: ${{ needs.compute-lifecycle-dev-matrix.outputs.artifacts-link }}
+      type: ${{ matrix.type }}
+      dev-branch: ${{ matrix.branch }}
+      enable-debug-when-failure: ${{ inputs.enable-debug-when-failure }}
+
+  install:
+    uses: ./.github/workflows/single-node-test.yaml
+    secrets: inherit
+    needs:
+      - retrieve-info
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - rocky-8
+          # NOTE: We add rocky-9 here even if it's already tested in pre-merge since
+          # we also test solution install + upgrade there
+          - rocky-9
+        setup-idp: [true]
+        setup-logging: [true]
+        include:
+          - os: rocky-9
+            setup-idp: false
+            setup-logging: false
+    with:
+      artifacts-url: ${{ needs.retrieve-info.outputs.artifacts-link }}
+      os: ${{ matrix.os }}
+      test-solution: true
+      setup-idp: ${{ matrix.setup-idp }}
+      setup-logging: ${{ matrix.setup-logging }}
+      enable-debug-when-failure: ${{ inputs.enable-debug-when-failure }}
+
+  bootstrap-restore:
+    uses: ./.github/workflows/multi-node-test.yaml
+    secrets: inherit
+    needs:
+      - retrieve-info
+    with:
+      name: bootstrap-restore
+      artifacts-url: ${{ needs.retrieve-info.outputs.artifacts-link }}
+      nodes-count: 2
+      bootstrap-restore: true
+      enable-debug-when-failure: ${{ inputs.enable-debug-when-failure }}
+
+  k8s-conformance:
+    uses: ./.github/workflows/multi-node-test.yaml
+    secrets: inherit
+    needs:
+      - retrieve-info
+    with:
+      name: k8s-conformance
+      artifacts-url: ${{ needs.retrieve-info.outputs.artifacts-link }}
+      nodes-count: 2
+      k8s-conformance: true
+      enable-debug-when-failure: ${{ inputs.enable-debug-when-failure }}
+
+  generate-sbom:
+    uses: ./.github/workflows/generate-sbom.yaml
+    needs:
+      - retrieve-info
+    secrets: inherit
+    with:
+      ref: ${{ github.ref }}
+      artifacts-url: ${{ needs.retrieve-info.outputs.artifacts-link }}
+
+  write-final-status:
+    runs-on: ubuntu-24.04
+    needs:
+      - lifecycle-promoted
+      - lifecycle-dev
+      - install
+      - bootstrap-restore
+      - k8s-conformance
+      - generate-sbom
+    if: always()
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Upload final status
+        if: always()
+        uses: scality/actions/upload_final_status@1.17.0
+        with:
+          ARTIFACTS_USER: ${{ secrets.ARTIFACTS_USER }}
+          ARTIFACTS_PASSWORD: ${{ secrets.ARTIFACTS_PASSWORD }}
+          JOBS_RESULTS: ${{ join(needs.*.result) }}

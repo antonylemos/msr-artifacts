@@ -1,0 +1,104 @@
+pattern,path,line,excerpt
+src-mount-export,exemplos/10-micro-frontends/apps/catalogo-react/src/mount.tsx,3,export async function mount(host: HTMLElement): Promise<() => void> {
+src-mount-export,exemplos/10-micro-frontends/apps/checkout-angular/src/mount.ts,4,export async function mount(host: HTMLElement): Promise<() => void> {
+src-custom-element,aula-arquitetura-front-end.html,20284,"<script>!function(){""use strict"";const t={h1:{proto:()=>HTMLHeadingElement,attrs:{role:""heading"",""aria-level"":""1""},style:""display: block; font-size: 2em; margin-block-start: 0.67em; margin-block-end: 0.67em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;""},h2:{proto:()=>HTMLHea"
+src-iframe,aula-arquitetura-front-end.html,20635,"!function(){""use strict"";function e(e){return e&&e.__esModule&&Object.prototype.hasOwnProperty.call(e,""default"")?e.default:e}var t,n,r=(n||(n=1,t={from:function(e,t){var n,r=1===(e.parent||e).nodeType?e.parent||e:document.querySelector(e.parent||e),o=[].filter.call(""string""==typeof e.slides?r.queryS"
+src-cross-unit-communication,aula-arquitetura-front-end.html,20284,"<script>!function(){""use strict"";const t={h1:{proto:()=>HTMLHeadingElement,attrs:{role:""heading"",""aria-level"":""1""},style:""display: block; font-size: 2em; margin-block-start: 0.67em; margin-block-end: 0.67em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;""},h2:{proto:()=>HTMLHea"
+src-cross-unit-communication,aula-arquitetura-front-end.html,20635,"!function(){""use strict"";function e(e){return e&&e.__esModule&&Object.prototype.hasOwnProperty.call(e,""default"")?e.default:e}var t,n,r=(n||(n=1,t={from:function(e,t){var n,r=1===(e.parent||e).nodeType?e.parent||e:document.querySelector(e.parent||e),o=[].filter.call(""string""==typeof e.slides?r.queryS"
+doc-mfe-term,README.md,22,`npm run aula` lista os blocos. Troque `01` pelo número desejado. O comando sobe automaticamente a API/BFF quando necessário. `10` inicia o conjunto de micro-frontends; `11 react` usa Next.js e `12 react` usa Astro com uma ilha React.
+doc-mfe-term,README.md,28,| Shell dos micro-frontends | http://127.0.0.1:4300 |
+doc-mfe-term,README.md,49,| 10 · Micro-frontends | [10-micro-frontends](exemplos/10-micro-frontends/README.md) | 67–72 |
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,130,- 10 · Micro-frontends: slides 67–72
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,139,Aprofundamento de execução e escala: Micro-frontends; Renderização; Ilhas; BFF.
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,234,R16: Cam Jackson — Micro Frontends — https://martinfowler.com/articles/micro-frontends.html
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,303,"| Execução e entrega | CSR, SSR, SSG, ilhas, micro-frontends |"
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,316,R16: Cam Jackson — Micro Frontends — https://martinfowler.com/articles/micro-frontends.html
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,984,Três arquivos separados pelos comentários. Registre routes usando provideRouter no bootstrap. Lazy loading é carregamento sob demanda do mesmo produto; não significa deploy independente e não transforma sozinho o projeto em micro-frontends.
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,2028,"<!-- _footer: ""ARQUITETURA FRONT-END · 10 · Micro-frontends | Ref.: R16"" -->"
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,2030,# Micro-frontends: fronteiras de entrega
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,2043,"**Code splitting, lazy loading e monorepo não bastam para definir micro-frontends.**"
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,2049,R16: Cam Jackson — Micro Frontends — https://martinfowler.com/articles/micro-frontends.html
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,2054,"<!-- _footer: ""ARQUITETURA FRONT-END · 10 · Micro-frontends | Ref.: R16, R18"" -->"
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,2057,# Micro-frontends · estrutura do produto
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,2079,R16: Cam Jackson — Micro Frontends — https://martinfowler.com/articles/micro-frontends.html
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,2080,R18: single-spa — Microfrontends Overview — https://single-spa.js.org/docs/microfrontends-concept/
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,2085,"<!-- _footer: ""ARQUITETURA FRONT-END · 10 · Micro-frontends | Ref.: R19, R16"" -->"
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,2088,# Micro-frontends · adaptador React
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,2111,R16: Cam Jackson — Micro Frontends — https://martinfowler.com/articles/micro-frontends.html
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,2116,"<!-- _footer: ""ARQUITETURA FRONT-END · 10 · Micro-frontends | Ref.: R20, R21"" -->"
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,2119,# Micro-frontends · adaptador Angular
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,2153,"<!-- _footer: ""ARQUITETURA FRONT-END · 10 · Micro-frontends | Ref.: R17, R18, R36, R16"" -->"
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,2156,# Micro-frontends · integração e operação
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,2174,R18: single-spa — Microfrontends Overview — https://single-spa.js.org/docs/microfrontends-concept/
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,2176,R16: Cam Jackson — Micro Frontends — https://martinfowler.com/articles/micro-frontends.html
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,2181,"<!-- _footer: ""ARQUITETURA FRONT-END · 10 · Micro-frontends | Ref.: R16, R18"" -->"
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,2184,# Micro-frontends · ganhos e limites
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,2202,R16: Cam Jackson — Micro Frontends — https://martinfowler.com/articles/micro-frontends.html
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,2203,R18: single-spa — Microfrontends Overview — https://single-spa.js.org/docs/microfrontends-concept/
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,2713,| Releases de equipes bloqueando uns aos outros | Micro-frontends |
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,2797,"Estas são decisões propostas para o caso. Em SSR, evite estado de usuário em singletons globais e cache compartilhado indevidamente. Em micro-frontends, falha no remoto deve ter fallback. Não considere autenticação no navegador equivalente a autorização no servidor."
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,3050,**R16** · [Cam Jackson — Micro Frontends](https://martinfowler.com/articles/micro-frontends.html)
+doc-mfe-term,conteudo/aula-arquitetura-front-end.md,3054,**R18** · [single-spa — Microfrontends Overview](https://single-spa.js.org/docs/microfrontends-concept/)
+doc-mfe-term,exemplos/10-micro-frontends/README.md,1,# Micro-frontends
+doc-mfe-term,exemplos/10-micro-frontends/README.md,115,[Documentação ou artigo de referência](https://martinfowler.com/articles/micro-frontends.html). As demais fontes estão nos slides e no [guia do aluno](../../material/guia-do-aluno.md).
+doc-mfe-term,exemplos/14-escolha-e-evolucao/README.md,124,Escreva um ADR comparando esta solução com micro-frontends. Identifique a evidência que justificaria mudar a fronteira de deploy.
+doc-mfe-term,exemplos/14-escolha-e-evolucao/adr/0001-organizacao-eventflow.md,20,"- Micro-frontends: permite artefatos e releases separados, com custo de integração e operação sem requisito atual correspondente."
+doc-mfe-term,material/exercicios.md,79,### 10 Micro-frontends
+doc-mfe-term,material/exercicios.md,81,[Pasta do exercício](../exemplos/10-micro-frontends/README.md).
+doc-mfe-term,material/exercicios.md,115,Escreva um ADR comparando esta solução com micro-frontends. Identifique a evidência que justificaria mudar a fronteira de deploy.
+doc-mfe-term,material/gabarito.md,16,10. **Micro-frontends:** montar e desmontar destrói a raiz React ou a aplicação Angular; a próxima montagem começa com estado novo. Um remoto indisponível exibe fallback. Catálogo pode gerar novo dist sem reconstruir shell ou checkout. O manifesto e as origens confiáveis fazem parte do contrato de o
+doc-mfe-term,material/gabarito.md,20,"14. **Escolha:** com uma equipe e um release, a solução de referência combina módulos com Clean na compra. Micro-frontends acrescentariam operação sem uma exigência atual de entrega independente. Equipes com áreas e cadências distintas podem justificar reavaliar a fronteira; registre a evidência no "
+doc-mfe-term,material/guia-do-aluno.md,34,"| Execução e entrega | CSR, SSR, SSG, ilhas, micro-frontends | Onde roda, quando carrega e como publica? |"
+doc-mfe-term,material/guia-do-aluno.md,95,### 10 Micro-frontends
+doc-mfe-term,material/guia-do-aluno.md,97,"Compor aplicações que possuem artefatos de build separados. Leia [o código e a explicação](../exemplos/10-micro-frontends/README.md), slides 67–72."
+doc-mfe-term,material/guia-do-aluno.md,128,- Lazy loading muda o carregamento do mesmo release. Micro-frontends exigem uma fronteira de entrega.
+doc-mfe-term,material/guia-do-aluno.md,142,- [Micro-frontends](https://martinfowler.com/articles/micro-frontends.html).
+doc-mfe-term,material/roteiro-do-professor.md,126,### 10 Micro-frontends
+doc-mfe-term,material/roteiro-do-professor.md,128,"Abra [a pasta do bloco](../exemplos/10-micro-frontends/README.md), slides 67–72. Compor aplicações que possuem artefatos de build separados."
+doc-mfe-term,material/roteiro-do-professor.md,172,Proponha: Escreva um ADR comparando esta solução com micro-frontends. Identifique a evidência que justificaria mudar a fronteira de deploy.
+doc-integration-technology,conteudo/aula-arquitetura-front-end.md,2080,R18: single-spa — Microfrontends Overview — https://single-spa.js.org/docs/microfrontends-concept/
+doc-integration-technology,conteudo/aula-arquitetura-front-end.md,2107,"Este é um contrato didático próprio, não o contrato exato bootstrap/mount/unmount de single-spa. App precisa existir e ser exportado no projeto React. O shell chama a limpeza antes de descartar a montagem. createRoot é para este recorte CSR; hidratação de HTML existente exige outro caminho."
+doc-integration-technology,conteudo/aula-arquitetura-front-end.md,2161,| Module Federation | Consumo de módulos de builds separados |
+doc-integration-technology,conteudo/aula-arquitetura-front-end.md,2162,| single-spa | Orquestração do ciclo de vida de aplicações |
+doc-integration-technology,conteudo/aula-arquitetura-front-end.md,2163,"| iframe | Contexto de documento separado, com custos de integração |"
+doc-integration-technology,conteudo/aula-arquitetura-front-end.md,2170,As configurações dependem do builder e das versões. Não prometa que um plugin webpack funciona automaticamente no App Router do Next ou em qualquer builder Angular. Multi-Zones faz navegação completa entre zonas. Iframe só oferece a proteção desejada com políticas de origem/sandbox apropriadas; não 
+doc-integration-technology,conteudo/aula-arquitetura-front-end.md,2173,R17: webpack — Module Federation — https://webpack.js.org/concepts/module-federation/
+doc-integration-technology,conteudo/aula-arquitetura-front-end.md,2174,R18: single-spa — Microfrontends Overview — https://single-spa.js.org/docs/microfrontends-concept/
+doc-integration-technology,conteudo/aula-arquitetura-front-end.md,2203,R18: single-spa — Microfrontends Overview — https://single-spa.js.org/docs/microfrontends-concept/
+doc-integration-technology,conteudo/aula-arquitetura-front-end.md,3052,**R17** · [webpack — Module Federation](https://webpack.js.org/concepts/module-federation/)
+doc-integration-technology,conteudo/aula-arquitetura-front-end.md,3054,**R18** · [single-spa — Microfrontends Overview](https://single-spa.js.org/docs/microfrontends-concept/)
+doc-import-map-zones,conteudo/aula-arquitetura-front-end.md,2160,| Rotas / reverse proxy / Multi-Zones | Composição por áreas de URL |
+doc-import-map-zones,conteudo/aula-arquitetura-front-end.md,2170,As configurações dependem do builder e das versões. Não prometa que um plugin webpack funciona automaticamente no App Router do Next ou em qualquer builder Angular. Multi-Zones faz navegação completa entre zonas. Iframe só oferece a proteção desejada com políticas de origem/sandbox apropriadas; não 
+doc-import-map-zones,conteudo/aula-arquitetura-front-end.md,2175,R36: Next.js — Multi-zones — https://nextjs.org/docs/app/guides/multi-zones
+doc-import-map-zones,conteudo/aula-arquitetura-front-end.md,3110,**R36** · [Next.js — Multi-zones](https://nextjs.org/docs/app/guides/multi-zones)
+doc-independence,README.md,93,- Cada pasta é uma alternativa independente. Os exemplos não importam regras uns dos outros; compartilham apenas o estilo visual de demonstração.
+doc-independence,conteudo/aula-arquitetura-front-end.md,224,| “Criamos vários projetos” | Eles podem ser publicados independentemente? |
+doc-independence,conteudo/aula-arquitetura-front-end.md,249,| Publicar áreas com equipes independentes | Fronteiras de deploy |
+doc-independence,conteudo/aula-arquitetura-front-end.md,984,Três arquivos separados pelos comentários. Registre routes usando provideRouter no bootstrap. Lazy loading é carregamento sob demanda do mesmo produto; não significa deploy independente e não transforma sozinho o projeto em micro-frontends.
+doc-independence,conteudo/aula-arquitetura-front-end.md,1033,**Evite quando:** há uma necessidade comprovada de releases realmente independentes que o modelo não atende.
+doc-independence,conteudo/aula-arquitetura-front-end.md,1341,"**Faz sentido:** regras complexas, simulações, editores ou fluxos que precisam de testes independentes."
+doc-independence,conteudo/aula-arquitetura-front-end.md,1743,O total é derivado. Não precisamos guardar `qtd` e `total` em estados independentes.
+doc-independence,conteudo/aula-arquitetura-front-end.md,1840,Um ViewModel pode depender de casos de uso da Clean Architecture. Ele não substitui módulos de negócio nem resolve publicação independente. Testes dos hooks ainda exigem suporte ao runtime React; mantenha regras puras fora deles quando isso ajudar.
+doc-independence,conteudo/aula-arquitetura-front-end.md,2034,**Ideia:** compor partes do produto que possam ser entregues independentemente.
+doc-independence,conteudo/aula-arquitetura-front-end.md,2194,"**Faz sentido:** existem equipes, fronteiras de negócio e necessidades reais de publicação independente."
+doc-independence,conteudo/aula-arquitetura-front-end.md,2378,"No Astro, ilhas de cliente podem ter ciclos de hidratação independentes. Angular oferece carregamento adiado e também mecanismos de hidratação incremental em contextos SSR. Não atribua a @defer sozinho todas as propriedades de uma arquitetura de ilhas."
+doc-independence,conteudo/aula-arquitetura-front-end.md,2545,# BFF · agregação independente da UI
+doc-independence,conteudo/aula-arquitetura-front-end.md,2567,"As funções consultam o mesmo evento, definido no adaptador do caso. Promise.all executa consultas independentes em paralelo, mas não cancela a outra automaticamente quando uma falha. Um produto real precisa escolher timeout, resultado parcial, cancelamento e observabilidade. A resposta deve expor ap"
+doc-independence,conteudo/aula-arquitetura-front-end.md,2773,"O teste da função pura é o mesmo independentemente de React ou Angular. Vitest é apenas a sintaxe do runner deste exemplo, não requisito arquitetural. Testes de UI devem observar o comportamento percebido pelo usuário; um teste de função não substitui um teste do fluxo real. Acrescente limites infer"
+doc-independence,conteudo/aula-arquitetura-front-end.md,3048,# Referências · entrega independente
+doc-independence,exemplos/10-micro-frontends/README.md,111,A composição usa ESM por URL e manifesto. Há bundles separados e um caminho de publicação independente; o laboratório não provisiona um pipeline de deploy.
+doc-independence,exemplos/12-ilhas/README.md,76,As abordagens têm propriedades diferentes. Este Angular usa CSR com carregamento adiado; não implementa ilhas independentes nem hidratação incremental.
+doc-independence,exemplos/14-escolha-e-evolucao/adr/0001-organizacao-eventflow.md,7,O produto possui catálogo e simulação de compra. Uma equipe mantém uma unidade de release. Regras de preço e quantidade precisam de verificação independente da interface; o catálogo apresenta poucas regras. A simulação não realiza cobrança nem reserva.
+doc-independence,exemplos/14-escolha-e-evolucao/adr/0001-organizacao-eventflow.md,28,"Reavaliar se surgirem equipes com cadências incompatíveis, necessidade de publicação independente, crescimento dos imports entre capacidades ou custo de manutenção das camadas superior ao benefício observado. Avaliar SSR/SSG do catálogo usando requisitos de atualização e conteúdo inicial, medindo a "
+doc-independence,material/exercicios.md,121,"O EventFlow passou a ter catálogo, compra e inscrições. Uma equipe publica o produto; políticas de preço mudam semanalmente. A página pública precisa ser indexável e o checkout precisa apresentar falhas de disponibilidade. Não há exigência atual de releases independentes."
+doc-independence,material/gabarito.md,20,"14. **Escolha:** com uma equipe e um release, a solução de referência combina módulos com Clean na compra. Micro-frontends acrescentariam operação sem uma exigência atual de entrega independente. Equipes com áreas e cadências distintas podem justificar reavaliar a fronteira; registre a evidência no "
+doc-independence,material/gabarito.md,45,- Quantidade e total não ficam em estados independentes.
+doc-independence,material/guia-do-aluno.md,32,"| Proteção das regras | Clean, Hexagonal | Como manter a regra independente dos detalhes? |"
+doc-independence,material/guia-do-aluno.md,99,A composição usa ESM por URL e manifesto. Há bundles separados e um caminho de publicação independente; o laboratório não provisiona um pipeline de deploy.
+doc-independence,material/guia-do-aluno.md,111,As abordagens têm propriedades diferentes. Este Angular usa CSR com carregamento adiado; não implementa ilhas independentes nem hidratação incremental.
+doc-independence,material/roteiro-do-professor.md,134,Feche discutindo o custo: A composição usa ESM por URL e manifesto. Há bundles separados e um caminho de publicação independente; o laboratório não provisiona um pipeline de deploy.
+doc-independence,material/roteiro-do-professor.md,154,Feche discutindo o custo: As abordagens têm propriedades diferentes. Este Angular usa CSR com carregamento adiado; não implementa ilhas independentes nem hidratação incremental.
+doc-independence,material/roteiro-do-professor.md,182,- Existe publicação independente ou apenas carregamento sob demanda?
+doc-host-remote,exemplos/10-micro-frontends/README.md,68,const host = document.querySelector<HTMLElement>('#remote')!;
+doc-host-remote,exemplos/10-micro-frontends/README.md,125,"Publique cada `dist/` separadamente e ajuste as URLs em `apps/shell/public/remotes.json` e a lista de origens permitidas do shell. Neste laboratório o shell fornece os estilos; o contrato é de montagem, sem comunicação de seleção entre catálogo e checkout. Cada remoto embute seu framework. Em produç"
+ws-workspaces,package.json,9,"  ""workspaces"": ["

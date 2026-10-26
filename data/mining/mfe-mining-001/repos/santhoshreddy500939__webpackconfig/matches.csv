@@ -1,0 +1,6 @@
+pattern,path,line,excerpt
+dep-mfe-term,package.json,2,"  ""name"": ""microfrontend"","
+cfg-federation-plugin,webpack.common.config.js,4,"const { ModuleFederationPlugin } = require(""webpack"").container;"
+cfg-federation-plugin,webpack.common.config.js,31,  plugins:[new ModuleFederationPlugin({
+cfg-remotes,webpack.common.config.js,33,      remotes: {
+src-remote-import,Components/Application1/Application1.js,3,"const RemoteApp = React.lazy(() => import(""RemoteApp/microfrontend1""));"

@@ -1,0 +1,3 @@
+directory,markers
+mfe1,mfe1/package.json;mfe1/webpack.config.ts
+mfe2,mfe2/package.json;mfe2/webpack.config.ts

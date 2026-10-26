@@ -1,0 +1,126 @@
+/* Ajustes para cards en grid */
+.characters-grid .character-card {
+  margin: 0; /* Remover margin auto del card individual */
+  width: 100%; /* Ocupar todo el espacio del grid item */
+  max-width: none; /* Remover restricción de max-width */
+}
+
+@import "tailwindcss";
+/* Dark mode styles that automatically detect system preference */
+@media (prefers-color-scheme: dark) {
+  /* Root dark theme variables */
+  :root {
+    --dark-bg-primary: #0f172a;
+    --dark-bg-secondary: #1e293b;
+    --dark-bg-tertiary: #334155;
+    --dark-text-primary: #f1f5f9;
+    --dark-text-secondary: #cbd5e1;
+    --dark-text-muted: #94a3b8;
+    --dark-border: #475569;
+    --dark-accent: #3b82f6;
+    --dark-accent-hover: #2563eb;
+    --dark-shadow: rgba(0, 0, 0, 0.5);
+  }
+
+  /* Global dark mode styles */
+  body {
+    background: var(--dark-bg-primary);
+    color: var(--dark-text-primary);
+  }
+
+  /* Dark mode for detail view container */
+  .detail-view-container {
+    background: linear-gradient(
+      135deg,
+      var(--dark-bg-primary) 0%,
+      var(--dark-bg-secondary) 100%
+    );
+  }
+
+  /* Dark mode for back button */
+  .back-button {
+    background: rgba(30, 41, 59, 0.9);
+    color: var(--dark-text-primary);
+    border: 1px solid var(--dark-border);
+  }
+
+  .back-button:hover {
+    background: rgba(51, 65, 85, 0.95);
+    border-color: var(--dark-accent);
+  }
+
+  /* Dark mode for character detail card */
+  .character-detail-card {
+    background: rgba(30, 41, 59, 0.95);
+    border: 1px solid var(--dark-border);
+  }
+
+  /* Dark mode for character image section */
+  .character-image-section {
+    background: linear-gradient(135deg, #1e40af 0%, #3730a3 100%);
+  }
+
+  /* Dark mode for buttons in vista component */
+  button {
+    background-color: var(--dark-bg-tertiary) !important;
+    color: var(--dark-text-primary) !important;
+    border: 1px solid var(--dark-border) !important;
+  }
+
+  button:hover {
+    background-color: var(--dark-accent) !important;
+    color: white !important;
+  }
+
+  /* Active button state */
+  button[style*="background-color: #3b82f6"] {
+    background-color: var(--dark-accent) !important;
+    color: white !important;
+  }
+
+  /* Dark mode for loading and error states */
+  .loading-container,
+  .error-container {
+    background: var(--dark-bg-primary);
+    color: var(--dark-text-primary);
+  }
+
+  /* Dark mode for any text elements */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--dark-text-primary);
+  }
+
+  p,
+  span,
+  div {
+    color: var(--dark-text-primary);
+  }
+
+  /* Dark mode for any form elements */
+  input,
+  textarea,
+  select {
+    background: var(--dark-bg-secondary);
+    color: var(--dark-text-primary);
+    border: 1px solid var(--dark-border);
+  }
+
+  /* Dark mode for links */
+  a {
+    color: var(--dark-accent);
+  }
+
+  a:hover {
+    color: var(--dark-accent-hover);
+  }
+}
+
+body {
+  max-width: 100%;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+}

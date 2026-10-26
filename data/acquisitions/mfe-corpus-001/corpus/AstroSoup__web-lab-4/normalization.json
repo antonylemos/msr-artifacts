@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "id": "1105927418",
+  "fullName": "AstroSoup/web-lab-4",
+  "commit": "2214561f8c9cb333f1849a0f1d04ec7ab36220cb",
+  "acquiredAt": "2026-10-24T00:32:37.182Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "backend/authMessageBroker/gradle/wrapper/gradle-wrapper.jar",
+      "reason": "preset:binaries",
+      "size": 60756
+    },
+    {
+      "path": "backend/authService/gradle/wrapper/gradle-wrapper.jar",
+      "reason": "preset:binaries",
+      "size": 60756
+    },
+    {
+      "path": "backend/geometryService/gradle/wrapper/gradle-wrapper.jar",
+      "reason": "preset:binaries",
+      "size": 60756
+    },
+    {
+      "path": "frontend/vite/host/icon.png",
+      "reason": "preset:binaries",
+      "size": 402252
+    },
+    {
+      "path": "frontend/vite/host/src/assets/tsukasa-phone.gif",
+      "reason": "preset:binaries",
+      "size": 2689351
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 147,
+    "bytes": 376247
+  },
+  "languages": {
+    "JSON": 190266,
+    "Java": 69429,
+    "Other": 48860,
+    "Vue": 45540,
+    "JavaScript": 11566,
+    "XML": 4246,
+    "CSS": 3395,
+    "YAML": 1875,
+    "HTML": 1059,
+    "Markdown": 11
+  },
+  "contentSha256": "cf5f544cd6cd74bf1016098d40cceea151875ad1c511fae358c9b2b3549f5ce8"
+}

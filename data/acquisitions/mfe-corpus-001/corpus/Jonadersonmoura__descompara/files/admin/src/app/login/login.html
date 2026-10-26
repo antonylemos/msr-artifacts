@@ -1,0 +1,16 @@
+<div class="login-page">
+  <ds-card title="Acesso restrito">
+    <p class="warning">Este painel é de uso exclusivo de administradores do sistema.</p>
+    <form (submit)="onSubmit($event)">
+      <label>
+        Usuário administrador
+        <input type="text" name="usuario" placeholder="admin.usuario" required />
+      </label>
+      <label>
+        Senha
+        <input type="password" name="senha" required />
+      </label>
+      <ds-button type="submit" variant="primary">Entrar</ds-button>
+    </form>
+  </ds-card>
+</div>

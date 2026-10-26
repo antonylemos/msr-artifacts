@@ -1,0 +1,3 @@
+directory,markers
+host,host/angular.json;host/federation.config.js;host/package.json
+remote,remote/angular.json;remote/federation.config.js;remote/package.json

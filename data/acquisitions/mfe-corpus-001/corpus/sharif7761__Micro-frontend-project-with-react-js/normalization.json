@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "id": "1158060733",
+  "fullName": "sharif7761/Micro-frontend-project-with-react-js",
+  "commit": "cb2083fd77ddcb4d6493af653e0ce523ba0be010",
+  "acquiredAt": "2026-10-24T00:32:28.997Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 34,
+    "bytes": 291182
+  },
+  "languages": {
+    "JSON": 247943,
+    "Markdown": 33552,
+    "TypeScript": 8619,
+    "HTML": 727,
+    "Other": 341
+  },
+  "contentSha256": "1ab23b9bb982d449d3ca2de8856dc27d6e1067d4f5e49b15945f8fab3c177ea2"
+}

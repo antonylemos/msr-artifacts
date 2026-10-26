@@ -1,0 +1,7 @@
+directory,markers
+.,package.json
+apps/cms,apps/cms/package.json;apps/cms/vite.config.ts
+apps/dashboard,apps/dashboard/package.json;apps/dashboard/vite.config.ts
+apps/kanban,apps/kanban/package.json;apps/kanban/vite.config.ts
+apps/shell,apps/shell/package.json;apps/shell/vite.config.ts
+packages/ui-kit,packages/ui-kit/package.json

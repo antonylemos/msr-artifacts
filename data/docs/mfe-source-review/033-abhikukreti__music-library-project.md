@@ -6,7 +6,7 @@ commit: 4fdce67023d92745fe1212c84509efe1054a8a49
 mining:
   output: data/mining/mfe-mining-001
   version: "1"
-  config_sha256: b3f63eb6fb86d8877fda117ccc22eec936a89ff7bf2d414c1dedafc0311f1fb1
+  config_sha256: 477ce8efa222a5170fdb68af51036d481c9688dda919aab993aa9f3db328fbf2
 annotation:
   method: manual
   status: final

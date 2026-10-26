@@ -1,0 +1,62 @@
+pattern,path,line,excerpt
+cfg-federation-plugin,packages/container/config/webpack.dev.js,3,"const ModuleFederationPlugin = require(""webpack/lib/container/ModuleFederationPlugin"");"
+cfg-federation-plugin,packages/container/config/webpack.dev.js,14,    new ModuleFederationPlugin({
+cfg-federation-plugin,packages/container/config/webpack.prod.js,3,"const ModuleFederationPlugin = require(""webpack/lib/container/ModuleFederationPlugin"");"
+cfg-federation-plugin,packages/container/config/webpack.prod.js,19,    new ModuleFederationPlugin({
+cfg-federation-plugin,packages/marketing/config/webpack.dev.js,4,"const ModuleFederationPlugin = require(""webpack/lib/container/ModuleFederationPlugin"");"
+cfg-federation-plugin,packages/marketing/config/webpack.dev.js,15,    new ModuleFederationPlugin({
+cfg-federation-plugin,packages/marketing/config/webpack.prod.js,3,"const ModuleFederationPlugin = require(""webpack/lib/container/ModuleFederationPlugin"");"
+cfg-federation-plugin,packages/marketing/config/webpack.prod.js,19,    new ModuleFederationPlugin({
+cfg-remotes,packages/container/config/webpack.dev.js,16,      remotes: {
+cfg-remotes,packages/container/config/webpack.prod.js,21,      remotes: {
+cfg-exposes,packages/marketing/config/webpack.dev.js,18,      exposes: {
+cfg-exposes,packages/marketing/config/webpack.prod.js,22,      exposes: {
+cfg-shared,packages/container/config/webpack.dev.js,19,"      shared: packageJsonDeps,"
+cfg-shared,packages/container/config/webpack.prod.js,24,"      shared: packageJsonDeps,"
+cfg-shared,packages/marketing/config/webpack.dev.js,21,"      shared: packageJsonDeps,"
+cfg-shared,packages/marketing/config/webpack.prod.js,25,"      shared: packageJsonDeps,"
+cfg-public-path,packages/container/config/webpack.prod.js,10,"    publicPath: ""/container/latest/"","
+cfg-public-path,packages/marketing/config/webpack.prod.js,10,"    publicPath: ""/marketing/latest/"","
+rt-remote-entry,.github/workflows/marketing.yml,40,"      - run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths ""/marketing/latest/remoteEntry.js"""
+rt-remote-entry,packages/container/config/webpack.dev.js,17,"        marketing: ""marketing@http://localhost:8081/remoteEntry.js"","
+rt-remote-entry,packages/container/config/webpack.prod.js,22,"        marketing: `marketing@${domain}/marketing/latest/remoteEntry.js`,"
+rt-remote-entry,packages/marketing/config/webpack.dev.js,17,"      filename: ""remoteEntry.js"","
+rt-remote-entry,packages/marketing/config/webpack.prod.js,21,"      filename: ""remoteEntry.js"","
+src-async-bootstrap,packages/container/src/index.js,1,"import(""./bootstrap"");"
+src-async-bootstrap,packages/marketing/src/index.js,1,"import(""./bootstrap"");"
+src-mount-export,packages/marketing/src/bootstrap.js,17,export { mount };
+src-mount-call,packages/container/src/components/MarketingApp.js,9,    if (ref.current) mount(ref.current);
+src-mount-import,packages/container/src/components/MarketingApp.js,3,"import { mount } from ""marketing/MarketingApp"";"
+ops-hosting,.github/workflows/container.yml,36,      - run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/container/latest
+ops-hosting,.github/workflows/container.yml,42,"      - run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths ""/container/latest/index.html"""
+ops-hosting,.github/workflows/marketing.yml,34,      - run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/marketing/latest
+ops-hosting,.github/workflows/marketing.yml,40,"      - run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths ""/marketing/latest/remoteEntry.js"""
+ci-workflow-file,.github/workflows/container.yml,,
+ci-workflow-file,.github/workflows/marketing.yml,,
+ci-path-trigger,.github/workflows/container.yml,8,    paths:
+ci-path-trigger,.github/workflows/marketing.yml,8,    paths:
+doc-mfe-term,README.md,1,# Micro Frontend Project
+doc-mfe-term,README.md,3,"This project demonstrates a micro frontend architecture using **Webpack 5 Module Federation**. The `container` package is the host application. It loads the independently built `marketing` application at runtime. The `auth` and `dashboard` directories exist, but they are not currently connected to t"
+doc-integration-technology,README.md,3,"This project demonstrates a micro frontend architecture using **Webpack 5 Module Federation**. The `container` package is the host application. It loads the independently built `marketing` application at runtime. The `auth` and `dashboard` directories exist, but they are not currently connected to t"
+doc-integration-technology,README.md,19,"The container owns the top-level page and header. Its Module Federation configuration declares a remote named `marketing`, served in development from `http://localhost:8081/remoteEntry.js`. The container imports `marketing/MarketingApp` in `src/components/MarketingApp.js`, then calls the remote's ex"
+doc-integration-technology,README.md,25,"Marketing exposes `./MarketingApp` from `src/bootstrap.js` using Module Federation. That module exports `mount(element)`, which renders the marketing React app into the element supplied by the host. In development, it also mounts itself into `#_marketing-dev-root`, allowing the remote to run on its "
+doc-integration-technology,README.md,39,This is runtime composition: the container does not compile the marketing source into its own bundle as a normal source import. Module Federation coordinates loading the remote and sharing configured dependencies.
+doc-integration-technology,README.md,89,- `webpack.dev.js` configures the local dev server and Module Federation URLs.
+doc-integration-technology,README.md,94,"Both the host and remote configure `shared` from their package's dependencies. This lets Module Federation coordinate common dependencies such as React at runtime. The configuration shares the dependency list, but does not currently declare explicit singleton or version constraints."
+doc-runtime-loading,README.md,3,"This project demonstrates a micro frontend architecture using **Webpack 5 Module Federation**. The `container` package is the host application. It loads the independently built `marketing` application at runtime. The `auth` and `dashboard` directories exist, but they are not currently connected to t"
+doc-runtime-loading,README.md,29,### Runtime loading
+doc-runtime-loading,README.md,39,This is runtime composition: the container does not compile the marketing source into its own bundle as a normal source import. Module Federation coordinates loading the remote and sharing configured dependencies.
+doc-runtime-loading,README.md,94,"Both the host and remote configure `shared` from their package's dependencies. This lets Module Federation coordinate common dependencies such as React at runtime. The configuration shares the dependency list, but does not currently declare explicit singleton or version constraints."
+doc-independence,README.md,3,"This project demonstrates a micro frontend architecture using **Webpack 5 Module Federation**. The `container` package is the host application. It loads the independently built `marketing` application at runtime. The `auth` and `dashboard` directories exist, but they are not currently connected to t"
+doc-host-remote,README.md,19,"The container owns the top-level page and header. Its Module Federation configuration declares a remote named `marketing`, served in development from `http://localhost:8081/remoteEntry.js`. The container imports `marketing/MarketingApp` in `src/components/MarketingApp.js`, then calls the remote's ex"
+doc-host-remote,README.md,25,"Marketing exposes `./MarketingApp` from `src/bootstrap.js` using Module Federation. That module exports `mount(element)`, which renders the marketing React app into the element supplied by the host. In development, it also mounts itself into `#_marketing-dev-root`, allowing the remote to run on its "
+doc-host-remote,README.md,34,2. The container requests the marketing remote entry from port `8081`.
+doc-host-remote,README.md,36,"4. The container imports `MarketingApp`, obtains `mount`, and mounts the remote into its page."
+doc-host-remote,README.md,37,5. Webpack loads any additional chunks the host or remote needs.
+doc-host-remote,README.md,39,This is runtime composition: the container does not compile the marketing source into its own bundle as a normal source import. Module Federation coordinates loading the remote and sharing configured dependencies.
+doc-host-remote,README.md,45,"| `packages/container` | Host shell, header, and marketing remote integration | Implemented; runs on port `8080`                                                                                          |"
+doc-host-remote,README.md,68,"Open **http://localhost:8080** to see the composed application. The marketing remote must be running because the container fetches it from port `8081`. To work on the remote by itself, open **http://localhost:8081**."
+doc-host-remote,README.md,82,"Webpack writes build artifacts to each package's `dist/` directory. Production output uses content-hashed JavaScript filenames. The marketing build also emits `remoteEntry.js`, which the host needs to locate and load the remote's exposed module."
+doc-host-remote,README.md,94,"Both the host and remote configure `shared` from their package's dependencies. This lets Module Federation coordinate common dependencies such as React at runtime. The configuration shares the dependency list, but does not currently declare explicit singleton or version constraints."
+doc-host-remote,README.md,98,The container's production Webpack config uses `PRODUCTION_DOMAIN` to locate the marketing remote at:
+doc-host-remote,README.md,108,"Both `container/src/App.js` and `marketing/src/App.js` currently render a `BrowserRouter`. Since the host mounts marketing inside its own router, this creates nested routers in the composed application. React Router generally does not support nesting `BrowserRouter` instances. If routing behaves une"

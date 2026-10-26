@@ -1,0 +1,32 @@
+{
+  "navbar": {
+    "main": [
+      {
+        "kind": "metalk8s-ui",
+        "view": "platform"
+      },
+      {
+        "kind": "metalk8s-ui",
+        "view": "alerts"
+      }
+    ],
+    "subLogin": []
+  },
+  "discoveryUrl": "/shell/deployed-ui-apps.json",
+  "productName": "MetalK8s",
+  "canChangeTheme": true,
+  "canUseGuardian": false,
+  "guardianOrigin": "http://localhost:8080",
+  "themes": {
+    "dark": {
+      "type": "core-ui",
+      "name": "darkRebrand",
+      "logoPath": "/brand/assets/logo-dark.svg"
+    },
+    "light": {
+      "type": "core-ui",
+      "name": "artescaLight",
+      "logoPath": "/brand/assets/logo-light.svg"
+    }
+  }
+}

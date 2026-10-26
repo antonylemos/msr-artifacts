@@ -1,0 +1,135 @@
+pattern,path,line,excerpt
+dep-module-federation,src/frontend/apps/ui-catalog-consumer/package.json,13,"		""@originjs/vite-plugin-federation"": ""^1.4.1"","
+dep-module-federation,src/frontend/apps/ui-catalog-merchant/package.json,13,"		""@originjs/vite-plugin-federation"": ""^1.4.1"","
+dep-module-federation,src/frontend/apps/ui-catalog/package.json,13,"		""@originjs/vite-plugin-federation"": ""^1.4.1"","
+lock-mfe-dependency,src/frontend/apps/ui-catalog-consumer/pnpm-lock.yaml,11,      '@originjs/vite-plugin-federation':
+lock-mfe-dependency,src/frontend/apps/ui-catalog-consumer/pnpm-lock.yaml,208,  '@originjs/vite-plugin-federation@1.4.1':
+lock-mfe-dependency,src/frontend/apps/ui-catalog-consumer/pnpm-lock.yaml,1119,  '@originjs/vite-plugin-federation@1.4.1':
+lock-mfe-dependency,src/frontend/apps/ui-catalog-merchant/pnpm-lock.yaml,11,      '@originjs/vite-plugin-federation':
+lock-mfe-dependency,src/frontend/apps/ui-catalog-merchant/pnpm-lock.yaml,208,  '@originjs/vite-plugin-federation@1.4.1':
+lock-mfe-dependency,src/frontend/apps/ui-catalog-merchant/pnpm-lock.yaml,1119,  '@originjs/vite-plugin-federation@1.4.1':
+lock-mfe-dependency,src/frontend/apps/ui-catalog/pnpm-lock.yaml,11,      '@originjs/vite-plugin-federation':
+lock-mfe-dependency,src/frontend/apps/ui-catalog/pnpm-lock.yaml,208,  '@originjs/vite-plugin-federation@1.4.1':
+lock-mfe-dependency,src/frontend/apps/ui-catalog/pnpm-lock.yaml,1119,  '@originjs/vite-plugin-federation@1.4.1':
+cfg-federation-plugin,src/frontend/apps/ui-catalog-consumer/vite.config.ts,16,		federation({
+cfg-federation-plugin,src/frontend/apps/ui-catalog-merchant/vite.config.ts,16,		federation({
+cfg-federation-plugin,src/frontend/apps/ui-catalog/vite.config.ts,85,    federation({
+cfg-remotes,src/frontend/apps/ui-catalog/vite.config.ts,87,"      remotes: federationRemotes,"
+cfg-exposes,src/frontend/apps/ui-catalog-consumer/vite.config.ts,19,			exposes: {
+cfg-exposes,src/frontend/apps/ui-catalog-merchant/vite.config.ts,19,			exposes: {
+cfg-shared,src/frontend/apps/ui-catalog-consumer/vite.config.ts,22,"			shared: [""react"", ""react-dom"", ""react-router-dom""],"
+cfg-shared,src/frontend/apps/ui-catalog-merchant/vite.config.ts,22,"			shared: [""react"", ""react-dom"", ""react-router-dom""],"
+cfg-shared,src/frontend/apps/ui-catalog/vite.config.ts,88,"      shared: ['react', 'react-dom', 'react-router-dom'],"
+cfg-public-path,src/frontend/apps/ui-catalog/vite.config.ts,75,"  base: '/ui-catalog/',"
+rt-remote-entry,src/frontend/apps/ui-catalog-consumer/vite.config.ts,18,"			filename: ""remoteEntry.js"","
+rt-remote-entry,src/frontend/apps/ui-catalog-merchant/vite.config.ts,18,"			filename: ""remoteEntry.js"","
+src-remote-import,src/frontend/apps/ui-catalog/vite.config.ts,37,"    Component: React.lazy(() => import(""${app.scope}/${modulePath}""))"
+ops-deployment-file,src/backend/Catalog.App/Dockerfile,,
+ops-deployment-file,src/backend/Catalog.Chat/Dockerfile,,
+ops-deployment-file,src/backend/Catalog.Gateway/Dockerfile,,
+ops-deployment-file,src/backend/Catalog.Rag/Dockerfile,,
+ops-deployment-file,src/frontend/apps/ui-catalog-consumer/Dockerfile,,
+ops-deployment-file,src/frontend/apps/ui-catalog-merchant/Dockerfile,,
+ops-deployment-file,src/frontend/apps/ui-catalog/Dockerfile,,
+ops-dockerfile,src/backend/Catalog.App/Dockerfile,1,FROM mcr.microsoft.com/dotnet/sdk:10.0-preview AS build
+ops-dockerfile,src/backend/Catalog.App/Dockerfile,15,FROM mcr.microsoft.com/dotnet/aspnet:10.0-preview AS runtime
+ops-dockerfile,src/backend/Catalog.Chat/Dockerfile,1,FROM mcr.microsoft.com/dotnet/sdk:10.0-preview AS build
+ops-dockerfile,src/backend/Catalog.Chat/Dockerfile,15,FROM mcr.microsoft.com/dotnet/aspnet:10.0-preview AS runtime
+ops-dockerfile,src/backend/Catalog.Gateway/Dockerfile,1,FROM mcr.microsoft.com/dotnet/sdk:10.0-preview AS build
+ops-dockerfile,src/backend/Catalog.Gateway/Dockerfile,15,FROM mcr.microsoft.com/dotnet/aspnet:10.0-preview AS runtime
+ops-dockerfile,src/backend/Catalog.Rag/Dockerfile,1,FROM mcr.microsoft.com/dotnet/sdk:10.0-preview AS build
+ops-dockerfile,src/backend/Catalog.Rag/Dockerfile,15,FROM mcr.microsoft.com/dotnet/aspnet:10.0-preview AS runtime
+ops-dockerfile,src/frontend/apps/ui-catalog-consumer/Dockerfile,1,FROM node:22-alpine AS build
+ops-dockerfile,src/frontend/apps/ui-catalog-consumer/Dockerfile,16,FROM nginx:alpine AS runtime
+ops-dockerfile,src/frontend/apps/ui-catalog-merchant/Dockerfile,1,FROM node:22-alpine AS build
+ops-dockerfile,src/frontend/apps/ui-catalog-merchant/Dockerfile,16,FROM nginx:alpine AS runtime
+ops-dockerfile,src/frontend/apps/ui-catalog/Dockerfile,1,FROM node:22-alpine AS build
+ops-dockerfile,src/frontend/apps/ui-catalog/Dockerfile,16,FROM nginx:alpine AS runtime
+ci-workflow-file,.github/workflows/ci-pipeline.yml,,
+ci-workflow-file,.github/workflows/copilot-code-review.yml,,
+ci-workflow-file,.github/workflows/delete-merged-branch.yml,,
+doc-mfe-term,Agents.md,15,- **React 19 Micro Frontends (MFEs)** using Vite and Module Federation.
+doc-mfe-term,Agents.md,90,│   ├── frontend/                     # React 19 Micro Frontends Workspace
+doc-mfe-term,Agents.md,93,│   │       ├── ui-catalog/           # Host Shell MFE (Port 3000)
+doc-mfe-term,Agents.md,94,│   │       ├── ui-catalog-merchant/  # Merchant / Vendor Catalog MFE (Port 3001)
+doc-mfe-term,Agents.md,95,│   │       └── ui-catalog-consumer/  # Customer / Shopper Catalog MFE (Port 3002)
+doc-mfe-term,Agents.md,145,## 4. Frontend Micro Frontend (MFE) Architecture
+doc-mfe-term,Agents.md,151,"| `src/frontend/apps/ui-catalog`          | **Shell Host App** | Host                   | `3000`   | Global layout, top navigation, Auth provider context, dynamic remote MFE router   |"
+doc-mfe-term,Agents.md,152,"| `src/frontend/apps/ui-catalog-merchant` | **Merchant MFE**   | Remote (`merchantApp`) | `3001`   | Vendor product management, draft creation, AI Copilot review & approval           |"
+doc-mfe-term,Agents.md,153,"| `src/frontend/apps/ui-catalog-consumer` | **Consumer MFE**   | Remote (`consumerApp`) | `3002`   | Customer catalog browse, product detail pages, embedded RAG Chat Assistant widget |"
+doc-mfe-term,Agents.md,161,"- **State Boundaries**: Keep remote MFE state self-contained. Use global context only for authentication tokens, active user profile, and global notifications."
+doc-mfe-term,Agents.md,319,# Run Merchant MFE (port 3001)
+doc-mfe-term,Agents.md,322,# Run Consumer MFE (port 3002)
+doc-mfe-term,Agents.md,383,- **DO** verify service and MFE boundaries before adding cross-service features.
+doc-mfe-term,Agents.md,387,- **DO** maintain Module Federation contracts and shared dependency configs when modifying MFE remotes.
+doc-mfe-term,documents/component_boundaries.md,16,"│   ├── frontend/                  # React 18 Micro Frontends (Shell, Catalog, Copilot, Assistant)"
+doc-mfe-term,documents/component_boundaries.md,23,## 1. Micro Frontends (MFE) Boundaries
+doc-mfe-term,documents/component_boundaries.md,27,|                              SHELL MFE                                |
+doc-mfe-term,documents/component_boundaries.md,34,|     VENDOR CATALOG MFE        |  |  AI MERCHANDISING COPILOT MFE |  |    CATALOG ASSISTANT MFE      |
+doc-mfe-term,documents/component_boundaries.md,41,### 1.1 Shell / Container MFE
+doc-mfe-term,documents/component_boundaries.md,42,"* **Responsibility**: Application entry point, layout shell, global navigation, authentication token management, and dynamic loading of remote MFEs."
+doc-mfe-term,documents/component_boundaries.md,46,"  * Exposes a React Context/Event Bus for cross-MFE communication (e.g., `onAuthTokenChange`, `onToastMessage`)."
+doc-mfe-term,documents/component_boundaries.md,48,### 1.2 Vendor Catalog MFE
+doc-mfe-term,documents/component_boundaries.md,56,### 1.3 AI Merchandising Copilot MFE
+doc-mfe-term,documents/component_boundaries.md,66,### 1.4 Catalog Assistant MFE
+doc-mfe-term,documents/component_boundaries.md,71,"  * Isolated, lightweight widget with zero dependency on Vendor MFEs."
+doc-mfe-term,documents/component_plans/06_shell_mfe.md,1,# Implementation Plan: Shell Micro Frontend (React 18 + Vite)
+doc-mfe-term,documents/component_plans/06_shell_mfe.md,4,"The Shell MFE is the host container application. Built with React 18, Vite, and Module Federation, it provides the main layout, top navigation bar, authentication context (`AuthProvider`), and dynamically loads remote MFEs based on active routes."
+doc-mfe-term,documents/component_plans/06_shell_mfe.md,20,│   │   └── AuthContext.tsx          # Shares JWT & User details across MFEs
+doc-mfe-term,documents/component_plans/06_shell_mfe.md,67,1. Run `npm run dev` for Shell MFE on port `3000`.
+doc-mfe-term,documents/component_plans/06_shell_mfe.md,69,3. Test Auth state propagation to remote MFEs.
+doc-mfe-term,documents/component_plans/07_vendor_catalog_mfe.md,1,# Implementation Plan: Vendor Catalog Micro Frontend (React 18 + Vite)
+doc-mfe-term,documents/component_plans/07_vendor_catalog_mfe.md,4,"The Vendor Catalog MFE is dedicated to product lifecycle management. Vendors can create raw product entries, view real-time inventory tables, assign categories, and monitor product statuses (`Draft` → `Enriching` → `Pending Review` → `Published`)."
+doc-mfe-term,documents/component_plans/07_vendor_catalog_mfe.md,10,Catalog.AI.App/src/frontend/catalog-mfe/
+doc-mfe-term,documents/component_plans/08_copilot_mfe.md,1,# Implementation Plan: AI Merchandising Copilot Micro Frontend (React 18)
+doc-mfe-term,documents/component_plans/08_copilot_mfe.md,4,"The AI Merchandising Copilot MFE provides vendors with a side-by-side review interface. Vendors can compare raw product details against AI-generated SEO titles, marketing descriptions, feature bullet points, and auto-generated tags generated by the containerized SLM before approving or tweaking them"
+doc-mfe-term,documents/component_plans/08_copilot_mfe.md,10,Catalog.AI.App/src/frontend/copilot-mfe/
+doc-mfe-term,documents/component_plans/09_catalog_assistant_mfe.md,1,# Implementation Plan: Catalog Assistant Micro Frontend (React 18)
+doc-mfe-term,documents/component_plans/09_catalog_assistant_mfe.md,4,"The Catalog Assistant MFE is an embeddable customer-facing widget. Rendered on product detail pages, it provides shoppers with a chat interface to ask natural language questions about product specifications, consuming real-time streaming RAG responses."
+doc-mfe-term,documents/component_plans/09_catalog_assistant_mfe.md,10,Catalog.AI.App/src/frontend/catalog-assistant-mfe/
+doc-mfe-term,documents/implementation_plan.md,3,"Building an end-to-end, production-ready E-Commerce Merchandising & Catalog AI platform from scratch for learning purposes. The platform utilizes React Micro Frontends (MFEs), .NET 8 Core Microservices, an event-driven architecture with RabbitMQ, Redis caching, PostgreSQL with `pgvector` for RAG/sem"
+doc-mfe-term,documents/implementation_plan.md,21,                                |   React Micro-Frontends (Vite)    |
+doc-mfe-term,documents/implementation_plan.md,23,                                |  - Vendor Catalog MFE             |
+doc-mfe-term,documents/implementation_plan.md,24,                                |  - AI Merchandising Copilot MFE   |
+doc-mfe-term,documents/implementation_plan.md,25,                                |  - Catalog Assistant MFE          |
+doc-mfe-term,documents/implementation_plan.md,56,### 1. Frontend: React Micro Frontends (MFE)
+doc-mfe-term,documents/implementation_plan.md,59,* **State & Querying**: TanStack Query (React Query) + Zustand for local MFE state.
+doc-mfe-term,documents/implementation_plan.md,94,│   ├── frontend/                  # React 18 + Vite Micro-Frontends (MFEs)
+doc-mfe-term,documents/implementation_plan.md,96,│   │   ├── catalog-mfe/           # Vendor Catalog Management MFE
+doc-mfe-term,documents/implementation_plan.md,97,│   │   ├── copilot-mfe/           # AI Merchandising Copilot Review MFE
+doc-mfe-term,documents/implementation_plan.md,98,│   │   └── catalog-assistant-mfe/ # Customer-facing RAG Chat Assistant MFE
+doc-mfe-term,documents/implementation_plan.md,127,### Phase 3: React Micro Frontends (MFE) Development
+doc-mfe-term,documents/implementation_plan.md,128,"- **MFE Shell Container App**: Host application with global navbar, authentication layout, and dynamic MFE router."
+doc-mfe-term,documents/implementation_plan.md,129,"- **Vendor Catalog MFE**: Product table, raw product creation form, status indicator (Draft -> Enriching -> Published)."
+doc-mfe-term,documents/implementation_plan.md,130,"- **AI Merchandising Copilot MFE**: Side-by-side comparison view allowing vendors to review, edit, and approve AI-generated SEO titles, bullet points, and tags."
+doc-mfe-term,documents/implementation_plan.md,131,- **Catalog Assistant MFE**: Embeddable React widget & shopper interface featuring a lightweight chat UI for natural language product questions.
+doc-mfe-term,documents/implementation_plan.md,144,  - Shell MFE `AuthProvider` context and `<ProtectedRoute>` route guards for remote MFEs.
+doc-mfe-term,documents/implementation_plan.md,158,- **Frontend**: Vitest + React Testing Library for MFE components.
+doc-mfe-term,documents/implementation_plan.md,163,"   - Create a basic product in Vendor Catalog MFE (""Stainless Steel Water Bottle 750ml"")."
+doc-mfe-term,documents/implementation_plan.md,166,   - Verify enriched output appears in the Copilot MFE for vendor approval.
+doc-mfe-term,documents/implementation_plan.md,168,"   - Ask a question in the Catalog Assistant MFE (""Is this bottle dishwasher safe?"")."
+doc-mfe-term,documents/sequence_diagrams.md,9,"This workflow illustrates how a vendor submits a raw product entry, which is then asynchronously processed by the `.NET 8 AI Worker` microservice using the containerized `Ollama SLM`, and presented to the vendor for review in the `Copilot MFE`."
+doc-mfe-term,documents/sequence_diagrams.md,15,    participant CatMFE as Vendor Catalog MFE
+doc-mfe-term,documents/sequence_diagrams.md,16,    participant CopilotMFE as Copilot MFE
+doc-mfe-term,documents/sequence_diagrams.md,67,    participant AssistantMFE as Catalog Assistant MFE
+doc-mfe-term,documents/v2_auth_and_sla_spec.md,16,│   ├── frontend/                  # React 18 Micro Frontends (Auth Guards)
+doc-mfe-term,documents/v2_auth_and_sla_spec.md,27,|                                  FRONTEND (MFE)                                   |
+doc-mfe-term,documents/v2_auth_and_sla_spec.md,68,### 1.2 Frontend MFE Auth Boundaries
+doc-mfe-term,documents/v2_auth_and_sla_spec.md,69,* **Shell Container MFE**:
+doc-mfe-term,documents/v2_auth_and_sla_spec.md,72,"  * Provides `useAuth()` hook for sub-MFEs (`catalog-mfe`, `copilot-mfe`)."
+doc-mfe-term,documents/v2_auth_and_sla_spec.md,74,  * `Vendor Catalog MFE`: Guarded by `Vendor` or `Admin` role.
+doc-mfe-term,documents/v2_auth_and_sla_spec.md,75,  * `Copilot MFE`: Guarded by `Vendor` or `Admin` role.
+doc-mfe-term,documents/v2_auth_and_sla_spec.md,76,  * `Catalog Assistant MFE`: Public access; no authentication required.
+doc-integration-technology,Agents.md,15,- **React 19 Micro Frontends (MFEs)** using Vite and Module Federation.
+doc-integration-technology,Agents.md,387,- **DO** maintain Module Federation contracts and shared dependency configs when modifying MFE remotes.
+doc-integration-technology,documents/component_boundaries.md,29,|  - Dynamic Remote Module Loader (Module Federation)                   |
+doc-integration-technology,documents/component_plans/06_shell_mfe.md,4,"The Shell MFE is the host container application. Built with React 18, Vite, and Module Federation, it provides the main layout, top navigation bar, authentication context (`AuthProvider`), and dynamically loads remote MFEs based on active routes."
+doc-integration-technology,documents/component_plans/06_shell_mfe.md,11,├── vite.config.ts                   # Module Federation Host configuration
+doc-integration-technology,documents/component_plans/06_shell_mfe.md,28,### Step 1: Vite Module Federation Setup (`vite.config.ts`)
+doc-integration-technology,documents/component_plans/07_vendor_catalog_mfe.md,11,├── vite.config.ts                   # Module Federation Remote configuration
+doc-integration-technology,documents/implementation_plan.md,57,* **Framework**: React 18 + TypeScript + Vite + Module Federation / Single-SPA.
+doc-host-remote,Agents.md,151,"| `src/frontend/apps/ui-catalog`          | **Shell Host App** | Host                   | `3000`   | Global layout, top navigation, Auth provider context, dynamic remote MFE router   |"
+doc-host-remote,Agents.md,160,"- **Shared Dependencies**: Shell and remotes share singletons for `react`, `react-dom`, and `react-router-dom`."
+doc-host-remote,documents/component_boundaries.md,42,"* **Responsibility**: Application entry point, layout shell, global navigation, authentication token management, and dynamic loading of remote MFEs."
+doc-host-remote,documents/component_plans/06_shell_mfe.md,4,"The Shell MFE is the host container application. Built with React 18, Vite, and Module Federation, it provides the main layout, top navigation bar, authentication context (`AuthProvider`), and dynamically loads remote MFEs based on active routes."
+doc-host-remote,documents/implementation_plan.md,144,  - Shell MFE `AuthProvider` context and `<ProtectedRoute>` route guards for remote MFEs.

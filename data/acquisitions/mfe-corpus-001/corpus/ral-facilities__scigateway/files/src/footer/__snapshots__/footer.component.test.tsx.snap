@@ -1,0 +1,66 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Footer component > footer renders correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="css-1dqylve"
+  >
+    <div
+      style="text-align: left; font-weight: bold; font-size: 14px; text-indent: 16px; display: inline-block;"
+    >
+      <a
+        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-bb0cn9-MuiTypography-root-MuiLink-root"
+        href="footer.links.facility"
+      >
+        Facility Home
+      </a>
+       | 
+      <a
+        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-bb0cn9-MuiTypography-root-MuiLink-root"
+        href="footer.links.privacy-statement"
+      >
+        Privacy statement
+      </a>
+       | 
+      <a
+        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-bb0cn9-MuiTypography-root-MuiLink-root"
+        href="footer.links.data-policy"
+      >
+        Data policy
+      </a>
+       | 
+      <a
+        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-bb0cn9-MuiTypography-root-MuiLink-root"
+        data-discover="true"
+        href="/accessibility"
+      >
+        Accessibilty statement
+      </a>
+       | 
+      <a
+        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-bb0cn9-MuiTypography-root-MuiLink-root"
+        href="footer.links.contact"
+      >
+        Contact
+      </a>
+    </div>
+    <div
+      style="text-align: right; font-size: 14px; right: 0px; padding-right: 16px; margin-left: auto;"
+    >
+      Built by the
+      <a
+        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-bb0cn9-MuiTypography-root-MuiLink-root"
+        href="https://www.scd.stfc.ac.uk/Pages/home.aspx"
+      >
+        Scientific Computing
+      </a>
+      <a
+        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-bb0cn9-MuiTypography-root-MuiLink-root"
+        href="https://www.scd.stfc.ac.uk/Pages/Software-Engineering-Group.aspx"
+      >
+        Data and Software Engineering Group
+      </a>
+    </div>
+  </div>
+</DocumentFragment>
+`;

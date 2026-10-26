@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "id": "1384034898",
+  "fullName": "horoshopodumaj/micro-frontends",
+  "commit": "e1e0a52e4ce5b444ad774b3db87bfaf30cbacf05",
+  "acquiredAt": "2026-10-24T00:32:22.963Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 46,
+    "bytes": 822061
+  },
+  "languages": {
+    "JSON": 797849,
+    "TypeScript": 11171,
+    "Other": 5806,
+    "Markdown": 5041,
+    "Vue": 918,
+    "HTML": 659,
+    "CSS": 617
+  },
+  "contentSha256": "de13cb077f9ab68a91579414f367be3144712e1ea80e2e5cc93f67849af2e0b1"
+}

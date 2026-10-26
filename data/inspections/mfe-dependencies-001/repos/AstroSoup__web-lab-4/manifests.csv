@@ -1,0 +1,4 @@
+manifest,state
+frontend/vite/host/package.json,ok
+frontend/vite/remote-inputs/package.json,ok
+frontend/vite/remote-results/package.json,ok

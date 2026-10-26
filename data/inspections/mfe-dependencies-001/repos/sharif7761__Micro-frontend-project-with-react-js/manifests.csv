@@ -1,0 +1,5 @@
+manifest,state
+common_simple/package.json,ok
+core_simple/package.json,ok
+package.json,ok
+users_simple/package.json,ok

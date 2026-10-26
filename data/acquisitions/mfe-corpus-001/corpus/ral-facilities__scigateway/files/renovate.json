@@ -1,0 +1,21 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "schedule:nonOfficeHours",
+    ":maintainLockFilesWeekly",
+    "security:minimumReleaseAgeNpm",
+    "helpers:pinGitHubActionDigests"
+  ],
+  "postUpdateOptions": ["yarnDedupeHighest"],
+  "labels": ["dependencies"],
+  "separateMinorPatch": true,
+  "patch": {
+    "enabled": false
+  },
+  "vulnerabilityAlerts": {
+    "patch": {
+      "enabled": true
+    }
+  }
+}

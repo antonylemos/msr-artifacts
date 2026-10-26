@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "id": "1130037642",
+  "fullName": "martinkuba/micro-frontend-test",
+  "commit": "f629b5bec52818c0c0c1cdc115bcd3d712ebbb93",
+  "acquiredAt": "2026-10-24T00:32:34.709Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 23,
+    "bytes": 222330
+  },
+  "languages": {
+    "JSON": 198253,
+    "TypeScript": 18865,
+    "JavaScript": 3944,
+    "Markdown": 764,
+    "HTML": 484,
+    "Other": 20
+  },
+  "contentSha256": "5f39218675bad5d2d0ef1d7a254860239aeb877f0beb9ba4969bc355c4bcbf7b"
+}

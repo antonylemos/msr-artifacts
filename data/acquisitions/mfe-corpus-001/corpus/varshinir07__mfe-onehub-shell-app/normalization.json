@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "id": "996744917",
+  "fullName": "varshinir07/mfe-onehub-shell-app",
+  "commit": "1ddddc4241157e335c1b6e39372f050aa1705c1d",
+  "acquiredAt": "2026-10-24T00:32:26.254Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 3870
+    },
+    {
+      "path": "public/logo192.png",
+      "reason": "preset:binaries",
+      "size": 5347
+    },
+    {
+      "path": "public/logo512.png",
+      "reason": "preset:binaries",
+      "size": 9664
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 16,
+    "bytes": 726449
+  },
+  "languages": {
+    "JSON": 711571,
+    "JavaScript": 6149,
+    "Markdown": 3411,
+    "SVG": 2632,
+    "HTML": 1689,
+    "CSS": 930,
+    "Other": 67
+  },
+  "contentSha256": "06195ba04af0218884e0638f12c7e21c1b38b6b9cb4a9f6c7d1ef572eeab9a6f"
+}

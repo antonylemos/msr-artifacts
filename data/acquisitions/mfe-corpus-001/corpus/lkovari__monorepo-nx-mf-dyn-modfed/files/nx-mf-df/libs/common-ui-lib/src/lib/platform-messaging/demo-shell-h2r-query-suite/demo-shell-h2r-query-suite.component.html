@@ -1,0 +1,207 @@
+<div class="c-demo-query-suite">
+  <p-button
+    type="button"
+    size="small"
+    severity="secondary"
+    styleClass="c-demo-query-suite__btn"
+    [disabled]="!bridgeAvailable()"
+    (onClick)="openRequestDialog()"
+    ariaLabel="Open demo query request dialog"
+  >
+    <span class="c-demo-query-suite__btn-label c-demo-query-suite__btn-label--long"
+      >Demo query</span
+    >
+    <span class="c-demo-query-suite__btn-label c-demo-query-suite__btn-label--short"
+      >Query</span
+    >
+  </p-button>
+  <p-button
+    type="button"
+    size="small"
+    severity="secondary"
+    styleClass="c-demo-query-suite__btn"
+    [disabled]="!canSendCommand()"
+    [loading]="sendingCommand()"
+    (onClick)="sendCommand()"
+    ariaLabel="Send demo command"
+  >
+    <span class="c-demo-query-suite__btn-label c-demo-query-suite__btn-label--long"
+      >Demo command</span
+    >
+    <span class="c-demo-query-suite__btn-label c-demo-query-suite__btn-label--short"
+      >Command</span
+    >
+  </p-button>
+  <p-button
+    type="button"
+    size="small"
+    severity="secondary"
+    styleClass="c-demo-query-suite__btn"
+    [outlined]="true"
+    (onClick)="openQueueDialog()"
+    ariaLabel="Open demo queue"
+  >
+    <span class="c-demo-query-suite__btn-label c-demo-query-suite__btn-label--long"
+      >Demo Queue</span
+    >
+    <span class="c-demo-query-suite__btn-label c-demo-query-suite__btn-label--short"
+      >Queue</span
+    >
+  </p-button>
+</div>
+
+<p-dialog
+  header="Send demo query"
+  [modal]="true"
+  [dismissableMask]="true"
+  [visible]="requestDialogOpen()"
+  (visibleChange)="onRequestDialogVisibleChange($event)"
+  styleClass="c-demo-query-dialog max-w-[min(100vw-2rem,22rem)] [&_.p-dialog-content]:p-3 [&_.p-dialog-header]:px-3 [&_.p-dialog-header]:pb-2 [&_.p-dialog-header]:pt-3"
+>
+  @if (requestDialogOpen()) {
+    <form class="c-demo-query-dialog__form" (ngSubmit)="sendQuery()">
+      <div class="c-demo-query-dialog__field">
+        <label class="c-demo-query-dialog__label" for="demo-query-target-dialog"
+          >Target remote</label
+        >
+        <p-select
+          inputId="demo-query-target-dialog"
+          size="small"
+          [options]="targetOptions"
+          [(ngModel)]="selectedTarget"
+          name="demoQueryTarget"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Remote"
+          styleClass="c-demo-query-dialog__select"
+          ariaLabel="Demo query target remote"
+        />
+      </div>
+      <div class="c-demo-query-dialog__field">
+        <label class="c-demo-query-dialog__label" for="demo-query-question"
+          >Request (question)</label
+        >
+        <input
+          pInputText
+          id="demo-query-question"
+          class="c-demo-query-dialog__input w-full"
+          name="demoQueryQuestion"
+          [(ngModel)]="questionText"
+          autocomplete="off"
+          required
+        />
+      </div>
+      <div class="c-demo-query-dialog__actions">
+        <p-button
+          type="button"
+          label="Cancel"
+          severity="secondary"
+          size="small"
+          (onClick)="closeRequestDialog()"
+        />
+        <p-button
+          type="submit"
+          label="Send query"
+          size="small"
+          [disabled]="!canSendQuery()"
+          [loading]="sendingQuery()"
+        />
+      </div>
+    </form>
+  }
+</p-dialog>
+
+<p-dialog
+  header="Reply to demo query"
+  [modal]="true"
+  [dismissableMask]="false"
+  [closable]="true"
+  [visible]="responseDialogOpen()"
+  (visibleChange)="onResponseDialogVisibleChange($event)"
+  styleClass="c-demo-query-dialog max-w-[min(100vw-2rem,24rem)] [&_.p-dialog-content]:p-3 [&_.p-dialog-header]:px-3 [&_.p-dialog-header]:pb-2 [&_.p-dialog-header]:pt-3"
+>
+  @if (responsePrompt(); as prompt) {
+    <div class="c-demo-query-dialog__form">
+      <div class="c-demo-query-dialog__incoming">
+        <span class="c-demo-query-dialog__incoming-label">Received from</span>
+        <span class="c-demo-query-dialog__incoming-value">{{ prompt.request.source }}</span>
+        <span class="c-demo-query-dialog__incoming-label">To</span>
+        <span class="c-demo-query-dialog__incoming-value">{{ prompt.responderId }}</span>
+        <p class="c-demo-query-dialog__incoming-message">{{ prompt.request.payload.q }}</p>
+      </div>
+      <div class="c-demo-query-dialog__field">
+        <label class="c-demo-query-dialog__label" for="demo-query-response"
+          >Your response</label
+        >
+        <input
+          pInputText
+          id="demo-query-response"
+          class="c-demo-query-dialog__input w-full"
+          name="demoQueryResponse"
+          [(ngModel)]="responseText"
+          autocomplete="off"
+          required
+        />
+      </div>
+      <div class="c-demo-query-dialog__actions">
+        <p-button
+          type="button"
+          label="Cancel"
+          severity="secondary"
+          size="small"
+          (onClick)="dismissResponse()"
+        />
+        <p-button
+          type="button"
+          label="Send response"
+          size="small"
+          [disabled]="responseText.trim().length === 0"
+          (onClick)="submitResponse()"
+        />
+      </div>
+    </div>
+  }
+</p-dialog>
+
+<p-dialog
+  header="Demo queue"
+  [modal]="true"
+  [dismissableMask]="true"
+  [visible]="queueDialogOpen()"
+  (visibleChange)="onQueueDialogVisibleChange($event)"
+  styleClass="c-demo-query-dialog c-demo-query-dialog--queue max-w-[min(100vw-2rem,28rem)] [&_.p-dialog-content]:p-3 [&_.p-dialog-header]:px-3 [&_.p-dialog-header]:pb-2 [&_.p-dialog-header]:pt-3"
+>
+  <div class="c-demo-queue">
+    @if (queueEntries().length === 0) {
+      <p class="c-demo-queue__empty">No demo query messages yet.</p>
+    } @else {
+      <ul class="c-demo-queue__list">
+        @for (entry of queueEntries(); track entry.id) {
+          <li class="c-demo-queue__item">
+            <div class="c-demo-queue__item-head">
+              <span class="c-demo-queue__badge" [class]="queueBadgeClass(entry)">{{
+                queueStatusLabel(entry)
+              }}</span>
+              <span class="c-demo-queue__kind">{{ entry.kind === 'incoming' ? 'Incoming' : 'Outgoing' }}</span>
+            </div>
+            <p class="c-demo-queue__route">
+              {{ entry.source }} → {{ entry.target || 'broadcast' }}
+            </p>
+            <p class="c-demo-queue__question">
+              <span class="c-demo-queue__label">Q:</span> {{ entry.question }}
+            </p>
+            @if (entry.kind === 'incoming' && entry.answer) {
+              <p class="c-demo-queue__answer">
+                <span class="c-demo-queue__label">A:</span> {{ entry.answer }}
+              </p>
+            }
+            @if (entry.kind === 'incoming' && entry.status === 'awaiting-response') {
+              <p class="c-demo-queue__hint">Type your response in the dialog</p>
+            }
+            <p class="c-demo-queue__time">{{ entry.updatedAtUtc }}</p>
+          </li>
+        }
+      </ul>
+    }
+  </div>
+</p-dialog>

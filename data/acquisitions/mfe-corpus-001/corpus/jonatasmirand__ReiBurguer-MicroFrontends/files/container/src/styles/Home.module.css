@@ -1,0 +1,25 @@
+.container {
+  background: linear-gradient(135deg, #ff5722, #ff8c42, #8a3116);
+  min-height: 100vh;
+  padding: 30px 20px;
+  font-family: 'Inter', sans-serif;
+  color: #fff;
+}
+
+.logo {
+  display: flex;
+  margin: 0 auto; /* Centraliza horizontal */
+  margin-bottom: 20px;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+}
+
+
+.section {
+  max-width: 900px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  backdrop-filter: blur(6px);
+}

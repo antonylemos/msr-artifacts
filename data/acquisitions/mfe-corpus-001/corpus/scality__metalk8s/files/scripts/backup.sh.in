@@ -1,0 +1,184 @@
+#!/bin/bash
+set -e
+set -u
+set -o pipefail
+
+VERBOSE=${VERBOSE:-0}
+LOGFILE="/var/log/metalk8s/backup.log"
+TAR_OPTS=(
+    "--acls"
+    "--selinux"
+    "--xattrs"
+    "--atime-preserve"
+    "--preserve-permissions"
+)
+BACKUP_ARCHIVE="/var/lib/metalk8s/backups/$(date -u +%Y%m%d_%H%M%S).tar.gz"
+REPLICATION=1
+
+_usage() {
+    echo "$(basename "$0") [options]"
+    echo "Options:"
+    echo "-b/--backup-file <backup_file>:  Path to backup file"
+    echo "-l/--log-file <logfile_path>:    Path to log file"
+    echo "-v/--verbose:                    Run in verbose mode"
+}
+
+while (( "$#" )); do
+    case "$1" in
+        -v|--verbose)
+            VERBOSE=1
+        ;;
+        -l|--log-file)
+            LOGFILE="$2"
+            shift
+        ;;
+        -b|--backup-file)
+            BACKUP_ARCHIVE="$2"
+            shift
+        ;;
+        # Disable the backup replication on other master nodes
+        -n|--no-replication)
+            REPLICATION=0
+        ;;
+        *) # unsupported flags
+            echo "Error: Unsupported flag $1" >&2
+            _usage
+            exit 1
+        ;;
+    esac
+    shift
+done
+
+TMPFILES=$(mktemp -d)
+BACKUP_DIR=$(mktemp -d)
+
+BASE_DIR=$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
+# shellcheck disable=SC1090,SC1091
+. "$BASE_DIR"/common.sh
+
+mkdir -p "$(dirname "$LOGFILE")"
+
+rotate_logfile
+
+cat << EOF >> "${LOGFILE}"
+--- Backup started on $(date -u -R) ---
+EOF
+
+exec > >(tee -ia "${LOGFILE}") 2>&1
+
+cleanup() {
+    rm -rf "${TMPFILES}" || true
+    rm -rf "${BACKUP_DIR}" || true
+}
+
+trap cleanup EXIT
+
+_save_cp() {
+    local -r src="$(readlink -f "$1")"
+    local -r dst="$2"
+    if [ -f "$src" ]; then
+        echo "Copying '$src' to '$dst'"
+        if [ ! -d "$(dirname "$dst")" ]; then
+            echo "Creating '$(dirname "$dst")' directory"
+            mkdir -p "$(dirname "$dst")"
+        fi
+        cp -a "$src" "$dst"
+    elif [ -d "$src" ]; then
+        for filename in "$src"/*; do
+            _save_cp "$filename" "$dst/$(basename "$filename")"
+        done
+    else
+        die "Error: '$src' does not exists"
+    fi
+}
+
+backup_metalk8s_conf() {
+    _save_cp "/etc/metalk8s" "${BACKUP_DIR}/metalk8s"
+}
+
+backup_cas() {
+    local -r ca_dir='/etc/kubernetes/pki/'
+    local -a ca_files=(
+        'ca.key'
+        'ca.crt'
+        'front-proxy-ca.key'
+        'front-proxy-ca.crt'
+        'etcd/ca.key'
+        'etcd/ca.crt'
+        'sa.key'
+        'sa.pub'
+    )
+    for ca in "${ca_files[@]}"; do
+        _save_cp "${ca_dir}$ca" "${BACKUP_DIR}/kubernetes/pki/$ca"
+    done
+}
+
+backup_etcd() {
+    local -r etcd_snapshot="etcd_snapshot_$(date -u +%Y%m%d_%H%M%S)"
+    local etcd_container=''
+    echo "Snapshot etcd"
+    etcd_container="$(crictl ps -q \
+        --label io.kubernetes.pod.namespace=kube-system \
+        --label io.kubernetes.container.name=etcd \
+        --state Running)"
+    echo "Running etcdctl snapshot save in etcd container $etcd_container"
+    # Note: etcd image in Kubernetes 1.33+ is distroless (no shell), so we must
+    # exec etcdctl directly without using "sh -c".
+    # etcd 3.4+ defaults to API v3, so ETCDCTL_API=3 is no longer required.
+    # In distroless images, the root filesystem is read-only, so we save the
+    # snapshot to /var/lib/etcd which is a writable mounted volume.
+    "${EXEC_CONTAINER_COMMAND[@]}" "$etcd_container" \
+        etcdctl \
+        --endpoints=https://127.0.0.1:2379 \
+        --cert=/etc/kubernetes/pki/etcd/salt-master-etcd-client.crt \
+        --key=/etc/kubernetes/pki/etcd/salt-master-etcd-client.key \
+        --cacert=/etc/kubernetes/pki/etcd/ca.crt \
+        snapshot save "/var/lib/etcd/${etcd_snapshot}"
+
+    # In distroless images, we need to retrieve the snapshot from the mounted
+    # volume path on the host (/var/lib/etcd), not from the container rootfs.
+    local -r snapshot_file="/var/lib/etcd/${etcd_snapshot}"
+    if ! test -f "${snapshot_file}"; then
+        die "etcd snapshot file not found"
+    fi
+
+    _save_cp \
+        "${snapshot_file}" \
+        "${BACKUP_DIR}/etcd_snapshot"
+
+    rm "${snapshot_file}"
+}
+
+create_archive() {
+    if [ ! -d "$(dirname "$BACKUP_ARCHIVE")" ]; then
+        echo "Creating '$(dirname "$BACKUP_ARCHIVE")' directory"
+        mkdir -p "$(dirname "$BACKUP_ARCHIVE")"
+    fi
+    (
+        cd "$BACKUP_DIR" &&
+        find . -type f ! -name ".sha256sum" -exec sha256sum {} \;
+    ) > "$BACKUP_DIR/.sha256sum"
+    cat > "$BACKUP_DIR/.metadata" << EOF
+VERSION=@@VERSION
+DATE=$(date -u --iso-8601=seconds)
+EOF
+
+    tar "${TAR_OPTS[@]}" -C "$BACKUP_DIR" -cz -f "$BACKUP_ARCHIVE" ./
+}
+
+replicate_archives() {
+    salt_master_exec=("${EXEC_CONTAINER_COMMAND[@]}" "$(get_salt_container)")
+
+    "${salt_master_exec[@]}" salt-run --state-output=mixed state.orchestrate \
+        metalk8s.orchestrate.backup.replication \
+        saltenv=metalk8s-@@VERSION
+}
+
+run "Backing up MetalK8s configurations" backup_metalk8s_conf
+run "Backing up CAs certificates and keys" backup_cas
+run "Backing up etcd data" with_retry 20 15 backup_etcd # try for 5 minutes (every 15 seconds, 20 times)
+run "Creating backup archive '$BACKUP_ARCHIVE'" create_archive
+
+if (( REPLICATION )); then
+    run "Replicating backup archives on master nodes" replicate_archives
+fi

@@ -1,0 +1,148 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: salt-master
+  namespace: kube-system
+  labels:
+    app: salt-master
+    app.kubernetes.io/name: salt-master
+    app.kubernetes.io/version: '{{ version }}'
+    app.kubernetes.io/component: salt
+    heritage: metalk8s
+    app.kubernetes.io/part-of: metalk8s
+    app.kubernetes.io/managed-by: salt
+    metalk8s.scality.com/version: {{ metalk8s_version }}
+  annotations:
+    metalk8s.scality.com/config-digest: '{{ config_digest }}'
+spec:
+  shareProcessNamespace: true
+  hostNetwork: true
+  priorityClassName: system-cluster-critical
+  securityContext:
+    runAsUser: 0
+    fsGroup: 0
+    readOnlyRootFilesystem: true
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+  containers:
+    - name: salt-master
+      image: {{ image }}
+      ports:
+        - name: publisher
+          containerPort: 4505
+          protocol: TCP
+        - name: requestserver
+          containerPort: 4506
+          protocol: TCP
+      livenessProbe:
+        exec:
+          command:
+          - pgrep
+          - -f
+          - salt-master
+        periodSeconds: 10
+        initialDelaySeconds: 5
+      readinessProbe:
+        exec:
+          command:
+          - salt-run
+          - event.send
+          - test
+        periodSeconds: 20
+        timeoutSeconds: 10
+        initialDelaySeconds: 10
+      volumeMounts:
+        - name: config
+          mountPath: '/etc/salt'
+        - name: cache
+          mountPath: '/var/cache/salt'
+        - name: run
+          mountPath: '/var/run/salt'
+        {%- for env, archive in archives.items() | sort(attribute='0') %}
+        - name: states-{{ env | replace('.', '-') }}
+          mountPath: '/srv/scality/{{ env }}/salt'
+          readOnly: true
+        - name: pillar-{{ env | replace('.', '-') }}
+          mountPath: '/srv/scality/{{ env }}/pillar'
+          readOnly: true
+        {%- endfor %}
+        {%- for solution, mountpoint in solution_archives.items() | sort(attribute='0') %}
+        - name: solution-{{ solution }}
+          mountPath: '{{ mountpoint }}'
+          readOnly: true
+        {%- endfor %}
+        - name: metalk8s-config
+          mountPath: '/etc/metalk8s'
+          readOnly: true
+        - name: kubernetes-pki
+          mountPath: '/etc/kubernetes/pki'
+          readOnly: true
+    - name: salt-api
+      image: {{ image }}
+      command: ['salt-api']
+      ports:
+        - name: api
+          containerPort: 4507
+          protocol: TCP
+      livenessProbe:
+        httpGet:
+          path: /
+          port: api
+          scheme: HTTPS
+          host: {{ salt_ip }}
+      readinessProbe:
+        httpGet:
+          path: /
+          port: api
+          scheme: HTTPS
+          host: {{ salt_ip }}
+      volumeMounts:
+        - name: config
+          mountPath: '/etc/salt'
+          readOnly: true
+        - name: cache
+          mountPath: '/var/cache/salt'
+        - name: run
+          mountPath: '/var/run/salt'
+        - name: kubernetes-pki
+          mountPath: '/etc/kubernetes/pki'
+          readOnly: true
+  volumes:
+    - name: config
+      hostPath:
+        path: '/etc/salt'
+        type: Directory
+    - name: cache
+      hostPath:
+        path: '/var/cache/salt'
+        type: Directory
+    - name: run
+      hostPath:
+        path: '/var/run/salt'
+        type: DirectoryOrCreate
+    {%- for env, archive in archives.items() | sort(attribute='0') %}
+    - name: states-{{ env | replace('.', '-') }}
+      hostPath:
+        path: '{{ archive.path }}/salt'
+        type: Directory
+    - name: pillar-{{ env | replace('.', '-') }}
+      hostPath:
+        path: '{{ archive.path }}/pillar'
+        type: Directory
+    {%- endfor %}
+    {%- for solution, mountpoint in solution_archives.items() | sort(attribute='0') %}
+    - name: solution-{{ solution }}
+      hostPath:
+        path: '{{ mountpoint }}'
+        type: Directory
+    {%- endfor %}
+    - name: metalk8s-config
+      hostPath:
+        path: '/etc/metalk8s'
+        type: Directory
+    - name: kubernetes-pki
+      hostPath:
+        path: '/etc/kubernetes/pki'
+        type: Directory

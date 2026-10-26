@@ -1,0 +1,480 @@
+{%- from "metalk8s/map.jinja" import defaults with context %}
+{%- from "metalk8s/map.jinja" import kubernetes with context %}
+{%- from "metalk8s/map.jinja" import networks with context %}
+{%- from "metalk8s/map.jinja" import repo with context %}
+
+{%- set node_name = pillar.orchestrate.node_name %}
+{%- set run_drain = not pillar.orchestrate.get('skip_draining', False) %}
+{%- set version = pillar.metalk8s.nodes[node_name].version %}
+{%- set salt_minion_version = repo.packages.get('salt-minion', {}).get('version') %}
+
+{%- set skip_roles = pillar.metalk8s.nodes[node_name].get('skip_roles', []) %}
+
+{%- set roles = pillar.get('metalk8s', {}).get('nodes', {}).get(node_name, {}).get('roles', []) %}
+
+{#- Every deployment of a node goes through here, so this is where the two version
+    annotations are maintained. The version label is set by whoever asked for this
+    deployment, since it selects the saltenv, and it says what the node was asked to
+    run. These say what it actually runs (MK8S-370). #}
+Mark node {{ node_name }} as being deployed in {{ version }}:
+  metalk8s_kubernetes.object_updated:
+    - name: {{ node_name }}
+    - kind: Node
+    - apiVersion: v1
+    - patch:
+        metadata:
+          annotations:
+            metalk8s.scality.com/version-in-progress: "{{ version }}"
+    - order: 1
+
+{%- if node_name not in salt.saltutil.runner('manage.up') %}
+Set grains ssh:
+  salt.state:
+    - ssh: true
+    - roster: kubernetes
+    - tgt: {{ node_name }}
+    - saltenv: metalk8s-{{ version }}
+    - sls:
+      - metalk8s.node.grains
+
+Refresh grains:
+  metalk8s.saltutil_cmd:
+    - name: saltutil.sync_grains
+    - tgt: {{ node_name }}
+    - ssh: true
+    - roster: kubernetes
+    - require:
+      - salt: Set grains ssh
+
+Check node:
+  metalk8s.saltutil_cmd:
+    - name: metalk8s_checks.node
+    - tgt: {{ node_name }}
+    - ssh: true
+    - roster: kubernetes
+    - kwarg:
+        # NOTE: We need to use the `conflicting_packages` and `conflicting_services`
+        # `listening_process_per_role` from the salt master since in salt-ssh
+        # when running an execution module we cannot embbed additional files
+        # (especially `map.jinja` in this case)
+        # Sees: https://github.com/saltstack/salt/issues/59314
+        conflicting_packages: >-
+          {{ repo.conflicting_packages | tojson }}
+        conflicting_services: >-
+          {{ defaults.conflicting_services | tojson }}
+        listening_process_per_role: >-
+          {{ networks.listening_process_per_role | tojson }}
+        # NOTE: We also need to give all the pillar value needed since execution
+        # module in Salt-ssh cannot read pillar data
+        # Sees: https://github.com/saltstack/salt/issues/28503
+        service_cidr: {{ pillar.networks.service }}
+        roles: {{ pillar.metalk8s.nodes[node_name].roles }}
+    - failhard: true
+    - require:
+      - metalk8s: Refresh grains
+
+Deploy salt-minion on a new node:
+  salt.state:
+    - ssh: true
+    - roster: kubernetes
+    - tgt: {{ node_name }}
+    - saltenv: metalk8s-{{ version }}
+    - sls:
+      - metalk8s.roles.minion
+    - require:
+      - metalk8s: Check node
+
+Accept key:
+  salt.runner:
+    - name: metalk8s_saltutil.accept_minion
+    - minion: {{ node_name }}
+    - retry:
+        attempts: 5
+    - require:
+      - salt: Deploy salt-minion on a new node
+
+Wait minion available ssh:
+  salt.runner:
+    - name: metalk8s_saltutil.wait_minions
+    - tgt: {{ node_name }}
+    - retry:
+        attempts: 3
+        interval: 30
+    - require:
+      - salt: Accept key
+    - require_in:
+      - salt: Set grains
+      - salt: Refresh the mine
+      - metalk8s_cordon: Cordon the node
+{%- endif %}
+
+Sync module on the node:
+  salt.function:
+    - name: saltutil.sync_all
+    - tgt: {{ node_name }}
+    - kwarg:
+        saltenv: metalk8s-{{ version }}
+
+Refresh the node grains:
+  salt.function:
+    - name: saltutil.refresh_grains
+    - tgt: {{ node_name }}
+    - timeout: 120
+    - require:
+      - salt: Sync module on the node
+
+Set grains:
+  salt.state:
+    - tgt: {{ node_name }}
+    - saltenv: metalk8s-{{ version }}
+    - sls:
+      - metalk8s.node.grains
+    - require:
+      - salt: Refresh the node grains
+
+Refresh the mine:
+  salt.function:
+    - name: mine.update
+    - tgt: '*'
+
+Ensure node default labels exist:
+  metalk8s_kubernetes.labels_exist:
+    - name: {{ node_name }}
+    - apiVersion: v1
+    - kind: Node
+    - labels: {{ kubernetes.nodes.default_labels | tojson }}
+
+Cordon the node:
+  metalk8s_cordon.node_cordoned:
+    - name: {{ node_name }}
+
+{%- if run_drain %}
+
+{#- The drain talks to the API server for every pod it evicts, and an upgrade
+    restarts etcd and the API servers, so a whole drain can fail on a transient
+    error. Retry instead of aborting the node deployment, and split the drain
+    budget across the attempts: a drain that can never succeed (an unsatisfiable
+    disruption budget) then still gives up in about the time a single drain used
+    to take. Budgets of a few seconds round up to one second per attempt, since a
+    zero timeout would silently mean the 3600 second default of the `metalk8s_drain`
+    module, which is also where the 3600 below comes from. #}
+{%- set drain_attempts = 4 %}
+{%- set drain_budget = pillar.orchestrate.get("drain_timeout") | int or 3600 %}
+{%- set drain_attempt_timeout = [(drain_budget / drain_attempts) | int, 1] | max %}
+
+Drain the node:
+  metalk8s_drain.node_drained:
+    - name: {{ node_name }}
+    - ignore_daemonset: True
+    - ignore_pending: True
+    - delete_local_data: True
+    - force: True
+    - timeout: {{ drain_attempt_timeout }}
+    - retry:
+        attempts: {{ drain_attempts }}
+        interval: 30
+        splay: 10
+    - require:
+      - metalk8s_cordon: Cordon the node
+    - require_in:
+      - salt: Run the highstate
+
+{%- endif %}
+
+Check pillar before salt-minion configuration:
+  salt.function:
+    - name: metalk8s.check_pillar_keys
+    - tgt: {{ node_name }}
+    - kwarg:
+        keys:
+          - metalk8s.endpoints.salt-master
+          - metalk8s.endpoints.repositories
+        # We cannot raise when using `salt.function` as we need to return
+        # `False` to have a failed state
+        # https://github.com/saltstack/salt/issues/55503
+        raise_error: False
+    - retry:
+        attempts: 5
+    - require:
+      - salt: Refresh the node grains
+
+Reconfigure salt-minion:
+  salt.state:
+    - tgt: {{ node_name }}
+    - saltenv: metalk8s-{{ version }}
+    - sls:
+      - metalk8s.salt.minion.configured
+    # NOTE: This state may restart salt-minion service (config changes) and
+    # launch a detached salt-minion package upgrade/downgrade, so it may take
+    # time to answer salt-master job query, so increase timeout for this
+    # specific state
+    - timeout: 300
+    - require:
+      - salt: Set grains
+      - salt: Refresh the mine
+      - salt: Check pillar before salt-minion configuration
+
+Wait minion available:
+  test.configurable_test_state:
+    - changes: False
+    - result: __slot__:salt:test.sleep(10)
+    - comment: Wait a bit for 'salt-minion' to restart before checking status
+    - onchanges:
+      - salt: Reconfigure salt-minion
+  salt.runner:
+    - name: metalk8s_saltutil.wait_minions
+    - tgt: {{ node_name }}
+    {%- if salt_minion_version %}
+    # Also wait for the detached salt-minion package upgrade (if any) launched
+    # by the state above to complete, by checking the installed version
+    - expected_salt_version: {{ salt_minion_version }}
+    {%- endif %}
+    # After the restart the minion re-authenticates quickly but its
+    # subscription to the salt-master publish channel can take a few minutes
+    # to re-establish, during which it answers no jobs. Re-run the wait so a
+    # slow reconnect does not fail the whole deployment. The detached
+    # salt-minion upgrade (if any) also completes within this window.
+    - retry:
+        attempts: 5
+        interval: 30
+    - require:
+      - test: Wait minion available
+    - require_in:
+      - http: Wait for API server to be available before highstate
+
+{%- if 'etcd' in roles and 'etcd' not in skip_roles %}
+
+Check pillar before etcd deployment:
+  salt.function:
+    - name: metalk8s.check_pillar_keys
+    - tgt: {{ node_name }}
+    - kwarg:
+        keys:
+          - metalk8s.endpoints.salt-master
+          - metalk8s.endpoints.repositories
+        # We cannot raise when using `salt.function` as we need to return
+        # `False` to have a failed state
+        # https://github.com/saltstack/salt/issues/55503
+        raise_error: False
+    - retry:
+        attempts: 5
+    - require:
+      - salt: Refresh the node grains
+      - salt: Wait minion available
+
+Install etcd node:
+  salt.state:
+    - tgt: {{ node_name }}
+    - saltenv: metalk8s-{{ version }}
+    - sls:
+      - metalk8s.roles.etcd
+    - pillar:
+        metalk8s:
+          # Skip etcd healthcheck as we register etcd member just after
+          skip_etcd_healthcheck: True
+          # Skip apiserver-proxy healthcheck as local apiserver may not be
+          # deployed yet (as we call `highstate` just after)
+          skip_apiserver_proxy_healthcheck: True
+    - require:
+      - salt: Check pillar before etcd deployment
+
+Register the node into etcd cluster:
+  salt.runner:
+    - name: state.orchestrate
+    - pillar: {{ pillar | json }}
+    - mods:
+      - metalk8s.orchestrate.register_etcd
+    - require:
+      - salt: Install etcd node
+    - require_in:
+      - http: Wait for API server to be available before highstate
+
+{%- endif %}
+
+Wait for API server to be available before highstate:
+  http.wait_for_successful_query:
+  - name: https://127.0.0.1:7443/healthz
+  - match: 'ok'
+  - status: 200
+  - verify_ssl: false
+  - request_interval: 1
+
+Check pillar before highstate:
+  salt.function:
+    - name: metalk8s.check_pillar_keys
+    - tgt: {{ node_name }}
+    - kwarg:
+        keys:
+          - metalk8s.endpoints.salt-master
+          - metalk8s.endpoints.repositories
+        # We cannot raise when using `salt.function` as we need to return
+        # `False` to have a failed state
+        # https://github.com/saltstack/salt/issues/55503
+        raise_error: False
+    - retry:
+        attempts: 5
+    - require:
+      - salt: Refresh the node grains
+      - http: Wait for API server to be available before highstate
+
+Run the highstate:
+  salt.state:
+    - tgt: {{ node_name }}
+    - highstate: True
+    - saltenv: metalk8s-{{ version }}
+    {#- Increase the timeout to 300s instead of the default 20s, to let the
+        highstate run to completion, because it replaces the kubelet and
+        containerd on every node, plus the control plane static pods on a
+        master or bootstrap node, on the very node the salt-master polls with
+        `saltutil.find_job`, and a full highstate needs minutes. Once a probe
+        goes unanswered no further probe is sent, so this is the grace left for
+        the state to return. This prevents Salt reporting `Run failed on
+        minions: <node>` and aborting the deployment with the node left
+        cordoned #}
+    - timeout: 300
+    {#- Add ability to skip node roles to not apply all the highstate
+        e.g.: Skipping etcd when downgrading #}
+    {%- if skip_roles %}
+    - pillar:
+        metalk8s:
+          nodes:
+            {{ node_name }}:
+              skip_roles: {{ skip_roles | unique | tojson }}
+    {%- endif %}
+    - require:
+      - salt: Set grains
+      - salt: Refresh the mine
+      - metalk8s_cordon: Cordon the node
+      - salt: Check pillar before highstate
+
+Wait for API server to be available:
+  http.wait_for_successful_query:
+  - name: https://127.0.0.1:7443/readyz?verbose
+  - match: 'poststarthook/rbac/bootstrap-roles ok'
+  - status: 200
+  - verify_ssl: false
+  - request_interval: 5
+  - wait_for: 420
+  - timeout: 10
+  - require:
+    - salt: Run the highstate
+
+Uncordon the node:
+  metalk8s_cordon.node_uncordoned:
+    - name: {{ node_name }}
+    - require:
+      - salt: Run the highstate
+      - http: Wait for API server to be available
+
+{%- set master_minions = salt['metalk8s.minions_by_role']('master') %}
+
+# Work-around for https://github.com/scality/metalk8s/pull/1028
+Kill kube-controller-manager on all master nodes:
+  salt.function:
+    - name: ps.pkill
+    - tgt: "{{ master_minions | join(',') }}"
+    - tgt_type: list
+    - fail_minions: "{{ master_minions | join(',') }}"
+    - kwarg:
+        pattern: kube-controller-manager
+    - require:
+      - salt: Run the highstate
+
+{%- if 'infra' in roles and 'infra' not in skip_roles %}
+
+# Trigger a restart of CoreDNS pods so that "soft anti-affinity" can be applied
+Restart CoreDNS pods:
+  module.run:
+    - metalk8s_kubernetes.rollout_restart:
+      - name: coredns
+      - namespace: kube-system
+      - kind: Deployment
+      - apiVersion: apps/v1
+    - require:
+      - metalk8s_cordon: Uncordon the node
+
+{%- endif %}
+
+{%- if 'master' in roles and 'master' not in skip_roles %}
+
+# Trigger a reconfiguration of the Control Plane Ingress Controller as we
+# want to expose the Controller on every master node Control Plane IP
+Reconfigure Control Plane Ingress:
+  salt.runner:
+    - name: state.orchestrate
+    - mods:
+      - metalk8s.addons.nginx-ingress-control-plane.deployed
+    - saltenv: {{ saltenv }}
+    - require:
+      - metalk8s_cordon: Uncordon the node
+
+{%- endif %}
+
+# Refresh the NPD peers map so existing probers learn about the new node
+Update NPD workload plane peers:
+  salt.runner:
+    - name: state.orchestrate
+    - mods:
+      - metalk8s.addons.node-problem-detector.deployed.wp-monitor
+    - saltenv: {{ saltenv }}
+    - require:
+      - metalk8s_cordon: Uncordon the node
+
+{#- Every state this orchestrate ends on, so the node is only recorded as running
+    this version once all of them succeeded. Kept in one place, since the state
+    below and the one explaining its failure must wait on the very same set. #}
+{%- set deployment_done = [
+    "salt: Update NPD workload plane peers",
+    "salt: Kill kube-controller-manager on all master nodes",
+] %}
+{%- if 'infra' in roles and 'infra' not in skip_roles %}
+  {%- do deployment_done.append("module: Restart CoreDNS pods") %}
+{%- endif %}
+{%- if 'master' in roles and 'master' not in skip_roles %}
+  {%- do deployment_done.append("salt: Reconfigure Control Plane Ingress") %}
+{%- endif %}
+
+Mark node {{ node_name }} as running {{ version }}:
+  metalk8s_kubernetes.object_updated:
+    - name: {{ node_name }}
+    - kind: Node
+    - apiVersion: v1
+    - patch:
+        metadata:
+          annotations:
+            metalk8s.scality.com/version-in-progress: null
+            metalk8s.scality.com/version-applied: "{{ version }}"
+    {#- This deployment just restarted the API server on this node, so give this
+        write a few tries before it fails the whole thing #}
+    - retry:
+        attempts: 5
+        interval: 30
+    - require:
+      {%- for state_id in deployment_done %}
+      - {{ state_id }}
+      {%- endfor %}
+
+{#- Clearing the marker is the last step, and it is the only one that can fail on
+    a node that is otherwise deployed. Say so, rather than leaving the operator with
+    a bare API error on the very last state. The `require` matters: without it this
+    state also fires when the deployment itself failed, and would then claim a broken
+    node is fine. #}
+Explain the stale marker on {{ node_name }}:
+  test.configurable_test_state:
+    - name: {{ node_name }}
+    - changes: False
+    - result: True
+    - comment: >-
+        Node {{ node_name }} was deployed in {{ version }}, only the
+        metalk8s.scality.com/version-in-progress annotation could not be cleared.
+        The node itself is fine. Deploy it again to record the version, or record
+        it by hand with "kubectl annotate node {{ node_name }}
+        metalk8s.scality.com/version-in-progress-
+        metalk8s.scality.com/version-applied={{ version }} --overwrite". Until one
+        of those, an upgrade to another version is refused.
+    - onfail:
+      - metalk8s_kubernetes: Mark node {{ node_name }} as running {{ version }}
+    - require:
+      {%- for state_id in deployment_done %}
+      - {{ state_id }}
+      {%- endfor %}

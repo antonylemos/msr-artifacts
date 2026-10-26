@@ -1,0 +1,206 @@
+#!/bin/bash
+set -e
+set -u
+set -o pipefail
+
+FORCE=''
+VERBOSE=${VERBOSE:-0}
+LOGFILE=/var/log/metalk8s/downgrade.log
+DRAIN_TIMEOUT=${DRAIN_TIMEOUT:-0}
+DRY_RUN=0
+SALTENV=${SALTENV:-}
+DESTINATION_VERSION=""
+SALT_CALL=${SALT_CALL:-salt-call}
+CRICTL=${CRICTL:-crictl}
+BASE_DIR=$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
+
+
+_usage() {
+    echo "downgrade.sh [options]"
+    echo "Options:"
+    echo "--destination-version "
+    echo "   <destination-version>:        Destination version to downgrade to"
+    echo "-f/--force                       Force downgrade when downgrade path"
+    echo "                                 is not supported"
+    echo "-D/--drain-timeout:              Change the node drain timeout (in seconds)"
+    echo "-l/--log-file <logfile_path>:    Path to log file"
+    echo "-v/--verbose:                    Run in verbose mode"
+    echo "-d/--dry-run:                    Run actions in dry run mode"
+    echo "-h/--help:                       Show this help menu"
+}
+
+while (( "$#" )); do
+  case "$1" in
+    -D|--drain-timeout)
+      DRAIN_TIMEOUT="$2"
+      shift 2
+      ;;
+    -d|--dry-run)
+      DRY_RUN=1
+      shift
+      ;;
+    -f|--force)
+      FORCE=true
+      shift
+      ;;
+    -v|--verbose)
+      VERBOSE=1
+      shift
+      ;;
+    --destination-version)
+      DESTINATION_VERSION="$2"
+      shift 2
+      ;;
+    -l|--log-file)
+      LOGFILE="$2"
+      shift 2
+      ;;
+    -h|--help)
+      _usage
+      exit
+      ;;
+    *) # unsupported flags
+      echo "Error: Unsupported flag $1" >&2
+      _usage
+      exit 1
+      ;;
+  esac
+done
+
+TMPFILES=$(mktemp -d)
+
+# shellcheck disable=SC1090,SC1091
+. "$BASE_DIR"/common.sh
+
+mkdir -p "$(dirname "${LOGFILE}")"
+
+rotate_logfile
+
+cat << EOF >> "${LOGFILE}"
+--- MetalK8s downgrade started on $(date -u -R) ---
+EOF
+
+exec > >(tee -ia "${LOGFILE}") 2>&1
+
+cleanup() {
+    rm -rf "${TMPFILES}" || true
+}
+
+trap cleanup EXIT
+
+precheck_downgrade () {
+    SALT_MASTER_CALL=("${EXEC_CONTAINER_COMMAND[@]}" "$(get_salt_container)")
+    "${SALT_MASTER_CALL[@]}" salt-run saltutil.sync_all \
+        saltenv="$SALTENV"
+    # Due to a bug in salt do not "raises" when we run from CLI
+    # See: https://github.com/saltstack/salt/issues/61173
+    "${SALT_MASTER_CALL[@]}" salt-run metalk8s_checks.downgrade \
+        dest_version="$DESTINATION_VERSION" \
+        saltenv="$SALTENV" \
+        raises=False \
+        ${FORCE:+bypass_disable=True}
+}
+
+launch_pre_downgrade () {
+    SALT_MASTER_CALL=("${EXEC_CONTAINER_COMMAND[@]}" "$(get_salt_container)")
+    "${SALT_MASTER_CALL[@]}" salt-run saltutil.sync_all \
+        saltenv="$SALTENV"
+
+    "${SALT_MASTER_CALL[@]}" salt-run state.orchestrate \
+        metalk8s.orchestrate.downgrade.pre \
+        saltenv="$SALTENV"
+}
+
+launch_post_downgrade () {
+    SALT_MASTER_CALL=("${EXEC_CONTAINER_COMMAND[@]}" "$(get_salt_container)")
+    "${SALT_MASTER_CALL[@]}" salt-run state.orchestrate \
+        metalk8s.orchestrate.downgrade.post \
+        saltenv="$SALTENV"
+}
+
+launch_downgrade () {
+    SALT_MASTER_CALL=("${EXEC_CONTAINER_COMMAND[@]}" "$(get_salt_container)")
+    # NOTE: We want to use `$SALTENV` version for the runners
+    "${SALT_MASTER_CALL[@]}" salt-run saltutil.sync_all \
+        extmod_whitelist="{'runners': []}" \
+        saltenv="metalk8s-$DESTINATION_VERSION"
+    "${SALT_MASTER_CALL[@]}" salt-run saltutil.sync_runners \
+        saltenv="$SALTENV"
+
+    "${SALT_MASTER_CALL[@]}" salt-run metalk8s_saltutil.sync_auth \
+        saltenv="metalk8s-$DESTINATION_VERSION"
+
+    "${SALT_MASTER_CALL[@]}" salt-run saltutil.sync_roster \
+        saltenv="metalk8s-$DESTINATION_VERSION"
+
+    "${SALT_MASTER_CALL[@]}" salt-run state.orchestrate \
+        metalk8s.orchestrate.downgrade \
+        saltenv="$SALTENV" \
+        pillar="{'orchestrate': {'drain_timeout': $DRAIN_TIMEOUT}${FORCE:+", 'metalk8s': {'downgrade': {'bypass_disable': true}}"}}"
+}
+
+downgrade_bootstrap () {
+    local saltmaster_endpoint repo_endpoint
+    saltmaster_endpoint="$($SALT_CALL pillar.get metalk8s:endpoints:salt-master --out txt \
+        | cut -d' ' -f2- )"
+    repo_endpoint="$($SALT_CALL pillar.get metalk8s:endpoints:repositories --out txt \
+        | cut -d' ' -f2- )"
+
+    SALT_MASTER_CALL=("${EXEC_CONTAINER_COMMAND[@]}" "$(get_salt_container)")
+    "${SALT_MASTER_CALL[@]}" salt-run state.orchestrate \
+        metalk8s.orchestrate.bootstrap.pre-downgrade \
+        saltenv="$SALTENV" || return 1
+
+    "${SALT_CALL}" --local --retcode-passthrough state.sls sync_mods="all" \
+        "metalk8s.roles.bootstrap.local" saltenv="metalk8s-$DESTINATION_VERSION" \
+        pillar="{'metalk8s': {'endpoints': {'salt-master': $saltmaster_endpoint, \
+        'repositories': $repo_endpoint}}}"
+}
+
+# patch the kube-system namespace annotation with <destination-version> input
+patch_kubesystem_namespace() {
+    SALT_MASTER_CALL=("${EXEC_CONTAINER_COMMAND[@]}" "$(get_salt_container)")
+
+    "${SALT_MASTER_CALL[@]}" salt-run saltutil.sync_all \
+        saltenv="$SALTENV"
+
+    #update the annotation with the new destination value
+    "${SALT_MASTER_CALL[@]}" salt-run state.orchestrate \
+        metalk8s.orchestrate.patch_kubesystem_namespace \
+        saltenv="$SALTENV" \
+        pillar="{'orchestrate': {'destination_version': '$DESTINATION_VERSION'}}"
+}
+
+get_cluster_version() {
+    DESTINATION_VERSION=$($SALT_CALL \
+        pillar.get metalk8s:cluster_version --out txt | cut -c 8-)
+}
+
+# Main
+if [ -z "$DESTINATION_VERSION" ]; then
+    get_cluster_version
+    run "Getting cluster version $DESTINATION_VERSION"
+fi
+
+# SALTENV should be equal to script version and equal to the higher node
+# version of the cluster
+# (checked by the precheck orchestrate)
+if [ -z "$SALTENV" ]; then
+    SALTENV="metalk8s-@@VERSION"
+fi
+
+run "Performing Pre-Downgrade checks" precheck_downgrade
+[ $DRY_RUN -eq 1 ] && exit 0
+
+"$BASE_DIR"/backup.sh
+
+run "Setting cluster version to $DESTINATION_VERSION" patch_kubesystem_namespace
+run "Launching the pre-downgrade" launch_pre_downgrade
+run "Downgrading bootstrap" downgrade_bootstrap
+run "Launching the downgrade" launch_downgrade
+run "Launching the post-downgrade" launch_post_downgrade
+
+# NOTE: We use --no-replication flag since the backup-server is not available
+# in the previous version of MetalK8s
+# This flag can safely be removed in MetalK8s 2.12.
+"$BASE_DIR"/backup.sh --no-replication

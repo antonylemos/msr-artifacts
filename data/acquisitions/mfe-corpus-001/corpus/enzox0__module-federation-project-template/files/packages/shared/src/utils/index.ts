@@ -1,0 +1,2 @@
+// Shared utilities
+export const classNames = (...classes: string[]) => classes.filter(Boolean).join(' ');

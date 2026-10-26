@@ -1,0 +1,49 @@
+pattern,path,line,excerpt
+rt-manifest-file,frontend/products-mf/public/manifest.json,,
+rt-manifest-file,frontend/shell-app/public/manifest.json,,
+src-iframe,frontend/shell-app/src/App.js,32,          <iframe
+ops-deployment-file,backend/api-gateway/Dockerfile,,
+ops-deployment-file,backend/discovery-service/Dockerfile,,
+ops-deployment-file,backend/order-service/Dockerfile,,
+ops-deployment-file,backend/product-service/Dockerfile,,
+ops-deployment-file,docker-compose.yml,,
+ops-deployment-file,frontend/products-mf/Dockerfile,,
+ops-deployment-file,frontend/products-mf/nginx.conf,,
+ops-deployment-file,frontend/shell-app/Dockerfile,,
+ops-deployment-file,frontend/shell-app/nginx.conf,,
+ops-dockerfile,backend/api-gateway/Dockerfile,1,FROM maven:3.9.6-eclipse-temurin-17 AS build
+ops-dockerfile,backend/api-gateway/Dockerfile,8,FROM eclipse-temurin:17-jre-alpine
+ops-dockerfile,backend/discovery-service/Dockerfile,2,FROM maven:3.9.6-eclipse-temurin-17 AS build
+ops-dockerfile,backend/discovery-service/Dockerfile,14,FROM eclipse-temurin:17-jre-alpine
+ops-dockerfile,backend/order-service/Dockerfile,1,FROM maven:3.9.6-eclipse-temurin-17 AS build
+ops-dockerfile,backend/order-service/Dockerfile,8,FROM eclipse-temurin:17-jre-alpine
+ops-dockerfile,backend/product-service/Dockerfile,1,FROM maven:3.9.6-eclipse-temurin-17 AS build
+ops-dockerfile,backend/product-service/Dockerfile,8,FROM eclipse-temurin:17-jre-alpine
+ops-dockerfile,frontend/products-mf/Dockerfile,1,FROM node:18 AS build
+ops-dockerfile,frontend/products-mf/Dockerfile,8,FROM nginx:alpine
+ops-dockerfile,frontend/shell-app/Dockerfile,1,FROM node:18 AS build
+ops-dockerfile,frontend/shell-app/Dockerfile,8,FROM nginx:alpine
+ops-compose-service,docker-compose.yml,8,    build: ./backend/discovery-service
+ops-compose-service,docker-compose.yml,18,    build: ./backend/product-service
+ops-compose-service,docker-compose.yml,19,    depends_on:
+ops-compose-service,docker-compose.yml,32,    build: ./backend/order-service
+ops-compose-service,docker-compose.yml,33,    depends_on:
+ops-compose-service,docker-compose.yml,46,    build: ./backend/api-gateway
+ops-compose-service,docker-compose.yml,47,    depends_on:
+ops-compose-service,docker-compose.yml,60,    build: ./frontend/shell-app
+ops-compose-service,docker-compose.yml,67,    build: ./frontend/products-mf
+ops-compose-service,docker-compose.yml,77,    image: curlimages/curl:latest
+ops-compose-service,docker-compose.yml,78,    depends_on:
+ops-compose-service,docker-compose.yml,92,    image: prom/prometheus:latest
+ops-compose-service,docker-compose.yml,105,    image: grafana/grafana:latest
+ops-compose-service,docker-compose.yml,111,    depends_on:
+ops-compose-service,docker-compose.yml,117,    image: influxdb:1.8
+ops-compose-service,docker-compose.yml,127,    image: grafana/k6:latest
+ops-compose-service,docker-compose.yml,129,    depends_on:
+ops-proxy-route,frontend/products-mf/nginx.conf,8,  location / {
+ops-proxy-route,frontend/shell-app/nginx.conf,8,  location / {
+ci-workflow-file,.github/workflows/ci.yml,,
+doc-mfe-term,README.md,2,"Running on **GitHub Codespaces** with **Docker Compose**, **Spring Boot**, **Eureka**, and **Microfrontends**."
+doc-mfe-term,README.md,13,- **Frontend (Shell App + Products Microfrontend)**  
+doc-mfe-term,README.md,70,#### Products Microfrontend:
+doc-mfe-term,README.md,107,- View frontend microfrontends working with backend services  

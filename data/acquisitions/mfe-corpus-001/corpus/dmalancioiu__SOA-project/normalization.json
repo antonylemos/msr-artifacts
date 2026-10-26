@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "id": "1134094230",
+  "fullName": "dmalancioiu/SOA-project",
+  "commit": "a00d6436b4a6c4f28287e7e90ded084c1241fcf1",
+  "acquiredAt": "2026-10-24T00:32:24.653Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 420,
+    "bytes": 879499
+  },
+  "languages": {
+    "Markdown": 382573,
+    "Java": 220589,
+    "JavaScript": 155313,
+    "YAML": 27365,
+    "XML": 26431,
+    "Other": 23489,
+    "Python": 21097,
+    "Shell": 10730,
+    "SQL": 5043,
+    "JSON": 5019,
+    "HTML": 1850
+  },
+  "contentSha256": "269a950ee67a2a3075d3293ff8019f45a120620c31e4111a9951ee8d438c7a5d"
+}

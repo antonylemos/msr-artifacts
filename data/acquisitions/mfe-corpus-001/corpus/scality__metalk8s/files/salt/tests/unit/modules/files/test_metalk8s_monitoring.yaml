@@ -1,0 +1,223 @@
+alertmanager_api_helper:
+  - _id: nominal
+    ips_and_ports: &alertmanager_ips_and_ports
+      ips:
+        - 10.0.0.1
+        - 10.0.0.2
+      ports:
+        http-web: 1234
+        reloader-web: 1235
+    route: api/v2/alerts
+    resp_content:
+      data: some result
+    result:
+      data: some result
+    called_with:
+      args: [GET, 'http://10.0.0.1:1234/api/v2/alerts']
+
+  - _id: bad-endpoint
+    ips_and_ports:
+      ips:
+        - 10.0.0.1
+        - 10.0.0.2
+      ports:
+        web: 1234
+        reloader-web: 1235
+    route: api/v2/alerts
+    raises: True
+    request_called_once: False
+    result: >-
+      Unable to get proper Alertmanager API endpoint: Available endpoints:
+
+  - _id: empty-endpoint
+    ips_and_ports: {}
+    route: api/v2/alerts
+    raises: True
+    request_called_once: False
+    result: >-
+      Unable to get proper Alertmanager API endpoint: Available endpoints:
+
+  - _id: custom-method
+    ips_and_ports: *alertmanager_ips_and_ports
+    route: my-route
+    method: POST
+    json:
+      my-data: my-value
+    resp_content:
+      data: some result
+    result:
+      data: some result
+    called_with:
+      args: [POST, 'http://10.0.0.1:1234/my-route']
+      kwargs:
+        json: {my-data: my-value}
+
+  - _id: request-error
+    ips_and_ports: *alertmanager_ips_and_ports
+    route: api/v2/alerts
+    request_raises: 'some request error'
+    raises: True
+    result: >-
+      Unable to query Alertmanager API on http://10.0.0.1:1234/api/v2/alerts
+
+  - _id: response-error
+    ips_and_ports: *alertmanager_ips_and_ports
+    route: api/v2/alerts
+    resp_status: 404
+    resp_content:
+      code: 601
+      message: 'alert not found'
+    raises: True
+    result: >-
+      Received HTTP code 404 when querying Alertmanager API on
+      http://10.0.0.1:1234/api/v2/alerts
+      Error message: '{"code": 601, "message": "alert not found"}'
+
+  - _id: response-bad-format
+    ips_and_ports: *alertmanager_ips_and_ports
+    route: api/v2/alerts
+    resp_content: 'wrong format'
+    raises: True
+    result: >-
+      Unable to decode JSON response from Alertmanager API
+      Content: 'wrong format'
+
+  - _id: response-bad-status
+    ips_and_ports: *alertmanager_ips_and_ports
+    route: api/v2/alerts
+    resp_status: 401
+    resp_content: Unauthorized
+    raises: True
+    result: >-
+      Received HTTP code 401 when querying Alertmanager API on
+      http://10.0.0.1:1234/api/v2/alerts
+      Error message: 'Unauthorized'
+
+  - _id: nominal-delete
+    ips_and_ports: *alertmanager_ips_and_ports
+    route: api/v2/alerts
+    result: True
+    called_with:
+      args: [GET, 'http://10.0.0.1:1234/api/v2/alerts']
+
+add_silence:
+  - _id: nominal
+    value: SomeAlertName
+    now_mock: "2020-06-01T00:00:00"
+    call_body:
+      matchers:
+        - name: alertname
+          isEqual: true
+          isRegex: false
+          value: SomeAlertName
+      startsAt: "2020-06-01T00:00:00Z"
+      endsAt: "2020-06-01T01:00:00Z"  # 1 hour duration by default
+      createdBy: ''
+      comment: ''
+      status:
+        state: active
+
+  - _id: custom-matcher
+    name: namespace
+    value: metalk8s.*
+    is_equal: false
+    is_regex: true
+    call_body:
+      matchers:
+        - name: namespace
+          isEqual: false
+          isRegex: true
+          value: metalk8s.*
+
+  - _id: custom-time-boundaries
+    value: WhatEver
+    starts_at: "2020-06-01T00:00:00"
+    ends_at: "2020-06-02T00:00:00"
+    call_body:
+      startsAt: "2020-06-01T00:00:00Z"
+      endsAt: "2020-06-02T00:00:00Z"
+
+  - _id: custom-time-format
+    value: WhatEver
+    starts_at: "01/06/20 00h00"
+    ends_at: "01/06/20 01h30"
+    time_format: "%d/%m/%y %Hh%M"
+    call_body:
+      startsAt: "2020-06-01T00:00:00Z"
+      endsAt: "2020-06-01T01:30:00Z"
+
+  - _id: custom-duration
+    value: WhatEver
+    duration: 10
+    now_mock: "2020-06-01T00:00:00"
+    call_body:
+      startsAt: "2020-06-01T00:00:00Z"
+      endsAt: "2020-06-01T00:00:10Z"
+
+  - _id: custom-author
+    value: WhatEver
+    author: the-best-sysadmin
+    call_body:
+      createdBy: the-best-sysadmin
+
+  - _id: custom-comment
+    value: WhatEver
+    comment: &_comment That's a really interesting comment
+    call_body:
+      comment: *_comment
+
+get_silences:
+  - _id: without-state
+    response: &silences_list
+      - &active_silence
+        id: d287796c-cf59-4d10-8e5b-d5cc3ff51b9c
+        status:
+          state: active
+      - id: 858e47f8-982a-4993-803b-8b795682f092
+        status:
+          state: expired
+    result: *silences_list
+
+  - _id: with-state
+    state: active
+    response: *silences_list
+    result:
+      - *active_silence
+
+  - _id: get_empty
+    response: []
+    result: []
+
+  - _id: get_none
+    response: null
+    result: []
+
+get_alerts:
+  - _id: without-state
+    response: &alerts_list
+      - &active_alert
+        fingerprint: 6d23e53004c504c7
+        labels:
+          alertname: KubeAPIErrorBudgetBurn
+        status:
+          state: active
+      - fingerprint: ffbe34d127f90d4c
+        labels:
+          alertname: NodeClockNotSynchronising
+        status:
+          state: suppressed
+    result: *alerts_list
+
+  - _id: with-state
+    state: active
+    response: *alerts_list
+    result:
+      - *active_alert
+
+  - _id: get_empty
+    response: []
+    result: []
+
+  - _id: get_none
+    response: null
+    result: []

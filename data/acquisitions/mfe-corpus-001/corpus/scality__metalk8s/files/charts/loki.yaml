@@ -1,0 +1,92 @@
+loki:
+  commonConfig:
+    replication_factor: 1
+  storage:
+    type: 'filesystem'
+
+  image:
+    registry: ""
+    repository: '__image__(loki)'
+
+  # needs to be removed asap when https://github.com/grafana/loki/issues/14497 is fixed
+  schemaConfig:
+    remove: me 
+
+  configStorageType: Secret
+  configObjectName: loki
+  generatedConfigObjectName: ""
+
+  podAnnotations:
+    # Override default checksum as we want to manage it with salt
+    checksum/config: '__slot__:salt:metalk8s_kubernetes.get_object_digest(kind="Secret", apiVersion="v1", namespace="metalk8s-logging", name="loki", path="data:config.yaml")'
+
+chunksCache:
+  enabled: false
+resultsCache:
+  enabled: false
+
+backend:
+  replicas: 0
+read:
+  replicas: 0
+write:
+  replicas: 0
+
+deploymentMode: SingleBinary
+
+singleBinary:
+  targetModule: "all,table-manager"
+
+  # The Loki helm chart now does some validation on this field and expect an int
+  # The logic to change this now handle by the rendering commands check
+  # `buildchain/buildchain/codegen.py`
+  #replicas: '__var__(loki.spec.deployment.replicas)'
+
+  persistence:
+    enabled: true
+    enableStatefulSetAutoDeletePVC: false
+    size: 10Gi
+    storageClass: metalk8s
+    selector:
+      matchLabels:
+        app.kubernetes.io/name: loki
+
+  resources: '__var__(loki.spec.deployment.resources)'
+
+  tolerations:
+    - key: "node-role.kubernetes.io/bootstrap"
+      operator: "Exists"
+      effect: "NoSchedule"
+    - key: "node-role.kubernetes.io/infra"
+      operator: "Exists"
+      effect: "NoSchedule"
+
+monitoring:
+  serviceMonitor:
+    enabled: true
+    labels:
+      metalk8s.scality.com/monitor: ''
+
+  selfMonitoring:
+    enabled: false
+
+    grafanaAgent:
+      installOperator: false
+
+  dashboards:
+    enabled: false
+
+lokiCanary:
+  enabled: false
+
+sidecar:
+  image:
+    registry: ""
+    repository: "__image__(k8s-sidecar)"
+    tag: 2.7.3
+
+gateway:
+  enabled: false
+
+test:
+  enabled: false

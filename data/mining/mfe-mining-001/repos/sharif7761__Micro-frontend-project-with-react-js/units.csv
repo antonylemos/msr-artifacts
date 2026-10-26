@@ -1,0 +1,5 @@
+directory,markers
+.,package.json
+common_simple,common_simple/package.json;common_simple/rsbuild.config.ts
+core_simple,core_simple/package.json;core_simple/rsbuild.config.ts
+users_simple,users_simple/package.json;users_simple/rsbuild.config.ts

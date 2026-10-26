@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=SN+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+html,body{
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    font-family: "SN Pro", sans-serif;
+}
+*{
+    box-sizing: border-box;
+    font-weight: 500;
+}
+.container{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.header{
+    background-color: #333;
+    color: #fff;
+    padding: 20px 10px;
+    text-align: center;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    margin-bottom: 20px;
+}
+.project-title{
+    font-size: 18px;
+    font-weight: bold;
+}
+.flex{
+    display: flex;
+    gap: 20px;
+}
+.space-between{
+    justify-content: space-between;
+}
+.items-center{
+    align-items: center;
+}
+.primary-btn{
+    background-color: #333;
+    color: #f0f0f0;
+    font-size: 14px;
+    padding: 10px 14px;
+    border: none;
+    cursor: pointer;
+}

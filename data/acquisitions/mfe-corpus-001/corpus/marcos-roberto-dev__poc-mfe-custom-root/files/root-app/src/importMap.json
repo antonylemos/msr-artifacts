@@ -1,0 +1,6 @@
+{
+  "imports": {
+    "@org/content-app": "http://127.0.0.1:5174/spa.js",
+    "@org/header-app": "http://127.0.0.1:5175/spa.js"
+  }
+}

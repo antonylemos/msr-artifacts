@@ -1,0 +1,29 @@
+/* Design tokens shared across the platform via CSS custom properties.
+   Both Vuetify 2 and Vuetify 4 remotes can reference these. */
+
+:root {
+  --brand-primary:     #1565C0;
+  --brand-primary-dk:  #0D47A1;
+  --brand-surface:     #F5F7FA;
+  --brand-text:        #1A1A2E;
+  --brand-text-muted:  #6B7280;
+  --brand-border:      #E2E8F0;
+  --brand-header-h:    64px;
+  --brand-radius:      8px;
+  --brand-shadow:      0 2px 8px rgba(0,0,0,.08);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--brand-surface);
+  color: var(--brand-text);
+  line-height: 1.5;
+}
+
+a { color: inherit; text-decoration: none; }

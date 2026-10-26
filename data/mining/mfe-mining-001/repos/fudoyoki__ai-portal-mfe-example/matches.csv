@@ -1,0 +1,116 @@
+pattern,path,line,excerpt
+dep-module-federation,apps/mfe-dashboard/package.json,21,"    ""@originjs/vite-plugin-federation"": ""^1.3.6"","
+dep-module-federation,apps/shell/package.json,22,"    ""@originjs/vite-plugin-federation"": ""^1.3.6"","
+dep-monorepo-tool,package.json,18,"    ""turbo"": ""^2.3.0"","
+dep-mfe-term,apps/mfe-dashboard/package.json,2,"  ""name"": ""@ai-portal/mfe-dashboard"","
+dep-mfe-term,package.json,2,"  ""name"": ""ai-portal-mfe"","
+cfg-federation-plugin,apps/mfe-dashboard/vite.config.ts,11,    federation({
+cfg-federation-plugin,apps/shell/vite.config.ts,28,    federation({
+cfg-remotes,apps/shell/vite.config.ts,30,      remotes: {
+cfg-exposes,apps/mfe-dashboard/vite.config.ts,15,      exposes: {
+cfg-shared,apps/mfe-dashboard/vite.config.ts,20,      shared: {
+cfg-shared,apps/mfe-dashboard/vite.config.ts,22,"          singleton: true,"
+cfg-shared,apps/mfe-dashboard/vite.config.ts,26,"          singleton: true,"
+cfg-shared,apps/mfe-dashboard/vite.config.ts,30,"          singleton: true,"
+cfg-shared,apps/mfe-dashboard/vite.config.ts,34,"          singleton: true,"
+cfg-shared,apps/mfe-dashboard/vite.config.ts,37,"          singleton: true,"
+cfg-shared,apps/shell/vite.config.ts,39,      shared: {
+cfg-shared,apps/shell/vite.config.ts,41,"          singleton: true,"
+cfg-shared,apps/shell/vite.config.ts,45,"          singleton: true,"
+cfg-shared,apps/shell/vite.config.ts,49,"          singleton: true,"
+cfg-shared,apps/shell/vite.config.ts,54,"          singleton: true,"
+cfg-shared,apps/shell/vite.config.ts,57,"          singleton: true,"
+rt-remote-entry,apps/mfe-dashboard/nginx.conf,15,    # Cache static assets (but not remoteEntry.js)
+rt-remote-entry,apps/mfe-dashboard/nginx.conf,21,    # remoteEntry.js - never cache (Shell needs latest)
+rt-remote-entry,apps/mfe-dashboard/nginx.conf,22,    location ~* remoteEntry\.js$ {
+rt-remote-entry,apps/mfe-dashboard/vite.config.ts,13,"      filename: 'remoteEntry.js',"
+rt-remote-entry,apps/shell/nginx.conf,17,    # Don't cache remoteEntry.js (needs fresh on each deploy)
+rt-remote-entry,apps/shell/nginx.conf,18,    location ~* remoteEntry\.js$ {
+rt-remote-entry,apps/shell/vite.config.ts,19,    return `http://localhost:${PORTS[name]}/assets/remoteEntry.js`
+rt-remote-entry,apps/shell/vite.config.ts,22,  return `${process.env.CDN_URL || 'https://cdn.example.com'}/${name}/remoteEntry.js`
+src-remote-import,apps/shell/src/App.tsx,7,const DashboardApp = React.lazy(() => import('mfeDashboard/DashboardApp'))
+ops-deployment-file,apps/bff/Dockerfile,,
+ops-deployment-file,apps/mfe-dashboard/Dockerfile,,
+ops-deployment-file,apps/mfe-dashboard/nginx.conf,,
+ops-deployment-file,apps/shell/Dockerfile,,
+ops-deployment-file,apps/shell/nginx.conf,,
+ops-deployment-file,docker-compose.dev.yml,,
+ops-deployment-file,docker-compose.yml,,
+ops-dockerfile,apps/bff/Dockerfile,2,FROM node:22-alpine AS builder
+ops-dockerfile,apps/bff/Dockerfile,19,FROM node:22-alpine AS production
+ops-dockerfile,apps/mfe-dashboard/Dockerfile,2,FROM node:22-alpine AS builder
+ops-dockerfile,apps/mfe-dashboard/Dockerfile,23,FROM nginx:alpine AS production
+ops-dockerfile,apps/shell/Dockerfile,2,FROM node:22-alpine AS builder
+ops-dockerfile,apps/shell/Dockerfile,23,FROM nginx:alpine AS production
+ops-compose-service,docker-compose.dev.yml,9,    image: node:22-alpine
+ops-compose-service,docker-compose.dev.yml,25,    image: node:22-alpine
+ops-compose-service,docker-compose.dev.yml,41,    image: node:22-alpine
+ops-compose-service,docker-compose.yml,6,    build:
+ops-compose-service,docker-compose.yml,11,    depends_on:
+ops-compose-service,docker-compose.yml,20,    build:
+ops-compose-service,docker-compose.yml,41,    build:
+ops-proxy-route,apps/mfe-dashboard/nginx.conf,16,    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2)$ {
+ops-proxy-route,apps/mfe-dashboard/nginx.conf,22,    location ~* remoteEntry\.js$ {
+ops-proxy-route,apps/mfe-dashboard/nginx.conf,28,    location / {
+ops-proxy-route,apps/mfe-dashboard/nginx.conf,33,    location /health {
+ops-proxy-route,apps/shell/nginx.conf,12,    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2)$ {
+ops-proxy-route,apps/shell/nginx.conf,18,    location ~* remoteEntry\.js$ {
+ops-proxy-route,apps/shell/nginx.conf,24,    location / {
+ops-proxy-route,apps/shell/nginx.conf,29,    location /health {
+ops-hosting,README.md,194,aws s3 sync apps/shell/dist/ s3://cdn/shell/
+ops-hosting,README.md,195,aws s3 sync apps/mfe-dashboard/dist/ s3://cdn/mfe-dashboard/
+ops-cors,apps/mfe-dashboard/nginx.conf,6,    # CORS headers for Module Federation
+ops-cors,apps/mfe-dashboard/nginx.conf,7,    add_header Access-Control-Allow-Origin *;
+ops-cors,apps/mfe-dashboard/nginx.conf,25,        add_header Access-Control-Allow-Origin *;
+ops-cors,apps/mfe-dashboard/vite.config.ts,45,"    cors: true,"
+ops-cors,apps/shell/vite.config.ts,65,"    cors: true,"
+doc-mfe-term,README.md,1,# AI Portal — Micro-Frontend Architecture Example
+doc-mfe-term,README.md,3,"A complete example of a micro-frontend architecture using **Vite + React + Module Federation**, with a **NestJS BFF** (Backend for Frontend)."
+doc-mfe-term,README.md,15,│  │  │    MFE      │ │    MFE      │ │    MFE      │         │  │
+doc-mfe-term,README.md,43,| MFE Dashboard | 3001 | Analytics & widgets |
+doc-mfe-term,README.md,44,| MFE Chat | 3002 | AI chat interface |
+doc-mfe-term,README.md,45,| MFE Tools | 3003 | AI tools |
+doc-mfe-term,README.md,46,| MFE Admin | 3004 | Admin panel |
+doc-mfe-term,README.md,56,git clone https://github.com/fudoyoki/ai-portal-mfe-example.git
+doc-mfe-term,README.md,57,cd ai-portal-mfe-example
+doc-mfe-term,README.md,68,### Step 3: Build MFEs
+doc-mfe-term,README.md,70,MFEs must be built before running — Module Federation needs the `remoteEntry.js` file.
+doc-mfe-term,README.md,73,npm run build -w @ai-portal/mfe-dashboard
+doc-mfe-term,README.md,85,"**Terminal 2 — MFE Dashboard (preview mode, serves built files):**"
+doc-mfe-term,README.md,87,cd apps/mfe-dashboard
+doc-mfe-term,README.md,103,3. You should see the Dashboard MFE loaded inside the Shell
+doc-mfe-term,README.md,105,"If you see ""Failed to load Dashboard module"" → MFE preview isn't running on :3001"
+doc-mfe-term,README.md,109,### ⚠️ Why Preview Mode for MFEs?
+doc-mfe-term,README.md,111,Vite Module Federation generates `remoteEntry.js` only at **build time**. So MFEs must be:
+doc-mfe-term,README.md,124,| `packages/ui-kit` | Rebuild it → rebuild MFEs → restart MFE previews |
+doc-mfe-term,README.md,125,| `apps/mfe-dashboard` | Rebuild → restart preview |
+doc-mfe-term,README.md,134,ai-portal-mfe/
+doc-mfe-term,README.md,137,│   ├── mfe-dashboard/      # Dashboard MFE (port 3001)
+doc-mfe-term,README.md,150,MFEs expose components that the Shell loads at runtime:
+doc-mfe-term,README.md,153,// MFE: vite.config.ts
+doc-mfe-term,README.md,155,"  name: 'mfeDashboard',"
+doc-mfe-term,README.md,162,// Shell: loads MFE dynamically
+doc-mfe-term,README.md,163,const DashboardApp = React.lazy(() => import('mfeDashboard/DashboardApp'))
+doc-mfe-term,README.md,168,Packages listed in `shared` are **provided by the Shell** at runtime. MFEs don't bundle their own copies.
+doc-mfe-term,README.md,181,Changes in remote MFEs won't trigger hot refresh in the Shell. Workarounds:
+doc-mfe-term,README.md,183,2. Develop MFEs in standalone mode first
+doc-mfe-term,README.md,195,aws s3 sync apps/mfe-dashboard/dist/ s3://cdn/mfe-dashboard/
+doc-mfe-term,README.md,211,cd apps/mfe-dashboard
+doc-mfe-term,README.md,216,## Adding a New MFE
+doc-mfe-term,README.md,218,1. Copy `apps/mfe-dashboard` as template
+doc-mfe-term,README.md,247,- MFE Dashboard: http://localhost:3001
+doc-mfe-term,README.md,262,docker build -f apps/mfe-dashboard/Dockerfile -t ai-portal-mfe-dashboard .
+doc-mfe-term,README.md,271,| MFE Dashboard | nginx:alpine | ~20MB |
+doc-integration-technology,README.md,3,"A complete example of a micro-frontend architecture using **Vite + React + Module Federation**, with a **NestJS BFF** (Backend for Frontend)."
+doc-integration-technology,README.md,70,MFEs must be built before running — Module Federation needs the `remoteEntry.js` file.
+doc-integration-technology,README.md,111,Vite Module Federation generates `remoteEntry.js` only at **build time**. So MFEs must be:
+doc-integration-technology,README.md,148,### Module Federation
+doc-integration-technology,README.md,279,- **Module Federation:** @originjs/vite-plugin-federation
+doc-runtime-loading,README.md,150,MFEs expose components that the Shell loads at runtime:
+doc-runtime-loading,README.md,168,Packages listed in `shared` are **provided by the Shell** at runtime. MFEs don't bundle their own copies.
+doc-independence,README.md,207,Each app has independent quality metrics. See `sonar-project.properties` in each app directory.
+doc-host-remote,README.md,115,"The Shell (host) can run `npm run dev` because it *consumes* remotes, not *exposes* them."
+doc-host-remote,README.md,181,Changes in remote MFEs won't trigger hot refresh in the Shell. Workarounds:
+doc-host-remote,README.md,221,4. Add remote to Shell's `vite.config.ts`
+ws-workspaces,package.json,5,"  ""workspaces"": ["
+ws-path-alias,apps/shell/tsconfig.json,18,"    ""paths"": {"

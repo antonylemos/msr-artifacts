@@ -1,0 +1,216 @@
+{
+  "schema": 1,
+  "id": "754013249",
+  "fullName": "MSF-OCG/LIME-EMR",
+  "commit": "4de9e4139c74b15c5af0cdc02a97c2e2eadf56de",
+  "acquiredAt": "2026-10-24T00:26:30.015Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "distro/configs/openmrs/frontend_config/header-logo.png",
+      "reason": "preset:binaries",
+      "size": 25893
+    },
+    {
+      "path": "distro/configs/openmrs/frontend_config/logo-dev.png",
+      "reason": "preset:binaries",
+      "size": 34431
+    },
+    {
+      "path": "distro/configs/openmrs/frontend_config/logo.png",
+      "reason": "preset:binaries",
+      "size": 33717
+    },
+    {
+      "path": "distro/configs/openmrs/frontend_config/madiro-logo.png",
+      "reason": "preset:binaries",
+      "size": 122129
+    },
+    {
+      "path": "distro/configs/openmrs/frontend_config/msf-logo.png",
+      "reason": "preset:binaries",
+      "size": 205431
+    },
+    {
+      "path": "distro/configs/openmrs/initializer_config/jsonkeyvalues/lime-emr-logo.png",
+      "reason": "preset:binaries",
+      "size": 21336
+    },
+    {
+      "path": "distro/configs/openmrs/initializer_config/ocl/MSFOCG_iraq-mosul_v1.72_autoexpand.zip",
+      "reason": "preset:binaries",
+      "size": 3974727
+    },
+    {
+      "path": "distro/configs/openmrs/initializer_config/ocl/MSFOCG_lime-emr_v1.5_autoexpand.zip",
+      "reason": "preset:binaries",
+      "size": 2030711
+    },
+    {
+      "path": "distro/configs/openmrs/overrides/modules/drools-1.1.0-SNAPSHOT.omod",
+      "reason": "max-file-bytes",
+      "size": 26178920
+    },
+    {
+      "path": "docs/logo.png",
+      "reason": "preset:binaries",
+      "size": 27314
+    },
+    {
+      "path": "docs/media/Madiro.png",
+      "reason": "preset:binaries",
+      "size": 8381
+    },
+    {
+      "path": "docs/media/change_language_1.png",
+      "reason": "preset:binaries",
+      "size": 288336
+    },
+    {
+      "path": "docs/media/change_language_2.png",
+      "reason": "preset:binaries",
+      "size": 292164
+    },
+    {
+      "path": "docs/media/concept_dictionary.png",
+      "reason": "preset:binaries",
+      "size": 264420
+    },
+    {
+      "path": "docs/media/concept_translated_answers.png",
+      "reason": "preset:binaries",
+      "size": 25874
+    },
+    {
+      "path": "docs/media/concept_translated_custom_labels.png",
+      "reason": "preset:binaries",
+      "size": 34347
+    },
+    {
+      "path": "environment/prod/header-logo.png",
+      "reason": "preset:binaries",
+      "size": 26948
+    },
+    {
+      "path": "environment/prod/logo.png",
+      "reason": "preset:binaries",
+      "size": 34626
+    },
+    {
+      "path": "environment/qa/header-logo.png",
+      "reason": "preset:binaries",
+      "size": 29433
+    },
+    {
+      "path": "environment/qa/logo.png",
+      "reason": "preset:binaries",
+      "size": 32798
+    },
+    {
+      "path": "environment/uat/header-logo.png",
+      "reason": "preset:binaries",
+      "size": 26948
+    },
+    {
+      "path": "environment/uat/logo.png",
+      "reason": "preset:binaries",
+      "size": 32408
+    },
+    {
+      "path": "scripts/.mvn/wrapper/maven-wrapper.jar",
+      "reason": "preset:binaries",
+      "size": 62547
+    },
+    {
+      "path": "scripts/data/mysql/mosul_fresh_database_nov26.sql.gz",
+      "reason": "preset:binaries",
+      "size": 465762
+    },
+    {
+      "path": "sites/bunia/configs/openmrs/frontend_config/header-logo.png",
+      "reason": "preset:binaries",
+      "size": 25714
+    },
+    {
+      "path": "sites/bunia/configs/openmrs/frontend_config/logo-dev.png",
+      "reason": "preset:binaries",
+      "size": 34253
+    },
+    {
+      "path": "sites/bunia/configs/openmrs/frontend_config/logo.png",
+      "reason": "preset:binaries",
+      "size": 33548
+    },
+    {
+      "path": "sites/bunia/configs/openmrs/initializer_config/ocl/MSFOCG_drc-bunia_v1.5_autoexpand.zip",
+      "reason": "preset:binaries",
+      "size": 1015025
+    },
+    {
+      "path": "sites/matsapha/configs/openmrs/frontend_config/header-logo.png",
+      "reason": "preset:binaries",
+      "size": 38989
+    },
+    {
+      "path": "sites/matsapha/configs/openmrs/frontend_config/logo-dev.png",
+      "reason": "preset:binaries",
+      "size": 35997
+    },
+    {
+      "path": "sites/matsapha/configs/openmrs/frontend_config/logo.png",
+      "reason": "preset:binaries",
+      "size": 35566
+    },
+    {
+      "path": "sites/matsapha/configs/openmrs/initializer_config/ocl/MSFOCG_eswatini-matsapha_v1.5_autoexpand.zip",
+      "reason": "preset:binaries",
+      "size": 924612
+    },
+    {
+      "path": "sites/mosul/configs/openmrs/frontend_config/header-logo.png",
+      "reason": "preset:binaries",
+      "size": 26948
+    },
+    {
+      "path": "sites/mosul/configs/openmrs/frontend_config/logo-dev.png",
+      "reason": "preset:binaries",
+      "size": 36561
+    },
+    {
+      "path": "sites/mosul/configs/openmrs/frontend_config/logo.png",
+      "reason": "preset:binaries",
+      "size": 35383
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 451,
+    "bytes": 30905931
+  },
+  "languages": {
+    "JSON": 17225429,
+    "YAML": 9845336,
+    "JavaScript": 3006044,
+    "Other": 425374,
+    "XML": 213643,
+    "Markdown": 144572,
+    "TypeScript": 28937,
+    "Shell": 8452,
+    "SQL": 6463,
+    "HTML": 1582,
+    "CSS": 99
+  },
+  "contentSha256": "b9fcf79b09c48395b7b6d5a533904836a02d176f5fcee28f129ee62dcdd280f0"
+}

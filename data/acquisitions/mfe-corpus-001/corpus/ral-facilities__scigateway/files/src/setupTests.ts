@@ -1,0 +1,42 @@
+import '@testing-library/jest-dom';
+
+function noOp(): void {
+  // required as work-around for enzyme/jest environment not implementing window.URL.createObjectURL method
+}
+
+if (typeof window.URL.createObjectURL === 'undefined') {
+  Object.defineProperty(window.URL, 'createObjectURL', { value: noOp });
+}
+
+// ensure we generate consistent values instead of random values in tests
+window.crypto.getRandomValues = vi.fn((arr) => {
+  (arr as Uint32Array).forEach((_v, i) => (arr[i] = i));
+  return arr;
+});
+
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: vi.fn().mockImplementation((query) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: vi.fn(),
+    removeListener: vi.fn(),
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  })),
+});
+
+// globally mock as we never want to actually call single-spa funcs in unit tests
+vi.mock('single-spa', () => ({
+  unloadApplication: vi.fn(),
+  start: vi.fn(),
+  getAppStatus: vi.fn(),
+  triggerAppChange: vi.fn(),
+  NOT_LOADED: 'NOT_LOADED',
+}));
+
+// Recreate jest behaviour by mocking with __mocks__ by mocking globally here
+vi.mock('axios');
+vi.mock('react-i18next');

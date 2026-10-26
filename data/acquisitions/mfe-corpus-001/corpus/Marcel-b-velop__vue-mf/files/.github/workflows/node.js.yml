@@ -1,0 +1,39 @@
+name: Build UI
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        node-version: [20]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
+      - name: Install dependencies
+        run: pnpm install
+      - name: Build
+        run: pnpm build
+    # .NET Setup und Build
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.x'  # Passen Sie die Version an
+      - name: Restore .NET dependencies
+        run: dotnet restore Api/Api.sln
+      - name: Build .NET
+        run: dotnet build Api/Api.sln --configuration Release --no-restore
+      - name: Test .NET
+        run: dotnet test Api/Api.sln --no-build --verbosity normal
+
+
+
+
+

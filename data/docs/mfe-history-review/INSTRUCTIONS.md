@@ -1,5 +1,7 @@
 # Método: revisão histórica
 
+Os caminhos começados por `docs/` preservam a organização do projeto de origem (`repo-miner`). Neste pacote, as análises correspondentes estão em `data/docs/`. Os caminhos e hashes registrados nas análises mantêm sua função de proveniência.
+
 Este documento descreve como foi feita a revisão histórica e como ler os arquivos
 `NNN-<owner>__<name>.md` desta pasta. Cada arquivo registra a revisão de um repositório do corpus.
 
@@ -47,6 +49,8 @@ Nenhum outro comando git é executado nos clones, e os arquivos dentro deles nã
 A proteção é de aplicação, não do sistema de arquivos: o que a garante é usar só o script e comparar
 as impressões digitais.
 
+Os clones mencionados nos caminhos originais estão publicados em [`data/clones/`](../../clones/README.md), com instruções de reconstrução e hashes de integridade.
+
 Os scripts de `tools/` e o registro `commands.log` não fazem parte deste pacote. Os comandos de cada
 repositório continuam registrados na seção "Comandos" do respectivo arquivo.
 
@@ -64,6 +68,9 @@ Nomes de autores não são citados; as referências usam hash curto, data e mens
 | Revisões anteriores | `docs/mfe-dependency-review/`, `docs/mfe-structure-review/`, `docs/mfe-source-review/`, `docs/mfe-composition-review/`, `docs/mfe-build-deploy-review/`, `docs/mfe-documentation-review/` (mesmo nome de arquivo) |
 | Snapshot | `data/acquisitions/mfe-corpus-001/corpus/<owner>__<name>/files/` |
 | Clone, só por `tools/hist.sh` | `data/samples/mfe-sample-001/repos/<owner>__<name>/` |
+
+As revisões anteriores, os dados e as configurações consultados são fontes de evidência e não
+são alterados nesta etapa. A validação final cabe ao pesquisador.
 
 ## Produto
 

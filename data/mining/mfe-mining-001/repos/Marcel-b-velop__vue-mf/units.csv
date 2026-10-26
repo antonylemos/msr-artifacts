@@ -1,0 +1,6 @@
+directory,markers
+.,package.json
+app-1,app-1/index.html;app-1/package.json;app-1/vite.config.ts
+app-2,app-2/index.html;app-2/package.json;app-2/vite.config.ts
+host,host/index.html;host/package.json;host/vite.config.ts
+lib,lib/index.html;lib/package.json;lib/vite.config.ts

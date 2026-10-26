@@ -1,0 +1,1 @@
+export { CompraRoot } from './composition';

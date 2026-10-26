@@ -1,0 +1,69 @@
+name: Lifecycle dev
+
+on:
+  workflow_call:
+    inputs:
+      artifacts-url:
+        description: "Artifacts URL"
+        required: true
+        type: string
+      dev-branch:
+        description: "The development branch to use (as source for upgrade and destination for downgrade)"
+        required: true
+        type: string
+      type:
+        description: "The type of lifecyle ran"
+        required: false
+        type: string
+        default: "unknown"
+
+      enable-debug-when-failure:
+        description: "Whether or not debug when failure should be enabled or not"
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  get-dev-artifacts-url:
+    runs-on: ubuntu-24.04
+    outputs:
+      artifacts-url: ${{ steps.artifacts.outputs.link }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.dev-branch }}
+      - name: Retrieve artifacts url
+        uses: scality/action-artifacts@v4
+        id: artifacts
+        with:
+          method: get
+          workflow-name: Post-merge
+          url: https://artifacts.scality.net
+          user: ${{ secrets.ARTIFACTS_USER }}
+          password: ${{ secrets.ARTIFACTS_PASSWORD }}
+
+  dev-upgrade:
+    needs:
+      - get-dev-artifacts-url
+    uses: ./.github/workflows/upgrade-test.yaml
+    secrets: inherit
+    with:
+      from-artifacts-url: ${{ needs.get-dev-artifacts-url.outputs.artifacts-url }}
+      to-artifacts-url: ${{ inputs.artifacts-url }}
+      type: ${{ inputs.type }}-dev
+      enable-debug-when-failure: ${{ inputs.enable-debug-when-failure }}
+
+  dev-downgrade:
+    needs:
+      - get-dev-artifacts-url
+    uses: ./.github/workflows/downgrade-test.yaml
+    # NOTE: Downgrade is not supported from 134 to 133 (see CHANGELOG.md)
+    # Should be removed in `development/135.0`
+    if: ${{ ! startsWith(inputs.dev-branch, 'development/133') }}
+    secrets: inherit
+    with:
+      from-artifacts-url: ${{ inputs.artifacts-url }}
+      to-artifacts-url: ${{ needs.get-dev-artifacts-url.outputs.artifacts-url }}
+      type: ${{ inputs.type }}-dev
+      enable-debug-when-failure: ${{ inputs.enable-debug-when-failure }}

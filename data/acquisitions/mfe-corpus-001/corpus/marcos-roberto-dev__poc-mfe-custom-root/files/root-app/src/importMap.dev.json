@@ -1,0 +1,6 @@
+{
+  "imports": {
+    "@org/content-app": "http://127.0.0.1:5174/src/main.ts",
+    "@org/header-app": "http://127.0.0.1:5175/src/main.ts"
+  }
+}

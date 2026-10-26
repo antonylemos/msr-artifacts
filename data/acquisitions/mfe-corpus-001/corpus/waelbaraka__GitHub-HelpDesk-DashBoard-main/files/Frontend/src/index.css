@@ -1,0 +1,167 @@
+/* src/index.css */
+
+/* Import Tailwind CSS (ensure this is at the very top) */
+@import "tailwindcss";
+
+/* Define your custom theme using CSS variables within the @theme directive */
+@theme {
+  /* === BACKGROUNDS === */
+  --color-expanded-panel-item-hover-bg: #21262D; /* Example hover background */
+  --color-expanded-panel-border: #30363D; /* Already defined, but ensuring */
+  --color-expanded-panel-heading: #C9D1D9; /* Example heading text color */
+  
+
+  /* App Shell Backgrounds (Dark) */
+  --color-top-bar-bg: #0D1117; /* Very dark, for the top bar */
+  --color-primary-sidebar-bg: #0D1117; /* Very dark, for the far-left icon sidebar */
+  --color-expanded-panel-bg: #161B22; /* Darker gray, for pop-out panels like Reports */
+  --color-top-bar-search-bg: #010409; /* Dark, for search input */
+--primary-sidebar-icon-default: #94a3b8;
+--primary-sidebar-icon-active-fg: #ffffff;
+
+
+  /* Page Content Backgrounds (Light) */
+  --color-page-background: #FFFFFF;     /* Overall background for main page content areas (TeamPage, HelpDeskPage, etc.) */
+  --color-content-bg: #FFFFFF;          /* Specific content areas within pages, often same as page-background */
+  --color-page-nav-bg: #FFFFFF;         /* For white internal navigation sidebars (like HelpDesk's left col) */
+  --color-details-sidebar-bg: #F9FAFB;  /* Gray-50, for right-hand details sidebars (Chat, Team Member) */
+  --color-table-header-bg: #F9FAFB;    /* Gray-50, for table headers */
+  --color-page-nav-search-bg: #F9FAFB; /* Gray-50 */
+  --color-page-nav-item-hover-bg: #F3F4F6; /* Gray-100 */
+  --color-ai-suggestion-bg: #EEF2FF; /* Indigo-50 */
+  --color-message-bubble-received-bg: #E5E7EB; /* Gray-200 for received chat bubbles */
+  --color-chat-list-active-bg: #F3F3F3; /* <<<< NEW: Active background for chat list items */
+
+
+  /* === TEXT COLORS === */
+  /* For Dark Backgrounds */
+  --color-top-bar-text: #C9D1D9;
+  --color-primary-sidebar-icon-default: #9CA3AF;  /* Gray-400 for default icon state */
+  --color-primary-sidebar-icon-active-fg: #FFFFFF; /* WHITE for icon when item is active/hovered */
+  --color-expanded-panel-text-default: #C9D1D9;
+  --color-expanded-panel-text-muted: #8B949E;
+  --color-expanded-panel-text-active: #58A6FF;   /* Blue */
+  --color-announcement-text: #FFFFFF;
+
+
+  /* For Light Backgrounds */
+  --color-page-nav-heading-text: #111827; /* Gray-900 */
+  --color-page-nav-text-default: #374151; /* Gray-700 */
+  --color-page-nav-text-muted: #6B7280;  /* Gray-500 */
+  --color-page-nav-text-active: #2563EB;  /* Blue-600 */
+  --color-content-text-primary: #1F2937; /* Gray-800 */
+  --color-content-text-secondary: #6B7280; /* Gray-500 */
+  --color-link-text: #2563EB; /* Blue-600 */
+  --color-ai-suggestion-text: #4338CA; /* Indigo-700 */
+
+
+  /* === BORDERS === */
+  --color-top-bar-border: #21262D;
+  --color-primary-sidebar-border: #21262D;
+  --color-expanded-panel-border: #30363D;
+  --color-page-nav-border: #E5E7EB; /* Gray-200, for light panels */
+  --color-table-border: #E5E7EB;    /* Gray-200, for tables */
+  --color-ai-suggestion-border: #C7D2FE; /* Indigo-200 */
+
+
+  /* === BUTTONS === */
+  --color-button-primary-blue-bg: #2563EB;
+  --color-button-primary-blue-hover-bg: #1D4ED8;
+  --color-button-primary-text: #FFFFFF;
+  --color-button-dark-bg: #1F2937; /* Gray-800 for dark buttons like "Send" in chat */
+  --color-button-dark-hover-bg: #111827; /* Gray-900 */
+  --color-announcement-button-bg: #FFFFFF;
+  --color-announcement-button-text: #007AFF;
+  --color-announcement-button-hover-bg: #F0F8FF;
+
+  /* === ITEM/ELEMENT BACKGROUNDS (Non-Page Backgrounds) === */
+  --color-primary-sidebar-item-hover-bg: #374151;  /* Gray-700 - Background on hover */
+  --color-primary-sidebar-item-active-bg: #4B5563; /* Gray-600 - Background when active */
+  --color-message-bubble-sent-bg: #2563EB; /* Blue-600 for sent chat bubbles */
+
+
+  /* === BADGES & STATUSES === */
+  --color-page-nav-badge-bg: #E5E7EB;
+  --color-page-nav-badge-text: #4B5563;
+  --color-status-open-bg: #DBEAFE;
+  --color-status-open-text: #1E40AF;
+  --color-status-onhold-bg: #F3E8FF;
+  --color-status-onhold-text: #6B21A8;
+  --color-notification-red: #EF4444; /* Red-500 */
+
+
+  /* === AVATARS === */
+  --color-avatar-yellow-bg: #FDB833;
+  --color-avatar-yellow-text: #000000;
+  --color-avatar-bg-red: #FEE2E2;
+  --color-avatar-text-red: #991B1B;
+  --color-avatar-bg-purple: #EDE9FE;
+  --color-avatar-text-purple: #5B21B6;
+  --color-avatar-bg-green: #DCFCE7;
+  --color-avatar-text-green: #166534;
+  --color-avatar-bg-blue: #DBEAFE;
+  --color-avatar-text-blue: #1E40AF;
+
+
+  /* === SPACING & SIZING === */
+  --spacing-primary-sidebar-w: 54px;    /* Primary Sidebar width */
+  --spacing-expanded-panel-w: 240px; /* Expanded Nav Panel width (e.g., Reports) */
+  --spacing-chat-list-w: 25%;          /* Chat List Column width */
+  --spacing-chat-message-w: 50%;       /* Chat Message Area width */
+  --spacing-chat-details-w: 25%;       /* Chat Details Sidebar width (expanded) */
+  --spacing-details-sidebar-w: 320px;  /* Default Details Sidebar width (Team Member, non-chat) */
+  --spacing-clients-details-expanded-w: 25%; /* For Clients Details Sidebar expanded width */
+
+  --spacing-details-sidebar-collapsed-w: 48px; /* Collapsed Details Sidebar width (Chat) */
+
+  --height-page-section-header: 3.5rem; /* 56px */
+  --height-top-bar: 3.5rem;            /* 56px, often same as header */
+  --height-announcement-bar: 2rem;     /* 32px, Example height */
+
+
+}
+
+/* Global Styles */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Base background for the entire app shell */
+  background-color: var(--color-primary-sidebar-bg);
+}
+
+/* Custom scrollbar (optional, apply .scrollbar-thin to elements) */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary-sidebar-icon-default) var(--color-expanded-panel-bg); /* Example colors */
+}
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: var(--color-expanded-panel-bg); /* Example track color */
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: var(--color-primary-sidebar-icon-default);
+  border-radius: 20px;
+}
+
+/* Basic styling for custom toggle switch */
+input[type="checkbox"].sr-only + .block { /* The track */
+  /* Add base styles if needed */
+}
+input[type="checkbox"].sr-only + .block + .dot { /* The thumb */
+  /* Add base styles if needed */
+}
+input[type="checkbox"].sr-only:checked + .block { /* Checked track */
+  background-color: var(--color-button-primary-blue-hover-bg); /* Example checked color */
+}
+input[type="checkbox"].sr-only:checked + .block + .dot { /* Checked thumb */
+  transform: translateX(100%);
+  background-color: var(--color-button-primary-blue-bg); /* Example checked color */
+  left: unset; /* Ensure left/right positioning works */
+  right: 0.5px; /* Adjust based on thumb/track size */
+}

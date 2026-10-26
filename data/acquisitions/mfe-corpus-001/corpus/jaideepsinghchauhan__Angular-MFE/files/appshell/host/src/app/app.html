@@ -1,0 +1,17 @@
+<ul class="remote-menu">
+  <li><a routerLink="/">Home</a></li>
+  <li><a routerLink="mfe1">Mfe1</a></li>
+  <li><a routerLink="mfe2">Mfe2</a></li>
+</ul>
+<lib-button
+  *ngIf="!isLoggedIn"
+  (click)="simulateLogin()"
+  [label]="'Login'"
+></lib-button>
+<lib-button
+  *ngIf="isLoggedIn"
+  (click)="simulateLogout()"
+  [label]="'Logout'"
+></lib-button>
+isLoggedIn {{ isLoggedIn}}
+<router-outlet></router-outlet>

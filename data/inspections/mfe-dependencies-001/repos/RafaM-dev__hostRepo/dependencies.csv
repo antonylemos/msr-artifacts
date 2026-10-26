@@ -1,0 +1,2 @@
+manifest,line,section,package,version,technology,same_package_matches,other_package_matches
+package.json,26,devDependencies,@originjs/vite-plugin-federation,^1.4.1,module-federation,vite.config.ts:8;vite.config.ts:11;vite.config.ts:14,

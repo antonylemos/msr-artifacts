@@ -1,0 +1,10 @@
+directory,markers
+.,package.json
+apps/app,apps/app/package.json;apps/app/project.json;apps/app/webpack.config.js
+apps/microfrontend,apps/microfrontend/package.json;apps/microfrontend/project.json;apps/microfrontend/webpack.config.js
+libs/communication,libs/communication/package.json;libs/communication/project.json;libs/communication/rollup.config.json
+libs/core,libs/core/package.json;libs/core/project.json;libs/core/rollup.config.json
+libs/i18n,libs/i18n/package.json;libs/i18n/project.json;libs/i18n/rollup.config.json
+libs/portal,libs/portal/package.json;libs/portal/project.json;libs/portal/rollup.config.json
+tools/metadata,tools/metadata/package.json;tools/metadata/project.json
+ui,ui/package.json;ui/rollup.config.json

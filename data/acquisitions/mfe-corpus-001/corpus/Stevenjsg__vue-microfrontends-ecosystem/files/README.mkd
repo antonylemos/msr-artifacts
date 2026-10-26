@@ -1,0 +1,154 @@
+# 🚀 Vue 3 Microfrontend Ecosystem
+
+Un ecosistema de Arquitectura Microfrontend de alto rendimiento construido con Vue 3, Vite y Module Federation, orquestado dentro de un Monorepo gestionado por Turborepo y pnpm workspaces.
+
+Este proyecto demuestra cómo escalar aplicaciones frontend empresariales dividiendo monolitos en aplicaciones verticales independientes que comparten diseño, lógica y estado, manteniendo una experiencia de desarrollador (DX) superior.
+
+## 🏗 Arquitectura del Sistema
+
+El sistema utiliza el patrón Host (Shell) + Remotes. El Shell actúa como el orquestador principal, cargando los microfrontends bajo demanda (Lazy Loading) y compartiendo dependencias críticas para optimizar el bundle size.
+
+```mermaid
+graph TD
+    subgraph "Navegador del Usuario"
+        Shell[🖥️ Shell / Host App]
+        style Shell fill:#42b883,stroke:#333,stroke-width:2px,color:white
+
+        Dashboard[📊 MFE: Dashboard]
+        CMS[📝 MFE: CMS / Editor]
+        Kanban[📋 MFE: Kanban Board]
+        
+        UIKit[🎨 Shared UI Kit]
+        style UIKit fill:#f1c40f,stroke:#333,stroke-width:2px
+    end
+
+    Shell -->|Carga Remota| Dashboard
+    Shell -->|Carga Remota| CMS
+    Shell -->|Carga Remota| Kanban
+    
+    Shell -.->|Consume| UIKit
+    Dashboard -.->|Consume| UIKit
+    CMS -.->|Consume| UIKit
+    Kanban -.->|Consume| UIKit
+    
+    linkStyle 0,1,2 stroke:#42b883,stroke-width:2px;
+    linkStyle 3,4,5,6 stroke:#f1c40f,stroke-width:1px,stroke-dasharray: 5 5;
+```
+
+## 📦 Estructura del Monorepo
+
+Utilizamos Turborepo para la orquestación de tareas y pnpm workspaces para la gestión eficiente de dependencias y symlinking local.
+
+```mermaid
+graph LR
+    Root[📂 Monorepo Root] --> Apps[📂 apps/]
+    Root --> Packages[📂 packages/]
+    
+    subgraph "Aplicaciones (Vite + Vue 3)"
+        Apps --> Shell["Shell (Puerto 5000)"]
+        Apps --> Dash["Dashboard (Puerto 5001)"]
+        Apps --> CMS["CMS (Puerto 5002)"]
+        Apps --> Kanban["Kanban (Puerto 5003)"]
+    end
+    
+    subgraph "Librerías Compartidas"
+        Packages --> UIKit["@repo/ui-kit"]
+        Packages --> Utils["@repo/utils"]
+        Packages --> TSConfig["Configuración TS"]
+    end
+
+    style Root fill:#ef4444,stroke:#333,color:white
+    style Apps fill:#3b82f6,stroke:#333,color:white
+    style Packages fill:#eab308,stroke:#333
+```
+
+## 🛠 Tech Stack
+
+* Core: Vue 3 (Script Setup, Composition API).
+* Build Tool: Vite 6.
+* Federation: vite-plugin-federation (Module Federation).
+* Monorepo: Turborepo + pnpm workspaces.
+* Lenguaje: TypeScript.
+* Styling: CSS Modules / Tailwind (según preferencia).
+* State Management: Pinia (Shared State).
+
+## 🚀 Inicio Rápido
+
+Este proyecto requiere Node.js 18+ y pnpm.
+
+### 1. Clonar e Instalar
+
+Gracias a los workspaces, un solo comando instala las dependencias de los 4 proyectos y conecta las librerías compartidas.
+
+```bash
+git clone https://github.com/tu-usuario/vue-microfrontends-ecosystem.git
+cd vue-microfrontends-ecosystem
+pnpm install
+```
+
+### 2. Ejecutar Entorno de Desarrollo
+
+Turborepo lanzará las 4 aplicaciones en paralelo.
+
+```bash
+pnpm dev
+```
+
+Verás en la consola:
+
+* `Shell`: http://localhost:5173 (Entra aquí para ver la integración completa)
+* `Dashboard`: http://localhost:5174
+* `CMS`: http://localhost:5175
+* `Kanban`: http://localhost:5176
+
+### 3. Build de Producción
+
+Para simular el entorno real de producción (donde Module Federation brilla):
+
+```bash
+pnpm build
+pnpm preview
+```
+
+## 🧩 Detalle de los Proyectos
+
+### 1. The Shell (Host)
+
+* Es el contenedor principal. Maneja:
+* Layout Global (Sidebar, Header).
+* Autenticación (JWT compartido).
+* Enrutamiento raíz.
+* Carga de microfrontends remotos.
+
+### 2. Dashboard MFE
+
+* Enfoque: Visualización de Datos y Performance.
+* Gráficos en tiempo real (ECharts).
+* Manejo de grandes volúmenes de datos.
+* WebSockets para actualizaciones en vivo.
+
+### 3. CMS MFE
+
+* Enfoque: Lógica de Negocio y Formularios.
+* Gestión de contenido compleja.
+* Formularios dinámicos y validaciones avanzadas.
+* Patrones de diseño de componentes controlados.
+
+### 4. Kanban MFE
+
+* Enfoque: UX Interactivo.
+* Gestión de tareas visual.
+* Drag & Drop API nativa o librerías optimizadas.
+* Animaciones de estado y transiciones fluidas.
+
+### 5. Shared UI Kit (`@repo/ui-kit`)
+
+Librería de componentes interna (Botones, Inputs, Cards) que asegura la consistencia visual entre todos los microfrontends sin necesidad de publicar en npm.
+
+## 🏆 ¿Por qué esta arquitectura?
+
+1. Independencia de Despliegue: Cada equipo puede desplegar su microfrontend (Dashboard, CMS) sin afectar al Shell ni a los otros módulos.
+2. Shared Dependencies: Gracias a Vite Module Federation, si todos usan `vue`, la librería se descarga una sola vez en el navegador, no 4 veces.
+3. DX Superior: El monorepo permite arreglar un bug en el `ui-kit` y ver el cambio reflejado instantáneamente en las 4 apps gracias al Hot Module Replacement (HMR) unificado.
+
+Hecho con ❤️ por @Stevenjsg

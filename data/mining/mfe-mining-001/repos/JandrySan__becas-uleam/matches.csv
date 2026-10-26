@@ -1,0 +1,23 @@
+pattern,path,line,excerpt
+cfg-public-path,1verificador-vue/vite.config.ts,5,"  base: '/vue/',"
+cfg-public-path,2postulacion-react/vite.config.ts,5,"  base: '/react/',"
+src-custom-element,src/main.ts,9,const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+src-iframe,index.html,61,"    <iframe id=""moduleFrame"" src=""about:blank"" title=""Módulo activo""></iframe>"
+src-cross-unit-communication,1verificador-vue/src/views/HomeView.vue,92,  window.parent?.postMessage(
+src-cross-unit-communication,1verificador-vue/src/views/HomeView.vue,103,"  window.parent?.postMessage({ modulo: 'postulacion' }, '*')"
+src-cross-unit-communication,2postulacion-react/src/context/PostulacionContext.tsx,60,"    window.parent?.postMessage({ tipo: 'BECAS_REACT_READY' }, '*');"
+src-cross-unit-communication,2postulacion-react/src/context/PostulacionContext.tsx,69,"    window.parent?.postMessage({ tipo: 'BECAS_POSTULACION_UPDATE', datos, documentos: estado.documentos }, '*');"
+src-cross-unit-communication,2postulacion-react/src/pages/VistaPrevia.tsx,99,"      window.parent?.postMessage({ modulo: 'seguimiento' }, '*');"
+src-cross-unit-communication,3seguimiento-angular/src/app/app.component.ts,18,"    window.parent?.postMessage({ tipo: 'BECAS_ANGULAR_READY' }, '*');"
+src-cross-unit-communication,src/main.ts,84,"  frame.contentWindow?.postMessage(payload, '*');"
+ops-deployment-file,vercel.json,,
+ops-hosting,README.md,61,En Vercel configurar las variables de entorno:
+ops-hosting,README.md,70,## Deploy en Vercel
+ops-hosting,README.md,73,2. Importar el repositorio en Vercel.
+ops-hosting,README.md,75,4. Verificar que Vercel use:
+ops-hosting,README.md,80,"El archivo `vercel.json` ya incluye rewrites para `/vue/`, `/react/` y `/angular/`."
+ops-hosting,vercel.json,2,"  ""$schema"": ""https://openapi.vercel.sh/vercel.json"","
+doc-integration-technology,README.md,7,"- **Contenedora vanilla-ts**: login único, menú principal e integración por iframe."
+doc-integration-technology,README.md,94,"El reto más importante fue integrar aplicaciones hechas con frameworks distintos sin usar herramientas complejas como module federation. Para resolverlo, cada módulo queda compilado en su carpeta y se carga desde un iframe bajo el mismo dominio. Si volviéramos a hacerlo, integraríamos Supabase desde"
+ws-workspaces,package.json,7,"  ""workspaces"": ["
+ws-workspaces,pnpm-workspace.yaml,1,packages:

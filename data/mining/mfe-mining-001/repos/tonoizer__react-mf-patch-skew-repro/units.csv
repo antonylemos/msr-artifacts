@@ -1,0 +1,6 @@
+directory,markers
+.,package.json
+host,host/index.html;host/package.json;host/vite.config.js
+remote_a,remote_a/index.html;remote_a/package.json;remote_a/vite.config.js
+remote_b,remote_b/index.html;remote_b/package.json;remote_b/vite.config.js
+remote_c,remote_c/index.html;remote_c/package.json;remote_c/vite.config.js

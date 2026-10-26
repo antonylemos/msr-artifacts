@@ -1,0 +1,107 @@
+{
+  "schema": 1,
+  "id": "1134331975",
+  "fullName": "andreea-lipan/cozy-desk-micro-frontends",
+  "commit": "7050669405cfdce6e0bf593fdfdb4d94ef5ad5dc",
+  "acquiredAt": "2026-10-24T00:32:22.068Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "readme-images/01-create-app.png",
+      "reason": "preset:binaries",
+      "size": 226638
+    },
+    {
+      "path": "readme-images/02-add-native.png",
+      "reason": "preset:binaries",
+      "size": 53973
+    },
+    {
+      "path": "readme-images/03-init.png",
+      "reason": "preset:binaries",
+      "size": 44967
+    },
+    {
+      "path": "readme-images/04-finish-init.png",
+      "reason": "preset:binaries",
+      "size": 123080
+    },
+    {
+      "path": "readme-images/05-serve.png",
+      "reason": "preset:binaries",
+      "size": 265683
+    },
+    {
+      "path": "readme-images/06-browser.png",
+      "reason": "preset:binaries",
+      "size": 203000
+    },
+    {
+      "path": "readme-images/07-tea1.png",
+      "reason": "preset:binaries",
+      "size": 39234
+    },
+    {
+      "path": "readme-images/08-tea2.png",
+      "reason": "preset:binaries",
+      "size": 39829
+    },
+    {
+      "path": "readme-images/09-home-page.png",
+      "reason": "preset:binaries",
+      "size": 331102
+    },
+    {
+      "path": "readme-images/10-tea-tracker.png",
+      "reason": "preset:binaries",
+      "size": 168253
+    },
+    {
+      "path": "readme-images/11-sticky-notes.png",
+      "reason": "preset:binaries",
+      "size": 177298
+    },
+    {
+      "path": "sticky-notes/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "tea-tracker/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "test-base/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 82,
+    "bytes": 1799865
+  },
+  "languages": {
+    "JSON": 1713837,
+    "HTML": 49668,
+    "Markdown": 16533,
+    "TypeScript": 8962,
+    "CSS": 5968,
+    "Other": 2754,
+    "JavaScript": 2143
+  },
+  "contentSha256": "0c5b84a66f65a1ef656d282b7c22665b6bb05d3e521768e06668e774ce1fdd17"
+}

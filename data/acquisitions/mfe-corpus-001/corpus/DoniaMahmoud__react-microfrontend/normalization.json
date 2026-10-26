@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "id": "1147094315",
+  "fullName": "DoniaMahmoud/react-microfrontend",
+  "commit": "adc0ef9de42ce63b3082f8297d0146b59ac0d612",
+  "acquiredAt": "2026-10-24T00:32:36.730Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": ".DS_Store",
+      "reason": "preset:binaries",
+      "size": 6148
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 19,
+    "bytes": 522025
+  },
+  "languages": {
+    "JSON": 517653,
+    "JavaScript": 3915,
+    "HTML": 321,
+    "Other": 136
+  },
+  "contentSha256": "ce6c2ba2de824970fd996585c997226261293554fa0c7c2d952967fd6989ef62"
+}

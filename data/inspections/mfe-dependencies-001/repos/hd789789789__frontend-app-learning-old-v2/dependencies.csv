@@ -1,0 +1,2 @@
+manifest,line,section,package,version,technology,same_package_matches,other_package_matches
+package.json,48,dependencies,@openedx/frontend-plugin-framework,^1.7.0,other-mfe-framework,,

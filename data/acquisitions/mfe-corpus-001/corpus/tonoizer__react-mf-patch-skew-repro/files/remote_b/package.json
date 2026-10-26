@@ -1,0 +1,19 @@
+{
+  "name": "remote_b",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "preview": "vite preview",
+    "dev": "vite"
+  },
+  "dependencies": {
+    "react": "19.2.6",
+    "react-dom": "19.2.6"
+  },
+  "devDependencies": {
+    "@module-federation/vite": "1.21.6",
+    "@vitejs/plugin-react": "4.3.4",
+    "vite": "6.3.5"
+  }
+}

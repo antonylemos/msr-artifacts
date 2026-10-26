@@ -1,0 +1,29 @@
+# This file defines and orchestrates the multi-container Docker application.
+# It allows us to run both micro-frontend applications with a single command,
+# making the development and deployment setup clean and reproducible.
+
+services:
+  # The 'store-app' is the main entry point for users.
+  # It handles all traffic and proxies requests for the cart to the 'cart-app'.
+  store-app:
+    build:
+      context: ./store-app
+      dockerfile: Dockerfile
+    container_name: store-app
+    ports:
+      # Exposes the store on port 3000 to the host machine.
+      - "3000:3000"
+    restart: unless-stopped
+
+  # The 'cart-app' is a completely independent micro-frontend.
+  # It has its own build process and runs in a separate container.
+  cart-app:
+    build:
+      context: ./cart-app
+      dockerfile: Dockerfile
+    container_name: cart-app
+    ports:
+      # Maps port 3001 on the host to the container's internal port 3000.
+      # This allows direct access for isolated development and testing.
+      - "3001:3000"
+    restart: unless-stopped

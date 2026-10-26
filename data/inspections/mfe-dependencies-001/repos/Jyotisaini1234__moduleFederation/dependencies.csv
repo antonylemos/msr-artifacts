@@ -1,0 +1,2 @@
+manifest,line,section,package,version,technology,same_package_matches,other_package_matches
+mfe1/package.json,15,dependencies,@module-federation/node,^2.7.14,module-federation,mfe1/webpack.config.ts:12;mfe1/webpack.config.ts:74;mfe1/webpack.config.ts:76;mfe1/webpack.config.ts:79;mfe1/webpack.config.ts:81;mfe1/webpack.config.ts:85,mfe2/webpack.config.ts:7;mfe2/webpack.config.ts:37;mfe2/webpack.config.ts:40;mfe2/webpack.config.ts:41

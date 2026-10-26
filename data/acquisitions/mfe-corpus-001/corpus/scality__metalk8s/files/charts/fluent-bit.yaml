@@ -1,0 +1,103 @@
+image:
+  repository: '__image__(fluent-bit)'
+  pullPolicy: IfNotPresent
+
+existingConfigMap: fluent-bit
+
+podAnnotations:
+  checksum/config: '__slot__:salt:metalk8s_kubernetes.get_object_digest(kind="ConfigMap", apiVersion="v1", namespace="metalk8s-logging", name="fluent-bit", path="data:fluent-bit.conf")'
+  checksum/secret: '__slot__:salt:metalk8s_kubernetes.get_object_digest(kind="Secret", apiVersion="v1", namespace="metalk8s-logging", name="fluent-bit-certs", path="data", ignore_not_found=True)'
+
+resources: '__var__(fluent_bit.spec.deployment.resources)'
+
+tolerations:
+- key: node-role.kubernetes.io/bootstrap
+  effect: NoSchedule
+  operator: Exists
+- key: node-role.kubernetes.io/etcd
+  effect: NoSchedule
+  operator: Exists
+- key: node-role.kubernetes.io/infra
+  effect: NoSchedule
+  operator: Exists
+- key: node-role.kubernetes.io/master
+  effect: NoSchedule
+  operator: Exists
+# Keep shipping logs from WP-isolated nodes tainted by node-warden
+- key: node.scality.com/workload-plane-unreachable
+  effect: NoExecute
+  operator: Exists
+
+# Extra volumes to scrape logs from
+daemonSetVolumes:
+# /run/fluent-bit is used for fluent-bit DB
+- name: run
+  hostPath:
+    path: /run/fluent-bit
+- name: varlog
+  hostPath:
+    path: /var/log
+# /run/log is used to fetch journal logs
+- name: runlog
+  hostPath:
+    path: /run/log
+# stores all needed certificates for TLS outputs
+- name: certificates
+  secret:
+    secretName: fluent-bit-certs
+
+daemonSetVolumeMounts:
+- name: run
+  mountPath: /run/fluent-bit
+- name: varlog
+  mountPath: /var/log
+  readOnly: true
+- name: runlog
+  mountPath: /run/log
+  readOnly: true
+- name: certificates
+  mountPath: /fluent-bit/etc/tls
+  readOnly: true
+
+serviceMonitor:
+  enabled: true
+  selector:
+    metalk8s.scality.com/monitor: ''
+
+prometheusRule:
+  enabled: true
+  additionalLabels:
+    metalk8s.scality.com/monitor: ''
+  rules:
+  - alert: FluentBitBackPressure
+    expr: fluentbit_input_ingestion_paused == 1 or fluentbit_input_storage_overlimit == 1
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: Fluent Bit input is experiencing back pressure.
+      message: >
+        Fluent Bit pod {{ $labels.pod }} input {{ $labels.name }} has been paused
+        due to back pressure for more than 5 minutes. Log ingestion is halted
+        until the output pipeline catches up.
+  - alert: FluentBitOutputRetryLimit
+    expr: rate(fluentbit_output_retries_failed_total[5m]) > 0
+    for: 15m
+    labels:
+      severity: critical
+    annotations:
+      summary: Fluent Bit output is dropping logs after exhausting retries.
+      message: >
+        Fluent Bit pod {{ $labels.pod }} output {{ $labels.name }} has been
+        failing retries and dropping log records for more than 15 minutes.
+        Check the destination and network connectivity.
+
+dashboards:
+  enabled: true
+  deterministicUid: true
+
+env:
+  - name: NODE_NAME
+    valueFrom:
+      fieldRef:
+        fieldPath: spec.nodeName

@@ -1,0 +1,12 @@
+directory,markers
+module-assessment,module-assessment/package.json;module-assessment/webpack.config.js
+module-cloud-console,module-cloud-console/package.json;module-cloud-console/webpack.config.js
+module-cloud-labs,module-cloud-labs/package.json;module-cloud-labs/webpack.config.js
+module-code-environment,module-code-environment/package.json;module-code-environment/webpack.config.js
+module-code-module,module-code-module/package.json;module-code-module/webpack.config.js
+module-content-uploading,module-content-uploading/package.json;module-content-uploading/webpack.config.js
+module-dashboard,module-dashboard/package.json;module-dashboard/webpack.config.js
+module-logging,module-logging/package.json;module-logging/webpack.config.js
+module-virtual-machine,module-virtual-machine/package.json;module-virtual-machine/webpack.config.js
+shared-design-system,shared-design-system/package.json;shared-design-system/webpack.config.js
+shell-app,shell-app/package.json;shell-app/webpack.config.js;shell-app/webpack.prod.config.js

@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "id": "1161566940",
+  "fullName": "coolsamson7/novx",
+  "commit": "128ba9a0f9f373210c09948a19bd1b59d9c7673f",
+  "acquiredAt": "2026-10-24T00:26:28.792Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "apps.zip",
+      "reason": "preset:binaries",
+      "size": 2207537
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 351,
+    "bytes": 1190587
+  },
+  "languages": {
+    "TypeScript": 611925,
+    "YAML": 443842,
+    "Other": 52869,
+    "JSON": 51554,
+    "Markdown": 17889,
+    "JavaScript": 9631,
+    "SVG": 1334,
+    "Shell": 793,
+    "HTML": 515,
+    "SCSS": 200,
+    "CSS": 35
+  },
+  "contentSha256": "a86e5737d4a571ea95e7ce1b537047b967070d5f00e6b3ba3d8f8ae49b90dbb7"
+}

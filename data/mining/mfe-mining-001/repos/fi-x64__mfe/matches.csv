@@ -1,0 +1,37 @@
+pattern,path,line,excerpt
+cfg-federation-plugin,packages/container/config/webpack.dev.js,3,"const ModuleFederationPlugin = require(""webpack/lib/container/ModuleFederationPlugin"");"
+cfg-federation-plugin,packages/container/config/webpack.dev.js,16,    new ModuleFederationPlugin({
+cfg-federation-plugin,packages/container/config/webpack.prod.js,2,"const ModuleFederationPlugin = require(""webpack/lib/container/ModuleFederationPlugin"");"
+cfg-federation-plugin,packages/container/config/webpack.prod.js,15,    new ModuleFederationPlugin({
+cfg-federation-plugin,packages/marketing/config/webpack.dev.js,3,"const ModuleFederationPlugin = require(""webpack/lib/container/ModuleFederationPlugin"");"
+cfg-federation-plugin,packages/marketing/config/webpack.dev.js,16,    new ModuleFederationPlugin({
+cfg-federation-plugin,packages/marketing/config/webpack.prod.js,2,"const ModuleFederationPlugin = require(""webpack/lib/container/ModuleFederationPlugin"");"
+cfg-federation-plugin,packages/marketing/config/webpack.prod.js,13,    new ModuleFederationPlugin({
+cfg-remotes,packages/container/config/webpack.dev.js,18,      remotes: {
+cfg-remotes,packages/container/config/webpack.prod.js,17,      remotes: {
+cfg-exposes,packages/marketing/config/webpack.dev.js,19,      exposes: {
+cfg-exposes,packages/marketing/config/webpack.prod.js,16,      exposes: {
+cfg-shared,packages/container/config/webpack.dev.js,21,"      shared: packageJson.dependencies,"
+cfg-shared,packages/container/config/webpack.prod.js,20,"      shared: packageJson.dependencies,"
+cfg-shared,packages/marketing/config/webpack.dev.js,22,"      shared: packageJson.dependencies,"
+cfg-shared,packages/marketing/config/webpack.prod.js,19,"      shared: packageJson.dependencies,"
+cfg-public-path,packages/container/config/webpack.prod.js,12,"    publicPath: ""/container/latest/"","
+cfg-public-path,packages/marketing/config/webpack.prod.js,10,"    publicPath: ""/marketing/latest/"","
+rt-remote-entry,.github/workflows/marketing.yml,29,"      - run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DISTRIBUTION_ID }} --paths ""/marketing/latest/remoteEntry.js"""
+rt-remote-entry,packages/container/config/webpack.dev.js,19,"        marketing: ""marketing@http://localhost:8081/remoteEntry.js"","
+rt-remote-entry,packages/container/config/webpack.prod.js,18,"        marketing: `marketing@${domain}/marketing/latest/remoteEntry.js`,"
+rt-remote-entry,packages/marketing/config/webpack.dev.js,18,"      filename: ""remoteEntry.js"","
+rt-remote-entry,packages/marketing/config/webpack.prod.js,15,"      filename: ""remoteEntry.js"","
+src-async-bootstrap,packages/container/src/index.js,1,import('./bootstrap');
+src-async-bootstrap,packages/marketing/src/index.js,1,import('./bootstrap');
+src-mount-export,packages/marketing/src/bootstrap.js,22,export { mount };
+src-mount-call,packages/container/src/components/MarketingApp.js,8,    mount(ref.current);
+src-mount-import,packages/container/src/components/MarketingApp.js,1,"import { mount } from ""marketing/MarketingApp"";"
+ops-hosting,.github/workflows/container.yml,26,      - run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/container/latest
+ops-hosting,.github/workflows/container.yml,31,"      - run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DISTRIBUTION_ID }} --paths ""/container/latest/index.html"""
+ops-hosting,.github/workflows/marketing.yml,24,      - run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/marketing/latest
+ops-hosting,.github/workflows/marketing.yml,29,"      - run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DISTRIBUTION_ID }} --paths ""/marketing/latest/remoteEntry.js"""
+ci-workflow-file,.github/workflows/container.yml,,
+ci-workflow-file,.github/workflows/marketing.yml,,
+ci-path-trigger,.github/workflows/container.yml,7,    paths:
+ci-path-trigger,.github/workflows/marketing.yml,7,    paths:

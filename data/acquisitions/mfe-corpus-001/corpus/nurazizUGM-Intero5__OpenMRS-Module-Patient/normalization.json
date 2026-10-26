@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "id": "997746951",
+  "fullName": "nurazizUGM-Intero5/OpenMRS-Module-Patient",
+  "commit": "c490ce752bac4d0772f28778fe81434dd6c57a00",
+  "acquiredAt": "2026-10-24T00:26:36.885Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "e2e/support/upload/brainScan.jpeg",
+      "reason": "preset:binaries",
+      "size": 12729
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 1648,
+    "bytes": 8844363
+  },
+  "languages": {
+    "JavaScript": 3029414,
+    "TypeScript": 2714640,
+    "JSON": 1929030,
+    "Other": 968493,
+    "SCSS": 166468,
+    "Markdown": 15605,
+    "YAML": 14888,
+    "HTML": 2885,
+    "Shell": 2281,
+    "SVG": 452,
+    "CSS": 207
+  },
+  "contentSha256": "ff08f64b525c734da97777f5ec5a530a8de285eb0a2c6ffb077d3dfa86766e50"
+}

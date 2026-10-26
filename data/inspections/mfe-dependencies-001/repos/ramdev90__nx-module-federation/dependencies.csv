@@ -1,0 +1,11 @@
+manifest,line,section,package,version,technology,same_package_matches,other_package_matches
+package.json,15,dependencies,@nx/angular,22.5.4,monorepo-tool,,
+package.json,25,devDependencies,@module-federation/enhanced,^0.21.2,module-federation,customer/module-federation.config.ts:5;customer/webpack.config.ts:1;customer/webpack.config.ts:9;customer/webpack.prod.config.ts:1;customer/webpack.prod.config.ts:9;customer/webpack.prod.config.ts:17;orders/module-federation.config.ts:5;orders/webpack.config.ts:1;orders/webpack.config.ts:9;orders/webpack.prod.config.ts:1;orders/webpack.prod.config.ts:9;orders/webpack.prod.config.ts:17;products/module-federation.config.ts:5;products/webpack.config.ts:1;products/webpack.config.ts:9;products/webpack.prod.config.ts:1;products/webpack.prod.config.ts:9;products/webpack.prod.config.ts:17;shell/module-federation.config.ts:9;shell/module-federation.config.ts:17;shell/webpack.config.ts:1;shell/webpack.config.ts:9;shell/webpack.prod.config.ts:1;shell/webpack.prod.config.ts:9;shell/webpack.prod.config.ts:17,
+package.json,26,devDependencies,@nx/eslint,22.5.4,monorepo-tool,,
+package.json,27,devDependencies,@nx/eslint-plugin,22.5.4,monorepo-tool,,
+package.json,28,devDependencies,@nx/js,22.5.4,monorepo-tool,,
+package.json,29,devDependencies,@nx/module-federation,22.5.4,monorepo-tool,,
+package.json,30,devDependencies,@nx/web,22.5.4,monorepo-tool,,
+package.json,31,devDependencies,@nx/webpack,22.5.4,monorepo-tool,,
+package.json,32,devDependencies,@nx/workspace,22.5.4,monorepo-tool,,
+package.json,41,devDependencies,nx,22.5.4,monorepo-tool,,

@@ -1,0 +1,6 @@
+manifest,state
+frontend/customer-app/package.json,ok
+frontend/merchant-app/package.json,ok
+frontend/package.json,ok
+frontend/shared/package.json,ok
+frontend/shell/package.json,ok

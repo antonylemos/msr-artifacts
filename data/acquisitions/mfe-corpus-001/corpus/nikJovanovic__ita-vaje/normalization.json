@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "id": "1170818206",
+  "fullName": "nikJovanovic/ita-vaje",
+  "commit": "842a007f3e2690f8a521f951fc899c4af560e931",
+  "acquiredAt": "2026-10-24T00:26:28.520Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "auth-mfe/src/app/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 25931
+    },
+    {
+      "path": "builds-mfe/src/app/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 25931
+    },
+    {
+      "path": "catalog-mfe/src/app/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 25931
+    },
+    {
+      "path": "shell/src/app/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 25931
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 304,
+    "bytes": 1159258
+  },
+  "languages": {
+    "Other": 722880,
+    "TypeScript": 283526,
+    "JSON": 72302,
+    "Markdown": 34300,
+    "CSS": 18176,
+    "SVG": 13256,
+    "YAML": 12283,
+    "SQL": 1523,
+    "Shell": 496,
+    "JavaScript": 376,
+    "TOML": 140
+  },
+  "contentSha256": "5e2450fa4f96985565e8edbb1eeab862b9b9f5bcc8f2706e74940416d0057f14"
+}

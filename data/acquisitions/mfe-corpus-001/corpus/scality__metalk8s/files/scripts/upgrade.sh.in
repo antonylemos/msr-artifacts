@@ -1,0 +1,250 @@
+#!/bin/bash
+set -e
+set -u
+set -o pipefail
+
+VERBOSE=${VERBOSE:-0}
+LOGFILE=/var/log/metalk8s/upgrade.log
+DRAIN_TIMEOUT=${DRAIN_TIMEOUT:-0}
+DRY_RUN=0
+DESTINATION_VERSION=${DESTINATION_VERSION:-@@VERSION}
+# SALTENV must be equal to script version and DESTINATION_VERSION
+# (checked by the precheck runner)
+SALTENV="metalk8s-$DESTINATION_VERSION"
+SALT_CALL=${SALT_CALL:-salt-call}
+BASE_DIR=$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
+
+
+_usage() {
+    echo "upgrade.sh [options]"
+    echo "Options:"
+    echo "-D/--drain-timeout:              Change the node drain timeout (in seconds)"
+    echo "-l/--log-file <logfile_path>:    Path to log file"
+    echo "-v/--verbose:                    Run in verbose mode"
+    echo "-d/--dry-run:                    Run actions in dry run mode"
+    echo "-h/--help:                       Show this help menu"
+}
+
+while (( "$#" )); do
+  case "$1" in
+    -D|--drain-timeout)
+      DRAIN_TIMEOUT="$2"
+      shift 2
+      ;;
+    -d|--dry-run)
+      DRY_RUN=1
+      shift
+      ;;
+    -v|--verbose)
+      VERBOSE=1
+      shift
+      ;;
+    -l|--log-file)
+      LOGFILE="$2"
+      shift 2
+      ;;
+    -h|--help)
+      _usage
+      exit
+      ;;
+    *) # unsupported flags
+      echo "Error: Unsupported flag $1" >&2
+      _usage
+      exit 1
+      ;;
+  esac
+done
+
+TMPFILES=$(mktemp -d)
+
+# shellcheck disable=SC1090,SC1091
+. "$BASE_DIR"/common.sh
+
+mkdir -p "$(dirname "${LOGFILE}")"
+
+rotate_logfile
+
+cat << EOF >> "${LOGFILE}"
+--- MetalK8s Upgrade started on $(date -u -R) ---
+EOF
+
+exec > >(tee -ia "${LOGFILE}") 2>&1
+
+cleanup() {
+    rm -rf "${TMPFILES}" || true
+}
+
+trap cleanup EXIT
+
+upgrade_bootstrap () {
+    "$SALT_CALL" saltutil.sync_all saltenv="$SALTENV"
+    "$SALT_CALL" saltutil.refresh_grains
+
+    SALT_MASTER_CALL=("${EXEC_CONTAINER_COMMAND[@]}" "$(get_salt_container)")
+    "${SALT_MASTER_CALL[@]}" salt-run state.orchestrate \
+        metalk8s.orchestrate.bootstrap.pre-upgrade \
+        saltenv="$SALTENV"
+
+    # Upgrade salt-master in local mode since salt-master will restart
+    "$SALT_CALL" --local saltutil.sync_all saltenv="$SALTENV" refresh=True
+    "$SALT_CALL" --local saltutil.refresh_grains
+    "$SALT_CALL" --local --retcode-passthrough state.sls \
+        metalk8s.salt.master.installed saltenv="$SALTENV"
+
+    # After the salt-master container restarts, wait for all minions to
+    # reconnect before proceeding. Without this, the subsequent mine.flush
+    # + mine.update may fire before minions have re-established their ZeroMQ
+    # connection, causing "Minion did not return. [No response]" errors.
+    SALT_MASTER_CALL=("${EXEC_CONTAINER_COMMAND[@]}" "$(get_salt_container)")
+    retry 10 10 "${SALT_MASTER_CALL[@]}" salt '*' test.ping
+}
+
+flush_and_refresh_mine() {
+    # After upgrading salt-master, the mine cache files on the master may have
+    # been corrupted by a non-atomic write interrupted mid-SIGTERM (kubelet
+    # kills the container when the manifest changes). mine.update alone cannot
+    # fix this: it reads the corrupt file first, fails, and silently discards
+    # the new data. mine.flush deletes the file (no read needed), after which
+    # mine.update writes a clean cache from scratch.
+    # Run on all minions so the master has a clean, up-to-date mine cache for
+    # the entire cluster before any upgrade state queries it.
+    SALT_MASTER_CALL=("${EXEC_CONTAINER_COMMAND[@]}" "$(get_salt_container)")
+    "${SALT_MASTER_CALL[@]}" salt '*' mine.flush
+    "${SALT_MASTER_CALL[@]}" salt '*' mine.update
+}
+
+launch_pre_upgrade () {
+    SALT_MASTER_CALL=("${EXEC_CONTAINER_COMMAND[@]}" "$(get_salt_container)")
+    "${SALT_MASTER_CALL[@]}" salt-run saltutil.sync_all \
+        saltenv="$SALTENV"
+
+    "${SALT_MASTER_CALL[@]}" salt-run state.orchestrate \
+        metalk8s.orchestrate.upgrade.pre \
+        saltenv="$SALTENV"
+}
+
+launch_post_upgrade () {
+    SALT_MASTER_CALL=("${EXEC_CONTAINER_COMMAND[@]}" "$(get_salt_container)")
+    "${SALT_MASTER_CALL[@]}" salt-run state.orchestrate \
+        metalk8s.orchestrate.upgrade.post \
+        saltenv="$SALTENV"
+}
+
+upgrade_etcd () {
+    SALT_MASTER_CALL=("${EXEC_CONTAINER_COMMAND[@]}" "$(get_salt_container)")
+    "${SALT_MASTER_CALL[@]}" salt-run saltutil.sync_all \
+        saltenv="$SALTENV"
+
+    "${SALT_MASTER_CALL[@]}" salt-run metalk8s_saltutil.sync_auth  \
+        saltenv="$SALTENV"
+
+    "${SALT_MASTER_CALL[@]}" salt-run saltutil.sync_roster  \
+        saltenv="$SALTENV"
+
+    "${SALT_MASTER_CALL[@]}" salt-run state.orchestrate \
+        metalk8s.orchestrate.etcd saltenv="$SALTENV"
+}
+
+upgrade_apiservers () {
+    # The etcd upgrade above restarts etcd, which can make the kube-apiserver
+    # briefly unavailable (especially on a single-node cluster). Wait for the
+    # apiserver to be ready before running the orchestrate: rendering it
+    # requires the salt-master to compile the `metalk8s_nodes` ext_pillar
+    # against the apiserver, and if it is still down the pillar compilation
+    # fails and aborts the whole upgrade.
+    "${SALT_CALL}" --local --retcode-passthrough http.wait_for_successful_query \
+        https://127.0.0.1:7443/healthz \
+        verify_ssl=False status=200 match="ok" wait_for=300 request_interval=5
+
+    SALT_MASTER_CALL=("${EXEC_CONTAINER_COMMAND[@]}" "$(get_salt_container)")
+    "${SALT_MASTER_CALL[@]}" salt-run state.orchestrate \
+        metalk8s.orchestrate.apiserver saltenv="$SALTENV"
+}
+
+# NOTE: We need to upgrade local engine (kubelet + containerd) locally
+#       before starting the node upgrade as we rely on salt-master running
+#       in a container managed by kubelet and containerd
+upgrade_local_engines () {
+    local saltmaster_endpoint repo_endpoint
+    saltmaster_endpoint="$($SALT_CALL pillar.get \
+        metalk8s:endpoints:salt-master --out txt | cut -d' ' -f2- )"
+    repo_endpoint="$($SALT_CALL pillar.get \
+        metalk8s:endpoints:repositories --out txt | cut -d' ' -f2- )"
+
+    # NOTE: Sleep a bit at the end so that container properly stop before
+    #       going to the next step
+    "${SALT_CALL}" --local --retcode-passthrough state.sls sync_mods="all" \
+        metalk8s.kubernetes.kubelet.standalone saltenv="$SALTENV" \
+        pillar="{'metalk8s': {'endpoints': {'salt-master': $saltmaster_endpoint, \
+        'repositories': $repo_endpoint}}}" && sleep 20 || return 1
+
+    # List of containers that need to be running to continue the upgrade
+    local -a containers_to_check=(
+        'repositories'
+        'salt-master'
+        'etcd'
+        'kube-apiserver'
+    )
+    for container in "${containers_to_check[@]}"; do
+        "${SALT_CALL}" --local --retcode-passthrough cri.wait_container \
+            name="$container" state=running timeout=180 || return 1
+    done
+
+    # Make sure apiserver works well
+    "${SALT_CALL}" --local --retcode-passthrough http.wait_for_successful_query \
+        https://127.0.0.1:7443/healthz \
+        verify_ssl=False status=200 match="ok"
+}
+
+upgrade_nodes () {
+    SALT_MASTER_CALL=("${EXEC_CONTAINER_COMMAND[@]}" "$(get_salt_container)")
+    "${SALT_MASTER_CALL[@]}" salt-run state.orchestrate \
+        metalk8s.orchestrate.upgrade saltenv="$SALTENV" \
+        pillar="{'orchestrate': {'drain_timeout': $DRAIN_TIMEOUT}}"
+}
+
+precheck_upgrade() {
+    SALT_MASTER_CALL=("${EXEC_CONTAINER_COMMAND[@]}" "$(get_salt_container)")
+    "${SALT_MASTER_CALL[@]}" salt-run saltutil.sync_all \
+        saltenv="$SALTENV"
+    # Due to a bug in salt do not "raises" when we run from CLI
+    # See: https://github.com/saltstack/salt/issues/61173
+    "${SALT_MASTER_CALL[@]}" salt-run metalk8s_checks.upgrade \
+        dest_version="$DESTINATION_VERSION" \
+        saltenv="$SALTENV" \
+        raises=False
+}
+
+# patch the kube-system namespace annotation with <destination-version> input
+patch_kubesystem_namespace() {
+    SALT_MASTER_CALL=("${EXEC_CONTAINER_COMMAND[@]}" "$(get_salt_container)")
+
+    "${SALT_MASTER_CALL[@]}" salt-run saltutil.sync_all \
+        saltenv="$SALTENV"
+
+    #update the annotation with the new destination value
+    "${SALT_MASTER_CALL[@]}" salt-run state.orchestrate \
+        metalk8s.orchestrate.patch_kubesystem_namespace \
+        saltenv="$SALTENV" \
+        pillar="{'orchestrate': {'destination_version': '$DESTINATION_VERSION'}}"
+}
+
+run "Performing Pre-Upgrade checks" precheck_upgrade
+[ $DRY_RUN -eq 1 ] && exit 0
+
+# NOTE: We use --no-replication flag since the backup-server is not available
+# in the previous version of MetalK8s.
+# This flag can safely be removed in MetalK8s 2.12.
+"$BASE_DIR"/backup.sh --no-replication
+
+run "Upgrading bootstrap" upgrade_bootstrap
+run "Refreshing Salt mine on nodes" flush_and_refresh_mine
+run "Setting cluster version to $DESTINATION_VERSION" patch_kubesystem_namespace
+run "Launching the pre-upgrade" launch_pre_upgrade
+run "Upgrading etcd cluster" upgrade_etcd
+run "Upgrading all kube-api-server instances" upgrade_apiservers
+run "Upgrading local containerd and kubelet" upgrade_local_engines
+run "Upgrading all nodes one by one" upgrade_nodes
+run "Launching the post-upgrade" launch_post_upgrade
+
+"$BASE_DIR"/backup.sh

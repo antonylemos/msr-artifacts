@@ -1,0 +1,23 @@
+# List of Prometheus rules that will be dropped from the
+# prometheus-operator charts at render time.
+node-exporter:
+  - NodeFilesystemSpaceFillingUp
+  - NodeFilesystemAlmostOutOfSpace
+  - NodeFilesystemFilesFillingUp
+  - NodeFilesystemAlmostOutOfFiles
+  - NodeNetworkReceiveErrs
+  - NodeNetworkTransmitErrs
+  - NodeHighNumberConntrackEntriesUsed
+  - NodeClockSkewDetected
+  - NodeClockNotSynchronising
+  - NodeRAIDDegraded
+  - NodeRAIDDiskFailure
+  - NodeTextFileCollectorScrapeError
+  - NodeFileDescriptorLimit
+kubernetes-apps:
+  - KubeJobNotCompleted
+  - KubeJobFailed
+# workaround: this fires upon install
+# revert the entire commit after the fix is merged
+etcd:
+  - etcdDatabaseHighFragmentationRatio

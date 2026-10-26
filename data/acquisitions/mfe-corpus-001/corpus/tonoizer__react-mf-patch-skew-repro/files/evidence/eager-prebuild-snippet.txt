@@ -1,0 +1,101 @@
+=== remote_a/dist/assets/main-B-xYbxqv.js (static eager import of react-dom/client loadShare) ===
+import { a as __mf_1 } from "./_virtual_mf___mfe_internal__remote_a__mf_owner__52435470359465__loadShare__react_mf_1_jsx_mf_2_runtime__loadShare__.js-Chqeozn1.js";
+import "./_virtual_mf___mfe_internal__remote_a__mf_owner__52435470359465__loadShare__react__loadShare__.js-C_c0hUUj.js";
+import { a as __mf_0 } from "./_virtual_mf___mfe_internal__remote_a__mf_owner__52435470359465__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-BL4_xYsN.js";
+import App from "./App-BGKGc-hT.js";
+import "./vite-preload-helper-Bdthrcwx.js";
+__mf_0(document.getElementById("root")).render(/* @__PURE__ */ __mf_1(App, {}));
+
+=== loadShare react-dom/client head (first 60 lines) ===
+import { g as getDefaultExportFromCjs } from "./_virtual_mf___mfe_internal__remote_a__mf_owner__52435470359465__loadShare__react_mf_1_jsx_mf_2_runtime__loadShare__.js-Chqeozn1.js";
+import { a as __moduleExports$1 } from "./_virtual_mf___mfe_internal__remote_a__mf_owner__52435470359465__loadShare__react__loadShare__.js-C_c0hUUj.js";
+function _mergeNamespaces(n, m) {
+  for (var i = 0; i < m.length; i++) {
+    const e = m[i];
+    if (typeof e !== "string" && !Array.isArray(e)) {
+      for (const k in e) {
+        if (k !== "default" && !(k in n)) {
+          const d = Object.getOwnPropertyDescriptor(e, k);
+          if (d) {
+            Object.defineProperty(n, k, d.get ? d : {
+              enumerable: true,
+              get: () => e[k]
+            });
+          }
+        }
+      }
+    }
+  }
+  return Object.freeze(Object.defineProperty(n, Symbol.toStringTag, { value: "Module" }));
+}
+var client = { exports: {} };
+var reactDomClient_production = {};
+var scheduler = { exports: {} };
+var scheduler_production = {};
+/**
+ * @license React
+ * scheduler.production.js
+ *
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+(function(exports) {
+  function push2(heap, node) {
+    var index2 = heap.length;
+    heap.push(node);
+    a: for (; 0 < index2; ) {
+      var parentIndex = index2 - 1 >>> 1, parent = heap[parentIndex];
+      if (0 < compare(parent, node))
+        heap[parentIndex] = node, heap[index2] = parent, index2 = parentIndex;
+      else break a;
+    }
+  }
+  function peek(heap) {
+    return 0 === heap.length ? null : heap[0];
+  }
+  function pop2(heap) {
+    if (0 === heap.length) return null;
+    var first = heap[0], last = heap.pop();
+    if (last !== first) {
+      heap[0] = last;
+      a: for (var index2 = 0, length = heap.length, halfLength = length >>> 1; index2 < halfLength; ) {
+        var leftIndex = 2 * (index2 + 1) - 1, left = heap[leftIndex], rightIndex = leftIndex + 1, right = heap[rightIndex];
+        if (0 > compare(left, last))
+          rightIndex < length && 0 > compare(right, left) ? (heap[index2] = right, heap[rightIndex] = last, index2 = rightIndex) : (heap[index2] = left, heap[leftIndex] = last, index2 = leftIndex);
+        else if (rightIndex < length && 0 > compare(right, last))
+          heap[index2] = right, heap[rightIndex] = last, index2 = rightIndex;
+        else break a;
+
+=== loadShare react-dom/client around prebuild export (tail) ===
+      const defaultExport = current == null ? void 0 : current.default;
+      if (!defaultExport || typeof defaultExport !== "object") return defaultExport ?? current;
+      current = defaultExport;
+    }
+    return current;
+  })();
+};
+__mfSubscribeSharedCache(__mfModuleCache.share, { "canonical": "default:react-dom/client" }, __mfApplySharedExports);
+__mfApplySharedExports(exportModule);
+const __moduleExports = exportModule;
+const _virtual_mf___mfe_internal__remote_a__mf_owner__52435470359465__loadShare__react_mf_2_dom_mf_1_client__loadShare__ = /* @__PURE__ */ _mergeNamespaces({
+  __proto__: null,
+  get createRoot() {
+    return __mf_0;
+  },
+  get default() {
+    return __mfDefaultExport;
+  },
+  get hydrateRoot() {
+    return __mf_1;
+  },
+  get version() {
+    return __mf_2;
+  }
+}, [__moduleExports]);
+export {
+  _virtual_mf___mfe_internal__remote_a__mf_owner__52435470359465__loadShare__react_mf_2_dom_mf_1_client__loadShare__ as _,
+  __mf_0 as a,
+  __mfLocalShare as b
+};

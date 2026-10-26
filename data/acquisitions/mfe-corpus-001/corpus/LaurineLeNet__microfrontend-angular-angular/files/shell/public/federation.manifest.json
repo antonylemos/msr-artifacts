@@ -1,0 +1,4 @@
+{
+  "athletes": "https://mf-angular-athletes.lenetlaurine.workers.dev/remoteEntry.json",
+  "ranking": "https://mf-angular-ranking.lenetlaurine.workers.dev/remoteEntry.json"
+}

@@ -1,0 +1,48 @@
+pattern,path,line,excerpt
+cfg-federation-plugin,host-app/webpack.dev.js,4,"const ModuleFederationPlugin = require(""webpack"").container.ModuleFederationPlugin;"
+cfg-federation-plugin,host-app/webpack.dev.js,45,    new ModuleFederationPlugin({
+cfg-federation-plugin,host-app/webpack.prod.js,4,"const ModuleFederationPlugin = require(""webpack"").container.ModuleFederationPlugin;"
+cfg-federation-plugin,host-app/webpack.prod.js,49,    new ModuleFederationPlugin({
+cfg-federation-plugin,todoForm-app/webpack.dev.js,4,"const ModuleFederationPlugin = require(""webpack"").container.ModuleFederationPlugin;"
+cfg-federation-plugin,todoForm-app/webpack.dev.js,48,        new ModuleFederationPlugin({
+cfg-federation-plugin,todoForm-app/webpack.prod.js,4,"const ModuleFederationPlugin = require(""webpack"").container.ModuleFederationPlugin;"
+cfg-federation-plugin,todoForm-app/webpack.prod.js,48,        new ModuleFederationPlugin({
+cfg-federation-plugin,todoList-app/webpack.dev.js,4,"const ModuleFederationPlugin = require(""webpack"").container.ModuleFederationPlugin;"
+cfg-federation-plugin,todoList-app/webpack.dev.js,47,        new ModuleFederationPlugin({
+cfg-federation-plugin,todoList-app/webpack.prod.js,4,"const ModuleFederationPlugin = require(""webpack"").container.ModuleFederationPlugin;"
+cfg-federation-plugin,todoList-app/webpack.prod.js,47,        new ModuleFederationPlugin({
+cfg-remotes,host-app/webpack.dev.js,48,        remotes:{
+cfg-remotes,host-app/webpack.prod.js,52,        remotes:{
+cfg-exposes,todoForm-app/webpack.dev.js,51,            exposes:{
+cfg-exposes,todoForm-app/webpack.prod.js,51,            exposes:{
+cfg-exposes,todoList-app/webpack.dev.js,50,            exposes:{
+cfg-exposes,todoList-app/webpack.prod.js,50,            exposes:{
+cfg-shared,host-app/webpack.dev.js,52,        shared:{
+cfg-shared,host-app/webpack.prod.js,56,        shared:{
+cfg-shared,todoForm-app/webpack.dev.js,54,            shared:{
+cfg-shared,todoForm-app/webpack.prod.js,54,            shared:{
+cfg-shared,todoList-app/webpack.dev.js,53,            shared:{
+cfg-shared,todoList-app/webpack.prod.js,53,            shared:{
+rt-remote-entry,host-app/webpack.dev.js,47,"        filename:'remoteEntry.js',"
+rt-remote-entry,host-app/webpack.dev.js,49,"            'todoForm_app':'todoForm_app@http://localhost:3001/remoteEntry.js',"
+rt-remote-entry,host-app/webpack.dev.js,50,"            'todoList_app':'todoList_app@http://localhost:3002/remoteEntry.js',"
+rt-remote-entry,host-app/webpack.prod.js,51,"        filename:'remoteEntry.js',"
+rt-remote-entry,host-app/webpack.prod.js,53,"            'todoForm_app':`todoForm_app@${todoformAppurl}/remoteEntry.js`,"
+rt-remote-entry,host-app/webpack.prod.js,54,"            'todoList_app':`todoList_app@${todolistAppurl}/remoteEntry.js`,"
+rt-remote-entry,todoForm-app/webpack.dev.js,50,"            filename:'remoteEntry.js',"
+rt-remote-entry,todoForm-app/webpack.prod.js,50,"            filename:'remoteEntry.js',"
+rt-remote-entry,todoList-app/webpack.dev.js,49,"            filename:'remoteEntry.js',"
+rt-remote-entry,todoList-app/webpack.prod.js,49,"            filename:'remoteEntry.js',"
+src-remote-import,host-app/src/App.jsx,2,const TodoForm = React.lazy(() => import('todoForm_app/TodoForm'))
+src-remote-import,host-app/src/App.jsx,3,const ToDoList = React.lazy(() => import('todoList_app/todoList'))
+doc-mfe-term,README.md,1,# Todo App Using Micro Frontends
+doc-mfe-term,README.md,3,A small React micro-frontend project built with Webpack Module Federation.
+doc-mfe-term,README.md,15,- Micro-frontend architecture with a host and two remotes
+doc-integration-technology,README.md,3,A small React micro-frontend project built with Webpack Module Federation.
+doc-integration-technology,README.md,11,The apps communicate through Module Federation and share todo data through `localStorage`.
+doc-integration-technology,README.md,26,- Module Federation
+doc-integration-technology,README.md,113,## Module Federation Setup
+doc-host-remote,README.md,15,- Micro-frontend architecture with a host and two remotes
+doc-host-remote,README.md,43,The `host-app` runs on port `3000` and loads two remote applications:
+doc-host-remote,README.md,115,### Host remotes
+doc-host-remote,README.md,128,"- The production config in `host-app` currently points to remotes on `localhost`, so deployment would need updated remote URLs."

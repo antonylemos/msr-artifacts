@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "id": "1149061587",
+  "fullName": "Christian-Encalada/examen-microfrontend",
+  "commit": "9456a399b086d78c65d167e0d08db5d2b8d31bb8",
+  "acquiredAt": "2026-10-24T00:32:27.114Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 42,
+    "bytes": 629904
+  },
+  "languages": {
+    "JSON": 603074,
+    "TypeScript": 17274,
+    "Other": 5883,
+    "Markdown": 2609,
+    "HTML": 696,
+    "CSS": 368
+  },
+  "contentSha256": "ec6498fa73c6b8687dc32e6d498b20560930a95fb4e29eca6863e691faf459ed"
+}

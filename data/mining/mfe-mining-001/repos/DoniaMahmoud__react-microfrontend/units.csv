@@ -1,0 +1,4 @@
+directory,markers
+cart,cart/package.json;cart/webpack.config.js
+container,container/package.json;container/webpack.config.js
+products,products/package.json;products/webpack.config.js

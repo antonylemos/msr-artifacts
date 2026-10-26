@@ -1,0 +1,94 @@
+pattern,path,line,excerpt
+dep-single-spa,content-app/package.json,12,"    ""single-spa"": ""^6.0.3"","
+dep-single-spa,content-app/package.json,13,"    ""single-spa-vue"": ""^3.0.1"","
+dep-single-spa,root-app/package.json,12,"    ""single-spa"": ""^6.0.3"","
+dep-single-spa,root-app/package.json,13,"    ""single-spa-vue"": ""^3.0.1"","
+dep-single-spa,root-app/package.json,14,"    ""vite-plugin-single-spa"": ""^1.1.0"","
+dep-single-spa,root-classic/package.json,39,"    ""webpack-config-single-spa-ts"": ""^8.0.0"","
+dep-single-spa,root-classic/package.json,40,"    ""ts-config-single-spa"": ""^3.0.0"""
+dep-single-spa,root-classic/package.json,45,"    ""single-spa"": ""^5.9.3"","
+dep-single-spa,root-classic/package.json,47,"    ""single-spa-layout"": ""^1.6.0"""
+dep-single-spa,topbar-app/package.json,12,"    ""single-spa"": ""^6.0.3"","
+dep-single-spa,topbar-app/package.json,13,"    ""single-spa-vue"": ""^3.0.1"","
+lock-mfe-dependency,content-app/package-lock.json,11,"        ""single-spa"": ""^6.0.3"","
+lock-mfe-dependency,content-app/package-lock.json,12,"        ""single-spa-vue"": ""^3.0.1"","
+lock-mfe-dependency,content-app/package-lock.json,1312,"    ""node_modules/single-spa"": {"
+lock-mfe-dependency,content-app/package-lock.json,1314,"      ""resolved"": ""https://registry.npmjs.org/single-spa/-/single-spa-6.0.3.tgz"","
+lock-mfe-dependency,content-app/package-lock.json,1318,"    ""node_modules/single-spa-vue"": {"
+lock-mfe-dependency,content-app/package-lock.json,1320,"      ""resolved"": ""https://registry.npmjs.org/single-spa-vue/-/single-spa-vue-3.0.1.tgz"","
+lock-mfe-dependency,root-app/package-lock.json,11,"        ""single-spa"": ""^6.0.3"","
+lock-mfe-dependency,root-app/package-lock.json,12,"        ""single-spa-vue"": ""^3.0.1"","
+lock-mfe-dependency,root-app/package-lock.json,13,"        ""vite-plugin-single-spa"": ""^1.1.0"","
+lock-mfe-dependency,root-app/package-lock.json,1256,"    ""node_modules/single-spa"": {"
+lock-mfe-dependency,root-app/package-lock.json,1258,"      ""resolved"": ""https://registry.npmjs.org/single-spa/-/single-spa-6.0.3.tgz"","
+lock-mfe-dependency,root-app/package-lock.json,1262,"    ""node_modules/single-spa-vue"": {"
+lock-mfe-dependency,root-app/package-lock.json,1264,"      ""resolved"": ""https://registry.npmjs.org/single-spa-vue/-/single-spa-vue-3.0.1.tgz"","
+lock-mfe-dependency,root-app/package-lock.json,1388,"    ""node_modules/vite-plugin-single-spa"": {"
+lock-mfe-dependency,root-app/package-lock.json,1390,"      ""resolved"": ""https://registry.npmjs.org/vite-plugin-single-spa/-/vite-plugin-single-spa-1.1.0.tgz"","
+lock-mfe-dependency,root-classic/package-lock.json,12,"        ""single-spa"": ""^5.9.3"","
+lock-mfe-dependency,root-classic/package-lock.json,13,"        ""single-spa-layout"": ""^1.6.0"""
+lock-mfe-dependency,root-classic/package-lock.json,35,"        ""ts-config-single-spa"": ""^3.0.0"","
+lock-mfe-dependency,root-classic/package-lock.json,39,"        ""webpack-config-single-spa-ts"": ""^8.0.0"","
+lock-mfe-dependency,root-classic/package-lock.json,10040,"    ""node_modules/single-spa"": {"
+lock-mfe-dependency,root-classic/package-lock.json,10042,"      ""resolved"": ""https://registry.npmjs.org/single-spa/-/single-spa-5.9.5.tgz"","
+lock-mfe-dependency,root-classic/package-lock.json,10046,"    ""node_modules/single-spa-layout"": {"
+lock-mfe-dependency,root-classic/package-lock.json,10048,"      ""resolved"": ""https://registry.npmjs.org/single-spa-layout/-/single-spa-layout-1.6.1.tgz"","
+lock-mfe-dependency,root-classic/package-lock.json,10055,"        ""single-spa"": "">=5"""
+lock-mfe-dependency,root-classic/package-lock.json,10222,"    ""node_modules/standalone-single-spa-webpack-plugin"": {"
+lock-mfe-dependency,root-classic/package-lock.json,10224,"      ""resolved"": ""https://registry.npmjs.org/standalone-single-spa-webpack-plugin/-/standalone-single-spa-webpack-plugin-6.0.0.tgz"","
+lock-mfe-dependency,root-classic/package-lock.json,10229,"        ""single-spa"": "">=7.0.0-beta.3"""
+lock-mfe-dependency,root-classic/package-lock.json,10239,"    ""node_modules/standalone-single-spa-webpack-plugin/node_modules/single-spa"": {"
+lock-mfe-dependency,root-classic/package-lock.json,10241,"      ""resolved"": ""https://registry.npmjs.org/single-spa/-/single-spa-7.0.0-beta.13.tgz"","
+lock-mfe-dependency,root-classic/package-lock.json,10743,"    ""node_modules/ts-config-single-spa"": {"
+lock-mfe-dependency,root-classic/package-lock.json,10745,"      ""resolved"": ""https://registry.npmjs.org/ts-config-single-spa/-/ts-config-single-spa-3.0.0.tgz"","
+lock-mfe-dependency,root-classic/package-lock.json,11298,"    ""node_modules/webpack-config-single-spa"": {"
+lock-mfe-dependency,root-classic/package-lock.json,11300,"      ""resolved"": ""https://registry.npmjs.org/webpack-config-single-spa/-/webpack-config-single-spa-8.0.0.tgz"","
+lock-mfe-dependency,root-classic/package-lock.json,11309,"        ""standalone-single-spa-webpack-plugin"": ""^6.0.0"","
+lock-mfe-dependency,root-classic/package-lock.json,11315,"    ""node_modules/webpack-config-single-spa-ts"": {"
+lock-mfe-dependency,root-classic/package-lock.json,11317,"      ""resolved"": ""https://registry.npmjs.org/webpack-config-single-spa-ts/-/webpack-config-single-spa-ts-8.0.0.tgz"","
+lock-mfe-dependency,root-classic/package-lock.json,11324,"        ""webpack-config-single-spa"": ""8.0.0"","
+lock-mfe-dependency,topbar-app/package-lock.json,11,"        ""single-spa"": ""^6.0.3"","
+lock-mfe-dependency,topbar-app/package-lock.json,12,"        ""single-spa-vue"": ""^3.0.1"","
+lock-mfe-dependency,topbar-app/package-lock.json,1312,"    ""node_modules/single-spa"": {"
+lock-mfe-dependency,topbar-app/package-lock.json,1314,"      ""resolved"": ""https://registry.npmjs.org/single-spa/-/single-spa-6.0.3.tgz"","
+lock-mfe-dependency,topbar-app/package-lock.json,1318,"    ""node_modules/single-spa-vue"": {"
+lock-mfe-dependency,topbar-app/package-lock.json,1320,"      ""resolved"": ""https://registry.npmjs.org/single-spa-vue/-/single-spa-vue-3.0.1.tgz"","
+rt-manifest-file,root-app/src/importMap.dev.json,,
+rt-manifest-file,root-app/src/importMap.json,,
+rt-import-map-entry,root-app/index.html,13,"    ""imports"": {"
+rt-import-map-entry,root-app/index.html,26,"    ""imports"": {"
+rt-import-map-entry,root-app/src/importMap.dev.json,2,"  ""imports"": {"
+rt-import-map-entry,root-app/src/importMap.json,2,"  ""imports"": {"
+rt-import-map-entry,root-classic/src/index.ejs,19,"      ""imports"": {"
+rt-import-map-entry,root-classic/src/index.ejs,32,"      ""imports"": {"
+src-mount-export,content-app/src/main.ts,20,export const bootstrap = vueLifecycles.bootstrap;
+src-mount-export,content-app/src/main.ts,21,export const mount = vueLifecycles.mount;
+src-mount-export,content-app/src/main.ts,22,export const unmount = vueLifecycles.unmount;
+src-mount-export,topbar-app/src/main.ts,20,export const bootstrap = vueLifecycles.bootstrap;
+src-mount-export,topbar-app/src/main.ts,21,export const mount = vueLifecycles.mount;
+src-mount-export,topbar-app/src/main.ts,22,export const unmount = vueLifecycles.unmount;
+src-lifecycles,content-app/src/main.ts,4,import singleSpaVue from 'single-spa-vue';
+src-lifecycles,content-app/src/main.ts,8,const vueLifecycles = singleSpaVue({
+src-lifecycles,topbar-app/src/main.ts,4,import singleSpaVue from 'single-spa-vue';
+src-lifecycles,topbar-app/src/main.ts,8,const vueLifecycles = singleSpaVue({
+src-import-map,root-app/index.html,11,"  <script type=""importmap"">"
+src-import-map,root-app/index.html,24,"  <!-- <script type=""systemjs-importmap"">"
+src-import-map,root-app/index.html,34,"    src=""https://cdn.jsdelivr.net/npm/import-map-overrides/dist/import-map-overrides.js""></script>"
+src-import-map,root-app/index.html,41,"  <import-map-overrides-full show-when-local-storage=""overrides-ui"" dev-libs></import-map-overrides-full>"
+src-import-map,root-app/src/global.d.ts,1,"// Global type declarations for single-spa, SystemJS, and import-map-overrides"
+src-import-map,root-app/src/global.d.ts,14,     * import-map-overrides API
+src-import-map,root-app/src/global.d.ts,15,     * https://github.com/single-spa/import-map-overrides
+src-import-map,root-app/src/global.d.ts,17,    importMapOverrides?: {
+src-import-map,root-app/src/utils/dynamicImport.ts,6," * 2. If that fails, try System.import() (for modules in systemjs-importmap)"
+src-import-map,root-app/src/utils/dynamicImport.ts,19,"    console.warn('[dynamicImport] Native import() failed, trying System.import()...', nativeError);"
+src-import-map,root-app/src/utils/dynamicImport.ts,21,    // Fallback to System.import() for legacy modules
+src-import-map,root-app/src/utils/dynamicImport.ts,24,        const module = await (window as any).System.import(url);
+src-import-map,root-app/src/utils/dynamicImport.ts,25,"        console.log('[dynamicImport] ✓ Loaded via System.import():', url);"
+src-import-map,root-app/src/utils/dynamicImport.ts,28,"        console.error('[dynamicImport] ✗ Both native and System.import() failed for:', url);"
+src-import-map,root-classic/src/index.ejs,12,"  <!-- If you wish to turn off import-map-overrides for specific environments (prod), uncomment the line below -->"
+src-import-map,root-classic/src/index.ejs,13,  <!-- More info at https://github.com/single-spa/import-map-overrides/blob/main/docs/configuration.md#domain-list -->
+src-import-map,root-classic/src/index.ejs,14,"  <!-- <meta name=""import-map-overrides-domains"" content=""denylist:prod.example.com"" /> -->"
+src-import-map,root-classic/src/index.ejs,41,"      <script src=""https://cdn.jsdelivr.net/npm/import-map-overrides@5.1.1/dist/import-map-overrides.js""></script>"
+src-import-map,root-classic/src/index.ejs,56,"  <import-map-overrides-full show-when-local-storage=""devtools"" dev-libs></import-map-overrides-full>"
+src-html-external-script,root-app/index.html,21,"  <script src=""https://cdn.jsdelivr.net/npm/systemjs@6.14.2/dist/system.min.js""></script>"
+src-html-external-script,root-classic/src/index.ejs,41,"      <script src=""https://cdn.jsdelivr.net/npm/import-map-overrides@5.1.1/dist/import-map-overrides.js""></script>"

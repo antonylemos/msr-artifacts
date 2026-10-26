@@ -1,0 +1,15 @@
+directory,markers
+.,package.json
+admin,admin/federation.config.mjs;admin/project.json;admin/vite.config.mts
+admin-e2e,admin-e2e/package.json;admin-e2e/project.json
+intranet,intranet/federation.config.mjs;intranet/project.json;intranet/vite.config.mts
+intranet-e2e,intranet-e2e/package.json;intranet-e2e/project.json
+libs/shared/data-access,libs/shared/data-access/project.json
+libs/shared/guards,libs/shared/guards/project.json
+libs/shared/theme,libs/shared/theme/project.json
+libs/shared/types,libs/shared/types/package.json;libs/shared/types/project.json
+libs/shared/ui,libs/shared/ui/project.json
+marAberto,marAberto/federation.config.mjs;marAberto/project.json;marAberto/vite.config.mts
+marAberto-e2e,marAberto-e2e/package.json;marAberto-e2e/project.json
+shell,shell/federation.config.mjs;shell/project.json;shell/vite.config.mts
+shell-e2e,shell-e2e/package.json;shell-e2e/project.json

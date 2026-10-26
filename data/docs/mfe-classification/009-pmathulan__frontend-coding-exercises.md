@@ -65,5 +65,5 @@ O repositório reúne seis exercícios independentes (`angular-frontend-practica
 ## Notas para análise
 
 - **Protocolo (corpus):** na mineração de artefatos, restringir a análise a `microfrontend-workspace/`; os demais diretórios são ruído (outros exercícios).
-- **RQ3:** comunicação host ↔ remote por serviço singleton compartilhado (`MessageService`), um mecanismo que os repos anteriores não tinham.
+- **RQ3:** comunicação host ↔ remote por serviço singleton compartilhado (`MessageService`), um mecanismo que os repositórios anteriores não tinham.
 - **RQ1:** a composição está duplicada (o `remotes` estático no webpack e a URL fixa no `loadRemoteModule`), um padrão comum em exemplos.

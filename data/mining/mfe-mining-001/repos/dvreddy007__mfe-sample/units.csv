@@ -1,0 +1,5 @@
+directory,markers
+.,package.json
+packages/app-1,packages/app-1/package.json;packages/app-1/vite.config.js
+packages/app-2,packages/app-2/package.json;packages/app-2/vite.config.js
+packages/host,packages/host/package.json;packages/host/vite.config.js

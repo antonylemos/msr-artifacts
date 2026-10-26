@@ -1,0 +1,28 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "composite": true,
+    "declaration": true,
+    "rootDir": "src",
+    "outDir": "../../dist/libs/portal",
+    "tsBuildInfoFile": "../../dist/libs/portal/tsconfig.lib.tsbuildinfo",
+    "types": ["webpack-env"],
+    "lib": ["DOM", "ES2022"],
+    "module": "esnext",
+    "target": "es2022",
+    "moduleResolution": "node"
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": [
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts"
+  ],
+  "references": [
+    { "path": "../core" },
+    { "path": "../i18n" },
+    { "path": "../communication" }
+  ]
+}

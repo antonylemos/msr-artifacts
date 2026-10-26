@@ -1,0 +1,518 @@
+import { NAN_STRING } from '@scality/core-ui/dist/components/constants';
+import sortByArray from 'lodash.sortby';
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router';
+import { createSelector } from 'reselect';
+import {
+  STATUS_CRITICAL,
+  STATUS_FAILED,
+  STATUS_HEALTH,
+  STATUS_NONE,
+  STATUS_READY,
+  STATUS_UNKNOWN,
+  STATUS_WARNING,
+  VOLUME_CONDITION_EXCLAMATION,
+  VOLUME_CONDITION_LINK,
+  VOLUME_CONDITION_UNLINK,
+} from '../constants';
+export function prettifyBytes(bytes, decimals) {
+  var units = ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
+  var unit = 'B';
+  var num = bytes;
+  var dec = decimals !== undefined ? Math.pow(10, decimals) : 1;
+  var i = 0;
+
+  while (num >= 1024) {
+    if (units[i] === undefined) {
+      break;
+    }
+
+    num = num / 1024;
+    unit = units[i];
+    i++;
+  }
+
+  num = Math.round(num * dec) / dec;
+  return {
+    value: num + ' ' + unit,
+    unit: unit,
+    number: num,
+  };
+}
+//memory = '1882148Ki'
+export function convertK8sMemoryToBytes(memory) {
+  return parseInt(memory.slice(0, -2), 10) * 1024;
+}
+export const sortSelector = createSelector(
+  // @ts-expect-error - FIXME when you are working on it
+  (list, sortBy, sortDirection) => {
+    const sortedList = sortByArray(list, [
+      (item) => {
+        return typeof item[sortBy] === 'string' ? item[sortBy].toLowerCase() : item[sortBy];
+      },
+    ]);
+
+    if (sortDirection === 'DESC') {
+      sortedList.reverse();
+    }
+
+    return sortedList;
+  },
+  (list) => list,
+);
+export const getNodeNameFromUrl = (state, props, name) => {
+  // Exceptional: don't need to get the name from URL.
+  if (name) {
+    return name;
+  }
+
+  const location = props?.location?.pathname?.split('/')[1];
+
+  if (location === 'volumes') {
+    const query = new URLSearchParams(props.location.search);
+    const nodeName = query.get('node');
+
+    if (nodeName) {
+      return nodeName;
+    } else {
+      return '';
+    }
+  }
+};
+export const getNodes = (state) => (state && state.app && state.app.nodes && state.app.nodes.list) || [];
+export const getPods = (state) => (state && state.app && state.app.pods && state.app.pods.list) || [];
+export const getVolumes = (state) => (state && state.app && state.app.volumes && state.app.volumes.list) || [];
+export const makeGetPodsFromUrl = createSelector(
+  // @ts-expect-error - FIXME when you are working on it
+  getNodeNameFromUrl,
+  getPods,
+  (nodeName, pods) => pods.filter((pod) => pod.nodeName === nodeName) || [],
+);
+export const makeGetVolumesFromUrl = createSelector(
+  // @ts-expect-error - FIXME when you are working on it
+  getNodeNameFromUrl,
+  getVolumes,
+  (nodeName, volumes) => volumes.filter((volume) => volume && volume.spec && volume.spec.nodeName === nodeName),
+);
+export const useRefreshEffect = (refreshAction, stopRefreshAction) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(refreshAction());
+    return () => {
+      dispatch(stopRefreshAction());
+    };
+  }, [dispatch, refreshAction, stopRefreshAction]);
+};
+export const sizeUnits = [
+  {
+    label: 'B',
+    value: '',
+    base: 1,
+  },
+  {
+    label: 'KiB',
+    value: 'Ki',
+    base: 2 ** 10,
+  },
+  {
+    label: 'MiB',
+    value: 'Mi',
+    base: 2 ** 20,
+  },
+  {
+    label: 'GiB',
+    value: 'Gi',
+    base: 2 ** 30,
+  },
+  {
+    label: 'TiB',
+    value: 'Ti',
+    base: 2 ** 40,
+  },
+  {
+    label: 'PiB',
+    value: 'Pi',
+    base: 2 ** 50,
+  },
+  {
+    label: 'K',
+    value: 'K',
+    base: 10 ** 3,
+  },
+  {
+    label: 'M',
+    value: 'M',
+    base: 10 ** 6,
+  },
+  {
+    label: 'G',
+    value: 'G',
+    base: 10 ** 9,
+  },
+  {
+    label: 'T',
+    value: 'T',
+    base: 10 ** 12,
+  },
+  {
+    label: 'P',
+    value: 'P',
+    base: 10 ** 15,
+  },
+];
+export function allSizeUnitsToBytes(size) {
+  const sizeRegex = /^(?<size>[1-9]([0-9]+)?\.?([0-9]+)?)\s?(?<unit>[kKMGTPB]i?)B?$/;
+
+  if (size && typeof size === 'string') {
+    const match = size?.match(sizeRegex);
+
+    if (match) {
+      const { groups } = match;
+
+      if (groups) {
+        const tmpInternalUnit = groups?.unit ?? '';
+        const tmpInternalSize = groups?.size;
+
+        if (tmpInternalUnit === 'B') {
+          return parseFloat(tmpInternalSize);
+        }
+
+        const tmpInternalUnitBase =
+          sizeUnits.find((sizeUnit) => sizeUnit.value === tmpInternalUnit)?.base ?? sizeUnits[0].value;
+        // @ts-expect-error - FIXME when you are working on it
+        return parseFloat(tmpInternalSize) * tmpInternalUnitBase;
+      }
+    }
+
+    return parseFloat(size);
+  }
+
+  return size;
+}
+export function bytesToSize(bytes) {
+  let sizes = ['Bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB'];
+  if (bytes === 0) return '0 Byte';
+  // @ts-expect-error - FIXME when you are working on it
+  let i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+  return (bytes / Math.pow(1024, i)).toFixed(1) + ' ' + sizes[i];
+}
+// The rules to compute the volume condition
+//  Exclamation: Failed + Unbound
+//  Unlink: Ready + Unbound
+//  Link: Ready + Bound
+export function computeVolumeCondition(status, isBound) {
+  if (status === STATUS_FAILED && !isBound) {
+    return VOLUME_CONDITION_EXCLAMATION;
+  } else if (status === STATUS_READY && !isBound) {
+    return VOLUME_CONDITION_UNLINK;
+  } else if (status === STATUS_READY && isBound) {
+    return VOLUME_CONDITION_LINK;
+  } else {
+    return STATUS_UNKNOWN;
+  }
+}
+
+/**
+ * This function manually adds the missing data points with `null` value caused by downtime of the VMs
+ *
+ * @param {array} orginalValues - The array of the data points are already sorted according to the time series
+ * @param {number} startingTimeStamp - The starting timestamp
+ * @param {number} sampleDuration - The time span value in seconds
+ * @param {number} sampleFrequency - The time difference between two data points in seconds
+ *
+ */
+export function addMissingDataPoint(orginalValues, startingTimeStamp, sampleDuration, sampleFrequency) {
+  if (
+    !orginalValues ||
+    orginalValues.length === 0 ||
+    startingTimeStamp === undefined ||
+    !sampleDuration ||
+    !sampleFrequency ||
+    startingTimeStamp < 0 ||
+    sampleDuration <= 0 ||
+    sampleFrequency <= 0
+  ) {
+    return [];
+  }
+
+  const newValues = [];
+  const numberOfDataPoints = sampleDuration / sampleFrequency;
+  let samplingPointTime = startingTimeStamp;
+
+  // initialize the array with all `null` value
+  for (let i = 0; i < numberOfDataPoints; i++) {
+    newValues.push([samplingPointTime, null]);
+    samplingPointTime += sampleFrequency;
+  }
+
+  // copy the existing data points from `orginalValue` array to `newValues`
+  if (newValues.length === 0) return;
+  let nextIndex = 0;
+
+  for (let i = 0; i < newValues.length; i++) {
+    if (orginalValues[nextIndex] && newValues[i][0] === orginalValues[nextIndex][0]) {
+      newValues[i][1] = orginalValues[nextIndex][1];
+      nextIndex++;
+    }
+  }
+
+  return newValues;
+}
+export function getNaNSegments(points: [number, number | string | null][]): {
+  startsAt: number;
+  endsAt?: number;
+}[] {
+  if (!points) return [];
+  const segments = points.map((point, index) => {
+    if (index === points.length - 1) {
+      return {
+        startsAt: point[0],
+        endsAt: null,
+        value: point[1],
+      };
+    }
+
+    return {
+      startsAt: point[0],
+      endsAt: points[index + 1][0],
+      value: point[1],
+    };
+  });
+  const nullSegments = segments.filter((segment) => segment.value === NAN_STRING);
+  return nullSegments.reduce((mergedNullSegments, segment) => {
+    if (mergedNullSegments.length > 0) {
+      const lastNullSegment = mergedNullSegments[mergedNullSegments.length - 1];
+
+      if (lastNullSegment.endsAt === segment.startsAt) {
+        mergedNullSegments[mergedNullSegments.length - 1] = {
+          startsAt: lastNullSegment.startsAt,
+          endsAt: segment.endsAt,
+        };
+        return mergedNullSegments;
+      }
+    }
+
+    return [
+      ...mergedNullSegments,
+      {
+        startsAt: segment.startsAt,
+        endsAt: segment.endsAt,
+      },
+    ];
+  }, []);
+}
+
+export function getSegments({
+  pointsAtRisk,
+  pointsDegraded,
+  pointsWatchdog,
+  startTimeStampSeconds,
+  endTimeStampSeconds,
+}) {
+  // If pointsWatchdog is empty, it means alerting service was completely unavailable
+  if (!pointsWatchdog || pointsWatchdog.length === 0) {
+    if (startTimeStampSeconds && endTimeStampSeconds) {
+      return [
+        {
+          startsAt: startTimeStampSeconds,
+          endsAt: endTimeStampSeconds,
+          type: NAN_STRING,
+        },
+      ];
+    }
+    return [];
+  }
+
+  // Use pointsWatchdog as the primary driver since it indicates if alerting service is available
+  const segments = pointsWatchdog.reduce((agg, [timestamp, watchdogValue], index) => {
+    const atRiskValue = pointsAtRisk[index]?.[1] || 0;
+    const degradedValue = pointsDegraded[index]?.[1] || 0;
+    const currentType =
+      watchdogValue !== '1'
+        ? NAN_STRING
+        : atRiskValue > 0
+          ? STATUS_CRITICAL
+          : degradedValue > 0
+            ? STATUS_WARNING
+            : STATUS_HEALTH;
+
+    if (agg.length > 0) {
+      const lastValue = agg[agg.length - 1];
+
+      // Only create new segment if status changes
+      if (lastValue.type !== currentType) {
+        lastValue.endsAt = timestamp;
+        agg.push({
+          startsAt: timestamp,
+          endsAt: null,
+          type: currentType,
+        });
+      }
+    } else {
+      // First segment
+      agg.push({
+        startsAt: timestamp,
+        endsAt: null,
+        type: currentType,
+      });
+    }
+
+    return agg;
+  }, []);
+  return segments.filter((segment) => segment.type !== STATUS_HEALTH);
+}
+
+// A custom hook that builds on useLocation to parse the query string.
+export const useURLQuery = () => {
+  return new URLSearchParams(useLocation().search);
+};
+// Convert the Unix Time Stamp to JS Date Object
+export const fromUnixTimestampToDate = (date): Date => {
+  if (date) {
+    return new Date(date * 1000);
+  }
+};
+// Convert the timestamp from milliseconds to Age.
+// For example: 1h1s, 1d1h, 1d1s, 1d
+export const fromMilliSectoAge = (milliSecTime) => {
+  if (milliSecTime >= 1000) {
+    let day, hour, minute, second;
+    const age = [];
+    second = Math.floor(milliSecTime / 1000);
+    minute = Math.floor(second / 60);
+    hour = Math.floor(minute / 60);
+    day = Math.floor(hour / 24);
+    second = second % 60;
+    minute = minute % 60;
+    hour = hour % 24;
+
+    if (day > 0) {
+      age.push(day + 'd');
+    }
+
+    if (hour > 0) {
+      age.push(hour + 'h');
+    }
+
+    if (minute > 0) {
+      age.push(minute + 'm');
+    }
+
+    if (second > 0) {
+      age.push(second + 's');
+    }
+
+    return age.slice(0, 2).join('');
+  }
+};
+// Status comparison logic used to sort Items based on health (critical first)
+export const compareHealth = (status1, status2) => {
+  const weights = {};
+  weights[STATUS_CRITICAL] = 3;
+  weights[STATUS_WARNING] = 2;
+  weights[STATUS_NONE] = 1;
+  weights[STATUS_HEALTH] = 0;
+  return weights[status1] - weights[status2];
+};
+// Add a space between size value and its unit since the API returns this as a string
+// Add the unit B
+export const formatSizeForDisplay = (value) => {
+  if (value && value.match(/^(\d+)(\D+)$/)) return value.replace(/^(\d+)(\D+)$/, '$1 $2') + 'B';
+  else return value || null;
+};
+
+/*
+ ** Custom hook to define chart dimension based on their container
+ ** By default this calculates the width for 3 rows of 2 charts
+ ** Takes container id as a param and optionnally desired number of columns and row and returns [ width, heigth ]
+ */
+export const useDynamicChartSize = (container_id: string, columns: number = 2, rows: number = 3): [number, number] => {
+  const graphsContainerWidth = document.getElementById(container_id)?.offsetWidth;
+  const [graphWidth, setGraphWidth] = useState(0);
+  useEffect(() => {
+    if (graphsContainerWidth) {
+      if (columns === 1) setGraphWidth(graphsContainerWidth - 45);
+      else setGraphWidth(graphsContainerWidth / columns - 50);
+    }
+  }, [graphsContainerWidth, columns]);
+  return [graphWidth, window.innerHeight / (rows * 2) - 50];
+};
+
+/*
+ ** Hook to store previous value of a given variable
+ ** Used to compare prev and next props or equivalent
+ */
+export const usePrevious = (value) => {
+  const ref = useRef();
+  // Store current value in ref
+  useEffect(() => {
+    ref.current = value;
+  }, [value]);
+  // Only re-run if value changes
+  return ref.current;
+};
+
+/**
+ * This function provides the name of the next nth drive name of virtualization-aware disk driver, used by batch volume creation.
+ *
+ * Note that:
+ * the recommended device path only happens with '/dev/vda'. We maybe want to support more kinds of disk drivers depends on the users' needs.
+ *
+ * Drive # —	Name
+ * 1	        vda
+ * 26	        vdz
+ * 27	        vdaa
+ * 28	        vdab
+ * 52	        vdaz
+ * 53	        vdba
+ * 54	        vdbb
+ * 702	      vdzz
+ * 703	      vdaaa
+ * 704	      vdaab
+ * 18278	    vdzzz
+ *
+ * @param {string} devicePath - The device path of the virtualization-aware disk driver.
+ * @param {number} increment  - The number of drive to increase compare to the targe the drive.
+ *
+ * @example
+ * const devicePath = '/dev/vda'
+ *
+ * const nextDevicePath = linuxDrivesNamingIncrement(devicePath, 2)
+ */
+export const linuxDrivesNamingIncrement = (devicePath, increment) => {
+  if (devicePath.match(/^\/dev\/vd[a-z]/) && increment >= 1) {
+    while (increment--) {
+      const lastChar = devicePath.slice(-1);
+      const sub = devicePath.slice(0, -1);
+
+      if (lastChar === 'z' && devicePath.length === 8) {
+        devicePath = '/dev/vdaa';
+      } else if (lastChar === 'z' && devicePath.length === 9) {
+        // when the path is `/dev/vdaz`, `/dev/vdbz`,
+        const last2ndChar = devicePath.slice(-2);
+        const subBefore = devicePath.slice(0, -2);
+        devicePath = subBefore + String.fromCharCode(last2ndChar.charCodeAt() + 1) + 'a';
+      } else {
+        devicePath = sub + String.fromCharCode(lastChar.charCodeAt() + 1);
+      }
+    }
+
+    return devicePath;
+  } else if (devicePath.match(/^\/dev\/vd[a-z]/) && increment === 0) {
+    return devicePath;
+  } else {
+    return '';
+  }
+};
+
+/* A convenience function for creating select post-request processing
+ * (used by react-query, see https://tanstack.com/query/v4/docs/reference/useQuery)
+ * It's useful when utilizing useQueries to perform multiple requests in paralel.
+ * Then you're not sure in which order the responses will arrive
+ * (useQueries returns an array and the order of response objects is not always the
+ *  same as the order in which the request were performed)
+ */
+export const generateSelectWithKey = (key, isAverage = false) => ({
+  select: (data) => ({ ...data, key: !isAverage ? key : `${key}Avg` }),
+});

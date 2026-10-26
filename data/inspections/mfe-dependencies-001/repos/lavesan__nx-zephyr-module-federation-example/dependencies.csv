@@ -1,0 +1,3 @@
+manifest,line,section,package,version,technology,same_package_matches,other_package_matches
+package.json,13,devDependencies,@nx/js,20.7.2,monorepo-tool,pnpm-workspace.yaml:1,
+package.json,17,devDependencies,nx,20.7.2,monorepo-tool,pnpm-workspace.yaml:1,

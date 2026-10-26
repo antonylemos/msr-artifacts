@@ -1,0 +1,4 @@
+directory,markers
+MF-CharacterDetail,MF-CharacterDetail/index.html;MF-CharacterDetail/module-federation.config.ts;MF-CharacterDetail/package.json;MF-CharacterDetail/rspack.config.ts;MF-CharacterDetail/webpack.config.js
+MF-Characters,MF-Characters/index.html;MF-Characters/module-federation.config.ts;MF-Characters/package.json;MF-Characters/rspack.config.ts;MF-Characters/webpack.config.js
+MF-Shell,MF-Shell/index.html;MF-Shell/module-federation.config.ts;MF-Shell/package.json;MF-Shell/rspack.config.ts

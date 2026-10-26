@@ -1,0 +1,8 @@
+manifest,state
+apps/mfe-vue2-admin/package.json,ok
+apps/mfe-vue2-checkout/package.json,ok
+apps/mfe-vue3-dashboard/package.json,ok
+apps/mfe-vue3-profile/package.json,ok
+apps/shell/package.json,ok
+package.json,ok
+packages/shared/package.json,ok

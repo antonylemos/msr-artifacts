@@ -1,0 +1,214 @@
+{
+  "schema": 1,
+  "id": "1174301349",
+  "fullName": "UserTharushi/companion-disease-risk-ai",
+  "commit": "373de0e6083b86b2707913da037735130c8f5503",
+  "acquiredAt": "2026-10-24T00:26:35.530Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "apps/mfe-auth/public/apple-touch-icon.png",
+      "reason": "preset:binaries",
+      "size": 1183
+    },
+    {
+      "path": "apps/mfe-auth/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 3357
+    },
+    {
+      "path": "apps/mfe-auth/public/pwa-192.png",
+      "reason": "preset:binaries",
+      "size": 1304
+    },
+    {
+      "path": "apps/mfe-auth/public/pwa-512.png",
+      "reason": "preset:binaries",
+      "size": 3965
+    },
+    {
+      "path": "apps/mfe-auth/src/assets/images/admin-ops-hero.jpg",
+      "reason": "preset:binaries",
+      "size": 252996
+    },
+    {
+      "path": "apps/mfe-auth/src/assets/images/auth-owner-dog.jpg",
+      "reason": "preset:binaries",
+      "size": 149944
+    },
+    {
+      "path": "apps/mfe-auth/src/assets/images/auth-vet-consult.jpg",
+      "reason": "preset:binaries",
+      "size": 206363
+    },
+    {
+      "path": "apps/mfe-auth/src/assets/images/info-hero.jpg",
+      "reason": "preset:binaries",
+      "size": 131740
+    },
+    {
+      "path": "apps/mfe-auth/src/assets/images/landing-hero.jpg",
+      "reason": "preset:binaries",
+      "size": 400261
+    },
+    {
+      "path": "apps/mfe-auth/src/assets/images/onboarding-ai.jpg",
+      "reason": "preset:binaries",
+      "size": 107940
+    },
+    {
+      "path": "apps/mfe-auth/src/assets/images/onboarding-vaccine.jpg",
+      "reason": "preset:binaries",
+      "size": 116979
+    },
+    {
+      "path": "apps/mfe-auth/src/assets/images/onboarding-vet.jpg",
+      "reason": "preset:binaries",
+      "size": 163612
+    },
+    {
+      "path": "apps/mfe-auth/src/assets/images/pet-buddy.jpg",
+      "reason": "preset:binaries",
+      "size": 70117
+    },
+    {
+      "path": "apps/mfe-auth/src/assets/images/pet-luna.jpg",
+      "reason": "preset:binaries",
+      "size": 47123
+    },
+    {
+      "path": "apps/mfe-auth/src/assets/images/splash-hero.jpg",
+      "reason": "preset:binaries",
+      "size": 105392
+    },
+    {
+      "path": "backend/services/python/ai-service/app/models/condition_model.joblib",
+      "reason": "preset:binaries",
+      "size": 508561
+    },
+    {
+      "path": "backend/services/python/ai-service/app/models/risk_model.joblib",
+      "reason": "preset:binaries",
+      "size": 4933
+    },
+    {
+      "path": "docs/2nd PR_Presentation_Outline_IT_IS.pptx",
+      "reason": "preset:binaries",
+      "size": 45213
+    },
+    {
+      "path": "docs/INTERIM_REPORT.docx",
+      "reason": "preset:binaries",
+      "size": 2611494
+    },
+    {
+      "path": "docs/PR2_Presentation.pptx",
+      "reason": "preset:binaries",
+      "size": 2162083
+    },
+    {
+      "path": "docs/TEST_CASES.xlsx",
+      "reason": "preset:binaries",
+      "size": 3286780
+    },
+    {
+      "path": "docs/coursework/Book1 - Copy.xlsx",
+      "reason": "preset:binaries",
+      "size": 21656
+    },
+    {
+      "path": "docs/coursework/Business Case Template.pdf",
+      "reason": "preset:binaries",
+      "size": 289505
+    },
+    {
+      "path": "docs/coursework/D.BIT.23.0025.pdf",
+      "reason": "preset:binaries",
+      "size": 480447
+    },
+    {
+      "path": "docs/diagrams/fig01-conceptual-framework.png",
+      "reason": "preset:binaries",
+      "size": 313043
+    },
+    {
+      "path": "docs/diagrams/fig02-use-case.png",
+      "reason": "preset:binaries",
+      "size": 499605
+    },
+    {
+      "path": "docs/diagrams/fig03-erd.png",
+      "reason": "preset:binaries",
+      "size": 499575
+    },
+    {
+      "path": "docs/diagrams/fig04-dfd.png",
+      "reason": "preset:binaries",
+      "size": 307974
+    },
+    {
+      "path": "docs/diagrams/fig05-class.png",
+      "reason": "preset:binaries",
+      "size": 479545
+    },
+    {
+      "path": "docs/diagrams/fig06-architecture.png",
+      "reason": "preset:binaries",
+      "size": 203719
+    },
+    {
+      "path": "docs/diagrams/fig07-agent-pipeline.png",
+      "reason": "preset:binaries",
+      "size": 73793
+    },
+    {
+      "path": "docs/diagrams/fig08-access-control.png",
+      "reason": "preset:binaries",
+      "size": 247126
+    },
+    {
+      "path": "docs/diagrams/fig10-gantt.png",
+      "reason": "preset:binaries",
+      "size": 270396
+    },
+    {
+      "path": "docs/interim report.pdf",
+      "reason": "preset:binaries",
+      "size": 1810772
+    },
+    {
+      "path": "docs/ml/condition_confusion_matrix.png",
+      "reason": "preset:binaries",
+      "size": 135419
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 319,
+    "bytes": 2808986
+  },
+  "languages": {
+    "Other": 1242153,
+    "TypeScript": 941619,
+    "Python": 286616,
+    "JavaScript": 147575,
+    "Markdown": 134342,
+    "JSON": 35495,
+    "YAML": 9498,
+    "CSS": 8111,
+    "HTML": 3577
+  },
+  "contentSha256": "e1365977d0dd2b1f872e03d5e8d8106a573d5052b1eb5117ab6ce2a3bc4e0011"
+}

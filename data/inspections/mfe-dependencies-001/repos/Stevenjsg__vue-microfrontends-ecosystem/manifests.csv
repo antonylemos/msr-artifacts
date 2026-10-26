@@ -1,0 +1,7 @@
+manifest,state
+apps/cms/package.json,ok
+apps/dashboard/package.json,ok
+apps/kanban/package.json,ok
+apps/shell/package.json,ok
+package.json,ok
+packages/ui-kit/package.json,ok

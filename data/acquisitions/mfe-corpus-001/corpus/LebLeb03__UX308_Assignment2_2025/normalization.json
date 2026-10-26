@@ -1,0 +1,1650 @@
+{
+  "schema": 1,
+  "id": "956247829",
+  "fullName": "LebLeb03/UX308_Assignment2_2025",
+  "commit": "c09cbbe990a83a84c0e22c6b794472cf61fc6bf7",
+  "acquiredAt": "2026-10-24T00:26:29.162Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "wp-content/database/.ht.sqlite",
+      "reason": "preset:binaries",
+      "size": 716800
+    },
+    {
+      "path": "wp-content/mu-plugins/one-click-child-theme/languages/one-click-child-theme-pt_PT.mo",
+      "reason": "preset:binaries",
+      "size": 4941
+    },
+    {
+      "path": "wp-content/plugins/akismet/_inc/img/akismet-activation-banner-elements.png",
+      "reason": "preset:binaries",
+      "size": 5767
+    },
+    {
+      "path": "wp-content/plugins/akismet/_inc/img/akismet-refresh-logo@2x.png",
+      "reason": "preset:binaries",
+      "size": 2783
+    },
+    {
+      "path": "wp-content/plugins/akismet/_inc/img/logo-a-2x.png",
+      "reason": "preset:binaries",
+      "size": 904
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/css/empty.gif",
+      "reason": "preset:binaries",
+      "size": 0
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/css/images/banner-bg.png",
+      "reason": "preset:binaries",
+      "size": 20291
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/css/images/doc.png",
+      "reason": "preset:binaries",
+      "size": 5025
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/css/images/example-icon.png",
+      "reason": "preset:binaries",
+      "size": 5853
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/css/images/free.png",
+      "reason": "preset:binaries",
+      "size": 3745
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/css/images/implecode.png",
+      "reason": "preset:binaries",
+      "size": 12252
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/css/images/info.png",
+      "reason": "preset:binaries",
+      "size": 2258
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/css/images/plus.png",
+      "reason": "preset:binaries",
+      "size": 5726
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/css/images/premium.png",
+      "reason": "preset:binaries",
+      "size": 9044
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/css/images/ready.png",
+      "reason": "preset:binaries",
+      "size": 7586
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/css/images/success.png",
+      "reason": "preset:binaries",
+      "size": 7671
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/css/images/warning.png",
+      "reason": "preset:binaries",
+      "size": 1684
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/css/search.png",
+      "reason": "preset:binaries",
+      "size": 4814
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/img/do-not-donate.png",
+      "reason": "preset:binaries",
+      "size": 19490
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/img/example-customization-feedback.png",
+      "reason": "preset:binaries",
+      "size": 55428
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/img/example-feedback.png",
+      "reason": "preset:binaries",
+      "size": 45840
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/img/implecode.jpg",
+      "reason": "preset:binaries",
+      "size": 68296
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/img/implecode.png",
+      "reason": "preset:binaries",
+      "size": 11983
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/img/no-default-thumbnail.png",
+      "reason": "preset:binaries",
+      "size": 17255
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/img/product-32.png",
+      "reason": "preset:binaries",
+      "size": 4224
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/img/product.png",
+      "reason": "preset:binaries",
+      "size": 3456
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/includes/blocks/active-filters/block.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 211
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/includes/blocks/category-filter/block.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 219
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/includes/blocks/category-links/block.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 214
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/includes/blocks/image-gallery/block.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 202
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/includes/blocks/js/framework.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 16819
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/includes/blocks/js/modify-editor-65.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 134
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/includes/blocks/js/modify-editor.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 140
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/includes/blocks/name/block.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 193
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/includes/blocks/product-category/block.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 183
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/includes/blocks/product-page/block.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 201
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/includes/blocks/related/block.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 231
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/includes/blocks/search/block.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 208
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/includes/blocks/short-description/block.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 206
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/includes/blocks/show-catalog/block.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 179
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/includes/blocks/show-categories/block.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 204
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/includes/blocks/show-products/block.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 202
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/includes/blocks/sitewide-icons/block.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 181
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/includes/blocks/size-filter/block.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 214
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/includes/blocks/sort/block.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 211
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/js/admin-scripts.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 9248
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/js/chosen/chosen-sprite.png",
+      "reason": "preset:binaries",
+      "size": 538
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/js/chosen/chosen-sprite@2x.png",
+      "reason": "preset:binaries",
+      "size": 738
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/js/chosen/chosen.jquery.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 28516
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/js/colorbox/images/border1.png",
+      "reason": "preset:binaries",
+      "size": 1057
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/js/colorbox/images/border2.png",
+      "reason": "preset:binaries",
+      "size": 170
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/js/colorbox/images/loading.gif",
+      "reason": "preset:binaries",
+      "size": 9427
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/js/colorbox/jquery.colorbox.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 12721
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/js/integration-script.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 5711
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/js/magnifier/magnifier.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 33544
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/js/product-ajax.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 6792
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/js/product.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 17113
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/js/range-slider.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 863
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/js/range-slider/ion.rangeSlider.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 42670
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-ar.mo",
+      "reason": "preset:binaries",
+      "size": 25836
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-ary.mo",
+      "reason": "preset:binaries",
+      "size": 6995
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-az.mo",
+      "reason": "preset:binaries",
+      "size": 4460
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-bg_BG.mo",
+      "reason": "preset:binaries",
+      "size": 18074
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-bs_BA.mo",
+      "reason": "preset:binaries",
+      "size": 11891
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-ca.mo",
+      "reason": "preset:binaries",
+      "size": 6103
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-cs_CZ.mo",
+      "reason": "preset:binaries",
+      "size": 10893
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-da_DK.mo",
+      "reason": "preset:binaries",
+      "size": 8761
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-de_DE.mo",
+      "reason": "preset:binaries",
+      "size": 17313
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-el.mo",
+      "reason": "preset:binaries",
+      "size": 18030
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-en_AU.mo",
+      "reason": "preset:binaries",
+      "size": 6049
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-en_CA.mo",
+      "reason": "preset:binaries",
+      "size": 7470
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-en_GB.mo",
+      "reason": "preset:binaries",
+      "size": 6395
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-en_NZ.mo",
+      "reason": "preset:binaries",
+      "size": 5680
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-es_CO.mo",
+      "reason": "preset:binaries",
+      "size": 62697
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-es_ES.mo",
+      "reason": "preset:binaries",
+      "size": 68083
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-es_MX.mo",
+      "reason": "preset:binaries",
+      "size": 68083
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-es_ar.mo",
+      "reason": "preset:binaries",
+      "size": 68083
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-et.mo",
+      "reason": "preset:binaries",
+      "size": 5940
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-fa_IR.mo",
+      "reason": "preset:binaries",
+      "size": 7548
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-fi.mo",
+      "reason": "preset:binaries",
+      "size": 23929
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-fr_FR.mo",
+      "reason": "preset:binaries",
+      "size": 34533
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-he_IL.mo",
+      "reason": "preset:binaries",
+      "size": 14404
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-hr.mo",
+      "reason": "preset:binaries",
+      "size": 35150
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-hu_HU.mo",
+      "reason": "preset:binaries",
+      "size": 24165
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-id_ID.mo",
+      "reason": "preset:binaries",
+      "size": 9226
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-is_IS.mo",
+      "reason": "preset:binaries",
+      "size": 5587
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-it_IT.mo",
+      "reason": "preset:binaries",
+      "size": 27427
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-ja.mo",
+      "reason": "preset:binaries",
+      "size": 12409
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-ko_KR.mo",
+      "reason": "preset:binaries",
+      "size": 5925
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-lt_LT.mo",
+      "reason": "preset:binaries",
+      "size": 7159
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-lv.mo",
+      "reason": "preset:binaries",
+      "size": 24695
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-nb_NO.mo",
+      "reason": "preset:binaries",
+      "size": 43336
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-nl_NL.mo",
+      "reason": "preset:binaries",
+      "size": 86473
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-pl_PL.mo",
+      "reason": "preset:binaries",
+      "size": 78598
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-pt_BR.mo",
+      "reason": "preset:binaries",
+      "size": 43500
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-pt_PT.mo",
+      "reason": "preset:binaries",
+      "size": 28889
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-ro_RO.mo",
+      "reason": "preset:binaries",
+      "size": 44425
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-ru_RU.mo",
+      "reason": "preset:binaries",
+      "size": 87526
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-sk_SK.mo",
+      "reason": "preset:binaries",
+      "size": 11290
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-sr_RS.mo",
+      "reason": "preset:binaries",
+      "size": 25849
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-sv_SE.mo",
+      "reason": "preset:binaries",
+      "size": 36275
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-tr_TR.mo",
+      "reason": "preset:binaries",
+      "size": 15247
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-vi.mo",
+      "reason": "preset:binaries",
+      "size": 6483
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-zh_CN.mo",
+      "reason": "preset:binaries",
+      "size": 11431
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-zh_HK.mo",
+      "reason": "preset:binaries",
+      "size": 4431
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/lang/ecommerce-product-catalog-zh_TW.mo",
+      "reason": "preset:binaries",
+      "size": 14624
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/css/images/doc.png",
+      "reason": "preset:binaries",
+      "size": 5025
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/css/images/example-icon.png",
+      "reason": "preset:binaries",
+      "size": 5853
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/css/images/free.png",
+      "reason": "preset:binaries",
+      "size": 3745
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/css/images/info.png",
+      "reason": "preset:binaries",
+      "size": 2258
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/css/images/plus.png",
+      "reason": "preset:binaries",
+      "size": 5726
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/css/images/premium.png",
+      "reason": "preset:binaries",
+      "size": 9044
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/css/images/ready.png",
+      "reason": "preset:binaries",
+      "size": 7586
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/css/images/success.png",
+      "reason": "preset:binaries",
+      "size": 7671
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/css/images/warning.png",
+      "reason": "preset:binaries",
+      "size": 1684
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/css/img/search-ico.gif",
+      "reason": "preset:binaries",
+      "size": 438
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/ext/chosen/chosen-sprite.png",
+      "reason": "preset:binaries",
+      "size": 538
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/ext/chosen/chosen-sprite@2x.png",
+      "reason": "preset:binaries",
+      "size": 738
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/ext/chosen/chosen.jquery.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 28456
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/includes/cart/js/ic-cart.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 2122
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/includes/customers/css/images/ui-bg_flat_0_aaaaaa_40x100.png",
+      "reason": "preset:binaries",
+      "size": 251
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/includes/customers/css/images/ui-bg_flat_75_ffffff_40x100.png",
+      "reason": "preset:binaries",
+      "size": 247
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/includes/customers/css/images/ui-bg_glass_55_fbf9ee_1x400.png",
+      "reason": "preset:binaries",
+      "size": 374
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/includes/customers/css/images/ui-bg_glass_65_ffffff_1x400.png",
+      "reason": "preset:binaries",
+      "size": 246
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/includes/customers/css/images/ui-bg_glass_75_dadada_1x400.png",
+      "reason": "preset:binaries",
+      "size": 301
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/includes/customers/css/images/ui-bg_glass_75_e6e6e6_1x400.png",
+      "reason": "preset:binaries",
+      "size": 301
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/includes/customers/css/images/ui-bg_glass_95_fef1ec_1x400.png",
+      "reason": "preset:binaries",
+      "size": 371
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/includes/customers/css/images/ui-bg_highlight-soft_75_cccccc_1x100.png",
+      "reason": "preset:binaries",
+      "size": 319
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/includes/customers/css/images/ui-icons_222222_256x240.png",
+      "reason": "preset:binaries",
+      "size": 7006
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/includes/customers/css/images/ui-icons_2e83ff_256x240.png",
+      "reason": "preset:binaries",
+      "size": 4599
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/includes/customers/css/images/ui-icons_454545_256x240.png",
+      "reason": "preset:binaries",
+      "size": 7071
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/includes/customers/css/images/ui-icons_888888_256x240.png",
+      "reason": "preset:binaries",
+      "size": 7092
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/includes/customers/css/images/ui-icons_cd0a0a_256x240.png",
+      "reason": "preset:binaries",
+      "size": 4599
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/includes/customers/js/customer-panel.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 1905
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/includes/customers/js/digital-customers.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 1216
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/includes/orders/js/edit-order.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 3948
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/includes/variations/js/variations-admin.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 877
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/includes/variations/js/variations.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 3588
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/js/shopping-cart-admin.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 776
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/cart/js/shopping-cart.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 7434
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/price/blocks/price-filter/block.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 213
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/modules/price/blocks/price-table/block.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 194
+    },
+    {
+      "path": "wp-content/plugins/ecommerce-product-catalog/templates/themes/img/example-product.jpg",
+      "reason": "preset:binaries",
+      "size": 37946
+    },
+    {
+      "path": "wp-content/themes/dark-mode/images/find-light.png",
+      "reason": "preset:binaries",
+      "size": 734
+    },
+    {
+      "path": "wp-content/themes/dark-mode/images/find.png",
+      "reason": "preset:binaries",
+      "size": 1716
+    },
+    {
+      "path": "wp-content/themes/dark-mode/screenshot.jpg",
+      "reason": "preset:binaries",
+      "size": 182192
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/fonts/0QI6MX1D_JOuGQbT0gvTJPa787weuyJDmKxemMeZ.woff2",
+      "reason": "preset:binaries",
+      "size": 47664
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/fonts/L0xoDF4xlVMF-BfR8bXMIjhOsXG-q2oeuFoqFrk5AOW4AJi8SZwt.woff2",
+      "reason": "preset:binaries",
+      "size": 45492
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/fonts/L0xoDF4xlVMF-BfR8bXMIjhOsXG-q2oeuFoqFrlVAOW4AJi8SZwt.woff2",
+      "reason": "preset:binaries",
+      "size": 45940
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/fonts/L0xoDF4xlVMF-BfR8bXMIjhOsXG-q2oeuFoqFrlnAOW4AJi8SZwt.woff2",
+      "reason": "preset:binaries",
+      "size": 44680
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/fonts/L0xoDF4xlVMF-BfR8bXMIjhOsXG-q2oeuFoqFrlnAeW4AJi8SZwt.woff2",
+      "reason": "preset:binaries",
+      "size": 43268
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/fonts/L0xoDF4xlVMF-BfR8bXMIjhOsXG-q2oeuFoqFrm5B-W4AJi8SZwt.woff2",
+      "reason": "preset:binaries",
+      "size": 45872
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/fonts/L0xoDF4xlVMF-BfR8bXMIjhOsXG-q2oeuFoqFrmAB-W4AJi8SZwt.woff2",
+      "reason": "preset:binaries",
+      "size": 45012
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/fonts/L0xoDF4xlVMF-BfR8bXMIjhOsXG-q2oeuFoqFrnnAOW4AJi8SZwt.woff2",
+      "reason": "preset:binaries",
+      "size": 45272
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/fonts/L0xuDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_3vqPRu-5Ip2sSQ.woff2",
+      "reason": "preset:binaries",
+      "size": 40864
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/fonts/L0xuDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_3vuPRu-5Ip2sSQ.woff2",
+      "reason": "preset:binaries",
+      "size": 41052
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/fonts/L0xuDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_7PqPRu-5Ip2sSQ.woff2",
+      "reason": "preset:binaries",
+      "size": 41996
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/fonts/L0xuDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_AP2PRu-5Ip2sSQ.woff2",
+      "reason": "preset:binaries",
+      "size": 41948
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/fonts/L0xuDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_Of2PRu-5Ip2sSQ.woff2",
+      "reason": "preset:binaries",
+      "size": 40880
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/fonts/L0xuDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_XvqPRu-5Ip2sSQ.woff2",
+      "reason": "preset:binaries",
+      "size": 42276
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/fonts/L0xuDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_gPqPRu-5Ip2sSQ.woff2",
+      "reason": "preset:binaries",
+      "size": 42180
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/fonts/WwkQxPq1DFK04tqgc17MMZgJ.woff2",
+      "reason": "preset:binaries",
+      "size": 62040
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/fonts/Xmz-HUzqDCFdgfMsYiV_F7wfS-Bs_eYR15bwkEU4HTy.woff2",
+      "reason": "preset:binaries",
+      "size": 16664
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/fonts/Xmz-HUzqDCFdgfMsYiV_F7wfS-Bs_ehR15bwkEU4HTy.woff2",
+      "reason": "preset:binaries",
+      "size": 16640
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/fonts/Xmz-HUzqDCFdgfMsYiV_F7wfS-Bs_f_R15bwkEU4HTy.woff2",
+      "reason": "preset:binaries",
+      "size": 16504
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/fonts/e3tmeuGtX-Co5MNzeAOqinEgfkPWovdU4w.woff2",
+      "reason": "preset:binaries",
+      "size": 118008
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/fonts/mtGh4-RGJqfMvt7P8FUr0Q1j-Hf1Nktv9ixALYs.woff2",
+      "reason": "preset:binaries",
+      "size": 78232
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/fonts/zOL64pLDlL1D99S8g8PtiKchm-VsjOLhZBY.woff2",
+      "reason": "preset:binaries",
+      "size": 19804
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/images/bg-here-01.jpg",
+      "reason": "preset:binaries",
+      "size": 135264
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/images/img-about01-1024x768.webp",
+      "reason": "preset:binaries",
+      "size": 168164
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/images/img13-edited-scaled.jpg",
+      "reason": "preset:binaries",
+      "size": 280983
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/images/img9-scaled.jpg",
+      "reason": "preset:binaries",
+      "size": 276747
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/images/interior-building-office-furniture-room-work-space-764434-pxhere.com_-scaled.jpg",
+      "reason": "preset:binaries",
+      "size": 221652
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/images/iphone-desk-computer-writing-working-table-764783-pxhere.com_-1024x683.jpg",
+      "reason": "preset:binaries",
+      "size": 43942
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/images/mockup.png",
+      "reason": "preset:binaries",
+      "size": 334068
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/images/notebook-man-working-people-woman-notepad-764658-pxhere.com_-1024x678.jpg",
+      "reason": "preset:binaries",
+      "size": 75237
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/images/notebook-man-working-person-people-notepad-764654-pxhere.com_-1024x678.jpg",
+      "reason": "preset:binaries",
+      "size": 102675
+    },
+    {
+      "path": "wp-content/themes/dark-realm/assets/images/table-architecture-people-restaurant-office-business-1179187-pxhere.com_-1024x646.jpg",
+      "reason": "preset:binaries",
+      "size": 82497
+    },
+    {
+      "path": "wp-content/themes/dark-realm/screenshot.png",
+      "reason": "preset:binaries",
+      "size": 247308
+    },
+    {
+      "path": "wp-content/themes/pressbook-masonry-dark/assets/images/mountain-sky.jpg",
+      "reason": "preset:binaries",
+      "size": 176124
+    },
+    {
+      "path": "wp-content/themes/pressbook-masonry-dark/assets/images/office-desk.jpg",
+      "reason": "preset:binaries",
+      "size": 42500
+    },
+    {
+      "path": "wp-content/themes/pressbook-masonry-dark/assets/js/script.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 780
+    },
+    {
+      "path": "wp-content/themes/pressbook-masonry-dark/assets/macy/macy.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 10625
+    },
+    {
+      "path": "wp-content/themes/pressbook-masonry-dark/screenshot.png",
+      "reason": "preset:binaries",
+      "size": 206950
+    },
+    {
+      "path": "wp-content/themes/pressbook/inc/transparency-grid.png",
+      "reason": "preset:binaries",
+      "size": 2646
+    },
+    {
+      "path": "wp-content/themes/pressbook/js/ResizeObserver.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 7740
+    },
+    {
+      "path": "wp-content/themes/pressbook/js/script.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 6840
+    },
+    {
+      "path": "wp-content/themes/pressbook/js/sticky-sidebar.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 11475
+    },
+    {
+      "path": "wp-content/themes/pressbook/languages/hi_IN.mo",
+      "reason": "preset:binaries",
+      "size": 733
+    },
+    {
+      "path": "wp-content/themes/pressbook/screenshot.png",
+      "reason": "preset:binaries",
+      "size": 192929
+    },
+    {
+      "path": "wp-content/themes/resume-kit/assets/img/intro-profile.png",
+      "reason": "preset:binaries",
+      "size": 70444
+    },
+    {
+      "path": "wp-content/themes/resume-kit/assets/webfonts/fa-brands-400.eot",
+      "reason": "preset:binaries",
+      "size": 134346
+    },
+    {
+      "path": "wp-content/themes/resume-kit/assets/webfonts/fa-brands-400.ttf",
+      "reason": "preset:binaries",
+      "size": 134040
+    },
+    {
+      "path": "wp-content/themes/resume-kit/assets/webfonts/fa-brands-400.woff",
+      "reason": "preset:binaries",
+      "size": 90060
+    },
+    {
+      "path": "wp-content/themes/resume-kit/assets/webfonts/fa-brands-400.woff2",
+      "reason": "preset:binaries",
+      "size": 76764
+    },
+    {
+      "path": "wp-content/themes/resume-kit/assets/webfonts/fa-regular-400.eot",
+      "reason": "preset:binaries",
+      "size": 34034
+    },
+    {
+      "path": "wp-content/themes/resume-kit/assets/webfonts/fa-regular-400.ttf",
+      "reason": "preset:binaries",
+      "size": 33736
+    },
+    {
+      "path": "wp-content/themes/resume-kit/assets/webfonts/fa-regular-400.woff",
+      "reason": "preset:binaries",
+      "size": 16276
+    },
+    {
+      "path": "wp-content/themes/resume-kit/assets/webfonts/fa-regular-400.woff2",
+      "reason": "preset:binaries",
+      "size": 13276
+    },
+    {
+      "path": "wp-content/themes/resume-kit/assets/webfonts/fa-solid-900.eot",
+      "reason": "preset:binaries",
+      "size": 203030
+    },
+    {
+      "path": "wp-content/themes/resume-kit/assets/webfonts/fa-solid-900.ttf",
+      "reason": "preset:binaries",
+      "size": 202744
+    },
+    {
+      "path": "wp-content/themes/resume-kit/assets/webfonts/fa-solid-900.woff",
+      "reason": "preset:binaries",
+      "size": 101652
+    },
+    {
+      "path": "wp-content/themes/resume-kit/assets/webfonts/fa-solid-900.woff2",
+      "reason": "preset:binaries",
+      "size": 78196
+    },
+    {
+      "path": "wp-content/themes/resume-kit/inc/about/images/logo1.png",
+      "reason": "preset:binaries",
+      "size": 4564
+    },
+    {
+      "path": "wp-content/themes/resume-kit/inc/about/js/about.min.js",
+      "reason": "path:**/*.min.js",
+      "size": 654
+    },
+    {
+      "path": "wp-content/themes/resume-kit/screenshot.png",
+      "reason": "preset:binaries",
+      "size": 90811
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/beiruti/Beiruti-VariableFont_wght.woff2",
+      "reason": "preset:binaries",
+      "size": 176048
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/fira-code/FiraCode-VariableFont_wght.woff2",
+      "reason": "preset:binaries",
+      "size": 106112
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/fira-sans/FiraSans-Black.woff2",
+      "reason": "preset:binaries",
+      "size": 153368
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/fira-sans/FiraSans-BlackItalic.woff2",
+      "reason": "preset:binaries",
+      "size": 165936
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/fira-sans/FiraSans-Bold.woff2",
+      "reason": "preset:binaries",
+      "size": 154984
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/fira-sans/FiraSans-BoldItalic.woff2",
+      "reason": "preset:binaries",
+      "size": 165308
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/fira-sans/FiraSans-ExtraBold.woff2",
+      "reason": "preset:binaries",
+      "size": 156120
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/fira-sans/FiraSans-ExtraBoldItalic.woff2",
+      "reason": "preset:binaries",
+      "size": 170672
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/fira-sans/FiraSans-ExtraLight.woff2",
+      "reason": "preset:binaries",
+      "size": 144724
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/fira-sans/FiraSans-ExtraLightItalic.woff2",
+      "reason": "preset:binaries",
+      "size": 152932
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/fira-sans/FiraSans-Italic.woff2",
+      "reason": "preset:binaries",
+      "size": 155164
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/fira-sans/FiraSans-Light.woff2",
+      "reason": "preset:binaries",
+      "size": 144996
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/fira-sans/FiraSans-LightItalic.woff2",
+      "reason": "preset:binaries",
+      "size": 153348
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/fira-sans/FiraSans-Medium.woff2",
+      "reason": "preset:binaries",
+      "size": 148396
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/fira-sans/FiraSans-MediumItalic.woff2",
+      "reason": "preset:binaries",
+      "size": 157872
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/fira-sans/FiraSans-Regular.woff2",
+      "reason": "preset:binaries",
+      "size": 145580
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/fira-sans/FiraSans-SemiBold.woff2",
+      "reason": "preset:binaries",
+      "size": 154604
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/fira-sans/FiraSans-SemiBoldItalic.woff2",
+      "reason": "preset:binaries",
+      "size": 165164
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/fira-sans/FiraSans-Thin.woff2",
+      "reason": "preset:binaries",
+      "size": 140752
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/fira-sans/FiraSans-ThinItalic.woff2",
+      "reason": "preset:binaries",
+      "size": 148716
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/literata/Literata72pt-Black.woff2",
+      "reason": "preset:binaries",
+      "size": 106188
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/literata/Literata72pt-BlackItalic.woff2",
+      "reason": "preset:binaries",
+      "size": 108440
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/literata/Literata72pt-Bold.woff2",
+      "reason": "preset:binaries",
+      "size": 107992
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/literata/Literata72pt-BoldItalic.woff2",
+      "reason": "preset:binaries",
+      "size": 110300
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/literata/Literata72pt-ExtraBold.woff2",
+      "reason": "preset:binaries",
+      "size": 110092
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/literata/Literata72pt-ExtraBoldItalic.woff2",
+      "reason": "preset:binaries",
+      "size": 110412
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/literata/Literata72pt-ExtraLight.woff2",
+      "reason": "preset:binaries",
+      "size": 104936
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/literata/Literata72pt-ExtraLightItalic.woff2",
+      "reason": "preset:binaries",
+      "size": 104392
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/literata/Literata72pt-Light.woff2",
+      "reason": "preset:binaries",
+      "size": 108112
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/literata/Literata72pt-LightItalic.woff2",
+      "reason": "preset:binaries",
+      "size": 105784
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/literata/Literata72pt-Medium.woff2",
+      "reason": "preset:binaries",
+      "size": 106504
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/literata/Literata72pt-MediumItalic.woff2",
+      "reason": "preset:binaries",
+      "size": 108808
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/literata/Literata72pt-Regular.woff2",
+      "reason": "preset:binaries",
+      "size": 94076
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/literata/Literata72pt-RegularItalic.woff2",
+      "reason": "preset:binaries",
+      "size": 95608
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/literata/Literata72pt-SemiBold.woff2",
+      "reason": "preset:binaries",
+      "size": 107448
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/literata/Literata72pt-SemiBoldItalic.woff2",
+      "reason": "preset:binaries",
+      "size": 109864
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/manrope/Manrope-VariableFont_wght.woff2",
+      "reason": "preset:binaries",
+      "size": 53600
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/platypi/Platypi-Italic-VariableFont_wght.woff2",
+      "reason": "preset:binaries",
+      "size": 71768
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/platypi/Platypi-VariableFont_wght.woff2",
+      "reason": "preset:binaries",
+      "size": 71128
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/roboto-slab/RobotoSlab-VariableFont_wght.woff2",
+      "reason": "preset:binaries",
+      "size": 115804
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/vollkorn/Vollkorn-Italic-VariableFont_wght.woff2",
+      "reason": "preset:binaries",
+      "size": 163352
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/vollkorn/Vollkorn-VariableFont_wght.woff2",
+      "reason": "preset:binaries",
+      "size": 193964
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/ysabeau-office/YsabeauOffice-Italic-VariableFont_wght.woff2",
+      "reason": "preset:binaries",
+      "size": 132592
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/fonts/ysabeau-office/YsabeauOffice-VariableFont_wght.woff2",
+      "reason": "preset:binaries",
+      "size": 166928
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/404-image.webp",
+      "reason": "preset:binaries",
+      "size": 129970
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/agenda-img-4.webp",
+      "reason": "preset:binaries",
+      "size": 14542
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/akaka-falls-state-park-flora.webp",
+      "reason": "preset:binaries",
+      "size": 6116
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/book-image-landing.webp",
+      "reason": "preset:binaries",
+      "size": 19734
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/book-image.webp",
+      "reason": "preset:binaries",
+      "size": 20980
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/botany-flowers-closeup.webp",
+      "reason": "preset:binaries",
+      "size": 60176
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/botany-flowers.webp",
+      "reason": "preset:binaries",
+      "size": 99800
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/campanula-alliariifolia-flower.webp",
+      "reason": "preset:binaries",
+      "size": 42036
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/category-anthuriums.webp",
+      "reason": "preset:binaries",
+      "size": 27472
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/category-cactus.webp",
+      "reason": "preset:binaries",
+      "size": 51878
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/category-sunflowers.webp",
+      "reason": "preset:binaries",
+      "size": 18558
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/coming-soon-bg-image.webp",
+      "reason": "preset:binaries",
+      "size": 88600
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/coral-square.webp",
+      "reason": "preset:binaries",
+      "size": 27554
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/dallas-creek-square.webp",
+      "reason": "preset:binaries",
+      "size": 7768
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/delphinium-flowers.webp",
+      "reason": "preset:binaries",
+      "size": 42214
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/flower-meadow-square.webp",
+      "reason": "preset:binaries",
+      "size": 29920
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/grid-flower-1.webp",
+      "reason": "preset:binaries",
+      "size": 19654
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/grid-flower-2.webp",
+      "reason": "preset:binaries",
+      "size": 82646
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/hero-podcast.webp",
+      "reason": "preset:binaries",
+      "size": 60794
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/link-in-bio-background.webp",
+      "reason": "preset:binaries",
+      "size": 112516
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/link-in-bio-image.webp",
+      "reason": "preset:binaries",
+      "size": 95598
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/location.webp",
+      "reason": "preset:binaries",
+      "size": 141020
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/malibu-plantlife.webp",
+      "reason": "preset:binaries",
+      "size": 5194
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/man-in-hat.webp",
+      "reason": "preset:binaries",
+      "size": 35386
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/marshland-birds-square.webp",
+      "reason": "preset:binaries",
+      "size": 5886
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/northern-buttercups-flowers.webp",
+      "reason": "preset:binaries",
+      "size": 35820
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/nurse.webp",
+      "reason": "preset:binaries",
+      "size": 21850
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/parthenon-square.webp",
+      "reason": "preset:binaries",
+      "size": 36124
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/poster-image-background.webp",
+      "reason": "preset:binaries",
+      "size": 222864
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/red-hibiscus-closeup.webp",
+      "reason": "preset:binaries",
+      "size": 56851
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/ruins-image.webp",
+      "reason": "preset:binaries",
+      "size": 68384
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/services-subscriber-photo.webp",
+      "reason": "preset:binaries",
+      "size": 52542
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/star-thristle-flower.webp",
+      "reason": "preset:binaries",
+      "size": 21338
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/typewriter.webp",
+      "reason": "preset:binaries",
+      "size": 97944
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/vash-gon-square.webp",
+      "reason": "preset:binaries",
+      "size": 28214
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/assets/images/woman-splashing-water.webp",
+      "reason": "preset:binaries",
+      "size": 57776
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfive/screenshot.png",
+      "reason": "preset:binaries",
+      "size": 216683
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfour/assets/fonts/cardo/cardo_italic_400.woff2",
+      "reason": "preset:binaries",
+      "size": 105184
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfour/assets/fonts/cardo/cardo_normal_400.woff2",
+      "reason": "preset:binaries",
+      "size": 146060
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfour/assets/fonts/cardo/cardo_normal_700.woff2",
+      "reason": "preset:binaries",
+      "size": 132564
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfour/assets/fonts/instrument-sans/InstrumentSans-Italic-VariableFont_wdth,wght.woff2",
+      "reason": "preset:binaries",
+      "size": 94644
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfour/assets/fonts/instrument-sans/InstrumentSans-VariableFont_wdth,wght.woff2",
+      "reason": "preset:binaries",
+      "size": 88476
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfour/assets/fonts/inter/Inter-VariableFont_slnt,wght.woff2",
+      "reason": "preset:binaries",
+      "size": 326628
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfour/assets/fonts/jost/Jost-Italic-VariableFont_wght.woff2",
+      "reason": "preset:binaries",
+      "size": 62072
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfour/assets/fonts/jost/Jost-VariableFont_wght.woff2",
+      "reason": "preset:binaries",
+      "size": 50396
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfour/assets/images/abstract-geometric-art.webp",
+      "reason": "preset:binaries",
+      "size": 100774
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfour/assets/images/angular-roof.webp",
+      "reason": "preset:binaries",
+      "size": 83964
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfour/assets/images/art-gallery.webp",
+      "reason": "preset:binaries",
+      "size": 118230
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfour/assets/images/building-exterior.webp",
+      "reason": "preset:binaries",
+      "size": 199724
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfour/assets/images/green-staircase.webp",
+      "reason": "preset:binaries",
+      "size": 249360
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfour/assets/images/hotel-facade.webp",
+      "reason": "preset:binaries",
+      "size": 82374
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfour/assets/images/icon-message.webp",
+      "reason": "preset:binaries",
+      "size": 1258
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfour/assets/images/museum.webp",
+      "reason": "preset:binaries",
+      "size": 123690
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfour/assets/images/tourist-and-building.webp",
+      "reason": "preset:binaries",
+      "size": 66482
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfour/assets/images/windows.webp",
+      "reason": "preset:binaries",
+      "size": 126244
+    },
+    {
+      "path": "wp-content/themes/twentytwentyfour/screenshot.png",
+      "reason": "preset:binaries",
+      "size": 721059
+    },
+    {
+      "path": "wp-content/themes/twentytwentythree/assets/fonts/dm-sans/DMSans-Bold-Italic.woff2",
+      "reason": "preset:binaries",
+      "size": 32784
+    },
+    {
+      "path": "wp-content/themes/twentytwentythree/assets/fonts/dm-sans/DMSans-Bold.woff2",
+      "reason": "preset:binaries",
+      "size": 29272
+    },
+    {
+      "path": "wp-content/themes/twentytwentythree/assets/fonts/dm-sans/DMSans-Regular-Italic.woff2",
+      "reason": "preset:binaries",
+      "size": 32492
+    },
+    {
+      "path": "wp-content/themes/twentytwentythree/assets/fonts/dm-sans/DMSans-Regular.woff2",
+      "reason": "preset:binaries",
+      "size": 29272
+    },
+    {
+      "path": "wp-content/themes/twentytwentythree/assets/fonts/ibm-plex-mono/IBMPlexMono-Bold.woff2",
+      "reason": "preset:binaries",
+      "size": 35652
+    },
+    {
+      "path": "wp-content/themes/twentytwentythree/assets/fonts/ibm-plex-mono/IBMPlexMono-Italic.woff2",
+      "reason": "preset:binaries",
+      "size": 38924
+    },
+    {
+      "path": "wp-content/themes/twentytwentythree/assets/fonts/ibm-plex-mono/IBMPlexMono-Light.woff2",
+      "reason": "preset:binaries",
+      "size": 34700
+    },
+    {
+      "path": "wp-content/themes/twentytwentythree/assets/fonts/ibm-plex-mono/IBMPlexMono-Regular.woff2",
+      "reason": "preset:binaries",
+      "size": 34480
+    },
+    {
+      "path": "wp-content/themes/twentytwentythree/assets/fonts/inter/Inter-VariableFont_slnt,wght.ttf",
+      "reason": "preset:binaries",
+      "size": 803384
+    },
+    {
+      "path": "wp-content/themes/twentytwentythree/assets/fonts/source-serif-pro/SourceSerif4Variable-Italic.otf.woff2",
+      "reason": "preset:binaries",
+      "size": 280296
+    },
+    {
+      "path": "wp-content/themes/twentytwentythree/assets/fonts/source-serif-pro/SourceSerif4Variable-Italic.ttf.woff2",
+      "reason": "preset:binaries",
+      "size": 346840
+    },
+    {
+      "path": "wp-content/themes/twentytwentythree/assets/fonts/source-serif-pro/SourceSerif4Variable-Roman.otf.woff2",
+      "reason": "preset:binaries",
+      "size": 348988
+    },
+    {
+      "path": "wp-content/themes/twentytwentythree/assets/fonts/source-serif-pro/SourceSerif4Variable-Roman.ttf.woff2",
+      "reason": "preset:binaries",
+      "size": 428448
+    },
+    {
+      "path": "wp-content/themes/twentytwentythree/screenshot.png",
+      "reason": "preset:binaries",
+      "size": 81654
+    },
+    {
+      "path": "wp-content/uploads/2025/03/Burger-1-.webp",
+      "reason": "preset:binaries",
+      "size": 34308
+    },
+    {
+      "path": "wp-content/uploads/2025/03/Pizza-1.jpg",
+      "reason": "preset:binaries",
+      "size": 92802
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 1061,
+    "bytes": 8793948
+  },
+  "languages": {
+    "PHP": 3992529,
+    "SVG": 1823055,
+    "CSS": 1149249,
+    "JavaScript": 724456,
+    "Other": 624503,
+    "JSON": 346179,
+    "HTML": 104557,
+    "Markdown": 22791,
+    "YAML": 4993,
+    "XML": 1636
+  },
+  "contentSha256": "2d19da42fcbb1be5e057eb05aac8220e97527562dcbc5a84e7b46aad0909fbfb"
+}

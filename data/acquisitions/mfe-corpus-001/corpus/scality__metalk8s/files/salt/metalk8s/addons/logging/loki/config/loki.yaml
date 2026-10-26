@@ -1,0 +1,57 @@
+#!yaml
+
+# Configuration of the Loki service
+apiVersion: addons.metalk8s.scality.com
+kind: LokiConfig
+spec:
+  deployment:
+    replicas: 1
+    resources:
+      requests:
+        memory: "256Mi"
+  config:
+    auth_enabled: false
+    memberlist:
+      abort_if_cluster_join_fails: false
+      join_members:
+        - loki-memberlist
+      dead_node_reclaim_time: 30s
+      gossip_to_dead_nodes_time: 15s
+      left_ingesters_timeout: 30s
+      bind_addr: ["0.0.0.0"]
+      bind_port: 7946
+    ingester:
+      chunk_block_size: 262144
+      chunk_idle_period: 3m
+      chunk_retain_period: 1m
+      wal:
+        dir: /var/loki/loki/wal
+        flush_on_shutdown: true
+      lifecycler:
+        ring:
+          kvstore:
+            store: memberlist
+    limits_config:
+      allow_structured_metadata: false
+      reject_old_samples: true
+      reject_old_samples_max_age: 168h
+      max_query_lookback: 0s
+    schema_config:
+      configs:
+      - from: 2018-04-15
+        index:
+          period: 168h
+          prefix: index_
+        object_store: filesystem
+        schema: v9
+        store: boltdb
+    server:
+      http_listen_port: 3100
+    storage_config:
+      boltdb:
+        directory: /var/loki/loki/index
+      filesystem:
+        directory: /var/loki/loki/chunks
+    table_manager:
+      retention_deletes_enabled: true
+      retention_period: 336h

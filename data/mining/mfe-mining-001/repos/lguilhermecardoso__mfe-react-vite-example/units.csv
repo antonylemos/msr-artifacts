@@ -1,0 +1,6 @@
+directory,markers
+mf-dashboard,mf-dashboard/index.html;mf-dashboard/package.json;mf-dashboard/vite.config.ts
+mf-login,mf-login/index.html;mf-login/package.json;mf-login/vite.config.ts
+mf-navbar,mf-navbar/index.html;mf-navbar/package.json;mf-navbar/vite.config.ts
+mf-personagem-detalhe,mf-personagem-detalhe/index.html;mf-personagem-detalhe/package.json;mf-personagem-detalhe/vite.config.ts
+root-app,root-app/index.html;root-app/package.json;root-app/vite.config.ts

@@ -1,0 +1,99 @@
+# Bitnami Thanos chart values override for MetalK8s.
+# Only the Query component is deployed; the sidecar is managed by
+# kube-prometheus-stack / Prometheus Operator.
+
+commonLabels:
+  app.kubernetes.io/version: '__var__(repo.images.thanos.version)'
+
+global:
+  security:
+    allowInsecureImages: true
+
+# -- Disable every component except Query --------------------------------
+
+queryFrontend:
+  enabled: false
+
+bucketweb:
+  enabled: false
+
+compactor:
+  enabled: false
+
+storegateway:
+  enabled: false
+
+ruler:
+  enabled: false
+
+receive:
+  enabled: false
+
+receiveDistributor:
+  enabled: false
+
+minio:
+  enabled: false
+
+# -- Image ----------------------------------------------------------------
+# Use the upstream Thanos image via the MetalK8s __image__ macro.
+# Setting registry to empty lets common.images.image produce
+# "<repository>:<tag>" without a registry prefix.
+
+image:
+  registry: ""
+  repository: '__image__(thanos)'
+  tag: v0.41.0
+  pullPolicy: IfNotPresent
+
+volumePermissions:
+  enabled: false
+
+# -- Query ----------------------------------------------------------------
+
+query:
+  enabled: true
+
+  replicaLabel:
+    - prometheus_replica
+
+  dnsDiscovery:
+    enabled: false
+
+  stores:
+    # Service deployed by Prometheus Operator to expose Thanos sidecars
+    - dnssrv+_grpc._tcp.prometheus-operator-thanos-discovery
+
+  existingSDConfigmap: thanos-query-sd-files
+
+  extraFlags:
+    - --query.auto-downsampling
+
+  automountServiceAccountToken: false
+
+  pdb:
+    create: false
+
+  tolerations:
+    - key: 'node-role.kubernetes.io/bootstrap'
+      operator: 'Exists'
+      effect: 'NoSchedule'
+    - key: 'node-role.kubernetes.io/infra'
+      operator: 'Exists'
+      effect: 'NoSchedule'
+
+  nodeSelector:
+    node-role.kubernetes.io/infra: ''
+
+  replicaCount: 2
+
+  # cpu/memory templated from CSC (metalk8s-thanos-config) so limits stay tunable
+  resources:
+    requests:
+      cpu: '__var__(thanos.spec.deployment.resources.requests.cpu)'
+      memory: '__var__(thanos.spec.deployment.resources.requests.memory)'
+      ephemeral-storage: 50Mi
+    limits:
+      cpu: '__var__(thanos.spec.deployment.resources.limits.cpu)'
+      memory: '__var__(thanos.spec.deployment.resources.limits.memory)'
+      ephemeral-storage: 2Gi

@@ -1,0 +1,16 @@
+<div class="login-page">
+  <ds-card title="Área do cliente">
+    <form (submit)="onSubmit($event)">
+      <label>
+        E-mail
+        <input type="email" name="email" placeholder="voce@email.com" required />
+      </label>
+      <label>
+        Senha
+        <input type="password" name="senha" required />
+      </label>
+      <ds-button type="submit" variant="primary">Entrar</ds-button>
+    </form>
+    <a class="back-link" routerLink="../">Voltar para o site</a>
+  </ds-card>
+</div>

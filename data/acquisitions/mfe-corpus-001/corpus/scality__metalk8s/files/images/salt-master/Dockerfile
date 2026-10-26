@@ -1,0 +1,42 @@
+# SHA256 digest of the base image
+ARG BASE_IMAGE_SHA256
+ARG BASE_IMAGE
+
+FROM ${BASE_IMAGE}@sha256:${BASE_IMAGE_SHA256}
+
+# Versions to use
+ARG SALT_VERSION
+
+# Install Saltstack and other dependencies
+RUN curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.repo > /etc/yum.repos.d/salt.repo \
+ && microdnf clean all \
+ && microdnf update -y \
+ # `dnf` is required by Salt's `yumpkg` module (used by e.g. `pkg.version_cmp`):
+ # its `__virtual__` rejects load if neither dnf/dnf5/tdnf/yum is on PATH;
+ # microdnf is not recognized.
+ && microdnf install -y \
+      salt-master-${SALT_VERSION} salt-api-${SALT_VERSION} salt-ssh-${SALT_VERSION} \
+      openssh-clients procps-ng \
+      dnf \
+      glibc-all-langpacks langpacks-en \
+ # No `pip install --upgrade pip` here: the pip bundled in the Salt onedir is
+ # patched by relenv, and replacing it breaks every later `salt-pip install`
+ # as soon as upstream pip changes the internals that patch relies on (pip
+ # 26.2 did, and broke this build). The bundled pip installs the packages
+ # below just fine.
+ && salt-pip install --no-cache-dir "etcd3gw ~= 2.6.0" "kubernetes ~= 33.1.0" \
+ && microdnf clean all
+
+# Set up locale
+ENV LC_ALL=en_US.UTF-8
+
+# Disable host key checking due to a bug in salt-ssh
+# Sees: https://github.com/saltstack/salt/issues/59691
+RUN mkdir -p /root/.ssh \
+  && printf "Host *\n\
+  StrictHostKeyChecking no\n" > /root/.ssh/config
+
+# salt-master, salt-api
+EXPOSE 4505 4506
+
+ENTRYPOINT ["/usr/bin/salt-master"]

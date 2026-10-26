@@ -1,0 +1,12 @@
+directory,markers
+nx-mf-df,nx-mf-df/package.json
+nx-mf-df/apps/main-host,nx-mf-df/apps/main-host/federation.config.js;nx-mf-df/apps/main-host/project.json
+nx-mf-df/apps/main-host-e2e,nx-mf-df/apps/main-host-e2e/project.json
+nx-mf-df/apps/mf_remote_a,nx-mf-df/apps/mf_remote_a/federation.config.js;nx-mf-df/apps/mf_remote_a/project.json
+nx-mf-df/apps/mf_remote_a-e2e,nx-mf-df/apps/mf_remote_a-e2e/project.json
+nx-mf-df/apps/mf_remote_b,nx-mf-df/apps/mf_remote_b/federation.config.js;nx-mf-df/apps/mf_remote_b/project.json
+nx-mf-df/apps/mf_remote_b-e2e,nx-mf-df/apps/mf_remote_b-e2e/project.json
+nx-mf-df/apps/mf_remote_c,nx-mf-df/apps/mf_remote_c/federation.config.js;nx-mf-df/apps/mf_remote_c/project.json
+nx-mf-df/apps/mf_remote_c-e2e,nx-mf-df/apps/mf_remote_c-e2e/project.json
+nx-mf-df/libs/common-ui-lib,nx-mf-df/libs/common-ui-lib/package.json;nx-mf-df/libs/common-ui-lib/project.json
+nx-mf-df/libs/contracts-platform-messaging,nx-mf-df/libs/contracts-platform-messaging/package.json;nx-mf-df/libs/contracts-platform-messaging/project.json

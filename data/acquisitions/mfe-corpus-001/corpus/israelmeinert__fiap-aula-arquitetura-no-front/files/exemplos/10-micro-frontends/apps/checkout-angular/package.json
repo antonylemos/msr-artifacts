@@ -1,0 +1,10 @@
+{
+  "name": "10-checkout-angular",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "ngc -p tsconfig.json && node ../../../../scripts/build-remoto.mjs angular",
+    "dev": "node ../../../../scripts/servir-remoto.mjs 4302"
+  }
+}

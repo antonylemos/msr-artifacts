@@ -1,0 +1,8 @@
+manifest,state
+apps/product-config/package.json,ok
+apps/sales-portal/package.json,ok
+apps/shell/package.json,ok
+apps/underwriter-portal/package.json,ok
+package.json,ok
+packages/shared-types/package.json,ok
+packages/shared-ui/package.json,ok

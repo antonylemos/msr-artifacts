@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "id": "1036507333",
+  "fullName": "swtbhsmn/micro-frontend-demo",
+  "commit": "9cb91cec30b991952a8bb405e8362b064256a26e",
+  "acquiredAt": "2026-10-24T00:32:21.839Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": ".DS_Store",
+      "reason": "preset:binaries",
+      "size": 6148
+    },
+    {
+      "path": "app1/.DS_Store",
+      "reason": "preset:binaries",
+      "size": 6148
+    },
+    {
+      "path": "app2/.DS_Store",
+      "reason": "preset:binaries",
+      "size": 6148
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 16,
+    "bytes": 359059
+  },
+  "languages": {
+    "JSON": 355352,
+    "JavaScript": 2819,
+    "Other": 608,
+    "HTML": 280
+  },
+  "contentSha256": "fe84690fa8199cd7bb821d926ab0d6ad9c89216996715e19352f1f4f12f05900"
+}

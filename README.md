@@ -7,19 +7,21 @@ Este pacote reúne os dados e as análises de uma pesquisa sobre repositórios p
 | Pasta | Função |
 |---|---|
 | [`config/`](config/) | Método executável da pesquisa: protocolo de elegibilidade, catálogo de consultas e configurações de amostragem, aquisição, mineração e inspeção. |
-| [`data/discovery/`](data/discovery/) | Rodada de descoberta dos candidatos, com acertos por consulta e um relatório de diagnóstico. |
+| [`data/discovery/`](data/discovery/) | Rodada de descoberta dos candidatos, com acertos por consulta, relatório de diagnóstico e partes textuais do CSV de candidatos e do dump SQL. |
 | [`data/samples/`](data/samples/) | Amostra sorteada dos candidatos elegíveis e registro da clonagem. |
 | [`data/docs/`](data/docs/) | Textos analíticos: as classificações e as oito revisões por repositório, cada uma com um documento metodológico. |
 | [`data/acquisitions/`](data/acquisitions/) | Corpus adquirido: um snapshot de cada repositório no commit estudado. Material de apoio. |
 | [`data/mining/`](data/mining/) e [`data/inspections/`](data/inspections/) | Dados estruturados da mineração e da inspeção de dependências, por repositório. |
 | [`data/clones/`](data/clones/) | Clones compactados dos repositórios, usados na revisão histórica. Material de apoio. |
 
+O [inventário](data/inventory.json) registra a origem, os hashes e a representação dos materiais deste corte. O [guia de integridade](data/README.md) explica sua conferência. Os metadados das análises e dos manifestos preservam as referências científicas da fonte; os hashes dos textos após revisão editorial ficam no inventário. As partes da descoberta e os clones têm [instruções de reconstrução](data/discovery/mfe-round-002/README.md) e [conferência dos arquivos compactados](data/clones/README.md).
+
 ## Sequência de avaliação
 
 Os arquivos de análise têm o mesmo nome em todas as etapas (`NNN-<owner>__<nome>.md`). Assim, o mesmo repositório pode ser acompanhado de uma etapa à outra.
 
 1. **Método.** Comece por [`config/protocols/micro-frontends.json`](config/protocols/micro-frontends.json), que define a elegibilidade, e pelo [catálogo de consultas](config/catalogs/micro-frontends.json), em que cada consulta traz a justificativa da busca. As demais configurações em [`config/`](config/) parametrizam as etapas seguintes.
-2. **Descoberta.** Leia o [relatório de diagnóstico](data/discovery/mfe-round-002/report.md) para ver a cobertura de cada consulta e as limitações da busca. Os candidatos estão em [`candidates.csv`](data/discovery/mfe-round-002/candidates.csv).
+2. **Descoberta.** Leia o [relatório de diagnóstico](data/discovery/mfe-round-002/report.md) para ver a cobertura de cada consulta e as limitações da busca. Os candidatos estão nas [partes CSV](data/discovery/mfe-round-002/candidates/), e o banco está preservado nas [partes do dump SQL](data/discovery/mfe-round-002/discovery.sql.parts/). O [guia de reconstrução](data/discovery/mfe-round-002/README.md) explica como obter os arquivos completos e verificar sua integridade.
 3. **Amostragem.** O [manifesto](data/samples/mfe-sample-001/manifest.json) descreve o sorteio, e [`sample.csv`](data/samples/mfe-sample-001/sample.csv) lista a amostra.
 4. **Triagem.** As [classificações](data/docs/mfe-classification/) registram a decisão sobre cada repositório e as evidências em que ela se apoia. Esta é a primeira etapa com texto analítico.
 5. **Aquisição do corpus.** [`acquisition.csv`](data/acquisitions/mfe-corpus-001/acquisition.csv) lista os repositórios do corpus e o commit estudado. Os snapshots em [`corpus/`](data/acquisitions/mfe-corpus-001/corpus/) servem para conferir uma evidência citada nas revisões.

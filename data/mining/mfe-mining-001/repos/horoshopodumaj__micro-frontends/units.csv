@@ -1,0 +1,4 @@
+directory,markers
+host,host/index.html;host/module-federation.config.ts;host/package.json;host/rspack.config.ts
+remote,remote/index.html;remote/module-federation.config.ts;remote/package.json;remote/rspack.config.ts
+vue-remote,vue-remote/index.html;vue-remote/module-federation.config.ts;vue-remote/package.json;vue-remote/rspack.config.ts

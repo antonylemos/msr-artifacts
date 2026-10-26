@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "id": "1010507438",
+  "fullName": "jaideepsinghchauhan/Angular-MFE",
+  "commit": "7648339ce74e8c78f86680e8ef8011e1010cc3e3",
+  "acquiredAt": "2026-10-24T00:32:34.412Z",
+  "rules": {
+    "presets": [
+      "node",
+      "python",
+      "build-output",
+      "binaries"
+    ],
+    "paths": [
+      "**/*.min.js"
+    ],
+    "maxFileBytes": 5242880
+  },
+  "removed": [
+    {
+      "path": "apps/angular-monorepo/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "appshell/host/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "appshell/mfe1/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    },
+    {
+      "path": "appshell/mfe2/public/favicon.ico",
+      "reason": "preset:binaries",
+      "size": 15086
+    }
+  ],
+  "submodules": [],
+  "symlinks": [],
+  "kept": {
+    "files": 137,
+    "bytes": 1094158
+  },
+  "languages": {
+    "JSON": 980831,
+    "TypeScript": 90007,
+    "Markdown": 14006,
+    "JavaScript": 6130,
+    "HTML": 1832,
+    "Other": 1032,
+    "CSS": 320
+  },
+  "contentSha256": "f9bb117c52a3e9f54d1f5b88050e7b76f726149078bad394a627c33d6b22ce20"
+}

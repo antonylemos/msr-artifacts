@@ -1,0 +1,5 @@
+# ARGOS-SiViA v1.7.5 · Dependencias Generales
+-r backend/requirements.txt
+
+# Herramientas de infraestructura y túneles
+pyngrok>=7.0.0

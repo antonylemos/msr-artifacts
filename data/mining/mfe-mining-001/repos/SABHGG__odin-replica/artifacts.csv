@@ -1,0 +1,17 @@
+path,artifact_types,bytes
+.gitignore,,310
+README.md,documentation,3359
+package-lock.json,lockfile,659042
+package.json,dependency-manifest;workspace-config,998
+public/index.html,source;page-entry,1721
+public/manifest.json,runtime-manifest,492
+public/robots.txt,,67
+src/App.css,,1097
+src/App.js,source,1652
+src/App.test.js,source,246
+src/index.css,,366
+src/index.js,source,3671
+src/logo.svg,,2632
+src/reportWebVitals.js,source,362
+src/root.app.js,source,591
+src/setupTests.js,source,241

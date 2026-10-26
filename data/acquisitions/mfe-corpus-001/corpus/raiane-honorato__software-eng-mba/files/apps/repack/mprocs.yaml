@@ -1,0 +1,10 @@
+# Sobe os 3 dev servers do super app num comando só (`pnpm start` na raiz).
+# As portas são fixadas nos scripts `start` de cada pacote e batem com o
+# `remotes` do host (check-in:9001, dashboard:9002; host:8081).
+procs:
+  host:
+    shell: pnpm --filter host start
+  check-in:
+    shell: pnpm --filter check-in start
+  dashboard:
+    shell: pnpm --filter dashboard start

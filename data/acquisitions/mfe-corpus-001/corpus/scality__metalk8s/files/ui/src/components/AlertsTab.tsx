@@ -1,0 +1,109 @@
+import { ConstrainedText, FormattedDateTime, spacing } from '@scality/core-ui';
+import { Box, Table } from '@scality/core-ui/dist/next';
+import { STATUS_CRITICAL, STATUS_WARNING } from '../constants';
+import { Alert } from '../services/alertUtils';
+import { useURLQuery } from '../services/utils';
+import ActiveAlertsFilter from './ActiveAlertsFilters';
+import CircleStatus from './CircleStatus';
+import { useIntl } from 'react-intl';
+import { NotBoundContainer } from './style/CommonLayoutStyle';
+
+const AlertsTab = ({ alerts, status }: { alerts: Alert[]; status: 'idle' | 'loading' | 'error' | 'success' }) => {
+  const query = useURLQuery();
+  // Retrieve the severity filter from URL.
+  // Filter more than one severity, the URL should be:
+  // `/nodes/<node-name>/alerts?severity=warning&severity=critical`
+  let alertSeverity = query.getAll('severity');
+  // Display all the alerts when there is no severity filter or when severity filter is 'all'.
+  if (alertSeverity?.length === 0 || alertSeverity?.includes('all')) {
+    alertSeverity.push(STATUS_WARNING, STATUS_CRITICAL);
+  }
+  const activeAlertListData =
+    alerts
+      ?.map((alert) => {
+        return {
+          name: alert.labels.alertname,
+          severity: alert.labels.severity,
+          alertDescription: alert.description || alert.summary,
+          activeSince: alert.startsAt,
+        };
+      })
+      ?.filter((alert) => alertSeverity.includes(alert.severity)) ?? [];
+  const columns = [
+    {
+      Header: 'Severity',
+      accessor: 'severity',
+      cellStyle: {
+        minWidth: '6rem',
+        flex: 0.5,
+        textAlign: 'center',
+        width: 'unset',
+        paddingRight: spacing.r16,
+      },
+      Cell: ({ value }) => {
+        return <CircleStatus name="Circle-health" status={value} />;
+      },
+    },
+    {
+      Header: 'Name',
+      accessor: 'name',
+      cellStyle: {
+        flex: 1,
+        width: 'unset',
+        minWidth: '4rem',
+      },
+      Cell: ({ value }) => <ConstrainedText lineClamp={2} text={value} />,
+    },
+    {
+      Header: 'Description',
+      accessor: 'alertDescription',
+      cellStyle: {
+        minWidth: '6.5rem',
+        flex: 3,
+        width: 'unset',
+        paddingLeft: '1rem',
+      },
+      Cell: ({ value }) => {
+        return <ConstrainedText lineClamp={2} text={value} />;
+      },
+    },
+    {
+      Header: 'Active since',
+      dropAt: 440,
+      accessor: 'activeSince',
+      cellStyle: {
+        minWidth: '9rem',
+        textAlign: 'right',
+        flex: 1,
+        marginRight: spacing.r16,
+        width: 'unset',
+      },
+      Cell: ({ value }) => {
+        return <FormattedDateTime value={new Date(value)} format="date-time-second" />;
+      },
+    },
+  ];
+  return (
+    <Box display="flex" flexDirection="column" height="100%" width="100%">
+      <Box display="flex" justifyContent="flex-end" padding={spacing.r16}>
+        <ActiveAlertsFilter />
+      </Box>
+      <Table
+        revealDroppedColumns
+        columns={columns}
+        data={activeAlertListData}
+        status={status}
+        entityName={{
+          en: {
+            singular: 'active alert',
+            plural: 'active alerts',
+          },
+        }}
+      >
+        <Table.SingleSelectableContent rowHeight="h48" separationLineVariant="backgroundLevel2" />
+      </Table>
+    </Box>
+  );
+};
+
+export default AlertsTab;

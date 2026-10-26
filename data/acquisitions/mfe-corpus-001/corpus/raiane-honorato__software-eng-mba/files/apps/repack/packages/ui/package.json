@@ -1,0 +1,27 @@
+{
+  "name": "@mygym/ui",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix"
+  },
+  "dependencies": {
+    "@mygym/theme": "workspace:*",
+    "@mygym/data": "workspace:*",
+    "@mygym/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "@mygym/tsconfig": "workspace:*",
+    "@mygym/eslint-config": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": ">=19.0.0",
+    "react-native": ">=0.81.0",
+    "react-native-linear-gradient": ">=2.8.0",
+    "phosphor-react-native": "^3.0.4",
+    "react-native-safe-area-context": ">=5.0.0"
+  }
+}
