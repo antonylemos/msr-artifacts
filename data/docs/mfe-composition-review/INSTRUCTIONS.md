@@ -2,33 +2,25 @@
 
 Paths beginning with `docs/` preserve the organization of the source project (`repo-miner`). In this package, the corresponding analyses are in `data/docs/`. The paths and hashes recorded in the analyses retain their provenance role.
 
-This document describes how the composition relationship review was conducted and how to read the
-`NNN-<owner>__<name>.md` files in this folder. Each file records the review of one corpus repository.
+This document describes how the composition relationship review was conducted and how to read the `NNN-<owner>__<name>.md` files in this folder. Each file records the review of one corpus repository.
 
 ## Objective
 
-Protocol section 3.4.5 (*Composition-relationship mining*): for each composition relationship,
-record the participating units and, when observable, the direction.
+**Composition-relationship mining:** for each composition relationship, record the participating units and, when observable, the direction.
 
-The source code review (protocol section 3.4.4) recorded **constructs**, one per line of code. This stage
-combines them with configuration declarations into **relationships between units**. In repository 045,
-three shell constructs and `remotes` in `vite.config.ts` become one relationship: `shell → shop`,
-`host → remote`.
+The source code review recorded **constructs**, one per line of code. This stage combines them with configuration declarations into **relationships between units**. In repository R045, three shell constructs and `remotes` in `vite.config.ts` become one relationship: `shell → shop`, `host → remote`.
 
 The file has two parts with different roles:
 
-- **The table expresses the criteria.** Each column has a fixed vocabulary and rule, so relationships
-  can be counted and compared across repositories.
-- **The text provides the interpretation.** The "Repository overview" and "Observations" paragraphs are free-form.
-  They record what the table cannot express, allowing readers to understand the project without returning to the code.
+- **The table expresses the criteria.** Each column has a fixed vocabulary and rule, so relationships can be counted and compared across repositories.
+- **The text provides the interpretation.** The "Repository overview" and "Observations" paragraphs are free-form. They record what the table cannot express, allowing readers to understand the project without returning to the code.
 
-This stage does not search for new code constructs, reclassify the repository or modify
-previous reviews.
+This stage does not search for new code constructs, reclassify the repository or modify  previous reviews.
 
 ## Sources consulted (read only)
 
 | What | Path |
-|---|---|
+| :--- | :--- |
 | Repository list | `data/acquisitions/mfe-corpus-001/acquisition.csv` |
 | Units | `docs/mfe-structure-review/NNN-<owner>__<name>.md` ("Units" table) |
 | Configuration | `docs/mfe-dependency-review/NNN-<owner>__<name>.md` (`Configured` = `Yes` rows) and configurations cited in previous reviews |
@@ -43,16 +35,14 @@ Classifications, previous reviews and configurations in `config/` are consulted 
 
 ## Output
 
-One `docs/mfe-composition-review/NNN-<owner>__<name>.md` file per repository, with the **same name**
-as its classification file. The complete example is `008-mrmechazilla__host-app.md`.
+One `docs/mfe-composition-review/NNN-<owner>__<name>.md` file per repository, with the **same name** as its classification file. The complete example is `008-mrmechazilla__host-app.md`.
 
 Each file has this structure:
 
 1. Front matter with the fields described in step 1.
 2. Title `# NNN — <owner>/<name>`.
 3. "Repository overview" section: free-form text.
-4. "Relationships" section: a table with the columns `#`, `Source`, `Target`, `Type`, `Direction`, `Mechanism`,
-   `In snapshot`, `Active`, `Configuration` and `Code`.
+4. "Relationships" section: a table with the columns `#`, `Source`, `Target`, `Type`, `Direction`, `Mechanism`, `In snapshot`, `Active`, `Configuration` and `Code`.
 5. "Observations" section: one paragraph per relationship.
 6. "Summary" section and, when `status` is `review`, the "Point for joint review" section.
 
@@ -60,12 +50,9 @@ Each file has this structure:
 
 ### 1. File header
 
-The front matter records `id`, `full_name` and `commit`, copied from the classification; `inputs.mining`, copied
-from the source code review; `inputs.inspection`, copied from the dependency review; `status: draft`
-while the review has not been validated (only the researcher promotes the status to `final`); and the review date.
+The front matter records `id`, `full_name` and `commit`, copied from the classification; `inputs.mining`, copied from the source code review; `inputs.inspection`, copied from the dependency review; `status: draft` while the review has not been validated (only the researcher promotes the status to `final`); and the review date.
 
-The three previous reviews must be `final` and have the same `commit` as `acquisition.csv`, and the
-input blocks must match the manifests. If anything differs, change `status` to `review` and record
+The three previous reviews must be `final` and have the same `commit` as `acquisition.csv`, and the input blocks must match the manifests. If anything differs, change `status` to `review` and record
 the discrepancy in "Point for joint review".
 
 ### 2. Gathering the evidence
