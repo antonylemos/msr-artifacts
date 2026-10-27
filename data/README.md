@@ -1,10 +1,6 @@
 # Package integrity and provenance
 
-The [inventory](inventory.json) records the imported cut, material selection, sizes and SHA-256 hashes. Scope retains the stages already represented in this package: discovery, sampling, classifications, corpus, mining, inspection, eight reviews and their methods. Clones correspond to the 100 corpus repositories. Templates, operational documents, consolidated analyses, profiles and source-tool backups are not part of this import.
-
-In `items`, `bytes` and `sha256` describe the delivered file. For revised texts, `sourceBytes` and `sourceSha256` describe the imported scientific source, and `representation: editorial-revision` identifies the editorial difference. Analysis front matter retains the source's current metadata, including hashes, commits, dates and status. Scientific manifests also remain intact; their references have not been replaced with editorial hashes.
-
-`editorial` distinguishes narrative reading from mechanical checks of tables, code and scientific fields. Repository evidence was not reassessed and no scientific judgment was repeated. `sourceFindings` records pre-existing inconsistencies observed during reading, without treating them as new decisions or correcting results by inference.
+The [inventory](inventory.json) records the imported cut, material selection, sizes, and SHA-256 hashes. Scope retains the stages already represented in this package: discovery, sampling, classifications, corpus, mining, inspection, eight reviews, and their methods. Clones correspond to the 100 corpus repositories. This import excludes templates, operational documents, consolidated analyses, profiles, and source tool backups.
 
 ## Checking files
 
@@ -29,7 +25,7 @@ print(f'{len(records)} files checked')
 PY
 ```
 
-The inventory excludes itself. Reconstructed complete candidate and SQLite files are ignored by Git; their tracked representation is in parts. Consult the [discovery reconstruction](discovery/mfe-round-002/README.md) and [clone](clones/README.md) guides to also verify reassembly.
+The inventory excludes itself. Git ignores the reconstructed complete candidate and SQLite files; it tracks them in parts. Consult the [discovery reconstruction](discovery/mfe-round-002/README.md) and [clone](clones/README.md) guides to also verify reassembly.
 
 ## Including snapshots in Git
 
@@ -41,4 +37,4 @@ When preparing a commit, explicitly include the corpus with `-f`, from the packa
 git add -f -- data/acquisitions/mfe-corpus-001/corpus/
 ```
 
-The command acts only on the acquired corpus. Other artifacts can be added normally. The package update does not run this command, make a commit or change what was already staged in the index.
+The command affects only the acquired corpus; other artifacts can be added normally. The package update does not run this command, make a commit, or change what was already staged in the index.
