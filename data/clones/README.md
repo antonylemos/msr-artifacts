@@ -19,4 +19,4 @@ tar -xzf OWNER__REPO.tar.gz -C unpacked
 cat OWNER__REPO.tar.gz.part-* | tar -xz -C unpacked
 ```
 
-Consult history with `git -C unpacked/OWNER__REPO log`. The `unpacked/` folder is ignored by this package's Git rules. Import checked each clone's commit and compared the contents of every archive member with its source; part hashes were also verified after splitting.
+Consult history with `git -C unpacked/OWNER__REPO log`. The `unpacked/` folder is ignored by this package's Git rules. Import checked each clone's commit and compared each archive member's contents with its source; it also verified part hashes after splitting.
