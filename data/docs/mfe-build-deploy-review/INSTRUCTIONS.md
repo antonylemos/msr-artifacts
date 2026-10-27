@@ -1,6 +1,6 @@
 # Method: build and deployment review
 
-Paths beginning with `docs/` preserve the organization of the source project (`repo-miner`). In this package, the corresponding analyses are in `data/docs/`. The paths and hashes recorded in the analyses retain their provenance role.
+Paths beginning with `docs/` preserve the organization of the source project. In this package, the corresponding analyses are in `data/docs/`. The paths and hashes recorded in the analyses retain their provenance role.
 
 This document describes how the build and deployment review was conducted and how to read the `NNN-<owner>__<name>.md` files in this folder. Each file records the review of one corpus repository.
 
